@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-14T08:55:00.343Z",
+  "engine": "engine.js",
+  "jobs": 11530,
+  "unitTests": 16,
+  "groups": {
+    "ordinary": 230,
+    "magnetic": 1651,
+    "magneticPoint": 122
+  },
+  "momenta": [
+    "\u8795",
+    "(1/2,1/2,1/2)",
+    "(0.173,0.271,0.389)"
+  ],
+  "magneticPointMomenta": [
+    "\u8795"
+  ],
+  "spins": [
+    "single-valued",
+    "double-valued"
+  ],
+  "maxProductError": 2.55351295663786e-14,
+  "maxCocycleError": 0,
+  "elapsedSeconds": 48.535,
+  "failures": []
+}

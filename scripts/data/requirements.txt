@@ -1,0 +1,2 @@
+# Only the offline extractor uses NumPy; the website has no Python dependency.
+numpy>=1.24,<3

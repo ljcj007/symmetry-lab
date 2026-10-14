@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "retrieved": "2026-10-14",
+  "repositories": [
+    {
+      "name": "SpaceGroupIrep",
+      "url": "https://github.com/goodluck1982/SpaceGroupIrep",
+      "tree": "7b43201ac0973333edbe69bc3dd6ccb308abf624",
+      "license": "GPL-3.0",
+      "sourceFiles": [
+        "getBCsymmetry.py",
+        "SpaceGroupIrep.wl",
+        "LittleGroupIrepData.wl",
+        "AbstractGroupData.wl"
+      ]
+    },
+    {
+      "name": "MSGCorep",
+      "url": "https://github.com/goodluck1982/MSGCorep",
+      "tree": "5082f30499afea656287a2054c86d523618f9f8a",
+      "license": "GPL-3.0",
+      "sourceFiles": [
+        "MSGData.wl",
+        "Usage.wl",
+        "MSGCorep.wl",
+        "BC_MSG_elements/BC-MSG_elem_*.txt",
+        "BC_MSG_elements/genMSGelem.nb"
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "title": "SpaceGroupIrep",
+      "doi": "10.1016/j.cpc.2021.107993",
+      "arxiv": "https://arxiv.org/abs/2012.08871"
+    },
+    {
+      "title": "MSGCorep",
+      "doi": "10.1016/j.cpc.2023.108722",
+      "arxiv": "https://arxiv.org/abs/2211.10740"
+    }
+  ],
+  "datasets": {
+    "spaceGroups": 230,
+    "spaceGroupOperations": 2609,
+    "magneticSpaceGroups": 1651,
+    "magneticSpaceGroupOperations": 25033,
+    "magneticPointGroups": 122,
+    "magneticTypes": {
+      "I": 230,
+      "II": 230,
+      "III": 674,
+      "IV": 517
+    }
+  },
+  "verification": {
+    "allMSGProductsChecked": 676317,
+    "translationCommonDenominator": 12,
+    "result": "All magnetic Seitz tables close modulo integer primitive translations. Every ordinary SG operation agrees with the corresponding type-I MSG rotation and translation."
+  },
+  "apiCoverage": [
+    {
+      "upstream": [
+        "SGSymStd",
+        "showMSGSym",
+        "MSGSymBNS",
+        "MSGSymBC",
+        "MSGSymOG",
+        "BNStoOG",
+        "OGtoBNS",
+        "MPGinfo"
+      ],
+      "browser": "Extracted symbol and BNS/OG lookup datasets."
+    },
+    {
+      "upstream": [
+        "getLGElem",
+        "getMSGElem",
+        "getMLGElem",
+        "getMPGElem",
+        "getMagKStar"
+      ],
+      "browser": "Stored Seitz operations, numerical reciprocal-space action and little-group filtering."
+    },
+    {
+      "upstream": [
+        "getLGIrep",
+        "getMLGCorep",
+        "getMPGCorep"
+      ],
+      "browser": "Independent numerical finite-group/projective representation calculation; outputs D/C numerical labels, not BC/CDML/Bilbao labels."
+    },
+    {
+      "upstream": [
+        "getSGIrep",
+        "getMSGCorep",
+        "MSGCorepDirectProduct"
+      ],
+      "browser": "Numerical induction and star-product tools have their own browser API; they are not Wolfram function calls."
+    },
+    {
+      "upstream": [
+        "readVasp2trace",
+        "readMagTrace"
+      ],
+      "browser": "Both original numeric text formats parsed by trace-parser.js; max 10 MiB. BC rotation/translation and spin-frame compatibility checked before matching."
+    },
+    {
+      "upstream": [
+        "getBandRep",
+        "getBandCorep"
+      ],
+      "browser": "Imported unitary characters can be decomposed against computed ordinary irreps or magnetic corepresentation restrictions, with Wigner-type normalization. No loading of libMLGCorep.mx, no guarantee of original corep labels."
+    },
+    {
+      "upstream": [
+        "autoConvTraceToBC",
+        "convTraceToBC",
+        "libMLGCorep"
+      ],
+      "browser": "Not ported: no automatic POSCAR/cell/origin/spin-frame standardization or Wolfram binary database import."
+    }
+  ],
+  "conventions": [
+    "BC primitive-cell fractional real-space and reciprocal-space coordinates. Magnetic data use the BNS family primitive basis.",
+    "Translation phases exp(-2 pi i k dot t). Stored translations recovered exactly from upstream decimals with denominator dividing 12.",
+    "Stored spatial spin matrices use down-up basis and upstream six-decimal precision. Antiunitary flag is separate; time-reversal spin action is not pre-multiplied.",
+    "Trace input spin matrices use up-down basis. Matching swaps basis, detects the double-cover sign and corrects integer-lattice translation phases.",
+    "Lattice basis values in browser display are representative parameters, not a measured crystal structure."
+  ],
+  "limitations": [
+    "Browser calculations are numerical and have bounded runtime; symbolic parameter families are not reproduced.",
+    "Numerical irreducible representation labels and gauges need not match the original Mathematica labels and bases.",
+    "A trace file in another cell/origin or Cartesian spin frame is rejected rather than silently transformed.",
+    "Magnetic band decomposition uses unitary restrictions of computed corepresentations with Wigner-type normalization; an incomplete Kramers/antiunitary multiplet is rejected."
+  ],
+  "examples": "../examples/provenance.json"
+}

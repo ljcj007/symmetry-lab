@@ -1,0 +1,5 @@
+* text=auto eol=lf
+upstream/** -text
+*.zip -text
+*.png -text
+*.cmd text eol=crlf

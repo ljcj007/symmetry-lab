@@ -1,0 +1,10 @@
+node_modules/
+*.tar.gz
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+.data-build-*/
+.openai/
+preview.png
+UI-VALIDATION.md

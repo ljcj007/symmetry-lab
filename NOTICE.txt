@@ -1,0 +1,42 @@
+Symmetry Lab — browser implementation and derived symmetry datasets
+
+This distribution uses data from:
+
+1. SpaceGroupIrep
+   Author identified by the upstream package: Gui-Bin Liu
+   https://github.com/goodluck1982/SpaceGroupIrep
+   Upstream license: GNU General Public License, version 3.
+   License copy: dist/data/LICENSE-SpaceGroupIrep.txt
+
+2. MSGCorep
+   Author identified by the upstream package: Gui-Bin Liu
+   https://github.com/goodluck1982/MSGCorep
+   Upstream license: GNU General Public License, version 3.
+   License copy: dist/licenses/MSGCorep-GPL-3.0.txt
+
+The extracted JSON datasets preserve the upstream BC coordinate convention.
+Source files, repository tree identifiers, numerical precision and transformations
+are documented in dist/data/provenance.json. Original notices and license text
+are retained. Dataset extraction and browser code were prepared on 2026-10-14.
+
+The JavaScript numerical implementation is an independent browser adaptation.
+It is not an official release or endorsement by the upstream author. Numerical
+representation identifiers and bases are not claimed to be the original BC,
+CDML or Bilbao labels or gauges. No Wolfram kernel or binary .mx database is
+included or executed.
+
+The supplied trace example is an explicitly truncated excerpt of the original
+MSGCorep Mn3NiN example, not a new or complete physical calculation. Its source,
+retained rows and changed k-point count are recorded in
+dist/examples/provenance.json. The ordinary SG186 parser-test fixture is likewise
+an attributed excerpt of an upstream SpaceGroupIrep example.
+
+Relevant original software papers:
+  Comput. Phys. Commun. 265, 107993 (2021)
+  https://doi.org/10.1016/j.cpc.2021.107993
+  Comput. Phys. Commun. 288, 108722 (2023)
+  https://doi.org/10.1016/j.cpc.2023.108722
+
+This software and data are supplied under the applicable GPL terms, without
+warranty. See the included license texts for the complete terms. This notice
+does not replace or remove the upstream license notices.

@@ -1,0 +1,2 @@
+import * as engine from './engine.js';
+self.onmessage=async({data})=>{try{let result;if(data.action==='analyze')result=engine.analyzeGroup(data.payload);else if(data.action==='induce'){const mod=await import('./induction.js');result=mod.induceRepresentation(data.payload);}else if(data.action==='product'){const mod=await import('./induction.js');result=mod.decomposeStarProduct(data.payload);}else throw new Error('未知计算任务');self.postMessage({id:data.id,result});}catch(error){self.postMessage({id:data.id,error:error.message,stack:error.stack});}};

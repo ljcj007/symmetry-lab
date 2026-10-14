@@ -1,0 +1,11 @@
+{
+  "name": "symmetry-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node scripts/test-engine.mjs && node scripts/test-trace.mjs && node scripts/test-induction.mjs && node scripts/test-magnetic-induction.mjs"
+  },
+  "license": "GPL-3.0-only"
+}
