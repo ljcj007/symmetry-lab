@@ -1,6 +1,6 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
-将 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep) 和 [MSGCorep](https://github.com/goodluck1982/MSGCorep) 的开放群数据与浏览器端数值算法结合，用于空间群、磁空间群及磁点群的表示计算。网站为独立实现，不代表上游作者发布或背书。
+整合 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep)、[MSGCorep](https://github.com/goodluck1982/MSGCorep)、[MagneticTB](https://github.com/zhangzeyingvv/MagneticTB) 和 [CrystKit](https://github.com/hongyi-zhao/CrystKit) 的数据与算法工作流。四个项目已实现的计算功能统一使用 Python，通过 Pyodide 在浏览器 Worker 内运行；JavaScript 负责界面、绘图和任务调度。网站为独立实现，不代表上游作者发布或背书。
 
 ## 启动与部署
 
@@ -16,11 +16,11 @@ npm start
 
 将 `dist/` 的完整内容部署到任意支持 JavaScript 模块和 Web Worker 的 HTTP/HTTPS 静态服务器即可。请保留 `data/`、`examples/`、许可证和相对目录结构。不要通过 `file://` 直接打开 HTML；浏览器通常会阻止模块、Worker 或数据文件加载。
 
-应用不使用 Mathematica/Wolfram 内核、Python 服务、外部 API 或计算后端。群数据从本站静态文件读取；上传的 trace 文件、输入和计算结果均在浏览器内处理。首次打开需要取得静态文件，未实现离线安装或 Service Worker 缓存。
+应用无需 Mathematica、GAP、Rust 原生扩展或 Python 服务器。首次运行从 jsDelivr 下载 Pyodide 314.0.7 解释器及 NumPy 2.4.6 / SymPy 1.14.0；需要联网并等待加载。群数据和本网站 Python 模块从本站静态文件读取。输入模型、上传文件和计算结果均留在浏览器，没有计算后端。运行任务可点击“取消计算”停止；重新启动解释器后可继续。未实现离线安装或 Service Worker 缓存。
 
 ### GitHub Pages
 
-仓库包含 [GitHub Pages 工作流](.github/workflows/pages.yml)。在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，向 `main` 分支推送提交或手动运行 **Deploy GitHub Pages** 即可发布。发布前工作流会运行全部 `npm test` 检查，重新生成可下载的 `dist/source.zip`，再把 `dist/` 上传到 Pages。部署成功后，工作流和仓库 Pages 设置都会显示网站链接。
+仓库包含 [GitHub Pages 工作流](.github/workflows/pages.yml)。在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，向 `main` 分支推送提交或手动运行 **Deploy GitHub Pages** 即可发布。发布前工作流会运行全部 `npm test` 和 `npm run test:python` 检查，重新生成可下载的 `dist/source.zip`，再把 `dist/` 上传到 Pages。部署成功后，工作流和仓库 Pages 设置都会显示网站链接。
 
 页面资源、数据、示例与 Web Worker 均使用相对路径，支持 GitHub Pages 的仓库子路径，无需填写固定域名。此流程只需要 GitHub 自动提供的令牌，无需设置访问令牌或第三方服务密钥；源码包生成使用 Python 标准库，在线计算仍完全在浏览器运行。
 
@@ -42,12 +42,23 @@ npm start
 
 主要代码入口：
 
-- `dist/engine.js`：`analyzeGroup`、`computeStar`、`buildMultiplicationTable`、`decomposeCharacters`、`decomposeCorepresentationCharacters`、`directProduct`。
-- `dist/induction.js`：`induceRepresentation`、`inducedOperationMatrix`、`decomposeStarProduct`。
-- `dist/trace-parser.js`：`parseTrace`、`matchTraceOperations`、`charactersForAnalysis`。
-- `dist/compute-worker.js`：计算 Worker；`dist/app.js`：页面交互。
+- `dist/python/symmetry_core.py`：SpaceGroupIrep / MSGCorep 的 Python 数值内核，包含不可约表示、共表示、全 k 星诱导、直积和 trace 匹配。
+- `dist/python/magnetictb_browser.py`：对称性约束跃迁模型、能带、hr、薄膜和拓扑计算。
+- `dist/python/crystkit_browser.py`：有理数仿射群、有限商群、矩阵群和三维数据库识别。
+- `dist/python-worker.js` / `python-client.js`：共享 Python Worker 的加载、调度、取消和超时；计算输入仅按 JSON 传入。
+- `dist/app.js` / `research-ui.js`：页面交互与结果绘图。
+- `dist/engine.js`、`induction.js`、`trace-parser.js` 保留为旧版独立回归参考，网页不调用这些 JavaScript 计算核心。
 
-`analyzeGroup` 返回的矩阵/特征标使用明确的操作顺序。`littleGroup.unitaryIndices` 是小群内索引，须经 `littleGroup.sourceIndices` 才能映射到输入群的全局操作索引。trace 匹配请使用 `charactersForAnalysis` 完成排序。
+本机 Python 也可直接使用相同模块：
+
+```sh
+python -m pip install -r dist/python/requirements.txt
+python dist/python/cli.py magnetictb dist/examples/magnetictb-graphene.json -o graphene-result.json
+python dist/python/cli.py crystkit dist/examples/crystkit-space-group.json -o group-result.json
+npm run test:python
+```
+
+`symmetry_core.analyze_group` 返回的矩阵/特征标使用明确的操作顺序。`littleGroup.unitaryIndices` 是小群内索引，须经 `littleGroup.sourceIndices` 才能映射到输入群的全局操作索引。trace 匹配请使用 `run("match_bands", payload)` 完成排序与分解。
 
 ## 坐标、标签与适用范围
 
@@ -82,7 +93,7 @@ node scripts/test-trace.mjs
 - `test-magnetic-induction.mjs`：18 个 type-II/III/IV 磁空间群、Γ/一般/边界 k 点与两种自旋设置的 254 个全共表示及 18 个直积；检查半线性乘法和平移相位。
 - `test-trace.mjs`：真实普通/磁性输入、BC 操作匹配、双覆盖符号、整格矢 Bloch 相位、操作重排、坏输入拒绝，以及真实 Γ 点特征标到数值共表示的端到端重构。
 
-随附 `engine-validation.json` 记录了已完成的 **11,530 次**小群计算：全部 230 SG 和 1651 MSG 在 Γ、`(1/2,1/2,1/2)`、`(0.173,0.271,0.389)` 三个波矢处分别计算单值/双值表示，全部 122 MPG 在 Γ 处计算两种自旋设置。该次扫描失败数为 0，最大记录乘法误差约为 `2.56×10^-14`；它不等于所有连续波矢或标准标签的穷尽验证。
+旧 JavaScript 参考实现的 `engine-validation.json` 记录了已完成的 **11,530 次**小群计算：全部 230 SG 和 1651 MSG 在 Γ、`(1/2,1/2,1/2)`、`(0.173,0.271,0.389)` 三个波矢处分别计算单值/双值表示，全部 122 MPG 在 Γ 处计算两种自旋设置。该次扫描失败数为 0，最大记录乘法误差约为 `2.56×10^-14`；它不等于所有连续波矢或标准标签的穷尽验证。
 
 数据提取阶段另用精确有理数检查了所有 1651 个磁群的 676,317 次 Seitz 乘积。平移公分母为 12，全部闭合；230 个普通空间群的 2609 个操作也与 type-I 磁群数据逐一交叉核对。
 
@@ -96,3 +107,25 @@ node scripts/test-trace.mjs
 
 - SpaceGroupIrep，*Computer Physics Communications* **265**, 107993 (2021)，[DOI: 10.1016/j.cpc.2021.107993](https://doi.org/10.1016/j.cpc.2021.107993)。
 - MSGCorep，*Computer Physics Communications* **288**, 108722 (2023)，[DOI: 10.1016/j.cpc.2023.108722](https://doi.org/10.1016/j.cpc.2023.108722)。
+
+## MagneticTB Python 工具
+
+模型输入明确指定晶格行向量、分数原子位置、s/p/d 轨道、完整对称操作及周期方向。支持站点轨道展开、反幺正操作、自旋 1/2 与用户局域矩阵，以线性约束零空间产生数值跃迁基底；每次建模检查厄米性和对称协变性。示例包括石墨烯、自旋链、SSH 和 QWZ Chern 绝缘体。
+
+支持 Wannier90 hr 读写、Bloch 能带、有限边界、薄膜、表面 Green 函数、Wilson 环 / Berry 相位和 FHS Chern 数。Hamiltonian 采用周期轨道规范 `H_ij(k) = Σ_R t_ij(R) exp(+2πi k·R)`，能量单位跟随输入参数。Chern/Wilson 要求占据子空间与其余能带有直接带隙；需提高网格验证收敛。JSON 输出保存规范和数值诊断。
+
+本版本不是上游 >160 个接口的完整兼容层：没有精确分圆域符号代数、完整自旋空间群目录、连续自旋群、任意多项式轨道、自动 Wyckoff 和标准 k 路径、DFT 拟合、节点搜索或 Z₂ 不变量。模型参数不是由真实材料第一性原理自动拟合所得。
+
+## CrystKit Python 工具
+
+精确有理数 Seitz 运算、坐标 / 原点变换、群闭合、点轨道 / 稳定子、有限商群导出群及最小生成元搜索、矩阵块分解、成对矩阵共轭、平移格简化、有限阶 GL(n,ℤ) 算法和三维参考群匹配。使用本站 230 群的 BC 原胞数据库；所有匹配结果须通过完整操作集相等验证，并给出 basis / origin。
+
+有限商群生成元不等于无限空间群最小生成元。可选受限坐标搜索未找到匹配，不证明仿射非同构；未穷尽搜索会在输出中注明。尚未迁移 CARAT 2–6 维整数 / 有理类目录、完整 GL(n,ℤ) 正规化子、PCP 扩张轨道枚举和一般空间群仿射同构算法。原 GAP 接口不能直接调用本 Python 模块。
+
+## Python 移植验证与来源
+
+`scripts/test-python-symmetry.py` 对照冻结的旧 JavaScript 独立结果：130 个小群分析、330 个诱导表示、24 个直积及真实 trace 数据，同时检查 Python 结果自身的群乘法、半线性法则、维数与特征标。测试不会逐项强制数值基底相同。新模块测试分别为 `test-python-magnetictb.py` 和 `test-python-crystkit.py`；采用解析模型、精确群恒等式与错误输入检查。
+
+新项目的固定版本、移植范围和参考源码 SHA-256 记录在 `dist/data/python-provenance.json`。`upstream/MagneticTB` 和 `upstream/CrystKit` 保存相关原始源码和声明。MagneticTB 原始许可为 GPL-3.0-only；CrystKit 为 GPL-2.0-or-later，在本组合衍生版本中按 GPL-3.0 发布。许可全文随网站与源码包提供。
+
+完整 Python 数据库扫描记录于 `dist/data/python-symmetry-validation.json`：11,530 次分析全部通过，最大记录矩阵乘法误差 5.66×10⁻¹⁴；记录包含实现源码 SHA-256。该扫描不能替代对任意连续波矢和真实材料设置的核验。

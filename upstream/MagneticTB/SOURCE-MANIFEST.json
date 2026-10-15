@@ -1,0 +1,534 @@
+{
+  "repository": "https://github.com/zhangzeyingvv/MagneticTB",
+  "commit": "3575e8356af282c9d9447bfbf03e282ef3bac77d",
+  "retrieved": "2026-10-15",
+  "license": "GPL-3.0-only",
+  "snapshot_kind": "Selected unmodified reference sources; not a complete upstream installation. Large databases, binaries and web assets are omitted.",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "bytes": 35823
+    },
+    {
+      "path": "Python-Rust-Web/python/pyproject.toml",
+      "sha256": "e6ccb33c0aa104ff47721f16c10fbce8f5f0cbd1420176ebb317e594c5c37e87",
+      "bytes": 912
+    },
+    {
+      "path": "Python-Rust-Web/python/src/magnetictb/__init__.py",
+      "sha256": "e13f2bd81d274b2dadd2132025f3c3fb0b1a698e3a3d1c84ca10edac0c0b1ce8",
+      "bytes": 8942
+    },
+    {
+      "path": "Python-Rust-Web/python/src/magnetictb/core_bindings.py",
+      "sha256": "f6467d8abdc5da4a1e3bad86bfa7c2841dd0994e50313f557f4d31b75bc9e50b",
+      "bytes": 6964
+    },
+    {
+      "path": "Python-Rust-Web/python/src/magnetictb/msgcorep_bridge.py",
+      "sha256": "93ab7ff6cb63e0d2223e0ace59f6f5bdc70532aebf47e059b12417c18d37ac7a",
+      "bytes": 12388
+    },
+    {
+      "path": "Python-Rust-Web/python/src/magnetictb/web/model_examples.py",
+      "sha256": "2e51ad5aa9601893601edac817bb4915e44e7aef341e151ff1ce0c77c5825c53",
+      "bytes": 10365
+    },
+    {
+      "path": "Python-Rust-Web/README.md",
+      "sha256": "660a4621e6067e8a6324b7836c32f157859c37345aa87091abae1664031e2908",
+      "bytes": 8618
+    },
+    {
+      "path": "Python-Rust-Web/rust/Cargo.lock",
+      "sha256": "f67562539326724715d0696e964e997185fd6f1fa7b35f4b44a6f1827568e1a5",
+      "bytes": 13117
+    },
+    {
+      "path": "Python-Rust-Web/rust/Cargo.toml",
+      "sha256": "3170bee58ff657f6873a717dfdebaa2cef95ea68c5c075aeaa56dd0077a86b15",
+      "bytes": 511
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/Cargo.toml",
+      "sha256": "e70b6082c2564b6899508f1d166c7fa826532ee80e1247d694a30ec25efc32e9",
+      "bytes": 481
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/error.rs",
+      "sha256": "95660f83a0e85199dc86cacc3fc53914bcebc9c9761ebc6cbffef9d6fd63792b",
+      "bytes": 857
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/exact.rs",
+      "sha256": "efc47c38ae89ce156fa359fa28599210cba4a1df6018576994381811e77d073f",
+      "bytes": 22005
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/fixture.rs",
+      "sha256": "2b1e8254ed849f10671657052f91aa7bd4404bebff15327ff45e3b4b618395d5",
+      "bytes": 22400
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/lib.rs",
+      "sha256": "fe7f1ca29e8c48bb46244cd7106d213e939be3fbe1e013aff30d9f144656f068",
+      "bytes": 537
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/matrix.rs",
+      "sha256": "f586cb2348ee5909fe76e225d60c93db544519a0ce797253a53229e2e597e2b2",
+      "bytes": 12797
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/cyclotomic-nullspace/src/native_backend.rs",
+      "sha256": "d126b6748873e1a92e8315cf14518a1dc5e497e3bb26c415332af30a44ad6327",
+      "bytes": 40748
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/Cargo.toml",
+      "sha256": "bd23c126bb61daedf40df9d0e7bb223042464d2945a4e5a4f9001ed675ec3173",
+      "bytes": 372
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/src/action.rs",
+      "sha256": "c4c7cf5de97860cfb0e38168472184630b02eaecdf2414ffe6852e1c8b19d5c5",
+      "bytes": 7396
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/src/enumeration.rs",
+      "sha256": "9df62e976d94649e2eac5499f47a2cf50c8693be509f06f61aa8dbf24056fa70",
+      "bytes": 7456
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/src/error.rs",
+      "sha256": "55b6bda3a57e8b5248c7d778c9351724be5a5f58d4f4951e28e1ea51c79bf50c",
+      "bytes": 938
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/src/group.rs",
+      "sha256": "d50211983964372103efa70abd3ec7495f92d84e4b25b39ad3424d634dd19ac6",
+      "bytes": 16299
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-abstract-group/src/lib.rs",
+      "sha256": "ef50c9d4be502af8ef0c1e2159c785dd4ee8decddc8b3fa7021a594bfef33f29",
+      "bytes": 306
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-crystal-geometry/Cargo.toml",
+      "sha256": "7fbac9244040faa559f01e143ed7082083ad706c92bac49a6affb6678ad9a745",
+      "bytes": 727
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-crystal-geometry/src/bond.rs",
+      "sha256": "d02af49e1e9a4b3d6b266735d36a8085d125a017d7321610500e520ce5bf1145",
+      "bytes": 42217
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-crystal-geometry/src/geometry/site_orbit_compiler.rs",
+      "sha256": "a85459f6a4c88d358b37b9d4717e057ea6462bdab2270a3873433073df6ba407",
+      "bytes": 6161
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-crystal-geometry/src/geometry/site_permutation_compiler.rs",
+      "sha256": "0d574a9d3fdd2e2dc0496d7ab8556b4ca4ed31bead9096da63373dc49bc9eeab",
+      "bytes": 6802
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-crystal-geometry/src/lib.rs",
+      "sha256": "0a038786b521f5bb20ee3da4caf25ae4f98b198b8b1cd5d8769998c695719bff",
+      "bytes": 5580
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-data/Cargo.toml",
+      "sha256": "068e0f901a45d5754a23966cf193b8dd74cb9466bd055ee7d04d1ae87574c569",
+      "bytes": 404
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-data/src/catalog.rs",
+      "sha256": "0152aa812393d8f2546c123bc19cb0ea7bf1432dea1bcacfff062c372628611a",
+      "bytes": 25844
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-data/src/error.rs",
+      "sha256": "13447edf5d29928443faa7307922cc8a45bcc746a863c925b94bd4b65463f005",
+      "bytes": 676
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-data/src/exact.rs",
+      "sha256": "9838a11463ecbd98a45dc616e91944f5e4d4b4ed1dd7c30986b944d636573bed",
+      "bytes": 3186
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-data/src/lib.rs",
+      "sha256": "3015ad1426b84188a9a0b0959d32f614fa31f365fa2b5cc4ad98ead86befca69",
+      "bytes": 5941
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-fitting/Cargo.toml",
+      "sha256": "842da1c5c2377873a5e3a551408f96bca7d33f3639d7b496e3d71d82a069bd8e",
+      "bytes": 450
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-fitting/src/error.rs",
+      "sha256": "10ee04155d7c827abeddee7b90965d11b7124f7d2b4017fa9247a3f73592bd53",
+      "bytes": 821
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-fitting/src/fitting.rs",
+      "sha256": "0ee467633105ef9e10e04c07773ca189bba062604f1f551a864526f394e89266",
+      "bytes": 24323
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-fitting/src/lib.rs",
+      "sha256": "13e65befec95d2801828affcfe6df7b492454c1d83f27f11e36dc89f036ff4cc",
+      "bytes": 406
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-fitting/src/vasp.rs",
+      "sha256": "9ddb8f1ac16487707ee17569d2a60139bfc01a35cdc4dd82f785ef4a3142f5cf",
+      "bytes": 7532
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-linear-algebra/Cargo.toml",
+      "sha256": "67f85c466ddf8a716bf7b04d34f6419d1e90b319a033d322929fbab5a45ecd91",
+      "bytes": 381
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-linear-algebra/src/basis.rs",
+      "sha256": "24d4d9ccfae10fe35b681914b3691fdd84faec7b0c87446f62174adeac680caa",
+      "bytes": 14816
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-linear-algebra/src/constraints.rs",
+      "sha256": "ef518f5547087ba2ab22e65c4f42b2f8d3a41865d4fe8b12caa2ef08631d347a",
+      "bytes": 23597
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-linear-algebra/src/lib.rs",
+      "sha256": "67b678cf6ebad3cf9bb19137a41478b1d75984c7c7fa2d8f0527b14e3cb3a9fb",
+      "bytes": 1300
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-linear-algebra/src/matrix.rs",
+      "sha256": "175f7c73e2d38a0ed6529cc6aa85e5ef79369b2420e5c6b17a8d78e064fc05ad",
+      "bytes": 9345
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/Cargo.toml",
+      "sha256": "1d660e9d7902684b27fa5413d6d10d3666ece08a0280da64334ec86a27dfa291",
+      "bytes": 456
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/berry.rs",
+      "sha256": "a880c054cc2a1674be1f1dc599f369e76d93eb6a25422d815d3f1592815c0446",
+      "bytes": 6109
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/brillouin.rs",
+      "sha256": "777976a0eac172ca06bf7cfbfda895081d80a65d5033c7c735375763eb5eabd9",
+      "bytes": 13534
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/error.rs",
+      "sha256": "b4ecbedf43da563dac88234d0ff58b543a09759cf3ddab1f9a536a16d67bf8bc",
+      "bytes": 839
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/hopping.rs",
+      "sha256": "c4f181fc8d48b5d9c2c5c3a4bbdcfe9cec8fcf7d8478fa39cd33ed3930df5d12",
+      "bytes": 37455
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/kpath.rs",
+      "sha256": "69b16f035a17e51e90f9dbeb8a0adbd5b4570a7453f7d49cc1e44babf7d47cf1",
+      "bytes": 36083
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/legacy.rs",
+      "sha256": "e8793c4762a97ba63a117c7c862bf1ba0bb309c59a4f78c9e0cc9c8c713cea4c",
+      "bytes": 5054
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/lib.rs",
+      "sha256": "fd6cfa9004cfc5c5813371aaf8c747b2fe615ff04dc3fd1392c97704ec7d52b9",
+      "bytes": 2034
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/spectral.rs",
+      "sha256": "369d84d449820058ca1d8a242dabfacd39e5be0a6594c8dc5dd8660f4bc0e48a",
+      "bytes": 4388
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/topology.rs",
+      "sha256": "f4cfaece61bf57b63e7b25358ca48fedc2ffe84555d619d791d99ce4b3f44cb8",
+      "bytes": 30050
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/wannier_io.rs",
+      "sha256": "75abce2beb52e3567aad67b66e206ec997a259c4b3ed72d5150680788c237969",
+      "bytes": 11951
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-properties/src/wilson.rs",
+      "sha256": "a6bdda558ccc48eb877ceab38bf2890dca950ee0931b0cd9a5e1421a91d4c456",
+      "bytes": 11941
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/Cargo.toml",
+      "sha256": "645a12b4d5a1df13e2d18f8d3d7fabd9d5dace7abbf85a969193797d57938820",
+      "bytes": 1215
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/bindings/abstract_group_callbacks.rs",
+      "sha256": "ac05198ee7cbfad1bbe21d5fa1bc69774951698fe19a490ef4809b27b4c93eb9",
+      "bytes": 2701
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/bindings/abstract_group_types.rs",
+      "sha256": "ff4530e30d0030379d98681a8b8354a34108235dd6f4151f666c07a581c1d4c1",
+      "bytes": 5944
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/bindings/core_dispatch.rs",
+      "sha256": "42217f42707112a626bf4f6a3581a71145ec5093f6f663e5f8adec462427ab0a",
+      "bytes": 4504
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/bindings/data.rs",
+      "sha256": "152710cc9bd7d967fde4d1c348ed9dd2234e2047ec3e804acbde3bd557662e32",
+      "bytes": 14753
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/bindings/shared.rs",
+      "sha256": "36136f74c41e2e02e6d090a23baf2719984c3a8909cd34b1c1b55b923c575afc",
+      "bytes": 1280
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/fitting_boundary.rs",
+      "sha256": "84d0d07a2ffa26a07e381d32eef581a0865b3a1480521fce7c13f633f12730b0",
+      "bytes": 15389
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/crystal_geometry.rs",
+      "sha256": "45b8f09d6e667104fa1c98986653a8445115293f6c2584231ee2708ec92b1b9a",
+      "bytes": 29926
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/crystal_geometry_support.rs",
+      "sha256": "8042118b94244f58c89330c62a117986ebcbabc13f8a166968701c09a5098110",
+      "bytes": 11028
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/dispatch.rs",
+      "sha256": "af74d0d4dd0d24387b12514e96a3da3e08df460ccfdb62a9dae92731b8269073",
+      "bytes": 14744
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/lattice_input.rs",
+      "sha256": "73d20ff84dee446f89737a502dc631e3ba3d1d3f80b9eabfacf45c1b48d001cd",
+      "bytes": 16388
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/model_compiler.rs",
+      "sha256": "ace435e6f8d1945c3bb13ce7ee363a6302d616983b4b0910018991cd8634372c",
+      "bytes": 57891
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/physical_representation_support.rs",
+      "sha256": "ff3363f70ff10f376ecc1c1d610827486f19f5123f573700759ca50d4590834b",
+      "bytes": 24533
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/properties.rs",
+      "sha256": "aa980473929e368d98c1116fde5c81ebaabebd6d70d7432f207368d25e535aed",
+      "bytes": 20389
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/shared.rs",
+      "sha256": "05ffd142b1a6503878c49a24919d369d336259ba34f3d6ba2427c351cdd07f8f",
+      "bytes": 18496
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/symmetry_support.rs",
+      "sha256": "c11bad988eecae4069b9acfa69c7a0aee3598d5d8e97779decf42bdff67f66aa",
+      "bytes": 7123
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/tight_binding.rs",
+      "sha256": "dca162c43c0f5d2d409577c94cee1bfbc49ff592b79ba08b7a19c55f1d779d76",
+      "bytes": 56420
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary/tight_binding_support.rs",
+      "sha256": "b821f40ecdf7d7605fc5da301071b13793db2a67490b8889497718370d219664",
+      "bytes": 25080
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/geometry_boundary.rs",
+      "sha256": "342a160303d852fea436c6795d7dcfa19949b8e8558515c06fe8ff2d591a876b",
+      "bytes": 727
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/lib.rs",
+      "sha256": "74a2da7459aa27d940b5131b9a7f209557d729c0212dc5c0fd7a1c67e9263b23",
+      "bytes": 4946
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/linear_algebra_boundary.rs",
+      "sha256": "4e61ed4bc43ae2a425d4a5b4665400e12be9b54a6eacdb12279b05ebb3fedd56",
+      "bytes": 19915
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/physical_boundary.rs",
+      "sha256": "2d6ccd6f6c148218dfcc6896ec07e0efcf9f5298fa00c7e7ba410c3eb0bb1fa0",
+      "bytes": 5195
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/properties_boundary.rs",
+      "sha256": "694268d651dccc0d2ceeba0e3ac5b975014c703c9e097727ffd1f98cb04e7c66",
+      "bytes": 42037
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/representation_boundary.rs",
+      "sha256": "fe53ab005c1553e3bc107dbeac766fe21165b679e4decd85339f2ad438b8d95b",
+      "bytes": 13247
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-python/src/tight_binding_boundary.rs",
+      "sha256": "0e5d04c9d7e2f45c517f86ec73277c37cd09c24a2ec91a2df18ed2cc54746865",
+      "bytes": 5905
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/Cargo.toml",
+      "sha256": "5b86f31031c6fd00d1cd2dc309e4fd182784bd05620a4014f525990a94f95bef",
+      "bytes": 541
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/error.rs",
+      "sha256": "da18f3ccf3e65554a4d8bfb372280d0ae1d802edcc36208b7f0589eed250c3d3",
+      "bytes": 1172
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/lib.rs",
+      "sha256": "fa445d2b5c41a722dde07814fc3872e4d106fac123cfaa703c9fb587807a1d1f",
+      "bytes": 7404
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/physical.rs",
+      "sha256": "960d7fe97a2a8555de77084275ee47f55b3bce4651536c812cb9bd4e7098da87",
+      "bytes": 5190
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/representation/direct_product_representation.rs",
+      "sha256": "dc73c2eb1f62eb6ce2cc0a98ff4dc321261aa41189f90f999ddb9a8ed0f05be5",
+      "bytes": 2090
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/representation/induced_representation.rs",
+      "sha256": "498edf16bb5f690aaf579278ba6077ff4ac530ab28bf8ec67a9d3ecf11ecf8f8",
+      "bytes": 13400
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/representation/representation_data.rs",
+      "sha256": "cccda1facc7f284003787ea1ae7eadc8122fa4fba70d9c068c06b619208f219a",
+      "bytes": 4460
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/representation.rs",
+      "sha256": "5b35c44809f21a39556aed0396138362cd3156cff0e1be6a6799da76422e0e47",
+      "bytes": 462
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-representation/src/symmetry.rs",
+      "sha256": "ca74b202bf26a36e45bdb267c167b6656073ad7cbecf7306333dcde8d251f4aa",
+      "bytes": 2085
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/Cargo.toml",
+      "sha256": "0f5eb660b794fd9d7fd1c9ad5c11017f2a030baf3d93acc380050c8bd4ff7df6",
+      "bytes": 582
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/basis/basis_catalog.rs",
+      "sha256": "3c6a7acb2ca573eb47262adbb0d1046529dc4a867cf0696fe988ba7b11d57b78",
+      "bytes": 4134
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/basis/function_basis_representation.rs",
+      "sha256": "a45b7de49f1f97992705f6f6797de0c19dccb8fd16d26a25e95b0b9c6d7475ad",
+      "bytes": 29828
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/basis/spin_representation.rs",
+      "sha256": "49206aac2b0f905453ca14e85bef04481ca2c80c48c59291adc29b4cff20124f",
+      "bytes": 11560
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/basis.rs",
+      "sha256": "96bda9747e5bbc3ce7769ec6381b7f524f9b92338acf1a17ceb7b4ec6ad371f6",
+      "bytes": 6839
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/lib.rs",
+      "sha256": "778acb24d52d92d8856b079ec65a33b6129c4efa5acdae33749cea3de3853b5d",
+      "bytes": 7094
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/symmetry/magnetic_group_input.rs",
+      "sha256": "af1d73dd4125be4a3bc924af69b8733035c237fa4f90488c78fa9e8e8eff6e92",
+      "bytes": 7465
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/symmetry/spin_space_group_input.rs",
+      "sha256": "0c98ecf8c1765a0cc0399ab53fa5bb90f9227221495ba5353850fc3c52455fab",
+      "bytes": 3510
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-symmetry/src/symmetry/symmetry_algebra.rs",
+      "sha256": "f49a221ff65d7f00a52229879b4f41a8e1c3392ec1faf5b0a41ad23f6e36f77c",
+      "bytes": 17914
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/Cargo.toml",
+      "sha256": "219133b62b467a349ce1b14321aeee311a83168effa0533f87f9a918cad94480",
+      "bytes": 845
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/src/band_trace.rs",
+      "sha256": "7f075d7f4a4a14e17dd4316a15328430c57107b2ad1bbd865dfe65efd1ea1c48",
+      "bytes": 13407
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/src/bond_constraint.rs",
+      "sha256": "5c8581433b620a85e80d75cfc678c1328128e548c2a88091a3cb5bcf9c01aa3f",
+      "bytes": 18665
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/src/bond_orbit.rs",
+      "sha256": "156f567725da5414d207669e17ec58cbed8fd6b90769384399a5993435be90b9",
+      "bytes": 13887
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/src/lib.rs",
+      "sha256": "4c11ae13e371c4fe7799b67fd2a4f6d8d0c79f9b82c9a1c3c8664679728f5c77",
+      "bytes": 10833
+    },
+    {
+      "path": "Python-Rust-Web/rust/crates/magnetictb-tight-binding/src/solved_model.rs",
+      "sha256": "df7724857d455e40755ef0399db938fb31829cce21dbb1d81239c899119f44d4",
+      "bytes": 19268
+    },
+    {
+      "path": "README.md",
+      "sha256": "0d0957ffc828e6ea65552a96affa6bc09ca78678006fe0fc3433747e307f30aa",
+      "bytes": 7396
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "176725138e8c7fbf0da1d8e20160e537cc4b580ee538f95afdd1b8c26eee363a",
+      "bytes": 6682
+    }
+  ]
+}

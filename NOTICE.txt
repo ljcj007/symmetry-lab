@@ -19,7 +19,8 @@ Source files, repository tree identifiers, numerical precision and transformatio
 are documented in dist/data/provenance.json. Original notices and license text
 are retained. Dataset extraction and browser code were prepared on 2026-10-14.
 
-The JavaScript numerical implementation is an independent browser adaptation.
+The Python numerical implementation and earlier JavaScript regression reference
+are independent browser adaptations.
 It is not an official release or endorsement by the upstream author. Numerical
 representation identifiers and bases are not claimed to be the original BC,
 CDML or Bilbao labels or gauges. No Wolfram kernel or binary .mx database is
@@ -40,3 +41,27 @@ Relevant original software papers:
 This software and data are supplied under the applicable GPL terms, without
 warranty. See the included license texts for the complete terms. This notice
 does not replace or remove the upstream license notices.
+
+Additional projects integrated on 2026-10-15:
+
+3. MagneticTB — https://github.com/zhangzeyingvv/MagneticTB
+   Commit 3575e8356af282c9d9447bfbf03e282ef3bac77d
+   GNU GPL version 3 (GPL-3.0-only).
+   See upstream/MagneticTB and dist/licenses/MagneticTB-LICENSE.txt.
+   NumPy adaptation of symmetry-constrained tight-binding workflow and numerical
+   band/topology analysis. It does not load the upstream native Rust extension
+   and does not implement all symbolic, fitting or spin-space-group interfaces.
+
+4. CrystKit — https://github.com/hongyi-zhao/CrystKit
+   Commit 0f4f85e31d8166bb5a3e3474287449fa5572d5fd
+   GNU GPL version 2 or (at your option) any later version.
+   See upstream/CrystKit and dist/licenses/CrystKit-LICENSE.txt.
+   Python adaptation of exact affine and matrix group tools with certified
+   three-dimensional reference matching. CARAT catalogs and general GAP/PCP
+   algorithms are not included. This combined derivative is under GPL version 3.
+
+Upstream copyright and authorship notices are preserved in the reference source
+files. Detailed source hashes and scope are in dist/data/python-provenance.json.
+Pyodide and numerical dependencies are downloaded from their pinned public CDN
+packages at runtime and retain their own upstream licenses. No calculation data
+is sent to that CDN. Python modules also run locally with CPython.

@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "referenceAnalyses": 130,
+  "inducedRepresentations": 330,
+  "tensorProducts": 24,
+  "allGroupScan": 11530,
+  "maxMatrixLawError": 5.66187827407963e-14,
+  "elapsedSeconds": 223.07,
+  "engine": "dist/python/symmetry_core.py",
+  "numpyVersion": "2.5.2",
+  "sourceSha256": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0",
+  "groups": {
+    "ordinary": 230,
+    "magnetic": 1651,
+    "magneticPoint": 122
+  },
+  "momenta": [
+    "Gamma",
+    "(1/2,1/2,1/2)",
+    "(0.173,0.271,0.389)"
+  ],
+  "magneticPointMomenta": [
+    "Gamma"
+  ],
+  "spins": [
+    "single-valued",
+    "double-valued"
+  ]
+}

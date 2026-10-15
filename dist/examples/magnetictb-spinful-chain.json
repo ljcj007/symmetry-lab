@@ -1,0 +1,152 @@
+{
+  "action": "model",
+  "lattice": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "sites": [
+    {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "orbitals": [
+        "sup",
+        "sdn"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "antiunitary": true
+    }
+  ],
+  "periodic": [
+    true,
+    false,
+    false
+  ],
+  "shell_count": 2,
+  "parameters": [
+    0,
+    -1
+  ],
+  "path": [
+    {
+      "label": "−X",
+      "k": [
+        -0.5,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Γ",
+      "k": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "X",
+      "k": [
+        0.5,
+        0,
+        0
+      ]
+    }
+  ],
+  "points_per_segment": 40
+}

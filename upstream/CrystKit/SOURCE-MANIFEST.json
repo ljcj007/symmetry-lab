@@ -1,0 +1,49 @@
+{
+  "repository": "https://github.com/hongyi-zhao/CrystKit",
+  "commit": "0f4f85e31d8166bb5a3e3474287449fa5572d5fd",
+  "retrieved": "2026-10-15",
+  "license": "GPL-2.0-or-later",
+  "snapshot_kind": "Selected unmodified reference sources; not a complete upstream installation. Large databases, binaries and web assets are omitted.",
+  "files": [
+    {
+      "path": "gap/CrystKit.gd",
+      "sha256": "d069f4f7c24215325b312a6ae5c70610f45920af97cc55a3d2793206598cfccb",
+      "bytes": 1454
+    },
+    {
+      "path": "gap/CrystKit.gi",
+      "sha256": "ecc8e070bae5d10944842b23694e4ddb9b680d66782c91e8c7ceda0bf882f1e8",
+      "bytes": 45477
+    },
+    {
+      "path": "gap/names.g",
+      "sha256": "7fbaadee98bbaf96aaf464d4a078668ddd06a4c5ef201aa8cc6fe58f6b129af0",
+      "bytes": 179747
+    },
+    {
+      "path": "init.g",
+      "sha256": "517b8448976bb1da4a713f2fa2180113e0682fd0ded695019961657f76c38128",
+      "bytes": 704
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "ecc4096d430349272fe45dcbbe7a5d0c1d4dbdb9d57099ffe1f0d05a2708ff5e",
+      "bytes": 15940
+    },
+    {
+      "path": "PackageInfo.g",
+      "sha256": "704b28a614a6a4b729da5585709b0b4dd0bf2f9a9e2dd5b4dc7105e3805524b0",
+      "bytes": 2922
+    },
+    {
+      "path": "read.g",
+      "sha256": "41e5d04e08eec9e4a8c4bddc4592b2be3ee42277b0e5db1c4d574a0a132c43b5",
+      "bytes": 997
+    },
+    {
+      "path": "README.md",
+      "sha256": "789e1ea9132d5f58a7b7e155b14b84496e7fad9696cf73c0bca26934ad03509e",
+      "bytes": 3559
+    }
+  ]
+}

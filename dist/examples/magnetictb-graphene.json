@@ -1,0 +1,1285 @@
+{
+  "action": "model",
+  "lattice": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      -0.5,
+      0.8660254037844386,
+      0
+    ],
+    [
+      0,
+      0,
+      3
+    ]
+  ],
+  "sites": [
+    {
+      "position": [
+        0.3333333333333333,
+        0.6666666666666666,
+        0
+      ],
+      "orbitals": [
+        "pz"
+      ],
+      "label": "C"
+    }
+  ],
+  "operations": [
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": false
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          -1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    },
+    {
+      "rotation": [
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "antiunitary": true
+    }
+  ],
+  "periodic": [
+    true,
+    true,
+    false
+  ],
+  "shell_count": 2,
+  "parameters": [
+    0,
+    -1
+  ],
+  "path": [
+    {
+      "label": "Γ",
+      "k": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "K",
+      "k": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0
+      ]
+    },
+    {
+      "label": "M",
+      "k": [
+        0.5,
+        0,
+        0
+      ]
+    },
+    {
+      "label": "Γ",
+      "k": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "points_per_segment": 40,
+  "character_k": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "retrieved": "2026-10-15",
+  "runtime": "Real Python in Pyodide Web Workers; no computation backend",
+  "repositories": [
+    {
+      "name": "MagneticTB",
+      "repository": "https://github.com/zhangzeyingvv/MagneticTB",
+      "commit": "3575e8356af282c9d9447bfbf03e282ef3bac77d",
+      "retrieved": "2026-10-15",
+      "license": "GPL-3.0-only",
+      "source_snapshot": "upstream/MagneticTB",
+      "source_manifest": "upstream/MagneticTB/SOURCE-MANIFEST.json",
+      "license_file": "dist/licenses/MagneticTB-LICENSE.txt",
+      "file_count": 105,
+      "total_bytes": 1207124
+    },
+    {
+      "name": "CrystKit",
+      "repository": "https://github.com/hongyi-zhao/CrystKit",
+      "commit": "0f4f85e31d8166bb5a3e3474287449fa5572d5fd",
+      "retrieved": "2026-10-15",
+      "license": "GPL-2.0-or-later",
+      "source_snapshot": "upstream/CrystKit",
+      "source_manifest": "upstream/CrystKit/SOURCE-MANIFEST.json",
+      "license_file": "dist/licenses/CrystKit-LICENSE.txt",
+      "file_count": 8,
+      "total_bytes": 250800
+    }
+  ],
+  "modules": [
+    {
+      "path": "dist/python/symmetry_core.py",
+      "upstream": [
+        "SpaceGroupIrep",
+        "MSGCorep"
+      ],
+      "license": "GPL-3.0-only",
+      "implementation": "NumPy port of all previously shipped website computations; independent browser numerical adaptation, not complete upstream Wolfram API compatibility",
+      "validation": "dist/data/python-symmetry-validation.json",
+      "coverage": [
+        "projective irreducible representations",
+        "Wigner a/b/c corepresentations",
+        "full k-star induction",
+        "arbitrary k-star tensor decomposition",
+        "vasp2trace/MagVasp2trace parsing and character matching"
+      ],
+      "limitations": [
+        "numerical D/C labels",
+        "explicit BC primitive coordinates required",
+        "no symbolic k lines",
+        "no automatic general POSCAR/CIF to BC conversion"
+      ]
+    },
+    {
+      "path": "dist/python/magnetictb_browser.py",
+      "upstream": "MagneticTB",
+      "license": "GPL-3.0-only",
+      "implementation": "Independent NumPy implementation of numerical symmetry-constrained tight-binding, band and topology workflows; not API-complete upstream Rust/Python replacement."
+    },
+    {
+      "path": "dist/python/crystkit_browser.py",
+      "upstream": "CrystKit",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Selected exact crystallographic algorithms ported from GAP with an independent rational affine-group implementation; no CARAT database or unbounded normalizer oracle.",
+      "implemented": [
+        "Exact rational affine multiplication, inversion, basis/origin changes and quotient closure",
+        "Finite quotient minimum generators, solvability, derived series, point orbits and stabilizers",
+        "Invariant Gram form and exact symmorphic origin congruences (73 of 230 3D space groups)",
+        "Arbitrary rational affine-generator simplification via Schreier translations, Hermite lattice basis, orientation-preserving Gram LLL and origin rationalization",
+        "Certified 3D database identification with exact origin shifts and optional orientation-preserving signed-permutation bases",
+        "Verified affine equivalence under supplied or signed-permutation lattice bases",
+        "SNoT orbits modulo origin shifts under supplied point-group normalizer generators",
+        "Rational finite-matrix-group conjugacy with verified certificates and explicit inconclusive search status",
+        "Prime-power inverse Euler totient and new/cumulative finite element orders of GL(n,Z)",
+        "Contiguous direct-sum matrix blocks and affine coordinate expressions"
+      ],
+      "not_implemented": [
+        "Native CARAT Name, Reverse_name, Q_catalog and exhaustive 4D–6D classification",
+        "Unbounded GL(n,Z) normalizer computation and complete affine-isomorphism classification",
+        "Full group-extension/cohomology enumeration",
+        "Certified minimum generating sets of infinite affine groups",
+        "General higher-dimensional enantiomorphism classification"
+      ],
+      "limits": {
+        "affine_dimension": "1–6, rational coordinates",
+        "default_quotient_order_limit": 384,
+        "default_matrix_group_order_limit": 192,
+        "finite_element_order_dimension_limit": 48,
+        "generator_indices": "zero based; minimum generators refer to the finite quotient",
+        "identification": "Positive matches are certified; no_match_in_search is not a nonisomorphism proof",
+        "matrix_conjugacy": "Bounded image assignments and invertible-intertwiner search report inconclusive when necessary"
+      },
+      "validation": "13 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs"
+    }
+  ],
+  "coordinate_conventions": {
+    "MagneticTB": "Row lattice vectors; fractional direct positions and reciprocal k; rotations act on columns; periodic orbital gauge H_ij(k)=sum_R t_ij(R) exp(2πi k·R).",
+    "CrystKit": "Rational column coordinates; x_old=B*x_new+origin for basis changes."
+  },
+  "citations": [
+    {
+      "project": "MagneticTB",
+      "doi": "10.1016/j.cpc.2021.108153",
+      "arxiv": "https://arxiv.org/abs/2105.09504"
+    }
+  ],
+  "notes": [
+    "CrystKit original sources remain GPL-2.0-or-later; GPL-3 compatibility uses the original later-version permission.",
+    "Existing SpaceGroupIrep and MSGCorep provenance remains in dist/data/provenance.json."
+  ],
+  "pythonRuntime": {
+    "implementation": "Pyodide",
+    "version": "314.0.7",
+    "indexURL": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+    "dependencies": {
+      "numpy": "2.4.6",
+      "sympy": "1.14.0"
+    },
+    "execution": "module Web Worker, single task at a time, no input transfer to backend"
+  }
+}
