@@ -1,0 +1,16 @@
+{
+  "action": "model",
+  "lattice": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+  "sites": [{"position": [0, 0, 0], "orbitals": ["s"]}],
+  "periodic": [true, false, false],
+  "operations": [
+    {"rotation": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]},
+    {"rotation": [[1, 0, 0], [0, 1, 0], [0, 0, 1]], "antiunitary": true}
+  ],
+  "shell_count": 2,
+  "parameters": ["epsilon", "t"],
+  "k": ["q", 0, 0],
+  "characteristic_polynomial": true,
+  "eigenvalues": true,
+  "numeric_substitutions": {"epsilon": 0, "t": -1}
+}

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "retrieved": "2026-10-15",
   "runtime": "Real Python in Pyodide Web Workers; no computation backend",
   "repositories": [
@@ -26,6 +26,16 @@
       "license_file": "dist/licenses/CrystKit-LICENSE.txt",
       "file_count": 8,
       "total_bytes": 250800
+    },
+    {
+      "name": "CARAT",
+      "repository": "https://github.com/lbfm-rwth/carat",
+      "commit": "65619d6ae4ec911c8cf7aa3c9fa09866a0d36ab9",
+      "license": "GPL-2.0-or-later",
+      "source_snapshot": "upstream/CARAT",
+      "source_manifest": "upstream/CARAT/PROVENANCE.json",
+      "license_file": "dist/licenses/CARAT-LICENSE.txt",
+      "catalog_manifest": "dist/data/carat/manifest.json"
     }
   ],
   "modules": [
@@ -50,19 +60,21 @@
         "explicit BC primitive coordinates required",
         "no symbolic k lines",
         "no automatic general POSCAR/CIF to BC conversion"
-      ]
+      ],
+      "sha256": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0"
     },
     {
       "path": "dist/python/magnetictb_browser.py",
       "upstream": "MagneticTB",
       "license": "GPL-3.0-only",
-      "implementation": "Independent NumPy implementation of numerical symmetry-constrained tight-binding, band and topology workflows; not API-complete upstream Rust/Python replacement."
+      "implementation": "Independent NumPy implementation of numerical symmetry-constrained tight-binding, band and topology workflows; not API-complete upstream Rust/Python replacement.",
+      "sha256": "25b199cc36416676ba957066e79b560a6ef71e5890f7fac37d42bffddd220eb3"
     },
     {
       "path": "dist/python/crystkit_browser.py",
       "upstream": "CrystKit",
       "license": "GPL-3.0-or-later",
-      "implementation": "Selected exact crystallographic algorithms ported from GAP with an independent rational affine-group implementation; no CARAT database or unbounded normalizer oracle.",
+      "implementation": "Exact base crystallographic algorithms. See crystkit_extensions.py and carat_browser.py for added cohomology, normalizer proof cases, infinite generation and high-dimensional Q catalogue.",
       "implemented": [
         "Exact rational affine multiplication, inversion, basis/origin changes and quotient closure",
         "Finite quotient minimum generators, solvability, derived series, point orbits and stabilizers",
@@ -76,11 +88,8 @@
         "Contiguous direct-sum matrix blocks and affine coordinate expressions"
       ],
       "not_implemented": [
-        "Native CARAT Name, Reverse_name, Q_catalog and exhaustive 4D–6D classification",
-        "Unbounded GL(n,Z) normalizer computation and complete affine-isomorphism classification",
-        "Full group-extension/cohomology enumeration",
-        "Certified minimum generating sets of infinite affine groups",
-        "General higher-dimensional enantiomorphism classification"
+        "General unbounded GL(n,Z) normalizer and Q-to-Z classification",
+        "Full high-dimensional affine-isomorphism decision procedure"
       ],
       "limits": {
         "affine_dimension": "1–6, rational coordinates",
@@ -91,7 +100,76 @@
         "identification": "Positive matches are certified; no_match_in_search is not a nonisomorphism proof",
         "matrix_conjugacy": "Bounded image assignments and invertible-intertwiner search report inconclusive when necessary"
       },
-      "validation": "13 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs"
+      "validation": "13 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs",
+      "extended_by": [
+        "crystkit_extensions.py",
+        "carat_browser.py"
+      ],
+      "sha256": "a65901226e3127dd0bb906206eb58e6c5f330e8035e55e39039e27688f9c39e6"
+    },
+    {
+      "path": "dist/python/carat_browser.py",
+      "upstream": "CARAT",
+      "license": "GPL-3.0-only",
+      "implementation": "Independent exact Python classification with the complete official 1–6D Q catalogue",
+      "coverage": [
+        "8329 exact Q representatives with presentations and source hashes",
+        "Exact finite integral matrix groups, characteristic invariants and rational central idempotents",
+        "Certified rational conjugators and explicit integral-unimodular positive certificates",
+        "All invariant column-HNF sublattices within a requested finite index",
+        "Selected integral representative links to exact cohomology and affine orbits"
+      ],
+      "limitations": [
+        "General Q-to-Z and all high-dimensional Z representatives not implemented",
+        "Official affine/Z counts are metadata, not generated representative lists",
+        "Bounded conjugator search can be inconclusive",
+        "Browser time and memory bounds apply"
+      ],
+      "validation": "scripts/test-python-carat.py",
+      "sha256": "30dc096bf0af4a2b71ddf9f5d4ad6e1ca12f24f0a3b291bd48e175c10a6e23b0"
+    },
+    {
+      "path": "dist/python/crystkit_extensions.py",
+      "upstream": "CrystKit",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Exact integer Cayley relation lattices and Smith transformations",
+      "coverage": [
+        "Complete H1(P,Q^d/Z^d) for a fixed integral point group, modulo every origin shift",
+        "Certified full normalizers for scalar groups, integral diagonal sign blocks, and unique invariant quadratic forms",
+        "Normalizer extension orbits with explicit completeness and orientation split",
+        "Infinite space-group generation via Schreier translation lattice certificate",
+        "Abelianization lower bound and certified upper bound; minimum only when bounds coincide",
+        "Exact origin-congruence affine comparison for supplied bases"
+      ],
+      "limitations": [
+        "Other normalizers are finite metric subgroups, explicitly incomplete",
+        "Different integral representations in one Q class are not automatically enumerated",
+        "Candidate generator searches may establish bounds only"
+      ],
+      "validation": "scripts/test-python-crystkit-extensions.py",
+      "sha256": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d"
+    },
+    {
+      "path": "dist/python/symbolic_core.py",
+      "upstream": "MagneticTB",
+      "license": "GPL-3.0-only",
+      "implementation": "Independent exact SymPy constraints, rational-function and algebraic domains; no float-to-symbolic reconstruction",
+      "coverage": [
+        "Restricted AST mathematical expression parsing",
+        "Exact expression/matrix algebra, rank conditions and cyclotomic fields",
+        "Exact Hermitian and unitary/antiunitary hopping constraints",
+        "Closed polynomial orbital bases including f orbitals",
+        "Symbolic Bloch and finite-degree k.p Hamiltonians, small exact spectra",
+        "Explicit parameter substitution bridge to numerical bands"
+      ],
+      "limitations": [
+        "Not a complete upstream API compatibility layer",
+        "General parameter ranks require conditions and exceptional-value recomputation",
+        "Symbolic geometry requires explicit closed bonds",
+        "No spin-space-group catalogue, DFT fitting or general symbolic SG/MSG representation standardization"
+      ],
+      "validation": "scripts/test-python-symbolic.py",
+      "sha256": "48adb8cd697f0d5807611b119cad42cd66ddeb78e37ce121ff85701f142161b9"
     }
   ],
   "coordinate_conventions": {
@@ -118,5 +196,23 @@
       "sympy": "1.14.0"
     },
     "execution": "module Web Worker, single task at a time, no input transfer to backend"
-  }
+  },
+  "updated": "2026-10-16",
+  "shared_api": {
+    "module": "dist/python/browser_api.py",
+    "cli": "dist/python/cli.py",
+    "tools": [
+      "analyze",
+      "induce",
+      "product",
+      "match_bands",
+      "magnetictb",
+      "crystkit",
+      "symbolic",
+      "carat",
+      "crystkit_ext"
+    ],
+    "contract_test": "scripts/test-python-api.py"
+  },
+  "exactValidation": "dist/data/exact-python-validation.json"
 }

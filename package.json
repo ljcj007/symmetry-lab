@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node scripts/test-engine.mjs && node scripts/test-trace.mjs && node scripts/test-induction.mjs && node scripts/test-magnetic-induction.mjs && node scripts/test-python-client.mjs",
-    "test:python": "python scripts/test-python-symmetry.py && python scripts/test-python-magnetictb.py && python scripts/test-python-crystkit.py"
+    "test:python": "python scripts/test-python-symmetry.py && python scripts/test-python-magnetictb.py && python scripts/test-python-crystkit.py && python scripts/test-python-carat.py && python scripts/test-python-symbolic.py && python scripts/test-python-crystkit-extensions.py && python scripts/test-python-api.py"
   },
   "license": "GPL-3.0-only"
 }

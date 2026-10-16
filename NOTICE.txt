@@ -57,11 +57,19 @@ Additional projects integrated on 2026-10-15:
    GNU GPL version 2 or (at your option) any later version.
    See upstream/CrystKit and dist/licenses/CrystKit-LICENSE.txt.
    Python adaptation of exact affine and matrix group tools with certified
-   three-dimensional reference matching. CARAT catalogs and general GAP/PCP
-   algorithms are not included. This combined derivative is under GPL version 3.
+   three-dimensional reference matching. The 2026-10-16 extension includes CARAT Q catalogs and exact
+   cohomology; it is not a complete GAP/PCP compatibility layer. This combined derivative is under GPL version 3.
 
 Upstream copyright and authorship notices are preserved in the reference source
 files. Detailed source hashes and scope are in dist/data/python-provenance.json.
 Pyodide and numerical dependencies are downloaded from their pinned public CDN
 packages at runtime and retain their own upstream licenses. No calculation data
 is sent to that CDN. Python modules also run locally with CPython.
+
+5. CARAT — https://github.com/lbfm-rwth/carat
+   Commit 65619d6ae4ec911c8cf7aa3c9fa09866a0d36ab9
+   Exact Q-class catalogue extraction and independent Python classification.
+   GPL-2.0-or-later; original license: dist/licenses/CARAT-LICENSE.txt.
+   See upstream/CARAT and dist/data/carat/manifest.json for source and hashes.
+   Z-class/affine counts are upstream metadata, not a claim of complete Python
+   enumeration. Symbolic and group-extension additions use SymPy exact arithmetic.

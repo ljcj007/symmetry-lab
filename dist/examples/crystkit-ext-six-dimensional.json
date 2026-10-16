@@ -1,0 +1,9 @@
+{
+  "action": "extensions",
+  "point_generators": [
+    [[0, -1, 0, 0, 0, 0], [1, -1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0],
+     [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 1]]
+  ],
+  "include_operations": false,
+  "max_classes": 4096
+}

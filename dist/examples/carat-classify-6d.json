@@ -1,0 +1,9 @@
+{
+  "action": "classify",
+  "dimension": 6,
+  "generators": [
+    [[-1, 0, 0, 0, 0, 0], [0, -1, 0, 0, 0, 0], [0, 0, -1, 0, 0, 0], [0, 0, 0, -1, 0, 0], [0, 0, 0, 0, -1, -6], [0, 0, 0, 0, 0, 1]]
+  ],
+  "find_conjugator": true,
+  "max_attempts": 256
+}

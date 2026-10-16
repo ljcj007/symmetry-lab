@@ -1,0 +1,6 @@
+{
+  "action": "orbitals",
+  "polynomials": ["fz3", "fxz2", "fyz2", "fz(x2-y2)", "fxyz", "fx(x2-3y2)", "fy(3x2-y2)"],
+  "rotation": [[0, -1, 0], [1, 0, 0], [0, 0, 1]],
+  "orthonormalize": true
+}

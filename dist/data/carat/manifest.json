@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "source": "https://github.com/lbfm-rwth/carat",
+  "revision": "65619d6ae4ec911c8cf7aa3c9fa09866a0d36ab9",
+  "license": "GPL-2.0-or-later",
+  "archive_sha256": "dcba1c037aa1e448b4e9ebaa059c1e3e57acec004770700b93a1e8e08fae54b4",
+  "dimensions": [
+    {
+      "dimension": 1,
+      "q_classes": 2,
+      "z_classes": 2,
+      "affine_classes": 2,
+      "torsion_free": 1,
+      "unique_fingerprint_classes": 2,
+      "unique_full_characteristic_classes": 2,
+      "file": "q1.json.gz",
+      "bytes": 444,
+      "json_bytes": 1023,
+      "sha256": "5a392f90444ea5ee576a8f1e7d3e0ecdeb2810ab39895dbeda5fbec09fca38b9"
+    },
+    {
+      "dimension": 2,
+      "q_classes": 10,
+      "z_classes": 13,
+      "affine_classes": 17,
+      "torsion_free": 2,
+      "unique_fingerprint_classes": 10,
+      "unique_full_characteristic_classes": 10,
+      "file": "q2.json.gz",
+      "bytes": 1362,
+      "json_bytes": 5947,
+      "sha256": "f2db115274281ef79fce5e394556ff87190ee62fac0bb63eca96fb5713e83eb5"
+    },
+    {
+      "dimension": 3,
+      "q_classes": 32,
+      "z_classes": 73,
+      "affine_classes": 219,
+      "torsion_free": 10,
+      "unique_fingerprint_classes": 32,
+      "unique_full_characteristic_classes": 32,
+      "file": "q3.json.gz",
+      "bytes": 3922,
+      "json_bytes": 23393,
+      "sha256": "2d61ba89793dc5ca31f4514b5271f8b1c720be0c0c5870663d1f881da6a69393"
+    },
+    {
+      "dimension": 4,
+      "q_classes": 227,
+      "z_classes": 710,
+      "affine_classes": 4783,
+      "torsion_free": 74,
+      "unique_fingerprint_classes": 227,
+      "unique_full_characteristic_classes": 227,
+      "file": "q4.json.gz",
+      "bytes": 31622,
+      "json_bytes": 244477,
+      "sha256": "88cbc40c0ae4b61e2a7286e27e40455fc7789ec7a35e81a32f3b252fe0df0ab5"
+    },
+    {
+      "dimension": 5,
+      "q_classes": 955,
+      "z_classes": 6079,
+      "affine_classes": 222018,
+      "torsion_free": 1060,
+      "unique_fingerprint_classes": 955,
+      "unique_full_characteristic_classes": 955,
+      "file": "q5.json.gz",
+      "bytes": 144658,
+      "json_bytes": 1382466,
+      "sha256": "b0ef191672267c8295a5a52c11f09fb54b374f8955bbd95208aeed3a142d183a"
+    },
+    {
+      "dimension": 6,
+      "q_classes": 7103,
+      "z_classes": 85308,
+      "affine_classes": 28927915,
+      "torsion_free": 38746,
+      "unique_fingerprint_classes": 7067,
+      "unique_full_characteristic_classes": 7095,
+      "file": "q6.json.gz",
+      "bytes": 1467395,
+      "json_bytes": 16238026,
+      "sha256": "42984aef80310f32c829b231ce0565ba6878d76902f042da0dcb822f496795b6"
+    }
+  ],
+  "scope": {
+    "q_catalog": "Complete 1–6D official Q representatives and presentations.",
+    "z_affine_counts": "Official counts per Q class; these counts are not stored representatives.",
+    "classification": "Exact class invariants including rational central-idempotent traces; unique full-catalog matches or explicit rational conjugator certificates.",
+    "z_lattices": "Exact invariant sublattices up to requested index; no false assertion of complete GL(n,Z) classes."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-16",
+  "status": "passed",
+  "python": "3.13",
+  "sympy": "1.14.0",
+  "sources": {
+    "dist/python/carat_browser.py": "30dc096bf0af4a2b71ddf9f5d4ad6e1ca12f24f0a3b291bd48e175c10a6e23b0",
+    "dist/python/symbolic_core.py": "48adb8cd697f0d5807611b119cad42cd66ddeb78e37ce121ff85701f142161b9",
+    "dist/python/crystkit_extensions.py": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d",
+    "dist/python/browser_api.py": "dc8066c1779fc6d8a6c20e402e223dbdf634e9268478c9b05ddb85c9e51e840a"
+  },
+  "carat": {
+    "qRepresentatives": 8329,
+    "generatorDeterminants": 23523,
+    "presentationRelators": 63803,
+    "lowDimensionClassifications": 44,
+    "higherDimensionClassifications": 73,
+    "allFirstInvariantCollisionRepresentatives": 36
+  },
+  "symbolic": {
+    "tests": 27,
+    "cases": [
+      "exact cyclotomic arithmetic",
+      "Hamiltonian Hermiticity and symmetry covariance",
+      "safe parser",
+      "symbolic poles and generic-rank conditions",
+      "chain and SSH numerical band bridge",
+      "nonperiodic translation handling",
+      "real parameter assumptions"
+    ]
+  },
+  "crystkitExtensions": {
+    "tests": 15,
+    "existingSpaceGroups": 230,
+    "integralPointRepresentations": 73,
+    "wallpaperTypes": 17,
+    "sixDimensionalExampleExtensions": 81
+  },
+  "publicCLI": {
+    "tests": 4
+  },
+  "regression": {
+    "legacyJavaScript": "passed",
+    "pythonSymmetryAnalyses": 130,
+    "inducedRepresentations": 330,
+    "tensorProducts": 24,
+    "magnetictbTests": 19,
+    "crystkitTests": 13
+  },
+  "limits": "Finite tests and supported proof cases do not establish complete upstream API equivalence or general exhaustive Q-to-Z / affine classification."
+}

@@ -1,0 +1,9 @@
+{
+  "action": "kp",
+  "dimension": 2,
+  "degree": 2,
+  "operations": [
+    {"rotation": [[1, 0], [0, 1]], "representation": [[0, 1], [-1, 0]], "antiunitary": true},
+    {"rotation": [[0, -1], [1, 0]], "representation": [["(1-I)/sqrt(2)", 0], [0, "(1+I)/sqrt(2)"]]}
+  ]
+}
