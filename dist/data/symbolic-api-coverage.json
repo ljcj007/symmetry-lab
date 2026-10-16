@@ -1,0 +1,2858 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "module": "dist/python/symbolic_interfaces.py",
+  "scope": "Function-by-function inventory of public ::usage symbols in the listed three-project source files; includes options/data symbols. Coverage statuses describe mathematical workflows, not drop-in Mathematica compatibility.",
+  "all_upstream_apis_covered": false,
+  "counts": {
+    "partial_exact_workflow": 16,
+    "not_covered_by_symbolic_port": 259,
+    "existing_numerical_workflow": 15,
+    "partial_existing_workflow": 1,
+    "exact_workflow": 17
+  },
+  "sources": [
+    {
+      "project": "MagneticTB",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "sha256": "ff43e63177ecac03a01451af77e155d29f693cd205d10e278ed8b23583d582fa",
+      "public_usage_symbols": 102
+    },
+    {
+      "project": "MagneticTB",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "sha256": "561d0833e1acd99a42dec12676fcfb1372ccd051423e8ae6cbcaa18f7fe3fa66",
+      "public_usage_symbols": 6
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "sha256": "f7e500421f8576c2ae00f7f51e21cccf966329bdad18bbfb2b0a14cd7d06c23b",
+      "public_usage_symbols": 131
+    },
+    {
+      "project": "MSGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "sha256": "34593f57623ab25095d92b8c04e1c5077d816b7a1024895058797d7b7dc8dbf1",
+      "public_usage_symbols": 69
+    }
+  ],
+  "actions": [
+    "compile_cyclotomic",
+    "common_kernel",
+    "representation",
+    "intertwiner",
+    "projector",
+    "character_decompose",
+    "induce",
+    "wigner",
+    "symmetrize",
+    "seitz",
+    "gauge",
+    "representation_element",
+    "bloch_cocycle"
+  ],
+  "additional_exact_workflows": [
+    {
+      "action": "intertwiner",
+      "description": "Full complex or antiunitary real-linear intertwiner basis with exact invertible equivalence witnesses; bounded unsuccessful witness search is inconclusive."
+    },
+    {
+      "action": "projector",
+      "description": "Isotypic character projectors and complete matrix-unit algebra for supplied unitary irreps."
+    },
+    {
+      "action": "symmetrize",
+      "description": "Exact finite semilinear Reynolds projection at a supplied fixed momentum."
+    }
+  ],
+  "limits": {
+    "group_order": 64,
+    "projective_group_order": 32,
+    "representation_dimension": 8,
+    "induced_dimension": 24,
+    "cyclotomic_order": 240,
+    "cyclotomic_degree": 64,
+    "cyclotomic_matrix_width": 24
+  },
+  "remaining_symbolic_gaps": [
+    "Automatic exact BC-labelled little-group/corepresentation catalog at every k line and star",
+    "All continuous spin-space-group/session APIs and complete automatic symbolic geometry strata",
+    "Exact semilinear corepresentation tensor decomposition with all upstream labels",
+    "Universal parameter-space/branch stratification and unrestricted symbolic algebra"
+  ],
+  "inventory": [
+    {
+      "project": "MagneticTB",
+      "symbol": "init",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic",
+      "action": "model",
+      "scope": "Exact finite supplied symmetry/site/orbital input and symmetry-constrained Hermitian Hamiltonians. Complete discrete operation lists required; no upstream global-session, automatic spin-space catalog or continuous C_infty init parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "initfromrep",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic",
+      "action": "model",
+      "scope": "Exact finite supplied symmetry/site/orbital input and symmetry-constrained Hermitian Hamiltonians. Complete discrete operation lists required; no upstream global-session, automatic spin-space catalog or continuous C_infty init parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "unsymham",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symham",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic",
+      "action": "model",
+      "scope": "Exact finite supplied symmetry/site/orbital input and symmetry-constrained Hermitian Hamiltonians. Complete discrete operation lists required; no upstream global-session, automatic spin-space catalog or continuous C_infty init parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "basis",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "basisdict",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "kx",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "ky",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "kz",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "a",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "b",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "c",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "x",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "y",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "z",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "ops",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "braLatt",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "gray",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "grayrod",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "graylayer",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "typeI",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "typeIII",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "typeIV",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "bnsdict",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "ogdict",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "ognumdict",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "bondclassify",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symminfo",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symmetryops",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "atompos",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "reclatt",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "latt",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "wcc",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symmcompile",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "lattice",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "wyckoffposition",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symminformation",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "basisFunctions",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "repinformation",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "orbitalLabels",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "lattpar",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "debugQ",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "InitialBondShells",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "GenerateSymmetryGroup",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "RepresentationMode",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CurrentModelSession",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CompileMagneticTBInput",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic",
+      "action": "model",
+      "scope": "Exact finite supplied symmetry/site/orbital input and symmetry-constrained Hermitian Hamiltonians. Complete discrete operation lists required; no upstream global-session, automatic spin-space catalog or continuous C_infty init parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "brokenSymmetryInitRules",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symmetrizationHRInit",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "bandManipulate",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotRange",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "yTicks",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "bandplot",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "bands",
+      "scope": "Existing Python bands and website plots from explicit models/paths; no Mathematica plotting-option compatibility."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showband",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "bands",
+      "scope": "Existing Python bands and website plots from explicit models/paths; no Mathematica plotting-option compatibility."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "banddata",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "bands",
+      "scope": "Existing Python bands and website plots from explicit models/paths; no Mathematica plotting-option compatibility."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "standardKPath",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showCrystalStructure",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showBrillouinZone",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotWilsonLoop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotSurfaceSpectrum",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotBerryCurvature2D",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotBerryCurvature3D",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "plotRealSpaceWavefunction",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showSymmetryRepresentations",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "orbitalTable",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showHamiltonianBasis",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showHoppingParameters",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "pointMatrix",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "tokpathvasp",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "realham2d",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "hop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "readHR",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "hoppingData",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "transformHoppings",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "buildBlochHamiltonian",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "buildRealSpaceHamiltonian",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "buildSlabHamiltonian",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "surfaceGreenFunction",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "surfaceSpectralFunction",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "pointChernNumber",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "findGaplessPoints",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "wLoop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "berryph",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "z2path",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "wilsonLoop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "topology",
+      "scope": "Existing numerical isolated occupied-space transport; not universal exact symbolic invariants."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "berryPhase",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "topology",
+      "scope": "Existing numerical isolated occupied-space transport; not universal exact symbolic invariants."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "berryCurvature",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "magnetictb",
+      "action": "topology",
+      "scope": "Existing numerical isolated occupied-space transport; not universal exact symbolic invariants."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "getMSGElemFromMSGCorep",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "getTBBandCorep",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "partial_existing_workflow",
+      "tool": "match_bands",
+      "action": "match_bands",
+      "scope": "Existing numerical trace matching after explicit BC inputs; no exact automatic DFT-to-BC coordinate and symbol conversion."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "symhamII",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "gauge",
+      "scope": "Explicit fractional orbital centers and momentum; sign adapted to website positive Bloch Fourier convention, H_atomic,ij=sum_R t_ij(R)exp(+2pi i k.(R+tau_j-tau_i)). No global init session."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showbonds",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "GenerateGroup",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "getGenerator",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "showMSGWyckoff",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "msgop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "mlgop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "mrgop",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "texOutput",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic",
+      "action": "algebra",
+      "scope": "Exact result display includes LaTeX and sanitized presentation MathML."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "bandManipulateEig",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "fittingTB",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "vaspEig",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "compareBand",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CompileCyclotomicMatrices",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "compile_cyclotomic",
+      "scope": "Multiple dense matrices; exact rational/radical/root-of-unity expression frontend, common conductor <=240 and degree <=64. JSON schemas differ; structured upstream root_sum serialization is not accepted."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CyclotomicRREF",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "common_kernel",
+      "scope": "Exact RREF and common nullspace in a shared cyclotomic field. Use cyclotomic:true or order. Column kernel plus explicit kernel_rows. Maximum 32 blocks and 24 columns; no upstream adaptive sparse serialization parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CyclotomicNullSpace",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "common_kernel",
+      "scope": "Exact RREF and common nullspace in a shared cyclotomic field. Use cyclotomic:true or order. Column kernel plus explicit kernel_rows. Maximum 32 blocks and 24 columns; no upstream adaptive sparse serialization parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CyclotomicCommonKernel",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "common_kernel",
+      "scope": "Exact RREF and common nullspace in a shared cyclotomic field. Use cyclotomic:true or order. Column kernel plus explicit kernel_rows. Maximum 32 blocks and 24 columns; no upstream adaptive sparse serialization parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "CyclotomicCommonNullSpace",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "common_kernel",
+      "scope": "Exact RREF and common nullspace in a shared cyclotomic field. Use cyclotomic:true or order. Column kernel plus explicit kernel_rows. Maximum 32 blocks and 24 columns; no upstream adaptive sparse serialization parity."
+    },
+    {
+      "project": "MagneticTB",
+      "symbol": "RestoreCyclotomicExpression",
+      "source": "https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Core/NullSpace/CyclotomicNullSpace.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "compile_cyclotomic",
+      "scope": "Outputs exact polynomials in formal z and rational coefficient tensors with a specified embedding. No upstream object deserializer or automatic radical prettifier."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGSymText",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGSymTextBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGSymStd",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGSymBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "BCOrientation",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGSymScho",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showSGSym",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "PGinfo",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showPGinfo",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "JonesSymbol",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getJones",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "BravLatt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "iBravLatt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "BravLattSymb",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "BasicVectors",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "JonesTM",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSGLatt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkBasVec",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "RotMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkRotMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getRotMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getRotName",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getRotMatOfK",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "RotMatCart",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkRotMatOfK",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "TMspglibToBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getQandS",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGGenElem",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "BCHighSymKpt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showBCHSKpt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkBCHSKpt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "kBCcoord",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "WSCell3DMesh",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "findURange",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showBZDemo",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "keqmod",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "identifyBCHSKpt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "doubleKuMax",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "identifyBCHSKptBySG",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SeitzTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix Seitz products/inverses/powers and exact symbolic translations in dimensions 1..6; named rotation overloads are not reproduced."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "invSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix Seitz products/inverses/powers and exact symbolic translations in dimensions 1..6; named rotation overloads are not reproduced."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "powerSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix Seitz products/inverses/powers and exact symbolic translations in dimensions 1..6; named rotation overloads are not reproduced."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "RotTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "powerRot",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "invRot",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DRotTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "powerDRot",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "invDRot",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "CentExtTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "Bloch cocycles are implemented but enumeration and named multiplication of finite central extensions are not exposed as exact compatibility APIs."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "CentExtPower",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "Bloch cocycles are implemented but enumeration and named multiplication of finite central extensions are not exposed as exact compatibility APIs."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSpinRotOp",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSpinRotName",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SpinRotTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DSGSeitzTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DSGpowerSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DSGinvSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DSGCentExtTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DSGCentExtPower",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "rotAxisAngle",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getKStar",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "generateGroup",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "modone",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "seteq",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getHLGElem",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getLGElem",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSGElem",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "aCentExt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "bloch_cocycle",
+      "scope": "Exact symbolic k-dependent Bloch/spin cocycle from complete supplied little-cogroup representatives; no automatic BC group-number or k-name lookup."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getCentExt",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "Bloch cocycles are implemented but enumeration and named multiplication of finite central extensions are not exposed as exact compatibility APIs."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSGElemAndSQ",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "detPointGroup",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "reduceRep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "character_decompose",
+      "scope": "Exact ordinary/projective character reduction against supplied validated irreps; ordinary tensor products supported. Does not infer named catalog irreps."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "calcRep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "analyze",
+      "action": "analyze",
+      "scope": "Existing numerical projective irreps from the website catalog. No universal exact symbolic BC-labeled irrep catalog is claimed."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "str2Mulliken",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "Mulliken2str",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "str2GammaLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "GammaLabel2str",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "LGIrepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DLGIrepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showRepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showLGIrepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showDLGIrepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "formatRepMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "mapLGIrepLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getPGElem",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getPGCharTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "analyze",
+      "action": "analyze",
+      "scope": "Existing numerical projective irreps from the website catalog. No universal exact symbolic BC-labeled irrep catalog is claimed."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showPGCharTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getPGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "analyze",
+      "action": "analyze",
+      "scope": "Existing numerical projective irreps from the website catalog. No universal exact symbolic BC-labeled irrep catalog is claimed."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showPGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "PGIrepDirectProduct",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "character_decompose",
+      "scope": "Exact ordinary/projective character reduction against supplied validated irreps; ordinary tensor products supported. Does not infer named catalog irreps."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showPGIrepDirectProduct",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getLGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "analyze",
+      "action": "analyze",
+      "scope": "Existing numerical projective irreps from the website catalog. No universal exact symbolic BC-labeled irrep catalog is claimed."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getLGCharTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "analyze",
+      "action": "analyze",
+      "scope": "Existing numerical projective irreps from the website catalog. No universal exact symbolic BC-labeled irrep catalog is claimed."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "LGIRtwokRelation",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkLGIrep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation",
+      "scope": "Checks all supplied finite/projective group laws exactly. JSON representation schema differs; translations encoded in supplied factor system."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getRepMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getLGIrepMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation_element",
+      "scope": "Exact integer-translation evaluation of supplied little/full-star representative matrices; explicit row momenta fix star ordering. No automatic BC matrix catalog or label lookup."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showRot",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showLGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showLGCharTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "induce",
+      "scope": "Exact finite/projective subgroup induction on supplied tables and unitary subgroup matrices; automatic infinite-space-group k-star generation remains the existing numerical engine."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showSGIrepTab",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getFullRepMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getSGIrepMat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation_element",
+      "scope": "Exact integer-translation evaluation of supplied little/full-star representative matrices; explicit row momenta fix star ordering. No automatic BC matrix catalog or label lookup."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "checkSGIrep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation",
+      "scope": "Checks all supplied finite/projective group laws exactly. JSON representation schema differs; translations encoded in supplied factor system."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "generateLibLGIrep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "SGIrepDirectProduct",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "product",
+      "action": "product",
+      "scope": "Existing numerical full k-star products; the new exact finite-table tensor action is not a universal exact k-star product implementation."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showSGIrepDirectProduct",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "readVasp2trace",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "getBandRep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showBandRep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "convTraceToBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "readPOSCAR",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "spglibGetSym",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "autoConvTraceToBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "allBCSkLGdat",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "kptBCStoBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showKptBCStoBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "buildTr4BCSrep",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "krepBCStoBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "showKrepBCStoBC",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "shiftOrigin",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "TMabc2t123",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "HMPosition",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "analyzeSeitz",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "RotTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "DRotTimes",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "str2Mulliken",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "Mulliken2str",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "str2GammaLabel",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "SpaceGroupIrep",
+      "symbol": "GammaLabel2str",
+      "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/master/SpaceGroupIrep.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMSGSeitz",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMSGSym",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSeitzTimes",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix affine operations with exact antiunitary parity; no named-rotation overload or implicit double-group central sign."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGinvSeitz",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix affine operations with exact antiunitary parity; no named-rotation overload or implicit double-group central sign."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGpowerSeitz",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "seitz",
+      "scope": "Matrix affine operations with exact antiunitary parity; no named-rotation overload or implicit double-group central sign."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "DMSGSeitzTimes",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "DMSGinvSeitz",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "DMSGpowerSeitz",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MagRotTimes",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "invMagRot",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "powerMagRot",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "DMagRotTimes",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "invDMagRot",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "powerDMagRot",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMagRot",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMPGElem",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMPGinfo",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMPGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "wigner",
+      "scope": "Exact a/b/c classification and construction from a supplied unitary-subgroup irrep and full magnetic quotient/cocycle; every semilinear product is checked. Automatic BNS/BC catalog evaluation remains numerical."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMPGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MPGCorepDirectProduct",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "product",
+      "action": "product",
+      "scope": "Existing numerical corepresentation products; complete exact semilinear corep tensor decomposition is not yet mapped."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMPGCorepDirectProduct",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMSGElem",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMLGElem",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMSGType",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMagKStar",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymStd",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymBNS",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymOG",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "wigner",
+      "scope": "Exact a/b/c classification and construction from a supplied unitary-subgroup irrep and full magnetic quotient/cocycle; every semilinear product is checked. Automatic BNS/BC catalog evaluation remains numerical."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMLGCorepMat",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation_element",
+      "scope": "Exact translation phases for supplied corep matrices and row momenta; antiunitary trace is not reported as a character. No upstream crinfo or BC label compatibility."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMSGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "wigner",
+      "scope": "Exact a/b/c classification and construction from a supplied unitary-subgroup irrep and full magnetic quotient/cocycle; every semilinear product is checked. Automatic BNS/BC catalog evaluation remains numerical."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMSGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getMSGCorepMat",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "partial_exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation_element",
+      "scope": "Exact translation phases for supplied corep matrices and row momenta; antiunitary trace is not reported as a character. No upstream crinfo or BC label compatibility."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "checkMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation",
+      "scope": "Checks every supplied projective semilinear law, antiunitary homomorphism and factor cocycle exactly. No upstream repinfo object compatibility."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "checkMSGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "exact_workflow",
+      "tool": "symbolic_interfaces",
+      "action": "representation",
+      "scope": "Checks every supplied projective semilinear law, antiunitary homomorphism and factor cocycle exactly. No upstream repinfo object compatibility."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGCorepDirectProduct",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "product",
+      "action": "product",
+      "scope": "Existing numerical corepresentation products; complete exact semilinear corep tensor decomposition is not yet mapped."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showMSGCorepDirectProduct",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "readMagTrace",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "getBandCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "existing_numerical_workflow",
+      "tool": "match_bands",
+      "action": "match_bands",
+      "scope": "Numerical trace matching with explicit BC coordinates; no automatic exact crystallographic label recovery."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "showBandCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "libMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "generateLibMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "lookupMLGCorep",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "BCTab7d2",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type1num",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type2num",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type3nums",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type4nums",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "index2subSG",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type3USubInfo",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type3kpairDict",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type4AUTrans",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGtype",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type1MSGSymText",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type2MSGSymText",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type3MSGSymText",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type4MSGSymText",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymText",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type1MSGSymTextBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type2MSGSymTextBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type3MSGSymTextBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "type4MSGSymTextBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymTextBC",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MSGSymTextOG",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "OGtoBNS",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "BNStoOG",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    },
+    {
+      "project": "MSGCorep",
+      "symbol": "MPGinfo",
+      "source": "https://github.com/goodluck1982/MSGCorep/blob/main/Usage.wl",
+      "status": "not_covered_by_symbolic_port",
+      "tool": null,
+      "action": null,
+      "scope": "No exact Python compatibility mapping is claimed for this upstream symbol. It may be data, an option, a display routine or functionality outside this symbolic port; consult the separate numerical/CrystKit coverage."
+    }
+  ]
+}

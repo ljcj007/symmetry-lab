@@ -1,0 +1,41 @@
+{
+  "action": "intertwiner",
+  "table": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "antiunitary": [
+    false,
+    true
+  ],
+  "left": [
+    [
+      [
+        1
+      ]
+    ],
+    [
+      [
+        "I"
+      ]
+    ]
+  ],
+  "right": [
+    [
+      [
+        1
+      ]
+    ],
+    [
+      [
+        1
+      ]
+    ]
+  ]
+}

@@ -73,3 +73,13 @@ is sent to that CDN. Python modules also run locally with CPython.
    See upstream/CARAT and dist/data/carat/manifest.json for source and hashes.
    Z-class/affine counts are upstream metadata, not a claim of complete Python
    enumeration. Symbolic and group-extension additions use SymPy exact arithmetic.
+
+Further exact Python algorithms added on 2026-10-16:
+   carat_integral.py: constructive prime-cyclic integral/affine classes and
+   certified modular-neighbour classification using independent CARAT counts.
+   integral_normalizer.py: arithmetic module, lattice glue and Schreier methods.
+   symbolic_interfaces.py: exact supplied-data representation/corepresentation,
+   cyclotomic, intertwiner and symbolic geometry interfaces.
+   These are independently implemented finite-resource algorithms, not a claim
+   of full CARAT/GAP/Mathematica compatibility. Coverage and proof boundaries are
+   retained in README.md and dist/data/python-provenance.json.

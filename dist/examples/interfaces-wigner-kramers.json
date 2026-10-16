@@ -1,0 +1,34 @@
+{
+  "action": "wigner",
+  "table": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "antiunitary": [
+    false,
+    true
+  ],
+  "factor_system": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      -1
+    ]
+  ],
+  "matrices": [
+    [
+      [
+        1
+      ]
+    ]
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "retrieved": "2026-10-15",
   "runtime": "Real Python in Pyodide Web Workers; no computation backend",
   "repositories": [
@@ -103,7 +103,9 @@
       "validation": "13 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs",
       "extended_by": [
         "crystkit_extensions.py",
-        "carat_browser.py"
+        "carat_browser.py",
+        "carat_integral.py",
+        "integral_normalizer.py"
       ],
       "sha256": "a65901226e3127dd0bb906206eb58e6c5f330e8035e55e39039e27688f9c39e6"
     },
@@ -120,13 +122,17 @@
         "Selected integral representative links to exact cohomology and affine orbits"
       ],
       "limitations": [
-        "General Q-to-Z and all high-dimensional Z representatives not implemented",
+        "General Q-to-Z remains incomplete; constructive and certified Z/affine enumeration is provided by carat_integral.py",
         "Official affine/Z counts are metadata, not generated representative lists",
         "Bounded conjugator search can be inconclusive",
         "Browser time and memory bounds apply"
       ],
       "validation": "scripts/test-python-carat.py",
-      "sha256": "30dc096bf0af4a2b71ddf9f5d4ad6e1ca12f24f0a3b291bd48e175c10a6e23b0"
+      "sha256": "fb40c3da3ce777be983fba2f524dcbc85ee346e1fa56aa3c2a58a8ca400904ee",
+      "extended_by": [
+        "carat_integral.py",
+        "integral_normalizer.py"
+      ]
     },
     {
       "path": "dist/python/crystkit_extensions.py",
@@ -142,12 +148,16 @@
         "Exact origin-congruence affine comparison for supplied bases"
       ],
       "limitations": [
-        "Other normalizers are finite metric subgroups, explicitly incomplete",
+        "Legacy metric fallback is explicitly incomplete outside its proof cases; public normalizer routes use integral_normalizer.py first",
         "Different integral representations in one Q class are not automatically enumerated",
         "Candidate generator searches may establish bounds only"
       ],
       "validation": "scripts/test-python-crystkit-extensions.py",
-      "sha256": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d"
+      "sha256": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d",
+      "extended_by": [
+        "integral_normalizer.py",
+        "carat_integral.py"
+      ]
     },
     {
       "path": "dist/python/symbolic_core.py",
@@ -170,6 +180,69 @@
       ],
       "validation": "scripts/test-python-symbolic.py",
       "sha256": "48adb8cd697f0d5807611b119cad42cd66ddeb78e37ce121ff85701f142161b9"
+    },
+    {
+      "path": "dist/python/carat_integral.py",
+      "upstream": "CARAT / CrystKit",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Constructive prime-cyclic classes and certified modular lattice search",
+      "coverage": [
+        "All prime-order cyclic integral and affine classes through dimension six",
+        "All subspace dimensions within ambient dimensions 1–6, lifted to exact neighbour lattices",
+        "Smith invariants and exhaustive primitive-form integral isometries",
+        "Complete classification only on structure theorem or independent catalogue cardinality certificate",
+        "Actual affine matrices and fractional translation representatives across Z classes"
+      ],
+      "limitations": [
+        "General reducible noncyclic integral equivalence may remain inconclusive",
+        "Not the complete native Voronoi/maximal-order QtoZ algorithm or CARAT Z naming",
+        "Finite resource searches do not guarantee all higher-dimensional classes"
+      ],
+      "validation": "scripts/test-python-carat-integral.py",
+      "sha256": "07b60cb6d66828e94c257e8324324b4fa356adf26ae8c395f23309c6fbf480bf"
+    },
+    {
+      "path": "dist/python/integral_normalizer.py",
+      "upstream": "CrystKit / CARAT",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Exact arithmetic modules and finite Schreier stabilizers",
+      "coverage": [
+        "Full sign-character and cyclic normalizers in dimensions one through six, including lattice glue",
+        "Exact small cyclotomic units and Galois action",
+        "Characteristic cyclic subgroup reduction when conjugacy orbit closes",
+        "Verified repeated absolutely irreducible integral tensor blocks",
+        "Canonical primitive metrics for rational multiplicity-free real irreducibles",
+        "Exact generator verification and independent completeness status"
+      ],
+      "limitations": [
+        "Arbitrary semisimple-order units and quaternionic arithmetic centralizers not implemented",
+        "Unresolved cases return explicitly incomplete metric subgroups",
+        "Resource bounds can prevent a proof"
+      ],
+      "validation": "scripts/test-python-integral-normalizer.py",
+      "sha256": "b328a9984d87c0818282a440a81fc6f58ca00cad74f145d0a46e6007dbb3413a"
+    },
+    {
+      "path": "dist/python/symbolic_interfaces.py",
+      "upstream": "MagneticTB / SpaceGroupIrep / MSGCorep",
+      "license": "GPL-3.0-only",
+      "implementation": "Exact supplied-data representation and symbolic interfaces",
+      "coverage": [
+        "13 exact JSON actions with restricted mathematical parser",
+        "Multi-matrix cyclotomic compilation and common kernels",
+        "Projective semilinear representation validation and real antiunitary intertwiners",
+        "Projectors, matrix units, character/tensor decomposition and induction",
+        "Constructive Wigner a/b/c corepresentations with every product verified",
+        "Symbolic Seitz, Bloch cocycles, k-star translation phases, Reynolds and gauge transforms",
+        "308-symbol upstream coverage inventory"
+      ],
+      "limitations": [
+        "Supplied multiplication tables and matrices, not automatic BC/Bilbao symbolic labels",
+        "No general symbolic spin-space-group catalogue or all-parameter classification",
+        "Finite matrix/group/conductor bounds; not complete upstream signature compatibility"
+      ],
+      "validation": "scripts/test-python-symbolic-interfaces.py",
+      "sha256": "f834fda01e405cbea742ce10d3f882801828ef4a371359be1c63d4b2678e9c29"
     }
   ],
   "coordinate_conventions": {
@@ -210,9 +283,18 @@
       "crystkit",
       "symbolic",
       "carat",
-      "crystkit_ext"
+      "crystkit_ext",
+      "carat_integral",
+      "integral_normalizer",
+      "symbolic_interfaces"
     ],
     "contract_test": "scripts/test-python-api.py"
   },
-  "exactValidation": "dist/data/exact-python-validation.json"
+  "exactValidation": "dist/data/exact-python-validation.json",
+  "proofNotes": [
+    "dist/docs/integral-classification.md",
+    "dist/docs/integral-normalizer.md",
+    "dist/docs/symbolic-interfaces.md"
+  ],
+  "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

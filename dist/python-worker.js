@@ -1,11 +1,14 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261016-exact2';
+const BUILD = '20261016-integral1';
 const plans = {
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
   magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
   symbolic: ['magnetictb_browser', 'symbolic_core'],
-  crystkit_ext: ['crystkit_browser', 'crystkit_extensions'], carat: ['crystkit_browser', 'crystkit_extensions', 'carat_browser']
+  crystkit_ext: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer'], carat: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'carat_browser'],
+  carat_integral: ['crystkit_browser', 'crystkit_extensions', 'carat_browser', 'integral_normalizer', 'carat_integral'],
+  integral_normalizer: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer'],
+  symbolic_interfaces: ['magnetictb_browser', 'symbolic_core', 'symbolic_interfaces']
 };
 let runtime;
 const modules = new Set(), packages = new Set(), catalogs = new Set();
@@ -20,7 +23,7 @@ async function prepare(id, action, payload) {
   if (!Object.hasOwn(plans, action)) throw new Error('未知计算工具');
   if (!payload || Array.isArray(payload) || typeof payload !== 'object') throw new Error('输入必须是 JSON 对象');
   const dimension = payload.dimension ?? 3;
-  if (action === 'carat' && (!Number.isInteger(dimension) || dimension < 1 || dimension > 6)) throw new Error('CARAT 维数须为 1–6 的整数');
+  if (['carat', 'carat_integral'].includes(action) && (!Number.isInteger(dimension) || dimension < 1 || dimension > 6)) throw new Error('CARAT 维数须为 1–6 的整数');
   const progress = message => self.postMessage({id, status: 'loading', message});
   if (!runtime) {
     progress('首次运行：下载 Python 解释器…');
@@ -28,7 +31,7 @@ async function prepare(id, action, payload) {
     runtime = await loadPyodide({indexURL: INDEX_URL});
     runtime.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_carat_catalogs = {}');
   }
-  const exact = ['crystkit', 'symbolic', 'carat', 'crystkit_ext'].includes(action);
+  const exact = ['crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces'].includes(action);
   for (const name of exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
@@ -42,12 +45,12 @@ async function prepare(id, action, payload) {
     runtime.runPython(`import ${name}`); // name is from the fixed allowlist above.
     modules.add(name);
   }
-  if (['crystkit', 'crystkit_ext'].includes(action) && !databaseLoaded) {
+  if (['crystkit', 'crystkit_ext', 'integral_normalizer'].includes(action) && !databaseLoaded) {
     runtime.globals.set('_data_text', await (await resource('./data/space-groups.json')).text());
     runtime.runPython('_sg_database = json.loads(_data_text)\ndel _data_text');
     databaseLoaded = true;
   }
-  if (action === 'carat' && !catalogs.has(dimension)) {
+  if (['carat', 'carat_integral'].includes(action) && !catalogs.has(dimension)) {
     progress(`正在载入 ${dimension} 维 CARAT 完整 Q 类目录…`);
     const bytes = new Uint8Array(await (await resource(`./data/carat/q${dimension}.json.gz`)).arrayBuffer());
     runtime.FS.writeFile('/home/pyodide/catalog.json.gz', bytes);

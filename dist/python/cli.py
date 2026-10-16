@@ -20,9 +20,9 @@ def main():
     args = parser.parse_args()
     payload = json.loads(sys.stdin.read() if args.input == '-' else Path(args.input).read_text(encoding='utf-8-sig'))
     data = Path(__file__).resolve().parent.parent / 'data'
-    database = json.loads((data / 'space-groups.json').read_text(encoding='utf8')) if args.tool in ('crystkit', 'crystkit_ext') else None
+    database = json.loads((data / 'space-groups.json').read_text(encoding='utf8')) if args.tool in ('crystkit', 'crystkit_ext', 'integral_normalizer') else None
     catalog = None
-    if args.tool == 'carat':
+    if args.tool in ('carat', 'carat_integral'):
         dimension = payload.get('dimension', 3)
         if type(dimension) is not int or dimension not in range(1, 7):
             raise ValueError('CARAT dimension must be an integer from 1 to 6')

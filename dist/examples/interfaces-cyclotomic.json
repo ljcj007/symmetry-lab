@@ -1,0 +1,13 @@
+{
+  "action": "compile_cyclotomic",
+  "matrices": [
+    [
+      [
+        "sqrt(2)",
+        "sqrt(3)",
+        "I",
+        "exp(2*pi*I/5)"
+      ]
+    ]
+  ]
+}

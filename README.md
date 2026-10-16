@@ -64,7 +64,7 @@ npm run test:python
 
 1. 旋转和平移采用 Bradley–Cracknell（BC）直接原胞分数坐标；波矢采用其倒易原胞分数坐标。磁群使用 BNS family 对应的原胞。平移相位为 `exp(-2π i k·t)`，反幺正操作的波矢作用为 `-R^-T k`。
 2. `D1, D2, …` 和 `C1, C2, …` 是本次计算的数值标签，**不等于 BC、CDML 或 Bilbao 标准标签**。输出矩阵可能处于不同的等价基底，不能通过逐元素比较判断是否与论文一致。
-3. 算法处理指定的数值 k 点，不生成 Wolfram 符号参数表达式或整条符号 k 线。上游高对称点名称可能依赖 BZ 类型；实际计算以坐标为准。
+3. 原有 SG/MSG 数值表示工具处理指定的数值 k 点，不生成 Wolfram 符号参数表达式或整条符号 k 线。上游高对称点名称可能依赖 BZ 类型；实际计算以坐标为准。
 4. 页面晶格和倒易原胞采用示意参数；它们不是输入材料的实验结构，也不是 Wigner–Seitz 布里渊区。不能据此读取定量晶格长度和夹角。
 5. trace 必须与选定群的 BC 原胞、原点及自旋框架兼容。当前没有 POSCAR/CIF 自动标准化、`autoConvTraceToBC` 等价转换或任意自旋框架转换。匹配失败时应先准备正确设置的数据。
 6. 存储的空间自旋矩阵采用 `↓↑` 基底、上游六位小数精度；trace 的 `↑↓` 基底在匹配时转换。数据库的 `antiunitary` 标记与空间自旋矩阵分开存储，时间反演由计算引擎处理。
@@ -132,7 +132,7 @@ node scripts/test-trace.mjs
 
 ## 精确代数与高维群（2026-10-16）
 
-网页新增“精确代数与高维群”，与原有工具共用浏览器内的 Python Worker。`browser_api.py` 提供相同的本机 / 浏览器 JSON 分发接口，新增 `carat`、`symbolic`、`crystkit_ext` 三种工具。输入不经过 eval 或任意代码执行。
+网页新增“精确代数与高维群”，与原有工具共用浏览器内的 Python Worker。`browser_api.py` 提供相同的本机 / 浏览器 JSON 分发接口，提供 `carat`、`carat_integral`、`integral_normalizer`、`symbolic`、`symbolic_interfaces`、`crystkit_ext` 六种精确工具。输入不经过 eval 或任意代码执行。
 
 ### CARAT 分类
 
@@ -143,7 +143,7 @@ node scripts/test-trace.mjs
 - `classify`：从输入整数矩阵闭合有限群，计算共轭类与精确特征不变量；需要时用群代数中心的本原幂等元和有理交织矩阵验证 Q 类。输出 `q_status`、`z_status` 与明确证书。
 - `invariant_lattices`：穷尽指定有限指数内的 HNF 不变子格，给出整数共轭代表与完成范围。不同子格可能属于同一 Z 类，**不把子格数当作 Z 类数**。
 
-Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包括平移部分。完整 Q 类目录并不等于完整高维 Z 类 / 仿射类枚举器；上游存储的 Z 类、仿射类“数量”也不等于本站已经生成了所有这些代表。一般 Z 类枚举、无界整数正规化子和任意高维仿射同构判定仍未完整移植。三维全仿射等价类为 219；通常的 230 空间群类型按手性进一步区分，不能混用这两个计数。
+Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包括平移部分。完整 Q 类目录并不等于完整高维 Z 类 / 仿射类枚举器；上游存储的 Z 类、仿射类“数量”也不等于本站已经生成了所有这些代表。新的 `carat_integral` 与 `integral_normalizer` 模块进一步实现下述有证书算法；一般非循环算术中心化子和全部高维输入的完整分类仍未覆盖。三维全仿射等价类为 219；通常的 230 空间群类型按手性进一步区分，不能混用这两个计数。
 
 ### 精确符号模块
 
@@ -160,7 +160,7 @@ Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包�
 
 `crystkit_extensions.py` 以整数 Cayley 关系格与带变换的 Smith 标准形计算 **H¹(P,ℚᵈ/ℤᵈ) ≅ H²(P,ℤᵈ)**，对所有原点变化取商；这里固定输入整数点群 P。支持完整向量系统代表、正规化子作用的轨道、定向轨道与对映体判断。
 
-对标量群、整数对角符号表示及唯一不变二次型的表示，可证明获得完整 GL(d,ℤ) 正规化子；其他情形返回明确标注的有限度量子群，不声称完整仿射分类。无限群生成元使用 Schreier 平移格证书、阿贝尔化与有限商下界；只有上下界一致才声明最小。精确原点同余求解不依赖猜测分母网格。
+原扩张模块的度量正规化子仍保留作为后备算法。公开网页 / CLI 的正规化子与扩张轨道接口已接入新增算术正规化子，支持循环群、初等交换 2 群及进一步可证明的情形。用户指定正规化子子群时不会自动假定完整。无限群生成元使用 Schreier 平移格证书、阿贝尔化与有限商下界；只有上下界一致才声明最小。精确原点同余求解不依赖猜测分母网格。
 
 新增测试覆盖二维全部 17 个壁纸群、四 / 六重螺旋扩张、六维上同调、无限群生成证书、分圆域恒等式、精确 Hamiltonian 对称性，以及 CARAT 目录完整性与 Q / Z 区分。大规模计算受浏览器 180 秒任务上限和各算法资源边界约束；未穷尽时明确返回状态或错误。
 
@@ -168,4 +168,32 @@ Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包�
 python dist/python/cli.py carat dist/examples/carat-catalog-6d.json
 python dist/python/cli.py symbolic dist/examples/symbolic-chain.json
 python dist/python/cli.py crystkit_ext dist/examples/crystkit-ext-wallpaper.json
+```
+
+### 整数类与仿射类
+
+`carat_integral.py` 的 `z_classes` / `affine_classes` 接受 CARAT `name` 或整数 `generators`，维数为 1–6。它构造实际代表，并将 `z_complete` 与 `affine_complete` 分开报告。
+
+- 素数阶循环群 C₂、C₃、C₅、C₇：以平凡、分圆与正则整格块构造全部整数类，并求全部仿射代表。六维对合 `min.178` 得到 **4 个 Z 类、7 个仿射类**。全部 34 个素数阶 Q 类的结果与独立 CARAT 计数一致。
+- 一般有限整数点群：枚举模素数的各维不变子空间、提升为不变子格；利用 Smith 不变量与唯一不变型的穷尽整数等距测试证明代表互不等价。只有取得官方类数那么多个已证明不同的代表，才标记 Z 类完整。有限搜索没有找到新代表不构成穷尽证明。
+- 在各 Z 类上计算完整 H²，再计算正规化子子群轨道。在 Z 类已完整枚举的前提下，完整正规化子，或所有 Z 类的轨道总数恰好达到独立官方仿射类数，均可提供仿射分类完整性证书。后一种证书不把正规化子本身标成完整。
+- `z_equivalent` 返回 `equivalent`、`inequivalent` 或 `inconclusive`；不会把同样的有限不变量误当作等价证据。代表序号是本次输出的局部编号，不是 CARAT 官方 Z 名称。
+
+网页可将选中的整数代表直接送入正规化子或固定点群扩张工具。仿射生成元应与输出所列的整数平移格一起使用。资源预算中断时保留已证明结果，并明确指出哪些步骤尚未完成。
+
+### 算术整数正规化子
+
+`integral_normalizer.py` 在 1–6 维处理循环表示和初等交换 2 群表示，包括重复不可约块与非平凡整格粘合。循环分量使用精确分圆整环、单位与 Galois 作用；符号特征分量使用完整 GL(m,ℤ) 生成元。有限格轨道上的 Schreier 稳定子计算恢复原整数格，因而支持无限正规化子，而不限于某个正定度量的有限等距群。
+
+结果提供 `complete`、`finite`、`generators`、`everyGeneratorVerified` 和证明记录。有限搜索预算不是完备性证书。非循环群还可通过特征循环子群的精确 Schreier 归约、已验证的重复绝对不可约张量块，或内在分块度量处理。测试包含 8 个二面体系列、六维重复块、A₄ 加固定轴的 96 阶正规化子。尚未覆盖的一般算术中心化子会明确返回不完整结果。算法证明见 [整数分类说明](dist/docs/integral-classification.md) 与 [正规化子说明](dist/docs/integral-normalizer.md)。
+
+### 精确符号表示接口
+
+`symbolic_interfaces.py` 提供独立的无状态 JSON 接口，复用安全表达式解析器。支持多矩阵分圆域编译与共核、精确线性 / 投影 / 反幺正表示律验证、交织空间、不可约投影与矩阵单位、特征标和张量积分解、子群诱导、Wigner 共表示、Reynolds 对称化、符号 Seitz 运算及 Bloch 规范变换；还支持符号 k 线小群的 Bloch 余循环与全 k 星表示平移相位。共 13 个计算操作，覆盖记录逐项列出 308 个上游公开符号。
+
+这些接口以用户给定的乘法表、矩阵和因子系统为输入；验证群律、余循环、不可约性等必要前提，不自动生成标准 BC / Bilbao 标签。反幺正交织使用实线性方程，原始分母与一般参数条件随结果保留。逐函数的迁移范围、输入约定与未移植项记录在 `dist/data/symbolic-api-coverage.json`。
+
+```sh
+python dist/python/cli.py carat_integral dist/examples/integral-affine-noncyclic-6d.json
+python dist/python/cli.py carat_integral dist/examples/integral-involution-6d.json
 ```

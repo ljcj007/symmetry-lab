@@ -43,6 +43,31 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual(result['minimumGeneratorCount'], 2)
         self.assertTrue(result['generationCertificate']['generates'])
 
+    def test_integral_classes_and_arithmetic_normalizer(self):
+        rotation = [[int(i == j)*(1 if i < 3 else -1) for j in range(6)] for i in range(6)]
+        result = self.result('carat_integral', {'action':'affine_classes','dimension':6,'generators':[rotation]})
+        self.assertTrue(result['z_complete'])
+        self.assertTrue(result['affine_complete'])
+        self.assertEqual((result['z_class_count'],result['affine_class_count']),(4,7))
+        glued = result['z_classes'][-1]['generators']
+        normalizer = self.result('integral_normalizer', {'rotations':glued})
+        self.assertTrue(normalizer['complete'])
+        self.assertFalse(normalizer['finite'])
+        self.assertTrue(normalizer['everyGeneratorVerified'])
+
+    def test_existing_extension_api_uses_arithmetic_normalizer(self):
+        result = self.result('crystkit_ext', {'action':'extension_orbits',
+                           'rotations':[[[0,-1,0],[1,0,0],[0,0,1]]]})
+        self.assertTrue(result['normalizerComplete'])
+        self.assertTrue(result['classificationCompleteForIntegralPointGroup'])
+        self.assertEqual(result['orbitCount'],3)
+
+    def test_exact_symbolic_interface(self):
+        result = self.result('symbolic_interfaces', {'action':'common_kernel',
+                            'matrices':[[[1,1,0]],[[0,1,1]]]})
+        self.assertEqual(result['nullity'],1)
+        self.assertEqual(result['matrix'],[['1'],['-1'],['1']])
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

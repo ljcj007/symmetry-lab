@@ -20,7 +20,7 @@ class Container {
 }
 const container = new Container();
 const calls = [];
-renderAdvancedView({container,run:async(tool,payload)=>{calls.push({tool,payload});return {expression:'2'};},toast:()=>{},download:()=>{}});
+renderAdvancedView({container,run:async(tool,payload)=>{calls.push({tool,payload});return tool==='carat_integral'?{z_complete:false,z_class_count:null,z_classes:[{index:1,generators:[[[1,0],[0,-1]]],certificate:'exact'}]}:{expression:'2'};},toast:()=>{},download:()=>{}});
 container.tabs.find(b=>b.dataset.exactTool==='symbolic').onclick();
 container.querySelector('#exact-example').onchange({target:{value:'chain'}});
 let resolveFetch;
@@ -51,5 +51,12 @@ try {
   resolveFetch({ok:true,json:async()=>({action:'algebra',expression:'3'})});
   await switched;
   assert.equal(container.html,visible,'Completing a background load must not replace another tool');
+  container.tabs.find(b=>b.dataset.exactTool==='carat_integral').onclick();
+  await container.querySelector('#exact-run').onclick();
+  assert.match(container.html,/尚未证明全部穷尽/);
+  container.querySelector('#integral-class').value='0';
+  container.querySelector('#integral-to-normalizer').click();
+  await container.querySelector('#exact-run').onclick();
+  assert.deepEqual(calls.at(-1),{tool:'integral_normalizer',payload:{action:'integral_normalizer',rotations:[[[1,0],[0,-1]]]}});
 } finally {globalThis.fetch=originalFetch;}
 console.log('Advanced UI: slow example/run race, download recovery and background tool isolation passed.');

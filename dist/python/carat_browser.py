@@ -443,7 +443,11 @@ def run(payload,catalog=None):
                              'integral_normalizer':'integral_normalizer'}[action]
         selected = representative(payload,catalog) if payload.get('name') else None
         options['point_generators'] = selected['generators'] if selected else _serial(_generators(payload,catalog))
-        result = crystkit_extensions.run(options)
+        if action != 'affine_extensions' and 'normalizers' not in options:
+            from integral_normalizer import run as calculate
+            result = calculate(options)
+        else:
+            result = crystkit_extensions.run(options)
         result['action'] = action
         if selected:
             result['q_class'] = _summary(selected)
