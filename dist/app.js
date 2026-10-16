@@ -1,6 +1,6 @@
-import {renderAdvancedView,getAdvancedResult} from './advanced-ui.js?v=20261016-exact';
-import {runPythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261016-exact';
-import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261016-exact';
+import {renderAdvancedView,getAdvancedResult} from './advanced-ui.js?v=20261016-exact2';
+import {runPythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261016-exact2';
+import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261016-exact2';
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
