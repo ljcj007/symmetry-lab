@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "module": "structure_bc",
+  "date": "2026-10-16",
+  "nativeSpglibVersion": "2.8.0",
+  "unitTests": 8,
+  "spaceGroupsTested": 230,
+  "syntheticStructuresTested": 460,
+  "spaceGroupsPassed": 230,
+  "failures": [],
+  "checks": [
+    "All 230 generic crystals generated independently from the spglib Hall database",
+    "All 230 repeated with an integral shear, nontrivial origin and Cartesian rotation",
+    "Original SpaceGroupIrep BC generator membership and integral rotations",
+    "Species-resolved atom covariance, primitive atom counts and input-operation transport",
+    "VASP 4/5, negative-volume and three-factor scaling, Cartesian and selective dynamics",
+    "CIF 1.1 quoted/semicolon fields, symmetry expansion, malformed operation rejection",
+    "Oblique determinant-two supercell retaining the full crystal group",
+    "POSCAR/CIF round trips for groups 5, 38, 70, 88, 146, 167, 227, 230",
+    "Reciprocal-coordinate translation-phase preservation",
+    "Native and Pyodide WASM examples: silicon SG 227 and monoclinic screw SG 4"
+  ],
+  "commands": [
+    "python scripts/test-python-structure-bc.py",
+    "python scripts/test-python-structure-bc.py --all",
+    "node scripts/test-spglib-pyodide.mjs <local-pyodide-directory>"
+  ],
+  "scope": "Ordered 3D periodic structures under explicit spglib numerical tolerances; magnetic, modulated and disordered structures are rejected instead of silently simplified."
+}

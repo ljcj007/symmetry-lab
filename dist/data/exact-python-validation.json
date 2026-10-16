@@ -4,10 +4,10 @@
   "python": "3.13",
   "sympy": "1.14.0",
   "sources": {
-    "dist/python/browser_api.py": "bd74a0cde0b3b77cdc5e07709c0b2a40ea60c1929868d5fcf3b6af487bf964f8",
+    "dist/python/browser_api.py": "72da2968916dacf40839bd71f2abc63d3a3247b61d2510fbdca0aa2477c2a0a4",
     "dist/python/carat_browser.py": "fb40c3da3ce777be983fba2f524dcbc85ee346e1fa56aa3c2a58a8ca400904ee",
     "dist/python/carat_integral.py": "66e78a666f51e007a72e048dc740da34b09cecd0cc79a2be20869fd96264d44e",
-    "dist/python/cli.py": "21feb42da90c1f592d9c61f6f6fd4a14a9da1c6dadb9247f36536e20b2e7d72a",
+    "dist/python/cli.py": "4dbe3931e81fa2fd21d44b5cff9562d57eb372a54f37bbd16ba8bd00c59cf32e",
     "dist/python/crystkit_browser.py": "a437692e93c64637b9159de08611b57887a97d06091f5a64bf917b454c663460",
     "dist/python/crystkit_extensions.py": "a6128ed300c412bad7c7cef4aaf83fdfada0af90c4c28990c290241b6a2401bd",
     "dist/python/integral_normalizer.py": "76c38eff2ec4e58cf16219d8b0793903f69d212e802185fbc3a144e40b650f72",
@@ -17,7 +17,10 @@
     "dist/python/symmetry_core.py": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0",
     "dist/python/arithmetic_centralizer.py": "c8247579e7602ee1772ec59d605c4b58badbe7d034cf55994f4951e345fa2547",
     "dist/python/finite_conductor.py": "930cb66808bd650d26d9cb761e1205cda3de95815356126fd233d186e3f98df9",
-    "dist/python/symbolic_spacegroups.py": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb"
+    "dist/python/symbolic_spacegroups.py": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb",
+    "dist/python/structure_bc.py": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c",
+    "dist/python/standard_labels.py": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4",
+    "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -47,7 +50,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 10
+    "tests": 13
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -167,5 +170,569 @@
       "Semilinear full-star induction and translation phases",
       "Input validation, parameter strata, alias adapters and resource budgets"
     ]
+  },
+  "standardLabels": {
+    "schemaVersion": 1,
+    "date": "2026-10-16",
+    "gamma_independent_numerical": {
+      "cases": 460,
+      "bc_unique": 460,
+      "bilbao_unique": 460,
+      "issues": []
+    },
+    "bilbao_to_bc": {
+      "k_tables": 2700,
+      "representations": 8907,
+      "unmatched": 24,
+      "matched": 8779,
+      "ambiguous": 104,
+      "unresolved_tables": [
+        {
+          "group": 1,
+          "k_label": "R",
+          "double_valued": false,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "T",
+          "double_valued": false,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "U",
+          "double_valued": false,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "V",
+          "double_valued": false,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "R",
+          "double_valued": true,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "T",
+          "double_valued": true,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "U",
+          "double_valued": true,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 1,
+          "k_label": "V",
+          "double_valued": true,
+          "states": [
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "R",
+          "double_valued": false,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "T",
+          "double_valued": false,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "U",
+          "double_valued": false,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "V",
+          "double_valued": false,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "R",
+          "double_valued": true,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "T",
+          "double_valued": true,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "U",
+          "double_valued": true,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 2,
+          "k_label": "V",
+          "double_valued": true,
+          "states": [
+            "unmatched",
+            "unmatched"
+          ]
+        },
+        {
+          "group": 122,
+          "k_label": "P",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 122,
+          "k_label": "P",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 143,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 143,
+          "k_label": "K",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 143,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 143,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 144,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 144,
+          "k_label": "K",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 144,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 144,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 145,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 145,
+          "k_label": "K",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 145,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 145,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 150,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 150,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 150,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 152,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 152,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 154,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 154,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 157,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 157,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 159,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 159,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 174,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 174,
+          "k_label": "K",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 174,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 174,
+          "k_label": "K",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 189,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 189,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "matched",
+            "ambiguous",
+            "ambiguous"
+          ]
+        },
+        {
+          "group": 190,
+          "k_label": "H",
+          "double_valued": false,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "matched"
+          ]
+        },
+        {
+          "group": 190,
+          "k_label": "H",
+          "double_valued": true,
+          "states": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ]
+        }
+      ]
+    },
+    "build_checks": {
+      "abstract_tables_orthogonal": 93,
+      "bc_k_tables_orthogonal": 6928,
+      "bilbao_files_converted": 460,
+      "bilbao_k_tables_orthogonal": 2700,
+      "exact_bc_spin_sign_products": true,
+      "affine_normalizer_transports": 3935
+    },
+    "notes": [
+      "Ambiguous outside-space-group normalizer transports remain candidates, not forced names.",
+      "24 unmatched rows are Bilbao R/T/U/V in triclinic SG1/2; BC source names no corresponding point.",
+      "Numeric catalogue crosscheck tolerance is 2e-4, reflecting rounded Bilbao source coefficients."
+    ],
+    "datasetSha256": {
+      "bc-labels.json.gz": "4fa94e0a29a491f876a36bc9096178cf33d504740f995adb67178a6929e68a6f",
+      "bilbao-labels.json.gz": "9dd3c0ff24f5273e15d793b2206fc2129a2ea32989d676b8e79588139dd0ce28"
+    }
+  },
+  "structureConversion": {
+    "schemaVersion": 1,
+    "module": "structure_bc",
+    "date": "2026-10-16",
+    "nativeSpglibVersion": "2.8.0",
+    "unitTests": 8,
+    "spaceGroupsTested": 230,
+    "syntheticStructuresTested": 460,
+    "spaceGroupsPassed": 230,
+    "failures": [],
+    "checks": [
+      "All 230 generic crystals generated independently from the spglib Hall database",
+      "All 230 repeated with an integral shear, nontrivial origin and Cartesian rotation",
+      "Original SpaceGroupIrep BC generator membership and integral rotations",
+      "Species-resolved atom covariance, primitive atom counts and input-operation transport",
+      "VASP 4/5, negative-volume and three-factor scaling, Cartesian and selective dynamics",
+      "CIF 1.1 quoted/semicolon fields, symmetry expansion, malformed operation rejection",
+      "Oblique determinant-two supercell retaining the full crystal group",
+      "POSCAR/CIF round trips for groups 5, 38, 70, 88, 146, 167, 227, 230",
+      "Reciprocal-coordinate translation-phase preservation",
+      "Native and Pyodide WASM examples: silicon SG 227 and monoclinic screw SG 4"
+    ],
+    "commands": [
+      "python scripts/test-python-structure-bc.py",
+      "python scripts/test-python-structure-bc.py --all",
+      "node scripts/test-spglib-pyodide.mjs <local-pyodide-directory>"
+    ],
+    "scope": "Ordered 3D periodic structures under explicit spglib numerical tolerances; magnetic, modulated and disordered structures are rejected instead of silently simplified."
+  },
+  "spglibWasm": {
+    "version": "2.8.0",
+    "nativeComparisonTests": 6,
+    "hallSettings": 530,
+    "datasetCases": 31,
+    "pythonBrowser": "3.14.2",
+    "pyodide": "314.0.7",
+    "actualBrowserCases": [
+      "NaCl POSCAR -> SG225 primitive 2 atoms",
+      "CsCl CIF -> SG221, reciprocal coordinate transport"
+    ],
+    "validation": "scripts/test-spglib-wasm.py",
+    "pyodideValidation": "scripts/test-spglib-pyodide.mjs"
   }
 }

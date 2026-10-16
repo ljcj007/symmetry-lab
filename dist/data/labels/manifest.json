@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-10-16",
+  "license": "GPL-3.0",
+  "files": {
+    "bc-labels.json.gz": {
+      "bytes": 235763,
+      "sha256": "4fa94e0a29a491f876a36bc9096178cf33d504740f995adb67178a6929e68a6f"
+    },
+    "bilbao-labels.json.gz": {
+      "bytes": 92566,
+      "sha256": "9dd3c0ff24f5273e15d793b2206fc2129a2ea32989d676b8e79588139dd0ce28"
+    },
+    "bilbao-source.zip": {
+      "bytes": 243878,
+      "sha256": "cd97af318f3ecfd5a8e3c684f08e622218319fc3127691de0a749d5f840ee0c1"
+    },
+    "validation.json": {
+      "bytes": 10390,
+      "sha256": "7c69358b340747d7c45c0b93b625cf7e2c9a6a7d14c5eb048d5b9cc20ec1c6ac"
+    }
+  },
+  "bc": {
+    "repository": "https://github.com/goodluck1982/SpaceGroupIrep",
+    "commit": "7b43201ac0973333edbe69bc3dd6ccb308abf624",
+    "abstractSourceSha256": "833936e8aae02b70b0bb513d79cd3fa5869b56ec9396f7c944f543294286f4c6",
+    "spaceGroups": 230,
+    "spinTypes": [
+      "single",
+      "double"
+    ],
+    "namedKTables": 6928,
+    "allNamedTableRows": 18754,
+    "affineNormalizerTransports": 3935
+  },
+  "bilbao": {
+    "repository": "https://github.com/irreducible-representations/irrep",
+    "commit": "4f43f138d30ef37a499a297ac9b1ec8ef14717cc",
+    "source": "Bilbao Crystallographic Server via IrRep frozen maximal-k tables",
+    "spaceGroups": 230,
+    "sourceFiles": 460,
+    "kTables": 2700,
+    "representations": 8907,
+    "sourceCharacterPrecision": "rounded decimal amplitudes and phase/pi; no claim of exact decimal source coefficients"
+  },
+  "runtime": {
+    "tool": "standard_labels",
+    "actions": [
+      "catalog",
+      "table",
+      "annotate",
+      "match"
+    ],
+    "phase": "exp(-2*pi*I*k.t)",
+    "bcMatchTolerance": 2e-05,
+    "bilbaoMatchTolerance": 0.0002,
+    "dependency": "NumPy + SymPy + symbolic_core.ExactParser",
+    "userInputExecution": false
+  },
+  "validation": {
+    "fastRegressionTests": 13,
+    "script": "scripts/test-python-standard-labels.py",
+    "exhaustiveScript": "scripts/validate-standard-labels.py",
+    "buildScripts": [
+      "scripts/build-standard-labels.py",
+      "scripts/build-bilbao-labels.py"
+    ]
+  },
+  "limitations": [
+    "Ordinary space-group irreps; magnetic corepresentation standard labels are not supplied.",
+    "Bilbao generic-line labels are absent from the frozen source.",
+    "Unlisted BC k points receive no invented BC name.",
+    "Different legal external normalizer conventions can leave multiple labels; these remain ambiguous.",
+    "Automatic matching uses a verified complete ordinary little group and numerical character residuals."
+  ]
+}

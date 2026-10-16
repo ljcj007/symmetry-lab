@@ -97,6 +97,33 @@ class PublicAPITests(unittest.TestCase):
         self.assertTrue(result['trivialCenter'])
         self.assertEqual(result['centerRank'],0)
 
+    def test_structure_conversion_cli(self):
+        payload = json.loads((ROOT / 'dist/examples/structure-silicon.json').read_text(encoding='utf8'))
+        result = self.result('structure_bc', payload)
+        self.assertEqual(result['group_number'], 227)
+        self.assertTrue(result['verified'])
+        self.assertEqual(result['bc_primitive']['atom_count'], 2)
+        again = self.result('structure_bc', {'format':'cif', 'text':result['exports']['bc_cif']})
+        self.assertEqual(again['group_number'], 227)
+
+    def test_standard_labels_are_attached_to_analyze(self):
+        groups = json.loads((ROOT / 'dist/data/space-groups.json').read_text(encoding='utf8'))['groups']
+        group = next(g for g in groups if g['number'] == 2)
+        result = self.result('analyze', {'group_number':2, 'operations':group['operations'],
+                           'basis':group['basis'], 'k':[0,0,0], 'doubleValued':False})
+        labels = result['standardLabels']['mappings']
+        self.assertEqual(len(labels), 2)
+        self.assertTrue(all(row['bc_label'] and row['bilbao_label'] for row in labels))
+        self.assertEqual({row['local_label'] for row in labels}, {ir['label'] for ir in result['irreps']})
+
+    def test_near_boundary_labels_preserve_numerical_little_group(self):
+        groups = json.loads((ROOT / 'dist/data/space-groups.json').read_text(encoding='utf8'))['groups']
+        group = next(g for g in groups if g['number'] == 2)
+        result = self.result('analyze', {'group_number':2, 'operations':group['operations'],
+                           'basis':group['basis'], 'k':[0.49999997,0,0], 'doubleValued':False})
+        self.assertEqual(len(result['littleGroup']['operations']), 1)
+        self.assertNotEqual(result['standardLabels'].get('status'), 'unavailable')
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

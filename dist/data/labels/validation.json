@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-16",
+  "gamma_independent_numerical": {
+    "cases": 460,
+    "bc_unique": 460,
+    "bilbao_unique": 460,
+    "issues": []
+  },
+  "bilbao_to_bc": {
+    "k_tables": 2700,
+    "representations": 8907,
+    "unmatched": 24,
+    "matched": 8779,
+    "ambiguous": 104,
+    "unresolved_tables": [
+      {
+        "group": 1,
+        "k_label": "R",
+        "double_valued": false,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "T",
+        "double_valued": false,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "U",
+        "double_valued": false,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "V",
+        "double_valued": false,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "R",
+        "double_valued": true,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "T",
+        "double_valued": true,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "U",
+        "double_valued": true,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 1,
+        "k_label": "V",
+        "double_valued": true,
+        "states": [
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "R",
+        "double_valued": false,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "T",
+        "double_valued": false,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "U",
+        "double_valued": false,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "V",
+        "double_valued": false,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "R",
+        "double_valued": true,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "T",
+        "double_valued": true,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "U",
+        "double_valued": true,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 2,
+        "k_label": "V",
+        "double_valued": true,
+        "states": [
+          "unmatched",
+          "unmatched"
+        ]
+      },
+      {
+        "group": 122,
+        "k_label": "P",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 122,
+        "k_label": "P",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 143,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 143,
+        "k_label": "K",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 143,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 143,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 144,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 144,
+        "k_label": "K",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 144,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 144,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 145,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 145,
+        "k_label": "K",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 145,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 145,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 150,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 150,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 150,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 152,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 152,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 154,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 154,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 157,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 157,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 159,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 159,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 174,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 174,
+        "k_label": "K",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 174,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 174,
+        "k_label": "K",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 189,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 189,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "matched",
+          "ambiguous",
+          "ambiguous"
+        ]
+      },
+      {
+        "group": 190,
+        "k_label": "H",
+        "double_valued": false,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "matched"
+        ]
+      },
+      {
+        "group": 190,
+        "k_label": "H",
+        "double_valued": true,
+        "states": [
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous",
+          "ambiguous"
+        ]
+      }
+    ]
+  },
+  "build_checks": {
+    "abstract_tables_orthogonal": 93,
+    "bc_k_tables_orthogonal": 6928,
+    "bilbao_files_converted": 460,
+    "bilbao_k_tables_orthogonal": 2700,
+    "exact_bc_spin_sign_products": true,
+    "affine_normalizer_transports": 3935
+  },
+  "notes": [
+    "Ambiguous outside-space-group normalizer transports remain candidates, not forced names.",
+    "24 unmatched rows are Bilbao R/T/U/V in triclinic SG1/2; BC source names no corresponding point.",
+    "Numeric catalogue crosscheck tolerance is 2e-4, reflecting rounded Bilbao source coefficients."
+  ],
+  "datasetSha256": {
+    "bc-labels.json.gz": "4fa94e0a29a491f876a36bc9096178cf33d504740f995adb67178a6929e68a6f",
+    "bilbao-labels.json.gz": "9dd3c0ff24f5273e15d793b2206fc2129a2ea32989d676b8e79588139dd0ce28"
+  }
+}

@@ -2,14 +2,22 @@
 TOOLS = ('analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
-         'arithmetic_centralizer', 'symbolic_spacegroups')
+         'arithmetic_centralizer', 'symbolic_spacegroups',
+         'structure_bc', 'standard_labels')
 
 
-def run(tool, payload, database=None, catalog=None, magnetic_database=None):
+def run(tool, payload, database=None, catalog=None, magnetic_database=None,
+        label_database=None):
     if tool not in TOOLS:
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool == 'structure_bc':
+        from structure_bc import run as calculate
+        return calculate(payload, database)
+    if tool == 'standard_labels':
+        from standard_labels import run as calculate
+        return calculate(payload, database, label_database)
     if tool == 'arithmetic_centralizer':
         from arithmetic_centralizer import run as calculate
         return calculate(payload, database)
@@ -44,4 +52,25 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None):
         from carat_browser import run as calculate
         return calculate(payload, catalog)
     from symmetry_core import run as calculate
-    return calculate(tool, payload)
+    result = calculate(tool, payload)
+    if tool == 'analyze' and payload.get('group_number') is not None:
+        from standard_labels import run as label
+        try:
+            result['standardLabels'] = label({
+                'action': 'annotate', 'group_number': payload['group_number'],
+                'k': payload.get('k', [0, 0, 0]),
+                'double_valued': payload.get('doubleValued', False),
+                'analysis': result,
+                **({key: payload[key] for key in ('k_label', 'bz_type') if key in payload})
+            }, database, label_database)
+        except ValueError as error:
+            # Standard names are optional metadata, never a replacement for
+            # the independently verified numerical representation above.
+            result['standardLabels'] = {
+                'complete': False, 'bc_complete': False, 'bilbao_complete': False,
+                'status': 'unavailable',
+                'message': '标准标签未确认；已保留通过验证的数值表示。原因：' + str(error),
+                'mappings': [{'local_label': row['label'], 'bc_label': None,
+                              'bilbao_label': None, 'status': 'unmatched'}
+                             for row in result['irreps']]}
+    return result

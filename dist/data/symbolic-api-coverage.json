@@ -6,10 +6,11 @@
   "all_upstream_apis_covered": false,
   "counts": {
     "partial_exact_workflow": 35,
-    "not_covered_by_symbolic_port": 224,
-    "existing_numerical_workflow": 20,
-    "partial_existing_workflow": 1,
-    "exact_workflow": 39
+    "not_covered_by_symbolic_port": 218,
+    "existing_numerical_workflow": 22,
+    "partial_existing_workflow": 3,
+    "exact_workflow": 39,
+    "data_or_option": 2
   },
   "sources": [
     {
@@ -82,7 +83,7 @@
     "cyclotomic_matrix_width": 24
   },
   "remaining_symbolic_gaps": [
-    "BC/CDML/Bilbao naming and upstream special-point/library overloads; exact automatic representations use local E/M/F labels.",
+    "Automatic exact E/M/F symbolic representation labels and magnetic corepresentation catalogue names remain separate; standard_labels now maps ordinary SG BC/Bilbao tables, with absent/ambiguous names explicit.",
     "Exhaustive symbolic parameter/branch stratification; generic little-group strata carry explicit exceptional-parameter conditions.",
     "Continuous spin-space-group and initialized Wolfram session APIs, automatic fitting/plotting/external-program interfaces.",
     "General semilinear corepresentation tensor decomposition with upstream labels and every upstream point-group convenience wrapper.",
@@ -2161,10 +2162,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "LGIrepLabel",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "Upstream catalogue data symbol; no corresponding Wolfram object/session/display contract is claimed. This is not counted as a missing mathematical algorithm.",
+      "status": "data_or_option",
+      "tool": "standard_labels",
+      "action": "table",
+      "scope": "All published single-valued BC named k-point/line label and exact character tables extracted from the pinned SpaceGroupIrep source; JSON schema.",
       "source_declaration_count": 1,
       "kind": "catalogue_data"
     },
@@ -2172,10 +2173,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "DLGIrepLabel",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "Upstream catalogue data symbol; no corresponding Wolfram object/session/display contract is claimed. This is not counted as a missing mathematical algorithm.",
+      "status": "data_or_option",
+      "tool": "standard_labels",
+      "action": "table",
+      "scope": "All published double-valued BC named k-point/line label and exact character tables extracted from the pinned SpaceGroupIrep source; JSON schema.",
       "source_declaration_count": 1,
       "kind": "catalogue_data"
     },
@@ -2577,10 +2578,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "readPOSCAR",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "Upstream io or external symbol; no corresponding Wolfram object/session/display contract is claimed. This is not counted as a missing mathematical algorithm.",
+      "status": "existing_numerical_workflow",
+      "tool": "structure_bc",
+      "action": "convert",
+      "scope": "VASP 4/5 direct/Cartesian parsing, volume/three-factor scaling and geometry conversion; original non-geometric fields retained as metadata. New JSON interface, not the Wolfram return object.",
       "source_declaration_count": 1,
       "kind": "io_or_external"
     },
@@ -2588,10 +2589,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "spglibGetSym",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "Upstream io or external symbol; no corresponding Wolfram object/session/display contract is claimed. This is not counted as a missing mathematical algorithm.",
+      "status": "existing_numerical_workflow",
+      "tool": "structure_bc",
+      "action": "convert",
+      "scope": "Ordinary 230-group spglib identification and original BC basis/origin conversion, full operations, reciprocal transport and geometry exports. Ordered 3D periodic POSCAR/CIF/cell inputs; excludes magnetic/disordered structures and trace spin-frame conversion.",
       "source_declaration_count": 1,
       "kind": "io_or_external"
     },
@@ -2602,7 +2603,7 @@
       "status": "not_covered_by_symbolic_port",
       "tool": null,
       "action": null,
-      "scope": "Upstream io or external symbol; no corresponding Wolfram object/session/display contract is claimed. This is not counted as a missing mathematical algorithm.",
+      "scope": "Structure-only POSCAR/CIF to BC conversion is implemented by structure_bc. Automatic trace operation/spin-frame/character phase transport is still outside this workflow.",
       "source_declaration_count": 1,
       "kind": "io_or_external"
     },
@@ -2643,10 +2644,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "buildTr4BCSrep",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "This named upstream mathematical function has no claimed Python compatibility mapping; related workflows do not imply coverage of its signature or complete algorithm.",
+      "status": "partial_existing_workflow",
+      "tool": "standard_labels",
+      "action": "table",
+      "scope": "Numerical character vectors from frozen Bilbao-derived maximal-k tables, converted to BC convention and matched to exact BC table rows. Arbitrary external Bilbao XML and every Wolfram overload are not implemented.",
       "source_declaration_count": 1,
       "kind": "calculation"
     },
@@ -2654,10 +2655,10 @@
       "project": "SpaceGroupIrep",
       "symbol": "krepBCStoBC",
       "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl",
-      "status": "not_covered_by_symbolic_port",
-      "tool": null,
-      "action": null,
-      "scope": "This named upstream mathematical function has no claimed Python compatibility mapping; related workflows do not imply coverage of its signature or complete algorithm.",
+      "status": "partial_existing_workflow",
+      "tool": "standard_labels",
+      "action": "annotate",
+      "scope": "Complete-character BC/Bilbao comparison with Seitz/translation/spin-section transport. Frozen IrRep Bilbao maximal-k tables cover all 230 ordinary SGs and both spin types; absent line names or ambiguous transports remain unresolved. Not a full upstream .mx database/signature port.",
       "source_declaration_count": 1,
       "kind": "calculation"
     },
@@ -3968,14 +3969,6 @@
     {
       "project": "SpaceGroupIrep",
       "symbol": "kptBCStoBC"
-    },
-    {
-      "project": "SpaceGroupIrep",
-      "symbol": "buildTr4BCSrep"
-    },
-    {
-      "project": "SpaceGroupIrep",
-      "symbol": "krepBCStoBC"
     },
     {
       "project": "SpaceGroupIrep",

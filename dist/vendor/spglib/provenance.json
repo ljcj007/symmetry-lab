@@ -1,0 +1,21 @@
+{
+  "library": "spglib",
+  "version": "2.8.0",
+  "source_url": "https://files.pythonhosted.org/packages/e0/12/571ccea78d63718030194972062a64f4a6ab9f09a4fb329c110d56766563/spglib-2.8.0.tar.gz",
+  "source_sha256": "12a224434b5659793353937625fd7eb91c00c8952c18ca729a7a8117b1e29e8f",
+  "source_repository": "https://github.com/spglib/spglib",
+  "license": "BSD-3-Clause",
+  "compiler": "Emscripten 5.0.3",
+  "sdk_release_commit": "065bfade0ee2c02138b83cb10049d8be95e146b6",
+  "c_source_changes": "None. Generated version.h and a separate JSON transport wrapper only.",
+  "build_script": "scripts/build-spglib-wasm.py",
+  "bridge_source": "scripts/spglib-wasm-bridge.c",
+  "bridge_sha256": "05d4213649308387a9ad3855894ffa8b7c3ae7e21b5aed1e62c5360de8da2e3c",
+  "assets": {
+    "spglib-kernel.mjs": "fb24a659d766645bf17e82654e4e5cc0c538ad526728bbf010da4250b1f25e10",
+    "spglib-kernel.wasm": "b5b154077c7c5e6f254ddded3a4283b6b0558d4d10634815da040c1d2b2689fa",
+    "LICENSE.spglib": "9c4e602ce15bf48206dad105b666ddaeedba747eeda6465807106bc11f4f587f",
+    "bridge.mjs": "aa03dc552c3e9c01b7443fdc6aef2641295377d63e3c8168213f5c9907f18651"
+  },
+  "python_adapter_sha256": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929"
+}

@@ -36,6 +36,21 @@
       "source_manifest": "upstream/CARAT/PROVENANCE.json",
       "license_file": "dist/licenses/CARAT-LICENSE.txt",
       "catalog_manifest": "dist/data/carat/manifest.json"
+    },
+    {
+      "name": "spglib",
+      "repository": "https://github.com/spglib/spglib",
+      "version": "2.8.0",
+      "license": "BSD-3-Clause",
+      "source_manifest": "dist/vendor/spglib/provenance.json"
+    },
+    {
+      "name": "IrRep",
+      "repository": "https://github.com/irreducible-representations/irrep",
+      "commit": "4f43f138d30ef37a499a297ac9b1ec8ef14717cc",
+      "license": "GPL-3.0",
+      "source_snapshot": "dist/data/labels/bilbao-source.zip",
+      "source_manifest": "dist/data/labels/manifest.json"
     }
   ],
   "modules": [
@@ -56,10 +71,9 @@
         "vasp2trace/MagVasp2trace parsing and character matching"
       ],
       "limitations": [
-        "numerical D/C labels",
-        "explicit BC primitive coordinates required",
-        "no symbolic k lines",
-        "no automatic general POSCAR/CIF to BC conversion"
+        "Local D/C numerical identifiers; optional standard_labels annotation is a separate workflow",
+        "Trace matching requires compatible BC primitive coordinates and spin frame",
+        "Symbolic k lines and structure conversion are separate modules"
       ],
       "sha256": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0"
     },
@@ -304,6 +318,44 @@
       ],
       "validation": "scripts/test-python-symbolic-spacegroups.py",
       "sha256": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb"
+    },
+    {
+      "path": "dist/python/structure_bc.py",
+      "upstream": [
+        "SpaceGroupIrep",
+        "spglib"
+      ],
+      "license": "GPL-3.0-only",
+      "implementation": "Python POSCAR/CIF parser and original all-230 BC settings; spglib native/WASM identification, validated affine and reciprocal coordinate transport, full Hall operation recovery, geometry exports.",
+      "validation": "dist/data/structure/validation.json",
+      "limitations": [
+        "Ordered ordinary three-dimensional periodic structures; explicit numerical symmetry tolerance",
+        "No magnetic/disordered/partial-occupancy model conversion or automatic trace spin-frame transport"
+      ],
+      "sha256": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c"
+    },
+    {
+      "path": "dist/python/standard_labels.py",
+      "upstream": [
+        "SpaceGroupIrep",
+        "IrRep/Bilbao"
+      ],
+      "license": "GPL-3.0-only",
+      "implementation": "Exact published BC named k point/line tables and frozen Bilbao maximal-k tables; validated complete-character matching with Seitz, reciprocal, translation and spin-section transport.",
+      "validation": "dist/data/labels/validation.json",
+      "limitations": [
+        "Ordinary space-group irreps only; magnetic corepresentation names remain separate",
+        "No invented Bilbao line labels; missing or conflicting standard names remain unresolved"
+      ],
+      "sha256": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4"
+    },
+    {
+      "path": "dist/python/spglib_runtime.py",
+      "upstream": "spglib",
+      "license": "GPL-3.0-only",
+      "implementation": "Python API adapter for the official BSD-3-Clause spglib 2.8.0 C kernel compiled to WebAssembly. The original C library retains its BSD license.",
+      "validation": "scripts/test-spglib-wasm.py",
+      "sha256": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929"
     }
   ],
   "coordinate_conventions": {
@@ -329,7 +381,13 @@
       "numpy": "2.4.6",
       "sympy": "1.14.0"
     },
-    "execution": "module Web Worker, single task at a time, no input transfer to backend"
+    "execution": "module Web Worker, single task at a time, no input transfer to backend",
+    "spglib": {
+      "version": "2.8.0",
+      "browser": "official C kernel compiled to WebAssembly",
+      "provenance": "dist/vendor/spglib/provenance.json",
+      "native": "official PyPI spglib==2.8.0"
+    }
   },
   "updated": "2026-10-16",
   "shared_api": {
@@ -349,7 +407,9 @@
       "integral_normalizer",
       "symbolic_interfaces",
       "arithmetic_centralizer",
-      "symbolic_spacegroups"
+      "symbolic_spacegroups",
+      "structure_bc",
+      "standard_labels"
     ],
     "contract_test": "scripts/test-python-api.py"
   },
@@ -360,7 +420,10 @@
     "dist/docs/symbolic-interfaces.md",
     "dist/docs/arithmetic-centralizer.md",
     "dist/docs/affine-properties.md",
-    "dist/docs/symbolic-spacegroups.md"
+    "dist/docs/symbolic-spacegroups.md",
+    "dist/docs/structure-bc.md",
+    "dist/docs/standard-labels.md",
+    "dist/docs/spglib-browser.md"
   ],
   "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

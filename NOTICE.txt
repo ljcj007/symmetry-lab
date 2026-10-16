@@ -96,3 +96,14 @@ Further arithmetic and symbolic coverage on 2026-10-16:
    Supported arithmetic models and parameter strata are documented separately;
    this release does not assert complete upstream signature compatibility or
    that all higher-dimensional catalogue classes have been precomputed.
+
+Structure standardization uses the original SpaceGroupIrep getBCsymmetry.py BC settings (Gui-Bin Liu, GPL-3.0), with a Python parser/converter and the official spglib 2.8.0 C library compiled to WebAssembly (BSD-3-Clause). See dist/vendor/spglib/LICENSE.spglib and provenance.json.
+
+BC standard labels are derived from the original SpaceGroupIrep tables.
+Bilbao maximal-k labels and character tables are redistributed from IrRep
+(https://github.com/irreducible-representations/irrep), commit
+4f43f138d30ef37a499a297ac9b1ec8ef14717cc, under GPL-3.0.
+See dist/licenses/IrRep-LICENSE.txt, dist/data/labels/manifest.json and the
+unmodified table snapshot dist/data/labels/bilbao-source.zip. Missing and
+ambiguous source labels are preserved; magnetic corepresentation labels
+are outside this standard-label dataset.

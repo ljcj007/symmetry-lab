@@ -63,10 +63,10 @@ npm run test:python
 ## 坐标、标签与适用范围
 
 1. 旋转和平移采用 Bradley–Cracknell（BC）直接原胞分数坐标；波矢采用其倒易原胞分数坐标。磁群使用 BNS family 对应的原胞。平移相位为 `exp(-2π i k·t)`，反幺正操作的波矢作用为 `-R^-T k`。
-2. `D1, D2, …` 和 `C1, C2, …` 是本次计算的数值标签，**不等于 BC、CDML 或 Bilbao 标准标签**。输出矩阵可能处于不同的等价基底，不能通过逐元素比较判断是否与论文一致。
+2. `D1, D2, …` 和 `C1, C2, …` 保留为本次计算的本地编号。普通空间群另由 `standard_labels` 比对完整特征标、平移相位和自旋提升，输出 BC / Bilbao 标准标签及匹配证书；缺失或歧义标签不强行命名。磁共表示不套用普通空间群标签。输出矩阵可能处于不同的等价基底，不能通过逐元素比较判断是否与论文一致。
 3. 原有 SG/MSG 数值表示工具处理指定的数值 k 点，不生成 Wolfram 符号参数表达式或整条符号 k 线。上游高对称点名称可能依赖 BZ 类型；实际计算以坐标为准。
 4. 页面晶格和倒易原胞采用示意参数；它们不是输入材料的实验结构，也不是 Wigner–Seitz 布里渊区。不能据此读取定量晶格长度和夹角。
-5. trace 必须与选定群的 BC 原胞、原点及自旋框架兼容。当前没有 POSCAR/CIF 自动标准化、`autoConvTraceToBC` 等价转换或任意自旋框架转换。匹配失败时应先准备正确设置的数据。
+5. trace 必须与选定群的 BC 原胞、原点及自旋框架兼容。新增 `structure_bc` 支持 POSCAR/CIF 到 BC 晶胞的转换。已有 trace 还包含原点相位和自旋框架，不能仅靠晶胞标准化自动转换；`autoConvTraceToBC` 的完整 trace 工作流仍未覆盖。匹配失败时应先准备正确设置的数据。
 6. 存储的空间自旋矩阵采用 `↓↑` 基底、上游六位小数精度；trace 的 `↑↓` 基底在匹配时转换。数据库的 `antiunitary` 标记与空间自旋矩阵分开存储，时间反演由计算引擎处理。
 7. 反幺正矩阵必须与复共轭算符 `K` 联用，其矩阵迹不作为普通线性特征标。能带共表示分解使用幺正限制的 Wigner 类型归一化；不完整的 Kramers/反幺正伙伴集合会被拒绝。
 8. 原有表示、能带与拓扑计算使用双精度数值，并检查乘法关系、因子系统、正交性、维数或重构误差。有限的测试不能证明所有波矢、所有输入与上游标准标签完全等价。大维数全表示和直积仍会受浏览器内存与时间限制。
@@ -219,3 +219,20 @@ python dist/python/cli.py symbolic_spacegroups dist/examples/symbolic-sg-fullsta
 ```
 
 逐项清单包含四个项目的 **319 个唯一公开符号**，其中 175 项为计算接口；其余为数据、选项、显示或外部 I/O。截至本版，83 个计算接口仍没有对应迁移流程，此外有部分覆盖项。清单可在网页按项目、状态或名称检索，不能把整个项目标为已经完整移植。
+
+## 结构转换与标准标签
+
+网页侧栏的“结构 → BC 晶胞”读取本地 POSCAR / CONTCAR / CIF，可设置对称性容差和输入波矢。结果给出 BC 原胞、ITA 常规胞、未理想化晶胞、基矢/原点/倒易坐标变换、生成元与原子协变检查，并导出 POSCAR / CIF / JSON。可直接把识别到的空间群和 BC 波矢送入表示工作台。
+
+结构解析与坐标处理由 Python 完成；空间群识别采用从官方源码构建的 spglib 2.8.0 WebAssembly 内核。输入结构不会传到服务器。CPython 使用官方 `spglib==2.8.0` 包，同一个 JSON API 可本地批处理：
+
+```sh
+python dist/python/cli.py structure_bc dist/examples/structure-silicon.json -o silicon-bc.json
+python scripts/test-python-structure-bc.py
+python scripts/test-python-structure-bc.py --all
+python scripts/test-spglib-wasm.py
+```
+
+普通空间群工作台自动显示 BC / Bilbao 标准标签，并在专门的结果页提供候选与匹配证书。`analyze` 输入带 `group_number` 时，JSON 的 `standardLabels` 保留本地编号到标准标签的对应关系；矩阵、CSV 与能带分解的本地引用不会因为命名而改变。
+
+方法、适用输入和可复现构建见 [结构转换](dist/docs/structure-bc.md)、[标准标签](dist/docs/standard-labels.md) 和 [spglib 浏览器内核](dist/docs/spglib-browser.md)。普通 230 空间群转换不处理磁结构、部分占位或无序模型；标准标签范围以打包表和匹配证书为准。
