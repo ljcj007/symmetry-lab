@@ -73,6 +73,9 @@ def matvec(a, v):
 
 
 def determinant(a):
+    # Raw integer matrices also enter through the CARAT/arithmetic modules.
+    # Keep Gaussian elimination rational even when no caller parsed them.
+    a = matrix(a)
     d = len(a)
     if any(len(row) != d for row in a):
         raise ValueError("Expected a square matrix")
@@ -95,6 +98,7 @@ def determinant(a):
 
 
 def inverse(a):
+    a = matrix(a)
     d = len(a)
     if any(len(row) != d for row in a):
         raise ValueError("Expected a square matrix")

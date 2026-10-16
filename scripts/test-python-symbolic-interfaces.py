@@ -339,7 +339,10 @@ class SymbolicGeometryInterfaces(unittest.TestCase):
     def test_api_inventory_discloses_uncovered_symbols(self):
         coverage = json.loads((ROOT/'dist/data/symbolic-api-coverage.json').read_text(encoding='utf-8'))
         self.assertFalse(coverage['all_upstream_apis_covered'])
-        self.assertEqual(len(coverage['inventory']), 308)
+        self.assertEqual(len(coverage['inventory']), 319)
+        self.assertEqual(len({(r['project'], r['symbol']) for r in coverage['inventory']}), 319)
+        self.assertEqual(coverage['project_counts']['CrystKit'], 17)
+        self.assertEqual(sum(coverage['kind_counts'].values()), 319)
         self.assertEqual(set(coverage['actions']), set(interface.ACTIONS))
         self.assertTrue(coverage['remaining_symbolic_gaps'])
 

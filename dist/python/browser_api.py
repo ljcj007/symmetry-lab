@@ -1,14 +1,21 @@
 """Shared, allowlisted JSON API for CPython and the browser Worker."""
 TOOLS = ('analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
-         'carat_integral', 'integral_normalizer', 'symbolic_interfaces')
+         'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
+         'arithmetic_centralizer', 'symbolic_spacegroups')
 
 
-def run(tool, payload, database=None, catalog=None):
+def run(tool, payload, database=None, catalog=None, magnetic_database=None):
     if tool not in TOOLS:
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool == 'arithmetic_centralizer':
+        from arithmetic_centralizer import run as calculate
+        return calculate(payload, database)
+    if tool == 'symbolic_spacegroups':
+        from symbolic_spacegroups import run as calculate
+        return calculate(payload, database, magnetic_database)
     if tool == 'carat_integral':
         from carat_integral import run as calculate
         return calculate(payload, catalog)

@@ -94,10 +94,10 @@ checks += 1
 # A complete affine classification need not imply a complete normalizer.
 # Deliberately use only the identity subgroup: for this 2D D8 case its two
 # H^2 orbits already attain the independent affine count.
-import integral_normalizer
-saved_normalizer = integral_normalizer.normalizer
+import arithmetic_centralizer
+saved_normalizer = arithmetic_centralizer.arithmetic_normalizer
 try:
-    integral_normalizer.normalizer = lambda group, **options: {
+    arithmetic_centralizer.arithmetic_normalizer = lambda group, options=None: {
         'generators': [cb._identity(len(group[0]))], 'complete': False,
         'certificate': 'Test subgroup only'}
     affine = ci.run({'action': 'affine_classes', 'dimension': 2, 'name': 'max.2'}, catalogs[2])
@@ -109,7 +109,7 @@ try:
                       for g, shift in zip(representative['point_generators'], representative['generator_translations'])]
         assert len(cryst.affine_closure(operations)) == 8
 finally:
-    integral_normalizer.normalizer = saved_normalizer
+    arithmetic_centralizer.arithmetic_normalizer = saved_normalizer
 checks += 1
 
 # Exhaustive primitive-form isometry proof finds actual unimodular witnesses.
@@ -133,7 +133,7 @@ checks += 1
 partial = ci.run({'name': 'min.352', 'max_candidates': 1}, catalogs[6])
 assert not partial['z_complete'] and partial['z_class_count'] is None
 assert partial['z_class_lower_bound'] == 1 and partial['search']['stop_reason'] == 'max_candidates'
-uncatalogued = ci.run({'generators': left, 'max_candidates': 2})
+uncatalogued = ci.run({'generators': left, 'max_candidates': 2, 'classification_method': 'neighbors'})
 assert not uncatalogued['z_complete'] and uncatalogued['z_class_count'] is None
 for field, value in [('max_candidates', True), ('max_candidates', 1.5), ('max_depth', 0), ('max_order', 0)]:
     try:

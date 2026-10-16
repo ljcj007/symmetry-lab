@@ -100,14 +100,16 @@
         "identification": "Positive matches are certified; no_match_in_search is not a nonisomorphism proof",
         "matrix_conjugacy": "Bounded image assignments and invertible-intertwiner search report inconclusive when necessary"
       },
-      "validation": "13 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs",
+      "validation": "14 scientific regression tests; all 230 database closures and invariant Gram forms; independent cyclotomic orders through 12D; literal upstream nonstandard SG227 generators; exact affine and conjugacy certificates; negative and malformed inputs; exact large raw-integer determinant and inverse regression",
       "extended_by": [
         "crystkit_extensions.py",
         "carat_browser.py",
         "carat_integral.py",
-        "integral_normalizer.py"
+        "integral_normalizer.py",
+        "arithmetic_centralizer.py",
+        "finite_conductor.py"
       ],
-      "sha256": "a65901226e3127dd0bb906206eb58e6c5f330e8035e55e39039e27688f9c39e6"
+      "sha256": "a437692e93c64637b9159de08611b57887a97d06091f5a64bf917b454c663460"
     },
     {
       "path": "dist/python/carat_browser.py",
@@ -145,7 +147,8 @@
         "Normalizer extension orbits with explicit completeness and orientation split",
         "Infinite space-group generation via Schreier translation lattice certificate",
         "Abelianization lower bound and certified upper bound; minimum only when bounds coincide",
-        "Exact origin-congruence affine comparison for supplied bases"
+        "Exact origin-congruence affine comparison for supplied bases",
+        "Exact all-coset norm/Smith torsion test, orientability and saturated central translation lattice"
       ],
       "limitations": [
         "Legacy metric fallback is explicitly incomplete outside its proof cases; public normalizer routes use integral_normalizer.py first",
@@ -153,10 +156,11 @@
         "Candidate generator searches may establish bounds only"
       ],
       "validation": "scripts/test-python-crystkit-extensions.py",
-      "sha256": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d",
+      "sha256": "a6128ed300c412bad7c7cef4aaf83fdfada0af90c4c28990c290241b6a2401bd",
       "extended_by": [
         "integral_normalizer.py",
-        "carat_integral.py"
+        "carat_integral.py",
+        "arithmetic_centralizer.py"
       ]
     },
     {
@@ -185,13 +189,12 @@
       "path": "dist/python/carat_integral.py",
       "upstream": "CARAT / CrystKit",
       "license": "GPL-3.0-or-later",
-      "implementation": "Constructive prime-cyclic classes and certified modular lattice search",
+      "implementation": "Constructive prime-cyclic classes, finite maximal-order conductor intervals and certified neighbour fallback",
       "coverage": [
-        "All prime-order cyclic integral and affine classes through dimension six",
-        "All subspace dimensions within ambient dimensions 1–6, lifted to exact neighbour lattices",
-        "Smith invariants and exhaustive primitive-form integral isometries",
-        "Complete classification only on structure theorem or independent catalogue cardinality certificate",
-        "Actual affine matrices and fractional translation representatives across Z classes"
+        "Constructive prime-cyclic integral and affine classes",
+        "Finite conductor-interval exhaustion for verified maximal-order models; catalogue counts optional",
+        "Exact cohomology and arithmetic normalizer orbits",
+        "Partial coverage and unresolved equivalence separately reported"
       ],
       "limitations": [
         "General reducible noncyclic integral equivalence may remain inconclusive",
@@ -199,7 +202,7 @@
         "Finite resource searches do not guarantee all higher-dimensional classes"
       ],
       "validation": "scripts/test-python-carat-integral.py",
-      "sha256": "07b60cb6d66828e94c257e8324324b4fa356adf26ae8c395f23309c6fbf480bf"
+      "sha256": "66e78a666f51e007a72e048dc740da34b09cecd0cc79a2be20869fd96264d44e"
     },
     {
       "path": "dist/python/integral_normalizer.py",
@@ -212,15 +215,15 @@
         "Characteristic cyclic subgroup reduction when conjugacy orbit closes",
         "Verified repeated absolutely irreducible integral tensor blocks",
         "Canonical primitive metrics for rational multiplicity-free real irreducibles",
-        "Exact generator verification and independent completeness status"
+        "Exact generator verification and independent completeness status",
+        "Public normalizer and affine-orbit entry points additionally use arithmetic_centralizer split and real-quadratic lifts"
       ],
       "limitations": [
-        "Arbitrary semisimple-order units and quaternionic arithmetic centralizers not implemented",
-        "Unresolved cases return explicitly incomplete metric subgroups",
+        "Higher-degree non-split arithmetic components and unimplemented division-algebra unit branches can remain incomplete",
         "Resource bounds can prevent a proof"
       ],
       "validation": "scripts/test-python-integral-normalizer.py",
-      "sha256": "b328a9984d87c0818282a440a81fc6f58ca00cad74f145d0a46e6007dbb3413a"
+      "sha256": "76c38eff2ec4e58cf16219d8b0793903f69d212e802185fbc3a144e40b650f72"
     },
     {
       "path": "dist/python/symbolic_interfaces.py",
@@ -233,8 +236,7 @@
         "Projective semilinear representation validation and real antiunitary intertwiners",
         "Projectors, matrix units, character/tensor decomposition and induction",
         "Constructive Wigner a/b/c corepresentations with every product verified",
-        "Symbolic Seitz, Bloch cocycles, k-star translation phases, Reynolds and gauge transforms",
-        "308-symbol upstream coverage inventory"
+        "Symbolic Seitz, Bloch cocycles, k-star translation phases, Reynolds and gauge transforms"
       ],
       "limitations": [
         "Supplied multiplication tables and matrices, not automatic BC/Bilbao symbolic labels",
@@ -243,6 +245,65 @@
       ],
       "validation": "scripts/test-python-symbolic-interfaces.py",
       "sha256": "f834fda01e405cbea742ce10d3f882801828ef4a371359be1c63d4b2678e9c29"
+    },
+    {
+      "path": "dist/python/arithmetic_centralizer.py",
+      "upstream": "CrystKit / CARAT",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Independent exact saturated endomorphism-order and arithmetic unit algorithms",
+      "coverage": [
+        "Saturated integral commutant, multiplication and determinant norm equation",
+        "Rational central primitive idempotents",
+        "Split rational multiplicity modules with arbitrary integral glue",
+        "Finite positive-definite adjoint-norm unit enumeration, including quaternion orders",
+        "Real quadratic order fundamental units through exact Pell bounds",
+        "Complete character-preserving automorphism lifts for split and real quadratic cases"
+      ],
+      "limitations": [
+        "General higher-degree number-field and arbitrary division-algebra units not complete",
+        "Finite budgets may prevent a proof"
+      ],
+      "validation": "scripts/test-python-arithmetic-centralizer.py",
+      "sha256": "c8247579e7602ee1772ec59d605c4b58badbe7d034cf55994f4951e345fa2547"
+    },
+    {
+      "path": "dist/python/finite_conductor.py",
+      "upstream": "CrystKit / CARAT",
+      "license": "GPL-3.0-or-later",
+      "implementation": "Independent finite maximal-order conductor interval and multiplicity-lattice orbit classification",
+      "coverage": [
+        "One-to-six-dimensional finite abelian cyclotomic PID models",
+        "Verified split rational matrix-algebra models and absolutely irreducible rational representations",
+        "Exact finite invariant-lattice traversal with maximal-order saturation",
+        "Complete candidate cover distinguished from complete unlabelled integral equivalence"
+      ],
+      "limitations": [
+        "General non-split matrix algebras over number fields or division algebras are not modelled",
+        "Large finite conductor intervals may exceed browser/resource budgets",
+        "Does not precompute every high-dimensional catalogue class"
+      ],
+      "validation": "scripts/test-python-finite-conductor.py",
+      "sha256": "930cb66808bd650d26d9cb761e1205cda3de95815356126fd233d186e3f98df9"
+    },
+    {
+      "path": "dist/python/symbolic_spacegroups.py",
+      "upstream": "SpaceGroupIrep / MSGCorep / MagneticTB",
+      "license": "GPL-3.0-only",
+      "implementation": "Independent exact twisted-regular and semilinear representation algorithms",
+      "coverage": [
+        "Automatic exact little groups, stars, irreps and Wigner corepresentations from group identifiers",
+        "Exact rational translations and symbolic Bloch phases",
+        "Exact invariant-metric SU(2) spin lifts",
+        "Full k-star induction with exact semilinear products",
+        "Allowlisted upstream-name JSON compatibility routes"
+      ],
+      "limitations": [
+        "Local labels, not BC/CDML/Bilbao standard labels",
+        "Generic parameter strata and explicit finite group/conductor/dimension limits",
+        "Not complete upstream calling-signature compatibility"
+      ],
+      "validation": "scripts/test-python-symbolic-spacegroups.py",
+      "sha256": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb"
     }
   ],
   "coordinate_conventions": {
@@ -286,7 +347,9 @@
       "crystkit_ext",
       "carat_integral",
       "integral_normalizer",
-      "symbolic_interfaces"
+      "symbolic_interfaces",
+      "arithmetic_centralizer",
+      "symbolic_spacegroups"
     ],
     "contract_test": "scripts/test-python-api.py"
   },
@@ -294,7 +357,10 @@
   "proofNotes": [
     "dist/docs/integral-classification.md",
     "dist/docs/integral-normalizer.md",
-    "dist/docs/symbolic-interfaces.md"
+    "dist/docs/symbolic-interfaces.md",
+    "dist/docs/arithmetic-centralizer.md",
+    "dist/docs/affine-properties.md",
+    "dist/docs/symbolic-spacegroups.md"
   ],
   "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

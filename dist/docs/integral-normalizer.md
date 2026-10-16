@@ -1,3 +1,9 @@
+> The public normalizer and affine-orbit entry points now first use the additional
+> split-rational and real-quadratic arithmetic algorithms described in
+> [arithmetic-centralizer.md](arithmetic-centralizer.md). The algorithms below
+> remain certified fast cases and fallbacks; their limitations are not a claim
+> that the newer branches are unavailable.
+
 # Exact integral normalizer implementation, 2026-10-16
 
 This implementation is pure Python/SymPy and shares the existing fixed integral point-group and H² engine. It does **not** claim that every finite GL(6,Z) group has a complete normalizer implementation. Each successful complete branch supplies a mathematical exhaustion certificate; unsupported cases keep `complete: false` and return the previously established finite metric subgroup. Explicit search budgets can fail without proving nonexistence.

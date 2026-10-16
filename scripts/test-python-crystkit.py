@@ -17,6 +17,14 @@ def ops(number):
 
 
 class CrystKitTests(unittest.TestCase):
+    def test_raw_large_integer_elimination_remains_exact(self):
+        n = 10**20
+        a = ((n, n-1), (n+1, n))
+        self.assertEqual(c.determinant(a), 1)
+        self.assertEqual(c.inverse(a), ((n, 1-n), (-n-1, n)))
+        self.assertTrue(all(isinstance(x, F) for row in c.inverse(a) for x in row))
+        self.assertEqual(c.matmul(a, c.inverse(a)), c.identity(2))
+
     def test_finite_orders_match_crystallographic_restriction(self):
         self.assertEqual(c.phipn_inverse(1), [2])
         self.assertEqual(c.phipn_inverse(2), [3, 4])

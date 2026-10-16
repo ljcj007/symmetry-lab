@@ -20,14 +20,15 @@ def main():
     args = parser.parse_args()
     payload = json.loads(sys.stdin.read() if args.input == '-' else Path(args.input).read_text(encoding='utf-8-sig'))
     data = Path(__file__).resolve().parent.parent / 'data'
-    database = json.loads((data / 'space-groups.json').read_text(encoding='utf8')) if args.tool in ('crystkit', 'crystkit_ext', 'integral_normalizer') else None
+    database = json.loads((data / 'space-groups.json').read_text(encoding='utf8')) if args.tool in ('crystkit', 'crystkit_ext', 'integral_normalizer', 'arithmetic_centralizer', 'symbolic_spacegroups') else None
+    magnetic_database = json.loads((data / 'magnetic-groups.json').read_text(encoding='utf8')) if args.tool == 'symbolic_spacegroups' else None
     catalog = None
     if args.tool in ('carat', 'carat_integral'):
         dimension = payload.get('dimension', 3)
         if type(dimension) is not int or dimension not in range(1, 7):
             raise ValueError('CARAT dimension must be an integer from 1 to 6')
         catalog = json.loads(gzip.decompress((data / 'carat' / f'q{dimension}.json.gz').read_bytes()))
-    result = run(args.tool, payload, database, catalog)
+    result = run(args.tool, payload, database, catalog, magnetic_database)
     output = json.dumps(result, ensure_ascii=False, allow_nan=False, indent=2)
     if args.output:
         Path(args.output).write_text(output + '\n', encoding='utf8')

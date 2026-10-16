@@ -83,3 +83,16 @@ Further exact Python algorithms added on 2026-10-16:
    These are independently implemented finite-resource algorithms, not a claim
    of full CARAT/GAP/Mathematica compatibility. Coverage and proof boundaries are
    retained in README.md and dist/data/python-provenance.json.
+
+Further arithmetic and symbolic coverage on 2026-10-16:
+   arithmetic_centralizer.py: saturated endomorphism orders, rational central
+   idempotents, split-module units with lattice glue, definite norm units,
+   real quadratic Pell units and certified normalizer lifts.
+   finite_conductor.py: finite maximal-order conductor intervals and exact
+   multiplicity-lattice orbits, with explicit completeness and resource status.
+   symbolic_spacegroups.py: automatic exact SG/MSG little representations,
+   Wigner corepresentations, full-star induction and original-name JSON aliases.
+   crystkit_extensions.py: exact torsion, orientability and translation center.
+   Supported arithmetic models and parameter strata are documented separately;
+   this release does not assert complete upstream signature compatibility or
+   that all higher-dimensional catalogue classes have been precomputed.

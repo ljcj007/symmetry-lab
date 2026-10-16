@@ -132,7 +132,7 @@ node scripts/test-trace.mjs
 
 ## 精确代数与高维群（2026-10-16）
 
-网页新增“精确代数与高维群”，与原有工具共用浏览器内的 Python Worker。`browser_api.py` 提供相同的本机 / 浏览器 JSON 分发接口，提供 `carat`、`carat_integral`、`integral_normalizer`、`symbolic`、`symbolic_interfaces`、`crystkit_ext` 六种精确工具。输入不经过 eval 或任意代码执行。
+网页新增“精确代数与高维群”，与原有工具共用浏览器内的 Python Worker。`browser_api.py` 提供相同的本机 / 浏览器 JSON 分发接口，提供 `carat`、`carat_integral`、`integral_normalizer`、`arithmetic_centralizer`、`symbolic`、`symbolic_interfaces`、`symbolic_spacegroups`、`crystkit_ext` 八种精确工具。输入不经过 eval 或任意代码执行。
 
 ### CARAT 分类
 
@@ -143,7 +143,7 @@ node scripts/test-trace.mjs
 - `classify`：从输入整数矩阵闭合有限群，计算共轭类与精确特征不变量；需要时用群代数中心的本原幂等元和有理交织矩阵验证 Q 类。输出 `q_status`、`z_status` 与明确证书。
 - `invariant_lattices`：穷尽指定有限指数内的 HNF 不变子格，给出整数共轭代表与完成范围。不同子格可能属于同一 Z 类，**不把子格数当作 Z 类数**。
 
-Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包括平移部分。完整 Q 类目录并不等于完整高维 Z 类 / 仿射类枚举器；上游存储的 Z 类、仿射类“数量”也不等于本站已经生成了所有这些代表。新的 `carat_integral` 与 `integral_normalizer` 模块进一步实现下述有证书算法；一般非循环算术中心化子和全部高维输入的完整分类仍未覆盖。三维全仿射等价类为 219；通常的 230 空间群类型按手性进一步区分，不能混用这两个计数。
+Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包括平移部分。完整 Q 类目录并不等于完整高维 Z 类 / 仿射类枚举器；上游存储的 Z 类、仿射类“数量”也不等于本站已经生成了所有这些代表。新的 `carat_integral` 与 `integral_normalizer` 模块进一步实现下述有证书算法；新增有限导子区间与算术中心化子算法的具体证明范围见后文；并未预先生成全部高维 Z 类和仿射类。三维全仿射等价类为 219；通常的 230 空间群类型按手性进一步区分，不能混用这两个计数。
 
 ### 精确符号模块
 
@@ -154,7 +154,7 @@ Q 等价允许 GL(d,ℚ) 变换，Z 等价要求 GL(d,ℤ)，仿射等价还包�
 - 厄米 / 幺正 / 反幺正对称约束的精确跃迁参数化，符号 Bloch Hamiltonian、k 线代入、小矩阵精确谱和数值模型导出。
 - 闭合多项式轨道基底（含七个 f 轨道）的精确旋转表示；有限阶多项式 k·p Hamiltonian 的对称性约束。
 
-符号参数默认实数。一般参数下的矩阵秩有例外集合，结果保留相应非零条件，不能忽略分母或秩变化条件。符号几何需明确提供闭合键集合；自动壳层枚举要求可比较的精确数值几何。网页支持 MathML 公式、JSON / LaTeX 下载。没有承诺等价覆盖上游全部 Mathematica / GAP 接口，也没有把现有数值不可约表示自动变成符号 k 线标准表示。
+符号参数默认实数。一般参数下的矩阵秩有例外集合，结果保留相应非零条件，不能忽略分母或秩变化条件。符号几何需明确提供闭合键集合；自动壳层枚举要求可比较的精确数值几何。网页支持 MathML 公式、JSON / LaTeX 下载。没有承诺等价覆盖上游全部 Mathematica / GAP 接口，自动符号 k 线表示由独立的 `symbolic_spacegroups.py` 精确算法生成，仍不自动赋予 BC / Bilbao 标准标签。
 
 ### 群扩张与无限空间群
 
@@ -175,7 +175,7 @@ python dist/python/cli.py crystkit_ext dist/examples/crystkit-ext-wallpaper.json
 `carat_integral.py` 的 `z_classes` / `affine_classes` 接受 CARAT `name` 或整数 `generators`，维数为 1–6。它构造实际代表，并将 `z_complete` 与 `affine_complete` 分开报告。
 
 - 素数阶循环群 C₂、C₃、C₅、C₇：以平凡、分圆与正则整格块构造全部整数类，并求全部仿射代表。六维对合 `min.178` 得到 **4 个 Z 类、7 个仿射类**。全部 34 个素数阶 Q 类的结果与独立 CARAT 计数一致。
-- 一般有限整数点群：枚举模素数的各维不变子空间、提升为不变子格；利用 Smith 不变量与唯一不变型的穷尽整数等距测试证明代表互不等价。只有取得官方类数那么多个已证明不同的代表，才标记 Z 类完整。有限搜索没有找到新代表不构成穷尽证明。
+- 已验证的极大序模型优先使用下述有限导子区间算法，不依赖官方类数证明穷尽。旧 `neighbors` 路径仍枚举模素数不变子空间，利用 Smith 不变量、整数等价和等距证书去重；其资源受限结果只有达到独立官方类数时才标记完整。有限搜索没有找到新代表不构成穷尽证明。
 - 在各 Z 类上计算完整 H²，再计算正规化子子群轨道。在 Z 类已完整枚举的前提下，完整正规化子，或所有 Z 类的轨道总数恰好达到独立官方仿射类数，均可提供仿射分类完整性证书。后一种证书不把正规化子本身标成完整。
 - `z_equivalent` 返回 `equivalent`、`inequivalent` 或 `inconclusive`；不会把同样的有限不变量误当作等价证据。代表序号是本次输出的局部编号，不是 CARAT 官方 Z 名称。
 
@@ -185,11 +185,11 @@ python dist/python/cli.py crystkit_ext dist/examples/crystkit-ext-wallpaper.json
 
 `integral_normalizer.py` 在 1–6 维处理循环表示和初等交换 2 群表示，包括重复不可约块与非平凡整格粘合。循环分量使用精确分圆整环、单位与 Galois 作用；符号特征分量使用完整 GL(m,ℤ) 生成元。有限格轨道上的 Schreier 稳定子计算恢复原整数格，因而支持无限正规化子，而不限于某个正定度量的有限等距群。
 
-结果提供 `complete`、`finite`、`generators`、`everyGeneratorVerified` 和证明记录。有限搜索预算不是完备性证书。非循环群还可通过特征循环子群的精确 Schreier 归约、已验证的重复绝对不可约张量块，或内在分块度量处理。测试包含 8 个二面体系列、六维重复块、A₄ 加固定轴的 96 阶正规化子。尚未覆盖的一般算术中心化子会明确返回不完整结果。算法证明见 [整数分类说明](dist/docs/integral-classification.md) 与 [正规化子说明](dist/docs/integral-normalizer.md)。
+结果提供 `complete`、`finite`、`generators`、`everyGeneratorVerified` 和证明记录。有限搜索预算不是完备性证书。非循环群还可通过特征循环子群的精确 Schreier 归约、已验证的重复绝对不可约张量块，或内在分块度量处理。测试包含 8 个二面体系列、六维重复块、A₄ 加固定轴的 96 阶正规化子。公开入口现进一步接入下述算术中心化子与完整自同构提升算法，旧实现保留作后备。仍未覆盖的数域和除代数类型会明确返回未完成状态。算法证明见 [整数分类说明](dist/docs/integral-classification.md) 与 [正规化子说明](dist/docs/integral-normalizer.md)。
 
 ### 精确符号表示接口
 
-`symbolic_interfaces.py` 提供独立的无状态 JSON 接口，复用安全表达式解析器。支持多矩阵分圆域编译与共核、精确线性 / 投影 / 反幺正表示律验证、交织空间、不可约投影与矩阵单位、特征标和张量积分解、子群诱导、Wigner 共表示、Reynolds 对称化、符号 Seitz 运算及 Bloch 规范变换；还支持符号 k 线小群的 Bloch 余循环与全 k 星表示平移相位。共 13 个计算操作，覆盖记录逐项列出 308 个上游公开符号。
+`symbolic_interfaces.py` 提供独立的无状态 JSON 接口，复用安全表达式解析器。支持多矩阵分圆域编译与共核、精确线性 / 投影 / 反幺正表示律验证、交织空间、不可约投影与矩阵单位、特征标和张量积分解、子群诱导、Wigner 共表示、Reynolds 对称化、符号 Seitz 运算及 Bloch 规范变换；还支持符号 k 线小群的 Bloch 余循环与全 k 星表示平移相位。共 13 个计算操作；覆盖记录另纳入自动符号空间群接口及 CrystKit 公开函数。
 
 这些接口以用户给定的乘法表、矩阵和因子系统为输入；验证群律、余循环、不可约性等必要前提，不自动生成标准 BC / Bilbao 标签。反幺正交织使用实线性方程，原始分母与一般参数条件随结果保留。逐函数的迁移范围、输入约定与未移植项记录在 `dist/data/symbolic-api-coverage.json`。
 
@@ -197,3 +197,25 @@ python dist/python/cli.py crystkit_ext dist/examples/crystkit-ext-wallpaper.json
 python dist/python/cli.py carat_integral dist/examples/integral-affine-noncyclic-6d.json
 python dist/python/cli.py carat_integral dist/examples/integral-involution-6d.json
 ```
+
+### 有限导子区间与算术中心化子
+
+`finite_conductor.py` 从整数群环在验证过的极大序模型中的指数构造 `c M ⊂ Z[G]`。将每个整数格的极大序包络归一化后，只需遍历 `c Z^d ⊂ L ⊂ Z^d` 的有限区间，因而无需用目录中的类数推断候选已穷尽。支持 1–6 维有限交换群的分圆 PID 分量、分裂有理矩阵代数模型，以及绝对不可约有理表示。完整性仍分别依赖候选遍历、整数等价判定和仿射正规化子轨道完成；超出资源限制的步骤保留未完成标记。`classification_method` 可选 `auto`、`conductor`、`neighbors`，最后一种保留原有受限邻格流程。证明与输入约定见 [整数分类说明](dist/docs/integral-classification.md)。
+
+`arithmetic_centralizer.py` 对任意输入有限整数点群计算饱和交换子整数序、乘法结构常数、单位范数方程以及有理中心本原幂等元分解。`action: order` 只计算整数序；`centralizer` 才请求单位群。完整单位群分支包括可验证的分裂有理表示及任意整格粘合、正定范数的有限单位群、实二次整数序的 Pell 基本单位，以及可与这些分支组合的有限粘合。完整正规化子还需穷尽保持有理特征的群自同构并验证整数提升。一般高次数域、任意除代数和超出预算的单位群计算仍返回明确的未完成状态，不能把已算出的整数序误作已算出全部单位。见 [算术中心化子说明](dist/docs/arithmetic-centralizer.md)。
+
+`crystkit_ext` 的 `affine_properties` / `torsionfree` 检查所有非平凡点群陪集的范数矩阵 Smith 整数可解性，给出无挠性、可定向性和饱和中心平移格。有挠时返回经精确乘方验证的有限阶元素。输入要求完整的原胞整数平移格；非原胞分数平移会被拒绝。见 [仿射性质证明](dist/docs/affine-properties.md)。
+
+### 自动符号空间群表示
+
+`symbolic_spacegroups.py` 从 `group_number`、`magnetic_group` 或给定的精确 Seitz 操作构造符号小群、k 星、投影不可约表示、Wigner 共表示和全 k 星诱导表示。相位使用原始有理平移；双值表示通过不变度量与精确 SU(2) 提升构造，不使用数据库中舍入后的自旋矩阵。输出精确验证所有乘法、特征标正交和维数平方和，保留符号 k 的适用条件。
+
+可用动作包括 `analyze`、`group`、`little_group`、`star`、`central_extension`、`spin_operations`、`origin`、`symbol`、`induce`。`api` / `function` 接受覆盖清单中列出的原接口名，返回统一 JSON 契约。标签 `E/M/F` 为本次计算的局部编号，未经标准表映射；连续参数的特殊值需代入重新计算。有限群阶、分圆阶数和诱导维数预算会显式拒绝过大任务，详见 [符号空间群说明](dist/docs/symbolic-spacegroups.md)。
+
+```sh
+python dist/python/cli.py arithmetic_centralizer dist/examples/arithmetic-c3-order.json
+python dist/python/cli.py symbolic_spacegroups dist/examples/symbolic-sg-screw.json
+python dist/python/cli.py symbolic_spacegroups dist/examples/symbolic-sg-fullstar.json
+```
+
+逐项清单包含四个项目的 **319 个唯一公开符号**，其中 175 项为计算接口；其余为数据、选项、显示或外部 I/O。截至本版，83 个计算接口仍没有对应迁移流程，此外有部分覆盖项。清单可在网页按项目、状态或名称检索，不能把整个项目标为已经完整移植。

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node scripts/serve.mjs",
     "test": "node scripts/test-engine.mjs && node scripts/test-trace.mjs && node scripts/test-induction.mjs && node scripts/test-magnetic-induction.mjs && node scripts/test-python-client.mjs && node scripts/test-advanced-ui.mjs",
-    "test:python": "python scripts/test-python-symmetry.py && python scripts/test-python-magnetictb.py && python scripts/test-python-crystkit.py && python scripts/test-python-carat.py && python scripts/test-python-symbolic.py && python scripts/test-python-crystkit-extensions.py && python scripts/test-python-carat-integral.py && python scripts/test-python-integral-normalizer.py && python scripts/test-python-symbolic-interfaces.py && python scripts/test-python-api.py"
+    "test:python": "python scripts/test-python-symmetry.py && python scripts/test-python-magnetictb.py && python scripts/test-python-crystkit.py && python scripts/test-python-carat.py && python scripts/test-python-symbolic.py && python scripts/test-python-crystkit-extensions.py && python scripts/test-python-carat-integral.py && python scripts/test-python-integral-normalizer.py && python scripts/test-python-symbolic-interfaces.py && python scripts/test-python-affine-properties.py && python scripts/test-python-arithmetic-centralizer.py && python scripts/test-python-finite-conductor.py && python scripts/test-python-symbolic-spacegroups.py && python scripts/test-python-api.py"
   },
   "license": "GPL-3.0-only"
 }

@@ -68,6 +68,35 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual(result['nullity'],1)
         self.assertEqual(result['matrix'],[['1'],['-1'],['1']])
 
+    def test_arithmetic_order_and_unit_group(self):
+        payload={'action':'order','rotations':[[[0,-1],[1,-1]]]}
+        order=self.result('arithmetic_centralizer',payload)
+        self.assertEqual(order['orderRank'],2)
+        self.assertEqual(order['centerDimension'],2)
+        self.assertTrue(order['orderComplete'])
+        self.assertEqual(len(order['multiplicationConstants']),2)
+        units=self.result('arithmetic_centralizer',{**payload,'action':'centralizer'})
+        self.assertTrue(units['unitGroupComplete'])
+        self.assertTrue(units['everyGeneratorVerified'])
+        self.assertEqual(units['centralizerOrder'],6)
+
+    def test_automatic_symbolic_screw_representation(self):
+        import sympy as sp
+        result=self.result('symbolic_spacegroups',{'action':'analyze','group_number':4,'k':[0,0,'q']})
+        self.assertTrue(result['verified'])
+        self.assertEqual(result['little_group']['order'],2)
+        self.assertEqual([r['dimension'] for r in result['irreps']],[1,1])
+        q=sp.Symbol('q',real=True)
+        for rep in result['irreps']:
+            screw=sp.sympify(rep['matrices'][1][0][0],locals={'q':q})
+            self.assertEqual(sp.simplify(sp.expand_complex(screw**2-sp.exp(-2*sp.pi*sp.I*q))),0)
+
+    def test_affine_torsion_contract(self):
+        result=self.result('crystkit_ext',{'action':'torsionfree','group_number':19})
+        self.assertTrue(result['bieberbach'])
+        self.assertTrue(result['trivialCenter'])
+        self.assertEqual(result['centerRank'],0)
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

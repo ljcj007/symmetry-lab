@@ -622,12 +622,105 @@ def infinite_generators(operations, candidates=None, max_candidates=400, max_tri
             "status": "certified_minimum" if lower == len(best) else "certified_bounds"}
 
 
+def affine_properties(operations):
+    """Decide torsion-freeness and the center for a standard affine lattice.
+
+    The input must be the complete quotient by its FULL translation lattice Z^d.
+    A nonidentity linear part R of order m admits a torsion element in its coset
+    iff (I+R+...+R^(m-1))*z = -(I+R+...+R^(m-1))*t has an integer solution.
+    Smith transforms decide this without a denominator or coordinate search.
+    """
+    sp = _sp()
+    if not operations:
+        raise ValueError("At least the identity coset is required")
+    d = len(operations[0][0])
+    eye, zero = c.affine_identity(d)
+    rotations = [r for r, _ in operations]
+    if len(set(rotations)) != len(rotations) or (eye, zero) not in operations:
+        raise ValueError("Use a primitive translation lattice Z^d with one coset per rotation")
+    rotations = [eye]+sorted(set(rotations)-{eye})
+    # Validate the full vector system rather than assuming arbitrary shifts define
+    # a group. The Cayley-generator check is sufficient for the whole quotient.
+    shifts = dict(operations)
+    gens = _choose_generators(rotations)
+    for r, t in operations:
+        if any(x.denominator != 1 for row in r for x in row):
+            raise ValueError("Rotations must preserve the integer translation lattice")
+        for g in gens:
+            rg, tg = c.compose((r,t), (g,shifts[g]))
+            if rg not in shifts or any((a-b).denominator != 1 for a,b in zip(tg,shifts[rg])):
+                raise ValueError("Operations do not define a closed vector system modulo Z^d")
+    checks, witness = [], None
+    for r, t in operations:
+        if r == eye:
+            continue
+        power, norm, order = eye, sp.zeros(d), 0
+        while True:
+            norm += c._sympy_matrix(power)
+            order += 1
+            power = c.matmul(power, r)
+            if power == eye:
+                break
+            if order > len(operations):
+                raise ValueError("Point group is not finite and closed")
+        rhs = -norm*sp.Matrix(t)
+        if any(x.q != 1 for x in rhs):
+            raise ValueError("A coset power is not in the supplied integer translation lattice")
+        diagonal, left, right = _smith(norm)
+        b = left*rhs
+        y = sp.zeros(d,1)
+        obstruction = None
+        for j in range(d):
+            n = int(diagonal[j,j])
+            if (n and int(b[j]) % n) or (not n and b[j] != 0):
+                obstruction = {"smithRow":j,"divisor":abs(n),"value":int(b[j])}
+                break
+            if n:
+                y[j] = b[j]/n
+        check = {"rotation":r,"pointOrder":order,"containsTorsion":obstruction is None,
+                 "normMatrix":[list(map(int,row)) for row in norm.tolist()],"smithDiagonal":[int(diagonal[j,j]) for j in range(d)]}
+        if obstruction is None:
+            z = right*y
+            if norm*z != rhs or any(x.q != 1 for x in z):
+                raise ArithmeticError("Integer torsion witness failed its certificate")
+            lift = r, tuple(a+F(int(b)) for a,b in zip(t,z))
+            element = c.affine_identity(d)
+            for _ in range(order):
+                element = c.compose(element,lift)
+            if element != c.affine_identity(d):
+                raise ArithmeticError("Torsion element does not have the claimed finite order")
+            check["integerShift"] = list(map(int,z))
+            if witness is None:
+                witness = {"operation":c.operation_json(lift),"order":order,
+                           "powerIsIdentity":True}
+        else:
+            check["obstruction"] = obstruction
+        checks.append(check)
+    equations = sp.Matrix.vstack(*(c._sympy_matrix(r)-sp.eye(d) for r in rotations))
+    diagonal, _, right = _smith(equations)
+    rank = sum(diagonal[j,j] != 0 for j in range(d))
+    center = right[:,rank:]
+    if equations*center != sp.zeros(equations.rows,center.cols):
+        raise ArithmeticError("Fixed translation lattice certificate failed")
+    return {"torsionFree":witness is None,"bieberbach":witness is None,
+            "centerRank":center.cols,"centerBasis":[list(map(int,row)) for row in center.tolist()],
+            "trivialCenter":center.cols == 0,
+            "orientable":all(c.determinant(r)==1 for r in rotations),
+            "torsionWitness":witness,"cosetChecks":checks,"complete":True,
+            "implicitTranslationLattice":"Z^d",
+            "certificate":"Every nonidentity point coset decided by an exact integer Smith equation; the full center is the saturated fixed translation lattice"}
+
+
 def run(payload, database=None):
     if isinstance(payload, str):
         payload = json.loads(payload)
     if not isinstance(payload, dict):
         raise ValueError("Expected a JSON request object")
     action = payload.get("action", "extensions")
+    if action in ("affine_properties", "torsionfree"):
+        operations = c.affine_closure(c._input_operations(payload, database), _limit(payload, "max_order", 384, 120000))
+        return c.jsonable({"action":action,"dimension":len(operations[0][0]),
+                           "pointGroupOrder":len(operations),**affine_properties(operations)})
     if action == "affine_compare":
         left = c.affine_closure(c._input_operations(payload, database, "left"))
         right = c.affine_closure(c._input_operations(payload, database, "right"))

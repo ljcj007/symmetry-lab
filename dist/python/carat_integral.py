@@ -200,8 +200,16 @@ def integral_equivalence(left, right, max_order=4096, max_vectors=200000, max_ma
     if af != bf or _invariant(a, lg, af) != _invariant(b, rg, bf):
         return {'status': 'inequivalent', 'certificate': 'Unequal exact integral conjugacy invariants (element Smith forms, coinvariants or primitive invariant-form determinant).'}
     if not af:
-        return {'status': 'inconclusive', 'certificate': 'The available integral invariants coincide; the general reducible integral-conjugacy problem is not decided by this test.'}
-    f, h = _primitive_gram(a), _primitive_gram(b)
+        from integral_normalizer import canonical_primitive_metric
+        left_metric, right_metric = canonical_primitive_metric(a), canonical_primitive_metric(b)
+        if left_metric is None or right_metric is None:
+            from finite_conductor import split_group_equivalence
+            return split_group_equivalence(lg, rg, max_order=max_order)
+        f, h = left_metric['gram'], right_metric['gram']
+        if f.det() != h.det():
+            return {'status': 'inequivalent', 'certificate': 'Different determinants of the canonical primitive component metrics.'}
+    else:
+        f, h = _primitive_gram(a), _primitive_gram(b)
     try:
         for t in _isometries(f, h, max_vectors, max_matrices):
             ti = t.inv()
@@ -210,10 +218,10 @@ def integral_equivalence(left, right, max_order=4096, max_vectors=200000, max_ma
                         'certificate': 'Exact unimodular T with T^-1 G_left T=G_right; equal finite orders prove equality.'}
     except cb.SearchLimitError as error:
         return {'status': 'inconclusive', 'certificate': str(error)}
-    return {'status': 'inequivalent', 'certificate': 'The invariant symmetric form space is one-dimensional. Every integral conjugacy must be an isometry of the primitive invariant forms; exhaustive integral isometry enumeration found none.'}
+    return {'status': 'inequivalent', 'certificate': 'Every integral conjugacy must preserve the canonical primitive invariant metric (unique global form or intrinsic real-irreducible component forms); exhaustive integral isometry enumeration found none.'}
 
 
-def _prime_neighbours(generators, p):
+def _prime_neighbours(generators, p, hyperplanes_only=False):
     """All proper invariant lattices between pL and L.
 
     Hyperplanes come first; other subspaces are unique reduced row-echelon
@@ -245,6 +253,8 @@ def _prime_neighbours(generators, p):
             if any(x.q != 1 for g in conjugates for x in g):
                 raise ArithmeticError('Invariant neighbour failed exact integrality verification')
             yield basis, [_matrix(g) for g in conjugates]
+    if hyperplanes_only:
+        return
     for k in range(1, d-1):
         for pivots in combinations(range(d), k):
             slots = [(i, j) for i in range(k) for j in range(pivots[i]+1, d) if j not in pivots]
@@ -373,7 +383,7 @@ def _search_classes(generators, group, entry, payload):
 
 
 def _affine_aggregate(result, entry, payload):
-    from integral_normalizer import normalizer
+    from arithmetic_centralizer import arithmetic_normalizer as normalizer
     all_complete = result['z_complete']
     total = 0
     for item in result['z_classes']:
@@ -384,10 +394,12 @@ def _affine_aggregate(result, entry, payload):
                  'certificate': 'Normalizer construction is unnecessary because H^2 is trivial.'}
         else:
             try:
-                n = normalizer(group, max_vectors=_limit(payload, 'max_vectors', 200000, 2000000),
+                options = dict(payload)
+                options.update(max_vectors=_limit(payload, 'max_vectors', 200000, 2000000),
                                max_matrices=_limit(payload, 'max_matrices', 20000, 100000),
                                max_orbit=_limit(payload, 'max_orbit', 20000, 100000),
                                max_module_trials=_limit(payload, 'max_module_trials', 20000, 100000))
+                n = normalizer(group, options)
             except (cb.SearchLimitError, c.SearchLimitError) as error:
                 n = {'generators': [cb._identity(len(group[0]))], 'complete': False,
                      'certificate': 'Normalizer resource limit reached; retain the identity subgroup and every exact cohomology class.',
@@ -414,14 +426,19 @@ def _affine_aggregate(result, entry, payload):
     # orbits can only MERGE these orbits.  Equality with an independent total
     # is therefore a rigorous exhaustion certificate, without asserting that
     # the subgroup is the full (possibly infinite) integral normalizer.
-    cardinality_complete = bool(result['z_complete'] and entry and total == entry['affine_classes'])
+    cardinality_complete = bool(not all_complete and result['z_complete'] and entry and total == entry['affine_classes'])
     if cardinality_complete:
         all_complete = True
         for item in result['z_classes']:
             item['affine_complete'] = True
         result['affine_certificate'] = {'method': 'catalogue_affine_cardinality_exhaustion',
+                                        'catalogue_count_used_for_completeness': True,
                                         'official_affine_count': entry['affine_classes'],
                                         'proof': 'All Z classes and all cohomology classes are covered. True normalizer orbits can only merge computed subgroup orbits. Equality of their total with the independent official affine count excludes every possible merger.'}
+    elif all_complete:
+        result['affine_certificate'] = {'method': 'complete_cohomology_and_arithmetic_normalizer_orbits',
+                                        'catalogue_count_used_for_completeness': False,
+                                        'proof': 'Every Z class is covered. Exact cohomology is partitioned by complete arithmetic normalizers, or a subgroup already has a single orbit. The independent catalogue count is used only as a consistency check.'}
     if all_complete and entry and total != entry['affine_classes']:
         raise ArithmeticError('Complete affine calculation disagrees with the independent CARAT count')
     result.update(affine_complete=all_complete, affine_class_count=total if all_complete else None,
@@ -444,6 +461,9 @@ def run(payload, catalog=None):
         return cb._serial({'action': action, 'dimension': len(left[0]), **result})
     if action not in ('z_classes', 'affine_classes'):
         raise ValueError('Unknown integral-classification action')
+    method = payload.get('classification_method', 'auto')
+    if method not in ('auto', 'conductor', 'neighbors'):
+        raise ValueError('classification_method must be auto, conductor or neighbors')
     generators = cb._generators(payload, catalog)
     d = len(generators[0])
     if 'dimension' in payload and (isinstance(payload['dimension'], bool) or payload['dimension'] != d):
@@ -459,14 +479,21 @@ def run(payload, catalog=None):
                   'z_complete': True, 'z_class_count': 1, 'z_class_lower_bound': 1,
                   'affine_complete': affine, 'affine_class_count': 1 if affine else None,
                   'certificate': {'method': 'trivial_point_group'}, 'scope': 'The unique free abelian crystallographic group Z^d.'}
-    elif _prime_type(group) is not None:
+    elif _prime_type(group) is not None and method != 'conductor':
         result = _prime_classes(group, affine)
         if entry and result['z_class_count'] != entry['z_classes']:
             raise ArithmeticError('Constructive prime cyclic classification disagrees with catalogue Z count')
         if affine and entry and result['affine_class_count'] != entry['affine_classes']:
             raise ArithmeticError('Constructive prime cyclic classification disagrees with catalogue affine count')
     else:
-        result = _search_classes(generators, group, entry, payload)
+        result = None
+        if method != 'neighbors':
+            from finite_conductor import classify
+            result = classify(generators, group, payload, entry)
+        if result is None:
+            if method == 'conductor':
+                raise ValueError('A supported maximal-order model is not established for this representation; no conductor-completeness claim is available')
+            result = _search_classes(generators, group, entry, payload)
         if affine:
             _affine_aggregate(result, entry, payload)
     result.update(action=action, dimension=d, group_order=len(group),

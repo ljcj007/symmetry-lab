@@ -543,7 +543,7 @@ def _metric_normalizer(group, gram, max_vectors, max_matrices):
             "metricVectorsTested": tested}
 
 
-def _finite_block_normalizer(group, max_vectors, max_matrices):
+def _finite_block_normalizer(group, max_vectors, max_matrices, return_metric_only=False):
     """Rational multiplicity-free real-irreducible blocks have finite normalizer.
 
     Every normalizer permutes their saturated Z lattices. Primitive integral
@@ -606,6 +606,11 @@ def _finite_block_normalizer(group, max_vectors, max_matrices):
         component_grams.append(_primitive_gram(small_group))
     inverse = basis.inv()
     canonical_gram = inverse.T*sp.diag(*component_grams)*inverse
+    if return_metric_only:
+        return {"gram": canonical_gram, "basis": basis,
+                "componentDimensions": [b.cols for b in component_bases],
+                "complete": True,
+                "certificate": "Primitive invariant metrics on intrinsic saturated rational real-irreducible components"}
     result = _metric_normalizer(group, canonical_gram, max_vectors, max_matrices)
     result.update({"complete": True, "finite": True,
                    "algorithm": "canonical-primitive-block-metric",
@@ -616,6 +621,15 @@ def _finite_block_normalizer(group, max_vectors, max_matrices):
                    "certificate": "Commuting rational self-adjoint endomorphisms split into distinct rational real-irreducible blocks; each saturated component lattice has a unique primitive integral invariant form; every normalizer preserves their canonical sum; all isometries enumerated with exact inverse-Gram bounds",
                    "scope": "Full integral normalizer of this rational multiplicity-free real-irreducible representation"})
     return result
+
+
+def canonical_primitive_metric(group):
+    """Normalizer-invariant positive metric, when certified, without enumeration."""
+    if ext.invariant_form_dimension(group) == 1:
+        return {"gram": _primitive_gram(group), "basis": _sp().eye(len(group[0])),
+                "componentDimensions": [len(group[0])], "complete": True,
+                "certificate": "Unique primitive positive invariant metric"}
+    return _finite_block_normalizer(group, 0, 0, return_metric_only=True)
 
 
 def normalizer(group, max_vectors=2000000, max_matrices=100000,
@@ -659,13 +673,18 @@ def run(payload, database=None):
     if action not in ("integral_normalizer", "normalizer", "extension_orbits", "affine_orbits"):
         raise ValueError("Unknown integral-normalizer action")
     group = ext._point_input(payload, database)
-    result = normalizer(group,
-                        ext._limit(payload, "max_vectors", 2000000, 10000000),
-                        ext._limit(payload, "max_matrices", 100000, 100000),
-                        ext._limit(payload, "max_orbit", 20000, 100000),
-                        ext._limit(payload, "max_module_trials", 20000, 100000),
-                        ext._limit(payload, "max_point_orbit", 64, 2000),
-                        payload.get("tensor_basis"))
+    # The low-level normalizer remains a fallback for the arithmetic module;
+    # dispatch only the public entry here, avoiding an import/recursion cycle.
+    from arithmetic_centralizer import arithmetic_normalizer
+    result = arithmetic_normalizer(group, payload)
+    group_set = set(group)
+    point_generators = ext._choose_generators(group)
+    for n in result["generators"]:
+        ni = c.inverse(n)
+        if abs(c.determinant(n)) != 1 or any(c.matmul(c.matmul(ni, g), n) not in group_set for g in point_generators):
+            raise ArithmeticError("Returned generator failed exact normalizer verification")
+    result.update(dimension=len(group[0]), pointGroupOrder=len(group),
+                  generatorCount=len(result["generators"]), everyGeneratorVerified=True)
     if action in ("extension_orbits", "affine_orbits"):
         data = ext.extension_data(group, ext._limit(payload, "max_classes", 4096, 65536))
         output = ext._extensions_result(data, payload.get("include_operations", True))

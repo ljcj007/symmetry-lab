@@ -4,17 +4,20 @@
   "python": "3.13",
   "sympy": "1.14.0",
   "sources": {
-    "dist/python/browser_api.py": "d0f3dc12083f1e47bdac5ce90f8e01cf1b4909529de043490297b779996ab00b",
+    "dist/python/browser_api.py": "bd74a0cde0b3b77cdc5e07709c0b2a40ea60c1929868d5fcf3b6af487bf964f8",
     "dist/python/carat_browser.py": "fb40c3da3ce777be983fba2f524dcbc85ee346e1fa56aa3c2a58a8ca400904ee",
-    "dist/python/carat_integral.py": "07b60cb6d66828e94c257e8324324b4fa356adf26ae8c395f23309c6fbf480bf",
-    "dist/python/cli.py": "ce65e856a838aa3047998be27a3dd282a4047d4a1d9ae16757f8a4e243d6b1d5",
-    "dist/python/crystkit_browser.py": "a65901226e3127dd0bb906206eb58e6c5f330e8035e55e39039e27688f9c39e6",
-    "dist/python/crystkit_extensions.py": "9e483be9b4cef733f8bdf13d3c2302b64a39ecd30802b2d4d2cdf9373a86665d",
-    "dist/python/integral_normalizer.py": "b328a9984d87c0818282a440a81fc6f58ca00cad74f145d0a46e6007dbb3413a",
+    "dist/python/carat_integral.py": "66e78a666f51e007a72e048dc740da34b09cecd0cc79a2be20869fd96264d44e",
+    "dist/python/cli.py": "21feb42da90c1f592d9c61f6f6fd4a14a9da1c6dadb9247f36536e20b2e7d72a",
+    "dist/python/crystkit_browser.py": "a437692e93c64637b9159de08611b57887a97d06091f5a64bf917b454c663460",
+    "dist/python/crystkit_extensions.py": "a6128ed300c412bad7c7cef4aaf83fdfada0af90c4c28990c290241b6a2401bd",
+    "dist/python/integral_normalizer.py": "76c38eff2ec4e58cf16219d8b0793903f69d212e802185fbc3a144e40b650f72",
     "dist/python/magnetictb_browser.py": "25b199cc36416676ba957066e79b560a6ef71e5890f7fac37d42bffddd220eb3",
     "dist/python/symbolic_core.py": "48adb8cd697f0d5807611b119cad42cd66ddeb78e37ce121ff85701f142161b9",
     "dist/python/symbolic_interfaces.py": "f834fda01e405cbea742ce10d3f882801828ef4a371359be1c63d4b2678e9c29",
-    "dist/python/symmetry_core.py": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0"
+    "dist/python/symmetry_core.py": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0",
+    "dist/python/arithmetic_centralizer.py": "c8247579e7602ee1772ec59d605c4b58badbe7d034cf55994f4951e345fa2547",
+    "dist/python/finite_conductor.py": "930cb66808bd650d26d9cb761e1205cda3de95815356126fd233d186e3f98df9",
+    "dist/python/symbolic_spacegroups.py": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -44,7 +47,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 7
+    "tests": 10
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -52,11 +55,11 @@
     "inducedRepresentations": 330,
     "tensorProducts": 24,
     "magnetictbTests": 19,
-    "crystkitTests": 13
+    "crystkitTests": 14
   },
-  "limits": "Finite tests and supported proof cases do not establish complete upstream API equivalence or general exhaustive Q-to-Z / affine classification.",
+  "limits": "Supported maximal-order models and unit branches have exact completeness certificates. This validation does not establish all high-dimensional arithmetic types or complete upstream API/signature compatibility. The inventory records remaining interfaces.",
   "integralClassification": {
-    "checks": 51,
+    "checks": 54,
     "primeOrderQClasses": 34,
     "nonprimeSixDimensionalQClasses": 6,
     "cases": [
@@ -81,7 +84,7 @@
   "symbolicInterfaces": {
     "tests": 36,
     "actions": 13,
-    "upstreamSymbolInventory": 308,
+    "upstreamSymbolInventory": 319,
     "cases": [
       "Cyclotomic compilation and common kernels",
       "Exact projective and semilinear representation laws",
@@ -95,11 +98,74 @@
   "browserVerification": {
     "runtime": "Pyodide 314.0.7",
     "examples": [
-      "6D prime involution: 4 Z classes, 7 affine classes",
-      "6D noncyclic min.351: 2 Z classes, 2 affine classes",
-      "6D glued involution: complete infinite integer normalizer",
-      "Exact Kramers Wigner b corepresentation, Herring indicator -1"
+      "6D conductor interval: two complete Z classes for C4 with four fixed coordinates",
+      "6D A5 arithmetic normalizer: complete infinite group, fundamental unit 2+sqrt(5)",
+      "C3 arithmetic order and six units",
+      "SG4 screw: exact symbolic q-line irreps",
+      "MSG1.3 generic q: full semilinear two-arm induction",
+      "319-symbol inventory filter: 83 unmapped calculation symbols"
     ],
-    "mobileViewport": "390 x 844, no horizontal overflow"
+    "mobileViewport": "390 x 844, no horizontal overflow; enlarged font retained"
+  },
+  "finiteConductor": {
+    "test": "scripts/test-python-finite-conductor.py",
+    "completeQClassesWithoutCatalogueInput": 44,
+    "completeZClasses": 88,
+    "completeAffineClasses": 238,
+    "dimensionTotals": {
+      "1": {
+        "q": 2,
+        "z": 2,
+        "affine": 2
+      },
+      "2": {
+        "q": 10,
+        "z": 13,
+        "affine": 17
+      },
+      "3": {
+        "q": 32,
+        "z": 73,
+        "affine": 219
+      }
+    },
+    "additionalHighDimensionalCases": 5,
+    "countsUsedForCompleteness": false
+  },
+  "arithmeticCentralizer": {
+    "tests": 15,
+    "test": "scripts/test-python-arithmetic-centralizer.py",
+    "cases": [
+      "Saturated order, multiplication, rational central idempotents",
+      "Split modules with integral glue and full normalizer lifts",
+      "Lipschitz 8 and Hurwitz 24 units",
+      "Mixed quaternion/scalar modules",
+      "Real quadratic and nonmaximal orders; exact Pell fundamental units",
+      "Quadratic integral intertwiners and six-dimensional A5 normalizer with 120 automorphisms",
+      "Raw integer A4 inverse regression and resource limits"
+    ]
+  },
+  "affineProperties": {
+    "tests": 8,
+    "test": "scripts/test-python-affine-properties.py",
+    "cases": [
+      "All seventeen wallpaper classes with exactly two torsion-free types",
+      "Proper-power torsion of composite screws",
+      "Finite-order witnesses requiring integer shifts",
+      "Hantzsche-Wendt group and translation center",
+      "Integer basis/origin covariance and nonprimitive rejection"
+    ]
+  },
+  "automaticSymbolicSpaceGroups": {
+    "tests": 28,
+    "test": "scripts/test-python-symbolic-spacegroups.py",
+    "publicExamples": 7,
+    "cases": [
+      "Exact screws and symbolic k lines",
+      "48-element cubic little group and projective boundary irreps",
+      "Exact spin lifts; Wigner a/b/c",
+      "Semilinear full-star induction and translation phases",
+      "Input validation, parameter strata, alias adapters and resource budgets"
+    ]
   }
 }

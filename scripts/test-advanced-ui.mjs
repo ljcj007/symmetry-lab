@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {renderAdvancedView} from '../dist/advanced-ui.js';
+import {filterCoverage} from '../dist/coverage-ui.js';
 
 // Minimal inert DOM: exercise the actual asynchronous UI handlers, including
 // clicking Run before a slow example response has arrived.
@@ -15,7 +16,7 @@ class Container {
     }
     for (const tag of html.matchAll(/data-exact-tool="([^"]+)"/g)) this.tabs.push({dataset:{exactTool:tag[1]}});
   }
-  querySelector(selector){return this.elements.get(selector)||null;}
+  querySelector(selector){return selector==='#exact-coverage'?null:this.elements.get(selector)||null;}
   querySelectorAll(selector){return selector==='[data-exact-tool]'?this.tabs:[];}
 }
 const container = new Container();
@@ -59,4 +60,9 @@ try {
   await container.querySelector('#exact-run').onclick();
   assert.deepEqual(calls.at(-1),{tool:'integral_normalizer',payload:{action:'integral_normalizer',rotations:[[[1,0],[0,-1]]]}});
 } finally {globalThis.fetch=originalFetch;}
+const inventory=[{symbol:'getSGIrep',project:'SpaceGroupIrep',status:'partial_exact_workflow',tool:'symbolic_spacegroups',action:'analyze',scope:'Explicit conditions'},
+ {symbol:'plotModel',project:'MagneticTB',status:'not_covered_by_symbolic_port',tool:null,action:null,scope:'Visualization'}];
+assert.deepEqual(filterCoverage(inventory,'GETSG analyze','SpaceGroupIrep','partial_exact_workflow'),[inventory[0]]);
+assert.equal(filterCoverage(inventory,'','MagneticTB','partial_exact_workflow').length,0);
+assert.equal(filterCoverage(inventory,'').length,2);
 console.log('Advanced UI: slow example/run race, download recovery and background tool isolation passed.');
