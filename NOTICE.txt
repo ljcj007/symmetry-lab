@@ -107,3 +107,14 @@ See dist/licenses/IrRep-LICENSE.txt, dist/data/labels/manifest.json and the
 unmodified table snapshot dist/data/labels/bilbao-source.zip. Missing and
 ambiguous source labels are preserved; magnetic corepresentation labels
 are outside this standard-label dataset.
+
+The 32 crystallographic point-group course (2026-10-18) contains original
+Chinese explanations, examples, exercises and interactive illustrations.
+Its pedagogical reference is M. S. Dresselhaus, G. Dresselhaus and A. Jorio,
+Group Theory: Application to the Physics of Condensed Matter, Springer (2008),
+https://doi.org/10.1007/978-3-540-32899-5. The textbook PDF, page images and
+original figures are not redistributed. Chapter/page references are recorded
+in dist/data/pointgroup-lessons.json and dist/docs/pointgroup-course.md.
+The point-group atlas and character tables are independently computed in
+Python from the existing attributed SpaceGroupIrep data; their source and
+numerical validation are included with the atlas and its build script.

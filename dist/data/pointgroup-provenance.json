@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-10-18",
+  "sourceBook": {
+    "title": "Group Theory: Application to the Physics of Condensed Matter",
+    "authors": [
+      "Mildred S. Dresselhaus",
+      "Gene Dresselhaus",
+      "Ado Jorio"
+    ],
+    "year": 2008,
+    "publisher": "Springer Berlin, Heidelberg",
+    "edition": "第 1 版",
+    "doi": "10.1007/978-3-540-32899-5",
+    "isbn": "978-3-540-32897-1",
+    "eisbn": "978-3-540-32899-5",
+    "url": "https://link.springer.com/book/10.1007/978-3-540-32899-5",
+    "fileName": "2008_Book_GroupTheory.pdf",
+    "referenceNote": "参考教材概念重新组织的原创中文入门课程，并非教材译文。引用同时列出书内印刷页码与用户 PDF 从 1 起计的物理页码；PDF 缺少部分空白页，两者偏移不固定。PDF 版权页将电子 ISBN 与 DOI 末位印为 8；这里采用 Springer 官网核验的末位 5。网站不分发原书 PDF、原图或整页扫描。"
+  },
+  "files": {
+    "dist/data/pointgroup-atlas.json": {
+      "bytes": 222680,
+      "sha256": "2b3e0d61ce141465facb2da580c5a7c3b29efbba8b4664dd4cf1ba4feca85f58"
+    },
+    "dist/data/pointgroup-lessons.json": {
+      "bytes": 32167,
+      "sha256": "83ec2e571216b61f67320fb844c0aca0b6fb72717d8c520214f5731e344ff1ef"
+    },
+    "dist/docs/pointgroup-course.md": {
+      "bytes": 6926,
+      "sha256": "0021c3c23ff3f0df0805fc5b90a936255b20016d1d59b5da5d67c40470aa5049"
+    },
+    "dist/pointgroup-ui.js": {
+      "bytes": 30893,
+      "sha256": "addf37e6a467d0a63472a93f0e6e5339502db0a5fd3c2f186f7d65aabaddb387"
+    },
+    "dist/pointgroup.css": {
+      "bytes": 19724,
+      "sha256": "dc68dc811c86a8291de8b98a195053ca21e21659a2a6326e384a8d7a7ad4065f"
+    },
+    "scripts/build-pointgroup-course.py": {
+      "bytes": 14438,
+      "sha256": "67e2f0300da5a4d1dd6e222063f5b0b005dd1330a2b1c286a4285b54239f9572"
+    },
+    "scripts/test-pointgroup-course.py": {
+      "bytes": 10002,
+      "sha256": "ed082b9af343ea01f45e1bf76e81cf59c55078b5706e1ae87622b9f28f0cb090"
+    },
+    "scripts/test-pointgroup-ui.mjs": {
+      "bytes": 2525,
+      "sha256": "e995c1bc4f04bd29d5a0867ea56d9f859674e49ed2219952582110147713ea88"
+    }
+  },
+  "validation": {
+    "groupCount": 32,
+    "systemCounts": {
+      "三斜": 2,
+      "单斜": 3,
+      "正交": 3,
+      "四方": 7,
+      "三方": 5,
+      "六方": 7,
+      "立方": 5
+    },
+    "centrosymmetricCount": 11,
+    "polarCount": 10,
+    "chiralCount": 11,
+    "irrepCount": 175,
+    "maxCharacterOrthogonalityError": 7.629277997537062e-17,
+    "method": "BC 精确源表与独立数值正则表示逐行匹配；验证群闭合、特征标正交、维数平方和、极/轴向量及对称平方分解。",
+    "mathRegressionTests": 6,
+    "lessonCount": 8,
+    "quizCount": 16
+  },
+  "methods": [
+    "Python derives the atlas from the frozen ordinary-space-group operations and verified BC Gamma tables.",
+    "All 32 groups checked for orthogonality, matrix closure, conjugacy, character orthogonality, FS indicators and projected function covariance.",
+    "Original Chinese lessons have verified textbook chapter/printed-page/PDF-page references."
+  ],
+  "scope": [
+    "Ordinary crystallographic point groups and single-valued representations",
+    "IR/Raman marks are symmetry allowances, not a prediction of material modes or intensities",
+    "The user-provided PDF and page images are not redistributed"
+  ]
+}

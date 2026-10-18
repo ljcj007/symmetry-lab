@@ -2,6 +2,14 @@
 
 整合 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep)、[MSGCorep](https://github.com/goodluck1982/MSGCorep)、[MagneticTB](https://github.com/zhangzeyingvv/MagneticTB) 和 [CrystKit](https://github.com/hongyi-zhao/CrystKit) 的数据与算法工作流。四个项目已实现的计算功能统一使用 Python，通过 Pyodide 在浏览器 Worker 内运行；JavaScript 负责界面、绘图和任务调度。网站为独立实现，不代表上游作者发布或背书。
 
+## 32 点群课堂
+
+左侧“32 点群课堂”（`#pointgroups`）包含分步中文讲解、32 个晶体学点群图谱、可操作的对称变换实验及即时自测。课程参考 Dresselhaus、Dresselhaus 与 Jorio 的 [Group Theory: Application to the Physics of Condensed Matter](https://doi.org/10.1007/978-3-540-32899-5)（Springer, 2008），标注原书章节和印刷/PDF 页码；讲解、例题和绘图为独立编写，网站不提供原书 PDF 或书页图像。
+
+图谱包含国际 / Schoenflies 符号、晶系、群阶、反演/极性/手性、笛卡尔操作矩阵、共轭类、单值特征标及极矢量、轴矢量和二次函数的表示分解。BC Γ 标签与可追溯的 Mulliken 名称并列；复共轭表示明确配对。IR/Raman 标记只表示对称性允许，不预测特定材料的振动频率、模式数量或散射强度。
+
+教学表格由 `python scripts/build-pointgroup-course.py` 从固定群数据生成，并用 `python scripts/test-pointgroup-course.py` 检查全部 32 群的矩阵闭合、共轭类、特征标正交性和表示分解。静态教学无需等待 Python 运行环境；“送入工作台”在相应参考空间群的 Γ 点启动现有 Python 计算。更多约定见 [课程说明](dist/docs/pointgroup-course.md)。
+
 ## 启动与部署
 
 Windows 可以直接双击 `start.cmd` 启动；关闭弹出的命令行窗口即可停止静态文件服务器。
