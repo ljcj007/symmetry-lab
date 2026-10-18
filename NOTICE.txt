@@ -118,3 +118,11 @@ in dist/data/pointgroup-lessons.json and dist/docs/pointgroup-course.md.
 The point-group atlas and character tables are independently computed in
 Python from the existing attributed SpaceGroupIrep data; their source and
 numerical validation are included with the atlas and its build script.
+
+The advanced symmetry course (2026-10-18) adds original Chinese lessons,
+exercises and Python-generated interactive demonstrations for space groups,
+double groups and magnetic symmetry. Textbook, IUCr, Bilbao and research
+references are recorded in dist/data/symmetry-course-lessons.json and
+dist/docs/symmetry-course.md. The teaching catalog is derived from the existing
+attributed SpaceGroupIrep and MSGCorep databases; it preserves their identifiers
+and licenses. The reference textbook PDF and page images are not redistributed.

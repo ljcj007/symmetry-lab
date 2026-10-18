@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-10-18",
+  "build": "20261018-academy1",
+  "sources": [
+    {
+      "id": "dresselhaus2008",
+      "title": "Group Theory: Application to the Physics of Condensed Matter",
+      "authors": [
+        "Mildred S. Dresselhaus",
+        "Gene Dresselhaus",
+        "Ado Jorio"
+      ],
+      "year": 2008,
+      "url": "https://link.springer.com/book/10.1007/978-3-540-32899-5",
+      "referenceNote": "用户提供的 2008_Book_GroupTheory.pdf，共 576 个物理页面。下列 PDF 页码从 1 开始，已对照章节页眉核验；课程为原创中文讲解，不附原书扫描页。书目 DOI 采用出版社核验的末位 5。"
+    },
+    {
+      "id": "iucr-hierarchy",
+      "title": "Crystallographic shelves: space-group hierarchy explained",
+      "authors": [
+        "Massimo Nespolo",
+        "Mois I. Aroyo",
+        "Bernd Souvignier"
+      ],
+      "year": 2018,
+      "url": "https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html",
+      "referenceNote": "晶系、Bravais 类型、空间群类型及对映分类的一手教学文献。"
+    },
+    {
+      "id": "iucr-tables",
+      "title": "How to read (and understand) Volume A of International Tables for Crystallography: an introduction for nonspecialists",
+      "authors": [
+        "Zbigniew Dauter",
+        "Mariusz Jaskolski"
+      ],
+      "year": 2010,
+      "url": "https://journals.iucr.org/j/issues/2010/05/02/kk5061/index.html",
+      "referenceNote": "空间群表、一般位置、特殊位置与晶胞设定的教学说明。"
+    },
+    {
+      "id": "bcs-double",
+      "title": "Double crystallographic groups and their representations on the Bilbao Crystallographic Server",
+      "year": 2017,
+      "url": "https://arxiv.org/abs/1706.09272",
+      "referenceNote": "Bilbao 双群定义、SU(2) 提升、标准设定和表示标记方法的原始论文。"
+    },
+    {
+      "id": "iucr-magnetic",
+      "title": "Magnetic Group Tables",
+      "authors": [
+        "Daniel B. Litvin"
+      ],
+      "year": 2013,
+      "url": "https://www.iucr.org/what-we-do/publications/books/Magnetic-Group-Tables",
+      "referenceNote": "磁点群与磁空间群的分类总数和规范表格。"
+    },
+    {
+      "id": "bcs-magnetic",
+      "title": "Tutorial on the magnetic section of the Bilbao Crystallographic Server",
+      "url": "https://cryst.ehu.es/html/cryst/tutorials/Tutorial_magnetic_section_BCS_1.pdf",
+      "referenceNote": "MGENPOS、BNS/OG 设定与磁性结构对称操作的官方教程。"
+    },
+    {
+      "id": "bcs-magnetic-classification",
+      "title": "Magnetic Space Groups: Bilbao teaching lecture",
+      "url": "https://www.cryst.ehu.es/html/resources/Hamilton2014/MagneticSpaceGroups_MIA.pdf",
+      "referenceNote": "四类磁空间群的群结构及 230、230、674、517 分类计数。"
+    },
+    {
+      "id": "iucr-magnetic-visual",
+      "title": "Teaching crystallographic and magnetic point group symmetry using three-dimensional rendered visualizations",
+      "url": "https://www.iucr.org/what-we-do/education/pamphlets/teaching-crystallographic-and-magnetic-point-group-symmetry-using",
+      "referenceNote": "极矢量、轴矢量、加撇操作及磁点群的教学材料。"
+    },
+    {
+      "id": "mong2010",
+      "title": "Antiferromagnetic topological insulators",
+      "authors": [
+        "Roger S. K. Mong",
+        "Andrew M. Essin",
+        "Joel E. Moore"
+      ],
+      "year": 2010,
+      "url": "https://doi.org/10.1103/PhysRevB.81.245209",
+      "referenceNote": "时间反演与半平移组合对称的原始研究；本课程仅借此解释对称代数，不由磁群类型直接断言拓扑相。"
+    },
+    {
+      "id": "msgcorep",
+      "title": "MSGCorep: corepresentations of magnetic space groups",
+      "url": "https://github.com/goodluck1982/MSGCorep",
+      "referenceNote": "现有工作台磁群数据与共表示接口的上游项目；标准标签与网站临时数值编号分别显示。"
+    }
+  ],
+  "files": {
+    "dist/data/symmetry-course-atlas.json": {
+      "bytes": 462416,
+      "sha256": "7e1a819897cc79f6b38e24a17f7f758b12974a76edb796810482e601de8319bf"
+    },
+    "dist/data/symmetry-course-lessons.json": {
+      "bytes": 62373,
+      "sha256": "dd1c2c8207002858f683084369ed4b78977c9cb23ddaa9b4fe812c79e91e21f7"
+    },
+    "dist/docs/symmetry-course.md": {
+      "bytes": 9726,
+      "sha256": "12d6ad5cae0379a1a2ab195afb54dab6df51117c36838b59390131674e793273"
+    },
+    "dist/symmetry-course-ui.js": {
+      "bytes": 45631,
+      "sha256": "70eedaae57de2399089dca03dce9b1dfc49b10168ef0d53d97410c5f5ebc431d"
+    },
+    "dist/symmetry-course.css": {
+      "bytes": 21821,
+      "sha256": "ea392bb0b1aa97d8dbc1a5ebdefc52416449e7f3d2933950e0a53beab042aadc"
+    },
+    "dist/python/teaching_labs.py": {
+      "bytes": 13870,
+      "sha256": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
+    },
+    "dist/python/browser_api.py": {
+      "bytes": 3930,
+      "sha256": "1cb4625c73ce7b4231e79a0776d3e4529919b83340b9f6cf8209396673f89a2b"
+    },
+    "scripts/build-symmetry-course.py": {
+      "bytes": 5987,
+      "sha256": "b6ece8c67bc38642873ffb6660d6ed57f98e4a44aa039c705bb32b30f8a332c4"
+    },
+    "scripts/test-symmetry-course.py": {
+      "bytes": 5009,
+      "sha256": "6aadbacdd6e4f4fcd22971d54a6d75ca3bee4b34c5312eeefc460ead6d84dbac"
+    },
+    "scripts/test-python-teaching-labs.py": {
+      "bytes": 11793,
+      "sha256": "431a4aa526d226f28976473c375ffbf52e959f2525980ddc86be52844e37e6a5"
+    },
+    "scripts/test-symmetry-course-ui.mjs": {
+      "bytes": 8037,
+      "sha256": "ed1b4a7273a7aefc571af5365513ba4dd397a413e1ff25bb594a0550a85b7cca"
+    }
+  },
+  "validation": {
+    "spaceGroupCount": 230,
+    "magneticGroupCount": 1651,
+    "magneticPointGroupCount": 122,
+    "systemCounts": {
+      "三斜": 2,
+      "单斜": 13,
+      "正交": 59,
+      "四方": 68,
+      "三方": 25,
+      "六方": 27,
+      "立方": 36
+    },
+    "magneticTypeCounts": {
+      "1": 230,
+      "2": 230,
+      "3": 674,
+      "4": 517
+    },
+    "magneticPointTypeCounts": {
+      "1": 32,
+      "2": 32,
+      "3": 58
+    },
+    "lessonCount": 15,
+    "quizCount": 30,
+    "pythonLabTests": 9
+  },
+  "scope": [
+    "Original Chinese pedagogical lessons with cited sources",
+    "Ordinary single/double-valued workbench links for all 230 space groups",
+    "Magnetic catalog preserves the 1651 MSG and 122 MPG identifiers from the frozen upstream database",
+    "Four Python demonstrations with explicit coordinate, phase and physical applicability conventions",
+    "Reference textbook PDF and page images not redistributed"
+  ]
+}

@@ -356,6 +356,18 @@
       "implementation": "Python API adapter for the official BSD-3-Clause spglib 2.8.0 C kernel compiled to WebAssembly. The original C library retains its BSD license.",
       "validation": "scripts/test-spglib-wasm.py",
       "sha256": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929"
+    },
+    {
+      "path": "dist/python/teaching_labs.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original standard-library Python demonstrations of Seitz products, SU(2) spinors, axial time-odd moments and antiunitary half translations. Frontend renders returned frames.",
+      "validation": "scripts/test-python-teaching-labs.py",
+      "limitations": [
+        "Fixed orthonormal-cell examples, not a general structure classification engine",
+        "Kramers eligibility is conditional on Hamiltonian symmetry; no material bands or intensities predicted"
+      ],
+      "sha256": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
     }
   ],
   "coordinate_conventions": {
@@ -389,7 +401,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-16",
+  "updated": "2026-10-18",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",
@@ -409,7 +421,8 @@
       "arithmetic_centralizer",
       "symbolic_spacegroups",
       "structure_bc",
-      "standard_labels"
+      "standard_labels",
+      "teaching_labs"
     ],
     "contract_test": "scripts/test-python-api.py"
   },
@@ -423,7 +436,8 @@
     "dist/docs/symbolic-spacegroups.md",
     "dist/docs/structure-bc.md",
     "dist/docs/standard-labels.md",
-    "dist/docs/spglib-browser.md"
+    "dist/docs/spglib-browser.md",
+    "dist/docs/symmetry-course.md"
   ],
   "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

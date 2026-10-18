@@ -124,6 +124,19 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual(len(result['littleGroup']['operations']), 1)
         self.assertNotEqual(result['standardLabels'].get('status'), 'unavailable')
 
+    def test_teaching_labs_public_contract(self):
+        screw = self.result('teaching_labs', {'lab':'seitz', 'preset':'screw21', 'steps':2, 'k':[0,0,0.5]})
+        self.assertEqual(screw['closure']['translation'], [0,0,1])
+        self.assertAlmostEqual(screw['frames'][2]['blochPhase']['re'], -1)
+        spin = self.result('teaching_labs', {'lab':'spinor', 'axis':'z', 'initialState':'up'})
+        self.assertAlmostEqual(spin['checkpoints']['angle360']['spinor'][0]['re'], -1)
+        self.assertAlmostEqual(spin['checkpoints']['angle720']['spinor'][0]['re'], 1)
+        moment = self.result('teaching_labs', {'lab':'magnetic', 'operation':'inversion', 'moment':[1,2,3]})
+        self.assertEqual(moment['transformedMoment'], [1,2,3])
+        anti = self.result('teaching_labs', {'lab':'antiferro', 'k':0.5, 'spinful':True})
+        self.assertTrue(anti['isTrim'])
+        self.assertFalse(anti['kramersEligible'])
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

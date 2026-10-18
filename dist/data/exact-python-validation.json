@@ -4,7 +4,7 @@
   "python": "3.13",
   "sympy": "1.14.0",
   "sources": {
-    "dist/python/browser_api.py": "72da2968916dacf40839bd71f2abc63d3a3247b61d2510fbdca0aa2477c2a0a4",
+    "dist/python/browser_api.py": "1cb4625c73ce7b4231e79a0776d3e4529919b83340b9f6cf8209396673f89a2b",
     "dist/python/carat_browser.py": "fb40c3da3ce777be983fba2f524dcbc85ee346e1fa56aa3c2a58a8ca400904ee",
     "dist/python/carat_integral.py": "66e78a666f51e007a72e048dc740da34b09cecd0cc79a2be20869fd96264d44e",
     "dist/python/cli.py": "4dbe3931e81fa2fd21d44b5cff9562d57eb372a54f37bbd16ba8bd00c59cf32e",
@@ -20,7 +20,8 @@
     "dist/python/symbolic_spacegroups.py": "c9436ba1adefb540d1897efbd78cb01cceaebdd9de29233a2a904da4f3b1aedb",
     "dist/python/structure_bc.py": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c",
     "dist/python/standard_labels.py": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4",
-    "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929"
+    "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
+    "dist/python/teaching_labs.py": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -50,7 +51,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 13
+    "tests": 14
   },
   "regression": {
     "legacyJavaScript": "passed",

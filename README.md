@@ -10,6 +10,16 @@
 
 教学表格由 `python scripts/build-pointgroup-course.py` 从固定群数据生成，并用 `python scripts/test-pointgroup-course.py` 检查全部 32 群的矩阵闭合、共轭类、特征标正交性和表示分解。静态教学无需等待 Python 运行环境；“送入工作台”在相应参考空间群的 Γ 点启动现有 Python 计算。更多约定见 [课程说明](dist/docs/pointgroup-course.md)。
 
+## 空间群、双群与磁群课堂
+
+左侧“空间群与磁群课堂”（`#academy`）沿空间群、双群与自旋、磁群与时间反演三条路线提供 15 个学习单元、15 个分步例题和 30 道带解析的练习。参考原有 Dresselhaus 教材及 IUCr、Bilbao 和原始研究文献，具体来源和适用范围见 [课程说明](dist/docs/symmetry-course.md)。32 点群课堂保留为入门课程。
+
+教学目录覆盖全部 **230 个空间群、1,651 个磁空间群和 122 个磁点群**，支持编号/符号检索、晶系/磁群类型筛选，以及单值或自旋双值工作台跳转。目录中的操作数指平移商的代表操作数，完整空间群仍是无限群；磁群 BNS 首段的含义按类型区分。目录不把“含分数平移”当成 symmorphic / nonsymmorphic 分类判据。
+
+四种交互实验由同一个 Python 接口 `teaching_labs` 计算：Seitz 平移/螺旋/滑移复合与 Bloch 相位、自旋 1/2 旋量的 2π/4π 旋转、极向量与磁矩在空间/时间反演下的对照、反铁磁半格平移与时间反演的组合。前端只显示 Python 结果并播放预计算帧。反铁磁示意模型明确区分“小群条件”和 `A² = −1`，不将示意箭头解释为真实材料能带预测。
+
+重建目录：`python scripts/build-symmetry-course.py`。验证课程/目录/实验：`npm run test:academy`。四个实验也可由 `python dist/python/cli.py teaching_labs input.json` 在本地 CPython 运行；该模块只用 Python 标准库。课程文本无需启动 Python，交互计算按需加载浏览器解释器。
+
 ## 启动与部署
 
 Windows 可以直接双击 `start.cmd` 启动；关闭弹出的命令行窗口即可停止静态文件服务器。

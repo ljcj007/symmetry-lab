@@ -22,7 +22,7 @@ export function mountCoverage(host) {
     button.disabled=true;content.textContent='正在读取接口清单…';
     try {
       if(!inventory){
-        pending ||= fetch('data/symbolic-api-coverage.json?v=20261018-course1').then(async response=>{
+        pending ||= fetch('data/symbolic-api-coverage.json?v=20261018-academy1').then(async response=>{
           if(!response.ok)throw new Error('接口清单读取失败');
           const data=await response.json();
           if(!Array.isArray(data.inventory))throw new Error('接口清单格式错误');
