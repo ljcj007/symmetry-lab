@@ -1,0 +1,2094 @@
+{
+  "schemaVersion": 1,
+  "title": "从典型材料认识空间群、双群与磁群",
+  "sources": [
+    {
+      "id": "aflow-nacl",
+      "title": "AFLOW：Rock Salt/Halite (NaCl, B1) Structure",
+      "url": "https://aflow.org/p/AB_cF8_225_a_b-001/",
+      "note": "官方原型库，核验 Fm-3m、fcc 平移和两套相差 (1/2,1/2,1/2) 的位点。模型选择 Na 在原点；交换两套化学基元的原点选择不改变空间群类型。"
+    },
+    {
+      "id": "aflow-diamond",
+      "title": "AFLOW：Diamond (A4) Structure",
+      "url": "https://aflow.org/p/A_cF8_227_a-001/",
+      "note": "官方原型库，核验金刚石结构、Si 同型及 No.227。此页采用原点选项2；课堂将原点平移到一个 Si 原子，使用常见的 0 与 (1/4,1/4,1/4) 基元。"
+    },
+    {
+      "id": "aflow-zincblende",
+      "title": "AFLOW：Zincblende (B3) Structure",
+      "url": "https://aflow.org/p/AB_cF8_216_a_c-001/",
+      "note": "官方原型库，核验 No.216 与两类原子的四面体配位；GaAs 模型按 Ga 在 4a、As 在 4c 选定化学占位。"
+    },
+    {
+      "id": "aflow-bcc",
+      "title": "AFLOW：Body-Centered Cubic (A2, bcc) Structure",
+      "url": "https://aflow.org/p/A_cI2_229_a-001/",
+      "note": "官方原型库，核验 bcc 核位置和 No.229；铁磁方向由本教学模型另行指定。"
+    },
+    {
+      "id": "aflow-rutile",
+      "title": "AFLOW：Rutile (TiO2, C4) Structure",
+      "url": "https://aflow.org/p/A2B_tP6_136_f_a-001/",
+      "note": "官方 rutile 原型，核验 No.136 的 2a/4f 分数坐标；用于 MnF2 的化学结构类型。"
+    },
+    {
+      "id": "stout1954",
+      "title": "Stout & Reed (1954)：The Crystal Structure of MnF2, FeF2, CoF2, NiF2 and ZnF2",
+      "url": "https://doi.org/10.1021/ja01650a005",
+      "note": "原始 X 射线结构研究；MnF2 在 25°C 为 rutile，a=4.8734 Å、c=3.3099 Å、u=0.310(3)。课堂只取舍入的 c/a=0.68 和 u=0.310；不宣称为低温精修。"
+    },
+    {
+      "id": "yamani2010",
+      "title": "Yamani, Tun & Ryan (2010)：Neutron scattering study of the classical antiferromagnet MnF2",
+      "url": "https://doi.org/10.1139/P10-081",
+      "note": "原始中子散射教学实验，支持 rutile 两 Mn 子晶格沿 c 轴反平行的磁序；不将教学中忽略的配体磁矩或有限温度涨落视作严格实验零值。"
+    },
+    {
+      "id": "roth1958",
+      "title": "Roth (1958)：Magnetic Structures of MnO, FeO, CoO, and NiO",
+      "url": "https://doi.org/10.1103/PhysRev.110.1333",
+      "note": "原始中子衍射研究，支持 NiO 的 (111) 铁磁面反铁磁堆垛和面内磁矩。"
+    },
+    {
+      "id": "pomjakushin2024",
+      "title": "Pomjakushin (2024)：On the magnetic and crystal structures of NiO and MnO",
+      "url": "https://doi.org/10.1107/S205252062400756X",
+      "note": "原始衍射研究，讨论低温晶格畸变及磁结构模型判别；提醒不能从理想立方母相或少量操作直接替代实验磁群精修。"
+    },
+    {
+      "id": "weber2024",
+      "title": "Weber et al. (2024)：Surface Magnetization in Antiferromagnets: Classification, Example Materials, and Relation to Magnetoelectric Responses",
+      "url": "https://doi.org/10.1103/PhysRevX.14.021033",
+      "note": "NiO 案例采用 (111) 层和 [11-2] 面内磁矩；课堂据此选定一个理想单磁畴。"
+    },
+    {
+      "id": "bcs-double",
+      "title": "Elcoro et al. (2017)：Double crystallographic groups and their representations on the Bilbao Crystallographic Server",
+      "url": "https://arxiv.org/abs/1706.09272",
+      "note": "双群、SU(2) 提升及双值表示的一手方法论文；以下旋量推导为原创教学例。"
+    }
+  ],
+  "materials": [
+    {
+      "id": "nacl",
+      "name": "氯化钠：先辨认化学基元",
+      "formula": "NaCl",
+      "category": "空间群",
+      "phase": "理想常压岩盐结构；非磁性核位置模型",
+      "spaceGroup": {
+        "number": 225,
+        "symbol": "Fm-3m",
+        "setting": "立方 F 常规胞，Na 在 (0,0,0)，Cl 在 (1/2,1/2,1/2)"
+      },
+      "summary": "同一几何点阵上的不同元素不能随意互换。用岩盐比较面心平移与交换 Na/Cl 的伪对称。",
+      "physics": "空间群保持整个带元素标签的周期结构；外形重合只是必要条件。",
+      "limitations": [
+        "晶格常数归一化为 1，不拟合温度、应变或离子位移。",
+        "零磁矩代表本核结构模型没有磁序，不用于模拟瞬时自旋涨落。"
+      ],
+      "sections": [
+        {
+          "title": "一个常规胞中的两套 fcc 子晶格",
+          "paragraphs": [
+            "Na 占四个面心格点，Cl 为同一组坐标整体加 (1/2,1/2,1/2) 后按晶胞折回。因此常规胞有 4 个 Na 和 4 个 Cl。",
+            "面心平移 (0,1/2,1/2) 将 Na 映回 Na、Cl 映回 Cl；(1/2,1/2,1/2) 虽把几何点集映回自身，却交换元素，不是 NaCl 的平移对称。"
+          ]
+        },
+        {
+          "title": "从演示到空间群",
+          "paragraphs": [
+            "绕 z 的 90° 旋转和原点反演都保持两种元素。将它们与面心平移结合，便能理解 Fm-3m 名称中的几何信息。",
+            "此处只展示少量代表操作；点击工作台查看标准 BC 设定下的完整操作与表示，不能把演示样本数当成群阶。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-nacl"
+      ],
+      "model": {
+        "cell": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。",
+        "atoms": [
+          {
+            "id": "Na1",
+            "element": "Na",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Na2",
+            "element": "Na",
+            "frac": [
+              0,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Na3",
+            "element": "Na",
+            "frac": [
+              0.5,
+              0,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Na4",
+            "element": "Na",
+            "frac": [
+              0.5,
+              0.5,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Cl1",
+            "element": "Cl",
+            "frac": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Cl2",
+            "element": "Cl",
+            "frac": [
+              0.5,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Cl3",
+            "element": "Cl",
+            "frac": [
+              0,
+              0.5,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Cl4",
+            "element": "Cl",
+            "frac": [
+              0,
+              0,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "所有原子保持原位，作为位置和元素匹配的基准；它不施加旋转或平移。"
+          },
+          {
+            "id": "c4z",
+            "label": "绕 z 旋转 90°",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "将整个结构绕 z 轴转 90°，Na 仍落到 Na、Cl 仍落到 Cl，体现立方结构的四重对称。"
+          },
+          {
+            "id": "inversion",
+            "label": "原点反演",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "将每个分数坐标 f 变成 −f，并允许相差整数晶胞平移；两套元素各自保持。"
+          },
+          {
+            "id": "f-translation",
+            "label": "面心平移 (0,1/2,1/2)",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "整体平移 (0,1/2,1/2)，Na 与 Cl 两套 fcc 子晶格分别映回自身，是合法的面心平移。"
+          },
+          {
+            "id": "swap-species",
+            "label": "反例：平移 (1/2,1/2,1/2)",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": false,
+            "expectedMagneticSymmetry": false,
+            "explanation": "整体平移 (1/2,1/2,1/2) 后几何点集重合，但 Na 与 Cl 被互换，因此不保持化学结构。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "225",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": false
+      }
+    },
+    {
+      "id": "silicon",
+      "name": "硅：平移补偿与双值表示",
+      "formula": "Si",
+      "category": "空间群 / 双群",
+      "phase": "理想常压金刚石结构；无磁序",
+      "spaceGroup": {
+        "number": 227,
+        "symbol": "Fd-3m",
+        "setting": "立方 F 常规胞，原点选项1（原点在 Si）；基元 0 与 (1/4,1/4,1/4)"
+      },
+      "summary": "原子旋转后能否重合取决于平移部分；电子旋量还要记录 360° 回转留下的负号。",
+      "physics": "核位置的空间对称与电子自旋的 SU(2) 表示描述不同自由度，必须分别验证。",
+      "limitations": [
+        "模型使用原子原点；标准表中的原点选项2坐标不可直接混用。",
+        "双群推导只示范自旋 1/2 的运动学，不计算 Si 实际能带或自旋轨道劈裂。"
+      ],
+      "sections": [
+        {
+          "title": "带平移的四重操作",
+          "paragraphs": [
+            "以一个 Si 为原点，纯 C4z 把 (1/4,1/4,1/4) 送到没有 Si 的位置。加入 t=(1/4,1/4,1/4) 后，所有 Si 又能一一对应。",
+            "这个 {C4z|t} 的旋转轴相对原点有偏移。重复四次时旋转部分成为恒等，累计平移为 (0,0,1)；晶胞内折回的画面相同不表示无限晶体上的操作就是恒等。"
+          ]
+        },
+        {
+          "title": "反演中心可以不在原点",
+          "paragraphs": [
+            "{−I|(1/4,1/4,1/4)} 的中心为 (1/8,1/8,1/8)，它交换两套等价 Si 子晶格。",
+            "对自旋 1/2，360° 的空间回转提升到 −I；720° 才回到 +I。三维原子动画看不到这个旋量整体符号，须结合分步推导或旋量实验阅读。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-diamond",
+        "bcs-double"
+      ],
+      "model": {
+        "cell": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。",
+        "atoms": [
+          {
+            "id": "Si1",
+            "element": "Si",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si2",
+            "element": "Si",
+            "frac": [
+              0,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si3",
+            "element": "Si",
+            "frac": [
+              0.5,
+              0,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si4",
+            "element": "Si",
+            "frac": [
+              0.5,
+              0.5,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si5",
+            "element": "Si",
+            "frac": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si6",
+            "element": "Si",
+            "frac": [
+              0.25,
+              0.75,
+              0.75
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si7",
+            "element": "Si",
+            "frac": [
+              0.75,
+              0.25,
+              0.75
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Si8",
+            "element": "Si",
+            "frac": [
+              0.75,
+              0.75,
+              0.25
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "保持全部 Si 位置不变，为比较其他操作提供基准；这里只核验核位置，不涉及旋量相位。"
+          },
+          {
+            "id": "c2z",
+            "label": "绕 z 旋转 180°",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "绕 z 轴转 180° 后，每个 Si 都能找到周期等价的 Si。电子自旋的同一半周回转另有 SU(2) 因子，需在双群推导中计算。"
+          },
+          {
+            "id": "c3",
+            "label": "绕 [111] 旋转 120°",
+            "rotation": [
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "循环置换 x、y、z，相当于绕 [111] 转 120°；两个 Si 子晶格分别保持。"
+          },
+          {
+            "id": "diamond-inversion",
+            "label": "反演中心 (1/8,1/8,1/8)",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "先将 f 取负，再加 (1/4,1/4,1/4)，等价于关于 (1/8,1/8,1/8) 反演。两套子晶格互换，但元素均为 Si，所以通过。"
+          },
+          {
+            "id": "diamond-c4",
+            "label": "{C4z | 1/4,1/4,1/4}",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "先绕 z 转 90°，再平移 (1/4,1/4,1/4)，补偿基元的位置差。重复四次会留下 (0,0,1) 平移，不能因晶胞内折回重合就当作完整恒等操作。"
+          },
+          {
+            "id": "pure-c4",
+            "label": "反例：只有 C4z",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": false,
+            "expectedMagneticSymmetry": false,
+            "explanation": "仅绕当前原点的 z 轴转 90°，部分 Si 会落到空位；缺少平移补偿，不能完整匹配。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "227",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": true
+      }
+    },
+    {
+      "id": "gaas",
+      "name": "砷化镓：几何相近，对称不同",
+      "formula": "GaAs",
+      "category": "空间群 / 双群",
+      "phase": "理想常压闪锌矿结构；无磁序",
+      "spaceGroup": {
+        "number": 216,
+        "symbol": "F-43m",
+        "setting": "立方 F 常规胞；Ga 在 4a，As 在 4c"
+      },
+      "summary": "把硅的两个同元素子晶格换成 Ga 与 As，原先交换两套基元的反演便失效。",
+      "physics": "元素占位会减少空间对称；加入电子自旋后，应使用剩余空间对称的双群。",
+      "limitations": [
+        "只讨论立方闪锌矿相，不涵盖纳米线中可能出现的纤锌矿相。",
+        "缺少反演不等于任意 k 都必须劈裂；还需时间反演、小群和具体哈密顿量。"
+      ],
+      "sections": [
+        {
+          "title": "Si 与 GaAs 的对照实验",
+          "paragraphs": [
+            "Ga 与 As 采用和硅相同的两套几何坐标。Si 中的键中心反演会把 Ga 送到 As，因此它不属于这个化学结构的空间群。",
+            "绕 [111] 的三重旋转保持每一种元素；绕 z 的四重反演 S4z=−C4z 也可保持两套子晶格。不要把符号 -4 与纯 4 混淆。"
+          ]
+        },
+        {
+          "title": "时间反演与自旋简并",
+          "paragraphs": [
+            "非磁性、具有自旋轨道耦合的理想 GaAs 仍可有 Θ 对称。自旋 1/2 的 Θ²=−I 只在 Θ 将 k 送回同一动量子空间时直接给出 Kramers 配对。",
+            "本页的 3D 模型核验原子位置；双值表示在工作台或旋量实验中核验，原子坐标不包含完整的电子波函数信息。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-zincblende",
+        "bcs-double"
+      ],
+      "model": {
+        "cell": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。",
+        "atoms": [
+          {
+            "id": "Ga1",
+            "element": "Ga",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Ga2",
+            "element": "Ga",
+            "frac": [
+              0,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Ga3",
+            "element": "Ga",
+            "frac": [
+              0.5,
+              0,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "Ga4",
+            "element": "Ga",
+            "frac": [
+              0.5,
+              0.5,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "As1",
+            "element": "As",
+            "frac": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "As2",
+            "element": "As",
+            "frac": [
+              0.25,
+              0.75,
+              0.75
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "As3",
+            "element": "As",
+            "frac": [
+              0.75,
+              0.25,
+              0.75
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "As4",
+            "element": "As",
+            "frac": [
+              0.75,
+              0.75,
+              0.25
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "Ga 与 As 均保持原位，是带元素标签的位置匹配基准。"
+          },
+          {
+            "id": "c2z",
+            "label": "绕 z 旋转 180°",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "绕 z 转 180° 后，Ga 映回 Ga、As 映回 As；保持的是每一种元素，而不只是无标签的几何点集。"
+          },
+          {
+            "id": "c3",
+            "label": "绕 [111] 旋转 120°",
+            "rotation": [
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "循环置换 x、y、z，对应绕 [111] 转 120°；Ga 与 As 两套子晶格分别保持。"
+          },
+          {
+            "id": "s4z",
+            "label": "四重反演 S4z",
+            "rotation": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "先绕 z 转 90°再作原点反演，即 S4z=−C4z。这个组合保持 Ga 与 As 各自的子晶格，不能与纯四重旋转混为一谈。"
+          },
+          {
+            "id": "f-translation",
+            "label": "面心平移",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "整体平移 (0,1/2,1/2)，将两套 fcc 子晶格分别送回自身，因此保持 GaAs 化学结构。"
+          },
+          {
+            "id": "swap-inversion",
+            "label": "反例：沿用 Si 的反演",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0.25,
+              0.25,
+              0.25
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": false,
+            "expectedMagneticSymmetry": false,
+            "explanation": "沿用 Si 的键中心反演会交换 Ga 与 As。位置集合虽重合，元素标签不保持，所以不是 GaAs 的化学对称。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "216",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": true
+      }
+    },
+    {
+      "id": "iron",
+      "name": "铁：磁化方向筛选对称",
+      "formula": "Fe",
+      "category": "磁群",
+      "phase": "理想 α-Fe bcc 铁磁单畴；固定 M∥[001]",
+      "spaceGroup": {
+        "number": 229,
+        "symbol": "Im-3m",
+        "setting": "所列为 bcc 化学母相；立方 I 常规胞"
+      },
+      "summary": "同一个 bcc 核结构，固定磁化方向后只保留能保持磁矩的幺正或反幺正组合。",
+      "physics": "磁矩是时间奇轴矢量，变换规律 m′=s det(Q)Qm；反演不翻转磁矩，时间反演会翻转。",
+      "limitations": [
+        "选取低于铁磁转变的理想单畴、M∥[001]；含 SOC 时空间操作同时作用于磁矩方向。",
+        "不把任意独立自旋转动作为补偿，不计算磁各向异性能或温度依赖。",
+        "所有 Fe 磁矩幅度设为 1；Im-3m 是化学母相标签，未宣称它就是此磁畴的磁空间群。"
+      ],
+      "sections": [
+        {
+          "title": "核位置通过，磁矩未必通过",
+          "paragraphs": [
+            "bcc 常规胞有 Fe(0,0,0) 与 Fe(1/2,1/2,1/2)，两者磁矩均指向 +z。C2x 保持核位置，但把磁矩转到 −z，破坏所选磁畴。",
+            "再组合时间反演 Θ，磁矩会第二次翻号，因此 ΘC2x 保持这一理想磁序。反例与正确操作具有相同的原子位置动画，差别来自磁矩。"
+          ]
+        },
+        {
+          "title": "反演为何保留磁化",
+          "paragraphs": [
+            "反演的 Q=−I、detQ=−1，因此轴矢量按 det(Q)Q=I 变换。极矢量位置反向，但磁矩不变。",
+            "单独 Θ 保持所有核位置，却把整个铁磁畴翻转成另一个畴；“两个畴能量相同”与“保持当前畴”是两回事。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-bcc"
+      ],
+      "model": {
+        "cell": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。",
+        "atoms": [
+          {
+            "id": "Fe1",
+            "element": "Fe",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "Fe2",
+            "element": "Fe",
+            "frac": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "两个 Fe 位置和 +z 磁矩都保持不变，作为当前铁磁单畴的基准。"
+          },
+          {
+            "id": "body-translation",
+            "label": "体心平移",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "平移 (1/2,1/2,1/2) 交换两个 Fe；它们磁矩同向，因此化学位置与磁序都保持。"
+          },
+          {
+            "id": "inversion",
+            "label": "反演：磁矩不翻转",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "反演将位置取负，但磁矩是轴矢量，det(Q)Q=I，因此 +z 磁矩不翻转；位置与磁序均通过。"
+          },
+          {
+            "id": "c4z",
+            "label": "绕磁化轴转 90°",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "绕所选磁化轴 z 转 90°，保持 bcc 核位置且不改变 +z 磁矩；成立与固定磁畴方向有关。"
+          },
+          {
+            "id": "c2x",
+            "label": "反例：C2x 翻转磁矩",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": false,
+            "explanation": "绕 x 转 180° 保持 bcc 原子位置，却把 +z 磁矩转成 −z，因此破坏当前铁磁畴。"
+          },
+          {
+            "id": "theta-c2x",
+            "label": "ΘC2x：两次翻号",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "C2x 先把磁矩转到 −z，时间反演再翻一次号，使其回到 +z；空间位置与磁矩同时匹配。"
+          },
+          {
+            "id": "theta",
+            "label": "反例：单独时间反演 Θ",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": false,
+            "explanation": "时间反演不移动原子核，却将全部 +z 磁矩翻转为 −z；它把当前畴变为相反磁畴，不保持当前磁序。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "229",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": true
+      }
+    },
+    {
+      "id": "nio",
+      "name": "氧化镍：反平移与磁晶胞",
+      "formula": "NiO",
+      "category": "磁群",
+      "phase": "理想岩盐母相上的 AF-II 层状反铁磁单畴（AF-II 指磁序，不是 II 型灰群）",
+      "spaceGroup": {
+        "number": 225,
+        "symbol": "Fm-3m",
+        "setting": "化学母相标签；演示改用体积 a³/2 的非正交磁原胞"
+      },
+      "summary": "沿 [111] 相邻铁磁面交替反向。化学平移可能破坏磁序，而时间反演加同一平移能够恢复它。",
+      "physics": "磁平移晶格可以是化学平移晶格的子群；磁倒空间与化学倒空间的坐标不能混用。",
+      "limitations": [
+        "选择母相立方常规胞倒格基矢单位下 Q=(1/2,1/2,1/2) 的单 Q 畴和 m∥[11-2]，磁矩归一化；忽略氧的诱导磁矩。",
+        "实际低温 NiO 有细小晶格畸变；此处冻结理想立方母相，不能替代实测结构精修或唯一 MSG 指认。",
+        "固定 SOC 锁定的磁矩方向，不允许独立自旋转动来补偿空间操作。"
+      ],
+      "sections": [
+        {
+          "title": "从 fcc 化学原胞到磁原胞",
+          "paragraphs": [
+            "令 a1=(0,1/2,1/2)、a2=(1/2,0,1/2)、a3=(1/2,1/2,0)，单位为立方母相的 a。选 b1=a1−a2、b2=a2−a3、b3=a1+a2。",
+            "Ni 在化学平移 n1a1+n2a2+n3a3 处的磁矩符号为 (−1)^(n1+n2+n3)。三个 b 平移都保持符号，所以磁原胞可容纳两个反向 Ni 与两个 O。"
+          ]
+        },
+        {
+          "title": "为什么 ΘTτ 可以成立",
+          "paragraphs": [
+            "τ=a1 在新磁胞中的坐标为 (1/2,0,1/2)。Tτ 交换两个 Ni 子晶格但不主动翻转磁矩，因此不是磁序对称；ΘTτ 同时翻转磁矩，恢复一一匹配。",
+            "在这个模型中，反演保持每个磁子晶格的符号，单独 Θ 却不保持当前畴。三维图用非正交晶胞显示真实几何，不能把分数坐标直接当成笛卡尔箭头。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-nacl",
+        "roth1958",
+        "pomjakushin2024",
+        "weber2024"
+      ],
+      "model": {
+        "cell": [
+          [
+            -0.5,
+            0,
+            0.5
+          ],
+          [
+            0.5,
+            -0.5,
+            0.5
+          ],
+          [
+            0,
+            0.5,
+            1
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。此 A 的三列是 b1,b2,b3；fractional τ=(1/2,0,1/2) 对应笛卡尔 a1=(0,1/2,1/2)。",
+        "atoms": [
+          {
+            "id": "Ni1",
+            "element": "Ni",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0.4082482904638631,
+              0.4082482904638631,
+              -0.8164965809277261
+            ]
+          },
+          {
+            "id": "Ni2",
+            "element": "Ni",
+            "frac": [
+              0.5,
+              0,
+              0.5
+            ],
+            "moment": [
+              -0.4082482904638631,
+              -0.4082482904638631,
+              0.8164965809277261
+            ]
+          },
+          {
+            "id": "O1",
+            "element": "O",
+            "frac": [
+              0.25,
+              0.5,
+              0.25
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "O2",
+            "element": "O",
+            "frac": [
+              0.75,
+              0.5,
+              0.75
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "保持非正交磁原胞中的全部原子和磁矩不变，作为所选 AF-II 单畴的比较基准。"
+          },
+          {
+            "id": "inversion",
+            "label": "原点反演",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "位置关于原点反演后，同种原子仍能周期匹配；轴矢量磁矩不因反演翻号，所以保持该理想磁序。"
+          },
+          {
+            "id": "chemical-translation",
+            "label": "反例：只有化学平移 τ",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": false,
+            "explanation": "沿磁胞分数坐标 τ=(1/2,0,1/2) 平移，化学位置全部匹配，但两个 Ni 磁子晶格互换而磁矩未翻转，因此磁序不保持。"
+          },
+          {
+            "id": "antitranslation",
+            "label": "反平移 ΘTτ",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0,
+              0.5
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "同一平移交换反向的 Ni 子晶格，再由时间反演翻转磁矩，恢复完整匹配；这是磁序保留的反平移。"
+          },
+          {
+            "id": "theta",
+            "label": "反例：只有 Θ",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": false,
+            "explanation": "单独时间反演保持核位置，却翻转每个 Ni 上的磁矩。净磁矩为零也不表示 Θ 保持当前反铁磁畴。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "225",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": true
+      }
+    },
+    {
+      "id": "mnf2",
+      "name": "二氟化锰：配体决定反铁磁对称",
+      "formula": "MnF₂",
+      "category": "磁群",
+      "phase": "常压 rutile 型共线反铁磁单畴；Mn 磁矩沿 ±c",
+      "spaceGroup": {
+        "number": 136,
+        "symbol": "P4₂/mnm",
+        "setting": "四方 P 化学常规胞；Mn 为 2a，F 为 4f"
+      },
+      "summary": "只看两个 Mn 会误把半平移当作对称。加入 F 配体后，需要旋转和平移的组合才能保持完整化学结构。",
+      "physics": "磁对称必须同时通过所有元素的位置匹配与磁矩匹配；不能从磁原子子集直接猜完整磁群。",
+      "limitations": [
+        "模型冻结 u=0.310、c/a=0.68；它们来自常压结构的教学舍入，不是低温精修值。",
+        "指定零外场、低于反铁磁转变的理想 ±c 单畴，保留 SOC 对方向的约束；忽略配体诱导磁矩和微小畸变。",
+        "No.136 是化学母相空间群；列出的少量操作不作为完整磁群分类。"
+      ],
+      "sections": [
+        {
+          "title": "六个原子都要参与核验",
+          "paragraphs": [
+            "Mn 位于 (0,0,0) 与 (1/2,1/2,1/2)，磁矩分别沿 +z 与 −z。四个 F 位于 (u,u,0)、(−u,−u,0)、(1/2−u,1/2+u,1/2)、(1/2+u,1/2−u,1/2)。",
+            "纯平移 (1/2,1/2,1/2) 交换 Mn，却不能把每个 F 送到 F，因此连化学对称都不是。给它再加 Θ 也无法修复配体位置。"
+          ]
+        },
+        {
+          "title": "旋转、平移和时间反演各司其职",
+          "paragraphs": [
+            "g={C4z|(1/2,1/2,1/2)} 同时交换两 Mn 并正确搬运四个 F，但 C4z 不翻转 z 向磁矩，故 g 破坏所选反铁磁序。",
+            "Θg 先以同一空间操作重排原子，再翻转磁矩，于是位置与磁矩都匹配。这解释了为什么只画 Mn 而不画 F 容易得出错误的对称结论。"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "aflow-rutile",
+        "stout1954",
+        "yamani2010"
+      ],
+      "model": {
+        "cell": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0.68
+          ]
+        ],
+        "convention": "cell 是笛卡尔基矢按列排列的矩阵 A；分数坐标为列向量，r=A·f。长度以母相常规胞 a 归一化，无 Å 单位；moment 是笛卡尔坐标中的归一化时间奇轴矢量，不是实测 μB。操作只取教学样本，不构成完整空间群列表。",
+        "atoms": [
+          {
+            "id": "Mn1",
+            "element": "Mn",
+            "frac": [
+              0,
+              0,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "id": "Mn2",
+            "element": "Mn",
+            "frac": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              -1
+            ]
+          },
+          {
+            "id": "F1",
+            "element": "F",
+            "frac": [
+              0.31,
+              0.31,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "F2",
+            "element": "F",
+            "frac": [
+              0.69,
+              0.69,
+              0
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "F3",
+            "element": "F",
+            "frac": [
+              0.19,
+              0.81,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "F4",
+            "element": "F",
+            "frac": [
+              0.81,
+              0.19,
+              0.5
+            ],
+            "moment": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "operations": [
+          {
+            "id": "identity",
+            "label": "恒等 E",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "两个 Mn、四个 F 及所选 ±c 磁矩均保持不变，作为完整六原子模型的基准。"
+          },
+          {
+            "id": "inversion",
+            "label": "原点反演",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                -1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "原点反演正确置换 F 并保持 Mn 的周期位置；磁矩是轴矢量，不因反演翻号，因此磁序保持。"
+          },
+          {
+            "id": "c2z",
+            "label": "绕 c 旋转 180°",
+            "rotation": [
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "绕 c 轴转 180°，F 位点成对置换，Mn 位点与 z 向磁矩保持；化学与磁性匹配均通过。"
+          },
+          {
+            "id": "rutile-screw",
+            "label": "反例：{C4z|1/2,1/2,1/2}",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": false,
+            "explanation": "先绕 c 转 90°再加 (1/2,1/2,1/2)，完整保持 Mn 与 F 的位置，但交换的两个 Mn 磁矩没有翻号，因此仅化学匹配通过。"
+          },
+          {
+            "id": "theta-screw",
+            "label": "Θ{C4z|1/2,1/2,1/2}",
+            "rotation": [
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": true,
+            "expectedMagneticSymmetry": true,
+            "explanation": "旋转和平移先完成 Mn 与 F 的正确置换，时间反演再把 Mn 磁矩翻号，与目标子晶格的磁矩一致。"
+          },
+          {
+            "id": "body-translation",
+            "label": "反例：纯半平移",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": false,
+            "expectedChemicalSymmetry": false,
+            "expectedMagneticSymmetry": false,
+            "explanation": "纯半平移虽然交换两个 Mn，却不能完整匹配四个 F 配体；只看磁性原子会误判这个操作。"
+          },
+          {
+            "id": "theta-translation",
+            "label": "反例：Θ 加纯半平移",
+            "rotation": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5,
+              0.5
+            ],
+            "timeReversal": true,
+            "expectedChemicalSymmetry": false,
+            "expectedMagneticSymmetry": false,
+            "explanation": "在纯半平移上添加 Θ 可以翻转 Mn 磁矩，但 Θ 不移动原子核，无法修复 F 配体的位置错误。"
+          }
+        ]
+      },
+      "workbench": {
+        "mode": "sg",
+        "id": "136",
+        "k": [
+          0,
+          0,
+          0
+        ],
+        "doubleValued": true
+      }
+    }
+  ]
+}

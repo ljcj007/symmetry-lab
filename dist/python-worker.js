@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261018-academy1';
+const BUILD = '20261021-materials1';
 const plans = {
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
   magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
@@ -12,7 +12,7 @@ const plans = {
   arithmetic_centralizer: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer'],
   symbolic_spacegroups: ['magnetictb_browser', 'symbolic_core', 'symbolic_interfaces', 'symbolic_spacegroups'],
   standard_labels: ['magnetictb_browser', 'symbolic_core', 'standard_labels'],
-  teaching_labs: ['teaching_labs'],
+  teaching_labs: ['crystal_labs', 'teaching_labs'],
   structure_bc: ['spglib_runtime', 'structure_bc']
 };
 let runtime;

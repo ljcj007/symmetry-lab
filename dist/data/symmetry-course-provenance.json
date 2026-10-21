@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-18",
-  "build": "20261018-academy1",
+  "release": "2026-10-21",
+  "build": "20261021-materials1",
   "sources": [
     {
       "id": "dresselhaus2008",
@@ -90,6 +90,66 @@
       "title": "MSGCorep: corepresentations of magnetic space groups",
       "url": "https://github.com/goodluck1982/MSGCorep",
       "referenceNote": "现有工作台磁群数据与共表示接口的上游项目；标准标签与网站临时数值编号分别显示。"
+    },
+    {
+      "id": "aflow-nacl",
+      "title": "AFLOW：Rock Salt/Halite (NaCl, B1) Structure",
+      "url": "https://aflow.org/p/AB_cF8_225_a_b-001/",
+      "note": "官方原型库，核验 Fm-3m、fcc 平移和两套相差 (1/2,1/2,1/2) 的位点。模型选择 Na 在原点；交换两套化学基元的原点选择不改变空间群类型。"
+    },
+    {
+      "id": "aflow-diamond",
+      "title": "AFLOW：Diamond (A4) Structure",
+      "url": "https://aflow.org/p/A_cF8_227_a-001/",
+      "note": "官方原型库，核验金刚石结构、Si 同型及 No.227。此页采用原点选项2；课堂将原点平移到一个 Si 原子，使用常见的 0 与 (1/4,1/4,1/4) 基元。"
+    },
+    {
+      "id": "aflow-zincblende",
+      "title": "AFLOW：Zincblende (B3) Structure",
+      "url": "https://aflow.org/p/AB_cF8_216_a_c-001/",
+      "note": "官方原型库，核验 No.216 与两类原子的四面体配位；GaAs 模型按 Ga 在 4a、As 在 4c 选定化学占位。"
+    },
+    {
+      "id": "aflow-bcc",
+      "title": "AFLOW：Body-Centered Cubic (A2, bcc) Structure",
+      "url": "https://aflow.org/p/A_cI2_229_a-001/",
+      "note": "官方原型库，核验 bcc 核位置和 No.229；铁磁方向由本教学模型另行指定。"
+    },
+    {
+      "id": "aflow-rutile",
+      "title": "AFLOW：Rutile (TiO2, C4) Structure",
+      "url": "https://aflow.org/p/A2B_tP6_136_f_a-001/",
+      "note": "官方 rutile 原型，核验 No.136 的 2a/4f 分数坐标；用于 MnF2 的化学结构类型。"
+    },
+    {
+      "id": "stout1954",
+      "title": "Stout & Reed (1954)：The Crystal Structure of MnF2, FeF2, CoF2, NiF2 and ZnF2",
+      "url": "https://doi.org/10.1021/ja01650a005",
+      "note": "原始 X 射线结构研究；MnF2 在 25°C 为 rutile，a=4.8734 Å、c=3.3099 Å、u=0.310(3)。课堂只取舍入的 c/a=0.68 和 u=0.310；不宣称为低温精修。"
+    },
+    {
+      "id": "yamani2010",
+      "title": "Yamani, Tun & Ryan (2010)：Neutron scattering study of the classical antiferromagnet MnF2",
+      "url": "https://doi.org/10.1139/P10-081",
+      "note": "原始中子散射教学实验，支持 rutile 两 Mn 子晶格沿 c 轴反平行的磁序；不将教学中忽略的配体磁矩或有限温度涨落视作严格实验零值。"
+    },
+    {
+      "id": "roth1958",
+      "title": "Roth (1958)：Magnetic Structures of MnO, FeO, CoO, and NiO",
+      "url": "https://doi.org/10.1103/PhysRev.110.1333",
+      "note": "原始中子衍射研究，支持 NiO 的 (111) 铁磁面反铁磁堆垛和面内磁矩。"
+    },
+    {
+      "id": "pomjakushin2024",
+      "title": "Pomjakushin (2024)：On the magnetic and crystal structures of NiO and MnO",
+      "url": "https://doi.org/10.1107/S205252062400756X",
+      "note": "原始衍射研究，讨论低温晶格畸变及磁结构模型判别；提醒不能从理想立方母相或少量操作直接替代实验磁群精修。"
+    },
+    {
+      "id": "weber2024",
+      "title": "Weber et al. (2024)：Surface Magnetization in Antiferromagnets: Classification, Example Materials, and Relation to Magnetoelectric Responses",
+      "url": "https://doi.org/10.1103/PhysRevX.14.021033",
+      "note": "NiO 案例采用 (111) 层和 [11-2] 面内磁矩；课堂据此选定一个理想单磁畴。"
     }
   ],
   "files": {
@@ -106,16 +166,16 @@
       "sha256": "12d6ad5cae0379a1a2ab195afb54dab6df51117c36838b59390131674e793273"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 45631,
-      "sha256": "70eedaae57de2399089dca03dce9b1dfc49b10168ef0d53d97410c5f5ebc431d"
+      "bytes": 63436,
+      "sha256": "3d27c228c7e13671f227329c9f1d91eeb0e5e69e267c2732041307b5884329c1"
     },
     "dist/symmetry-course.css": {
-      "bytes": 21821,
-      "sha256": "ea392bb0b1aa97d8dbc1a5ebdefc52416449e7f3d2933950e0a53beab042aadc"
+      "bytes": 30767,
+      "sha256": "f57d458cf9325e15ccd6607516395f1e758890dd985c27bc86a3ac4eacffb722"
     },
     "dist/python/teaching_labs.py": {
-      "bytes": 13870,
-      "sha256": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
+      "bytes": 13998,
+      "sha256": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09"
     },
     "dist/python/browser_api.py": {
       "bytes": 3930,
@@ -134,8 +194,40 @@
       "sha256": "431a4aa526d226f28976473c375ffbf52e959f2525980ddc86be52844e37e6a5"
     },
     "scripts/test-symmetry-course-ui.mjs": {
-      "bytes": 8037,
-      "sha256": "ed1b4a7273a7aefc571af5365513ba4dd397a413e1ff25bb594a0550a85b7cca"
+      "bytes": 17184,
+      "sha256": "4d050c810bc4b12db1b55474c9a9081fae3d44094424ef5331003c32bb2444ba"
+    },
+    "scripts/test-materials-course.py": {
+      "bytes": 3520,
+      "sha256": "f3cb7d5c154eb74a68ebbb28be80f3327964fa8cb96271cfda508c22f735a79b"
+    },
+    "scripts/test-python-crystal-labs.py": {
+      "bytes": 11799,
+      "sha256": "9cc809034a521dc4b218b8e2980aeacc01a804178a8a558d8cac397aa8bacea3"
+    },
+    "dist/python/crystal_labs.py": {
+      "bytes": 16791,
+      "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
+    },
+    "scripts/test-python-api.py": {
+      "bytes": 9165,
+      "sha256": "ffedab9e5f031909002e4fe0e46abec9fbb4ce22af82c527b7fe58e1b306a262"
+    },
+    "dist/crystal-viewer.js": {
+      "bytes": 8851,
+      "sha256": "7a37f0c1a99ea83ce6c144c29fc997366a1e8b25c658f0d5058f917720d08d4a"
+    },
+    "dist/data/symmetry-derivations.json": {
+      "bytes": 25743,
+      "sha256": "2f748a44f5cb68c1382ffc49a3a1cce2074affe31961087a1929b1cddb7d014e"
+    },
+    "dist/docs/materials-classroom.md": {
+      "bytes": 6109,
+      "sha256": "0ce4661f347d355cccf64f211680297dce617083d0c8aa014742af8387755f72"
+    },
+    "dist/data/symmetry-materials.json": {
+      "bytes": 57701,
+      "sha256": "344ae087c6e3044a956801aed602ccdefed902e45821a2dd0ac3bf4e8473afcd"
     }
   },
   "validation": {
@@ -164,13 +256,21 @@
     },
     "lessonCount": 15,
     "quizCount": 30,
-    "pythonLabTests": 9
+    "pythonLabTests": 9,
+    "materialCount": 6,
+    "materialOperationCount": 36,
+    "guidedExerciseCount": 12,
+    "crystalPythonTests": 9,
+    "chemicalParentGroupCrossCheck": "spglib, all six ideal chemical structures"
   },
   "scope": [
     "Original Chinese pedagogical lessons with cited sources",
     "Ordinary single/double-valued workbench links for all 230 space groups",
     "Magnetic catalog preserves the 1651 MSG and 122 MPG identifiers from the frozen upstream database",
     "Four Python demonstrations with explicit coordinate, phase and physical applicability conventions",
-    "Reference textbook PDF and page images not redistributed"
+    "Reference textbook PDF and page images not redistributed",
+    "Six material case studies with explicit parent phases and selected ideal magnetic domains",
+    "Interactive 3D camera rendering Python-calculated structures and axial moments",
+    "Guided derivations with individually revealed steps and separate mastery progress"
   ]
 }

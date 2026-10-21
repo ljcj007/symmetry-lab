@@ -126,3 +126,12 @@ references are recorded in dist/data/symmetry-course-lessons.json and
 dist/docs/symmetry-course.md. The teaching catalog is derived from the existing
 attributed SpaceGroupIrep and MSGCorep databases; it preserves their identifiers
 and licenses. The reference textbook PDF and page images are not redistributed.
+
+The materials classroom extension (2026-10-21) contains original idealized
+structural models, Chinese case studies, guided derivations and a 3D viewer.
+Physical and crystallographic sources, phases and model approximations are
+recorded in dist/data/symmetry-materials.json and dist/docs/materials-classroom.md.
+No research-paper figures or article text are redistributed. Symmetry matching
+is independently calculated in Python, and the chemical parent groups are
+cross-checked with spglib. Magnetic results refer to the stated ideal model
+and selected domain, not an experimental magnetic-space-group determination.

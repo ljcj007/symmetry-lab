@@ -10,24 +10,31 @@ const lessons={
   lessons:[{id:'fixture',track:'space',title:'01 Fixture lesson',summary:'Fixture',objectives:[],sections:[],references:[],
     quiz:Array.from({length:8},(_,i)=>({question:`Question ${i}`,choices:['Correct','Incorrect'],answer:0,explanation:'Fixture explanation'}))}]
 };
+const materials={materials:[{id:'fixture',name:'Material fixture',formula:'NaCl',category:'Fixture',phase:'Fixture phase',spaceGroup:{number:1,symbol:'P1',setting:'Fixture'},summary:'Fixture',physics:'Fixture',limitations:[],sections:[],sourceIds:[],model:{cell:[[1,0,0],[0,1,0],[0,0,1]],convention:'Fixture',atoms:[{id:'Na1',element:'Na',frac:[0,0,0],moment:[0,0,1]}],operations:[{id:'E',label:'Identity',rotation:[[1,0,0],[0,1,0],[0,0,1]],translation:[0,0,0],timeReversal:false,explanation:'Fixture'}]}}],sources:[]};
+const derivations={exercises:[{id:'derive-fixture',track:'space',title:'Derivation fixture',materialId:'fixture',prompt:'Try the derivation',givens:['Given data'],hint:'Hidden hint content',steps:[{title:'First step',explanation:'First revealed content'},{title:'Second step',explanation:'Second revealed content'}],answer:'Hidden final conclusion',pitfall:'Fixture pitfall',check:{question:'Fixture check',choices:['Yes','No'],answer:0,explanation:'Checked derivation explanation'}}]};
 
-const dataResponse=url=>({ok:true,json:async()=>url.includes('lessons')?lessons:atlas});
+const dataResponse=url=>({ok:true,json:async()=>url.includes('symmetry-materials')?materials:url.includes('symmetry-derivations')?derivations:url.includes('lessons')?lessons:atlas});
 const camel=value=>value.replace(/-([a-z])/g,(_,c)=>c.toUpperCase());
 class Element {
   constructor(tag='div',attributes={},parentNode=null){this.tag=tag;this.attributes=attributes;this.parentNode=parentNode;this.children=[];this.dataset={};this.classList={remove:()=>{}};for(const [name,value] of Object.entries(attributes))if(name.startsWith('data-'))this.dataset[camel(name.slice(5))]=value;this.value=attributes.value||'';this.checked=attributes.checked!==undefined;}
   set innerHTML(value){
     for(const child of this.children)child.parentNode=null;
     this.html=value;this.children=[];
-    for(const match of value.matchAll(/<([a-z][\w-]*)\b([^>]*)>/gi)){
+    const stack=[this],voidTags=new Set(['input','br','hr','img','meta','link','source','wbr','area','base','col','embed','param','track']);
+    for(const match of value.matchAll(/<(\/?)([a-z][\w-]*)\b([^>]*)>/gi)){
+      const tag=match[2].toLowerCase();
+      if(match[1]){while(stack.length>1){const closed=stack.pop();if(closed.tag===tag)break;}continue;}
       const attributes={};
-      for(const attr of match[2].matchAll(/([\w:-]+)(?:="([^"]*)")?/g))attributes[attr[1]]=attr[2]??'';
-      this.children.push(new Element(match[1].toLowerCase(),attributes,this));
+      for(const attr of match[3].matchAll(/([\w:-]+)(?:="([^"]*)")?/g))attributes[attr[1]]=attr[2]??'';
+      const parent=stack.at(-1),child=new Element(tag,attributes,parent);parent.children.push(child);
+      if(!voidTags.has(tag)&&!match[3].endsWith('/'))stack.push(child);
     }
   }
   get innerHTML(){return this.html||'';}
   matches(selector){
     if(selector.startsWith('#'))return this.attributes.id===selector.slice(1);
     if(selector.startsWith('.'))return String(this.attributes.class||'').split(/\s+/).includes(selector.slice(1));
+    if(/^[a-z][\w-]*$/.test(selector))return this.tag===selector;
     const attr=selector.match(/^(\w+)?\[([\w-]+)(?:="([^"]*)")?\]$/);
     return !!attr&&(!attr[1]||attr[1]===this.tag)&&Object.hasOwn(this.attributes,attr[2])&&(attr[3]===undefined||this.attributes[attr[2]]===attr[3]);
   }
@@ -127,4 +134,105 @@ assert.equal(downloaded.selectedGroup.data.number,2,'Downloaded teaching data mu
 assert.deepEqual(downloaded.selectedGroup.data,atlas.spaceGroups.find(group=>group.number===2));
 assert.deepEqual(downloaded.sources,lessons.sources);
 
-console.log('Advanced course UI: late-navigation isolation, 503 recovery, detached retry, malformed/invalid progress filtering, mastery counts, answer invalidation and selected catalog export passed.');
+// New lesson assets are lazy: a failure in these files cannot block the
+// original 15 lessons or their separate quiz records.
+const settle=()=>new Promise(resolve=>setImmediate(resolve));
+globalThis.localStorage={getItem:()=>null,setItem:()=>{}};
+globalThis.fetch=async url=>dataResponse(url);
+const extensionRace=await import('../dist/symmetry-course-ui.js?extension-race');
+const extensionContainer=new Container();
+await extensionRace.renderSymmetryCourseView({container:extensionContainer});
+const extensionRoot=extensionContainer.firstElementChild,extensionWaiting=[];
+globalThis.fetch=url=>new Promise(resolve=>extensionWaiting.push({url,resolve}));
+extensionRoot.querySelector('#sc-tab-materials').onclick();
+assert.equal(extensionWaiting.length,2,'The new assets are requested on entering a new tab');
+extensionRoot.querySelector('#sc-tab-quiz').onclick();
+for(const item of extensionWaiting)item.resolve(dataResponse(item.url));
+await settle();
+assert.match(extensionRoot.querySelector('#sc-content').innerHTML,/sc-quizzes/);
+assert.doesNotMatch(extensionRoot.querySelector('#sc-content').innerHTML,/sc-material-cards/,'A late material fetch must not overwrite a quiz');
+
+const writes={};
+globalThis.localStorage={getItem:key=>key.includes('derivations')?JSON.stringify({'derive-fixture':{revealed:99,hint:'yes',showAnswer:true,selected:20,checked:true},unknown:{revealed:1}}):JSON.stringify({'fixture:0':{selected:0,checked:true}}),setItem:(key,value)=>{writes[key]=JSON.parse(value);}};
+globalThis.fetch=async url=>dataResponse(url);
+const extensionRetry=await import('../dist/symmetry-course-ui.js?extension-retry');
+const derivationContainer=new Container();
+let resolveCrystal;
+await extensionRetry.renderSymmetryCourseView({container:derivationContainer,run:()=>new Promise(resolve=>{resolveCrystal=resolve;})});
+const derivationRoot=derivationContainer.firstElementChild;
+globalThis.fetch=async()=>({ok:false,status:503});
+derivationRoot.querySelector('#sc-tab-derive').onclick();
+await settle();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/503/);
+const extensionRetryButton=derivationRoot.querySelector('#sc-extension-retry');
+globalThis.fetch=async url=>dataResponse(url);
+await extensionRetryButton.onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/已展开 0 \/ 2 步/,'Invalid persisted derivation step counts reset safely');
+assert.doesNotMatch(derivationRoot.querySelector('#sc-content').innerHTML,/Hidden final conclusion|First revealed content|Hidden hint content/,'Answers, hints and steps must not be revealed before a deliberate action');
+derivationRoot.querySelector('#sc-derive-hint').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/Hidden hint content/);
+derivationRoot.querySelector('#sc-derive-next').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/First revealed content/);
+assert.doesNotMatch(derivationRoot.querySelector('#sc-content').innerHTML,/Second revealed content|Hidden final conclusion/);
+derivationRoot.querySelector('#sc-derive-next').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/Second revealed content/);
+assert.doesNotMatch(derivationRoot.querySelector('#sc-content').innerHTML,/Hidden final conclusion/,'Finishing the steps does not automatically reveal the conclusion');
+derivationRoot.querySelector('#sc-derive-answer').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/Hidden final conclusion/);
+derivationRoot.querySelectorAll('input[name="sc-derive-choice"]')[0].onchange();
+derivationRoot.querySelector('#sc-derive-check').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/判断正确/);
+assert.deepEqual(Object.keys(writes),['symmetry-lab.academy.derivations.v1'],'Derivation work must not overwrite the original quiz storage key');
+assert.deepEqual(Object.keys(writes['symmetry-lab.academy.derivations.v1']),['derive-fixture'],'Unknown stored derivations must be discarded');
+derivationRoot.querySelector('#sc-tab-quiz').onclick();
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/<strong>1<small> \/ 8<\/small>/,'Original quiz progress survives derivation interactions');
+
+derivationRoot.querySelector('#sc-tab-materials').onclick();
+await settle();
+const crystalPending=derivationRoot.querySelector('#sc-crystal-form').onsubmit({preventDefault(){}});
+assert.equal(typeof resolveCrystal,'function');
+derivationRoot.querySelector('#sc-tab-quiz').onclick();
+resolveCrystal({lab:'crystal',atoms:[]});
+await crystalPending;
+assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/sc-quizzes/,'A delayed Python material result cannot overwrite navigation');
+assert.equal(extensionRetry.getSymmetryCourseResult().materialExperiment,null,'Discarded material calculations must not enter exports');
+
+// Exercise the real camera with supplied Cartesian data, rather than copying
+// the camera formula into the test. Check interaction changes and cleanup.
+const {createCrystalViewer}=await import('../dist/crystal-viewer.js');
+const viewerData={operation:{label:'Fixture operation'},cellVertices:[[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,0,1],[0,1,1],[1,1,1]],latticeAxes:[{label:'a',start:[0,0,0],end:[1,0,0]}],atoms:[
+  {id:'Na1',element:'Na',cartesian:[.1,.2,.3],moment:[0,0,1],transformed:{cartesianWrapped:[.9,.8,.7],cartesianUnwrapped:[1.9,.8,.7],moment:[0,0,-1]}},
+  {id:'Cl1',element:'Cl',cartesian:[.6,.7,.8],moment:[0,0,0],transformed:{cartesianWrapped:[.4,.3,.2],cartesianUnwrapped:[1.4,.3,.2],moment:[0,0,0]}}
+]};
+const viewerContainer=new Element();let viewerCurrent=true;
+const camera=createCrystalViewer({container:viewerContainer,data:viewerData,isCurrent:()=>viewerCurrent});
+const cv=name=>viewerContainer.querySelector(`[data-cv="${name}"]`),surface=cv('stage'),scene=surface.querySelector('svg');
+const beforeDrag=scene.innerHTML;
+let captured=null,released=false;
+surface.setPointerCapture=id=>{captured=id;};surface.hasPointerCapture=id=>captured===id;surface.releasePointerCapture=()=>{released=true;captured=null;};
+surface.onpointerdown({button:0,pointerId:1,clientX:10,clientY:20,preventDefault(){}});
+surface.onpointermove({pointerId:1,clientX:130,clientY:65});
+assert.notEqual(scene.innerHTML,beforeDrag,'Dragging must change the projected 3D scene');
+assert.notEqual(camera.getView().yaw,-32);
+surface.onpointerup();
+assert.equal(released,true,'Pointer capture is released after dragging');
+const yawBefore=camera.getView().yaw;
+surface.onkeydown({key:'ArrowLeft',preventDefault(){}});
+assert.equal(camera.getView().yaw,yawBefore-5,'Keyboard rotation provides a pointer-free alternative');
+cv('mode').value='transformed';cv('mode').onchange();
+assert.match(scene.innerHTML,/stroke="#a67ee2"/);
+assert.match(scene.innerHTML,/stroke="#6caa65"/,'Transformed-only atoms retain their element colors');
+const wrappedScene=scene.innerHTML;
+cv('wrapped').checked=false;cv('wrapped').onchange();
+assert.notEqual(scene.innerHTML,wrappedScene,'Wrapping toggles the supplied Cartesian coordinates without recalculating symmetry');
+cv('zoom').value='1.5';cv('zoom').oninput();
+assert.equal(camera.getView().zoom,1.5);
+cv('reset').onclick();
+assert.equal(camera.getView().zoom,1);
+assert.equal(camera.getView().yaw,-32);
+viewerCurrent=false;surface.onpointermove({pointerId:1,clientX:200,clientY:100});
+assert.equal(surface.onpointerdown,null);
+assert.equal(surface.onpointermove,null,'Leaving the view clears pointer handlers');
+camera.destroy();
+
+console.log('Advanced course UI: loader/retry races, separate quiz and derivation progress, hidden sequential answers, selected exports, delayed Python isolation, 3D drag/keyboard/zoom/wrapping, element colors and pointer cleanup passed.');

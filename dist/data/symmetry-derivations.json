@@ -1,0 +1,599 @@
+{
+  "schemaVersion": 1,
+  "title": "从操作到结论：分步推导练习",
+  "subtitle": "先作预测，再逐步展开；所有例题都说明坐标、相位和适用条件。",
+  "sourceFile": "symmetry-materials.json",
+  "exercises": [
+    {
+      "id": "space-nacl-count",
+      "track": "space",
+      "title": "NaCl：常规胞为什么有 8 个原子？",
+      "materialId": "nacl",
+      "prompt": "从 fcc 平移和双原子基元推导 NaCl 常规胞、化学原胞的原子数，并判断 (1/2,1/2,1/2) 能否作为晶格平移。",
+      "givens": [
+        "立方常规胞边长为 a。",
+        "F 格点代表为 (0,0,0)、(0,1/2,1/2)、(1/2,0,1/2)、(1/2,1/2,0)。",
+        "每个 F 格点附带 Na 与相对位移 (1/2,1/2,1/2) 的 Cl。"
+      ],
+      "hint": "先数平移等价的格点，再数每个格点上的化学基元；元素标签也属于结构。",
+      "steps": [
+        {
+          "title": "数出 F 格点",
+          "explanation": "按边界共享权重计算，8 个角点各占 1/8，6 个面心各占 1/2。",
+          "formula": "N_F=8×1/8+6×1/2=4"
+        },
+        {
+          "title": "加入两原子基元",
+          "explanation": "每个格点对应一 Na 和一 Cl，所以常规胞含 4 个化学式单位。",
+          "formula": "N_atoms=4×2=8；N_primitive=2"
+        },
+        {
+          "title": "检查可疑平移",
+          "explanation": "把原点 Na 平移到 (1/2,1/2,1/2)，落到 Cl；即使点集重合也没有保持元素。",
+          "formula": "T_(1/2,1/2,1/2)：Na→Cl，故不是化学平移对称。"
+        }
+      ],
+      "answer": "NaCl 常规胞含 4 Na+4 Cl，化学原胞含 1 Na+1 Cl；交换 Na/Cl 的半平移不成立。",
+      "pitfall": "Bravais 格点数不等于原子数。不能去掉元素标签后再判空间群。",
+      "check": {
+        "question": "哪一个平移保持本模型的 NaCl 化学结构？",
+        "choices": [
+          "(1/2,1/2,1/2)",
+          "(0,1/2,1/2)",
+          "(1/4,1/4,1/4)"
+        ],
+        "answer": 1,
+        "explanation": "面心平移将两套 fcc 子晶格分别映回自身。"
+      },
+      "sourceIds": [
+        "aflow-nacl"
+      ]
+    },
+    {
+      "id": "space-si-compose",
+      "track": "space",
+      "title": "Si：四次带平移旋转留下了什么？",
+      "materialId": "silicon",
+      "prompt": "对 g={C4z|(1/4,1/4,1/4)} 求 g² 和 g⁴，并解释晶胞内看似回到原位为何不等于完整操作为恒等。",
+      "givens": [
+        "C4z(x,y,z)=(-y,x,z)。",
+        "Seitz 乘法为 {R|t}{S|u}={RS|t+Ru}。",
+        "分数坐标以课堂 Si 立方常规胞为基准。"
+      ],
+      "hint": "平移不能直接乘以次数；第二次平移须先被第一次旋转。",
+      "steps": [
+        {
+          "title": "计算平方的平移",
+          "explanation": "t=(1/4,1/4,1/4)，Rt=(-1/4,1/4,1/4)，将二者相加。",
+          "formula": "g²={C2z|(0,1/2,1/2)}"
+        },
+        {
+          "title": "再平方",
+          "explanation": "C2z 把 (0,1/2,1/2) 转成 (0,-1/2,1/2)，累加后留下完整 z 平移。",
+          "formula": "g⁴={E|(0,0,1)}"
+        },
+        {
+          "title": "区分折回与真实坐标",
+          "explanation": "对晶胞中的图像，整数平移在折回后消失；在无限晶体中，它把原子搬到另一个晶胞。",
+          "formula": "{E|(0,0,1)}≠{E|0}"
+        },
+        {
+          "title": "联系 Bloch 相位",
+          "explanation": "采用主动平移 (T_tψ)(r)=ψ(r−t)，全格矢平移在 k 态上产生相位。",
+          "formula": "D_k(g⁴)=exp(−2πik_z)；k_z=1/2 时为 −1。"
+        }
+      ],
+      "answer": "g²={C2z|(0,1/2,1/2)}，g⁴={E|(0,0,1)}。最后的平移在 Bloch 态上仍可留下非平凡相位。",
+      "pitfall": "这里最后一式只讨论不含自旋回转负号的空间操作；双值表示还要加入 SU(2) 提升。k 坐标不能与工作台 BC 原胞坐标直接混用。",
+      "check": {
+        "question": "在本题的单值空间表示与 k_z=1/2 条件下，g⁴ 的相位为？",
+        "choices": [
+          "+1",
+          "−1",
+          "0"
+        ],
+        "answer": 1,
+        "explanation": "完整平移 (0,0,1) 给出 exp(−iπ)=−1。"
+      },
+      "sourceIds": [
+        "aflow-diamond",
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "space-si-gaas-inversion",
+      "track": "space",
+      "title": "Si 与 GaAs：同一反演为什么一成一败？",
+      "materialId": "gaas",
+      "prompt": "检查 p={−I|(1/4,1/4,1/4)} 在 Si 与 GaAs 模型中的作用，并求反演中心。",
+      "givens": [
+        "两套 fcc 子晶格分别位于 L 与 L+d，d=(1/4,1/4,1/4)。",
+        "Si 中两套均为 Si；GaAs 中 L 为 Ga，L+d 为 As。"
+      ],
+      "hint": "先解固定点方程，再判断 p 交换的是几何位置还是同种原子。",
+      "steps": [
+        {
+          "title": "求反演中心",
+          "explanation": "中心 c 满足 c=−c+d。",
+          "formula": "c=d/2=(1/8,1/8,1/8)"
+        },
+        {
+          "title": "求子晶格像",
+          "explanation": "F 平移晶格满足 −L=L；因此 p 把 L 映成 L+d，把 L+d 映成 L。",
+          "formula": "p(L)=L+d；p(L+d)=L"
+        },
+        {
+          "title": "加入元素标签",
+          "explanation": "Si 的交换仍为 Si→Si；GaAs 的交换为 Ga↔As，破坏化学占位。",
+          "formula": "Si：通过；GaAs：不通过。"
+        }
+      ],
+      "answer": "同一几何反演在 Si 中成立，在 GaAs 中不成立；反演中心为 (1/8,1/8,1/8)。",
+      "pitfall": "“原子球看起来重合”不代表化学结构不变；还须核验元素。",
+      "check": {
+        "question": "导致 GaAs 不通过这项反演的直接原因是什么？",
+        "choices": [
+          "反演不能作用于晶体",
+          "Ga 与 As 被交换",
+          "GaAs 没有任何三重旋转"
+        ],
+        "answer": 1,
+        "explanation": "位置集合保持，但化学元素标签未保持。"
+      },
+      "sourceIds": [
+        "aflow-diamond",
+        "aflow-zincblende"
+      ]
+    },
+    {
+      "id": "space-nio-cell",
+      "track": "space",
+      "title": "NiO：用 4 个原子构造非正交磁原胞",
+      "materialId": "nio",
+      "prompt": "证明课堂 NiO 的三个 b 基矢保持反铁磁序，并求磁原胞体积与原子数。",
+      "givens": [
+        "fcc 化学原胞 a1=(0,1/2,1/2)、a2=(1/2,0,1/2)、a3=(1/2,1/2,0)。",
+        "磁矩符号为 (−1)^(n1+n2+n3)。",
+        "b1=a1−a2，b2=a2−a3，b3=a1+a2。"
+      ],
+      "hint": "把 b 平移写成 a 基底中的整数系数，检查系数之和的奇偶。",
+      "steps": [
+        {
+          "title": "检查三条磁平移",
+          "explanation": "b1、b2、b3 的系数和依次为 0、0、2，均为偶数，所以不翻转磁矩。",
+          "formula": "(-1)^0=(-1)^0=(-1)^2=+1"
+        },
+        {
+          "title": "求晶胞指数",
+          "explanation": "列变换矩阵的行依次为 (1,0,1)、(−1,1,1)、(0,−1,0)，行列式为 2。",
+          "formula": "[b1 b2 b3]=[a1 a2 a3]P；detP=2"
+        },
+        {
+          "title": "换算体积与原子数",
+          "explanation": "fcc 化学原胞体积为 a³/4，含一 Ni 和一 O；磁原胞大两倍。",
+          "formula": "V_mag=a³/2；N_mag=2×2=4"
+        },
+        {
+          "title": "写出反平移坐标",
+          "explanation": "由 b1+b3=2a1 得 τ=a1；它的磁胞分数坐标含半整数。",
+          "formula": "τ=(b1+b3)/2 → (1/2,0,1/2)_mag"
+        }
+      ],
+      "answer": "三个 b 平移都保持磁序；磁原胞体积 a³/2，含 2 Ni+2 O。τ=a1 不是磁平移，但可与时间反演组合。",
+      "pitfall": "a³/2 并不等于“半个化学原胞”：a³ 是立方常规胞体积，化学原胞为 a³/4。",
+      "check": {
+        "question": "该磁原胞相对于 fcc 化学原胞的指数为？",
+        "choices": [
+          "1/2",
+          "2",
+          "4"
+        ],
+        "answer": 1,
+        "explanation": "detP=2，磁平移晶格只保留化学平移的偶奇条件子群。"
+      },
+      "sourceIds": [
+        "roth1958",
+        "pomjakushin2024"
+      ]
+    },
+    {
+      "id": "double-si-c2",
+      "track": "double",
+      "title": "Si 电子：为什么 C2 的自旋本征值为 ±i？",
+      "materialId": "silicon",
+      "prompt": "对自旋 1/2 的绕 z 半周旋转求矩阵、本征值和平方。",
+      "givens": [
+        "U_z(θ)=cos(θ/2)I−i sin(θ/2)σz。",
+        "σz=diag(1,−1)。",
+        "此题仅取自旋因子，不指定 Si 的具体轨道能带。"
+      ],
+      "hint": "将 θ=π 代入，不要误把半角写成整角。",
+      "steps": [
+        {
+          "title": "代入半角",
+          "explanation": "cos(π/2)=0，sin(π/2)=1。",
+          "formula": "U_z(π)=−iσz=diag(−i,+i)"
+        },
+        {
+          "title": "读取本征值",
+          "explanation": "z 向上、向下自旋分别得到 −i、+i。",
+          "formula": "λ_↑=−i；λ_↓=+i"
+        },
+        {
+          "title": "连续作用两次",
+          "explanation": "每个本征值平方均为 −1，所以空间中的 2π 回转提升为双群的中心元素。",
+          "formula": "U_z(π)²=−I≡U_z(2π)"
+        },
+        {
+          "title": "理解双群",
+          "explanation": "几何上 C2²=E；双群保留中心元素 Ē 的区别，旋量表示满足 D(Ē)=−I。",
+          "formula": "Ē²=E；U_z(π)⁴=+I"
+        }
+      ],
+      "answer": "U_z(π)=diag(−i,+i)，本征值为 ±i，平方为 −I，第四次作用才为 +I。",
+      "pitfall": "±i 是本题自旋旋转因子的本征值；实际 Bloch 态还可能含轨道表示与平移相位。",
+      "check": {
+        "question": "若误把自旋 1/2 的 C2 本征值强制为 ±1，会丢失什么？",
+        "choices": [
+          "2π 回转对应的中心负号",
+          "原子元素标签",
+          "晶格长度单位"
+        ],
+        "answer": 0,
+        "explanation": "双值表示必须体现 U(2π)=−I。"
+      },
+      "sourceIds": [
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "double-gaas-c3",
+      "track": "double",
+      "title": "GaAs：三重旋转的 SU(2) 提升",
+      "materialId": "gaas",
+      "prompt": "对沿 [111] 量子化的自旋，求 120° 旋转本征值以及连续三次作用的结果。",
+      "givens": [
+        "n=(1,1,1)/√3，n·σ 的本征值为 s=±1。",
+        "U_n(θ)=exp[−iθ(n·σ)/2]。"
+      ],
+      "hint": "在 n·σ 的本征基中，矩阵指数变成两个普通复指数。",
+      "steps": [
+        {
+          "title": "选择旋转轴本征基",
+          "explanation": "对 n·σ|s⟩=s|s⟩，旋转不混合这两个态，只乘相位。",
+          "formula": "U_n(θ)|s⟩=exp(−isθ/2)|s⟩"
+        },
+        {
+          "title": "代入三重角",
+          "explanation": "θ=2π/3，两个相位互为复共轭。",
+          "formula": "λ_+=exp(−iπ/3)；λ_−=exp(+iπ/3)"
+        },
+        {
+          "title": "重复三次",
+          "explanation": "将两个相位分别立方，均得到 −1。",
+          "formula": "λ_±³=exp(∓iπ)=−1；U_n(2π/3)³=−I"
+        }
+      ],
+      "answer": "自旋因子本征值是 exp(±iπ/3)，三次 120° 回转给 −I，六次给 +I。",
+      "pitfall": "几何三重旋转与其 SU(2) 提升阶数不同。不能仅凭这两个相位替 GaAs 所有能带指定不可约表示。",
+      "check": {
+        "question": "自旋 1/2 的 120° 回转重复三次后，Bloch 自旋方向与旋量分别如何？",
+        "choices": [
+          "方向不变，旋量乘 −1",
+          "方向反向，旋量不变",
+          "方向与旋量均不变"
+        ],
+        "answer": 0,
+        "explanation": "2π 不改变自旋期望值，但旋量留下中心负号。"
+      },
+      "sourceIds": [
+        "aflow-zincblende",
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "double-si-interference",
+      "track": "double",
+      "title": "360° 的负号怎样进入干涉？",
+      "materialId": "silicon",
+      "prompt": "若电子波函数分成相干两路，一路施加 2π 自旋回转，另一路不动，比较单路自旋概率与两路相对相位。",
+      "givens": [
+        "初态 |+x⟩=(|↑z⟩+|↓z⟩)/√2。",
+        "一路的自旋操作 U_z(2π)=−I；理想另一条参考路为 I。",
+        "忽略两路的其他动力学相位，只讨论受控自旋因子。"
+      ],
+      "hint": "先分别比较 |ψ|²，再比较“只有一路变号”的相干振幅和。",
+      "steps": [
+        {
+          "title": "求旋转后的态",
+          "explanation": "U_z(2π) 使两个分量同时乘 −1。",
+          "formula": "|ψ′⟩=−|+x⟩"
+        },
+        {
+          "title": "检查单路概率",
+          "explanation": "整体负号在模方或期望值中抵消，所以自旋方向和测量概率不变。",
+          "formula": "|−ψ|²=|ψ|²；⟨−ψ|σ|−ψ⟩=⟨ψ|σ|ψ⟩"
+        },
+        {
+          "title": "比较两路相对相位",
+          "explanation": "只有一条路径变号，二者的相对相位从 0 变为 π；在选定的理想合束端，振幅相消。",
+          "formula": "ψ_ref+ψ_rot=ψ−ψ=0"
+        },
+        {
+          "title": "再转一圈",
+          "explanation": "累计 4π 使旋转路恢复原符号，原先的相对相位也恢复。",
+          "formula": "U_z(4π)=+I"
+        }
+      ],
+      "answer": "孤立一路的整体负号不改变概率；与未旋转参考路相干比较时，2π 回转可改变干涉，4π 恢复。",
+      "pitfall": "这是理想干涉推导，不声称晶体转动 360° 就自动对电子实施纯自旋回转，也不声称孤立整体相位可直接测量。",
+      "check": {
+        "question": "哪一种比较能让本题中的负号成为可观测的相对相位？",
+        "choices": [
+          "只测旋转一路的自旋向上概率",
+          "与未旋转的相干参考路合束",
+          "删去参考路再测总粒子数"
+        ],
+        "answer": 1,
+        "explanation": "必须保留相干参考，才能比较两路的相位差。"
+      },
+      "sourceIds": [
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "double-gaas-kramers",
+      "track": "double",
+      "title": "GaAs：无反演时如何判断 Kramers 条件？",
+      "materialId": "gaas",
+      "prompt": "对保留时间反演的非磁性自旋 1/2 体系，比较 Γ 与一般 k 的时间反演配对。",
+      "givens": [
+        "Θ²=−I，且 Θ 把 k 映成 −k。",
+        "只有 −k=k+G 时，Θ 才保持同一 Bloch 动量子空间。",
+        "本题不假设反演，也不添加其他保持 k 的反幺正对称。"
+      ],
+      "hint": "“存在伙伴态”与“伙伴在同一个 k”是两个判断。",
+      "steps": [
+        {
+          "title": "检查动量是否返回",
+          "explanation": "Γ=0 总满足条件；一般 k 通常不满足。",
+          "formula": "−k≡k (mod G) ⇔ 2k 为倒格矢"
+        },
+        {
+          "title": "在同一 k 使用平方条件",
+          "explanation": "对 Θ 不变的动量子空间，Θ²=−I 使 |ψ⟩ 与 Θ|ψ⟩ 正交且同能。",
+          "formula": "E_n(k)=E_partner(k)（条件满足时）"
+        },
+        {
+          "title": "处理一般 k",
+          "explanation": "时间反演依然联系 k 与 −k 的能谱，但单凭它不能保证每个一般 k 都有两个独立同能态。",
+          "formula": "E_n(k)=E_partner(−k)"
+        },
+        {
+          "title": "保留逻辑余地",
+          "explanation": "其他小群表示或对称可能另行给出简并；本题只说明时间反演单独能推出什么。"
+        }
+      ],
+      "answer": "Γ 有由 Θ²=−I 保护的 Kramers 配对；一般 k 的时间反演伙伴通常位于 −k，不能仅凭 Θ 断言该 k 两重简并。",
+      "pitfall": "GaAs 缺少反演不等于所有 k 必然自旋劈裂，也不等于 Γ 失去 Kramers 配对。",
+      "check": {
+        "question": "哪一个条件是用 Θ²=−I 证明同一 k 配对时不可缺少的？",
+        "choices": [
+          "晶体必须有反演",
+          "Θ 必须将 k 送回模倒格矢等价的 k",
+          "磁矩总和必须非零"
+        ],
+        "answer": 1,
+        "explanation": "反幺正算符须作用在同一个动量子空间。"
+      },
+      "sourceIds": [
+        "aflow-zincblende",
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "magnetic-iron-axial",
+      "track": "magnetic",
+      "title": "Fe：反演、C2x 与 ΘC2x 的逐项判断",
+      "materialId": "iron",
+      "prompt": "对磁矩 m=(0,0,1) 的 bcc Fe 单畴，分别判断 P、C2x、ΘC2x 是否保持磁序。",
+      "givens": [
+        "m′=s det(Q)Qm；含 Θ 时 s=−1，否则 s=+1。",
+        "P 的 Q=−I；C2x 的 Q=diag(1,−1,−1)。",
+        "三种操作的空间部分都保持 bcc 核位置。"
+      ],
+      "hint": "磁矩是轴矢量。不要把反演的作用错写成 m→−m。",
+      "steps": [
+        {
+          "title": "计算反演",
+          "explanation": "det(−I)=−1，两个负号相消。",
+          "formula": "m′_P=(−1)(−I)m=m"
+        },
+        {
+          "title": "计算 C2x",
+          "explanation": "这是正旋转，detQ=+1；z 分量被翻转。",
+          "formula": "m′_C2x=(0,0,−1)≠m"
+        },
+        {
+          "title": "加入时间反演",
+          "explanation": "Θ 再翻转一次磁矩，恢复所选畴。",
+          "formula": "m′_ΘC2x=−(0,0,−1)=m"
+        },
+        {
+          "title": "给出完整判断",
+          "explanation": "位置与磁矩两项都通过才是当前磁序的对称；位置通过并不够。"
+        }
+      ],
+      "answer": "P 和 ΘC2x 保持此理想 Fe 磁畴，C2x 单独不保持。",
+      "pitfall": "将一个磁畴变成相反磁畴不等于保持当前磁序；是否同能不改变这一判定。",
+      "check": {
+        "question": "Fe 中单独 Θ 的位置检测和磁矩检测结果是什么？",
+        "choices": [
+          "位置通过，磁矩不通过",
+          "位置不通过，磁矩通过",
+          "两项都通过"
+        ],
+        "answer": 0,
+        "explanation": "Θ 不移动核位置，但翻转全部 Fe 磁矩。"
+      },
+      "sourceIds": [
+        "aflow-bcc"
+      ]
+    },
+    {
+      "id": "magnetic-nio-square",
+      "track": "magnetic",
+      "title": "NiO 模型：反平移平方与 Kramers 条件",
+      "materialId": "nio",
+      "prompt": "对课堂磁胞中的 A=ΘTτ，τ=(1/2,0,1/2)，求自旋 1/2 的 A²，并比较 Γ 与 k=(1/2,0,0)。",
+      "givens": [
+        "采用磁原胞倒格分数坐标。",
+        "Θ²=−I，且时间反演与实空间平移算符对易。",
+        "主动平移 T_t 在 k 上的相位为 exp(−2πik·t)。",
+        "假设电子哈密顿量具有这个理想磁序的 A 对称。"
+      ],
+      "hint": "先在算符层面平方，再代入 k；最后单独检查 −k 是否等价于 k。",
+      "steps": [
+        {
+          "title": "先平方算符",
+          "explanation": "因为 Θ 与 Tτ 对易，两个半平移合成 2τ。",
+          "formula": "A²=Θ²T_2τ=−T_(1,0,1)"
+        },
+        {
+          "title": "转成 Bloch 相位",
+          "explanation": "在磁倒格分数坐标中，k·(1,0,1)=k1+k3。",
+          "formula": "A²|k=−exp[−2πi(k1+k3)]"
+        },
+        {
+          "title": "代入 Γ",
+          "explanation": "Γ 被 A 保持，指数为 1，所以平方为 −I。",
+          "formula": "Γ：A²=−I，满足该反幺正配对条件。"
+        },
+        {
+          "title": "代入边界点",
+          "explanation": "k=(1/2,0,0) 与 −k 相差磁倒格矢，但指数为 −1，前面的负号将其变为 +I。",
+          "formula": "(1/2,0,0)：A²=+I，仅此 A 不强制 Kramers 配对。"
+        }
+      ],
+      "answer": "A²|k=−exp[−2πi(k1+k3)]。Γ 满足 A 配对条件，所给边界点不满足；这不排除其他对称带来的简并。",
+      "pitfall": "公式中的 k 属于本页非正交磁原胞，不能直接替换成母相立方胞或 BC 原胞坐标。真实材料还须核验其磁结构和哈密顿量假设。",
+      "check": {
+        "question": "在一般 k=(1/4,0,−1/4) 处虽然 A²=−I，为什么仍不能单凭 A 保证同一 k 两重简并？",
+        "choices": [
+          "因为 A 不把该 k 送回模磁倒格矢等价的 k",
+          "因为磁原胞不允许分数 k",
+          "因为 −I 不是合法算符"
+        ],
+        "answer": 0,
+        "explanation": "2k=(1/2,0,−1/2) 不是磁倒格矢整数坐标，伙伴位于不等价的 −k。"
+      },
+      "sourceIds": [
+        "roth1958",
+        "pomjakushin2024",
+        "bcs-double"
+      ]
+    },
+    {
+      "id": "magnetic-mnf2-ligands",
+      "track": "magnetic",
+      "title": "MnF₂：为何 Θ 加半平移仍然失败？",
+      "materialId": "mnf2",
+      "prompt": "比较 Tτ、ΘTτ 和 Θ{C4z|τ}，τ=(1/2,1/2,1/2)，逐项核验 Mn 与 F。",
+      "givens": [
+        "Mn 位于 0 与 τ，磁矩分别为 +z 与 −z。",
+        "u=0.310，F 的 z=0 位点为 (u,u,0)、(−u,−u,0)。",
+        "F 的 z=1/2 位点为 (1/2−u,1/2+u,1/2) 与 (1/2+u,1/2−u,1/2)。",
+        "C4z(x,y,z)=(-y,x,z)。"
+      ],
+      "hint": "先取一个 F 作为反例。时间反演能改变磁矩，但不会改变这个 F 的位置。",
+      "steps": [
+        {
+          "title": "检查纯半平移",
+          "explanation": "F(u,u,0) 经 Tτ 到 (u+1/2,u+1/2,1/2)，不在两种 z=1/2 的 F 位点中。",
+          "formula": "(0.31,0.31,0)→(0.81,0.81,0.5)：无匹配 F。"
+        },
+        {
+          "title": "给半平移加 Θ",
+          "explanation": "Θ 不移动原子核，所以位置错误原样保留。即使 Mn 磁矩碰巧修复，完整结构仍不通过。",
+          "formula": "ΘTτ：化学位置不通过 ⇒ 磁结构不通过。"
+        },
+        {
+          "title": "把 C4z 加入空间部分",
+          "explanation": "对同一 F，先旋转再平移得到合法配体位置；其他 F 也完整置换。",
+          "formula": "(u,u,0)→(1/2−u,1/2+u,1/2)=(0.19,0.81,0.5)"
+        },
+        {
+          "title": "检查 Mn 磁矩",
+          "explanation": "{C4z|τ} 交换两 Mn 但不翻转 z 磁矩；Θ 再翻号后与目标 Mn 磁矩相同。",
+          "formula": "Θ{C4z|τ}：化学位置与磁矩均通过。"
+        }
+      ],
+      "answer": "Tτ 与 ΘTτ 都因 F 配体不匹配而失败；Θ{C4z|τ} 保持本页完整的六原子理想磁结构。",
+      "pitfall": "只保留磁性 Mn 原子会误判化学平移；配体不是可随意删除的背景。",
+      "check": {
+        "question": "时间反演能否修复不匹配的 F 原子坐标？",
+        "choices": [
+          "能，它将位置取负",
+          "不能，它不改变核位置",
+          "只要净磁矩为零就能"
+        ],
+        "answer": 1,
+        "explanation": "Θ 改变时间奇量，不承担缺失的空间重排。"
+      },
+      "sourceIds": [
+        "aflow-rutile",
+        "stout1954",
+        "yamani2010"
+      ]
+    },
+    {
+      "id": "magnetic-iron-mirror",
+      "track": "magnetic",
+      "title": "Fe：镜面为什么会翻转面内磁矩？",
+      "materialId": "iron",
+      "prompt": "对 yz 镜面 Mx，求 z 向极矢量与 z 向磁矩的变换，判断 ΘMx 对所选 Fe 磁畴的作用。",
+      "givens": [
+        "Mx 的笛卡尔矩阵 Q=diag(−1,1,1)，detQ=−1。",
+        "时间反演偶的极矢量 p 变成 Qp；磁矩 m 变成 s det(Q)Qm。",
+        "本题 p=m=(0,0,1)，这里只比较方向，不将两者视作同一物理量。"
+      ],
+      "hint": "镜面包含 z 方向，但轴矢量还要乘一个 detQ。",
+      "steps": [
+        {
+          "title": "先变换时间反演偶的极矢量",
+          "explanation": "z 方向位于 yz 镜面内，Q 不改变其分量。",
+          "formula": "p′=Qp=(0,0,1)"
+        },
+        {
+          "title": "再变换磁矩",
+          "explanation": "轴矢量多一个负的行列式因子，因此面内 z 磁矩反向。",
+          "formula": "m′=det(Q)Qm=(0,0,−1)"
+        },
+        {
+          "title": "加入时间反演",
+          "explanation": "含 Θ 的镜面组合把磁矩再翻号；bcc 核位置也被该镜面保持。",
+          "formula": "m′_ΘMx=−det(Q)Qm=(0,0,1)"
+        },
+        {
+          "title": "限定结论",
+          "explanation": "Mx 单独把磁畴翻转，ΘMx 保持所选 z 磁畴。若磁化方向改动，必须重新计算。"
+        }
+      ],
+      "answer": "Mx 保持 z 向时间反演偶的极矢量，却翻转 z 向磁矩；ΘMx 保持本题 Fe 磁畴。",
+      "pitfall": "轴矢量与极矢量在正旋转下相同，在反演或镜面下不同。速度是时间奇极矢量，不能直接用本题的时间反演偶的 p 替代。",
+      "check": {
+        "question": "对不含 Θ 的 yz 镜面，沿 x 的磁矩会怎样？",
+        "choices": [
+          "保持不变",
+          "翻转方向",
+          "变成零"
+        ],
+        "answer": 0,
+        "explanation": "Q 将 x 分量翻号，detQ=−1 再翻一次，所以镜面法向轴矢量不变。"
+      },
+      "sourceIds": [
+        "aflow-bcc"
+      ]
+    }
+  ]
+}

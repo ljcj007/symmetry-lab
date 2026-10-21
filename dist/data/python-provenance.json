@@ -367,7 +367,19 @@
         "Fixed orthonormal-cell examples, not a general structure classification engine",
         "Kramers eligibility is conditional on Hamiltonian symmetry; no material bands or intensities predicted"
       ],
-      "sha256": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
+      "sha256": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09"
+    },
+    {
+      "path": "dist/python/crystal_labs.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original standard-library Python crystal teaching model validator: fractional Seitz transforms, Cartesian axial moments, periodic nearest-image distances and independent chemical/magnetic bijective matching.",
+      "validation": "scripts/test-python-crystal-labs.py",
+      "limitations": [
+        "Tests one supplied operation against a stated ideal periodic model; does not infer a complete magnetic space group",
+        "Model phases, domains, normalizations and approximations are documented per material"
+      ],
+      "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
     }
   ],
   "coordinate_conventions": {
@@ -401,7 +413,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-18",
+  "updated": "2026-10-21",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",
@@ -437,7 +449,8 @@
     "dist/docs/structure-bc.md",
     "dist/docs/standard-labels.md",
     "dist/docs/spglib-browser.md",
-    "dist/docs/symmetry-course.md"
+    "dist/docs/symmetry-course.md",
+    "dist/docs/materials-classroom.md"
   ],
   "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

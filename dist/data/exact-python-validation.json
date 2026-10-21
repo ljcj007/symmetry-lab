@@ -21,7 +21,8 @@
     "dist/python/structure_bc.py": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c",
     "dist/python/standard_labels.py": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4",
     "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
-    "dist/python/teaching_labs.py": "b2d872dfaef6c455dcfbc1ffb03316c0c9410abb31be79a4dbcaf93b06babd0e"
+    "dist/python/teaching_labs.py": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09",
+    "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -51,7 +52,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 14
+    "tests": 15
   },
   "regression": {
     "legacyJavaScript": "passed",

@@ -1,16 +1,23 @@
 // Teaching UI. All transformation, spinor and antiunitary calculations are
 // supplied by the Python teaching_labs API; SVG code only projects its output.
+import {createCrystalViewer} from './crystal-viewer.js?v=20261021-materials1';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = value => { const n=Number(value);return Number.isFinite(n)?(Math.abs(n)<1e-9?'0':Number(n.toFixed(5)).toString()):String(value??'—'); };
 const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'—';
 const complex = value => {if(typeof value==='number')return fmt(value);if(!value||typeof value!=='object')return String(value??'—');const a=Number(value.re||0),b=Number(value.im||0);if(Math.abs(b)<1e-9)return fmt(a);const i=(Math.abs(Math.abs(b)-1)<1e-9?'':fmt(Math.abs(b)))+'i';return Math.abs(a)<1e-9?(b<0?'−':'')+i:fmt(a)+(b<0?' − ':' + ')+i;};
-const tabs=[['learn','学习路线'],['atlas','空间群与磁群图谱'],['lab','交互实验'],['quiz','练习与自测']];
+const tabs=[['learn','学习路线'],['atlas','空间群与磁群图谱'],['lab','交互实验'],['materials','材料实例 · 3D'],['derive','分步推导'],['quiz','练习与自测']];
 const labNames={seitz:'螺旋轴、滑移面与 Bloch 相位',spinor:'旋量的 720° 回转',magnetic:'磁矩与反幺正操作',antiferro:'反铁磁链与 Kramers 条件'};
 const latticeNames={TricPrim:'三斜 · 原始',MonoPrim:'单斜 · 原始',MonoBase:'单斜 · 底心',OrthPrim:'正交 · 原始',OrthBase:'正交 · 底心',OrthBody:'正交 · 体心',OrthFace:'正交 · 面心',TetrPrim:'四方 · 原始',TetrBody:'四方 · 体心',TrigPrim:'三方 · 菱方原始',HexaPrim:'六方 · 原始',CubiPrim:'立方 · 原始',CubiBody:'立方 · 体心',CubiFace:'立方 · 面心'};
 const storageKey='symmetry-lab.academy.progress.v1';
+const derivationStorageKey='symmetry-lab.academy.derivations.v1';
 const initialInputs={seitz:{preset:'screw21',point:[.2,.3,.1],steps:4,k:[0,0,.5]},spinor:{axis:'z',initialState:'plus'},magnetic:{operation:'mirror_z',timeReversal:false,moment:[.4,.3,.8],position:[.25,.35,.45]},antiferro:{k:0,spinful:true}};
 const state={tab:'learn',track:'all',lesson:0,mode:'sg',selection:{sg:1,msg:'1.1',mpg:'1.1'},search:'',system:'',type:'',page:0,lab:'seitz',inputs:structuredClone(initialInputs),labResult:null,labPayload:null,frame:0,busy:false,labError:'',labJob:0,quizTrack:'all',quizLesson:'all',answers:{},revision:0,timer:null};
 let dataPromise,loaded;
+let extensionPromise,extensions,viewer=null;
+const extensionState={material:null,operation:null,result:null,payload:null,error:'',busy:false,job:0,viewRevision:0,exercise:null,progress:{}};
+try{const saved=JSON.parse(localStorage.getItem(derivationStorageKey)||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))extensionState.progress=saved;}catch{/* Independent derivation progress may be unavailable. */}
+const persistDerivations=()=>{try{localStorage.setItem(derivationStorageKey,JSON.stringify(extensionState.progress));}catch{/* Keep progress in memory. */}};
+const stopViewer=()=>{viewer?.destroy();viewer=null;};
 try{const saved=JSON.parse(localStorage.getItem(storageKey)||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))state.answers=saved;}catch{/* Storage may be disabled or contain an older format. */}
 const persist=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state.answers));}catch{/* Progress remains available for this page. */}};
 const stop=()=>{if(state.timer!==null)clearTimeout(state.timer);state.timer=null;};
@@ -33,13 +40,21 @@ async function load(){
   return dataPromise;
 }
 
+async function loadExtensions(){
+  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261021-materials1');if(!response.ok)throw Error(`材料与推导数据未能载入（HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
+    if(!Array.isArray(materials.materials)||!materials.materials.length||!Array.isArray(derivations.exercises)||!derivations.exercises.length)throw Error('材料与推导数据格式不完整，请重新载入。');
+    const valid={};for(const exercise of derivations.exercises){const saved=extensionState.progress[exercise.id];if(!saved||typeof saved!=='object'||Array.isArray(saved))continue;const entry={revealed:Number.isInteger(saved.revealed)&&saved.revealed>=0&&saved.revealed<=exercise.steps.length?saved.revealed:0,hint:saved.hint===true,showAnswer:saved.showAnswer===true&&saved.revealed===exercise.steps.length};if(Number.isInteger(saved.selected)&&saved.selected>=0&&saved.selected<exercise.check.choices.length){entry.selected=saved.selected;entry.checked=saved.checked===true;}valid[exercise.id]=entry;}
+    extensionState.progress=valid;extensions={materials,derivations};return extensions;
+  }).catch(error=>{extensionPromise=null;throw error;});return extensionPromise;
+}
+
 export function getSymmetryCourseResult(){
   if(!loaded)return null;
-  return {kind:'space-double-magnetic-group-teaching',selectedGroup:{mode:state.mode,data:selectedGroup()},experiment:state.labResult?{input:state.labPayload,result:state.labResult}:null,sources:loaded.lessons.sources,convention:'Teaching demonstrations are calculated by the browser Python engine. Catalog operation counts refer to the supplied representatives, not infinite group order.'};
+  return {kind:'space-double-magnetic-group-teaching',selectedGroup:{mode:state.mode,data:selectedGroup()},experiment:state.labResult?{input:state.labPayload,result:state.labResult}:null,materialExperiment:extensionState.result?{input:extensionState.payload,result:extensionState.result,camera:viewer?.getView()||null}:null,sources:loaded.lessons.sources,convention:'Teaching demonstrations are calculated by the browser Python engine. Catalog operation counts refer to the supplied representatives, not infinite group order.'};
 }
 
 export async function renderSymmetryCourseView({container,run,toast=()=>{},download=()=>{},openGroup=()=>{}}){
-  stop();state.busy=false;state.labJob++;const revision=++state.revision;
+  stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML='<div class="sc-page"><div class="sc-loading" role="status"><span class="spinner"></span>正在载入空间群、双群与磁群课程…</div></div>';
   const root=container.firstElementChild,current=()=>state.revision===revision&&root.parentNode===container,$=selector=>root.querySelector(selector);
   let lessons,atlas;
@@ -47,7 +62,7 @@ export async function renderSymmetryCourseView({container,run,toast=()=>{},downl
   if(!current())return;
   const allQuestions=quizEntries(lessons.lessons),tracks=lessons.tracks||[],trackTitle=id=>tracks.find(t=>t.id===id)?.title||id;
   const sourceHTML=()=>`<details class="sc-source"><summary>参考来源与计算约定</summary><p>课程以原创中文说明组织；晶体群图谱来自本项目已有的可核对数据库，交互实验在浏览器内调用 Python 计算。章节页码用于定位参考阅读，未转载教材正文或插图。</p>${(lessons.sources||[]).map(source=>`<p>${safeURL(source.url)?`<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.title)} ↗</a>`:esc(source.title)}${(source.note||source.referenceNote)?' · '+esc(source.note||source.referenceNote):''}</p>`).join('')}<p>空间群的阶是无限的。图谱中的有限计数是数据库采用的平移等价操作代表数；双群需同时指定单值或双值表示，磁群的反幺正操作使用共表示。它们不能只凭普通点群特征标判断。</p></details>`;
-  function invalidateLab(){stop();state.labJob++;state.busy=false;}
+  function invalidateLab(){stop();stopViewer();state.labJob++;state.busy=false;extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;}
   function navigate(tab){invalidateLab();state.tab=tab;draw();$('#sc-content')?.focus({preventScroll:true});}
   function openWorkbench(spec){invalidateLab();openGroup({mode:spec.mode||'sg',id:spec.id,k:spec.k||[0,0,0],doubleValued:!!spec.doubleValued});}
   function draw(){
@@ -57,7 +72,7 @@ export async function renderSymmetryCourseView({container,run,toast=()=>{},downl
       <div class="sc-tabs" role="tablist" aria-label="进阶群论教学栏目">${tabs.map(([id,label])=>`<button type="button" id="sc-tab-${id}" role="tab" aria-controls="sc-content" aria-selected="${state.tab===id}" tabindex="${state.tab===id?'0':'-1'}" data-sc-tab="${id}">${label}</button>`).join('')}</div><div id="sc-content" class="sc-content" role="tabpanel" aria-labelledby="sc-tab-${state.tab}" tabindex="-1"></div>${sourceHTML()}`;
     root.querySelectorAll('[data-sc-track]').forEach(button=>button.onclick=()=>{state.track=button.dataset.scTrack;const first=lessons.lessons.findIndex(l=>l.track===state.track);if(first>=0)state.lesson=first;navigate('learn');});
     root.querySelectorAll('[data-sc-tab]').forEach(button=>{button.onclick=()=>navigate(button.dataset.scTab);button.onkeydown=e=>{const i=tabs.findIndex(([id])=>id===state.tab);let next;if(e.key==='ArrowRight')next=(i+1)%tabs.length;if(e.key==='ArrowLeft')next=(i+tabs.length-1)%tabs.length;if(e.key==='Home')next=0;if(e.key==='End')next=tabs.length-1;if(next!==undefined){e.preventDefault();navigate(tabs[next][0]);$('#sc-tab-'+state.tab)?.focus();}};});
-    if(state.tab==='learn')drawLearn();if(state.tab==='atlas')drawAtlas();if(state.tab==='lab')drawLab();if(state.tab==='quiz')drawQuiz();
+    if(state.tab==='learn')drawLearn();if(state.tab==='atlas')drawAtlas();if(state.tab==='lab')drawLab();if(state.tab==='quiz')drawQuiz();if(state.tab==='materials'||state.tab==='derive')drawExtension();
   }
   function drawLearn(){
     const visible=lessons.lessons.map((lesson,index)=>({lesson,index})).filter(({lesson})=>state.track==='all'||lesson.track===state.track);
@@ -109,6 +124,62 @@ export async function renderSymmetryCourseView({container,run,toast=()=>{},downl
     const spec={mode:state.mode,id:g.number??g.id,k:[0,0,0],doubleValued:false};
     $('#sc-to-workbench').onclick=()=>openWorkbench(spec);$('#sc-to-double').onclick=()=>openWorkbench({...spec,doubleValued:true});
     $('#sc-export-group').onclick=()=>{download(JSON.stringify(getSymmetryCourseResult(),null,2),`symmetry-course-${state.mode}-${groupKey(g)}.json`);toast('已导出所选群与当前实验数据');};
+  }
+  async function drawExtension(){
+    stopViewer();const tab=state.tab,viewRevision=++extensionState.viewRevision;
+    $('#sc-content').innerHTML='<div class="sc-loading" role="status"><span class="spinner"></span>正在载入材料实例与分步推导…</div>';
+    try{await loadExtensions();}catch(error){if(current()&&state.tab===tab&&viewRevision===extensionState.viewRevision){$('#sc-content').innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary" id="sc-extension-retry">重新载入材料与推导</button>`;$('#sc-extension-retry').onclick=()=>{if(current()&&state.tab===tab)return drawExtension();};}return;}
+    if(!current()||state.tab!==tab||viewRevision!==extensionState.viewRevision)return;
+    if(tab==='materials')drawMaterials();else drawDerivation();
+  }
+  function chooseMaterial(id){if(extensionState.material===id)return;stopViewer();extensionState.job++;extensionState.busy=false;extensionState.material=id;extensionState.operation=null;extensionState.result=null;extensionState.payload=null;extensionState.error='';}
+  function selectedMaterial(){return extensions.materials.materials.find(m=>m.id===extensionState.material)||extensions.materials.materials[0];}
+  function drawMaterials(){
+    stopViewer();const catalog=extensions.materials,material=selectedMaterial();extensionState.material=material.id;
+    const operations=material.model.operations;const operation=operations.find(op=>op.id===extensionState.operation)||operations[0];extensionState.operation=operation.id;const hasMoments=material.model.atoms.some(atom=>atom.moment?.some(value=>Math.abs(value)>1e-10));
+    const sources=(catalog.sources||[]).filter(source=>(material.sourceIds||[]).includes(source.id));
+    $('#sc-content').innerHTML=`<div class="sc-material-intro"><h2>在真实材料模型中检验对称性</h2><p>先确认材料的相、晶胞设置与磁畴，再检查一个具体操作。三维相机只改变观察方向；对称变换、周期匹配和磁矩变换由 Python 计算。</p></div><div class="sc-material-cards">${catalog.materials.map(m=>`<button type="button" data-sc-material="${esc(m.id)}" class="${m.id===material.id?'selected':''}" aria-pressed="${m.id===material.id}"><strong>${esc(m.formula)}</strong><span>${esc(m.name)}</span><small>${esc(m.phase)}</small></button>`).join('')}</div><article class="sc-material-detail"><header class="sc-detail-heading"><div><span class="sc-kicker">${esc(material.category)}</span><h2>${esc(material.name)} · ${esc(material.formula)}</h2><p>${esc(material.summary)}</p></div>${material.workbench?`<button type="button" id="sc-material-workbench" class="secondary">${hasMoments?'化学母相双值表示':'进入计算工作台'} →</button>`:''}</header><dl class="sc-facts"><div><dt>材料相 / 磁态</dt><dd>${esc(material.phase)}</dd></div><div><dt>结构空间群</dt><dd>${esc(material.spaceGroup?.symbol)} · No. ${esc(material.spaceGroup?.number)}</dd></div><div><dt>晶胞设置</dt><dd>${esc(material.spaceGroup?.setting)}</dd></div></dl><p class="sc-callout">${esc(material.physics)}</p><div class="sc-material-layout"><form id="sc-crystal-form" class="sc-crystal-controls"><fieldset ${extensionState.busy?'disabled':''}><legend>选择一个操作来检验</legend><label>操作<select id="sc-crystal-operation">${options(operations.map(op=>[op.id,op.label]),operation.id)}</select></label><p class="sc-small">${esc(operation.explanation)}</p><button type="submit" class="primary" id="sc-run-crystal">${extensionState.busy?'Python 计算中…':'计算操作并生成 3D →'}</button></fieldset><p class="sc-small">${esc(material.model.convention)}</p></form><section id="sc-crystal-output" class="sc-crystal-output" aria-label="三维晶体与对称性计算结果" aria-busy="${extensionState.busy}"></section></div><div class="sc-material-notes">${(material.sections||[]).map(section=>`<section><h3>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}</section>`).join('')}</div><aside class="sc-pitfall"><strong>这个模型的适用范围</strong><ul>${(material.limitations||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></aside><div class="sc-references"><strong>材料与相的来源</strong>${sources.map(source=>`<span>${safeURL(source.url)?`<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.title)} ↗</a>`:esc(source.title)}${source.note?' · '+esc(source.note):''}</span>`).join('')}</div>${extensions.derivations.exercises.some(e=>e.materialId===material.id)?'<div class="sc-actions"><button type="button" class="secondary" id="sc-material-derive">进入这个材料的分步推导 →</button></div>':''}</article>`;
+    root.querySelectorAll('[data-sc-material]').forEach(button=>button.onclick=()=>{chooseMaterial(button.dataset.scMaterial);drawMaterials();});
+    $('#sc-crystal-operation').onchange=e=>{stopViewer();extensionState.job++;extensionState.operation=e.target.value;extensionState.result=null;extensionState.payload=null;extensionState.error='';extensionState.busy=false;drawMaterials();};
+    $('#sc-crystal-form').onsubmit=e=>{e.preventDefault();return runCrystal();};
+    if($('#sc-material-workbench'))$('#sc-material-workbench').onclick=()=>openWorkbench(material.workbench);
+    if($('#sc-material-derive'))$('#sc-material-derive').onclick=()=>{extensionState.exercise=extensions.derivations.exercises.find(e=>e.materialId===material.id).id;navigate('derive');};
+    drawCrystalResult();
+  }
+  async function runCrystal(){
+    if(!current()||state.tab!=='materials'||extensionState.busy)return;
+    stopViewer();const material=selectedMaterial(),payload={lab:'crystal',model:material.model,operationId:extensionState.operation},job=++extensionState.job;
+    extensionState.busy=true;extensionState.error='';extensionState.result=null;extensionState.payload=null;drawMaterials();
+    try{if(typeof run!=='function')throw Error('Python 计算接口暂不可用，请刷新后重试。');const result=await run('teaching_labs',payload);if(current()&&state.tab==='materials'&&job===extensionState.job){extensionState.result=result;extensionState.payload=payload;}}
+    catch(error){if(current()&&state.tab==='materials'&&job===extensionState.job)extensionState.error=error.message||String(error);}
+    finally{if(current()&&state.tab==='materials'&&job===extensionState.job){extensionState.busy=false;drawMaterials();}}
+  }
+  function drawCrystalResult(){
+    const target=$('#sc-crystal-output');if(!current()||state.tab!=='materials'||!target)return;
+    if(extensionState.busy){target.innerHTML='<div class="sc-lab-placeholder" role="status"><span class="spinner"></span><h3>计算晶胞、原子匹配与磁矩</h3><p>首次使用时需载入浏览器 Python 环境。</p></div>';return;}
+    if(extensionState.error){target.innerHTML=`<div class="sc-lab-placeholder"><p class="notice error" role="alert">${esc(extensionState.error)}</p><button type="button" class="secondary" id="sc-crystal-retry">重新计算</button></div>`;$('#sc-crystal-retry').onclick=()=>runCrystal();return;}
+    const result=extensionState.result;
+    if(!result){target.innerHTML='<div class="sc-lab-placeholder"><span class="sc-placeholder-symbol" aria-hidden="true">3D</span><h3>从结构与操作开始</h3><p>点击“计算操作并生成 3D”，即可拖动旋转晶胞，对照原子和磁矩的变换前后位置。</p></div>';return;}
+    const magnetic=result.atoms.some(atom=>atom.moment?.some(x=>Math.abs(x)>1e-10));
+    target.innerHTML=`<div class="sc-crystal-status"><div class="${result.chemicalSymmetry?'passes':'fails'}"><span>化学结构</span><strong>${result.chemicalSymmetry?'✓ 操作保持结构':'✕ 操作破坏结构'}</strong></div><div class="${result.magneticSymmetry?'passes':'fails'}"><span>${magnetic?'指定磁畴的磁序':'零磁矩模型'}</span><strong>${magnetic?(result.magneticSymmetry?'✓ 操作保持磁序':'✕ 操作破坏磁序'):'磁矩约束为空'}</strong></div></div><div id="sc-crystal-viewer"></div><pre class="sc-formula">${esc(result.formula||'r′ = Rr + t; m′ = εₜ det(Q) Qm')}</pre><details class="sc-crystal-mapping"><summary>查看周期原子匹配与数值检验</summary><p>化学匹配只允许同元素原子相互对应；磁匹配还要求变换后磁矩与目标一致。</p><p>位置容差 ${esc(fmt(result.tolerances?.position))}；磁矩容差 ${esc(fmt(result.tolerances?.moment))}。</p><div class="sc-mapping-scroll"><table><thead><tr><th>原子</th><th>对应原子</th><th>周期平移</th><th>位置误差</th><th>磁矩误差</th></tr></thead><tbody>${(result.atomMapping||[]).map(match=>`<tr><td>${esc(match.sourceId)}</td><td>${esc(match.targetId??'未匹配')}</td><td>${esc(vector(match.periodicShift))}</td><td>${esc(fmt(match.positionError))}</td><td>${match.momentError===undefined?'—':esc(fmt(match.momentError))}</td></tr>`).join('')}</tbody></table></div><p>未匹配（化学）：${esc(result.unmatched?.chemical?.join('、')||'无')}；未匹配（磁序）：${esc(result.unmatched?.magnetic?.join('、')||'无')}。</p></details>${Array.isArray(result.notes)?`<ul class="sc-notes">${result.notes.map(note=>`<li>${esc(note)}</li>`).join('')}</ul>`:''}<button type="button" class="sc-text-button" id="sc-export-crystal">↓ 导出材料、操作与 Python 计算结果</button>`;
+    viewer=createCrystalViewer({container:$('#sc-crystal-viewer'),data:result,isCurrent:()=>current()&&state.tab==='materials'&&extensionState.result===result});
+    $('#sc-export-crystal').onclick=()=>{download(JSON.stringify({material:selectedMaterial(),input:extensionState.payload,result,camera:viewer?.getView()},null,2),`crystal-${extensionState.material}-${extensionState.operation}.json`);toast('已导出三维模型与对称性检验结果');};
+  }
+  function drawDerivation(){
+    const exercises=extensions.derivations.exercises,exercise=exercises.find(e=>e.id===extensionState.exercise)||exercises[0];extensionState.exercise=exercise.id;
+    const progress=extensionState.progress[exercise.id]||{revealed:0,hint:false,showAnswer:false},checked=progress.checked===true,correct=checked&&progress.selected===exercise.check.answer;
+    const material=extensions.materials.materials.find(m=>m.id===exercise.materialId);
+    $('#sc-content').innerHTML=`<div class="sc-derive-intro"><h2>自己推一步，再展开下一步</h2><p>先写出判断或计算，再按需打开提示和推导。这里的进度独立于原有 30 道自测题，保存在当前浏览器。</p></div><div class="sc-derive-layout"><aside class="sc-derive-nav" aria-label="分步推导目录">${exercises.map(e=>{const p=extensionState.progress[e.id];return `<button type="button" data-sc-exercise="${esc(e.id)}" class="${e.id===exercise.id?'active':''}"><strong>${esc(e.title)}</strong><span>${esc(trackTitle(e.track))}${p?.checked&&p.selected===e.check.answer?' · ✓ 检验答对':''}</span></button>`;}).join('')}<button type="button" class="sc-text-button" id="sc-clear-derivations">清除分步推导进度</button></aside><article class="sc-derivation"><span class="sc-kicker">${esc(trackTitle(exercise.track))}${material?' · '+esc(material.formula):''}</span><h2>${esc(exercise.title)}</h2><p class="sc-derive-prompt">${esc(exercise.prompt)}</p><div class="sc-objectives"><h3>已知条件</h3><ul>${exercise.givens.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></div><div class="sc-actions"><button type="button" class="secondary" id="sc-derive-hint">${progress.hint?'收起提示':'需要一点提示'}</button>${material?'<button type="button" class="secondary" id="sc-derive-material">打开对应材料的 3D 实验</button>':''}</div>${progress.hint?`<aside class="sc-callout" id="sc-derive-hint-text">${esc(exercise.hint)}</aside>`:''}<div class="sc-derive-steps">${exercise.steps.slice(0,progress.revealed).map((step,i)=>`<section><span class="sc-kicker">第 ${i+1} 步</span><h3>${esc(step.title)}</h3><p>${esc(step.explanation)}</p>${step.formula?`<pre class="sc-formula">${esc(step.formula)}</pre>`:''}</section>`).join('')}</div><div class="sc-derive-progress" role="status">已展开 ${progress.revealed} / ${exercise.steps.length} 步</div><div class="sc-actions"><button type="button" class="primary" id="sc-derive-next" ${progress.revealed>=exercise.steps.length?'disabled':''}>${progress.revealed?'展开下一步':'展开第 1 步'}</button><button type="button" class="secondary" id="sc-derive-answer" ${progress.revealed<exercise.steps.length?'disabled':''}>${progress.showAnswer?'收起结论':'查看完整结论'}</button><button type="button" class="sc-text-button" id="sc-derive-reset">重新推导本题</button></div>${progress.showAnswer?`<div class="sc-worked" id="sc-derive-conclusion"><h3>推导结论</h3><p>${esc(exercise.answer)}</p><p><strong>容易混淆：</strong>${esc(exercise.pitfall)}</p></div>`:''}<section class="sc-derive-check ${checked?(correct?'is-correct':'is-incorrect'):''}"><h3>独立检验</h3><p>可以在展开推导之前作答；提交后会显示解释。</p><fieldset><legend>${esc(exercise.check.question)}</legend>${exercise.check.choices.map((choice,i)=>`<label class="sc-answer ${checked&&i===exercise.check.answer?'correct-choice':''}"><input type="radio" name="sc-derive-choice" value="${i}" ${progress.selected===i?'checked':''}><span class="sc-choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary" id="sc-derive-check">检查判断</button><div class="sc-answer-feedback" aria-live="polite">${checked?`<strong>${correct?'判断正确':'再想一想'} · 答案 ${String.fromCharCode(65+exercise.check.answer)}</strong><p>${esc(exercise.check.explanation)}</p>`:''}</div></section></article></div>`;
+    const save=()=>{extensionState.progress[exercise.id]=progress;persistDerivations();drawDerivation();};
+    root.querySelectorAll('[data-sc-exercise]').forEach(button=>button.onclick=()=>{extensionState.exercise=button.dataset.scExercise;drawDerivation();});
+    $('#sc-derive-hint').onclick=()=>{progress.hint=!progress.hint;save();};
+    $('#sc-derive-next').onclick=()=>{if(progress.revealed<exercise.steps.length){progress.revealed++;save();}};
+    $('#sc-derive-answer').onclick=()=>{if(progress.revealed===exercise.steps.length){progress.showAnswer=!progress.showAnswer;save();}};
+    $('#sc-derive-reset').onclick=()=>{delete extensionState.progress[exercise.id];persistDerivations();drawDerivation();};
+    $('#sc-clear-derivations').onclick=()=>{extensionState.progress={};persistDerivations();drawDerivation();toast('分步推导进度已清除，原课程自测记录保留');};
+    if($('#sc-derive-material'))$('#sc-derive-material').onclick=()=>{chooseMaterial(exercise.materialId);navigate('materials');};
+    root.querySelectorAll('input[name="sc-derive-choice"]').forEach(input=>input.onchange=()=>{progress.selected=Number(input.value);progress.checked=false;save();});
+    $('#sc-derive-check').onclick=()=>{if(!Number.isInteger(progress.selected)){toast('请先选择一个判断');return;}progress.checked=true;save();};
   }
   function changeLab(id){invalidateLab();if(state.lab!==id){state.lab=id;state.labResult=null;state.labPayload=null;state.labError='';state.frame=0;}}
   function numberInput(id,label,value,min,max,step='any'){return `<label>${label}<input id="${id}" type="number" value="${esc(value)}" ${min!==undefined?`min="${min}"`:''} ${max!==undefined?`max="${max}"`:''} step="${step}" required></label>`;}

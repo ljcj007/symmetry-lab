@@ -137,6 +137,21 @@ class PublicAPITests(unittest.TestCase):
         self.assertTrue(anti['isTrim'])
         self.assertFalse(anti['kramersEligible'])
 
+    def test_material_crystal_public_contract(self):
+        materials = json.loads((ROOT / 'dist/data/symmetry-materials.json').read_text(encoding='utf8'))
+        iron = next(m for m in materials['materials'] if m['formula'] == 'Fe')
+        model = iron['model']
+        # Check both preservation and loss of the chosen magnetic domain via
+        # the same public dispatcher that the browser Worker uses.
+        for expected in (True, False):
+            operation = next(o for o in model['operations']
+                             if o['expectedChemicalSymmetry'] and o['expectedMagneticSymmetry'] is expected)
+            result = self.result('teaching_labs', {'lab':'crystal', 'model':model, 'operationId':operation['id']})
+            self.assertTrue(result['chemicalSymmetry'])
+            self.assertEqual(result['magneticSymmetry'], expected)
+            self.assertEqual(len(result['atoms']), len(model['atoms']))
+            self.assertEqual(result['operation']['id'], operation['id'])
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

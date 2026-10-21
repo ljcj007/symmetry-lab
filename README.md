@@ -20,6 +20,10 @@
 
 重建目录：`python scripts/build-symmetry-course.py`。验证课程/目录/实验：`npm run test:academy`。四个实验也可由 `python dist/python/cli.py teaching_labs input.json` 在本地 CPython 运行；该模块只用 Python 标准库。课程文本无需启动 Python，交互计算按需加载浏览器解释器。
 
+“材料实例”加入 NaCl、金刚石结构 Si、GaAs、bcc Fe、NiO 和 MnF₂ 的理想模型。三维视图支持拖动旋转、键盘调节视角、缩放、操作前后叠加、周期折回和磁矩箭头；原子变换与化学/磁结构的一一匹配由纯 Python `crystal_labs.py` 计算。模型明确标注母相、晶胞、磁畴和近似条件，不自动将一个操作的匹配结果解释为真实材料的完整磁空间群。
+
+“分步推导”提供提示、逐步展开的计算过程、最终答案及自测反馈，覆盖晶体平移、化学基元、双群旋量、磁矩及反铁磁组合对称。材料来源、模型设定和练习适用边界见 [材料课堂说明](dist/docs/materials-classroom.md)。材料原胞/常规胞采用各自说明中的坐标；进入表示工作台后，波矢仍使用本站 BC 原胞约定。
+
 ## 启动与部署
 
 Windows 可以直接双击 `start.cmd` 启动；关闭弹出的命令行窗口即可停止静态文件服务器。
