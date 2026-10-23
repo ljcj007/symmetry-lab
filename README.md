@@ -2,9 +2,19 @@
 
 整合 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep)、[MSGCorep](https://github.com/goodluck1982/MSGCorep)、[MagneticTB](https://github.com/zhangzeyingvv/MagneticTB) 和 [CrystKit](https://github.com/hongyi-zhao/CrystKit) 的数据与算法工作流。四个项目已实现的计算功能统一使用 Python，通过 Pyodide 在浏览器 Worker 内运行；JavaScript 负责界面、绘图和任务调度。网站为独立实现，不代表上游作者发布或背书。
 
+## 统一群论课堂与李群基础
+
+侧边栏只保留一个“群论课堂”入口，内部可切换“32 点群”“空间群 · 双群 · 磁群”“李群基础 · SU(2) / SU(3)”。旧课程答题记录沿用原有存储键；李群记录独立保存。页签支持键盘方向键、Home / End 和直接链接。
+
+[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 8 个原创中文单元、8 个分步例题和 16 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
+
+三个实验由标准库 Python `lie_labs.py` 计算，使用 `U(θ)=exp(−iθT)`、`T=σ/2` 或 `λ/2`：SU(2) 的 Bloch 向量、复振幅和 2π/4π 检验；SU(3) 各生成元的态变换、测量概率和 Cartan 权；两组生成元的对易关系。界面显示角度与弧度，Python API 的 `angle` 始终为弧度。SU(3) 的参数不被解释为空间旋转角，权图也不是晶体原子位置。`dimension` 表示基本表示维数，`realDimension` 表示群流形的实维数。实验使用固定生成元的解析指数，不宣称支持任意矩阵指数或一般李群分类。
+
+命令行示例：`python dist/python/cli.py teaching_labs input.json`，其中输入可为 `{"lab":"lie","experiment":"commutator","group":"su3","a":4,"b":5}`。验证命令 `npm run test:academy` 同时检查原有课堂、新课程和计算实验。
+
 ## 32 点群课堂
 
-左侧“32 点群课堂”（`#pointgroups`）包含分步中文讲解、32 个晶体学点群图谱、可操作的对称变换实验及即时自测。课程参考 Dresselhaus、Dresselhaus 与 Jorio 的 [Group Theory: Application to the Physics of Condensed Matter](https://doi.org/10.1007/978-3-540-32899-5)（Springer, 2008），标注原书章节和印刷/PDF 页码；讲解、例题和绘图为独立编写，网站不提供原书 PDF 或书页图像。
+左侧“群论课堂”的“32 点群”页签（`#classroom/pointgroups`，兼容旧链接 `#pointgroups`）包含分步中文讲解、32 个晶体学点群图谱、可操作的对称变换实验及即时自测。课程参考 Dresselhaus、Dresselhaus 与 Jorio 的 [Group Theory: Application to the Physics of Condensed Matter](https://doi.org/10.1007/978-3-540-32899-5)（Springer, 2008），标注原书章节和印刷/PDF 页码；讲解、例题和绘图为独立编写，网站不提供原书 PDF 或书页图像。
 
 图谱包含国际 / Schoenflies 符号、晶系、群阶、反演/极性/手性、笛卡尔操作矩阵、共轭类、单值特征标及极矢量、轴矢量和二次函数的表示分解。BC Γ 标签与可追溯的 Mulliken 名称并列；复共轭表示明确配对。IR/Raman 标记只表示对称性允许，不预测特定材料的振动频率、模式数量或散射强度。
 
@@ -12,7 +22,7 @@
 
 ## 空间群、双群与磁群课堂
 
-左侧“空间群与磁群课堂”（`#academy`）沿空间群、双群与自旋、磁群与时间反演三条路线提供 15 个学习单元、15 个分步例题和 30 道带解析的练习。参考原有 Dresselhaus 教材及 IUCr、Bilbao 和原始研究文献，具体来源和适用范围见 [课程说明](dist/docs/symmetry-course.md)。32 点群课堂保留为入门课程。
+“群论课堂”的“空间群 · 双群 · 磁群”页签（`#classroom/crystal`，兼容旧链接 `#academy`）沿空间群、双群与自旋、磁群与时间反演三条路线提供 15 个学习单元、15 个分步例题和 30 道带解析的练习。参考原有 Dresselhaus 教材及 IUCr、Bilbao 和原始研究文献，具体来源和适用范围见 [课程说明](dist/docs/symmetry-course.md)。32 点群课堂保留为入门课程。
 
 教学目录覆盖全部 **230 个空间群、1,651 个磁空间群和 122 个磁点群**，支持编号/符号检索、晶系/磁群类型筛选，以及单值或自旋双值工作台跳转。目录中的操作数指平移商的代表操作数，完整空间群仍是无限群；磁群 BNS 首段的含义按类型区分。目录不把“含分数平移”当成 symmorphic / nonsymmorphic 分类判据。
 

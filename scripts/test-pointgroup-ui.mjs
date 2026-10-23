@@ -43,4 +43,15 @@ for(const item of retries)item.resolve({ok:true,json:async()=>item.url.includes(
 await retried;
 assert.equal(errorContainer.html,'<p>Left during retry</p>');
 assert.equal(retry.getPointgroupResult().pointGroup.hm,'mm2');
-console.log('Point-group UI: malformed stored progress, failed-fetch recovery, late navigation isolation and verified atlas export passed.');
+const nestedWaiting=[];
+globalThis.fetch=url=>new Promise(resolve=>nestedWaiting.push({url,resolve}));
+const nested=await import('../dist/pointgroup-ui.js?nested-hub-race');
+const nestedContainer=new Container();nestedContainer.isConnected=true;
+const nestedPending=nested.renderPointgroupView({container:nestedContainer});
+const nestedRoot=nestedContainer.firstElementChild,before=nestedRoot.innerHTML;
+nestedContainer.isConnected=false;
+for(const item of nestedWaiting)item.resolve({ok:true,json:async()=>item.url.includes('lessons')?lessons:atlas});
+await nestedPending;
+assert.equal(nestedRoot.parentNode,nestedContainer);
+assert.equal(nestedRoot.innerHTML,before,'A detached classroom subtree must not render a late result');
+console.log('Point-group UI: malformed stored progress, failed-fetch recovery, nested classroom navigation isolation and verified atlas export passed.');

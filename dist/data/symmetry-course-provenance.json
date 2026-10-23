@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-21",
-  "build": "20261021-materials1",
+  "release": "2026-10-23",
+  "build": "20261023-lie1",
   "sources": [
     {
       "id": "dresselhaus2008",
@@ -162,20 +162,20 @@
       "sha256": "dd1c2c8207002858f683084369ed4b78977c9cb23ddaa9b4fe812c79e91e21f7"
     },
     "dist/docs/symmetry-course.md": {
-      "bytes": 9726,
-      "sha256": "12d6ad5cae0379a1a2ab195afb54dab6df51117c36838b59390131674e793273"
+      "bytes": 9762,
+      "sha256": "0c67f116dc5c9f0225f7cad872d897064e573a7594bdc75b07b7bbbe3b77513e"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 63436,
-      "sha256": "3d27c228c7e13671f227329c9f1d91eeb0e5e69e267c2732041307b5884329c1"
+      "bytes": 63455,
+      "sha256": "075df60d52610b5d43746f02d8f4492ef8623e4fd1d1fc3fcea4c8e207c35d49"
     },
     "dist/symmetry-course.css": {
       "bytes": 30767,
       "sha256": "f57d458cf9325e15ccd6607516395f1e758890dd985c27bc86a3ac4eacffb722"
     },
     "dist/python/teaching_labs.py": {
-      "bytes": 13998,
-      "sha256": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09"
+      "bytes": 14110,
+      "sha256": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1"
     },
     "dist/python/browser_api.py": {
       "bytes": 3930,
@@ -194,8 +194,8 @@
       "sha256": "431a4aa526d226f28976473c375ffbf52e959f2525980ddc86be52844e37e6a5"
     },
     "scripts/test-symmetry-course-ui.mjs": {
-      "bytes": 17184,
-      "sha256": "4d050c810bc4b12db1b55474c9a9081fae3d44094424ef5331003c32bb2444ba"
+      "bytes": 17894,
+      "sha256": "73c59712a5a7f6fc9125f4d9cbc2cf243f479a900bf2ea8db0204568bf7acba2"
     },
     "scripts/test-materials-course.py": {
       "bytes": 3520,
@@ -210,8 +210,8 @@
       "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
     },
     "scripts/test-python-api.py": {
-      "bytes": 9165,
-      "sha256": "ffedab9e5f031909002e4fe0e46abec9fbb4ce22af82c527b7fe58e1b306a262"
+      "bytes": 9922,
+      "sha256": "bd261e63b2362426416ea5917d0d8fbffd5fcb2ab38751d019c0cdcc62e00be8"
     },
     "dist/crystal-viewer.js": {
       "bytes": 8851,

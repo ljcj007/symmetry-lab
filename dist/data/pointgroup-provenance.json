@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-18",
+  "release": "2026-10-23",
   "sourceBook": {
     "title": "Group Theory: Application to the Physics of Condensed Matter",
     "authors": [
@@ -32,8 +32,8 @@
       "sha256": "0021c3c23ff3f0df0805fc5b90a936255b20016d1d59b5da5d67c40470aa5049"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 30893,
-      "sha256": "addf37e6a467d0a63472a93f0e6e5339502db0a5fd3c2f186f7d65aabaddb387"
+      "bytes": 30947,
+      "sha256": "889e1eb4b75815062ef83ae7ddc55b797941f5e0cdf4a4e0a20ce058e30803d2"
     },
     "dist/pointgroup.css": {
       "bytes": 19724,
@@ -48,8 +48,8 @@
       "sha256": "ed082b9af343ea01f45e1bf76e81cf59c55078b5706e1ae87622b9f28f0cb090"
     },
     "scripts/test-pointgroup-ui.mjs": {
-      "bytes": 2525,
-      "sha256": "e995c1bc4f04bd29d5a0867ea56d9f859674e49ed2219952582110147713ea88"
+      "bytes": 3268,
+      "sha256": "622052e91dbe9f96bfdb7f7725d3cd56877860ce0a7e11455040d5ba489104a3"
     }
   },
   "validation": {
@@ -82,5 +82,6 @@
     "Ordinary crystallographic point groups and single-valued representations",
     "IR/Raman marks are symmetry allowances, not a prediction of material modes or intensities",
     "The user-provided PDF and page images are not redistributed"
-  ]
+  ],
+  "build": "20261023-lie1"
 }

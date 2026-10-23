@@ -135,3 +135,11 @@ No research-paper figures or article text are redistributed. Symmetry matching
 is independently calculated in Python, and the chemical parent groups are
 cross-checked with spglib. Magnetic results refer to the stated ideal model
 and selected domain, not an experimental magnetic-space-group determination.
+
+The unified classroom and introductory Lie-group course (2026-10-23) add original
+Chinese lessons, examples and exercises about U(1), SU(2) and SU(3), with original
+standard-library Python demonstrations of generator exponentials and commutators.
+The course cites university lecture notes and preserves explicit normalization,
+representation-dimension and parameter conventions. It does not redistribute
+the cited lecture notes. See dist/docs/lie-groups.md and
+dist/data/lie-group-provenance.json for sources, scope and file hashes.

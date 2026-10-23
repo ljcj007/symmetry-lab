@@ -270,6 +270,9 @@ def run(payload):
     """Run one finite teaching experiment and return JSON-serializable data."""
     if not isinstance(payload, dict):
         raise ValueError('教学实验输入必须是 JSON 对象')
+    if payload.get('lab') == 'lie':
+        from lie_labs import run as lie_run
+        return lie_run(payload)
     if payload.get('lab') == 'crystal':
         from crystal_labs import run as crystal_run
         return crystal_run(payload)

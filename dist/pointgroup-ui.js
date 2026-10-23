@@ -58,11 +58,11 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const revision=++state.revision;
   container.innerHTML='<div class="pg-page"><div class="pg-loading" role="status"><span class="spinner"></span>正在载入点群课程与图谱…</div></div>';
   const root=container.firstElementChild;
-  const current=()=>revision===state.revision&&root.parentNode===container;
+  const current=()=>revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
   const $=selector=>root.querySelector(selector);
   let lessons,atlas;
   try { ({lessons,atlas}=await load()); } catch(error) {
-    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=()=>renderPointgroupView({container,toast,download,openGroup});}
+    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=()=>{if(current())return renderPointgroupView({container,toast,download,openGroup});};}
     return;
   }
   if(!current())return;

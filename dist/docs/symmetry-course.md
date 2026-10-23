@@ -2,7 +2,7 @@
 
 这套课程承接「32 点群课堂」，面向已知道群、表示和特征标基本概念的学习者。它把 230 个空间群的实空间操作、电子双群与磁群共表示串成三条学习路线，配有 15 个分步例题、30 道带解析的自测题，以及 Seitz、旋量、磁矩和反铁磁半平移的交互实验入口。
 
-课堂的机器可读内容位于 [symmetry-course-lessons.json](../data/symmetry-course-lessons.json)，网页入口是 [进阶群论课堂](../index.html#academy)。文字、例题和练习均为本网站原创中文教学内容，参考书籍与一手资料进行核验，不发布原书 PDF、扫描页或逐段翻译。
+课堂的机器可读内容位于 [symmetry-course-lessons.json](../data/symmetry-course-lessons.json)，网页入口是 [群论课堂：空间群 · 双群 · 磁群](../index.html#classroom/crystal)。文字、例题和练习均为本网站原创中文教学内容，参考书籍与一手资料进行核验，不发布原书 PDF、扫描页或逐段翻译。
 
 ## 三条学习路线
 

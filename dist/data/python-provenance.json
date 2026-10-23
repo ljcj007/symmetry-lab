@@ -367,7 +367,7 @@
         "Fixed orthonormal-cell examples, not a general structure classification engine",
         "Kramers eligibility is conditional on Hamiltonian symmetry; no material bands or intensities predicted"
       ],
-      "sha256": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09"
+      "sha256": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1"
     },
     {
       "path": "dist/python/crystal_labs.py",
@@ -380,6 +380,18 @@
         "Model phases, domains, normalizations and approximations are documented per material"
       ],
       "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
+    },
+    {
+      "path": "dist/python/lie_labs.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original standard-library Python SU(2)/SU(3) fundamental-representation demonstrations, analytic single-generator exponentials and generator commutators.",
+      "validation": "scripts/test-python-lie-labs.py",
+      "limitations": [
+        "Fixed normalized Hermitian generators and selected pure initial states",
+        "No general matrix exponential, arbitrary representation or general Lie-group classification"
+      ],
+      "sha256": "24e208a0a245d6bea85963ab3af720454192486de01e5d23f4ad23a3d2f9c2e4"
     }
   ],
   "coordinate_conventions": {
@@ -413,7 +425,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-21",
+  "updated": "2026-10-23",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",
@@ -450,7 +462,8 @@
     "dist/docs/standard-labels.md",
     "dist/docs/spglib-browser.md",
     "dist/docs/symmetry-course.md",
-    "dist/docs/materials-classroom.md"
+    "dist/docs/materials-classroom.md",
+    "dist/docs/lie-groups.md"
   ],
   "symbolicAPICoverage": "dist/data/symbolic-api-coverage.json"
 }

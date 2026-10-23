@@ -152,6 +152,17 @@ class PublicAPITests(unittest.TestCase):
             self.assertEqual(len(result['atoms']), len(model['atoms']))
             self.assertEqual(result['operation']['id'], operation['id'])
 
+    def test_lie_labs_public_contract(self):
+        import math
+        spin=self.result('teaching_labs',{'lab':'lie','experiment':'su2','axis':'z','angle':2*math.pi,'state':'up'})
+        self.assertAlmostEqual(spin['matrix'][0][0]['re'],-1)
+        self.assertEqual((spin['dimension'],spin['realDimension'],spin['rank']),(2,3,1))
+        color=self.result('teaching_labs',{'lab':'lie','experiment':'su3','generator':1,'angle':math.pi,'state':1})
+        self.assertAlmostEqual(color['probabilities'][1],1)
+        bracket=self.result('teaching_labs',{'lab':'lie','experiment':'commutator','group':'su3','a':4,'b':5})
+        self.assertAlmostEqual(bracket['coefficients'][2],.5)
+        self.assertAlmostEqual(bracket['coefficients'][7],math.sqrt(3)/2)
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

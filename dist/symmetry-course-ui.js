@@ -1,6 +1,6 @@
 // Teaching UI. All transformation, spinor and antiunitary calculations are
 // supplied by the Python teaching_labs API; SVG code only projects its output.
-import {createCrystalViewer} from './crystal-viewer.js?v=20261021-materials1';
+import {createCrystalViewer} from './crystal-viewer.js?v=20261023-lie1';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = value => { const n=Number(value);return Number.isFinite(n)?(Math.abs(n)<1e-9?'0':Number(n.toFixed(5)).toString()):String(value??'—'); };
 const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'—';
@@ -41,7 +41,7 @@ async function load(){
 }
 
 async function loadExtensions(){
-  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261021-materials1');if(!response.ok)throw Error(`材料与推导数据未能载入（HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
+  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261023-lie1');if(!response.ok)throw Error(`材料与推导数据未能载入（HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
     if(!Array.isArray(materials.materials)||!materials.materials.length||!Array.isArray(derivations.exercises)||!derivations.exercises.length)throw Error('材料与推导数据格式不完整，请重新载入。');
     const valid={};for(const exercise of derivations.exercises){const saved=extensionState.progress[exercise.id];if(!saved||typeof saved!=='object'||Array.isArray(saved))continue;const entry={revealed:Number.isInteger(saved.revealed)&&saved.revealed>=0&&saved.revealed<=exercise.steps.length?saved.revealed:0,hint:saved.hint===true,showAnswer:saved.showAnswer===true&&saved.revealed===exercise.steps.length};if(Number.isInteger(saved.selected)&&saved.selected>=0&&saved.selected<exercise.check.choices.length){entry.selected=saved.selected;entry.checked=saved.checked===true;}valid[exercise.id]=entry;}
     extensionState.progress=valid;extensions={materials,derivations};return extensions;
@@ -56,7 +56,7 @@ export function getSymmetryCourseResult(){
 export async function renderSymmetryCourseView({container,run,toast=()=>{},download=()=>{},openGroup=()=>{}}){
   stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML='<div class="sc-page"><div class="sc-loading" role="status"><span class="spinner"></span>正在载入空间群、双群与磁群课程…</div></div>';
-  const root=container.firstElementChild,current=()=>state.revision===revision&&root.parentNode===container,$=selector=>root.querySelector(selector);
+  const root=container.firstElementChild,current=()=>state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
   let lessons,atlas;
   try{({lessons,atlas}=await load());}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary sc-retry">重新载入</button>`;$('.sc-retry').onclick=()=>{if(current())return renderSymmetryCourseView({container,run,toast,download,openGroup});};}return;}
   if(!current())return;

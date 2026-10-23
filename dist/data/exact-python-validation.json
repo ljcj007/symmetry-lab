@@ -21,8 +21,9 @@
     "dist/python/structure_bc.py": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c",
     "dist/python/standard_labels.py": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4",
     "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
-    "dist/python/teaching_labs.py": "cfcda93c00ed0f400f3f44f7a6758acdf2185b4266c32c94a73b0040cf897d09",
-    "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
+    "dist/python/teaching_labs.py": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1",
+    "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014",
+    "dist/python/lie_labs.py": "24e208a0a245d6bea85963ab3af720454192486de01e5d23f4ad23a3d2f9c2e4"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -52,7 +53,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 15
+    "tests": 16
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -736,5 +737,20 @@
     ],
     "validation": "scripts/test-spglib-wasm.py",
     "pyodideValidation": "scripts/test-spglib-pyodide.mjs"
+  },
+  "lieTeaching": {
+    "date": "2026-10-23",
+    "unitTests": 11,
+    "lessonSchemaTests": 1,
+    "commutatorPairs": 73,
+    "checks": [
+      "Generator Hermiticity, trace and normalization",
+      "Independent structure constants for all generator pairs",
+      "SU(2) right-handed Bloch rotations and double-cover sign",
+      "SU(3) state transfer, spectator states, Cartan weights and expectation",
+      "T8 minimal period and nontrivial center",
+      "Group law, finite derivatives, unitary determinant, finite JSON, strict payload validation"
+    ],
+    "test": "scripts/test-python-lie-labs.py"
   }
 }

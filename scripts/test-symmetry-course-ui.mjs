@@ -197,6 +197,18 @@ await crystalPending;
 assert.match(derivationRoot.querySelector('#sc-content').innerHTML,/sc-quizzes/,'A delayed Python material result cannot overwrite navigation');
 assert.equal(extensionRetry.getSymmetryCourseResult().materialExperiment,null,'Discarded material calculations must not enter exports');
 
+const nestedWaiting=[];
+globalThis.fetch=url=>new Promise(resolve=>nestedWaiting.push({url,resolve}));
+const nested=await import('../dist/symmetry-course-ui.js?nested-hub-race');
+const nestedContainer=new Container();nestedContainer.isConnected=true;
+const nestedPending=nested.renderSymmetryCourseView({container:nestedContainer});
+const nestedRoot=nestedContainer.firstElementChild,beforeNested=nestedRoot.innerHTML;
+nestedContainer.isConnected=false;
+for(const item of nestedWaiting)item.resolve(dataResponse(item.url));
+await nestedPending;
+assert.equal(nestedRoot.parentNode,nestedContainer);
+assert.equal(nestedRoot.innerHTML,beforeNested,'Detached classroom subtree cannot accept a late lesson load');
+
 // Exercise the real camera with supplied Cartesian data, rather than copying
 // the camera formula into the test. Check interaction changes and cleanup.
 const {createCrystalViewer}=await import('../dist/crystal-viewer.js');

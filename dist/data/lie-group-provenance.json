@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-10-23",
+  "build": "20261023-lie1",
+  "sources": [
+    {
+      "id": "mit-etingof-lie",
+      "title": "MIT · Pavel Etingof：Lie Groups and Lie Algebras",
+      "url": "https://ocw.mit.edu/courses/18-755-lie-groups-and-lie-algebras-ii-spring-2024/mit18_755_s24_lec_full.pdf",
+      "note": "李群、表示、覆盖与根系的数学背景。课堂例题、文字和图示为独立编写，不复制讲义题目或页面。"
+    },
+    {
+      "id": "alberta-unitary",
+      "title": "University of Alberta · Vincent Bouchard：Unitary representations",
+      "url": "https://sites.ualberta.ca/~vbouchar/MAPH464/section-unitary.html",
+      "note": "共轭转置、酉矩阵与复内积的基础定义。"
+    },
+    {
+      "id": "alberta-su2",
+      "title": "University of Alberta · Vincent Bouchard：SU(2)",
+      "url": "https://sites.ualberta.ca/~vbouchar/MAPH464/section-su2.html",
+      "note": "SU(2) 生成元及其到 SO(3) 的二对一映射；本课堂统一采用 U=exp(−iθT) 的符号约定。"
+    },
+    {
+      "id": "mit-su2-representations",
+      "title": "MIT 8.323 · Wentao Cui：Recitation 7，SU(2) 部分",
+      "url": "https://live.ocw.mit.edu/courses/8-323-relativistic-quantum-field-theory-i-spring-2023/mit8_323_s23_rec07.pdf",
+      "note": "SU(2) 不可约表示的自旋标签与维数；仅引用 SU(2) 部分，不将局部李代数关系等同于任意群的全局表示。"
+    },
+    {
+      "id": "tong-su3",
+      "title": "University of Cambridge · David Tong：The Standard Model，The Strong Force",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sm/standardmodel3.pdf",
+      "note": "核对标准 Gell-Mann 矩阵、Tₐ=λₐ/2、迹归一化与 Cartan 生成元。三能级演示不模拟 QCD。"
+    },
+    {
+      "id": "lbl-spin-interference",
+      "title": "Lawrence Berkeley National Laboratory：Symmetry in Rotation",
+      "url": "https://www2.lbl.gov/abc/wallchart/chapters/05/1.html",
+      "note": "自旋半整数回转与中子干涉的教学背景；课堂将整体相位和两路径相对相位明确区分。"
+    }
+  ],
+  "files": {
+    "dist/classroom-ui.js": {
+      "bytes": 3410,
+      "sha256": "e2c53e151367fd6e820c81d29b1b9d372beee27bb291e16c3f93c1966b7c91e4"
+    },
+    "dist/classroom.css": {
+      "bytes": 1065,
+      "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
+    },
+    "dist/lie-group-ui.js": {
+      "bytes": 25682,
+      "sha256": "4bccd1687d0df3930f9dba97a6e10d79b7b446fe318e96a7cb6447dc936f2c8a"
+    },
+    "dist/lie-group.css": {
+      "bytes": 13990,
+      "sha256": "73eee8c6bc0997e72ee62344c1c27b4c78a2c7bf8b2721d1e68a94028a5309da"
+    },
+    "dist/python/lie_labs.py": {
+      "bytes": 11814,
+      "sha256": "24e208a0a245d6bea85963ab3af720454192486de01e5d23f4ad23a3d2f9c2e4"
+    },
+    "dist/data/lie-group-lessons.json": {
+      "bytes": 29474,
+      "sha256": "67afe800e42a08c8527843a62e6760e93cdf0646f91d57f3915267b9d6d99f44"
+    },
+    "dist/docs/lie-groups.md": {
+      "bytes": 4987,
+      "sha256": "3c568f8fcfa45d59d315306fbab1c6e213451bf951d4280ef289ebf540db718b"
+    },
+    "scripts/test-classroom-ui.mjs": {
+      "bytes": 2959,
+      "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
+    },
+    "scripts/test-lie-group-ui.mjs": {
+      "bytes": 13862,
+      "sha256": "0d0056ac429191aa3336d0354299214ad6016b96d255aca0d49d750520612f54"
+    },
+    "scripts/test-python-lie-labs.py": {
+      "bytes": 11173,
+      "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
+    },
+    "scripts/test-lie-group-course.py": {
+      "bytes": 2050,
+      "sha256": "37add0b98fa82263a22532d866a41cdf93188948d6886a375f731197c0bf2ddd"
+    }
+  },
+  "validation": {
+    "lessonCount": 8,
+    "workedExamples": 8,
+    "quizCount": 16,
+    "pythonLabTests": 11,
+    "publicAPITests": 16
+  },
+  "conventions": [
+    "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
+    "UI parameters displayed in degrees; public Python API receives radians",
+    "dimension is fundamental representation dimension; realDimension is manifold dimension",
+    "SU(3) Cartan weight diagram is not a real-space crystal diagram"
+  ],
+  "scope": [
+    "Original Chinese lessons and exercises, cited source documents are not redistributed",
+    "Three classroom sections share one sidebar entry; legacy course hashes and storage keys preserved",
+    "Selected one-parameter subgroups, pure-state transforms and generator commutators; no general Lie-group classifier"
+  ]
+}

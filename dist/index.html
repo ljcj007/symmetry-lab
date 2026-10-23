@@ -1,14 +1,13 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Python 晶体对称性工作台：32 点群、230 空间群、双群与磁群交互课堂、群表示、磁性紧束缚模型、晶体群代数，计算在浏览器完成。"><title>Symmetry Lab · 对称性工作台</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v=20261021-materials1"><link rel="stylesheet" href="pointgroup.css?v=20261021-materials1"><link rel="stylesheet" href="symmetry-course.css?v=20261021-materials1"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Python 晶体对称性工作台：32 点群、230 空间群、双群、磁群及 SU(2)/SU(3) 李群课堂、群表示、磁性紧束缚模型、晶体群代数，计算在浏览器完成。"><title>Symmetry Lab · 对称性工作台</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v=20261023-lie1"><link rel="stylesheet" href="pointgroup.css?v=20261023-lie1"><link rel="stylesheet" href="symmetry-course.css?v=20261023-lie1"><link rel="stylesheet" href="classroom.css?v=20261023-lie1"><link rel="stylesheet" href="lie-group.css?v=20261023-lie1"></head>
 <body>
 <aside class="sidebar">
  <a class="brand" href="#workbench" data-view="workbench"><img src="icon.svg" alt=""><span>Symmetry<span class="brand-light">Lab</span><small>CRYSTAL SYMMETRY TOOLKIT</small></span></a>
  <div class="side-label">研究空间 / WORKSPACE</div>
  <nav aria-label="主导航">
   <button class="nav-item active" data-view="workbench"><span class="nav-icon">⌘</span> 对称性工作台 <span class="nav-arrow">↗</span></button>
-  <button class="nav-item" data-view="pointgroups"><span class="nav-icon">▥</span> 32 点群课堂</button>
-  <button class="nav-item" data-view="academy"><span class="nav-icon">◈</span> 空间群与磁群课堂</button>
+  <button class="nav-item" data-view="classroom"><span class="nav-icon">▥</span> 群论课堂</button>
   <button class="nav-item" data-view="database"><span class="nav-icon">▦</span> 群数据库 <span class="count">1,881</span></button>
   <button class="nav-item" data-view="structure"><span class="nav-icon">⬡</span> 结构 → BC 晶胞</button>
   <button class="nav-item" data-view="products"><span class="nav-icon">⊗</span> 直积分解</button>
@@ -29,5 +28,5 @@
  </div>
 </main>
 <div id="toast" role="status"></div>
-<script type="module" src="app.js?v=20261021-materials1"></script>
+<script type="module" src="app.js?v=20261023-lie1"></script>
 </body></html>
