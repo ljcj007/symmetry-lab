@@ -6,9 +6,17 @@
 
 侧边栏只保留一个“群论课堂”入口，内部可切换“32 点群”“空间群 · 双群 · 磁群”“李群基础 · SU(2) / SU(3)”。旧课程答题记录沿用原有存储键；李群记录独立保存。页签支持键盘方向键、Home / End 和直接链接。
 
-[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 8 个原创中文单元、8 个分步例题和 16 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
+[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 14 个原创中文单元、14 个分步例题和 28 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
 
-三个实验由标准库 Python `lie_labs.py` 计算，使用 `U(θ)=exp(−iθT)`、`T=σ/2` 或 `λ/2`：SU(2) 的 Bloch 向量、复振幅和 2π/4π 检验；SU(3) 各生成元的态变换、测量概率和 Cartan 权；两组生成元的对易关系。界面显示角度与弧度，Python API 的 `angle` 始终为弧度。SU(3) 的参数不被解释为空间旋转角，权图也不是晶体原子位置。`dimension` 表示基本表示维数，`realDimension` 表示群流形的实维数。实验使用固定生成元的解析指数，不宣称支持任意矩阵指数或一般李群分类。
+原有三个基础实验由标准库 Python `lie_labs.py` 计算，使用 `U(θ)=exp(−iθT)`、`T=σ/2` 或 `λ/2`：SU(2) 的 Bloch 向量、复振幅和 2π/4π 检验；SU(3) 各生成元的态变换、测量概率和 Cartan 权；两组生成元的对易关系。界面显示角度与弧度，Python API 的 `angle` 始终为弧度。SU(3) 的参数不被解释为空间旋转角，权图也不是晶体原子位置。`dimension` 表示基本表示维数，`realDimension` 表示群流形的实维数。实验使用固定生成元的解析指数，不宣称支持任意矩阵指数或一般李群分类。
+
+新增物理应用课程讨论二能级 Rabi 振荡、角动量耦合与 Clebsch–Gordan 系数、Heisenberg 交换、SU(3) Dynkin 标签、味/颜色对称和八重态直积；“分步推导”含 8 道可逐步揭示提示、推导和答案的练习，使用独立进度记录。
+
+`lie_applications.py` 提供三个新的浏览器 Python 实验：
+
+- Rabi：计算理想常量有效 Hamiltonian 的态与概率轨迹，明确区分共振、失谐和实际退相干。
+- SU(2) 耦合：支持 `0 ≤ j₁,j₂ ≤ 3` 的整数或半整数角动量，计算耦合基、CG 系数、选定乘积态的总角动量概率及各向同性交换能级。公共 API 以整数 `twoJ`/`twoM` 表示两倍量子数。
+- SU(3) 直积：每个输入 Dynkin 标签满足非负整数 `p+q ≤ 4`，通过整数 Gelfand–Tsetlin 权重计数和最高权扣除计算完整分解；显示重数、维数、二次 Casimir 与权图。包括 `3⊗3=6⊕3̅`、`3⊗3̅=8⊕1` 和 `8⊗8=27⊕10⊕10̅⊕2·8⊕1`。算法给出不可约分量重数，不提供 SU(3) CG 系数或为重复八重态选择对称/反对称基。
 
 命令行示例：`python dist/python/cli.py teaching_labs input.json`，其中输入可为 `{"lab":"lie","experiment":"commutator","group":"su3","a":4,"b":5}`。验证命令 `npm run test:academy` 同时检查原有课堂、新课程和计算实验。
 

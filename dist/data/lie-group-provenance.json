@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-23",
-  "build": "20261023-lie1",
+  "build": "20261023-lie2",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -38,70 +38,118 @@
       "title": "Lawrence Berkeley National Laboratory：Symmetry in Rotation",
       "url": "https://www2.lbl.gov/abc/wallchart/chapters/05/1.html",
       "note": "自旋半整数回转与中子干涉的教学背景；课堂将整体相位和两路径相对相位明确区分。"
+    },
+    {
+      "id": "wmi-rabi",
+      "title": "Walther-Meißner-Institut · Control of quantum two-level systems",
+      "url": "https://www.wmi.badw.de/fileadmin/WMI/Lecturenotes/Applied_Superconductivity/AS2020_Chapter06_3_Slides.pdf",
+      "note": "旋转坐标系中的相干驱动、失谐与 Rabi 振荡；本课堂采用自己定义的 Ω、Δ 与初始 |↑⟩，不直接套用讲义中的基态符号。"
+    },
+    {
+      "id": "berkeley-rabi",
+      "title": "UC Berkeley · Budker Group：Rabi Tutorial",
+      "url": "https://physics.berkeley.edu/research-faculty/budker-group/physics-tutorials/rabi-tutorial",
+      "note": "受周期驱动的二能级系统；用于核对物理背景，课堂使用恒定有效哈密顿量的独立解析推导。"
+    },
+    {
+      "id": "mit-angular-addition",
+      "title": "MIT 8.05 · Barton Zwiebach：Addition of Angular Momentum",
+      "url": "https://ocw.mit.edu/courses/8-05-quantum-physics-ii-fall-2013/resources/lecture-25-addition-of-angular-momentum-cont/",
+      "note": "角动量耦合与自旋轨道耦合背景。课堂的数值例子与练习独立编写。"
+    },
+    {
+      "id": "osborn-groups",
+      "title": "University of Cambridge · Hugh Osborn：Group Theory Lecture Notes",
+      "url": "https://www.damtp.cam.ac.uk/user/ho/GNotes.pdf",
+      "note": "第 3.6–3.7 节的 SU(2) 张量积与 Clebsch–Gordan 约定，第 7.3–7.6 节的 SU(3) 表示和张量积。其第 7.3.3 节 Casimir 归一化与本课堂不同，比较时转换到 Tₐ=λₐ/2。"
     }
   ],
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3410,
-      "sha256": "e2c53e151367fd6e820c81d29b1b9d372beee27bb291e16c3f93c1966b7c91e4"
+      "sha256": "f39785daa5a812ad2ac130a2a8e110afb8d35c6047c6c6dbc7eed3d0af2d103b"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 25682,
-      "sha256": "4bccd1687d0df3930f9dba97a6e10d79b7b446fe318e96a7cb6447dc936f2c8a"
+      "bytes": 36693,
+      "sha256": "5d1aaf0ecbe86757122dcb468d2765d2fd0ae46aa1b4633151b0190db9a5d711"
     },
     "dist/lie-group.css": {
-      "bytes": 13990,
-      "sha256": "73eee8c6bc0997e72ee62344c1c27b4c78a2c7bf8b2721d1e68a94028a5309da"
+      "bytes": 17204,
+      "sha256": "e84985319319590d3102a14e3233a0261cc50c23694d7aca549709e3626f1a74"
     },
     "dist/python/lie_labs.py": {
-      "bytes": 11814,
-      "sha256": "24e208a0a245d6bea85963ab3af720454192486de01e5d23f4ad23a3d2f9c2e4"
+      "bytes": 11990,
+      "sha256": "de6a438c05fb4e9931c4639d9ed7e47579344d74a5270cdc7f3ff7d0e3f46d31"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 29474,
-      "sha256": "67afe800e42a08c8527843a62e6760e93cdf0646f91d57f3915267b9d6d99f44"
+      "bytes": 61275,
+      "sha256": "3562d1512689217b76e3c65d786ccb2d297d3a25e77189db19da572a98e9900e"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 4987,
-      "sha256": "3c568f8fcfa45d59d315306fbab1c6e213451bf951d4280ef289ebf540db718b"
+      "bytes": 11556,
+      "sha256": "fc90d708ef7c36271b315c2bc57697104a77deab89a95a180837d21a635ced3e"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 13862,
-      "sha256": "0d0056ac429191aa3336d0354299214ad6016b96d255aca0d49d750520612f54"
+      "bytes": 26974,
+      "sha256": "1133eab95a00984e31216b5932be1f24354d744d9c71e29cc92de5b9922f1e00"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 2050,
-      "sha256": "37add0b98fa82263a22532d866a41cdf93188948d6886a375f731197c0bf2ddd"
+      "bytes": 3568,
+      "sha256": "9f74f136bd6d6a5263a68d958244e2182a642d6ef790d539287314ff4a41a134"
+    },
+    "dist/lie-physics-ui.js": {
+      "bytes": 16583,
+      "sha256": "94e247e711d7cbb559a842baeef74fe557794e561007404f42819fe4a35f7ef4"
+    },
+    "dist/python/lie_applications.py": {
+      "bytes": 20497,
+      "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
+    },
+    "dist/data/lie-derivations.json": {
+      "bytes": 20257,
+      "sha256": "c4a9460cde92a956f35a1592a014d750c0d296f202544433657c5fa82c4c7059"
+    },
+    "scripts/test-python-lie-applications.py": {
+      "bytes": 15426,
+      "sha256": "e8ba38b88caae665849ed35e666b4e6d36b64edd3d87fed9f1b0065a3bd9c682"
     }
   },
   "validation": {
-    "lessonCount": 8,
-    "workedExamples": 8,
-    "quizCount": 16,
+    "lessonCount": 14,
+    "workedExamples": 14,
+    "quizCount": 28,
     "pythonLabTests": 11,
-    "publicAPITests": 16
+    "publicAPITests": 17,
+    "guidedExercises": 8,
+    "pythonPhysicsTests": 11,
+    "interactiveExperiments": 6
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
     "UI parameters displayed in degrees; public Python API receives radians",
     "dimension is fundamental representation dimension; realDimension is manifold dimension",
-    "SU(3) Cartan weight diagram is not a real-space crystal diagram"
+    "SU(3) Cartan weight diagram is not a real-space crystal diagram",
+    "SU(2) CG coefficients use Condon-Shortley phases",
+    "Rabi frequencies are angular frequencies in a common chosen time unit; H_eff/hbar=(Omega sigma_x+Delta sigma_z)/2",
+    "SU(3) highest weights use Dynkin (p,q); exact integer weight multiplicities do not determine a CG basis"
   ],
   "scope": [
     "Original Chinese lessons and exercises, cited source documents are not redistributed",
     "Three classroom sections share one sidebar entry; legacy course hashes and storage keys preserved",
-    "Selected one-parameter subgroups, pure-state transforms and generator commutators; no general Lie-group classifier"
+    "Selected one-parameter subgroups, pure-state transforms and generator commutators; no general Lie-group classifier",
+    "Six additional physics lessons and eight independently tracked guided derivations",
+    "Physics application demos use stated effective-model assumptions; flavor and color interpretations are distinguished"
   ]
 }

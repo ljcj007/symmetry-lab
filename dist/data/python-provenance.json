@@ -391,7 +391,20 @@
         "Fixed normalized Hermitian generators and selected pure initial states",
         "No general matrix exponential, arbitrary representation or general Lie-group classification"
       ],
-      "sha256": "24e208a0a245d6bea85963ab3af720454192486de01e5d23f4ad23a3d2f9c2e4"
+      "sha256": "de6a438c05fb4e9931c4639d9ed7e47579344d74a5270cdc7f3ff7d0e3f46d31"
+    },
+    {
+      "path": "dist/python/lie_applications.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original standard-library Python Rabi dynamics, bounded SU(2) Clebsch-Gordan coefficients/exchange spectrum and SU(3) integer Gelfand-Tsetlin weight tensor decomposition.",
+      "validation": "scripts/test-python-lie-applications.py",
+      "limitations": [
+        "Ideal time-independent effective two-level Hamiltonian",
+        "SU(2) input angular momenta at most j=3; no anisotropic or many-body Hamiltonian solver",
+        "SU(3) input Dynkin labels p+q at most 4; decomposition multiplicities, not SU(3) Clebsch-Gordan bases"
+      ],
+      "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     }
   ],
   "coordinate_conventions": {

@@ -163,6 +163,22 @@ class PublicAPITests(unittest.TestCase):
         self.assertAlmostEqual(bracket['coefficients'][2],.5)
         self.assertAlmostEqual(bracket['coefficients'][7],math.sqrt(3)/2)
 
+    def test_lie_physics_public_contract(self):
+        import math
+        rabi=self.result('teaching_labs',{'lab':'lie','experiment':'rabi','omega':1,'delta':0,'time':math.pi})
+        self.assertAlmostEqual(rabi['transitionProbability'],1)
+        self.assertAlmostEqual(rabi['trajectory'][-1]['time'],math.pi)
+        spins=self.result('teaching_labs',{'lab':'lie','experiment':'su2_coupling',
+                          'twoJ1':1,'twoJ2':1,'twoM1':1,'twoM2':-1,'coupling':1})
+        self.assertEqual(spins['dimension'],4)
+        self.assertEqual({float(row['J']):row['energy'] for row in spins['decomposition']},{0:-.75,1:.25})
+        for row in spins['selected']['expansion']:
+            self.assertAlmostEqual(row['probability'],.5)
+        octets=self.result('teaching_labs',{'lab':'lie','experiment':'su3_tensor','p1':1,'q1':1,'p2':1,'q2':1})
+        self.assertEqual(octets['dimension'],64)
+        self.assertEqual({(row['p'],row['q']):row['multiplicity'] for row in octets['decomposition']},
+                         {(2,2):1,(3,0):1,(0,3):1,(1,1):2,(0,0):1})
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

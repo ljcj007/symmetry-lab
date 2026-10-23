@@ -9,7 +9,7 @@ class LieCourse(unittest.TestCase):
     def test_complete_course(self):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
         lessons=course['lessons'];sources={s['id']:s for s in course['sources']}
-        self.assertGreaterEqual(len(lessons),8)
+        self.assertEqual(len(lessons),14)
         self.assertEqual(len({l['id'] for l in lessons}),len(lessons))
         self.assertGreaterEqual(len(sources),3)
         for source in sources.values():
@@ -33,8 +33,31 @@ class LieCourse(unittest.TestCase):
                 for reference in lesson['references']:
                     self.assertIn(reference['sourceId'],sources)
                 if lesson.get('lab'):
-                    self.assertIn(lesson['lab'],('su2','su3','commutator'))
+                    self.assertIn(lesson['lab'],('su2','su3','commutator','rabi','su2_coupling','su3_tensor'))
                     labs.add(lesson['lab'])
-        self.assertEqual(labs,{'su2','su3','commutator'})
+        self.assertEqual(labs,{'su2','su3','commutator','rabi','su2_coupling','su3_tensor'})
+
+    def test_guided_derivations(self):
+        course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
+        data=json.loads((ROOT/'dist/data/lie-derivations.json').read_text(encoding='utf8'))
+        exercises=data['exercises'];sources={s['id'] for s in course['sources']}
+        self.assertEqual(len(exercises),8)
+        self.assertEqual(len({e['id'] for e in exercises}),8)
+        self.assertEqual({e['group'] for e in exercises},{'su2','su3'})
+        for exercise in exercises:
+            with self.subTest(exercise=exercise['id']):
+                for field in ('title','prompt','givens','hint','answer','pitfall','references'):
+                    self.assertTrue(exercise[field])
+                self.assertGreaterEqual(len(exercise['steps']),3)
+                for step in exercise['steps']:
+                    self.assertTrue(step['title'] and step['explanation'])
+                check=exercise['check']
+                self.assertEqual(type(check['answer']),int)
+                self.assertTrue(0<=check['answer']<len(check['choices']))
+                self.assertEqual(len(check['choices']),len(set(check['choices'])))
+                self.assertTrue(check['question'] and check['explanation'])
+                for reference in exercise['references']:
+                    self.assertIn(reference['sourceId'],sources)
+                self.assertIn(exercise['lab'],('rabi','su2_coupling','su3_tensor'))
 
 if __name__=='__main__':unittest.main(verbosity=2)
