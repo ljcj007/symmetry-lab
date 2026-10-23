@@ -71,6 +71,41 @@ class SU3ClebschGordan(unittest.TestCase):
                 decomposition = sum(_weyl_character(b['p'], b['q'], angles) for b in data['blocks'])
                 self.assertLess(abs(product - decomposition), 1e-9)
 
+    def test_higher_dimensional_products_independent_characters(self):
+        reps = [(p, q) for p in range(5) for q in range(5 - p)]
+        tested = 0
+        for left, right in itertools.product(reps, repeat=2):
+            n = cg._dimension(*left) * cg._dimension(*right)
+            if n > 256:
+                continue
+            data = cg._coupling(*left, *right)
+            self.assertEqual(sum(b['dimension'] for b in data['blocks']), n)
+            for residual in data['checks'].values():
+                self.assertLess(residual, 1e-10)
+            product = _weyl_character(*left, (.31, .83)) * _weyl_character(*right, (.31, .83))
+            expected = sum(_weyl_character(b['p'], b['q'], (.31, .83)) for b in data['blocks'])
+            self.assertLess(abs(product - expected), 1e-8)
+            tested += 1
+        self.assertGreater(tested, 150)
+
+    def test_higher_dimensional_finite_group_element_and_boundary(self):
+        # A generic non-Cartan group element checks the computed embeddings
+        # independently of the highest-weight/weight-conservation checks.
+        data = cg._coupling(2, 2, 1, 1)
+        generators = data['generators']
+        h = .37 * (generators[0] + generators[1]) + .23j * (generators[2] - generators[3]) + .19 * generators[6]
+        eigenvalues, vectors = np.linalg.eigh(h)
+        evolution = (vectors * np.exp(-.83j * eigenvalues)) @ vectors.conj().T
+        transformed = data['matrix'].T @ evolution @ data['matrix']
+        for block in data['blocks']:
+            outside = list(range(block['start'])) + list(range(block['end'], 216))
+            self.assert_close(transformed[np.ix_(outside, range(block['start'], block['end']))], 0)
+        # 24 x 10 = 240 is close to the explicit browser resource bound.
+        result = cg.run(request((3, 1, 3, 0)))
+        self.assertEqual(result['dimension'], 240)
+        self.assertEqual(result['arithmetic'], 'numeric')
+        self.assertLess(result['checks']['unitarity'], 1e-10)
+
     def test_all_coupled_columns_have_expected_quadratic_casimir(self):
         # Independent spectral identity in the original tensor-product basis.
         for left, right in itertools.product(REPS, repeat=2):
@@ -218,8 +253,9 @@ class SU3ClebschGordan(unittest.TestCase):
     def test_strict_bounds_and_invalid_states(self):
         valid = request()
         invalid = [None, [], {}, dict(valid, unexpected=1), dict(valid, lab='other'),
-                   dict(valid, experiment='su3_tensor'), dict(valid, p1=True), dict(valid, p1=3),
-                   dict(valid, p1=2, q1=1), dict(valid, q2=-1), dict(valid, p1=1.0),
+                   dict(valid, experiment='su3_tensor'), dict(valid, p1=True), dict(valid, p1=5),
+                   dict(valid, p1=4, q1=1), dict(valid, p1=2, q1=2, p2=2, q2=2),
+                   dict(valid, arithmetic='symbolic'), dict(valid, q2=-1), dict(valid, p1=1.0),
                    dict(valid, direction='guess'), dict(valid, state=None),
                    dict(valid, state={'index': True}), dict(valid, state={'index': -1}),
                    dict(valid, state={'index': 9}), dict(valid, state={'index': 0, 'amplitudes': []}),

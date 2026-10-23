@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-23",
-  "build": "20261023-lie3",
+  "build": "20261023-lie4",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -67,99 +67,130 @@
       "id": "alex-su-n-cg",
       "title": "Alex、Kalus、Huckleberry、von Delft：SU(N) Clebsch–Gordan 数值算法",
       "url": "https://arxiv.org/abs/1009.0437",
-      "note": "J. Math. Phys. 52, 023507 (2011)，doi:10.1063/1.3521562。核对 Gelfand–Tsetlin 基底、最高权、生成元交织关系与外重数的定义；本课堂独立实现有限范围的 SU(3) 数值计算，表格相位及外重数选基不保证与该论文逐项一致。"
+      "note": "J. Math. Phys. 52, 023507 (2011)，doi:10.1063/1.3521562。用于核对 GT、最高权与重数概念；论文提出数值算法，本课堂另写有限范围的数值与精确代数实现。相位和副本选基不保证逐项相同。"
     },
     {
       "id": "lmu-cg-conventions",
       "title": "LMU Munich · SU(N) Clebsch–Gordan generator：Conventions",
       "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/",
       "note": "作者公开说明的 GT 图样、状态标签及外重数指标。课堂借此区分表示标签、态标签与同型表示的副本标签；不调用该远程计算器。"
+    },
+    {
+      "id": "sympy-exact-arithmetic",
+      "title": "SymPy 官方文档：Best Practices · Exact Rational Numbers vs. Floats",
+      "url": "https://docs.sympy.org/latest/explanation/best-practices.html#exact-rational-numbers-vs-floats",
+      "note": "核对有理数、根式与浮点输入的区别。本课堂精确 GT 构造独立实现；安全表达式输入使用受限语法，不将任意字符串交给 Python 执行。"
     }
   ],
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3410,
-      "sha256": "7ba2bc91bdf0ce9e1fa12a1f1744b43a2878c341f6773d55e1d034b69b17fd08"
+      "sha256": "42c76c47df770fa591aed39b572f9fbe9cba1bb49532f9182f693cc29e02ed98"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 37267,
-      "sha256": "2844438e5aa696559b21ea512b2c5bf22ee93f2aefd1b0cce25af99fd0c894a3"
+      "bytes": 37474,
+      "sha256": "207369b46b4847f0a685d4d23eb4d299de930dee05cb8415d82ce56369595f28"
     },
     "dist/lie-group.css": {
-      "bytes": 18848,
-      "sha256": "7a4a4aa15164b399059ead4b985faf374c93f54b452377ade447960c5295ec96"
+      "bytes": 19473,
+      "sha256": "36ae4b5bc547ff2f4e47f84816e8580a3ee936df149a9233c3a45540bfc5ff37"
     },
     "dist/python/lie_labs.py": {
-      "bytes": 12108,
-      "sha256": "dc289374d85c34f5871097da8ef3f4aecf06783ac229b2af8660e14a93a060e7"
+      "bytes": 12248,
+      "sha256": "2ad937b7ab20e2dab3ee656216b327b5fe8ae5543dc75952d7719aa923c2074f"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 78136,
-      "sha256": "0e4f3556129db0502765e3b73ee22819072b698d532d3c6f5a870b0cfe6264a0"
+      "bytes": 93665,
+      "sha256": "6455ae4bc7d4d1431d393b1c8a71100c90a35ac18261e56504277034ba4f2650"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 17353,
-      "sha256": "3ae4c5c33993ecb94fcd116ec20255013b98bbb95cc2ca94dc4342f898ad71db"
+      "bytes": 21055,
+      "sha256": "f2ab213b2928856938d4dbf8874887c268e1ec7efa51e2725e2429005924584b"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 36349,
-      "sha256": "b9fc4df32da06f7f1f338132544a2f1fb0524d90eb508e65a42c5e9f539e4a19"
+      "bytes": 43008,
+      "sha256": "22362723d6f37ec279b2a77e3e0eeb2f4f6e12455fe76f6e544170f0ee47b49f"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 3597,
-      "sha256": "05efa49a995b358c8beb742661a85e06e56c8b95af2af9e11d543bbfbf8be01b"
+      "bytes": 3673,
+      "sha256": "3b4224b0b3c6ae61eb8b18525402316e0c55464def046d1ac0cef2b9d0bd3e87"
     },
     "dist/lie-physics-ui.js": {
-      "bytes": 17290,
-      "sha256": "0be72b2005f813e292ce7c869d6d3bd1425317f93579cf261d9f1a2eba17bf8d"
+      "bytes": 17323,
+      "sha256": "b6f319f387293399062834fa362bd3244c51b1527d5c5ade00cdeb8f4d130053"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 31375,
-      "sha256": "a93afa5544b824fac937476ac05d46f18c2e1d6c9fef3c6f07cece727d973d5f"
+      "bytes": 42794,
+      "sha256": "5280c5c7f1b08de8bb02ec907a3ccfaabcad2d6ba2920393d36d8ba92f69b917"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,
       "sha256": "e8ba38b88caae665849ed35e666b4e6d36b64edd3d87fed9f1b0065a3bd9c682"
     },
     "dist/su3-cg-ui.js": {
-      "bytes": 15601,
-      "sha256": "a08ec19c012ff8f6e0c311a8c72f627eebce3308f68545184154226c69ef1e0d"
+      "bytes": 22382,
+      "sha256": "56ab642ec1bcee8cfa47f332252eaefbdb1928227c1da1c34adb1475a53cbfe9"
     },
     "dist/python/su3_cg.py": {
-      "bytes": 17818,
-      "sha256": "50c4dad233b5a5a514e9ff2a4cda551a40807f5b63397d5b167eb1b966580dd8"
+      "bytes": 21975,
+      "sha256": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794"
     },
     "scripts/test-python-su3-cg.py": {
-      "bytes": 13636,
-      "sha256": "f47bca8a61c33386285698864c41e425b44b63a0c1197346465f90d0263719aa"
+      "bytes": 15719,
+      "sha256": "0de9fb025880ca10adc02aea5115b65ac0e11a4ccde0b78edf8d44f40e0db7c0"
+    },
+    "dist/python/su3_cg_exact.py": {
+      "bytes": 14031,
+      "sha256": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2"
+    },
+    "scripts/test-python-su3-cg-exact.py": {
+      "bytes": 9934,
+      "sha256": "eacb0961af71e2d870a5ede7c56a3c2700030e6e8d563447ce8dfb09bfb1d39e"
+    },
+    "scripts/fixtures/su3-cg-extended-ui.json": {
+      "bytes": 438329,
+      "sha256": "aad6f7a7bc63d5db0b480a27c21430f90148d22da230efd7e30f9bb749ffbc3c"
+    },
+    "scripts/generate-su3-cg-ui-fixtures.py": {
+      "bytes": 1556,
+      "sha256": "adb2879880d148bf5ae94de2dd25ab7f9fb467a342abfa00c77a5f038dfeed5f"
+    },
+    "dist/examples/su3-cg-exact-ten-three.json": {
+      "bytes": 176,
+      "sha256": "3e3e5ca6a8e1336a53978edb5a7dc2da628fef5d2ac875cc60548b1fdc5dbb86"
+    },
+    "dist/examples/su3-cg-high-adjoint.json": {
+      "bytes": 179,
+      "sha256": "683cfbf6e366d953f3a9441bf7e8e9de01ba2796c8d1f78027bf459070d3c58e"
     }
   },
   "validation": {
-    "lessonCount": 17,
-    "workedExamples": 17,
-    "quizCount": 34,
+    "lessonCount": 20,
+    "workedExamples": 20,
+    "quizCount": 40,
     "pythonLabTests": 11,
-    "publicAPITests": 18,
-    "guidedExercises": 12,
+    "publicAPITests": 21,
+    "guidedExercises": 16,
     "pythonPhysicsTests": 11,
     "interactiveExperiments": 7,
-    "pythonSU3CGTests": 13
+    "pythonSU3CGTests": 15,
+    "pythonSU3CGExactTests": 10
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
@@ -170,7 +201,8 @@
     "Rabi frequencies are angular frequencies in a common chosen time unit; H_eff/hbar=(Omega sigma_x+Delta sigma_z)/2",
     "SU(3) highest weights use Dynkin (p,q); exact integer weight multiplicities do not determine a CG basis",
     "SU(3) CG matrix columns are coupled orthonormal GT states in the ordered product basis; b=C^dagger a and a=C b",
-    "Highest-weight phase and deterministic outer-multiplicity conventions are explicit; identical-factor copies resolve exchange parity"
+    "Highest-weight phase and deterministic outer-multiplicity conventions are explicit; identical-factor copies resolve exchange parity",
+    "Exact CG coefficients are constructed over rational/radical arithmetic and verified before numerical approximations are generated"
   ],
   "scope": [
     "Original Chinese lessons and exercises, cited source documents are not redistributed",
@@ -178,6 +210,7 @@
     "Selected one-parameter subgroups, pure-state transforms and generator commutators; no general Lie-group classifier",
     "Six additional physics lessons and eight independently tracked guided derivations",
     "Physics application demos use stated effective-model assumptions; flavor and color interpretations are distinguished",
-    "SU(3) CG: all 36 ordered pairs drawn from 1,3,3bar,6,6bar,8, maximum 64x64 numerical change-of-basis matrix"
+    "SU(3) CG: each input p+q<=4; maximum numerical matrix 256x256 and exact matrix 81x81",
+    "Three higher-dimensional/exact lessons and four additional sequential derivations; safe radical inputs and exact serialized state reversal"
   ]
 }

@@ -157,3 +157,10 @@ exchange-resolved outer multiplicities and complex state basis changes.
 Primary algorithm references, independent normalization conventions, bounds and
 tests are documented in dist/python/su3_cg.py and dist/docs/lie-groups.md.
 No reference source code, coefficient tables or textbook pages are redistributed.
+
+The higher-dimensional and exact SU(3) extension (2026-10-23) adds an original
+SymPy rational/radical GT and highest-weight construction, exact generator
+intertwining checks, safe arithmetic inputs and reversible symbolic state
+changes. The NumPy implementation supports larger bounded product spaces.
+The new lessons and exercises are original; cited reference pages and tables
+are not redistributed. Computational bounds and conventions are explicit.

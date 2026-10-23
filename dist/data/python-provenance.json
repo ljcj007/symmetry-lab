@@ -391,7 +391,7 @@
         "Fixed normalized Hermitian generators and selected pure initial states",
         "No general matrix exponential, arbitrary representation or general Lie-group classification"
       ],
-      "sha256": "dc289374d85c34f5871097da8ef3f4aecf06783ac229b2af8660e14a93a060e7"
+      "sha256": "2ad937b7ab20e2dab3ee656216b327b5fe8ae5543dc75952d7719aa923c2074f"
     },
     {
       "path": "dist/python/lie_applications.py",
@@ -402,7 +402,7 @@
       "limitations": [
         "Ideal time-independent effective two-level Hamiltonian",
         "SU(2) input angular momenta at most j=3; no anisotropic or many-body Hamiltonian solver",
-        "This module computes SU(3) integer weight decompositions for p+q<=4; bounded numerical CG bases are provided separately by su3_cg.py"
+        "This module computes integer SU(3) weight decompositions for p+q<=4; numerical and exact CG bases are provided separately by su3_cg.py and su3_cg_exact.py"
       ],
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
@@ -410,13 +410,25 @@
       "path": "dist/python/su3_cg.py",
       "upstream": [],
       "license": "GPL-3.0-only",
-      "implementation": "Original NumPy SU(3) Gelfand-Tsetlin generator and highest-weight Clebsch-Gordan construction; exchange-resolved repeated irreps and unitary complex-amplitude basis changes.",
+      "implementation": "Original NumPy GT highest-weight CG construction with weight-local validation and complex changes of basis.",
       "validation": "scripts/test-python-su3-cg.py",
       "limitations": [
-        "Each input irrep has nonnegative Dynkin labels p+q<=2; at most 64 product states",
-        "Floating point coefficients with explicit GT and highest-weight phase conventions, not symbolic radicals or a universal literature-table convention"
+        "Each input p+q<=4; product dimension <=256",
+        "Explicit GT phases and exchange-resolved outer multiplicities; literature tables may use another basis"
       ],
-      "sha256": "50c4dad233b5a5a514e9ff2a4cda551a40807f5b63397d5b167eb1b966580dd8"
+      "sha256": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794"
+    },
+    {
+      "path": "dist/python/su3_cg_exact.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original direct SymPy rational/radical GT construction, exact highest-weight projectors and lowering; no float-to-symbolic reconstruction.",
+      "validation": "scripts/test-python-su3-cg-exact.py",
+      "limitations": [
+        "Each input p+q<=4; product dimension <=81",
+        "Bounded arithmetic grammar for real/imaginary amplitudes; finite exact constants, no free symbolic parameters"
+      ],
+      "sha256": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2"
     }
   ],
   "coordinate_conventions": {

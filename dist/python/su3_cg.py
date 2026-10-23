@@ -1,9 +1,8 @@
-"""Numerical SU(3) CG matrices in an explicit orthonormal GT convention.
+"""SU(3) CG matrices in an explicit orthonormal GT convention.
 
-Each input has p+q <= 2; this covers all 36 ordered products of
-1, 3, 3bar, 6, 6bar, 8 (dimension <= 64).  This is a constructive
-highest-weight/intertwiner calculation, not a coefficient table.
-Only NumPy is required.  Browser execution stays inside Pyodide.
+Each input has p+q <= 4, with a product dimension of at most 256.
+The optional exact path constructs rational/radical coefficients directly
+using SymPy (product dimension <= 81). Browser execution stays in Pyodide.
 """
 from functools import lru_cache
 import math
@@ -29,7 +28,15 @@ def _name(p, q):
     names = {(0, 0): '1', (1, 0): '3', (0, 1): '3̄', (2, 0): '6',
              (0, 2): '6̄', (1, 1): '8', (3, 0): '10', (0, 3): '10̄',
              (2, 2): '27', (4, 0): '15′', (0, 4): '15̄′',
-             (2, 1): '15', (1, 2): '15̄'}
+             (2, 1): '15', (1, 2): '15̄', (3, 1): '24', (1, 3): '24̄',
+             (5, 0): '21', (0, 5): '21̄', (4, 1): '35', (1, 4): '35̄',
+             (3, 2): '42', (2, 3): '42̄', (6, 0): '28', (0, 6): '28̄',
+             (5, 1): '48', (1, 5): '48̄', (4, 2): '60', (2, 4): '60̄',
+             (3, 3): '64', (7, 0): '36', (0, 7): '36̄',
+             (6, 1): '63', (1, 6): '63̄', (5, 2): '81', (2, 5): '81̄',
+             (4, 3): '90', (3, 4): '90̄', (8, 0): '45', (0, 8): '45̄',
+             (7, 1): '80', (1, 7): '80̄', (6, 2): '105', (2, 6): '105̄',
+             (5, 3): '120', (3, 5): '120̄', (4, 4): '125'}
     return f'{names.get((p, q), str(_dimension(p, q)))} ({p},{q})'
 
 
@@ -53,7 +60,7 @@ def _z(value):
     return {'re': float(complex(value).real), 'im': float(complex(value).imag)}
 
 
-@lru_cache(maxsize=64)
+@lru_cache(maxsize=32)
 def _irrep(p, q):
     """GT E12,E23, H1,H2; Eij^dagger=Eji and positive raising roots.
 
@@ -131,7 +138,7 @@ def _null_basis(matrix):
     return result
 
 
-def _lower_block(highest, target, generators):
+def _lower_block(highest, target, generators, product_weights):
     """Recover every GT column from known lowering relations, weight by weight.
 
     If D contains target lowering coefficients into weight w and B contains
@@ -147,12 +154,14 @@ def _lower_block(highest, target, generators):
         if indices == [0]:
             continue
         relation, lowered = [], []
+        rows = [i for i, w in enumerate(product_weights) if w == weight]
         for generator_index, root in ((1, (2, -1)), (3, (-1, 2))):
             higher = (weight[0] + root[0], weight[1] + root[1])
             upper = [i for i, w in enumerate(weights) if w == higher]
             if upper:
                 relation.append(target['generators'][generator_index][np.ix_(indices, upper)])
-                lowered.append(generators[generator_index] @ out[:, upper])
+                source_rows = [i for i, w in enumerate(product_weights) if w == higher]
+                lowered.append(generators[generator_index][np.ix_(rows, source_rows)] @ out[np.ix_(source_rows, upper)])
         if not relation:
             raise ArithmeticError('GT lowering reached a disconnected weight')
         d = np.concatenate(relation, axis=1)
@@ -160,11 +169,11 @@ def _lower_block(highest, target, generators):
         solved, _, rank, _ = np.linalg.lstsq(d.T, b.T, rcond=1e-12)
         if rank != len(indices):
             raise ArithmeticError('GT lowering did not span a weight space')
-        out[:, indices] = solved.T
+        out[np.ix_(rows, indices)] = solved.T
     return out
 
 
-@lru_cache(maxsize=36)
+@lru_cache(maxsize=4)
 def _coupling(p1, q1, p2, q2):
     left, right = _irrep(p1, q1), _irrep(p2, q2)
     n1, n2 = left['dimension'], right['dimension']
@@ -191,7 +200,7 @@ def _coupling(p1, q1, p2, q2):
                 copy += 1
                 highest = np.zeros(n)
                 highest[indices] = seed
-                matrix = _lower_block(highest, target, generators)
+                matrix = _lower_block(highest, target, generators, weights)
                 matrices.append(matrix)
                 suffix = ('s' if parity == 1 else 'a') if parity is not None else ''
                 label = f'{_name(p, q)}{suffix}'
@@ -211,15 +220,30 @@ def _coupling(p1, q1, p2, q2):
     if start != n:
         raise ArithmeticError('Highest-weight decomposition dimension mismatch')
     c = np.concatenate(matrices, axis=1)
-    checks = {'unitarity': max(_maxabs(c.T @ c - np.eye(n)), _maxabs(c @ c.T - np.eye(n))),
+    checks = {'unitarity': 0.0,
               'intertwining': 0.0, 'weightConservation': 0.0, 'exchange': 0.0}
+    weight_rows = {w: [i for i, v in enumerate(weights) if v == w] for w in set(weights)}
+    for weight, rows in weight_rows.items():
+        cols = [i for i, row in enumerate(coupled_basis) if tuple(row['weight']) == weight]
+        cw = c[np.ix_(rows, cols)]
+        checks['unitarity'] = max(checks['unitarity'], _maxabs(cw.T @ cw - np.eye(len(cols))),
+                                   _maxabs(cw @ cw.T - np.eye(len(rows))))
+    shifts = ((2, -1), (-2, 1), (-1, 2), (1, -2), (1, 1), (-1, -1), (0, 0), (0, 0))
     for block, matrix in zip(blocks, matrices):
         target = _irrep(block['p'], block['q'])
-        for product_generator, target_generator in zip(generators, target['generators']):
-            checks['intertwining'] = max(checks['intertwining'],
-                _maxabs(product_generator @ matrix - matrix @ target_generator))
+        target_rows = {w: [i for i, v in enumerate(target['weights']) if v == w] for w in set(target['weights'])}
+        for gi, shift in enumerate(shifts):
+            for weight, cols in target_rows.items():
+                dest = (weight[0] + shift[0], weight[1] + shift[1])
+                rows = weight_rows.get(dest, [])
+                source = weight_rows[weight]
+                target_dest = target_rows.get(dest, [])
+                lhs = generators[gi][np.ix_(rows, source)] @ matrix[np.ix_(source, cols)]
+                rhs = matrix[np.ix_(rows, target_dest)] @ target['generators'][gi][np.ix_(target_dest, cols)]
+                checks['intertwining'] = max(checks['intertwining'], _maxabs(lhs - rhs))
         if identical:
-            checks['exchange'] = max(checks['exchange'], _maxabs(swap @ matrix - block['swapParity'] * matrix))
+            swap_rows = [j * n1 + i for i in range(n1) for j in range(n2)]
+            checks['exchange'] = max(checks['exchange'], _maxabs(matrix[swap_rows] - block['swapParity'] * matrix))
         for j, weight in enumerate(target['weights']):
             forbidden = [i for i, w in enumerate(weights) if w != weight]
             checks['weightConservation'] = max(checks['weightConservation'], _maxabs(matrix[forbidden, j]))
@@ -267,23 +291,37 @@ def _state(raw, dimension):
 
 
 def run(payload):
-    allowed = {'lab', 'experiment', 'p1', 'q1', 'p2', 'q2', 'direction', 'state'}
+    allowed = {'lab', 'experiment', 'p1', 'q1', 'p2', 'q2', 'direction', 'state', 'arithmetic'}
     if not isinstance(payload, dict) or set(payload) - allowed:
         raise ValueError('SU(3) CG 请求包含不支持的字段')
     if payload.get('lab') != 'lie' or payload.get('experiment') != 'su3_cg':
         raise ValueError('此接口要求 lab=lie、experiment=su3_cg')
-    labels = [_integer(payload.get(key, default), 0, 2, key)
+    arithmetic = payload.get('arithmetic', 'numeric')
+    if arithmetic not in ('numeric', 'exact'):
+        raise ValueError('arithmetic 必须是 numeric 或 exact')
+    labels = [_integer(payload.get(key, default), 0, 4, key)
               for key, default in (('p1', 1), ('q1', 0), ('p2', 0), ('q2', 1))]
     p1, q1, p2, q2 = labels
-    if p1 + q1 > 2 or p2 + q2 > 2:
-        raise ValueError('每个输入表示需满足 p+q≤2；最大直积维数为 64')
+    if p1 + q1 > 4 or p2 + q2 > 4:
+        raise ValueError('每个输入表示需满足 p+q≤4')
     direction = payload.get('direction', 'product_to_coupled')
     if direction not in ('product_to_coupled', 'coupled_to_product'):
         raise ValueError('direction 必须是 product_to_coupled 或 coupled_to_product')
     n = _dimension(p1, q1) * _dimension(p2, q2)
-    input_vector = _state(payload.get('state', {'index': 0}), n)
-    data = _coupling(*labels)
-    c = data['matrix']
+    limit = 81 if arithmetic == 'exact' else 256
+    if n > limit:
+        raise ValueError(f'{arithmetic} 模式的直积维数上限为 {limit}，当前为 {n}')
+    extra = {}
+    if arithmetic == 'exact':
+        from su3_cg_exact import prepare, fields
+        data, exact_vector = prepare(labels, payload.get('state', {'index': 0}))
+        extra = fields(data, exact_vector, direction)
+        c = np.array(data['matrix'].evalf(17).tolist(), dtype=float)
+        input_vector = np.array([complex(value.evalf(17)) for value in exact_vector])
+    else:
+        input_vector = _state(payload.get('state', {'index': 0}), n)
+        data = _coupling(*labels)
+        c = data['matrix']
     input_norm = float(np.vdot(input_vector, input_vector).real)
     output = c.T @ input_vector if direction == 'product_to_coupled' else c @ input_vector
     restored = c @ output if direction == 'product_to_coupled' else c.T @ output
@@ -296,11 +334,31 @@ def run(payload):
                                   'leftIndex': a['index'], 'rightIndex': b['index'],
                                   'weight': list(data['weights'][index])})
     checks = dict(data['checks'])
+    if arithmetic == 'exact':
+        # These residuals describe the floating-point preview, independently
+        # of the strict zero identities reported in exactChecks.
+        left_numeric, right_numeric = _irrep(p1, q1), _irrep(p2, q2)
+        n1, n2 = left_numeric['dimension'], right_numeric['dimension']
+        numeric_generators = tuple(np.kron(a, np.eye(n2)) + np.kron(np.eye(n1), b)
+                                   for a, b in zip(left_numeric['generators'], right_numeric['generators']))
+        checks = {'unitarity': max(_maxabs(c.T @ c - np.eye(n)), _maxabs(c @ c.T - np.eye(n))),
+                  'intertwining': 0.0, 'weightConservation': 0.0, 'exchange': 0.0}
+        for block in data['blocks']:
+            matrix = c[:, block['start']:block['end']]
+            target = _irrep(block['p'], block['q'])
+            for generator, target_generator in zip(numeric_generators, target['generators']):
+                checks['intertwining'] = max(checks['intertwining'], _maxabs(generator @ matrix - matrix @ target_generator))
+            for j, weight in enumerate(target['weights']):
+                forbidden = [i for i, w in enumerate(data['weights']) if w != weight]
+                checks['weightConservation'] = max(checks['weightConservation'], _maxabs(matrix[forbidden, j]))
+            if (p1, q1) == (p2, q2):
+                swapped = matrix[[j * n1 + i for i in range(n1) for j in range(n2)]]
+                checks['exchange'] = max(checks['exchange'], _maxabs(swapped - block['swapParity'] * matrix))
     output_norm = float(np.vdot(output, output).real)
     checks.update({'stateNorm': abs(output_norm - input_norm) / input_norm,
                    'roundtrip': _maxabs(restored - input_vector) / math.sqrt(input_norm)})
     output_basis = data['coupledBasis'] if direction == 'product_to_coupled' else product_basis
-    return {'lab': 'lie', 'experiment': 'su3_cg', 'group': 'su3',
+    result = {'lab': 'lie', 'experiment': 'su3_cg', 'group': 'su3', 'arithmetic': arithmetic,
             'title': 'SU(3) Clebsch–Gordan 系数与换基',
             'dimension': n, 'direction': direction,
             'factors': [{'p': r['p'], 'q': r['q'], 'label': _name(r['p'], r['q']),
@@ -334,8 +392,10 @@ def run(payload):
                 '检验 C†C=CC†=I 及全部八个生成元的 T_total C=C T_block，再按方向计算振幅；振幅相加后才能取模平方。',
             ],
             'notes': [
-                '计算覆盖每个输入 p+q≤2 的全部 36 个有序直积，最大 64×64；输出表示可有更高 Dynkin 标签。',
-                '数值系数采用双精度，不是一般任意维数或精确根式接口。显示零阈值为 10^-14，内部验证阈值为 10^-8。',
+                '输入表示满足 p+q≤4；数值模式直积维数上限 256，精确模式上限 81，输出表示可有更高 Dynkin 标签。',
+                '数值模式采用双精度；精确模式从有理数根式 GT 生成元直接构造并严格验证，exact 字段保存根式，普通数值字段供预览。',
                 '输入振幅原样换基，不自动归一化；平方范数限于 10^-24 至 10^12，边界允许 10^-12 相对数值容差。概率按各自平方范数归一化。',
                 'GT 标签中的 I=(a−b)/2、I₃=H₁/2、Y=(H₁+2H₂)/3 描述标准 SU(2)×U(1) 子群；物理含义依具体模型而定。',
             ], 'sources': _SOURCES}
+    result.update(extra)
+    return result

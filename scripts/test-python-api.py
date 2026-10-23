@@ -201,6 +201,58 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual(octets['dimension'],64)
         self.assertEqual(sorted(b['swapParity'] for b in octets['blocks'] if (b['p'],b['q'])==(1,1)),[-1,1])
 
+    def test_su3_high_dimensional_cg_public_contract(self):
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_cg',
+            'arithmetic':'numeric','p1':2,'q1':2,'p2':1,'q2':1,
+            'direction':'product_to_coupled','state':{'index':17}})
+        self.assertEqual(result['dimension'],216)
+        # Independent adjoint tensor rule (p,q) x (1,1), with two copies
+        # of an interior highest weight. Dynkin labels fix conjugation.
+        from collections import Counter
+        self.assertEqual(Counter((b['p'],b['q']) for b in result['blocks']),
+            Counter({(3,3):1,(4,1):1,(1,4):1,(2,2):2,(3,0):1,(0,3):1,(1,1):1}))
+        self.assertLess(max(result['checks'].values()),1e-8)
+
+    def test_su3_exact_cg_public_contract_and_roundtrip(self):
+        import sympy as sp
+        request={'lab':'lie','experiment':'su3_cg','arithmetic':'exact',
+            'p1':1,'q1':0,'p2':1,'q2':0,'direction':'product_to_coupled'}
+        amplitudes=[{'re':'0','im':'0'} for _ in range(9)]
+        amplitudes[1]={'re':'sqrt(2)/2','im':'0'}
+        amplitudes[3]={'re':'0','im':'sqrt(2)/2'}
+        forward=self.result('teaching_labs',{**request,'state':{'amplitudes':amplitudes}})
+        self.assertEqual(forward['arithmetic'],'exact')
+        self.assertEqual(sp.simplify(sp.sympify(forward['exactCGMatrix'][1][1])-sp.sqrt(2)/2),0)
+        self.assertEqual(sp.simplify(sp.sympify(forward['exactCGMatrix'][3][6])+sp.sqrt(2)/2),0)
+        self.assertEqual(forward['exactOutputAmplitudes'][1],{'re':'1/2','im':'1/2'})
+        self.assertEqual(forward['exactOutputAmplitudes'][6],{'re':'1/2','im':'-1/2'})
+        self.assertTrue(forward['exactChecks'])
+        self.assertTrue(all(value=='0' for value in forward['exactChecks'].values()))
+        self.assertEqual(forward['exactInputNorm'],'1')
+        self.assertEqual(forward['exactOutputNorm'],'1')
+        self.assertFalse(any(sp.sympify(value).has(sp.Float) for row in forward['exactCGMatrix'] for value in row))
+        back=self.result('teaching_labs',{**request,'direction':'coupled_to_product',
+            'state':{'amplitudes':forward['exactOutputAmplitudes']}})
+        for actual,expected in zip(back['exactOutputAmplitudes'],amplitudes):
+            for part in ('re','im'):
+                self.assertEqual(sp.simplify(sp.sympify(actual[part])-sp.sympify(expected[part])),0)
+
+    def test_su3_exact_higher_irrep_first_lowering(self):
+        import sympy as sp
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_cg',
+            'arithmetic':'exact','p1':3,'q1':0,'p2':1,'q2':0,'state':{'index':1}})
+        self.assertEqual(result['dimension'],30)
+        self.assertEqual([(b['p'],b['q']) for b in result['blocks']],[(4,0),(2,1)])
+        matrix=result['exactCGMatrix']
+        second=result['blocks'][1]['start']
+        # F12(|uuu> x |u>)=sqrt(3)|uud> x |u>+|uuu> x |d>.
+        # The normalized first descendant and its orthogonal highest weight
+        # therefore have these coefficients without consulting the CG solver.
+        for i,j,expected in ((1,1,sp.Rational(1,2)),(3,1,sp.sqrt(3)/2),
+                             (1,second,sp.sqrt(3)/2),(3,second,-sp.Rational(1,2))):
+            self.assertEqual(sp.simplify(sp.sympify(matrix[i][j])-expected),0)
+        self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

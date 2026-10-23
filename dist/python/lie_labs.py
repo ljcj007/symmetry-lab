@@ -242,8 +242,11 @@ def _commutator(payload):
 
 def run(payload):
     """Validate a small flat JSON object and return JSON-safe teaching data."""
-    if not isinstance(payload, dict) or len(payload) > 8:
-        raise ValueError('输入必须是最多 8 个字段的 JSON 对象')
+    if not isinstance(payload, dict):
+        raise ValueError('输入必须是 JSON 对象')
+    maximum = 9 if payload.get('experiment') == 'su3_cg' else 8
+    if len(payload) > maximum:
+        raise ValueError(f'输入必须是最多 {maximum} 个字段的 JSON 对象')
     if payload.get('lab') != 'lie':
         raise ValueError('lab 必须为 lie')
     if payload.get('experiment') == 'su3_cg':
