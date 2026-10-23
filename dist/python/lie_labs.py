@@ -246,6 +246,9 @@ def run(payload):
         raise ValueError('输入必须是最多 8 个字段的 JSON 对象')
     if payload.get('lab') != 'lie':
         raise ValueError('lab 必须为 lie')
+    if payload.get('experiment') == 'su3_cg':
+        from su3_cg import run as cg_run
+        return cg_run(payload)
     if payload.get('experiment') in ('rabi', 'su2_coupling', 'su3_tensor'):
         from lie_applications import run as application_run
         return application_run(payload)

@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261023-lie2';
+const BUILD = '20261023-lie3';
 const plans = {
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
   magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
@@ -38,7 +38,8 @@ async function prepare(id, action, payload) {
   }
   const needsLabels = action === 'standard_labels' || (action === 'analyze' && payload.group_number !== undefined);
   const exact = needsLabels || ['crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
-  for (const name of action === 'teaching_labs' ? [] : exact ? ['numpy', 'sympy'] : ['numpy']) {
+  const su3CG = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_cg';
+  for (const name of action === 'teaching_labs' ? (su3CG ? ['numpy'] : []) : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
     await runtime.loadPackage(name); packages.add(name);
@@ -49,7 +50,7 @@ async function prepare(id, action, payload) {
     self.symmetryLabSpglib = await createSpglibBridge();
     spglibLoaded = true;
   }
-  for (const name of ['browser_api', ...plans[action], ...(needsLabels ? ['magnetictb_browser', 'symbolic_core', 'standard_labels'] : [])]) {
+  for (const name of ['browser_api', ...plans[action], ...(su3CG ? ['su3_cg'] : []), ...(needsLabels ? ['magnetictb_browser', 'symbolic_core', 'standard_labels'] : [])]) {
     if (modules.has(name)) continue;
     progress('正在加载本站 Python 计算代码…');
     const response = await resource(`./python/${name}.py`);

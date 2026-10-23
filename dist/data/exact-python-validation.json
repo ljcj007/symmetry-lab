@@ -23,8 +23,9 @@
     "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
     "dist/python/teaching_labs.py": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1",
     "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014",
-    "dist/python/lie_labs.py": "de6a438c05fb4e9931c4639d9ed7e47579344d74a5270cdc7f3ff7d0e3f46d31",
-    "dist/python/lie_applications.py": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
+    "dist/python/lie_labs.py": "dc289374d85c34f5871097da8ef3f4aecf06783ac229b2af8660e14a93a060e7",
+    "dist/python/lie_applications.py": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9",
+    "dist/python/su3_cg.py": "50c4dad233b5a5a514e9ff2a4cda551a40807f5b63397d5b167eb1b966580dd8"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -54,7 +55,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 17
+    "tests": 18
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -760,5 +761,11 @@
     "lessonSchemaTests": 2,
     "test": "scripts/test-python-lie-applications.py",
     "scope": "Bounded angular momenta and Dynkin labels; explicit exact integer SU(3) weight counts and floating SU(2) CG checks"
+  },
+  "su3CGTeaching": {
+    "date": "2026-10-23",
+    "unitTests": 13,
+    "test": "scripts/test-python-su3-cg.py",
+    "scope": "All 36 supported ordered irrep pairs; bounded numerical CG matrices and complex state change of basis. Exact integer tensor decomposition remains a separate experiment."
   }
 }

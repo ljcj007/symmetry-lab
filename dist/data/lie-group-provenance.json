@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-23",
-  "build": "20261023-lie2",
+  "build": "20261023-lie3",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -62,79 +62,104 @@
       "title": "University of Cambridge · Hugh Osborn：Group Theory Lecture Notes",
       "url": "https://www.damtp.cam.ac.uk/user/ho/GNotes.pdf",
       "note": "第 3.6–3.7 节的 SU(2) 张量积与 Clebsch–Gordan 约定，第 7.3–7.6 节的 SU(3) 表示和张量积。其第 7.3.3 节 Casimir 归一化与本课堂不同，比较时转换到 Tₐ=λₐ/2。"
+    },
+    {
+      "id": "alex-su-n-cg",
+      "title": "Alex、Kalus、Huckleberry、von Delft：SU(N) Clebsch–Gordan 数值算法",
+      "url": "https://arxiv.org/abs/1009.0437",
+      "note": "J. Math. Phys. 52, 023507 (2011)，doi:10.1063/1.3521562。核对 Gelfand–Tsetlin 基底、最高权、生成元交织关系与外重数的定义；本课堂独立实现有限范围的 SU(3) 数值计算，表格相位及外重数选基不保证与该论文逐项一致。"
+    },
+    {
+      "id": "lmu-cg-conventions",
+      "title": "LMU Munich · SU(N) Clebsch–Gordan generator：Conventions",
+      "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/",
+      "note": "作者公开说明的 GT 图样、状态标签及外重数指标。课堂借此区分表示标签、态标签与同型表示的副本标签；不调用该远程计算器。"
     }
   ],
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3410,
-      "sha256": "f39785daa5a812ad2ac130a2a8e110afb8d35c6047c6c6dbc7eed3d0af2d103b"
+      "sha256": "7ba2bc91bdf0ce9e1fa12a1f1744b43a2878c341f6773d55e1d034b69b17fd08"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 36693,
-      "sha256": "5d1aaf0ecbe86757122dcb468d2765d2fd0ae46aa1b4633151b0190db9a5d711"
+      "bytes": 37267,
+      "sha256": "2844438e5aa696559b21ea512b2c5bf22ee93f2aefd1b0cce25af99fd0c894a3"
     },
     "dist/lie-group.css": {
-      "bytes": 17204,
-      "sha256": "e84985319319590d3102a14e3233a0261cc50c23694d7aca549709e3626f1a74"
+      "bytes": 18848,
+      "sha256": "7a4a4aa15164b399059ead4b985faf374c93f54b452377ade447960c5295ec96"
     },
     "dist/python/lie_labs.py": {
-      "bytes": 11990,
-      "sha256": "de6a438c05fb4e9931c4639d9ed7e47579344d74a5270cdc7f3ff7d0e3f46d31"
+      "bytes": 12108,
+      "sha256": "dc289374d85c34f5871097da8ef3f4aecf06783ac229b2af8660e14a93a060e7"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 61275,
-      "sha256": "3562d1512689217b76e3c65d786ccb2d297d3a25e77189db19da572a98e9900e"
+      "bytes": 78136,
+      "sha256": "0e4f3556129db0502765e3b73ee22819072b698d532d3c6f5a870b0cfe6264a0"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 11556,
-      "sha256": "fc90d708ef7c36271b315c2bc57697104a77deab89a95a180837d21a635ced3e"
+      "bytes": 17353,
+      "sha256": "3ae4c5c33993ecb94fcd116ec20255013b98bbb95cc2ca94dc4342f898ad71db"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 26974,
-      "sha256": "1133eab95a00984e31216b5932be1f24354d744d9c71e29cc92de5b9922f1e00"
+      "bytes": 36349,
+      "sha256": "b9fc4df32da06f7f1f338132544a2f1fb0524d90eb508e65a42c5e9f539e4a19"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 3568,
-      "sha256": "9f74f136bd6d6a5263a68d958244e2182a642d6ef790d539287314ff4a41a134"
+      "bytes": 3597,
+      "sha256": "05efa49a995b358c8beb742661a85e06e56c8b95af2af9e11d543bbfbf8be01b"
     },
     "dist/lie-physics-ui.js": {
-      "bytes": 16583,
-      "sha256": "94e247e711d7cbb559a842baeef74fe557794e561007404f42819fe4a35f7ef4"
+      "bytes": 17290,
+      "sha256": "0be72b2005f813e292ce7c869d6d3bd1425317f93579cf261d9f1a2eba17bf8d"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 20257,
-      "sha256": "c4a9460cde92a956f35a1592a014d750c0d296f202544433657c5fa82c4c7059"
+      "bytes": 31375,
+      "sha256": "a93afa5544b824fac937476ac05d46f18c2e1d6c9fef3c6f07cece727d973d5f"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,
       "sha256": "e8ba38b88caae665849ed35e666b4e6d36b64edd3d87fed9f1b0065a3bd9c682"
+    },
+    "dist/su3-cg-ui.js": {
+      "bytes": 15601,
+      "sha256": "a08ec19c012ff8f6e0c311a8c72f627eebce3308f68545184154226c69ef1e0d"
+    },
+    "dist/python/su3_cg.py": {
+      "bytes": 17818,
+      "sha256": "50c4dad233b5a5a514e9ff2a4cda551a40807f5b63397d5b167eb1b966580dd8"
+    },
+    "scripts/test-python-su3-cg.py": {
+      "bytes": 13636,
+      "sha256": "f47bca8a61c33386285698864c41e425b44b63a0c1197346465f90d0263719aa"
     }
   },
   "validation": {
-    "lessonCount": 14,
-    "workedExamples": 14,
-    "quizCount": 28,
+    "lessonCount": 17,
+    "workedExamples": 17,
+    "quizCount": 34,
     "pythonLabTests": 11,
-    "publicAPITests": 17,
-    "guidedExercises": 8,
+    "publicAPITests": 18,
+    "guidedExercises": 12,
     "pythonPhysicsTests": 11,
-    "interactiveExperiments": 6
+    "interactiveExperiments": 7,
+    "pythonSU3CGTests": 13
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
@@ -143,13 +168,16 @@
     "SU(3) Cartan weight diagram is not a real-space crystal diagram",
     "SU(2) CG coefficients use Condon-Shortley phases",
     "Rabi frequencies are angular frequencies in a common chosen time unit; H_eff/hbar=(Omega sigma_x+Delta sigma_z)/2",
-    "SU(3) highest weights use Dynkin (p,q); exact integer weight multiplicities do not determine a CG basis"
+    "SU(3) highest weights use Dynkin (p,q); exact integer weight multiplicities do not determine a CG basis",
+    "SU(3) CG matrix columns are coupled orthonormal GT states in the ordered product basis; b=C^dagger a and a=C b",
+    "Highest-weight phase and deterministic outer-multiplicity conventions are explicit; identical-factor copies resolve exchange parity"
   ],
   "scope": [
     "Original Chinese lessons and exercises, cited source documents are not redistributed",
     "Three classroom sections share one sidebar entry; legacy course hashes and storage keys preserved",
     "Selected one-parameter subgroups, pure-state transforms and generator commutators; no general Lie-group classifier",
     "Six additional physics lessons and eight independently tracked guided derivations",
-    "Physics application demos use stated effective-model assumptions; flavor and color interpretations are distinguished"
+    "Physics application demos use stated effective-model assumptions; flavor and color interpretations are distinguished",
+    "SU(3) CG: all 36 ordered pairs drawn from 1,3,3bar,6,6bar,8, maximum 64x64 numerical change-of-basis matrix"
   ]
 }

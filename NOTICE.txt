@@ -148,5 +148,12 @@ The Lie-group physics extension (2026-10-23) adds original Rabi, angular-momentu
 coupling, isotropic exchange and SU(3) tensor-product teaching implementations.
 SU(2) CG coefficients use the stated Condon-Shortley convention. SU(3) integer
 weight multiplicities use Gelfand-Tsetlin patterns and highest-weight subtraction;
-SU(3) CG coefficients are outside this implementation's scope. Original lessons
+The original integer-weight lab does not compute a CG basis; a separate extension below supplies it. Original lessons
 and guided exercises cite their primary sources in the lesson data and docs.
+
+The SU(3) CG extension (2026-10-23) adds an original NumPy implementation of
+orthonormal Gelfand-Tsetlin representations, highest-weight CG construction,
+exchange-resolved outer multiplicities and complex state basis changes.
+Primary algorithm references, independent normalization conventions, bounds and
+tests are documented in dist/python/su3_cg.py and dist/docs/lie-groups.md.
+No reference source code, coefficient tables or textbook pages are redistributed.

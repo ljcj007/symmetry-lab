@@ -179,6 +179,28 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual({(row['p'],row['q']):row['multiplicity'] for row in octets['decomposition']},
                          {(2,2):1,(3,0):1,(0,3):1,(1,1):2,(0,0):1})
 
+    def test_su3_cg_public_change_of_basis(self):
+        import math
+        def z(value):return complex(value['re'],value['im'])
+        request={'lab':'lie','experiment':'su3_cg','p1':1,'q1':0,'p2':0,'q2':1}
+        amplitudes=[{'re':1,'im':1},{'re':2,'im':-1}]+[{'re':0,'im':0} for _ in range(7)]
+        forward=self.result('teaching_labs',{**request,'direction':'product_to_coupled','state':{'amplitudes':amplitudes}})
+        self.assertEqual(forward['dimension'],9)
+        self.assertLess(max(forward['checks'].values()),1e-10)
+        # In the exported GT antifundamental convention (sbar,-dbar,ubar),
+        # the invariant tensor has the independent signs +,-,+.
+        singlet=next(b for b in forward['blocks'] if (b['p'],b['q'])==(0,0))['start']
+        for row in range(9):
+            self.assertAlmostEqual(forward['cgMatrix'][row][singlet],
+                {2:1/math.sqrt(3),4:-1/math.sqrt(3),6:1/math.sqrt(3)}.get(row,0))
+        backward=self.result('teaching_labs',{**request,'direction':'coupled_to_product','state':{'amplitudes':forward['outputAmplitudes']}})
+        for actual,expected in zip(backward['outputAmplitudes'],amplitudes):
+            self.assertLess(abs(z(actual)-z(expected)),1e-10)
+        self.assertAlmostEqual(forward['inputNorm'],7)
+        octets=self.result('teaching_labs',{'lab':'lie','experiment':'su3_cg','p1':1,'q1':1,'p2':1,'q2':1})
+        self.assertEqual(octets['dimension'],64)
+        self.assertEqual(sorted(b['swapParity'] for b in octets['blocks'] if (b['p'],b['q'])==(1,1)),[-1,1])
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

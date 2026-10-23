@@ -391,7 +391,7 @@
         "Fixed normalized Hermitian generators and selected pure initial states",
         "No general matrix exponential, arbitrary representation or general Lie-group classification"
       ],
-      "sha256": "de6a438c05fb4e9931c4639d9ed7e47579344d74a5270cdc7f3ff7d0e3f46d31"
+      "sha256": "dc289374d85c34f5871097da8ef3f4aecf06783ac229b2af8660e14a93a060e7"
     },
     {
       "path": "dist/python/lie_applications.py",
@@ -402,9 +402,21 @@
       "limitations": [
         "Ideal time-independent effective two-level Hamiltonian",
         "SU(2) input angular momenta at most j=3; no anisotropic or many-body Hamiltonian solver",
-        "SU(3) input Dynkin labels p+q at most 4; decomposition multiplicities, not SU(3) Clebsch-Gordan bases"
+        "This module computes SU(3) integer weight decompositions for p+q<=4; bounded numerical CG bases are provided separately by su3_cg.py"
       ],
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
+    },
+    {
+      "path": "dist/python/su3_cg.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy SU(3) Gelfand-Tsetlin generator and highest-weight Clebsch-Gordan construction; exchange-resolved repeated irreps and unitary complex-amplitude basis changes.",
+      "validation": "scripts/test-python-su3-cg.py",
+      "limitations": [
+        "Each input irrep has nonnegative Dynkin labels p+q<=2; at most 64 product states",
+        "Floating point coefficients with explicit GT and highest-weight phase conventions, not symbolic radicals or a universal literature-table convention"
+      ],
+      "sha256": "50c4dad233b5a5a514e9ff2a4cda551a40807f5b63397d5b167eb1b966580dd8"
     }
   ],
   "coordinate_conventions": {
