@@ -6,11 +6,11 @@
 
 侧边栏只保留一个“群论课堂”入口，内部可切换“32 点群”“空间群 · 双群 · 磁群”“李群基础 · SU(2) / SU(3)”。旧课程答题记录沿用原有存储键；李群记录独立保存。页签支持键盘方向键、Home / End 和直接链接。
 
-[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 20 个原创中文单元、20 个分步例题和 40 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
+[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 23 个原创中文单元、23 个分步例题和 46 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
 
 原有三个基础实验由标准库 Python `lie_labs.py` 计算，使用 `U(θ)=exp(−iθT)`、`T=σ/2` 或 `λ/2`：SU(2) 的 Bloch 向量、复振幅和 2π/4π 检验；SU(3) 各生成元的态变换、测量概率和 Cartan 权；两组生成元的对易关系。界面显示角度与弧度，Python API 的 `angle` 始终为弧度。SU(3) 的参数不被解释为空间旋转角，权图也不是晶体原子位置。`dimension` 表示基本表示维数，`realDimension` 表示群流形的实维数。实验使用固定生成元的解析指数，不宣称支持任意矩阵指数或一般李群分类。
 
-新增物理应用课程讨论二能级 Rabi 振荡、角动量耦合与 Clebsch–Gordan 系数、Heisenberg 交换、SU(3) Dynkin 标签、味/颜色对称和八重态直积；“分步推导”含 16 道可逐步揭示提示、推导和答案的练习，使用独立进度记录。
+新增物理应用课程讨论二能级 Rabi 振荡、角动量耦合与 Clebsch–Gordan 系数、Heisenberg 交换、SU(3) Dynkin 标签、味/颜色对称和八重态直积；“分步推导”含 20 道可逐步揭示提示、推导和答案的练习，使用独立进度记录。
 
 `lie_applications.py` 提供三个新的浏览器 Python 实验：
 
@@ -32,6 +32,17 @@ python dist/python/cli.py teaching_labs dist/examples/su3-cg-high-adjoint.json
 
 高维与精确计算新增三节课程和四道分步推导，讲解 10⊗3 的首降权系数、27⊗3 的分解、根式矩阵正交性及精确复振幅往返。原有课程与答题记录继续沿用。
 
+
+SU(3) Racah（6j）实验计算三重张量积的两条耦合路径：`((A⊗B)⊗C)→D` 与 `(A⊗(B⊗C))→D`。每个输入因子从 `1、3、3̄、6、6̄、8` 中选择，总乘积空间最多 512 维；最终表示从精确字符分解中选择，矩阵作用在该最终表示的重数空间。每条路径同时记录中间表示及两个二元顶点的外重数，包含 `8⊗8⊗8→8` 的八条路径。
+
+精确 Racah 矩阵 `F=V_R†V_L` 的行对应右路径、列对应左路径，坐标按 `b_R=F b_L`、`b_L=F† b_R` 变换。本项目采用 GT 相位下的维数缩约 6j 定义 `S_fe=F_fe/√(dimE dimF)`；S 满足加权正交，态换基使用 F。程序直接复合精确 CG 嵌入，在最高权重数空间求重叠，检查正交、重构、两树路径数，并用一个降权态核对相同 F。根式复振幅、完整反向换基、F/6j 系数切换、耦合路径树和 JSON 导出均在浏览器内运行。
+
+新增三节课程、六道自测和四道分步推导，讲解 `3⊗3⊗3→8` 的解析矩阵、6j 加权正交、两级重数以及精确复振幅往返。CLI 复现示例：
+
+```sh
+python dist/python/cli.py teaching_labs dist/examples/su3-racah-three.json
+python dist/python/cli.py teaching_labs dist/examples/su3-racah-octets.json
+```
 
 ## 32 点群课堂
 

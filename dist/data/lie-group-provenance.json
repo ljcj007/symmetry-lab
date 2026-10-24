@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-23",
-  "build": "20261023-lie4",
+  "release": "2026-10-24",
+  "build": "20261024-racah1",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -80,64 +80,76 @@
       "title": "SymPy 官方文档：Best Practices · Exact Rational Numbers vs. Floats",
       "url": "https://docs.sympy.org/latest/explanation/best-practices.html#exact-rational-numbers-vs-floats",
       "note": "核对有理数、根式与浮点输入的区别。本课堂精确 GT 构造独立实现；安全表达式输入使用受限语法，不将任意字符串交给 Python 执行。"
+    },
+    {
+      "id": "dang-u3-recoupling",
+      "title": "Dang、Draayer、Pan、Becker：U(3) 耦合与重耦合系数",
+      "url": "https://arxiv.org/html/2405.06843v1#S5.SS1",
+      "note": "EPJ Plus 139, 704 (2024)，doi:10.1140/epjp/s13360-024-05501-8。预印本 V.1、式 (27)–(28) 给出三重耦合路径与含外重数指标的 U 系数；IV.3–IV.4 说明最高权和相位传递。本课堂只实现普通 SU(3) 的两种相邻括号，采用自己的 GT 约定。"
+    },
+    {
+      "id": "lanina-sleptsov-sixj",
+      "title": "Lanina、Sleptsov：Racah 矩阵与 6j 归一化",
+      "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf",
+      "note": "Physics Letters B 845, 138138 (2023)，第 2.1 节、式 (2.4)–(2.5)。用于核对重数空间映射及除以两条中间表示维数平方根的归一化。本课堂取普通群的 q→1 极限，使用通常维数；不计算量子群或辫群。"
     }
   ],
   "files": {
     "dist/classroom-ui.js": {
-      "bytes": 3410,
-      "sha256": "42c76c47df770fa591aed39b572f9fbe9cba1bb49532f9182f693cc29e02ed98"
+      "bytes": 3416,
+      "sha256": "17258cd986b17389455aa863dd052c5b4d68cfdeb2a485aa165e070c3f4563bf"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 37474,
-      "sha256": "207369b46b4847f0a685d4d23eb4d299de930dee05cb8415d82ce56369595f28"
+      "bytes": 37596,
+      "sha256": "10a9bfd87ca242129ee8de4d7606d67e5f09a8e1cd7533292a16098b51874f00"
     },
     "dist/lie-group.css": {
-      "bytes": 19473,
-      "sha256": "36ae4b5bc547ff2f4e47f84816e8580a3ee936df149a9233c3a45540bfc5ff37"
+      "bytes": 21587,
+      "sha256": "6cd6683159aae7c37e8ecb88c91d78067d7be60711de3fadd91f25b95751ac13"
     },
     "dist/python/lie_labs.py": {
-      "bytes": 12248,
-      "sha256": "2ad937b7ab20e2dab3ee656216b327b5fe8ae5543dc75952d7719aa923c2074f"
+      "bytes": 12378,
+      "sha256": "71ad8157a4f9c5b1bd31d09c0df0d57091e0d76bef6163da140e3a682559831e"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 93665,
-      "sha256": "6455ae4bc7d4d1431d393b1c8a71100c90a35ac18261e56504277034ba4f2650"
+      "bytes": 111428,
+      "sha256": "463bdaabff1b8c5d032dabcfb2401efac43371a3f770c57c15c37aff0567ca7d"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 21055,
-      "sha256": "f2ab213b2928856938d4dbf8874887c268e1ec7efa51e2725e2429005924584b"
+      "bytes": 28139,
+      "sha256": "ea919106777692ca1c432cb1e79d8f94b835b9e7a8cc37cca9e7480ccef9d924"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 43008,
-      "sha256": "22362723d6f37ec279b2a77e3e0eeb2f4f6e12455fe76f6e544170f0ee47b49f"
+      "bytes": 52725,
+      "sha256": "50b00e613c8316504251c235ed0c8a6f96fa494b4686da82a63f1fbf282b6fab"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 3673,
-      "sha256": "3b4224b0b3c6ae61eb8b18525402316e0c55464def046d1ac0cef2b9d0bd3e87"
+      "bytes": 3709,
+      "sha256": "8b41372907c61b92dbbff5b0185ed53e82490f81a1435f500a4ca6cf93336ab9"
     },
     "dist/lie-physics-ui.js": {
-      "bytes": 17323,
-      "sha256": "b6f319f387293399062834fa362bd3244c51b1527d5c5ade00cdeb8f4d130053"
+      "bytes": 17925,
+      "sha256": "36944e98c88da3bc8296090fcc777766b8628c85996adc6884834bf82baad6b1"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 42794,
-      "sha256": "5280c5c7f1b08de8bb02ec907a3ccfaabcad2d6ba2920393d36d8ba92f69b917"
+      "bytes": 55461,
+      "sha256": "f8d07f8453d561ed0e2c0ae46fbf27f0831430532a2758ef74d8cf595d2ac40b"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,
@@ -178,19 +190,48 @@
     "dist/examples/su3-cg-high-adjoint.json": {
       "bytes": 179,
       "sha256": "683cfbf6e366d953f3a9441bf7e8e9de01ba2796c8d1f78027bf459070d3c58e"
+    },
+    "dist/su3-racah-ui.js": {
+      "bytes": 21923,
+      "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
+    },
+    "dist/python/su3_racah.py": {
+      "bytes": 18856,
+      "sha256": "b65748e131fc851e21eecf01080e4045bd2ba2eb44ce1c2235bc07bd8424ef11"
+    },
+    "scripts/test-python-su3-racah.py": {
+      "bytes": 12113,
+      "sha256": "dbd4a3c3b96808ce92a96356fc9d64dbc5bf5e6e5e5660b1375f54532e79d52a"
+    },
+    "scripts/fixtures/su3-racah-ui.json": {
+      "bytes": 75306,
+      "sha256": "44c8773a9bd1f01ddc53af6a3ea72ddf40ff71c6c06a1ce69279d2a7e2da9af7"
+    },
+    "scripts/generate-su3-racah-ui-fixtures.py": {
+      "bytes": 1432,
+      "sha256": "3f3e973158b3c7d303d4b75d9bdd0dc5633d8b02f92dc77b1761277255454e18"
+    },
+    "dist/examples/su3-racah-three.json": {
+      "bytes": 164,
+      "sha256": "e45779e8e146dd68f55ef467a79fb84d4c593e97c70f55b3c86aabfcab17dea5"
+    },
+    "dist/examples/su3-racah-octets.json": {
+      "bytes": 164,
+      "sha256": "9e5c723ed27738138efa15ffec003d77e7b65c8a208441b1621ff87cd15f1eef"
     }
   },
   "validation": {
-    "lessonCount": 20,
-    "workedExamples": 20,
-    "quizCount": 40,
+    "lessonCount": 23,
+    "workedExamples": 23,
+    "quizCount": 46,
     "pythonLabTests": 11,
-    "publicAPITests": 21,
-    "guidedExercises": 16,
+    "publicAPITests": 24,
+    "guidedExercises": 20,
     "pythonPhysicsTests": 11,
-    "interactiveExperiments": 7,
+    "interactiveExperiments": 8,
     "pythonSU3CGTests": 15,
-    "pythonSU3CGExactTests": 10
+    "pythonSU3CGExactTests": 10,
+    "pythonSU3RacahTests": 11
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
@@ -202,7 +243,9 @@
     "SU(3) highest weights use Dynkin (p,q); exact integer weight multiplicities do not determine a CG basis",
     "SU(3) CG matrix columns are coupled orthonormal GT states in the ordered product basis; b=C^dagger a and a=C b",
     "Highest-weight phase and deterministic outer-multiplicity conventions are explicit; identical-factor copies resolve exchange parity",
-    "Exact CG coefficients are constructed over rational/radical arithmetic and verified before numerical approximations are generated"
+    "Exact CG coefficients are constructed over rational/radical arithmetic and verified before numerical approximations are generated",
+    "Racah F has right paths as rows and left paths as columns; b_R=F b_L; paths retain both binary vertex multiplicities",
+    "Dimension-reduced six-j S_fe=F_fe/sqrt(dimE dimF), in this GT gauge; S has dimension-weighted orthogonality"
   ],
   "scope": [
     "Original Chinese lessons and exercises, cited source documents are not redistributed",
@@ -211,6 +254,8 @@
     "Six additional physics lessons and eight independently tracked guided derivations",
     "Physics application demos use stated effective-model assumptions; flavor and color interpretations are distinguished",
     "SU(3) CG: each input p+q<=4; maximum numerical matrix 256x256 and exact matrix 81x81",
-    "Three higher-dimensional/exact lessons and four additional sequential derivations; safe radical inputs and exact serialized state reversal"
+    "Three higher-dimensional/exact lessons and four additional sequential derivations; safe radical inputs and exact serialized state reversal",
+    "Exact SU(3) Racah recoupling for six input irreps and total dimension <=512; 3x3x3 and 8x8x8 examples",
+    "Three additional Racah lessons, six self-checks and four sequential derivations"
   ]
 }

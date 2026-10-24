@@ -252,6 +252,9 @@ def run(payload):
     if payload.get('experiment') == 'su3_cg':
         from su3_cg import run as cg_run
         return cg_run(payload)
+    if payload.get('experiment') == 'su3_racah':
+        from su3_racah import run as racah_run
+        return racah_run(payload)
     if payload.get('experiment') in ('rabi', 'su2_coupling', 'su3_tensor'):
         from lie_applications import run as application_run
         return application_run(payload)

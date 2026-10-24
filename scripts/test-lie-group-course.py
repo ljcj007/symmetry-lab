@@ -9,8 +9,8 @@ class LieCourse(unittest.TestCase):
     def test_complete_course(self):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
         lessons=course['lessons'];sources={s['id']:s for s in course['sources']}
-        self.assertEqual(len(lessons),20)
-        self.assertEqual(sum(len(lesson['quiz']) for lesson in lessons),40)
+        self.assertEqual(len(lessons),23)
+        self.assertEqual(sum(len(lesson['quiz']) for lesson in lessons),46)
         self.assertEqual(len({l['id'] for l in lessons}),len(lessons))
         self.assertGreaterEqual(len(sources),3)
         for source in sources.values():
@@ -34,16 +34,16 @@ class LieCourse(unittest.TestCase):
                 for reference in lesson['references']:
                     self.assertIn(reference['sourceId'],sources)
                 if lesson.get('lab'):
-                    self.assertIn(lesson['lab'],('su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg'))
+                    self.assertIn(lesson['lab'],('su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg','su3_racah'))
                     labs.add(lesson['lab'])
-        self.assertEqual(labs,{'su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg'})
+        self.assertEqual(labs,{'su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg','su3_racah'})
 
     def test_guided_derivations(self):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
         data=json.loads((ROOT/'dist/data/lie-derivations.json').read_text(encoding='utf8'))
         exercises=data['exercises'];sources={s['id'] for s in course['sources']}
-        self.assertEqual(len(exercises),16)
-        self.assertEqual(len({e['id'] for e in exercises}),16)
+        self.assertEqual(len(exercises),20)
+        self.assertEqual(len({e['id'] for e in exercises}),20)
         self.assertEqual({e['group'] for e in exercises},{'su2','su3'})
         for exercise in exercises:
             with self.subTest(exercise=exercise['id']):
@@ -59,6 +59,6 @@ class LieCourse(unittest.TestCase):
                 self.assertTrue(check['question'] and check['explanation'])
                 for reference in exercise['references']:
                     self.assertIn(reference['sourceId'],sources)
-                self.assertIn(exercise['lab'],('rabi','su2_coupling','su3_tensor','su3_cg'))
+                self.assertIn(exercise['lab'],('rabi','su2_coupling','su3_tensor','su3_cg','su3_racah'))
 
 if __name__=='__main__':unittest.main(verbosity=2)

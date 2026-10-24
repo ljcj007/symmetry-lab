@@ -1,6 +1,6 @@
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.
-import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261023-lie4';
+import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261024-racah1';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=value=>{const n=Number(value);return Number.isFinite(n)?Math.abs(n)<1e-10?'0':Number(n.toFixed(6)).toString():'—';};
 const residual=value=>Number.isFinite(Number(value))?Number(value).toExponential(2):'—';
@@ -24,7 +24,7 @@ const persistDerivations=()=>{try{localStorage.setItem(derivationStorageKey,JSON
 const mastered=questions=>questions.filter(({quiz,key})=>state.answers[key]?.checked===true&&state.answers[key]?.selected===quiz.answer).length;
 async function load(){
   if(!promise)promise=(async()=>{
-    const response=await fetch('./data/lie-group-lessons.json?v=20261023-lie4');
+    const response=await fetch('./data/lie-group-lessons.json?v=20261024-racah1');
     if(!response.ok)throw Error(`李群课程未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.lessons)||!data.lessons.length||data.lessons.some(lesson=>!lesson.id||!Array.isArray(lesson.quiz)||lesson.quiz.some(q=>!Array.isArray(q.choices)||!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.choices.length)))throw Error('李群课程数据不完整，请重新载入。');
@@ -34,7 +34,7 @@ async function load(){
 }
 async function loadDerivations(){
   if(!derivationPromise)derivationPromise=(async()=>{
-    const response=await fetch('./data/lie-derivations.json?v=20261023-lie4');
+    const response=await fetch('./data/lie-derivations.json?v=20261024-racah1');
     if(!response.ok)throw Error(`分步推导未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.exercises)||!data.exercises.length||data.exercises.some(exercise=>!exercise.id||!Array.isArray(exercise.steps)||!exercise.steps.length||exercise.steps.some(step=>typeof step.title!=='string'||typeof step.explanation!=='string')||!Array.isArray(exercise.check?.choices)||!Number.isInteger(exercise.check.answer)||exercise.check.answer<0||exercise.check.answer>=exercise.check.choices.length))throw Error('分步推导数据不完整，请重新载入。');
@@ -77,7 +77,7 @@ export async function renderLieGroupView({container,run,toast=()=>{},download=()
     root.querySelectorAll('[data-lg-preset]').forEach(button=>button.onclick=()=>{if(!current()||state.busy)return;$('#lg-angle').value=button.dataset.lgPreset;return runLab();});
     if($('#lg-center-preset'))$('#lg-center-preset').onclick=()=>{if(!current()||state.busy)return;$('#lg-generator').value='8';$('#lg-angle').value=String(240*Math.sqrt(3));return runLab();};
     if($('#lg-period-preset'))$('#lg-period-preset').onclick=()=>{if(!current()||state.busy)return;$('#lg-generator').value='8';$('#lg-angle').value=String(720*Math.sqrt(3));return runLab();};
-    root.querySelectorAll('[data-lg-physics-preset]').forEach(button=>button.onclick=()=>{if(!current()||state.busy)return;const preset=physicsPresets[button.dataset.lgPhysicsPreset];if(!preset||preset.experiment!==state.experiment)return;state.inputs[preset.experiment]={...preset.input};drawLab();return runLab();});
+    root.querySelectorAll('[data-lg-physics-preset]').forEach(button=>button.onclick=()=>{if(!current()||state.busy)return;const preset=physicsPresets[button.dataset.lgPhysicsPreset];if(!preset||preset.experiment!==state.experiment)return;state.inputs[preset.experiment]=structuredClone(preset.input);state.result=null;state.payload=null;state.error='';drawLab();return runLab();});
     for(const index of [1,2])if($('#lg-two-j'+index))$('#lg-two-j'+index).onchange=()=>{
       if(!current()||state.busy)return;const input={...state.inputs.su2_coupling,coupling:Number($('#lg-coupling').value)};
       for(const i of [1,2]){const j=Number($('#lg-two-j'+i).value),m=Number($('#lg-two-m'+i).value);if(!Number.isInteger(j)||j<0||j>6)return;input['twoJ'+i]=j;input['twoM'+i]=Number.isInteger(m)&&Math.abs(m)<=j&&(j-m)%2===0?m:j;}
@@ -113,7 +113,7 @@ export async function renderLieGroupView({container,run,toast=()=>{},download=()
     if(!result){target.innerHTML='<div class="lg-placeholder"><span class="lg-symbol">e<sup>−iθT</sup></span><h3>从一个生成元开始</h3><p>左侧选择参数，点击「计算并观察」。尝试预测矩阵或测量概率，再与结果对照。</p></div>';return;}
     const checks=result.residuals||{};
     target.innerHTML=`<span class="lg-kicker">${esc(result.group?.toUpperCase())} · ${physicsNames[result.experiment]?'物理与表示':'基本表示'}</span><h3 class="lg-result-title">${esc(result.title)}</h3><p class="lg-hint">${esc(result.generatorConvention||(Array.isArray(result.convention)?result.matrixOrientation:result.convention)||'')}</p>${physicsNames[result.experiment]?physicsOutput(result):result.experiment==='commutator'?`<pre class="lg-formula">${esc(result.expansion)}</pre><div class="lg-matrix-pair"><section><h4>Tₐ</h4>${matrix(result.generatorA,'第一个生成元')}</section><section><h4>Tᵦ</h4>${matrix(result.generatorB,'第二个生成元')}</section></div><h4>对易子 [Tₐ, Tᵦ]</h4>${matrix(result.commutator,'对易子矩阵')}<p class="lg-mono">Frobenius 范数：${fmt(result.commutatorNorm)}</p><div class="lg-checks">${[['重构残差',checks.closure],['反厄米残差',checks.antiHermitian],['展开系数虚部',checks.coefficientImaginary]].map(([label,value])=>`<div><span>${label}</span><code>${residual(value)}</code></div>`).join('')}</div>`:`${result.experiment==='su2'?blochSVG(result.blochVector):weightsSVG(result.cartanWeights,result.cartanExpectation)}<p class="lg-visual-caption">${result.experiment==='su2'?'Bloch 向量由 Python 计算。这个球面表示纯态射线，无法单独显示整体相位。':'固定基本表示的权图：三个顶点分别是 e₁、e₂、e₃ 的 (T₃,T₈) 本征值，橙点表示当前态的 Cartan 期望值；它不是三维空间旋转。'}</p><div class="lg-probabilities">${result.probabilities.map((value,index)=>`<div><span>${result.experiment==='su2'?['↑','↓'][index]:'e'+(index+1)}</span><progress max="1" value="${esc(value)}" aria-label="${result.experiment==='su2'?['自旋向上','自旋向下'][index]:'e'+(index+1)} 的测量概率"></progress><code>${fmt(value)}</code></div>`).join('')}</div><div class="lg-state-facts"><p><span>初态</span><code>${esc(vector(result.initialState))}</code></p><p><span>变换后态</span><code>${esc(vector(result.state))}</code></p><p><span>重叠 ⟨初态|末态⟩</span><code>${esc(complex(result.overlap))}</code></p><p><span>det U</span><code>${esc(complex(result.determinant))}</code></p></div><h4>变换矩阵 U = exp(−iθT)</h4>${matrix(result.matrix,'变换矩阵 U')}<details class="lg-generator"><summary>查看生成元 ${esc(result.generatorLabel)}</summary>${matrix(result.generatorMatrix,'厄米生成元')}</details><div class="lg-checks">${[['归一化残差',checks.norm],['幺正残差',checks.unitarity],['行列式残差',checks.determinant]].map(([label,value])=>`<div><span>${label}</span><code>${residual(value)}</code></div>`).join('')}</div><p class="lg-hint lg-period">${esc(result.periodExplanation)}</p>`}<ul class="lg-result-notes">${(result.notes||[]).map(note=>`<li>${esc(note)}</li>`).join('')}</ul><button type="button" class="secondary" id="lg-export">导出本次计算 JSON</button>`;
-    if(physicsNames[result.experiment])bindPhysicsOutput(root,result,()=>current()&&state.tab==='lab'&&state.result===result&&target.isConnected!==false,patch=>{if(!current()||state.busy||state.result!==result)return;state.inputs[state.experiment]={...state.inputs[state.experiment],...patch};drawLab();return runLab();});
+    if(physicsNames[result.experiment])bindPhysicsOutput(root,result,()=>current()&&state.tab==='lab'&&state.result===result&&target.isConnected!==false,patch=>{if(!current()||state.busy||state.result!==result)return;state.inputs[state.experiment]={...state.inputs[state.experiment],...patch};state.result=null;state.payload=null;state.error='';drawLab();return runLab();});
     $('#lg-export').onclick=()=>{if(!current()||!state.result)return;download(JSON.stringify(getLieGroupResult(),null,2),'lie-group-'+state.result.experiment+'.json');toast('已导出李群实验数据');};
   }
   async function drawDerivations(){

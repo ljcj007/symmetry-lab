@@ -164,3 +164,9 @@ intertwining checks, safe arithmetic inputs and reversible symbolic state
 changes. The NumPy implementation supports larger bounded product spaces.
 The new lessons and exercises are original; cited reference pages and tables
 are not redistributed. Computational bounds and conventions are explicit.
+
+The SU(3) Racah extension (2026-10-24) adds an original exact three-factor
+recoupling implementation by composition of GT Clebsch-Gordan embeddings.
+It resolves both vertex multiplicities and states its own dimension-reduced
+6j normalization and GT phase convention. Sources, tests and original Chinese
+lessons are recorded in dist/docs/lie-groups.md and classroom provenance.

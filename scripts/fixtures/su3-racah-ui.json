@@ -1,0 +1,3008 @@
+{
+  "three": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 27,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 2
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "fMatrix": [
+      [
+        0.5,
+        0.8660254037844386
+      ],
+      [
+        0.8660254037844386,
+        -0.5
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "1/2",
+        "sqrt(3)/2"
+      ],
+      [
+        "sqrt(3)/2",
+        "-1/2"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.08333333333333333,
+        0.2041241452319315
+      ],
+      [
+        0.2041241452319315,
+        -0.16666666666666666
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "1/12",
+        "sqrt(6)/12"
+      ],
+      [
+        "sqrt(6)/12",
+        "-1/6"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.5,
+        "im": 0.0
+      },
+      {
+        "re": 0.8660254037844386,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "1/2",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(3)/2",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.25,
+      0.75
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/4",
+      "3/4"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.5,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "1/2",
+          "im": "0"
+        },
+        "probability": 0.25
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.8660254037844386,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(3)/2",
+          "im": "0"
+        },
+        "probability": 0.75
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 1.4917441686503464e-17,
+      "multiplicity": 0.0,
+      "stateNorm": 1.1102230246251565e-16,
+      "roundtrip": 1.1102230246251565e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "bar": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 27,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 0,
+      "label": "3 (1,0)",
+      "dimension": 3,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 2
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "8 (1,1) · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      },
+      {
+        "index": 1,
+        "label": "1 (0,0) · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "8 (1,1) · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      },
+      {
+        "index": 1,
+        "label": "1 (0,0) · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      }
+    ],
+    "fMatrix": [
+      [
+        -0.3333333333333333,
+        0.9428090415820634
+      ],
+      [
+        0.9428090415820634,
+        0.3333333333333333
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "-1/3",
+        "2*sqrt(2)/3"
+      ],
+      [
+        "2*sqrt(2)/3",
+        "1/3"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        -0.041666666666666664,
+        0.3333333333333333
+      ],
+      [
+        0.3333333333333333,
+        0.3333333333333333
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "-1/24",
+        "1/3"
+      ],
+      [
+        "1/3",
+        "1/3"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": -0.3333333333333333,
+        "im": 0.0
+      },
+      {
+        "re": 0.9428090415820634,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "-1/3",
+        "im": "0"
+      },
+      {
+        "re": "2*sqrt(2)/3",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.1111111111111111,
+      0.8888888888888888
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/9",
+      "8/9"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "8 (1,1) · α=1, β=1",
+        "amplitude": {
+          "re": -0.3333333333333333,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-1/3",
+          "im": "0"
+        },
+        "probability": 0.1111111111111111
+      },
+      {
+        "index": 1,
+        "label": "1 (0,0) · α=1, β=1",
+        "amplitude": {
+          "re": 0.9428090415820634,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "2*sqrt(2)/3",
+          "im": "0"
+        },
+        "probability": 0.8888888888888888
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 5.551115123125783e-17,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 1.1102230246251565e-16,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "six": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 54,
+    "factors": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 1,
+      "label": "15 (2,1)",
+      "dimension": 15,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 2
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "10 (3,0) · α=1, β=1",
+        "intermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      },
+      {
+        "index": 1,
+        "label": "8 (1,1) · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "swapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "fMatrix": [
+      [
+        0.5773502691896257,
+        0.816496580927726
+      ],
+      [
+        0.816496580927726,
+        -0.5773502691896257
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "sqrt(3)/3",
+        "sqrt(6)/3"
+      ],
+      [
+        "sqrt(6)/3",
+        "-sqrt(3)/3"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.07453559924999299,
+        0.11785113019775792
+      ],
+      [
+        0.14907119849998599,
+        -0.11785113019775792
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "sqrt(5)/30",
+        "sqrt(2)/12"
+      ],
+      [
+        "sqrt(5)/15",
+        "-sqrt(2)/12"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.5773502691896257,
+        "im": 0.0
+      },
+      {
+        "re": 0.816496580927726,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(3)/3",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(6)/3",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.3333333333333333,
+      0.6666666666666666
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/3",
+      "2/3"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.5773502691896257,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(3)/3",
+          "im": "0"
+        },
+        "probability": 0.3333333333333333
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.816496580927726,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(6)/3",
+          "im": "0"
+        },
+        "probability": 0.6666666666666666
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 1.3877787807814457e-17,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "eight": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 512,
+    "factors": [
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 8
+    },
+    "targets": [
+      {
+        "p": 3,
+        "q": 3,
+        "label": "64 (3,3)",
+        "dimension": 64,
+        "multiplicity": 1
+      },
+      {
+        "p": 4,
+        "q": 1,
+        "label": "35 (4,1)",
+        "dimension": 35,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 4,
+        "label": "35̄ (1,4)",
+        "dimension": 35,
+        "multiplicity": 2
+      },
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27,
+        "multiplicity": 6
+      },
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 4
+      },
+      {
+        "p": 0,
+        "q": 3,
+        "label": "10̄ (0,3)",
+        "dimension": 10,
+        "multiplicity": 4
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 8
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1,
+        "multiplicity": 2
+      }
+    ],
+    "multiplicity": 8,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "27 (2,2)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 2,
+          "label": "27 (2,2)",
+          "dimension": 27
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "10 (3,0)a · α=1, β=1",
+        "intermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      },
+      {
+        "index": 2,
+        "label": "10̄ (0,3)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 3,
+          "label": "10̄ (0,3)",
+          "dimension": 10
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      },
+      {
+        "index": 3,
+        "label": "8 (1,1)s · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "swapParity": 1
+      },
+      {
+        "index": 4,
+        "label": "8 (1,1)s · α=1, β=2",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 2,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "swapParity": 1
+      },
+      {
+        "index": 5,
+        "label": "8 (1,1)a · α=2, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 2,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "swapParity": -1
+      },
+      {
+        "index": 6,
+        "label": "8 (1,1)a · α=2, β=2",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 2,
+        "secondCopy": 2,
+        "firstSwapParity": -1,
+        "secondSwapParity": -1,
+        "swapParity": -1
+      },
+      {
+        "index": 7,
+        "label": "1 (0,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "27 (2,2)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 2,
+          "label": "27 (2,2)",
+          "dimension": 27
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "10 (3,0)a · α=1, β=1",
+        "intermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      },
+      {
+        "index": 2,
+        "label": "10̄ (0,3)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 3,
+          "label": "10̄ (0,3)",
+          "dimension": 10
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      },
+      {
+        "index": 3,
+        "label": "8 (1,1)s · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "swapParity": 1
+      },
+      {
+        "index": 4,
+        "label": "8 (1,1)s · α=1, β=2",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 2,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "swapParity": 1
+      },
+      {
+        "index": 5,
+        "label": "8 (1,1)a · α=2, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 2,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "swapParity": -1
+      },
+      {
+        "index": 6,
+        "label": "8 (1,1)a · α=2, β=2",
+        "intermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 2,
+        "secondCopy": 2,
+        "firstSwapParity": -1,
+        "secondSwapParity": -1,
+        "swapParity": -1
+      },
+      {
+        "index": 7,
+        "label": "1 (0,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      }
+    ],
+    "fMatrix": [
+      [
+        0.175,
+        0.13693063937629152,
+        0.13693063937629152,
+        0.3674234614174767,
+        0.0,
+        0.0,
+        -0.6123724356957945,
+        0.649519052838329
+      ],
+      [
+        0.13693063937629152,
+        0.25,
+        0.25,
+        0.4472135954999579,
+        0.5,
+        -0.5,
+        0.0,
+        -0.39528470752104744
+      ],
+      [
+        0.13693063937629152,
+        0.25,
+        0.25,
+        0.4472135954999579,
+        -0.5,
+        0.5,
+        0.0,
+        -0.39528470752104744
+      ],
+      [
+        0.3674234614174767,
+        0.4472135954999579,
+        0.4472135954999579,
+        -0.3,
+        0.0,
+        0.0,
+        0.5,
+        0.3535533905932738
+      ],
+      [
+        0.0,
+        -0.5,
+        0.5,
+        0.0,
+        0.5,
+        0.5,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.5,
+        -0.5,
+        0.0,
+        0.5,
+        0.5,
+        0.0,
+        0.0
+      ],
+      [
+        -0.6123724356957945,
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.5,
+        0.3535533905932738
+      ],
+      [
+        0.649519052838329,
+        -0.39528470752104744,
+        -0.39528470752104744,
+        0.3535533905932738,
+        0.0,
+        0.0,
+        0.3535533905932738,
+        0.125
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "7/40",
+        "sqrt(30)/40",
+        "sqrt(30)/40",
+        "3*sqrt(6)/20",
+        "0",
+        "0",
+        "-sqrt(6)/4",
+        "3*sqrt(3)/8"
+      ],
+      [
+        "sqrt(30)/40",
+        "1/4",
+        "1/4",
+        "sqrt(5)/5",
+        "1/2",
+        "-1/2",
+        "0",
+        "-sqrt(10)/8"
+      ],
+      [
+        "sqrt(30)/40",
+        "1/4",
+        "1/4",
+        "sqrt(5)/5",
+        "-1/2",
+        "1/2",
+        "0",
+        "-sqrt(10)/8"
+      ],
+      [
+        "3*sqrt(6)/20",
+        "sqrt(5)/5",
+        "sqrt(5)/5",
+        "-3/10",
+        "0",
+        "0",
+        "1/2",
+        "sqrt(2)/4"
+      ],
+      [
+        "0",
+        "-1/2",
+        "1/2",
+        "0",
+        "1/2",
+        "1/2",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1/2",
+        "-1/2",
+        "0",
+        "1/2",
+        "1/2",
+        "0",
+        "0"
+      ],
+      [
+        "-sqrt(6)/4",
+        "0",
+        "0",
+        "1/2",
+        "0",
+        "0",
+        "1/2",
+        "sqrt(2)/4"
+      ],
+      [
+        "3*sqrt(3)/8",
+        "-sqrt(10)/8",
+        "-sqrt(10)/8",
+        "sqrt(2)/4",
+        "0",
+        "0",
+        "sqrt(2)/4",
+        "1/8"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.006481481481481481,
+        0.008333333333333333,
+        0.008333333333333333,
+        0.025,
+        0.0,
+        0.0,
+        -0.041666666666666664,
+        0.125
+      ],
+      [
+        0.008333333333333333,
+        0.025,
+        0.025,
+        0.05,
+        0.05590169943749474,
+        -0.05590169943749474,
+        0.0,
+        -0.125
+      ],
+      [
+        0.008333333333333333,
+        0.025,
+        0.025,
+        0.05,
+        -0.05590169943749474,
+        0.05590169943749474,
+        0.0,
+        -0.125
+      ],
+      [
+        0.025,
+        0.05,
+        0.05,
+        -0.0375,
+        0.0,
+        0.0,
+        0.0625,
+        0.125
+      ],
+      [
+        0.0,
+        -0.05590169943749474,
+        0.05590169943749474,
+        0.0,
+        0.0625,
+        0.0625,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.05590169943749474,
+        -0.05590169943749474,
+        0.0,
+        0.0625,
+        0.0625,
+        0.0,
+        0.0
+      ],
+      [
+        -0.041666666666666664,
+        0.0,
+        0.0,
+        0.0625,
+        0.0,
+        0.0,
+        0.0625,
+        0.125
+      ],
+      [
+        0.125,
+        -0.125,
+        -0.125,
+        0.125,
+        0.0,
+        0.0,
+        0.125,
+        0.125
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "7/1080",
+        "1/120",
+        "1/120",
+        "1/40",
+        "0",
+        "0",
+        "-1/24",
+        "1/8"
+      ],
+      [
+        "1/120",
+        "1/40",
+        "1/40",
+        "1/20",
+        "sqrt(5)/40",
+        "-sqrt(5)/40",
+        "0",
+        "-1/8"
+      ],
+      [
+        "1/120",
+        "1/40",
+        "1/40",
+        "1/20",
+        "-sqrt(5)/40",
+        "sqrt(5)/40",
+        "0",
+        "-1/8"
+      ],
+      [
+        "1/40",
+        "1/20",
+        "1/20",
+        "-3/80",
+        "0",
+        "0",
+        "1/16",
+        "1/8"
+      ],
+      [
+        "0",
+        "-sqrt(5)/40",
+        "sqrt(5)/40",
+        "0",
+        "1/16",
+        "1/16",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "sqrt(5)/40",
+        "-sqrt(5)/40",
+        "0",
+        "1/16",
+        "1/16",
+        "0",
+        "0"
+      ],
+      [
+        "-1/24",
+        "0",
+        "0",
+        "1/16",
+        "0",
+        "0",
+        "1/16",
+        "1/8"
+      ],
+      [
+        "1/8",
+        "-1/8",
+        "-1/8",
+        "1/8",
+        "0",
+        "0",
+        "1/8",
+        "1/8"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.175,
+        "im": 0.0
+      },
+      {
+        "re": 0.13693063937629152,
+        "im": 0.0
+      },
+      {
+        "re": 0.13693063937629152,
+        "im": 0.0
+      },
+      {
+        "re": 0.3674234614174767,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": -0.6123724356957945,
+        "im": 0.0
+      },
+      {
+        "re": 0.649519052838329,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "7/40",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(30)/40",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(30)/40",
+        "im": "0"
+      },
+      {
+        "re": "3*sqrt(6)/20",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "-sqrt(6)/4",
+        "im": "0"
+      },
+      {
+        "re": "3*sqrt(3)/8",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.030625,
+      0.01875,
+      0.01875,
+      0.135,
+      0.0,
+      0.0,
+      0.375,
+      0.421875
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "49/1600",
+      "3/160",
+      "3/160",
+      "27/200",
+      "0",
+      "0",
+      "3/8",
+      "27/64"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "27 (2,2)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.175,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "7/40",
+          "im": "0"
+        },
+        "probability": 0.030625
+      },
+      {
+        "index": 1,
+        "label": "10 (3,0)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.13693063937629152,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(30)/40",
+          "im": "0"
+        },
+        "probability": 0.01875
+      },
+      {
+        "index": 2,
+        "label": "10̄ (0,3)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.13693063937629152,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(30)/40",
+          "im": "0"
+        },
+        "probability": 0.01875
+      },
+      {
+        "index": 3,
+        "label": "8 (1,1)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.3674234614174767,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "3*sqrt(6)/20",
+          "im": "0"
+        },
+        "probability": 0.135
+      },
+      {
+        "index": 6,
+        "label": "8 (1,1)a · α=2, β=2",
+        "amplitude": {
+          "re": -0.6123724356957945,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-sqrt(6)/4",
+          "im": "0"
+        },
+        "probability": 0.375
+      },
+      {
+        "index": 7,
+        "label": "1 (0,0)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.649519052838329,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "3*sqrt(3)/8",
+          "im": "0"
+        },
+        "probability": 0.421875
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 4.440892098500626e-16,
+      "reconstruction": 5.551115123125783e-17,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 6.938893903907228e-18,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 5.551115123125783e-17
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "autoNoOctet": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 9,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 0,
+      "label": "6 (2,0)",
+      "dimension": 6,
+      "multiplicity": 1
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 1,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "3 (1,0) · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "swapParity": null
+      }
+    ],
+    "fMatrix": [
+      [
+        1.0
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "1"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.23570226039551584
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "sqrt(2)/6"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0
+    ],
+    "outputProbabilities": [
+      1.0
+    ],
+    "exactInputProbabilities": [
+      "1"
+    ],
+    "exactOutputProbabilities": [
+      "1"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "3 (1,0) · α=1, β=1",
+        "amplitude": {
+          "re": 1.0,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "1",
+          "im": "0"
+        },
+        "probability": 1.0
+      }
+    ],
+    "checks": {
+      "unitarity": 0.0,
+      "pathOrthogonality": 0.0,
+      "reconstruction": 0.0,
+      "gtStateIndependence": 2.220446049250313e-16,
+      "weightedSixJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "autoNoOctetBar": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 9,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      }
+    ],
+    "target": {
+      "p": 0,
+      "q": 1,
+      "label": "3̄ (0,1)",
+      "dimension": 3,
+      "multiplicity": 1
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 1,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "3 (1,0) · α=1, β=1",
+        "intermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "swapParity": null
+      }
+    ],
+    "fMatrix": [
+      [
+        1.0
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "1"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.3333333333333333
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "1/3"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0
+    ],
+    "outputProbabilities": [
+      1.0
+    ],
+    "exactInputProbabilities": [
+      "1"
+    ],
+    "exactOutputProbabilities": [
+      "1"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "3 (1,0) · α=1, β=1",
+        "amplitude": {
+          "re": 1.0,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "1",
+          "im": "0"
+        },
+        "probability": 1.0
+      }
+    ],
+    "checks": {
+      "unitarity": 0.0,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 0.0,
+      "gtStateIndependence": 2.220446049250313e-16,
+      "weightedSixJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "complex": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 27,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 2
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "fMatrix": [
+      [
+        0.5,
+        0.8660254037844386
+      ],
+      [
+        0.8660254037844386,
+        -0.5
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "1/2",
+        "sqrt(3)/2"
+      ],
+      [
+        "sqrt(3)/2",
+        "-1/2"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.08333333333333333,
+        0.2041241452319315
+      ],
+      [
+        0.2041241452319315,
+        -0.16666666666666666
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "1/12",
+        "sqrt(6)/12"
+      ],
+      [
+        "sqrt(6)/12",
+        "-1/6"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.3535533905932738,
+        "im": 0.6123724356957945
+      },
+      {
+        "re": 0.6123724356957945,
+        "im": -0.3535533905932738
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(2)/4",
+        "im": "sqrt(6)/4"
+      },
+      {
+        "re": "sqrt(6)/4",
+        "im": "-sqrt(2)/4"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.5,
+      0.5
+    ],
+    "outputProbabilities": [
+      0.5,
+      0.5
+    ],
+    "exactInputProbabilities": [
+      "1/2",
+      "1/2"
+    ],
+    "exactOutputProbabilities": [
+      "1/2",
+      "1/2"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.3535533905932738,
+          "im": 0.6123724356957945
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/4",
+          "im": "sqrt(6)/4"
+        },
+        "probability": 0.5
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.6123724356957945,
+          "im": -0.3535533905932738
+        },
+        "exactAmplitude": {
+          "re": "sqrt(6)/4",
+          "im": "-sqrt(2)/4"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 1.4917441686503464e-17,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 1.2412670766236366e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  },
+  "complexBack": {
+    "lab": "lie",
+    "experiment": "su3_racah",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) Racah（6j）与三重张量积重耦合",
+    "dimension": 27,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 2
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "right_to_left",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "intermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": null,
+        "swapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "intermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": null,
+        "swapParity": -1
+      }
+    ],
+    "fMatrix": [
+      [
+        0.5,
+        0.8660254037844386
+      ],
+      [
+        0.8660254037844386,
+        -0.5
+      ]
+    ],
+    "exactFMatrix": [
+      [
+        "1/2",
+        "sqrt(3)/2"
+      ],
+      [
+        "sqrt(3)/2",
+        "-1/2"
+      ]
+    ],
+    "sixJMatrix": [
+      [
+        0.08333333333333333,
+        0.2041241452319315
+      ],
+      [
+        0.2041241452319315,
+        -0.16666666666666666
+      ]
+    ],
+    "exactSixJMatrix": [
+      [
+        "1/12",
+        "sqrt(6)/12"
+      ],
+      [
+        "sqrt(6)/12",
+        "-1/6"
+      ]
+    ],
+    "matrixOrientation": "F[rightPath][leftPath] = V_R† V_L; b_R=F b_L, b_L=F† b_R",
+    "sixJDefinition": "S[rightPath][leftPath] = F[rightPath][leftPath] / sqrt(dim(E) dim(F)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.3535533905932738,
+        "im": 0.6123724356957945
+      },
+      {
+        "re": 0.6123724356957945,
+        "im": -0.3535533905932738
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "sqrt(2)/4",
+        "im": "sqrt(6)/4"
+      },
+      {
+        "re": "sqrt(6)/4",
+        "im": "-sqrt(2)/4"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.5,
+      0.5
+    ],
+    "outputProbabilities": [
+      0.5,
+      0.5
+    ],
+    "exactInputProbabilities": [
+      "1/2",
+      "1/2"
+    ],
+    "exactOutputProbabilities": [
+      "1/2",
+      "1/2"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s · α=1, β=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      },
+      {
+        "index": 1,
+        "label": "3̄ (0,1)a · α=1, β=1",
+        "amplitude": {
+          "re": 0.0,
+          "im": 0.7071067811865476
+        },
+        "exactAmplitude": {
+          "re": "0",
+          "im": "sqrt(2)/2"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedSixJ": 1.4917441686503464e-17,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 1.1102230246251565e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedSixJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。",
+      "α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。",
+      "F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。",
+      "本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。",
+      "范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符逐项相减分解 A⊗B⊗C，得到最终表示 D 的外重数 m。",
+      "枚举 E⊂A⊗B 及 D⊂E⊗C，分别保留两个顶点的外重数，构造 m 条左路径；右路径同理。",
+      "将次顶点最高权零空间与首顶点完整 CG 嵌入复合，得到三重乘积基中的 V_L 与 V_R。",
+      "计算 F=V_R†V_L，严格检查 F†F=I、V_R F=V_L 和路径数 m；降低一个最终 GT 态再次核对相同 F。",
+      "用 b_R=F b_L 或 b_L=F† b_R 换基，精确核对范数与往返；维数缩约 S 满足 S† diag(dimF) S=diag(1/dimE)。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8 的三重积，总维数≤512；最终表示从精确三重分解选择，计算所选表示的重数空间。",
+      "省略 target 时优先选择实际出现的 8，否则选择三重分解的首项；显式指定不存在的最终表示会报错。",
+      "全部系数由 SymPy 的有理数与根式运算直接构造；小数仅为精确结果的预览，未使用浮点拟合根式。",
+      "Racah 矩阵是不同结合顺序的基底变换，不自动给出哈密顿量、散射振幅或能谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Authors’ SU(N) Clebsch–Gordan calculator and conventions",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/Papers/ClebschGordan/"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) coupling and recoupling, §5.1",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      },
+      {
+        "title": "Lanina & Sleptsov (2023): Racah matrices and dimension-reduced 6j, §2.1",
+        "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf"
+      }
+    ]
+  }
+}

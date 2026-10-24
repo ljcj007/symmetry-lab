@@ -391,7 +391,7 @@
         "Fixed normalized Hermitian generators and selected pure initial states",
         "No general matrix exponential, arbitrary representation or general Lie-group classification"
       ],
-      "sha256": "2ad937b7ab20e2dab3ee656216b327b5fe8ae5543dc75952d7719aa923c2074f"
+      "sha256": "71ad8157a4f9c5b1bd31d09c0df0d57091e0d76bef6163da140e3a682559831e"
     },
     {
       "path": "dist/python/lie_applications.py",
@@ -429,6 +429,19 @@
         "Bounded arithmetic grammar for real/imaginary amplitudes; finite exact constants, no free symbolic parameters"
       ],
       "sha256": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2"
+    },
+    {
+      "path": "dist/python/su3_racah.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original exact SU(3) Racah matrices from composed GT embeddings, selected highest-weight kernels and both vertex multiplicities. Dimension-reduced six-j matrices use the documented GT convention.",
+      "validation": "scripts/test-python-su3-racah.py",
+      "limitations": [
+        "Input factors have p+q<=2; total product dimension <=512",
+        "Classical q=1 recoupling in a fixed GT phase convention; no automatic conversion to another literature gauge",
+        "Safe finite rational/radical state constants; no free symbolic parameters"
+      ],
+      "sha256": "b65748e131fc851e21eecf01080e4045bd2ba2eb44ce1c2235bc07bd8424ef11"
     }
   ],
   "coordinate_conventions": {
@@ -462,7 +475,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",

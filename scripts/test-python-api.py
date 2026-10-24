@@ -253,6 +253,63 @@ class PublicAPITests(unittest.TestCase):
             self.assertEqual(sp.simplify(sp.sympify(matrix[i][j])-expected),0)
         self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
 
+    def test_su3_racah_exact_f_and_dimension_reduced_sixj(self):
+        import sympy as sp
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_racah',
+            'factors':[[1,0],[1,0],[1,0]],'target':[1,1],
+            'direction':'left_to_right','state':{'index':0}})
+        self.assertEqual(result['dimension'],27)
+        self.assertEqual(result['multiplicity'],2)
+        # Independent S3 Young-space overlap in (uud,udu,duu), with the
+        # first nonzero GT coordinate positive in each highest-weight seed.
+        expected=sp.Matrix([[sp.Rational(1,2),sp.sqrt(3)/2],
+                            [sp.sqrt(3)/2,-sp.Rational(1,2)]])
+        f=sp.Matrix(result['exactFMatrix']).applyfunc(sp.sympify)
+        self.assertEqual((f-expected).applyfunc(sp.simplify),sp.zeros(2))
+        s=sp.Matrix(result['exactSixJMatrix']).applyfunc(sp.sympify)
+        expected_s=sp.Matrix([[sp.Rational(1,12),sp.sqrt(6)/12],
+                              [sp.sqrt(6)/12,-sp.Rational(1,6)]])
+        self.assertEqual((s-expected_s).applyfunc(sp.simplify),sp.zeros(2))
+        # The reduced 6j matrix has dimension-weighted orthogonality.
+        self.assertEqual((s.T*sp.diag(6,3)*s-sp.diag(sp.Rational(1,6),sp.Rational(1,3))).applyfunc(sp.simplify),sp.zeros(2))
+        self.assertTrue(all(value=='0' for value in result['exactChecks'].values()))
+
+    def test_su3_racah_exact_complex_roundtrip_and_singlet(self):
+        import sympy as sp
+        request={'lab':'lie','experiment':'su3_racah','factors':[[1,0]]*3,'target':[1,1]}
+        state=[{'re':'sqrt(2)/2','im':'0'},{'re':'0','im':'sqrt(2)/2'}]
+        forward=self.result('teaching_labs',{**request,'state':{'amplitudes':state}})
+        expected=[(sp.sqrt(2)/4,sp.sqrt(6)/4),(sp.sqrt(6)/4,-sp.sqrt(2)/4)]
+        for actual,pair in zip(forward['exactOutputAmplitudes'],expected):
+            for part,value in zip(('re','im'),pair):
+                self.assertEqual(sp.simplify(sp.sympify(actual[part])-value),0)
+        backward=self.result('teaching_labs',{**request,'direction':'right_to_left',
+            'state':{'amplitudes':forward['exactOutputAmplitudes']}})
+        for actual,original in zip(backward['exactOutputAmplitudes'],state):
+            for part in ('re','im'):
+                self.assertEqual(sp.simplify(sp.sympify(actual[part])-sp.sympify(original[part])),0)
+        # The antisymmetric epsilon tensor is invariant under a cyclic
+        # reassociation, so the sole singlet path has F=1 and reduced 6j=1/3.
+        singlet=self.result('teaching_labs',{**request,'target':[0,0]})
+        self.assertEqual(singlet['exactFMatrix'],[['1']])
+        self.assertEqual(singlet['exactSixJMatrix'],[['1/3']])
+
+    def test_su3_racah_three_octets_preserve_all_path_multiplicities(self):
+        from collections import Counter
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_racah',
+            'factors':[[1,1]]*3,'target':[1,1]})
+        self.assertEqual((result['dimension'],result['multiplicity']),(512,8))
+        self.assertEqual(len(result['leftPaths']),8)
+        self.assertEqual(len(result['rightPaths']),8)
+        self.assertEqual(len(result['exactFMatrix']),8)
+        self.assertTrue(all(len(row)==8 for row in result['exactFMatrix']))
+        self.assertTrue(all(value=='0' for value in result['exactChecks'].values()))
+        self.assertLess(max(result['checks'].values()),1e-8)
+        # Independent adjoint multiplication applied to
+        # 27 + 10 + 10bar + 2*8 + 1 gives these total multiplicities.
+        self.assertEqual(Counter({(t['p'],t['q']):t['multiplicity'] for t in result['targets']}),
+            Counter({(3,3):1,(4,1):2,(1,4):2,(2,2):6,(3,0):4,(0,3):4,(1,1):8,(0,0):2}))
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:
