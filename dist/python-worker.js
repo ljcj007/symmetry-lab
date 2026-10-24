@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261024-racah2';
+const BUILD = '20261024-ninej1';
 const plans = {
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
   magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
@@ -41,7 +41,8 @@ async function prepare(id, action, payload) {
   const su3CG = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_cg';
   const exactCG = su3CG && payload.arithmetic === 'exact';
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
-  const teachingPackages = su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
+  const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
+  const teachingPackages = su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
   for (const name of action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
@@ -53,7 +54,7 @@ async function prepare(id, action, payload) {
     self.symmetryLabSpglib = await createSpglibBridge();
     spglibLoaded = true;
   }
-  const teachingModules = su3Racah ? ['su3_cg', 'su3_cg_exact', 'su3_racah'] : su3CG ? ['su3_cg', ...(exactCG ? ['su3_cg_exact'] : [])] : [];
+  const teachingModules = su3NineJ ? ['su3_cg', 'su3_cg_exact', 'su3_racah', 'su3_ninej'] : su3Racah ? ['su3_cg', 'su3_cg_exact', 'su3_racah'] : su3CG ? ['su3_cg', ...(exactCG ? ['su3_cg_exact'] : [])] : [];
   for (const name of ['browser_api', ...plans[action], ...teachingModules, ...(needsLabels ? ['magnetictb_browser', 'symbolic_core', 'standard_labels'] : [])]) {
     if (modules.has(name)) continue;
     progress('正在加载本站 Python 计算代码…');

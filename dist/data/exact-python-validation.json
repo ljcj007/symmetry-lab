@@ -23,11 +23,12 @@
     "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
     "dist/python/teaching_labs.py": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1",
     "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014",
-    "dist/python/lie_labs.py": "71ad8157a4f9c5b1bd31d09c0df0d57091e0d76bef6163da140e3a682559831e",
+    "dist/python/lie_labs.py": "5ee4f357e3e4c9de3bca16ad075c4fd0299e3a74401a7837bcc99a01d5acb682",
     "dist/python/lie_applications.py": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9",
     "dist/python/su3_cg.py": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794",
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
-    "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d"
+    "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d",
+    "dist/python/su3_ninej.py": "0551d11ad279fbed4908260865224d42fb383c7d36c38eb109ed4a55da1eba18"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -57,7 +58,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 24
+    "tests": 27
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -783,6 +784,18 @@
       "maxMultiplicity": 8,
       "allExactChecksPassed": true,
       "maxNumericalPreviewResidual": 5.551115123125783e-16
+    }
+  },
+  "su3NineJTeaching": {
+    "date": "2026-10-24",
+    "unitTests": 14,
+    "test": "scripts/test-python-su3-ninej.py",
+    "scope": "Six input irreps (p+q<=2), four factors, product dimension<=512; all actual final targets, exact paired-tree recoupling R and dimension-reduced nine-j with reversible radical complex state coordinates. Three vertex multiplicities per path.",
+    "characterAndPathAudit": {
+      "orderedQuadruples": 975,
+      "finalIrrepTargets": 5221,
+      "bothPairedTreePathCountsPassed": true,
+      "exactMatrixValidation": "Representative independent S4 and trace-contraction benchmarks, all four-fundamental targets, three-vertex outer multiplicities, complex roundtrips, identity-factor Racah reduction, 432- and 512-dimensional examples. Not a complete exact-matrix audit of all 5221 channels."
     }
   }
 }

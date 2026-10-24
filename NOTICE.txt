@@ -170,3 +170,9 @@ recoupling implementation by composition of GT Clebsch-Gordan embeddings.
 It resolves both vertex multiplicities and states its own dimension-reduced
 6j normalization and GT phase convention. Sources, tests and original Chinese
 lessons are recorded in dist/docs/lie-groups.md and classroom provenance.
+
+The SU(3) nine-j extension (2026-10-24) adds an original exact four-factor
+paired-tree recoupling implementation using composed GT embeddings and an
+explicit tensor-axis permutation. All three vertex multiplicities are kept
+per path. Its dimension-reduced 9j normalization, phase convention, original
+Chinese lessons and validation are documented with the classroom sources.

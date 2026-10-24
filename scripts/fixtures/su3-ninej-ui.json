@@ -1,0 +1,2690 @@
+{
+  "four": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 81,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 1,
+      "label": "15 (2,1)",
+      "dimension": 15,
+      "multiplicity": 3
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 3
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 3
+      }
+    ],
+    "multiplicity": 3,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.0,
+        0.7071067811865476,
+        0.7071067811865476
+      ],
+      [
+        0.7071067811865476,
+        0.5,
+        -0.5
+      ],
+      [
+        0.7071067811865476,
+        -0.5,
+        0.5
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "0",
+        "sqrt(2)/2",
+        "sqrt(2)/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "1/2",
+        "-1/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "-1/2",
+        "1/2"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0,
+        0.027777777777777776,
+        0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        0.027777777777777776,
+        -0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        -0.027777777777777776,
+        0.027777777777777776
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "0",
+        "1/36",
+        "1/36"
+      ],
+      [
+        "1/36",
+        "1/36",
+        "-1/36"
+      ],
+      [
+        "1/36",
+        "-1/36",
+        "1/36"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.0,
+      0.5,
+      0.5
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "0",
+      "1/2",
+      "1/2"
+    ],
+    "outputTerms": [
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 2.220446049250313e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 0.0,
+      "weightedNineJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 2.220446049250313e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "color": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 81,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 4
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27,
+        "multiplicity": 1
+      },
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 3,
+        "label": "10̄ (0,3)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 4
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1,
+        "multiplicity": 2
+      }
+    ],
+    "multiplicity": 4,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "8 (1,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": 1
+      },
+      {
+        "index": 1,
+        "label": "8 (1,1) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 2,
+        "label": "8 (1,1) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "1 (0,0) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6̄ (0,2)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 2,
+          "label": "6̄ (0,2)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3 (1,0)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6̄ (0,2)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 2,
+          "label": "6̄ (0,2)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "3̄ (0,1)a × 3 (1,0)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.408248290463863,
+        0.0,
+        0.6454972243679028,
+        0.6454972243679028
+      ],
+      [
+        0.0,
+        0.7071067811865476,
+        0.5,
+        -0.5
+      ],
+      [
+        0.0,
+        0.7071067811865476,
+        -0.5,
+        0.5
+      ],
+      [
+        0.9128709291752769,
+        0.0,
+        -0.28867513459481287,
+        -0.28867513459481287
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(6)/6",
+        "0",
+        "sqrt(15)/6",
+        "sqrt(15)/6"
+      ],
+      [
+        "0",
+        "sqrt(2)/2",
+        "1/2",
+        "-1/2"
+      ],
+      [
+        "0",
+        "sqrt(2)/2",
+        "-1/2",
+        "1/2"
+      ],
+      [
+        "sqrt(30)/6",
+        "0",
+        "-sqrt(3)/6",
+        "-sqrt(3)/6"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.008505172717997146,
+        0.0,
+        0.03803628871563654,
+        0.03803628871563654
+      ],
+      [
+        0.0,
+        0.020833333333333332,
+        0.041666666666666664,
+        -0.041666666666666664
+      ],
+      [
+        0.0,
+        0.020833333333333332,
+        -0.041666666666666664,
+        0.041666666666666664
+      ],
+      [
+        0.03803628871563654,
+        0.0,
+        -0.034020690871988585,
+        -0.034020690871988585
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(6)/288",
+        "0",
+        "sqrt(30)/144",
+        "sqrt(30)/144"
+      ],
+      [
+        "0",
+        "1/48",
+        "1/24",
+        "-1/24"
+      ],
+      [
+        "0",
+        "1/48",
+        "-1/24",
+        "1/24"
+      ],
+      [
+        "sqrt(30)/144",
+        "0",
+        "-sqrt(6)/72",
+        "-sqrt(6)/72"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.408248290463863,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.9128709291752769,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(6)/6",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(30)/6",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.16666666666666666,
+      0.0,
+      0.0,
+      0.8333333333333334
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/6",
+      "0",
+      "0",
+      "5/6"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6̄ (0,2)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.408248290463863,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(6)/6",
+          "im": "0"
+        },
+        "probability": 0.16666666666666666
+      },
+      {
+        "index": 3,
+        "label": "3̄ (0,1)a × 3 (1,0)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.9128709291752769,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(30)/6",
+          "im": "0"
+        },
+        "probability": 0.8333333333333334
+      }
+    ],
+    "checks": {
+      "unitarity": 2.220446049250313e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 5.551115123125783e-17,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 3.147506164048996e-18,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "mixed": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 54,
+    "factors": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 0,
+      "label": "6 (2,0)",
+      "dimension": 6,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 3,
+        "q": 1,
+        "label": "24 (3,1)",
+        "dimension": 24,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 2,
+        "label": "15̄ (1,2)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "10 (3,0) × 3̄ (0,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "8 (1,1) × 3̄ (0,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "15 (2,1) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": 1
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.408248290463863,
+        -0.9128709291752769
+      ],
+      [
+        0.9128709291752769,
+        0.408248290463863
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(6)/6",
+        "-sqrt(30)/6"
+      ],
+      [
+        "sqrt(30)/6",
+        "sqrt(6)/6"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.011111111111111112,
+        -0.027777777777777776
+      ],
+      [
+        0.05555555555555555,
+        0.027777777777777776
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "1/90",
+        "-1/36"
+      ],
+      [
+        "1/18",
+        "1/36"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.408248290463863,
+        "im": 0.0
+      },
+      {
+        "re": 0.9128709291752769,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(6)/6",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(30)/6",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.16666666666666666,
+      0.8333333333333334
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/6",
+      "5/6"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "15 (2,1) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.408248290463863,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(6)/6",
+          "im": "0"
+        },
+        "probability": 0.16666666666666666
+      },
+      {
+        "index": 1,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.9128709291752769,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(30)/6",
+          "im": "0"
+        },
+        "probability": 0.8333333333333334
+      }
+    ],
+    "checks": {
+      "unitarity": 1.994914301293711e-17,
+      "pathOrthogonality": 1.1102230246251565e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 6.938893903907228e-18,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "auto": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 9,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 0,
+      "label": "6 (2,0)",
+      "dimension": 6,
+      "multiplicity": 1
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 1,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 1 (0,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": 1
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        1.0
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "1"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.13608276348795434
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(6)/18"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0
+    ],
+    "outputProbabilities": [
+      1.0
+    ],
+    "exactInputProbabilities": [
+      "1"
+    ],
+    "exactOutputProbabilities": [
+      "1"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 1.0,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "1",
+          "im": "0"
+        },
+        "probability": 1.0
+      }
+    ],
+    "checks": {
+      "unitarity": 0.0,
+      "pathOrthogonality": 0.0,
+      "reconstruction": 0.0,
+      "gtStateIndependence": 2.220446049250313e-16,
+      "weightedNineJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "autoBar": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 9,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      },
+      {
+        "p": 0,
+        "q": 0,
+        "label": "1 (0,0)",
+        "dimension": 1
+      }
+    ],
+    "target": {
+      "p": 0,
+      "q": 1,
+      "label": "3̄ (0,1)",
+      "dimension": 3,
+      "multiplicity": 1
+    },
+    "targets": [
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 1,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "3̄ (0,1)a × 1 (0,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 0,
+          "label": "3 (1,0)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": -1
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        1.0
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "1"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.19245008972987526
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(3)/9"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0
+    ],
+    "outputProbabilities": [
+      1.0
+    ],
+    "exactInputProbabilities": [
+      "1"
+    ],
+    "exactOutputProbabilities": [
+      "1"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "3 (1,0) × 3 (1,0) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 1.0,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "1",
+          "im": "0"
+        },
+        "probability": 1.0
+      }
+    ],
+    "checks": {
+      "unitarity": 0.0,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 0.0,
+      "gtStateIndependence": 2.220446049250313e-16,
+      "weightedNineJ": 5.551115123125783e-17,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "complex": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 81,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 1,
+      "label": "15 (2,1)",
+      "dimension": 15,
+      "multiplicity": 3
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 3
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 3
+      }
+    ],
+    "multiplicity": 3,
+    "direction": "left_to_right",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.0,
+        0.7071067811865476,
+        0.7071067811865476
+      ],
+      [
+        0.7071067811865476,
+        0.5,
+        -0.5
+      ],
+      [
+        0.7071067811865476,
+        -0.5,
+        0.5
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "0",
+        "sqrt(2)/2",
+        "sqrt(2)/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "1/2",
+        "-1/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "-1/2",
+        "1/2"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0,
+        0.027777777777777776,
+        0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        0.027777777777777776,
+        -0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        -0.027777777777777776,
+        0.027777777777777776
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "0",
+        "1/36",
+        "1/36"
+      ],
+      [
+        "1/36",
+        "1/36",
+        "-1/36"
+      ],
+      [
+        "1/36",
+        "-1/36",
+        "1/36"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.0,
+        "im": 0.5
+      },
+      {
+        "re": 0.5,
+        "im": 0.3535533905932738
+      },
+      {
+        "re": 0.5,
+        "im": -0.3535533905932738
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "0",
+        "im": "1/2"
+      },
+      {
+        "re": "1/2",
+        "im": "sqrt(2)/4"
+      },
+      {
+        "re": "1/2",
+        "im": "-sqrt(2)/4"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.5,
+      0.5,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.25,
+      0.375,
+      0.375
+    ],
+    "exactInputProbabilities": [
+      "1/2",
+      "1/2",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/4",
+      "3/8",
+      "3/8"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.0,
+          "im": 0.5
+        },
+        "exactAmplitude": {
+          "re": "0",
+          "im": "1/2"
+        },
+        "probability": 0.25
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.5,
+          "im": 0.3535533905932738
+        },
+        "exactAmplitude": {
+          "re": "1/2",
+          "im": "sqrt(2)/4"
+        },
+        "probability": 0.375
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.5,
+          "im": -0.3535533905932738
+        },
+        "exactAmplitude": {
+          "re": "1/2",
+          "im": "-sqrt(2)/4"
+        },
+        "probability": 0.375
+      }
+    ],
+    "checks": {
+      "unitarity": 2.220446049250313e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 0.0,
+      "weightedNineJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 0.0
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "complexBack": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 81,
+    "factors": [
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 1,
+      "label": "15 (2,1)",
+      "dimension": 15,
+      "multiplicity": 3
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 3
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 3
+      }
+    ],
+    "multiplicity": 3,
+    "direction": "right_to_left",
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": 1,
+        "finalSwapParity": -1
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": 1,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "3̄ (0,1)a × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": -1,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.0,
+        0.7071067811865476,
+        0.7071067811865476
+      ],
+      [
+        0.7071067811865476,
+        0.5,
+        -0.5
+      ],
+      [
+        0.7071067811865476,
+        -0.5,
+        0.5
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "0",
+        "sqrt(2)/2",
+        "sqrt(2)/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "1/2",
+        "-1/2"
+      ],
+      [
+        "sqrt(2)/2",
+        "-1/2",
+        "1/2"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0,
+        0.027777777777777776,
+        0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        0.027777777777777776,
+        -0.027777777777777776
+      ],
+      [
+        0.027777777777777776,
+        -0.027777777777777776,
+        0.027777777777777776
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "0",
+        "1/36",
+        "1/36"
+      ],
+      [
+        "1/36",
+        "1/36",
+        "-1/36"
+      ],
+      [
+        "1/36",
+        "-1/36",
+        "1/36"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.0,
+        "im": 0.5
+      },
+      {
+        "re": 0.5,
+        "im": 0.3535533905932738
+      },
+      {
+        "re": 0.5,
+        "im": -0.3535533905932738
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "0",
+        "im": "1/2"
+      },
+      {
+        "re": "1/2",
+        "im": "sqrt(2)/4"
+      },
+      {
+        "re": "1/2",
+        "im": "-sqrt(2)/4"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.25,
+      0.375,
+      0.375
+    ],
+    "outputProbabilities": [
+      0.5,
+      0.5,
+      0.0
+    ],
+    "exactInputProbabilities": [
+      "1/4",
+      "3/8",
+      "3/8"
+    ],
+    "exactOutputProbabilities": [
+      "1/2",
+      "1/2",
+      "0"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "6 (2,0)s × 6 (2,0)s · α=1, β=1, γ=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      },
+      {
+        "index": 1,
+        "label": "6 (2,0)s × 3̄ (0,1)a · α=1, β=1, γ=1",
+        "amplitude": {
+          "re": 0.0,
+          "im": 0.7071067811865476
+        },
+        "exactAmplitude": {
+          "re": "0",
+          "im": "sqrt(2)/2"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 2.220446049250313e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 0.0,
+      "weightedNineJ": 0.0,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 1.1102230246251565e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  }
+}

@@ -391,7 +391,7 @@
         "Fixed normalized Hermitian generators and selected pure initial states",
         "No general matrix exponential, arbitrary representation or general Lie-group classification"
       ],
-      "sha256": "71ad8157a4f9c5b1bd31d09c0df0d57091e0d76bef6163da140e3a682559831e"
+      "sha256": "5ee4f357e3e4c9de3bca16ad075c4fd0299e3a74401a7837bcc99a01d5acb682"
     },
     {
       "path": "dist/python/lie_applications.py",
@@ -442,6 +442,19 @@
         "Safe finite rational/radical state constants; no free symbolic parameters"
       ],
       "sha256": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d"
+    },
+    {
+      "path": "dist/python/su3_ninej.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original exact four-factor paired SU(3) recoupling from GT embeddings, selected final highest-weight kernels and explicit ACBD-to-ABCD axis permutation. All three vertex multiplicities are retained per path; dimension-reduced nine-j uses the documented project convention.",
+      "validation": "scripts/test-python-su3-ninej.py",
+      "limitations": [
+        "Each of four input irreps has p+q<=2; total product dimension<=512",
+        "Classical ordinary SU(3), fixed GT phase and outer-copy basis; no free symbolic parameters or automatic literature gauge conversion",
+        "Coordinate permutation adds no fermionic statistics sign"
+      ],
+      "sha256": "0551d11ad279fbed4908260865224d42fb383c7d36c38eb109ed4a55da1eba18"
     }
   ],
   "coordinate_conventions": {

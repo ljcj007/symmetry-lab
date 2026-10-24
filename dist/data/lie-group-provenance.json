@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-24",
-  "build": "20261024-racah2",
+  "build": "20261024-ninej1",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -85,71 +85,77 @@
       "id": "dang-u3-recoupling",
       "title": "Dang、Draayer、Pan、Becker：U(3) 耦合与重耦合系数",
       "url": "https://arxiv.org/html/2405.06843v1#S5.SS1",
-      "note": "EPJ Plus 139, 704 (2024)，doi:10.1140/epjp/s13360-024-05501-8。预印本 V.1、式 (27)–(28) 给出三重耦合路径与含外重数指标的 U 系数；IV.3–IV.4 说明最高权和相位传递。本课堂只实现普通 SU(3) 的两种相邻括号，采用自己的 GT 约定。"
+      "note": "EPJ Plus 139, 704 (2024)，doi:10.1140/epjp/s13360-024-05501-8。预印本 V.1、式 (27)–(28) 给出三重耦合路径与含外重数指标的 U 系数；IV.3–IV.4 说明最高权和相位传递。本课堂的三重 Racah 实验实现普通 SU(3) 的两种相邻括号，采用自己的 GT 约定。"
     },
     {
       "id": "lanina-sleptsov-sixj",
       "title": "Lanina、Sleptsov：Racah 矩阵与 6j 归一化",
       "url": "https://scoap3-prod-backend.s3.cern.ch/media/files/79803/10.1016/j.physletb.2023.138138.pdf",
       "note": "Physics Letters B 845, 138138 (2023)，第 2.1 节、式 (2.4)–(2.5)。用于核对重数空间映射及除以两条中间表示维数平方根的归一化。本课堂取普通群的 q→1 极限，使用通常维数；不计算量子群或辫群。"
+    },
+    {
+      "id": "dang-u3-four-recoupling",
+      "title": "Dang、Draayer、Pan、Becker：四重耦合与 9-U(3) 重耦合系数",
+      "url": "https://arxiv.org/html/2405.06843v1#S5.SS2",
+      "note": "V.2、式 (30) 给出两种配对树之间的酉 9-U(3) 系数，可经 6-U、6-Z 系数求得。本课堂独立组成 CG 嵌入并取内积，以 R 表示酉重叠；另定义的维数约化 9j 表 S 不是把式 (30) 原样抄成 S。SU(3) 的 GT 相位、副本基底与归一化均单独注明。"
     }
   ],
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3416,
-      "sha256": "fa3253763a17fffde7369f3a625ed25d40cc805f03d2826c2ee73f0908ec422e"
+      "sha256": "535f7779f18c2582313434d997cb2af54b2a56d0bbc66d73226a83c58640ddd0"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 37596,
-      "sha256": "03b93ebcd6fb3ef8c2cb47fdaa9122bc6bcee4644db10d9a897c59130f517be6"
+      "bytes": 37766,
+      "sha256": "d70fa3d94eae9500eb4db42b236c49471442aa2635d10293ed74728bfee60476"
     },
     "dist/lie-group.css": {
-      "bytes": 21587,
-      "sha256": "6cd6683159aae7c37e8ecb88c91d78067d7be60711de3fadd91f25b95751ac13"
+      "bytes": 24395,
+      "sha256": "256c0c333fbb4ade5ab8d10ab1d16819f0c55dd7d6efc0a36bb1e28cec1ec436"
     },
     "dist/python/lie_labs.py": {
-      "bytes": 12378,
-      "sha256": "71ad8157a4f9c5b1bd31d09c0df0d57091e0d76bef6163da140e3a682559831e"
+      "bytes": 12508,
+      "sha256": "5ee4f357e3e4c9de3bca16ad075c4fd0299e3a74401a7837bcc99a01d5acb682"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 111428,
-      "sha256": "463bdaabff1b8c5d032dabcfb2401efac43371a3f770c57c15c37aff0567ca7d"
+      "bytes": 128427,
+      "sha256": "76a55b5b910dd6b4034eb8016dbf33be8b5815ad3d88f9602bc581c614c5bb5e"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 28139,
-      "sha256": "ea919106777692ca1c432cb1e79d8f94b835b9e7a8cc37cca9e7480ccef9d924"
+      "bytes": 35650,
+      "sha256": "c9ddacd63c862bd7c9824a9ab80fb557e85c5db9ae12d50284226869dbf63c11"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 52725,
-      "sha256": "1f49156e85698165cac797854ea23b1d516f777b5ee648a339800deb14409acd"
+      "bytes": 62903,
+      "sha256": "b7a8e2f3cb355b3060a07182f9ac93338e1ce3f3153e0932a437cc35b5832a8c"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 3709,
-      "sha256": "8b41372907c61b92dbbff5b0185ed53e82490f81a1435f500a4ca6cf93336ab9"
+      "bytes": 3745,
+      "sha256": "9b50e65305bb9305475aab6b8d113f3998935a4038756a76c389fd3f3ec9d1d0"
     },
     "dist/lie-physics-ui.js": {
-      "bytes": 17925,
-      "sha256": "d89d86889a66d29afbac6d0183758f8c1192f02059fb13ae893fba5947326bcb"
+      "bytes": 18525,
+      "sha256": "593a2bbfe1a3301616cff7d16e335a0c61e69be58634825b9d4184aaf0eb440e"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 55461,
-      "sha256": "f8d07f8453d561ed0e2c0ae46fbf27f0831430532a2758ef74d8cf595d2ac40b"
+      "bytes": 68031,
+      "sha256": "ea9eb7475d7576bb797d06e4da9feee30ca941bf63ba487c3f5689f1ceee4fca"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,
@@ -218,20 +224,49 @@
     "dist/examples/su3-racah-octets.json": {
       "bytes": 164,
       "sha256": "9e5c723ed27738138efa15ffec003d77e7b65c8a208441b1621ff87cd15f1eef"
+    },
+    "dist/su3-ninej-ui.js": {
+      "bytes": 23302,
+      "sha256": "e31e9086a546062333cef26895af71d1d28283ba55164cdab4ab1f7d046fdd7d"
+    },
+    "dist/python/su3_ninej.py": {
+      "bytes": 16065,
+      "sha256": "0551d11ad279fbed4908260865224d42fb383c7d36c38eb109ed4a55da1eba18"
+    },
+    "scripts/test-python-su3-ninej.py": {
+      "bytes": 13615,
+      "sha256": "608454591506a75022168148da7388b7178f7a8bc1f5a8ff772f763357762955"
+    },
+    "scripts/fixtures/su3-ninej-ui.json": {
+      "bytes": 69152,
+      "sha256": "533c99c5de288654c3c2a97b12922e340f45b8f08a9306b40363594edfd8416f"
+    },
+    "scripts/generate-su3-ninej-ui-fixtures.py": {
+      "bytes": 1408,
+      "sha256": "e9949087dfc5948b802cd704f7d035a73814eb15a9de0e1cc515805a60dbdad5"
+    },
+    "dist/examples/su3-ninej-four.json": {
+      "bytes": 172,
+      "sha256": "2594cceaf2a00bc1084eb316639607f6a641bf494ffac12f295c19c9d5a8b243"
+    },
+    "dist/examples/su3-ninej-color.json": {
+      "bytes": 172,
+      "sha256": "ead70aea3eb9dc326e914e4f0f205ea4a8e72b49f1ff39ea834903fe368f44c2"
     }
   },
   "validation": {
-    "lessonCount": 23,
-    "workedExamples": 23,
-    "quizCount": 46,
+    "lessonCount": 26,
+    "workedExamples": 26,
+    "quizCount": 52,
     "pythonLabTests": 11,
-    "publicAPITests": 24,
-    "guidedExercises": 20,
+    "publicAPITests": 27,
+    "guidedExercises": 24,
     "pythonPhysicsTests": 11,
-    "interactiveExperiments": 8,
+    "interactiveExperiments": 9,
     "pythonSU3CGTests": 15,
     "pythonSU3CGExactTests": 10,
-    "pythonSU3RacahTests": 11
+    "pythonSU3RacahTests": 11,
+    "pythonSU3NineJTests": 14
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
@@ -245,7 +280,9 @@
     "Highest-weight phase and deterministic outer-multiplicity conventions are explicit; identical-factor copies resolve exchange parity",
     "Exact CG coefficients are constructed over rational/radical arithmetic and verified before numerical approximations are generated",
     "Racah F has right paths as rows and left paths as columns; b_R=F b_L; paths retain both binary vertex multiplicities",
-    "Dimension-reduced six-j S_fe=F_fe/sqrt(dimE dimF), in this GT gauge; S has dimension-weighted orthogonality"
+    "Dimension-reduced six-j S_fe=F_fe/sqrt(dimE dimF), in this GT gauge; S has dimension-weighted orthogonality",
+    "Four-factor R has right paired paths as rows and left paired paths as columns; right tensor order ACBD is explicitly returned to ABCD; b_R=R b_L",
+    "Dimension-reduced nine-j S=R/sqrt(dimE dimF dimG dimH), with dimension-weighted orthogonality; three outer copies per path"
   ],
   "scope": [
     "Original Chinese lessons and exercises, cited source documents are not redistributed",
@@ -256,6 +293,8 @@
     "SU(3) CG: each input p+q<=4; maximum numerical matrix 256x256 and exact matrix 81x81",
     "Three higher-dimensional/exact lessons and four additional sequential derivations; safe radical inputs and exact serialized state reversal",
     "Exact SU(3) Racah recoupling for six input irreps and total dimension <=512; 3x3x3 and 8x8x8 examples",
-    "Three additional Racah lessons, six self-checks and four sequential derivations"
+    "Three additional Racah lessons, six self-checks and four sequential derivations",
+    "Exact four-factor SU(3) paired recoupling for six input irreps and total dimension<=512",
+    "Three additional nine-j lessons, six self-checks and four sequential derivations"
   ]
 }

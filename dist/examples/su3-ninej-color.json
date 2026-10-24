@@ -1,0 +1,8 @@
+{
+  "lab": "lie",
+  "experiment": "su3_ninej",
+  "factors": [[1, 0], [0, 1], [1, 0], [0, 1]],
+  "target": [0, 0],
+  "direction": "left_to_right",
+  "state": {"index": 1}
+}

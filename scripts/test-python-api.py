@@ -310,6 +310,74 @@ class PublicAPITests(unittest.TestCase):
         self.assertEqual(Counter({(t['p'],t['q']):t['multiplicity'] for t in result['targets']}),
             Counter({(3,3):1,(4,1):2,(1,4):2,(2,2):6,(3,0):4,(0,3):4,(1,1):8,(0,0):2}))
 
+    def test_su3_ninej_four_fundamentals_and_dimension_normalization(self):
+        import sympy as sp
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_ninej',
+            'factors':[[1,0]]*4,'target':[2,1],'state':{'index':0}})
+        self.assertEqual((result['dimension'],result['multiplicity']),(81,3))
+        # S4 standard Young space in the four orthogonal product states
+        # with one d among three u's; pair exchange parities fix this basis.
+        root=sp.sqrt(2)/2
+        expected=sp.Matrix([[0,root,root],[root,sp.Rational(1,2),-sp.Rational(1,2)],
+                            [root,-sp.Rational(1,2),sp.Rational(1,2)]])
+        r=sp.Matrix(result['exactRecouplingMatrix']).applyfunc(sp.sympify)
+        self.assertEqual((r-expected).applyfunc(sp.simplify),sp.zeros(3))
+        left=[p['firstIntermediate']['dimension']*p['secondIntermediate']['dimension']
+              for p in result['leftPaths']]
+        right=[p['firstIntermediate']['dimension']*p['secondIntermediate']['dimension']
+               for p in result['rightPaths']]
+        self.assertEqual(left,[36,18,18])
+        self.assertEqual(right,[36,18,18])
+        s=sp.Matrix(result['exactNineJMatrix']).applyfunc(sp.sympify)
+        for i in range(3):
+            for j in range(3):
+                self.assertEqual(sp.simplify(s[i,j]-r[i,j]/sp.sqrt(right[i]*left[j])),0)
+        self.assertEqual((s.T*sp.diag(*right)*s-sp.diag(*[sp.Rational(1,d) for d in left])).applyfunc(sp.simplify),sp.zeros(3))
+        # Schur-Weyl partitions [4], [3,1], [2,2], [2,1,1].
+        self.assertEqual([(t['p'],t['q'],t['multiplicity']) for t in result['targets']],
+                         [(4,0,1),(2,1,3),(0,2,2),(1,0,3)])
+        self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
+
+    def test_su3_ninej_exact_complex_roundtrip_and_identity(self):
+        import sympy as sp
+        request={'lab':'lie','experiment':'su3_ninej','factors':[[1,0]]*4,'target':[2,1]}
+        state=[{'re':'sqrt(2)/2','im':'0'},{'re':'0','im':'sqrt(2)/2'},{'re':'0','im':'0'}]
+        forward=self.result('teaching_labs',{**request,'state':{'amplitudes':state}})
+        expected=[(0,sp.Rational(1,2)),(sp.Rational(1,2),sp.sqrt(2)/4),
+                  (sp.Rational(1,2),-sp.sqrt(2)/4)]
+        for actual,pair in zip(forward['exactOutputAmplitudes'],expected):
+            for part,value in zip(('re','im'),pair):
+                self.assertEqual(sp.simplify(sp.sympify(actual[part])-value),0)
+        backward=self.result('teaching_labs',{**request,'direction':'right_to_left',
+            'state':{'amplitudes':forward['exactOutputAmplitudes']}})
+        for actual,original in zip(backward['exactOutputAmplitudes'],state):
+            for part in ('re','im'):
+                self.assertEqual(sp.simplify(sp.sympify(actual[part])-sp.sympify(original[part])),0)
+        unit=self.result('teaching_labs',{'lab':'lie','experiment':'su3_ninej',
+            'factors':[[0,0]]*4})
+        self.assertEqual(unit['exactRecouplingMatrix'],[['1']])
+        self.assertEqual(unit['exactNineJMatrix'],[['1']])
+        self.assertTrue(all(v=='0' for v in backward['exactChecks'].values()))
+
+    def test_su3_ninej_preserves_root_and_pair_vertex_outer_copies(self):
+        # Two octets in the final 8 x 8 -> 8 vertex, even though all
+        # individual factors here are fundamental or antifundamental.
+        result=self.result('teaching_labs',{'lab':'lie','experiment':'su3_ninej',
+            'factors':[[1,0],[0,1],[1,0],[0,1]],'target':[1,1]})
+        self.assertEqual((result['dimension'],result['multiplicity']),(81,4))
+        roots=[p['finalCopy'] for p in result['leftPaths']
+               if all(p[k]['dimension']==8 for k in ('firstIntermediate','secondIntermediate'))]
+        self.assertEqual(roots,[1,2])
+        self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
+        # A repeated 8 in the very first binary vertex is separately tagged.
+        pair=self.result('teaching_labs',{'lab':'lie','experiment':'su3_ninej',
+            'factors':[[1,1],[1,1],[1,0],[0,0]],'target':[1,0]})
+        self.assertEqual((pair['dimension'],pair['multiplicity']),(192,3))
+        copies=[p['firstCopy'] for p in pair['leftPaths'] if p['firstIntermediate']['dimension']==8]
+        self.assertEqual(copies,[1,2])
+        self.assertLess(max(pair['checks'].values()),1e-8)
+        self.assertTrue(all(v=='0' for v in pair['exactChecks'].values()))
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

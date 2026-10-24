@@ -6,11 +6,11 @@
 
 侧边栏只保留一个“群论课堂”入口，内部可切换“32 点群”“空间群 · 双群 · 磁群”“李群基础 · SU(2) / SU(3)”。旧课程答题记录沿用原有存储键；李群记录独立保存。页签支持键盘方向键、Home / End 和直接链接。
 
-[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 23 个原创中文单元、23 个分步例题和 46 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
+[李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 26 个原创中文单元、26 个分步例题和 52 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
 
 原有三个基础实验由标准库 Python `lie_labs.py` 计算，使用 `U(θ)=exp(−iθT)`、`T=σ/2` 或 `λ/2`：SU(2) 的 Bloch 向量、复振幅和 2π/4π 检验；SU(3) 各生成元的态变换、测量概率和 Cartan 权；两组生成元的对易关系。界面显示角度与弧度，Python API 的 `angle` 始终为弧度。SU(3) 的参数不被解释为空间旋转角，权图也不是晶体原子位置。`dimension` 表示基本表示维数，`realDimension` 表示群流形的实维数。实验使用固定生成元的解析指数，不宣称支持任意矩阵指数或一般李群分类。
 
-新增物理应用课程讨论二能级 Rabi 振荡、角动量耦合与 Clebsch–Gordan 系数、Heisenberg 交换、SU(3) Dynkin 标签、味/颜色对称和八重态直积；“分步推导”含 20 道可逐步揭示提示、推导和答案的练习，使用独立进度记录。
+新增物理应用课程讨论二能级 Rabi 振荡、角动量耦合与 Clebsch–Gordan 系数、Heisenberg 交换、SU(3) Dynkin 标签、味/颜色对称和八重态直积；“分步推导”含 24 道可逐步揭示提示、推导和答案的练习，使用独立进度记录。
 
 `lie_applications.py` 提供三个新的浏览器 Python 实验：
 
@@ -42,6 +42,17 @@ SU(3) Racah（6j）实验计算三重张量积的两条耦合路径：`((A⊗B)�
 ```sh
 python dist/python/cli.py teaching_labs dist/examples/su3-racah-three.json
 python dist/python/cli.py teaching_labs dist/examples/su3-racah-octets.json
+```
+
+SU(3) 9j 实验比较四重张量积的两种成对耦合：`((A⊗B)E⊗(C⊗D)F)→T` 与 `((A⊗C)G⊗(B⊗D)H)→T`。每个输入因子可选 `1、3、3̄、6、6̄、8`，总乘积维数不超过 512；只计算实际分解中选定最终表示的重数空间。两侧路径分别保留两个中间表示和三个顶点的外重数，右树的 ACBD 坐标明确还原为 ABCD，再求精确重叠。
+
+换基矩阵 `R=V_R†V_L` 的行对应右路径、列对应左路径；完整根式复振幅按 `b_R=R b_L`、`b_L=R† b_R` 往返。本项目的维数缩约 9j 定义为 `S[R,L]=R[R,L]/√(dimE dimF dimG dimH)`，满足维数加权正交，直接换基仍使用 R。全部结果由有理数和根式直接构造，保留本站 GT 相位和副本选基；不自动附加费米子交换符号，不声称与未转换约定的外部表逐项相同。
+
+实验提供四因子与最终表示选择、左右成对耦合树、精确矩阵及热图、9j 视图、通道概率、完整复向量反向重耦合和 JSON 导出。新增三节课程、六道自测、四道分步推导，包含四个基本表示、颜色配对和精确复振幅往返。CLI 示例：
+
+```sh
+python dist/python/cli.py teaching_labs dist/examples/su3-ninej-four.json
+python dist/python/cli.py teaching_labs dist/examples/su3-ninej-color.json
 ```
 
 ## 32 点群课堂
