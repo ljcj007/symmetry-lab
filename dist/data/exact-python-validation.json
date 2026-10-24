@@ -28,7 +28,7 @@
     "dist/python/su3_cg.py": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794",
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
     "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d",
-    "dist/python/su3_ninej.py": "0551d11ad279fbed4908260865224d42fb383c7d36c38eb109ed4a55da1eba18"
+    "dist/python/su3_ninej.py": "2117f5a6e507932768fbe9d10d3bb9f4b91d3abafd78bff64bd0c57bf462d6d1"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -58,7 +58,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 27
+    "tests": 28
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -788,14 +788,36 @@
   },
   "su3NineJTeaching": {
     "date": "2026-10-24",
-    "unitTests": 14,
+    "unitTests": 19,
     "test": "scripts/test-python-su3-ninej.py",
-    "scope": "Six input irreps (p+q<=2), four factors, product dimension<=512; all actual final targets, exact paired-tree recoupling R and dimension-reduced nine-j with reversible radical complex state coordinates. Three vertex multiplicities per path.",
+    "scope": "Six input irreps (p+q<=2), four factors, product dimension<=4096; all actual final targets, exact paired-tree recoupling R and dimension-reduced nine-j with reversible radical complex state coordinates. Three vertex multiplicities per path.",
     "characterAndPathAudit": {
-      "orderedQuadruples": 975,
-      "finalIrrepTargets": 5221,
+      "orderedQuadruples": 1296,
+      "finalIrrepTargets": 8472,
       "bothPairedTreePathCountsPassed": true,
-      "exactMatrixValidation": "Representative independent S4 and trace-contraction benchmarks, all four-fundamental targets, three-vertex outer multiplicities, complex roundtrips, identity-factor Racah reduction, 432- and 512-dimensional examples. Not a complete exact-matrix audit of all 5221 channels."
+      "independentWeylTorusPoints": 2,
+      "largestMultiplicity": 33,
+      "largestMultiplicityFactors": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "exactMatrixValidation": "All 13 final irreps of 8^4 passed exact path, unitary, reconstruction, lowering, weighted nine-j and symmetric-involution checks, with an independent cycle-character test. Independent double-singlet invariant probabilities; 32-channel radical complex roundtrip; asymmetric 3072-dimensional inverse crossing; earlier S4/trace/Racah reductions retained. No claim of an exact-matrix audit of all 8472 final channels."
     }
   }
 }

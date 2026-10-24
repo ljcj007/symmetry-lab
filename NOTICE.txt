@@ -176,3 +176,9 @@ paired-tree recoupling implementation using composed GT embeddings and an
 explicit tensor-axis permutation. All three vertex multiplicities are kept
 per path. Its dimension-reduced 9j normalization, phase convention, original
 Chinese lessons and validation are documented with the classroom sources.
+
+The high-dimensional nine-j extension (2026-10-24) supports all ordered
+four-factor products of 1, 3, conjugate 3, 6, conjugate 6 and 8 through
+dimension 4096, using exact highest-weight blocks and tensor permutation
+reuse. Original teaching and independent permutation/invariant benchmarks
+cover the eight, 32 and 33 dimensional multiplicity spaces of four adjoints.

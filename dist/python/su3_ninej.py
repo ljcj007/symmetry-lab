@@ -17,7 +17,7 @@ from su3_cg_exact import _irrep, _coupling, _matrix_simp, _simp, _zero, _state, 
 from su3_racah import FACTORS, _representation, _decomposition, _highest
 
 
-MAX_DIMENSION = 512
+MAX_DIMENSION = 4096
 
 
 def _four_weights(factors):
@@ -73,31 +73,57 @@ def _paths(factors, target, side, rows):
     return sp.Matrix.hstack(*vectors), paths
 
 
-def _lowered(factors, rows, columns, target):
-    """Verify the overlap on one additional normalized final GT state."""
+@lru_cache(maxsize=16)
+def _lowering(factors, target):
+    """Build the selected-weight lowering map by acting on one tensor axis.
+
+    Each GT generator is sparse.  Visiting its nonzero column entries avoids
+    testing every pair of four-factor product states, and never constructs a
+    4096 by 4096 product generator.
+    """
     p, q = target
-    if p == q == 0:
-        return columns, rows
     gi, root, norm = (1, (2, -1), p) if p else (3, (-1, 2), q)
     weights = _four_weights(factors)
+    rows = [i for i, weight in enumerate(weights) if weight == target]
     outrows = [i for i, weight in enumerate(weights) if weight == (p - root[0], q - root[1])]
     dimensions = [_dimension(*pair) for pair in factors]
     generators = [_irrep(*pair)['generators'][gi] for pair in factors]
-    def unpack(index):
-        result = []
-        for dimension in reversed(dimensions):
-            index, local = divmod(index, dimension)
-            result.append(local)
-        return tuple(reversed(result))
-    lowering = sp.zeros(len(outrows), len(rows))
-    for i, row in enumerate(outrows):
-        indices = unpack(row)
-        for j, col in enumerate(rows):
-            source = unpack(col)
-            for k in range(4):
-                if all(indices[t] == source[t] for t in range(4) if t != k):
-                    lowering[i, j] += generators[k][indices[k], source[k]]
+    strides = [math.prod(dimensions[k + 1:]) for k in range(4)]
+    lookup = {row: i for i, row in enumerate(outrows)}
+    columns = [[[(r, generator[r, c]) for r in range(generator.rows)
+                 if generator[r, c] != 0] for c in range(generator.cols)]
+               for generator in generators]
+    entries = {}
+    for j, col in enumerate(rows):
+        for axis, stride in enumerate(strides):
+            source = (col // stride) % dimensions[axis]
+            for destination, amplitude in columns[axis][source]:
+                key = (lookup[col + (destination - source) * stride], j)
+                entries[key] = entries.get(key, 0) + amplitude
+    return sp.SparseMatrix(len(outrows), len(rows), entries), outrows, rows, norm
+
+
+def _lowered(factors, rows, columns, target):
+    """Verify the overlap on one additional normalized final GT state."""
+    if target == (0, 0):
+        return columns, rows
+    lowering, outrows, source_rows, norm = _lowering(factors, target)
+    if rows != source_rows:
+        raise ArithmeticError('Nine-j lowering weight rows are inconsistent')
     return _matrix_simp(lowering * columns / sp.sqrt(norm)), outrows
+
+
+def _crossing_rows(factors, rows):
+    """B↔C is an exact row permutation when the two middle factors agree."""
+    _, nb, nc, nd = [_dimension(*pair) for pair in factors]
+    lookup = {row: i for i, row in enumerate(rows)}
+    permutation = []
+    for row in rows:
+        abc, id_ = divmod(row, nd)
+        ab, ic = divmod(abc, nc)
+        ia, ib = divmod(ab, nb)
+        permutation.append(lookup[((ia * nb + ic) * nc + ib) * nd + id_])
+    return permutation
 
 
 def _path_dimension(path):
@@ -112,7 +138,15 @@ def _recoupling(factors, target):
         raise ValueError('所选最终表示不出现在该四重张量积中，请从最终表示列表选择')
     rows = [i for i, weight in enumerate(_four_weights(factors)) if weight == target]
     left, left_paths = _paths(factors, target, 'left', rows)
-    right, right_paths = _paths(factors, target, 'right', rows)
+    if factors[1] == factors[2]:
+        # The two natural paired-tree embeddings then have identical CG
+        # coefficients.  Reuse them with the actual B↔C product-axis
+        # permutation; this does not identify or discard any outer copy.
+        right = left[_crossing_rows(factors, rows), :]
+        letters = str.maketrans({'α': 'δ', 'β': 'ε', 'γ': 'ζ'})
+        right_paths = [dict(path, label=path['label'].translate(letters)) for path in left_paths]
+    else:
+        right, right_paths = _paths(factors, target, 'right', rows)
     if len(left_paths) != expected or len(right_paths) != expected:
         raise ArithmeticError('Nine-j path count does not equal the character multiplicity')
     matrix = _matrix_simp(right.T * left)
@@ -198,6 +232,10 @@ def run(payload):
         'title': 'SU(3) 9j 与四重张量积重耦合', 'dimension': n,
         'factors': [_representation(*pair) for pair in factors], 'target': target_data,
         'targets': list(data['targets']), 'multiplicity': target_data['multiplicity'], 'direction': direction,
+        'computation': {'method': 'selected-highest-weight', 'productDimension': n,
+                        'highestWeightRows': len(data['weightRows']),
+                        'maxProductDimension': MAX_DIMENSION,
+                        'middleFactorPermutationReuse': factors[1] == factors[2]},
         'leftPaths': data['leftPaths'], 'rightPaths': data['rightPaths'],
         'recouplingMatrix': data['numeric'].tolist(), 'exactRecouplingMatrix': [[str(x) for x in row] for row in matrix.tolist()],
         'nineJMatrix': np.array(data['nineJ'].evalf(17).tolist(), dtype=float).tolist(),
@@ -231,7 +269,8 @@ def run(payload):
             '用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。',
         ],
         'notes': [
-            '六类输入 1、3、3̄、6、6̄、8，四重积总维数≤512；该范围内所有实际最终表示均可选择，不截断中间表示或外重数。',
+            '六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。',
+            '8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。',
             '省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。',
             '全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。',
             '这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。',

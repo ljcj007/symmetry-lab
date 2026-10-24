@@ -1,6 +1,6 @@
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261024-ninej1';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261024-ninej1';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261024-ninej1';
+import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261024-ninej2';
+import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261024-ninej2';
+import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261024-ninej2';
 
 export const classroomSections = [
   {id:'pointgroups',slug:'pointgroups',title:'32 点群',summary:'从有限对称操作、特征标与选择定则入门。'},
@@ -20,7 +20,7 @@ export function getClassroomResult(section) {
   return course?{kind:'group-theory-classroom',section,course}:null;
 }
 
-export function renderClassroomView({container,section='pointgroups',onSection=()=>{},run,toast,download,openGroup,courseRenderers=renderers}) {
+export function renderClassroomView({container,section='pointgroups',onSection=()=>{},run,cancelRun,toast,download,openGroup,courseRenderers=renderers}) {
   if(!isClassroomView(section))section='pointgroups';
   container.innerHTML=`<div class="classroom-page"><nav class="classroom-tabs" role="tablist" aria-label="群论课堂课程分区">${classroomSections.map(item=>`<button type="button" role="tab" id="classroom-tab-${item.id}" aria-selected="${item.id===section}" aria-controls="classroom-course" tabindex="${item.id===section?0:-1}" data-classroom-section="${item.id}"><strong>${item.title}</strong><span>${item.summary}</span></button>`).join('')}</nav><section id="classroom-course" role="tabpanel" aria-labelledby="classroom-tab-${section}"></section></div>`;
   const root=container.firstElementChild;
@@ -42,6 +42,6 @@ export function renderClassroomView({container,section='pointgroups',onSection=(
       container.querySelector('#classroom-tab-'+id)?.focus();
     };
   });
-  return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,toast,download,
+  return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,cancelRun,toast,download,
     openGroup:selection=>openGroup?.(typeof selection==='number'?{mode:'sg',id:selection,k:[0,0,0],doubleValued:false}:selection)});
 }

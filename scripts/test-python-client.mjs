@@ -34,5 +34,25 @@ const retry=runPythonTask('crystkit',{action:'analyze'});
 fresh.reply({id:fresh.messages.at(-1).id,result:{verified:true}});
 assert.deepEqual(await retry,{verified:true});
 assert.ok(states.includes('running')&&states.includes('error')&&states.includes('ready'));
+// Exact 4096-dimensional recoupling gets a bounded longer computation window;
+// loading still has its own deadline, and timeout really terminates the worker.
+const setTimer=globalThis.setTimeout,clearTimer=globalThis.clearTimeout,timers=[];
+try {
+  globalThis.setTimeout=(callback,delay)=>{const timer={callback,delay};timers.push(timer);return timer;};
+  globalThis.clearTimeout=timer=>{if(timer)timer.cleared=true;};
+  const heavy=runPythonTask('teaching_labs',{lab:'lie',experiment:'su3_ninej',factors:[[1,1],[1,1],[1,1],[1,1]]});
+  assert.equal(timers.at(-1).delay,180000);
+  const loading=timers.at(-1);
+  fresh.reply({id:fresh.messages.at(-1).id,status:'running',message:'exact recoupling'});
+  assert.equal(loading.cleared,true);
+  assert.equal(timers.at(-1).delay,600000);
+  const timedOut=assert.rejects(heavy,/超过 600 秒/);
+  timers.at(-1).callback();await timedOut;
+  assert.equal(fresh.terminated,true);
+  const regular=runPythonTask('analyze',{}),normal=transports.at(-1);
+  normal.reply({id:normal.messages.at(-1).id,status:'running',message:'analyzing'});
+  assert.equal(timers.at(-1).delay,180000);
+  normal.reply({id:normal.messages.at(-1).id,result:{ok:true}});await regular;
+} finally {globalThis.setTimeout=setTimer;globalThis.clearTimeout=clearTimer;}
 unsubscribe();cancelPython();
-console.log('Python client: serial dispatch, cancellation, stale-worker isolation, error recovery passed.');
+console.log('Python client: serial dispatch, cancellation, stale-worker isolation, error recovery and bounded exact-recoupling timeout passed.');

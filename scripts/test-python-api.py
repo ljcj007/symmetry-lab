@@ -378,6 +378,31 @@ class PublicAPITests(unittest.TestCase):
         self.assertLess(max(pair['checks'].values()),1e-8)
         self.assertTrue(all(v=='0' for v in pair['exactChecks'].values()))
 
+    def test_su3_ninej_four_adjoints_exact_invariant_channels(self):
+        import sympy as sp
+        from collections import defaultdict
+        payload=json.loads((ROOT/'dist/examples/su3-ninej-adjoint-singlet.json').read_text())
+        result=self.result('teaching_labs',payload)
+        self.assertEqual((result['dimension'],result['multiplicity']),(4096,8))
+        self.assertEqual(len(result['targets']),13)
+        self.assertEqual({(t['p'],t['q']):t['multiplicity'] for t in result['targets']
+                          if (t['p'],t['q']) in ((0,0),(1,1),(2,2))},
+                         {(0,0):8,(1,1):32,(2,2):33})
+        index=payload['state']['index']
+        self.assertEqual([result['leftPaths'][index][k]['dimension']
+                          for k in ('firstIntermediate','secondIntermediate')],[1,1])
+        # Independently normalized real-adjoint invariant delta_ab delta_cd/8:
+        # its crossed self-overlap is sum_abcd(delta_ab delta_cd delta_ac delta_bd)/64=1/8.
+        self.assertEqual(sp.sympify(result['exactRecouplingMatrix'][index][index]),sp.Rational(1,8))
+        grouped=defaultdict(lambda:sp.Integer(0))
+        for path,probability in zip(result['rightPaths'],result['exactOutputProbabilities']):
+            irrep=path['firstIntermediate']
+            grouped[irrep['p'],irrep['q']]+=sp.sympify(probability)
+        self.assertEqual(dict(grouped),{(2,2):sp.Rational(27,64),(3,0):sp.Rational(10,64),
+            (0,3):sp.Rational(10,64),(1,1):sp.Rational(16,64),(0,0):sp.Rational(1,64)})
+        self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
+        self.assertLess(max(result['checks'].values()),3e-12)
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

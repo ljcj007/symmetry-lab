@@ -165,7 +165,7 @@ class SU3NineJ(unittest.TestCase):
         self.assertEqual(result['dimension'], 432)
         self.assertEqual(result['multiplicity'], 7)
 
-    def test_all_975_supported_characters_and_both_paired_path_counts(self):
+    def test_all_1296_supported_characters_and_both_paired_path_counts(self):
         count, channels = 0, 0
         for factors in itertools.product(ninej.FACTORS, repeat=4):
             dimension = math.prod(ninej._dimension(*x) for x in factors)
@@ -188,8 +188,128 @@ class SU3NineJ(unittest.TestCase):
                 self.assertEqual(path_counts, {(x['p'], x['q']): x['multiplicity'] for x in targets})
             count += 1
             channels += len(targets)
-        self.assertEqual(count, 975)
-        self.assertEqual(channels, 5221)
+        self.assertEqual(count, 1296)
+        self.assertEqual(channels, 8472)
+
+    def test_4096_dimensional_four_octets_all_final_targets_and_cycle_character(self):
+        # For four identical factors, crossing is literally P23.  Its trace
+        # character is independently χ8(g²)χ8(g)² (cycle type 2,1,1), so all
+        # thirteen recoupling blocks together must reproduce that character.
+        factors = ((1, 1),) * 4
+        traces = {}
+        for target in ninej._decomposition(factors):
+            label = target['p'], target['q']
+            result = ninej.run(request(factors, label))
+            self.assert_result(result)
+            self.assertEqual(result['dimension'], 4096)
+            r = matrix(result['exactRecouplingMatrix'])
+            self.assert_exact(r, r.T)
+            self.assert_exact(r * r, sp.eye(result['multiplicity']))
+            traces[label] = ninej._simp(sp.trace(r))
+            self.assertTrue(traces[label].is_Integer)
+            if label == (1, 1):
+                self.assertEqual(result['multiplicity'], 32)
+                for side in ('leftPaths', 'rightPaths'):
+                    octet_pairs = [path for path in result[side]
+                                   if path['firstIntermediate']['dimension'] == path['secondIntermediate']['dimension'] == 8]
+                    copies = {(x['firstCopy'], x['secondCopy'], x['finalCopy']) for x in octet_pairs}
+                    self.assertEqual(copies, set(itertools.product((1, 2), repeat=3)))
+            if label == (2, 2):
+                self.assertEqual(result['multiplicity'], 33)
+                for side in ('leftPaths', 'rightPaths'):
+                    largest_pairs = [path for path in result[side]
+                                     if path['firstIntermediate']['dimension'] == path['secondIntermediate']['dimension'] == 27]
+                    self.assertEqual([(x['finalCopy'], x['finalSwapParity']) for x in largest_pairs],
+                                     [(1, 1), (2, 1), (3, -1)])
+        self.assertEqual(len(traces), 13)
+        self.assertEqual([traces[x] for x in ((0, 0), (1, 1), (2, 2))], [0, 0, 1])
+        for angles in ((.31, .83), (.57, -.23)):
+            actual = sum(int(trace) * _weyl_character(*label, angles) for label, trace in traces.items())
+            expected = _weyl_character(1, 1, tuple(2 * x for x in angles)) * _weyl_character(1, 1, angles) ** 2
+            self.assertLess(abs(actual - expected), 3e-8)
+
+    def test_four_octets_singlet_independent_invariant_channel_dimensions(self):
+        # Normalized invariant tensors δabδcd/8 and δacδbd/8 overlap by 1/8.
+        # Resolving the crossed tensor with the orthogonal 8⊗8 projectors
+        # gives d/64 per irrep copy, with the two inequivalent octet copies
+        # contributing a combined16/64.  This test does not use CG entries to
+        # determine the expected probabilities.
+        factors = ((1, 1),) * 4
+        basis = ninej.run(request(factors, (0, 0)))
+        index = next(path['index'] for path in basis['leftPaths']
+                     if ninej._path_dimension(path) == 1)
+        self.assertEqual(index, 7)
+        result = ninej.run(request(factors, (0, 0), state={'index': index}))
+        self.assert_result(result)
+        self.assertEqual(result['exactRecouplingMatrix'][index][index], '1/8')
+        probabilities = {}
+        for path, probability in zip(result['rightPaths'], result['exactOutputProbabilities']):
+            label = path['firstIntermediate']['p'], path['firstIntermediate']['q']
+            probabilities[label] = probabilities.get(label, 0) + sp.sympify(probability)
+            if path['firstIntermediate']['dimension'] == path['secondIntermediate']['dimension'] == 8:
+                if path['firstCopy'] != path['secondCopy']:
+                    self.assertEqual(probability, '0')
+        self.assertEqual(probabilities, {(2, 2): sp.Rational(27, 64), (3, 0): sp.Rational(10, 64),
+                                         (0, 3): sp.Rational(10, 64), (1, 1): sp.Rational(16, 64),
+                                         (0, 0): sp.Rational(1, 64)})
+
+    def test_four_octets_32_channel_exact_complex_roundtrip(self):
+        factors = ((1, 1),) * 4
+        amplitudes = [{'re': 'sqrt(2)/2', 'im': '0'}, {'re': '0', 'im': 'sqrt(2)/2'}]
+        amplitudes += [{'re': '0', 'im': '0'}] * 30
+        forward = ninej.run(request(factors, (1, 1), state={'amplitudes': amplitudes}))
+        self.assert_result(forward)
+        self.assertEqual(forward['multiplicity'], 32)
+        self.assertEqual(forward['exactInputNorm'], '1')
+        self.assertEqual(forward['exactOutputNorm'], '1')
+        reverse = ninej.run(request(factors, (1, 1), direction='right_to_left',
+                                   state={'amplitudes': forward['exactOutputAmplitudes']}))
+        self.assert_result(reverse)
+        self.assert_exact(vector(reverse['exactOutputAmplitudes']), vector(forward['exactInputAmplitudes']))
+
+    def test_3072_dimensional_asymmetric_middle_factors_crossing_inverse(self):
+        # Swapping the named B,C factors exchanges the two paired trees.
+        # The inverse problem must therefore return exactly Rᵀ, including
+        # the ordering of every vertex copy.  Unlike8^4, this exercises two
+        # genuinely different natural paired-tree embeddings.
+        factors = ((1, 1), (2, 0), (1, 1), (1, 1))
+        forward = ninej.run(request(factors, (2, 0)))
+        crossed = ninej.run(request((factors[0], factors[2], factors[1], factors[3]), (2, 0)))
+        self.assert_result(forward)
+        self.assert_result(crossed)
+        self.assertEqual(forward['dimension'], 3072)
+        self.assertEqual(forward['multiplicity'], 16)
+        self.assertFalse(forward['computation']['middleFactorPermutationReuse'])
+        self.assert_exact(matrix(forward['exactRecouplingMatrix']).T, matrix(crossed['exactRecouplingMatrix']))
+        def vertices(paths):
+            return [(x['firstIntermediate']['p'], x['firstIntermediate']['q'],
+                     x['secondIntermediate']['p'], x['secondIntermediate']['q'],
+                     x['firstCopy'], x['secondCopy'], x['finalCopy']) for x in paths]
+        self.assertEqual(vertices(forward['leftPaths']), vertices(crossed['rightPaths']))
+        self.assertEqual(vertices(forward['rightPaths']), vertices(crossed['leftPaths']))
+
+    def test_selected_sparse_lowering_matches_direct_product_action(self):
+        factors, target = ((1, 1),) * 4, (1, 1)
+        lowering, outrows, rows, norm = ninej._lowering(factors, target)
+        self.assertIsInstance(lowering, sp.SparseMatrix)
+        self.assertEqual(norm, 1)
+        self.assertLess(lowering.nnz(), len(rows) * 8)
+        # Inspect every input column directly in the four product indices;
+        # this independent tensor action checks cached selected row indexing.
+        generators = [ninej._irrep(*pair)['generators'][1] for pair in factors]
+        for column, source in enumerate(rows):
+            indices = np.unravel_index(source, (8, 8, 8, 8))
+            expected = {}
+            for axis, generator in enumerate(generators):
+                for destination in range(8):
+                    amplitude = generator[destination, indices[axis]]
+                    if amplitude:
+                        final = list(indices)
+                        final[axis] = destination
+                        row = int(np.ravel_multi_index(tuple(final), (8, 8, 8, 8)))
+                        expected[row] = expected.get(row, 0) + amplitude
+            actual = {outrows[row]: lowering[row, column] for row in range(len(outrows)) if lowering[row, column]}
+            self.assertEqual(actual, expected)
 
     def test_neutral_factors_in_all_positions(self):
         for pair in ninej.FACTORS:
@@ -201,7 +321,7 @@ class SU3NineJ(unittest.TestCase):
                 self.assertEqual(result['exactRecouplingMatrix'], [['1']])
 
     def test_input_bounds_and_safe_symbolic_parser(self):
-        invalid = [dict(factors=[]), dict(factors=[[1, 0]] * 3), dict(factors=[[1, 1]] * 4),
+        invalid = [dict(factors=[]), dict(factors=[[1, 0]] * 3),
                    dict(factors=[[3, 0]] + [[1, 0]] * 3), dict(factors=[[True, 0]] + [[1, 0]] * 3),
                    dict(target=[1, 1]), dict(target=[-1, 0]), dict(direction='product_to_coupled'),
                    dict(arithmetic='numeric'), dict(state={'index': 3}),

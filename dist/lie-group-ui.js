@@ -1,6 +1,6 @@
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.
-import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261024-ninej1';
+import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261024-ninej2';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=value=>{const n=Number(value);return Number.isFinite(n)?Math.abs(n)<1e-10?'0':Number(n.toFixed(6)).toString():'—';};
 const residual=value=>Number.isFinite(Number(value))?Number(value).toExponential(2):'—';
@@ -24,7 +24,7 @@ const persistDerivations=()=>{try{localStorage.setItem(derivationStorageKey,JSON
 const mastered=questions=>questions.filter(({quiz,key})=>state.answers[key]?.checked===true&&state.answers[key]?.selected===quiz.answer).length;
 async function load(){
   if(!promise)promise=(async()=>{
-    const response=await fetch('./data/lie-group-lessons.json?v=20261024-ninej1');
+    const response=await fetch('./data/lie-group-lessons.json?v=20261024-ninej2');
     if(!response.ok)throw Error(`李群课程未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.lessons)||!data.lessons.length||data.lessons.some(lesson=>!lesson.id||!Array.isArray(lesson.quiz)||lesson.quiz.some(q=>!Array.isArray(q.choices)||!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.choices.length)))throw Error('李群课程数据不完整，请重新载入。');
@@ -34,7 +34,7 @@ async function load(){
 }
 async function loadDerivations(){
   if(!derivationPromise)derivationPromise=(async()=>{
-    const response=await fetch('./data/lie-derivations.json?v=20261024-ninej1');
+    const response=await fetch('./data/lie-derivations.json?v=20261024-ninej2');
     if(!response.ok)throw Error(`分步推导未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.exercises)||!data.exercises.length||data.exercises.some(exercise=>!exercise.id||!Array.isArray(exercise.steps)||!exercise.steps.length||exercise.steps.some(step=>typeof step.title!=='string'||typeof step.explanation!=='string')||!Array.isArray(exercise.check?.choices)||!Number.isInteger(exercise.check.answer)||exercise.check.answer<0||exercise.check.answer>=exercise.check.choices.length))throw Error('分步推导数据不完整，请重新载入。');
@@ -43,11 +43,11 @@ async function loadDerivations(){
 }
 export function getLieGroupResult(){return loaded?{kind:'lie-group-teaching',experiment:state.result?{input:state.payload,result:state.result}:null,derivations:derivations?{selected:derivations.exercises[state.derivation]?.id,total:derivations.exercises.length,progress:structuredClone(state.derivationProgress)}:null,sources:loaded.sources||[],convention:'U = exp(−i θ T); T = σ/2 or λ/2. All group, state, tensor-product and dynamics calculations use the browser Python engine.'}:null;}
 
-export async function renderLieGroupView({container,run,toast=()=>{},download=()=>{}}){
+export async function renderLieGroupView({container,run,cancelRun,toast=()=>{},download=()=>{}}){
   const revision=++state.revision;state.job++;state.busy=false;
   container.innerHTML='<div class="lg-page"><div class="lg-loading" role="status"><span class="spinner"></span>正在载入李群基础课程…</div></div>';
   const root=container.firstElementChild,current=()=>state.revision===revision&&container.isConnected!==false&&root.isConnected!==false&&root.parentNode===container,$=selector=>root.querySelector(selector);
-  let data;try{data=await load();}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary" id="lg-retry">重新载入</button>`;$('#lg-retry').onclick=()=>{if(current())return renderLieGroupView({container,run,toast,download});};}return;}
+  let data;try{data=await load();}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary" id="lg-retry">重新载入</button>`;$('#lg-retry').onclick=()=>{if(current())return renderLieGroupView({container,run,cancelRun,toast,download});};}return;}
   if(!current())return;
   const questions=entries(data.lessons);
   const invalidate=()=>{state.job++;state.derivationLoad++;state.busy=false;state.error='';};
@@ -108,7 +108,7 @@ export async function renderLieGroupView({container,run,toast=()=>{},download=()
   }
   function drawOutput(){
     if(!current()||state.tab!=='lab')return;const target=$('#lg-lab-output'),result=state.result;if(!target)return;
-    if(state.busy){target.innerHTML=`<div class="lg-placeholder" role="status"><span class="spinner"></span><h3>Python 正在计算</h3><p>${state.experiment==='su3_ninej'?'正在构造成对耦合树并精确核验 9j 系数。首次需要载入 SymPy；较大的四重积可能需要数十秒，请稍候。':state.experiment==='su3_cg'&&state.inputs.su3_cg.arithmetic==='exact'?'正在构造并核验精确根式矩阵。首次需要载入 SymPy；27 ⊗ 3 等高维计算可能需要数十秒，请稍候。':'首次使用需要载入计算环境，请稍候。'}</p></div>`;return;}
+    if(state.busy){const runningJob=state.job;target.innerHTML=`<div class="lg-placeholder" role="status"><span class="spinner"></span><h3>Python 正在计算</h3><p>${state.experiment==='su3_ninej'?'正在构造成对耦合树并精确核验 9j 系数。首次需要载入 SymPy；8⁴ 等高维四重积需进行较多精确符号运算，首次计算可能需要数分钟。相同因子与目标的后续换基会复用本次会话缓存，请保持页面打开。':state.experiment==='su3_cg'&&state.inputs.su3_cg.arithmetic==='exact'?'正在构造并核验精确根式矩阵。首次需要载入 SymPy；27 ⊗ 3 等高维计算可能需要数十秒，请稍候。':'首次使用需要载入计算环境，请稍候。'}</p>${typeof cancelRun==='function'?'<button type="button" class="secondary" id="lg-cancel-run">取消本次计算</button><p class="lg-hint">取消会重置浏览器 Python 环境与本次会话计算缓存。</p>':''}</div>`;if($('#lg-cancel-run'))$('#lg-cancel-run').onclick=()=>{if(!current()||!state.busy||runningJob!==state.job)return;state.job++;state.busy=false;state.result=null;state.payload=null;state.error='本次计算已取消。可以修改参数后重新计算。';try{cancelRun();}catch(error){state.error=error.message||String(error);}drawLab();};return;}
     if(state.error){target.innerHTML=`<div class="lg-placeholder"><h3>这次计算未完成</h3><p class="notice error" role="alert">${esc(state.error)}</p><button type="button" class="secondary" id="lg-retry-lab">重新计算</button></div>`;$('#lg-retry-lab').onclick=runLab;return;}
     if(!result){target.innerHTML='<div class="lg-placeholder"><span class="lg-symbol">e<sup>−iθT</sup></span><h3>从一个生成元开始</h3><p>左侧选择参数，点击「计算并观察」。尝试预测矩阵或测量概率，再与结果对照。</p></div>';return;}
     const checks=result.residuals||{};

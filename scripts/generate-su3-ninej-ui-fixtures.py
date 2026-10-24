@@ -14,6 +14,9 @@ cases = {
     'mixed': {'factors': [[2, 0], [1, 0], [0, 1], [0, 0]], 'target': [2, 0]},
     'auto': {'factors': [[1, 0], [1, 0], [0, 0], [0, 0]]},
     'autoBar': {'factors': [[1, 0], [1, 0], [0, 0], [0, 0]], 'target': [0, 1]},
+    'octetsSinglet': {'factors': [[1, 1]] * 4, 'target': [0, 0], 'state': {'index': 7}},
+    'octetsAdjoint': {'factors': [[1, 1]] * 4, 'target': [1, 1]},
+    'octets27': {'factors': [[1, 1]] * 4, 'target': [2, 2]},
 }
 results = {name: run(dict(base, **inputs)) for name, inputs in cases.items()}
 results['complex'] = run(dict(base, **cases['four'], state={'amplitudes': [
@@ -21,6 +24,13 @@ results['complex'] = run(dict(base, **cases['four'], state={'amplitudes': [
 ]}))
 results['complexBack'] = run(dict(base, **cases['four'], direction='right_to_left',
                                   state={'amplitudes': results['complex']['exactOutputAmplitudes']}))
+octets = {'factors': [[1, 1]] * 4, 'target': [0, 0]}
+results['octetsComplex'] = run(dict(base, **octets, state={'amplitudes': [
+    {'re': 'sqrt(2)/2' if i == 0 else '0', 'im': 'sqrt(2)/2' if i == 1 else '0'}
+    for i in range(8)
+]}))
+results['octetsComplexBack'] = run(dict(base, **octets, direction='right_to_left',
+                                        state={'amplitudes': results['octetsComplex']['exactOutputAmplitudes']}))
 target = ROOT / 'scripts' / 'fixtures' / 'su3-ninej-ui.json'
-target.write_text(json.dumps(results, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+target.write_text(json.dumps(results, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
 print(f'Wrote {target.relative_to(ROOT)} with {len(results)} exact Python results')
