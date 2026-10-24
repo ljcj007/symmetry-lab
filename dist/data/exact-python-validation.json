@@ -27,7 +27,7 @@
     "dist/python/lie_applications.py": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9",
     "dist/python/su3_cg.py": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794",
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
-    "dist/python/su3_racah.py": "b65748e131fc851e21eecf01080e4045bd2ba2eb44ce1c2235bc07bd8424ef11"
+    "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -776,6 +776,13 @@
     "date": "2026-10-24",
     "unitTests": 11,
     "test": "scripts/test-python-su3-racah.py",
-    "scope": "Six input irreps (p+q<=2), 216 ordered triples, product dimension <=512, selected final-irrep multiplicity spaces. Exact F, dimension-reduced six-j and reversible complex state coordinates."
+    "scope": "Six input irreps (p+q<=2), 216 ordered triples, product dimension <=512, selected final-irrep multiplicity spaces. Exact F, dimension-reduced six-j and reversible complex state coordinates.",
+    "fullScopeAudit": {
+      "orderedTriples": 216,
+      "finalIrrepTargets": 899,
+      "maxMultiplicity": 8,
+      "allExactChecksPassed": true,
+      "maxNumericalPreviewResidual": 5.551115123125783e-16
+    }
   }
 }

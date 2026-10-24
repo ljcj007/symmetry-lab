@@ -1,5 +1,5 @@
-import {cgName,cgDefault,cgPresets,cgInputIds,cgControls,readCGPayload,bindCGControls,cgOutput,bindCGOutput} from './su3-cg-ui.js?v=20261024-racah1';
-import {racahName,racahDefault,racahPresets,racahInputIds,racahControls,readRacahPayload,bindRacahControls,racahOutput,bindRacahOutput} from './su3-racah-ui.js?v=20261024-racah1';
+import {cgName,cgDefault,cgPresets,cgInputIds,cgControls,readCGPayload,bindCGControls,cgOutput,bindCGOutput} from './su3-cg-ui.js?v=20261024-racah2';
+import {racahName,racahDefault,racahPresets,racahInputIds,racahControls,readRacahPayload,bindRacahControls,racahOutput,bindRacahOutput} from './su3-racah-ui.js?v=20261024-racah2';
 // Display-only helpers. Python supplies dynamics, CG coefficients, dimensions,
 // Casimirs and weights; SVG only projects the returned coordinates and samples.
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

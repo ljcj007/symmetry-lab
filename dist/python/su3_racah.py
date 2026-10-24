@@ -138,7 +138,8 @@ def _paths(factors, target, side, rows):
             vectors.append(_matrix_simp(vector))
             suffix = 's' if block['swapParity'] == 1 else 'a' if block['swapParity'] == -1 else ''
             intermediate = _representation(*middle)
-            label = (f"{intermediate['label']}{suffix} · α={block['copy']}, β={outer['copy']}")
+            first_label, second_label = ('α', 'β') if side == 'left' else ('γ', 'δ')
+            label = (f"{intermediate['label']}{suffix} · {first_label}={block['copy']}, {second_label}={outer['copy']}")
             paths.append({'index': len(paths), 'label': label, 'intermediate': intermediate,
                           'firstCopy': block['copy'], 'secondCopy': outer['copy'],
                           'firstSwapParity': block['swapParity'], 'secondSwapParity': outer['swapParity'],
@@ -288,7 +289,7 @@ def run(payload):
         'convention': [
             '三因子顺序固定 A⊗B⊗C；左路径为 ((A B)E C)D，右路径为 (A (B C)F)D。',
             '每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同因子先交换对称后反对称。',
-            'α=firstCopy，β=secondCopy 分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。',
+            '左路径 α=firstCopy、β=secondCopy，右路径 γ=firstCopy、δ=secondCopy，分别标出两个二元顶点的外重数；这些标签不能只用中间表示代替。',
             'F 的行是右路径、列是左路径；F 为正交矩阵，不随最终表示的 GT 磁量子态改变。',
             '本项目维数缩约 6j 定义为 S_fe=F_fe/√(dimE dimF)，其相位与文献约定可能不同；F 与 S 不可混用。',
             '范数为平方范数；输入不自动归一化，所示概率按该平方范数归一化。',

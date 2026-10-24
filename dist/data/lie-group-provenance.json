@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-24",
-  "build": "20261024-racah1",
+  "build": "20261024-racah2",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -97,7 +97,7 @@
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3416,
-      "sha256": "17258cd986b17389455aa863dd052c5b4d68cfdeb2a485aa165e070c3f4563bf"
+      "sha256": "fa3253763a17fffde7369f3a625ed25d40cc805f03d2826c2ee73f0908ec422e"
     },
     "dist/classroom.css": {
       "bytes": 1065,
@@ -105,7 +105,7 @@
     },
     "dist/lie-group-ui.js": {
       "bytes": 37596,
-      "sha256": "10a9bfd87ca242129ee8de4d7606d67e5f09a8e1cd7533292a16098b51874f00"
+      "sha256": "03b93ebcd6fb3ef8c2cb47fdaa9122bc6bcee4644db10d9a897c59130f517be6"
     },
     "dist/lie-group.css": {
       "bytes": 21587,
@@ -129,7 +129,7 @@
     },
     "scripts/test-lie-group-ui.mjs": {
       "bytes": 52725,
-      "sha256": "50b00e613c8316504251c235ed0c8a6f96fa494b4686da82a63f1fbf282b6fab"
+      "sha256": "1f49156e85698165cac797854ea23b1d516f777b5ee648a339800deb14409acd"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
@@ -141,7 +141,7 @@
     },
     "dist/lie-physics-ui.js": {
       "bytes": 17925,
-      "sha256": "36944e98c88da3bc8296090fcc777766b8628c85996adc6884834bf82baad6b1"
+      "sha256": "d89d86889a66d29afbac6d0183758f8c1192f02059fb13ae893fba5947326bcb"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
@@ -196,16 +196,16 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/python/su3_racah.py": {
-      "bytes": 18856,
-      "sha256": "b65748e131fc851e21eecf01080e4045bd2ba2eb44ce1c2235bc07bd8424ef11"
+      "bytes": 19021,
+      "sha256": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d"
     },
     "scripts/test-python-su3-racah.py": {
-      "bytes": 12113,
-      "sha256": "dbd4a3c3b96808ce92a96356fc9d64dbc5bf5e6e5e5660b1375f54532e79d52a"
+      "bytes": 12700,
+      "sha256": "aaad4ddf6c63d69fe79518855414693801d3b8ce38f9f7aaa4890fccc6e7c2a8"
     },
     "scripts/fixtures/su3-racah-ui.json": {
-      "bytes": 75306,
-      "sha256": "44c8773a9bd1f01ddc53af6a3ea72ddf40ff71c6c06a1ce69279d2a7e2da9af7"
+      "bytes": 75730,
+      "sha256": "5bc7207bea6f25552919d9f6b0fb66aeded200daa5c288b94fc986c36b4fbada"
     },
     "scripts/generate-su3-racah-ui-fixtures.py": {
       "bytes": 1432,

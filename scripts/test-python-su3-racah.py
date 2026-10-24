@@ -64,6 +64,10 @@ class SU3Racah(unittest.TestCase):
         self.assertEqual([(path['intermediate']['p'], path['intermediate']['q']) for path in result['leftPaths']],
                          [(2, 0), (0, 1)])
         self.assertEqual([path['firstSwapParity'] for path in result['leftPaths']], [1, -1])
+        for side, letters in (('leftPaths', ('α', 'β')), ('rightPaths', ('γ', 'δ'))):
+            for path in result[side]:
+                self.assertIn(f"{letters[0]}={path['firstCopy']}", path['label'])
+                self.assertIn(f"{letters[1]}={path['secondCopy']}", path['label'])
         self.assert_exact(exact_matrix(result['exactSixJMatrix']),
                           [[sp.Rational(1, 12), sp.sqrt(6) / 12], [sp.sqrt(6) / 12, -sp.Rational(1, 6)]])
 
@@ -117,6 +121,10 @@ class SU3Racah(unittest.TestCase):
             self.assertEqual([(x['firstCopy'], x['secondCopy']) for x in octets], [(1, 1), (1, 2), (2, 1), (2, 2)])
             self.assertEqual([(x['firstSwapParity'], x['secondSwapParity']) for x in octets],
                              [(1, 1), (1, -1), (-1, 1), (-1, -1)])
+            first_label, second_label = ('α', 'β') if side == 'leftPaths' else ('γ', 'δ')
+            for path in octets:
+                self.assertIn(f"{first_label}={path['firstCopy']}", path['label'])
+                self.assertIn(f"{second_label}={path['secondCopy']}", path['label'])
         # Independent 1↔1 trace contraction in the adjoint has overlap 1/8.
         self.assertEqual(result['exactFMatrix'][-1][-1], '1/8')
         self.assertEqual(result['exactFMatrix'][0][0], '7/40')

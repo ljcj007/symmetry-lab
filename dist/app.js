@@ -1,8 +1,8 @@
-import {renderAdvancedView,getAdvancedResult} from './advanced-ui.js?v=20261024-racah1';
-import {runPythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261024-racah1';
-import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261024-racah1';
-import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261024-racah1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash} from './classroom-ui.js?v=20261024-racah1';
+import {renderAdvancedView,getAdvancedResult} from './advanced-ui.js?v=20261024-racah2';
+import {runPythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261024-racah2';
+import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261024-racah2';
+import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261024-racah2';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash} from './classroom-ui.js?v=20261024-racah2';
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
