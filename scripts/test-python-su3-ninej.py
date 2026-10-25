@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import sympy as sp
@@ -167,7 +168,7 @@ class SU3NineJ(unittest.TestCase):
 
     def test_all_1296_supported_characters_and_both_paired_path_counts(self):
         count, channels = 0, 0
-        for factors in itertools.product(ninej.FACTORS, repeat=4):
+        for factors in itertools.product(ninej._SMALL_FACTORS, repeat=4):
             dimension = math.prod(ninej._dimension(*x) for x in factors)
             if dimension > ninej.MAX_DIMENSION:
                 continue
@@ -320,9 +321,110 @@ class SU3NineJ(unittest.TestCase):
                 self.assert_result(result)
                 self.assertEqual(result['exactRecouplingMatrix'], [['1']])
 
+    def test_selected_binary_columns_preserve_complete_octet_gt_gauge(self):
+        # Compare every GT column, including degenerate weights and both
+        # symmetric/antisymmetric outer copies, to the established full CG.
+        pair = ((1, 1), (1, 1))
+        complete = ninej._coupling(*(pair[0] + pair[1]))
+        for block in complete['blocks']:
+            embedding = ninej._selected_embedding(pair, (block['p'], block['q']), block['copy'])
+            selected = sp.zeros(64, block['dimension'])
+            for column in range(block['dimension']):
+                for row, value in embedding.column(column):
+                    selected[row, column] = value
+            self.assert_exact(selected, complete['matrix'][:, block['start']:block['end']])
+            self.assertEqual(embedding.outer['swapParity'], block['swapParity'])
+        # The lazy path composer must also retain the original nesting of
+        # first-copy, second-intermediate, second-copy and final-copy order.
+        factors, target = ((1, 1), (1, 1), (0, 0), (1, 1)), (1, 1)
+        rows = [i for i, weight in enumerate(ninej._four_weights(factors)) if weight == target]
+        for side in ('left', 'right'):
+            original, old_paths = ninej._paths(factors, target, side, rows)
+            selected, new_paths = ninej._selected_paths(factors, target, side, rows)
+            self.assert_exact(selected, original)
+            self.assertEqual(new_paths, old_paths)
+
+    def test_high_input_binary_full_intertwining_without_full_cg_solver(self):
+        # Independently verify the lazy27⊗3 embeddings against all eight
+        # tensor-product generators, not just a final recoupling Gram matrix.
+        pair = ((2, 2), (1, 0))
+        left, right = [ninej._irrep(*label) for label in pair]
+        generators = [sp.kronecker_product(a, sp.eye(3)) + sp.kronecker_product(sp.eye(27), b)
+                      for a, b in zip(left['generators'], right['generators'])]
+        matrices = []
+        for block in ninej._decomposition(pair):
+            middle = block['p'], block['q']
+            target = ninej._irrep(*middle)
+            for outer in ninej._highest(*(pair[0] + pair[1]), *middle):
+                embedding = ninej._selected_embedding(pair, middle, outer['copy'])
+                columns = sp.zeros(81, block['dimension'])
+                for column in range(block['dimension']):
+                    for row, value in embedding.column(column):
+                        columns[row, column] = value
+                for actual, expected in zip(generators, target['generators']):
+                    self.assert_exact(actual * columns, columns * expected)
+                matrices.append(columns)
+        complete = sp.Matrix.hstack(*matrices)
+        self.assertEqual(complete.shape, (81, 81))
+        self.assert_exact(complete.T * complete, sp.eye(81))
+
+    def test_decuplet_four_active_factors_independent_s3_probabilities(self):
+        # 3^3=10+2·8+1; only the doubled8 can couple with10 to final8.
+        # Its two paths carry the standard S3 representation.  In the CD
+        # exchange eigenbasis, P_BC has squared entries1/4,3/4 regardless
+        # of CG phases.  This is an independent permutation-group oracle.
+        result = ninej.run(request(((3, 0), (1, 0), (1, 0), (1, 0)), (1, 1)))
+        self.assert_result(result)
+        self.assertEqual((result['dimension'], result['multiplicity']), (270, 2))
+        r = matrix(result['exactRecouplingMatrix'])
+        self.assert_exact(r.applyfunc(lambda x: ninej._simp(x * x)),
+                          [[sp.Rational(1, 4), sp.Rational(3, 4)],
+                           [sp.Rational(3, 4), sp.Rational(1, 4)]])
+        self.assert_exact(r * r, sp.eye(2))
+        exchange = sp.diag(*[path['secondSwapParity'] for path in result['leftPaths']])
+        self.assert_exact((exchange * r) ** 3, sp.eye(2))
+
+    def test_high_input_four_active_presets_outer_copies_and_complex_inverse(self):
+        cases = [(((3, 0), (1, 0), (1, 0), (0, 1)), (2, 1), 270, 4),
+                 (((2, 1), (1, 0), (0, 1), (1, 0)), (3, 1), 405, 5),
+                 (((2, 2), (1, 0), (0, 1), (1, 0)), (3, 2), 729, 5),
+                 (((0, 3), (0, 1), (0, 1), (1, 0)), (1, 2), 270, 4),
+                 (((4, 0), (1, 0), (0, 1), (1, 0)), (3, 1), 405, 4),
+                 (((3, 1), (1, 0), (0, 1), (1, 0)), (4, 1), 648, 5)]
+        for factors, target, dimension, multiplicity in cases:
+            result = ninej.run(request(factors, target))
+            self.assert_result(result)
+            self.assertEqual((result['dimension'], result['multiplicity']), (dimension, multiplicity))
+            self.assertEqual(result['computation']['binaryEmbeddingMethod'], 'lazy-selected-weight')
+            self.assertTrue(any(path['finalCopy'] == 2 for path in result['leftPaths']))
+            crossed = ninej.run(request((factors[0], factors[2], factors[1], factors[3]), target))
+            self.assert_exact(matrix(crossed['exactRecouplingMatrix']), matrix(result['exactRecouplingMatrix']).T)
+        factors, target, _, multiplicity = cases[2]
+        amplitudes = [{'re': 'sqrt(2)/2', 'im': '0'}, {'re': '0', 'im': 'sqrt(2)/2'}]
+        amplitudes += [{'re': '0', 'im': '0'}] * (multiplicity - 2)
+        forward = ninej.run(request(factors, target, state={'amplitudes': amplitudes}))
+        reverse = ninej.run(request(factors, target, direction='right_to_left',
+                                   state={'amplitudes': forward['exactOutputAmplitudes']}))
+        self.assert_result(forward)
+        self.assert_result(reverse)
+        self.assert_exact(vector(reverse['exactOutputAmplitudes']), vector(forward['exactInputAmplitudes']))
+
+    def test_large_first_pair_and_high_final_dynkin_label(self):
+        with patch.object(ninej, '_coupling', side_effect=AssertionError('Full binary CG construction is forbidden here')):
+            result = ninej.run(request(((2, 2), (2, 2), (1, 0), (0, 0)), (1, 0)))
+        self.assert_result(result)
+        self.assertEqual((result['dimension'], result['multiplicity']), (2187, 3))
+        # A729-dimensional first pair must never call the full CG builder.
+        self.assertEqual(result['computation']['binaryEmbeddingMethod'], 'lazy-selected-weight')
+        highest = ninej.run(request(((4, 0), (4, 0), (4, 0), (0, 0)), (12, 0)))
+        self.assert_result(highest)
+        self.assertEqual(highest['dimension'], 3375)
+        self.assertEqual(highest['exactRecouplingMatrix'], [['1']])
+
     def test_input_bounds_and_safe_symbolic_parser(self):
         invalid = [dict(factors=[]), dict(factors=[[1, 0]] * 3),
-                   dict(factors=[[3, 0]] + [[1, 0]] * 3), dict(factors=[[True, 0]] + [[1, 0]] * 3),
+                   dict(factors=[[3, 2]] + [[1, 0]] * 3), dict(factors=[[2, 2]] * 4),
+                   dict(factors=[[True, 0]] + [[1, 0]] * 3),
                    dict(target=[1, 1]), dict(target=[-1, 0]), dict(direction='product_to_coupled'),
                    dict(arithmetic='numeric'), dict(state={'index': 3}),
                    dict(state={'amplitudes': [{'re': '0', 'im': '0'}] * 3}),

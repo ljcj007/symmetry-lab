@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-24",
-  "build": "20261024-ninej2",
+  "release": "2026-10-25",
+  "build": "20261025-ninej3",
   "sources": [
     {
       "id": "dresselhaus2008",
@@ -167,7 +167,7 @@
     },
     "dist/symmetry-course-ui.js": {
       "bytes": 63459,
-      "sha256": "0f6ab7af8c71707b5f319f6b0499605ae9d6f88df2dd4e7c68561092f42462cb"
+      "sha256": "bec376b984fa06cc45116c48f743072b7bad11bde02b0f8bc98f89926521c250"
     },
     "dist/symmetry-course.css": {
       "bytes": 30767,
@@ -210,8 +210,8 @@
       "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
     },
     "scripts/test-python-api.py": {
-      "bytes": 25757,
-      "sha256": "1f6a70817098bd12feb47ef3a3e1e05359a91c9fdc650b63fbd3f96c6a17c485"
+      "bytes": 28265,
+      "sha256": "d46a9034c56bc0a58c8922ae27ae3b9a92f3d581f1434d27ce3a6c6ebd085135"
     },
     "dist/crystal-viewer.js": {
       "bytes": 8851,

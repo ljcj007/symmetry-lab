@@ -447,14 +447,14 @@
       "path": "dist/python/su3_ninej.py",
       "upstream": [],
       "license": "GPL-3.0-only",
-      "implementation": "Original exact four-factor SU(3) recoupling in selected highest-weight blocks; sparse one-axis lowering and identical-factor tensor-permutation reuse preserve the GT gauge, all three outer copies per path and the documented dimension-reduced nine-j convention.",
+      "implementation": "Original exact SU(3) four-factor recoupling. Higher inputs use lazy binary weight-block CG embeddings, sparse two-root lowering with redundant-relation verification and selected final highest-weight kernels. Legacy six-input paired embeddings, GT gauge, three outer copies per path and dimension-reduced nine-j convention are preserved.",
       "validation": "scripts/test-python-su3-ninej.py",
       "limitations": [
-        "Each of four input irreps has p+q<=2; total product dimension<=4096; all 1296 ordered combinations and all their actual final irreps",
+        "Each of four input irreps has p+q<=4 (15 types); total product dimension<=4096, admitting 19258 ordered combinations. Actual final targets only; no unrestricted high-dimensional input products.",
         "Classical ordinary SU(3), fixed GT phase and outer-copy basis; no free symbolic parameters or automatic literature gauge conversion",
         "Coordinate permutation adds no fermionic statistics sign"
       ],
-      "sha256": "2117f5a6e507932768fbe9d10d3bb9f4b91d3abafd78bff64bd0c57bf462d6d1"
+      "sha256": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
     }
   ],
   "coordinate_conventions": {
@@ -488,7 +488,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",

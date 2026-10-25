@@ -1,6 +1,6 @@
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261024-ninej2';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261024-ninej2';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261024-ninej2';
+import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261025-ninej3';
+import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261025-ninej3';
+import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261025-ninej3';
 
 export const classroomSections = [
   {id:'pointgroups',slug:'pointgroups',title:'32 点群',summary:'从有限对称操作、特征标与选择定则入门。'},

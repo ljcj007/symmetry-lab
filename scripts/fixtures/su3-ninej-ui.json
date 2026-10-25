@@ -17001,6 +17001,8 @@
       "productDimension": 81,
       "highestWeightRows": 4,
       "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "complete-first-pair",
+      "maxInputDynkinSum": 4,
       "middleFactorPermutationReuse": true
     },
     "leftPaths": [
@@ -17361,12 +17363,13 @@
     "derivation": [
       "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
       "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
-      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
       "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
       "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
     ],
     "notes": [
-      "六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
       "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
       "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
       "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
@@ -17460,6 +17463,8 @@
       "productDimension": 81,
       "highestWeightRows": 4,
       "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "complete-first-pair",
+      "maxInputDynkinSum": 4,
       "middleFactorPermutationReuse": true
     },
     "leftPaths": [
@@ -17807,12 +17812,13 @@
     "derivation": [
       "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
       "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
-      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
       "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
       "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
     ],
     "notes": [
-      "六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
       "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
       "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
       "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
@@ -17969,6 +17975,8 @@
       "productDimension": 4096,
       "highestWeightRows": 346,
       "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "complete-first-pair",
+      "maxInputDynkinSum": 4,
       "middleFactorPermutationReuse": true
     },
     "leftPaths": [
@@ -18974,12 +18982,13 @@
     "derivation": [
       "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
       "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
-      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
       "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
       "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
     ],
     "notes": [
-      "六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
       "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
       "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
       "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
@@ -19136,6 +19145,8 @@
       "productDimension": 4096,
       "highestWeightRows": 346,
       "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "complete-first-pair",
+      "maxInputDynkinSum": 4,
       "middleFactorPermutationReuse": true
     },
     "leftPaths": [
@@ -20063,12 +20074,3879 @@
     "derivation": [
       "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
       "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
-      "将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
       "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
       "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
     ],
     "notes": [
-      "六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "decuplet": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 270,
+    "factors": [
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 2,
+      "q": 1,
+      "label": "15 (2,1)",
+      "dimension": 15,
+      "multiplicity": 4
+    },
+    "targets": [
+      {
+        "p": 5,
+        "q": 1,
+        "label": "48 (5,1)",
+        "dimension": 48,
+        "multiplicity": 1
+      },
+      {
+        "p": 3,
+        "q": 2,
+        "label": "42 (3,2)",
+        "dimension": 42,
+        "multiplicity": 2
+      },
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 3
+      },
+      {
+        "p": 1,
+        "q": 3,
+        "label": "24̄ (1,3)",
+        "dimension": 24,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 4
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 4,
+    "direction": "left_to_right",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 270,
+      "highestWeightRows": 14,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": true
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "15′ (4,0) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 4,
+          "q": 0,
+          "label": "15′ (4,0)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "15 (2,1) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "15 (2,1) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "15′ (4,0) × 8 (1,1) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 4,
+          "q": 0,
+          "label": "15′ (4,0)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 8 (1,1) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "15 (2,1) × 8 (1,1) · δ=1, ε=1, ζ=2",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "15 (2,1) × 1 (0,0) · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        -0.25,
+        0.6004805767690767,
+        -0.2773500981126146,
+        0.7071067811865476
+      ],
+      [
+        0.6004805767690767,
+        0.7115384615384616,
+        0.13323467750529824,
+        -0.3396831102433787
+      ],
+      [
+        -0.2773500981126146,
+        0.13323467750529824,
+        -0.7948717948717948,
+        -0.5229763603684907
+      ],
+      [
+        0.7071067811865476,
+        -0.3396831102433787,
+        -0.5229763603684907,
+        0.3333333333333333
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "-1/4",
+        "5*sqrt(39)/52",
+        "-sqrt(13)/13",
+        "sqrt(2)/2"
+      ],
+      [
+        "5*sqrt(39)/52",
+        "37/52",
+        "sqrt(3)/13",
+        "-sqrt(78)/26"
+      ],
+      [
+        "-sqrt(13)/13",
+        "sqrt(3)/13",
+        "-31/39",
+        "-4*sqrt(26)/39"
+      ],
+      [
+        "sqrt(2)/2",
+        "-sqrt(78)/26",
+        "-4*sqrt(26)/39",
+        "1/3"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        -0.0020833333333333333,
+        0.005004004806408973,
+        -0.002311250817605121,
+        0.016666666666666666
+      ],
+      [
+        0.005004004806408973,
+        0.005929487179487179,
+        0.0011102889792108188,
+        -0.008006407690254357
+      ],
+      [
+        -0.002311250817605121,
+        0.0011102889792108188,
+        -0.006623931623931624,
+        -0.012326671027227313
+      ],
+      [
+        0.016666666666666666,
+        -0.008006407690254357,
+        -0.012326671027227313,
+        0.022222222222222223
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "-1/480",
+        "sqrt(39)/1248",
+        "-sqrt(13)/1560",
+        "1/60"
+      ],
+      [
+        "sqrt(39)/1248",
+        "37/6240",
+        "sqrt(3)/1560",
+        "-sqrt(39)/780"
+      ],
+      [
+        "-sqrt(13)/1560",
+        "sqrt(3)/1560",
+        "-31/4680",
+        "-2*sqrt(13)/585"
+      ],
+      [
+        "1/60",
+        "-sqrt(39)/780",
+        "-2*sqrt(13)/585",
+        "1/45"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": -0.25,
+        "im": 0.0
+      },
+      {
+        "re": 0.6004805767690767,
+        "im": 0.0
+      },
+      {
+        "re": -0.2773500981126146,
+        "im": 0.0
+      },
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "-1/4",
+        "im": "0"
+      },
+      {
+        "re": "5*sqrt(39)/52",
+        "im": "0"
+      },
+      {
+        "re": "-sqrt(13)/13",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.0625,
+      0.3605769230769231,
+      0.07692307692307693,
+      0.5
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/16",
+      "75/208",
+      "1/13",
+      "1/2"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "15′ (4,0) × 8 (1,1) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": -0.25,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-1/4",
+          "im": "0"
+        },
+        "probability": 0.0625
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 8 (1,1) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.6004805767690767,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "5*sqrt(39)/52",
+          "im": "0"
+        },
+        "probability": 0.3605769230769231
+      },
+      {
+        "index": 2,
+        "label": "15 (2,1) × 8 (1,1) · δ=1, ε=1, ζ=2",
+        "amplitude": {
+          "re": -0.2773500981126146,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-sqrt(13)/13",
+          "im": "0"
+        },
+        "probability": 0.07692307692307693
+      },
+      {
+        "index": 3,
+        "label": "15 (2,1) × 1 (0,0) · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 7.351262805568075e-17,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 7.817598153654591e-19,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 2.7755575615628914e-17
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "decupletStandard": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 270,
+    "factors": [
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 1,
+      "q": 1,
+      "label": "8 (1,1)",
+      "dimension": 8,
+      "multiplicity": 2
+    },
+    "targets": [
+      {
+        "p": 6,
+        "q": 0,
+        "label": "28 (6,0)",
+        "dimension": 28,
+        "multiplicity": 1
+      },
+      {
+        "p": 4,
+        "q": 1,
+        "label": "35 (4,1)",
+        "dimension": 35,
+        "multiplicity": 3
+      },
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27,
+        "multiplicity": 3
+      },
+      {
+        "p": 3,
+        "q": 0,
+        "label": "10 (3,0)",
+        "dimension": 10,
+        "multiplicity": 3
+      },
+      {
+        "p": 0,
+        "q": 3,
+        "label": "10̄ (0,3)",
+        "dimension": 10,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 1,
+        "label": "8 (1,1)",
+        "dimension": 8,
+        "multiplicity": 2
+      }
+    ],
+    "multiplicity": 2,
+    "direction": "left_to_right",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 270,
+      "highestWeightRows": 19,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": true
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "15 (2,1) × 6 (2,0)s · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 3̄ (0,1)a · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "15 (2,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        -0.5,
+        0.8660254037844386
+      ],
+      [
+        0.8660254037844386,
+        0.5
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "-1/2",
+        "sqrt(3)/2"
+      ],
+      [
+        "sqrt(3)/2",
+        "1/2"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        -0.005555555555555556,
+        0.013608276348795434
+      ],
+      [
+        0.013608276348795434,
+        0.011111111111111112
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "-1/180",
+        "sqrt(6)/180"
+      ],
+      [
+        "sqrt(6)/180",
+        "1/90"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": -0.5,
+        "im": 0.0
+      },
+      {
+        "re": 0.8660254037844386,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "-1/2",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(3)/2",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.25,
+      0.75
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/4",
+      "3/4"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "15 (2,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": -0.5,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-1/2",
+          "im": "0"
+        },
+        "probability": 0.25
+      },
+      {
+        "index": 1,
+        "label": "15 (2,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.8660254037844386,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(3)/2",
+          "im": "0"
+        },
+        "probability": 0.75
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 1.1102230246251565e-16,
+      "reconstruction": 5.551115123125783e-17,
+      "gtStateIndependence": 5.551115123125783e-17,
+      "weightedNineJ": 3.469446951953614e-18,
+      "multiplicity": 0.0,
+      "stateNorm": 1.1102230246251565e-16,
+      "roundtrip": 1.1102230246251565e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "fifteen": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 405,
+    "factors": [
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 3,
+      "q": 1,
+      "label": "24 (3,1)",
+      "dimension": 24,
+      "multiplicity": 5
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 2,
+        "label": "60 (4,2)",
+        "dimension": 60,
+        "multiplicity": 1
+      },
+      {
+        "p": 5,
+        "q": 0,
+        "label": "21 (5,0)",
+        "dimension": 21,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 3,
+        "label": "42̄ (2,3)",
+        "dimension": 42,
+        "multiplicity": 2
+      },
+      {
+        "p": 3,
+        "q": 1,
+        "label": "24 (3,1)",
+        "dimension": 24,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 4,
+        "label": "15̄′ (0,4)",
+        "dimension": 15,
+        "multiplicity": 1
+      },
+      {
+        "p": 1,
+        "q": 2,
+        "label": "15̄ (1,2)",
+        "dimension": 15,
+        "multiplicity": 5
+      },
+      {
+        "p": 2,
+        "q": 0,
+        "label": "6 (2,0)",
+        "dimension": 6,
+        "multiplicity": 4
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3,
+        "multiplicity": 2
+      }
+    ],
+    "multiplicity": 5,
+    "direction": "left_to_right",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 405,
+      "highestWeightRows": 10,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": false
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "24 (3,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "24 (3,1) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "15̄ (1,2) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 2,
+          "label": "15̄ (1,2)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "6 (2,0) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "27 (2,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 2,
+          "label": "27 (2,2)",
+          "dimension": 27
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "27 (2,2) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 2,
+          "label": "27 (2,2)",
+          "dimension": 27
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "10 (3,0) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "10 (3,0) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 0,
+          "label": "10 (3,0)",
+          "dimension": 10
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "8 (1,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.05184758473652126,
+        0.332633674318044,
+        0.5916079783099616,
+        -0.3415650255319866,
+        0.648074069840786
+      ],
+      [
+        -0.30673444786227766,
+        0.5220925637866243,
+        0.5,
+        0.28867513459481287,
+        -0.5477225575051661
+      ],
+      [
+        0.1371758152921836,
+        0.5088816890758622,
+        -0.37267799624996495,
+        0.6454972243679028,
+        0.408248290463863
+      ],
+      [
+        0.5312796481290517,
+        0.5332997301241935,
+        -0.28867513459481287,
+        -0.5,
+        -0.31622776601683794
+      ],
+      [
+        0.7759835936631706,
+        -0.2709336042670731,
+        0.4216370213557839,
+        0.3651483716701107,
+        -0.11547005383792515
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(93)/186",
+        "7*sqrt(217)/310",
+        "sqrt(35)/10",
+        "-sqrt(105)/30",
+        "sqrt(42)/10"
+      ],
+      [
+        "-sqrt(3255)/186",
+        "13*sqrt(155)/310",
+        "1/2",
+        "sqrt(3)/6",
+        "-sqrt(30)/10"
+      ],
+      [
+        "sqrt(651)/186",
+        "17*sqrt(31)/186",
+        "-sqrt(5)/6",
+        "sqrt(15)/6",
+        "sqrt(6)/6"
+      ],
+      [
+        "sqrt(1085)/62",
+        "23*sqrt(465)/930",
+        "-sqrt(3)/6",
+        "-1/2",
+        "-sqrt(10)/10"
+      ],
+      [
+        "2*sqrt(1302)/93",
+        "-16*sqrt(62)/465",
+        "2*sqrt(10)/15",
+        "sqrt(30)/15",
+        "-sqrt(3)/15"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.00029398177546340396,
+        0.001886071234597984,
+        0.009487917375888517,
+        -0.0024497697324672137,
+        0.00734930919740164
+      ],
+      [
+        -0.002459628000597462,
+        0.004186531697834853,
+        0.011340230290662862,
+        0.0029280348705262773,
+        -0.008784104611578832
+      ],
+      [
+        0.001278060199426157,
+        0.00474122520532725,
+        -0.009820927516479826,
+        0.007607257743127307,
+        0.007607257743127307
+      ],
+      [
+        0.0070002240107525735,
+        0.007026840928106512,
+        -0.01075828707279838,
+        -0.008333333333333333,
+        -0.008333333333333333
+      ],
+      [
+        0.00808316243399136,
+        -0.0028222250444486776,
+        0.012422599874998832,
+        0.004811252243246881,
+        -0.0024056261216234406
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(62)/26784",
+        "7*sqrt(1302)/133920",
+        "sqrt(105)/1080",
+        "-sqrt(7)/1080",
+        "sqrt(7)/360"
+      ],
+      [
+        "-sqrt(1085)/13392",
+        "13*sqrt(465)/66960",
+        "sqrt(6)/216",
+        "sqrt(10)/1080",
+        "-sqrt(10)/360"
+      ],
+      [
+        "sqrt(3255)/44640",
+        "17*sqrt(155)/44640",
+        "-sqrt(2)/144",
+        "sqrt(30)/720",
+        "sqrt(30)/720"
+      ],
+      [
+        "sqrt(434)/2976",
+        "23*sqrt(186)/44640",
+        "-sqrt(15)/360",
+        "-1/120",
+        "-1/120"
+      ],
+      [
+        "sqrt(1302)/4464",
+        "-sqrt(62)/2790",
+        "sqrt(5)/180",
+        "sqrt(3)/360",
+        "-sqrt(3)/720"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.05184758473652126,
+        "im": 0.0
+      },
+      {
+        "re": -0.30673444786227766,
+        "im": 0.0
+      },
+      {
+        "re": 0.1371758152921836,
+        "im": 0.0
+      },
+      {
+        "re": 0.5312796481290517,
+        "im": 0.0
+      },
+      {
+        "re": 0.7759835936631706,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(93)/186",
+        "im": "0"
+      },
+      {
+        "re": "-sqrt(3255)/186",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(651)/186",
+        "im": "0"
+      },
+      {
+        "re": "sqrt(1085)/62",
+        "im": "0"
+      },
+      {
+        "re": "2*sqrt(1302)/93",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.002688172043010753,
+      0.09408602150537634,
+      0.01881720430107527,
+      0.28225806451612906,
+      0.6021505376344086
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "1/372",
+      "35/372",
+      "7/372",
+      "35/124",
+      "56/93"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "27 (2,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.05184758473652126,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(93)/186",
+          "im": "0"
+        },
+        "probability": 0.002688172043010753
+      },
+      {
+        "index": 1,
+        "label": "27 (2,2) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": -0.30673444786227766,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-sqrt(3255)/186",
+          "im": "0"
+        },
+        "probability": 0.09408602150537634
+      },
+      {
+        "index": 2,
+        "label": "10 (3,0) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.1371758152921836,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(651)/186",
+          "im": "0"
+        },
+        "probability": 0.01881720430107527
+      },
+      {
+        "index": 3,
+        "label": "10 (3,0) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.5312796481290517,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(1085)/62",
+          "im": "0"
+        },
+        "probability": 0.28225806451612906
+      },
+      {
+        "index": 4,
+        "label": "8 (1,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.7759835936631706,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "2*sqrt(1302)/93",
+          "im": "0"
+        },
+        "probability": 0.6021505376344086
+      }
+    ],
+    "checks": {
+      "unitarity": 2.220446049250313e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 1.1932038626740246e-18,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 2.7755575615628914e-17
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "twentySeven": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 729,
+    "factors": [
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 3,
+      "q": 2,
+      "label": "42 (3,2)",
+      "dimension": 42,
+      "multiplicity": 5
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 3,
+        "label": "90 (4,3)",
+        "dimension": 90,
+        "multiplicity": 1
+      },
+      {
+        "p": 5,
+        "q": 1,
+        "label": "48 (5,1)",
+        "dimension": 48,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 4,
+        "label": "60̄ (2,4)",
+        "dimension": 60,
+        "multiplicity": 2
+      },
+      {
+        "p": 3,
+        "q": 2,
+        "label": "42 (3,2)",
+        "dimension": 42,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 5,
+        "label": "21̄ (0,5)",
+        "dimension": 21,
+        "multiplicity": 1
+      },
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 3,
+        "label": "24̄ (1,3)",
+        "dimension": 24,
+        "multiplicity": 5
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 5,
+    "direction": "left_to_right",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 729,
+      "highestWeightRows": 10,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": false
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "42 (3,2) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24̄ (1,3) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 3,
+          "label": "24̄ (1,3)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15 (2,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "42̄ (2,3) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42̄ (2,3) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24 (3,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15̄ (1,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 2,
+          "label": "15̄ (1,2)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.06025846050518227,
+        0.3960590171906697,
+        0.5443310539518174,
+        -0.2222222222222222,
+        0.7027283689263065
+      ],
+      [
+        -0.2087414303617165,
+        0.5716619504750294,
+        0.4714045207910317,
+        0.19245008972987526,
+        -0.6085806194501846
+      ],
+      [
+        0.15244318679334118,
+        0.46966821831386213,
+        -0.43033148291193524,
+        0.7027283689263065,
+        0.2777777777777778
+      ],
+      [
+        0.5904099236933968,
+        0.4446486458999438,
+        -0.3333333333333333,
+        -0.5443310539518174,
+        -0.21516574145596762
+      ],
+      [
+        0.762215933966706,
+        -0.31311214554257477,
+        0.43033148291193524,
+        0.35136418446315326,
+        -0.1111111111111111
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(85)/153",
+        "2*sqrt(102)/51",
+        "2*sqrt(6)/9",
+        "-2/9",
+        "2*sqrt(10)/9"
+      ],
+      [
+        "-2*sqrt(255)/153",
+        "5*sqrt(34)/51",
+        "sqrt(2)/3",
+        "sqrt(3)/9",
+        "-sqrt(30)/9"
+      ],
+      [
+        "4*sqrt(34)/153",
+        "sqrt(255)/34",
+        "-sqrt(15)/9",
+        "2*sqrt(10)/9",
+        "5/18"
+      ],
+      [
+        "4*sqrt(510)/153",
+        "11*sqrt(17)/102",
+        "-1/3",
+        "-2*sqrt(6)/9",
+        "-sqrt(15)/18"
+      ],
+      [
+        "20*sqrt(34)/153",
+        "-sqrt(255)/51",
+        "sqrt(15)/9",
+        "sqrt(10)/9",
+        "-1/9"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0002070847523429727,
+        0.0013610998820834034,
+        0.005291005291005291,
+        -0.0010102680103518166,
+        0.004041072041407266
+      ],
+      [
+        -0.0010145039535018128,
+        0.002778333500055575,
+        0.006480131594664492,
+        0.0012373205644093722,
+        -0.004949282257637489
+      ],
+      [
+        0.000693038137560296,
+        0.0021352084939864264,
+        -0.005533465783955526,
+        0.0042262543017373925,
+        0.0021131271508686962
+      ],
+      [
+        0.003795926211531425,
+        0.0028587823174362212,
+        -0.006061608062110899,
+        -0.004629629629629629,
+        -0.0023148148148148147
+      ],
+      [
+        0.004383158040103249,
+        -0.0018005658987560122,
+        0.0069993420927634675,
+        0.002672917912914934,
+        -0.0010691671651659736
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(255)/77112",
+        "sqrt(34)/4284",
+        "1/189",
+        "-sqrt(21)/4536",
+        "sqrt(21)/1134"
+      ],
+      [
+        "-sqrt(170)/12852",
+        "5*sqrt(51)/12852",
+        "sqrt(6)/378",
+        "sqrt(14)/3024",
+        "-sqrt(14)/756"
+      ],
+      [
+        "sqrt(714)/38556",
+        "sqrt(595)/11424",
+        "-sqrt(70)/1512",
+        "sqrt(30)/1296",
+        "sqrt(30)/2592"
+      ],
+      [
+        "sqrt(595)/6426",
+        "11*sqrt(714)/102816",
+        "-sqrt(21)/756",
+        "-1/216",
+        "-1/432"
+      ],
+      [
+        "sqrt(1785)/9639",
+        "-sqrt(238)/8568",
+        "sqrt(7)/378",
+        "sqrt(3)/648",
+        "-sqrt(3)/1620"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 1.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.06025846050518227,
+        "im": 0.0
+      },
+      {
+        "re": -0.2087414303617165,
+        "im": 0.0
+      },
+      {
+        "re": 0.15244318679334118,
+        "im": 0.0
+      },
+      {
+        "re": 0.5904099236933968,
+        "im": 0.0
+      },
+      {
+        "re": 0.762215933966706,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "1",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(85)/153",
+        "im": "0"
+      },
+      {
+        "re": "-2*sqrt(255)/153",
+        "im": "0"
+      },
+      {
+        "re": "4*sqrt(34)/153",
+        "im": "0"
+      },
+      {
+        "re": "4*sqrt(510)/153",
+        "im": "0"
+      },
+      {
+        "re": "20*sqrt(34)/153",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.0036310820624546117,
+      0.04357298474945534,
+      0.023238925199709513,
+      0.3485838779956427,
+      0.5809731299927379
+    ],
+    "exactInputProbabilities": [
+      "1",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "5/1377",
+      "20/459",
+      "32/1377",
+      "160/459",
+      "800/1377"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "42̄ (2,3) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.06025846050518227,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(85)/153",
+          "im": "0"
+        },
+        "probability": 0.0036310820624546117
+      },
+      {
+        "index": 1,
+        "label": "42̄ (2,3) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": -0.2087414303617165,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "-2*sqrt(255)/153",
+          "im": "0"
+        },
+        "probability": 0.04357298474945534
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.15244318679334118,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "4*sqrt(34)/153",
+          "im": "0"
+        },
+        "probability": 0.023238925199709513
+      },
+      {
+        "index": 3,
+        "label": "24 (3,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.5904099236933968,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "4*sqrt(510)/153",
+          "im": "0"
+        },
+        "probability": 0.3485838779956427
+      },
+      {
+        "index": 4,
+        "label": "15̄ (1,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.762215933966706,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "20*sqrt(34)/153",
+          "im": "0"
+        },
+        "probability": 0.5809731299927379
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 8.673617379884035e-19,
+      "multiplicity": 0.0,
+      "stateNorm": 0.0,
+      "roundtrip": 2.7755575615628914e-17
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "highComplex": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 729,
+    "factors": [
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 3,
+      "q": 2,
+      "label": "42 (3,2)",
+      "dimension": 42,
+      "multiplicity": 5
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 3,
+        "label": "90 (4,3)",
+        "dimension": 90,
+        "multiplicity": 1
+      },
+      {
+        "p": 5,
+        "q": 1,
+        "label": "48 (5,1)",
+        "dimension": 48,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 4,
+        "label": "60̄ (2,4)",
+        "dimension": 60,
+        "multiplicity": 2
+      },
+      {
+        "p": 3,
+        "q": 2,
+        "label": "42 (3,2)",
+        "dimension": 42,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 5,
+        "label": "21̄ (0,5)",
+        "dimension": 21,
+        "multiplicity": 1
+      },
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 3,
+        "label": "24̄ (1,3)",
+        "dimension": 24,
+        "multiplicity": 5
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 5,
+    "direction": "left_to_right",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 729,
+      "highestWeightRows": 10,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": false
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "42 (3,2) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24̄ (1,3) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 3,
+          "label": "24̄ (1,3)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15 (2,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "42̄ (2,3) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42̄ (2,3) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24 (3,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15̄ (1,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 2,
+          "label": "15̄ (1,2)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.06025846050518227,
+        0.3960590171906697,
+        0.5443310539518174,
+        -0.2222222222222222,
+        0.7027283689263065
+      ],
+      [
+        -0.2087414303617165,
+        0.5716619504750294,
+        0.4714045207910317,
+        0.19245008972987526,
+        -0.6085806194501846
+      ],
+      [
+        0.15244318679334118,
+        0.46966821831386213,
+        -0.43033148291193524,
+        0.7027283689263065,
+        0.2777777777777778
+      ],
+      [
+        0.5904099236933968,
+        0.4446486458999438,
+        -0.3333333333333333,
+        -0.5443310539518174,
+        -0.21516574145596762
+      ],
+      [
+        0.762215933966706,
+        -0.31311214554257477,
+        0.43033148291193524,
+        0.35136418446315326,
+        -0.1111111111111111
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(85)/153",
+        "2*sqrt(102)/51",
+        "2*sqrt(6)/9",
+        "-2/9",
+        "2*sqrt(10)/9"
+      ],
+      [
+        "-2*sqrt(255)/153",
+        "5*sqrt(34)/51",
+        "sqrt(2)/3",
+        "sqrt(3)/9",
+        "-sqrt(30)/9"
+      ],
+      [
+        "4*sqrt(34)/153",
+        "sqrt(255)/34",
+        "-sqrt(15)/9",
+        "2*sqrt(10)/9",
+        "5/18"
+      ],
+      [
+        "4*sqrt(510)/153",
+        "11*sqrt(17)/102",
+        "-1/3",
+        "-2*sqrt(6)/9",
+        "-sqrt(15)/18"
+      ],
+      [
+        "20*sqrt(34)/153",
+        "-sqrt(255)/51",
+        "sqrt(15)/9",
+        "sqrt(10)/9",
+        "-1/9"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0002070847523429727,
+        0.0013610998820834034,
+        0.005291005291005291,
+        -0.0010102680103518166,
+        0.004041072041407266
+      ],
+      [
+        -0.0010145039535018128,
+        0.002778333500055575,
+        0.006480131594664492,
+        0.0012373205644093722,
+        -0.004949282257637489
+      ],
+      [
+        0.000693038137560296,
+        0.0021352084939864264,
+        -0.005533465783955526,
+        0.0042262543017373925,
+        0.0021131271508686962
+      ],
+      [
+        0.003795926211531425,
+        0.0028587823174362212,
+        -0.006061608062110899,
+        -0.004629629629629629,
+        -0.0023148148148148147
+      ],
+      [
+        0.004383158040103249,
+        -0.0018005658987560122,
+        0.0069993420927634675,
+        0.002672917912914934,
+        -0.0010691671651659736
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(255)/77112",
+        "sqrt(34)/4284",
+        "1/189",
+        "-sqrt(21)/4536",
+        "sqrt(21)/1134"
+      ],
+      [
+        "-sqrt(170)/12852",
+        "5*sqrt(51)/12852",
+        "sqrt(6)/378",
+        "sqrt(14)/3024",
+        "-sqrt(14)/756"
+      ],
+      [
+        "sqrt(714)/38556",
+        "sqrt(595)/11424",
+        "-sqrt(70)/1512",
+        "sqrt(30)/1296",
+        "sqrt(30)/2592"
+      ],
+      [
+        "sqrt(595)/6426",
+        "11*sqrt(714)/102816",
+        "-sqrt(21)/756",
+        "-1/216",
+        "-1/432"
+      ],
+      [
+        "sqrt(1785)/9639",
+        "-sqrt(238)/8568",
+        "sqrt(7)/378",
+        "sqrt(3)/648",
+        "-sqrt(3)/1620"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.04260916604707614,
+        "im": 0.28005601680560194
+      },
+      {
+        "re": -0.1476024809233492,
+        "im": 0.4042260417272216
+      },
+      {
+        "re": 0.1077936111272591,
+        "im": 0.3321055820775357
+      },
+      {
+        "re": 0.417482860723433,
+        "im": 0.3144140727612662
+      },
+      {
+        "re": 0.5389680556362955,
+        "im": -0.22140372138502382
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(170)/306",
+        "im": "2*sqrt(51)/51"
+      },
+      {
+        "re": "-sqrt(510)/153",
+        "im": "5*sqrt(17)/51"
+      },
+      {
+        "re": "4*sqrt(17)/153",
+        "im": "sqrt(510)/68"
+      },
+      {
+        "re": "4*sqrt(255)/153",
+        "im": "11*sqrt(34)/204"
+      },
+      {
+        "re": "20*sqrt(17)/153",
+        "im": "-sqrt(510)/102"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.5,
+      0.5,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outputProbabilities": [
+      0.08024691358024691,
+      0.18518518518518517,
+      0.12191358024691358,
+      0.27314814814814814,
+      0.3395061728395062
+    ],
+    "exactInputProbabilities": [
+      "1/2",
+      "1/2",
+      "0",
+      "0",
+      "0"
+    ],
+    "exactOutputProbabilities": [
+      "13/162",
+      "5/27",
+      "79/648",
+      "59/216",
+      "55/162"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "42̄ (2,3) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.04260916604707614,
+          "im": 0.28005601680560194
+        },
+        "exactAmplitude": {
+          "re": "sqrt(170)/306",
+          "im": "2*sqrt(51)/51"
+        },
+        "probability": 0.08024691358024691
+      },
+      {
+        "index": 1,
+        "label": "42̄ (2,3) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": -0.1476024809233492,
+          "im": 0.4042260417272216
+        },
+        "exactAmplitude": {
+          "re": "-sqrt(510)/153",
+          "im": "5*sqrt(17)/51"
+        },
+        "probability": 0.18518518518518517
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.1077936111272591,
+          "im": 0.3321055820775357
+        },
+        "exactAmplitude": {
+          "re": "4*sqrt(17)/153",
+          "im": "sqrt(510)/68"
+        },
+        "probability": 0.12191358024691358
+      },
+      {
+        "index": 3,
+        "label": "24 (3,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.417482860723433,
+          "im": 0.3144140727612662
+        },
+        "exactAmplitude": {
+          "re": "4*sqrt(255)/153",
+          "im": "11*sqrt(34)/204"
+        },
+        "probability": 0.27314814814814814
+      },
+      {
+        "index": 4,
+        "label": "15̄ (1,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "amplitude": {
+          "re": 0.5389680556362955,
+          "im": -0.22140372138502382
+        },
+        "exactAmplitude": {
+          "re": "20*sqrt(17)/153",
+          "im": "-sqrt(510)/102"
+        },
+        "probability": 0.3395061728395062
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 8.673617379884035e-19,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 1.1443916996305594e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
+      "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
+      "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
+      "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",
+      "这是两个指定配对树之间的重耦合；不把交换张量轴解释为粒子交换统计，也不自动产生哈密顿量或谱。"
+    ],
+    "sources": [
+      {
+        "title": "Alex et al.: SU(N) Clebsch–Gordan algorithm and GT convention",
+        "url": "https://homepages.physik.uni-muenchen.de/~vondelft/PapersVonDelft/Alex2011.pdf"
+      },
+      {
+        "title": "Dang et al. (2024): canonical U(3) four-factor recoupling, §5.2",
+        "url": "https://link.springer.com/article/10.1140/epjp/s13360-024-05501-8"
+      }
+    ]
+  },
+  "highComplexBack": {
+    "lab": "lie",
+    "experiment": "su3_ninej",
+    "group": "su3",
+    "arithmetic": "exact",
+    "title": "SU(3) 9j 与四重张量积重耦合",
+    "dimension": 729,
+    "factors": [
+      {
+        "p": 2,
+        "q": 2,
+        "label": "27 (2,2)",
+        "dimension": 27
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      },
+      {
+        "p": 0,
+        "q": 1,
+        "label": "3̄ (0,1)",
+        "dimension": 3
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3
+      }
+    ],
+    "target": {
+      "p": 3,
+      "q": 2,
+      "label": "42 (3,2)",
+      "dimension": 42,
+      "multiplicity": 5
+    },
+    "targets": [
+      {
+        "p": 4,
+        "q": 3,
+        "label": "90 (4,3)",
+        "dimension": 90,
+        "multiplicity": 1
+      },
+      {
+        "p": 5,
+        "q": 1,
+        "label": "48 (5,1)",
+        "dimension": 48,
+        "multiplicity": 1
+      },
+      {
+        "p": 2,
+        "q": 4,
+        "label": "60̄ (2,4)",
+        "dimension": 60,
+        "multiplicity": 2
+      },
+      {
+        "p": 3,
+        "q": 2,
+        "label": "42 (3,2)",
+        "dimension": 42,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 5,
+        "label": "21̄ (0,5)",
+        "dimension": 21,
+        "multiplicity": 1
+      },
+      {
+        "p": 4,
+        "q": 0,
+        "label": "15′ (4,0)",
+        "dimension": 15,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 3,
+        "label": "24̄ (1,3)",
+        "dimension": 24,
+        "multiplicity": 5
+      },
+      {
+        "p": 2,
+        "q": 1,
+        "label": "15 (2,1)",
+        "dimension": 15,
+        "multiplicity": 5
+      },
+      {
+        "p": 0,
+        "q": 2,
+        "label": "6̄ (0,2)",
+        "dimension": 6,
+        "multiplicity": 2
+      },
+      {
+        "p": 1,
+        "q": 0,
+        "label": "3 (1,0)",
+        "dimension": 3,
+        "multiplicity": 1
+      }
+    ],
+    "multiplicity": 5,
+    "direction": "right_to_left",
+    "computation": {
+      "method": "selected-highest-weight",
+      "productDimension": 729,
+      "highestWeightRows": 10,
+      "maxProductDimension": 4096,
+      "binaryEmbeddingMethod": "lazy-selected-weight",
+      "maxInputDynkinSum": 4,
+      "middleFactorPermutationReuse": false
+    },
+    "leftPaths": [
+      {
+        "index": 0,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=2",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 2,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "42 (3,2) × 1 (0,0) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 2,
+          "label": "42 (3,2)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 0,
+          "label": "1 (0,0)",
+          "dimension": 1
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24̄ (1,3) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 3,
+          "label": "24̄ (1,3)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15 (2,1) × 8 (1,1) · α=1, β=1, γ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 1,
+          "label": "15 (2,1)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 1,
+          "q": 1,
+          "label": "8 (1,1)",
+          "dimension": 8
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": null,
+        "finalSwapParity": null
+      }
+    ],
+    "rightPaths": [
+      {
+        "index": 0,
+        "label": "42̄ (2,3) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 1,
+        "label": "42̄ (2,3) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 2,
+          "q": 3,
+          "label": "42̄ (2,3)",
+          "dimension": 42
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 2,
+        "label": "24 (3,1) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 3,
+        "label": "24 (3,1) × 3̄ (0,1)a · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 3,
+          "q": 1,
+          "label": "24 (3,1)",
+          "dimension": 24
+        },
+        "secondIntermediate": {
+          "p": 0,
+          "q": 1,
+          "label": "3̄ (0,1)",
+          "dimension": 3
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": -1,
+        "finalSwapParity": null
+      },
+      {
+        "index": 4,
+        "label": "15̄ (1,2) × 6 (2,0)s · δ=1, ε=1, ζ=1",
+        "firstIntermediate": {
+          "p": 1,
+          "q": 2,
+          "label": "15̄ (1,2)",
+          "dimension": 15
+        },
+        "secondIntermediate": {
+          "p": 2,
+          "q": 0,
+          "label": "6 (2,0)",
+          "dimension": 6
+        },
+        "firstCopy": 1,
+        "secondCopy": 1,
+        "finalCopy": 1,
+        "firstSwapParity": null,
+        "secondSwapParity": 1,
+        "finalSwapParity": null
+      }
+    ],
+    "recouplingMatrix": [
+      [
+        0.06025846050518227,
+        0.3960590171906697,
+        0.5443310539518174,
+        -0.2222222222222222,
+        0.7027283689263065
+      ],
+      [
+        -0.2087414303617165,
+        0.5716619504750294,
+        0.4714045207910317,
+        0.19245008972987526,
+        -0.6085806194501846
+      ],
+      [
+        0.15244318679334118,
+        0.46966821831386213,
+        -0.43033148291193524,
+        0.7027283689263065,
+        0.2777777777777778
+      ],
+      [
+        0.5904099236933968,
+        0.4446486458999438,
+        -0.3333333333333333,
+        -0.5443310539518174,
+        -0.21516574145596762
+      ],
+      [
+        0.762215933966706,
+        -0.31311214554257477,
+        0.43033148291193524,
+        0.35136418446315326,
+        -0.1111111111111111
+      ]
+    ],
+    "exactRecouplingMatrix": [
+      [
+        "sqrt(85)/153",
+        "2*sqrt(102)/51",
+        "2*sqrt(6)/9",
+        "-2/9",
+        "2*sqrt(10)/9"
+      ],
+      [
+        "-2*sqrt(255)/153",
+        "5*sqrt(34)/51",
+        "sqrt(2)/3",
+        "sqrt(3)/9",
+        "-sqrt(30)/9"
+      ],
+      [
+        "4*sqrt(34)/153",
+        "sqrt(255)/34",
+        "-sqrt(15)/9",
+        "2*sqrt(10)/9",
+        "5/18"
+      ],
+      [
+        "4*sqrt(510)/153",
+        "11*sqrt(17)/102",
+        "-1/3",
+        "-2*sqrt(6)/9",
+        "-sqrt(15)/18"
+      ],
+      [
+        "20*sqrt(34)/153",
+        "-sqrt(255)/51",
+        "sqrt(15)/9",
+        "sqrt(10)/9",
+        "-1/9"
+      ]
+    ],
+    "nineJMatrix": [
+      [
+        0.0002070847523429727,
+        0.0013610998820834034,
+        0.005291005291005291,
+        -0.0010102680103518166,
+        0.004041072041407266
+      ],
+      [
+        -0.0010145039535018128,
+        0.002778333500055575,
+        0.006480131594664492,
+        0.0012373205644093722,
+        -0.004949282257637489
+      ],
+      [
+        0.000693038137560296,
+        0.0021352084939864264,
+        -0.005533465783955526,
+        0.0042262543017373925,
+        0.0021131271508686962
+      ],
+      [
+        0.003795926211531425,
+        0.0028587823174362212,
+        -0.006061608062110899,
+        -0.004629629629629629,
+        -0.0023148148148148147
+      ],
+      [
+        0.004383158040103249,
+        -0.0018005658987560122,
+        0.0069993420927634675,
+        0.002672917912914934,
+        -0.0010691671651659736
+      ]
+    ],
+    "exactNineJMatrix": [
+      [
+        "sqrt(255)/77112",
+        "sqrt(34)/4284",
+        "1/189",
+        "-sqrt(21)/4536",
+        "sqrt(21)/1134"
+      ],
+      [
+        "-sqrt(170)/12852",
+        "5*sqrt(51)/12852",
+        "sqrt(6)/378",
+        "sqrt(14)/3024",
+        "-sqrt(14)/756"
+      ],
+      [
+        "sqrt(714)/38556",
+        "sqrt(595)/11424",
+        "-sqrt(70)/1512",
+        "sqrt(30)/1296",
+        "sqrt(30)/2592"
+      ],
+      [
+        "sqrt(595)/6426",
+        "11*sqrt(714)/102816",
+        "-sqrt(21)/756",
+        "-1/216",
+        "-1/432"
+      ],
+      [
+        "sqrt(1785)/9639",
+        "-sqrt(238)/8568",
+        "sqrt(7)/378",
+        "sqrt(3)/648",
+        "-sqrt(3)/1620"
+      ]
+    ],
+    "matrixOrientation": "R[rightPath][leftPath] = V_R† V_L; b_R=R b_L, b_L=R† b_R",
+    "nineJDefinition": "S[rightPath][leftPath] = R[rightPath][leftPath] / sqrt(dim(E) dim(F) dim(G) dim(H)); project GT phase convention",
+    "inputAmplitudes": [
+      {
+        "re": 0.04260916604707614,
+        "im": 0.28005601680560194
+      },
+      {
+        "re": -0.1476024809233492,
+        "im": 0.4042260417272216
+      },
+      {
+        "re": 0.1077936111272591,
+        "im": 0.3321055820775357
+      },
+      {
+        "re": 0.417482860723433,
+        "im": 0.3144140727612662
+      },
+      {
+        "re": 0.5389680556362955,
+        "im": -0.22140372138502382
+      }
+    ],
+    "outputAmplitudes": [
+      {
+        "re": 0.7071067811865476,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.7071067811865476
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      },
+      {
+        "re": 0.0,
+        "im": 0.0
+      }
+    ],
+    "exactInputAmplitudes": [
+      {
+        "re": "sqrt(170)/306",
+        "im": "2*sqrt(51)/51"
+      },
+      {
+        "re": "-sqrt(510)/153",
+        "im": "5*sqrt(17)/51"
+      },
+      {
+        "re": "4*sqrt(17)/153",
+        "im": "sqrt(510)/68"
+      },
+      {
+        "re": "4*sqrt(255)/153",
+        "im": "11*sqrt(34)/204"
+      },
+      {
+        "re": "20*sqrt(17)/153",
+        "im": "-sqrt(510)/102"
+      }
+    ],
+    "exactOutputAmplitudes": [
+      {
+        "re": "sqrt(2)/2",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "sqrt(2)/2"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      },
+      {
+        "re": "0",
+        "im": "0"
+      }
+    ],
+    "inputNorm": 1.0,
+    "outputNorm": 1.0,
+    "exactInputNorm": "1",
+    "exactOutputNorm": "1",
+    "inputProbabilities": [
+      0.08024691358024691,
+      0.18518518518518517,
+      0.12191358024691358,
+      0.27314814814814814,
+      0.3395061728395062
+    ],
+    "outputProbabilities": [
+      0.5,
+      0.5,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "exactInputProbabilities": [
+      "13/162",
+      "5/27",
+      "79/648",
+      "59/216",
+      "55/162"
+    ],
+    "exactOutputProbabilities": [
+      "1/2",
+      "1/2",
+      "0",
+      "0",
+      "0"
+    ],
+    "outputTerms": [
+      {
+        "index": 0,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=1",
+        "amplitude": {
+          "re": 0.7071067811865476,
+          "im": 0.0
+        },
+        "exactAmplitude": {
+          "re": "sqrt(2)/2",
+          "im": "0"
+        },
+        "probability": 0.5
+      },
+      {
+        "index": 1,
+        "label": "42 (3,2) × 8 (1,1) · α=1, β=1, γ=2",
+        "amplitude": {
+          "re": 0.0,
+          "im": 0.7071067811865476
+        },
+        "exactAmplitude": {
+          "re": "0",
+          "im": "sqrt(2)/2"
+        },
+        "probability": 0.5
+      }
+    ],
+    "checks": {
+      "unitarity": 1.1102230246251565e-16,
+      "pathOrthogonality": 2.220446049250313e-16,
+      "reconstruction": 1.1102230246251565e-16,
+      "gtStateIndependence": 1.1102230246251565e-16,
+      "weightedNineJ": 8.673617379884035e-19,
+      "multiplicity": 0.0,
+      "stateNorm": 2.220446049250313e-16,
+      "roundtrip": 1.1443916996305594e-16
+    },
+    "exactChecks": {
+      "unitarity": "0",
+      "pathOrthogonality": "0",
+      "reconstruction": "0",
+      "gtStateIndependence": "0",
+      "weightedNineJ": "0",
+      "multiplicity": "0",
+      "stateNorm": "0",
+      "roundtrip": "0"
+    },
+    "convention": [
+      "四因子顺序固定 A⊗B⊗C⊗D；左路径为 ((A B)E (C D)F)T，右路径为 ((A C)G (B D)H)T。",
+      "右路径自然生成于 A⊗C⊗B⊗D，先交换中间 B、C 张量轴，再在共同 A⊗B⊗C⊗D 中求重叠；这是带标签张量因子的线性置换，不添加费米交换负号。",
+      "每个二元顶点沿用本站正交 GT、坐标轴投影及首个非零最高权系数为正的相位；相同表示先交换对称后反对称。",
+      "每条路径保留三个顶点的外重数：左 α=firstCopy、β=secondCopy、γ=finalCopy；右 δ=firstCopy、ε=secondCopy、ζ=finalCopy。",
+      "R 的行是右路径、列是左路径，R 为正交换基矩阵；本项目维数缩约 9j 为 S=R/√(dimE dimF dimG dimH)，相位与其他文献约定可能不同。",
+      "范数为平方范数；输入不自动归一化，概率按该平方范数归一化。"
+    ],
+    "derivation": [
+      "用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。",
+      "枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。",
+      "将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。",
+      "计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。",
+      "用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。"
+    ],
+    "notes": [
+      "支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。",
+      "高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。",
       "8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。",
       "省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。",
       "全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。",

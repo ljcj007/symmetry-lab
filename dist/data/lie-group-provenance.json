@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-24",
-  "build": "20261024-ninej2",
+  "release": "2026-10-25",
+  "build": "20261025-ninej3",
   "sources": [
     {
       "id": "mit-etingof-lie",
@@ -103,15 +103,15 @@
   "files": {
     "dist/classroom-ui.js": {
       "bytes": 3436,
-      "sha256": "34534da9aa250d9aa645071b8db714cbe0685f063bd502817f960033a89c678c"
+      "sha256": "75154865f2135de95a1c762dd9da7762106148f948fc7b0b5f6c3e99c83dda4c"
     },
     "dist/classroom.css": {
       "bytes": 1065,
       "sha256": "215d91ac979f8103b4591ee38b28661dda2319debe8cd1fab853ec59414be28e"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 38498,
-      "sha256": "e4d874debc2f0b4d8d166cb44f3460a38632473a90f377073f7a19fe82c35b47"
+      "bytes": 38518,
+      "sha256": "59e88ed7004a27411926a0c869a70565ae60d0ccd8b67d876020c744119f0796"
     },
     "dist/lie-group.css": {
       "bytes": 25204,
@@ -122,40 +122,40 @@
       "sha256": "5ee4f357e3e4c9de3bca16ad075c4fd0299e3a74401a7837bcc99a01d5acb682"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 145937,
-      "sha256": "1649bce600838e6af9a63c25652866a79f0e9fdf348c0b6fde4b57bb2bf4ee55"
+      "bytes": 163075,
+      "sha256": "d21191db7ec0ccd5e09951d94ada385e3682d6141a3558962c968f00fb7b2c95"
     },
     "dist/docs/lie-groups.md": {
-      "bytes": 40754,
-      "sha256": "c94fd189afde6af7aa8b77505443b9dc1bdb7014d3832ae5e8d402f9746a59c2"
+      "bytes": 45925,
+      "sha256": "89434049c2982bfad831e3c66b964a479043e582fa681d577b3c259d05e495fd"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 2959,
       "sha256": "2adaff4a58e6c187c8df833987a2ba4f2e75758c58d97bdb4e94203bed250c8f"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 69524,
-      "sha256": "ec70fecfa5cdb2f8a0dfe79b66329d9c708aa37f1684cf4957835dff2a9c242c"
+      "bytes": 74188,
+      "sha256": "92ed992b49261e47914d0dd620c805610e009cf8c5fae325ec73edc1dd993ce6"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 8218,
-      "sha256": "b0c78e8da389e0b0a4dffae6138bb0c94252f9486fdc82a982b70201db0ee0cc"
+      "bytes": 14224,
+      "sha256": "c6d059c480c07ebf6f673cbf6c5719f839be0f674f3def191fe30307ac931461"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 18525,
-      "sha256": "0c34fb9ebbfa56e37a5df62b6fbc1bc2e9dc041c1f0032e1b4d24d3d81043a37"
+      "sha256": "ad3bc0fac1fd38f837241a098e8859b146310bae95e1d2769713c818120aad6c"
     },
     "dist/python/lie_applications.py": {
       "bytes": 20497,
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 81927,
-      "sha256": "0f340e1368d6fcf394c381dd1f66eb2e7581d5f3dc824ca09ab7a8e9114a6f7a"
+      "bytes": 96017,
+      "sha256": "dee2a3ca1ff4d23716fc37f2e6e6fcf4e7509113f27117802c79c18dc0a1111f"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,
@@ -226,24 +226,24 @@
       "sha256": "9e5c723ed27738138efa15ffec003d77e7b65c8a208441b1621ff87cd15f1eef"
     },
     "dist/su3-ninej-ui.js": {
-      "bytes": 28164,
-      "sha256": "a94e0d7682e0e4047aaec4480dc0a556e5c3d5d358df5a3ae55dbfedfbefcded"
+      "bytes": 30331,
+      "sha256": "67d575399d8cd0f68979c50e3f31529a6516c2228cf7a6b8b63b0eed9b08f1de"
     },
     "dist/python/su3_ninej.py": {
-      "bytes": 18237,
-      "sha256": "2117f5a6e507932768fbe9d10d3bb9f4b91d3abafd78bff64bd0c57bf462d6d1"
+      "bytes": 26822,
+      "sha256": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
     },
     "scripts/test-python-su3-ninej.py": {
-      "bytes": 21205,
-      "sha256": "870fbf798426fc4c23ca5eebe147739e9e8352517bdaea4f2933f32d655ead64"
+      "bytes": 27780,
+      "sha256": "8e057ba44517bec0db0311a9eae486a1886bb43f501fd1969bf50a1598544001"
     },
     "scripts/fixtures/su3-ninej-ui.json": {
-      "bytes": 450047,
-      "sha256": "6916b15de4e01b83c6948bd9d2ce5dfe4a4da76b1c6d27be96ba44633718ebe9"
+      "bytes": 549927,
+      "sha256": "194c03376ee38d89e76134ab85afe6fe749d7104b495596fc4175ca841e7338f"
     },
     "scripts/generate-su3-ninej-ui-fixtures.py": {
-      "bytes": 2071,
-      "sha256": "1d780dc1b2a67781d5d6d6ae5d57d6aa8cdaf254df1a15ebb5ab5eb260ccf75f"
+      "bytes": 3259,
+      "sha256": "0830dd05ba54648f686a8b5e23d3053505aaf3c8068cbc0ffc4eff442a69ed69"
     },
     "dist/examples/su3-ninej-four.json": {
       "bytes": 172,
@@ -260,21 +260,37 @@
     "dist/examples/su3-ninej-adjoint-octet.json": {
       "bytes": 172,
       "sha256": "0b64d556c7cde835f4a8709d83ad3bc33c1bb4aef0c2cdf39afc9a3a46856751"
+    },
+    "dist/examples/su3-ninej-10-input.json": {
+      "bytes": 172,
+      "sha256": "3ebe9e1ea24f3e91bc3f3dfe9782b21e280a4c34bbb98466f29ecd70659bbda2"
+    },
+    "dist/examples/su3-ninej-15-input.json": {
+      "bytes": 172,
+      "sha256": "8d3c5c959c49cc373e354723590fc3a30b5bb8cbf51af3f2ee88326b2a8523d1"
+    },
+    "dist/examples/su3-ninej-27-input.json": {
+      "bytes": 172,
+      "sha256": "9a7de8e1d0938e203acf28ed52bf92fc0b0759122f3f5d18eecb2c290cca20c3"
+    },
+    "dist/examples/su3-ninej-10-permutation.json": {
+      "bytes": 172,
+      "sha256": "c617f363272b6f96c0f26126220ef865f66b4cab7a723f7d02963c3c8f313fcf"
     }
   },
   "validation": {
-    "lessonCount": 29,
-    "workedExamples": 29,
-    "quizCount": 58,
+    "lessonCount": 32,
+    "workedExamples": 32,
+    "quizCount": 64,
     "pythonLabTests": 11,
-    "publicAPITests": 28,
-    "guidedExercises": 28,
+    "publicAPITests": 30,
+    "guidedExercises": 32,
     "pythonPhysicsTests": 11,
     "interactiveExperiments": 9,
     "pythonSU3CGTests": 15,
     "pythonSU3CGExactTests": 10,
     "pythonSU3RacahTests": 11,
-    "pythonSU3NineJTests": 19
+    "pythonSU3NineJTests": 24
   },
   "conventions": [
     "U(theta)=exp(-i theta T); Hermitian T=sigma/2 or lambda/2",
@@ -302,9 +318,11 @@
     "Three higher-dimensional/exact lessons and four additional sequential derivations; safe radical inputs and exact serialized state reversal",
     "Exact SU(3) Racah recoupling for six input irreps and total dimension <=512; 3x3x3 and 8x8x8 examples",
     "Three additional Racah lessons, six self-checks and four sequential derivations",
-    "Exact four-factor SU(3) paired recoupling for all 1296 ordered combinations of six input irreps and total dimension<=4096",
+    "Exact four-factor SU(3) recoupling for 15 input irreps p+q<=4, total N<=4096, 19258 admissible ordered quadruples; higher-input lazy exact GT weight blocks",
     "Three additional nine-j lessons, six self-checks and four sequential derivations",
     "Four adjoints: all13 final irreps; singlet8, adjoint32 and 27-dimensional irrep33 multiplicity-space matrices",
-    "Three additional high-dimensional lessons, six self-checks and four sequential derivations; exact invariant overlaps and permutation eigencounts"
+    "Three additional high-dimensional lessons, six self-checks and four sequential derivations; exact invariant overlaps and permutation eigencounts",
+    "Three higher-input lessons, six self-checks and four stepwise derivations; distinct 15 and 15-prime, LR counts and S3 benchmark",
+    "Target Dynkin labels are not truncated at 8; actual decompositions select final irreps; no claim of all 225486 exact matrices audited"
   ]
 }

@@ -403,6 +403,43 @@ class PublicAPITests(unittest.TestCase):
         self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
         self.assertLess(max(result['checks'].values()),3e-12)
 
+    def test_su3_ninej_higher_input_examples_and_independent_s3(self):
+        import sympy as sp
+        for label,n,m,target in [('10',270,4,[2,1]),('15',405,5,[3,1]),('27',729,5,[3,2])]:
+            payload=json.loads((ROOT/f'dist/examples/su3-ninej-{label}-input.json').read_text())
+            result=self.result('teaching_labs',payload)
+            self.assertEqual((result['dimension'],result['multiplicity']),(n,m))
+            self.assertEqual([result['target'][k] for k in ('p','q')],target)
+            self.assertTrue(all(v=='0' for v in result['exactChecks'].values()))
+            self.assertLess(max(result['checks'].values()),3e-12)
+        # Independently, 10 x 3^3 -> 8 is the two-dimensional standard S3
+        # multiplicity representation of B,C,D. In a CD-parity basis the
+        # crossing reflection has squared entries 1/4 and 3/4.
+        payload=json.loads((ROOT/'dist/examples/su3-ninej-10-permutation.json').read_text())
+        result=self.result('teaching_labs',payload)
+        self.assertEqual(result['multiplicity'],2)
+        r=sp.Matrix(result['exactRecouplingMatrix']).applyfunc(sp.sympify)
+        self.assertEqual(r.applyfunc(lambda x:sp.simplify(x*x)),
+                         sp.Matrix([[sp.Rational(1,4),sp.Rational(3,4)],
+                                    [sp.Rational(3,4),sp.Rational(1,4)]]))
+
+    def test_su3_ninej_27_input_complex_and_large_target_label(self):
+        import sympy as sp
+        payload=json.loads((ROOT/'dist/examples/su3-ninej-27-input.json').read_text())
+        state=[{'re':'sqrt(2)/2','im':'0'},{'re':'0','im':'sqrt(2)/2'}]+[{'re':'0','im':'0'}]*3
+        forward=self.result('teaching_labs',{**payload,'state':{'amplitudes':state}})
+        backward=self.result('teaching_labs',{**payload,'direction':'right_to_left',
+            'state':{'amplitudes':forward['exactOutputAmplitudes']}})
+        self.assertEqual(backward['exactOutputAmplitudes'],state)
+        self.assertTrue(all(v=='0' for v in backward['exactChecks'].values()))
+        # Three 15-prime inputs have a unique highest component (12,0).
+        high=self.result('teaching_labs',{'lab':'lie','experiment':'su3_ninej',
+            'factors':[[4,0],[4,0],[4,0],[0,0]],'target':[12,0]})
+        self.assertEqual((high['dimension'],high['multiplicity']),(3375,1))
+        self.assertEqual(high['exactRecouplingMatrix'],[['1']])
+        # Both trees couple (8,0) of dimension45 with (4,0) of dimension15.
+        self.assertEqual(high['exactNineJMatrix'],[['1/675']])
+
     def test_invalid_data_and_unknown_tool(self):
         for tool, payload in [('carat',{'dimension':'../../example'}), ('symbolic',[]),
                               ('symbolic',{'expression':'__import__("os").getcwd()'}), ('unknown',{})]:

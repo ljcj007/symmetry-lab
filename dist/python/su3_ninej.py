@@ -14,10 +14,102 @@ import sympy as sp
 
 from su3_cg import _dimension, _integer, _maxabs, _z as _numeric_z
 from su3_cg_exact import _irrep, _coupling, _matrix_simp, _simp, _zero, _state, _z
-from su3_racah import FACTORS, _representation, _decomposition, _highest
+from su3_racah import FACTORS as _SMALL_FACTORS, _representation, _decomposition, _highest
 
 
 MAX_DIMENSION = 4096
+FACTORS = tuple((p, total - p) for total in range(5) for p in range(total, -1, -1))
+
+
+@lru_cache(maxsize=32)
+def _binary_data(pair):
+    """Sparse GT data for a binary product, without a full product matrix."""
+    left, right = [_irrep(*label) for label in pair]
+    n2 = right['dimension']
+    weights = tuple((a[0] + b[0], a[1] + b[1])
+                    for a in left['weights'] for b in right['weights'])
+    rows = {weight: tuple(i for i, value in enumerate(weights) if value == weight)
+            for weight in set(weights)}
+    columns = tuple(tuple(tuple((row, generator[row, col]) for row in range(generator.rows)
+                                if generator[row, col] != 0)
+                          for col in range(generator.cols))
+                    for rep in (left, right) for generator in (rep['generators'][1], rep['generators'][3]))
+    return weights, rows, n2, columns
+
+
+@lru_cache(maxsize=256)
+def _binary_lowering(pair, weight, gi):
+    """Only the source/destination weight block of F1 or F2 is materialized."""
+    _, rows, n2, generators = _binary_data(pair)
+    root = (2, -1) if gi == 1 else (-1, 2)
+    higher = (weight[0] + root[0], weight[1] + root[1])
+    output, source = rows[weight], rows[higher]
+    lookup = {index: i for i, index in enumerate(output)}
+    entries = {}
+    offset = 0 if gi == 1 else 1
+    for column, index in enumerate(source):
+        a, b = divmod(index, n2)
+        for destination, value in generators[offset][a]:
+            key = lookup[destination * n2 + b], column
+            entries[key] = entries.get(key, 0) + value
+        for destination, value in generators[2 + offset][b]:
+            key = lookup[a * n2 + destination], column
+            entries[key] = entries.get(key, 0) + value
+    return sp.SparseMatrix(len(output), len(source), entries)
+
+
+@lru_cache(maxsize=128)
+def _selected_embedding(pair, middle, copy):
+    return _WeightEmbedding(pair, middle, copy)
+
+
+class _WeightEmbedding:
+    """A single CG outer copy, generated one required GT weight at a time.
+
+    The seed and the two-root lowering solve are exactly those used by
+    su3_cg_exact._coupling.  In particular this preserves its phases, its
+    coordinate-projector outer-copy order and degenerate-weight GT basis.
+    """
+    def __init__(self, pair, middle, copy):
+        self.pair, self.middle = pair, middle
+        self.target = _irrep(*middle)
+        self.target_rows = {weight: tuple(i for i, value in enumerate(self.target['weights']) if value == weight)
+                            for weight in set(self.target['weights'])}
+        self.rows = _binary_data(pair)[1]
+        self.outer = _highest(*(pair[0] + pair[1]), *middle)[copy - 1]
+        self.blocks = {middle: self.outer['seed']}
+        self.columns = {}
+
+    def weight(self, weight):
+        if weight in self.blocks:
+            return self.blocks[weight]
+        local = self.target_rows[weight]
+        relations, lowered = [], []
+        for gi, root in ((1, (2, -1)), (3, (-1, 2))):
+            higher = weight[0] + root[0], weight[1] + root[1]
+            upper = self.target_rows.get(higher, ())
+            if upper:
+                relations.append(self.target['generators'][gi][list(local), list(upper)])
+                lowered.append(_binary_lowering(self.pair, weight, gi) * self.weight(higher))
+        d, b = sp.Matrix.hstack(*relations), sp.Matrix.hstack(*lowered)
+        pivots = list(d.rref(simplify=_simp)[1])
+        if len(pivots) != len(local):
+            raise ArithmeticError('Selected CG lowering did not span a GT weight space')
+        solved = _matrix_simp(b[:, pivots] * d[:, pivots].inv())
+        # Check every lowering relation, including those not used to solve.
+        if not _zero(solved * d - b):
+            raise ArithmeticError('Selected CG lowering relations are inconsistent')
+        self.blocks[weight] = solved
+        return solved
+
+    def column(self, local):
+        if local not in self.columns:
+            weight = self.target['weights'][local]
+            block = self.weight(weight)
+            column = self.target_rows[weight].index(local)
+            self.columns[local] = tuple((row, block[i, column]) for i, row in enumerate(self.rows[weight])
+                                        if block[i, column] != 0)
+        return self.columns[local]
 
 
 def _four_weights(factors):
@@ -27,6 +119,8 @@ def _four_weights(factors):
 
 def _paths(factors, target, side, rows):
     """Compose two full first-level CG maps with selected root kernels."""
+    if any(label not in _SMALL_FACTORS for label in factors):
+        return _selected_paths(factors, target, side, rows)
     a, b, c, d = factors
     pair1, pair2 = ((a, b), (c, d)) if side == 'left' else ((a, c), (b, d))
     first, second = _coupling(*(pair1[0] + pair1[1])), _coupling(*(pair2[0] + pair2[1]))
@@ -71,6 +165,62 @@ def _paths(factors, target, side, rows):
                               'firstSwapParity': block1['swapParity'], 'secondSwapParity': block2['swapParity'],
                               'finalSwapParity': outer['swapParity']})
     return sp.Matrix.hstack(*vectors), paths
+
+
+def _selected_paths(factors, target, side, rows):
+    """Compose only the binary GT columns needed by this final HW space."""
+    a, b, c, d = factors
+    pair1, pair2 = ((a, b), (c, d)) if side == 'left' else ((a, c), (b, d))
+    nc, nd = _dimension(*c), _dimension(*d)
+    nb = _dimension(*b)
+    lookup = {row: i for i, row in enumerate(rows)}
+    paths, vectors = [], []
+    for rep1 in _decomposition(pair1):
+        e = rep1['p'], rep1['q']
+        for rep2 in _decomposition(pair2):
+            f = rep2['p'], rep2['q']
+            if not any((out['p'], out['q']) == target for out in _decomposition((e, f))):
+                continue
+            outers = _highest(*(e + f), *target)
+            for first in _highest(*(pair1[0] + pair1[1]), *e):
+                cg1 = _selected_embedding(pair1, e, first['copy'])
+                for second in _highest(*(pair2[0] + pair2[1]), *f):
+                    cg2 = _selected_embedding(pair2, f, second['copy'])
+                    for outer in outers:
+                        vector = sp.zeros(len(rows), 1)
+                        for index, coefficient in zip(outer['indices'], outer['seed']):
+                            if coefficient == 0:
+                                continue
+                            ie, jf = divmod(index, rep2['dimension'])
+                            for i, x in cg1.column(ie):
+                                for j, y in cg2.column(jf):
+                                    if side == 'left':
+                                        row = i * nc * nd + j
+                                    else:
+                                        ia, ic = divmod(i, nc)
+                                        ib, id_ = divmod(j, nd)
+                                        row = ((ia * nb + ib) * nc + ic) * nd + id_
+                                    vector[lookup[row]] += coefficient * x * y
+                        vectors.append(_matrix_simp(vector))
+                        suffix = lambda parity: 's' if parity == 1 else 'a' if parity == -1 else ''
+                        letters = ('α', 'β', 'γ') if side == 'left' else ('δ', 'ε', 'ζ')
+                        label = (f"{rep1['label']}{suffix(first['swapParity'])} × "
+                                 f"{rep2['label']}{suffix(second['swapParity'])} · "
+                                 f"{letters[0]}={first['copy']}, {letters[1]}={second['copy']}, {letters[2]}={outer['copy']}")
+                        paths.append({'index': len(paths), 'label': label,
+                                      'firstIntermediate': _representation(*e), 'secondIntermediate': _representation(*f),
+                                      'firstCopy': first['copy'], 'secondCopy': second['copy'], 'finalCopy': outer['copy'],
+                                      'firstSwapParity': first['swapParity'], 'secondSwapParity': second['swapParity'],
+                                      'finalSwapParity': outer['swapParity']})
+    first_order = {(row['p'], row['q']): i for i, row in enumerate(_decomposition(pair1))}
+    second_order = {(row['p'], row['q']): i for i, row in enumerate(_decomposition(pair2))}
+    order = sorted(range(len(paths)), key=lambda i: (
+        first_order[paths[i]['firstIntermediate']['p'], paths[i]['firstIntermediate']['q']],
+        paths[i]['firstCopy'],
+        second_order[paths[i]['secondIntermediate']['p'], paths[i]['secondIntermediate']['q']],
+        paths[i]['secondCopy'], paths[i]['finalCopy']))
+    paths = [dict(paths[index], index=i) for i, index in enumerate(order)]
+    return sp.Matrix.hstack(*(vectors[index] for index in order)), paths
 
 
 @lru_cache(maxsize=16)
@@ -190,9 +340,9 @@ def run(payload):
     for pair in raw:
         if not isinstance(pair, list) or len(pair) != 2:
             raise ValueError('每个因子必须为 [p,q]')
-        label = tuple(_integer(x, 0, 2, 'Dynkin label') for x in pair)
+        label = tuple(_integer(x, 0, 4, 'Dynkin label') for x in pair)
         if label not in FACTORS:
-            raise ValueError('每个输入因子要求 p+q≤2，支持 1、3、3̄、6、6̄、8')
+            raise ValueError('每个输入因子要求 p+q≤4，支持 1、3、6、8、10、15、15′、24、27 及其共轭表示')
         factors.append(label)
     factors = tuple(factors)
     n = math.prod(_dimension(*pair) for pair in factors)
@@ -204,7 +354,7 @@ def run(payload):
     raw_target = payload.get('target', [preferred['p'], preferred['q']])
     if not isinstance(raw_target, list) or len(raw_target) != 2:
         raise ValueError('target 必须为最终表示的 [p,q]')
-    target = tuple(_integer(x, 0, 8, 'target') for x in raw_target)
+    target = tuple(_integer(x, 0, 16, 'target') for x in raw_target)
     direction = payload.get('direction', 'left_to_right')
     if direction not in ('left_to_right', 'right_to_left'):
         raise ValueError('direction 必须为 left_to_right 或 right_to_left')
@@ -235,6 +385,8 @@ def run(payload):
         'computation': {'method': 'selected-highest-weight', 'productDimension': n,
                         'highestWeightRows': len(data['weightRows']),
                         'maxProductDimension': MAX_DIMENSION,
+                        'binaryEmbeddingMethod': 'lazy-selected-weight' if any(label not in _SMALL_FACTORS for label in factors) else 'complete-first-pair',
+                        'maxInputDynkinSum': 4,
                         'middleFactorPermutationReuse': factors[1] == factors[2]},
         'leftPaths': data['leftPaths'], 'rightPaths': data['rightPaths'],
         'recouplingMatrix': data['numeric'].tolist(), 'exactRecouplingMatrix': [[str(x) for x in row] for row in matrix.tolist()],
@@ -264,12 +416,13 @@ def run(payload):
         'derivation': [
             '用整数 GT 权字符分解 A⊗B⊗C⊗D，得到最终表示 T 的外重数 m。',
             '枚举 E⊂A⊗B、F⊂C⊗D 与 T⊂E⊗F，保留全部三个顶点外重数；右树对 G⊂A⊗C、H⊂B⊗D 同理。',
-            '将两个首层完整 CG 嵌入与根顶点选定最高权零空间复合，再将右树 ACBD 张量轴显式置换为 ABCD，得到 V_L、V_R。',
+            '将首层 CG 嵌入与根顶点选定最高权零空间复合；高维输入仅按需生成二元 CG 的权块，再将右树 ACBD 张量轴置换为 ABCD，得到 V_L、V_R。',
             '计算 R=V_R†V_L，精确检查正交性、V_R R=V_L、字符重数与路径数相等，并降低一个最终 GT 态核对相同 R。',
             '用 b_R=R b_L 或 b_L=R† b_R 换基，精确核对范数与往返；S 满足 S† diag(dimG dimH) S=diag(1/(dimE dimF))。',
         ],
         'notes': [
-            '六类输入 1、3、3̄、6、6̄、8 的全部四重积，总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。',
+            '支持 p+q≤4 的全部十五种输入表示（含 10、15、15′、24、27 及其共轭），四重积总维数≤4096；所有实际最终表示均可选择，不截断中间表示或外重数。',
+            '高维输入按所选最终最高权惰性生成首层二元 CG 权块，沿用已有精确 GT 相位和外重数顺序；计算量还随最高权重数及根式复杂度增长。',
             '8⊗8⊗8⊗8 的 4096 维空间仅构造所选最终最高权的嵌入：1 的外重数为 8，8 为 32，27 为 33；避免构造完整 4096×4096 CG 矩阵。',
             '省略 target 时优先选择实际出现的 8，其次为 (2,1) 的 15，否则选择字符分解首项；显式不存在的最终表示会报错。',
             '全部系数直接由 SymPy 的有理数与根式构造；小数仅作预览，未用浮点拟合根式。',

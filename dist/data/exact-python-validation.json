@@ -28,7 +28,7 @@
     "dist/python/su3_cg.py": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794",
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
     "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d",
-    "dist/python/su3_ninej.py": "2117f5a6e507932768fbe9d10d3bb9f4b91d3abafd78bff64bd0c57bf462d6d1"
+    "dist/python/su3_ninej.py": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -58,7 +58,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 28
+    "tests": 30
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -787,10 +787,10 @@
     }
   },
   "su3NineJTeaching": {
-    "date": "2026-10-24",
-    "unitTests": 19,
+    "date": "2026-10-25",
+    "unitTests": 24,
     "test": "scripts/test-python-su3-ninej.py",
-    "scope": "Six input irreps (p+q<=2), four factors, product dimension<=4096; all actual final targets, exact paired-tree recoupling R and dimension-reduced nine-j with reversible radical complex state coordinates. Three vertex multiplicities per path.",
+    "scope": "15 external input irreps with p+q<=4, four factors, N<=4096. Selected exact binary GT weight blocks for higher inputs; all actual final targets, three outer copies per path, exact R and dimension-reduced nine-j, reversible radical complex state coordinates. Legacy four-adjoint behavior retained.",
     "characterAndPathAudit": {
       "orderedQuadruples": 1296,
       "finalIrrepTargets": 8472,
@@ -818,6 +818,37 @@
         ]
       ],
       "exactMatrixValidation": "All 13 final irreps of 8^4 passed exact path, unitary, reconstruction, lowering, weighted nine-j and symmetric-involution checks, with an independent cycle-character test. Independent double-singlet invariant probabilities; 32-channel radical complex roundtrip; asymmetric 3072-dimensional inverse crossing; earlier S4/trace/Racah reductions retained. No claim of an exact-matrix audit of all 8472 final channels."
+    },
+    "higherInputCharacterAndPathAudit": {
+      "inputIrreps": 15,
+      "admissibleOrderedQuadruples": 19258,
+      "finalIrrepTargets": 225486,
+      "multisets": 1159,
+      "bothPairedTreePathCountsPassed": true,
+      "independentWeylTorusPoints": 2,
+      "largestMultiplicity": 33,
+      "largestMultiplicityFactors": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ],
+      "largestFinalDynkinSum": 12,
+      "exactMatrixValidation": "Separate representative exact checks: 10/15/27 four-active-factor examples; independent S3 probabilities; 27-input complex inverse and crossing transpose; 27x27 binary product with 729 states; target(12,0); full old 8x8 CG column gauge comparison; all 8 generator intertwinings for selected 27x3. Existing four-adjoint and mixed tests retained. The 225486 channels are audited for characters and path counts, not all exact matrices."
     }
   }
 }
