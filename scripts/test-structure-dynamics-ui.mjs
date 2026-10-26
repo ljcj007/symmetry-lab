@@ -56,4 +56,67 @@ const atlas=await mount({atlasOnly:true,material:'batio3'});assert.ok(atlas.cont
 const lessonLab=await mount({lesson:'screw-glide'});await lessonLab.container.querySelector('#dyn-to-lab').onclick();assert.equal(lessonLab.container.querySelector('#dyn-preset').value,'screw21');assert.equal(lessonLab.container.querySelector('#dyn-hkl').value,'[0,0,1]');
 const lessonSwitch=await mount();lessonSwitch.container.querySelector('#dyn-lesson').onchange({target:{value:'centering-basis'}});lessonSwitch.container.querySelector('[data-dyn-tab="derive"]').onclick();assert.equal(lessonSwitch.container.querySelector('#dyn-exercise').value,data.exercises.find(e=>e.lesson==='centering-basis').id);
 const nacl=await mount({calculationOnly:true,experiment:'diffraction',material:'nacl'});assert.equal(nacl.container.querySelector('#dyn-hkl').value,'[1,1,1]');assert.deepEqual(JSON.parse(nacl.container.querySelector('#dyn-factors').value),{Na:1,Cl:2});
-console.log('Structure dynamics UI: real Python schemas, six-domain and origin interaction, reflection selection, band segmentation, mode selection, 3D projection, stale result/export guards, routes and persisted stepwise exercises passed.');
+
+// File reads and demo fetches may resolve after a user changes the tab,
+// changes the tool, or edits the file. They must never write into new controls.
+let resolveFile,rejectFile;
+const slowFile=await mount({tab:'lab',experiment:'phonopy',material:'gaas'});
+const fileRequest=slowFile.container.querySelector('#dyn-file').onchange({target:{files:[{name:'old.yaml',size:100,text:()=>new Promise(resolve=>resolveFile=resolve)}]}});
+slowFile.container.querySelector('[data-dyn-tab="learn"]').onclick();
+slowFile.container.querySelector('[data-dyn-tab="lab"]').onclick();
+resolveFile('old-file-content');await fileRequest;
+assert.equal(slowFile.container.querySelector('#dyn-file-text').value,'','Returning to the same tab must not revive an older read');
+const badRead=slowFile.container.querySelector('#dyn-structure-file').onchange({target:{files:[{name:'missing.yaml',size:100,text:()=>new Promise((resolve,reject)=>rejectFile=reject)}]}});
+slowFile.container.querySelector('[data-dyn-tab="derive"]').onclick();rejectFile(Error('late-file-error'));await badRead;
+assert.equal(slowFile.container.querySelector('#dyn-output'),null,'Late file errors must not write into a lesson or throw on missing DOM');
+
+const editedFile=await mount({tab:'lab',experiment:'phonopy'});
+const oldDOS=editedFile.container.querySelector('#dyn-dos-file').onchange({target:{files:[{name:'old.dat',size:100,text:()=>new Promise(resolve=>resolveFile=resolve)}]}});
+editedFile.container.querySelector('#dyn-dos').value='new DOS text';
+editedFile.container.querySelector('#dyn-form').oninput({target:editedFile.container.querySelector('#dyn-dos')});
+resolveFile('stale DOS text');await oldDOS;
+assert.equal(editedFile.container.querySelector('#dyn-dos').value,'new DOS text');
+
+const normalFetch=globalThis.fetch;
+let resolveDemo,rejectDemo;
+globalThis.fetch=async()=>({ok:true,text:()=>new Promise(resolve=>resolveDemo=resolve)});
+const slowDemo=await mount({tab:'lab',experiment:'phonopy'}),demoRequest=slowDemo.container.querySelector('#dyn-demo').onclick();
+await Promise.resolve();
+slowDemo.container.querySelector('[data-dyn-tool="phase"]').onclick();resolveDemo('stale demo');await demoRequest;
+assert.ok(slowDemo.container.querySelector('#dyn-q'));
+slowDemo.container.querySelector('[data-dyn-tool="phonopy"]').onclick();
+assert.equal(slowDemo.container.querySelector('#dyn-file-text').value,'');
+globalThis.fetch=async()=>({ok:true,text:()=>new Promise((resolve,reject)=>rejectDemo=reject)});
+const rejectedDemo=slowDemo.container.querySelector('#dyn-demo').onclick();await Promise.resolve();
+slowDemo.container.querySelector('[data-dyn-tab="cases"]').onclick();rejectDemo(Error('late-demo-error'));await rejectedDemo;
+assert.ok(slowDemo.container.querySelector('.obs-case-grid'));
+
+globalThis.fetch=async()=>({ok:true,text:()=>new Promise(resolve=>resolveDemo=resolve)});
+const lessonAuto=await mount({lesson:'phonopy-files'}),autoRequest=lessonAuto.container.querySelector('#dyn-to-lab').onclick();await Promise.resolve();
+assert.ok(lessonAuto.container.querySelector('#dyn-file-text'),'Lesson opens the lab while its optional example is loading');
+lessonAuto.container.querySelector('#dyn-file-text').value='user file wins';
+lessonAuto.container.querySelector('#dyn-form').oninput({target:lessonAuto.container.querySelector('#dyn-file-text')});
+resolveDemo('stale lesson example');await autoRequest;
+assert.equal(lessonAuto.container.querySelector('#dyn-file-text').value,'user file wins');
+globalThis.fetch=normalFetch;
+
+// Transfer the completed input, not later control text, and preserve material
+// context while leaving physical length units to the actual file metadata.
+const transfer=await mount({calculationOnly:true,experiment:'phonopy',material:'gaas'});
+transfer.container.querySelector('#dyn-file-text').value='completed input';await submit(transfer);
+const freeze=transfer.container.querySelector('#dyn-freeze');
+assert.equal(freeze.attributes.href,'#compute/phonon-modes?material=gaas');
+transfer.container.querySelector('#dyn-file-text').value='unsubmitted control edit';freeze.onclick();
+const researchData=JSON.parse(fs.readFileSync(new URL('../dist/data/material-research.json',import.meta.url),'utf8'));
+globalThis.fetch=async url=>String(url).includes('material-research.json')?{ok:true,json:async()=>researchData}:normalFetch(url);
+const {renderMaterialResearchView}=await import('../dist/material-research-ui.js?v=20261026-research1');
+const handoffContainer=new Container();let handoffInput;
+await renderMaterialResearchView({container:handoffContainer,selection:{calculationOnly:true,module:'modes',material:'gaas'},run:async(action,input)=>{handoffInput=input;throw Error('Input captured for transfer regression');},download:()=>{}});
+assert.equal(handoffContainer.querySelector('#mr-preset').value,'custom');
+assert.equal(handoffContainer.querySelector('#mr-length').value,'auto');
+assert.equal(handoffContainer.querySelector('#mr-file-text').value,'completed input');
+handoffContainer.querySelector('#mr-form').onsubmit({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));
+assert.equal(handoffInput.content,'completed input');
+assert.equal(Object.hasOwn(handoffInput,'length_unit'),false);
+globalThis.fetch=normalFetch;
+console.log('Structure dynamics UI: real Python schemas, six-domain and origin interaction, reflection selection, band segmentation, mode selection, 3D projection, stale calculation/file/demo guards, snapshot handoff with automatic units and material deep links, routes and persisted stepwise exercises passed.');

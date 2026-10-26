@@ -16,6 +16,18 @@ def invoke(tool, payload):
 
 
 class PublicAPITests(unittest.TestCase):
+    def test_material_research_public_api(self):
+        modes = self.result('phonon_modes', {'preset': 'silicon'})
+        self.assertEqual(modes['symmetry']['spaceGroup'], 227)
+        self.assertEqual(modes['modeGroups'][1]['classification']['label'], 'T2g')
+        self.assertTrue(modes['exports']['poscar'])
+        bands = self.result('band_connectivity', {'model': 'c4v', 'mixing': .2})
+        self.assertAlmostEqual(bands['summary']['perturbationGap'], .4)
+        self.assertTrue(bands['validation']['dimensionConserved'])
+        thermo = self.result('phonon_thermo', {'source': 'compare', 'natom': 2})
+        self.assertEqual(len(thermo['series']), 2)
+        self.assertAlmostEqual(thermo['summary']['dulongPetitLimit'], 6 * 8.31446261815324)
+
     def test_structure_dynamics_public_api(self):
         phase = self.result('phase', {'q': .7})
         self.assertEqual(phase['symmetry']['retainedOrder'], 8)

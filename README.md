@@ -1,5 +1,17 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+## 材料分析与研究记录（2026-10-26）
+
+新增 **9 课、9 道分步练习（36 步）**，融入原有七条学习路径、计算中心和材料图谱，保留五个主导航与 18px 正文字号：
+
+- `#compute/phonon-modes`：从 Phonopy 本征矢分析 Γ 点简并子空间，计算特征标并检查封闭性；当前标签覆盖 O_h、T_d、C_1、C_i。可调相位、幅度与相容超胞，三维查看冻结位移，导出 POSCAR / P1 CIF；输入长度单位须明确。Si/GaAs/NaCl 内置模式是合成教学数据。
+- `#compute/band-connectivity`：二维方格 C4v 与 Rashba 教学模型，计算 Γ–X 两端的表示限制、连接图、镜面交叉与破缺开隙；不等于全 230 空间群的通用相容关系或自动拓扑分类。
+- `#compute/phonon-thermo`：Einstein / Debye 模型、完整加权网格及总 DOS 的 F/U/S/Cv，或读取 `thermal_properties.yaml`。区分模型原胞与输入计算胞，检查模式权重、频率单位和零频策略；不把高对称路径当作布里渊区积分。
+- `#atlas/research`：Si、GaAs 与二维方格模型的连续分析路线；课堂分别位于 `structure-dynamics?module=modes`、`crystal?module=bands`、`observables?module=thermo`。
+- `#atlas/notebook`：本机保存材料项目，包含计算输入、完整结果、版本、解释笔记和学习进度快照；可导出 JSON、导入副本、修改输入重算和显式恢复进度。IndexedDB 存储，单项目限 32 MiB / 40 条计算；建议导出备份。
+
+说明：[模式、能带与热力学](dist/docs/material-research.md)。验证：`npm run test:research`；三个工具均经由公共 `browser_api.py` 调用同一 Python 核心，已加入完整回归与 Pages 发布检查。
+
 ## 结构、相变与实验（2026-10-26）
 
 新增 8 课、8 道分步练习（32 步）和 BaTiO₃ / Si / NaCl / GaAs 四条材料路线，沿用五个主导航与 18px 正文字号：
@@ -20,12 +32,14 @@
 
 2026-10-26 版将网站组织为五个顶层入口：**总览、群论课堂、计算中心、群与材料图谱、方法与文档**。总览提供学习、结构分析和表示耦合入口；计算中心按结构与晶胞、表示与共表示、张量积与重耦合、Hamiltonian 与能带、群分类与精确代数整理工具。课堂和计算中心复用相同计算器，已有参数、计算核心和精确结果约定保持一致。
 
-“群论课堂”按先修知识组织成五条路径，避免把学习层级和物理对称种类混在同一排页签中：
+“群论课堂”按先修知识组织成七条路径，避免把学习层级和物理对称种类混在同一排页签中：
 
 | 学习路线 | 地址 | 主要内容 |
 | --- | --- | --- |
 | 基础与表示 | `#classroom/foundations` | 群、表示、32 点群、特征标与对称操作 |
 | 晶体对称 | `#classroom/crystal` | 三维空间群、Seitz 乘法、Bloch 相位与材料 |
+| 材料物性与光谱 | `#classroom/observables` | 声子、光谱选择定则、张量与热力学 |
+| 结构、相变与实验 | `#classroom/structure-dynamics` | 相变、畴、衍射、Phonopy、模式与冻结结构 |
 | 自旋与扩展对称 | `#classroom/spin` | 双群、磁群、色群、自旋点群与自旋空间群 |
 | 连续群与物理 | `#classroom/continuous` | U(1)、SU(2)、SU(3)、生成元与物理应用 |
 | 张量积与重耦合 | `#classroom/coupling` | 表示分解、CG 换基、Racah（6j）与四体 9j |

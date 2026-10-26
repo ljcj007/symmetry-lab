@@ -1,7 +1,9 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261026-dynamics1';
+const BUILD = '20261026-research1';
 const plans = {
+  phonon_modes: ['spglib_runtime', 'phonopy_import', 'phonon_spectra', 'phonon_modes'],
+  band_connectivity: ['band_connectivity'], phonon_thermo: ['phonopy_import', 'phonon_thermo'],
   phase: ['phase_domains'], diffraction: ['diffraction'], phonopy: ['phonopy_import'],
   phonons: ['phonon_spectra'], tensors: ['property_tensors'],
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
@@ -45,12 +47,12 @@ async function prepare(id, action, payload) {
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
   const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
   const teachingPackages = su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
-  for (const name of action === 'phonopy' ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
+  for (const name of ['phonopy','phonon_modes','phonon_thermo'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
     await runtime.loadPackage(name); packages.add(name);
   }
-  if (action === 'structure_bc' && !spglibLoaded) {
+  if (['structure_bc','phonon_modes'].includes(action) && !spglibLoaded) {
     progress('正在加载本地晶体对称性引擎 spglib…');
     const {createSpglibBridge} = await import('./vendor/spglib/bridge.mjs');
     self.symmetryLabSpglib = await createSpglibBridge();

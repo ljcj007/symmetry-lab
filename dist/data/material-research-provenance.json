@@ -1,0 +1,44 @@
+{
+  "release": "20261026-research1",
+  "date": "2026-10-26",
+  "originalContent": true,
+  "syntheticExamples": "Built-in phonon frequencies/eigenvectors, mesh/DOS/thermal data and band Hamiltonians are original educational examples, not material measurements or first-principles calculations.",
+  "sources": [
+    "https://phonopy.github.io/phonopy/formulation.html",
+    "https://phonopy.github.io/phonopy/output-files.html",
+    "https://phonopy.github.io/phonopy/symmetry-adapted-modes.html",
+    "https://spglib.readthedocs.io/en/stable/dataset.html",
+    "https://arxiv.org/abs/1706.09272"
+  ],
+  "files": [
+    {
+      "path": "dist/data/material-research.json",
+      "sha256": "849a2069d5108fd3d567571a5ee719515abc646866446d6d5b12daebc7acfd9c"
+    },
+    {
+      "path": "dist/data/examples/phonon-modes-silicon.json",
+      "sha256": "9ebcd6a3a210cfebb47502b61380c09a8d91577964e3aec9835b7f3430a94670"
+    },
+    {
+      "path": "dist/data/examples/thermo-mesh-demo.yaml",
+      "sha256": "cab74ec2beb809b570a0d2414e70cf28c3a33c96008ef672270f7ad485111a05"
+    },
+    {
+      "path": "dist/data/examples/thermal-properties-demo.yaml",
+      "sha256": "fdf63fbcdda055ffb169dea4bc80f56b5358e5b2cd6337216ffb62a9a025187a"
+    },
+    {
+      "path": "dist/python/phonon_modes.py",
+      "sha256": "44327838b4d5ef9ee276951e84918c141e1c081fc820da0509014f9fc150ee64"
+    },
+    {
+      "path": "dist/python/band_connectivity.py",
+      "sha256": "4b71f00483e26f61dbef28d10f4b5126d390bc4b294e0f118a3bb71480ffe314"
+    },
+    {
+      "path": "dist/python/phonon_thermo.py",
+      "sha256": "b0f7e78f3601a935998a9b3c6a02b6d10f1a95e6fbda3cfc05e58fb550ad4281"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text with LF line endings (Git checkout convention)"
+}

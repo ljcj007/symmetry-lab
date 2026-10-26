@@ -30,6 +30,15 @@ for(const route of ['classroom/foundations?tab=lab&lesson=representations&group=
  const parsed=parseClassroomRoute(route);assert.ok(parsed);assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed,'Route roundtrip preserves context');
 }
 assert.equal(parseClassroomRoute('compute/lie/su3_ninej?tab=learn').tab,'lab');
+for(const [tool,module,pathway] of [['phonon-modes','modes','structure-dynamics'],['band-connectivity','bands','crystal'],['phonon-thermo','thermo','observables']]){
+ const route=parseClassroomRoute('compute/'+tool+'?material=silicon&preset=demo&tab=learn');
+ assert.equal(route.module,module);assert.equal(route.section,'material-research');assert.equal(route.pathway,pathway);assert.equal(route.tab,'lab');assert.equal(route.material,'silicon');
+ assert.deepEqual(parseClassroomRoute(buildClassroomHash(route)),route);
+ assert.equal(parseClassroomRoute('compute/'+tool+'?module=wrong').module,module);
+ assert.equal(parseClassroomRoute('classroom/'+pathway+'?module='+module).section,'material-research');
+}
+assert.equal(parseClassroomRoute('compute/phonons?module=bands').section,'observables');
+assert.equal(parseClassroomRoute(classroomHash('material-research')).module,'modes');
 assert.equal(parseClassroomRoute('workbench'),null);assert.equal(parseClassroomRoute('classroom/not-a-path'),null);
 const c=new Container(),calls=[],opened=[],navigations=[],locations=[];
 const courseRenderers=Object.fromEntries(classroomSections.map(s=>[s.id,options=>calls.push({section:s.id,...options})]));

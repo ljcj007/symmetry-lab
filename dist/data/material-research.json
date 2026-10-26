@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "title": "从模式、能带到热力学的材料分析",
+  "sources": [
+    {"id":"phonopy","title":"Phonopy：动力学矩阵、本征矢与热力学公式","url":"https://phonopy.github.io/phonopy/formulation.html"},
+    {"id":"files","title":"Phonopy：输出文件与单位","url":"https://phonopy.github.io/phonopy/output-files.html"},
+    {"id":"isodistort","title":"ISODISTORT：畸变模与母相—子相关系","url":"https://iso.byu.edu/isodistorthelp.php"},
+    {"id":"bilbao","title":"Double crystallographic groups and their representations on the Bilbao Crystallographic Server","url":"https://arxiv.org/abs/1706.09272"}
+  ],
+  "modules": [
+    {"id":"modes","action":"phonon_modes","route":"phonon-modes","pathway":"structure-dynamics","title":"声子模式识别与冻结模","summary":"在 Γ 点识别整个简并子空间，再把选定振动冻结为可导出的结构。","lesson":"mode-subspaces"},
+    {"id":"bands","action":"band_connectivity","route":"band-connectivity","pathway":"crystal","title":"能带相容关系与连接","summary":"从表示限制到能带交叉，用对称保持与破缺两种模型检验结论。","lesson":"band-restriction"},
+    {"id":"thermo","action":"phonon_thermo","route":"phonon-thermo","pathway":"observables","title":"声子热力学","summary":"用完整加权数据计算振动自由能、熵和热容，比较 Einstein 与 Debye 模型。","lesson":"thermal-oscillator"}
+  ],
+  "lessons": [
+    {"id":"mode-subspaces","module":"modes","title":"简并振动应当怎样分类？","summary":"对称操作作用于一个模式子空间；任意选出的单根本征矢可能并不是不变对象。","sections":[
+      {"title":"从质量加权坐标开始","text":"Phonopy 对角化质量加权动力学矩阵。它给出的本征矢 e_j 与实际原子位移 u_j 相差质量平方根。旋转原子位移时，要同时处理笛卡尔向量的旋转和等价原子的置换。","formula":"u_j ∝ e_j / √m_j"},
+      {"title":"简并空间的基底不是唯一的","text":"同一频率的正交本征矢可以作幺正混合。若把每一列都单独贴上不可约表示标签，换一组本征矢就可能得到矛盾结果。先收集完整简并空间 E，再检验每个群操作是否保持它。","formula":"D_sub(g)=E†D(g)E；χ_sub(g)=Tr D_sub(g)"},
+      {"title":"特征标和封闭性一起检查","text":"特征标在子空间内部换基后不变。除了计算字符内积，还要检查 D(g)E 是否落在 E 内、列是否正交。频率分组容差过小会拆开简并，过大可能合并不同物理分支；合并后允许得到多个不可约成分。","formula":"n_α=(1/|G|)Σ_g χ_α(g)*χ_sub(g)"},
+      {"title":"首版的分类范围","text":"Γ 点消除了晶格平移的 Bloch 相位。本站先支持明确覆盖的点群字符表和完整可用的子空间；其他点群或不封闭空间会显示字符与原因，保留未分类状态。标签说明空间对称性，不单独给出 Raman 强度。"}
+    ],"references":["phonopy","bilbao"],"lab":{"preset":"silicon","selected_band":3}},
+    {"id":"mode-freezing","module":"modes","title":"把一支振动冻结成结构","summary":"把模式方向与位移幅度分开，产生可继续计算的 POSCAR / CIF。","sections":[
+      {"title":"冻结结构是一张模式快照","text":"指定模式、实空间相位与位移幅度，将位移加到平衡原子位置。归一化使用质量反加权复位移的最大包络；指定相位下实际最大位移可能小于 A。这里的幅度是用户指定的几何尺度，并非有限温度下的均方振幅，也不说明该结构是能量极小。","formula":"r′_j(R)=r_j(R)+A Re[(e_j/√m_j) exp(i2πq·(R+r_j)−iφ)] / max_k ||e_k/√m_k||"},
+      {"title":"超胞必须容纳波长","text":"对角超胞 [n1,n2,n3] 的周期边界要求 ni qi 都为整数。Γ 点可用一个原胞；q=(1/2,0,0) 至少需要第一方向的偶数倍周期。仅把原胞图复制几次并不能自动满足条件。","formula":"exp(i2π q·L_super)=1"},
+      {"title":"导出与下一步验证","text":"导出保留元素、晶格和位移后的坐标。POSCAR 按元素分组，完整结果给出原子顺序映射；CIF 保留冻结原子列表顺序。CIF 以 P1 写出全部原子，避免在未重新识别的情况下沿用母相操作。可以将结果送入结构标准化，或交给外部电子结构程序计算能量和力。"},
+      {"title":"正负幅度与原点约定","text":"一个模式的整体复相位可以改变快照方向；简并空间内不同组合也可能生成不同畸变。研究记录需保留原始文件、q、模式编号、相位、超胞和幅度，才能重建同一张快照。"}
+    ],"references":["phonopy","isodistort"],"lab":{"preset":"gaas","selected_band":3,"amplitude":0.12}},
+    {"id":"mode-audit","module":"modes","title":"怎样验证导入模式的可靠性？","summary":"先确认原胞、原子顺序和本征矢，再讨论模式标签。","sections":[
+      {"title":"结构与本征矢必须一一对应","text":"频率文件与补充结构必须使用相同原胞和原子顺序。相同化学式并不足以证明对应关系。质量、坐标单位或本征矢缺失时，需要补充数据；不应凭材料名称补上任意结构。"},
+      {"title":"声学零模提供独立检查","text":"Γ 点整体平移的实际位移对每个原子相同，而质量加权本征矢的幅度应与 √m 成正比。由 e/√m 恢复后，所有原子应同向等幅。","formula":"e_j=√m_j c；u_j=c"},
+      {"title":"把数值误差与物理破缺分开","text":"若本应简并的频率略有分裂，先查看数值容差与结构精度。识别出的完整结构对称性只说明几何关系；输入动力学矩阵或模式未遵守这些对称性时，子空间封闭检查可以失败。"},
+      {"title":"保存证据而不只保存标签","text":"同时记录字符、分解重数、封闭残差、输入文件及计算版本。内置二原子模型的频率和本征矢是教学构造；它们适合验证解析结果，不能作为真实材料的第一性原理谱。"}
+    ],"references":["phonopy","files"],"lab":{"preset":"gaas","selected_band":0}},
+    {"id":"band-restriction","module":"bands","title":"高对称点的表示怎样沿线分支？","summary":"把端点表示限制到路径的小群，得到相容关系。","sections":[
+      {"title":"路径上的对称性通常更少","text":"二维方格晶格的 Γ 点可具有 C4v，而 Γ–X 线上一般点只保留包含该线的镜面。端点的二维 E 表示限制到这个 Cs 子群时，可分为镜面对称与反对称两个一维分支。","formula":"E ↓ Cs = A′ ⊕ A″"},
+      {"title":"限制不是重新猜一张表","text":"只保留子群中的操作，计算原表示在这些操作上的字符，再与子群不可约字符作内积。对 Cs，操作为 E 和镜面 m，E 表示的限制字符为 (2,0)。","formula":"n_A′=(2+0)/2=1；n_A″=(2−0)/2=1"},
+      {"title":"维数守恒是必要检查","text":"所有分支维数乘重数之和必须等于端点表示维数。相容关系限制允许的连接方式，但不确定每一支的能量、带宽或所有材料的实际带序。","formula":"dim D=Σ_α n_α dim D_α"},
+      {"title":"模型与真实能带的关系","text":"交互演示采用明确给出的两轨道二维周期 Hamiltonian，参数使用模型能量单位。它是限制表示与交叉保护的可检验实例；没有把这个模型冒称为 Si 或 GaAs 的电子结构。"}
+    ],"references":["bilbao"],"lab":{"model":"c4v","mixing":0}},
+    {"id":"band-crossing","module":"bands","title":"为什么有些交叉能保留，有些会开隙？","summary":"用镜面本征值判断混合，再加入破缺项检验。","sections":[
+      {"title":"不同镜面标签不能被保持镜面的项混合","text":"在镜面对称的路径上，取镜面本征值 +1 和 −1 的两个态。若 Hamiltonian 与镜面对易，态间矩阵元等于其自身的负值，所以必须为零。","formula":"⟨+|H|−⟩=−⟨+|H|−⟩=0"},
+      {"title":"允许交叉不保证发生交叉","text":"对称性禁止杂化，但两支能量是否相遇仍依赖模型参数。演示中的模型提供一个可见交叉；移动带序参数可以改变交叉位置或使其离开路径。"},
+      {"title":"加入破缺项后直接对角化","text":"在交叉附近写 H=εI+d_zσ_z+δσ_x。δ 混合两种镜面标签并破坏对应镜面对称；在原交叉位置 d_z=0，两本征值相差 2|δ|。此时母相相容表只作为参考，不再作为实际态的严格标签。","formula":"E±=ε±√(d_z²+δ²)；Δ=2|δ|"},
+      {"title":"从结果追溯假设","text":"检查计算返回的共变残差和实际保留的对称性，再解释交叉。当前演示不进行一般材料的拓扑分类；可以进一步使用已有紧束缚和 Wilson 环工具研究适用的模型。"}
+    ],"references":["bilbao"],"lab":{"model":"c4v","mixing":0.2}},
+    {"id":"band-spin","module":"bands","title":"SOC、镜面双值表示与 Kramers 简并","summary":"用 Rashba 模型区分一般 k 点劈裂与时间反演不变点简并。","sections":[
+      {"title":"自旋镜面与普通镜面不同","text":"自旋 1/2 的镜面提升平方为 −1，所以其本征值是 +i 和 −i。它们对应双群的一维镜面分支，不能直接当作普通 Cs 的 ±1 标签。","formula":"M²=−I；m=±i"},
+      {"title":"时间反演连接 k 与 −k","text":"保留 T 且 T²=−1 时，Kramers 定理要求时间反演不变波矢处的双重简并。一般 k 点的伙伴在 −k；因此无反演的体系可以在一般 k 点有自旋劈裂。"},
+      {"title":"一个周期 Rashba 模型","text":"取 H=ε(k)I+α(sin ky σx−sin kx σy)。在 Γ 和 X，正弦项为零；在 Γ–X 一般点则可劈裂。加入 Bzσz 后时间反演被破坏，不能继续声称端点由 Kramers 定理保证简并。","formula":"E±=ε±√[α²(sin²kx+sin²ky)+Bz²]"},
+      {"title":"将符号检查与图像对照","text":"分别将 SOC 和 Zeeman 参数设为零或非零，观察端点、一般点和镜面标签。分步练习要求先判断哪些对称性还在，再解释曲线的变化。"}
+    ],"references":["bilbao"],"lab":{"model":"rashba","soc":0.6,"zeeman":0}},
+    {"id":"thermal-oscillator","module":"thermo","title":"一组振动怎样给出自由能和热容？","summary":"从单个量子谐振子累加到整个原胞，明确零点能与统计权重。","sections":[
+      {"title":"零点能在零温仍然存在","text":"对正频率模式，能量量子为 hν。零点能为 hν/2，Bose 占据数给出额外的热激发。这里 ν 是普通频率，不是角频率；不能再多乘一个 2π。","formula":"x=hν/(kBT)；U_ν=hν(1/2+1/(eˣ−1))"},
+      {"title":"由配分函数得到 F、S、Cv","text":"自由能含零点项和热占据项，熵由 (U−F)/T 得到。定容热容衡量内能随温度的变化。稳定的数值实现要正确处理 T=0、极小 x 和极大 x。","formula":"F_ν=hν/2+kBT ln(1−e⁻ˣ)；Cv,ν=kB x²eˣ/(eˣ−1)²"},
+      {"title":"每原胞与每摩尔原胞","text":"含 n 个原子的原胞共有 3n 个声子分支。本站显示 kJ/mol原胞 的能量和 J/(mol原胞 K) 的熵、热容，并保留每原胞换算。每摩尔原胞与每摩尔原子差 n 倍。","formula":"Cv(T→∞)=3nR"},
+      {"title":"谐近似的范围","text":"这里讨论固定结构的谐声子热力学，不包含电子、磁性或缺陷的自由能，也不自动得到定压热容、热膨胀或晶格热导率。多个体积的声子数据可以用于后续准谐扩展。"}
+    ],"references":["phonopy"],"lab":{"source":"compare","natom":2,"theta_e":400,"theta_d":500}},
+    {"id":"thermal-data","module":"thermo","title":"哪些声子数据能够计算体热容？","summary":"高对称路径、完整网格和 DOS 各自回答不同问题。","sections":[
+      {"title":"路径不是布里渊区积分","text":"band.yaml 通常只采样一条或几条高对称线。把这些频率直接平均会给这些线过大的权重，不能代表整个布里渊区。需要带正确权重的网格，或覆盖全部分支且规范化明确的总 DOS。"},
+      {"title":"先检查权重，再累加模式","text":"不可约网格 q 点携带代表等价点数的权重。归一化后所有 q 点权重之和为 1，各点的 3n 个分支都应计入。DOS 的积分应为每原胞 3n 个模式，不能把部分原子投影 DOS 当作总 DOS。","formula":"Σ_q w_q=1；∫g(ν)dν=3n"},
+      {"title":"虚频与零频需明确处理","text":"负号频率通常编码虚频，稳定谐振子的热力学公式不适用，不能悄悄删去。离散网格中的精确零频也需要明确政策；若选择排除，必须报告损失的模式权重，而不把结果称为完整谐模型。"},
+      {"title":"已有 thermal_properties.yaml","text":"可以直接读取 Phonopy 已算好的温度表，核对能量与热容单位后画图。导入沿用文件的输入计算胞，不能自动改称每原胞。内能可由已有 F、S、T 用 U=F+TS 推导并标注；缺失的零点能保留未知。"}
+    ],"references":["phonopy","files"],"lab":{"source":"compare","natom":2}},
+    {"id":"thermal-limits","module":"thermo","title":"Einstein 与 Debye 模型能解释什么？","summary":"用低温和高温极限检查模型，再解释中间温区的区别。","sections":[
+      {"title":"Einstein：把振动放在同一频率","text":"Einstein 模型把 3n 个模式都放在特征温度 θE 对应的频率。低温时热激发受到指数抑制；增大 θE 会把热容上升的温区移到更高温度。","formula":"Cv,E=3nR (θE/T)² exp(θE/T)/(exp(θE/T)−1)²"},
+      {"title":"Debye：保留三维低频连续谱","text":"Debye 模型在截止频率以下采用与频率平方成正比的 DOS，并将总模式数规范为 3n。它给出低温 T³ 热容；这是三维声学连续模型的结果，不是所有维数和所有激发的通则。","formula":"Cv,D(T≪θD)≈(12π⁴/5)nR(T/θD)³"},
+      {"title":"相同的高温模式计数","text":"两个模型在高温都趋向 3nR。若导入 DOS 得到错误的平台，首先检查频率单位、DOS 归一化、是否漏掉分支及每摩尔单位。"},
+      {"title":"材料参数需要来源","text":"演示中的 θE、θD 是可调教学参数。将一条曲线标成某种真实材料的预测之前，应提供参数来源或实际网格数据，并在材料研究记录中写明拟合与近似。"}
+    ],"references":["phonopy"],"lab":{"source":"compare","t_max":1000,"t_step":20}}
+  ],
+  "exercises": [
+    {"id":"mode-trace","lesson":"mode-subspaces","title":"简并子空间换基后标签为什么不变？","prompt":"一个三维简并空间由正交列矩阵 E 张成，群操作限制为 Dsub。","steps":[
+      {"prompt":"换基 E′=EU 后，限制矩阵是什么？","choices":["U† Dsub U","U Dsub","Dsub U"],"answer":0,"hint":"代入 E′† D E′。","explanation":"E′†DE′=U†E†DEU，所以是相似变换。"},
+      {"prompt":"Tr(U† Dsub U) 等于什么？","choices":["Tr Dsub","3 Tr Dsub","由 U 任意改变"],"answer":0,"hint":"使用迹的循环性质和 U†U=I。","explanation":"迹不依赖子空间内部的正交基。"},
+      {"prompt":"字符内积分解的重数会怎样变化？","choices":["保持不变","变为倒数","都变成 1"],"answer":0,"hint":"内积只用字符。","explanation":"字符不变，因此不可约分量重数不变。"},
+      {"prompt":"若只取简并空间中的一列并发现不封闭，应怎样处理？","choices":["恢复完整简并空间再分类","强行取最近的标签","改变材料名字"],"answer":0,"hint":"单列可能被群操作旋转到其他简并列。","explanation":"应检查整个子空间，不能给不封闭的单列强行赋不可约标签。"}]},
+    {"id":"mode-supercell","lesson":"mode-freezing","title":"为 q=(1/2,0,0) 选择周期超胞","prompt":"原胞倒易坐标 q=(1/2,0,0)，采用对角超胞。","steps":[
+      {"prompt":"沿第一原胞平移一次，模式相位因子是多少？","choices":["−1","+1","0"],"answer":0,"hint":"计算 exp(2πi×1/2)。","explanation":"相位转过 π，等于 −1。"},
+      {"prompt":"沿第一方向平移两个原胞，因子是多少？","choices":["+1","−1","2"],"answer":0,"hint":"再乘一次 −1。","explanation":"exp(2πi)=1，因此周期恢复。"},
+      {"prompt":"哪个最小示例超胞满足周期条件？","choices":["[2,1,1]","[1,2,1]","[1,1,2]"],"answer":0,"hint":"必须满足每个 ni qi 为整数。","explanation":"只有第一方向需要加倍。"},
+      {"prompt":"冻结结构导出后能否直接认定为稳定相？","choices":["不能，还需能量、力和稳定性验证","能，因位移非零","能，因使用了超胞"],"answer":0,"hint":"冻结模式只指定几何构型。","explanation":"模式快照不是结构弛豫或自由能最小化的结果。"}]},
+    {"id":"mode-masses","lesson":"mode-audit","title":"从质量加权本征矢恢复整体平移","prompt":"两个原子的质量为 1、4，某方向的质量加权本征矢分量为 1/√5、2/√5。","steps":[
+      {"prompt":"这两个分量的模平方和是多少？","choices":["1","3/5","5"],"answer":0,"hint":"计算 1/5+4/5。","explanation":"质量加权本征矢已归一化。"},
+      {"prompt":"第二个原子的质量反加权位移比例是多少？","choices":["1/√5","2/√5","4/√5"],"answer":0,"hint":"将 2/√5 除以 √4。","explanation":"质量反加权后第二个原子分量是 1/√5。"},
+      {"prompt":"两个原子的实际位移是什么关系？","choices":["同向等幅","反向等幅","第二个大两倍"],"answer":0,"hint":"比较 e1/√m1 与 e2/√m2。","explanation":"它们对应整体平移，是声学零模的独立检查。"},
+      {"prompt":"仅按 e 的长度直接绘制实际位移，会出现什么问题？","choices":["错误显示第二个原子位移更大","没有问题","频率单位自动修正"],"answer":0,"hint":"e 是质量加权坐标。","explanation":"省略质量反加权会改变实际原子运动的相对幅度。"}]},
+    {"id":"band-branch","lesson":"band-restriction","title":"手算 C4v 的 E 到 Cs 的分支","prompt":"限制字符为 (2,0)，Cs 的 A′、A″ 字符分别是 (1,1)、(1,−1)。","steps":[
+      {"prompt":"子群 Cs 的阶是多少？","choices":["2","4","8"],"answer":0,"hint":"只有恒等和镜面。","explanation":"内积的分母为 2。"},
+      {"prompt":"A′ 的重数是多少？","choices":["1","0","2"],"answer":0,"hint":"(2×1+0×1)/2。","explanation":"A′ 出现一次。"},
+      {"prompt":"A″ 的重数是多少？","choices":["1","−1","0"],"answer":0,"hint":"(2×1+0×(−1))/2。","explanation":"A″ 也出现一次。"},
+      {"prompt":"限制后的维数总和是多少？","choices":["2，与原表示一致","1，因为小群更小","4，因为有两支"],"answer":0,"hint":"重数乘表示维数再求和。","explanation":"1×1+1×1=2，降低对称性不会丢失态。"}]},
+    {"id":"band-gap","lesson":"band-crossing","title":"从镜面保护到避免交叉","prompt":"两态镜面本征值为 +1、−1，局部模型 H=dz σz+δσx。","steps":[
+      {"prompt":"保持镜面对称时，两态间常数混合 δ 必须怎样？","choices":["等于 0","等于 1","任意非零"],"answer":0,"hint":"MσxM⁻¹=−σx。","explanation":"常数 σx 混合项改变符号，镜面对称要求其系数为零。"},
+      {"prompt":"δ=0 时在 dz=0 处的能级如何？","choices":["简并","间隔 2","无法计算"],"answer":0,"hint":"直接对角化零矩阵。","explanation":"两个能量都为零。"},
+      {"prompt":"δ=0.2 时，在原交叉处能隙是多少？","choices":["0.4","0.2","0.04"],"answer":0,"hint":"能量为 ±|δ|。","explanation":"上能级减下能级等于 2|δ|=0.4。"},
+      {"prompt":"破缺后能否继续把 ±1 当作每个本征态的严格镜面标签？","choices":["不能，Hamiltonian 已不保持该镜面","能，因为母相有镜面","能，因为矩阵仍是二阶"],"answer":0,"hint":"先检查 [H,M]。","explanation":"母相相容表可作比较，但实际态已混合。"}]},
+    {"id":"band-kramers","lesson":"band-spin","title":"Rashba 劈裂与 Kramers 伙伴在哪里？","prompt":"H=εI+α(sin ky σx−sin kx σy)，T²=−1，起初 Bz=0。","steps":[
+      {"prompt":"Γ 点的自旋依赖项是多少？","choices":["0","α","2α"],"answer":0,"hint":"sin 0=0。","explanation":"Γ 点的两态简并。"},
+      {"prompt":"Γ–X 上一般点是否必须在同一个 k 两重简并？","choices":["不必须，T 通常将 k 映到 −k","必须，任意 k 都是 TRIM","SOC 一定为零"],"answer":0,"hint":"Kramers 同点简并需要 k 与 −k 倒易等价。","explanation":"一般 k 点可以有 Rashba 劈裂，其时间反演伙伴位于 −k。"},
+      {"prompt":"自旋镜面 M²=−I 的本征值是哪一组？","choices":["+i、−i","+1、−1","0、1"],"answer":0,"hint":"求 m²=−1。","explanation":"这是双值镜面表示。"},
+      {"prompt":"加入 Bzσz 后，可否仍依赖 T 保证 Γ 点简并？","choices":["不可以，Zeeman 项破坏 T","可以，只要 α 非零","可以，因为 Γ=0"],"answer":0,"hint":"时间反演将自旋翻转。","explanation":"Γ 的两能级间隔变为 2|Bz|。"}]},
+    {"id":"thermal-count","lesson":"thermal-oscillator","title":"两原子原胞的高温热容","prompt":"采用固定原胞的稳定谐模型，原胞含 n=2 个原子，R≈8.31446 J/(mol K)。","steps":[
+      {"prompt":"每个 q 点有多少个振动分支？","choices":["6","3","2"],"answer":0,"hint":"每个原子有三个位移方向。","explanation":"分支数为 3n=6。"},
+      {"prompt":"高温时每个正频率谐模式贡献多少定容热容？","choices":["kB","kB/2","0"],"answer":0,"hint":"动能与势能各贡献 kBT/2。","explanation":"每模式内能趋于 kBT，热容趋于 kB。"},
+      {"prompt":"每摩尔原胞高温 Cv 约是多少？","choices":["49.89 J/(mol原胞 K)","24.94 J/(mol原胞 K)","8.31 J/(mol原胞 K)"],"answer":0,"hint":"6R。","explanation":"6×8.31446≈49.89。"},
+      {"prompt":"换算为每摩尔原子应怎样处理？","choices":["除以 2","乘以 2","保持不变"],"answer":0,"hint":"每个原胞有两个原子。","explanation":"每摩尔原子的平台为 3R，计量基准必须写清楚。"}]},
+    {"id":"thermal-weights","lesson":"thermal-data","title":"检查声子网格与 DOS 的归一化","prompt":"2×2×2 网格缩减成三个代表 q 点，权重为 1、3、4；原胞有两个原子。","steps":[
+      {"prompt":"代表点的整数权重总和应该是多少？","choices":["8","3","6"],"answer":0,"hint":"完整网格有 2×2×2 个点。","explanation":"1+3+4=8，与完整网格一致。"},
+      {"prompt":"归一化后的第三个点权重是多少？","choices":["1/2","1/3","4"],"answer":0,"hint":"用代表数除以总点数。","explanation":"4/8=1/2。"},
+      {"prompt":"完整总 DOS 每原胞的积分应是多少？","choices":["6","8","3"],"answer":0,"hint":"数的是 3n 个模式，不是网格点数。","explanation":"每原胞模式数为 6。"},
+      {"prompt":"只有 Γ–X 路径频率能否直接替代上述积分？","choices":["不能，路径不代表布里渊区体积采样","能，均匀平均即可","能，重复端点越多越好"],"answer":0,"hint":"线与体积采样不同。","explanation":"需要正确网格权重或完整、规范化明确的总 DOS。"}]},
+    {"id":"thermal-debye","lesson":"thermal-limits","title":"用极限区分 Einstein 与 Debye","prompt":"比较同一模式总数、相同特征温度的两个三维教学模型。","steps":[
+      {"prompt":"Debye 模型低频 DOS 与 ν 的什么幂成正比？","choices":["ν²","ν⁰","ν⁻²"],"answer":0,"hint":"三维球壳态计数。","explanation":"线性色散的三维波矢球壳给出 g(ν)∝ν²。"},
+      {"prompt":"其充分低温热容与 T 的什么幂成正比？","choices":["T³","T","T⁰"],"answer":0,"hint":"把 ν/T 作为积分变量。","explanation":"热可激发的低频模式数随 T³ 增加。"},
+      {"prompt":"在同一低温渐近区，温度加倍，Debye 热容约变为几倍？","choices":["8","2","4"],"answer":0,"hint":"(2T)³/T³。","explanation":"应约为 8 倍，可用数值曲线作独立检查。"},
+      {"prompt":"两个模型的高温平台由什么决定？","choices":["总模式数 3n","θE 与 θD 的比值","零点能大小"],"answer":0,"hint":"每模式高温贡献 kB。","explanation":"同一 n 下均趋于 3nR，尽管低温行为不同。"}]}
+  ],
+  "cases": [
+    {"id":"silicon","formula":"Si","title":"从 Γ 模式到冻结结构与热容","summary":"识别 Oh 的声学 T1u 与光学 T2g，检查位移后导出结构；再用自己的网格数据研究热力学。","assumption":"内置频率和模式是可核验的教学构造；θE/θD 为用户参数，不是 Si 的拟合参数。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=silicon"],["衍射消光","#compute/diffraction?material=silicon"],["Phonopy 导入","#compute/phonopy?material=silicon"]]},
+    {"id":"gaas","formula":"GaAs","title":"不同原子质量与 Td 振动表示","summary":"比较质量加权本征矢与实际位移，理解声学和光学 T2 子空间，并构造冻结模。","assumption":"演示不由模式标签推算 Raman 强度或真实软模频率。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=gaas"],["红外与 Raman 选择定则","#compute/phonons?preset=gaas"],["Phonopy 导入","#compute/phonopy?material=gaas"]]},
+    {"id":"square-model","formula":"C4v 模型","title":"方格晶格上的轨道、镜面与交叉","summary":"用 p_x/p_y 两轨道的周期模型，计算 E→A′+A″ 和镜面破缺开隙；再切换到自旋 Rashba 模型。","assumption":"这是二维模型，不指代某一真实材料，也不是所有空间群的能带连接目录。","modules":["bands"],"links":[["点群与表示","#classroom/foundations"],["双群与自旋","#classroom/spin"],["紧束缚与拓扑计算","#magnetictb"]]}
+  ]
+}
