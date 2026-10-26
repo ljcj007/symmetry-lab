@@ -1,5 +1,5 @@
 // Presentation only: all classification and algebra are computed by Python.
-import {mountCoverage} from './coverage-ui.js?v=20261025-ninej3';
+import {mountCoverage} from './coverage-ui.js?v=20261026-redesign1';
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pretty = x => JSON.stringify(x, null, 2);
 const specs = {
@@ -30,6 +30,7 @@ const specs = {
 };
 const states = Object.fromEntries(Object.entries(specs).map(([tool,s]) => [tool,{text:pretty(s.examples[0][2]),example:s.examples[0][0],revision:0,result:null,error:null,busy:false}]));
 let selected = 'carat_integral';
+export function selectAdvancedTool(tool){if(Object.hasOwn(specs,tool)){selected=tool;return true;}return false;}
 export function getAdvancedResult(){return states[selected].result;}
 const table = (headers,rows) => `<div class="table-wrap"><table><thead><tr>${headers.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(typeof x==='object'?JSON.stringify(x):x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const cards = rows => `<div class="stats exact-stats">${rows.map(([label,value])=>`<div class="stat"><div class="stat-label">${esc(label)}</div><strong>${esc(value)}</strong></div>`).join('')}</div>`;
@@ -93,6 +94,7 @@ function resultView(tool,s){
 
 export function renderAdvancedView(options){
  const {container,run,toast,download}=options,tool=selected,s=states[tool],spec=specs[tool];
+ options.onToolChange?.(tool);
  let input={};try{input=JSON.parse(s.text)||{};}catch{}
  const here=()=>container.dataset.researchView==='advanced'&&selected===tool;
  const draw=()=>{if(here())renderAdvancedView(options);};
@@ -103,7 +105,7 @@ export function renderAdvancedView(options){
  container.querySelectorAll('[data-exact-tool]').forEach(b=>b.onclick=()=>{selected=b.dataset.exactTool;renderAdvancedView(options);});
  $('#exact-input').oninput=e=>{s.revision++;s.text=e.target.value;s.result=null;s.error=null;$('#exact-results').innerHTML='<div class="empty-state">输入已修改，请重新运行。</div>';};
  $('#exact-example').onchange=e=>{s.example=e.target.value;};
- $('#exact-load').onclick=async()=>{const example=spec.examples.find(e=>e[0]===s.example),revision=++s.revision;s.loading=true;s.result=null;s.error=null;draw();try{let p=example[2];if(typeof p==='string'){const response=await fetch(`examples/${p}?v=20261025-ninej3`);if(!response.ok)throw new Error('示例加载失败');p=await response.json();}if(s.revision===revision)setInput(p);}catch(e){if(s.revision===revision){s.loading=false;s.error=e.message;draw();toast(e.message);}}};
+ $('#exact-load').onclick=async()=>{const example=spec.examples.find(e=>e[0]===s.example),revision=++s.revision;s.loading=true;s.result=null;s.error=null;draw();try{let p=example[2];if(typeof p==='string'){const response=await fetch(`examples/${p}?v=20261026-redesign1`);if(!response.ok)throw new Error('示例加载失败');p=await response.json();}if(s.revision===revision)setInput(p);}catch(e){if(s.revision===revision){s.loading=false;s.error=e.message;draw();toast(e.message);}}};
  $('#exact-catalog')?.addEventListener('click',()=>setInput({action:'catalog',dimension:Number($('#carat-dimension').value),query:$('#carat-query').value,limit:20}));
  for(const [id,sign] of [['carat-prev',-1],['carat-next',1]])$('#'+id)?.addEventListener('click',()=>{const payload=JSON.parse(s.text);setInput({...payload,offset:Math.max(0,(payload.offset||0)+sign*(payload.limit||20))});container.querySelector('#exact-run').click();});
  $('#carat-representative')?.addEventListener('click',()=>setInput({action:'representative',dimension:JSON.parse(s.text).dimension||3,name:$('#carat-name').value}));

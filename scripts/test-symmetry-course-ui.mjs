@@ -42,6 +42,7 @@ class Element {
   querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
   focus(){}
   scrollIntoView(){}
+  checkValidity(){return true;}
 }
 class Container {
   set innerHTML(value){if(this.firstElementChild)this.firstElementChild.parentNode=null;this.html=value;this.firstElementChild=new Element('div',{},this);this.firstElementChild.innerHTML=value;}
@@ -248,3 +249,62 @@ assert.equal(surface.onpointermove,null,'Leaving the view clears pointer handler
 camera.destroy();
 
 console.log('Advanced course UI: loader/retry races, separate quiz and derivation progress, hidden sequential answers, selected exports, delayed Python isolation, 3D drag/keyboard/zoom/wrapping, element colors and pointer cleanup passed.');
+
+// These are Python outputs, not JavaScript reconstructions of group algebra.
+const groupCases=JSON.parse(fs.readFileSync(new URL('./fixtures/group-extensions-ui.json',import.meta.url),'utf8')).cases;
+const realData=Object.fromEntries(['symmetry-course-lessons','symmetry-course-atlas','symmetry-materials','symmetry-derivations'].map(name=>[name,JSON.parse(fs.readFileSync(new URL('../dist/data/'+name+'.json',import.meta.url),'utf8'))]));
+globalThis.fetch=async url=>({ok:true,json:async()=>realData[url.split('/').at(-1).split('?')[0].replace('.json','')]});
+globalThis.localStorage={getItem:()=>null,setItem:()=>{}};
+const groupsUI=await import('../dist/symmetry-course-ui.js?group-extension-fixtures'),groupDownloads=[],groupCalls=[],groupRoutes=[];
+for(const [index,fixture] of groupCases.entries()){
+  const groupPage=new Container(),input=fixture.input,lesson=realData['symmetry-course-lessons'].lessons.find(item=>item.lab===input.lab&&item.labPreset===input.preset);
+  await groupsUI.renderSymmetryCourseView({container:groupPage,selection:{pathway:'spin',tab:'lab',lesson:lesson?.id,experiment:input.lab,preset:input.preset},onNavigate:patch=>groupRoutes.push(patch),run:async(action,payload)=>{groupCalls.push({action,payload});return fixture.result;},download:(text,name)=>groupDownloads.push({data:JSON.parse(text),name})});
+  const root=groupPage.firstElementChild,$=selector=>root.querySelector(selector);
+  $('#sc-group-preset').value=input.preset;$('#sc-group-steps').value=String(input.steps);
+  if(input.lab==='double_group')$('#sc-group-kz').value=input.kz;else $('#sc-group-variant').value=input.variant;
+  await $('#sc-lab-form').onsubmit({preventDefault(){}});
+  assert.deepEqual(groupCalls.at(-1),{action:'teaching_labs',payload:input});
+  assert.ok($('#sc-group-viewer').querySelector('svg'),'Every real Python preset has a 3D rendering');
+  assert.match($('#sc-lab-output').innerHTML,/查看有限群表与复合约定/);
+  if(fixture.result.dimension==='space')assert.match($('#sc-lab-output').innerHTML,/完整空间对称群是无限群/);
+  if(input.lab==='spin_group')assert.match($('#sc-lab-output').innerHTML,/SOC 锁定/);
+  if(input.variant==='spatial_only'||input.variant==='internal_only')assert.match($('#sc-lab-output').innerHTML,/这个操作破坏指定图案/,'A control variant opens at step 1, not the misleading identity frame');
+  const yaw=root.querySelector('[data-gx="yaw"]');yaw.value='51';yaw.oninput();
+  $('#sc-frame').oninput({target:{value:'2'}});
+  assert.equal(root.querySelector('[data-gx="yaw"]').value,'51','Changing composition step preserves the camera');
+  $('#sc-export-lab').onclick();assert.deepEqual(groupDownloads.at(-1).data.result,fixture.result);assert.deepEqual(groupDownloads.at(-1).data.input,input);assert.equal(groupDownloads.at(-1).data.camera.yaw,51);
+  assert.equal(groupDownloads.at(-1).name,'teaching-lab-'+input.lab+'.json');
+  const stage=root.querySelector('[data-gx="stage"]'),svg=stage.querySelector('svg'),before=svg.innerHTML;
+  stage.onkeydown({key:'ArrowRight',preventDefault(){}});assert.notEqual(svg.innerHTML,before,'Keyboard changes the actual 3D projection');
+  $('#sc-tab-quiz').onclick();assert.equal(stage.onpointerdown,null,'Leaving the experiment destroys its camera handlers');
+  if(lesson)assert.equal(groupRoutes.at(-1).lesson,lesson.id,'Exercise navigation keeps its teaching lesson');
+}
+assert.equal(groupCalls.length,23);
+
+const groupLate=await import('../dist/symmetry-course-ui.js?group-late-result'),groupLatePage=new Container();let finishGroup;
+await groupLate.renderSymmetryCourseView({container:groupLatePage,selection:{pathway:'spin',tab:'lab',experiment:'spin_group',preset:'af_space'},run:()=>new Promise(resolve=>{finishGroup=resolve;})});
+const gl=selector=>groupLatePage.firstElementChild.querySelector(selector);
+gl('#sc-group-preset').value='af_space';gl('#sc-group-steps').value='4';gl('#sc-group-variant').value='combined';
+const computing=gl('#sc-lab-form').onsubmit({preventDefault(){}});gl('#sc-tab-learn').onclick();finishGroup(groupCases.find(item=>item.input.lab==='spin_group').result);await computing;
+assert.equal(groupLate.getSymmetryCourseResult().experiment,null,'Late scientific data does not enter exports after navigation');
+assert.ok(gl('#sc-chapter-select'));
+const colorLesson=realData['symmetry-course-lessons'].lessons.find(item=>item.lab==='color_group'&&item.labPreset==='translation3_space');
+const linked=await import('../dist/symmetry-course-ui.js?deep-linked-lesson'),linkedPage=new Container(),linkedRoutes=[];
+await linked.renderSymmetryCourseView({container:linkedPage,selection:{pathway:'spin',track:'color',lesson:colorLesson.id},onNavigate:route=>linkedRoutes.push(route)});
+linkedPage.firstElementChild.querySelector('#sc-lesson-lab').onclick();assert.equal(linkedRoutes.at(-1).preset,'translation3_space');assert.equal(linkedRoutes.at(-1).lesson,colorLesson.id);
+console.log('Double/colour/spin UI: 23 real Python cases, point/3D controls, negative comparisons, exact exports, camera persistence, keyboard projection, cleanup, lesson presets and late-result isolation passed.');
+
+const materialRoutes=[],materialRouteUI=await import('../dist/symmetry-course-ui.js?material-route-isolation'),materialPage=new Container();
+const materialReply={...viewerData,lab:'crystal',chemicalSymmetry:true,magneticSymmetry:false,atomMapping:[],notes:[]};
+await materialRouteUI.renderSymmetryCourseView({container:materialPage,selection:{pathway:'crystal',tab:'materials',material:'nacl'},onNavigate:patch=>materialRoutes.push(patch),run:async()=>materialReply});
+await settle();assert.equal(materialRoutes.length,0,'Initial asynchronous material render must not add browser history');
+await materialPage.firstElementChild.querySelector('#sc-crystal-form').onsubmit({preventDefault(){}});
+assert.ok(materialRouteUI.getSymmetryCourseResult().materialExperiment);
+await materialRouteUI.renderSymmetryCourseView({container:materialPage,selection:{pathway:'crystal',tab:'materials',material:'nio'},onNavigate:patch=>materialRoutes.push(patch)});
+await settle();assert.equal(materialRouteUI.getSymmetryCourseResult().materialExperiment,null,'A material deep link clears the previous material result and export');
+assert.match(materialPage.firstElementChild.querySelector('#sc-content').innerHTML,/NiO/);
+assert.equal(materialRoutes.length,0);
+const deriveRoutes=[],derivePage=new Container();
+await materialRouteUI.renderSymmetryCourseView({container:derivePage,selection:{pathway:'spin',tab:'derive',exercise:realData['symmetry-derivations'].exercises.at(-1).id},onNavigate:patch=>deriveRoutes.push(patch)});
+await settle();assert.equal(deriveRoutes.length,0,'Opening an explicit derivation creates no normalization history entry');
+console.log('Course deep links: initial asynchronous views do not push history; switching material IDs invalidates results and exports.');

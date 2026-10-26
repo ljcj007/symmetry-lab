@@ -2,9 +2,25 @@
 
 整合 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep)、[MSGCorep](https://github.com/goodluck1982/MSGCorep)、[MagneticTB](https://github.com/zhangzeyingvv/MagneticTB) 和 [CrystKit](https://github.com/hongyi-zhao/CrystKit) 的数据与算法工作流。四个项目已实现的计算功能统一使用 Python，通过 Pyodide 在浏览器 Worker 内运行；JavaScript 负责界面、绘图和任务调度。网站为独立实现，不代表上游作者发布或背书。
 
-## 统一群论课堂与李群基础
+## 网站导航与学习路线
 
-侧边栏只保留一个“群论课堂”入口，内部可切换“32 点群”“空间群 · 双群 · 磁群”“李群基础 · SU(2) / SU(3)”。旧课程答题记录沿用原有存储键；李群记录独立保存。页签支持键盘方向键、Home / End 和直接链接。
+2026-10-26 版将网站组织为五个顶层入口：**总览、群论课堂、计算中心、群与材料图谱、方法与文档**。总览提供学习、结构分析和表示耦合入口；计算中心按结构与晶胞、表示与共表示、张量积与重耦合、Hamiltonian 与能带、群分类与精确代数整理工具。课堂和计算中心复用相同计算器，已有参数、计算核心和精确结果约定保持一致。
+
+“群论课堂”按先修知识组织成五条路径，避免把学习层级和物理对称种类混在同一排页签中：
+
+| 学习路线 | 地址 | 主要内容 |
+| --- | --- | --- |
+| 基础与表示 | `#classroom/foundations` | 群、表示、32 点群、特征标与对称操作 |
+| 晶体对称 | `#classroom/crystal` | 三维空间群、Seitz 乘法、Bloch 相位与材料 |
+| 自旋与扩展对称 | `#classroom/spin` | 双群、磁群、色群、自旋点群与自旋空间群 |
+| 连续群与物理 | `#classroom/continuous` | U(1)、SU(2)、SU(3)、生成元与物理应用 |
+| 张量积与重耦合 | `#classroom/coupling` | 表示分解、CG 换基、Racah（6j）与四体 9j |
+
+课程、实验预设、材料与推导题均可通过地址直接定位，例如 `#classroom/spin?track=color&lesson=color-02`、`#classroom/spin?tab=lab&experiment=spin_group&preset=af_space`。独立计算入口如 `#compute/lie/su3_ninej` 复用课堂中的 9j 计算器。旧的 `#pointgroups`、`#academy`、`#classroom/pointgroups`、`#classroom/lie` 等链接仍可使用。
+
+总览、计算中心和图谱提供工具、课程、群编号与材料的统一检索；计算工具可收藏，总览显示最近访问。收藏和最近访问保存在当前浏览器，原有课程答题及分步推导记录继续沿用各自存储键。页面保留此前放大的字号，并提供面包屑和清晰的返回入口；课程页签保留键盘方向键与 Home / End 操作。
+
+## 李群基础与物理应用
 
 [李群基础](https://ljcj007.github.io/symmetry-lab/#classroom/lie)包含 32 个原创中文单元、32 个分步例题和 64 道解析自测：连续群与 U(1)、幺正矩阵、生成元与对易子、SU(2) 自旋旋量与 SO(3) 双覆盖、表示和维数、SU(3) 的 Gell-Mann 生成元、Cartan 子代数与基本表示权图。来源与数学约定见 [李群课程说明](dist/docs/lie-groups.md)。
 
@@ -72,25 +88,41 @@ python dist/python/cli.py teaching_labs dist/examples/su3-ninej-10-permutation.j
 
 ## 32 点群课堂
 
-左侧“群论课堂”的“32 点群”页签（`#classroom/pointgroups`，兼容旧链接 `#pointgroups`）包含分步中文讲解、32 个晶体学点群图谱、可操作的对称变换实验及即时自测。课程参考 Dresselhaus、Dresselhaus 与 Jorio 的 [Group Theory: Application to the Physics of Condensed Matter](https://doi.org/10.1007/978-3-540-32899-5)（Springer, 2008），标注原书章节和印刷/PDF 页码；讲解、例题和绘图为独立编写，网站不提供原书 PDF 或书页图像。
+“群论课堂”的“基础与表示”路线（`#classroom/foundations`，兼容 `#classroom/pointgroups` 和 `#pointgroups`）包含分步中文讲解、32 个晶体学点群图谱、可操作的对称变换实验及即时自测。课程参考 Dresselhaus、Dresselhaus 与 Jorio 的 [Group Theory: Application to the Physics of Condensed Matter](https://doi.org/10.1007/978-3-540-32899-5)（Springer, 2008），标注原书章节和印刷/PDF 页码；讲解、例题和绘图为独立编写，网站不提供原书 PDF 或书页图像。
 
 图谱包含国际 / Schoenflies 符号、晶系、群阶、反演/极性/手性、笛卡尔操作矩阵、共轭类、单值特征标及极矢量、轴矢量和二次函数的表示分解。BC Γ 标签与可追溯的 Mulliken 名称并列；复共轭表示明确配对。IR/Raman 标记只表示对称性允许，不预测特定材料的振动频率、模式数量或散射强度。
 
 教学表格由 `python scripts/build-pointgroup-course.py` 从固定群数据生成，并用 `python scripts/test-pointgroup-course.py` 检查全部 32 群的矩阵闭合、共轭类、特征标正交性和表示分解。静态教学无需等待 Python 运行环境；“送入工作台”在相应参考空间群的 Γ 点启动现有 Python 计算。更多约定见 [课程说明](dist/docs/pointgroup-course.md)。
 
-## 空间群、双群与磁群课堂
+## 空间群、双群、磁群、色群与自旋群课堂
 
-“群论课堂”的“空间群 · 双群 · 磁群”页签（`#classroom/crystal`，兼容旧链接 `#academy`）沿空间群、双群与自旋、磁群与时间反演三条路线提供 15 个学习单元、15 个分步例题和 30 道带解析的练习。参考原有 Dresselhaus 教材及 IUCr、Bilbao 和原始研究文献，具体来源和适用范围见 [课程说明](dist/docs/symmetry-course.md)。32 点群课堂保留为入门课程。
+“晶体对称”和“自旋与扩展对称”两条学习路径共同使用 24 个学习单元、24 个课内分步例题、48 道解析自测及 20 道独立分步推导。内容主题包括空间群 6 节、双群 6 节、磁群 5 节、色群 3 节与自旋群 4 节。参考原有 Dresselhaus 教材及 IUCr、Bilbao 和原始研究文献，具体来源和适用范围见 [课程说明](dist/docs/symmetry-course.md)。新增内容保留原有课程与题目的 ID，32 点群课堂仍为入门基础。
 
 教学目录覆盖全部 **230 个空间群、1,651 个磁空间群和 122 个磁点群**，支持编号/符号检索、晶系/磁群类型筛选，以及单值或自旋双值工作台跳转。目录中的操作数指平移商的代表操作数，完整空间群仍是无限群；磁群 BNS 首段的含义按类型区分。目录不把“含分数平移”当成 symmorphic / nonsymmorphic 分类判据。
 
-四种交互实验由同一个 Python 接口 `teaching_labs` 计算：Seitz 平移/螺旋/滑移复合与 Bloch 相位、自旋 1/2 旋量的 2π/4π 旋转、极向量与磁矩在空间/时间反演下的对照、反铁磁半格平移与时间反演的组合。前端只显示 Python 结果并播放预计算帧。反铁磁示意模型明确区分“小群条件”和 `A² = −1`，不将示意箭头解释为真实材料能带预测。
+七类交互实验由同一个 Python 接口 `teaching_labs` 计算。原有四类是 Seitz 平移/螺旋/滑移复合与 Bloch 相位、自旋 1/2 旋量的 2π/4π 旋转、极向量与磁矩在空间/时间反演下的对照、反铁磁半格平移与时间反演的组合。前端显示 Python 结果并播放预计算帧；反铁磁示意模型分别检查“小群条件”和 `A² = −1`，不将示意箭头解释为真实材料能带预测。
 
-重建目录：`python scripts/build-symmetry-course.py`。验证课程/目录/实验：`npm run test:academy`。四个实验也可由 `python dist/python/cli.py teaching_labs input.json` 在本地 CPython 运行；该模块只用 Python 标准库。课程文本无需启动 Python，交互计算按需加载浏览器解释器。
+新增三类实验由标准库 Python `group_extensions.py` 提供精确操作、有限乘法表与结构匹配；三维视图只投影其结果：
+
+- **双群**：C₂ 的四阶旋量提升、三维点群 222 的 Q₈ 提升，以及双空间群 2₁ 螺旋关系 `ĝ²=ĒTz`。分开显示 2π 中心负号与 Bloch 平移相位；明确通常电子晶体双群的反演约定。
+- **色群**：三色 C₃ 点模型和沿三个晶格方向重复的 RGB 三层模型。比较空间操作、内部标签置换与组合动作，求保色核并区分完整空间平移与有限商。有限颜色置换不同于 QCD 的连续 SU(3) 色规范群。
+- **自旋群**：两站点点模型、三站点 120° 共面模型、三维反铁磁半平移和三层螺旋磁序。比较 `[U∥R|t]` 的组合、只动位置及只转磁矩，讲解自旋点投影、按磁矩秩得到的连续 spin-only 稳定子，以及 SOC 锁定条件 `U=(−1)^εdet(Rc)Rc`。
+
+新增实验使用有理数及精确根式核对指定生成操作和其幂，步数限制为 1–12，三维空间群的完整平移部分始终保留。有限图表展示指定点子群或平移商，并不表示完整空间群只有有限阶。它们没有实现任意着色/磁结构的完整色群或自旋空间群分类器；230 和 1651 不是这些扩展群的总类型数。经典磁矩重合也不代替电子旋量的双覆盖或反幺正算符检验。`Spin(3)≅SU(2)` 与磁学自旋空间群分别说明两种不同结构。
+
+新增来源包括 [Bilbao 双晶体群论文](https://arxiv.org/abs/1706.09272)、[有色点阵研究](https://pmc.ncbi.nlm.nih.gov/articles/PMC392941/)、[IUCr 自旋对称操作搜索算法](https://journals.iucr.org/a/issues/2024/01/00/ib5119/)与[自旋点群和 SOC 的原始论文](https://journals.iucr.org/a/issues/2025/04/00/cam5007/)。课程例题和推导为本站原创，不转载文献图表。
+
+重建目录：`python scripts/build-symmetry-course.py`。验证课程、目录与实验：`npm run test:academy`。这些教学实验也可由相同接口在本地 CPython 运行；新三类实验只需 Python 标准库。课程文本无需启动 Python，交互计算按需加载浏览器解释器。三个可复现输入为：
+
+```sh
+python dist/python/cli.py teaching_labs dist/examples/double-group-screw.json
+python dist/python/cli.py teaching_labs dist/examples/color-group-space.json
+python dist/python/cli.py teaching_labs dist/examples/spin-group-space.json
+```
 
 “材料实例”加入 NaCl、金刚石结构 Si、GaAs、bcc Fe、NiO 和 MnF₂ 的理想模型。三维视图支持拖动旋转、键盘调节视角、缩放、操作前后叠加、周期折回和磁矩箭头；原子变换与化学/磁结构的一一匹配由纯 Python `crystal_labs.py` 计算。模型明确标注母相、晶胞、磁畴和近似条件，不自动将一个操作的匹配结果解释为真实材料的完整磁空间群。
 
-“分步推导”提供提示、逐步展开的计算过程、最终答案及自测反馈，覆盖晶体平移、化学基元、双群旋量、磁矩及反铁磁组合对称。材料来源、模型设定和练习适用边界见 [材料课堂说明](dist/docs/materials-classroom.md)。材料原胞/常规胞采用各自说明中的坐标；进入表示工作台后，波矢仍使用本站 BC 原胞约定。
+“分步推导”提供提示、逐步展开的计算过程、最终答案及自测反馈。12 道材料题保留原有结构、磁畴与坐标约定；新增 8 道理想模型题覆盖 Q₈ 交换子、双值螺旋、色同态与平移周期、自旋组合、三层螺旋、spin-only 稳定子和 SOC 锁定。理想模型单独标明，不冒充真实材料的测量结构。材料来源和练习适用边界见 [材料课堂说明](dist/docs/materials-classroom.md)。材料原胞/常规胞采用各自说明中的坐标；进入表示工作台后，波矢仍使用本站 BC 原胞约定。
 
 ## 启动与部署
 

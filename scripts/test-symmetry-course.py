@@ -58,9 +58,12 @@ class AcademyCatalog(unittest.TestCase):
     def test_complete_lesson_schema_and_workbench_links(self):
         course=read('dist/data/symmetry-course-lessons.json')
         lessons=course['lessons'];sources={s['id'] for s in course['sources']}
-        self.assertEqual(len(lessons), 15)
-        self.assertEqual(len({l['id'] for l in lessons}), 15)
-        self.assertEqual(Counter(l['track'] for l in lessons), {'space':6, 'double':4, 'magnetic':5})
+        self.assertEqual(len(lessons), 24)
+        self.assertEqual(len({l['id'] for l in lessons}), 24)
+        self.assertEqual(Counter(l['track'] for l in lessons), {'space':6, 'double':6, 'magnetic':5, 'color':3, 'spin':4})
+        lab_presets={'double_group':{'c2_point','d2_point','screw21_space'},
+                     'color_group':{'c3_point','translation3_space'},
+                     'spin_group':{'c2_point','af_space','triangular_point','helix3_space'}}
         ids={'sg':{str(g['number']) for g in ATLAS['spaceGroups']},
              'msg':{g['id'] for g in ATLAS['magneticGroups']},
              'mpg':{g['id'] for g in ATLAS['magneticPointGroups']}}
@@ -78,11 +81,27 @@ class AcademyCatalog(unittest.TestCase):
                 for ref in lesson['references']:
                     self.assertIn(ref['sourceId'], sources)
                 if 'lab' in lesson:
-                    self.assertIn(lesson['lab'], ('seitz','spinor','magnetic','antiferro'))
+                    self.assertIn(lesson['lab'], ('seitz','spinor','magnetic','antiferro',*lab_presets))
+                if 'labPreset' in lesson:
+                    self.assertIn(lesson['labPreset'], lab_presets[lesson['lab']])
                 if 'workbench' in lesson:
                     link=lesson['workbench'];self.assertIn(str(link['id']), ids[link['mode']])
                     self.assertEqual(len(link['k']), 3)
                     self.assertEqual(type(link['doubleValued']), bool)
+
+    def test_extended_routes_cover_points_and_three_dimensional_space(self):
+        course=read('dist/data/symmetry-course-lessons.json')
+        by_id={lesson['id']:lesson for lesson in course['lessons']}
+        # Retain the established progress keys when extending the catalog.
+        for prefix,count in [('space',6),('double',4),('magnetic',5)]:
+            for index in range(1,count+1):
+                self.assertIn(f'{prefix}-{index:02}',by_id)
+        for track in ('double','color','spin'):
+            levels={l.get('symmetryLevel') for l in by_id.values() if l['track']==track}
+            self.assertIn('point',levels)
+            self.assertIn('space',levels)
+        self.assertEqual(sum(len(l['quiz']) for l in by_id.values()),48)
+        self.assertEqual({t['id'] for t in course['tracks']},{'space','double','magnetic','color','spin'})
 
 
 if __name__ == '__main__':

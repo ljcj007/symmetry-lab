@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const saved=new Map();
+globalThis.localStorage={getItem:key=>saved.get(key)||null,setItem:(key,value)=>saved.set(key,value)};
+const {toolGroups,toolsIndex,knownTool,searchEntries,favoriteRoutes,toggleFavorite,rememberRoute}=await import('../dist/navigation-ui.js');
+const {parseClassroomRoute,buildClassroomHash}=await import('../dist/classroom-ui.js');
+assert.equal(toolGroups.length,5);
+assert.equal(new Set(toolsIndex.map(t=>t.route)).size,toolsIndex.length);
+for(const route of ['workbench','structure','products','bands','magnetictb','crystkit'])assert.ok(knownTool(route),route);
+for(const name of ['carat','carat_integral','integral_normalizer','arithmetic_centralizer','symbolic','symbolic_interfaces','symbolic_spacegroups','crystkit_ext'])assert.ok(knownTool('compute/advanced/'+name),name);
+const names=fs.readFileSync(new URL('../dist/lie-physics-ui.js',import.meta.url),'utf8');
+for(const t of toolsIndex.filter(t=>t.route.startsWith('compute/lie/'))){
+ const route=parseClassroomRoute(t.route);
+ assert.equal(route.section,'lie');assert.equal(route.tab,'lab');assert.equal(route.calculationOnly,true);
+ assert.ok(names.includes(route.experiment+':'),route.experiment);
+ assert.equal(buildClassroomHash(route),'#'+t.route);
+}
+assert.equal(searchEntries(toolsIndex,'9j')[0].route,'compute/lie/su3_ninej');
+assert.equal(searchEntries(toolsIndex,'POSCAR CIF')[0].route,'structure');
+assert.equal(searchEntries(toolsIndex,'不存在的工具').length,0);
+toggleFavorite('compute/lie/su3_cg');assert.deepEqual(favoriteRoutes(),['compute/lie/su3_cg']);
+toggleFavorite('compute/lie/su3_cg');assert.deepEqual(favoriteRoutes(),[]);
+toggleFavorite('javascript:bad');assert.deepEqual(favoriteRoutes(),[]);
+saved.set('symmetry-lab.favorites.v1','corrupt');assert.deepEqual(favoriteRoutes(),[]);
+rememberRoute('classroom/spin?lesson=spin-03');rememberRoute('workbench');rememberRoute('workbench');
+assert.deepEqual(JSON.parse(saved.get('symmetry-lab.recent.v1')),['workbench','classroom/spin?lesson=spin-03']);
+const index=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+const nav=index.match(/<nav aria-label="主导航">([\s\S]*?)<\/nav>/)[1];
+assert.deepEqual([...nav.matchAll(/data-view="(.*?)"/g)].map(m=>m[1]),['home','classroom','compute','atlas','docs']);
+assert.match(fs.readFileSync(new URL('../dist/style.css',import.meta.url),'utf8'),/body\{[^}]*font-size:18px/);
+console.log('Navigation: all existing tools discoverable, shared Lie calculators, search, safe persistent favorites, recent routes and enlarged type verified.');

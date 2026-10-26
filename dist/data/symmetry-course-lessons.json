@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "title": "空间群、双群与磁群课堂",
-  "subtitle": "把晶胞中的几何操作、电子的旋量和反幺正对称连成一条可计算的学习路线。",
+  "title": "空间群、双群、磁群、色群与自旋群课堂",
+  "subtitle": "从点群到三维周期晶体，区分旋量提升、颜色置换与独立自旋旋转，并用同一个模型逐步检验。",
   "sources": [
     {
       "id": "dresselhaus2008",
@@ -90,6 +90,62 @@
       "title": "MSGCorep: corepresentations of magnetic space groups",
       "url": "https://github.com/goodluck1982/MSGCorep",
       "referenceNote": "现有工作台磁群数据与共表示接口的上游项目；标准标签与网站临时数值编号分别显示。"
+    },
+    {
+      "id": "iucr-color-2015",
+      "title": "Color groups arising from index-n subgroups of symmetry groups",
+      "authors": [
+        "René P. Felix",
+        "Allan O. Junio"
+      ],
+      "year": 2015,
+      "url": "https://doi.org/10.1107/S2053273314028071",
+      "referenceNote": "Acta Cryst. A71, 216–224；颜色对称与保色子群的原始研究。课程使用原创有限置换和三层周期例题。"
+    },
+    {
+      "id": "harker-color-1978",
+      "title": "Colored lattices",
+      "authors": [
+        "David Harker"
+      ],
+      "year": 1978,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC392941/",
+      "referenceNote": "PNAS 75, 5264–5267；三维有色点阵与颜色置换的原始文献。"
+    },
+    {
+      "id": "spinspg-2024",
+      "title": "Algorithm for spin symmetry operation search",
+      "authors": [
+        "Kohei Shinohara",
+        "Atsushi Togo",
+        "Hikaru Watanabe",
+        "Takuya Nomoto",
+        "Isao Tanaka",
+        "Ryotaro Arita"
+      ],
+      "year": 2024,
+      "url": "https://journals.iucr.org/a/issues/2024/01/00/ib5119/",
+      "referenceNote": "Acta Cryst. A80, 94–103；自旋空间操作、结构匹配和按磁矩张成空间判定 spin-only 稳定子。"
+    },
+    {
+      "id": "spinpoint-2025",
+      "title": "Crystal tensor properties of magnetic materials with and without spin–orbit coupling. Application of spin point groups as approximate symmetries",
+      "authors": [
+        "Jesus Etxebarria",
+        "J. Manuel Perez-Mato",
+        "Emre S. Tasci",
+        "Luis Elcoro"
+      ],
+      "year": 2025,
+      "url": "https://journals.iucr.org/a/issues/2025/04/00/cam5007/",
+      "referenceNote": "Acta Cryst. A81, 317–338；自旋点群、独立自旋/空间变换与 SOC 锁定的磁群子群。"
+    },
+    {
+      "id": "ssg-enumeration-2024",
+      "title": "Enumeration of Spin-Space Groups: Toward a Complete Description of Symmetries of Magnetic Orders",
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2307.10371",
+      "referenceNote": "Phys. Rev. X14, 031039；解释分类假设、周期指标和无限类型范围。本站提供教学模型，不宣称已枚举所有自旋空间群。"
     }
   ],
   "tracks": [
@@ -101,12 +157,22 @@
     {
       "id": "double",
       "title": "双群与电子自旋",
-      "summary": "亲手比较 2π 与 4π 旋转，再理解双值表示、SOC 与 Kramers 条件。"
+      "summary": "由 C₂ 的提升走向 Q₈、双空间群螺旋相位与电子旋量，并辨认反演提升约定。"
     },
     {
       "id": "magnetic",
       "title": "磁群与共表示",
       "summary": "把磁矩变换、四类磁空间群和反幺正乘法接到反铁磁组合对称。"
+    },
+    {
+      "id": "color",
+      "title": "色群与标签置换",
+      "summary": "从三色点群到三维有色平移晶格，理解同态、保色核与黑白磁群的物理区别。"
+    },
+    {
+      "id": "spin",
+      "title": "自旋点群与空间群",
+      "summary": "独立转动自旋和晶格，比较共线、共面磁序，识别连续稳定子与 SOC 的适用条件。"
     }
   ],
   "lessons": [
@@ -1293,6 +1359,707 @@
         }
       ],
       "lab": "antiferro"
+    },
+    {
+      "id": "double-05",
+      "track": "double",
+      "title": "16 三维点群 222 的双群：为什么出现 Q₈？",
+      "summary": "普通的三个二重旋转彼此交换，提升到旋量后，乘法次序会留下中心负号。",
+      "objectives": [
+        "写出 222=D₂ 与其八元素双群",
+        "用 Pauli 矩阵核对两个二重旋转的乘积",
+        "区别线性表示、射影表示与物理旋转"
+      ],
+      "sections": [
+        {
+          "title": "先把空间动作写清楚",
+          "paragraphs": [
+            "D₂={E,C₂x,C₂y,C₂z} 是三维点群 222，三条互相垂直的二重轴穿过同一原点。其普通三维矩阵满足 C₂x C₂y=C₂y C₂x=C₂z。此处 D₂ 表示四元素旋转群，不是八元素正方形二面体群。"
+          ]
+        },
+        {
+          "title": "旋量保留了空间矩阵丢掉的信息",
+          "paragraphs": [
+            "令 X=−iσx、Y=−iσy、Z=−iσz。每一个二重旋转的提升平方都是 −I，且 XY=Z、YX=−Z。连同 ±I、±X、±Y、±Z，得到四元数群 Q₈。中心元 Ē=−I 在空间坐标上看不见，在自旋 1/2 振幅上却不能删掉。"
+          ],
+          "formula": "X²=Y²=Z²=Ē；XY=Z；YX=ĒZ；Ē²=E"
+        },
+        {
+          "title": "射影负号来自截面选择",
+          "paragraphs": [
+            "若只给普通 D₂ 的每个元素挑一个提升矩阵，就可能有 D(g)D(h)=ω(g,h)D(gh)，ω=±1。这是普通群的射影表示；把 Ē 加回群中后，同一批矩阵成为双群的普通线性表示。重新选提升会改变若干 ω，却不能把这里的非交换结构改成 D₂×C₂。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "比较 XY 和 YX",
+        "steps": [
+          "先按右侧操作先作用，计算 (−iσx)(−iσy)=−iσz=Z。",
+          "交换顺序，σyσx=−iσz，于是 YX=+iσz=−Z。",
+          "投影到三维旋转后 ±Z 都是 C₂z，因此普通点群仍交换。"
+        ],
+        "result": "Q₈ 的非交换性由中心元 Ē 记录；双群的几何投影仍是 D₂。"
+      },
+      "pitfall": "“双群”指二重覆盖，不表示所有不可约表示都是二维，也不表示每个能级必然二重简并。",
+      "quiz": [
+        {
+          "question": "在本课约定下，X² 等于什么？",
+          "choices": [
+            "E",
+            "Ē",
+            "X"
+          ],
+          "answer": 1,
+          "explanation": "X=−iσx，故 X²=(−i)²σx²=−I=Ē。"
+        },
+        {
+          "question": "为什么 D₂ 交换，而它的双群 Q₈ 不交换？",
+          "choices": [
+            "投影把 ±Z 识别为同一个空间旋转",
+            "三维空间的旋转轴不再垂直",
+            "双群改变了原子坐标"
+          ],
+          "answer": 0,
+          "explanation": "两种顺序只相差中心负号；SO(3) 投影看不到该负号。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "bcs-double",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "double_group",
+      "labPreset": "d2_point",
+      "difficulty": "进阶",
+      "symmetryLevel": "point"
+    },
+    {
+      "id": "double-06",
+      "track": "double",
+      "title": "17 双空间群：螺旋轴的两个负号来源",
+      "summary": "把 2π 旋量负号与整胞平移的 Bloch 相位分别保留，并明确反演、镜面的提升。",
+      "objectives": [
+        "推导自旋 1/2 的 2₁ 螺旋本征值",
+        "比较 Γ 与轴向区边界",
+        "说明反演和镜面的晶体双群约定"
+      ],
+      "sections": [
+        {
+          "title": "从三维螺旋操作开始",
+          "paragraphs": [
+            "取 g={C₂z|(0,0,1/2)}，坐标为分数坐标。普通空间群有 g²=Tz；其自旋 1/2 提升 ĝ 还积累一个 2π 回转，所以 ĝ²=ĒTz。无限晶体中的 Tz 不能因绘图折回晶胞而变成恒等。"
+          ],
+          "formula": "ĝ²=ĒTz；Dₖ(ĝ)²=−exp(−2πikz)I"
+        },
+        {
+          "title": "沿螺旋轴求本征值",
+          "paragraphs": [
+            "只在 g 保持相应 k 子空间时讨论同一 k 的本征值。沿 kz 轴取主动平移约定 T(L)→exp(−2πik·L)，解平方关系得到 λ±=±i exp(−iπkz)。Γ 的 λ 为 ±i；kz=1/2 的 λ 为 ±1。相邻倒格周期可能交换两条标号，不能把标号当作全局唯一的能带名称。"
+          ],
+          "formula": "λ±(kz)=±i exp(−iπkz)"
+        },
+        {
+          "title": "反演不是 SU(2) 中的一次正旋转",
+          "paragraphs": [
+            "本课采用通常的电子晶体双群约定：空间反演 P 与旋转提升交换，P²=E；P 对轨道给出宇称，对自旋方向不作翻转。镜面 M=P C₂n 因而满足 M̃²=Ē。其他 Pin 覆盖约定属于不同问题，必须先说明，不能把所有不正变换都直接塞进 SU(2)。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "在 kz=1/2 计算双值螺旋平方",
+        "steps": [
+          "平移相位 exp(−2πi×1/2)=−1。",
+          "自旋回转贡献 D(Ē)=−1。",
+          "两者相乘为 +1，故螺旋本征值可以为 +1 或 −1。"
+        ],
+        "result": "Γ 的双值螺旋平方为 −1，轴向边界的平方为 +1；这是两个明确因子的乘积。"
+      },
+      "pitfall": "螺旋平方为 +1 本身不证明简并。Kramers 配对还需要指定反幺正对称及其动量作用。",
+      "quiz": [
+        {
+          "question": "kz=0 时，自旋 1/2 的 ĝ 本征值是？",
+          "choices": [
+            "±1",
+            "±i",
+            "只有 +1"
+          ],
+          "answer": 1,
+          "explanation": "Γ 的整胞平移相位为 1，但 2π 旋量回转仍给出 −1。"
+        },
+        {
+          "question": "在 P²=E 且 P 与旋转提升交换的约定下，镜面提升的平方是？",
+          "choices": [
+            "Ē",
+            "P",
+            "任意平移"
+          ],
+          "answer": 0,
+          "explanation": "M̃=P C̃₂n，因此 M̃²=P² C̃₂n²=Ē。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "bcs-double",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "double_group",
+      "labPreset": "screw21_space",
+      "difficulty": "进阶",
+      "symmetryLevel": "space"
+    },
+    {
+      "id": "color-01",
+      "track": "color",
+      "title": "18 色点群：空间操作怎样诱导颜色置换？",
+      "summary": "用三个有色顶点把“形状重合”提升为“形状与标签同时重合”。",
+      "objectives": [
+        "用有序对写出颜色对称",
+        "从复合推出置换同态",
+        "找到保色核并辨认其商群"
+      ],
+      "sections": [
+        {
+          "title": "给对称对象附加标签",
+          "paragraphs": [
+            "颜色在这里是有限状态标签，可以代表取向、装饰或某种可交换状态。取一个三角形的三个顶点，按逆时针依次标为红、绿、蓝。几何 120° 旋转使红点来到原来的绿点位置；若同时作红→绿→蓝→红的统一置换，带色图样就完全重合。"
+          ]
+        },
+        {
+          "title": "同一个置换必须作用于所有同色点",
+          "paragraphs": [
+            "写操作为 (R,π)，作用是 (r,c)→(Rr,π(c))，AB 先做 B。若每个几何对称对应唯一的全局颜色置换，便得到 ρ:G→Sₙ 且 ρ(gh)=ρ(g)ρ(h)。不能给不同位置的红色任意指定不同去向；那不是颜色集合上的置换。"
+          ],
+          "formula": "(R,π)(S,σ)=(RS,πσ)；H=kerρ；G/H≅imρ"
+        },
+        {
+          "title": "核和像分别回答什么问题",
+          "paragraphs": [
+            "保色核 H 由不改颜色的空间操作组成，是 G 的正规子群。像 imρ 列出实际出现的颜色置换；它可以只是 Sₙ 的一个小子群。在本课选取的 C₃ 旋转子群中，像为三循环 C₃，核为恒等。若把三角形的镜面对称也纳入母群，必须另行检查，它不是本实验所声称已穷尽的群。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "三循环的闭合",
+        "steps": [
+          "令 r 为 120° 旋转，π=(红 绿 蓝)。",
+          "r³=E 且 π³=id，所以 (r,π)³=(E,id)。",
+          "三个幂诱导三个不同置换，因而该 C₃ 子群的核只含 E。"
+        ],
+        "result": "图样的 C₃ 颜色对称有三个元素，但纯空间旋转 r 不保持每个颜色标签。"
+      },
+      "pitfall": "晶体学色群的有限标签置换，与粒子物理中 QCD 的连续 SU(3) 色规范群是不同概念。三种颜色不自动产生 SU(3)。",
+      "quiz": [
+        {
+          "question": "若 π=(红 绿 蓝)，π² 把红色送到哪里？",
+          "choices": [
+            "红",
+            "绿",
+            "蓝"
+          ],
+          "answer": 2,
+          "explanation": "先红→绿，再绿→蓝；复合次序也必须在颜色部分保留。"
+        },
+        {
+          "question": "ρ 的核包含哪些操作？",
+          "choices": [
+            "不移动任何点的操作",
+            "保持所有颜色标签的空间操作",
+            "所有三循环"
+          ],
+          "answer": 1,
+          "explanation": "保色不要求逐点不动；非平凡空间操作也可能处于核中。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "iucr-color-2015",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "color_group",
+      "labPreset": "c3_point",
+      "difficulty": "进阶",
+      "symmetryLevel": "point"
+    },
+    {
+      "id": "color-02",
+      "track": "color",
+      "title": "19 三维色空间群：颜色周期与几何周期",
+      "summary": "沿 z 排列红、绿、蓝三层，再沿三条晶格方向周期延拓。",
+      "objectives": [
+        "构造真实三维周期的有色模型",
+        "计算组合平移的幂与保色平移核",
+        "区分完整平移和模晶胞代表"
+      ],
+      "sections": [
+        {
+          "title": "模型在三维中周期延拓",
+          "paragraphs": [
+            "采用三维晶胞基矢 a、b、c，胞内同一 x,y 柱上放 z=0、1/3、2/3 三个位置，颜色依次为红、绿、蓝。沿 a、b、c 平移重复全部带色基元。为突出机制，实验只检验指定的平移生成子，不把这个简化基元当作某种真实三元材料。"
+          ]
+        },
+        {
+          "title": "几何更短，保色周期更长",
+          "paragraphs": [
+            "忽略颜色时，沿 c/3 的平移就使位置集合重合。保留标签后，必须同时循环颜色。令 g=(T_(c/3),π)，则 g³=(T_c,id)；T_c 是保持颜色的整胞平移。在所选平移群里，kerρ 由 T_a、T_b、T_c 生成，商为 C₃。"
+          ],
+          "formula": "g=(T_(c/3),(红 绿 蓝))；g³=(T_c,id)；G/H≅C₃"
+        },
+        {
+          "title": "有限画面不改变群的阶",
+          "paragraphs": [
+            "g³ 在周期边界折回后看似回到初始画面，但它实际把每个点送到上一个方向的相邻晶胞。完整色空间群含无限多个平移；只有模所选保色平移子群的代表集合是三元素。若更换保色晶胞，必须同时更新坐标、标签和商群说明。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "第三次操作后发生了什么？",
+        "steps": [
+          "第一次：z 增加 1/3，标签红→绿。",
+          "第二次：z 增加 2/3，标签红→蓝。",
+          "第三次：z 增加 1，标签回红；原子仍在相邻胞。"
+        ],
+        "result": "颜色回到原值并不意味着完整 Seitz 操作变成恒等；留下 T_c。"
+      },
+      "pitfall": "若颜色代表不同化学元素，允许置换标签是一种扩展的形式对称；它不自动成为固定化学晶体 Hamiltonian 的真实对称。",
+      "quiz": [
+        {
+          "question": "本模型的最短正向保色 z 平移是多少？",
+          "choices": [
+            "c/3",
+            "2c/3",
+            "c"
+          ],
+          "answer": 2,
+          "explanation": "较短平移循环颜色；c 才保持全部颜色。"
+        },
+        {
+          "question": "完整操作 g 的阶是多少？",
+          "choices": [
+            "3",
+            "无限",
+            "1"
+          ],
+          "answer": 1,
+          "explanation": "g 的每三次幂还留下非零整胞平移，因此完整无限晶体中的 g 没有有限阶。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "harker-color-1978",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "iucr-color-2015",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "color_group",
+      "labPreset": "translation3_space",
+      "difficulty": "进阶",
+      "symmetryLevel": "space"
+    },
+    {
+      "id": "color-03",
+      "track": "color",
+      "title": "20 黑白色群与磁群：相同标签不等于相同算符",
+      "summary": "两种颜色可以帮助画磁畴，却不能代替时间反演的反线性作用。",
+      "objectives": [
+        "解释二色同态与指标 2 保色核",
+        "区分颜色交换、磁矩反向和量子时间反演",
+        "说明磁点群与磁空间群的颜色图示边界"
+      ],
+      "sections": [
+        {
+          "title": "二色置换提供一种群结构语言",
+          "paragraphs": [
+            "对使用两色且具有非平凡交换的单值着色，颜色像为 C₂，保色核 H 的指标为 2。非保色操作位于一个陪集 gH。这个结构能解释某些黑白图案，也能帮助理解磁群带撇与不带撇部分，但两者的物理作用仍需另外定义。"
+          ],
+          "formula": "ρ:G→C₂；imρ=C₂ ⇒ [G:kerρ]=2"
+        },
+        {
+          "title": "磁矩还带有方向和时间奇性",
+          "paragraphs": [
+            "磁空间操作 (R,t,ε) 对轴矢量磁矩作用为 m′=(−1)^εdet(Rc)Rc m，其中 Rc 是正交笛卡尔矩阵。纯粹把红蓝标签互换，没有规定镜面怎样转动磁矩，也没有规定量子态怎样复共轭。灰磁群的纯时间反演更不能一般解释为某个固定、处处单色非零图案的纯换色对称。"
+          ]
+        },
+        {
+          "title": "检验算符而不只检验两张图",
+          "paragraphs": [
+            "自旋 1/2 的 Θ 可取 −iσy K，Θ²=−I。一个普通的两标签交换矩阵 P 却满足 P²=I，且不必反线性。即使二者都让一幅箭头图出现 ↑↔↓，它们对复振幅、乘法和配对定理的结论仍不同。"
+          ],
+          "formula": "Θ(aψ+bφ)=a*Θψ+b*Θφ；Θ²=−I（自旋 1/2）"
+        }
+      ],
+      "example": {
+        "title": "给相同“翻色”加上不同物理含义",
+        "steps": [
+          "在纯标签空间定义 P|红⟩=|蓝⟩、P|蓝⟩=|红⟩，得到 P²=I。",
+          "在自旋基底定义 Θ=−iσyK，必须在第二次作用时共轭第一次的系数。",
+          "直接计算 Θ²=(−iσy)(−iσy)*=−I。"
+        ],
+        "result": "图示的二色交换不能单独决定 Kramers 条件；要指定 Hilbert 空间中的真实算符。"
+      },
+      "pitfall": "本节用黑白图案说明结构联系，不把全部磁群等同于普通有限颜色置换群，也不从颜色数推断能带简并。",
+      "quiz": [
+        {
+          "question": "若一个非平凡二色同态满射到 C₂，它的核的指标是多少？",
+          "choices": [
+            "1",
+            "2",
+            "4"
+          ],
+          "answer": 1,
+          "explanation": "第一同构定理给出 G/kerρ≅C₂。"
+        },
+        {
+          "question": "两标签交换 P²=I，能否推出电子 Θ²=I？",
+          "choices": [
+            "能，二者都是翻转",
+            "不能，Θ 还具有反线性及旋量作用",
+            "只有三维晶体中能"
+          ],
+          "answer": 1,
+          "explanation": "电子 Θ² 必须用反幺正矩阵与复共轭计算。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "iucr-color-2015",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "iucr-magnetic",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "bcs-double",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "color_group",
+      "labPreset": "c3_point",
+      "difficulty": "进阶",
+      "symmetryLevel": "point-and-space"
+    },
+    {
+      "id": "spin-01",
+      "track": "spin",
+      "title": "21 自旋点群：把两种旋转分开写",
+      "summary": "让晶格转动 R、自旋转动 U，直接检验“搬动位置”和“转动箭头”各自做了什么。",
+      "objectives": [
+        "解释 [U∥R] 的两套坐标",
+        "用两站点反铁磁模型检验组合对称",
+        "区分自旋空间群与 Spin(3)"
+      ],
+      "sections": [
+        {
+          "title": "空间坐标与自旋坐标是不同对象",
+          "paragraphs": [
+            "无 SOC 的交换模型允许把自旋方向与晶格方向分别讨论。自旋点操作写作 [U∥R]：位置按 R 变化，磁矩按 U 变化；U 是磁矩分量上的正交矩阵。本实验中的 U 采用正旋转，三维点群实例以共同原点的有限位置集给出。"
+          ],
+          "formula": "[U∥R]：(r,m)→(Rr,Um)；[U∥R][V∥S]=[UV∥RS]"
+        },
+        {
+          "title": "只做一半通常不是对称",
+          "paragraphs": [
+            "取 x=±a 的两个同类站点，磁矩分别 +z 与 −z。空间 C₂z 交换站点，却不必把自旋从 +z 转为 −z；自旋 C₂x 翻转磁矩，却不搬动站点。组合 [C₂x∥C₂z] 才保持这套指定磁序。分别关闭空间部分和自旋部分，是检验组合机制的有效对照。"
+          ]
+        },
+        {
+          "title": "Spin(3) 与自旋点群分别回答不同问题",
+          "paragraphs": [
+            "Spin(3)≅SU(2) 是 SO(3) 的二重覆盖，说明电子旋量的 2π 负号。自旋点群则描述一套磁结构允许哪些独立的自旋/空间操作配对。若研究自旋 1/2 态，可以进一步把其正自旋旋转提升到 SU(2)，但经典箭头重合本身看不到该提升的负号。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "两个二重旋转怎样配对",
+        "steps": [
+          "R=C₂z 使 +x 站点来到 −x 站点。",
+          "U=C₂x 把该站点的 +z 磁矩变成 −z。",
+          "目标位置恰有 −z 磁矩，另一个站点也同样匹配。"
+        ],
+        "result": "组合是该两站点磁序的对称；只搬站点或只转箭头都不成立。"
+      },
+      "pitfall": "Hamiltonian 在无 SOC 时的全局自旋旋转对称，不表示选定的有序磁畴也保持所有全局旋转。应区分能量模型与一个具体磁序的稳定子。",
+      "quiz": [
+        {
+          "question": "在 [U∥R] 中，R 和 U 分别作用在哪里？",
+          "choices": [
+            "R 作用位置，U 作用磁矩",
+            "R 与 U 都必须作用在位置",
+            "U 必须等于 R"
+          ],
+          "answer": 0,
+          "explanation": "自旋群允许这两部分独立；是否保持结构需配对检验。"
+        },
+        {
+          "question": "自旋点群与 Spin(3)≅SU(2) 是同一个概念吗？",
+          "choices": [
+            "是，名称相同",
+            "不是，前者是磁结构的配对对称，后者是旋转二重覆盖",
+            "只在有三个站点时相同"
+          ],
+          "answer": 1,
+          "explanation": "两者可以在电子表示中联系，但定义和任务不同。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "spinspg-2024",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "bcs-double",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "spin_group",
+      "labPreset": "c2_point",
+      "difficulty": "进阶",
+      "symmetryLevel": "point"
+    },
+    {
+      "id": "spin-02",
+      "track": "spin",
+      "title": "22 自旋空间群：半平移与三层螺旋磁序",
+      "summary": "把独立自旋旋转加入 Seitz 乘法，检查完整三维周期模型而不只观察一条链。",
+      "objectives": [
+        "写出 [U∥R|t] 的群乘法",
+        "比较反铁磁半平移与三层螺旋的组合操作",
+        "区分自旋点投影和纯平移商"
+      ],
+      "sections": [
+        {
+          "title": "平移部分仍服从 Seitz 规则",
+          "paragraphs": [
+            "三维自旋空间操作为 [U∥R|t]，把位置送到 Rr+t，把磁矩送到 Um。操作复合时，自旋矩阵相乘，空间平移则必须先被外层的 R 转动。实验的胞内基元在 a、b、c 三方向重复，并保留跨胞平移。"
+          ],
+          "formula": "[U∥R|t][V∥S|u]=[UV∥RS|t+Ru]"
+        },
+        {
+          "title": "共线半平移与共面三层螺旋",
+          "paragraphs": [
+            "共线模型在 z=0、1/2 放 +z、−z，g=[C₂x∥E|c/2] 保持结构且 g²=[E∥E|c]。另一个模型在 z=0、1/3、2/3 放方向依次相差 120° 的共面磁矩，h=[C₃z∥E|c/3] 满足 h³=[E∥E|c]。这些是经典矢量关系；若提升为电子旋量，完整回转还需追踪中心负号。"
+          ]
+        },
+        {
+          "title": "去掉平移时别丢掉自旋部分",
+          "paragraphs": [
+            "把 [U∥R|t] 投影到 [U∥R] 得到相应自旋点群的操作。像 g 这样的组合平移投影为 [C₂x∥E]，不会自动消失。投影的核是 U=E、R=E 的纯平移；把所有空间 R=E 的操作一概丢掉，会误删自旋信息。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "三层螺旋磁序的第三步",
+        "steps": [
+          "每一步平移 c/3，并把磁矩在 xy 平面转 120°。",
+          "三次后自旋矢量转过 360°，所以 U³=E。",
+          "平移累积成 c，留下一个保磁序整胞平移。"
+        ],
+        "result": "h³ 是整胞平移，完整 h 的阶仍无限；三幅胞内画面只展示模平移的循环。"
+      },
+      "pitfall": "本课只检验指定生成子及其幂，不据此给任意材料分配完整自旋空间群编号，也不把自旋空间群的分类与 230 个普通空间群或 1651 个磁空间群类型混为一谈。",
+      "quiz": [
+        {
+          "question": "对于经典矢量，g=[C₂x∥E|c/2] 的平方是？",
+          "choices": [
+            "[E∥E|c]",
+            "[E∥E|0]",
+            "纯时间反演"
+          ],
+          "answer": 0,
+          "explanation": "自旋 C₂x 平方为 E，两个半平移相加为 c。"
+        },
+        {
+          "question": "把 g 投影到自旋点群，得到什么？",
+          "choices": [
+            "恒等",
+            "[C₂x∥E]",
+            "[E∥C₂x]"
+          ],
+          "answer": 1,
+          "explanation": "只去掉 t，自旋部分仍然保留。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "spinspg-2024",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "spinpoint-2025",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "ssg-enumeration-2024",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "spin_group",
+      "labPreset": "helix3_space",
+      "difficulty": "进阶",
+      "symmetryLevel": "space"
+    },
+    {
+      "id": "spin-03",
+      "track": "spin",
+      "title": "23 共线、共面与连续 spin-only 稳定子",
+      "summary": "固定所有位置后，哪些统一自旋操作仍能让每一个磁矩保持原值？",
+      "objectives": [
+        "由磁矩张成空间的秩求 spin-only 稳定子",
+        "区别 SO(3) 正旋转与 O(3) 广义自旋操作",
+        "解释共线磁序为何有连续残余对称"
+      ],
+      "sections": [
+        {
+          "title": "稳定子要求逐个磁矩保持不变",
+          "paragraphs": [
+            "spin-only 操作写作 [U∥E|0]，不交换任何位置，因此要求 Umi=mi 对所有站点同时成立。把所有磁矩张成的线性空间记为 W。正交矩阵若逐点固定 W，就只能在正交补 W⊥ 上变化；这是本节计算稳定子的直接方法。"
+          ],
+          "formula": "Gso={U∈O(3):Umi=mi ∀i}≅O(3−rank W)"
+        },
+        {
+          "title": "从一条轴到整个三维空间",
+          "paragraphs": [
+            "无磁矩时 rank W=0，稳定子为 O(3)。非零共线磁序的秩为 1，O(3) 中稳定子同构于 O(2)，其连续正旋转部分是绕磁轴的 SO(2)。非共线但共面的秩为 2，只剩恒等与该平面的反射；非共面且张成三维时秩为 3，只剩恒等。"
+          ]
+        },
+        {
+          "title": "不正的自旋矩阵需要物理解释",
+          "paragraphs": [
+            "这里的 U 直接作用于时间奇磁矩。若 detU=−1，可写 U=−V，其中 V∈SO(3)，从而对应“正自旋旋转 V 加时间反演”；在电子 Hilbert 空间中这一部分反幺正。若只允许幺正正旋转，则共线稳定子为 SO(2)，共面非共线与三维非共面均只有恒等。"
+          ],
+          "formula": "detU=−1 ⇒ U=(−I)V，V=−U∈SO(3)"
+        }
+      ],
+      "example": {
+        "title": "xy 平面内的三个 120° 磁矩",
+        "steps": [
+          "两个不平行的磁矩已张成 xy 平面，因此 rank W=2。",
+          "逐点固定 xy 平面的正交矩阵只能把法向 z 送到 ±z。",
+          "两个选择是 E 与 diag(1,1,−1)；后者由 Θ 与绕 z 的 π 旋转组合实现。"
+        ],
+        "result": "完整 O(3) 描述中稳定子为二元素镜面群；只看 SO(3) 正旋转则是平凡群。"
+      },
+      "pitfall": "“共面”在这里指至少有两个不共线的非零磁矩。若所有箭头实际上共线，即使也画在一个平面上，秩仍为 1。",
+      "quiz": [
+        {
+          "question": "非零共线磁序的连续幺正 spin-only 部分是什么？",
+          "choices": [
+            "SO(3)",
+            "绕磁轴的 SO(2)",
+            "三元素 C₃"
+          ],
+          "answer": 1,
+          "explanation": "任意绕该磁轴的旋转都逐点固定所有共线磁矩。"
+        },
+        {
+          "question": "xy 平面内非共线磁序的 O(3) 稳定子包含哪一个非平凡操作？",
+          "choices": [
+            "diag(1,1,−1)",
+            "diag(−1,−1,1)",
+            "任意绕 z 旋转"
+          ],
+          "answer": 0,
+          "explanation": "前者逐点固定平面，后者通常把平面内每个磁矩翻转。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "spinspg-2024",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "spinpoint-2025",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "spin_group",
+      "labPreset": "triangular_point",
+      "difficulty": "进阶",
+      "symmetryLevel": "point-and-space"
+    },
+    {
+      "id": "spin-04",
+      "track": "spin",
+      "title": "24 加入 SOC 后：哪些自旋群操作仍成立？",
+      "summary": "用一个明确的锁定条件连接自旋群与磁群，并把结构对称和 Hamiltonian 对称分别核对。",
+      "objectives": [
+        "写出磁群在自旋空间群中的锁定条件",
+        "判断组合操作是否能在 SOC 下保留",
+        "避免从零净磁矩直接推断简并或磁群类型"
+      ],
+      "sections": [
+        {
+          "title": "独立与锁定是两种约束",
+          "paragraphs": [
+            "忽略 SOC 的理想模型允许 U 和 Rc 独立。常规磁群的自旋响应则被空间正交矩阵 Rc 及是否含时间反演 ε 锁定：U=(−1)^εdet(Rc)Rc。把满足此条件且保持磁结构的操作挑出，可得到对应磁群的操作；实际 Hamiltonian 还须满足这些对称。"
+          ],
+          "formula": "U=(−1)^εdet(Rc)Rc，ε∈{0,1}"
+        },
+        {
+          "title": "一个几何可行的操作也可能被 SOC 排除",
+          "paragraphs": [
+            "两站点模型的 [C₂x∥C₂z] 保持指定箭头，却不能满足 U=±C₂z，因此一般不属于它的常规磁点群。类似地，半平移配上 C₂x 可能是自旋空间对称；在常规磁空间群中，相同空间平移只能配 U=±I。另一操作 [−I∥E|c/2] 可以在共线反铁磁模型中起相同的翻矩作用，但它包含时间反演，量子实现与前者不同。"
+          ]
+        },
+        {
+          "title": "从材料出发时需要哪些信息",
+          "paragraphs": [
+            "先给出化学元素、晶胞、磁矩方向和所选磁畴，再说明 SOC 相对研究能标是否可忽略。MnF₂、NiO 等共线实例与共面非共线磁序都能帮助理解这些层次，但实际磁畴、各向异性和配体位置必须分别检验。仅有净磁矩为零，不能判定所有能带简并，也不能自动认定某一种交错磁性。"
+          ]
+        }
+      ],
+      "example": {
+        "title": "检验 [C₂x∥C₂z] 的锁定条件",
+        "steps": [
+          "在同一笛卡尔基底中写 U=diag(1,−1,−1)，Rc=diag(−1,−1,1)。",
+          "ε=0 时要求 U=Rc，两者不同。",
+          "ε=1 时要求 U=−Rc=diag(1,1,−1)，仍不相同。"
+        ],
+        "result": "该组合可属于理想模型的自旋点群，但不满足常规磁点群的 SOC 锁定规则。"
+      },
+      "pitfall": "有限 SOC 下，自旋群通常是相对于所关心能标的近似对称；少数模型可能有额外精确对称，应通过 Hamiltonian 检验，不能一概断言全部消失。",
+      "quiz": [
+        {
+          "question": "空间部分为纯平移时，常规磁群允许的 U 是？",
+          "choices": [
+            "任意 SO(3) 旋转",
+            "I 或 −I",
+            "只能 C₃"
+          ],
+          "answer": 1,
+          "explanation": "此时 Rc=I，锁定条件化为 U=(−1)^εI。"
+        },
+        {
+          "question": "磁结构被某个 [U∥R|t] 保持，是否已证明真实有 SOC 的 Hamiltonian 保持它？",
+          "choices": [
+            "是，只需图样重合",
+            "不是，还要检查自旋与空间的锁定及 Hamiltonian",
+            "只需磁矩总和为零"
+          ],
+          "answer": 1,
+          "explanation": "结构匹配是必要检查之一，不能替代模型的物理对称假设。"
+        }
+      ],
+      "references": [
+        {
+          "sourceId": "spinpoint-2025",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        },
+        {
+          "sourceId": "ssg-enumeration-2024",
+          "chapter": "定义、约定与延伸阅读；数值例题由本课推导"
+        }
+      ],
+      "lab": "spin_group",
+      "labPreset": "af_space",
+      "difficulty": "进阶",
+      "symmetryLevel": "point-and-space"
     }
   ]
 }

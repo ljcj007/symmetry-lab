@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "release": "2026-10-25",
+  "release": "2026-10-26",
   "sourceBook": {
     "title": "Group Theory: Application to the Physics of Condensed Matter",
     "authors": [
@@ -32,8 +32,8 @@
       "sha256": "0021c3c23ff3f0df0805fc5b90a936255b20016d1d59b5da5d67c40470aa5049"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 30947,
-      "sha256": "889e1eb4b75815062ef83ae7ddc55b797941f5e0cdf4a4e0a20ce058e30803d2"
+      "bytes": 32670,
+      "sha256": "94b0aea7f1128d61c18359a32a369067ae72a2a6cec0ad4c8f464a33f05735b3"
     },
     "dist/pointgroup.css": {
       "bytes": 19724,
@@ -83,5 +83,5 @@
     "IR/Raman marks are symmetry allowances, not a prediction of material modes or intensities",
     "The user-provided PDF and page images are not redistributed"
   ],
-  "build": "20261025-ninej3"
+  "build": "20261026-redesign1"
 }

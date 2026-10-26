@@ -188,3 +188,31 @@ input irreps with p+q<=4 within product dimension 4096. Original lazy
 weight-block CG embeddings preserve exact GT phases and outer-copy bases.
 Independent permutation and LR-tableaux benchmarks, original Chinese
 lessons and stepwise derivations accompany the new 10, 15 and 27 demos.
+
+The navigation and extended-symmetry teaching release (2026-10-26) reorganizes
+the existing implementation into overview, classroom, computation, group/material
+atlas and documentation entries. Five learning pathways link to shared tools,
+while existing course identifiers, progress storage and legacy links are retained.
+Search, tool favorites and recent locations use the browser's local storage.
+
+The extended crystal-symmetry course now contains 24 original Chinese lessons,
+48 self-check questions and 20 guided derivations. Nine new lessons and eight
+guided problems cover double, color and spin point groups and three-dimensional
+periodic examples. The independent standard-library Python group_extensions.py
+implementation supplies selected exact finite operations, multiplication tables,
+spinor lifts, colored motif matching and spin-space motif matching. The viewer
+renders those calculated results. Sources and conventions are recorded in
+dist/data/symmetry-course-lessons.json and dist/docs/symmetry-course.md, including
+the Bilbao double-group paper and original IUCr spin-symmetry publications.
+Reference articles, textbook pages, research figures and coefficient tables are
+not redistributed as part of this extension.
+
+These selected pedagogical models are not an exhaustive classifier for arbitrary
+color groups, spin point groups or spin space groups. Complete space groups keep
+infinite translations; finite teaching tables are specified subgroups or quotients.
+Continuous spin-only stabilizers are explained analytically, not claimed to be
+enumerated by finite animation frames. Classical vector matching, SU(2) spinor
+lifts, antiunitary time reversal and SOC-locked magnetic symmetry are distinguished.
+Crystallographic color permutations are also distinguished from the SU(3) color
+gauge symmetry discussed in the separate Lie-group course. The new conceptual
+examples are labeled as ideal models and are not presented as measured materials.

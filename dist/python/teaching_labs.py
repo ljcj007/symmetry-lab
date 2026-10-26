@@ -276,6 +276,9 @@ def run(payload):
     if payload.get('lab') == 'crystal':
         from crystal_labs import run as crystal_run
         return crystal_run(payload)
+    if payload.get('lab') in ('double_group', 'color_group', 'spin_group'):
+        from group_extensions import run as group_extensions_run
+        return group_extensions_run(payload)
     labs = {'seitz': _seitz, 'spinor': _spinor, 'magnetic': _magnetic, 'antiferro': _antiferro}
     lab = _choice(payload.get('lab'), labs, 'lab')
     return labs[lab](payload)

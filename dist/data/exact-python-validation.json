@@ -21,14 +21,15 @@
     "dist/python/structure_bc.py": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c",
     "dist/python/standard_labels.py": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4",
     "dist/python/spglib_runtime.py": "dbdfa6b2d50552d23f6def4df22cfc3105b99a35436744c4a7f3f6d7e3aa9929",
-    "dist/python/teaching_labs.py": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1",
+    "dist/python/teaching_labs.py": "87749a79da15aeb4b831745b8571c47a7bcf268d31c5280a2510c9cae92442f2",
     "dist/python/crystal_labs.py": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014",
     "dist/python/lie_labs.py": "5ee4f357e3e4c9de3bca16ad075c4fd0299e3a74401a7837bcc99a01d5acb682",
     "dist/python/lie_applications.py": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9",
     "dist/python/su3_cg.py": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794",
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
     "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d",
-    "dist/python/su3_ninej.py": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
+    "dist/python/su3_ninej.py": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57",
+    "dist/python/group_extensions.py": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -58,7 +59,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 30
+    "tests": 31
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -850,5 +851,12 @@
       "largestFinalDynkinSum": 12,
       "exactMatrixValidation": "Separate representative exact checks: 10/15/27 four-active-factor examples; independent S3 probabilities; 27-input complex inverse and crossing transpose; 27x27 binary product with 729 states; target(12,0); full old 8x8 CG column gauge comparison; all 8 generator intertwinings for selected 27x3. Existing four-adjoint and mixed tests retained. The 225486 channels are audited for characters and path counts, not all exact matrices."
     }
+  },
+  "doubleColorSpinTeaching": {
+    "date": "2026-10-26",
+    "unitTests": 13,
+    "scope": "Selected exact double point and space groups, colored point/periodic motifs, independent spin point/space operations and SOC-lock conditions. No exhaustive classification claim.",
+    "implementation": "dist/python/group_extensions.py",
+    "tests": "scripts/test-python-group-extensions.py"
   }
 }

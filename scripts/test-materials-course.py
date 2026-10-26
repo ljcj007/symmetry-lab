@@ -16,6 +16,7 @@ class MaterialsCourseTests(unittest.TestCase):
     def setUpClass(cls):
         cls.materials = read('symmetry-materials.json')
         cls.derivations = read('symmetry-derivations.json')
+        cls.course = read('symmetry-course-lessons.json')
 
     def test_six_materials_have_traceable_phase_and_model_assumptions(self):
         data = self.materials
@@ -51,12 +52,21 @@ class MaterialsCourseTests(unittest.TestCase):
     def test_guided_derivations_are_complete_and_have_unambiguous_checks(self):
         exercises = self.derivations['exercises']
         materials = {m['id'] for m in self.materials['materials']}
-        self.assertGreaterEqual(len(exercises), 9)
+        self.assertEqual(len(exercises), 20)
         self.assertEqual(len({e['id'] for e in exercises}), len(exercises))
-        self.assertEqual({e['track'] for e in exercises}, {'space', 'double', 'magnetic'})
+        self.assertEqual({e['track'] for e in exercises}, {'space', 'double', 'magnetic', 'color', 'spin'})
+        sources={s['id'] for s in self.materials['sources']}|{s['id'] for s in self.course['sources']}
+        lab_presets={'double_group':{'c2_point','d2_point','screw21_space'},
+                     'color_group':{'c3_point','translation3_space'},
+                     'spin_group':{'c2_point','af_space','triangular_point','helix3_space'}}
         for e in exercises:
             with self.subTest(exercise=e['id']):
-                self.assertIn(e['materialId'], materials)
+                if 'materialId' in e:
+                    self.assertIn(e['materialId'], materials)
+                else:
+                    self.assertTrue(e['modelLabel'])
+                    self.assertIn(e['labPreset'], lab_presets[e['lab']])
+                self.assertTrue(set(e['sourceIds']) <= sources)
                 for field in ('title', 'prompt', 'givens', 'hint', 'answer', 'pitfall'):
                     self.assertTrue(e[field])
                 self.assertGreaterEqual(len(e['steps']), 3)

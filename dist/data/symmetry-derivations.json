@@ -594,6 +594,428 @@
       "sourceIds": [
         "aflow-bcc"
       ]
+    },
+    {
+      "id": "double-q8-commutator",
+      "track": "double",
+      "title": "Q₈：一次交换次序留下什么？",
+      "prompt": "计算 X Y X⁻¹ Y⁻¹，并比较普通 222 点群中的同一个交换子。",
+      "givens": [
+        "X=−iσx，Y=−iσy，Z=−iσz。",
+        "XY=Z，YX=−Z，X²=Y²=Z²=−I。",
+        "AB 表示先作用 B，再作用 A。"
+      ],
+      "hint": "由 X²=−I 先求逆元；也可以比较 XY 与 YX。",
+      "steps": [
+        {
+          "title": "求逆元",
+          "explanation": "X(−X)=I，Y 同理。",
+          "formula": "X⁻¹=−X；Y⁻¹=−Y"
+        },
+        {
+          "title": "代入交换子",
+          "explanation": "两个负号抵消，剩下 XYXY。",
+          "formula": "XYX⁻¹Y⁻¹=XYXY=(XY)²"
+        },
+        {
+          "title": "利用第三条二重轴",
+          "explanation": "XY=Z，而 Z 的平方是一个 2π 旋量回转。",
+          "formula": "(XY)²=Z²=−I=Ē"
+        },
+        {
+          "title": "投影回普通点群",
+          "explanation": "中心元 Ē 与 E 投影到同一空间恒等，故普通交换子为 E。",
+          "formula": "Q₈/{E,Ē}≅D₂"
+        }
+      ],
+      "answer": "双群交换子是 Ē；普通 222 点群交换子是 E。非交换性恰被二重覆盖的核记录。",
+      "pitfall": "不能先删掉负号再用结果检验旋量的乘法。",
+      "check": {
+        "question": "若交换子为 Ē，它在一个自旋 1/2 态上的矩阵是？",
+        "choices": [
+          "I",
+          "−I",
+          "零矩阵"
+        ],
+        "answer": 1,
+        "explanation": "双值扇区中中心元由 −I 表示。"
+      },
+      "sourceIds": [
+        "bcs-double"
+      ],
+      "lab": "double_group",
+      "labPreset": "d2_point",
+      "modelLabel": "三维点群 222 的旋量提升"
+    },
+    {
+      "id": "double-screw-boundary",
+      "track": "double",
+      "title": "双空间群：Γ 到区边界的螺旋本征值",
+      "prompt": "推导自旋 1/2 的 2₁ 螺旋沿 kz 轴的两个本征值，并核对 kz=0 与 1/2。",
+      "givens": [
+        "ĝ 的空间部分为 {C₂z|(0,0,1/2)}。",
+        "D(Ē)=−I；Tz 的 Bloch 相位为 exp(−2πikz)。",
+        "k 沿螺旋轴，操作保持这个动量子空间。"
+      ],
+      "hint": "先求 ĝ²，再开平方；保留两个符号。",
+      "steps": [
+        {
+          "title": "累积平移",
+          "explanation": "两次平移沿旋转轴，彼此相加为一个整胞。",
+          "formula": "g²=Tz"
+        },
+        {
+          "title": "加入旋量回转",
+          "explanation": "两个 π 自旋旋转给出 2π 的中心负号。",
+          "formula": "ĝ²=ĒTz"
+        },
+        {
+          "title": "求两个平方根",
+          "explanation": "将平移相位与中心负号一起放入本征值关系。",
+          "formula": "λ²=−exp(−2πikz) ⇒ λ±=±i exp(−iπkz)"
+        },
+        {
+          "title": "代入两处动量",
+          "explanation": "Γ 无平移相位；边界平移相位为 −1，抵消旋量负号。",
+          "formula": "kz=0：λ=±i；kz=1/2：λ=±1"
+        }
+      ],
+      "answer": "螺旋本征值从 Γ 的 ±i 变到边界的 ±1；它们的平方改变来自 Bloch 相位。",
+      "pitfall": "本征值关系本身不决定能量简并；时间反演等附加条件须另查。",
+      "check": {
+        "question": "若删除旋量负号，得到的是哪一种情况？",
+        "choices": [
+          "单值的普通螺旋表示",
+          "相同双值表示的另一个分支",
+          "时间反演平方"
+        ],
+        "answer": 0,
+        "explanation": "单值扇区 D(Ē)=+I，因此 λ² 只剩平移相位。"
+      },
+      "sourceIds": [
+        "bcs-double"
+      ],
+      "lab": "double_group",
+      "labPreset": "screw21_space",
+      "modelLabel": "三维 2₁ 螺旋轴"
+    },
+    {
+      "id": "color-c3-kernel",
+      "track": "color",
+      "title": "三色色点群：求同态的核与像",
+      "prompt": "对 C₃=<r>，指定 ρ(r)=(红 绿 蓝)，求 ρ 的核、像和商群。",
+      "givens": [
+        "只考虑三维中绕 z 的 C₃ 旋转子群。",
+        "三角形顶点沿旋转方向依次标红、绿、蓝。",
+        "ρ(rⁿ)=ρ(r)ⁿ。"
+      ],
+      "hint": "列出 E、r、r² 诱导的三个置换。",
+      "steps": [
+        {
+          "title": "写出像",
+          "explanation": "恒等不换色，r 是一个三循环，r² 是其逆循环。",
+          "formula": "ρ(E)=id；ρ(r)=π；ρ(r²)=π²"
+        },
+        {
+          "title": "找保色元素",
+          "explanation": "π 与 π² 都不是恒等置换，所以只有 E 处于核中。",
+          "formula": "H=kerρ={E}"
+        },
+        {
+          "title": "求商群",
+          "explanation": "核平凡且像有三个元素，同构关系直接成立。",
+          "formula": "C₃/H≅{id,π,π²}≅C₃"
+        },
+        {
+          "title": "说明模型边界",
+          "explanation": "实验选取旋转子群；镜面需要另外指定和检验相应置换。",
+          "formula": "三种标签 ≠ 连续 SU(3) 色规范群"
+        }
+      ],
+      "answer": "核为 {E}，像为三循环群，商群为 C₃。",
+      "pitfall": "颜色数为 3 不表示像一定是六元素 S₃；此处只出现三个循环置换。",
+      "check": {
+        "question": "若保持同一个 C₃ 母群，能把 r 送到一个二色交换而得到同态吗？",
+        "choices": [
+          "能",
+          "不能",
+          "仅在三维中能"
+        ],
+        "answer": 1,
+        "explanation": "r³=E 要求 ρ(r)³=id，但二色交换的三次幂仍是交换。"
+      },
+      "sourceIds": [
+        "iucr-color-2015"
+      ],
+      "lab": "color_group",
+      "labPreset": "c3_point",
+      "modelLabel": "三色三角形的 C₃ 子群"
+    },
+    {
+      "id": "color-space-period",
+      "track": "color",
+      "title": "三维有色平移：为什么 g³ 不是 E？",
+      "prompt": "在三层 RGB 晶胞中，求 g=(T_(c/3),π) 的三次幂及其保色平移子群。",
+      "givens": [
+        "π 为红→绿→蓝→红。",
+        "三层坐标为 z=0、1/3、2/3，沿 a、b、c 周期重复。",
+        "使用未折回的无限晶体坐标。"
+      ],
+      "hint": "把空间平移和颜色置换分两列累计。",
+      "steps": [
+        {
+          "title": "第一次与第二次",
+          "explanation": "平移不旋转其它平移，颜色部分则逐次复合。",
+          "formula": "g²=(T_(2c/3),π²)"
+        },
+        {
+          "title": "第三次",
+          "explanation": "三循环回到原色，平移却累积到一个整胞。",
+          "formula": "g³=(T_c,id)"
+        },
+        {
+          "title": "确定保色核",
+          "explanation": "所选平移群内，a、b 不换色，z 方向每隔三次短平移才保色。",
+          "formula": "H=<T_a,T_b,T_c>"
+        },
+        {
+          "title": "区分无限群与有限商",
+          "explanation": "模 H 时只有 g 的三个余类；完整 g 的幂不断移动晶胞。",
+          "formula": "G/H≅C₃；ord(g)=∞"
+        }
+      ],
+      "answer": "g³ 是 T_c；完整群无限，模保色平移核的商群才是 C₃。",
+      "pitfall": "折回画面的重复只说明周期边界等价，不是完整操作恒等。",
+      "check": {
+        "question": "g⁶ 的空间平移是多少？",
+        "choices": [
+          "0",
+          "c",
+          "2c"
+        ],
+        "answer": 2,
+        "explanation": "每步 c/3，六次累积为 2c，颜色同时回到原值。"
+      },
+      "sourceIds": [
+        "harker-color-1978"
+      ],
+      "lab": "color_group",
+      "labPreset": "translation3_space",
+      "modelLabel": "三维 RGB 周期基元"
+    },
+    {
+      "id": "spin-point-pair",
+      "track": "spin",
+      "title": "自旋点群：哪一种组合保持两站点磁序？",
+      "prompt": "检验 [C₂x∥C₂z]，并分别删掉自旋或空间部分。",
+      "givens": [
+        "站点 A=(a,0,0)，mA=(0,0,1)。",
+        "站点 B=(−a,0,0)，mB=(0,0,−1)，二者化学种类相同。",
+        "位置按 R=C₂z 变换，磁矩按 U=C₂x 变换。"
+      ],
+      "hint": "既检查目标位置，也检查那个位置应有的磁矩。",
+      "steps": [
+        {
+          "title": "检查空间匹配",
+          "explanation": "R 交换 A、B 两个位置。",
+          "formula": "RA=B；RB=A"
+        },
+        {
+          "title": "检查磁矩匹配",
+          "explanation": "U 把 z 方向反转，使来源站点的磁矩等于目标站点磁矩。",
+          "formula": "UmA=mB；UmB=mA"
+        },
+        {
+          "title": "关闭自旋部分",
+          "explanation": "只交换位置，A 的 +z 到达应为 −z 的 B，不匹配。",
+          "formula": "[E∥C₂z] 不保持本磁序"
+        },
+        {
+          "title": "关闭空间部分",
+          "explanation": "只翻转自旋而不换位置，同样与原站点磁矩不匹配。",
+          "formula": "[C₂x∥E] 不保持本磁序"
+        }
+      ],
+      "answer": "只有指定组合通过两项匹配；这展示自旋旋转与空间旋转的独立配对。",
+      "pitfall": "本题是有限点群模型，不代表已经识别某种真实材料的完整磁群。",
+      "check": {
+        "question": "将两站点磁矩都改为 +z 后，原组合还保持磁序吗？",
+        "choices": [
+          "保持",
+          "不保持",
+          "只与 a 的数值有关"
+        ],
+        "answer": 1,
+        "explanation": "自旋 C₂x 会把两处 +z 都翻为 −z，目标站点并无该磁矩。"
+      },
+      "sourceIds": [
+        "spinspg-2024"
+      ],
+      "lab": "spin_group",
+      "labPreset": "c2_point",
+      "modelLabel": "两站点反铁磁点模型"
+    },
+    {
+      "id": "spin-space-helix",
+      "track": "spin",
+      "title": "三维自旋螺旋：从 h 到 h³",
+      "prompt": "求三层共面磁序中 h=[C₃z∥E|c/3] 的幂，并求其自旋点投影。",
+      "givens": [
+        "三个层的磁矩角度依次为 0°、120°、240°。",
+        "同一基元沿 a、b、c 三方向重复。",
+        "本题磁矩为经典三维矢量。"
+      ],
+      "hint": "位置平移与自旋角分别累计；最后再投影。",
+      "steps": [
+        {
+          "title": "检验单步",
+          "explanation": "平移把第 j 层送到 j+1 层，自旋旋转也把其磁矩转到目标方向。",
+          "formula": "h：(z,θ)→(z+1/3,θ+120°)"
+        },
+        {
+          "title": "计算三次幂",
+          "explanation": "三次自旋旋转为恒等，三个短平移为整胞平移。",
+          "formula": "h³=[E∥E|c]"
+        },
+        {
+          "title": "求自旋点投影",
+          "explanation": "忘掉平移只去掉 t，不删除 U。",
+          "formula": "p(h)=[C₃z∥E]"
+        },
+        {
+          "title": "判断阶与覆盖",
+          "explanation": "p(h) 在矢量层面阶为 3；完整 h 包含无限平移。若研究电子旋量，360° 还需中心负号。",
+          "formula": "ord(h)=∞；ord(p(h))=3（经典矢量）"
+        }
+      ],
+      "answer": "三步后留下 T_c；其自旋点投影保留非平凡 C₃ 自旋旋转。",
+      "pitfall": "不要把矢量 U³=I 直接当作自旋 1/2 提升的三次幂也等于 I。",
+      "check": {
+        "question": "仅做 c/3 平移、不旋转磁矩，是否保持本模型？",
+        "choices": [
+          "是，因为位置集合重合",
+          "否，目标层的磁矩方向不同",
+          "只要颜色相同就保持"
+        ],
+        "answer": 1,
+        "explanation": "磁序的对称要求位置与磁矩同时匹配。"
+      },
+      "sourceIds": [
+        "spinspg-2024",
+        "spinpoint-2025"
+      ],
+      "lab": "spin_group",
+      "labPreset": "helix3_space",
+      "modelLabel": "三维三层 120° 螺旋模型"
+    },
+    {
+      "id": "spin-only-rank",
+      "track": "spin",
+      "title": "spin-only：从磁矩的秩找稳定子",
+      "prompt": "为 xy 平面内三个 120° 磁矩确定完整 O(3) 稳定子，并给出只允许正旋转时的结果。",
+      "givens": [
+        "m1=(1,0,0)，m2=(−1/2,√3/2,0)，m3=(−1/2,−√3/2,0)。",
+        "spin-only 操作不交换站点，要求 Umi=mi。",
+        "U 是正交矩阵；暂时允许 detU=±1。"
+      ],
+      "hint": "m1 与 m2 已经张成整个 xy 平面。",
+      "steps": [
+        {
+          "title": "求张成空间",
+          "explanation": "两条不平行磁矩足以张成 xy 平面，第三条没有增加秩。",
+          "formula": "rank W=2"
+        },
+        {
+          "title": "约束 U",
+          "explanation": "U 必须逐点固定 xy 平面，因此只能独立选择法向 z 的符号。",
+          "formula": "U=diag(1,1,s)，s=±1"
+        },
+        {
+          "title": "分辨正与不正",
+          "explanation": "s=1 是恒等；s=−1 是自旋平面反射，行列式为 −1。",
+          "formula": "Gso={I,diag(1,1,−1)}"
+        },
+        {
+          "title": "加入量子物理解释",
+          "explanation": "不正的磁矩变换可由 Θ 和 C₂z 组合实现，属于反幺正部分；若只取 SO(3)，只剩恒等。",
+          "formula": "Gso∩SO(3)={I}"
+        }
+      ],
+      "answer": "完整广义稳定子有两个元素，连续幺正部分平凡；共线情形才有绕磁轴的连续 SO(2)。",
+      "pitfall": "将全部磁矩转到另一组等能方向，不等于逐点保持当前磁畴。",
+      "check": {
+        "question": "若三条磁矩都改成 ±z，连续幺正稳定子变为什么？",
+        "choices": [
+          "SO(2)",
+          "SO(3)",
+          "仍只有恒等"
+        ],
+        "answer": 0,
+        "explanation": "所有绕 z 的正旋转都固定每一条 ±z 磁矩。"
+      },
+      "sourceIds": [
+        "spinspg-2024",
+        "spinpoint-2025"
+      ],
+      "lab": "spin_group",
+      "labPreset": "triangular_point",
+      "modelLabel": "三站点共面 120° 磁序"
+    },
+    {
+      "id": "spin-soc-lock",
+      "track": "spin",
+      "title": "SOC 检验：独立组合能进入磁群吗？",
+      "prompt": "判断 [C₂x∥C₂z] 是否满足常规磁点群的自旋—空间锁定条件。",
+      "givens": [
+        "U=diag(1,−1,−1)。",
+        "Rc=diag(−1,−1,1)，detRc=1。",
+        "常规磁操作要求 U=(−1)^εdet(Rc)Rc，ε=0 或 1。"
+      ],
+      "hint": "分别代入不带时间反演与带时间反演两种情况。",
+      "steps": [
+        {
+          "title": "检查 ε=0",
+          "explanation": "此时 U 必须等于 Rc，但两者 x、z 对角元不同。",
+          "formula": "U≠Rc"
+        },
+        {
+          "title": "检查 ε=1",
+          "explanation": "此时 U 必须等于 −Rc；y 对角元不符。",
+          "formula": "−Rc=diag(1,1,−1)≠U"
+        },
+        {
+          "title": "得到群论结论",
+          "explanation": "两种可能均失败，因此这一独立组合不属于满足锁定规则的常规磁点群。",
+          "formula": "[C₂x∥C₂z]∉对应锁定子群"
+        },
+        {
+          "title": "限定物理推论",
+          "explanation": "它仍能保持理想无 SOC 模型的箭头排列。真实体系中是否为近似或额外精确对称，需要检查具体 Hamiltonian。",
+          "formula": "结构匹配 + 物理模型对称，缺一不可"
+        }
+      ],
+      "answer": "这项独立自旋/空间组合不是常规磁点群操作；“能把箭头重合”不足以保证真实含 SOC 的 Hamiltonian 对称。",
+      "pitfall": "不能把本例推广成“任何有限 SOC 都破坏全部自旋群操作”。满足锁定或额外模型条件的操作可保留。",
+      "check": {
+        "question": "空间部分换成 E 时，常规磁操作允许的 U 为？",
+        "choices": [
+          "任意 C₂",
+          "±I",
+          "仅绕 z 的 SO(2)"
+        ],
+        "answer": 1,
+        "explanation": "锁定公式直接给出 U=(−1)^εI。"
+      },
+      "sourceIds": [
+        "spinpoint-2025"
+      ],
+      "lab": "spin_group",
+      "labPreset": "c2_point",
+      "modelLabel": "SOC 锁定的矩阵对照"
     }
+  ],
+  "sourceFiles": [
+    "symmetry-materials.json",
+    "symmetry-course-lessons.json"
   ]
 }

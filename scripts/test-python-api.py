@@ -137,6 +137,19 @@ class PublicAPITests(unittest.TestCase):
         self.assertTrue(anti['isTrim'])
         self.assertFalse(anti['kramersEligible'])
 
+    def test_double_color_spin_teaching_contract(self):
+        double = self.result('teaching_labs', {'lab':'double_group', 'preset':'screw21_space', 'kz':'1/2', 'steps':4})
+        self.assertEqual(double['frames'][2]['translationExact'], ['0','0','1'])
+        self.assertEqual(double['frames'][2]['spinorMatrixExact'], [['-1','0'],['0','-1']])
+        self.assertEqual(double['closure']['blochPhaseExact'], '1')
+        for lab, preset in [('color_group','translation3_space'),('spin_group','af_space'),('spin_group','helix3_space')]:
+            combined = self.result('teaching_labs', {'lab':lab,'preset':preset,'variant':'combined'})
+            self.assertTrue(combined['exact'])
+            self.assertTrue(all(frame['preservesPattern'] for frame in combined['frames']))
+            alone = self.result('teaching_labs', {'lab':lab,'preset':preset,'variant':'spatial_only'})
+            self.assertFalse(alone['frames'][1]['preservesPattern'])
+        self.assertFalse(combined['socLockedTest']['preservesPattern'])
+
     def test_material_crystal_public_contract(self):
         materials = json.loads((ROOT / 'dist/data/symmetry-materials.json').read_text(encoding='utf8'))
         iron = next(m for m in materials['materials'] if m['formula'] == 'Fe')

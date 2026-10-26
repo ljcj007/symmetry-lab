@@ -367,7 +367,7 @@
         "Fixed orthonormal-cell examples, not a general structure classification engine",
         "Kramers eligibility is conditional on Hamiltonian symmetry; no material bands or intensities predicted"
       ],
-      "sha256": "b650df45b9ab1e974b087a86ad6dcfa154c9cc24d45912424dd04cd02ce108a1"
+      "sha256": "87749a79da15aeb4b831745b8571c47a7bcf268d31c5280a2510c9cae92442f2"
     },
     {
       "path": "dist/python/crystal_labs.py",
@@ -455,6 +455,18 @@
         "Coordinate permutation adds no fermionic statistics sign"
       ],
       "sha256": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
+    },
+    {
+      "path": "dist/python/group_extensions.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original exact standard-library point/space teaching examples for double covers, finite color permutations and independent spin-space operations. Rational and quadratic-field arithmetic; the frontend only renders returned 3D frames.",
+      "validation": "scripts/test-python-group-extensions.py",
+      "limitations": [
+        "Selected point and three-dimensional periodic examples, not an exhaustive color/spin-space group classifier",
+        "Classical spin operations and half-spin quantum lifts are distinguished; SOC compatibility is a symmetry constraint, not a material band prediction"
+      ],
+      "sha256": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
     }
   ],
   "coordinate_conventions": {
@@ -488,7 +500,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-25",
+  "updated": "2026-10-26",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",

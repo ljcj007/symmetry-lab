@@ -53,7 +53,7 @@ export function getPointgroupResult() {
   return {kind:'point-group-teaching',pointGroup:g,experiment:{coordinateConvention:'orthonormal Cartesian column vectors; r′ = R r',operation:op,initialPoint:state.point.slice(),applications:state.step,result:transformed(op,state.point,state.step),fullGroupOrbit:orbit(g,state.point)},source:loaded.lessons.source};
 }
 
-export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{}}) {
+export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{}}) {
   stop();
   const revision=++state.revision;
   container.innerHTML='<div class="pg-page"><div class="pg-loading" role="status"><span class="spinner"></span>正在载入点群课程与图谱…</div></div>';
@@ -62,24 +62,27 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const $=selector=>root.querySelector(selector);
   let lessons,atlas;
   try { ({lessons,atlas}=await load()); } catch(error) {
-    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=()=>{if(current())return renderPointgroupView({container,toast,download,openGroup});};}
+    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=()=>{if(current())return renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation});};}
     return;
   }
   if(!current())return;
+  if(selection.pathway||selection.tab){state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.lesson=Math.max(0,lessons.lessons.findIndex(item=>item.id===selection.lesson));if(selection.group)changeGroup(selection.group);if(state.tab==='quiz'&&selection.lesson)state.quizLesson=String(state.lesson);}
+  const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,group:String(state.group)});onLocation('学习中心 / 基础与表示 / '+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
   const allQuestions=quizEntries(lessons.lessons);
   const source=lessons.source||{};
   const sourceText=[Array.isArray(source.authors)?source.authors.join('、'):source.authors,source.title,source.edition,source.publisher,source.year].filter(Boolean).join(' · ');
   const sourceDOI=String(source.doi||'').replace(/^https?:\/\/doi\.org\//,'');
   const sourceLink=/^10\.\d{4,9}\/[\w./();:+-]+$/i.test(sourceDOI)?` <a href="https://doi.org/${esc(sourceDOI)}" target="_blank" rel="noreferrer">出版信息 ↗</a>`:'';
   const sourceHTML=()=>`<details class="pg-source"><summary>参考书与使用约定</summary><p>${esc(sourceText)}${sourceLink}</p><p>${esc(source.referenceNote||'教学内容以自己的语言组织，章节页码用于定位参考书；图谱和交互实验由本项目生成。')}</p><p>图谱讲解三维晶体的 32 个普通点群与单值表示，不含磁点群和自旋双群。点群操作没有平移部分；进入工作台时使用代表空间群的 Γ 点。</p></details>`;
-  function navigate(tab) { stop();state.tab=tab;draw();$('.pg-content')?.focus({preventScroll:true}); }
+  function navigate(tab) { stop();state.tab=tab;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
   function changeGroup(id) { const g=atlas.groups.find(g=>String(g.id)===String(id))||atlas.groups[0];state.group=g.id;state.operation=g.generators?.[0]??0;state.step=0;stop(); }
   function draw() {
     if(!current()){stop();return;}
     const progress=correctCount(allQuestions);
     root.innerHTML=`<section class="pg-intro"><div><span class="pg-kicker">从几何变换到物理选择定则</span><h2>看见对称性，读懂表示。</h2><p>${esc(lessons.subtitle||'以 32 个晶体点群为线索，连接群论、特征标与晶体物理。')}</p></div><div class="pg-intro-stats" aria-label="课程概要"><div><strong>32</strong><span>晶体点群</span></div><div><strong>${lessons.lessons.length}</strong><span>学习单元</span></div><div><strong>${progress}<small> / ${allQuestions.length}</small></strong><span>自测已掌握</span></div></div></section>
-      <div class="pg-tabs" role="tablist" aria-label="点群教学栏目">${tabs.map(([id,title])=>`<button id="pg-tab-${id}" type="button" role="tab" aria-controls="pg-content" aria-selected="${state.tab===id}" tabindex="${state.tab===id?'0':'-1'}" data-pg-tab="${id}">${title}</button>`).join('')}</div>
-      <div class="pg-content" id="pg-content" role="tabpanel" aria-labelledby="pg-tab-${state.tab}" tabindex="-1"></div>${sourceHTML()}`;
+      ${selection.embeddedOnly||selection.atlasOnly?'':`<div class="pg-tabs" role="tablist" aria-label="点群教学栏目">${tabs.map(([id,title])=>`<button id="pg-tab-${id}" type="button" role="tab" aria-controls="pg-content" aria-selected="${state.tab===id}" tabindex="${state.tab===id?'0':'-1'}" data-pg-tab="${id}">${title}</button>`).join('')}</div>`}
+      ${state.tab!=='learn'&&!selection.embeddedOnly&&!selection.atlasOnly?`<div class="classroom-study-context"><strong>当前单元：${esc(shortLessonTitle(lessons.lessons[state.lesson]))}</strong><button type="button" id="pg-return-lesson">返回讲解</button><button type="button" id="pg-context-quiz">本节练习</button></div>`:''}<div class="pg-content" id="pg-content" role="tabpanel" aria-labelledby="pg-tab-${state.tab}" tabindex="-1"></div>${sourceHTML()}`;
+    if($('#pg-return-lesson'))$('#pg-return-lesson').onclick=()=>navigate('learn');if($('#pg-context-quiz'))$('#pg-context-quiz').onclick=()=>navigate('quiz');
     root.querySelectorAll('[data-pg-tab]').forEach(button=>{
       button.onclick=()=>navigate(button.dataset.pgTab);
       button.onkeydown=e=>{
@@ -89,7 +92,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
         if(e.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;
         if(e.key==='Home')next=0;
         if(e.key==='End')next=tabs.length-1;
-        if(next!==undefined){e.preventDefault();state.tab=tabs[next][0];stop();draw();$('#pg-tab-'+state.tab).focus();}
+        if(next!==undefined){e.preventDefault();navigate(tabs[next][0]);$('#pg-tab-'+state.tab).focus();}
       };
     });
     if(state.tab==='learn')drawLearn();
@@ -100,7 +103,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   function drawLearn() {
     state.lesson=safeIndex(state.lesson,lessons.lessons.length);
     const lesson=lessons.lessons[state.lesson];
-    $('.pg-content').innerHTML=`<div class="pg-learn-layout"><aside class="pg-lesson-nav" aria-label="课程目录"><p class="pg-label">循序渐进 · 学习路线</p>${lessons.lessons.map((item,i)=>{
+    $('.pg-content').innerHTML=`<div class="classroom-chapter-picker"><label>基础与表示 · 选择单元<select id="pg-chapter-select">${lessons.lessons.map((item,i)=>`<option value="${i}" ${state.lesson===i?'selected':''}>${esc(item.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="pg-chapter-lab">进入演示 →</button></div><div class="pg-learn-layout"><aside class="pg-lesson-nav" aria-label="课程目录"><p class="pg-label">循序渐进 · 学习路线</p>${lessons.lessons.map((item,i)=>{
       const entries=quizEntries([item]),complete=entries.length>0&&correctCount(entries)===entries.length;
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
@@ -110,10 +113,11 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       ${lesson.pitfall?`<aside class="pg-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="pg-reference"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">动手操作对称变换</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
-    root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
+    $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
+    root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
     $('#pg-lesson-lab').onclick=()=>navigate('lab');
-    if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
+    if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
   }
   function filteredGroups() {
     const search=state.search.trim().toLowerCase().replace(/[\s_{}]/g,'');
@@ -130,7 +134,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     const groups=filteredGroups();
     $('#pg-filter-summary').textContent=`显示 ${groups.length} / 32 个点群 · 点击卡片查看特征标与物理基函数`;
     $('#pg-group-cards').innerHTML=groups.length?groups.map(g=>`<button type="button" class="pg-group-card ${g.id===selected().id?'selected':''}" data-pg-group="${g.id}" aria-pressed="${g.id===selected().id}"><span class="pg-card-top"><strong>${esc(g.hm)}</strong><span>${esc(g.schoenflies)}</span></span><span class="pg-card-bottom">${esc(g.system)}<span>阶 ${g.order}</span></span></button>`).join(''):'<p class="pg-no-results">没有符合条件的点群。可试试 Hermann–Mauguin 符号（如 4mm）或 Schoenflies 符号（如 C4v）。</p>';
-    root.querySelectorAll('[data-pg-group]').forEach(button=>button.onclick=()=>{changeGroup(button.dataset.pgGroup);drawCards();drawGroupDetail();$('#pg-group-detail').scrollIntoView({block:'start',behavior:'instant'});});
+    root.querySelectorAll('[data-pg-group]').forEach(button=>button.onclick=()=>{changeGroup(button.dataset.pgGroup);drawCards();drawGroupDetail();sync();$('#pg-group-detail').scrollIntoView({block:'start',behavior:'instant'});});
   }
   function drawGroupDetail() {
     const g=selected();
