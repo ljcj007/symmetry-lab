@@ -5,7 +5,7 @@ const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const params={phonons:{preset:'silicon',angle:45,polarization:'parallel',mode:'sum',channel:'raman',frequency_cm1:300,width_cm1:20,amplitude:.10,steps:48},tensors:{preset:'cubic_m3m',tensor:'dielectric',orientation_deg:0,field:[1,0,0],strain:[1,0,0,0,0,1],parameters:{},plane:'xy'}};
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261026-materials1').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
+const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261026-dynamics1').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
 export const getObservablesResult=()=>lastResult;
 export function formatDecomposition(rows){return (rows||[]).map(r=>(r.multiplicity===1?'':r.multiplicity+' ')+r.irrep).join(' ⊕ ')||'无';}
 export function curveSVG(points,xLabel,yLabel){
@@ -33,7 +33,7 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  const $=s=>root.querySelector(s);
  function sync(){onNavigate({tab,lesson:lesson.id,material:material.id,experiment:tool,exercise:tab==='derive'?exercise.id:undefined});}
  function invalidate(){result=null;payload=null;lastResult=null;ticket++;stopAnimation();}
- function caseLinks(c){return `<div class="obs-links"><a href="#classroom/observables?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">学习推导 →</a><a href="#compute/phonons?material=${esc(c.id)}">声子与光谱 →</a><a href="#compute/tensors?material=${esc(c.id)}">物性张量 →</a><a href="#atlas/materials?material=${esc(c.id)}">晶体结构与操作 →</a></div>`;}
+ function caseLinks(c){return `<div class="obs-links"><a href="#classroom/observables?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">学习推导 →</a><a href="#compute/phonons?material=${esc(c.id)}">声子与光谱 →</a><a href="#compute/tensors?material=${esc(c.id)}">物性张量 →</a><a href="#classroom/structure-dynamics?material=${esc(c.id)}">相变、衍射与数据导入 →</a><a href="#atlas/materials?material=${esc(c.id)}">晶体结构与操作 →</a></div>`;}
  function draw(){if(!current())return;stopAnimation();onLocation((selection.calculationOnly?'计算中心':'学习中心 / 材料物性')+' / '+(selection.calculationOnly?(tool==='phonons'?'声子与光谱':'物性张量'):lesson.title));
  root.innerHTML=`<div class="obs-header"><span class="obs-eyebrow">SYMMETRY → OBSERVABLES</span><h2>${selection.calculationOnly?(tool==='phonons'?'从位移表示到光谱选择定则':'从对称操作到允许的物性张量'):'让群论走进可观测的材料性质'}</h2><p>以 Si、GaAs、NaCl 为线索，连接结构、表示、响应与实验几何。</p></div>${selection.calculationOnly?'':`<nav class="obs-tabs" aria-label="材料物性课程内容">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料案例']].map(([id,t])=>`<button type="button" data-obs-tab="${id}" aria-pressed="${tab===id}" class="${tab===id?'active':''}">${t}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>案例导航（计算模型可另选）<select id="obs-material">${options(data.cases.map(c=>[c.id,c.formula+' · '+c.name]),material.id)}</select></label><p>${esc(material.summary)}</p></div><div id="obs-content"></div>`;
  root.querySelectorAll('[data-obs-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.obsTab;draw();sync();});

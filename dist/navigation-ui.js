@@ -3,9 +3,12 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 export const toolGroups=[
  {id:'observables',title:'声子光谱与物性',summary:'从原胞位移和对称操作，计算光谱选择定则与允许响应。',tools:[
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],
+  ['compute/phonopy','Phonopy · 声子数据导入','读取 band / qpoints YAML、复本征矢、分段色散与 DOS。','Phonopy phonon band yaml DOS 软模 虚频'],
   ['compute/tensors','物性张量 · 精确对称约束','介电、弹性、压电与磁电张量；点群预设、自定义生成元与旋转响应。','介电 弹性 压电 磁电 Neumann tensor'],
  ]},
- {id:'structure',title:'结构与晶胞',summary:'从真实结构出发，确定群与坐标约定。',tools:[
+ {id:'structure',title:'结构、相变与衍射',summary:'从真实结构出发，确定群与坐标约定。',tools:[
+  ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
+  ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor'],
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[
@@ -51,7 +54,9 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261026-materials1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261026-dynamics1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics])=>[
+  ...dynamics.lessons.map(l=>({route:'classroom/structure-dynamics?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'相变 衍射 Phonopy '+l.id,kind:'课程'})),
+  ...dynamics.cases.map(c=>({route:'atlas/dynamics?material='+encodeURIComponent(c.id),title:c.formula+' · 材料研究路线',summary:c.summary,keywords:c.id+' 相变 衍射 声子',kind:'材料'})),
   ...observables.lessons.map(l=>({route:'classroom/observables?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'物性 声子 光谱 张量 '+l.id,kind:'课程'})),
   ...pg.lessons.map(l=>({route:'classroom/foundations?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'点群 基础 '+l.id,kind:'课程'})),
   ...sg.lessons.map(l=>({route:'classroom/'+(['double','magnetic','color','spin'].includes(l.track)?'spin':'crystal')+'?lesson='+encodeURIComponent(l.id)+'&track='+encodeURIComponent(l.track),title:l.title,summary:l.summary,keywords:l.track+' '+l.id,kind:'课程'})),
@@ -71,11 +76,13 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/msg','1,651 磁空间群','BNS / OG 编号、四类磁群与共表示入口。'],
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
+  ['atlas/dynamics','结构、相变与实验案例','BaTiO₃ 极性畴；Si、NaCl、GaAs 衍射；自己的 Phonopy 数据。'],
   ['classroom/spin','双群、色群与自旋群专题','按点群与三维空间群学习；明确教学实例的适用范围。']
  ].map(([r,t,s])=>`<article>${link(r,`<h2>${t}</h2><p>${s}</p><span class="nav-card-go">浏览 →</span>`,'nav-atlas-card')}</article>`).join('')}</div>`;
  else {
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
+  ['classroom/structure-dynamics','从结构走到实验','相变与畴 → 衍射消光 → Phonopy 数据'],
   ['classroom/observables','从材料理解物性','Si / GaAs / NaCl → 声子光谱 → 物性张量'],
   ['classroom/foundations','从零学群论','对称操作 → 表示与特征标 → 晶体与自旋'],
   ['structure','分析晶体结构','导入结构 → 标准晶胞 → 群表示 → 能带匹配'],

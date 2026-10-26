@@ -1,5 +1,19 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+## 结构、相变与实验（2026-10-26）
+
+新增 8 课、8 道分步练习（32 步）和 BaTiO₃ / Si / NaCl / GaAs 四条材料路线，沿用五个主导航与 18px 正文字号：
+
+- `#classroom/structure-dynamics`：课程、交互实验、分步推导、材料案例。
+- `#compute/phase`：Landau 自由能的驻点、稳定性和全局极小；理想 BaTiO₃ 单 Ti 轴向位移、48→8 点操作与六个几何方向畴。参数为无量纲教学值，不是实测相图或畴壁模拟。
+- `#compute/diffraction`：Si/GaAs/NaCl/FCC/BCC/2₁ 模型及自定义晶胞；复结构因子、原子相位、Bragg 可达性、非正交倒易度量和有限指标粉末棒谱。区分格心、金刚石基底、螺旋轴与权重偶然抵消；常数散射因子不替代定量 XRD。
+- `#compute/phonopy`：浏览器本地安全读取 band.yaml、qpoints.yaml、同结构 JSON；可补充 phonopy.yaml 原胞信息。分段色散、虚频容差计数、质量反加权复本征矢动画及 total/projected/XYZ DOS。不从结构或力常数文件重新求声子，不猜测未声明单位。内置样本为原创合成数据。
+- `#atlas/dynamics`：四条材料学习路线连接旧结构图谱、声子/张量和新工具。导出保留输入、约定和完整结果。
+
+说明：[结构、相变与实验](dist/docs/structure-dynamics.md) · [Phonopy 导入约定](dist/docs/phonopy-import.md)。
+验证：`npm run test:dynamics`；命令行与浏览器共用 `browser_api.py`。新增 YAML 依赖为 PyYAML，浏览器通过 Pyodide 按需载入。
+
+
 整合 [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep)、[MSGCorep](https://github.com/goodluck1982/MSGCorep)、[MagneticTB](https://github.com/zhangzeyingvv/MagneticTB) 和 [CrystKit](https://github.com/hongyi-zhao/CrystKit) 的数据与算法工作流。四个项目已实现的计算功能统一使用 Python，通过 Pyodide 在浏览器 Worker 内运行；JavaScript 负责界面、绘图和任务调度。网站为独立实现，不代表上游作者发布或背书。
 
 ## 网站导航与学习路线

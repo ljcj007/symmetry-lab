@@ -16,6 +16,16 @@ def invoke(tool, payload):
 
 
 class PublicAPITests(unittest.TestCase):
+    def test_structure_dynamics_public_api(self):
+        phase = self.result('phase', {'q': .7})
+        self.assertEqual(phase['symmetry']['retainedOrder'], 8)
+        self.assertEqual(phase['symmetry']['domainCount'], 6)
+        diffraction = self.result('diffraction', {'preset': 'silicon', 'hkl': [2,0,0]})
+        self.assertEqual(diffraction['reflection']['extinction']['kind'], 'diamond_basis')
+        phonopy = self.result('phonopy', {'content': (ROOT/'dist/data/examples/phonopy-demo.yaml').read_text(encoding='utf8'), 'frequency_unit': 'THz'})
+        self.assertEqual(phonopy['summary']['bandCount'], 6)
+        self.assertTrue(phonopy['animation']['available'])
+
     def test_phonon_public_api(self):
         result = self.result('phonons', {'preset': 'nacl', 'channel': 'ir', 'mode': 'sum'})
         self.assertEqual(result['formulas']['optical'], 'T1u')

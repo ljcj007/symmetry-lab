@@ -1,7 +1,8 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261026-materials1';
+const BUILD = '20261026-dynamics1';
 const plans = {
+  phase: ['phase_domains'], diffraction: ['diffraction'], phonopy: ['phonopy_import'],
   phonons: ['phonon_spectra'], tensors: ['property_tensors'],
   analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
   magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
@@ -38,13 +39,13 @@ async function prepare(id, action, payload) {
     runtime.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_magnetic_database = None\n_label_database = None\n_carat_catalogs = {}');
   }
   const needsLabels = action === 'standard_labels' || (action === 'analyze' && payload.group_number !== undefined);
-  const exact = needsLabels || ['tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
+  const exact = needsLabels || ['phase', 'tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
   const su3CG = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_cg';
   const exactCG = su3CG && payload.arithmetic === 'exact';
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
   const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
   const teachingPackages = su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
-  for (const name of action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
+  for (const name of action === 'phonopy' ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
     await runtime.loadPackage(name); packages.add(name);

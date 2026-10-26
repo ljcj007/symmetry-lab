@@ -3,7 +3,7 @@ TOOLS = ('analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
-         'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors')
+         'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors', 'phase', 'diffraction', 'phonopy')
 
 
 def run(tool, payload, database=None, catalog=None, magnetic_database=None,
@@ -12,6 +12,15 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool == 'phase':
+        from phase_domains import run as calculate
+        return calculate(payload)
+    if tool == 'diffraction':
+        from diffraction import run as calculate
+        return calculate(payload)
+    if tool == 'phonopy':
+        from phonopy_import import run as calculate
+        return calculate(payload)
     if tool == 'phonons':
         from phonon_spectra import run_phonons
         return run_phonons(payload)
