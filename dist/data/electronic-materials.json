@@ -1,0 +1,1207 @@
+{
+  "schema": "symmetry-lab-electronic-materials-1",
+  "version": "20261026-electronic1",
+  "language": "zh-CN",
+  "title": "电子态、非线性光学与超胞谱",
+  "provenance": {
+    "content": "本站原创教学文字、解析练习与合成参数；参考链接支持方法背景，不复制第三方教程。",
+    "modelBoundary": "首版限定方格单态/Kitaev、Td/4mm/Oh体电偶极几何SHG、一维单轨道正交基展开。"
+  },
+  "modules": [
+    {
+      "id": "pairing",
+      "title": "超导配对与 BdG 电子态",
+      "summary": "从费米子交换反对称性走到能隙节点、准粒子谱和一维边界态；用可验证模型理解配对对称性。",
+      "pathway": "spin",
+      "route": "pairing-lab",
+      "action": "pairing_lab",
+      "presets": [
+        {
+          "id": "square-d",
+          "title": "方格 dₓ²₋ᵧ² · μ=−1",
+          "input": {
+            "model": "square_singlet",
+            "pairing": "d_x2_y2",
+            "hopping": 1,
+            "chemical_potential": -1,
+            "gap": 0.4,
+            "grid": 41,
+            "path_samples": 61,
+            "sites": 40
+          }
+        },
+        {
+          "id": "square-s",
+          "title": "方格常数 s 波 · 全能隙",
+          "input": {
+            "model": "square_singlet",
+            "pairing": "s",
+            "hopping": 1,
+            "chemical_potential": -1,
+            "gap": 0.4
+          }
+        },
+        {
+          "id": "square-extended-s",
+          "title": "扩展 s 波 · 半填充反例",
+          "input": {
+            "model": "square_singlet",
+            "pairing": "extended_s",
+            "hopping": 1,
+            "chemical_potential": 0,
+            "gap": 0.4
+          }
+        },
+        {
+          "id": "square-did",
+          "title": "方格 d+id · 复相位",
+          "input": {
+            "model": "square_singlet",
+            "pairing": "d+id",
+            "hopping": 1,
+            "chemical_potential": -1,
+            "gap": 0.4
+          }
+        },
+        {
+          "id": "kitaev-topological",
+          "title": "Kitaev 链 · 拓扑区间",
+          "input": {
+            "model": "kitaev",
+            "hopping": 1,
+            "chemical_potential": 0.5,
+            "gap": 0.6,
+            "sites": 40
+          }
+        },
+        {
+          "id": "kitaev-trivial",
+          "title": "Kitaev 链 · 平庸区间",
+          "input": {
+            "model": "kitaev",
+            "hopping": 1,
+            "chemical_potential": 3,
+            "gap": 0.6,
+            "sites": 40
+          }
+        }
+      ]
+    },
+    {
+      "id": "shg",
+      "title": "非线性光学与旋转 SHG",
+      "summary": "把点群约束转成 χ⁽²⁾ 张量，再连接样品切面、入射角和偏振通道，区分图样信息与实验推断边界。",
+      "pathway": "observables",
+      "route": "shg-lab",
+      "action": "shg_lab",
+      "presets": [
+        {
+          "id": "gaas-001",
+          "title": "GaAs (001) · 四通道",
+          "input": {
+            "model": "gaas",
+            "cut": "001",
+            "incidence": 45,
+            "azimuth": 30,
+            "samples": 181,
+            "channel": "PP",
+            "cOverA": 1,
+            "coefficients": {
+              "xyz": 1
+            }
+          }
+        },
+        {
+          "id": "gaas-111",
+          "title": "GaAs (111) · 改变切面",
+          "input": {
+            "model": "gaas",
+            "cut": "111",
+            "incidence": 45,
+            "azimuth": 30,
+            "samples": 181,
+            "channel": "PP",
+            "cOverA": 1,
+            "coefficients": {
+              "xyz": 1
+            }
+          }
+        },
+        {
+          "id": "batio3-001",
+          "title": "BaTiO₃ 4mm (001) · 独立张量系数",
+          "input": {
+            "model": "batio3",
+            "cut": "001",
+            "incidence": 45,
+            "azimuth": 30,
+            "samples": 181,
+            "channel": "PP",
+            "cOverA": 1,
+            "coefficients": {
+              "xxz": 1,
+              "zxx": 0.7,
+              "zzz": 1.5
+            }
+          }
+        },
+        {
+          "id": "batio3-complex",
+          "title": "BaTiO₃ 4mm (111) · 复系数干涉",
+          "input": {
+            "model": "batio3",
+            "cut": "111",
+            "incidence": 45,
+            "azimuth": 30,
+            "samples": 181,
+            "channel": "PP",
+            "cOverA": 1.01,
+            "coefficients": {
+              "xxz": {
+                "re": 1,
+                "im": 0.2
+              },
+              "zxx": {
+                "re": 0.7,
+                "im": -0.1
+              },
+              "zzz": {
+                "re": 1.5,
+                "im": 0.5
+              }
+            }
+          }
+        },
+        {
+          "id": "oh-zero",
+          "title": "Oh · 中心对称体电偶极零响应",
+          "input": {
+            "model": "centrosymmetric",
+            "cut": "001",
+            "incidence": 45,
+            "azimuth": 30,
+            "samples": 181,
+            "channel": "PP",
+            "cOverA": 1,
+            "coefficients": {}
+          }
+        }
+      ]
+    },
+    {
+      "id": "unfold",
+      "title": "超胞、缺陷与能带展开",
+      "summary": "对照折叠能带与原胞动量谱权重，理解平移对称性破缺，并认识真实波函数数据的作用。",
+      "pathway": "crystal",
+      "route": "unfold-lab",
+      "action": "unfold_lab",
+      "presets": [
+        {
+          "id": "chain-impurity",
+          "title": "N=4 杂质超胞 · 默认",
+          "input": {
+            "mode": "model",
+            "model": "impurity",
+            "size": 4,
+            "hopping": 1,
+            "onsite": 0,
+            "defectStrength": 1.5,
+            "defectSite": 0,
+            "samples": 81,
+            "q": 0.25,
+            "band": 0
+          }
+        },
+        {
+          "id": "chain-perfect",
+          "title": "N=4 完美超胞 · 恢复原胞谱",
+          "input": {
+            "mode": "model",
+            "model": "perfect",
+            "size": 4,
+            "hopping": 1,
+            "onsite": 0,
+            "samples": 81,
+            "q": 0.25,
+            "band": 0
+          }
+        },
+        {
+          "id": "chain-dimerized",
+          "title": "N=4 二聚化 · 交替跃迁",
+          "input": {
+            "mode": "model",
+            "model": "dimerized",
+            "size": 4,
+            "hopping": 1,
+            "onsite": 0,
+            "dimerization": 0.3,
+            "samples": 81,
+            "q": 0.25,
+            "band": 0
+          }
+        },
+        {
+          "id": "chain-alternating",
+          "title": "N=4 交替势 · 不同开隙机制",
+          "input": {
+            "mode": "model",
+            "model": "alternating",
+            "size": 4,
+            "hopping": 1,
+            "onsite": 0,
+            "alternatingPotential": 0.6,
+            "samples": 81,
+            "q": 0.25,
+            "band": 0
+          }
+        },
+        {
+          "id": "chain-vacancy",
+          "title": "N=4 单空位 · 删除一个轨道",
+          "input": {
+            "mode": "model",
+            "model": "vacancy",
+            "size": 4,
+            "hopping": 1,
+            "onsite": 0,
+            "defectSite": 0,
+            "samples": 81,
+            "q": 0.25,
+            "band": 0
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "pairing-exchange",
+      "module": "pairing",
+      "title": "从交换反对称性到配对表示",
+      "summary": "先分清自旋、动量和轨道指标，再理解 s、d 波为何是对称性分类。",
+      "preset": "square-d",
+      "references": [
+        "kwant-bdg",
+        "kitaev-paper"
+      ],
+      "sections": [
+        {
+          "title": "交换两个费米子，配对振幅必须变号",
+          "text": "Δ 的两个自旋指标属于一对电子。交换时既转置指标，也把相对动量 k 变为 −k。在本单轨道、自旋旋转对称的模型中，自旋单态部分反对称，因此标量动量函数必须为偶函数。无自旋 Kitaev 链则用奇动量配对。多轨道或强 SOC 系统还需显式处理轨道指标，不能直接照搬这条简化规则。",
+          "formula": "Δ(k)=−Δᵀ(−k)；单态 Δ(k)=ψ(k)iσy，ψ(−k)=ψ(k)"
+        },
+        {
+          "title": "用方格点群分类基函数",
+          "text": "取二维方格正交坐标轴。常数和 cos kx+cos ky 属于 A₁g，cos kx−cos ky 属于 B₁g，sin kx sin ky 属于 B₂g，这里使用 D₄h 的偶宇称标签。d+id 是 B₁g 与 B₂g 的复组合，并不是本方格点群中的单个二维不可约表示。分类说明允许的变换规律，不决定哪个配对态在材料中胜出。",
+          "formula": "ψs=Δ₀；ψdₓ²₋ᵧ²=Δ₀(cos kx−cos ky)/2"
+        },
+        {
+          "title": "在完整 Nambu 基底检查 Hamiltonian",
+          "text": "本模块保留电子上/下自旋与对应空穴，得到 4×4 BdG 矩阵。它的粒子–空穴对称性来自 Nambu 冗余；不代表正常态电子能带必须关于费米能对称。打开实验改变配对函数，检查厄米性、交换条件和粒子–空穴残差。Δ₀ 是输入参数，不求解能隙方程，也不预测临界温度。",
+          "formula": "H_BdG(k)=[[ξI₂,Δ],[Δ†,−ξI₂]]；C=τxK，CH(k)C⁻¹=−H(−k)"
+        }
+      ]
+    },
+    {
+      "id": "pairing-nodes",
+      "module": "pairing",
+      "title": "能隙零线何时成为准粒子节点",
+      "summary": "把配对函数与正常态费米面叠在一起，避免把任意 Δ=0 的位置误判为零能激发。",
+      "preset": "square-d",
+      "references": [
+        "kwant-bdg"
+      ],
+      "sections": [
+        {
+          "title": "先找到正常态费米面",
+          "text": "最近邻方格模型的色散由跃迁 t 与化学势 μ 决定。颜色图展示配对函数，深色标记展示 ξ=0 的正常态费米面。超导态的零能节点必须同时落在两者的零集合上；若 |μ|>4t，正常态没有费米面。",
+          "formula": "ξ(k)=−2t(cos kx+cos ky)−μ；E±=±√(ξ²+|ψ|²)"
+        },
+        {
+          "title": "给 d 波节点一个解析位置",
+          "text": "dₓ²₋ᵧ² 为零要求 cos kx=cos ky，再与费米面方程联立。t=1、μ=−1 时，两者均为 1/4，得到四个对称节点。有限网格可能没有恰好采到节点，不能用画面上最小能量大于零来证明全能隙。模块同时报告解析分类与数值采样结果。",
+          "formula": "cos kx=cos ky=−μ/(4t)；t=1,μ=−1 ⇒ kx,ky=±arccos(1/4)"
+        },
+        {
+          "title": "用反例理解表示标签的限度",
+          "text": "常数 s 波在 Δ₀≠0 时有全能隙，但同属 A₁g 的扩展 s 波在本模型半填充 μ=0 时恰在整个费米面上为零。d+id 的两部分必须同时为零才有节点，在 |μ|<4t 的本模型中可打开全能隙。这里的全能隙和配对标签都不足以独自确定真实材料的配对机制。",
+          "formula": "ψext-s|ξ=0=−Δ₀μ/(4t)；|ψd+id|²=Δ₀²[(cos kx−cos ky)²/4+sin²kx sin²ky]"
+        }
+      ]
+    },
+    {
+      "id": "pairing-kitaev",
+      "module": "pairing",
+      "title": "Kitaev 链：体能隙与有限边界态",
+      "summary": "连接奇宇称配对、体拓扑区间和开放链局域权重，区分数学模型与材料证据。",
+      "preset": "kitaev-topological",
+      "references": [
+        "kitaev-paper",
+        "topocondmat"
+      ],
+      "sections": [
+        {
+          "title": "一条最小的无自旋配对链",
+          "text": "每个格点只有一个费米轨道。最近邻配对在动量空间是 sin k 的奇函数，满足交换反对称性。模型使用输入的 t、μ、Δ，不包含具体纳米线的 SOC、Zeeman 场、接触或无序，因此不是某种真实材料的定量预测。",
+          "formula": "ξ(k)=−2t cos k−μ；Δ(k)=2iΔ sin k；E±=±√[(2t cos k+μ)²+4Δ²sin²k]"
+        },
+        {
+          "title": "从体谱闭隙找到边界",
+          "text": "当 Δ≠0 时，k=0 与 π 的配对都为零，体谱在 μ=−2t 或 +2t 闭隙。对该单通道链，|μ|<2t 是非平庸区间，|μ|>2t 是平庸区间。Δ=0 时通常回到金属链，不能继续把没有体能隙的点标为已验证的拓扑超导相。",
+          "formula": "ν=sgn[ξ(0)ξ(π)]；ν=−1 对应 |μ|<2t（Δ≠0）"
+        },
+        {
+          "title": "看边界权重，而不只看近零能量",
+          "text": "打开边界后比较低能态的电子加空穴权重与链长。有限链两端可杂化，近零能态并非任意参数下严格为零；一个 BdG 本征矢也不应直接等同于一个孤立 Majorana。先用体判据检查模型，再看最低两态的平均空间权重，并与 μ=3 的平庸预设比较。平均权重在这个双态子空间内部换基下不变，所有格点求和仍为 1。",
+          "formula": "w_j^(pair)=(1/2)Σ_{a=1,2}(|u_aj|²+|v_aj|²)；Σj w_j^(pair)=1"
+        }
+      ]
+    },
+    {
+      "id": "shg-tensor",
+      "module": "shg",
+      "title": "同频二阶张量：为什么 4mm 有三个系数",
+      "summary": "将点群约束与频率置换对称分开，避免把动态 SHG 错当作静态全对称张量。",
+      "preset": "batio3-001",
+      "references": [
+        "shgpy",
+        "yambo-angle"
+      ],
+      "sections": [
+        {
+          "title": "写出输出与输入频率",
+          "text": "SHG 把两个频率 ω 的输入连接到 2ω 的极化。两个输入相同，只保证末两指标 j、k 可交换；输出指标 i 的频率不同，不能因此与 j 或 k 任意交换。只有额外满足相应近似条件时才讨论 Kleinman 对称，本模块不施加它。",
+          "formula": "P_i(2ω)=Σjk χ_ijk(2ω;ω,ω)E_jE_k；χ_ijk=χ_ikj"
+        },
+        {
+          "title": "用全部点群操作求允许张量",
+          "text": "GaAs 的 Td 模型只有一个独立系数，六个 xyz 排列相等；4mm 有 xxz、zxx、zzz 三个独立系数。特别地，χ_xxz=χ_xzx=χ_yyz=χ_yzy 与 χ_zxx=χ_zyy 互不约束。输入的是 χ，不是 d=χ/2；完整指标求和已包含交叉项的因子 2。",
+          "formula": "χ_ijk=R_ia R_jb R_kc χ_abc；dim(Td)=1，dim(4mm)=3"
+        },
+        {
+          "title": "用反演建立零响应对照",
+          "text": "极性三阶张量在反演下变号，Oh 中心对称体的电偶极 χ 因而全零。这个结论只针对体电偶极贡献；表面和更高阶多极过程不在当前计算中。把 Oh 预设作为边界检查，不要把一条零强度曲线当成实验已证明反演对称。",
+          "formula": "R=−I ⇒ χ=−χ ⇒ χ=0"
+        }
+      ]
+    },
+    {
+      "id": "shg-geometry",
+      "module": "shg",
+      "title": "从晶体切面到四通道角度谱",
+      "summary": "明确样品旋转、偏振字母和共同强度标尺，手算一个可直接核对的 GaAs 图样。",
+      "preset": "gaas-001",
+      "references": [
+        "shgpy"
+      ],
+      "sections": [
+        {
+          "title": "固定实验室散射面，旋转样品",
+          "text": "表面外法向为 +z，散射面为 xz，入射角 θ 相对法向测量。第一字母代表入射偏振，第二字母代表分析器，所以 PS 是 P 入射、S 出射。样品绕 z 主动旋转 φ；(001)、(111) 预设决定初始取向，四方 (111) 的法向还依赖 c/a。",
+          "formula": "Q(φ)=Rz(φ)Q₀；k_in=(sinθ,0,−cosθ)，k_out=(sinθ,0,+cosθ)"
+        },
+        {
+          "title": "先相干相加，再取模平方",
+          "text": "把电场变到晶体坐标后求非线性极化，再投影到输出分析器。复系数之间可以相长或相消；不能先把每项强度单独算出再相加。四条曲线保留同一任意单位，因此把所有 χ 放大三倍，强度应放大九倍。",
+          "formula": "A=e_out·[χ:E_in E_in]；I=|A|²"
+        },
+        {
+          "title": "GaAs (001) 的解析校验",
+          "text": "令 a=χ_xyz。PP 与 SP 通道正比于 sin 2φ，PS 正比于 cos 2φ，SS 为零。θ=45°、φ=45°、a=1 时 I_PP=1/8。θ=0 时所有通道均为零，这是非中心对称材料也会出现几何零信号的例子。结果未包含 Fresnel、折射、相位匹配或绝对光功率。",
+          "formula": "A_PP=−a cos²θ sinθ sin2φ；A_PS=2a cosθ sinθ cos2φ；A_SP=−a sinθ sin2φ；A_SS=0"
+        }
+      ]
+    },
+    {
+      "id": "shg-inference",
+      "module": "shg",
+      "title": "反向推理：一张 SHG 图能证明什么",
+      "summary": "用全局变号、未知系数和几何消光，训练对实验图样的有限推断。",
+      "preset": "batio3-complex",
+      "references": [
+        "shgpy",
+        "yambo-angle"
+      ],
+      "sections": [
+        {
+          "title": "相同强度可以来自不同复振幅",
+          "text": "把所有 χ 同时变为 −χ，A 会变号，|A|² 却完全不变。全局复相位也无法从独立强度图中恢复。若两个反向极性畴的唯一差别是整体 χ 变号，当前强度演示无法单独识别畴的正负，需要相位参考或其他证据。",
+          "formula": "χ′=e^(iα)χ ⇒ A′=e^(iα)A ⇒ I′=I"
+        },
+        {
+          "title": "图样的旋转对称性不等于完整点群",
+          "text": "4mm (001) 的这个三阶张量几何投影不随 φ 改变，但晶体仍只有四重而不是连续旋转对称。反过来，一个四瓣图也可能由不同张量、切面和系数组合产生。多通道与多切面数据能增加约束，但不能在未指定模型时保证唯一答案。",
+          "formula": "观测图样 = 点群允许张量 + 系数 + 取向 + 光学几何"
+        },
+        {
+          "title": "用可证伪的比较替代唯一标签",
+          "text": "先写候选点群与取向，再说明哪些通道和角度能区分它们；同时检查仪器背景、表面贡献和 Fresnel 因子的影响。本实验支持复系数的相干图样比较，不包含实验拟合、置信区间或自动点群识别。建议保存候选输入与完整结果，记录仍未排除的解释。",
+          "formula": "一个零通道 ≠ 已证明 χ=0 ≠ 已证明材料有反演"
+        }
+      ]
+    },
+    {
+      "id": "unfold-folding",
+      "module": "unfold",
+      "title": "超胞为什么让能带变密",
+      "summary": "用完整链作为对照，把布里渊区折叠与真实平移对称性破缺分开。",
+      "preset": "chain-perfect",
+      "references": [
+        "easyunfold-theory",
+        "easyunfold-workflow"
+      ],
+      "sections": [
+        {
+          "title": "扩大实空间胞，缩小倒易空间区间",
+          "text": "原胞间距取 a=1，N 倍超胞长度是 N。超胞波数 K 位于 [−π/N,π/N)，每个 K 对应 N 个原胞动量 k=K+2πm/N，最后折回原胞布里渊区。程序中的动量使用弧度波数；图轴 k/π 是显示坐标，不是晶胞分数坐标。",
+          "formula": "G_SC=2π/N；k_m=K+2πm/N（mod 2π）"
+        },
+        {
+          "title": "同一物理谱可以画成更多分支",
+          "text": "完美链仍有原胞平移对称性，选择较大的计算胞不会改变物理 Hamiltonian。超胞图出现 N 条折叠分支，不能把分支数增加解释为出现新轨道或相变。理想单轨道链的原胞色散仍是 ε₀−2t cos k。",
+          "formula": "E(k)=ε₀−2t cos k"
+        },
+        {
+          "title": "让谱权重告诉你原来的动量",
+          "text": "展开保留超胞本征能量，计算它在各原胞 Bloch 动量上的投影权重。完美链的合并谱权重应恢复一条原胞色散，即使简并点的单一本征矢被数值求解器混合。比较完美预设与杂质预设，观察哪些变化只是折叠，哪些来自 Hamiltonian 改变。",
+          "formula": "A(k,E)=Σn W_n(k)δ(E−E_n)"
+        }
+      ]
+    },
+    {
+      "id": "unfold-projection",
+      "module": "unfold",
+      "title": "谱权重从哪里来：相位、投影与求和规则",
+      "summary": "从 N=2 的手算出发，理解为什么本征值不能替代波函数。",
+      "preset": "chain-perfect",
+      "references": [
+        "easyunfold-theory"
+      ],
+      "sections": [
+        {
+          "title": "固定超胞 Bloch 相位约定",
+          "text": "本工具采用 ψ(RN+j)=exp(iKRN)c_j，其中 j 是胞内保留的原胞格点。投影至原胞动量时必须保留胞内相位 exp(−ikj)。直接对 |c_j|² 做加权无法恢复相位干涉，也就无法区分均匀态与交替态的动量。",
+          "formula": "W_n(k)=|Σj exp(−ikj)c_jn|²/N"
+        },
+        {
+          "title": "用两站点均匀态手算",
+          "text": "在 N=2、K=0 时，c=(1,1)/√2 对 k=0 相长，对 k=π 相消，所以 W(0)=1、W(π)=0。把态换为 (1,−1)/√2，权重交换；两者的实空间概率完全相同。这个反例直接说明仅有逐站点概率也不足以展开。",
+          "formula": "c±=(1,±1)/√2 ⇒ [W(0),W(π)]=[1,0] 或 [0,1]"
+        },
+        {
+          "title": "用守恒规则诊断实现",
+          "text": "对任一归一化本征态，遍历 N 个对应原胞动量的权重和是 1。完整 N 轨道模型中，固定 k 对所有能带求和也是 1；若真正删除轨道，只保留 M 个，后者为 M/N，不能偷偷重新归一。简并子空间内单态权重依赖基底，应比较同能态合并结果。",
+          "formula": "Σk W_n(k)=1；Σn W_n(k)=M/N"
+        }
+      ]
+    },
+    {
+      "id": "unfold-defects",
+      "module": "unfold",
+      "title": "从缺陷教学链走向真实计算流程",
+      "summary": "识别周期缺陷阵列、有限模型和第一性原理展开之间的边界。",
+      "preset": "chain-impurity",
+      "references": [
+        "easyunfold-workflow",
+        "easyunfold-theory"
+      ],
+      "sections": [
+        {
+          "title": "三个不同的 Hamiltonian 改变",
+          "text": "杂质预设只改变一个格点的在位势；二聚化改变交替键的跃迁；交替势改变两个子晶格的在位能。空位预设则真正删除一个轨道及其连接。每个缺陷都会按超胞周期重复，所以 N=4 的杂质链不是无限稀释的孤立缺陷。相似开隙图并不唯一确定机制。",
+          "formula": "杂质：ε_j→ε_j+Vδ_jj₀；二聚化：t_j=t[1+δ(−1)^j]"
+        },
+        {
+          "title": "真实 VASP 展开要保留波函数",
+          "text": "真实三维任务需要相容的参考原胞与超胞、明确的变换关系、对应的超胞采样点以及波函数输出。可在本地使用 easyunfold 等程序处理 WAVECAR，再检查坐标与对称性约定。本站当前计算器只接收一维正交单轨道本征态 JSON，不会把 POSCAR、EIGENVAL 或 PROCAR 的有限信息自动猜成一般展开权重。",
+          "formula": "结构关系 + K 点 + 波函数/等价完备投影信息 → 动量谱权重"
+        },
+        {
+          "title": "区分展开谱与实验光电子强度",
+          "text": "展开权重反映相对于参考原胞的 Bloch 特征，不等于已经包含光电矩阵元、探测器分辨率和表面效应的 ARPES 强度。导入数据需给出归一化复本征向量、轨道位置及相位约定；仅给能量会被拒绝。保存参数、模型限制与数据来源，才能比较不同缺陷浓度或计算设置。",
+          "formula": "展开本身不改变 E_n；它改变的是每个 k 上显示的 W_n(k)"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "pairing-pauli-exercise",
+      "module": "pairing",
+      "lesson": "pairing-exchange",
+      "title": "从 Pauli 条件推到方格 d 波表示",
+      "prompt": "限定单轨道、自旋旋转对称的自旋单态。按顺序检查交换条件、空间宇称与四重旋转。",
+      "steps": [
+        {
+          "prompt": "交换两个电子后，配对矩阵应满足哪一个条件？",
+          "hint": "交换既转置两个自旋指标，也反转相对动量。",
+          "choices": [
+            "Δ(k)=Δᵀ(−k)",
+            "Δ(k)=−Δᵀ(−k)",
+            "Δ(k)=−Δ†(k)"
+          ],
+          "answer": 1,
+          "explanation": "费米子反交换关系要求 Δ(k)=−Δᵀ(−k)。"
+        },
+        {
+          "prompt": "自旋单态矩阵 iσy 已经反对称，标量 ψ(k) 的宇称是什么？",
+          "hint": "总交换符号必须为负。",
+          "choices": [
+            "偶：ψ(−k)=ψ(k)",
+            "奇：ψ(−k)=−ψ(k)",
+            "任意，与交换无关"
+          ],
+          "answer": 0,
+          "explanation": "反对称自旋部分乘偶空间部分，得到总反对称配对。"
+        },
+        {
+          "prompt": "四重旋转 (kx,ky)→(−ky,kx) 对 cos kx−cos ky 做什么？",
+          "hint": "余弦是偶函数，交换 x、y 后再比较。",
+          "choices": [
+            "保持不变",
+            "变为复共轭",
+            "整体变号"
+          ],
+          "answer": 2,
+          "explanation": "cos(−ky)−cos kx=−(cos kx−cos ky)，符合 B₁g 基函数。"
+        },
+        {
+          "prompt": "在本 D₄h 模型中，dₓ²₋ᵧ²+i dₓᵧ 应怎样标注？",
+          "hint": "B₁g 和 B₂g 是两个不同的一维表示。",
+          "choices": [
+            "单个二维不可约表示",
+            "B₁g+iB₂g 的复组合",
+            "必定是 A₁g"
+          ],
+          "answer": 1,
+          "explanation": "复组合不是方格点群的单个二维 irrep；是否自发形成需要额外能量学信息。"
+        }
+      ]
+    },
+    {
+      "id": "pairing-nodes-exercise",
+      "module": "pairing",
+      "lesson": "pairing-nodes",
+      "title": "解析找到 μ=−1 的四个节点",
+      "prompt": "取 t=1、Δ₀≠0 和 dₓ²₋ᵧ² 配对，用方程而不是图形网格判断零能节点。",
+      "steps": [
+        {
+          "prompt": "E=√(ξ²+|ψ|²) 为零需要什么？",
+          "hint": "两个非负项之和为零，要求每项都为零。",
+          "choices": [
+            "只有 ψ=0",
+            "只有 ξ=0",
+            "ξ=0 且 ψ=0"
+          ],
+          "answer": 2,
+          "explanation": "配对零线必须与正常态费米面相交，才产生准粒子零能节点。"
+        },
+        {
+          "prompt": "μ=−1 时，ξ=0 给出的余弦和是多少？",
+          "hint": "把 −2(cos kx+cos ky)+1=0 移项。",
+          "choices": [
+            "1/2",
+            "−1/2",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "正常态费米面满足 cos kx+cos ky=1/2。"
+        },
+        {
+          "prompt": "再结合 d 波的 cos kx=cos ky，可得到什么？",
+          "hint": "两个相同的数之和为 1/2。",
+          "choices": [
+            "cos kx=cos ky=1/2",
+            "cos kx=cos ky=1/4",
+            "只能在 k=0"
+          ],
+          "answer": 1,
+          "explanation": "kx、ky 各可为 ±arccos(1/4)，得到四个节点。"
+        },
+        {
+          "prompt": "有限网格最小能量为一个小正数，能否推翻上述解析节点？",
+          "hint": "网格未必包含 arccos(1/4)。",
+          "choices": [
+            "能，数值总比解析可靠",
+            "能，只要颜色图足够平滑",
+            "不能，需检查采样位置或直接代入节点"
+          ],
+          "answer": 2,
+          "explanation": "数值网格可能漏过零点；解析代入与收敛检查用于验证。"
+        }
+      ]
+    },
+    {
+      "id": "pairing-kitaev-exercise",
+      "module": "pairing",
+      "lesson": "pairing-kitaev",
+      "title": "体判据与边界证据要一起看",
+      "prompt": "取 Kitaev 链 t=1、Δ=0.6、μ=0.5；比较体谱、开放边界和有限尺寸效应。",
+      "steps": [
+        {
+          "prompt": "在 k=0 与 π，Δ(k)=2iΔ sin k 等于多少？",
+          "hint": "正弦在这两个点为零。",
+          "choices": [
+            "0",
+            "分别为 ±2Δ",
+            "恒为 Δ"
+          ],
+          "answer": 0,
+          "explanation": "配对在这两个粒子–空穴不变动量消失，闭隙由 ξ 决定。"
+        },
+        {
+          "prompt": "此时 ξ(0)ξ(π)=(−2.5)(1.5) 的符号说明什么？",
+          "hint": "只在有体能隙、Δ≠0 时使用此模型判据。",
+          "choices": [
+            "正号，平庸",
+            "负号，处于非平庸区间",
+            "零，恰在相变点"
+          ],
+          "answer": 1,
+          "explanation": "|μ|=0.5<2t，符号为负，属于该链模型的拓扑区间。"
+        },
+        {
+          "prompt": "有限开放链出现一对近零能量，但不是严格零，应如何理解？",
+          "hint": "两端局域模式可通过有限长度发生杂化。",
+          "choices": [
+            "代码必有错误",
+            "由此直接宣布实验发现 Majorana",
+            "可能是端点杂化，需检查体判据及端点权重"
+          ],
+          "answer": 2,
+          "explanation": "有限长度允许小劈裂；低能谱、空间权重与体判据应联合判断。"
+        },
+        {
+          "prompt": "保持 t=1、Δ=0.6，把 μ 改成 3 后体分类如何？",
+          "hint": "比较 |μ| 与 2t。",
+          "choices": [
+            "平庸区间",
+            "必定仍非平庸",
+            "因为 Δ 非零所以无法分类"
+          ],
+          "answer": 0,
+          "explanation": "|μ|>2t，为此单通道模型的平庸区间；不能仅凭有配对就判拓扑。"
+        }
+      ]
+    },
+    {
+      "id": "shg-tensor-exercise",
+      "module": "shg",
+      "lesson": "shg-tensor",
+      "title": "动态 χ⁽²⁾ 不要误用全置换",
+      "prompt": "考虑 χ_ijk(2ω;ω,ω)，从频率标签推导允许置换，再检查 4mm 与 Oh。",
+      "steps": [
+        {
+          "prompt": "相同的两个输入频率直接保证哪种指标交换？",
+          "hint": "输出频率是 2ω，输入频率是 ω。",
+          "choices": [
+            "任意 i,j,k 全置换",
+            "只交换 j 和 k",
+            "只交换 i 和 j"
+          ],
+          "answer": 1,
+          "explanation": "固有置换作用于同频输入 j、k；本模型没有额外 Kleinman 假设。"
+        },
+        {
+          "prompt": "4mm 中 χ_xxz 与 χ_zxx 必须相等吗？",
+          "hint": "一个交换涉及输出指标。",
+          "choices": [
+            "必须相等",
+            "必须互为相反数",
+            "不必相等，它们是独立系数"
+          ],
+          "answer": 2,
+          "explanation": "4mm 的三个独立系数是 xxz、zxx、zzz。"
+        },
+        {
+          "prompt": "反演对极性三阶 χ 的作用是什么？",
+          "hint": "三个极性矢量指标各带一个负号。",
+          "choices": [
+            "χ→−χ",
+            "χ→χ",
+            "χ→χ*"
+          ],
+          "answer": 0,
+          "explanation": "奇数个负号得到 χ→−χ；若反演属于点群，不变条件迫使 χ=0。"
+        },
+        {
+          "prompt": "Oh 的体电偶极 SHG 为零，是否说明真实样品绝不产生 SHG？",
+          "hint": "当前模型没有表面和高阶多极贡献。",
+          "choices": [
+            "是，任何条件都零",
+            "否，还需考虑表面与多极等过程",
+            "只有把入射角设90°才可能非零"
+          ],
+          "answer": 1,
+          "explanation": "体电偶极禁戒不能排除模型外的 SHG 来源。"
+        }
+      ]
+    },
+    {
+      "id": "shg-geometry-exercise",
+      "module": "shg",
+      "lesson": "shg-geometry",
+      "title": "手算 GaAs (001) 的相对强度",
+      "prompt": "沿本站约定取 a=χ_xyz=1，θ=45°、φ=45°，使用共同强度单位。",
+      "steps": [
+        {
+          "prompt": "PS 通道的含义是什么？",
+          "hint": "本站第一字母为入射，第二字母为分析器。",
+          "choices": [
+            "S 入射、P 出射",
+            "两个光子分别 P 和 S",
+            "P 入射、S 出射"
+          ],
+          "answer": 2,
+          "explanation": "通道是输入与输出偏振标签，不是两个输入光子的独立偏振。"
+        },
+        {
+          "prompt": "A_PP=−cos²θ sinθ sin2φ 在此处等于多少？",
+          "hint": "cos²45°=1/2，sin45°=1/√2，sin90°=1。",
+          "choices": [
+            "−1/(2√2)",
+            "−1/2",
+            "−1"
+          ],
+          "answer": 0,
+          "explanation": "三项相乘给出 −1/(2√2)。"
+        },
+        {
+          "prompt": "对应的 I_PP=|A_PP|² 是多少？",
+          "hint": "先求振幅，再取模平方。",
+          "choices": [
+            "1/4",
+            "1/8",
+            "1/2"
+          ],
+          "answer": 1,
+          "explanation": "相对强度为 1/8；它不是已经校准的绝对光功率。"
+        },
+        {
+          "prompt": "所有 χ 同时乘 3 后，相对强度怎样变化？",
+          "hint": "振幅线性依赖 χ，强度为模平方。",
+          "choices": [
+            "不变，因为图总会归一化",
+            "乘 3",
+            "乘 9"
+          ],
+          "answer": 2,
+          "explanation": "当前模块保留共同单位而不逐通道归一化，因此平方缩放可以直接检验。"
+        }
+      ]
+    },
+    {
+      "id": "shg-inference-exercise",
+      "module": "shg",
+      "lesson": "shg-inference",
+      "title": "反向题：同一张图不只有一个解释",
+      "prompt": "观察一幅角度强度图，逐步判断哪些结论由数据支持，哪些还需要额外证据。",
+      "steps": [
+        {
+          "prompt": "χ 与 −χ 计算出的独立强度图是什么关系？",
+          "hint": "对应振幅互为相反数。",
+          "choices": [
+            "完全相同",
+            "处处互为相反数",
+            "一定旋转90°"
+          ],
+          "answer": 0,
+          "explanation": "I=|A|² 对整体变号不敏感，单独强度不能恢复该相位。"
+        },
+        {
+          "prompt": "4mm (001) 理想模型的角谱为常数，能否说明晶体具有连续旋转对称性？",
+          "hint": "有限阶张量可能看不出全部离散点群信息。",
+          "choices": [
+            "能，常数图只能来自连续群",
+            "不能，这个张量与几何不足以区分",
+            "能，只要测量范围是360°"
+          ],
+          "answer": 1,
+          "explanation": "角谱的对称性可能高于晶体完整点群，不能直接等同。"
+        },
+        {
+          "prompt": "GaAs (001) 正入射全通道零，最合理的解释是什么？",
+          "hint": "Td 没有反演，但几何投影可以为零。",
+          "choices": [
+            "GaAs 必定变成 Oh",
+            "所有张量系数被数学强制为零",
+            "当前几何消光，不能独自判断反演"
+          ],
+          "answer": 2,
+          "explanation": "非零允许张量也可能在所选几何中不产生可投影信号。"
+        },
+        {
+          "prompt": "若要区分仅整体 χ 变号的两种候选，哪种新增信息最直接？",
+          "hint": "要区分 A 与 −A，需要对振幅相位敏感。",
+          "choices": [
+            "相位参考或干涉测量",
+            "把同一强度图画得更大",
+            "只把扫描点数翻倍"
+          ],
+          "answer": 0,
+          "explanation": "相位参考可提供强度测量缺少的信息；实际建模仍需处理光学边界条件。"
+        }
+      ]
+    },
+    {
+      "id": "unfold-folding-exercise",
+      "module": "unfold",
+      "lesson": "unfold-folding",
+      "title": "N=4 超胞的动量折叠",
+      "prompt": "一维单轨道链取 a=1，超胞包含 N=4 个原胞，先不引入缺陷。",
+      "steps": [
+        {
+          "prompt": "超胞倒格矢的大小是多少？",
+          "hint": "实空间周期由1增至4。",
+          "choices": [
+            "2π",
+            "π/2",
+            "π/4"
+          ],
+          "answer": 1,
+          "explanation": "G_SC=2π/N=π/2；第一布里渊区宽度等于这个值。"
+        },
+        {
+          "prompt": "原胞 k=3π/4 折回 [−π/4,π/4) 后，K 是多少？",
+          "hint": "可减去整数个 π/2；右端点不在选定半开区间。",
+          "choices": [
+            "3π/4",
+            "π/4",
+            "−π/4"
+          ],
+          "answer": 2,
+          "explanation": "3π/4−2(π/2)=−π/4；±π/4 是同一个物理区边点。"
+        },
+        {
+          "prompt": "完美链画成四条折叠分支，是否说明出现四种新的物理轨道？",
+          "hint": "只是更换计算胞，没有改变 Hamiltonian。",
+          "choices": [
+            "否，是同一物理谱的重新标记",
+            "是，每扩大一次胞就产生新轨道",
+            "是，必定发生结构相变"
+          ],
+          "answer": 0,
+          "explanation": "超胞矩阵的四个胞内轨道来自四个原胞；它们不是新生成的原胞物理轨道。"
+        },
+        {
+          "prompt": "展开后，完美链的合并谱权重应恢复什么？",
+          "hint": "比较 ε₀−2t cos k 的原胞色散。",
+          "choices": [
+            "任意四条等强曲线",
+            "原胞色散及其 Bloch 权重",
+            "与 k 完全无关的能量"
+          ],
+          "answer": 1,
+          "explanation": "展开以谱权重重新组织同一组能量，完美链应恢复原胞谱。"
+        }
+      ]
+    },
+    {
+      "id": "unfold-projection-exercise",
+      "module": "unfold",
+      "lesson": "unfold-projection",
+      "title": "两站点投影与权重守恒",
+      "prompt": "取 N=2、K=0，归一化态 c=(1,1)/√2，投影因子为 exp(−ikj)/√N。",
+      "steps": [
+        {
+          "prompt": "在 k=0，两个站点的投影振幅怎样组合？",
+          "hint": "两项相位相同；要包含外面的 1/√2。",
+          "choices": [
+            "相消为0",
+            "相加为√2，权重为2",
+            "相加为1，权重为1"
+          ],
+          "answer": 2,
+          "explanation": "(1/√2)(1/√2+1/√2)=1，因此 W(0)=1。"
+        },
+        {
+          "prompt": "在 k=π，j=1 的相位为−1，此时 W(π) 是多少？",
+          "hint": "两个等大项相消。",
+          "choices": [
+            "0",
+            "1/2",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "均匀态在交替动量方向的投影为零。"
+        },
+        {
+          "prompt": "保持 |c₀|²=|c₁|²=1/2，把 c₁ 改为负号，会怎样？",
+          "hint": "实空间概率不变，但相对相位改变。",
+          "choices": [
+            "权重不变",
+            "W(0)与W(π)交换",
+            "本征态必定不归一"
+          ],
+          "answer": 1,
+          "explanation": "相位决定动量投影；仅有逐站点概率或本征值无法重建展开权重。"
+        },
+        {
+          "prompt": "若数值算法在简并能量内旋转本征基，哪个量更适合比较？",
+          "hint": "简并子空间投影不依赖内部选基。",
+          "choices": [
+            "任意一个本征矢的权重必须完全相同",
+            "只看本征矢每项正负号",
+            "同一能量子空间的合并谱权重"
+          ],
+          "answer": 2,
+          "explanation": "个别态权重可变，合并谱函数才是该简并子空间的基底不变量。"
+        }
+      ]
+    },
+    {
+      "id": "unfold-defects-exercise",
+      "module": "unfold",
+      "lesson": "unfold-defects",
+      "title": "缺陷谱中的边界与反向推断",
+      "prompt": "先比较 N=4 的周期杂质模型，再看真正删除一个轨道的空位模型。",
+      "steps": [
+        {
+          "prompt": "N=4 超胞中的一个杂质在无限周期计算中表示什么？",
+          "hint": "超胞被 Bloch 周期性重复。",
+          "choices": [
+            "每4个原胞重复的杂质阵列",
+            "严格孤立的一个杂质",
+            "完全随机的无限无序"
+          ],
+          "answer": 0,
+          "explanation": "周期超胞并非无限稀释极限，需要改变胞大小考察缺陷间影响。"
+        },
+        {
+          "prompt": "真正删除一个轨道后 M=3，固定 k 对全部能带的权重和是多少？",
+          "hint": "参考原胞位置仍为 N=4，投影归一采用 1/√N。",
+          "choices": [
+            "1，必须把缺失部分补回来",
+            "3/4",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "Σn W_n(k)=M/N=3/4，缺失谱权重有明确的轨道计数来源。"
+        },
+        {
+          "prompt": "只有 POSCAR 和能带本征值，能否在本工具重建一般展开权重？",
+          "hint": "投影需要复波函数及相位约定。",
+          "choices": [
+            "能，按能量大小自动分配",
+            "能，把所有带设为同样亮度",
+            "不能，需要波函数或等价完备投影信息"
+          ],
+          "answer": 2,
+          "explanation": "能量不包含所需的相位和轨道信息；工具不猜造波函数。"
+        },
+        {
+          "prompt": "二聚化与交替在位势都可能开隙，仅看到开隙应作何判断？",
+          "hint": "多个 Hamiltonian 机制可产生类似现象。",
+          "choices": [
+            "不能唯一判机制，需结构/轨道等额外证据",
+            "必定是二聚化",
+            "必定是一个孤立空位"
+          ],
+          "answer": 0,
+          "explanation": "反向问题需要比较候选模型与额外可观测量，展开谱本身也不是完整 ARPES 强度。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "square-pairing",
+      "module": "pairing",
+      "title": "方格电子模型：从 D₄h 表示到能隙节点",
+      "summary": "在同一正常态色散上切换常数 s、扩展 s、d 与复 d+id，观察节点是否与费米面相交。",
+      "kind": "原创教学模型",
+      "assumption": "单轨道、自旋单态、输入配对幅度；没有自洽配对机制或材料临界温度预测，不直接等同某种铜氧化物。",
+      "preset": "square-d",
+      "links": [
+        [
+          "点群与表示",
+          "#classroom/foundations"
+        ],
+        [
+          "SU(2) 与自旋",
+          "#classroom/continuous"
+        ]
+      ]
+    },
+    {
+      "id": "kitaev-chain",
+      "module": "pairing",
+      "title": "Kitaev 链：体判据与有限端点权重",
+      "summary": "比较 μ=0.5 和 μ=3，观察体能隙、开放链低能谱和两端局域性。",
+      "kind": "可解析模型",
+      "assumption": "无自旋最近邻链，非具体纳米线材料模型；近零能量不等于实验发现 Majorana，有限尺寸可产生端点杂化。",
+      "preset": "kitaev-topological",
+      "links": [
+        [
+          "双群与自旋课堂",
+          "#classroom/spin"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "gaas-shg",
+      "module": "shg",
+      "title": "GaAs：Td 张量与切面依赖",
+      "summary": "连接既有闪锌矿结构、声子与张量案例，比较 (001)/(111) 和四个偏振通道。",
+      "kind": "真实材料对称背景 + 教学参数",
+      "assumption": "采用 Td 允许张量，χ 数值为原创教学值；仅体电偶极几何响应，不含 Fresnel 或实测强度。",
+      "preset": "gaas-001",
+      "links": [
+        [
+          "GaAs 材料结构",
+          "#atlas/materials?material=gaas"
+        ],
+        [
+          "声子与选择定则",
+          "#compute/phonons?material=gaas"
+        ]
+      ]
+    },
+    {
+      "id": "batio3-shg",
+      "module": "shg",
+      "title": "BaTiO₃：铁电 4mm 与复系数干涉",
+      "summary": "沿相变、畴、物性张量路线进入 SHG，比较独立系数和整体反号的可观测后果。",
+      "kind": "真实材料对称背景 + 教学参数",
+      "assumption": "四方 4mm 相的张量模型，不计算相变温度或真实光学系数；仅整体χ反号的候选在独立强度图中不可区分。",
+      "preset": "batio3-complex",
+      "links": [
+        [
+          "相变与畴",
+          "#compute/phase?material=batio3"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors?preset=tetragonal_4mm"
+        ],
+        [
+          "结构畸变",
+          "#compute/distortion-modes"
+        ]
+      ]
+    },
+    {
+      "id": "si-shg",
+      "module": "shg",
+      "title": "Si 背景：中心对称体与非零表面信号",
+      "summary": "使用 Oh 零张量对照理解体电偶极禁戒，并讨论真实表面信号为何不构成矛盾。",
+      "kind": "真实材料背景 + 对称性对照",
+      "assumption": "金刚石 Si 的体点群背景为 Oh；本预设只验证体电偶极零响应，没有计算硅表面、电四极或实际反射谱。",
+      "preset": "oh-zero",
+      "links": [
+        [
+          "Si 材料结构",
+          "#atlas/materials?material=silicon"
+        ],
+        [
+          "点群图谱",
+          "#atlas/pointgroups"
+        ]
+      ]
+    },
+    {
+      "id": "chain-defect",
+      "module": "unfold",
+      "title": "周期杂质链：平移对称破缺的谱权重",
+      "summary": "逐渐增加杂质势，观察原胞动量权重如何从完美链向多分支分散。",
+      "kind": "原创教学模型",
+      "assumption": "一维单轨道正交基，缺陷每N个原胞重复，不是孤立缺陷或真实掺杂材料的定量预测。",
+      "preset": "chain-impurity",
+      "links": [
+        [
+          "平移与空间群",
+          "#classroom/crystal"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "chain-dimer",
+      "module": "unfold",
+      "title": "二聚化与交替势：相似开隙的不同原因",
+      "summary": "对比两种微观扰动，再用真正删除轨道的空位预设检查谱权重求和规则。",
+      "kind": "可比较教学模型",
+      "assumption": "相似能隙不能唯一判机制；当前展开权重没有光电矩阵元，不等同完整 ARPES 强度。",
+      "preset": "chain-dimerized",
+      "links": [
+        [
+          "结构畸变与模式",
+          "#compute/distortion-modes"
+        ],
+        [
+          "相变与畴",
+          "#compute/phase"
+        ]
+      ]
+    },
+    {
+      "id": "vasp-unfold-workflow",
+      "module": "unfold",
+      "title": "真实 VASP 数据：把波函数留在计算流程里",
+      "summary": "梳理相容原胞/超胞、k路径、波函数输出与展开后处理，先用完美链校验相位和归一。",
+      "kind": "研究工作流程说明",
+      "assumption": "本站当前只计算一维正交轨道预处理 JSON，不直接读取 WAVECAR，也不声称已实现一般三维 VASP 展开。真实任务可参考 easyunfold 本地流程。",
+      "preset": "chain-perfect",
+      "links": [
+        [
+          "晶体空间群课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "结构畸变与相容超胞",
+          "#compute/distortion-modes"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "kwant-bdg",
+      "title": "Kwant：超导体与粒子–空穴自由度",
+      "url": "https://kwant-project.org/doc/latest/tutorial/superconductors"
+    },
+    {
+      "id": "kitaev-paper",
+      "title": "Kitaev：Unpaired Majorana fermions in quantum wires",
+      "url": "https://arxiv.org/abs/cond-mat/0010440"
+    },
+    {
+      "id": "topocondmat",
+      "title": "Topology in condensed matter：Kitaev chain",
+      "url": "https://topocondmat.org/w1-topointro/d-1/"
+    },
+    {
+      "id": "shgpy",
+      "title": "ShgPy：RA-SHG 张量、角度响应与拟合",
+      "url": "https://bfichera.github.io/shgpy/"
+    },
+    {
+      "id": "yambo-angle",
+      "title": "Yambo：Angular dependence of non-linear response",
+      "url": "https://wiki.yambo-code.eu/wiki/index.php?title=Angular_dependence_of_non-linear_response"
+    },
+    {
+      "id": "easyunfold-theory",
+      "title": "easyunfold：波函数投影与谱权重理论",
+      "url": "https://smtg-bham.github.io/easyunfold/theory.html"
+    },
+    {
+      "id": "easyunfold-workflow",
+      "title": "easyunfold：VASP 展开的原胞、超胞与波函数流程",
+      "url": "https://smtg-bham.github.io/easyunfold/tutorial.html"
+    }
+  ]
+}
+

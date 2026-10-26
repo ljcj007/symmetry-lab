@@ -1,0 +1,129 @@
+{
+  "release": "20261026-electronic1",
+  "date": "2026-10-26",
+  "originalContent": true,
+  "sources": [
+    {
+      "id": "kwant-bdg",
+      "title": "Kwant：超导体与粒子–空穴自由度",
+      "url": "https://kwant-project.org/doc/latest/tutorial/superconductors"
+    },
+    {
+      "id": "kitaev-paper",
+      "title": "Kitaev：Unpaired Majorana fermions in quantum wires",
+      "url": "https://arxiv.org/abs/cond-mat/0010440"
+    },
+    {
+      "id": "topocondmat",
+      "title": "Topology in condensed matter：Kitaev chain",
+      "url": "https://topocondmat.org/w1-topointro/d-1/"
+    },
+    {
+      "id": "shgpy",
+      "title": "ShgPy：RA-SHG 张量、角度响应与拟合",
+      "url": "https://bfichera.github.io/shgpy/"
+    },
+    {
+      "id": "yambo-angle",
+      "title": "Yambo：Angular dependence of non-linear response",
+      "url": "https://wiki.yambo-code.eu/wiki/index.php?title=Angular_dependence_of_non-linear_response"
+    },
+    {
+      "id": "easyunfold-theory",
+      "title": "easyunfold：波函数投影与谱权重理论",
+      "url": "https://smtg-bham.github.io/easyunfold/theory.html"
+    },
+    {
+      "id": "easyunfold-workflow",
+      "title": "easyunfold：VASP 展开的原胞、超胞与波函数流程",
+      "url": "https://smtg-bham.github.io/easyunfold/tutorial.html"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF",
+  "files": [
+    {
+      "path": "dist/data/electronic-materials.json",
+      "sha256": "c0ffb0b7a5884fcfff30ac6d8b28afbbca089ee8ce4f333e5e4da68bba75aef8"
+    },
+    {
+      "path": "dist/docs/electronic-materials.md",
+      "sha256": "8629c448587417691b1b4cc8fcf88f7a706154283debd64e6b5bb881435554f5"
+    },
+    {
+      "path": "dist/docs/pairing-lab.md",
+      "sha256": "46c63f9d377395852c8331515237a2c04690c0a9b83cd4273a23d4ff989e360c"
+    },
+    {
+      "path": "dist/docs/shg-lab.md",
+      "sha256": "293ea7da5068c2493a36c5d7e5b330c7f67cf99ab8681297d26aa5990830978c"
+    },
+    {
+      "path": "dist/docs/unfold-lab.md",
+      "sha256": "111764c78ae5af32384b67d7d33fb2cd650b547318228cd92242507e29100934"
+    },
+    {
+      "path": "dist/electronic-materials-ui.js",
+      "sha256": "029ac29d3009b9626d7186a4ced1a058ce76d1d217793d40e674c3a498a073f8"
+    },
+    {
+      "path": "dist/electronic-materials.css",
+      "sha256": "0f817139a4fd9c83289b6801f688220537d7d16e408ae3558ade5d0f0dead7f2"
+    },
+    {
+      "path": "dist/examples/pairing-kitaev-endstates.json",
+      "sha256": "476054790d6930d0558b729d6aed8ef8c0d67d01f6b58054b357bf84cdbfec04"
+    },
+    {
+      "path": "dist/examples/pairing-square-chiral.json",
+      "sha256": "81d5323d7d566f6ed4b8463fe3c94bec7d845921902763d6ca714bbc3acbfcc0"
+    },
+    {
+      "path": "dist/examples/pairing-square-d.json",
+      "sha256": "21bde1ae792b1925e100ea8cdf6f20057ba393ce24e4a218184963cb82d0ee05"
+    },
+    {
+      "path": "dist/examples/shg-batio3-complex.json",
+      "sha256": "5de1a44d0ce24d325f8019c3155f9d85dd65bde206115d352fb1c555816062ec"
+    },
+    {
+      "path": "dist/examples/shg-centrosymmetric-zero.json",
+      "sha256": "ef7bae8c2ef7286f6e1eb9560c9551bd87eeb8225d8e23a6af44903eb02b75f2"
+    },
+    {
+      "path": "dist/examples/shg-gaas-001.json",
+      "sha256": "cbe874ed3909da365c3fb935127b28447db70a946c2eb2d0abf6595415200935"
+    },
+    {
+      "path": "dist/examples/unfold-dimerized.json",
+      "sha256": "f375c37e92aceee56c42a2d7d50940448a9f96b73b7e2b629ac85ba601bb43ca"
+    },
+    {
+      "path": "dist/examples/unfold-import.json",
+      "sha256": "8d97e1167b5c142401a6e75d4be6397d1971a85b7e004fa91ea0f0c8b604a99f"
+    },
+    {
+      "path": "dist/examples/unfold-impurity.json",
+      "sha256": "7664905eb07448d0f11c345adf7c4b76b44072db1f12a1cb602832a9f07a211d"
+    },
+    {
+      "path": "dist/examples/unfold-perfect.json",
+      "sha256": "5128d138d5764ac33d8c9ff0b5c402a340521688827906dba4ef78bda3055363"
+    },
+    {
+      "path": "dist/examples/unfold-vacancy.json",
+      "sha256": "5794e5b1f2a501f657f60ead882479eee74c9648360ce609e3083852a107eeca"
+    },
+    {
+      "path": "dist/python/pairing_lab.py",
+      "sha256": "0d94a0b33c9d896c47bb5d21fa529f9a7dfeada0bb160635d4e4d8cbfbce7df1"
+    },
+    {
+      "path": "dist/python/shg_lab.py",
+      "sha256": "f74d0ed08914be082012cdbc59f3571b4654760bcb72fe5488c781b20511940f"
+    },
+    {
+      "path": "dist/python/unfold_lab.py",
+      "sha256": "1f80fb03bd5d446d270d4a70ce80ca01b630a78ad3fc9ac1c82bb97fa55b6d77"
+    }
+  ]
+}

@@ -489,6 +489,45 @@
         "Exact invariant subspaces for equilibrium dielectric, elastic, piezoelectric and magnetoelectric tensors; Cartesian orthogonal generators, chosen numeric coefficients and orientation; no transport Onsager or complete group classification."
       ],
       "sha256": "41059b1cddf48262a2830d182e46fbc608d8f32a23036f93fb602c195fec015a"
+    },
+    {
+      "path": "dist/python/pairing_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Given-gap square-lattice singlet 4x4 BdG, analytic nodes and Kitaev chain bulk/open spectra"
+      ],
+      "limitations": [
+        "No self-consistent Tc or material pairing prediction"
+      ],
+      "sha256": "0d94a0b33c9d896c47bb5d21fa529f9a7dfeada0bb160635d4e4d8cbfbce7df1"
+    },
+    {
+      "path": "dist/python/shg_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Td/4mm/Oh degenerate SHG tensor constraints and Cartesian RA-SHG geometry"
+      ],
+      "limitations": [
+        "Relative bulk electric-dipole response; no Fresnel, surface, multipole or absolute intensity prediction"
+      ],
+      "sha256": "f74d0ed08914be082012cdbc59f3571b4654760bcb72fe5488c781b20511940f"
+    },
+    {
+      "path": "dist/python/unfold_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "1D orthogonal-orbital supercell unfolding with complete eigenstates and independent sum rules"
+      ],
+      "limitations": [
+        "No direct WAVECAR or generic 3D plane-wave unfolding; energies alone are insufficient"
+      ],
+      "sha256": "1f80fb03bd5d446d270d4a70ce80ca01b630a78ad3fc9ac1c82bb97fa55b6d77"
     }
   ],
   "coordinate_conventions": {

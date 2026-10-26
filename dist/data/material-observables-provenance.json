@@ -67,8 +67,8 @@
       "sha256": "f0b05baa6cb8ef0b407cf9c2f307dc2add2d563d2294a794f6f21daed0b60dc3"
     },
     "dist/observables-ui.js": {
-      "bytes": 25247,
-      "sha256": "44868a4c344befec5cb694e7ce47cc4f425c09a3f09dbfae534f3a92098b80ee"
+      "bytes": 25348,
+      "sha256": "59c02f639543424c4fbd73f419e295ffc0539c15dff7ec19dd2dce208e6fdcf9"
     },
     "dist/observables.css": {
       "bytes": 5056,
@@ -83,32 +83,32 @@
       "sha256": "41059b1cddf48262a2830d182e46fbc608d8f32a23036f93fb602c195fec015a"
     },
     "dist/python/browser_api.py": {
-      "bytes": 4172,
-      "sha256": "d6e62f99f701144be64e540c4a359eef0e35b460a430961a9e7a81293006d771"
+      "bytes": 5708,
+      "sha256": "abefdb17b3f19a1b78ba5931b839438bd19186130df1b6e6a8e6c6efecfcb05f"
     },
     "dist/python-worker.js": {
-      "bytes": 8207,
-      "sha256": "a0166f1c80eada410e7600d21fd5ee601ef54dfd37bedd6e4e8dfe7e1d37ee6c"
+      "bytes": 8812,
+      "sha256": "f7a519c0c2331d80e9ab68bae89e7d060eedb6e4c8da50bfdd34650f06f1f863"
     },
     "dist/classroom-ui.js": {
-      "bytes": 10250,
-      "sha256": "a8adefb7c097f588bd1dd4f365378371d21f41338579f16a3ee3f6d6b8653981"
+      "bytes": 14982,
+      "sha256": "ec8a3c5a44491cca452f1249ded19151a8173755cf7267ca00e3f163c9577008"
     },
     "dist/navigation-ui.js": {
-      "bytes": 14042,
-      "sha256": "d71b4f41e7c632d1b8539d3a15118f756f3e33384ea9e1f8947449fb3fbe07e8"
+      "bytes": 19616,
+      "sha256": "7d961cf004d8169f0fc0c1abdf4a7caa929ddae672602312b598ee3fdb0dd6d7"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 77286,
-      "sha256": "86110fa722b7440d38efd8c449fef8baa07103d8e5f9244e9a05d43172b8693d"
+      "bytes": 77546,
+      "sha256": "4879e2b940b98cbf60db4b5ee12020c25f7112e996c87bcf7f693601a3f1bd77"
     },
     "dist/app.js": {
-      "bytes": 68068,
-      "sha256": "758641d8f8bad97664f9c91edc3eaf06dad18a938bd81ee1e9910fe4ca500bfa"
+      "bytes": 74949,
+      "sha256": "2e73a7989b3bcfa663bad7bff857c21d12d87ee0a0c80f9d2badd4ec478895f6"
     },
     "dist/index.html": {
-      "bytes": 3544,
-      "sha256": "bbc0ffbf048586d37f3c06cd9f3002ed7fe24adb1b5379e707c53330b73fa89f"
+      "bytes": 3856,
+      "sha256": "a3002d8084303880ea0de0ae516b22f217f2035500904fba3ebe5b5b8c018384"
     },
     "dist/docs/material-observables.md": {
       "bytes": 4814,
@@ -131,20 +131,20 @@
       "sha256": "0e0aadcca7d4a16642fa99f626a7c168736b506420fc794062bc47ca20c8d15a"
     },
     "scripts/test-python-api.py": {
-      "bytes": 30046,
-      "sha256": "396ca1d67f6d168d45a6b117770316aadbf737cbee21e8d49899c2abdd941f50"
+      "bytes": 33245,
+      "sha256": "4ad8475c524850342195dedffd0d268efb22b7e6db648c252fb6dba10f4c8866"
     },
     "scripts/test-classroom-ui.mjs": {
-      "bytes": 7065,
-      "sha256": "71bab4b00fde64b64cf3d53fffe04391f9897a039082d244b852600655567117"
+      "bytes": 7952,
+      "sha256": "70d3d1ccd7847894932ee501e9b6b10c8eca7256109c05c43239b8e852f53228"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2664,
       "sha256": "9b6cfe60116aaaea95d611003eef4801c613876f0e44bb67cd1cd07d2a9b261d"
     },
     "package.json": {
-      "bytes": 3266,
-      "sha256": "c78d9e3d713e59b8d378757b4b6e5879a8762f5a6da96363ec706aac582c5ccc"
+      "bytes": 5319,
+      "sha256": "9d539b0706a1545018608c3c1ab4b25e932161d3e52fc9fdcf787391fe25a979"
     }
   }
 }

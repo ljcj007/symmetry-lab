@@ -1,4 +1,4 @@
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261026-coupled1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261026-electronic1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');

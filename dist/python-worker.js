@@ -1,7 +1,8 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261026-coupled1';
+const BUILD = '20261026-electronic1';
 const plans = {
+  pairing_lab: ['pairing_lab'], shg_lab: ['shg_lab'], unfold_lab: ['unfold_lab'],
   distortion_lab: ['distortion_lab'], magnon_lab: ['magnon_lab'],
   qha_lab: ['phonopy_import', 'phonon_thermo', 'qha_lab'],
   phonon_modes: ['spglib_runtime', 'phonopy_import', 'phonon_spectra', 'phonon_modes'],

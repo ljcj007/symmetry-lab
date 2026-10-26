@@ -1,0 +1,10 @@
+{
+  "action": "pairing_lab",
+  "model": "square_singlet",
+  "hopping": 1,
+  "chemical_potential": 0,
+  "gap": 0.4,
+  "pairing": "d+id",
+  "grid": 41,
+  "path_samples": 61
+}

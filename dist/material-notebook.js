@@ -1,9 +1,9 @@
 // Browser-local, explicit research records. No network or automatic upload.
 export const NOTEBOOK_VERSION=1;
-export const RELEASE='20261026-coupled1';
+export const RELEASE='20261026-electronic1';
 export const MAX_PROJECT_BYTES=32*1024*1024;
-const ACTIONS=new Set('analyze induce product match_bands magnetictb crystkit symbolic carat crystkit_ext carat_integral integral_normalizer symbolic_interfaces arithmetic_centralizer symbolic_spacegroups structure_bc standard_labels teaching_labs phonons tensors phase diffraction phonopy phonon_modes band_connectivity phonon_thermo distortion_lab magnon_lab qha_lab'.split(' '));
-const PROGRESS=['pointgroups.progress','academy.progress','academy.derivations','lie.progress','lie.derivations','observables.progress','structure-dynamics.progress','material-research.progress','coupled-materials.progress'].map(x=>'symmetry-lab.'+x+'.v1');
+const ACTIONS=new Set('analyze induce product match_bands magnetictb crystkit symbolic carat crystkit_ext carat_integral integral_normalizer symbolic_interfaces arithmetic_centralizer symbolic_spacegroups structure_bc standard_labels teaching_labs phonons tensors phase diffraction phonopy phonon_modes band_connectivity phonon_thermo distortion_lab magnon_lab qha_lab pairing_lab shg_lab unfold_lab'.split(' '));
+const PROGRESS=['pointgroups.progress','academy.progress','academy.derivations','lie.progress','lie.derivations','observables.progress','structure-dynamics.progress','material-research.progress','coupled-materials.progress','electronic-materials.progress'].map(x=>'symmetry-lab.'+x+'.v1');
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const uid=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
