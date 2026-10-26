@@ -16,6 +16,19 @@ def invoke(tool, payload):
 
 
 class PublicAPITests(unittest.TestCase):
+    def test_phonon_public_api(self):
+        result = self.result('phonons', {'preset': 'nacl', 'channel': 'ir', 'mode': 'sum'})
+        self.assertEqual(result['formulas']['optical'], 'T1u')
+        self.assertEqual(result['dimensions']['mechanical'], 6)
+        self.assertAlmostEqual(result['polarization']['intensity'], 1)
+        self.assertFalse(result['spectrum']['predictedFrequency'])
+
+    def test_property_tensor_public_api(self):
+        result = self.result('tensors', {'preset': 'zincblende_td', 'tensor': 'piezoelectric',
+                                      'strain': [0, 0, 0, 1, 0, 0], 'parameters': {'a1': 2}})
+        self.assertEqual(result['independent_count'], 1)
+        self.assertEqual(result['response']['output'], [2, 0, 0])
+
     def result(self, tool, payload):
         process = invoke(tool, payload)
         self.assertEqual(process.returncode, 0, process.stderr)

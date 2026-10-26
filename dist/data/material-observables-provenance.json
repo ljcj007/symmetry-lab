@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-10-26",
+  "build": "20261026-materials1",
+  "sources": [
+    {
+      "id": "bcs-sam",
+      "title": "Bilbao：SAM 官方帮助",
+      "url": "https://cryst.ehu.es/rep/sam_help.html",
+      "note": "机械表示、Γ 点对称适配模式和 IR/Raman 活性分类的方法依据。本文的算例、题目和推导为原创。"
+    },
+    {
+      "id": "iucr-tensors",
+      "title": "IUCr：An Introduction to Crystal Physics，Ervin Hartmann",
+      "url": "https://www.iucr.org/__data/assets/pdf_file/0003/14790/18.pdf",
+      "note": "§2–4 区分张量变换、本征指标对称性与晶体对称性；平衡响应和输运响应的适用条件不同。"
+    },
+    {
+      "id": "bcs-mtensor",
+      "title": "Bilbao：MTENSOR 官方帮助",
+      "url": "https://www.cryst.ehu.es/cryst/mtensor_help.html",
+      "note": "磁点群约束张量的背景资料；本课堂独立用极性、轴性和时间反演奇偶推导静态线性磁电响应。"
+    },
+    {
+      "id": "iucr-spin-tensors",
+      "title": "Etxebarria 等：Crystal tensor properties of magnetic materials with and without spin–orbit coupling (2025)",
+      "url": "https://journals.iucr.org/a/issues/2025/04/00/cam5007/",
+      "note": "用于说明磁点群与忽略自旋轨道耦合时的自旋点群约束具有不同适用范围。这里的练习只指定磁点群，不替真实磁性材料判定磁序。"
+    },
+    {
+      "id": "aflow-silicon",
+      "title": "AFLOW：Diamond (A4) 结构原型",
+      "url": "https://aflow.org/p/A_cF8_227_a-001/",
+      "note": "核验 Si 金刚石结构、No.227 和两原子原胞。"
+    },
+    {
+      "id": "aflow-gaas",
+      "title": "AFLOW：Zincblende (B3) 结构原型",
+      "url": "https://aflow.org/p/AB_cF8_216_a_c-001/",
+      "note": "核验 GaAs 闪锌矿结构、No.216 和不同化学占位造成的反演缺失。"
+    },
+    {
+      "id": "aflow-nacl",
+      "title": "AFLOW：Rock Salt/Halite (NaCl, B1) 结构原型",
+      "url": "https://aflow.org/p/AB_cF8_225_a_b-001/",
+      "note": "核验 NaCl 岩盐结构、No.225 与两套 fcc 子晶格。"
+    }
+  ],
+  "validation": {
+    "lessonCount": 8,
+    "exerciseCount": 8,
+    "stepCount": 32,
+    "caseCount": 3,
+    "phononTests": 11,
+    "tensorTests": 25,
+    "contentTests": 9,
+    "publicAPITests": 33
+  },
+  "scope": [
+    "声子模块研究 Γ 点的对称适配位移和一阶光学选择定则；它不从对称性计算力常数、声子频率或真实光谱强度。",
+    "张量模块求给定点群约束下的静态平衡响应形式；允许的分量可以在具体材料中因微观原因恰好为零。",
+    "Si、GaAs 和 NaCl 采用材料图谱中的理想立方结构。动画振幅、谱线中心和线宽均为演示参数，不是实验或第一性原理数据。"
+  ],
+  "files": {
+    "dist/data/material-observables.json": {
+      "bytes": 38288,
+      "sha256": "f0b05baa6cb8ef0b407cf9c2f307dc2add2d563d2294a794f6f21daed0b60dc3"
+    },
+    "dist/observables-ui.js": {
+      "bytes": 25247,
+      "sha256": "44868a4c344befec5cb694e7ce47cc4f425c09a3f09dbfae534f3a92098b80ee"
+    },
+    "dist/observables.css": {
+      "bytes": 5056,
+      "sha256": "7990b198b8fcd20dda6c0d8bddab0cdc0842b0f15960140f798df57e41148b8b"
+    },
+    "dist/python/phonon_spectra.py": {
+      "bytes": 18790,
+      "sha256": "65f943ce20ad9683527324a417a5dd803fe32821373a059cf9d3522d9806469c"
+    },
+    "dist/python/property_tensors.py": {
+      "bytes": 21194,
+      "sha256": "41059b1cddf48262a2830d182e46fbc608d8f32a23036f93fb602c195fec015a"
+    },
+    "dist/python/browser_api.py": {
+      "bytes": 4172,
+      "sha256": "d6e62f99f701144be64e540c4a359eef0e35b460a430961a9e7a81293006d771"
+    },
+    "dist/python-worker.js": {
+      "bytes": 8207,
+      "sha256": "a0166f1c80eada410e7600d21fd5ee601ef54dfd37bedd6e4e8dfe7e1d37ee6c"
+    },
+    "dist/classroom-ui.js": {
+      "bytes": 10250,
+      "sha256": "a8adefb7c097f588bd1dd4f365378371d21f41338579f16a3ee3f6d6b8653981"
+    },
+    "dist/navigation-ui.js": {
+      "bytes": 14042,
+      "sha256": "d71b4f41e7c632d1b8539d3a15118f756f3e33384ea9e1f8947449fb3fbe07e8"
+    },
+    "dist/symmetry-course-ui.js": {
+      "bytes": 77286,
+      "sha256": "86110fa722b7440d38efd8c449fef8baa07103d8e5f9244e9a05d43172b8693d"
+    },
+    "dist/app.js": {
+      "bytes": 68068,
+      "sha256": "758641d8f8bad97664f9c91edc3eaf06dad18a938bd81ee1e9910fe4ca500bfa"
+    },
+    "dist/index.html": {
+      "bytes": 3544,
+      "sha256": "bbc0ffbf048586d37f3c06cd9f3002ed7fe24adb1b5379e707c53330b73fa89f"
+    },
+    "dist/docs/material-observables.md": {
+      "bytes": 4814,
+      "sha256": "461e585b2ec9b9dd5426a141eea2ce3cfd1a8cc8a32042caa3a53567728a9517"
+    },
+    "scripts/test-python-phonon-spectra.py": {
+      "bytes": 9267,
+      "sha256": "311fda6c73dd5415b0f07fcfa3e54c3cb3c20aeb1f9b0b718b7e9c2f31679a0d"
+    },
+    "scripts/test-python-property-tensors.py": {
+      "bytes": 9819,
+      "sha256": "6859701254a252c82eee9c5aaca5b9822a64322966982991e3e2bdd099316168"
+    },
+    "scripts/test-material-observables.py": {
+      "bytes": 10596,
+      "sha256": "aa619a2d8d9d5ed7c3bbe4bdd08e52146965fa5878a3d55f6dd9faf00234d3f4"
+    },
+    "scripts/test-observables-ui.mjs": {
+      "bytes": 11366,
+      "sha256": "0e0aadcca7d4a16642fa99f626a7c168736b506420fc794062bc47ca20c8d15a"
+    },
+    "scripts/test-python-api.py": {
+      "bytes": 30046,
+      "sha256": "396ca1d67f6d168d45a6b117770316aadbf737cbee21e8d49899c2abdd941f50"
+    },
+    "scripts/test-classroom-ui.mjs": {
+      "bytes": 7065,
+      "sha256": "71bab4b00fde64b64cf3d53fffe04391f9897a039082d244b852600655567117"
+    },
+    "scripts/test-navigation-ui.mjs": {
+      "bytes": 2664,
+      "sha256": "9b6cfe60116aaaea95d611003eef4801c613876f0e44bb67cd1cd07d2a9b261d"
+    },
+    "package.json": {
+      "bytes": 3266,
+      "sha256": "c78d9e3d713e59b8d378757b4b6e5879a8762f5a6da96363ec706aac582c5ccc"
+    }
+  }
+}

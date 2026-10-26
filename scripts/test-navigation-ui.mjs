@@ -4,9 +4,9 @@ const saved=new Map();
 globalThis.localStorage={getItem:key=>saved.get(key)||null,setItem:(key,value)=>saved.set(key,value)};
 const {toolGroups,toolsIndex,knownTool,searchEntries,favoriteRoutes,toggleFavorite,rememberRoute}=await import('../dist/navigation-ui.js');
 const {parseClassroomRoute,buildClassroomHash}=await import('../dist/classroom-ui.js');
-assert.equal(toolGroups.length,5);
+assert.equal(toolGroups.length,6);
 assert.equal(new Set(toolsIndex.map(t=>t.route)).size,toolsIndex.length);
-for(const route of ['workbench','structure','products','bands','magnetictb','crystkit'])assert.ok(knownTool(route),route);
+for(const route of ['workbench','structure','products','bands','magnetictb','crystkit','compute/phonons','compute/tensors'])assert.ok(knownTool(route),route);
 for(const name of ['carat','carat_integral','integral_normalizer','arithmetic_centralizer','symbolic','symbolic_interfaces','symbolic_spacegroups','crystkit_ext'])assert.ok(knownTool('compute/advanced/'+name),name);
 const names=fs.readFileSync(new URL('../dist/lie-physics-ui.js',import.meta.url),'utf8');
 for(const t of toolsIndex.filter(t=>t.route.startsWith('compute/lie/'))){

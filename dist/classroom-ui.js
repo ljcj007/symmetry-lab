@@ -1,13 +1,15 @@
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261026-redesign1';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261026-redesign1';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261026-redesign1';
+import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261026-materials1';
+import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261026-materials1';
+import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261026-materials1';
+import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261026-materials1';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
-export const classroomSections=[{id:'pointgroups',slug:'pointgroups',title:'基础与点群'},{id:'academy',slug:'crystal',title:'晶体对称与内部自由度'},{id:'lie',slug:'lie',title:'连续群与表示'}];
+export const classroomSections=[{id:'pointgroups',slug:'pointgroups',title:'基础与点群'},{id:'academy',slug:'crystal',title:'晶体对称与内部自由度'},{id:'lie',slug:'lie',title:'连续群与表示'},{id:'observables',slug:'observables',title:'材料物性与光谱'}];
 export const classroomPathways=[
   {id:'foundations',section:'pointgroups',title:'基础与表示',summary:'从对称操作、群与特征标开始，建立读懂表示的语言。',level:'入门',prerequisite:'向量与矩阵基础',links:[['32 点群与特征标',''],['对称操作演示','tab=lab'],['概念练习','tab=quiz']]},
   {id:'crystal',section:'academy',track:'space',title:'晶体对称',summary:'把点群推广到三维周期结构，理解平移、螺旋轴和滑移面。',level:'基础 → 进阶',prerequisite:'点群与表示',links:[['空间群与 Bloch 相位','track=space'],['Seitz 操作实验','tab=lab&experiment=seitz'],['典型材料与三维结构','tab=materials']]},
+  {id:'observables',section:'observables',title:'材料物性与光谱',summary:'从原胞振动、选择定则到物性张量，用材料案例检验对称性的预测。',level:'基础 → 应用',prerequisite:'点群、特征标与矩阵',links:[['晶体振动与光谱','lesson=mechanical-modes'],['物性张量与响应','lesson=neumann'],['交互实验','tab=lab'],['分步练习','tab=derive'],['材料案例','tab=cases']]},
   {id:'spin',section:'academy',track:'double',title:'自旋与扩展对称',summary:'区分旋量双覆盖、时间反演、颜色置换与独立自旋转动。',level:'进阶',prerequisite:'点群、空间群与线性代数',links:[['双群与旋量','track=double'],['磁群与共表示','track=magnetic'],['色群与标签置换','track=color'],['自旋点群与空间群','track=spin']]},
   {id:'continuous',section:'lie',track:'continuous',title:'连续群与物理',summary:'认识 SU(2)、SU(3) 的生成元、权图以及量子态的连续变换。',level:'基础 → 进阶',prerequisite:'复数、矩阵与量子态',links:[['生成元与物理应用','track=continuous'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['SU(3) 与权图','tab=lab&experiment=su3']]},
   {id:'coupling',section:'lie',track:'coupling',title:'张量积与重耦合',summary:'从表示分解走到 CG 换基、Racah（6j）与四体 9j 系数。',level:'进阶 → 专题',prerequisite:'表示、张量积与 SU(2)/SU(3)',links:[['表示与直积分解','track=representations'],['CG 系数与换基','track=cg'],['Racah（6j）','track=racah'],['四体重耦合（9j）','track=ninej']]}
@@ -19,7 +21,8 @@ export function parseClassroomRoute(route){
   if(typeof route!=='string')return null;
   const [path,query='']=route.replace(/^#/,'').split('?'),params=new URLSearchParams(query);
   let result;
-  if(path.startsWith('compute/lie/')){const experiment=path.slice('compute/lie/'.length);if(!/^[a-z][a-z0-9_]*$/.test(experiment))return null;result={section:'lie',pathway:'coupling',tab:'lab',experiment,calculationOnly:true};}
+  if(['compute/phonons','compute/tensors'].includes(path))result={section:'observables',pathway:'observables',tab:'lab',experiment:path.slice(8),calculationOnly:true};
+  else if(path.startsWith('compute/lie/')){const experiment=path.slice('compute/lie/'.length);if(!/^[a-z][a-z0-9_]*$/.test(experiment))return null;result={section:'lie',pathway:'coupling',tab:'lab',experiment,calculationOnly:true};}
   else if(path==='classroom')result={section:'overview',pathway:'overview'};
   else {
     const slug=path.startsWith('classroom/')?path.slice(10):path;
@@ -28,11 +31,12 @@ export function parseClassroomRoute(route){
   }
   for(const field of queryFields){const value=params.get(field);if(value!==null&&value.length<=160)result[field]=value;}
   if(result.calculationOnly)result.tab='lab';
+  if(['compute/phonons','compute/tensors'].includes(path))result.experiment=path.slice(8);
   return result;
 }
 export function buildClassroomHash(selection={}){
   const pathway=selection.pathway||({pointgroups:'foundations',academy:'crystal',lie:'continuous'}[selection.section])||'overview';
-  const path=selection.calculationOnly?'compute/lie/'+encodeURIComponent(selection.experiment||'su3_cg'):pathway==='overview'?'classroom':'classroom/'+pathway;
+  const path=selection.calculationOnly?(selection.section==='observables'?'compute/'+(selection.experiment==='tensors'?'tensors':'phonons'):'compute/lie/'+encodeURIComponent(selection.experiment||'su3_cg')):pathway==='overview'?'classroom':'classroom/'+pathway;
   const params=new URLSearchParams();
   for(const key of queryFields)if(selection[key]!==undefined&&selection[key]!==null&&selection[key]!==''&&!(selection.calculationOnly&&(key==='tab'||key==='experiment')))params.set(key,String(selection[key]));
   return '#'+path+(params.size?'?'+params.toString():'');
@@ -42,8 +46,8 @@ export function resolveClassroomRoute(route,last='pointgroups'){
   return parseClassroomRoute(route)?.section||null;
 }
 export const classroomHash=section=>'#classroom/'+(classroomSections.find(item=>item.id===section)||classroomSections[0]).slug;
-const renderers={pointgroups:renderPointgroupView,academy:renderSymmetryCourseView,lie:renderLieGroupView};
-const results={pointgroups:getPointgroupResult,academy:getSymmetryCourseResult,lie:getLieGroupResult};
+const renderers={pointgroups:renderPointgroupView,academy:renderSymmetryCourseView,lie:renderLieGroupView,observables:renderObservablesView};
+const results={pointgroups:getPointgroupResult,academy:getSymmetryCourseResult,lie:getLieGroupResult,observables:getObservablesResult};
 export function getClassroomResult(section){const course=results[section]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
 
 export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,courseRenderers=renderers}){
@@ -60,7 +64,7 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   root.querySelectorAll('[data-course-route]').forEach(link=>link.onclick=event=>{event?.preventDefault();move(link.dataset.courseRoute);});
   onLocation(overview?'学习中心':selection.calculationOnly?'计算中心 / 张量积与重耦合':'学习中心 / '+(pathway?.title||'课程'));
   if(overview)return;
-  const update=patch=>{if(!current())return;selection={...selection,...patch};if(patch.tab&&patch.tab!=='derive')delete selection.exercise;if(patch.tab&&patch.tab!=='materials')delete selection.material;move(buildClassroomHash(selection),{render:false});};
+  const update=patch=>{if(!current())return;selection={...selection,...patch};if(patch.tab&&patch.tab!=='derive')delete selection.exercise;if(patch.tab&&patch.tab!=='materials'&&section!=='observables')delete selection.material;move(buildClassroomHash(selection),{render:false});};
   return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,cancelRun,toast,download,selection,onNavigate:update,onLocation,
     openGroup:spec=>openGroup?.(typeof spec==='number'?{mode:'sg',id:spec,k:[0,0,0],doubleValued:false}:spec)});
 }

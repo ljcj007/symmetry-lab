@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "release": "2026-10-26",
-  "build": "20261026-redesign1",
+  "build": "20261026-materials1",
   "sources": [
     {
       "id": "dresselhaus2008",
@@ -222,8 +222,8 @@
       "sha256": "ddc0374d79ac10a1d69f4a7b15d1835e97673c6ffcd2399bebf93d152d3045cf"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 76860,
-      "sha256": "034997d0f13519d1156bada8cda939ebadb10f6c0e0e495d7c2415397a0d8435"
+      "bytes": 77286,
+      "sha256": "86110fa722b7440d38efd8c449fef8baa07103d8e5f9244e9a05d43172b8693d"
     },
     "dist/symmetry-course.css": {
       "bytes": 35342,
@@ -234,8 +234,8 @@
       "sha256": "87749a79da15aeb4b831745b8571c47a7bcf268d31c5280a2510c9cae92442f2"
     },
     "dist/python/browser_api.py": {
-      "bytes": 3930,
-      "sha256": "1cb4625c73ce7b4231e79a0776d3e4529919b83340b9f6cf8209396673f89a2b"
+      "bytes": 4172,
+      "sha256": "d6e62f99f701144be64e540c4a359eef0e35b460a430961a9e7a81293006d771"
     },
     "scripts/build-symmetry-course.py": {
       "bytes": 5987,
@@ -266,8 +266,8 @@
       "sha256": "104e2acc7a4388850e3703e9d1515870de915126d992cbd4c0b97cc5a8b16014"
     },
     "scripts/test-python-api.py": {
-      "bytes": 29290,
-      "sha256": "6f9d0b44093e0f97e68c777982bd4526a75eada3c069b40a2629757e61465bf6"
+      "bytes": 30046,
+      "sha256": "396ca1d67f6d168d45a6b117770316aadbf737cbee21e8d49899c2abdd941f50"
     },
     "dist/crystal-viewer.js": {
       "bytes": 8851,
@@ -298,16 +298,16 @@
       "sha256": "2355d6bf389ab71e95d0acc33db68762eb513afd608493c2a72ca07b74ab49a6"
     },
     "dist/navigation-ui.js": {
-      "bytes": 13104,
-      "sha256": "7d3583fa6b869659774e47f789d7dab17179939847faa2e34c55a93b09fc40dd"
+      "bytes": 14042,
+      "sha256": "d71b4f41e7c632d1b8539d3a15118f756f3e33384ea9e1f8947449fb3fbe07e8"
     },
     "dist/navigation.css": {
       "bytes": 5826,
       "sha256": "9ad027b27247d98390a4bdab1c074661a5b9544fab4730ec691d11c4c09db267"
     },
     "scripts/test-navigation-ui.mjs": {
-      "bytes": 2628,
-      "sha256": "2fb3ae26d405bb3a7f6a39057ea62bcd329b744d34b0389c92db5239d7a3ea75"
+      "bytes": 2664,
+      "sha256": "9b6cfe60116aaaea95d611003eef4801c613876f0e44bb67cd1cd07d2a9b261d"
     },
     "scripts/fixtures/group-extensions-ui.json": {
       "bytes": 179779,
@@ -360,7 +360,7 @@
     "chemicalParentGroupCrossCheck": "spglib, all six ideal chemical structures",
     "groupExtensionTests": 13,
     "labCount": 7,
-    "publicAPITests": 31
+    "publicAPITests": 33
   },
   "scope": [
     "Original Chinese pedagogical lessons with cited sources",

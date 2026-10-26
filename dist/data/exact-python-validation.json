@@ -4,7 +4,7 @@
   "python": "3.13",
   "sympy": "1.14.0",
   "sources": {
-    "dist/python/browser_api.py": "1cb4625c73ce7b4231e79a0776d3e4529919b83340b9f6cf8209396673f89a2b",
+    "dist/python/browser_api.py": "d6e62f99f701144be64e540c4a359eef0e35b460a430961a9e7a81293006d771",
     "dist/python/carat_browser.py": "fb40c3da3ce777be983fba2f524dcbc85ee346e1fa56aa3c2a58a8ca400904ee",
     "dist/python/carat_integral.py": "66e78a666f51e007a72e048dc740da34b09cecd0cc79a2be20869fd96264d44e",
     "dist/python/cli.py": "4dbe3931e81fa2fd21d44b5cff9562d57eb372a54f37bbd16ba8bd00c59cf32e",
@@ -29,7 +29,9 @@
     "dist/python/su3_cg_exact.py": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2",
     "dist/python/su3_racah.py": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d",
     "dist/python/su3_ninej.py": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57",
-    "dist/python/group_extensions.py": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
+    "dist/python/group_extensions.py": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef",
+    "dist/python/phonon_spectra.py": "65f943ce20ad9683527324a417a5dd803fe32821373a059cf9d3522d9806469c",
+    "dist/python/property_tensors.py": "41059b1cddf48262a2830d182e46fbc608d8f32a23036f93fb602c195fec015a"
   },
   "carat": {
     "qRepresentatives": 8329,
@@ -59,7 +61,7 @@
     "sixDimensionalExampleExtensions": 81
   },
   "publicCLI": {
-    "tests": 31
+    "tests": 33
   },
   "regression": {
     "legacyJavaScript": "passed",
@@ -858,5 +860,18 @@
     "scope": "Selected exact double point and space groups, colored point/periodic motifs, independent spin point/space operations and SOC-lock conditions. No exhaustive classification claim.",
     "implementation": "dist/python/group_extensions.py",
     "tests": "scripts/test-python-group-extensions.py"
+  },
+  "materialObservables": {
+    "date": "2026-10-26",
+    "phononTests": 11,
+    "tensorTests": 25,
+    "contentTests": 9,
+    "tests": [
+      "scripts/test-python-phonon-spectra.py",
+      "scripts/test-python-property-tensors.py",
+      "scripts/test-material-observables.py",
+      "scripts/test-observables-ui.mjs"
+    ],
+    "scope": "Exact character decompositions and invariant tensor constraints; animation, orientations and model spectra use floating-point numbers. No experimental frequency or material-constant prediction."
   }
 }

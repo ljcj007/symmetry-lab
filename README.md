@@ -358,3 +358,12 @@ python scripts/test-spglib-wasm.py
 普通空间群工作台自动显示 BC / Bilbao 标准标签，并在专门的结果页提供候选与匹配证书。`analyze` 输入带 `group_number` 时，JSON 的 `standardLabels` 保留本地编号到标准标签的对应关系；矩阵、CSV 与能带分解的本地引用不会因为命名而改变。
 
 方法、适用输入和可复现构建见 [结构转换](dist/docs/structure-bc.md)、[标准标签](dist/docs/standard-labels.md) 和 [spglib 浏览器内核](dist/docs/spglib-browser.md)。普通 230 空间群转换不处理磁结构、部分占位或无序模型；标准标签范围以打包表和匹配证书为准。
+
+
+### 材料物性与光谱（2026-10-26）
+
+新增共享课堂与计算工具：`#classroom/observables`、`#compute/phonons`、`#compute/tensors`。Si、GaAs、NaCl 案例从材料图谱直接连接原胞振动、光谱选择定则、允许的物性张量与分步练习；沿用五项主导航、现有课堂进度和 18px 正文字号。
+
+- `phonon_spectra.py` 从三种二原子 fcc 原胞的位点置换与笛卡尔旋转计算 Γ 点机械特征标，精确约化声学与光学表示；提供 IR / 一阶非共振 Raman 允许性、相对位移动画及给定偏振几何的相对因子。谱峰位置和线宽是用户假设输入，不是声子频率预测。
+- `property_tensors.py` 用精确生成元约束介电、弹性、压电与线性平衡磁电张量，支持自定义正交笛卡尔矩阵及时间反演。显示独立参数、零元、相等关系与旋转响应。自由参数的数值为演示输入，不推断真实材料常数；不处理耗散输运 Onsager 关系。
+- 课程与案例数据：`dist/data/material-observables.json`；方法、来源与范围：`dist/docs/material-observables.md`。新增测试入口 `npm run test:observables`；完整 JavaScript / Python 回归继续在发布流水线运行。

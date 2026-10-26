@@ -25,8 +25,8 @@ for(const [old,canonical] of [['pointgroups','pointgroups'],['academy','crystal'
 assert.equal(resolveClassroomRoute('classroom','academy'),'academy');
 assert.equal(resolveClassroomRoute('workbench'),null);
 assert.deepEqual(parseClassroomRoute('#classroom'),{section:'overview',pathway:'overview'});
-assert.equal(classroomPathways.length,5);
-for(const route of ['classroom/foundations?tab=lab&lesson=representations&group=2','classroom/spin?track=color&tab=lab&experiment=color_group&preset=translation3_space&lesson=color-space','classroom/crystal?tab=materials&material=nacl','classroom/coupling?tab=derive&track=ninej&exercise=9j-test','compute/lie/su3_ninej?preset=ninej-27-complex']){
+assert.equal(classroomPathways.length,6);
+for(const route of ['classroom/foundations?tab=lab&lesson=representations&group=2','classroom/spin?track=color&tab=lab&experiment=color_group&preset=translation3_space&lesson=color-space','classroom/crystal?tab=materials&material=nacl','classroom/coupling?tab=derive&track=ninej&exercise=9j-test','compute/lie/su3_ninej?preset=ninej-27-complex','classroom/observables?tab=derive&material=si&exercise=phonon-count','compute/phonons?material=si','compute/tensors?material=gaas']){
  const parsed=parseClassroomRoute(route);assert.ok(parsed);assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed,'Route roundtrip preserves context');
 }
 assert.equal(parseClassroomRoute('compute/lie/su3_ninej?tab=learn').tab,'lab');
@@ -34,7 +34,7 @@ assert.equal(parseClassroomRoute('workbench'),null);assert.equal(parseClassroomR
 const c=new Container(),calls=[],opened=[],navigations=[],locations=[];
 const courseRenderers=Object.fromEntries(classroomSections.map(s=>[s.id,options=>calls.push({section:s.id,...options})]));
 const render=route=>renderClassroomView({container:c,route:parseClassroomRoute(route),onNavigate:(hash,options)=>navigations.push({hash,options}),onLocation:value=>locations.push(value),courseRenderers,openGroup:s=>opened.push(s)});
-render('classroom');assert.equal(calls.length,0,'Overview loads no calculation or lesson module');assert.equal(c.firstElementChild.querySelectorAll('.classroom-path-card').length,5);
+render('classroom');assert.equal(calls.length,0,'Overview loads no calculation or lesson module');assert.equal(c.firstElementChild.querySelectorAll('.classroom-path-card').length,6);
 render('classroom/spin?track=spin&tab=lab&lesson=spin-definition&experiment=spin_group&preset=af_space');
 assert.equal(calls.at(-1).section,'academy');assert.equal(calls.at(-1).selection.preset,'af_space');assert.equal(calls.at(-1).selection.lesson,'spin-definition');
 calls.at(-1).openGroup(99);assert.deepEqual(opened[0],{mode:'sg',id:99,k:[0,0,0],doubleValued:false});
@@ -46,4 +46,4 @@ calls.at(-1).onNavigate({experiment:'su3_cg'});assert.equal(parseClassroomRoute(
 const previous=navigations.length;c.isConnected=false;calls.at(-1).onNavigate({tab:'learn'});assert.equal(navigations.length,previous,'Detached course callbacks cannot change the URL');
 assert.ok(locations.some(value=>value.startsWith('计算中心')));
 const index=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.doesNotMatch(index,/data-view="(?:pointgroups|academy)"/,'Legacy modules do not become duplicate main navigation items');
-console.log('Classroom IA: five pathways, legacy routes, deep-link roundtrips, context-preserving local navigation, shared full calculation mode, workbench adapters and detached callbacks passed.');
+console.log('Classroom IA: six pathways, legacy routes, deep-link roundtrips, context-preserving local navigation, shared full calculation mode, workbench adapters and detached callbacks passed.');

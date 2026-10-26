@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "title": "从对称到材料可观测量",
+  "summary": "把原胞位移、光谱选择定则和物性张量连成同一条推导路线。",
+  "scope": [
+    "声子模块研究 Γ 点的对称适配位移和一阶光学选择定则；它不从对称性计算力常数、声子频率或真实光谱强度。",
+    "张量模块求给定点群约束下的静态平衡响应形式；允许的分量可以在具体材料中因微观原因恰好为零。",
+    "Si、GaAs 和 NaCl 采用材料图谱中的理想立方结构。动画振幅、谱线中心和线宽均为演示参数，不是实验或第一性原理数据。"
+  ],
+  "sources": [
+    {"id": "bcs-sam", "title": "Bilbao：SAM 官方帮助", "url": "https://cryst.ehu.es/rep/sam_help.html", "note": "机械表示、Γ 点对称适配模式和 IR/Raman 活性分类的方法依据。本文的算例、题目和推导为原创。"},
+    {"id": "iucr-tensors", "title": "IUCr：An Introduction to Crystal Physics，Ervin Hartmann", "url": "https://www.iucr.org/__data/assets/pdf_file/0003/14790/18.pdf", "note": "§2–4 区分张量变换、本征指标对称性与晶体对称性；平衡响应和输运响应的适用条件不同。"},
+    {"id": "bcs-mtensor", "title": "Bilbao：MTENSOR 官方帮助", "url": "https://www.cryst.ehu.es/cryst/mtensor_help.html", "note": "磁点群约束张量的背景资料；本课堂独立用极性、轴性和时间反演奇偶推导静态线性磁电响应。"},
+    {"id": "iucr-spin-tensors", "title": "Etxebarria 等：Crystal tensor properties of magnetic materials with and without spin–orbit coupling (2025)", "url": "https://journals.iucr.org/a/issues/2025/04/00/cam5007/", "note": "用于说明磁点群与忽略自旋轨道耦合时的自旋点群约束具有不同适用范围。这里的练习只指定磁点群，不替真实磁性材料判定磁序。"},
+    {"id": "aflow-silicon", "title": "AFLOW：Diamond (A4) 结构原型", "url": "https://aflow.org/p/A_cF8_227_a-001/", "note": "核验 Si 金刚石结构、No.227 和两原子原胞。"},
+    {"id": "aflow-gaas", "title": "AFLOW：Zincblende (B3) 结构原型", "url": "https://aflow.org/p/AB_cF8_216_a_c-001/", "note": "核验 GaAs 闪锌矿结构、No.216 和不同化学占位造成的反演缺失。"},
+    {"id": "aflow-nacl", "title": "AFLOW：Rock Salt/Halite (NaCl, B1) 结构原型", "url": "https://aflow.org/p/AB_cF8_225_a_b-001/", "note": "核验 NaCl 岩盐结构、No.225 与两套 fcc 子晶格。"}
+  ],
+  "lessons": [
+    {
+      "id": "mechanical-modes", "title": "01 · 原子怎样组成振动表示？",
+      "summary": "在 Γ 点同时追踪原子置换与位移方向，构造 3N 维机械表示。",
+      "sections": [
+        {"title": "先确定原胞中的原子数", "text": "原胞含 N 个原子时，每个原子有三个独立位移，所以机械表示的维数是 3N。Si、GaAs、NaCl 的面心立方常规胞都含八个原子，但原胞只有两个，因此本课的 Γ 点问题是六维。把常规胞当作原胞会引入折叠模式，不能直接把 24 个坐标解释成六条物理声子支。", "formula": "u = (u₁x,u₁y,u₁z,…,uNx,uNy,uNz)ᵀ；dim Γmech = 3N"},
+        {"title": "一次操作做两件事", "text": "空间群操作 {R|t} 先把位点 a 映到同种元素的位点 p(a)，再用笛卡尔正交矩阵 R 转动位移。在 Γ 点，晶格平移的 Bloch 相位为 1。原子置换矩阵 P 与向量矩阵 R 的直积给出完整的位移变换；非零波矢时还需处理平移相位，不能沿用本课的简式。", "formula": "Dmech({R|t}) = P({R|t}) ⊗ R；χmech(g) = Nfix(g) tr R"},
+        {"title": "只有回到原位的原子贡献迹", "text": "Nfix 统计操作后在模原胞平移意义下回到自身的原子。被交换的两个原子仍然参与运动，但其矩阵块不在主对角线上，因此对特征标没有贡献。若用分数坐标输入，必须先把旋转矩阵换到笛卡尔基底，不能把斜晶胞的分数坐标直接当作正交坐标。"},
+        {"title": "用内积提取不可约表示", "text": "对完整有限点群逐操作求特征标内积，即得到每个不可约表示的重数。三重简并表示出现一次占三个坐标；重数和维数是两个不同的数。最后必须检查各项的维数总和等于 3N。", "formula": "nα = (1/|G|) Σg χα(g)* χmech(g)；Σα nα dα = 3N"}
+      ],
+      "examples": [{"title": "反演在 Si 和 NaCl 中为何给出不同特征标？", "steps": ["反演的笛卡尔矩阵是 −I，迹为 −3。", "Si 选择键中心为反演中心后，两原子基元相互交换，所以 Nfix=0。", "NaCl 的 Na 和 Cl 分别在模 fcc 平移意义下回到自己，所以 Nfix=2。", "将 Nfix 乘以 −3，分别得到 0 和 −6。"], "result": "相同点群不保证相同机械表示；原子的化学标签和占位同样重要。"}],
+      "exerciseIds": ["mechanical-trace"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["bcs-sam", "aflow-silicon", "aflow-nacl", "aflow-gaas"]
+    },
+    {
+      "id": "acoustic-optical", "title": "02 · 从六个位移分出声学与光学模式",
+      "summary": "移除三种整体平移，并理解对称适配模式与真实动力学本征模式的区别。",
+      "sections": [
+        {"title": "晶体扣除的是三种平移", "text": "所有原子同向等量平移形成三维声学子空间。在 Γ 点，它按极向量表示变换。无限周期晶体不按孤立分子的 3N−6 规则扣除整体转动；这里的光学自由度数为 3N−3。", "formula": "Γopt = Γmech − Γvector；dim Γopt = 3N−3"},
+        {"title": "三种材料的 Γ 点分解", "text": "采用 Oh 和 Td 的通常 Mulliken 标签：Si 的机械表示为 T1u+T2g，NaCl 为 2T1u，GaAs 为 2T2。三种材料各有一个三维声学子空间和一个三维光学子空间。T2g 也常写作 F2g；标签不同不改变表示维数。", "formula": "Si：Γopt=T2g；NaCl：Γopt=T1u；GaAs：Γopt=T2"},
+        {"title": "动画展示的是对称结构", "text": "同向与反向位移便于识别整体平移和相对位移。不同质量的两原子真实光学运动一般需要满足质心与动力学条件；简单画成等长反向箭头只代表相对位移的对称适配基。出现多个相同不可约表示时，它们之间还可以由动力学矩阵混合。"},
+        {"title": "频率需要额外的物理输入", "text": "只有给定质量和力常数，才能建立动力学矩阵并求频率与质量加权本征向量。极性晶体在 q→0 极限的 LO–TO 分裂还依赖长程库仑项、Born 有效电荷与介电响应。Γ 点的对称标签不能单独确定这些数值。", "formula": "D(q)eν(q) = ων(q)² eν(q)"}
+      ],
+      "examples": [{"title": "GaAs 的两个 T2 是否意味着六条光学支？", "steps": ["一个 T2 的维数是 3，两个 T2 合计 6。", "整体平移恰好也按 T2 变换，先扣除一个 T2。", "剩下一个 T2 光学子空间，维数为 3。"], "result": "GaAs 的两原子原胞有三条声学支与三条光学支；同标签不代表它们是同一物理子空间。"}],
+      "exerciseIds": ["count-optical"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["bcs-sam"]
+    },
+    {
+      "id": "ir-raman", "title": "03 · 为什么有的模式只在一种光谱里出现？",
+      "summary": "用极向量和对称二阶张量判断一阶 IR 与普通 Raman 活性。",
+      "sections": [
+        {"title": "红外吸收需要线性偶极耦合", "text": "电偶极近似下，模式 Qν 要与电场线性耦合，模式的表示必须出现在极向量表示中。这个条件回答耦合是否被对称性禁止；耦合有多强仍取决于模式有效电荷。声学整体平移先从光学候选中扣除。", "formula": "IR：Γν ⊂ Γvector；Iν ∝ |ein · Zν|²"},
+        {"title": "普通一阶 Raman 读取极化率的变化", "text": "本课采用非共振、对称极化率的普通一阶 Raman 近似。其模式张量来自对称平方 Sym²(V)，基函数可取 x²、y²、z²、yz、xz、xy。共振磁光过程、反对称散射项和高阶过程需要另加条件，不能用本课表格直接判定。", "formula": "Raman：Γν ⊂ Sym²(Γvector)；Rν,ij = ∂αij/∂Qν"},
+        {"title": "反演给出奇偶互斥", "text": "在有反演中心的理想晶体中，极向量在反演下为奇，而二次乘积为偶。因此同一个确定宇称的 Γ 点光学模式不能同时具有本课定义的 IR 与 Raman 活性。互斥适用于这些一阶近似，不等于任意实验光谱永远没有相同频率的峰。"},
+        {"title": "三种材料形成一组对照", "text": "Si 的 T2g 光学模式允许 Raman、禁止电偶极 IR。NaCl 的 T1u 光学模式允许 IR、禁止普通一阶 Raman。GaAs 没有反演中心，T2 同时包含向量与非对角二次函数的变换类型，所以两类耦合都允许；具体散射几何仍可能使信号为零。"}
+      ],
+      "examples": [{"title": "GaAs 同时活跃，是否违反互斥？", "steps": ["先检查互斥的前提是反演对称。", "Ga 与 As 不能互换，闪锌矿结构没有 Si 金刚石结构中的键中心反演。", "Td 中向量和 (yz,xz,xy) 都按 T2 变换。"], "result": "前提不成立，因此一个 T2 光学子空间同时允许 IR 和 Raman 并不矛盾。"}],
+      "exerciseIds": ["selection-rules"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["bcs-sam", "aflow-gaas"]
+    },
+    {
+      "id": "polarization", "title": "04 · 转动偏振，读出 Raman 张量",
+      "summary": "从散射振幅推导平行与交叉偏振的角度依赖，区分模式活性与特定几何的明暗。",
+      "sections": [
+        {"title": "强度先由振幅计算", "text": "输入偏振 ein、输出分析方向 eout 与模式 Raman 张量 Rν 共同决定振幅。先做两次矩阵收缩，再取模平方；不能把张量分量的平方直接相加来替代振幅。这里偏振为实向量，模型系数 d 取实数。", "formula": "Aν = eoutᵀ Rν ein；Iν ∝ |Aν|²"},
+        {"title": "选一个可手算的模式分量", "text": "采用晶轴 x、y、z，选择只有 xy 与 yx 分量为 d 的 Rz。入射方向沿 z，入射偏振在 xy 平面转动。平行分析器沿 ein，交叉分析器沿其面内垂直方向。这里的下标 z 只标记这一组模式张量基。", "formula": "Rz = [[0,d,0],[d,0,0],[0,0,0]]；ein=(cosθ,sinθ,0)；e⊥=(−sinθ,cosθ,0)"},
+        {"title": "四叶形角分布来自两个收缩", "text": "平行振幅为 2d sinθ cosθ，交叉振幅为 d(cos²θ−sin²θ)。归一化 d=1 后，θ=0° 时平行暗、交叉亮；θ=45° 时相反。一个对称允许的模式在特定几何下完全暗是正常现象。", "formula": "I∥/d²=sin²(2θ)；I⊥/d²=cos²(2θ)"},
+        {"title": "线形与角分布承担不同角色", "text": "交互图可以把相对角强度乘上用户指定中心和线宽的示意线形。这样展示如何读谱，不预测某种材料的真实峰位。不同终态通常做非相干强度求和；若实验涉及相干模式叠加，必须另行给定相位与制备方式。"}
+      ],
+      "examples": [{"title": "为什么 22.5° 是一个自检点？", "steps": ["将 θ=22.5° 代入，得到 2θ=45°。", "sin²45°=cos²45°=1/2。", "两种归一化强度都为 1/2，总和为 1。"], "result": "这个恒等式用于检查指定 Rz 和 xy 偏振几何；它不宣称所有 Raman 张量都有相同角分布。"}],
+      "exerciseIds": ["raman-angle"], "materialIds": ["silicon", "gaas"], "references": ["bcs-sam"]
+    },
+    {
+      "id": "neumann", "title": "05 · Neumann 原理怎样变成线性方程？",
+      "summary": "把对称操作逐一施加到响应张量，求零分量、相等分量与独立参数。",
+      "sections": [
+        {"title": "物性必须保持晶体已有的对称", "text": "对给定平衡相，任一晶体点群操作都不能改变其物性关系。在 P=χE 中，P 与 E 都是极向量，所以二阶张量满足 χ=RχRᵀ。每个操作提供线性约束，所有约束的公共解给出允许形式。", "formula": "χij = Σab Ria Rjb χab；A vec(χ)=0"},
+        {"title": "本征指标对称性先于晶体约束", "text": "本课的静态平衡介电响应来自同一热力学势的二阶导数，采用 χij=χji。弹性张量在无偶应力的线性平衡模型中满足两组小对称性与一组大对称性。它们不是某个晶系额外赐予的条件。", "formula": "Cijkl=Cjikl=Cijlk=Cklij；σij=Cijkl εkl"},
+        {"title": "立方对称不等于所有物性都各向同性", "text": "立方对称将静态介电张量压缩为 χ0I，只剩一个参数；同样的群作用在四阶弹性张量上却留下 C11、C12、C44 三个独立参数。只有进一步满足 C44=(C11−C12)/2 时，立方弹性才成为各向同性。", "formula": "χ=diag(χ0,χ0,χ0)；Cubic elasticity：{C11,C12,C44}"},
+        {"title": "旋转样品不是增加对称操作", "text": "把晶体放到不同实验方向，只是将同一张量换到实验坐标：每个指标都乘一个旋转矩阵。降低所选点群约束则是另一个问题，它改变允许参数空间。允许不等于实际非零，也不决定材料常数的单位、符号或大小。", "formula": "χlab=QχcrystalQᵀ"}
+      ],
+      "examples": [{"title": "从 C2 到 C4 逐步约束 χ", "steps": ["C2(z)=diag(−1,−1,1) 使 χxz、χyz 与各自负值相等，所以它们为零。", "再施加 C4(z)，对称张量的 χxx 与 χyy 相等，χxy 为零。", "此时 χzz 仍独立；若再加入交换 z 与 x 的立方旋转，三个对角元才全部相等。"], "result": "对称性逐步提高，允许的独立参数数目逐步减少。"}],
+      "exerciseIds": ["tensor-constraints"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["iucr-tensors"]
+    },
+    {
+      "id": "piezoelectricity", "title": "06 · GaAs 为什么允许压电，Si 和 NaCl 却不允许？",
+      "summary": "从三阶极张量的反演变号出发，推导闪锌矿压电形式。",
+      "sections": [
+        {"title": "先写清采用哪一种压电系数", "text": "本课采用应变形式 P_i=e_ijk ε_jk，其中应变 ε 为对称张量，所以 e_ijk=e_ikj。不要把 e 与连接极化和应力的 d 系数混用；两者须通过弹性响应联系。下面使用完整笛卡尔指标求和，避免把工程剪切的因子二藏在记号里。", "formula": "Pi=Σjk eijk εjk；εjk=εkj；eijk=eikj"},
+        {"title": "反演直接杀掉三阶极张量", "text": "在反演下，极化变号，应变不变。因此反演若是该相的对称，线性压电系数必须等于其负值，全部为零。Si 与 NaCl 的理想结构都有反演中心。反过来，无反演只是必要条件，不能把所有非中心对称点群都判为压电群。", "formula": "i：e′ijk=(−1)³eijk=−eijk；e=e′ ⇒ e=0"},
+        {"title": "Td 留下一个独立参数", "text": "在所选立方晶轴下，GaAs 的 Td 点群使三个指标全不相同的六个 e 分量相等，其余分量为零。记共同值为 e0，完整求和得到 Px=2e0 εyz，Py=2e0 εxz，Pz=2e0 εxy。把工程剪切定义为 γyz=2εyz 后，Px=e0γyz。", "formula": "exyz=exzy=eyxz=eyzx=ezxy=ezyx=e0；Px=2e0 εyz"},
+        {"title": "对称允许与材料测量之间还有一步", "text": "一个自由参数表示群没有强迫它为零，既不提供数值，也不保证每个外加应变都产生极化。例如在理想 Td 模型中，仅施加 εxx 不会通过这一线性压电项产生极化；yz 剪切才耦合到 Px。"}
+      ],
+      "examples": [{"title": "剪切因子二的来源", "steps": ["设 εyz=εzy=s，其余应变为零。", "完整求和包含 exyz εyz 和 exzy εzy 两项。", "两项均为 e0s，因此 Px=2e0s。"], "result": "若 e0=1、s=1/100，则模型 Px=1/50；这是无量纲演示值，不是 GaAs 的实测极化。"}],
+      "exerciseIds": ["piezo-shear"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["iucr-tensors", "aflow-gaas", "aflow-silicon", "aflow-nacl"]
+    },
+    {
+      "id": "magnetoelectricity", "title": "07 · 带撇操作如何约束磁电响应？",
+      "summary": "同时处理极向量、轴向量和时间反演，比较反演 i、时间反演 1′ 与复合操作 i′。",
+      "sections": [
+        {"title": "静态磁电张量的输入与输出不同", "text": "本课定义 P=αH。P 是时间偶的极向量；H 是时间奇的轴向量。对空间正交矩阵 R 与时间因子 τ=±1，二者分别变为 RP 与 τ det(R)RH。令物性关系不变，就得到 α 的变换约束。", "formula": "α = τ det(R) RαRᵀ；τ=−1 表示带时间反演的操作"},
+        {"title": "i 和 1′ 各自禁止 α", "text": "纯反演满足 R=−I、τ=+1，因而 α=−α。纯时间反演满足 R=I、τ=−1，同样给出 α=−α。只要任意一种是该磁相的对称，就禁止本课定义的静态线性磁电项。"},
+        {"title": "i′ 中的两个负号相消", "text": "若只保留单位元和反演与时间反演的复合 i′，则 τ=−1、det(R)=−1，约束变成 α=α。因此这一个非平凡操作本身不限制九个分量。增加其他空间或磁操作还会继续减小自由度。α 一般不需要对称；平衡互易关系联系的是正、逆磁电响应，而不是任意要求 αij=αji。"},
+        {"title": "先指定磁相，再谈材料", "text": "i′ 练习是明确给定的两元素磁点群模型，不声称某种材料一定属于它。真实磁序、磁畴、外场和自旋轨道耦合会影响适用的对称群。输运、耗散光学与无自旋轨道耦合的自旋群问题需要相应的物理变换规则，不能直接套用本课的静态公式。"}
+      ],
+      "examples": [{"title": "三个只改一个开关的模型", "steps": ["生成元设为 i：允许空间维数为 0。", "生成元设为 1′：允许空间维数仍为 0。", "生成元设为 i′：只考虑该生成元时，允许空间维数为 9。"], "result": "带撇不只是给普通点群换个名字；它改变时间奇响应的约束符号。"}],
+      "exerciseIds": ["magnetic-parity"], "materialIds": [], "references": ["bcs-mtensor", "iucr-spin-tensors", "iucr-tensors"]
+    },
+    {
+      "id": "materials-workflow", "title": "08 · 用同一个材料完成一条可复现的推导",
+      "summary": "从材料图谱确认模型，经课堂提出预测，再把同一材料带入声子与张量计算。",
+      "sections": [
+        {"title": "第一步：固定模型与坐标", "text": "打开材料图谱，记录相、空间群、化学占位和所用晶轴。本文案例都用理想立方结构；缺陷、表面、应变或磁序改变对称时，需要新模型。计算时保留材料 ID，比只记录一个群名更能避免误把 Si 与 NaCl 的振动表示混为一谈。"},
+        {"title": "第二步：先给出可检验的预测", "text": "先判断原胞原子数和机械表示，再扣除声学平移并判定光学活性。随后选择物性张量，预测独立参数与零分量。把选择定则、允许形式、演示参数与待测材料常数分开记录。"},
+        {"title": "第三步：改变一个实验条件", "text": "保持材料不变，在声子演示中切换模式分量和偏振角；在张量演示中改变场、应变或样品方向。用手算结果检查一个特殊角度、一个被禁分量或一个剪切响应，能及时发现坐标与因子二的错误。"},
+        {"title": "第四步：保存输入与结论的适用范围", "text": "保存材料、预设、张量类型、方向、系数和计算输出。相同输入应能重现同一对称结果。若要和实验频率、绝对强度或材料常数比较，应另行附上其来源、温度、单位及测量或计算条件。"}
+      ],
+      "examples": [{"title": "一眼比较三种同为两原子原胞的材料", "steps": ["Si：T2g 光学模式，普通 Raman 允许，电偶极 IR 禁止，线性压电为零。", "NaCl：T1u 光学模式，IR 允许，普通一阶 Raman 禁止，线性压电为零。", "GaAs：T2 光学模式，IR 与 Raman 均允许，Td 压电形式有一个自由参数。"], "result": "原胞原子数相同，只保证自由度相同；原子占位、化学标签和群作用决定物理选择定则。"}],
+      "exerciseIds": ["compare-materials"], "materialIds": ["silicon", "nacl", "gaas"], "references": ["bcs-sam", "iucr-tensors", "aflow-silicon", "aflow-gaas", "aflow-nacl"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "mechanical-trace", "lesson": "mechanical-modes", "title": "逐步求机械表示的特征标",
+      "prompt": "在 Γ 点，已知操作将两个原子都映回各自在模原胞平移意义下的位置。空间操作为绕 z 的 180° 旋转。求机械表示的特征标，再与两原子被交换的情况比较。",
+      "steps": [
+        {"prompt": "C2(z) 的笛卡尔矩阵迹是多少？", "hint": "x、y 反向，z 不变。", "choices": ["3", "−1", "−3"], "answer": 1, "explanation": "diag(−1,−1,1) 的迹为 −1。"},
+        {"prompt": "两个原子都回到自身时，χmech 等于多少？", "hint": "将 Nfix 与矩阵迹相乘。", "choices": ["−2", "2", "−6"], "answer": 0, "explanation": "χmech=2×(−1)=−2；不是把群的阶乘进来。"},
+        {"prompt": "若该操作交换两个原子，χmech 又是多少？", "hint": "交换块不在主对角线上。", "choices": ["−2", "6", "0"], "answer": 2, "explanation": "Nfix=0，所以特征标为 0；这不表示操作没有作用。"},
+        {"prompt": "单位操作应给出什么特征标，作为维数自检？", "hint": "每个原子有三个位移坐标。", "choices": ["2", "3", "6"], "answer": 2, "explanation": "χ(E)=dim Γmech=3N=6。"}
+      ], "references": ["bcs-sam"]
+    },
+    {
+      "id": "count-optical", "lesson": "acoustic-optical", "title": "从 GaAs 的 2T2 中取出光学子空间",
+      "prompt": "GaAs 原胞有两个原子，机械表示为 2T2，T2 维数为 3，整体平移也按 T2 变换。",
+      "steps": [
+        {"prompt": "机械表示总维数是多少？", "hint": "重数乘以不可约表示维数。", "choices": ["2", "6", "9"], "answer": 1, "explanation": "2×3=6，等于两原子的 3N。"},
+        {"prompt": "应从 Γmech 扣除哪一项？", "hint": "无限周期晶体在 Γ 点有三种整体平移。", "choices": ["T2", "2T2", "三个转动与三个平移"], "answer": 0, "explanation": "扣除声学向量表示 T2；3N−6 是非线性孤立分子的计数规则。"},
+        {"prompt": "剩余光学自由度数是多少？", "hint": "不要把一个 T2 当成一个坐标。", "choices": ["1", "0", "3"], "answer": 2, "explanation": "Γopt=T2，维数为 3。"},
+        {"prompt": "仅凭这个分解能得到哪个结论？", "hint": "区分对称分类与动力学数值。", "choices": ["得到实际 LO 与 TO 频率", "得到模式的对称类型，频率仍需动力学输入", "三个光学模式的实测强度必相同"], "answer": 1, "explanation": "对称性给出子空间结构；频率和强度需要力常数、有效电荷等输入。"}
+      ], "references": ["bcs-sam"]
+    },
+    {
+      "id": "selection-rules", "lesson": "ir-raman", "title": "用宇称推导 Si 与 NaCl 的光谱差别",
+      "prompt": "在 Oh 中，极向量为 T1u，对称二阶张量分解为 A1g+Eg+T2g。Si 的光学表示为 T2g，NaCl 为 T1u。采用电偶极 IR 与普通一阶 Raman 近似。",
+      "steps": [
+        {"prompt": "Si 的 T2g 光学模式属于哪一种活动类型？", "hint": "分别检查向量与对称二阶张量是否含 T2g。", "choices": ["只允许 Raman", "只允许 IR", "二者都允许"], "answer": 0, "explanation": "T2g 出现在对称二阶张量中，不出现在极向量 T1u 中。"},
+        {"prompt": "NaCl 的 T1u 光学模式属于哪一种活动类型？", "hint": "g 与 u 是不同的反演宇称。", "choices": ["二者都禁止", "只允许 Raman", "只允许 IR"], "answer": 2, "explanation": "T1u 与极向量相同，但不属于上述全为偶宇称的对称二阶张量。"},
+        {"prompt": "为什么 GaAs 的 T2 可以两者都允许？", "hint": "先检查反演互斥的前提。", "choices": ["因为所有三重简并模式都两者活跃", "因为 Td 没有反演，且向量与非对角二次函数都含 T2", "因为 GaAs 不需要扣除声学模式"], "answer": 1, "explanation": "缺少反演解除互斥；还需检查实际表示，不能只凭缺少反演就判每个模式都活跃。"},
+        {"prompt": "看到 NaCl 的实验 Raman 信号，正确的下一步是什么？", "hint": "结论限定为理想结构中的普通一阶过程。", "choices": ["立即否定空间群", "把 T1u 改写成 T2g", "检查高阶过程、缺陷、表面或对称性改变等实验条件"], "answer": 2, "explanation": "一阶选择定则不排除所有其他散射机制，也不直接诊断实验样品。"}
+      ], "references": ["bcs-sam"]
+    },
+    {
+      "id": "raman-angle", "lesson": "polarization", "title": "手算一次偏振扫描",
+      "prompt": "给定 Rz=[[0,1,0],[1,0,0],[0,0,0]]、ein=(cosθ,sinθ,0)，交叉分析方向为 (−sinθ,cosθ,0)。用振幅的模平方计算相对强度。",
+      "steps": [
+        {"prompt": "平行偏振振幅是什么？", "hint": "计算 einᵀRz ein。", "choices": ["sin(2θ)", "cos(2θ)", "1"], "answer": 0, "explanation": "两个非零项之和为 2sinθcosθ=sin2θ。"},
+        {"prompt": "θ=0° 时，(I∥,I⊥) 是什么？", "hint": "交叉振幅为 cos2θ。", "choices": ["(1,0)", "(0,1)", "(0,0)"], "answer": 1, "explanation": "sin²0=0，cos²0=1。"},
+        {"prompt": "θ=22.5° 时，(I∥,I⊥) 是什么？", "hint": "此时 2θ=45°。", "choices": ["(1,1)", "(1/4,3/4)", "(1/2,1/2)"], "answer": 2, "explanation": "sin²45°=cos²45°=1/2。"},
+        {"prompt": "平行几何在 θ=0° 为零，说明什么？", "hint": "区分群论活性与实际收缩。", "choices": ["模式被所有光学过程禁止", "该模式张量在这个几何下的收缩为零", "声子频率为零"], "answer": 1, "explanation": "几何造成暗信号，不能推出模式不存在或频率为零。"}
+      ], "references": ["bcs-sam"]
+    },
+    {
+      "id": "tensor-constraints", "lesson": "neumann", "title": "一步步压缩静态介电张量",
+      "prompt": "从实对称 3×3 介电响应 χ 开始，先加入 C2(z)，再加入 C4(z)，最后加入绕 [111] 的 120° 立方旋转。",
+      "steps": [
+        {"prompt": "C2(z) 强迫哪些分量为零？", "hint": "矩阵元 χij 乘 RiiRjj。", "choices": ["三个对角元", "χxy", "χxz 与 χyz 及其对称分量"], "answer": 2, "explanation": "xz、yz 带一个负号；xy 带两个负号而不因此被禁止。"},
+        {"prompt": "加上 C4(z) 后剩下几个独立参数？", "hint": "χxx=χyy，χxy=0，而 χzz 尚可不同。", "choices": ["1", "2", "4"], "answer": 1, "explanation": "允许形式为 diag(a,a,c)，有两个参数。"},
+        {"prompt": "再加入循环置换 x→y→z→x 后，允许形式是什么？", "hint": "检查 z 对角元与 x、y 对角元的关系。", "choices": ["aI", "任意实对称矩阵", "只剩 χzz"], "answer": 0, "explanation": "三个对角元必须相同，故只剩一个独立参数。"},
+        {"prompt": "这是否意味着立方弹性也只有一个参数？", "hint": "弹性是四阶张量，约束空间不同。", "choices": ["是，所有立方物性都各向同性", "否，通常仍有 C11、C12、C44 三个参数", "否，通常有 81 个独立参数"], "answer": 1, "explanation": "四阶弹性在本征指标对称性和立方约束后仍保留三个独立参数。"}
+      ], "references": ["iucr-tensors"]
+    },
+    {
+      "id": "piezo-shear", "lesson": "piezoelectricity", "title": "保留剪切因子二的 GaAs 压电推导",
+      "prompt": "Td 模型中，三个指标全不相同的 eijk 都等于 e0，其余为零。取 e0=1、εyz=εzy=1/100，其余应变为零，使用 Pi=Σjk eijk εjk 的完整求和。数值均为无量纲演示值。",
+      "steps": [
+        {"prompt": "Px 中有几项非零贡献？", "hint": "分别写出 j=y,k=z 和 j=z,k=y。", "choices": ["1", "2", "6"], "answer": 1, "explanation": "exyzεyz 与 exzyεzy 各贡献 e0/100。"},
+        {"prompt": "计算得到 Px 是多少？", "hint": "不要漏掉第二个对称应变分量。", "choices": ["1/50", "1/100", "0"], "answer": 0, "explanation": "Px=2×1×1/100=1/50，Py=Pz=0。"},
+        {"prompt": "用工程剪切 γyz=2εyz 表示时，关系是什么？", "hint": "因子二已经进入 γyz。", "choices": ["Px=2e0γyz", "Px=e0γyz/2", "Px=e0γyz"], "answer": 2, "explanation": "Px=2e0εyz=e0γyz；不能再乘一次 2。"},
+        {"prompt": "若同样施加于理想有反演中心的 Si，线性压电贡献是多少？", "hint": "三阶极张量在反演下变号。", "choices": ["仍为 1/50", "0", "由 Si 原子质量单独决定"], "answer": 1, "explanation": "反演要求 e=−e，故整个线性压电张量为零。这里不讨论非均匀应变梯度等其他机制。"}
+      ], "references": ["iucr-tensors"]
+    },
+    {
+      "id": "magnetic-parity", "lesson": "magnetoelectricity", "title": "比较 i、1′、i′ 对 α 的约束",
+      "prompt": "只研究静态 P=αH，采用 α=τdet(R)RαRᵀ。分别以 i、1′ 或 i′ 为唯一非平凡生成元，不加入其他限制，α 不预设为对称。",
+      "steps": [
+        {"prompt": "纯反演 i 给出什么关系？", "hint": "R=−I，detR=−1，τ=+1。", "choices": ["α=−α，所以 α=0", "α=α，所以有九个参数", "只要求 α 为对称矩阵"], "answer": 0, "explanation": "两侧的 −I 抵消，但轴性因子 detR 仍提供一个负号。"},
+        {"prompt": "纯时间反演 1′ 给出什么关系？", "hint": "R=I，τ=−1。", "choices": ["α 为任意对称矩阵", "α=−α，所以 α=0", "只禁止对角元"], "answer": 1, "explanation": "P 为时间偶，H 为时间奇，静态线性磁电系数因而为时间奇。"},
+        {"prompt": "复合 i′ 中，τdet(R) 等于多少？", "hint": "两个因子都为 −1。", "choices": ["−1", "0", "+1"], "answer": 2, "explanation": "τdet(R)=(−1)(−1)=+1；RαRᵀ=α。"},
+        {"prompt": "群 {E,i′} 对一般实 α 留下多少个自由参数？", "hint": "本题没有加入 αij=αji。", "choices": ["0", "9", "6"], "answer": 1, "explanation": "该操作不增加约束，九个分量都允许。允许不保证真实材料中每个分量都非零。"}
+      ], "references": ["bcs-mtensor", "iucr-spin-tensors"]
+    },
+    {
+      "id": "compare-materials", "lesson": "materials-workflow", "title": "用两台计算器核对同一个材料",
+      "prompt": "三个理想立方案例都使用两原子原胞。请按材料结构、光谱与线性压电的顺序，完成一份可复现的对照记录。",
+      "steps": [
+        {"prompt": "哪一项正确区分了 Si 与 NaCl？", "hint": "它们的点群相同，位移的原子置换却不同。", "choices": ["点群相同，所以机械表示必相同", "Si 的光学表示是 T2g，NaCl 是 T1u", "NaCl 原胞只有一个原子"], "answer": 1, "explanation": "Si 的反演交换两原子，NaCl 的反演保持各自位点，机械特征标由此不同。"},
+        {"prompt": "哪个案例同时允许本课的一阶 IR、Raman 和线性压电耦合？", "hint": "寻找没有反演的 Td 案例。", "choices": ["GaAs", "Si", "NaCl"], "answer": 0, "explanation": "GaAs 的光学 T2 同时匹配向量和对称二阶张量，Td 还允许一个压电参数。"},
+        {"prompt": "三种材料的静态立方介电响应各有几个独立参数？", "hint": "这里讨论允许形式，不比较材料常数的数值。", "choices": ["9", "3", "1"], "answer": 2, "explanation": "三者都允许 χ=χ0I，但各自的 χ0 数值可以不同。"},
+        {"prompt": "哪份记录足以重现实验演示？", "hint": "模型输入和演示参数都应保留。", "choices": ["只写“立方材料”", "只保存一张没有角度标记的截图", "保存材料 ID、群与坐标约定、模式或张量、偏振角或应变以及模型系数"], "answer": 2, "explanation": "完整输入支持复算；模型参数应与实验或第一性原理数据分开标注。"}
+      ], "references": ["bcs-sam", "iucr-tensors"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "silicon", "name": "Si：看见 Raman，检查压电零值", "formula": "Si",
+      "summary": "用同一个金刚石结构模型连接三维位移、偏振选择定则与反演禁止的线性压电。",
+      "phase": "理想金刚石结构，Fd-3m（No.227），点群 m-3m（Oh），两原子原胞。",
+      "phononPreset": "silicon", "tensorPreset": "cubic_m3m", "tensorProperty": "piezoelectric",
+      "lessonIds": ["mechanical-modes", "acoustic-optical", "ir-raman", "polarization", "neumann", "piezoelectricity", "materials-workflow"],
+      "exerciseIds": ["mechanical-trace", "selection-rules", "raman-angle", "piezo-shear", "compare-materials"],
+      "routes": {"classroom": "#classroom/observables?lesson=ir-raman&material=silicon", "phonons": "#compute/phonons?material=silicon", "tensors": "#compute/tensors?material=silicon", "atlas": "#atlas/materials?material=silicon"},
+      "question": "在指定 Rz、d=1、xy 平行偏振且 θ=45° 的模型中，Raman 相对强度是多少？同一理想结构的线性压电自由参数有几个？",
+      "answer": "Raman 相对强度为 sin²90°=1；反演强迫线性压电张量为零，自由参数数目为 0。",
+      "expected": {"spaceGroup": 227, "primitiveAtoms": 2, "mechanicalDimension": 6, "acousticDimension": 3, "opticalDimension": 3, "opticalIrrep": "T2g", "irAllowed": false, "ramanAllowed": true, "piezoParameters": 0, "dielectricParameters": 1, "elasticParameters": 3, "ramanAngleDegrees": 45, "ramanParallelRelative": 1},
+      "limitations": ["Raman 张量系数 d=1 是归一化演示参数，不是硅的实测极化率导数。", "结论针对理想体相的普通一阶 Raman、电偶极 IR 和线性压电，不含表面、缺陷或高阶机制。"],
+      "references": ["aflow-silicon", "bcs-sam", "iucr-tensors"]
+    },
+    {
+      "id": "gaas", "name": "GaAs：从双活性光学模式到剪切压电", "formula": "GaAs",
+      "summary": "化学占位去掉反演，让 T2 光学模式同时允许 IR 与 Raman，并留下一个压电系数。",
+      "phase": "理想闪锌矿结构，F-43m（No.216），点群 -43m（Td），两原子原胞。",
+      "phononPreset": "gaas", "tensorPreset": "zincblende_td", "tensorProperty": "piezoelectric",
+      "lessonIds": ["mechanical-modes", "acoustic-optical", "ir-raman", "polarization", "piezoelectricity", "materials-workflow"],
+      "exerciseIds": ["count-optical", "selection-rules", "raman-angle", "piezo-shear", "compare-materials"],
+      "routes": {"classroom": "#classroom/observables?lesson=piezoelectricity&material=gaas", "phonons": "#compute/phonons?material=gaas", "tensors": "#compute/tensors?material=gaas", "atlas": "#atlas/materials?material=gaas"},
+      "question": "指定 e0=1、εyz=εzy=1/100，其余应变为零时，Td 模型的极化向量是什么？这个材料的 T2 光学模式允许哪些一阶光学耦合？",
+      "answer": "P=(1/50,0,0)，因为完整求和包含两个剪切分量；T2 同时允许电偶极 IR 与普通一阶 Raman，但特定偏振几何仍可使信号为零。",
+      "expected": {"spaceGroup": 216, "primitiveAtoms": 2, "mechanicalDimension": 6, "acousticDimension": 3, "opticalDimension": 3, "opticalIrrep": "T2", "irAllowed": true, "ramanAllowed": true, "piezoParameters": 1, "dielectricParameters": 1, "elasticParameters": 3, "shearTensorYZ": "1/100", "piezoCoefficient": "1", "polarization": ["1/50", "0", "0"]},
+      "limitations": ["剪切和系数采用无量纲模型值，不替代 GaAs 实测压电常数。", "等长反向位移动画只展示相对位移的对称基；不同原子质量的真实光学本征向量需要动力学输入。", "不从 Γ 点标签计算 LO–TO 分裂或频率。"],
+      "references": ["aflow-gaas", "bcs-sam", "iucr-tensors"]
+    },
+    {
+      "id": "nacl", "name": "NaCl：红外活性与一阶 Raman 禁止", "formula": "NaCl",
+      "summary": "与 Si 对比同一 Oh 点群中的不同原子置换，理解 T1u 光学模式和反演约束。",
+      "phase": "理想岩盐结构，Fm-3m（No.225），点群 m-3m（Oh），两原子原胞。",
+      "phononPreset": "nacl", "tensorPreset": "cubic_m3m", "tensorProperty": "piezoelectric",
+      "lessonIds": ["mechanical-modes", "acoustic-optical", "ir-raman", "neumann", "piezoelectricity", "materials-workflow"],
+      "exerciseIds": ["mechanical-trace", "selection-rules", "tensor-constraints", "compare-materials"],
+      "routes": {"classroom": "#classroom/observables?lesson=mechanical-modes&material=nacl", "phonons": "#compute/phonons?material=nacl", "tensors": "#compute/tensors?material=nacl", "atlas": "#atlas/materials?material=nacl"},
+      "question": "NaCl 的反演机械特征标是多少？扣除声学平移后，光学子空间的维数和一阶 IR/Raman 活性分别是什么？",
+      "answer": "反演保持两个原子的各自位点，χmech(i)=2×(−3)=−6；光学子空间为三维 T1u，允许电偶极 IR、禁止普通一阶 Raman。",
+      "expected": {"spaceGroup": 225, "primitiveAtoms": 2, "mechanicalDimension": 6, "acousticDimension": 3, "opticalDimension": 3, "opticalIrrep": "T1u", "irAllowed": true, "ramanAllowed": false, "piezoParameters": 0, "dielectricParameters": 1, "elasticParameters": 3, "inversionMechanicalCharacter": -6},
+      "limitations": ["普通一阶 Raman 禁止不等于所有阶数、所有缺陷样品的 Raman 信号均为零。", "实际红外振子强度与 LO–TO 分裂需要有效电荷、介电响应和动力学数据。"],
+      "references": ["aflow-nacl", "bcs-sam", "iucr-tensors"]
+    }
+  ]
+}

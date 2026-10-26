@@ -467,6 +467,28 @@
         "Classical spin operations and half-spin quantum lifts are distinguished; SOC compatibility is a symmetry constraint, not a material band prediction"
       ],
       "sha256": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
+    },
+    {
+      "path": "dist/python/phonon_spectra.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original Python teaching and computation implementation.",
+      "validation": "scripts/test-python-phonon-spectra.py",
+      "limitations": [
+        "Three stated two-site fcc crystal models at Gamma: mechanical characters, optical modes, selection rules, chosen polarization and illustrative spectra; no force-constant or absolute-intensity prediction."
+      ],
+      "sha256": "65f943ce20ad9683527324a417a5dd803fe32821373a059cf9d3522d9806469c"
+    },
+    {
+      "path": "dist/python/property_tensors.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original Python teaching and computation implementation.",
+      "validation": "scripts/test-python-property-tensors.py",
+      "limitations": [
+        "Exact invariant subspaces for equilibrium dielectric, elastic, piezoelectric and magnetoelectric tensors; Cartesian orthogonal generators, chosen numeric coefficients and orientation; no transport Onsager or complete group classification."
+      ],
+      "sha256": "41059b1cddf48262a2830d182e46fbc608d8f32a23036f93fb602c195fec015a"
     }
   ],
   "coordinate_conventions": {
