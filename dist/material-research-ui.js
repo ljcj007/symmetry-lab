@@ -1,4 +1,4 @@
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261026-research1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261026-coupled1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
@@ -13,11 +13,13 @@ const catalog=()=>catalogPromise??=fetch('data/material-research.json?v='+RELEAS
 export const getMaterialResearchResult=()=>lastResult;
 export function setMaterialResearchInput(module,input){handoff={module,input:structuredClone(input)};}
 export const researchCourseRoute=(module,query='')=>'#classroom/'+({modes:'structure-dynamics',bands:'crystal',thermo:'observables'}[module]||'structure-dynamics')+'?module='+module+(query?'&'+query:'');
-export function multiCurveSVG(series,{xLabel='x',yLabel='y',cursor=null}={}){
- const clean=series.map(s=>({...s,points:s.points.filter(p=>p.length>=2&&p.every(Number.isFinite))})).filter(s=>s.points.length);if(!clean.length)return '<p>当前数据没有这个物理量。</p>';
- const ps=clean.flatMap(s=>s.points),xmin=Math.min(...ps.map(p=>p[0])),xmax=Math.max(...ps.map(p=>p[0])),ymin=Math.min(0,...ps.map(p=>p[1])),ymax=Math.max(0,...ps.map(p=>p[1])),dx=xmax-xmin||1,dy=ymax-ymin||1;
+export function multiCurveSVG(series,{xLabel='x',yLabel='y',cursor=null,includeZero=true}={}){
+ const clean=(Array.isArray(series)?series:[]).map(s=>({...s,points:(Array.isArray(s?.points)?s.points:[]).filter(p=>Array.isArray(p)&&p.length>=2&&p.every(Number.isFinite))})).filter(s=>s.points.length);if(!clean.length)return '<p>当前数据没有这个物理量。</p>';
+ const ps=clean.flatMap(s=>s.points);let xmin=Math.min(...ps.map(p=>p[0])),xmax=Math.max(...ps.map(p=>p[0])),ymin=Math.min(...ps.map(p=>p[1])),ymax=Math.max(...ps.map(p=>p[1]));
+ if(includeZero){ymin=Math.min(0,ymin);ymax=Math.max(0,ymax);}else{const pad=(ymax-ymin)*.08||Math.max(Math.abs(ymin)*.02,1);ymin-=pad;ymax+=pad;if(xmin===xmax){const xpad=Math.max(Math.abs(xmin)*.02,1);xmin-=xpad;xmax+=xpad;}}
+ const dx=xmax-xmin||1,dy=ymax-ymin||1;
  const xy=p=>[80+570*(p[0]-xmin)/dx,255-210*(p[1]-ymin)/dy];
- return `<svg class="obs-curve" viewBox="0 0 720 340" role="img" aria-label="${esc(yLabel)} 随 ${esc(xLabel)} 变化"><title>${esc(yLabel)}</title><path d="M80 35V255H660" fill="none" stroke="#9eb3a5"/>${[0,.5,1].map(t=>`<line x1="80" x2="660" y1="${255-t*210}" y2="${255-t*210}" stroke="#dce6df"/><text x="70" y="${261-t*210}" text-anchor="end">${num(ymin+t*dy)}</text>`).join('')}${clean.map((s,i)=>`<polyline points="${s.points.map(p=>xy(p).join(',')).join(' ')}" fill="none" stroke="${palette[i%4]}" stroke-width="3"/>`).join('')}${Number.isFinite(cursor)?`<path d="M${xy([cursor,0])[0]} 35V255" stroke="#aa7252" stroke-dasharray="4 4"/>`:''}<text x="80" y="282">${num(xmin)}</text><text x="650" y="282" text-anchor="end">${num(xmax)}</text><text x="90" y="23">${esc(yLabel)}</text><text x="360" y="317" text-anchor="middle">${esc(xLabel)}</text></svg><div class="mr-legend">${clean.map((s,i)=>`<span><i style="background:${palette[i%4]}"></i>${esc(s.label)}</span>`).join('')}</div>`;
+ return `<svg class="obs-curve" viewBox="0 0 720 340" role="img" aria-label="${esc(yLabel)} 随 ${esc(xLabel)} 变化"><title>${esc(yLabel)}</title><path d="M80 35V255H660" fill="none" stroke="#9eb3a5"/>${[0,.5,1].map(t=>`<line x1="80" x2="660" y1="${255-t*210}" y2="${255-t*210}" stroke="#dce6df"/><text x="70" y="${261-t*210}" text-anchor="end">${num(ymin+t*dy)}</text>`).join('')}${clean.map((s,i)=>s.points.length===1?`<circle cx="${xy(s.points[0])[0]}" cy="${xy(s.points[0])[1]}" r="4" fill="${palette[i%4]}"/>`:`<polyline points="${s.points.map(p=>xy(p).join(',')).join(' ')}" fill="none" stroke="${palette[i%4]}" stroke-width="3"/>`).join('')}${Number.isFinite(cursor)?`<path d="M${xy([cursor,0])[0]} 35V255" stroke="#aa7252" stroke-dasharray="4 4"/>`:''}<text x="80" y="282">${num(xmin)}</text><text x="650" y="282" text-anchor="end">${num(xmax)}</text><text x="90" y="23">${esc(yLabel)}</text><text x="360" y="317" text-anchor="middle">${esc(xLabel)}</text></svg><div class="mr-legend">${clean.map((s,i)=>`<span><i style="background:${palette[i%4]}"></i>${esc(s.label)}</span>`).join('')}</div>`;
 }
 export function connectionSVG(result){
  const groups=[0,1,2].map(col=>result.nodes.filter(n=>n.column===col)),positions=new Map();groups.forEach((g,col)=>g.forEach((n,i)=>positions.set(n.id,[100+250*col,95+(i-(g.length-1)/2)*85+50])));

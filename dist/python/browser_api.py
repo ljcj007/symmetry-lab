@@ -3,7 +3,8 @@ TOOLS = ('analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
-         'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors', 'phase', 'diffraction', 'phonopy', 'phonon_modes', 'band_connectivity', 'phonon_thermo')
+         'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors', 'phase', 'diffraction', 'phonopy', 'phonon_modes', 'band_connectivity', 'phonon_thermo',
+         'distortion_lab', 'magnon_lab', 'qha_lab')
 
 
 def run(tool, payload, database=None, catalog=None, magnetic_database=None,
@@ -12,6 +13,15 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool == 'distortion_lab':
+        from distortion_lab import run as calculate
+        return calculate(payload)
+    if tool == 'magnon_lab':
+        from magnon_lab import run as calculate
+        return calculate(payload)
+    if tool == 'qha_lab':
+        from qha_lab import run as calculate
+        return calculate(payload)
     if tool == 'phonon_modes':
         from phonon_modes import run as calculate
         return calculate(payload)

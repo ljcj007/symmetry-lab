@@ -1,0 +1,74 @@
+{
+  "release": "20261026-coupled1",
+  "date": "2026-10-26",
+  "originalContent": true,
+  "syntheticExamples": "Built-in BaTiO3/SrTiO3 displacements, Landau coefficients, XXZ chain parameters, volume-dependent Einstein spectra, static energies and thermal tables are original educational models, not measured or first-principles material data.",
+  "sources": [
+    "https://iso.byu.edu/isodistorthelp.php",
+    "https://doi.org/10.1107/S0021889806014075",
+    "https://spinw.org/pyspinw/tutorials/ferromagnetic_chain/index.html",
+    "https://spinw.org/pyspinw/tutorials/antiferromagnetic_chain/index.html",
+    "https://arxiv.org/abs/1402.6069",
+    "https://phonopy.github.io/phonopy/qha.html",
+    "https://phonopy.github.io/phonopy/formulation.html"
+  ],
+  "files": [
+    {
+      "path": "dist/coupled-materials-ui.js",
+      "sha256": "b49242c5462460c3a6f56e3ae8b7277a3021ccd898b9a0436975806951bb9b61"
+    },
+    {
+      "path": "dist/coupled-materials.css",
+      "sha256": "3c62ed834ed74129071bd3a42c3e36a496df0d5ad0ad090498f88b9acd8a506f"
+    },
+    {
+      "path": "dist/data/coupled-materials.json",
+      "sha256": "20ada2711bcc7b89e09531331dbd1502f097c91107441155126facdc051cad68"
+    },
+    {
+      "path": "dist/data/examples/distortion-batio3.json",
+      "sha256": "09d09635ae23d78279564a3bcbcf008cfd7417c98a7b36149264a5b24e28f4c8"
+    },
+    {
+      "path": "dist/data/examples/distortion-srtio3.json",
+      "sha256": "c56f9f4f9f23d7082e0544ce26d3008853a4c1b8936d37ca7827f86ce750aa80"
+    },
+    {
+      "path": "dist/data/examples/magnon-afm-instability.json",
+      "sha256": "de5e18acd940fb7066d3a23229e22658e75950758c8cafc1494e026a09dfd585"
+    },
+    {
+      "path": "dist/data/examples/magnon-afm-polarization.json",
+      "sha256": "7400af661272e715794b3b909e65d4b858aa04f68325a2c4cee51e7ea9d2eb13"
+    },
+    {
+      "path": "dist/data/examples/magnon-fm-goldstone.json",
+      "sha256": "3cbc7ca075afc4e55b5e4d704706e912d973a15f30f9265cecaa431b1215d388"
+    },
+    {
+      "path": "dist/data/examples/qha-multivolume-demo.json",
+      "sha256": "3b79b80cced27496e7c59327b6d7e7d5df7cb9d74a7e1dfdf0031b9c17a42992"
+    },
+    {
+      "path": "dist/data/examples/qha-thermal-files-demo.json",
+      "sha256": "4c38c0e2bd190ef2a2720e7bbad095e071fe16d707ee66013ed501237cead57e"
+    },
+    {
+      "path": "dist/docs/coupled-materials.md",
+      "sha256": "eb05e36300a6dec7748b31e30b6beaffdc1ba012a6a65fa1323e2a75676e3bed"
+    },
+    {
+      "path": "dist/python/distortion_lab.py",
+      "sha256": "69f59d38171855f9068d6b2a2aa07efbf2f5977fcb77e0f95e17a51abc93f7e8"
+    },
+    {
+      "path": "dist/python/magnon_lab.py",
+      "sha256": "ad543f40ac328ae0fb012cad7353b1ffe17cfe91349ce2f7c63ee6b325fd9dd6"
+    },
+    {
+      "path": "dist/python/qha_lab.py",
+      "sha256": "4505784a1b62e5f4442b3995407f449575bd39f8d497b0baf947ef202232d44f"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text with LF line endings (Git checkout convention)"
+}

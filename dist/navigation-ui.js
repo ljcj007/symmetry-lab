@@ -5,11 +5,13 @@ export const toolGroups=[
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],
   ['compute/phonon-modes','声子模式 · 分类与冻结结构','Γ 点简并子空间、相容超胞、POSCAR / CIF 冻结模导出。','Phonopy irrep 冻结模 对称 声子'],
   ['compute/phonon-thermo','声子热力学 · F / S / Cv','Einstein / Debye、加权网格与总 DOS、Phonopy 热性质导入。','热容 自由能 熵 热力学 Debye Einstein'],
+  ['compute/qha-lab','准谐近似 · 热膨胀与 Cp','多体积静态能与振动自由能、平衡体积、体模量和导数收敛。','QHA 准谐 热膨胀 定压热容 Phonopy 自由能'],
   ['compute/phonopy','Phonopy · 声子数据导入','读取 band / qpoints YAML、复本征矢、分段色散与 DOS。','Phonopy phonon band yaml DOS 软模 虚频'],
   ['compute/tensors','物性张量 · 精确对称约束','介电、弹性、压电与磁电张量；点群预设、自定义生成元与旋转响应。','介电 弹性 压电 磁电 Neumann tensor'],
  ]},
  {id:'structure',title:'结构、相变与衍射',summary:'从真实结构出发，确定群与坐标约定。',tools:[
   ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
+  ['compute/distortion-modes','结构畸变 · 模式分解与耦合','同胞结构对、原子对应、模式投影与重构，两序参量自由能。','畸变 分解 结构匹配 极性 八面体 模式耦合 BaTiO3 SrTiO3'],
   ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor'],
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
@@ -28,6 +30,7 @@ export const toolGroups=[
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
   ['compute/band-connectivity','能带相容关系与连接','Γ–X 表示分支、镜面保护交叉、破缺开隙与 SOC 模型。','compatibility C4v Rashba SOC 能带连接'],
+  ['compute/magnon-lab','磁振子 · 交换与自旋波','XXZ 铁磁 / 反铁磁链、模式进动、偏振、外场与稳定性。','magnon spin wave 磁振子 自旋波 交换 各向异性 Goldstone'],
   ['magnetictb','紧束缚模型与拓扑','对称性约束建模、能带、薄膜、表面谱、Wilson 环与 Chern 数。','MagneticTB Berry hr'],
   ['compute/advanced/symbolic','符号 Hamiltonian 与 k·p','精确跃迁约束、Bloch 矩阵、参数表达式和多项式轨道。','SymPy Hamiltonian'],
   ['bands','能带特征标匹配','导入 trace / JSON，将能带特征标分解到当前群的表示。','DFT trace'],
@@ -58,7 +61,9 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261026-research1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261026-coupled1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled])=>[
+  ...coupled.lessons.map(l=>({route:'classroom/'+coupled.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 畸变 磁振子 自旋波 QHA 热膨胀',kind:'课程'})),
+  ...coupled.cases.map(c=>({route:'atlas/mechanisms?material='+encodeURIComponent(c.id),title:c.title+' · 材料机制',summary:c.summary,keywords:c.id+' 畸变 模式耦合 磁交换 热膨胀',kind:'材料'})),
   ...research.lessons.map(l=>({route:'classroom/'+research.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 材料 声子 能带 热力学',kind:'课程'})),
   ...research.cases.map(c=>({route:'atlas/research?material='+encodeURIComponent(c.id),title:c.title+' · 材料分析',summary:c.summary,keywords:c.id+' 模式 冻结 能带 热力学',kind:'材料'})),
   ...dynamics.lessons.map(l=>({route:'classroom/structure-dynamics?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'相变 衍射 Phonopy '+l.id,kind:'课程'})),
@@ -83,6 +88,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
+  ['atlas/mechanisms','畸变、磁激发与有限温度','结构模式耦合 → 磁交换与自旋波 → 多体积自由能与热膨胀。'],
   ['atlas/notebook','我的材料研究记录','在本机保存计算输入、结果、约定和解释，导出项目后可恢复和重算。'],
   ['atlas/dynamics','结构、相变与实验案例','BaTiO₃ 极性畴；Si、NaCl、GaAs 衍射；自己的 Phonopy 数据。'],
   ['classroom/spin','双群、色群与自旋群专题','按点群与三维空间群学习；明确教学实例的适用范围。']
@@ -91,6 +97,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
   ['atlas/research','完成一份材料分析','模式识别 → 冻结模 / 能带连接 / 热力学 → 研究记录'],
+  ['atlas/mechanisms','连接材料结构与激发','畸变模式 → 磁振子 → 准谐热膨胀与 Cp'],
   ['classroom/structure-dynamics','从结构走到实验','相变与畴 → 衍射消光 → Phonopy 数据'],
   ['classroom/observables','从材料理解物性','Si / GaAs / NaCl → 声子光谱 → 物性张量'],
   ['classroom/foundations','从零学群论','对称操作 → 表示与特征标 → 晶体与自旋'],

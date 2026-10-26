@@ -16,6 +16,35 @@ def invoke(tool, payload):
 
 
 class PublicAPITests(unittest.TestCase):
+    def test_distortion_lab_public_api(self):
+        result = self.result('distortion_lab', {'preset': 'batio3', 'landau': {'resolution': 11}})
+        self.assertEqual(result['kind'], 'distortion-lab')
+        self.assertEqual(result['parent']['natom'], 5)
+        self.assertAlmostEqual(result['decomposition']['amplitudes'][0], .22)
+        self.assertAlmostEqual(result['decomposition']['amplitudes'][1], .07)
+        self.assertLess(result['decomposition']['residualNorm'], 1e-12)
+        self.assertTrue(result['reconstruction']['exports']['poscar'])
+        self.assertAlmostEqual(result['landau']['globalMinimumEnergy'], -.304)
+
+    def test_magnon_lab_public_api(self):
+        result = self.result('magnon_lab', {'model': 'afm', 'anisotropy': 1.25,
+                                          'exchange': 1, 'spin': 1, 'field': .2, 'q': 0})
+        self.assertEqual(result['kind'], 'magnon-lab')
+        self.assertAlmostEqual(result['selection']['energy'], 1.3)
+        self.assertTrue(result['stability']['classicalGroundState'])
+        self.assertTrue(result['animation']['available'])
+        self.assertLess(result['validation']['eigenvectorResidual'], 1e-12)
+
+    def test_qha_lab_public_api(self):
+        result = self.result('qha_lab', {'source': 'preset', 'gamma': 0, 'temperatures': [0, 100, 200]})
+        self.assertEqual(result['kind'], 'qha-lab')
+        self.assertEqual(result['basis'], 'per-input-cell')
+        self.assertEqual(result['summary']['validCount'], 3)
+        self.assertAlmostEqual(result['rows'][1]['volume'], 40)
+        self.assertAlmostEqual(result['rows'][1]['alphaVolume'], 0, places=12)
+        self.assertGreater(result['rows'][1]['heatCapacity'], 0)
+        self.assertIsNone(result['rows'][0]['heatCapacity'])
+
     def test_material_research_public_api(self):
         modes = self.result('phonon_modes', {'preset': 'silicon'})
         self.assertEqual(modes['symmetry']['spaceGroup'], 227)

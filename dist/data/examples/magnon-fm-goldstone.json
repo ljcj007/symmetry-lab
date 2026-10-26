@@ -1,0 +1,15 @@
+{
+  "description": "原创一维铁磁教学模型：各向同性零场，Γ 点 Goldstone 模与小 q 二次色散；不是材料拟合参数。",
+  "synthetic": true,
+  "model": "fm",
+  "exchange": 1,
+  "spin": 1,
+  "anisotropy": 1,
+  "field": 0,
+  "q": 0.25,
+  "branch": 0,
+  "amplitude": 0.12,
+  "sites": 16,
+  "frames": 32,
+  "samples": 161
+}

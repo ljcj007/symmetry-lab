@@ -39,7 +39,7 @@ async function runUITests(){
  globalThis.document={createElement:tag=>new Element(tag)};
  globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')});
  const ui=await import('../dist/material-research-ui.js');
- const notebook=await import('../dist/material-notebook.js?v=20261026-research1');
+ const notebook=await import('../dist/material-notebook.js?v=20261026-coupled1');
  const {parseClassroomRoute,buildClassroomHash,classroomPathways}=await import('../dist/classroom-ui.js');
  const {knownTool}=await import('../dist/navigation-ui.js');
  const calls=[];
@@ -74,6 +74,20 @@ async function runUITests(){
  assert.match(ui.multiCurveSVG([{label:'<script>',points:[[0,0],[1,1],[2,NaN]]}]),/&lt;script&gt;/);
  assert.doesNotMatch(ui.multiCurveSVG([{label:'zero',points:[[0,0],[0,0]]}]),/NaN|Infinity/);
  assert.match(ui.multiCurveSVG([{label:'missing',points:[[0,null]]}]),/没有这个物理量/);
+ const smallChange=[{label:'V(T)',points:[[0,40],[300,40.01]]}];
+ const defaultChart=ui.multiCurveSVG(smallChange),expandedChart=ui.multiCurveSVG(smallChange,{includeZero:false});
+ const plottedPoints=svg=>svg.match(/<polyline points="([^"]+)"/)[1].split(' ').map(p=>p.split(',').map(Number));
+ assert.equal(defaultChart,ui.multiCurveSVG(smallChange,{includeZero:true}),'The default retains a zero-inclusive scale');
+ const defaultPoints=plottedPoints(defaultChart),expandedPoints=plottedPoints(expandedChart);
+ assert.ok(Math.abs(defaultPoints[0][1]-defaultPoints[1][1])<1,'The original zero-inclusive scale is unchanged');
+ assert.ok(Math.abs(expandedPoints[0][1]-expandedPoints[1][1])>150,'Data-range scaling makes small volume changes visible');
+ assert.ok(expandedPoints.every(p=>p[1]>45&&p[1]<255),'Data-range scaling retains vertical padding');
+ for(const points of [[[300,40]],[[0,40],[300,40]],[[0,0],[300,0]],[[0,-40],[300,-39.99]],[[0,null],[1,undefined],[2,NaN]]]){
+  assert.doesNotMatch(ui.multiCurveSVG([{label:'bounded',points}],{includeZero:false}),/NaN|Infinity|undefined/);
+ }
+ const single=ui.multiCurveSVG([{label:'single',points:[[300,40]]}],{includeZero:false});
+ assert.match(single,/<circle cx="365" cy="150" r="4"/,'A single valid point is visibly centered rather than an invisible polyline');
+ assert.match(ui.multiCurveSVG([{label:'empty',points:[null,[],[0,null]]}],{includeZero:false}),/没有这个物理量/);
 
  const modes=await mount({calculationOnly:true,module:'modes'});await submit(modes);
  assert.equal(ui.getMaterialResearchResult().tool,'phonon_modes');

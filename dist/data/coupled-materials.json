@@ -1,0 +1,926 @@
+{
+  "version": 1,
+  "title": "畸变、磁激发与有限温度材料",
+  "sources": [
+    {
+      "id": "iso",
+      "title": "ISODISTORT：位移模式、归一化与母相/畸变相",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "landau",
+      "title": "ISOTROPY：序参量方向与不变量",
+      "url": "https://iso.byu.edu/isotropy_doc.php"
+    },
+    {
+      "id": "spinw",
+      "title": "SpinW：交换 Hamiltonian 与线性自旋波",
+      "url": "https://spinw.org/"
+    },
+    {
+      "id": "qha",
+      "title": "Phonopy：准谐近似、热膨胀与定压热容",
+      "url": "https://phonopy.github.io/phonopy/qha.html"
+    },
+    {
+      "id": "phonopy",
+      "title": "Phonopy：谐振动自由能和热力学公式",
+      "url": "https://phonopy.github.io/phonopy/formulation.html"
+    }
+  ],
+  "modules": [
+    {
+      "id": "distortion",
+      "action": "distortion_lab",
+      "route": "distortion-modes",
+      "pathway": "structure-dynamics",
+      "title": "结构畸变分解与模式耦合",
+      "summary": "从对齐的结构对提取位移，投影到模式基底，再研究两个序参量的竞争与共存。"
+    },
+    {
+      "id": "magnons",
+      "action": "magnon_lab",
+      "route": "magnon-lab",
+      "pathway": "spin",
+      "title": "磁交换、磁振子与自旋波",
+      "summary": "在铁磁与双子晶格反铁磁链中，把交换参数、进动模式和激发色散联系起来。"
+    },
+    {
+      "id": "qha",
+      "action": "qha_lab",
+      "route": "qha-lab",
+      "pathway": "observables",
+      "title": "准谐近似与热膨胀",
+      "summary": "由多体积静态能量和振动自由能，求有限温度平衡体积、热膨胀与定压热容。"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "distortion-reference",
+      "module": "distortion",
+      "title": "先对齐晶胞，再谈畸变",
+      "summary": "原点、周期镜像和应变都可能伪装成原子位移。",
+      "sections": [
+        {
+          "title": "结构对必须有共同参照",
+          "text": "母相和畸变相须先转换到同一个相容晶胞基，元素与原子数相同。本站首版要求用户确认这种对应，不把任意两个结构自动解释为相变前后。"
+        },
+        {
+          "title": "原子对应不是只比较列表索引",
+          "text": "自动匹配需遵守元素身份和全局一对一关系。同种原子有等价距离或多种可行匹配时，应明确提供原子映射；否则模式幅度没有唯一意义。"
+        },
+        {
+          "title": "非正交晶胞的周期最短位移",
+          "text": "分数坐标差可加任意整数晶格向量；用笛卡尔长度判断哪个镜像最近。在倾斜晶胞中，各分量独立折回到半区间并不保证真实最短距离。",
+          "formula": "u=(Δf+n)L；选使 ||u|| 最小的 n∈Z³"
+        },
+        {
+          "title": "把均匀应变与内位移分开",
+          "text": "以母相晶格 Lp 作为参考度量，u_ref=Δf Lp。晶格的变形梯度 F=(Lp⁻¹Ld)ᵀ 给出均匀应变 E=(FᵀF−I)/2；实际畸变晶胞中的内位移为 u_ref Fᵀ。模式投影在母相参考系中进行。整体平移可以按原子算术平均去除，不使用质量加权质心。"
+        }
+      ],
+      "references": [
+        "iso"
+      ],
+      "lab": {
+        "preset": "batio3"
+      }
+    },
+    {
+      "id": "distortion-projection",
+      "module": "distortion",
+      "title": "用模式坐标重构原子畸变",
+      "summary": "一个模式幅度只有连同基底和归一化一起保存才有意义。",
+      "sections": [
+        {
+          "title": "模式是位移空间中的方向",
+          "text": "把 N 个原子的三维位移堆成 3N 维向量。当前使用笛卡尔几何位移，按欧氏范数规范化模式，不把它混同于质量加权声子本征矢。",
+          "formula": "u≈B Q"
+        },
+        {
+          "title": "正交与非正交基底",
+          "text": "若模式正交归一，幅度为 Bᵀu。非正交但线性独立时需解最小二乘；简单地逐个点乘会重复计数。秩亏基底不能给出唯一幅度。",
+          "formula": "Q=(BᵀB)⁻¹Bᵀu；正交时 Q=Bᵀu"
+        },
+        {
+          "title": "残差回答遗漏了什么",
+          "text": "重构只包含用户提供的模式空间。残差大说明结构位移未被这组模式充分描述，不代表程序自动找到了另一个不可约表示。",
+          "formula": "r=u−B Q；||r||/||u||"
+        },
+        {
+          "title": "从线性模式到可导出结构",
+          "text": "拖动幅度可以重构结构并导出。SrTiO₃ 示例采用相容超胞中的小位移氧转动模式；线性位移不是任意有限角度下的刚性八面体旋转。模式名称为本站描述标签。"
+        }
+      ],
+      "references": [
+        "iso"
+      ],
+      "lab": {
+        "preset": "srtio3"
+      }
+    },
+    {
+      "id": "landau-coupling",
+      "module": "distortion",
+      "title": "两个序参量怎样竞争与共存？",
+      "summary": "先检查自由能有界，再找全部驻点并比较能量。",
+      "sections": [
+        {
+          "title": "一个可核验的双模式模型",
+          "text": "取每个序参量都可独立变号的偶次教学自由能。真实材料是否允许这些项，需由具体表示与动量守恒判断；该通式不自动代表任意两种畸变。",
+          "formula": "F=a₁Q₁²+b₁Q₁⁴+a₂Q₂²+b₂Q₂⁴+cQ₁²Q₂²"
+        },
+        {
+          "title": "高阶项决定能量是否有下界",
+          "text": "b1、b2>0 且 c>−2√(b1b2) 保证四次项严格稳定，正 c 没有上限。低于边界时无下界；等于负边界时还要检查二次项。工具分别报告有界性与连续简并解，不把绘图区的最低点当作稳定相。正边界 c=2√(b1b2) 在特定二次系数下也可有连续椭圆极小。"
+        },
+        {
+          "title": "共存解来自联立方程",
+          "text": "对非零 Q₁、Q₂ 令 x=Q₁²、y=Q₂²。解线性方程后还要要求 x,y>0，并检验 Hessian；两个非零分量并不自动意味着稳定共存。",
+          "formula": "2b₁x+cy=−a₁；cx+2b₂y=−a₂"
+        },
+        {
+          "title": "比较所有稳定候选",
+          "text": "原点、单模式解和混合解都要纳入比较。正的 c 倾向惩罚同时出现的两种模式；自由能面上的极小值描述模型平衡，不给出真实畴壁或转变速率。"
+        }
+      ],
+      "references": [
+        "landau"
+      ],
+      "lab": {
+        "preset": "batio3",
+        "landau": {
+          "a1": -1,
+          "b1": 1,
+          "a2": -1,
+          "b2": 1,
+          "c": 0.5,
+          "q1": 0.6,
+          "q2": 0.6,
+          "range": 1.5,
+          "resolution": 61
+        }
+      }
+    },
+    {
+      "id": "magnon-ferromagnet",
+      "module": "magnons",
+      "title": "从交换能到铁磁自旋波",
+      "summary": "把自旋小幅偏离的代价，变成可传播的集体激发。",
+      "sections": [
+        {
+          "title": "定义符号与物理单位",
+          "text": "铁磁链采用负号交换 Hamiltonian，J>0；Δ≥1 为易轴 XXZ 交换各向异性。h 是 Zeeman 能量，单位 meV，已经包含 gμB，不能直接当作 Tesla。",
+          "formula": "H=−JΣ(SxᵢSxᵢ₊₁+SyᵢSyᵢ₊₁+ΔSzᵢSzᵢ₊₁)−hΣSzᵢ"
+        },
+        {
+          "title": "线性化只保留小幅运动",
+          "text": "围绕沿 +z 的共线参考态展开，忽略激发之间的高阶相互作用。S 是自旋量子数；动画的小角度振幅仅用于展示模式，不代表给定温度的热占据。",
+          "formula": "ε(q)=h+2JS[Δ−cos(qa)]"
+        },
+        {
+          "title": "无隙与有隙从同一个式子出现",
+          "text": "当 Δ=1、h=0，q=0 的均匀转动无能量代价。易轴各向异性或沿参考磁矩的正场可以打开能隙。",
+          "formula": "ε(0)=h+2JS(Δ−1)"
+        },
+        {
+          "title": "波矢与相位一起看",
+          "text": "本站图轴 q 表示 qa/π；铁磁第一布里渊区为 [−1,1]。移动波矢可观察相邻自旋的相位差，再用时间/相位游标观察进动。",
+          "formula": "Δφ=qa"
+        }
+      ],
+      "references": [
+        "spinw"
+      ],
+      "lab": {
+        "model": "fm",
+        "anisotropy": 1,
+        "field": 0,
+        "q": 0.25
+      }
+    },
+    {
+      "id": "magnon-antiferromagnet",
+      "module": "magnons",
+      "title": "反铁磁的两种偏振与磁场劈裂",
+      "summary": "两个反向子晶格的耦合，使运动不同于两条独立铁磁链。",
+      "sections": [
+        {
+          "title": "磁性周期改变了布里渊区",
+          "text": "Néel 参考态的磁性原胞包含两个子晶格。以最近邻距离 a 计，约化区为 qa/π∈[−1/2,1/2]；不能直接把它当成铁磁链的完整区间。"
+        },
+        {
+          "title": "双子晶格需要成对对角化",
+          "text": "在两子晶格局域量子化轴中展开，正负频率和共轭振幅成对出现。物理正能分支来自保持玻色对易关系的变换。",
+          "formula": "ε₀(q)=2JS√[Δ²−cos²(qa)]"
+        },
+        {
+          "title": "纵向场分开两种偏振",
+          "text": "稳定 Néel 背景上的两支模式分别移动 ±h；有符号分支降至零时必须重新审视参考态。",
+          "formula": "ε±(q)=ε₀(q)±h"
+        },
+        {
+          "title": "模型谱与真实材料分开",
+          "text": "先用少子晶格链理解机制，再阅读 MnF₂ 等反铁磁材料背景。教学链的参数、维度和谱不等于真实 MnF₂ 的定量拟合；小 S 一维量子链也不由线性自旋波完整描述。"
+        }
+      ],
+      "references": [
+        "spinw"
+      ],
+      "lab": {
+        "model": "afm",
+        "anisotropy": 1.15,
+        "field": 0.2,
+        "q": 0.25
+      }
+    },
+    {
+      "id": "magnon-stability",
+      "module": "magnons",
+      "title": "画出频谱之前，先检查参考态",
+      "summary": "软模、有符号能量和不稳定背景需要不同的解释。",
+      "sections": [
+        {
+          "title": "各向同性极限提供基准",
+          "text": "Δ=1、h=0 时，铁磁长波能量按 q² 消失，反铁磁线性自旋波按 |q| 消失。这是检查离散公式与坐标轴的独立方法。",
+          "formula": "1−cos x≈x²/2；|sin x|≈|x|"
+        },
+        {
+          "title": "静态相变阈值也要检查",
+          "text": "易轴反铁磁纵场可导致自旋翻转/倾斜态。本站同时显示经典基态范围与小振动参考谱，越过范围后关闭把旧背景当稳定态的进动演示。"
+        },
+        {
+          "title": "零频的相位游标不是真实有限周期",
+          "text": "均匀零能模式没有有限振动周期。低能极限下模矢可能奇异，程序应给出原因，而不是产生无穷振幅或一个虚假的周期。"
+        },
+        {
+          "title": "从自旋群到可观测激发",
+          "text": "比较保持和破坏连续自旋转动的模型，解释能隙的变化。完整中子散射强度还需磁形状因子、几何与关联函数，此首版展示色散和线性模式。"
+        }
+      ],
+      "references": [
+        "spinw"
+      ],
+      "lab": {
+        "model": "afm",
+        "anisotropy": 1,
+        "field": 0,
+        "q": 0
+      }
+    },
+    {
+      "id": "qha-free-energy",
+      "module": "qha",
+      "title": "热膨胀从不同体积的自由能竞争产生",
+      "summary": "固定体积的 Cv 与平衡体积随温度变化是两个不同的问题。",
+      "sections": [
+        {
+          "title": "先准备一组相容的数据",
+          "text": "每个体积都要有静态能量和振动自由能，使用相同的计算胞计量、原子数、温度网格和能量单位。体积必须对应各自声子计算，而不是把同一份 DOS 重复赋给不同体积。"
+        },
+        {
+          "title": "把静态和振动贡献相加",
+          "text": "声子自由能含零点能与温度项，但不包含静态电子基态能。外压通过 pV 进入目标函数。",
+          "formula": "G(T,p)=minᵥ[Estatic(V)+Fvib(T,V)+pV]"
+        },
+        {
+          "title": "温度改变平衡位置",
+          "text": "随着温度变化，声子自由能的体积依赖会改变总自由能最低点。调节温度游标，观察散点、拟合曲线和 Veq 的移动。",
+          "formula": "∂[E_static(V)+F_vib(T,V)]/∂V+p=0；∂²[E_static+F_vib]/∂V²>0"
+        },
+        {
+          "title": "当前计算方法与材料含义",
+          "text": "本实验使用明确给出的局部低阶多项式拟合，不冒充通用状态方程求解器。内置体积依赖 Einstein 模型用于验证机制；定量材料结果需要用户导入并检查体积与温度收敛。"
+        }
+      ],
+      "references": [
+        "qha",
+        "phonopy"
+      ],
+      "lab": {
+        "source": "preset",
+        "gamma": 1.5,
+        "pressure": 0
+      }
+    },
+    {
+      "id": "qha-response",
+      "module": "qha",
+      "title": "从平衡自由能得到热膨胀与 Cp",
+      "summary": "求导之前先说明固定的变量，并保留单位换算。",
+      "sections": [
+        {
+          "title": "体积膨胀系数",
+          "text": "αV 是平衡体积对温度导数除以体积。只有各向同性膨胀时，线膨胀系数才等于 αV/3；一个体积路径不能自动给出一般各向异性膨胀张量。",
+          "formula": "αV=(1/Veq)(∂Veq/∂T)p"
+        },
+        {
+          "title": "定压热容来自最小化后的 G",
+          "text": "先对每个温度最小化体积，再对 G(T,p) 求二阶温度导数。固定体积的 Cv 则来自同一体积下 F(T,V) 的导数，二者不能交换标签。",
+          "formula": "Cp=−T(∂²G/∂T²)p"
+        },
+        {
+          "title": "体积曲率决定压缩模量",
+          "text": "平衡点处的正体积曲率给出等温体积模量。若拟合极小在输入体积边界，无法仅凭边界外延推算可靠的曲率与平衡体积。",
+          "formula": "BT=Veq(∂²Ftotal/∂V²)T"
+        },
+        {
+          "title": "数值微分的端点和噪声",
+          "text": "内部温度点才有两侧数据支持。本工具首末温度不报告派生 αV/Cp；拟合噪声会被二阶导数放大，需要比较温度步长和体积窗口。"
+        }
+      ],
+      "references": [
+        "qha"
+      ],
+      "lab": {
+        "source": "preset",
+        "gamma": 1.5,
+        "pressure": 1
+      }
+    },
+    {
+      "id": "qha-audit",
+      "module": "qha",
+      "title": "怎样判断一条热膨胀曲线可信？",
+      "summary": "检查有效极小、拟合残差、体积窗口和数据来源。",
+      "sections": [
+        {
+          "title": "至少覆盖极小附近的体积",
+          "text": "首版要求五个或更多不同体积，并核验温度网格一致。每个温度的最低点应被样本覆盖；出现边界极小时扩大体积范围，再重新计算输入数据。"
+        },
+        {
+          "title": "拟合优度不等于物理收敛",
+          "text": "小残差只说明函数贴近当前样本。需要增加体积点、改变拟合窗口和阶数，检查平衡体积和体积模量的变化。声子 q 网格收敛要在数据生产阶段另外核验。"
+        },
+        {
+          "title": "相变附近需要更谨慎的模型",
+          "text": "不同结构分支应分别建立自由能后再比较。在软模或明显非谐区域，单一稳定谐参考态的准谐近似可能失效；本工具不生成非谐力常数或热导率。"
+        },
+        {
+          "title": "把计算过程保存为研究记录",
+          "text": "导出各体积原始能量、单位、温度网格、压力、拟合设置、残差和无效点原因。重算时保留旧记录，才能解释曲线因何改变。"
+        }
+      ],
+      "references": [
+        "qha"
+      ],
+      "lab": {
+        "source": "preset",
+        "fit_degree": 2,
+        "fit_window": 5
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "id": "distortion-image",
+      "lesson": "distortion-reference",
+      "title": "周期边界和参照晶胞",
+      "prompt": "一维长度为 4 Å，母相分数坐标 0.98，畸变相为 0.02；没有应变。",
+      "steps": [
+        {
+          "prompt": "直接相减的分数坐标差是多少？",
+          "choices": [
+            "0.04",
+            "−0.96",
+            "0.96"
+          ],
+          "answer": 1,
+          "hint": "先算 0.02−0.98。",
+          "explanation": "原始差为 −0.96，还没有选周期镜像。"
+        },
+        {
+          "prompt": "选择最近周期镜像后的分数差是多少？",
+          "choices": [
+            "−0.96",
+            "1.04",
+            "0.04"
+          ],
+          "answer": 2,
+          "hint": "给原始差加一个整数平移。",
+          "explanation": "−0.96+1=0.04。"
+        },
+        {
+          "prompt": "实际最短位移是多少？",
+          "choices": [
+            "0.16 Å",
+            "0.04 Å",
+            "3.84 Å"
+          ],
+          "answer": 0,
+          "hint": "乘以晶格长度 4 Å。",
+          "explanation": "0.04×4=0.16 Å。"
+        },
+        {
+          "prompt": "非正交三维晶胞也能总靠逐分量折回吗？",
+          "choices": [
+            "总能",
+            "不能，应比较笛卡尔长度",
+            "只看元素即可"
+          ],
+          "answer": 1,
+          "hint": "晶格向量之间有交叉度量项。",
+          "explanation": "倾斜晶胞中必须最小化真实笛卡尔范数。"
+        }
+      ]
+    },
+    {
+      "id": "distortion-amplitudes",
+      "lesson": "distortion-projection",
+      "title": "正交投影与残差",
+      "prompt": "在二维位移子空间取 b₁=(1,1)/√2，b₂=(1,−1)/√2，u=(√2,0)。",
+      "steps": [
+        {
+          "prompt": "b₁ 与 b₂ 的内积是多少？",
+          "choices": [
+            "1",
+            "√2",
+            "0"
+          ],
+          "answer": 2,
+          "hint": "展开两个分量的乘积。",
+          "explanation": "(1−1)/2=0。"
+        },
+        {
+          "prompt": "Q₁=b₁·u 等于多少？",
+          "choices": [
+            "1",
+            "0",
+            "2"
+          ],
+          "answer": 0,
+          "hint": "只有 u 的第一分量非零。",
+          "explanation": "√2/√2=1。"
+        },
+        {
+          "prompt": "Q₂ 等于多少？",
+          "choices": [
+            "−1",
+            "1",
+            "0"
+          ],
+          "answer": 1,
+          "hint": "计算 b₂ 的第一分量与 √2 的乘积。",
+          "explanation": "Q₂=1，因此两个模式共同重构 u。"
+        },
+        {
+          "prompt": "只保留 b₁，残差范数是多少？",
+          "choices": [
+            "0",
+            "√2",
+            "1"
+          ],
+          "answer": 2,
+          "hint": "遗漏的分量为 Q₂b₂，b₂ 已归一。",
+          "explanation": "残差范数为 |Q₂|=1。"
+        }
+      ]
+    },
+    {
+      "id": "landau-coexist",
+      "lesson": "landau-coupling",
+      "title": "竞争参数怎样改变平衡幅度？",
+      "prompt": "取 a₁=a₂=−1，b₁=b₂=1，c=1，求对称混合解。",
+      "steps": [
+        {
+          "prompt": "令 x=Q₁²、y=Q₂²，第一条方程是什么？",
+          "choices": [
+            "x+y=1",
+            "2x+y=1",
+            "2x−y=1"
+          ],
+          "answer": 1,
+          "hint": "将参数代入 2b₁x+cy=−a₁。",
+          "explanation": "得到 2x+y=1。"
+        },
+        {
+          "prompt": "对称解 x=y 为多少？",
+          "choices": [
+            "1/2",
+            "1",
+            "1/3"
+          ],
+          "answer": 2,
+          "hint": "将 y=x 代入第一式。",
+          "explanation": "3x=1，所以 x=y=1/3。"
+        },
+        {
+          "prompt": "混合解的自由能是多少？",
+          "choices": [
+            "−1/3",
+            "−1/4",
+            "0"
+          ],
+          "answer": 0,
+          "hint": "代入 −x−y+x²+y²+xy。",
+          "explanation": "−2/3+3/9=−1/3。"
+        },
+        {
+          "prompt": "单模式最低能为 −1/4，哪一个更低？",
+          "choices": [
+            "单模式",
+            "混合解",
+            "相等"
+          ],
+          "answer": 1,
+          "hint": "比较两个负数。",
+          "explanation": "−1/3<−1/4，且混合解 Hessian 为正，此组参数共存稳定。"
+        }
+      ]
+    },
+    {
+      "id": "magnon-gap",
+      "lesson": "magnon-ferromagnet",
+      "title": "手算铁磁链的能隙与带宽",
+      "prompt": "取 J=1 meV、S=1、Δ=1.2、h=0.1 meV。",
+      "steps": [
+        {
+          "prompt": "q=0 处的余弦是多少？",
+          "choices": [
+            "0",
+            "−1",
+            "1"
+          ],
+          "answer": 2,
+          "hint": "cos(0)=1。",
+          "explanation": "均匀模式的余弦为 1。"
+        },
+        {
+          "prompt": "q=0 的能量是多少？",
+          "choices": [
+            "0.5 meV",
+            "0.1 meV",
+            "2.5 meV"
+          ],
+          "answer": 0,
+          "hint": "h+2JS(Δ−1)。",
+          "explanation": "0.1+2×0.2=0.5 meV。"
+        },
+        {
+          "prompt": "qa=π 处的能量是多少？",
+          "choices": [
+            "2.5 meV",
+            "4.5 meV",
+            "0.5 meV"
+          ],
+          "answer": 1,
+          "hint": "cos π=−1。",
+          "explanation": "0.1+2×(1.2+1)=4.5 meV。"
+        },
+        {
+          "prompt": "两者之差为多少？",
+          "choices": [
+            "0.4 meV",
+            "2 meV",
+            "4 meV"
+          ],
+          "answer": 2,
+          "hint": "用区边界能量减去区中心能量。",
+          "explanation": "带宽为 4JS=4 meV。"
+        }
+      ]
+    },
+    {
+      "id": "magnon-afm",
+      "lesson": "magnon-antiferromagnet",
+      "title": "反铁磁分支的磁场劈裂",
+      "prompt": "取 J=S=1、Δ=1.25，q=0，h=0.2 meV。",
+      "steps": [
+        {
+          "prompt": "零场根号内的数是多少？",
+          "choices": [
+            "0.5625",
+            "1.5625",
+            "0.25"
+          ],
+          "answer": 0,
+          "hint": "计算 Δ²−1。",
+          "explanation": "1.25²−1=0.5625。"
+        },
+        {
+          "prompt": "零场能量 ε₀ 为多少？",
+          "choices": [
+            "0.75 meV",
+            "1.5 meV",
+            "3 meV"
+          ],
+          "answer": 1,
+          "hint": "根号后乘 2JS。",
+          "explanation": "2×0.75=1.5 meV。"
+        },
+        {
+          "prompt": "两支能量是哪一组？",
+          "choices": [
+            "1.5 与 1.5",
+            "0.2 与 −0.2",
+            "1.3 与 1.7 meV"
+          ],
+          "answer": 2,
+          "hint": "分别减去和加上 h。",
+          "explanation": "ε±=1.5±0.2。"
+        },
+        {
+          "prompt": "磁场分裂的大小是多少？",
+          "choices": [
+            "0.4 meV",
+            "0.2 meV",
+            "3 meV"
+          ],
+          "answer": 0,
+          "hint": "两支之差等于 2h。",
+          "explanation": "1.7−1.3=0.4 meV。"
+        }
+      ]
+    },
+    {
+      "id": "magnon-low-q",
+      "lesson": "magnon-stability",
+      "title": "长波极限与 Goldstone 模式",
+      "prompt": "令 Δ=1、h=0，比较小 qa 下的铁磁与反铁磁模型。",
+      "steps": [
+        {
+          "prompt": "铁磁公式中 1−cos(qa) 的最低阶项是？",
+          "choices": [
+            "|qa|",
+            "(qa)²/2",
+            "1"
+          ],
+          "answer": 1,
+          "hint": "用余弦的 Taylor 展开。",
+          "explanation": "cos x=1−x²/2+…"
+        },
+        {
+          "prompt": "铁磁 ε 的最低阶形式是？",
+          "choices": [
+            "2JS|qa|",
+            "2JS",
+            "JS(qa)²"
+          ],
+          "answer": 2,
+          "hint": "将上一式乘以 2JS。",
+          "explanation": "铁磁长波色散为二次型。"
+        },
+        {
+          "prompt": "反铁磁 √(1−cos²qa) 等于？",
+          "choices": [
+            "|sin qa|",
+            "cos qa",
+            "1−cos qa"
+          ],
+          "answer": 0,
+          "hint": "用三角恒等式并保留绝对值。",
+          "explanation": "平方根为 |sin qa|。"
+        },
+        {
+          "prompt": "反铁磁长波 ε 最低阶形式是？",
+          "choices": [
+            "JS(qa)²",
+            "2JS|qa|",
+            "零，整个区间都为零"
+          ],
+          "answer": 1,
+          "hint": "小角度 sin x≈x。",
+          "explanation": "线性自旋波的反铁磁长波分支是线性的；零点仅在相应波矢。"
+        }
+      ]
+    },
+    {
+      "id": "qha-pressure",
+      "lesson": "qha-free-energy",
+      "title": "压力为什么倾向更小体积？",
+      "prompt": "比较同一温度的两点：V₁=40 Å³、V₂=42 Å³，零压总自由能相同，外压为正。",
+      "steps": [
+        {
+          "prompt": "需要加入哪一项？",
+          "choices": [
+            "−pV",
+            "p/V",
+            "pV"
+          ],
+          "answer": 2,
+          "hint": "固定压力下使用 Gibbs 自由能。",
+          "explanation": "G 的待最小化函数包含 +pV。"
+        },
+        {
+          "prompt": "正压下哪一项 pV 更大？",
+          "choices": [
+            "V₂ 对应项",
+            "V₁ 对应项",
+            "二者相同"
+          ],
+          "answer": 0,
+          "hint": "压力相同，体积更大则乘积更大。",
+          "explanation": "V₂=42 Å³ 的 pV 更大。"
+        },
+        {
+          "prompt": "在这两个自由能原本相同的候选中，哪一个更有利？",
+          "choices": [
+            "V₂",
+            "V₁",
+            "无法根据任何条件比较"
+          ],
+          "answer": 1,
+          "hint": "比较加入 pV 后的总量。",
+          "explanation": "正压使 V₁ 的总自由能更低。"
+        },
+        {
+          "prompt": "只有一份固定体积 DOS 能确定 V(T) 吗？",
+          "choices": [
+            "能，直接积分",
+            "能，令 Cp=Cv",
+            "不能，需要体积依赖数据"
+          ],
+          "answer": 2,
+          "hint": "最小化需要不同体积之间的比较。",
+          "explanation": "缺少 E(V) 与 Fvib(T,V) 的体积依赖时，无法确定平衡体积。"
+        }
+      ]
+    },
+    {
+      "id": "qha-derivatives",
+      "lesson": "qha-response",
+      "title": "从解析曲线求响应",
+      "prompt": "设 V(T)=V₀(1+aT)，G(T)=G₀−bT²/2，a,b>0，使用一致单位。",
+      "steps": [
+        {
+          "prompt": "dV/dT 是多少？",
+          "choices": [
+            "V₀a",
+            "aT",
+            "V₀(1+aT)"
+          ],
+          "answer": 0,
+          "hint": "对线性温度项求导。",
+          "explanation": "dV/dT=V₀a。"
+        },
+        {
+          "prompt": "αV 是多少？",
+          "choices": [
+            "a",
+            "a/(1+aT)",
+            "3a"
+          ],
+          "answer": 1,
+          "hint": "将导数除以当前体积。",
+          "explanation": "αV=V₀a/[V₀(1+aT)]。"
+        },
+        {
+          "prompt": "d²G/dT² 是多少？",
+          "choices": [
+            "b",
+            "−bT",
+            "−b"
+          ],
+          "answer": 2,
+          "hint": "对 −bT²/2 连续求两次导数。",
+          "explanation": "二阶导数为 −b。"
+        },
+        {
+          "prompt": "Cp 是多少？",
+          "choices": [
+            "bT",
+            "b",
+            "−bT"
+          ],
+          "answer": 0,
+          "hint": "Cp=−TG″。",
+          "explanation": "Cp=bT，在 T≥0 时非负。"
+        }
+      ]
+    },
+    {
+      "id": "qha-boundary",
+      "lesson": "qha-audit",
+      "title": "识别体积外推与假收敛",
+      "prompt": "在 36–44 Å³ 的输入范围，拟合自由能仍随体积增大持续下降。",
+      "steps": [
+        {
+          "prompt": "在已采样范围内有被包围的极小吗？",
+          "choices": [
+            "有，在 40",
+            "没有",
+            "有，在 36"
+          ],
+          "answer": 1,
+          "hint": "下降函数在内部不会出现极小。",
+          "explanation": "未覆盖极小，44 Å³ 只是采样边界。"
+        },
+        {
+          "prompt": "合适的下一步是？",
+          "choices": [
+            "直接外推十倍体积",
+            "将边界称为平衡态",
+            "扩大体积范围并补算"
+          ],
+          "answer": 2,
+          "hint": "需要新的物理输入，而不是只改变图轴。",
+          "explanation": "应补充覆盖极小附近的体积点与声子计算。"
+        },
+        {
+          "prompt": "很小的拟合残差能证明 q 网格收敛吗？",
+          "choices": [
+            "不能",
+            "能",
+            "只要五个体积就能"
+          ],
+          "answer": 0,
+          "hint": "拟合误差与声子采样误差来自不同步骤。",
+          "explanation": "残差只评价当前数据拟合，不验证原始声子网格。"
+        },
+        {
+          "prompt": "温度端点缺少两侧数据时，本工具怎样处理 Cp？",
+          "choices": [
+            "强制设零",
+            "不报告并说明原因",
+            "复制中间值"
+          ],
+          "answer": 1,
+          "hint": "不要把缺失导数伪装成物理结果。",
+          "explanation": "端点派生量为空，要求更多温度数据支持。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "batio3",
+      "formula": "BaTiO₃",
+      "title": "把极性畸变写成模式坐标",
+      "summary": "从理想母胞、Ti/O 相对位移到模式重构，再用双序参量自由能理解竞争。",
+      "assumption": "结构和模式是原创理想教学模型；Landau 系数不由该结构自动拟合。",
+      "modules": [
+        "distortion"
+      ],
+      "links": [
+        [
+          "原有相变与畴",
+          "#compute/phase?material=batio3"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors?preset=tetragonal_4mm"
+        ]
+      ]
+    },
+    {
+      "id": "srtio3",
+      "formula": "SrTiO₃",
+      "title": "相容超胞与反相氧八面体转动",
+      "summary": "在 2×2×2 超胞中观察交替转动的线性位移，投影和重构同一畸变。",
+      "assumption": "小位移模式描述；不将任意幅度解释为严格刚性八面体或真实温度相图。",
+      "modules": [
+        "distortion"
+      ],
+      "links": [
+        [
+          "声子模式与冻结结构",
+          "#compute/phonon-modes"
+        ],
+        [
+          "衍射相位与消光",
+          "#compute/diffraction"
+        ]
+      ]
+    },
+    {
+      "id": "afm-chain",
+      "formula": "XXZ 教学链",
+      "title": "从反向磁矩到成对的磁激发",
+      "summary": "比较铁磁与反铁磁交换，观察各向异性、外场及子晶格进动。",
+      "assumption": "一维线性自旋波教学模型；MnF₂ 仅作为已有三维材料背景，不使用链参数冒充定量谱。",
+      "modules": [
+        "magnons"
+      ],
+      "links": [
+        [
+          "磁群与共表示",
+          "#classroom/spin?track=magnetic"
+        ],
+        [
+          "MnF₂ 磁性材料",
+          "#atlas/materials?material=mnf2"
+        ]
+      ]
+    },
+    {
+      "id": "qha-solid",
+      "formula": "多体积固体模型",
+      "title": "从振动自由能走到热膨胀",
+      "summary": "比较温度、压力与频率的体积依赖，导入自己的多体积数据后保存研究记录。",
+      "assumption": "内置 Einstein 频率、静态能量与参数是原创教学构造，不是某个材料的第一性原理数据。",
+      "modules": [
+        "qha"
+      ],
+      "links": [
+        [
+          "固定体积声子热力学",
+          "#compute/phonon-thermo"
+        ],
+        [
+          "Phonopy 数据导入",
+          "#compute/phonopy"
+        ]
+      ]
+    }
+  ]
+}
