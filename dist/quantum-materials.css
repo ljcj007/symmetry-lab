@@ -4,3 +4,6 @@
 @media(max-width:700px){.qm-lab .obs-controls{grid-template-columns:1fr}}
 
 .qm-orbital{touch-action:none;cursor:grab}.qm-orbital:active{cursor:grabbing}.qm-map{width:100%;max-width:660px;display:block;margin:auto}.qm-page .obs-formula{font-size:18px}.qm-plot-key{display:flex;gap:18px;flex-wrap:wrap}.qm-plot-key span{display:flex;align-items:center;gap:6px}.qm-dot{width:14px;height:14px;border-radius:50%;display:inline-block}.qm-results svg{max-width:100%}.qm-results .mr-chart{width:100%}.qm-lab select{min-width:0}
+
+/* Course directory consumes a column; keep scientific plots at readable width. */
+.classroom-shell .qm-lab{grid-template-columns:minmax(0,1fr)}.classroom-shell .qm-lab .obs-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.classroom-shell .qm-lab .obs-controls>p,.classroom-shell .qm-lab .obs-controls>label:has(textarea),.classroom-shell .qm-lab .obs-controls>label:has(input[type=file]){grid-column:1/-1}@media(max-width:700px){.classroom-shell .qm-lab .obs-controls{grid-template-columns:1fr}}
