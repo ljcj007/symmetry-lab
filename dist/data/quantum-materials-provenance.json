@@ -1,0 +1,160 @@
+{
+  "release": "20261027-quantum1",
+  "date": "2026-10-27",
+  "originalContent": true,
+  "sources": [
+    {
+      "id": "quanty-nio",
+      "title": "Quanty：NiO晶场与多电子基态教程",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    },
+    {
+      "id": "crispy-cf",
+      "title": "ESRF Crispy：晶场、坐标与Dq/Ds/Dt约定",
+      "url": "https://crispy.esrf.fr/en/stable/user_guide/crystal_field.html"
+    },
+    {
+      "id": "quanty-d4h",
+      "title": "Quanty：D4h特征标与轴约定",
+      "url": "https://www.quanty.org/physics_chemistry/point_groups/d4h"
+    },
+    {
+      "id": "jt-linear",
+      "title": "Requist等：线性E⊗e Jahn–Teller模型",
+      "url": "https://arxiv.org/abs/1710.04041"
+    },
+    {
+      "id": "geometry-fhs",
+      "title": "Fukui, Hatsugai, Suzuki：离散布里渊区 Chern 数",
+      "url": "https://arxiv.org/abs/cond-mat/0503172"
+    },
+    {
+      "id": "geometry-qwz",
+      "title": "Qi, Wu, Zhang：二维晶格拓扑模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    },
+    {
+      "id": "geometry-metric",
+      "title": "tbkit：Bloch 带的量子度规与 Berry 曲率",
+      "url": "https://cpoli.github.io/tbkit/api/gallery/topology/plot_quantum_geometry.html"
+    },
+    {
+      "id": "geometry-ssh",
+      "title": "Su, Schrieffer, Heeger：Solitons in Polyacetylene",
+      "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.42.1698"
+    },
+    {
+      "id": "boltztrap2",
+      "title": "Madsen, Carrete & Verstraete: BoltzTraP2 (2018)",
+      "url": "https://arxiv.org/abs/1712.07946"
+    },
+    {
+      "id": "boltzwann",
+      "title": "Wannier90 BoltzWann: transport integrals and conventions",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/boltzwann/"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF",
+  "files": [
+    {
+      "path": "dist/data/crystal-field-content.json",
+      "sha256": "6c3ec7230cac4fa3e7c60942e02e5654c188cebc3bad2a33101389c4ff7c7923"
+    },
+    {
+      "path": "dist/data/electron-transport-content.json",
+      "sha256": "a2110ebafea29f1410fa143429d656e1163b499c404366e78b66eda7989b885f"
+    },
+    {
+      "path": "dist/data/quantum-geometry-content.json",
+      "sha256": "7add7170eacc6201e78a23f9266f14a9432e44428c533041f276538933881047"
+    },
+    {
+      "path": "dist/data/quantum-materials.json",
+      "sha256": "b301f32ab31fa57ce81a74d3b83f50ecec6fce6c4b4d65d0f3b7d9e632cfb73a"
+    },
+    {
+      "path": "dist/docs/crystal-field-lab.md",
+      "sha256": "2aaea9847a507a0a94c2d81b39bf92f505f16444edb5c3dc80c00e5369dd1c83"
+    },
+    {
+      "path": "dist/docs/electron-transport-lab.md",
+      "sha256": "e7f0cfac25f899659aa0f443872a2eb5316b3132030a2a24670a03a74e4e31cc"
+    },
+    {
+      "path": "dist/docs/quantum-geometry-lab.md",
+      "sha256": "dc1e0954ed5ed4ba7f301c3d320825683fedf642dddb14cb19292512438423b9"
+    },
+    {
+      "path": "dist/docs/quantum-materials.md",
+      "sha256": "ca1793a0915fcd81867ce8901e67510368fed3d809ff5eb70dc129cecad385a3"
+    },
+    {
+      "path": "dist/examples/crystal-field-jahn-teller.json",
+      "sha256": "610eb82b0d5c79341ffa2dc8b72ab3d15633f7e39fbc5977c5a3ce0cc191b07d"
+    },
+    {
+      "path": "dist/examples/crystal-field-negative-soc.json",
+      "sha256": "dbd6594dc53f8ac9a353d651212c02dba4d10bbbbf1c11541b364b9790e2a33c"
+    },
+    {
+      "path": "dist/examples/crystal-field-octahedral.json",
+      "sha256": "3a441ae05bab7a83b25f8bcf16e6ae297c106d69058e3808ecc3018d52007aac"
+    },
+    {
+      "path": "dist/examples/crystal-field-tetrahedral.json",
+      "sha256": "d0b0b1f6a935e0d8c73abe6950313e16ffba9b035947e804d0a8448124b4e13a"
+    },
+    {
+      "path": "dist/examples/electron-transport-import.json",
+      "sha256": "daf0bc33a1fe1e2e674283599bccd14239a13087f371206f6b53f7750e1beb4c"
+    },
+    {
+      "path": "dist/examples/electron-transport-sheet.json",
+      "sha256": "ae423c47533a0e13b7705496bac1f04b89645ec158913299f3b5f093d5283b67"
+    },
+    {
+      "path": "dist/examples/electron-transport-sparse.json",
+      "sha256": "7cacd269f7dc6a643539c224f7d6a0df7e1f0b53a12b704389fd2917a935305b"
+    },
+    {
+      "path": "dist/examples/electron-transport-volume.json",
+      "sha256": "25491cd8e457e7f3de187052547e2bf7684f4c64a9e4b9d87d89e75e5b991dbc"
+    },
+    {
+      "path": "dist/examples/quantum-geometry-closing.json",
+      "sha256": "a6628b6e3ac96b2d09a82f37b0a0549baede9a41013a254f60efe509d61ee6da"
+    },
+    {
+      "path": "dist/examples/quantum-geometry-qwz.json",
+      "sha256": "c571a51e24543359c0675fb65a8c4f5be8d647271f3bb5f5d699932c5e070345"
+    },
+    {
+      "path": "dist/examples/quantum-geometry-ssh.json",
+      "sha256": "81476b3341e09070104f869fa9db3b7ec3b2286dddc49934b31942b31d00c2a3"
+    },
+    {
+      "path": "dist/python/crystal_field_lab.py",
+      "sha256": "7fd92a7f1b207b7cd23f3217463a6793a0b59118f764196c062f0bfd763b6348"
+    },
+    {
+      "path": "dist/python/electron_transport_lab.py",
+      "sha256": "7bdac7e38c509cbb5b46c66d77d949a490d054f66b3fb6c285d7f1ab0fd36361"
+    },
+    {
+      "path": "dist/python/quantum_geometry_lab.py",
+      "sha256": "41f8b521449b01dccf7ff347c7e1694395db30f4c5ff723b329d383d1c910f7b"
+    },
+    {
+      "path": "dist/quantum-materials-ui.js",
+      "sha256": "8e79177cccf919c47b244aa0851eee248fc02c2d637a9558fe984fd10ba003c5"
+    },
+    {
+      "path": "dist/quantum-materials.css",
+      "sha256": "87f91e99837966855c6dc131857be86959ffb8c09787158a9b5e681bc654a836"
+    },
+    {
+      "path": "dist/quantum-plots.js",
+      "sha256": "fbc2c22dcc3ab50b2780c85e026c1919f3666af059fd36046a9fa545714384f6"
+    }
+  ]
+}

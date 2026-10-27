@@ -528,6 +528,45 @@
         "No direct WAVECAR or generic 3D plane-wave unfolding; energies alone are insufficient"
       ],
       "sha256": "1f80fb03bd5d446d270d4a70ce80ca01b630a78ad3fc9ac1c82bb97fa55b6d77"
+    },
+    {
+      "path": "dist/python/crystal_field_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Single-electron real d-orbital cubic/tetragonal crystal field, exact 10x10 SOC, E x e Jahn-Teller teaching model"
+      ],
+      "limitations": [
+        "Not a multielectron multiplet, high/low-spin or fitted material solver"
+      ],
+      "sha256": "7fd92a7f1b207b7cd23f3217463a6793a0b59118f764196c062f0bfd763b6348"
+    },
+    {
+      "path": "dist/python/quantum_geometry_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "SSH/QWZ quantum metric, Berry geometry, gauge invariance, analytic gap and mesh diagnostics"
+      ],
+      "limitations": [
+        "Fixed two-band teaching models, not general materials topology classification"
+      ],
+      "sha256": "41f8b521449b01dccf7ff347c7e1694395db30f4c5ff723b329d383d1c910f7b"
+    },
+    {
+      "path": "dist/python/electron_transport_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Constant scalar relaxation-time electronic transport on full 2D/3D BZ meshes, tensor moments and convergence checks"
+      ],
+      "limitations": [
+        "No general DFT Fourier interpolation, lattice thermal conductivity or material ZT prediction"
+      ],
+      "sha256": "7bdac7e38c509cbb5b46c66d77d949a490d054f66b3fb6c285d7f1ab0fd36361"
     }
   ],
   "coordinate_conventions": {
@@ -561,7 +600,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",

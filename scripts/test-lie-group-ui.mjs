@@ -39,7 +39,7 @@ const commutator={lab:'lie',experiment:'commutator',group:'su3',title:'Commutato
 globalThis.localStorage={getItem:()=>'{bad',setItem:()=>{}};
 const pendingFetch=[];globalThis.fetch=url=>new Promise(resolve=>pendingFetch.push({url,resolve}));
 const race=await import('../dist/lie-group-ui.js?race');assert.equal(race.getLieGroupResult(),null);
-const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261026-electronic1/);
+const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261027-quantum1/);
 const detachedRoot=detached.firstElementChild,loadingHTML=detachedRoot.innerHTML;detached.isConnected=false;assert.equal(detachedRoot.parentNode,detached,'Hub detaches the whole container, not its root');pendingFetch[0].resolve(response());await loading;
 assert.equal(detachedRoot.innerHTML,loadingHTML,'Detached course containers must not render a late loader result');
 

@@ -1,0 +1,418 @@
+{
+  "schema": "symmetry-lab-quantum-content-fragment-1",
+  "version": "20261027-quantum1",
+  "modules": [
+    {
+      "id": "transport",
+      "title": "电子输运与热电响应",
+      "summary": "完整BZ、费米热窗口与速度张量：比较电导、Seebeck和开路电子热导，核查二维/三维单位与网格收敛。",
+      "pathway": "observables",
+      "route": "electron-transport-lab",
+      "action": "electron_transport_lab",
+      "presets": [
+        {
+          "id": "transport-sheet-electrons",
+          "title": "二维各向异性 · 电子侧",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 300,
+            "mesh": 48,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-sheet-holes",
+          "title": "二维同一能带 · 空态侧",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 1.2,
+            "temperature": 300,
+            "mesh": 48,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-volume",
+          "title": "三维立方体 · 等方输运",
+          "input": {
+            "source": "model",
+            "dimension": 3,
+            "hopping": 0.1,
+            "anisotropy": 1,
+            "zAnisotropy": 1,
+            "chemicalPotential": 0.3,
+            "temperature": 600,
+            "mesh": 24,
+            "muMin": -0.1,
+            "muMax": 1.3
+          }
+        },
+        {
+          "id": "transport-sparse",
+          "title": "低温粗网格 · 收敛反例",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 10,
+            "mesh": 8,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-tau",
+          "title": "给定 τ=10 fs · 从比值到系数",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 300,
+            "mesh": 48,
+            "tauFs": 10,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "transport-window",
+      "module": "transport",
+      "title": "哪些电子参与输运：费米热窗口与速度",
+      "summary": "从填充数与电流响应的区别出发，理解完整布里渊区上的速度平方加权。",
+      "preset": "transport-sheet-electrons",
+      "references": [
+        "boltztrap2",
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "占据电子并不等于导电电子",
+          "text": "填充积分使用费米函数 f；线性响应还由 −∂f/∂E 选择化学势附近宽度约 kBT 的热窗口。深能级即使几乎满占据，也很少改变电流。改变温度时观察窗口如何采样原先离散的网格能级。",
+          "formula": "n=(g/Ω)Σw f；−∂f/∂E=f(1−f)/(kBT)"
+        },
+        {
+          "title": "相同能量可以有不同方向速度",
+          "text": "模型用 tᵧ/tₓ 控制跃迁各向异性。能态密度不是电导：输运还要乘 vᵢvⱼ。旋转坐标要同时变换速度分量和张量；不可约网格代表点的单个速度方向也不能直接乘星数代替完整张量。",
+          "formula": "E(q)=Σ2tᵢ(1−cos qᵢ)；vᵢ=(2tᵢa/ℏ)sin qᵢ"
+        },
+        {
+          "title": "从色散走到完整 BZ 积分",
+          "text": "高对称能带路径可以定位简并和交叉，却不能提供体积积分权重。本模块逐点检查完整周期网格及其均匀权重。教学数据是独立紧束缚模型，不是 GaAs、Si 或其他材料的拟合。",
+          "formula": "L₀=(g/Ω)Σₙₖwₖ vvᵀ(−∂f/∂E)；σ/τ=e²L₀"
+        }
+      ]
+    },
+    {
+      "id": "transport-seebeck",
+      "module": "transport",
+      "title": "Seebeck 符号与开路电子热导",
+      "summary": "用能量矩解释电子侧与空态侧的热电符号，并区分裸热流响应与零电流热导。",
+      "preset": "transport-sheet-holes",
+      "references": [
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "热电响应测量热窗口的不对称性",
+          "text": "采用电子电荷 −e、开路 E=S∇T 的约定。L₁ 对 E−μ 额外加权：窗口上方与下方相抵程度决定 Seebeck。低填充导带侧通常为负，高填充空态侧可为正，但真实多带材料不能只按标签判符号。",
+          "formula": "S=−L₀⁻¹L₁/(eT)"
+        },
+        {
+          "title": "开路时热导必须扣除回流",
+          "text": "温度梯度驱动粒子流；开路电场抵消净电流，也改变热流。因此电子热导要扣除 L₁L₀⁻¹L₁。程序检验协方差的半正定性；显著负值被报告为数值问题。这里没有声子热导，不能据此计算真实材料 ZT。",
+          "formula": "κₑ/τ=(L₂−L₁L₀⁻¹L₁)/T"
+        },
+        {
+          "title": "常数 τ 的适用范围",
+          "text": "同一个标量且与能量无关的 τ 在 S 的比值中抵消，σ 与 κₑ 则都正比于 τ。把 τ 改为10或30 fs验证缩放。能量依赖散射会重新加权热窗口，不适用这个消去结论。",
+          "formula": "τ→3τ：σ→3σ，κₑ→3κₑ，S不变"
+        }
+      ]
+    },
+    {
+      "id": "transport-validation",
+      "module": "transport",
+      "title": "二维单位、完整数据与网格收敛",
+      "summary": "避免真空层、重复自旋、路径积分和低温伪峰四类常见误判。",
+      "preset": "transport-sparse",
+      "references": [
+        "boltztrap2",
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "二维片系数不能随真空层改变",
+          "text": "二维以晶胞面积归一，电导单位是 S，电子热导是 W/K；三维以体积归一，分别为 S/m 和 W/(m·K)。若确需体单位，应明确物理厚度，不能把模拟真空层当材料厚度。",
+          "formula": "Ω₂D=A，Ω₃D=V；σ₂D=σ₃D×物理厚度（定义明确时）"
+        },
+        {
+          "title": "输入能带集合决定计数含义",
+          "text": "电子填充只统计导入的能带；空态数是这些能带未占据部分，未自动定义半导体掺杂。输入若已经显式列出两个自旋通道，应设简并为1。速度须使用笛卡尔 m/s，能量须为eV，网格、能量和速度须一一对应。",
+          "formula": "n_e+n_empty=g Nband/Ω"
+        },
+        {
+          "title": "先比较网格，再解释峰值",
+          "text": "温度越低，费米导数越窄。有效输运采样态太少时，移动μ会扫过离散网格能级而产生伪峰。程序给出当前μ/T两网格差异；这不证明整个扫描收敛。热窗口权重过小或矩阵病态时，S和κ以null表示，不能用0代替。",
+          "formula": "x=(E−μ)/(kBT)；检查 σ 网格差与 S 的µV/K变化"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "transport-window-exercise",
+      "module": "transport",
+      "lesson": "transport-window",
+      "title": "从费米窗口推导电导与方向性",
+      "prompt": "限定完整二维单带网格、常数τ、无磁场。逐步构造方向电导。",
+      "steps": [
+        {
+          "prompt": "哪一个权重决定小电场下化学势附近的响应？",
+          "choices": [
+            "f本身",
+            "−∂f/∂E",
+            "只看最低能态"
+          ],
+          "answer": 1,
+          "hint": "区分总占据与对微小扰动的变化。",
+          "explanation": "线性响应使用费米导数，热窗口宽度随kBT变化。"
+        },
+        {
+          "prompt": "x方向电导积分中的速度因子是什么？",
+          "choices": [
+            "vₓ²",
+            "|vₓ|",
+            "vₓ+vᵧ"
+          ],
+          "answer": 0,
+          "hint": "电流和分布修正各给出一个速度。",
+          "explanation": "σₓₓ/τ=e²(g/Ω)Σw vₓ²(−∂f/∂E)。"
+        },
+        {
+          "prompt": "只有Γ–X–M路径的能量和速度，能完成二维电导积分吗？",
+          "choices": [
+            "能，给每点相等权重即可",
+            "不能，需要完整BZ体积采样",
+            "能，只要路径更密"
+          ],
+          "answer": 1,
+          "hint": "一维路径没有覆盖二维BZ测度。",
+          "explanation": "密路径仍不是完整二维积分，不能用点数弥补缺失区域。"
+        },
+        {
+          "prompt": "保持色散参数t不变，将二维晶格常数a放大两倍，σ/τ如何变？",
+          "choices": [
+            "放大4倍",
+            "缩小4倍",
+            "不变"
+          ],
+          "answer": 2,
+          "hint": "速度平方给a²，面积归一给1/a²。",
+          "explanation": "模型中v²和面积同比缩放，片电导/τ不变；电子面密度降为1/4。"
+        }
+      ]
+    },
+    {
+      "id": "transport-seebeck-exercise",
+      "module": "transport",
+      "lesson": "transport-seebeck",
+      "title": "热电符号、开路修正与τ缩放",
+      "prompt": "取电子电荷−e、开路E=S∇T，比较热窗口的能量矩。",
+      "steps": [
+        {
+          "prompt": "粒子—空穴对称半填充时，L₁是什么？",
+          "choices": [
+            "零",
+            "必为正",
+            "等于L₀"
+          ],
+          "answer": 0,
+          "hint": "E−μ为奇权重，两侧输运分布对称。",
+          "explanation": "L₁积分正负抵消，因此可逆L₀下S=0。"
+        },
+        {
+          "prompt": "若L₁为正且是单个解耦方向，S的符号是什么？",
+          "choices": [
+            "正",
+            "负",
+            "无法定义任何符号"
+          ],
+          "answer": 1,
+          "hint": "e>0而电子电荷为−e。",
+          "explanation": "S=−L₁/(eTL₀)，L₀>0，因此为负。"
+        },
+        {
+          "prompt": "零电流条件下的κₑ/τ应使用哪一个式子？",
+          "choices": [
+            "L₂/T",
+            "(L₂−L₁L₀⁻¹L₁)/T",
+            "L₁/T"
+          ],
+          "answer": 1,
+          "hint": "开路电场抵消粒子流并改变热流。",
+          "explanation": "必须扣除热电回流项，裸L₂/T不是开路电子热导。"
+        },
+        {
+          "prompt": "把同一个常数τ从10 fs增至30 fs，会发生什么？",
+          "choices": [
+            "σ、κₑ、S都乘3",
+            "只有S乘3",
+            "σ与κₑ乘3，S不变"
+          ],
+          "answer": 2,
+          "hint": "S是相同τ加权积分的比值。",
+          "explanation": "常数τ在S中抵消；能量依赖τ不适用这一结论。"
+        }
+      ]
+    },
+    {
+      "id": "transport-validation-exercise",
+      "module": "transport",
+      "lesson": "transport-validation",
+      "title": "诊断低温伪峰与输入计数",
+      "prompt": "你的二维计算出现很尖的Seebeck峰。逐步核查输入和收敛。",
+      "steps": [
+        {
+          "prompt": "已有显式上、下自旋两条能带，spinDegeneracy应设多少？",
+          "choices": [
+            "1",
+            "2",
+            "4"
+          ],
+          "answer": 0,
+          "hint": "不要把已经列出的自由度再乘一次。",
+          "explanation": "每条显式自旋能带不再有双重自旋简并，应设1。"
+        },
+        {
+          "prompt": "二维含20 Å真空层的输入应怎样归一片电导？",
+          "choices": [
+            "使用整个超胞体积",
+            "使用物理二维晶胞面积",
+            "乘以真空层厚度"
+          ],
+          "answer": 1,
+          "hint": "片系数不应依赖计算中任意的真空。",
+          "explanation": "二维模块按面积归一；体系数需要另给物理厚度定义。"
+        },
+        {
+          "prompt": "加密网格后尖峰移动或消失，首先支持什么解释？",
+          "choices": [
+            "发现新的相变",
+            "低温热窗口未收敛",
+            "τ一定变号"
+          ],
+          "answer": 1,
+          "hint": "比较kBT宽度与离散能级间隔。",
+          "explanation": "网格伪峰不能解释为材料特征，需细化并验证全扫描。"
+        },
+        {
+          "prompt": "极低载流子下S返回null，应当怎样处理？",
+          "choices": [
+            "改成0画进曲线",
+            "当作无限大",
+            "保留缺失并报告病态诊断"
+          ],
+          "answer": 2,
+          "hint": "没有可靠值不等于物理量为零。",
+          "explanation": "保留null，检查热窗口、能带范围和网格，而不是伪造确定值。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "transport-anisotropic-sheet",
+      "module": "transport",
+      "title": "二维各向异性带：从张量到热电符号",
+      "summary": "用同一条有限宽能带观察x/y电导差异、电子侧负S和空态侧正S。",
+      "kind": "原创教学模型",
+      "assumption": "不拟合具体材料；给定跃迁和常数τ，忽略Berry/Hall与相互作用修正。",
+      "preset": "transport-sheet-electrons",
+      "links": [
+        [
+          "物性张量",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "紧束缚模型",
+          "#magnetictb"
+        ],
+        [
+          "超胞能带展开",
+          "#compute/unfold-lab"
+        ]
+      ]
+    },
+    {
+      "id": "transport-cubic-volume",
+      "module": "transport",
+      "title": "三维立方电子带：等方响应与计数",
+      "summary": "比较三条方向，检查σ张量等方性和载流子体密度的单位。",
+      "kind": "三维紧束缚教学模型",
+      "assumption": "简单立方单带，教学跃迁参数不对应硅或其他实际晶体的多谷能带。",
+      "preset": "transport-volume",
+      "links": [
+        [
+          "晶体点群",
+          "#classroom/foundations"
+        ],
+        [
+          "声子热力学",
+          "#compute/phonon-thermo"
+        ]
+      ]
+    },
+    {
+      "id": "transport-convergence",
+      "module": "transport",
+      "title": "从可疑尖峰到可复现输运",
+      "summary": "先运行低温粗网格反例，再增加温度或网格，检查局部收敛与电子热导边界。",
+      "kind": "数值诊断案例",
+      "assumption": "完整均匀BZ输入仍需物理能带窗口与速度收敛；不含声子热导，也不输出真实ZT。",
+      "preset": "transport-sparse",
+      "links": [
+        [
+          "预处理JSON样例",
+          "examples/electron-transport-import.json"
+        ],
+        [
+          "方法与单位",
+          "docs/electron-transport-lab.md"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "boltztrap2",
+      "title": "Madsen, Carrete & Verstraete: BoltzTraP2 (2018)",
+      "url": "https://arxiv.org/abs/1712.07946"
+    },
+    {
+      "id": "boltzwann",
+      "title": "Wannier90 BoltzWann: transport integrals and conventions",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/boltzwann/"
+    }
+  ]
+}

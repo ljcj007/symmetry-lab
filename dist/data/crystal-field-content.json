@@ -1,0 +1,86 @@
+{
+  "schema": "symmetry-lab-quantum-materials-fragment-1",
+  "modules": [{
+    "id": "orbitals",
+    "title": "晶场、轨道与 Jahn–Teller",
+    "summary": "把点群表示连接到 d 轨道能级、四方晶场、自旋–轨道耦合和一个可解析的电子—畸变模型。",
+    "pathway": "spin",
+    "route": "crystal-field-lab",
+    "action": "crystal_field_lab",
+    "presets": [
+      {"id":"octahedral-d","title":"八面体 · e_g 与 t₂g","input":{"mode":"crystal_field","coordination":"octahedral","splitting":1,"ds":0,"dt":0,"soc":0,"selected_level":0}},
+      {"id":"tetrahedral-d","title":"四面体 · e 与 t₂","input":{"mode":"crystal_field","coordination":"tetrahedral","splitting":0.6,"ds":0,"dt":0,"soc":0,"selected_level":0}},
+      {"id":"tetragonal-soc","title":"四方晶场与 SOC 混合","input":{"mode":"crystal_field","coordination":"octahedral","splitting":1,"ds":0.12,"dt":0.03,"soc":0.08,"selected_level":0}},
+      {"id":"free-ion-soc","title":"自由离子单电子 SOC 极限","input":{"mode":"crystal_field","coordination":"octahedral","splitting":0,"ds":0,"dt":0,"soc":0.2,"selected_level":0}},
+      {"id":"jt-circle","title":"E⊗e · 圆形极小谷","input":{"mode":"jahn_teller","coupling":1,"stiffness":2,"q2":0.2,"q3":0.3,"q_extent":1.5,"grid":41}}
+    ]
+  }],
+  "lessons": [
+    {
+      "id":"orbital-crystal-field","module":"orbitals","title":"从 d 轨道形状到晶场分裂","summary":"用同一套实球谐坐标，理解五个轨道怎样按点群分组，以及分裂参数究竟表示什么。","preset":"octahedral-d","references":["quanty-nio","crispy-cf","quanty-d4h"],
+      "sections":[
+        {"title":"五个轨道与十个单电子态","text":"选择 xy、yz、xz、x²−y²、3z²−r² 五个归一实 d 球谐，每个配上 ↑ 和 ↓。十维矩阵表示一个电子可以处于的十个基态，不表示体系自动含有十个电子。图中轨道颜色标实基函数正负，半径只用于展示角分布，没有真实原子径向尺度。","formula":"d 轨道空间维数 2l+1=5；d⊗spin 的单电子维数 5×2=10"},
+        {"title":"八面体两组能量保持重心","text":"理想 Oh 背景下，xy、yz、xz 构成 t₂g，另两个轨道构成 e_g。设 Δ=E(e_g)−E(t₂g)>0，并把五个轨道的能量重心放在零，就能同时确定两组位置。改变 Δ 只改变能量，不自动改变配体键长。","formula":"3E(t₂g)+2E(e_g)=0；E(t₂g)=−2Δ/5，E(e_g)=3Δ/5"},
+        {"title":"四面体的顺序和标签","text":"理想 Td 背景下，双重 e 低于三重 t₂。Td 没有反演，标签不加 g/u。这里输入的 Δ 是当前几何的正分裂量；并未把相同数值当作同一种真实材料的配位转换，也没有自动套用八面体与四面体之间的经验比例。","formula":"E(e)=−3Δ/5，E(t₂)=2Δ/5；2E(e)+3E(t₂)=0"},
+        {"title":"材料背景与模型的区别","text":"NiO 是学习局域八面体晶场的材料背景，但 Ni²⁺ 的 d⁸ 问题还需要电子间相互作用、Hund 多重态等信息。本实验没有这些项，因此只展示单电子对称性和给定能级参数，不能由能级图独自宣布真实材料的高低自旋或基态。","formula":"单电子晶场谱 ≠ 多电子多重态谱 ≠ 材料磁基态预测"}
+      ]
+    },
+    {
+      "id":"orbital-soc","module":"orbitals","title":"四方晶场、SOC 与简并子空间","summary":"从明确的 Ds/Dt 能级参数进入完整 L·S 耦合，区分可重复的子空间信息与任意本征基。","preset":"tetragonal-soc","references":["crispy-cf","quanty-d4h","quanty-nio"],
+      "sections":[
+        {"title":"Ds 与 Dt 是能级参数","text":"在本约定中，四方项按指定对角系数作用于五个 d 轨道；Oh 的 Δ 等于 10Dq。Ds/Dt 不由配体坐标拟合，正负也不能脱离约定直接称为拉伸或压缩。三维配体仍展示理想背景；若要连接结构畸变，需要另行给出位移到晶场参数的模型。","formula":"E_xy=−4Dq+2Ds−Dt；E_xz=E_yz=−4Dq−Ds+4Dt；E_x²−y²=6Dq+2Ds−Dt；E_z²=6Dq−2Ds−6Dt"},
+        {"title":"SOC 在完整十维空间中混合态","text":"角动量矩阵从 l=2 的升降算符转换到与三维图一致的实轨道基，L、S 以 ℏ 为单位，λ 使用 eV。晶场为零时，j=l±s 给出一个可独立检查的解析极限。λ 为负时两组排序反转，矩阵和角动量约定不变。","formula":"H=H_CF⊗I₂+λL·S；E_j=λ[j(j+1)−l(l+1)−s(s+1)]/2；j=3/2:−3λ/2（4态），j=5/2:λ（6态）"},
+        {"title":"Kramers 配对与稳定的角密度","text":"该模型没有外磁场或其他时间反演破缺项，自旋1/2使能级至少成 Kramers 对。简并子空间中的单个本征矢可以任意换基，所以主要图形显示该子空间平均、再对自旋求迹的角密度。它在子空间内部换基下不变；轨道投影权重的和为1，不是多电子占据数。","formula":"T=(I₅⊗iσy)K，T²=−I；ρ_orb=Tr_spin(P_group/d_group)；n(Ω)=Yᵀρ_orbY，∫n dΩ=1"}
+      ]
+    },
+    {
+      "id":"orbital-jahn-teller","module":"orbitals","title":"E⊗e：由电子劈裂得到畸变势能面","summary":"用一个独立的二重态模型推导两张绝热势能面、极小半径与稳定化能，并理解圆谷的范围。","preset":"jt-circle","references":["jt-linear"],
+      "sections":[
+        {"title":"先明示两个电子态与两个坐标","text":"本节独立取 [z²,x²−y²] 二重电子基和两个无量纲约化坐标 Q₂、Q₃。线性耦合由一个实系数 g 指定，弹性系数 K 必须为正。这里不自动把前一节的十维 SOC 矩阵截成两维，也不把 Q 换算成实际原子位移。","formula":"H_el=g(Q₂τx+Q₃τz)，V_elastic=K(Q₂²+Q₃²)/2"},
+        {"title":"对角化后得到两张势能面","text":"电子矩阵本征值为 ±|g|ρ，其中 ρ 是二维坐标半径。加上弹性能，得到上、下两张绝热面。g≠0 时原点是锥形交叉；原点的单一下态并不唯一，不能给任意数值本征矢一个唯一的轨道解释。","formula":"ρ=√(Q₂²+Q₃²)；V±(ρ)=Kρ²/2±|g|ρ"},
+        {"title":"极小值来自解析导数","text":"下势能面的径向导数为 Kρ−|g|，因此极小半径是 |g|/K，能量相对原点降低 g²/(2K)。程序报告解析全局极小，即使当前二维显示窗口没有覆盖它；径向曲线会包含该半径。g=0 时则只有原点这个极小位置。","formula":"ρ₀=|g|/K；V−(ρ₀)=−g²/(2K)；E_JT=g²/(2K)"},
+        {"title":"圆谷不是无限多真实晶体旋转对称性","text":"线性模型只依赖 ρ，所以 g≠0 时极小集合是一圈。这是模型的偶然连续简并；高阶耦合与环境各向异性可以选择离散方向。当前计算没有核动能、零点振动、动态JT隧穿、温度或多电子占据；它提供结构畸变课堂的机制例子，而非真实材料相图。","formula":"径向曲率 K>0；圆谷切向曲率为0（仅此线性绝热模型）"}
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id":"orbital-splitting-exercise","module":"orbitals","lesson":"orbital-crystal-field","title":"由重心约束推出晶场能级","prompt":"只考虑单电子 d 轨道、无SOC和无四方项，取正分裂量 Δ=1 eV。",
+      "steps":[
+        {"prompt":"五个 d 轨道在 Oh 中分成哪两组？","choices":["一个五维不可约表示","三重 t₂g 与二重 e_g","两个三重表示"],"answer":1,"hint":"数一数 xy、yz、xz 与其余两个轨道。","explanation":"t₂g 包含 xy、yz、xz，e_g 包含 x²−y² 与3z²−r²，总维数3+2=5。"},
+        {"prompt":"轨道能量重心取零，正确条件是什么？","choices":["3E_t+2E_e=0","E_t+E_e=0","2E_t+3E_e=0"],"answer":0,"hint":"重心按轨道重数加权。","explanation":"三重 t₂g 与二重 e_g 各贡献3E_t、2E_e。"},
+        {"prompt":"再用 E_e−E_t=1，得到哪组位置？","choices":["E_t=−0.5，E_e=0.5","E_t=−0.6，E_e=0.4","E_t=−0.4，E_e=0.6"],"answer":2,"hint":"代入3E_t+2(E_t+1)=0。","explanation":"解得 E_t=−2/5 eV、E_e=3/5 eV，能差为1且轨道重心为零。"},
+        {"prompt":"换成理想 Td、保持正间距1 eV，哪种说法正确？","choices":["低 e 为−0.6，高 t₂为0.4，标签不加g","低 t₂g 为−0.4，高 e_g为0.6","只能改变轨道数量，不能改变顺序"],"answer":0,"hint":"Td中的双重组位于下方，且没有反演。","explanation":"2(−0.6)+3(0.4)=0；Td 的 e/t₂标签没有g/u。该参数比较不是对真实配位转换的定量预测。"}
+      ]
+    },
+    {
+      "id":"orbital-soc-exercise","module":"orbitals","lesson":"orbital-soc","title":"SOC解析极限与Kramers对","prompt":"令晶场Δ、Ds、Dt全为0，取l=2、s=1/2、λ=0.2 eV。",
+      "steps":[
+        {"prompt":"角动量耦合允许哪两个j？","choices":["j=0与1","j=3/2与5/2","j=2与3"],"answer":1,"hint":"单电子自旋为1/2，j=l±s。","explanation":"l=2与s=1/2耦合得到j=3/2、5/2，对应4、6个态。"},
+        {"prompt":"j=3/2的 L·S 本征值和能量分别是什么？","choices":["1，0.2 eV","−1/2，−0.1 eV","−3/2，−0.3 eV"],"answer":2,"hint":"代入[j(j+1)−6−3/4]/2。","explanation":"(15/4−6−3/4)/2=−3/2，乘λ得到−0.3 eV；另六态为+0.2 eV。"},
+        {"prompt":"把λ改为−0.2 eV后，哪组较低？","choices":["j=5/2六态，能量−0.2 eV","j=3/2四态，能量−0.3 eV","两组必定仍简并"],"answer":0,"hint":"所有SOC本征值随λ改变符号。","explanation":"j=5/2能量为λ=−0.2 eV；j=3/2为−3λ/2=+0.3 eV。"},
+        {"prompt":"有晶场但仍无磁场时，哪个图示解释最可靠？","choices":["任意单个简并本征矢的形状都唯一","简并组平均角密度在组内换基下不变，能级仍有Kramers配对","10个基态表示有10个电子"],"answer":1,"hint":"区分N维单电子基与电子数，并使用T²=−1。","explanation":"时间反演保持Kramers成对简并，投影到整组后平均可避免把任意本征基选择误当物理差异。"}
+      ]
+    },
+    {
+      "id":"orbital-jt-exercise","module":"orbitals","lesson":"orbital-jahn-teller","title":"手算 E⊗e 的圆谷与稳定化能","prompt":"取 g=1 eV、K=2 eV，Q₂、Q₃为无量纲坐标；这里只求绝热势能面。",
+      "steps":[
+        {"prompt":"电子矩阵g(Q₂τx+Q₃τz)的两个本征值是什么？","choices":["±g(Q₂+Q₃)","±g²(Q₂²+Q₃²)","±|g|√(Q₂²+Q₃²)"],"answer":2,"hint":"矩阵平方为g²(Q₂²+Q₃²)I。","explanation":"定义ρ=√(Q₂²+Q₃²)，电子能量为±|g|ρ，再加相同的Kρ²/2。"},
+        {"prompt":"下势能面V−=ρ²−ρ的极小半径是多少？","choices":["0.5","1","2"],"answer":0,"hint":"对ρ求导：2ρ−1=0。","explanation":"ρ₀=|g|/K=1/2。径向二阶导为K=2>0。"},
+        {"prompt":"极小能量与正的稳定化能分别是多少？","choices":["0与0","−0.25 eV与0.25 eV","−0.5 eV与0.5 eV"],"answer":1,"hint":"将ρ=1/2代入ρ²−ρ。","explanation":"V_min=−g²/(2K)=−1/4 eV，能量相对原点降低1/4 eV。"},
+        {"prompt":"同一半径的各方向等能，最准确的结论是什么？","choices":["真实晶体一定具有连续空间旋转对称性","必须随便挑一个方向称为唯一基态","线性模型有偶然圆谷，高阶项可以选择离散方向"],"answer":2,"hint":"势能中只出现ρ，没有方位角。","explanation":"圆谷属于这一截断模型；没有核动能、隧穿或高阶耦合时，不能把它等同真实材料的全部结构和动力学结论。"}
+      ]
+    }
+  ],
+  "cases": [
+    {"id":"nio-local-orbitals","module":"orbitals","title":"NiO背景：局域八面体与多电子边界","summary":"把既有NiO结构和磁性材料案例连接到局域d轨道分组，区分单电子晶场图与d⁸多重态。","kind":"真实材料配位背景 + 单电子教学模型","assumption":"Ni²⁺的d⁸多电子相互作用不在本10×10单电子模型中；参数为原创教学值，不预测NiO高低自旋、磁基态或实测d–d激发。","preset":"octahedral-d","links":[["NiO材料结构","#atlas/materials?material=nio"],["点群与表示","#classroom/foundations"],["自旋与双群","#classroom/spin"]]},
+    {"id":"tetrahedral-orbital-cluster","module":"orbitals","title":"理想四面体簇：换配位，不换坐标约定","summary":"比较四个等距配体与六个等距配体的理想背景，观察e/t₂排序和d轨道角分布。","kind":"原创理想配位模型","assumption":"不指定真实化合物，不由配体位置重新计算势能；Δ、Ds、Dt与λ都是给定参数，配体键长保持可视化单位1。","preset":"tetrahedral-d","links":[["晶体点群","#atlas/pointgroups"],["SU(2)与角动量","#classroom/continuous"]]},
+    {"id":"jt-distortion-mechanism","module":"orbitals","title":"Jahn–Teller机制：电子能量与畸变代价","summary":"用解析E⊗e圆谷理解电子劈裂如何补偿弹性能，并接到既有结构畸变和Landau课堂。","kind":"独立可解析教学模型","assumption":"Q₂/Q₃是无量纲约化坐标；不是自动生成的标准晶体模式，也不是从真实结构拟合的g/K。未包含核动能、动态JT、SOC或相变温度。","preset":"jt-circle","links":[["结构畸变分解","#compute/distortion-modes"],["结构相变与畴","#compute/phase"],["材料研究记录","#atlas/notebook"]]}
+  ],
+  "sources": [
+    {"id":"quanty-nio","title":"Quanty：NiO晶场与多电子基态教程","url":"https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"},
+    {"id":"crispy-cf","title":"ESRF Crispy：晶场、坐标与Dq/Ds/Dt约定","url":"https://crispy.esrf.fr/en/stable/user_guide/crystal_field.html"},
+    {"id":"quanty-d4h","title":"Quanty：D4h特征标与轴约定","url":"https://www.quanty.org/physics_chemistry/point_groups/d4h"},
+    {"id":"jt-linear","title":"Requist等：线性E⊗e Jahn–Teller模型","url":"https://arxiv.org/abs/1710.04041"}
+  ]
+}

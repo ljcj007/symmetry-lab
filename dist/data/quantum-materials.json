@@ -1,0 +1,1241 @@
+{
+  "schema": "symmetry-lab-quantum-materials-1",
+  "release": "20261027-quantum1",
+  "modules": [
+    {
+      "id": "orbitals",
+      "title": "晶场、轨道与 Jahn–Teller",
+      "summary": "把点群表示连接到 d 轨道能级、四方晶场、自旋–轨道耦合和一个可解析的电子—畸变模型。",
+      "pathway": "spin",
+      "route": "crystal-field-lab",
+      "action": "crystal_field_lab",
+      "presets": [
+        {
+          "id": "octahedral-d",
+          "title": "八面体 · e_g 与 t₂g",
+          "input": {
+            "mode": "crystal_field",
+            "coordination": "octahedral",
+            "splitting": 1,
+            "ds": 0,
+            "dt": 0,
+            "soc": 0,
+            "selected_level": 0
+          }
+        },
+        {
+          "id": "tetrahedral-d",
+          "title": "四面体 · e 与 t₂",
+          "input": {
+            "mode": "crystal_field",
+            "coordination": "tetrahedral",
+            "splitting": 0.6,
+            "ds": 0,
+            "dt": 0,
+            "soc": 0,
+            "selected_level": 0
+          }
+        },
+        {
+          "id": "tetragonal-soc",
+          "title": "四方晶场与 SOC 混合",
+          "input": {
+            "mode": "crystal_field",
+            "coordination": "octahedral",
+            "splitting": 1,
+            "ds": 0.12,
+            "dt": 0.03,
+            "soc": 0.08,
+            "selected_level": 0
+          }
+        },
+        {
+          "id": "free-ion-soc",
+          "title": "自由离子单电子 SOC 极限",
+          "input": {
+            "mode": "crystal_field",
+            "coordination": "octahedral",
+            "splitting": 0,
+            "ds": 0,
+            "dt": 0,
+            "soc": 0.2,
+            "selected_level": 0
+          }
+        },
+        {
+          "id": "jt-circle",
+          "title": "E⊗e · 圆形极小谷",
+          "input": {
+            "mode": "jahn_teller",
+            "coupling": 1,
+            "stiffness": 2,
+            "q2": 0.2,
+            "q3": 0.3,
+            "q_extent": 1.5,
+            "grid": 41
+          }
+        }
+      ]
+    },
+    {
+      "id": "geometry",
+      "title": "量子几何与拓扑诊断",
+      "summary": "在 SSH/QWZ 教学模型中联动能带、量子度规、Berry 曲率与闭环拓扑，检查规范、闭隙和网格收敛。",
+      "pathway": "crystal",
+      "route": "quantum-geometry-lab",
+      "action": "quantum_geometry_lab",
+      "presets": [
+        {
+          "id": "geometry-qwz-chern",
+          "title": "QWZ m=−1 · Chern +1",
+          "input": {
+            "model": "qwz",
+            "mass": -1,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0.4
+          }
+        },
+        {
+          "id": "geometry-qwz-trivial",
+          "title": "QWZ m=3 · 平庸但有局部几何",
+          "input": {
+            "model": "qwz",
+            "mass": 3,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0.4
+          }
+        },
+        {
+          "id": "geometry-qwz-closing",
+          "title": "QWZ m=−2 · 网格漏采闭隙反例",
+          "input": {
+            "model": "qwz",
+            "mass": -2,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0,
+            "ky": 0
+          }
+        },
+        {
+          "id": "geometry-ssh-topological",
+          "title": "SSH t₁=0.6,t₂=1 · Zak π",
+          "input": {
+            "model": "ssh",
+            "t1": 0.6,
+            "t2": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0
+          }
+        },
+        {
+          "id": "geometry-ssh-trivial",
+          "title": "SSH t₁=1,t₂=0.6 · Zak 0",
+          "input": {
+            "model": "ssh",
+            "t1": 1,
+            "t2": 0.6,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "title": "电子输运与热电响应",
+      "summary": "完整BZ、费米热窗口与速度张量：比较电导、Seebeck和开路电子热导，核查二维/三维单位与网格收敛。",
+      "pathway": "observables",
+      "route": "electron-transport-lab",
+      "action": "electron_transport_lab",
+      "presets": [
+        {
+          "id": "transport-sheet-electrons",
+          "title": "二维各向异性 · 电子侧",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 300,
+            "mesh": 48,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-sheet-holes",
+          "title": "二维同一能带 · 空态侧",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 1.2,
+            "temperature": 300,
+            "mesh": 48,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-volume",
+          "title": "三维立方体 · 等方输运",
+          "input": {
+            "source": "model",
+            "dimension": 3,
+            "hopping": 0.1,
+            "anisotropy": 1,
+            "zAnisotropy": 1,
+            "chemicalPotential": 0.3,
+            "temperature": 600,
+            "mesh": 24,
+            "muMin": -0.1,
+            "muMax": 1.3
+          }
+        },
+        {
+          "id": "transport-sparse",
+          "title": "低温粗网格 · 收敛反例",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 10,
+            "mesh": 8,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        },
+        {
+          "id": "transport-tau",
+          "title": "给定 τ=10 fs · 从比值到系数",
+          "input": {
+            "source": "model",
+            "dimension": 2,
+            "hopping": 0.25,
+            "anisotropy": 0.5,
+            "chemicalPotential": 0.3,
+            "temperature": 300,
+            "mesh": 48,
+            "tauFs": 10,
+            "muMin": -0.05,
+            "muMax": 1.55
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "orbital-crystal-field",
+      "module": "orbitals",
+      "title": "从 d 轨道形状到晶场分裂",
+      "summary": "用同一套实球谐坐标，理解五个轨道怎样按点群分组，以及分裂参数究竟表示什么。",
+      "preset": "octahedral-d",
+      "references": [
+        "quanty-nio",
+        "crispy-cf",
+        "quanty-d4h"
+      ],
+      "sections": [
+        {
+          "title": "五个轨道与十个单电子态",
+          "text": "选择 xy、yz、xz、x²−y²、3z²−r² 五个归一实 d 球谐，每个配上 ↑ 和 ↓。十维矩阵表示一个电子可以处于的十个基态，不表示体系自动含有十个电子。图中轨道颜色标实基函数正负，半径只用于展示角分布，没有真实原子径向尺度。",
+          "formula": "d 轨道空间维数 2l+1=5；d⊗spin 的单电子维数 5×2=10"
+        },
+        {
+          "title": "八面体两组能量保持重心",
+          "text": "理想 Oh 背景下，xy、yz、xz 构成 t₂g，另两个轨道构成 e_g。设 Δ=E(e_g)−E(t₂g)>0，并把五个轨道的能量重心放在零，就能同时确定两组位置。改变 Δ 只改变能量，不自动改变配体键长。",
+          "formula": "3E(t₂g)+2E(e_g)=0；E(t₂g)=−2Δ/5，E(e_g)=3Δ/5"
+        },
+        {
+          "title": "四面体的顺序和标签",
+          "text": "理想 Td 背景下，双重 e 低于三重 t₂。Td 没有反演，标签不加 g/u。这里输入的 Δ 是当前几何的正分裂量；并未把相同数值当作同一种真实材料的配位转换，也没有自动套用八面体与四面体之间的经验比例。",
+          "formula": "E(e)=−3Δ/5，E(t₂)=2Δ/5；2E(e)+3E(t₂)=0"
+        },
+        {
+          "title": "材料背景与模型的区别",
+          "text": "NiO 是学习局域八面体晶场的材料背景，但 Ni²⁺ 的 d⁸ 问题还需要电子间相互作用、Hund 多重态等信息。本实验没有这些项，因此只展示单电子对称性和给定能级参数，不能由能级图独自宣布真实材料的高低自旋或基态。",
+          "formula": "单电子晶场谱 ≠ 多电子多重态谱 ≠ 材料磁基态预测"
+        }
+      ]
+    },
+    {
+      "id": "orbital-soc",
+      "module": "orbitals",
+      "title": "四方晶场、SOC 与简并子空间",
+      "summary": "从明确的 Ds/Dt 能级参数进入完整 L·S 耦合，区分可重复的子空间信息与任意本征基。",
+      "preset": "tetragonal-soc",
+      "references": [
+        "crispy-cf",
+        "quanty-d4h",
+        "quanty-nio"
+      ],
+      "sections": [
+        {
+          "title": "Ds 与 Dt 是能级参数",
+          "text": "在本约定中，四方项按指定对角系数作用于五个 d 轨道；Oh 的 Δ 等于 10Dq。Ds/Dt 不由配体坐标拟合，正负也不能脱离约定直接称为拉伸或压缩。三维配体仍展示理想背景；若要连接结构畸变，需要另行给出位移到晶场参数的模型。",
+          "formula": "E_xy=−4Dq+2Ds−Dt；E_xz=E_yz=−4Dq−Ds+4Dt；E_x²−y²=6Dq+2Ds−Dt；E_z²=6Dq−2Ds−6Dt"
+        },
+        {
+          "title": "SOC 在完整十维空间中混合态",
+          "text": "角动量矩阵从 l=2 的升降算符转换到与三维图一致的实轨道基，L、S 以 ℏ 为单位，λ 使用 eV。晶场为零时，j=l±s 给出一个可独立检查的解析极限。λ 为负时两组排序反转，矩阵和角动量约定不变。",
+          "formula": "H=H_CF⊗I₂+λL·S；E_j=λ[j(j+1)−l(l+1)−s(s+1)]/2；j=3/2:−3λ/2（4态），j=5/2:λ（6态）"
+        },
+        {
+          "title": "Kramers 配对与稳定的角密度",
+          "text": "该模型没有外磁场或其他时间反演破缺项，自旋1/2使能级至少成 Kramers 对。简并子空间中的单个本征矢可以任意换基，所以主要图形显示该子空间平均、再对自旋求迹的角密度。它在子空间内部换基下不变；轨道投影权重的和为1，不是多电子占据数。",
+          "formula": "T=(I₅⊗iσy)K，T²=−I；ρ_orb=Tr_spin(P_group/d_group)；n(Ω)=Yᵀρ_orbY，∫n dΩ=1"
+        }
+      ]
+    },
+    {
+      "id": "orbital-jahn-teller",
+      "module": "orbitals",
+      "title": "E⊗e：由电子劈裂得到畸变势能面",
+      "summary": "用一个独立的二重态模型推导两张绝热势能面、极小半径与稳定化能，并理解圆谷的范围。",
+      "preset": "jt-circle",
+      "references": [
+        "jt-linear"
+      ],
+      "sections": [
+        {
+          "title": "先明示两个电子态与两个坐标",
+          "text": "本节独立取 [z²,x²−y²] 二重电子基和两个无量纲约化坐标 Q₂、Q₃。线性耦合由一个实系数 g 指定，弹性系数 K 必须为正。这里不自动把前一节的十维 SOC 矩阵截成两维，也不把 Q 换算成实际原子位移。",
+          "formula": "H_el=g(Q₂τx+Q₃τz)，V_elastic=K(Q₂²+Q₃²)/2"
+        },
+        {
+          "title": "对角化后得到两张势能面",
+          "text": "电子矩阵本征值为 ±|g|ρ，其中 ρ 是二维坐标半径。加上弹性能，得到上、下两张绝热面。g≠0 时原点是锥形交叉；原点的单一下态并不唯一，不能给任意数值本征矢一个唯一的轨道解释。",
+          "formula": "ρ=√(Q₂²+Q₃²)；V±(ρ)=Kρ²/2±|g|ρ"
+        },
+        {
+          "title": "极小值来自解析导数",
+          "text": "下势能面的径向导数为 Kρ−|g|，因此极小半径是 |g|/K，能量相对原点降低 g²/(2K)。程序报告解析全局极小，即使当前二维显示窗口没有覆盖它；径向曲线会包含该半径。g=0 时则只有原点这个极小位置。",
+          "formula": "ρ₀=|g|/K；V−(ρ₀)=−g²/(2K)；E_JT=g²/(2K)"
+        },
+        {
+          "title": "圆谷不是无限多真实晶体旋转对称性",
+          "text": "线性模型只依赖 ρ，所以 g≠0 时极小集合是一圈。这是模型的偶然连续简并；高阶耦合与环境各向异性可以选择离散方向。当前计算没有核动能、零点振动、动态JT隧穿、温度或多电子占据；它提供结构畸变课堂的机制例子，而非真实材料相图。",
+          "formula": "径向曲率 K>0；圆谷切向曲率为0（仅此线性绝热模型）"
+        }
+      ]
+    },
+    {
+      "id": "geometry-rays",
+      "module": "geometry",
+      "title": "同一量子态的相位与态之间的距离",
+      "summary": "从投影算符理解量子度规，先区分波函数相位、轨道基底和真正的态变化。",
+      "preset": "geometry-ssh-topological",
+      "references": [
+        "geometry-metric",
+        "geometry-ssh"
+      ],
+      "sections": [
+        {
+          "title": "把无关的整体相位去掉",
+          "text": "同一孤立带的本征矢可以逐点乘 e^(iα(k))，但投影 P=|u><u| 不变。普通导数 ∂u 会随着 α 改变，不能直接用它的模长作为物理距离。量子几何张量先用 1−P 去掉沿原态方向的变化，保留态射线之间可区分的部分。",
+          "formula": "Qμν=<∂μu|(1−P)|∂νu>=Tr[P(∂μP)(∂νP)]"
+        },
+        {
+          "title": "实部给度规，虚部给曲率",
+          "text": "采用 Berry 联络 A=i<u|∂u>，所以 Q=g−iΩ/2。度规描述邻近态重叠偏离1的二阶量；曲率描述参数平面中绕小回路的几何相位。对 H=d·σ 的下带，投影由单位矢量 n=d/|d| 决定。能量整体乘正数不会改变 n，因此可改变能隙而保持该固定基底中的几何。",
+          "formula": "1−|<u(k)|u(k+δk)>|²≈gμνδkμδkν；gμν=(∂μn·∂νn)/4"
+        },
+        {
+          "title": "用 SSH 的极限建立直觉",
+          "text": "t₁=0、t₂=1 时，SSH 下带沿布里渊区绕赤道一周，在当前周期轨道基中 gkk=1/4；t₂=0 时本征投影不随 k 改变，gkk=0。SSH 是一维模型，本模块为它报告一维度规和 Zak 相位，不从它推断二维 Chern 数。改变晶胞或轨道嵌入并非简单的带本征矢 U(1) 相位操作。",
+          "formula": "HSSH=(t₁+t₂cos k)σx+t₂sin k σy；t₁=0 ⇒ gkk=1/4"
+        }
+      ]
+    },
+    {
+      "id": "geometry-topology",
+      "module": "geometry",
+      "title": "从局部 Berry 曲率走到 Zak 与 Chern",
+      "summary": "明确带、坐标方向和符号约定，让离散环路与连续曲率给出可核对的结论。",
+      "preset": "geometry-qwz-chern",
+      "references": [
+        "geometry-fhs",
+        "geometry-qwz",
+        "geometry-metric"
+      ],
+      "sections": [
+        {
+          "title": "固定 QWZ 模型与占据带",
+          "text": "本模块选择负能量下带，化学势放在零能隙，并以 kx 后 ky 的顺序定义面积方向。m=−1 对应 C=+1；m=+1 对应 C=−1。更换 Berry 联络号、选择上带或反转坐标方向会改变符号，比较不同软件前必须对齐约定。这里的数值属于教学模型，不是任何真实材料的预测。",
+          "formula": "H=s[sin kx σx+sin ky σy+(m+cos kx+cos ky)σz]；Ωxy=n·(∂xn×∂yn)/2（下带）"
+        },
+        {
+          "title": "把相邻态接成闭合回路",
+          "text": "相邻本征态重叠的模去掉后得到 Uμ。规范相位出现在每条链的端点，但在闭环上逐个抵消；布里渊区边界的闭合链接也必须包含。本站约定下，FHS 单元通量为环路乘积相位的负值。SSH 沿一维布里渊区累乘得到 Zak，相位只在模2π意义下有定义。",
+          "formula": "Uμ=<u(k)|u(k+δμ)>/|overlap|；C=−Σarg(UxUy′Ux′*Uy*)/(2π)"
+        },
+        {
+          "title": "拓扑数不等于全部局部几何",
+          "text": "m=3 的 QWZ 总 Chern 为0，却仍可以有非零局部曲率和度规；正负贡献在积分中抵消。两带纯态满足 det g=Ω²/4，以及 tr g≥|Ω|。这些关系约束局部几何，但单个点的大度规、一个局部曲率峰或一张热图都不能独自决定整体拓扑。",
+          "formula": "C=(1/2π)∫BZ Ωxy d²k；det g=Ωxy²/4；tr g≥|Ωxy|"
+        }
+      ]
+    },
+    {
+      "id": "geometry-diagnostics",
+      "module": "geometry",
+      "title": "一个整数为什么还不够：闭隙与收敛",
+      "summary": "比较解析间隙、离散 FHS、曲率积分与规范测试，发现粗网格可能掩盖的失败。",
+      "preset": "geometry-qwz-closing",
+      "references": [
+        "geometry-fhs",
+        "geometry-qwz"
+      ],
+      "sections": [
+        {
+          "title": "有限网格可以错过真正的闭隙",
+          "text": "QWZ 在 m=−2、0、2 有闭隙。以 −π 为起点的奇数网格不包含 Γ，m=−2 时采样最小能隙可能仍大于零。程序使用整个模型的解析直接间隙，闭隙或低于隔离阈值时不报告下带 Chern/Zak；局部未简并点的几何仍可显示。",
+          "formula": "Δdirect=2s min(|m+2|,|m|,|m−2|)；SSH：Δdirect=2|t₁−t₂|"
+        },
+        {
+          "title": "离散整数与积分收敛是不同检查",
+          "text": "FHS 会在满足离散链条件时给出整数，但粗网格可能没有分辨集中的曲率。这里同时比较 N 与2N−1 两层网格、链重叠、最大单元通量和已知模型拓扑值；若不可靠，主数值结果留空。直接对解析曲率求黎曼和可能收敛更慢，因此表中另列它的误差。",
+          "formula": "有隙 + 非奇异重叠 + 通量诊断 + 网格比较；整数化 ≠ 已收敛"
+        },
+        {
+          "title": "用相位滑块做可重复的规范检验",
+          "text": "滑块逐点改变本征态相位，应改变本征矢的复数分量，却保持投影、重叠模与闭环拓扑。这个测试只能检查规范处理，不保证模型完整或网格足够。研究记录应同时保存 Hamiltonian、基底约定、间隙诊断和收敛表；不要只保存一个整数。",
+          "formula": "u′(k)=e^(iα(k))u(k)；P′=P，g′=g，Ω′=Ω，闭环相位不变"
+        }
+      ]
+    },
+    {
+      "id": "transport-window",
+      "module": "transport",
+      "title": "哪些电子参与输运：费米热窗口与速度",
+      "summary": "从填充数与电流响应的区别出发，理解完整布里渊区上的速度平方加权。",
+      "preset": "transport-sheet-electrons",
+      "references": [
+        "boltztrap2",
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "占据电子并不等于导电电子",
+          "text": "填充积分使用费米函数 f；线性响应还由 −∂f/∂E 选择化学势附近宽度约 kBT 的热窗口。深能级即使几乎满占据，也很少改变电流。改变温度时观察窗口如何采样原先离散的网格能级。",
+          "formula": "n=(g/Ω)Σw f；−∂f/∂E=f(1−f)/(kBT)"
+        },
+        {
+          "title": "相同能量可以有不同方向速度",
+          "text": "模型用 tᵧ/tₓ 控制跃迁各向异性。能态密度不是电导：输运还要乘 vᵢvⱼ。旋转坐标要同时变换速度分量和张量；不可约网格代表点的单个速度方向也不能直接乘星数代替完整张量。",
+          "formula": "E(q)=Σ2tᵢ(1−cos qᵢ)；vᵢ=(2tᵢa/ℏ)sin qᵢ"
+        },
+        {
+          "title": "从色散走到完整 BZ 积分",
+          "text": "高对称能带路径可以定位简并和交叉，却不能提供体积积分权重。本模块逐点检查完整周期网格及其均匀权重。教学数据是独立紧束缚模型，不是 GaAs、Si 或其他材料的拟合。",
+          "formula": "L₀=(g/Ω)Σₙₖwₖ vvᵀ(−∂f/∂E)；σ/τ=e²L₀"
+        }
+      ]
+    },
+    {
+      "id": "transport-seebeck",
+      "module": "transport",
+      "title": "Seebeck 符号与开路电子热导",
+      "summary": "用能量矩解释电子侧与空态侧的热电符号，并区分裸热流响应与零电流热导。",
+      "preset": "transport-sheet-holes",
+      "references": [
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "热电响应测量热窗口的不对称性",
+          "text": "采用电子电荷 −e、开路 E=S∇T 的约定。L₁ 对 E−μ 额外加权：窗口上方与下方相抵程度决定 Seebeck。低填充导带侧通常为负，高填充空态侧可为正，但真实多带材料不能只按标签判符号。",
+          "formula": "S=−L₀⁻¹L₁/(eT)"
+        },
+        {
+          "title": "开路时热导必须扣除回流",
+          "text": "温度梯度驱动粒子流；开路电场抵消净电流，也改变热流。因此电子热导要扣除 L₁L₀⁻¹L₁。程序检验协方差的半正定性；显著负值被报告为数值问题。这里没有声子热导，不能据此计算真实材料 ZT。",
+          "formula": "κₑ/τ=(L₂−L₁L₀⁻¹L₁)/T"
+        },
+        {
+          "title": "常数 τ 的适用范围",
+          "text": "同一个标量且与能量无关的 τ 在 S 的比值中抵消，σ 与 κₑ 则都正比于 τ。把 τ 改为10或30 fs验证缩放。能量依赖散射会重新加权热窗口，不适用这个消去结论。",
+          "formula": "τ→3τ：σ→3σ，κₑ→3κₑ，S不变"
+        }
+      ]
+    },
+    {
+      "id": "transport-validation",
+      "module": "transport",
+      "title": "二维单位、完整数据与网格收敛",
+      "summary": "避免真空层、重复自旋、路径积分和低温伪峰四类常见误判。",
+      "preset": "transport-sparse",
+      "references": [
+        "boltztrap2",
+        "boltzwann"
+      ],
+      "sections": [
+        {
+          "title": "二维片系数不能随真空层改变",
+          "text": "二维以晶胞面积归一，电导单位是 S，电子热导是 W/K；三维以体积归一，分别为 S/m 和 W/(m·K)。若确需体单位，应明确物理厚度，不能把模拟真空层当材料厚度。",
+          "formula": "Ω₂D=A，Ω₃D=V；σ₂D=σ₃D×物理厚度（定义明确时）"
+        },
+        {
+          "title": "输入能带集合决定计数含义",
+          "text": "电子填充只统计导入的能带；空态数是这些能带未占据部分，未自动定义半导体掺杂。输入若已经显式列出两个自旋通道，应设简并为1。速度须使用笛卡尔 m/s，能量须为eV，网格、能量和速度须一一对应。",
+          "formula": "n_e+n_empty=g Nband/Ω"
+        },
+        {
+          "title": "先比较网格，再解释峰值",
+          "text": "温度越低，费米导数越窄。有效输运采样态太少时，移动μ会扫过离散网格能级而产生伪峰。程序给出当前μ/T两网格差异；这不证明整个扫描收敛。热窗口权重过小或矩阵病态时，S和κ以null表示，不能用0代替。",
+          "formula": "x=(E−μ)/(kBT)；检查 σ 网格差与 S 的µV/K变化"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "orbital-splitting-exercise",
+      "module": "orbitals",
+      "lesson": "orbital-crystal-field",
+      "title": "由重心约束推出晶场能级",
+      "prompt": "只考虑单电子 d 轨道、无SOC和无四方项，取正分裂量 Δ=1 eV。",
+      "steps": [
+        {
+          "prompt": "五个 d 轨道在 Oh 中分成哪两组？",
+          "choices": [
+            "一个五维不可约表示",
+            "三重 t₂g 与二重 e_g",
+            "两个三重表示"
+          ],
+          "answer": 1,
+          "hint": "数一数 xy、yz、xz 与其余两个轨道。",
+          "explanation": "t₂g 包含 xy、yz、xz，e_g 包含 x²−y² 与3z²−r²，总维数3+2=5。"
+        },
+        {
+          "prompt": "轨道能量重心取零，正确条件是什么？",
+          "choices": [
+            "3E_t+2E_e=0",
+            "E_t+E_e=0",
+            "2E_t+3E_e=0"
+          ],
+          "answer": 0,
+          "hint": "重心按轨道重数加权。",
+          "explanation": "三重 t₂g 与二重 e_g 各贡献3E_t、2E_e。"
+        },
+        {
+          "prompt": "再用 E_e−E_t=1，得到哪组位置？",
+          "choices": [
+            "E_t=−0.5，E_e=0.5",
+            "E_t=−0.6，E_e=0.4",
+            "E_t=−0.4，E_e=0.6"
+          ],
+          "answer": 2,
+          "hint": "代入3E_t+2(E_t+1)=0。",
+          "explanation": "解得 E_t=−2/5 eV、E_e=3/5 eV，能差为1且轨道重心为零。"
+        },
+        {
+          "prompt": "换成理想 Td、保持正间距1 eV，哪种说法正确？",
+          "choices": [
+            "低 e 为−0.6，高 t₂为0.4，标签不加g",
+            "低 t₂g 为−0.4，高 e_g为0.6",
+            "只能改变轨道数量，不能改变顺序"
+          ],
+          "answer": 0,
+          "hint": "Td中的双重组位于下方，且没有反演。",
+          "explanation": "2(−0.6)+3(0.4)=0；Td 的 e/t₂标签没有g/u。该参数比较不是对真实配位转换的定量预测。"
+        }
+      ]
+    },
+    {
+      "id": "orbital-soc-exercise",
+      "module": "orbitals",
+      "lesson": "orbital-soc",
+      "title": "SOC解析极限与Kramers对",
+      "prompt": "令晶场Δ、Ds、Dt全为0，取l=2、s=1/2、λ=0.2 eV。",
+      "steps": [
+        {
+          "prompt": "角动量耦合允许哪两个j？",
+          "choices": [
+            "j=0与1",
+            "j=3/2与5/2",
+            "j=2与3"
+          ],
+          "answer": 1,
+          "hint": "单电子自旋为1/2，j=l±s。",
+          "explanation": "l=2与s=1/2耦合得到j=3/2、5/2，对应4、6个态。"
+        },
+        {
+          "prompt": "j=3/2的 L·S 本征值和能量分别是什么？",
+          "choices": [
+            "1，0.2 eV",
+            "−1/2，−0.1 eV",
+            "−3/2，−0.3 eV"
+          ],
+          "answer": 2,
+          "hint": "代入[j(j+1)−6−3/4]/2。",
+          "explanation": "(15/4−6−3/4)/2=−3/2，乘λ得到−0.3 eV；另六态为+0.2 eV。"
+        },
+        {
+          "prompt": "把λ改为−0.2 eV后，哪组较低？",
+          "choices": [
+            "j=5/2六态，能量−0.2 eV",
+            "j=3/2四态，能量−0.3 eV",
+            "两组必定仍简并"
+          ],
+          "answer": 0,
+          "hint": "所有SOC本征值随λ改变符号。",
+          "explanation": "j=5/2能量为λ=−0.2 eV；j=3/2为−3λ/2=+0.3 eV。"
+        },
+        {
+          "prompt": "有晶场但仍无磁场时，哪个图示解释最可靠？",
+          "choices": [
+            "任意单个简并本征矢的形状都唯一",
+            "简并组平均角密度在组内换基下不变，能级仍有Kramers配对",
+            "10个基态表示有10个电子"
+          ],
+          "answer": 1,
+          "hint": "区分N维单电子基与电子数，并使用T²=−1。",
+          "explanation": "时间反演保持Kramers成对简并，投影到整组后平均可避免把任意本征基选择误当物理差异。"
+        }
+      ]
+    },
+    {
+      "id": "orbital-jt-exercise",
+      "module": "orbitals",
+      "lesson": "orbital-jahn-teller",
+      "title": "手算 E⊗e 的圆谷与稳定化能",
+      "prompt": "取 g=1 eV、K=2 eV，Q₂、Q₃为无量纲坐标；这里只求绝热势能面。",
+      "steps": [
+        {
+          "prompt": "电子矩阵g(Q₂τx+Q₃τz)的两个本征值是什么？",
+          "choices": [
+            "±g(Q₂+Q₃)",
+            "±g²(Q₂²+Q₃²)",
+            "±|g|√(Q₂²+Q₃²)"
+          ],
+          "answer": 2,
+          "hint": "矩阵平方为g²(Q₂²+Q₃²)I。",
+          "explanation": "定义ρ=√(Q₂²+Q₃²)，电子能量为±|g|ρ，再加相同的Kρ²/2。"
+        },
+        {
+          "prompt": "下势能面V−=ρ²−ρ的极小半径是多少？",
+          "choices": [
+            "0.5",
+            "1",
+            "2"
+          ],
+          "answer": 0,
+          "hint": "对ρ求导：2ρ−1=0。",
+          "explanation": "ρ₀=|g|/K=1/2。径向二阶导为K=2>0。"
+        },
+        {
+          "prompt": "极小能量与正的稳定化能分别是多少？",
+          "choices": [
+            "0与0",
+            "−0.25 eV与0.25 eV",
+            "−0.5 eV与0.5 eV"
+          ],
+          "answer": 1,
+          "hint": "将ρ=1/2代入ρ²−ρ。",
+          "explanation": "V_min=−g²/(2K)=−1/4 eV，能量相对原点降低1/4 eV。"
+        },
+        {
+          "prompt": "同一半径的各方向等能，最准确的结论是什么？",
+          "choices": [
+            "真实晶体一定具有连续空间旋转对称性",
+            "必须随便挑一个方向称为唯一基态",
+            "线性模型有偶然圆谷，高阶项可以选择离散方向"
+          ],
+          "answer": 2,
+          "hint": "势能中只出现ρ，没有方位角。",
+          "explanation": "圆谷属于这一截断模型；没有核动能、隧穿或高阶耦合时，不能把它等同真实材料的全部结构和动力学结论。"
+        }
+      ]
+    },
+    {
+      "id": "geometry-metric-steps",
+      "module": "geometry",
+      "lesson": "geometry-rays",
+      "title": "从态射线到 SSH 的量子度规",
+      "prompt": "在固定周期轨道基中考虑 SSH 极限 t₁=0、t₂=1。把相位、投影和几何逐步分开。",
+      "steps": [
+        {
+          "prompt": "u→e^(iα)u 后，P=|u><u| 怎样变化？",
+          "hint": "bra 和 ket 的相位互为共轭。",
+          "choices": [
+            "P 不变",
+            "P 乘 e^(2iα)",
+            "P 变号"
+          ],
+          "answer": 0,
+          "explanation": "相位在外积中抵消，投影只记录态射线。"
+        },
+        {
+          "prompt": "为什么 Q 使用 (1−P) 去投影 ∂u？",
+          "hint": "沿原态方向的导数包含可任意选择的相位变化。",
+          "choices": [
+            "为了改变能量本征值",
+            "为了移除纯相位方向",
+            "为了删除整个能带"
+          ],
+          "answer": 1,
+          "explanation": "它去除沿 |u> 的规范依赖部分，保留可区分的态变化。"
+        },
+        {
+          "prompt": "n=(cos k,sin k,0)，∂kn 的长度是1，gkk 是多少？",
+          "hint": "两带公式有因子 1/4。",
+          "choices": [
+            "1",
+            "1/2",
+            "1/4"
+          ],
+          "answer": 2,
+          "explanation": "gkk=(∂kn·∂kn)/4=1/4。"
+        },
+        {
+          "prompt": "把整个 Hamiltonian 乘正数3，会怎样？",
+          "hint": "n=d/|d| 不变，能量乘3。",
+          "choices": [
+            "能隙乘3，当前基底中的度规不变",
+            "度规乘9",
+            "Zak 必定变为3π且不取模"
+          ],
+          "answer": 0,
+          "explanation": "量子几何来自投影而非能量尺度；不可据此把任意能量放大当作态变化。"
+        }
+      ]
+    },
+    {
+      "id": "geometry-chern-steps",
+      "module": "geometry",
+      "lesson": "geometry-topology",
+      "title": "符号、局部几何与全局拓扑",
+      "prompt": "采用 A=i<u|∂u>、QWZ 下带以及 kx→ky 面积方向，逐步检查 Chern 的解释。",
+      "steps": [
+        {
+          "prompt": "在本站约定下，曲率与 Qxy 虚部的关系是什么？",
+          "hint": "Q=g−iΩ/2。",
+          "choices": [
+            "Ω=2 Im Qxy",
+            "Ω=−2 Im Qxy",
+            "Ω=Re Qxy"
+          ],
+          "answer": 1,
+          "explanation": "由约定可得 Ωxy=−2 Im Qxy，不能和相反联络号混用。"
+        },
+        {
+          "prompt": "同一有隙带将积分坐标方向 x、y 交换，C 怎样变化？",
+          "hint": "定向面积和曲率分量同时体现反对称性；反向定义积分取向会变号。",
+          "choices": [
+            "总保持不变",
+            "变成 C²",
+            "在反向取向下变号"
+          ],
+          "answer": 2,
+          "explanation": "若主动反转所选定向，C 的符号翻转；必须说明采用的坐标取向。"
+        },
+        {
+          "prompt": "QWZ m=3 的 C=0，是否推出所有 k 的度规和曲率均为零？",
+          "hint": "积分为零可以来自局部非零贡献的抵消。",
+          "choices": [
+            "不能",
+            "可以",
+            "只有网格为奇数时可以"
+          ],
+          "answer": 0,
+          "explanation": "拓扑总数并不包含全部局部几何信息。"
+        },
+        {
+          "prompt": "二维两带纯态的局部几何满足哪一关系？",
+          "hint": "量子几何张量由一个与占据态正交的方向贡献。",
+          "choices": [
+            "det g=Ω²",
+            "det g=Ω²/4",
+            "tr g 必定为0"
+          ],
+          "answer": 1,
+          "explanation": "两带纯态在二维参数空间饱和行列式关系，但不一般要求 gxx=gyy。"
+        }
+      ]
+    },
+    {
+      "id": "geometry-diagnostic-steps",
+      "module": "geometry",
+      "lesson": "geometry-diagnostics",
+      "title": "反向题：粗网格给整数就可信吗",
+      "prompt": "QWZ 取 m=−2、s=1，使用以−π为起点的31×31网格。判断程序应该报告哪些结论。",
+      "steps": [
+        {
+          "prompt": "解析直接间隙 2min(|m+2|,|m|,|m−2|) 是多少？",
+          "hint": "把 m=−2 代入三个绝对值。",
+          "choices": [
+            "2",
+            "4",
+            "0"
+          ],
+          "answer": 2,
+          "explanation": "Γ 点闭隙，因此全局下带不是孤立带。"
+        },
+        {
+          "prompt": "网格未采到 Γ，采样最小能隙大于零，此时可报告有效 Chern 吗？",
+          "hint": "是否孤立需要覆盖整个布里渊区，而非只检查采样点。",
+          "choices": [
+            "不可，解析闭隙优先，主拓扑值留空",
+            "可，采样点全有隙即可",
+            "只要结果是整数就可"
+          ],
+          "answer": 0,
+          "explanation": "解析诊断阻止把漏采的闭隙误判为绝缘拓扑相。"
+        },
+        {
+          "prompt": "另一组有隙参数在粗细网格均给整数，是否还要看曲率积分误差？",
+          "hint": "链变量法与普通黎曼积分是不同数值方法。",
+          "choices": [
+            "不必，所有积分自动精确",
+            "要，离散整数化不能替代另一积分的收敛",
+            "只检查波函数是否为实数"
+          ],
+          "answer": 1,
+          "explanation": "特别在接近相变时，局部曲率集中可让普通积分收敛缓慢。"
+        },
+        {
+          "prompt": "随机或平滑改变每个 k 点的本征态相位后闭环值不变，能证明什么？",
+          "hint": "这是一项规范处理检查，不是全套物理验证。",
+          "choices": [
+            "已证明真实材料是拓扑绝缘体",
+            "已证明网格足够密",
+            "支持实现的U(1)规范不变性，仍需间隙与收敛检查"
+          ],
+          "answer": 2,
+          "explanation": "规范检验通过不能排除闭隙、欠采样或模型适用范围问题。"
+        }
+      ]
+    },
+    {
+      "id": "transport-window-exercise",
+      "module": "transport",
+      "lesson": "transport-window",
+      "title": "从费米窗口推导电导与方向性",
+      "prompt": "限定完整二维单带网格、常数τ、无磁场。逐步构造方向电导。",
+      "steps": [
+        {
+          "prompt": "哪一个权重决定小电场下化学势附近的响应？",
+          "choices": [
+            "f本身",
+            "−∂f/∂E",
+            "只看最低能态"
+          ],
+          "answer": 1,
+          "hint": "区分总占据与对微小扰动的变化。",
+          "explanation": "线性响应使用费米导数，热窗口宽度随kBT变化。"
+        },
+        {
+          "prompt": "x方向电导积分中的速度因子是什么？",
+          "choices": [
+            "vₓ²",
+            "|vₓ|",
+            "vₓ+vᵧ"
+          ],
+          "answer": 0,
+          "hint": "电流和分布修正各给出一个速度。",
+          "explanation": "σₓₓ/τ=e²(g/Ω)Σw vₓ²(−∂f/∂E)。"
+        },
+        {
+          "prompt": "只有Γ–X–M路径的能量和速度，能完成二维电导积分吗？",
+          "choices": [
+            "能，给每点相等权重即可",
+            "不能，需要完整BZ体积采样",
+            "能，只要路径更密"
+          ],
+          "answer": 1,
+          "hint": "一维路径没有覆盖二维BZ测度。",
+          "explanation": "密路径仍不是完整二维积分，不能用点数弥补缺失区域。"
+        },
+        {
+          "prompt": "保持色散参数t不变，将二维晶格常数a放大两倍，σ/τ如何变？",
+          "choices": [
+            "放大4倍",
+            "缩小4倍",
+            "不变"
+          ],
+          "answer": 2,
+          "hint": "速度平方给a²，面积归一给1/a²。",
+          "explanation": "模型中v²和面积同比缩放，片电导/τ不变；电子面密度降为1/4。"
+        }
+      ]
+    },
+    {
+      "id": "transport-seebeck-exercise",
+      "module": "transport",
+      "lesson": "transport-seebeck",
+      "title": "热电符号、开路修正与τ缩放",
+      "prompt": "取电子电荷−e、开路E=S∇T，比较热窗口的能量矩。",
+      "steps": [
+        {
+          "prompt": "粒子—空穴对称半填充时，L₁是什么？",
+          "choices": [
+            "零",
+            "必为正",
+            "等于L₀"
+          ],
+          "answer": 0,
+          "hint": "E−μ为奇权重，两侧输运分布对称。",
+          "explanation": "L₁积分正负抵消，因此可逆L₀下S=0。"
+        },
+        {
+          "prompt": "若L₁为正且是单个解耦方向，S的符号是什么？",
+          "choices": [
+            "正",
+            "负",
+            "无法定义任何符号"
+          ],
+          "answer": 1,
+          "hint": "e>0而电子电荷为−e。",
+          "explanation": "S=−L₁/(eTL₀)，L₀>0，因此为负。"
+        },
+        {
+          "prompt": "零电流条件下的κₑ/τ应使用哪一个式子？",
+          "choices": [
+            "L₂/T",
+            "(L₂−L₁L₀⁻¹L₁)/T",
+            "L₁/T"
+          ],
+          "answer": 1,
+          "hint": "开路电场抵消粒子流并改变热流。",
+          "explanation": "必须扣除热电回流项，裸L₂/T不是开路电子热导。"
+        },
+        {
+          "prompt": "把同一个常数τ从10 fs增至30 fs，会发生什么？",
+          "choices": [
+            "σ、κₑ、S都乘3",
+            "只有S乘3",
+            "σ与κₑ乘3，S不变"
+          ],
+          "answer": 2,
+          "hint": "S是相同τ加权积分的比值。",
+          "explanation": "常数τ在S中抵消；能量依赖τ不适用这一结论。"
+        }
+      ]
+    },
+    {
+      "id": "transport-validation-exercise",
+      "module": "transport",
+      "lesson": "transport-validation",
+      "title": "诊断低温伪峰与输入计数",
+      "prompt": "你的二维计算出现很尖的Seebeck峰。逐步核查输入和收敛。",
+      "steps": [
+        {
+          "prompt": "已有显式上、下自旋两条能带，spinDegeneracy应设多少？",
+          "choices": [
+            "1",
+            "2",
+            "4"
+          ],
+          "answer": 0,
+          "hint": "不要把已经列出的自由度再乘一次。",
+          "explanation": "每条显式自旋能带不再有双重自旋简并，应设1。"
+        },
+        {
+          "prompt": "二维含20 Å真空层的输入应怎样归一片电导？",
+          "choices": [
+            "使用整个超胞体积",
+            "使用物理二维晶胞面积",
+            "乘以真空层厚度"
+          ],
+          "answer": 1,
+          "hint": "片系数不应依赖计算中任意的真空。",
+          "explanation": "二维模块按面积归一；体系数需要另给物理厚度定义。"
+        },
+        {
+          "prompt": "加密网格后尖峰移动或消失，首先支持什么解释？",
+          "choices": [
+            "发现新的相变",
+            "低温热窗口未收敛",
+            "τ一定变号"
+          ],
+          "answer": 1,
+          "hint": "比较kBT宽度与离散能级间隔。",
+          "explanation": "网格伪峰不能解释为材料特征，需细化并验证全扫描。"
+        },
+        {
+          "prompt": "极低载流子下S返回null，应当怎样处理？",
+          "choices": [
+            "改成0画进曲线",
+            "当作无限大",
+            "保留缺失并报告病态诊断"
+          ],
+          "answer": 2,
+          "hint": "没有可靠值不等于物理量为零。",
+          "explanation": "保留null，检查热窗口、能带范围和网格，而不是伪造确定值。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "nio-local-orbitals",
+      "module": "orbitals",
+      "title": "NiO背景：局域八面体与多电子边界",
+      "summary": "把既有NiO结构和磁性材料案例连接到局域d轨道分组，区分单电子晶场图与d⁸多重态。",
+      "kind": "真实材料配位背景 + 单电子教学模型",
+      "assumption": "Ni²⁺的d⁸多电子相互作用不在本10×10单电子模型中；参数为原创教学值，不预测NiO高低自旋、磁基态或实测d–d激发。",
+      "preset": "octahedral-d",
+      "links": [
+        [
+          "NiO材料结构",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "点群与表示",
+          "#classroom/foundations"
+        ],
+        [
+          "自旋与双群",
+          "#classroom/spin"
+        ]
+      ]
+    },
+    {
+      "id": "tetrahedral-orbital-cluster",
+      "module": "orbitals",
+      "title": "理想四面体簇：换配位，不换坐标约定",
+      "summary": "比较四个等距配体与六个等距配体的理想背景，观察e/t₂排序和d轨道角分布。",
+      "kind": "原创理想配位模型",
+      "assumption": "不指定真实化合物，不由配体位置重新计算势能；Δ、Ds、Dt与λ都是给定参数，配体键长保持可视化单位1。",
+      "preset": "tetrahedral-d",
+      "links": [
+        [
+          "晶体点群",
+          "#atlas/pointgroups"
+        ],
+        [
+          "SU(2)与角动量",
+          "#classroom/continuous"
+        ]
+      ]
+    },
+    {
+      "id": "jt-distortion-mechanism",
+      "module": "orbitals",
+      "title": "Jahn–Teller机制：电子能量与畸变代价",
+      "summary": "用解析E⊗e圆谷理解电子劈裂如何补偿弹性能，并接到既有结构畸变和Landau课堂。",
+      "kind": "独立可解析教学模型",
+      "assumption": "Q₂/Q₃是无量纲约化坐标；不是自动生成的标准晶体模式，也不是从真实结构拟合的g/K。未包含核动能、动态JT、SOC或相变温度。",
+      "preset": "jt-circle",
+      "links": [
+        [
+          "结构畸变分解",
+          "#compute/distortion-modes"
+        ],
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "geometry-ssh-chain",
+      "module": "geometry",
+      "title": "二聚化链：连接展开、Zak 与量子度规",
+      "summary": "从现有交替跃迁链出发，在固定胞内/胞间键约定下比较两种二聚化与态空间距离。",
+      "kind": "SSH 教学模型；聚乙炔是历史背景",
+      "assumption": "只计算固定参数的无自旋两带链；不求解真实聚乙炔电子–声子自洽结构，也不把 Zak/2π 当作无约定的绝对材料极化。",
+      "preset": "geometry-ssh-topological",
+      "links": [
+        [
+          "二聚化与能带展开",
+          "#compute/unfold-lab?preset=chain-dimerized"
+        ],
+        [
+          "现有紧束缚与 Wilson 环",
+          "#magnetictb"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    },
+    {
+      "id": "geometry-qwz-insulator",
+      "module": "geometry",
+      "title": "QWZ：同一 Chern 类中的不同局部几何",
+      "summary": "改变质量参数与能量尺度，观察热图、拓扑不变量和能隙如何分别变化。",
+      "kind": "可验证二维两带模型",
+      "assumption": "QWZ 参数是原创教学设置，不是实际磁性材料的拟合；下带Chern不等于已计算真实电导、有限温度响应或边界输运。",
+      "preset": "geometry-qwz-chern",
+      "links": [
+        [
+          "现有 Berry/Chern 计算",
+          "#magnetictb"
+        ],
+        [
+          "配对与BdG",
+          "#compute/pairing-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "geometry-gap-audit",
+      "module": "geometry",
+      "title": "漏采闭隙：让计算结果有可检查的边界",
+      "summary": "在 m=−2 的奇数网格中观察采样有隙与解析闭隙的冲突，练习保存完整诊断。",
+      "kind": "数值反例与研究方法",
+      "assumption": "模型已知解析间隙；对一般材料不能照搬该公式，需要另外的可靠全局带隔离检查。本模块不自动诊断任意第一性原理能带。",
+      "preset": "geometry-qwz-closing",
+      "links": [
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ],
+        [
+          "空间群与能带课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    },
+    {
+      "id": "transport-anisotropic-sheet",
+      "module": "transport",
+      "title": "二维各向异性带：从张量到热电符号",
+      "summary": "用同一条有限宽能带观察x/y电导差异、电子侧负S和空态侧正S。",
+      "kind": "原创教学模型",
+      "assumption": "不拟合具体材料；给定跃迁和常数τ，忽略Berry/Hall与相互作用修正。",
+      "preset": "transport-sheet-electrons",
+      "links": [
+        [
+          "物性张量",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "紧束缚模型",
+          "#magnetictb"
+        ],
+        [
+          "超胞能带展开",
+          "#compute/unfold-lab"
+        ]
+      ]
+    },
+    {
+      "id": "transport-cubic-volume",
+      "module": "transport",
+      "title": "三维立方电子带：等方响应与计数",
+      "summary": "比较三条方向，检查σ张量等方性和载流子体密度的单位。",
+      "kind": "三维紧束缚教学模型",
+      "assumption": "简单立方单带，教学跃迁参数不对应硅或其他实际晶体的多谷能带。",
+      "preset": "transport-volume",
+      "links": [
+        [
+          "晶体点群",
+          "#classroom/foundations"
+        ],
+        [
+          "声子热力学",
+          "#compute/phonon-thermo"
+        ]
+      ]
+    },
+    {
+      "id": "transport-convergence",
+      "module": "transport",
+      "title": "从可疑尖峰到可复现输运",
+      "summary": "先运行低温粗网格反例，再增加温度或网格，检查局部收敛与电子热导边界。",
+      "kind": "数值诊断案例",
+      "assumption": "完整均匀BZ输入仍需物理能带窗口与速度收敛；不含声子热导，也不输出真实ZT。",
+      "preset": "transport-sparse",
+      "links": [
+        [
+          "预处理JSON样例",
+          "examples/electron-transport-import.json"
+        ],
+        [
+          "方法与单位",
+          "docs/electron-transport-lab.md"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "quanty-nio",
+      "title": "Quanty：NiO晶场与多电子基态教程",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    },
+    {
+      "id": "crispy-cf",
+      "title": "ESRF Crispy：晶场、坐标与Dq/Ds/Dt约定",
+      "url": "https://crispy.esrf.fr/en/stable/user_guide/crystal_field.html"
+    },
+    {
+      "id": "quanty-d4h",
+      "title": "Quanty：D4h特征标与轴约定",
+      "url": "https://www.quanty.org/physics_chemistry/point_groups/d4h"
+    },
+    {
+      "id": "jt-linear",
+      "title": "Requist等：线性E⊗e Jahn–Teller模型",
+      "url": "https://arxiv.org/abs/1710.04041"
+    },
+    {
+      "id": "geometry-fhs",
+      "title": "Fukui, Hatsugai, Suzuki：离散布里渊区 Chern 数",
+      "url": "https://arxiv.org/abs/cond-mat/0503172"
+    },
+    {
+      "id": "geometry-qwz",
+      "title": "Qi, Wu, Zhang：二维晶格拓扑模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    },
+    {
+      "id": "geometry-metric",
+      "title": "tbkit：Bloch 带的量子度规与 Berry 曲率",
+      "url": "https://cpoli.github.io/tbkit/api/gallery/topology/plot_quantum_geometry.html"
+    },
+    {
+      "id": "geometry-ssh",
+      "title": "Su, Schrieffer, Heeger：Solitons in Polyacetylene",
+      "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.42.1698"
+    },
+    {
+      "id": "boltztrap2",
+      "title": "Madsen, Carrete & Verstraete: BoltzTraP2 (2018)",
+      "url": "https://arxiv.org/abs/1712.07946"
+    },
+    {
+      "id": "boltzwann",
+      "title": "Wannier90 BoltzWann: transport integrals and conventions",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/boltzwann/"
+    }
+  ]
+}

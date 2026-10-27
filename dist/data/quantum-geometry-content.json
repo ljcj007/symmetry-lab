@@ -1,0 +1,425 @@
+{
+  "schema": "symmetry-lab-quantum-content-fragment-1",
+  "release": "20261027-quantum1",
+  "section": "quantum-materials",
+  "modules": [
+    {
+      "id": "geometry",
+      "title": "量子几何与拓扑诊断",
+      "summary": "在 SSH/QWZ 教学模型中联动能带、量子度规、Berry 曲率与闭环拓扑，检查规范、闭隙和网格收敛。",
+      "pathway": "crystal",
+      "route": "quantum-geometry-lab",
+      "action": "quantum_geometry_lab",
+      "presets": [
+        {
+          "id": "geometry-qwz-chern",
+          "title": "QWZ m=−1 · Chern +1",
+          "input": {
+            "model": "qwz",
+            "mass": -1,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0.4
+          }
+        },
+        {
+          "id": "geometry-qwz-trivial",
+          "title": "QWZ m=3 · 平庸但有局部几何",
+          "input": {
+            "model": "qwz",
+            "mass": 3,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0.4
+          }
+        },
+        {
+          "id": "geometry-qwz-closing",
+          "title": "QWZ m=−2 · 网格漏采闭隙反例",
+          "input": {
+            "model": "qwz",
+            "mass": -2,
+            "energyScale": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0,
+            "ky": 0
+          }
+        },
+        {
+          "id": "geometry-ssh-topological",
+          "title": "SSH t₁=0.6,t₂=1 · Zak π",
+          "input": {
+            "model": "ssh",
+            "t1": 0.6,
+            "t2": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0
+          }
+        },
+        {
+          "id": "geometry-ssh-trivial",
+          "title": "SSH t₁=1,t₂=0.6 · Zak 0",
+          "input": {
+            "model": "ssh",
+            "t1": 1,
+            "t2": 0.6,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "geometry-rays",
+      "module": "geometry",
+      "title": "同一量子态的相位与态之间的距离",
+      "summary": "从投影算符理解量子度规，先区分波函数相位、轨道基底和真正的态变化。",
+      "preset": "geometry-ssh-topological",
+      "references": [
+        "geometry-metric",
+        "geometry-ssh"
+      ],
+      "sections": [
+        {
+          "title": "把无关的整体相位去掉",
+          "text": "同一孤立带的本征矢可以逐点乘 e^(iα(k))，但投影 P=|u><u| 不变。普通导数 ∂u 会随着 α 改变，不能直接用它的模长作为物理距离。量子几何张量先用 1−P 去掉沿原态方向的变化，保留态射线之间可区分的部分。",
+          "formula": "Qμν=<∂μu|(1−P)|∂νu>=Tr[P(∂μP)(∂νP)]"
+        },
+        {
+          "title": "实部给度规，虚部给曲率",
+          "text": "采用 Berry 联络 A=i<u|∂u>，所以 Q=g−iΩ/2。度规描述邻近态重叠偏离1的二阶量；曲率描述参数平面中绕小回路的几何相位。对 H=d·σ 的下带，投影由单位矢量 n=d/|d| 决定。能量整体乘正数不会改变 n，因此可改变能隙而保持该固定基底中的几何。",
+          "formula": "1−|<u(k)|u(k+δk)>|²≈gμνδkμδkν；gμν=(∂μn·∂νn)/4"
+        },
+        {
+          "title": "用 SSH 的极限建立直觉",
+          "text": "t₁=0、t₂=1 时，SSH 下带沿布里渊区绕赤道一周，在当前周期轨道基中 gkk=1/4；t₂=0 时本征投影不随 k 改变，gkk=0。SSH 是一维模型，本模块为它报告一维度规和 Zak 相位，不从它推断二维 Chern 数。改变晶胞或轨道嵌入并非简单的带本征矢 U(1) 相位操作。",
+          "formula": "HSSH=(t₁+t₂cos k)σx+t₂sin k σy；t₁=0 ⇒ gkk=1/4"
+        }
+      ]
+    },
+    {
+      "id": "geometry-topology",
+      "module": "geometry",
+      "title": "从局部 Berry 曲率走到 Zak 与 Chern",
+      "summary": "明确带、坐标方向和符号约定，让离散环路与连续曲率给出可核对的结论。",
+      "preset": "geometry-qwz-chern",
+      "references": [
+        "geometry-fhs",
+        "geometry-qwz",
+        "geometry-metric"
+      ],
+      "sections": [
+        {
+          "title": "固定 QWZ 模型与占据带",
+          "text": "本模块选择负能量下带，化学势放在零能隙，并以 kx 后 ky 的顺序定义面积方向。m=−1 对应 C=+1；m=+1 对应 C=−1。更换 Berry 联络号、选择上带或反转坐标方向会改变符号，比较不同软件前必须对齐约定。这里的数值属于教学模型，不是任何真实材料的预测。",
+          "formula": "H=s[sin kx σx+sin ky σy+(m+cos kx+cos ky)σz]；Ωxy=n·(∂xn×∂yn)/2（下带）"
+        },
+        {
+          "title": "把相邻态接成闭合回路",
+          "text": "相邻本征态重叠的模去掉后得到 Uμ。规范相位出现在每条链的端点，但在闭环上逐个抵消；布里渊区边界的闭合链接也必须包含。本站约定下，FHS 单元通量为环路乘积相位的负值。SSH 沿一维布里渊区累乘得到 Zak，相位只在模2π意义下有定义。",
+          "formula": "Uμ=<u(k)|u(k+δμ)>/|overlap|；C=−Σarg(UxUy′Ux′*Uy*)/(2π)"
+        },
+        {
+          "title": "拓扑数不等于全部局部几何",
+          "text": "m=3 的 QWZ 总 Chern 为0，却仍可以有非零局部曲率和度规；正负贡献在积分中抵消。两带纯态满足 det g=Ω²/4，以及 tr g≥|Ω|。这些关系约束局部几何，但单个点的大度规、一个局部曲率峰或一张热图都不能独自决定整体拓扑。",
+          "formula": "C=(1/2π)∫BZ Ωxy d²k；det g=Ωxy²/4；tr g≥|Ωxy|"
+        }
+      ]
+    },
+    {
+      "id": "geometry-diagnostics",
+      "module": "geometry",
+      "title": "一个整数为什么还不够：闭隙与收敛",
+      "summary": "比较解析间隙、离散 FHS、曲率积分与规范测试，发现粗网格可能掩盖的失败。",
+      "preset": "geometry-qwz-closing",
+      "references": [
+        "geometry-fhs",
+        "geometry-qwz"
+      ],
+      "sections": [
+        {
+          "title": "有限网格可以错过真正的闭隙",
+          "text": "QWZ 在 m=−2、0、2 有闭隙。以 −π 为起点的奇数网格不包含 Γ，m=−2 时采样最小能隙可能仍大于零。程序使用整个模型的解析直接间隙，闭隙或低于隔离阈值时不报告下带 Chern/Zak；局部未简并点的几何仍可显示。",
+          "formula": "Δdirect=2s min(|m+2|,|m|,|m−2|)；SSH：Δdirect=2|t₁−t₂|"
+        },
+        {
+          "title": "离散整数与积分收敛是不同检查",
+          "text": "FHS 会在满足离散链条件时给出整数，但粗网格可能没有分辨集中的曲率。这里同时比较 N 与2N−1 两层网格、链重叠、最大单元通量和已知模型拓扑值；若不可靠，主数值结果留空。直接对解析曲率求黎曼和可能收敛更慢，因此表中另列它的误差。",
+          "formula": "有隙 + 非奇异重叠 + 通量诊断 + 网格比较；整数化 ≠ 已收敛"
+        },
+        {
+          "title": "用相位滑块做可重复的规范检验",
+          "text": "滑块逐点改变本征态相位，应改变本征矢的复数分量，却保持投影、重叠模与闭环拓扑。这个测试只能检查规范处理，不保证模型完整或网格足够。研究记录应同时保存 Hamiltonian、基底约定、间隙诊断和收敛表；不要只保存一个整数。",
+          "formula": "u′(k)=e^(iα(k))u(k)；P′=P，g′=g，Ω′=Ω，闭环相位不变"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "geometry-metric-steps",
+      "module": "geometry",
+      "lesson": "geometry-rays",
+      "title": "从态射线到 SSH 的量子度规",
+      "prompt": "在固定周期轨道基中考虑 SSH 极限 t₁=0、t₂=1。把相位、投影和几何逐步分开。",
+      "steps": [
+        {
+          "prompt": "u→e^(iα)u 后，P=|u><u| 怎样变化？",
+          "hint": "bra 和 ket 的相位互为共轭。",
+          "choices": [
+            "P 不变",
+            "P 乘 e^(2iα)",
+            "P 变号"
+          ],
+          "answer": 0,
+          "explanation": "相位在外积中抵消，投影只记录态射线。"
+        },
+        {
+          "prompt": "为什么 Q 使用 (1−P) 去投影 ∂u？",
+          "hint": "沿原态方向的导数包含可任意选择的相位变化。",
+          "choices": [
+            "为了改变能量本征值",
+            "为了移除纯相位方向",
+            "为了删除整个能带"
+          ],
+          "answer": 1,
+          "explanation": "它去除沿 |u> 的规范依赖部分，保留可区分的态变化。"
+        },
+        {
+          "prompt": "n=(cos k,sin k,0)，∂kn 的长度是1，gkk 是多少？",
+          "hint": "两带公式有因子 1/4。",
+          "choices": [
+            "1",
+            "1/2",
+            "1/4"
+          ],
+          "answer": 2,
+          "explanation": "gkk=(∂kn·∂kn)/4=1/4。"
+        },
+        {
+          "prompt": "把整个 Hamiltonian 乘正数3，会怎样？",
+          "hint": "n=d/|d| 不变，能量乘3。",
+          "choices": [
+            "能隙乘3，当前基底中的度规不变",
+            "度规乘9",
+            "Zak 必定变为3π且不取模"
+          ],
+          "answer": 0,
+          "explanation": "量子几何来自投影而非能量尺度；不可据此把任意能量放大当作态变化。"
+        }
+      ]
+    },
+    {
+      "id": "geometry-chern-steps",
+      "module": "geometry",
+      "lesson": "geometry-topology",
+      "title": "符号、局部几何与全局拓扑",
+      "prompt": "采用 A=i<u|∂u>、QWZ 下带以及 kx→ky 面积方向，逐步检查 Chern 的解释。",
+      "steps": [
+        {
+          "prompt": "在本站约定下，曲率与 Qxy 虚部的关系是什么？",
+          "hint": "Q=g−iΩ/2。",
+          "choices": [
+            "Ω=2 Im Qxy",
+            "Ω=−2 Im Qxy",
+            "Ω=Re Qxy"
+          ],
+          "answer": 1,
+          "explanation": "由约定可得 Ωxy=−2 Im Qxy，不能和相反联络号混用。"
+        },
+        {
+          "prompt": "同一有隙带将积分坐标方向 x、y 交换，C 怎样变化？",
+          "hint": "定向面积和曲率分量同时体现反对称性；反向定义积分取向会变号。",
+          "choices": [
+            "总保持不变",
+            "变成 C²",
+            "在反向取向下变号"
+          ],
+          "answer": 2,
+          "explanation": "若主动反转所选定向，C 的符号翻转；必须说明采用的坐标取向。"
+        },
+        {
+          "prompt": "QWZ m=3 的 C=0，是否推出所有 k 的度规和曲率均为零？",
+          "hint": "积分为零可以来自局部非零贡献的抵消。",
+          "choices": [
+            "不能",
+            "可以",
+            "只有网格为奇数时可以"
+          ],
+          "answer": 0,
+          "explanation": "拓扑总数并不包含全部局部几何信息。"
+        },
+        {
+          "prompt": "二维两带纯态的局部几何满足哪一关系？",
+          "hint": "量子几何张量由一个与占据态正交的方向贡献。",
+          "choices": [
+            "det g=Ω²",
+            "det g=Ω²/4",
+            "tr g 必定为0"
+          ],
+          "answer": 1,
+          "explanation": "两带纯态在二维参数空间饱和行列式关系，但不一般要求 gxx=gyy。"
+        }
+      ]
+    },
+    {
+      "id": "geometry-diagnostic-steps",
+      "module": "geometry",
+      "lesson": "geometry-diagnostics",
+      "title": "反向题：粗网格给整数就可信吗",
+      "prompt": "QWZ 取 m=−2、s=1，使用以−π为起点的31×31网格。判断程序应该报告哪些结论。",
+      "steps": [
+        {
+          "prompt": "解析直接间隙 2min(|m+2|,|m|,|m−2|) 是多少？",
+          "hint": "把 m=−2 代入三个绝对值。",
+          "choices": [
+            "2",
+            "4",
+            "0"
+          ],
+          "answer": 2,
+          "explanation": "Γ 点闭隙，因此全局下带不是孤立带。"
+        },
+        {
+          "prompt": "网格未采到 Γ，采样最小能隙大于零，此时可报告有效 Chern 吗？",
+          "hint": "是否孤立需要覆盖整个布里渊区，而非只检查采样点。",
+          "choices": [
+            "不可，解析闭隙优先，主拓扑值留空",
+            "可，采样点全有隙即可",
+            "只要结果是整数就可"
+          ],
+          "answer": 0,
+          "explanation": "解析诊断阻止把漏采的闭隙误判为绝缘拓扑相。"
+        },
+        {
+          "prompt": "另一组有隙参数在粗细网格均给整数，是否还要看曲率积分误差？",
+          "hint": "链变量法与普通黎曼积分是不同数值方法。",
+          "choices": [
+            "不必，所有积分自动精确",
+            "要，离散整数化不能替代另一积分的收敛",
+            "只检查波函数是否为实数"
+          ],
+          "answer": 1,
+          "explanation": "特别在接近相变时，局部曲率集中可让普通积分收敛缓慢。"
+        },
+        {
+          "prompt": "随机或平滑改变每个 k 点的本征态相位后闭环值不变，能证明什么？",
+          "hint": "这是一项规范处理检查，不是全套物理验证。",
+          "choices": [
+            "已证明真实材料是拓扑绝缘体",
+            "已证明网格足够密",
+            "支持实现的U(1)规范不变性，仍需间隙与收敛检查"
+          ],
+          "answer": 2,
+          "explanation": "规范检验通过不能排除闭隙、欠采样或模型适用范围问题。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "geometry-ssh-chain",
+      "module": "geometry",
+      "title": "二聚化链：连接展开、Zak 与量子度规",
+      "summary": "从现有交替跃迁链出发，在固定胞内/胞间键约定下比较两种二聚化与态空间距离。",
+      "kind": "SSH 教学模型；聚乙炔是历史背景",
+      "assumption": "只计算固定参数的无自旋两带链；不求解真实聚乙炔电子–声子自洽结构，也不把 Zak/2π 当作无约定的绝对材料极化。",
+      "preset": "geometry-ssh-topological",
+      "links": [
+        [
+          "二聚化与能带展开",
+          "#compute/unfold-lab?preset=chain-dimerized"
+        ],
+        [
+          "现有紧束缚与 Wilson 环",
+          "#magnetictb"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    },
+    {
+      "id": "geometry-qwz-insulator",
+      "module": "geometry",
+      "title": "QWZ：同一 Chern 类中的不同局部几何",
+      "summary": "改变质量参数与能量尺度，观察热图、拓扑不变量和能隙如何分别变化。",
+      "kind": "可验证二维两带模型",
+      "assumption": "QWZ 参数是原创教学设置，不是实际磁性材料的拟合；下带Chern不等于已计算真实电导、有限温度响应或边界输运。",
+      "preset": "geometry-qwz-chern",
+      "links": [
+        [
+          "现有 Berry/Chern 计算",
+          "#magnetictb"
+        ],
+        [
+          "配对与BdG",
+          "#compute/pairing-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "geometry-gap-audit",
+      "module": "geometry",
+      "title": "漏采闭隙：让计算结果有可检查的边界",
+      "summary": "在 m=−2 的奇数网格中观察采样有隙与解析闭隙的冲突，练习保存完整诊断。",
+      "kind": "数值反例与研究方法",
+      "assumption": "模型已知解析间隙；对一般材料不能照搬该公式，需要另外的可靠全局带隔离检查。本模块不自动诊断任意第一性原理能带。",
+      "preset": "geometry-qwz-closing",
+      "links": [
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ],
+        [
+          "空间群与能带课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "geometry-fhs",
+      "title": "Fukui, Hatsugai, Suzuki：离散布里渊区 Chern 数",
+      "url": "https://arxiv.org/abs/cond-mat/0503172"
+    },
+    {
+      "id": "geometry-qwz",
+      "title": "Qi, Wu, Zhang：二维晶格拓扑模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    },
+    {
+      "id": "geometry-metric",
+      "title": "tbkit：Bloch 带的量子度规与 Berry 曲率",
+      "url": "https://cpoli.github.io/tbkit/api/gallery/topology/plot_quantum_geometry.html"
+    },
+    {
+      "id": "geometry-ssh",
+      "title": "Su, Schrieffer, Heeger：Solitons in Polyacetylene",
+      "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.42.1698"
+    }
+  ]
+}
+
