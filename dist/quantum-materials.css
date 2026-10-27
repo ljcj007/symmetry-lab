@@ -7,3 +7,5 @@
 
 /* Course directory consumes a column; keep scientific plots at readable width. */
 .classroom-shell .qm-lab{grid-template-columns:minmax(0,1fr)}.classroom-shell .qm-lab .obs-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.classroom-shell .qm-lab .obs-controls>p,.classroom-shell .qm-lab .obs-controls>label:has(textarea),.classroom-shell .qm-lab .obs-controls>label:has(input[type=file]){grid-column:1/-1}@media(max-width:700px){.classroom-shell .qm-lab .obs-controls{grid-template-columns:1fr}}
+
+.qm-lab .obs-controls{position:static}
