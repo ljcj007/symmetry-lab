@@ -14,7 +14,11 @@
     "test:research": "python scripts/test-python-phonon-modes.py && python scripts/test-python-band-connectivity.py && python scripts/test-python-phonon-thermo.py && python scripts/test-material-research-content.py && node scripts/test-material-research-ui.mjs && node scripts/test-material-notebook.mjs",
     "test:coupled": "python scripts/test-python-distortion-lab.py && python scripts/test-python-magnon-lab.py && python scripts/test-python-qha-lab.py && python scripts/test-python-coupled-content.py && node scripts/test-coupled-materials-ui.mjs",
     "test:electronic": "python scripts/test-python-pairing-lab.py && python scripts/test-python-shg-lab.py && python scripts/test-python-unfold-lab.py && python scripts/test-python-electronic-content.py && node scripts/test-electronic-materials-ui.mjs",
-    "test:quantum": "python scripts/test-python-crystal-field-lab.py && python scripts/test-python-quantum-geometry-lab.py && python scripts/test-python-electron-transport-lab.py && python scripts/test-python-quantum-content.py && node scripts/test-quantum-materials-ui.mjs"
+    "test:quantum": "python scripts/test-python-crystal-field-lab.py && python scripts/test-python-quantum-geometry-lab.py && python scripts/test-python-electron-transport-lab.py && python scripts/test-python-quantum-content.py && node scripts/test-quantum-materials-ui.mjs",
+    "test:quantum:layout": "node --test scripts/test-quantum-layout.mjs"
   },
-  "license": "GPL-3.0-only"
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
 }
