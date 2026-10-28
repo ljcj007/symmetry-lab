@@ -1,5 +1,18 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+## 磁共振、超导结与多重态光谱（20261028-spectroscopy1）
+
+新增 **3个主题、9课、9道分步练习（36步）、9个材料与模型案例、18个可复现实验预设及3份跨模块项目作业**。项目中心保留原有3份作业，共6份。内容融入现有课堂、计算中心、材料图谱与研究记录，保留既有功能、五个主导航和18px正文字号。
+
+- `#compute/spin-resonance-lab`：最大36维有效电子/核自旋模型，联动磁场方向、g张量、D/E、超精细作用、微波偏振、热占据和磁偶极吸收。H/h使用GHz，磁场使用T；简并强度按子空间迹求和，谱线按正频面积归一。给定有效参数不从旧无SOC Kanamori模型自动推导；当前不含粉末、弛豫、饱和、脉冲或直接核磁驱动。课堂为 `#classroom/spin?module=resonance`。
+- `#compute/andreev-lab`：正常有限链连接正常/s波超导半无限电极，使用精确迟致自能，计算电子与空穴反射、准粒子透射、电导和局域谱。`G=2(e²/h)(1−Rₑₑ+Rₕₑ)`已含两种物理自旋；E=0为零温线性极限，非零E为固定势谱微分电导。显式报告η吸收、守恒与粒子—空穴检查；精确能隙阈值留空。当前无Josephson、自洽配对、有限偏压自洽势或拓扑超导判据。课堂为 `#classroom/spin?module=andreev`。
+- `#compute/atomic-spectra-lab`：完整 `p⁶d⁸→p⁵d⁹` 和 `p⁶d⁹→p⁵d¹⁰` 组态，包含d–d/p–d Slater作用、晶场与芯/价壳SOC，比较线/圆偏振、热占据和XAS差谱。能量相对末态组态重心，强度省略公共径向因子；不报告绝对吸收边，不含配体电荷转移、RIXS或材料拟合。课堂为 `#classroom/observables?module=spectra`。
+- `#atlas/spectroscopy` 与 `#atlas/projects`：9个案例连接既有工具；3份新项目串联“多电子自旋→有效自旋→共振”“正常器件→Δ=0→Andreev反射”“Kanamori参照→完整多重态→偏振XAS”。每份包含3个阶段、参数匹配的计算证据、分步推导笔记和JSON/Markdown报告。正常器件比较须统一物理自旋倍数，并报告有限η引入的差异；记录完成不代表答案已自动批改。
+
+范围、单位与复现入口见[磁共振、超导结与多重态光谱总述](dist/docs/spectroscopy.md)，来源与文件哈希见[本次发布清单](dist/data/spectroscopy-provenance.json)。三个核心均为浏览器Python/NumPy原创教学实现；材料名称为背景，示例参数不是实验拟合。
+
+验证命令：`npm run test:spectroscopy`；完整回归继续使用 `npm test` 与 `npm run test:python`。最终源码修改后运行 `python scripts/refresh-spectroscopy-provenance.py`，再运行同一命令加 `--check` 只读核验。该脚本保留旧清单版本与计数，刷新所有旧文件哈希和Python模块哈希并生成本次清单，不打包或提交。
+
 ## 横向响应、器件与多电子态（20261028-response1）
 
 新增 **9 课、9 道分步练习（36 步）、9 个材料与模型案例、3 份跨模块项目作业**，以及 17 个可复现实验预设。三个主题分别融入材料物性、晶体对称和自旋课堂，沿用计算中心、材料图谱、研究记录、五个主导航和 18px 正文字号。
@@ -11,7 +24,7 @@
 
 方法与模型边界：[横向响应、器件与多电子态说明](dist/docs/response-materials.md)。来源与文件校验：[发布来源清单](dist/data/response-materials-provenance.json)。三个计算核心均在浏览器 Python / NumPy 中运行；Fe、NiO 等真实材料只提供背景，数值示例为原创教学参数。
 
-验证命令：`npm run test:response`，涵盖三个独立 Python 核心、全部预设与内容引用、界面、36 个推导步骤及项目记录。完整 `npm test` 和 `npm run test:python` 同时保留旧模块回归。发布前在全部源码修改完成后运行 `python .openai/response-release.py`，再运行 `python .openai/response-release.py --check` 校验来源哈希；该命令只更新来源清单，不修改计算/界面代码、不打包或提交仓库。
+验证命令：`npm run test:response`，涵盖三个独立 Python 核心、全部预设与内容引用、界面、36 个推导步骤及项目记录。完整 `npm test` 和 `npm run test:python` 同时保留旧模块回归。发布前在全部源码修改完成后运行 `python scripts/refresh-spectroscopy-provenance.py`，再运行 `python scripts/refresh-spectroscopy-provenance.py --check` 校验来源哈希；该命令只更新来源清单，不修改计算/界面代码、不打包或提交仓库。
 
 ## 轨道、量子几何与电子输运（20261027-quantum1）
 
@@ -216,7 +229,7 @@ npm start
 
 ### GitHub Pages
 
-仓库包含 [GitHub Pages 工作流](.github/workflows/pages.yml)。在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，向 `main` 分支推送提交或手动运行 **Deploy GitHub Pages** 即可发布。发布前工作流会运行全部 `npm test` 和 `npm run test:python` 检查，重新生成可下载的 `dist/source.zip`，再把 `dist/` 上传到 Pages。部署成功后，工作流和仓库 Pages 设置都会显示网站链接。
+仓库包含 [GitHub Pages 工作流](.github/workflows/pages.yml)。在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，向 `main` 分支推送提交或手动运行 **Deploy GitHub Pages** 即可发布。发布前工作流会运行全部 `npm test` 和 `npm run test:python` 检查，从本次提交生成可下载的 `dist/source.zip`（该生成文件不再存入 Git），再把 `dist/` 上传到 Pages。部署成功后，工作流和仓库 Pages 设置都会显示网站链接。
 
 页面资源、数据、示例与 Web Worker 均使用相对路径，支持 GitHub Pages 的仓库子路径，无需填写固定域名。此流程只需要 GitHub 自动提供的令牌，无需设置访问令牌或第三方服务密钥；源码包生成使用 Python 标准库，在线计算仍完全在浏览器运行。
 

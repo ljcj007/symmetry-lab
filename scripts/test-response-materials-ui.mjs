@@ -8,9 +8,9 @@ const fixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/response-materials
 const saved=new Map();globalThis.localStorage={getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)};globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/response-materials-ui.js');
-const views=await import('../dist/response-views.js?v=20261028-response1');
-const projectUI=await import('../dist/response-projects.js?v=20261028-response1');
-const notebook=await import('../dist/material-notebook.js?v=20261028-response1');
+const views=await import('../dist/response-views.js?v=20261028-spectroscopy1');
+const projectUI=await import('../dist/response-projects.js?v=20261028-spectroscopy1');
+const notebook=await import('../dist/material-notebook.js?v=20261028-spectroscopy1');
 const safe=html=>assert.doesNotMatch(html,/NaN|Infinity|undefined/);
 const calls=[];let selectedFixture='hall-qwz-plateau';
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[selectedFixture]);};
@@ -41,7 +41,7 @@ const stageFixtures={
 const captureFixture=key=>{const request=fixtures.requests[key];return notebook.captureCalculation(request.action,request.input,fixtures.results[key],{title:key,route:'compute/'+request.action.replaceAll('_','-')});};
 const projectMount=async template=>{const container=new Container(),downloads=[];await projectUI.renderResponseProjects({container,selection:{project:template.id},download:(body,name)=>downloads.push({body,name})});return {container,downloads,$:s=>container.querySelector(s)};};
 const savedProject=async id=>(await notebook.listProjects()).find(p=>p.id===id);
-const stages=projectUI.assignmentTemplates.flatMap(t=>t.steps.map(step=>({template:t,step,key:stageFixtures[t.id][step.id]})));
+const stages=projectUI.assignmentTemplates.filter(t=>Object.hasOwn(stageFixtures,t.id)).flatMap(t=>t.steps.map(step=>({template:t,step,key:stageFixtures[t.id][step.id]})));
 assert.equal(stages.length,9);
 for(const {template,step,key}of stages){
  const record=captureFixture(key),label=template.id+'/'+step.id;
@@ -80,7 +80,7 @@ for(const [key,defined,resolved]of [['hall-qwz-plateau',true,true],['hall-unreso
  assert.doesNotMatch(summary,/NaN|Infinity|undefined/);
 }
 const completedProjects=new Map();
-for(const template of projectUI.assignmentTemplates){
+for(const template of projectUI.assignmentTemplates.filter(t=>Object.hasOwn(stageFixtures,t.id))){
  const empty=notebook.makeProject({title:template.title});empty.assignment={id:template.id,steps:{},conclusion:''};await notebook.saveProject(empty);
  const explanations=Object.fromEntries(template.steps.map((s,i)=>[s.id,`${template.id} 第 ${i+1} 步：<script>原始解释</script>；参数与诊断一起记录。`]));
  for(const step of template.steps){

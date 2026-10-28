@@ -1,0 +1,370 @@
+{
+  "schema": "symmetry-lab-spectroscopy-provenance-1",
+  "release": "20261028-spectroscopy1",
+  "date": "2026-10-28",
+  "originalContent": true,
+  "scope": "Original Python/NumPy teaching implementations, lessons, synthetic model parameters and cross-module assignments; primary literature and official software documentation provide methods, not material-fitted data or complete upstream compatibility",
+  "counts": {
+    "modules": 3,
+    "lessons": 9,
+    "exercises": 9,
+    "cases": 9,
+    "sources": 8,
+    "exerciseSteps": 36,
+    "presets": 18,
+    "projects": 3,
+    "projectCenterTotal": 6
+  },
+  "projects": [
+    {
+      "id": "spin-resonance",
+      "module": "resonance",
+      "title": "从多电子自旋走到磁共振信号"
+    },
+    {
+      "id": "normal-andreev",
+      "module": "andreev",
+      "title": "从正常透射走到电子空穴反射"
+    },
+    {
+      "id": "multiplet-xas",
+      "module": "spectra",
+      "title": "从局域多重态走到偏振吸收"
+    }
+  ],
+  "sources": [
+    {
+      "id": "resonance-spin-hamiltonian",
+      "title": "EasySpin：有效自旋哈密顿量、Zeeman、零场与超精细相互作用",
+      "url": "https://www.easyspin.org/documentation/hamiltonian.html"
+    },
+    {
+      "id": "resonance-pepper",
+      "title": "EasySpin：固态 EPR 的实验与线形约定",
+      "url": "https://www.easyspin.org/documentation/pepper.html"
+    },
+    {
+      "id": "andreev-kwant",
+      "title": "Kwant: superconducting junctions and electron/hole conductance",
+      "url": "https://kwant-project.org/doc/1/tutorial/superconductors"
+    },
+    {
+      "id": "andreev-btk",
+      "title": "Blonder, Tinkham, Klapwijk: metallic to tunneling regimes in NS contacts",
+      "url": "https://doi.org/10.1103/PhysRevB.25.4515"
+    },
+    {
+      "id": "andreev-beenakker",
+      "title": "Beenakker: mesoscopic theory of NS junctions",
+      "url": "https://arxiv.org/abs/cond-mat/9406083"
+    },
+    {
+      "id": "spectra-quanty-xas",
+      "title": "Quanty：原子近似的偏振 XAS 与有限温度",
+      "url": "https://www.quanty.org/documentation/tutorials/small_programs_a_quick_start/xas"
+    },
+    {
+      "id": "spectra-quanty-nio",
+      "title": "Quanty：2p–3d Slater 直接/交换项与偶极算符",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/xas_l23"
+    },
+    {
+      "id": "spectra-quanty-ground",
+      "title": "Quanty：完整 d 壳层 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF; binary files hashed without conversion",
+  "refreshCommand": "python scripts/refresh-spectroscopy-provenance.py",
+  "verifyCommand": "python scripts/refresh-spectroscopy-provenance.py --check",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "ca2093d7f710fd810b5e09c3411962771d2e95dfac7d4edef5904c8ee4d9161e"
+    },
+    {
+      "path": "README.md",
+      "sha256": "fbbd4fb71891d9b14515efc909c1f02338c9d3542d8cbb39dd0541b568e32276"
+    },
+    {
+      "path": "dist/advanced-ui.js",
+      "sha256": "68d03fc7592e46fbe0cc4e0a77e600a7b1319e7fc7877a6361e66c9b963a2b4c"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "43d0440b18779c32f9bec9ed03fb70f4e5998e63c1764fa8bd48654ce7e5590e"
+    },
+    {
+      "path": "dist/classroom-ui.js",
+      "sha256": "85d0ad8ad50d688ee602cefc6db8035de2143b1a36c4c40ba4924fc7429eb241"
+    },
+    {
+      "path": "dist/coupled-materials-ui.js",
+      "sha256": "99f1b8185fd0ba4e1709467f485da4459e1746b5361dc5c4053b53f876b5e457"
+    },
+    {
+      "path": "dist/coverage-ui.js",
+      "sha256": "fdcdbfeb500c016e91cc2a452c063864edf571bb3fc2fdebf1a742c19e313b2a"
+    },
+    {
+      "path": "dist/data/andreev-content.json",
+      "sha256": "8b1da375dcd9d9585b5cf970f556ca7b8fdd96b8f1eb6167e61745e73f5faef5"
+    },
+    {
+      "path": "dist/data/atomic-spectra-content.json",
+      "sha256": "b6eb7da172062b248fe67ccc38785f7ef55ece3c706e1d4f888211d057e9a02b"
+    },
+    {
+      "path": "dist/data/spectroscopy-materials.json",
+      "sha256": "2e84baf7624671ad815f988bcb37c29d2c522a0525822868db20718b315e1586"
+    },
+    {
+      "path": "dist/data/spin-resonance-content.json",
+      "sha256": "4689a045065b35a1bebb590a4e5462469a57f81e61b1afeecd87bfecd1cef54c"
+    },
+    {
+      "path": "dist/docs/andreev-lab.md",
+      "sha256": "246c9f243fb3cb847e2f0ce86550f9fd08effda7e8c1075a6f31042d8e832e9f"
+    },
+    {
+      "path": "dist/docs/atomic-spectra-lab.md",
+      "sha256": "66852241e242452729e46eae5d964f0de12ff8096376dcc7ae761f7b2a7b51f3"
+    },
+    {
+      "path": "dist/docs/spectroscopy.md",
+      "sha256": "0e811d1946bab037212bce141bbb270b9fc70b2157d00298af6e7ec5d0261c1d"
+    },
+    {
+      "path": "dist/docs/spin-resonance-lab.md",
+      "sha256": "f3a86bbb685d6d99141dc855553a5857b299391db38d88ca4f0c34217f2d0ac3"
+    },
+    {
+      "path": "dist/electronic-materials-ui.js",
+      "sha256": "a741c4afdf6b3cb4d4e0177d3b494a0c89d05a986598d4b310f7f9f0139c8424"
+    },
+    {
+      "path": "dist/examples/andreev-barrier.json",
+      "sha256": "a9c6e818dbaf31cdaa2a5c0812321854f2ec3b73a21fcfc262815d2249c6bf0b"
+    },
+    {
+      "path": "dist/examples/andreev-project-normal.json",
+      "sha256": "d83189a541f6c2aa032ae1d6b596eb899519c0673f969aadcbcb5f7e4ae83759"
+    },
+    {
+      "path": "dist/examples/andreev-project-paired.json",
+      "sha256": "4c7ee9c1cea6632f1666e504f6764e2a6c3c4ce24f531f7971f4e64454e0424a"
+    },
+    {
+      "path": "dist/examples/andreev-small-gap.json",
+      "sha256": "73df7dd5514f5470971b8c54b7b705ce39d8c4437223d60f75806a851e5e6b0f"
+    },
+    {
+      "path": "dist/examples/andreev-threshold.json",
+      "sha256": "68066e9af0b0c9345e400010da0edd5eb3b6c0553e8d2757f6268522419d9201"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-d8-cubic.json",
+      "sha256": "028dad36164d0f0fa463639314df864fe40f4968225c37e36ee85f420af41d5b"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-d9-limit.json",
+      "sha256": "27ee2a4cf3f7fe8483f800a024a61eeda5f16c7651f6f618989d2fc1a8679ba0"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-field-xmcd.json",
+      "sha256": "c273f98d2a5917d474cc19dd1f005e596f8f2607c86a47560380c6124609a6f1"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-project-x.json",
+      "sha256": "f8dbb1fd19c16de2513403f95eac08372d27667b79bbc810a2e2477c7620133a"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-project-z.json",
+      "sha256": "2bb90f3fc57e4620bcc967b35976dc2fb4df5c1a37038ad52dcfd4e2f52b750e"
+    },
+    {
+      "path": "dist/examples/atomic-spectra-valence-soc-off.json",
+      "sha256": "867d6afcae133df3a9ab53f7d0a2603c4fafc0f73826958aa2a32e387626c7cc"
+    },
+    {
+      "path": "dist/examples/spin-resonance-anisotropic-x.json",
+      "sha256": "6e2a248eab827590762f6fbe697916d952b3d25193e32eaef39da0eef8f30d2b"
+    },
+    {
+      "path": "dist/examples/spin-resonance-anisotropic-z.json",
+      "sha256": "bcf06120a98eefff32e24e8332e374a2657b92d138475db8fe2922186ccf367b"
+    },
+    {
+      "path": "dist/examples/spin-resonance-hyperfine.json",
+      "sha256": "4d74a504e26f38bb04d203d580a572714f98657d3e1c5cedf5aa5badb0e394fb"
+    },
+    {
+      "path": "dist/examples/spin-resonance-isotropic.json",
+      "sha256": "fbc8dc9f25c6b65d9b72ffcaafdd84ee3f75fb206bf1f4b9a3ffa476571eb784"
+    },
+    {
+      "path": "dist/examples/spin-resonance-longitudinal.json",
+      "sha256": "e2c65ee0637577bd8475e6c1436c195eacb43f44f982033e3ee2be77974df18a"
+    },
+    {
+      "path": "dist/examples/spin-resonance-spin1-isotropic.json",
+      "sha256": "d144f565a0f4962e009b625d69c51e812b7b573cde9917ded765e7b19079ba5d"
+    },
+    {
+      "path": "dist/examples/spin-resonance-spin1.json",
+      "sha256": "220aa1aa4e3268ebc63485b6a854fa0c25609d824c77497ec50d9c03ca01c8bf"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "1aa865e318d43cc0dc8b13849af98c3362f08d7dc94dc428b7a11ced080e707a"
+    },
+    {
+      "path": "dist/lie-group-ui.js",
+      "sha256": "8ad79e4b936f41fba40dc66c33896737b573b5f90c937aa14b69fcaa9b8c88e1"
+    },
+    {
+      "path": "dist/lie-physics-ui.js",
+      "sha256": "fa7250dd6294ebbac84e5e941af6ee646497cc2fe96389843acf5e35896bc139"
+    },
+    {
+      "path": "dist/material-notebook.js",
+      "sha256": "ab11d3efa9dd7db48dc5892bae874f1f40cb3e7d43826929c7f28e45bd2e839a"
+    },
+    {
+      "path": "dist/material-research-ui.js",
+      "sha256": "a981d3c3c61d907196edcd315f1e74b29c9529f7a7e830fb24a2728ce10733f0"
+    },
+    {
+      "path": "dist/navigation-ui.js",
+      "sha256": "2e46978663de52dc614b65580285e7f9e67115fcb5d76b64245ade068b1ad4b6"
+    },
+    {
+      "path": "dist/observables-ui.js",
+      "sha256": "0cd194094c527d0515a784ac0cc2161dfb0bb87afa0d7daa2f581a5fc6212e7a"
+    },
+    {
+      "path": "dist/python-client.js",
+      "sha256": "fb34ca4da7662ba9336b72a9303b041668cfbaf6f92592ddc24886dd01191ef0"
+    },
+    {
+      "path": "dist/python-worker.js",
+      "sha256": "863eb9c16e25ef9464fed0f8498e7eb1ee3ec17d18a8296c9f8015e43119bdb4"
+    },
+    {
+      "path": "dist/python/andreev_lab.py",
+      "sha256": "24cf7da25126b041eeeee36a731244fb71682ad3cdf1e78b616afa18138164a3"
+    },
+    {
+      "path": "dist/python/atomic_spectra_lab.py",
+      "sha256": "80e36eedfd59e06e4daea87fac85bca70681972c844a961b80ddf8b4ee9f8e0c"
+    },
+    {
+      "path": "dist/python/browser_api.py",
+      "sha256": "78e9f411608d88508afc46651d5df39a37fde914ba1ee23b93c50dd68be976b8"
+    },
+    {
+      "path": "dist/python/spin_resonance_lab.py",
+      "sha256": "f6ebc5af3aaf505716af9e43ab4e24aa6b08d2aefbdceef43442d9f49985a53b"
+    },
+    {
+      "path": "dist/quantum-materials-ui.js",
+      "sha256": "75e420b78c207db634f14c193310c5335f8ac70dfc9efefdbf191743c1dc2216"
+    },
+    {
+      "path": "dist/response-materials-ui.js",
+      "sha256": "77dd9b75b573c9748961a0a8331baea124f06709b45207213353b932ab40daa6"
+    },
+    {
+      "path": "dist/response-projects.js",
+      "sha256": "8b9313c6e7d93d6aea1b1b7bbabe1fd05f68a63d385265d575091e5f91ee96e9"
+    },
+    {
+      "path": "dist/response-views.js",
+      "sha256": "d0306c6128f28ba2529a5c345317c01ca03e607d761a82f1713b97f88a33bf39"
+    },
+    {
+      "path": "dist/spectroscopy-projects.js",
+      "sha256": "5e296f538a584e78cf8717194175737229a1eb71c551da462e9f2e601d1867ce"
+    },
+    {
+      "path": "dist/spectroscopy-ui.js",
+      "sha256": "5eb328357e5503340dc732590c58b1d1929ee88970bc26c8853e0adaf938bbca"
+    },
+    {
+      "path": "dist/spectroscopy-views.js",
+      "sha256": "ff91d2f53247cda8cdfafda13fd654d3968913f495e03f80917d7aefa40a4261"
+    },
+    {
+      "path": "dist/spectroscopy.css",
+      "sha256": "5eabee6fc70c05aef145d2ce88475fb135e0a83bdf4eb64dc87e7627c2efdc06"
+    },
+    {
+      "path": "dist/structure-dynamics-ui.js",
+      "sha256": "b6039914754e5d1edca49f25b321b4460ac0817e22bc971864fa2419b6c2a1f5"
+    },
+    {
+      "path": "dist/symmetry-course-ui.js",
+      "sha256": "6c326166e005d8016f2db3e78f744859cc638440f93b888ef61826e5d9ba64e6"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1cdd43fbc5870e3f4152e5e051062154f47522f92de0828ec7dc87b664d13dbb"
+    },
+    {
+      "path": "scripts/build-spectroscopy-catalog.py",
+      "sha256": "a54441f17613711b9bc67a71b3ab3299892408ff88b30d4d136080cdd1883448"
+    },
+    {
+      "path": "scripts/build-spectroscopy-fixtures.py",
+      "sha256": "a3e6ab28a5867107fde410f7eca4ea6069065a14d1aec341665a54666c46c51e"
+    },
+    {
+      "path": "scripts/fixtures/spectroscopy.json",
+      "sha256": "cc6f3a0b85a5f2436d66f1ae625aa2b039e2eb0ca27be1730e753a6aef7bf836"
+    },
+    {
+      "path": "scripts/refresh-spectroscopy-provenance.py",
+      "sha256": "3c99f2be49ee7d33598ba212daee89db19029ec6a911dcf7508dd937389c722b"
+    },
+    {
+      "path": "scripts/test-coupled-materials-ui.mjs",
+      "sha256": "69d455c1ed24f6a5b24cb527f83bc5710de2295b7de7029c035cd6af87c11323"
+    },
+    {
+      "path": "scripts/test-lie-group-ui.mjs",
+      "sha256": "fb998d940c84a5bd570736e156d08d829ad035da3189cb12c78d93ecd3ba9da9"
+    },
+    {
+      "path": "scripts/test-material-research-ui.mjs",
+      "sha256": "f4d07bbeef3eb4c1597b6bec6c6618bb0d41c69b0747d714824e2cc1e56a1bbc"
+    },
+    {
+      "path": "scripts/test-python-andreev.py",
+      "sha256": "3700a2657e71adfb9a909fedd65d0322cddc6f8eb503b47e2f51ba706947ffd2"
+    },
+    {
+      "path": "scripts/test-python-atomic-spectra.py",
+      "sha256": "327567ff3248c7316c4f5e54d08e6d9ba76e71ce67dd15857eb0e2284e829698"
+    },
+    {
+      "path": "scripts/test-python-spectroscopy-content.py",
+      "sha256": "c4faaa0fc123534a7ba55e9743361fbfec0989d32e4e7b232590356e4fac7cad"
+    },
+    {
+      "path": "scripts/test-python-spin-resonance.py",
+      "sha256": "e368be64b9fd2faa08ec1ab8f4d368c8ed3eff91d74a66b52e3082a0070c5f1e"
+    },
+    {
+      "path": "scripts/test-response-materials-ui.mjs",
+      "sha256": "599865c5887a3b8d9ef39131c341b00af7f28c2ace15ed6cd361236d1431e445"
+    },
+    {
+      "path": "scripts/test-spectroscopy-ui.mjs",
+      "sha256": "14687f5d122ee6b61e50e2fed420c618065814960d8d7fa541d960a5ba9470a0"
+    },
+    {
+      "path": "scripts/test-structure-dynamics-ui.mjs",
+      "sha256": "71cb341838bfbdf72db3d911845cdcb6cf477bd000ff4ff41f6350da13a10a19"
+    }
+  ]
+}

@@ -612,6 +612,51 @@
         "No atomic LS term labels, material-fitted NiO spectrum, charge transfer or XAS/RIXS calculation"
       ],
       "sha256": "9166cb06b0fd09a22de23ad57a35ca471ae3a25b5dc76f3ed7064455749c6fc4"
+    },
+    {
+      "path": "dist/python/spin_resonance_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Single effective electron spin S=1/2 through 5/2 and at most one nuclear spin I=0 through 5/2; diagonal g, D/E and axial hyperfine tensors in a shared crystal frame",
+        "Exact finite-dimensional eigensystems, thermal populations, degenerate-subspace magnetic-dipole trace strengths, positive-frequency absorption and sorted field-scan energies"
+      ],
+      "limitations": [
+        "Phenomenological effective parameters are supplied independently, not inferred from the no-SOC Kanamori model or material structures",
+        "Single-crystal weak-drive equilibrium spectrum; no powder average, relaxation, saturation, pulses, direct nuclear drive or full complex susceptibility"
+      ],
+      "sha256": "f6ebc5af3aaf505716af9e43ab4e24aa6b08d2aefbdceef43442d9f49985a53b"
+    },
+    {
+      "path": "dist/python/andreev_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Normal one-orbital 1D chain connected to normal and real s-wave superconducting semi-infinite leads with exact retarded surface self-energies",
+        "Electron/hole reflection, quasiparticle transmission, spin-degenerate electrical conductance, local spectra, particle-hole and flux checks with explicit finite-device eta absorption"
+      ],
+      "limitations": [
+        "Zero-temperature fixed-potential spectral differential conductance; E=0 is the zero-bias linear limit; no finite-bias self-consistency, Josephson phase, SOC or Majorana diagnosis",
+        "Two physical spins already included in G; exact E=+/-Delta threshold points are withheld and must not be filled by zero; finite-bandwidth/barrier contacts need not double normal conductance"
+      ],
+      "sha256": "24cf7da25126b041eeeee36a731244fb71682ad3cdf1e78b616afa18138164a3"
+    },
+    {
+      "path": "dist/python/atomic_spectra_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Complete p6d8 to p5d9 and p6d9 to p5d10 atomic configuration spaces with d-d Slater F0/F2/F4, p-d F0/F2/G1/G3, crystal field and p/d spin-orbit interactions",
+        "Polarization-dependent 2p-to-3d dipole XAS, thermal and degenerate-subspace averaging, circular/linear difference spectra and complete-space oscillator-strength checks"
+      ],
+      "limitations": [
+        "Single-ion approximation with illustrative parameters; no ligand charge transfer, magnetic crystal order, RIXS or absolute absorption cross-section",
+        "Transition energies are referenced to the final-configuration centroid, not an absolute experimental edge; radial factors are suppressed and LS terms are not automatically assigned"
+      ],
+      "sha256": "80e36eedfd59e06e4daea87fac85bca70681972c844a961b80ddf8b4ee9f8e0c"
     }
   ],
   "coordinate_conventions": {

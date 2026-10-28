@@ -83,24 +83,20 @@
     }
   ],
   "hashConvention": "SHA-256 of UTF-8 text normalized to LF; binary files hashed without conversion",
-  "refreshCommand": "python .openai/response-release.py",
-  "verifyCommand": "python .openai/response-release.py --check",
+  "refreshCommand": "python scripts/refresh-spectroscopy-provenance.py",
+  "verifyCommand": "python scripts/refresh-spectroscopy-provenance.py --check",
   "files": [
     {
-      "path": ".openai/response-release.py",
-      "sha256": "812fdbcc502b25d3253019b57ad51ed7187fadcb5892fcd9ccb80616bb4edf25"
-    },
-    {
       "path": "README.md",
-      "sha256": "565771c9ffde1cae678e37ac89345520cb3430cf93c5ded441ccf2cc483e33ee"
+      "sha256": "fbbd4fb71891d9b14515efc909c1f02338c9d3542d8cbb39dd0541b568e32276"
     },
     {
       "path": "dist/app.js",
-      "sha256": "b6cd2e129fb338fadf5c0ab994b0d7744cb65d4651f6a9176a6380095c2645cb"
+      "sha256": "43d0440b18779c32f9bec9ed03fb70f4e5998e63c1764fa8bd48654ce7e5590e"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "11eb906c12f0a23c5c9e46e82ccb964239ae16fd9c621d71230185b687ebcf55"
+      "sha256": "85d0ad8ad50d688ee602cefc6db8035de2143b1a36c4c40ba4924fc7429eb241"
     },
     {
       "path": "dist/data/device-transport-content.json",
@@ -200,27 +196,27 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "8ad131aaf148f5a758644d965b996b8e0b0011af62055ddbf05d14deb050da3b"
+      "sha256": "1aa865e318d43cc0dc8b13849af98c3362f08d7dc94dc428b7a11ced080e707a"
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "e76bef619b1e3d72c14945f7272e317567ea32181063469c1f54f2310741090a"
+      "sha256": "ab11d3efa9dd7db48dc5892bae874f1f40cb3e7d43826929c7f28e45bd2e839a"
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "ab1df219120c96f30fbdea073c0c98af9685abc266481f47f1c5970e4e040882"
+      "sha256": "2e46978663de52dc614b65580285e7f9e67115fcb5d76b64245ade068b1ad4b6"
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "9ec2fdb96c5251c08609bb801888d3b62ea1bc7d63f60a1b00d108e6896f2535"
+      "sha256": "fb34ca4da7662ba9336b72a9303b041668cfbaf6f92592ddc24886dd01191ef0"
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "240b82b5c4930993d29263abb4335187a2cc80b2896ca5bcd429495422bbccf4"
+      "sha256": "863eb9c16e25ef9464fed0f8498e7eb1ee3ec17d18a8296c9f8015e43119bdb4"
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "48d415a285580fe2e7f31feaf4d4376dd4192763f5d3661b434af1113a39232f"
+      "sha256": "78e9f411608d88508afc46651d5df39a37fde914ba1ee23b93c50dd68be976b8"
     },
     {
       "path": "dist/python/device_transport_lab.py",
@@ -236,7 +232,7 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "53abc839677072ec4411915c4b3ea61ac72a922bdc896590b2b77331310d76f8"
+      "sha256": "77dd9b75b573c9748961a0a8331baea124f06709b45207213353b932ab40daa6"
     },
     {
       "path": "dist/response-materials.css",
@@ -244,15 +240,15 @@
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "252fafb70c7b69122fe32c84e15bc28af876bd71e0465435872a48b8365eb78d"
+      "sha256": "8b9313c6e7d93d6aea1b1b7bbabe1fd05f68a63d385265d575091e5f91ee96e9"
     },
     {
       "path": "dist/response-views.js",
-      "sha256": "3c744dea06aaa49e530db7b04b1eadd903b5201d9eb4c5a47c619f85615d6927"
+      "sha256": "d0306c6128f28ba2529a5c345317c01ca03e607d761a82f1713b97f88a33bf39"
     },
     {
       "path": "package.json",
-      "sha256": "26d9272026a017d0541ced0628df943f407550635ec2909f2f4461ef04a05855"
+      "sha256": "1cdd43fbc5870e3f4152e5e051062154f47522f92de0828ec7dc87b664d13dbb"
     },
     {
       "path": "scripts/build-response-catalog.py",
@@ -284,7 +280,13 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "0173941388b88876238a515774469e275bcb45bbecf9e93f9247cdd78a2092a1"
+      "sha256": "599865c5887a3b8d9ef39131c341b00af7f28c2ace15ed6cd361236d1431e445"
     }
-  ]
+  ],
+  "provenanceMaintenance": {
+    "note": "Legacy local helpers excluded from the reproducible file manifest; historical release, counts and sources are preserved.",
+    "excludedLocalHelpers": [
+      ".openai/response-release.py"
+    ]
+  }
 }

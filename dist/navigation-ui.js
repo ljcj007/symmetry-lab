@@ -2,6 +2,8 @@
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
  {id:'observables',title:'声子光谱与物性',summary:'从原胞位移和对称操作，计算光谱选择定则与允许响应。',tools:[
+  ['compute/spin-resonance-lab','磁共振 · 有效自旋与 EPR','各向异性 g、零场分裂、超精细作用、磁场方向与磁偶极跃迁谱。','EPR ESR resonance 磁共振 有效自旋 超精细'],
+  ['compute/atomic-spectra-lab','多重态光谱 · 偏振 XAS','完整 Slater、SOC 与 d⁸/d⁹ 原子近似的 2p→3d 偏振吸收。','XAS XMCD XLD 多重态 偏振 选择定则 Slater'],
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],
   ['compute/phonon-modes','声子模式 · 分类与冻结结构','Γ 点简并子空间、相容超胞、POSCAR / CIF 冻结模导出。','Phonopy irrep 冻结模 对称 声子'],
   ['compute/phonon-thermo','声子热力学 · F / S / Cv','Einstein / Debye、加权网格与总 DOS、Phonopy 热性质导入。','热容 自由能 熵 热力学 Debye Einstein'],
@@ -32,6 +34,7 @@ export const toolGroups=[
   ['compute/lie/su3_ninej','SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
+  ['compute/andreev-lab','超导结 · Andreev 反射','正常金属—超导接触的电子/空穴反射、电导与通量检查。','Andreev NS BdG 超导 反射 接触'],
   ['compute/device-transport-lab','器件量子输运 · 双电极与透射','均匀 / SSH 链、接触、势垒、Landauer 电导与局域谱。','Landauer device 器件 电极 透射 散射'],
   ['compute/local-multiplet-lab','多电子晶场 · Hund 与多重态','固定 N 五轨道 Kanamori、自旋分类、轨道占据与高低自旋竞争。','Hund Kanamori multiplet 多电子 多重态 晶场'],
   ['compute/crystal-field-lab','晶场与轨道 · SOC 与 Jahn–Teller','d 轨道与配位、立方和四方分裂、自旋轨道耦合与 E⊗e 模型。','orbital crystal field 晶场 轨道 SOC Jahn Teller NiO'],
@@ -70,7 +73,9 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261028-response1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261028-spectroscopy1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy])=>[
+  ...spectroscopy.lessons.map(l=>({route:'classroom/'+spectroscopy.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 磁共振 超导 反射 多重态 偏振 XAS',kind:'课程'})),
+  ...spectroscopy.cases.map(c=>({route:'atlas/spectroscopy?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' EPR Andreev XAS',kind:'材料'})),
   ...response.lessons.map(l=>({route:"classroom/"+response.modules.find(m=>m.id===l.module).pathway+"?module="+l.module+"&lesson="+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+" 霍尔 横向 热电 器件 多电子 Hund",kind:"课程"})),
   ...response.cases.map(c=>({route:"atlas/response?material="+encodeURIComponent(c.id)+"&module="+c.module,title:c.title,summary:c.summary,keywords:c.id+" 响应 透射 多电子",kind:"材料"})),
   {route:"atlas/projects",title:"跨模块项目作业",summary:"从研究问题到计算证据与解释，保存可复现的项目报告。",keywords:"项目 作业 报告 证据 研究",kind:"项目"},
@@ -104,7 +109,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
-  ['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
+  ['atlas/spectroscopy','磁共振、超导结与偏振光谱','从有效自旋和电子空穴散射走到原子多重态的光谱信号。'],['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
   ['atlas/projects','跨模块项目作业','收录计算证据、撰写推导解释、导出完整项目和研究报告。'],
   ['atlas/quantum','轨道、量子几何与电子输运','从局域 d 轨道走到 Bloch 波函数几何与热电响应。'],
   ['atlas/electronic','电子配对、倍频与缺陷能带','从配对能隙、GaAs / BaTiO₃ 非线性光学，走到超胞谱权重。'],
@@ -117,7 +122,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
   ['atlas/research','完成一份材料分析','模式识别 → 冻结模 / 能带连接 / 热力学 → 研究记录'],
-  ['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
+  ['atlas/spectroscopy','磁共振、超导结与偏振光谱','从有效自旋和电子空穴散射走到原子多重态的光谱信号。'],['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
   ['atlas/projects','跨模块项目作业','收录计算证据、撰写推导解释、导出完整项目和研究报告。'],
   ['atlas/quantum','轨道、量子几何与电子输运','从局域 d 轨道走到 Bloch 波函数几何与热电响应。'],
   ['atlas/electronic','电子配对、倍频与缺陷能带','从配对能隙、GaAs / BaTiO₃ 非线性光学，走到超胞谱权重。'],

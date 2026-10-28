@@ -1,0 +1,508 @@
+{
+  "schema": "symmetry-lab-spectroscopy-content-fragment-1",
+  "release": "20261028-spectroscopy1",
+  "section": "spectroscopy-materials",
+  "modules": [
+    {
+      "id": "spectra",
+      "title": "多重态光谱与偏振选择定则",
+      "summary": "在完整Slater与SOC原子模型中计算2p→3d偏振吸收，联动芯空穴、热占据、谱强和积分检验。",
+      "pathway": "observables",
+      "route": "atomic-spectra-lab",
+      "action": "atomic_spectra_lab",
+      "presets": [
+        {
+          "id": "spectra-d8-cubic",
+          "title": "d⁸ 立方离子 · Slater 与 SOC",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-project-x",
+          "title": "轴向晶场 · x 偏振",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.3,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-project-z",
+          "title": "同一轴向晶场 · z 偏振",
+          "input": {
+            "configuration": "d8",
+            "polarization": "z",
+            "tenDq": 1.0,
+            "tetragonal": 0.3,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-field-xmcd",
+          "title": "给定磁场 · 圆二色性",
+          "input": {
+            "configuration": "d8",
+            "polarization": "plus",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 20,
+            "temperature": 2,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-d9-limit",
+          "title": "d⁹ 解析极限 · L₃/L₂ 权重",
+          "input": {
+            "configuration": "d9",
+            "polarization": "x",
+            "tenDq": 0,
+            "tetragonal": 0.0,
+            "F0": 0,
+            "F2": 0,
+            "F4": 0,
+            "pdF0": 0,
+            "pdF2": 0,
+            "pdG1": 0,
+            "pdG3": 0,
+            "socD": 0,
+            "socP": 10,
+            "fieldTesla": 0.0,
+            "temperature": 0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-valence-soc-off",
+          "title": "d⁸ 对照 · 关闭价壳 SOC",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "spectra-slater",
+      "module": "spectra",
+      "title": "从统一 J 到完整 Slater 与芯空穴",
+      "summary": "明确两种相互作用的不同，再建立吸收前后的完整多电子空间。",
+      "preset": "spectra-d8-cubic",
+      "references": [
+        "spectra-quanty-ground",
+        "spectra-quanty-nio"
+      ],
+      "sections": [
+        {
+          "title": "同样是 d 壳层，保留的信息可以不同",
+          "text": "现有 Kanamori 课堂用统一 J 描述轨道间交换；本模块通过球谐角矩阵和 F⁰、F²、F⁴ 构造完整旋转不变 d–d 库仑相互作用。F² 与 F⁴ 分别控制不同角向通道，不直接等于某个单一 Hund 参数。这里使用完整反对称费米行列式。",
+          "formula": "H_dd=½Σ_abcd U_abcd c†_a c†_b c_d c_c；k=0,2,4"
+        },
+        {
+          "title": "吸收前后不在同一个组态空间",
+          "text": "2p 核电子被激发到3d：d⁸ 离子的初态为 p⁶d⁸，共45维，末态为 p⁵d⁹，共60维。末态包含2p SOC、p–d直接 F⁰/F² 和交换 G¹/G³。d⁹初态10维，末态p⁵d¹⁰为6维。pp作用在这些闭壳层或单空穴组态中只贡献公共常数，本模块将其纳入未标定的吸收边零点。",
+          "formula": "dim(p⁶d⁸)=C(10,8)=45；dim(p⁵d⁹)=C(6,5)C(10,9)=60"
+        },
+        {
+          "title": "SOC 后怎样读自旋和轨道",
+          "text": "价壳 SOC 是所有单电子 l·s 的和，不能任意替换成一个总 L·S 而不投影。一般晶场与 SOC 会混合不同 L、S，能级表因此显示 ⟨S²⟩、⟨L²⟩及简并平均占据，不强行赋予 LS 项标签。立方和轴向晶场均在与球谐基严格换基后的实轨道上定义。",
+          "formula": "H_SOC=ζ_dΣ_(d电子)l·s+ζ_pΣ_(p电子)l·s"
+        }
+      ]
+    },
+    {
+      "id": "spectra-polarization",
+      "module": "spectra",
+      "title": "从偶极矩阵元得到偏振选择定则",
+      "summary": "能量差决定谱线位置，波函数和光偏振共同决定谱线强度。",
+      "preset": "spectra-project-x",
+      "references": [
+        "spectra-quanty-nio",
+        "spectra-quanty-xas"
+      ],
+      "sections": [
+        {
+          "title": "先计算振幅，再平方",
+          "text": "电偶极跃迁由 ε·r 描述，2p→3d 改变轨道宇称且偶极算符本身不翻转自旋；SOC 会混合基态和末态中的自旋成分。存在能量差不保证存在非零跃迁强度。本页径向偶极积分固定为1，保留角向矩阵元与多电子反对称化。",
+          "formula": "D_ε=Σ_(m,m′,σ)〈2m|ε·r̂|1m′〉d†_(mσ)p_(m′σ)"
+        },
+        {
+          "title": "比较线偏振与圆偏振",
+          "text": "x、y、z 是晶体坐标；linear 使用 cosθ x+sinθ z，适合沿y传播的光。±圆偏振定义为(x±iy)/√2，沿z传播。一般叠加偏振须先叠加复振幅，不能直接平均强度。在本页轴向零场模型中相关交叉项消失，45°线偏振可用于核对(x+z)/2强度。",
+          "formula": "I_ε∝|ε_x M_x+ε_y M_y+ε_z M_z|²；XMCD=I₊−I₋；XLD=I_z−I_x"
+        },
+        {
+          "title": "温度和外场改变初态权重",
+          "text": "有限温度对全部初态作 Boltzmann 平均；T=0时对基态简并空间等权。零场平衡态不会凭空选取磁化方向，因此其圆二色性应消失。给定z向磁场能够产生圆二色性；反转磁场应交换两种圆偏振的谱。单离子场不等于真实NiO反铁磁序。",
+          "formula": "p_i=exp[−(E_i−E_0)/(kBT)]/Z；H_Z=+μB B(L_z+2S_z)"
+        }
+      ]
+    },
+    {
+      "id": "spectra-audit",
+      "module": "spectra",
+      "title": "从谱峰走到可复核的吸收报告",
+      "summary": "区分相对吸收边、积分强度、展宽和真实材料谱，保留数值证据。",
+      "preset": "spectra-d9-limit",
+      "references": [
+        "spectra-quanty-xas",
+        "spectra-quanty-nio"
+      ],
+      "sections": [
+        {
+          "title": "吸收边零点需要独立标定",
+          "text": "这里每次计算都把末态组态的能量重心作为参考，并将初态基态能量设为零。横轴展示相对跃迁能，不是预测绝对核心结合能；F⁰只带来的组态公共位移在此坐标中消去。不能从这类重新校准的曲线推断化学位移。",
+          "formula": "E_rel=(E_f−Tr H_f/dim H_f)−(E_i−E_i,min)"
+        },
+        {
+          "title": "展宽改变峰形，不创造积分强度",
+          "text": "每条线用面积为1的Lorentz函数展宽。参数Γ为半高半宽，完整宽度为2Γ。数值窗口会截掉尾部；输出同时给无限窗口强度、当前窗口的解析强度及数值积分。采样步长过大时显示需要加密，而不把光滑连线当作精确峰形。",
+          "formula": "L_Γ(E)=Γ/[π(E²+Γ²)]；FWHM=2Γ"
+        },
+        {
+          "title": "用完整空间检查选择定则",
+          "text": "径向积分为1时，对x、y、z三种正交偏振及完整末态求和，积分强度等于(2/5)倍的d空穴数。d⁸应为0.8，d⁹应为0.4；各向同性平均还要除以3。d⁹无相互作用、价壳SOC为零的解析极限给出L₃:L₂=2:1，这不保证一般多重态都有同样的积分分支比。",
+          "formula": "Σ_(ε=x,y,z)Σ_i,f p_i|〈f|D_ε|i〉|²=(2/5)(10−n)"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "spectra-spaces-steps",
+      "module": "spectra",
+      "lesson": "spectra-slater",
+      "title": "数清初末态，并识别核心 SOC",
+      "prompt": "考虑p⁶d⁸→p⁵d⁹，随后在无相互作用d⁹解析极限检查p空穴。",
+      "steps": [
+        {
+          "prompt": "p⁶d⁸初态空间有多少维？",
+          "hint": "p壳层已满；只需从十个d自旋轨道选八个。",
+          "choices": [
+            "10",
+            "45",
+            "60"
+          ],
+          "answer": 1,
+          "explanation": "C(6,6)C(10,8)=45，闭合p壳层没有额外重数。"
+        },
+        {
+          "prompt": "p⁵d⁹末态空间有多少维？",
+          "hint": "分别选择p空穴和d空穴位置。",
+          "choices": [
+            "60",
+            "45",
+            "16"
+          ],
+          "answer": 0,
+          "explanation": "C(6,5)C(10,9)=6×10=60，不能省略核心空穴的六个状态。"
+        },
+        {
+          "prompt": "p电子ζl·s的j=3/2能量为+ζ/2；闭壳层少一个这样的电子时，空穴贡献是什么？",
+          "hint": "从满壳层总能量中减去该电子的贡献。",
+          "choices": [
+            "+ζ/2",
+            "0",
+            "−ζ/2"
+          ],
+          "answer": 2,
+          "explanation": "空穴能量是电子被移走前贡献的相反数，因此j=3/2空穴位于−ζ/2。"
+        },
+        {
+          "prompt": "p空穴j=3/2与j=1/2的简并度分别为多少？",
+          "hint": "使用2j+1。",
+          "choices": [
+            "2和4",
+            "4和2",
+            "3和1"
+          ],
+          "answer": 1,
+          "explanation": "两个核心分支有4和2个磁分量；在指定解析极限下对应低能L₃和高能L₂。"
+        }
+      ]
+    },
+    {
+      "id": "spectra-polarization-steps",
+      "module": "spectra",
+      "lesson": "spectra-polarization",
+      "title": "由复振幅推导偏振对比",
+      "prompt": "同一轴向d⁸模型，固定所有相互作用、温度和晶场，只改变光偏振。",
+      "steps": [
+        {
+          "prompt": "一个本征态能量差落在扫描范围内，是否一定出现吸收峰？",
+          "hint": "峰强还依赖初态占据和跃迁矩阵元。",
+          "choices": [
+            "一定出现",
+            "不一定，偶极矩阵元可能为零",
+            "只取决于展宽"
+          ],
+          "answer": 1,
+          "explanation": "能量可达只是条件之一；对称性和波函数可以使该偏振的振幅为零。"
+        },
+        {
+          "prompt": "ε=(x+z)/√2时，通用的强度表达式是哪一个？",
+          "hint": "先线性叠加复振幅，再取模平方。",
+          "choices": [
+            "|M_x+M_z|²/2",
+            "(|M_x|²+|M_z|²)/2总是成立",
+            "|M_xM_z|"
+          ],
+          "answer": 0,
+          "explanation": "第一式保留干涉项；只有交叉项被对称性或平均消去时，才等于两强度平均。"
+        },
+        {
+          "prompt": "零场热平衡、简并空间等权时，I₊−I₋应满足什么检查？",
+          "hint": "时间反演相关态的圆偏振贡献互相抵消。",
+          "choices": [
+            "必为正",
+            "等于I_z−I_x",
+            "应在数值误差内为零"
+          ],
+          "answer": 2,
+          "explanation": "无外场及自发有序的该模型保持时间反演平衡；轴向线二色性仍可非零。"
+        },
+        {
+          "prompt": "保持传播与偏振约定不变，反转z向磁场后应怎样比较？",
+          "hint": "时间反演将两种圆偏振对调。",
+          "choices": [
+            "I₊(B)=I₋(−B)",
+            "所有谱峰位置都不变",
+            "将XMCD绝对值相加"
+          ],
+          "answer": 0,
+          "explanation": "比较完整谱而不只看峰高；XMCD随场反转变号是重要的符号检查。"
+        }
+      ]
+    },
+    {
+      "id": "spectra-integral-steps",
+      "module": "spectra",
+      "lesson": "spectra-audit",
+      "title": "审计积分强度、线宽与能量零点",
+      "prompt": "径向积分为1，考虑d⁸原子近似的三种正交偏振和完整末态。",
+      "steps": [
+        {
+          "prompt": "对x、y、z三偏振求和的无限窗口积分是多少？",
+          "hint": "d⁸有2个d空穴，使用(2/5)乘空穴数。",
+          "choices": [
+            "0.8",
+            "2",
+            "0.2667"
+          ],
+          "answer": 0,
+          "explanation": "三偏振求和为0.8；各向同性平均为0.8/3，不能混用两种归一化。"
+        },
+        {
+          "prompt": "Γ=0.35 eV是Lorentz半高半宽，其FWHM是多少？",
+          "hint": "完整宽度是两侧半宽之和。",
+          "choices": [
+            "0.175 eV",
+            "0.35 eV",
+            "0.70 eV"
+          ],
+          "answer": 2,
+          "explanation": "FWHM=2Γ=0.70 eV，比较实验展宽前须核对定义。"
+        },
+        {
+          "prompt": "有限能量窗口的曲线面积小于无限窗口强度，首先应检查什么？",
+          "hint": "Lorentz尾部不会在有限能量处严格归零。",
+          "choices": [
+            "立即修改跃迁矩阵元",
+            "窗口覆盖和采样收敛",
+            "把每条谱归一化成1"
+          ],
+          "answer": 1,
+          "explanation": "先比较解析窗口积分与数值积分，再扩大范围；不能用任意归一化隐藏漏掉的强度。"
+        },
+        {
+          "prompt": "只改变F⁰而本页仍逐次重置边重心，可据此提取绝对化学位移吗？",
+          "hint": "横轴移除了组态间公共能量偏移。",
+          "choices": [
+            "可以，取最高峰位置即可",
+            "不可以，需要独立吸收边能量标定",
+            "只需增大采样点数"
+          ],
+          "answer": 1,
+          "explanation": "此处关注相对多重态和偏振结构，绝对核心能量与化学位移不在模型输出范围内。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "spectra-nio-local",
+      "module": "spectra",
+      "title": "NiO 背景：从局域多重态到 L 边吸收",
+      "summary": "连接已有d⁸ Kanamori背景与完整Slater/SOC原子近似，辨别能级、芯空穴和跃迁强度。",
+      "kind": "真实材料背景 + 原创离子模型",
+      "assumption": "未拟合NiO参数，不包含配体电荷转移、反铁磁有序和实验绝对吸收边；旧U/J不能直接逐项对应本页Slater积分。",
+      "preset": "spectra-d8-cubic",
+      "links": [
+        [
+          "已有多电子晶场",
+          "#compute/local-multiplet-lab?preset=multiplet-d8-nio"
+        ],
+        [
+          "NiO结构与磁性背景",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "跨模块项目作业",
+          "#atlas/projects?project=multiplet-xas"
+        ]
+      ]
+    },
+    {
+      "id": "spectra-axial-dichroism",
+      "module": "spectra",
+      "title": "同一个离子：改变光偏振能看到什么",
+      "summary": "保持轴向晶场、SOC与温度不变，比较x与z偏振、45°叠加及零场圆二色性。",
+      "kind": "偏振选择定则与参数控制案例",
+      "assumption": "轴向晶场是显式轨道势参数，没有从真实畸变结构自动拟合；所示吸收为相对强度。",
+      "preset": "spectra-project-x",
+      "links": [
+        [
+          "物性张量与晶体方向",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "单电子晶场与轨道",
+          "#compute/crystal-field-lab?preset=octahedral-d"
+        ],
+        [
+          "偏振跨模块项目",
+          "#atlas/projects?project=multiplet-xas"
+        ]
+      ]
+    },
+    {
+      "id": "spectra-d9-core-limit",
+      "module": "spectra",
+      "title": "d⁹ 空穴基准：L₃ / L₂ 的解析检查",
+      "summary": "关闭非单极库仑项与价壳SOC，用核心SOC、简并度和完整偶极空间检验谱强。",
+      "kind": "可手算的自由离子极限",
+      "assumption": "这是d⁹的解析基准，不是CuO真实光谱；一般多重态的分支强度需要完整跃迁计算。",
+      "preset": "spectra-d9-limit",
+      "links": [
+        [
+          "SU(2)角动量耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "双群与旋量",
+          "#classroom/spin?track=double"
+        ],
+        [
+          "方法与输入约定",
+          "docs/atomic-spectra-lab.md"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "spectra-quanty-xas",
+      "title": "Quanty：原子近似的偏振 XAS 与有限温度",
+      "url": "https://www.quanty.org/documentation/tutorials/small_programs_a_quick_start/xas"
+    },
+    {
+      "id": "spectra-quanty-nio",
+      "title": "Quanty：2p–3d Slater 直接/交换项与偶极算符",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/xas_l23"
+    },
+    {
+      "id": "spectra-quanty-ground",
+      "title": "Quanty：完整 d 壳层 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ]
+}

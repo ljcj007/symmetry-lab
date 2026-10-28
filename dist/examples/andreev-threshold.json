@@ -1,0 +1,19 @@
+{
+  "action": "andreev_lab",
+  "input": {
+    "sites": 12,
+    "hopping": 1,
+    "chemicalPotential": 0,
+    "gate": 0,
+    "barrier": 0,
+    "barrierStart": 6,
+    "contactLeft": 1,
+    "contactRight": 1,
+    "gap": 0.3,
+    "energy": 0.3,
+    "energyMin": -0.6,
+    "energyMax": 0.6,
+    "samples": 121,
+    "eta": 1e-07
+  }
+}

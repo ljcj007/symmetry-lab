@@ -1,5 +1,5 @@
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261028-response1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261028-response1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261028-spectroscopy1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261028-spectroscopy1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');

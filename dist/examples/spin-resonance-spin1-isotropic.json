@@ -1,0 +1,23 @@
+{
+  "spin": 1,
+  "nuclearSpin": 0.0,
+  "gX": 2.0,
+  "gY": 2.0,
+  "gZ": 2.0,
+  "zeroFieldD": 0.0,
+  "zeroFieldE": 0.0,
+  "hyperfinePerp": 0.0,
+  "hyperfineParallel": 0.0,
+  "nuclearGamma": 0.0,
+  "field": 0.05,
+  "theta": 35,
+  "phi": 0.0,
+  "temperature": 4.0,
+  "lineWidth": 0.05,
+  "frequencyMin": 0.0,
+  "frequencyMax": 8,
+  "frequencyPoints": 301,
+  "fieldMax": 0.3,
+  "fieldPoints": 61,
+  "polarization": "theta"
+}

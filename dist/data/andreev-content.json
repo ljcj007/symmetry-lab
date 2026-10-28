@@ -1,0 +1,466 @@
+{
+  "schema": "symmetry-lab-spectroscopy-content-fragment-1",
+  "release": "20261028-spectroscopy1",
+  "section": "spectroscopy",
+  "modules": [
+    {
+      "id": "andreev",
+      "title": "超导结与 Andreev 反射",
+      "summary": "将正常器件连接到s波超导电极，联动电子/空穴反射、谱电导、正常参考和守恒诊断。",
+      "pathway": "spin",
+      "route": "andreev-lab",
+      "action": "andreev_lab",
+      "presets": [
+        {
+          "id": "andreev-project-normal",
+          "title": "同一量子线 · 关闭配对 Δ=0",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-project-paired",
+          "title": "透明 NS 结 · 亚隙空穴反射",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-barrier",
+          "title": "同一 NS 结 · 加入势垒",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 1.5,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-small-gap",
+          "title": "小能隙极限 · 接近电导加倍",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.02,
+            "energy": 0,
+            "energyMin": -0.06,
+            "energyMax": 0.06,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-threshold",
+          "title": "精确能隙阈值 · 保留空值",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.3,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "andreev-charge",
+      "module": "andreev",
+      "title": "空穴反射如何把电荷送入超导体",
+      "summary": "区分电子/空穴概率、准粒子通量和电荷电导，固定物理自旋的计数。",
+      "preset": "andreev-project-paired",
+      "references": [
+        "andreev-kwant",
+        "andreev-btk"
+      ],
+      "sections": [
+        {
+          "title": "先辨认同一模型的两个自由度",
+          "text": "采用(e↑,h↓)的Nambu块，正常区不混合电子和空穴；右电极的实s波配对把两者耦合。另一个自旋块给出相同概率，所以最终电导乘2。Nambu的电子/空穴冗余本身不是额外的物理自旋。",
+          "formula": "H_BdG(k)=ξ(k)τz+Δτx；ξ(k)=−μ−2t cos k"
+        },
+        {
+          "title": "亚隙没有向右传播的准粒子",
+          "text": "能量小于超导能隙时，理想电极没有可传播的体准粒子，但来自左侧的电子可以被反射为一个空穴。凝聚体承担相应的电荷转移。有限带宽、势垒和接触失配会同时产生正常反射。",
+          "formula": "|E|<Δ ⇒ Tqp=0；Ree+Rhe→1"
+        },
+        {
+          "title": "空穴反射在电导中取加号",
+          "text": "向左返回的空穴与向右进入的电子对电荷电流贡献同号。因此不能把右电极准粒子透射Tqp直接当作电荷电导。每个入射自旋通道的响应是1−Ree+Rhe，本页已计两自旋。",
+          "formula": "G/(e²/h)=2(1−Ree+Rhe)"
+        },
+        {
+          "title": "理想加倍需要条件",
+          "text": "透明接触、费米能远离带边且Δ相对带宽很小时，亚隙Andreev反射接近1，G接近4e²/h；同一正常线为2e²/h。格点模型有有限带宽，即使接触匹配也不必精确得到4。",
+          "formula": "μ=E=0的匹配格点界面：Rhe=4t²/(4t²+Δ²)"
+        }
+      ]
+    },
+    {
+      "id": "andreev-barriers",
+      "module": "andreev",
+      "title": "从正常态散射到超导结的谱电导",
+      "summary": "只改变一个物理条件，比较同一器件的正常极限、配对与势垒。",
+      "preset": "andreev-barrier",
+      "references": [
+        "andreev-kwant",
+        "andreev-beenakker"
+      ],
+      "sections": [
+        {
+          "title": "Δ=0应回到已有的正常器件",
+          "text": "新实验的正常区为均匀链，两个引线的跃迁均为t；μ以相反符号进入电子和空穴在位能。设置μ=0、Δ=0即可和旧器件工具比较。旧预设device-perfect只计一个自旋，本页电导除以2后再比较。",
+          "formula": "G_NS(Δ=0)/2→G_device(gs=1)，η→0"
+        },
+        {
+          "title": "势垒同时改变两种反射",
+          "text": "在一个正常站点增加V，电子感受到+V，空穴感受到−V。正常态透射降低后，零能Andreev反射在短结、小能隙近似下通常更快减小；具体曲线仍由完整模型计算。",
+          "formula": "Rhe(0)≈T_N²/(2−T_N)²，适用于正常散射在Δ窗口内近似不变"
+        },
+        {
+          "title": "同一条参考线保留所有正常参数",
+          "text": "图中的正常参考线仅把Δ设为0；站点数、μ、势垒、接触和η均不变。若同时改变势垒与能隙，则无法把差异单独归因于配对。能量相对超导凝聚体的化学势，而不是给每个能量重新填充整个器件。",
+          "formula": "正常参考：{相同输入，Δ=0}"
+        },
+        {
+          "title": "谱电导与有限偏压计算分开",
+          "text": "本页在零温、固定势与固定配对近似下显示E对应的谱微分电导。E=0是严格零偏压线性电导；非零E可以在冻结势近似下联系到eV，但没有求真实偏压下的电势、占据或配对自洽。",
+          "formula": "E=0：线性G；E≠0：固定势谱dI/dV"
+        }
+      ]
+    },
+    {
+      "id": "andreev-checks",
+      "module": "andreev",
+      "title": "用粒子—空穴对称和通量核验 NS 结果",
+      "summary": "保留阈值空点，检验表面Green函数、人工吸收和粒子—空穴关系。",
+      "preset": "andreev-threshold",
+      "references": [
+        "andreev-kwant"
+      ],
+      "sections": [
+        {
+          "title": "迟致边界不能选错根",
+          "text": "两个半无限引线通过表面Green函数进入接触自能。正常链使用精确平方根分支；超导链由同一谱测度的解析分式求得。在能隙内右引线Γ为0，不靠人为引线展宽制造传播通道。",
+          "formula": "Σ=V†gʳV；Γ=i(Σ−Σ†)≥0"
+        },
+        {
+          "title": "数值η必须进入守恒账本",
+          "text": "有限正常区的正η给出人工吸收Aη。只有把它与两种反射和右侧准粒子透射一起相加，才能检验数值守恒。减小η的稳定性与能量扫描分辨率是两个不同检查。",
+          "formula": "Ree+Rhe+Tqp+Aη=1；Aη=2η||√Γe Gʳe₀||²"
+        },
+        {
+          "title": "不同能量的电子和空穴互相对应",
+          "text": "在本块约定中，τy复共轭变换把E与−E联系起来。电子入射在E的正常/Andreev反射应与空穴入射在−E的对应结果相等；不应只检查一条曲线是否看起来对称。",
+          "formula": "Ree(E)=Rhh(−E)；Rhe(E)=Reh(−E)"
+        },
+        {
+          "title": "阈值空值不是电导为零",
+          "text": "理想右电极在精确E=±Δ处需要仔细取阈值极限。本版解析公式在这些点留空，扫描曲线保留断点。可以从两侧逼近并检查η，而不能把空值填成零或声称有真实缺失谱。",
+          "formula": "undefined ≠ 0；比较E=Δ−δ与E=Δ+δ"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "andreev-charge-steps",
+      "module": "andreev",
+      "lesson": "andreev-charge",
+      "title": "从反射概率推导亚隙电导",
+      "prompt": "考虑理想透明、两重物理自旋的常规s波NS接触，取小能隙近似、E=0和η→0。",
+      "steps": [
+        {
+          "prompt": "能隙内向超导体传播的体准粒子透射Tqp是多少？",
+          "hint": "理想s波电极的能谱在此能量有隙。",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "没有向右传播的体准粒子通道，但仍可通过Andreev过程转移电荷。"
+        },
+        {
+          "prompt": "理想透明极限中Ree≈0，那么Rhe是多少？",
+          "hint": "从准粒子通量守恒出发。",
+          "choices": [
+            "0",
+            "1/2",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "Tqp=0且无人工吸收，故Ree+Rhe=1，得到Rhe=1。"
+        },
+        {
+          "prompt": "一个入射自旋通道的1−Ree+Rhe是多少？",
+          "hint": "返回空穴对电荷电流贡献取加号。",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 2,
+          "explanation": "1−0+1=2；不能使用Tqp=0误判电导为0。"
+        },
+        {
+          "prompt": "本页已包含两个物理自旋，最终G是多少？",
+          "hint": "每个通道的系数再乘2e²/h。",
+          "choices": [
+            "2e²/h",
+            "4e²/h",
+            "8e²/h"
+          ],
+          "answer": 1,
+          "explanation": "G=2(e²/h)×2=4e²/h。Nambu冗余不再增加额外的倍数。"
+        }
+      ]
+    },
+    {
+      "id": "andreev-normal-steps",
+      "module": "andreev",
+      "lesson": "andreev-barriers",
+      "title": "把正常器件和 NS 工具放在同一计数下",
+      "prompt": "两端完全匹配的正常链在带内取T=1。旧device-perfect预设计一个自旋，新工具固定计两个物理自旋。忽略数值η。",
+      "steps": [
+        {
+          "prompt": "旧工具device-perfect的G是多少？",
+          "hint": "旧预设spinDegeneracy=1。",
+          "choices": [
+            "e²/h",
+            "2e²/h",
+            "4e²/h"
+          ],
+          "answer": 0,
+          "explanation": "单自旋、单完全传播通道给出e²/h。"
+        },
+        {
+          "prompt": "新工具设置Δ=0，是否有电子到空穴的反射？",
+          "hint": "没有配对项来混合两个Nambu分量。",
+          "choices": [
+            "Rhe=1",
+            "Rhe=0",
+            "Rhe=1/2"
+          ],
+          "answer": 1,
+          "explanation": "Hamiltonian电子/空穴分块，Rhe严格为0。"
+        },
+        {
+          "prompt": "新工具Δ=0的G是多少？",
+          "hint": "每个物理自旋传输相同。",
+          "choices": [
+            "e²/h",
+            "4e²/h",
+            "2e²/h"
+          ],
+          "answer": 2,
+          "explanation": "G=2(e²/h)(1−0+0)=2e²/h，除以2后才能与旧单自旋预设比较。"
+        },
+        {
+          "prompt": "只打开配对后出现亚隙增强，正确对照是什么？",
+          "hint": "控制自旋计数和其他器件参数。",
+          "choices": [
+            "与任意另一条链比较",
+            "同参数Δ=0参考线，并检查η",
+            "把G除以Tqp"
+          ],
+          "answer": 1,
+          "explanation": "保持长度、接触、势垒、μ与数值η，才能归因于配对；Tqp在亚隙为0而G仍可非零。"
+        }
+      ]
+    },
+    {
+      "id": "andreev-check-steps",
+      "module": "andreev",
+      "lesson": "andreev-checks",
+      "title": "判断一份 NS 数值报告是否可信",
+      "prompt": "某亚隙计算得到Ree=.2、Rhe=.799、Tqp=0、Aη=.001。",
+      "steps": [
+        {
+          "prompt": "准粒子通量是否闭合？",
+          "hint": "四项应相加为1。",
+          "choices": [
+            "否，必须Ree+Rhe=1",
+            "是，四项和为1",
+            "无法检查"
+          ],
+          "answer": 1,
+          "explanation": "包含人工η吸收后，.2+.799+0+.001=1。"
+        },
+        {
+          "prompt": "这是否证明η已经足够小？",
+          "hint": "守恒恒等式与物理极限收敛是不同要求。",
+          "choices": [
+            "是，守恒即可",
+            "否，还应减小η比较结果",
+            "只看图是否平滑"
+          ],
+          "answer": 1,
+          "explanation": "可严格守恒却有显著人工吸收，需要η与η/2等比较。"
+        },
+        {
+          "prompt": "E=Δ处页面返回空值，应该怎样处理？",
+          "hint": "此点需要理想阈值极限。",
+          "choices": [
+            "填成0",
+            "跨过空点直线插值作精确值",
+            "保留空值并比较两侧极限"
+          ],
+          "answer": 2,
+          "explanation": "空值表示本公式未报告精确阈值，不代表物理电导为零。"
+        },
+        {
+          "prompt": "怎样独立核验粒子—空穴关系？",
+          "hint": "比较不同入射种类与相反能量。",
+          "choices": [
+            "比较Ree(E)与Rhh(−E)",
+            "只看Ree(E)是否总为0",
+            "只比较矩阵维数"
+          ],
+          "answer": 0,
+          "explanation": "同一约定下Ree(E)=Rhh(−E)，同时应检查Rhe(E)=Reh(−E)。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "andreev-normal-bridge",
+      "module": "andreev",
+      "title": "同一量子线：正常输运到 NS 电导",
+      "kind": "跨模块教学模型",
+      "summary": "沿用12格点、t=1、E=.2的正常器件，用Δ=0基准固定自旋计数，再打开配对。",
+      "assumption": "旧device-perfect按一个自旋输出；NS模型固定两重物理自旋，比较前须除以2。相差的数值η吸收需保留。",
+      "preset": "andreev-project-normal",
+      "links": [
+        [
+          "原有正常器件",
+          "#compute/device-transport-lab?preset=device-perfect"
+        ],
+        [
+          "超导配对与BdG",
+          "#classroom/spin?module=pairing"
+        ],
+        [
+          "跨模块项目",
+          "#atlas/projects?module=andreev"
+        ]
+      ]
+    },
+    {
+      "id": "andreev-interface",
+      "module": "andreev",
+      "title": "透明界面与势垒：同样有能隙，不同电导",
+      "kind": "原创格点NS接触",
+      "summary": "把无势垒与单点势垒曲线并排比较，观察正常反射、空穴反射和电荷响应。",
+      "assumption": "参数为教学值，固定势、零温且无磁场/SOC；不代表具体铝、铌或半导体接触的定量拟合。",
+      "preset": "andreev-barrier",
+      "links": [
+        [
+          "器件量子输运",
+          "#classroom/crystal?module=device"
+        ],
+        [
+          "配对能谱",
+          "#compute/pairing-lab"
+        ],
+        [
+          "Kwant教程",
+          "https://kwant-project.org/doc/1/tutorial/superconductors"
+        ]
+      ]
+    },
+    {
+      "id": "andreev-threshold-audit",
+      "module": "andreev",
+      "title": "阈值与人工吸收：把诊断写进报告",
+      "kind": "数值核验案例",
+      "summary": "比较精确能隙阈值、两侧能量与η变化，区分真实的传播通道和数值展宽。",
+      "assumption": "本实验不引入超导引线展宽；阈值空点不是实际电导为0，也不能用单个亚隙峰宣称Majorana态。",
+      "preset": "andreev-threshold",
+      "links": [
+        [
+          "NS守恒课程",
+          "#classroom/spin?module=andreev&lesson=andreev-checks"
+        ],
+        [
+          "已有Kitaev链",
+          "#classroom/spin?module=pairing"
+        ],
+        [
+          "方法与范围",
+          "docs/andreev-lab.md"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "andreev-kwant",
+      "title": "Kwant: superconducting junctions and electron/hole conductance",
+      "url": "https://kwant-project.org/doc/1/tutorial/superconductors"
+    },
+    {
+      "id": "andreev-btk",
+      "title": "Blonder, Tinkham, Klapwijk: metallic to tunneling regimes in NS contacts",
+      "url": "https://doi.org/10.1103/PhysRevB.25.4515"
+    },
+    {
+      "id": "andreev-beenakker",
+      "title": "Beenakker: mesoscopic theory of NS junctions",
+      "url": "https://arxiv.org/abs/cond-mat/9406083"
+    }
+  ]
+}

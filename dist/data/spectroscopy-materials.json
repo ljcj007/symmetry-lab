@@ -1,0 +1,1479 @@
+{
+  "schema": "symmetry-lab-spectroscopy-1",
+  "release": "20261028-spectroscopy1",
+  "modules": [
+    {
+      "id": "resonance",
+      "title": "磁共振与有效自旋",
+      "summary": "联动静磁场方向、有效g张量、零场与超精细作用、热占据及微波偏振，比较能级和吸收谱。",
+      "pathway": "spin",
+      "route": "spin-resonance-lab",
+      "action": "spin_resonance_lab",
+      "presets": [
+        {
+          "id": "resonance-isotropic",
+          "title": "S=½ · 各向同性 Zeeman 基准",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-anisotropic-z",
+          "title": "各向异性 g · 磁场沿 z",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2,
+            "gY": 2.1,
+            "gZ": 2.3,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-anisotropic-x",
+          "title": "同一 g 张量 · 磁场沿 x",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2,
+            "gY": 2.1,
+            "gZ": 2.3,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 90,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-spin1-isotropic",
+          "title": "S=1 · 先关闭零场分裂",
+          "input": {
+            "spin": 1,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.05,
+            "theta": 35,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 8,
+            "frequencyPoints": 301,
+            "fieldMax": 0.3,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-spin1",
+          "title": "同一 S=1 · 加入零场分裂",
+          "input": {
+            "spin": 1,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 2.87,
+            "zeroFieldE": 0.15,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.05,
+            "theta": 35,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 8,
+            "frequencyPoints": 301,
+            "fieldMax": 0.3,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-hyperfine",
+          "title": "S=½、I=½ · 电子核自旋耦合",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.5,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.3,
+            "hyperfineParallel": 0.3,
+            "nuclearGamma": 0.04257748,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-longitudinal",
+          "title": "各向同性纯 Zeeman · 纵向偏振暗态",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "parallel"
+          }
+        }
+      ]
+    },
+    {
+      "id": "andreev",
+      "title": "超导结与 Andreev 反射",
+      "summary": "将正常器件连接到s波超导电极，联动电子/空穴反射、谱电导、正常参考和守恒诊断。",
+      "pathway": "spin",
+      "route": "andreev-lab",
+      "action": "andreev_lab",
+      "presets": [
+        {
+          "id": "andreev-project-normal",
+          "title": "同一量子线 · 关闭配对 Δ=0",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-project-paired",
+          "title": "透明 NS 结 · 亚隙空穴反射",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-barrier",
+          "title": "同一 NS 结 · 加入势垒",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 1.5,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.2,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-small-gap",
+          "title": "小能隙极限 · 接近电导加倍",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.02,
+            "energy": 0,
+            "energyMin": -0.06,
+            "energyMax": 0.06,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        },
+        {
+          "id": "andreev-threshold",
+          "title": "精确能隙阈值 · 保留空值",
+          "input": {
+            "sites": 12,
+            "hopping": 1,
+            "chemicalPotential": 0,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "gap": 0.3,
+            "energy": 0.3,
+            "energyMin": -0.6,
+            "energyMax": 0.6,
+            "samples": 121,
+            "eta": 1e-07
+          }
+        }
+      ]
+    },
+    {
+      "id": "spectra",
+      "title": "多重态光谱与偏振选择定则",
+      "summary": "在完整Slater与SOC原子模型中计算2p→3d偏振吸收，联动芯空穴、热占据、谱强和积分检验。",
+      "pathway": "observables",
+      "route": "atomic-spectra-lab",
+      "action": "atomic_spectra_lab",
+      "presets": [
+        {
+          "id": "spectra-d8-cubic",
+          "title": "d⁸ 立方离子 · Slater 与 SOC",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-project-x",
+          "title": "轴向晶场 · x 偏振",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.3,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-project-z",
+          "title": "同一轴向晶场 · z 偏振",
+          "input": {
+            "configuration": "d8",
+            "polarization": "z",
+            "tenDq": 1.0,
+            "tetragonal": 0.3,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-field-xmcd",
+          "title": "给定磁场 · 圆二色性",
+          "input": {
+            "configuration": "d8",
+            "polarization": "plus",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0.08,
+            "socP": 11.5,
+            "fieldTesla": 20,
+            "temperature": 2,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-d9-limit",
+          "title": "d⁹ 解析极限 · L₃/L₂ 权重",
+          "input": {
+            "configuration": "d9",
+            "polarization": "x",
+            "tenDq": 0,
+            "tetragonal": 0.0,
+            "F0": 0,
+            "F2": 0,
+            "F4": 0,
+            "pdF0": 0,
+            "pdF2": 0,
+            "pdG1": 0,
+            "pdG3": 0,
+            "socD": 0,
+            "socP": 10,
+            "fieldTesla": 0.0,
+            "temperature": 0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        },
+        {
+          "id": "spectra-valence-soc-off",
+          "title": "d⁸ 对照 · 关闭价壳 SOC",
+          "input": {
+            "configuration": "d8",
+            "polarization": "x",
+            "tenDq": 1.0,
+            "tetragonal": 0.0,
+            "F0": 4.0,
+            "F2": 10.0,
+            "F4": 6.0,
+            "pdF0": 6.0,
+            "pdF2": 6.0,
+            "pdG1": 4.0,
+            "pdG3": 2.5,
+            "socD": 0,
+            "socP": 11.5,
+            "fieldTesla": 0.0,
+            "temperature": 300.0,
+            "polarizationAngle": 45.0,
+            "width": 0.35,
+            "energyMin": -15.0,
+            "energyMax": 25.0,
+            "samples": 401
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "resonance-zeeman",
+      "module": "resonance",
+      "title": "从 g 张量到方向依赖的共振",
+      "summary": "同一自旋中心旋转磁场时，共振位置和微波矩阵元一起改变。",
+      "preset": "resonance-anisotropic-z",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "先分清能量、频率与磁场",
+          "text": "本页以 H/h 表示 Hamiltonian，单位 GHz；磁场输入为 T。μB/h 约为13.996245 GHz/T，g 是无量纲有效张量。共振频率等于能级差除以 h，不能再额外乘一次2π。",
+          "formula": "H_Z/h=(μB/h) B·g·S"
+        },
+        {
+          "title": "各向异性要连同方向一起读",
+          "text": "gX、gY、gZ 是共同晶体主轴上的三个参数。theta 从 z 轴量起，phi 是 xy 平面的方位角。S=½、无核自旋、无其他作用时，能隙只取决于 |g n|；在给定 B 下，沿 z 与沿 x 对应不同共振。更一般模型中显示的几何 g_eff 不能代替完整对角化。",
+          "formula": "ν=(μB/h) B g_eff；g_eff²=gX² nx²+gY² ny²+gZ² nz²"
+        },
+        {
+          "title": "频率以外还要计算跃迁强度",
+          "text": "微波磁场的 theta 和 phi 偏振与静磁场正交，parallel 与静磁场平行。跃迁矩阵元包含 g 和微波方向。纯各向同性 Zeeman 模型的纵向驱动与 H 对易，因而没有有限频率吸收；各向异性或状态混合时不能直接沿用这条结论。",
+          "formula": "M=Σa e₁,a ga Sa；Wif=(pi−pf)|〈f|M|i〉|²"
+        }
+      ]
+    },
+    {
+      "id": "resonance-interactions",
+      "module": "resonance",
+      "title": "零场与超精细作用怎样改变自旋谱",
+      "summary": "用可手算极限检查能级，再观察外场下的混合与劈裂。",
+      "preset": "resonance-hyperfine",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "二阶零场分裂属于哪些自旋",
+          "text": "D 项区分 mS=0 与 mS=±1；E 项混合相差两个自旋投影的态。S=1/2 时这两个二阶算符恒为零，不能靠改变 D/E 劈裂一个孤立 Kramers 双重态。本页只保留这两个二阶参数，没有任意高阶晶场算符。",
+          "formula": "H_ZFS/h=D[Sz²−S(S+1)/3]+E(Sx²−Sy²)"
+        },
+        {
+          "title": "电子与一个核自旋",
+          "text": "可以加入一个 I 自旋。A⊥ 和 A∥ 分别控制横向自旋翻转与纵向耦合。核 Zeeman 项采用 −γN B·I，γN 输入为有符号的 GHz/T。S=I=½、B=0、各向同性 A 时得到 F=0 与 F=1 的解析能级；有限场会混合不同总自旋。",
+          "formula": "A S·I=A[F(F+1)−S(S+1)−I(I+1)]/2"
+        },
+        {
+          "title": "避免把有效参数当作自动输出",
+          "text": "已有多电子工具可在指定近似下给出一个基态 S，但单凭 S 不能得到 g、D、E 或 A。下折叠这些参数还需要 SOC、轨道态、低能子空间和投影约定。跨模块作业会先确认 d⁸ 模型中的 S=1，再用明确给定的参数研究有效自旋谱；这不是 NiO 的拟合谱。",
+          "formula": "多电子低能子空间 → 明确投影与 SOC → 有效自旋参数"
+        }
+      ]
+    },
+    {
+      "id": "resonance-selection",
+      "module": "resonance",
+      "title": "从能级到可观察吸收：占据、偏振与采样",
+      "summary": "能级差给出候选频率，实际谱线还需要矩阵元、热占据和充分采样。",
+      "preset": "resonance-spin1",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "热占据保留在谱权重里",
+          "text": "热平衡占据按 Boltzmann 权重计算。吸收与受激发射相减后，每条正频跃迁的净权重含 pi−pf；升温会减小纯 Zeeman 双重态的占据差。程序不把每张谱归一为相同峰高，因而可以比较同一参数下的温度效应。",
+          "formula": "pn=exp[−(En−E0)/(kBT/h)]/Z"
+        },
+        {
+          "title": "简并态不能挑选任意一条本征矢",
+          "text": "同能子空间内数值本征矢可以任意旋转。本页将两个能量分组间的矩阵元模方求和，并使用每个简并态的相同占据；T=0 在整个基态简并空间均匀分配权重。这样谱线不会随求解器选取的基底改变。",
+          "formula": "WAB=(pA−pB) Tr(PA M† PB M PA)"
+        },
+        {
+          "title": "线宽和网格承担不同职责",
+          "text": "lineWidth 是 Lorentz 线形的半高半宽，以 GHz 计；每条线形在正频轴上单位归一。扫描网格越粗，越可能漏掉窄峰，程序比较数值积分与同一窗口的解析面积。此处是单晶弱激发频率吸收，不是常见场调制一阶导数实验谱，也不包含饱和和弛豫。",
+          "formula": "∫₀∞ L₊(ν;ν₀,γ)dν=1；积分谱权重=Σif Wif"
+        }
+      ]
+    },
+    {
+      "id": "andreev-charge",
+      "module": "andreev",
+      "title": "空穴反射如何把电荷送入超导体",
+      "summary": "区分电子/空穴概率、准粒子通量和电荷电导，固定物理自旋的计数。",
+      "preset": "andreev-project-paired",
+      "references": [
+        "andreev-kwant",
+        "andreev-btk"
+      ],
+      "sections": [
+        {
+          "title": "先辨认同一模型的两个自由度",
+          "text": "采用(e↑,h↓)的Nambu块，正常区不混合电子和空穴；右电极的实s波配对把两者耦合。另一个自旋块给出相同概率，所以最终电导乘2。Nambu的电子/空穴冗余本身不是额外的物理自旋。",
+          "formula": "H_BdG(k)=ξ(k)τz+Δτx；ξ(k)=−μ−2t cos k"
+        },
+        {
+          "title": "亚隙没有向右传播的准粒子",
+          "text": "能量小于超导能隙时，理想电极没有可传播的体准粒子，但来自左侧的电子可以被反射为一个空穴。凝聚体承担相应的电荷转移。有限带宽、势垒和接触失配会同时产生正常反射。",
+          "formula": "|E|<Δ ⇒ Tqp=0；Ree+Rhe→1"
+        },
+        {
+          "title": "空穴反射在电导中取加号",
+          "text": "向左返回的空穴与向右进入的电子对电荷电流贡献同号。因此不能把右电极准粒子透射Tqp直接当作电荷电导。每个入射自旋通道的响应是1−Ree+Rhe，本页已计两自旋。",
+          "formula": "G/(e²/h)=2(1−Ree+Rhe)"
+        },
+        {
+          "title": "理想加倍需要条件",
+          "text": "透明接触、费米能远离带边且Δ相对带宽很小时，亚隙Andreev反射接近1，G接近4e²/h；同一正常线为2e²/h。格点模型有有限带宽，即使接触匹配也不必精确得到4。",
+          "formula": "μ=E=0的匹配格点界面：Rhe=4t²/(4t²+Δ²)"
+        }
+      ]
+    },
+    {
+      "id": "andreev-barriers",
+      "module": "andreev",
+      "title": "从正常态散射到超导结的谱电导",
+      "summary": "只改变一个物理条件，比较同一器件的正常极限、配对与势垒。",
+      "preset": "andreev-barrier",
+      "references": [
+        "andreev-kwant",
+        "andreev-beenakker"
+      ],
+      "sections": [
+        {
+          "title": "Δ=0应回到已有的正常器件",
+          "text": "新实验的正常区为均匀链，两个引线的跃迁均为t；μ以相反符号进入电子和空穴在位能。设置μ=0、Δ=0即可和旧器件工具比较。旧预设device-perfect只计一个自旋，本页电导除以2后再比较。",
+          "formula": "G_NS(Δ=0)/2→G_device(gs=1)，η→0"
+        },
+        {
+          "title": "势垒同时改变两种反射",
+          "text": "在一个正常站点增加V，电子感受到+V，空穴感受到−V。正常态透射降低后，零能Andreev反射在短结、小能隙近似下通常更快减小；具体曲线仍由完整模型计算。",
+          "formula": "Rhe(0)≈T_N²/(2−T_N)²，适用于正常散射在Δ窗口内近似不变"
+        },
+        {
+          "title": "同一条参考线保留所有正常参数",
+          "text": "图中的正常参考线仅把Δ设为0；站点数、μ、势垒、接触和η均不变。若同时改变势垒与能隙，则无法把差异单独归因于配对。能量相对超导凝聚体的化学势，而不是给每个能量重新填充整个器件。",
+          "formula": "正常参考：{相同输入，Δ=0}"
+        },
+        {
+          "title": "谱电导与有限偏压计算分开",
+          "text": "本页在零温、固定势与固定配对近似下显示E对应的谱微分电导。E=0是严格零偏压线性电导；非零E可以在冻结势近似下联系到eV，但没有求真实偏压下的电势、占据或配对自洽。",
+          "formula": "E=0：线性G；E≠0：固定势谱dI/dV"
+        }
+      ]
+    },
+    {
+      "id": "andreev-checks",
+      "module": "andreev",
+      "title": "用粒子—空穴对称和通量核验 NS 结果",
+      "summary": "保留阈值空点，检验表面Green函数、人工吸收和粒子—空穴关系。",
+      "preset": "andreev-threshold",
+      "references": [
+        "andreev-kwant"
+      ],
+      "sections": [
+        {
+          "title": "迟致边界不能选错根",
+          "text": "两个半无限引线通过表面Green函数进入接触自能。正常链使用精确平方根分支；超导链由同一谱测度的解析分式求得。在能隙内右引线Γ为0，不靠人为引线展宽制造传播通道。",
+          "formula": "Σ=V†gʳV；Γ=i(Σ−Σ†)≥0"
+        },
+        {
+          "title": "数值η必须进入守恒账本",
+          "text": "有限正常区的正η给出人工吸收Aη。只有把它与两种反射和右侧准粒子透射一起相加，才能检验数值守恒。减小η的稳定性与能量扫描分辨率是两个不同检查。",
+          "formula": "Ree+Rhe+Tqp+Aη=1；Aη=2η||√Γe Gʳe₀||²"
+        },
+        {
+          "title": "不同能量的电子和空穴互相对应",
+          "text": "在本块约定中，τy复共轭变换把E与−E联系起来。电子入射在E的正常/Andreev反射应与空穴入射在−E的对应结果相等；不应只检查一条曲线是否看起来对称。",
+          "formula": "Ree(E)=Rhh(−E)；Rhe(E)=Reh(−E)"
+        },
+        {
+          "title": "阈值空值不是电导为零",
+          "text": "理想右电极在精确E=±Δ处需要仔细取阈值极限。本版解析公式在这些点留空，扫描曲线保留断点。可以从两侧逼近并检查η，而不能把空值填成零或声称有真实缺失谱。",
+          "formula": "undefined ≠ 0；比较E=Δ−δ与E=Δ+δ"
+        }
+      ]
+    },
+    {
+      "id": "spectra-slater",
+      "module": "spectra",
+      "title": "从统一 J 到完整 Slater 与芯空穴",
+      "summary": "明确两种相互作用的不同，再建立吸收前后的完整多电子空间。",
+      "preset": "spectra-d8-cubic",
+      "references": [
+        "spectra-quanty-ground",
+        "spectra-quanty-nio"
+      ],
+      "sections": [
+        {
+          "title": "同样是 d 壳层，保留的信息可以不同",
+          "text": "现有 Kanamori 课堂用统一 J 描述轨道间交换；本模块通过球谐角矩阵和 F⁰、F²、F⁴ 构造完整旋转不变 d–d 库仑相互作用。F² 与 F⁴ 分别控制不同角向通道，不直接等于某个单一 Hund 参数。这里使用完整反对称费米行列式。",
+          "formula": "H_dd=½Σ_abcd U_abcd c†_a c†_b c_d c_c；k=0,2,4"
+        },
+        {
+          "title": "吸收前后不在同一个组态空间",
+          "text": "2p 核电子被激发到3d：d⁸ 离子的初态为 p⁶d⁸，共45维，末态为 p⁵d⁹，共60维。末态包含2p SOC、p–d直接 F⁰/F² 和交换 G¹/G³。d⁹初态10维，末态p⁵d¹⁰为6维。pp作用在这些闭壳层或单空穴组态中只贡献公共常数，本模块将其纳入未标定的吸收边零点。",
+          "formula": "dim(p⁶d⁸)=C(10,8)=45；dim(p⁵d⁹)=C(6,5)C(10,9)=60"
+        },
+        {
+          "title": "SOC 后怎样读自旋和轨道",
+          "text": "价壳 SOC 是所有单电子 l·s 的和，不能任意替换成一个总 L·S 而不投影。一般晶场与 SOC 会混合不同 L、S，能级表因此显示 ⟨S²⟩、⟨L²⟩及简并平均占据，不强行赋予 LS 项标签。立方和轴向晶场均在与球谐基严格换基后的实轨道上定义。",
+          "formula": "H_SOC=ζ_dΣ_(d电子)l·s+ζ_pΣ_(p电子)l·s"
+        }
+      ]
+    },
+    {
+      "id": "spectra-polarization",
+      "module": "spectra",
+      "title": "从偶极矩阵元得到偏振选择定则",
+      "summary": "能量差决定谱线位置，波函数和光偏振共同决定谱线强度。",
+      "preset": "spectra-project-x",
+      "references": [
+        "spectra-quanty-nio",
+        "spectra-quanty-xas"
+      ],
+      "sections": [
+        {
+          "title": "先计算振幅，再平方",
+          "text": "电偶极跃迁由 ε·r 描述，2p→3d 改变轨道宇称且偶极算符本身不翻转自旋；SOC 会混合基态和末态中的自旋成分。存在能量差不保证存在非零跃迁强度。本页径向偶极积分固定为1，保留角向矩阵元与多电子反对称化。",
+          "formula": "D_ε=Σ_(m,m′,σ)〈2m|ε·r̂|1m′〉d†_(mσ)p_(m′σ)"
+        },
+        {
+          "title": "比较线偏振与圆偏振",
+          "text": "x、y、z 是晶体坐标；linear 使用 cosθ x+sinθ z，适合沿y传播的光。±圆偏振定义为(x±iy)/√2，沿z传播。一般叠加偏振须先叠加复振幅，不能直接平均强度。在本页轴向零场模型中相关交叉项消失，45°线偏振可用于核对(x+z)/2强度。",
+          "formula": "I_ε∝|ε_x M_x+ε_y M_y+ε_z M_z|²；XMCD=I₊−I₋；XLD=I_z−I_x"
+        },
+        {
+          "title": "温度和外场改变初态权重",
+          "text": "有限温度对全部初态作 Boltzmann 平均；T=0时对基态简并空间等权。零场平衡态不会凭空选取磁化方向，因此其圆二色性应消失。给定z向磁场能够产生圆二色性；反转磁场应交换两种圆偏振的谱。单离子场不等于真实NiO反铁磁序。",
+          "formula": "p_i=exp[−(E_i−E_0)/(kBT)]/Z；H_Z=+μB B(L_z+2S_z)"
+        }
+      ]
+    },
+    {
+      "id": "spectra-audit",
+      "module": "spectra",
+      "title": "从谱峰走到可复核的吸收报告",
+      "summary": "区分相对吸收边、积分强度、展宽和真实材料谱，保留数值证据。",
+      "preset": "spectra-d9-limit",
+      "references": [
+        "spectra-quanty-xas",
+        "spectra-quanty-nio"
+      ],
+      "sections": [
+        {
+          "title": "吸收边零点需要独立标定",
+          "text": "这里每次计算都把末态组态的能量重心作为参考，并将初态基态能量设为零。横轴展示相对跃迁能，不是预测绝对核心结合能；F⁰只带来的组态公共位移在此坐标中消去。不能从这类重新校准的曲线推断化学位移。",
+          "formula": "E_rel=(E_f−Tr H_f/dim H_f)−(E_i−E_i,min)"
+        },
+        {
+          "title": "展宽改变峰形，不创造积分强度",
+          "text": "每条线用面积为1的Lorentz函数展宽。参数Γ为半高半宽，完整宽度为2Γ。数值窗口会截掉尾部；输出同时给无限窗口强度、当前窗口的解析强度及数值积分。采样步长过大时显示需要加密，而不把光滑连线当作精确峰形。",
+          "formula": "L_Γ(E)=Γ/[π(E²+Γ²)]；FWHM=2Γ"
+        },
+        {
+          "title": "用完整空间检查选择定则",
+          "text": "径向积分为1时，对x、y、z三种正交偏振及完整末态求和，积分强度等于(2/5)倍的d空穴数。d⁸应为0.8，d⁹应为0.4；各向同性平均还要除以3。d⁹无相互作用、价壳SOC为零的解析极限给出L₃:L₂=2:1，这不保证一般多重态都有同样的积分分支比。",
+          "formula": "Σ_(ε=x,y,z)Σ_i,f p_i|〈f|D_ε|i〉|²=(2/5)(10−n)"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "resonance-zeeman-steps",
+      "module": "resonance",
+      "lesson": "resonance-zeeman",
+      "title": "从磁场方向推导共振频率",
+      "prompt": "S=½、I=0，g=(2,2.1,2.3)，B=0.34 T，没有零场或超精细作用。",
+      "steps": [
+        {
+          "prompt": "磁场沿 z 时，g_eff 是多少？",
+          "hint": "只保留 nz=1。",
+          "choices": [
+            "2",
+            "2.1",
+            "2.3"
+          ],
+          "answer": 2,
+          "explanation": "g_eff=|gZ|=2.3。"
+        },
+        {
+          "prompt": "此时频率约为多少？",
+          "hint": "13.996245×0.34×2.3，单位 GHz。",
+          "choices": [
+            "10.945 GHz",
+            "68.77 GHz",
+            "0.34 GHz"
+          ],
+          "answer": 0,
+          "explanation": "ν≈10.9451 GHz，输入已经使用 H/h，不能再乘2π。"
+        },
+        {
+          "prompt": "保持 B 不变，只把磁场转到 x 轴，共振移到哪里？",
+          "hint": "g_eff 变为2。",
+          "choices": [
+            "保持10.945 GHz",
+            "约9.517 GHz",
+            "变成0"
+          ],
+          "answer": 1,
+          "explanation": "沿 x 的ν≈9.51745 GHz，变化来自同一 g 张量的方向。"
+        },
+        {
+          "prompt": "各向同性纯 Zeeman 模型，用 parallel 微波驱动，会怎样？",
+          "hint": "驱动与H含相同自旋分量。",
+          "choices": [
+            "一定增强峰",
+            "出现双峰",
+            "无有限频率吸收"
+          ],
+          "answer": 2,
+          "explanation": "两算符对易，非简并能级间矩阵元为零；这不推广到所有各向异性模型。"
+        }
+      ]
+    },
+    {
+      "id": "resonance-interaction-steps",
+      "module": "resonance",
+      "lesson": "resonance-interactions",
+      "title": "手算零场分裂与电子核耦合",
+      "prompt": "先考虑 S=1、I=0、B=0、E=0；再比较 S=I=½ 的各向同性超精细模型。",
+      "steps": [
+        {
+          "prompt": "S=1 时，mS=0 的 D 项能量是多少？",
+          "hint": "S(S+1)/3=2/3。",
+          "choices": [
+            "−2D/3",
+            "D/3",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "mS=0 的能量为−2D/3；mS=±1 为D/3。"
+        },
+        {
+          "prompt": "若 D>0，两个能量分组之间的频率差是多少？",
+          "hint": "相减 D/3−(−2D/3)。",
+          "choices": [
+            "D/3",
+            "D",
+            "2D"
+          ],
+          "answer": 1,
+          "explanation": "两组间能量差为D GHz。"
+        },
+        {
+          "prompt": "S=I=½、B=0、A>0 时，单态与三重态的能量分别为多少？",
+          "hint": "用总角动量 F=0 和1。",
+          "choices": [
+            "−3A/4 与 A/4",
+            "−A 与 A",
+            "0 与 A/2"
+          ],
+          "answer": 0,
+          "explanation": "F=0 的能量是−3A/4，F=1 是A/4，间隔为A。"
+        },
+        {
+          "prompt": "已由多电子计算得到基态 S=1，能直接确定 D 吗？",
+          "hint": "低能自旋维数没有包含全部轨道和SOC信息。",
+          "choices": [
+            "D一定等于1 GHz",
+            "D一定为0",
+            "不能，还需额外微观信息或有效参数"
+          ],
+          "answer": 2,
+          "explanation": "S 规定自旋空间；g、D/E 等还需要微观投影或独立给定，不能自动从当前无SOC模型推断。"
+        }
+      ]
+    },
+    {
+      "id": "resonance-intensity-steps",
+      "module": "resonance",
+      "lesson": "resonance-selection",
+      "title": "判断谱峰强度与数值可信度",
+      "prompt": "固定一个纯 Zeeman 双重态，比较温度、偏振、线宽与网格。",
+      "steps": [
+        {
+          "prompt": "有限温度下的净吸收权重含哪个占据因子？",
+          "hint": "同时考虑吸收和受激发射。",
+          "choices": [
+            "pi+pf",
+            "pi−pf",
+            "恒为1"
+          ],
+          "answer": 1,
+          "explanation": "两个相反过程相减，净吸收含pi−pf。"
+        },
+        {
+          "prompt": "保持能隙不变而显著升温，占据差通常怎样变化？",
+          "hint": "两个能级的占据更接近。",
+          "choices": [
+            "减小",
+            "增大",
+            "完全不变"
+          ],
+          "answer": 0,
+          "explanation": "热平衡双重态的占据差为tanh[Δ/(2kBT)]，升温时减小。"
+        },
+        {
+          "prompt": "如果γ比频率网格间距小得多，峰高能否直接用于比较强度？",
+          "hint": "采样可能落不到窄峰中心。",
+          "choices": [
+            "任何网格都可以",
+            "只看图上的最高点",
+            "应先加密网格并检查积分面积"
+          ],
+          "answer": 2,
+          "explanation": "解析窗口面积与离散积分的比较能揭示漏采，峰高还受线宽影响。"
+        },
+        {
+          "prompt": "在一个简并能级内换一组本征矢，物理谱应怎样？",
+          "hint": "比较整个子空间，不任意选一个态。",
+          "choices": [
+            "随本征矢改变",
+            "子空间求和后的强度不变",
+            "只有零温才不变"
+          ],
+          "answer": 1,
+          "explanation": "投影算符迹和不依赖简并子空间内部的基底选择。"
+        }
+      ]
+    },
+    {
+      "id": "andreev-charge-steps",
+      "module": "andreev",
+      "lesson": "andreev-charge",
+      "title": "从反射概率推导亚隙电导",
+      "prompt": "考虑理想透明、两重物理自旋的常规s波NS接触，取小能隙近似、E=0和η→0。",
+      "steps": [
+        {
+          "prompt": "能隙内向超导体传播的体准粒子透射Tqp是多少？",
+          "hint": "理想s波电极的能谱在此能量有隙。",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "没有向右传播的体准粒子通道，但仍可通过Andreev过程转移电荷。"
+        },
+        {
+          "prompt": "理想透明极限中Ree≈0，那么Rhe是多少？",
+          "hint": "从准粒子通量守恒出发。",
+          "choices": [
+            "0",
+            "1/2",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "Tqp=0且无人工吸收，故Ree+Rhe=1，得到Rhe=1。"
+        },
+        {
+          "prompt": "一个入射自旋通道的1−Ree+Rhe是多少？",
+          "hint": "返回空穴对电荷电流贡献取加号。",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 2,
+          "explanation": "1−0+1=2；不能使用Tqp=0误判电导为0。"
+        },
+        {
+          "prompt": "本页已包含两个物理自旋，最终G是多少？",
+          "hint": "每个通道的系数再乘2e²/h。",
+          "choices": [
+            "2e²/h",
+            "4e²/h",
+            "8e²/h"
+          ],
+          "answer": 1,
+          "explanation": "G=2(e²/h)×2=4e²/h。Nambu冗余不再增加额外的倍数。"
+        }
+      ]
+    },
+    {
+      "id": "andreev-normal-steps",
+      "module": "andreev",
+      "lesson": "andreev-barriers",
+      "title": "把正常器件和 NS 工具放在同一计数下",
+      "prompt": "两端完全匹配的正常链在带内取T=1。旧device-perfect预设计一个自旋，新工具固定计两个物理自旋。忽略数值η。",
+      "steps": [
+        {
+          "prompt": "旧工具device-perfect的G是多少？",
+          "hint": "旧预设spinDegeneracy=1。",
+          "choices": [
+            "e²/h",
+            "2e²/h",
+            "4e²/h"
+          ],
+          "answer": 0,
+          "explanation": "单自旋、单完全传播通道给出e²/h。"
+        },
+        {
+          "prompt": "新工具设置Δ=0，是否有电子到空穴的反射？",
+          "hint": "没有配对项来混合两个Nambu分量。",
+          "choices": [
+            "Rhe=1",
+            "Rhe=0",
+            "Rhe=1/2"
+          ],
+          "answer": 1,
+          "explanation": "Hamiltonian电子/空穴分块，Rhe严格为0。"
+        },
+        {
+          "prompt": "新工具Δ=0的G是多少？",
+          "hint": "每个物理自旋传输相同。",
+          "choices": [
+            "e²/h",
+            "4e²/h",
+            "2e²/h"
+          ],
+          "answer": 2,
+          "explanation": "G=2(e²/h)(1−0+0)=2e²/h，除以2后才能与旧单自旋预设比较。"
+        },
+        {
+          "prompt": "只打开配对后出现亚隙增强，正确对照是什么？",
+          "hint": "控制自旋计数和其他器件参数。",
+          "choices": [
+            "与任意另一条链比较",
+            "同参数Δ=0参考线，并检查η",
+            "把G除以Tqp"
+          ],
+          "answer": 1,
+          "explanation": "保持长度、接触、势垒、μ与数值η，才能归因于配对；Tqp在亚隙为0而G仍可非零。"
+        }
+      ]
+    },
+    {
+      "id": "andreev-check-steps",
+      "module": "andreev",
+      "lesson": "andreev-checks",
+      "title": "判断一份 NS 数值报告是否可信",
+      "prompt": "某亚隙计算得到Ree=.2、Rhe=.799、Tqp=0、Aη=.001。",
+      "steps": [
+        {
+          "prompt": "准粒子通量是否闭合？",
+          "hint": "四项应相加为1。",
+          "choices": [
+            "否，必须Ree+Rhe=1",
+            "是，四项和为1",
+            "无法检查"
+          ],
+          "answer": 1,
+          "explanation": "包含人工η吸收后，.2+.799+0+.001=1。"
+        },
+        {
+          "prompt": "这是否证明η已经足够小？",
+          "hint": "守恒恒等式与物理极限收敛是不同要求。",
+          "choices": [
+            "是，守恒即可",
+            "否，还应减小η比较结果",
+            "只看图是否平滑"
+          ],
+          "answer": 1,
+          "explanation": "可严格守恒却有显著人工吸收，需要η与η/2等比较。"
+        },
+        {
+          "prompt": "E=Δ处页面返回空值，应该怎样处理？",
+          "hint": "此点需要理想阈值极限。",
+          "choices": [
+            "填成0",
+            "跨过空点直线插值作精确值",
+            "保留空值并比较两侧极限"
+          ],
+          "answer": 2,
+          "explanation": "空值表示本公式未报告精确阈值，不代表物理电导为零。"
+        },
+        {
+          "prompt": "怎样独立核验粒子—空穴关系？",
+          "hint": "比较不同入射种类与相反能量。",
+          "choices": [
+            "比较Ree(E)与Rhh(−E)",
+            "只看Ree(E)是否总为0",
+            "只比较矩阵维数"
+          ],
+          "answer": 0,
+          "explanation": "同一约定下Ree(E)=Rhh(−E)，同时应检查Rhe(E)=Reh(−E)。"
+        }
+      ]
+    },
+    {
+      "id": "spectra-spaces-steps",
+      "module": "spectra",
+      "lesson": "spectra-slater",
+      "title": "数清初末态，并识别核心 SOC",
+      "prompt": "考虑p⁶d⁸→p⁵d⁹，随后在无相互作用d⁹解析极限检查p空穴。",
+      "steps": [
+        {
+          "prompt": "p⁶d⁸初态空间有多少维？",
+          "hint": "p壳层已满；只需从十个d自旋轨道选八个。",
+          "choices": [
+            "10",
+            "45",
+            "60"
+          ],
+          "answer": 1,
+          "explanation": "C(6,6)C(10,8)=45，闭合p壳层没有额外重数。"
+        },
+        {
+          "prompt": "p⁵d⁹末态空间有多少维？",
+          "hint": "分别选择p空穴和d空穴位置。",
+          "choices": [
+            "60",
+            "45",
+            "16"
+          ],
+          "answer": 0,
+          "explanation": "C(6,5)C(10,9)=6×10=60，不能省略核心空穴的六个状态。"
+        },
+        {
+          "prompt": "p电子ζl·s的j=3/2能量为+ζ/2；闭壳层少一个这样的电子时，空穴贡献是什么？",
+          "hint": "从满壳层总能量中减去该电子的贡献。",
+          "choices": [
+            "+ζ/2",
+            "0",
+            "−ζ/2"
+          ],
+          "answer": 2,
+          "explanation": "空穴能量是电子被移走前贡献的相反数，因此j=3/2空穴位于−ζ/2。"
+        },
+        {
+          "prompt": "p空穴j=3/2与j=1/2的简并度分别为多少？",
+          "hint": "使用2j+1。",
+          "choices": [
+            "2和4",
+            "4和2",
+            "3和1"
+          ],
+          "answer": 1,
+          "explanation": "两个核心分支有4和2个磁分量；在指定解析极限下对应低能L₃和高能L₂。"
+        }
+      ]
+    },
+    {
+      "id": "spectra-polarization-steps",
+      "module": "spectra",
+      "lesson": "spectra-polarization",
+      "title": "由复振幅推导偏振对比",
+      "prompt": "同一轴向d⁸模型，固定所有相互作用、温度和晶场，只改变光偏振。",
+      "steps": [
+        {
+          "prompt": "一个本征态能量差落在扫描范围内，是否一定出现吸收峰？",
+          "hint": "峰强还依赖初态占据和跃迁矩阵元。",
+          "choices": [
+            "一定出现",
+            "不一定，偶极矩阵元可能为零",
+            "只取决于展宽"
+          ],
+          "answer": 1,
+          "explanation": "能量可达只是条件之一；对称性和波函数可以使该偏振的振幅为零。"
+        },
+        {
+          "prompt": "ε=(x+z)/√2时，通用的强度表达式是哪一个？",
+          "hint": "先线性叠加复振幅，再取模平方。",
+          "choices": [
+            "|M_x+M_z|²/2",
+            "(|M_x|²+|M_z|²)/2总是成立",
+            "|M_xM_z|"
+          ],
+          "answer": 0,
+          "explanation": "第一式保留干涉项；只有交叉项被对称性或平均消去时，才等于两强度平均。"
+        },
+        {
+          "prompt": "零场热平衡、简并空间等权时，I₊−I₋应满足什么检查？",
+          "hint": "时间反演相关态的圆偏振贡献互相抵消。",
+          "choices": [
+            "必为正",
+            "等于I_z−I_x",
+            "应在数值误差内为零"
+          ],
+          "answer": 2,
+          "explanation": "无外场及自发有序的该模型保持时间反演平衡；轴向线二色性仍可非零。"
+        },
+        {
+          "prompt": "保持传播与偏振约定不变，反转z向磁场后应怎样比较？",
+          "hint": "时间反演将两种圆偏振对调。",
+          "choices": [
+            "I₊(B)=I₋(−B)",
+            "所有谱峰位置都不变",
+            "将XMCD绝对值相加"
+          ],
+          "answer": 0,
+          "explanation": "比较完整谱而不只看峰高；XMCD随场反转变号是重要的符号检查。"
+        }
+      ]
+    },
+    {
+      "id": "spectra-integral-steps",
+      "module": "spectra",
+      "lesson": "spectra-audit",
+      "title": "审计积分强度、线宽与能量零点",
+      "prompt": "径向积分为1，考虑d⁸原子近似的三种正交偏振和完整末态。",
+      "steps": [
+        {
+          "prompt": "对x、y、z三偏振求和的无限窗口积分是多少？",
+          "hint": "d⁸有2个d空穴，使用(2/5)乘空穴数。",
+          "choices": [
+            "0.8",
+            "2",
+            "0.2667"
+          ],
+          "answer": 0,
+          "explanation": "三偏振求和为0.8；各向同性平均为0.8/3，不能混用两种归一化。"
+        },
+        {
+          "prompt": "Γ=0.35 eV是Lorentz半高半宽，其FWHM是多少？",
+          "hint": "完整宽度是两侧半宽之和。",
+          "choices": [
+            "0.175 eV",
+            "0.35 eV",
+            "0.70 eV"
+          ],
+          "answer": 2,
+          "explanation": "FWHM=2Γ=0.70 eV，比较实验展宽前须核对定义。"
+        },
+        {
+          "prompt": "有限能量窗口的曲线面积小于无限窗口强度，首先应检查什么？",
+          "hint": "Lorentz尾部不会在有限能量处严格归零。",
+          "choices": [
+            "立即修改跃迁矩阵元",
+            "窗口覆盖和采样收敛",
+            "把每条谱归一化成1"
+          ],
+          "answer": 1,
+          "explanation": "先比较解析窗口积分与数值积分，再扩大范围；不能用任意归一化隐藏漏掉的强度。"
+        },
+        {
+          "prompt": "只改变F⁰而本页仍逐次重置边重心，可据此提取绝对化学位移吗？",
+          "hint": "横轴移除了组态间公共能量偏移。",
+          "choices": [
+            "可以，取最高峰位置即可",
+            "不可以，需要独立吸收边能量标定",
+            "只需增大采样点数"
+          ],
+          "answer": 1,
+          "explanation": "此处关注相对多重态和偏振结构，绝对核心能量与化学位移不在模型输出范围内。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "resonance-g-orientation",
+      "module": "resonance",
+      "title": "理想顺磁中心：转动同一个 g 张量",
+      "summary": "比较同一个S=½有效中心在不同静磁场方向上的共振位置和偏振强度。",
+      "kind": "可解析单晶教学模型",
+      "assumption": "g=(2,2.1,2.3)为示意参数，没有指定实际离子或拟合材料。对称性约束不单独决定g的数值。",
+      "preset": "resonance-anisotropic-z",
+      "links": [
+        [
+          "物性张量与晶体方向",
+          "#compute/tensors"
+        ],
+        [
+          "SU(2)与自旋",
+          "#classroom/continuous"
+        ],
+        [
+          "有效自旋项目",
+          "#atlas/projects?project=spin-resonance"
+        ]
+      ]
+    },
+    {
+      "id": "resonance-single-nucleus",
+      "module": "resonance",
+      "title": "电子与单核：总自旋、混合与谱线",
+      "summary": "从零场单态/三重态的手算结果走向有限磁场的电子核耦合，观察频率与跃迁强度。",
+      "kind": "有限维有效自旋教学模型",
+      "assumption": "仅一个S=½电子自旋与一个I=½核自旋；A为示意值，不模拟具体分子的多核谱。微波驱动只作用于电子磁矩。",
+      "preset": "resonance-hyperfine",
+      "links": [
+        [
+          "角动量耦合课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "群表示与简并",
+          "#classroom/foundations"
+        ],
+        [
+          "实验与单位说明",
+          "docs/spin-resonance-lab.md"
+        ]
+      ]
+    },
+    {
+      "id": "resonance-local-spin",
+      "module": "resonance",
+      "title": "从 d⁸ 局域自旋到给定参数的 S=1 谱",
+      "summary": "先在已有五轨道模型中确认S=1，再比较关闭和开启D/E的有效自旋谱，辨认两种模型之间缺少的信息。",
+      "kind": "多电子背景 + 独立有效模型",
+      "assumption": "S=1来自指定的d⁸教学模型；g=2、D=2.87 GHz、E=0.15 GHz另行给定。它们不是NiO或任何缺陷中心的拟合参数，也没有从该无SOC多电子模型自动导出。",
+      "preset": "resonance-spin1",
+      "links": [
+        [
+          "已有 d⁸ 多电子计算",
+          "#compute/local-multiplet-lab?preset=multiplet-d8-nio"
+        ],
+        [
+          "NiO结构背景",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "跨模块自旋作业",
+          "#atlas/projects?project=spin-resonance"
+        ]
+      ]
+    },
+    {
+      "id": "andreev-normal-bridge",
+      "module": "andreev",
+      "title": "同一量子线：正常输运到 NS 电导",
+      "kind": "跨模块教学模型",
+      "summary": "沿用12格点、t=1、E=.2的正常器件，用Δ=0基准固定自旋计数，再打开配对。",
+      "assumption": "旧device-perfect按一个自旋输出；NS模型固定两重物理自旋，比较前须除以2。相差的数值η吸收需保留。",
+      "preset": "andreev-project-normal",
+      "links": [
+        [
+          "原有正常器件",
+          "#compute/device-transport-lab?preset=device-perfect"
+        ],
+        [
+          "超导配对与BdG",
+          "#classroom/spin?module=pairing"
+        ],
+        [
+          "跨模块项目",
+          "#atlas/projects?module=andreev"
+        ]
+      ]
+    },
+    {
+      "id": "andreev-interface",
+      "module": "andreev",
+      "title": "透明界面与势垒：同样有能隙，不同电导",
+      "kind": "原创格点NS接触",
+      "summary": "把无势垒与单点势垒曲线并排比较，观察正常反射、空穴反射和电荷响应。",
+      "assumption": "参数为教学值，固定势、零温且无磁场/SOC；不代表具体铝、铌或半导体接触的定量拟合。",
+      "preset": "andreev-barrier",
+      "links": [
+        [
+          "器件量子输运",
+          "#classroom/crystal?module=device"
+        ],
+        [
+          "配对能谱",
+          "#compute/pairing-lab"
+        ],
+        [
+          "Kwant教程",
+          "https://kwant-project.org/doc/1/tutorial/superconductors"
+        ]
+      ]
+    },
+    {
+      "id": "andreev-threshold-audit",
+      "module": "andreev",
+      "title": "阈值与人工吸收：把诊断写进报告",
+      "kind": "数值核验案例",
+      "summary": "比较精确能隙阈值、两侧能量与η变化，区分真实的传播通道和数值展宽。",
+      "assumption": "本实验不引入超导引线展宽；阈值空点不是实际电导为0，也不能用单个亚隙峰宣称Majorana态。",
+      "preset": "andreev-threshold",
+      "links": [
+        [
+          "NS守恒课程",
+          "#classroom/spin?module=andreev&lesson=andreev-checks"
+        ],
+        [
+          "已有Kitaev链",
+          "#classroom/spin?module=pairing"
+        ],
+        [
+          "方法与范围",
+          "docs/andreev-lab.md"
+        ]
+      ]
+    },
+    {
+      "id": "spectra-nio-local",
+      "module": "spectra",
+      "title": "NiO 背景：从局域多重态到 L 边吸收",
+      "summary": "连接已有d⁸ Kanamori背景与完整Slater/SOC原子近似，辨别能级、芯空穴和跃迁强度。",
+      "kind": "真实材料背景 + 原创离子模型",
+      "assumption": "未拟合NiO参数，不包含配体电荷转移、反铁磁有序和实验绝对吸收边；旧U/J不能直接逐项对应本页Slater积分。",
+      "preset": "spectra-d8-cubic",
+      "links": [
+        [
+          "已有多电子晶场",
+          "#compute/local-multiplet-lab?preset=multiplet-d8-nio"
+        ],
+        [
+          "NiO结构与磁性背景",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "跨模块项目作业",
+          "#atlas/projects?project=multiplet-xas"
+        ]
+      ]
+    },
+    {
+      "id": "spectra-axial-dichroism",
+      "module": "spectra",
+      "title": "同一个离子：改变光偏振能看到什么",
+      "summary": "保持轴向晶场、SOC与温度不变，比较x与z偏振、45°叠加及零场圆二色性。",
+      "kind": "偏振选择定则与参数控制案例",
+      "assumption": "轴向晶场是显式轨道势参数，没有从真实畸变结构自动拟合；所示吸收为相对强度。",
+      "preset": "spectra-project-x",
+      "links": [
+        [
+          "物性张量与晶体方向",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "单电子晶场与轨道",
+          "#compute/crystal-field-lab?preset=octahedral-d"
+        ],
+        [
+          "偏振跨模块项目",
+          "#atlas/projects?project=multiplet-xas"
+        ]
+      ]
+    },
+    {
+      "id": "spectra-d9-core-limit",
+      "module": "spectra",
+      "title": "d⁹ 空穴基准：L₃ / L₂ 的解析检查",
+      "summary": "关闭非单极库仑项与价壳SOC，用核心SOC、简并度和完整偶极空间检验谱强。",
+      "kind": "可手算的自由离子极限",
+      "assumption": "这是d⁹的解析基准，不是CuO真实光谱；一般多重态的分支强度需要完整跃迁计算。",
+      "preset": "spectra-d9-limit",
+      "links": [
+        [
+          "SU(2)角动量耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "双群与旋量",
+          "#classroom/spin?track=double"
+        ],
+        [
+          "方法与输入约定",
+          "docs/atomic-spectra-lab.md"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "resonance-spin-hamiltonian",
+      "title": "EasySpin：有效自旋哈密顿量、Zeeman、零场与超精细相互作用",
+      "url": "https://www.easyspin.org/documentation/hamiltonian.html"
+    },
+    {
+      "id": "resonance-pepper",
+      "title": "EasySpin：固态 EPR 的实验与线形约定",
+      "url": "https://www.easyspin.org/documentation/pepper.html"
+    },
+    {
+      "id": "andreev-kwant",
+      "title": "Kwant: superconducting junctions and electron/hole conductance",
+      "url": "https://kwant-project.org/doc/1/tutorial/superconductors"
+    },
+    {
+      "id": "andreev-btk",
+      "title": "Blonder, Tinkham, Klapwijk: metallic to tunneling regimes in NS contacts",
+      "url": "https://doi.org/10.1103/PhysRevB.25.4515"
+    },
+    {
+      "id": "andreev-beenakker",
+      "title": "Beenakker: mesoscopic theory of NS junctions",
+      "url": "https://arxiv.org/abs/cond-mat/9406083"
+    },
+    {
+      "id": "spectra-quanty-xas",
+      "title": "Quanty：原子近似的偏振 XAS 与有限温度",
+      "url": "https://www.quanty.org/documentation/tutorials/small_programs_a_quick_start/xas"
+    },
+    {
+      "id": "spectra-quanty-nio",
+      "title": "Quanty：2p–3d Slater 直接/交换项与偶极算符",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/xas_l23"
+    },
+    {
+      "id": "spectra-quanty-ground",
+      "title": "Quanty：完整 d 壳层 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ]
+}

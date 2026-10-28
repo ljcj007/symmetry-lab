@@ -1,0 +1,536 @@
+{
+  "schema": "symmetry-lab-spectroscopy-content-fragment-1",
+  "release": "20261028-spectroscopy1",
+  "section": "spectroscopy-materials",
+  "modules": [
+    {
+      "id": "resonance",
+      "title": "磁共振与有效自旋",
+      "summary": "联动静磁场方向、有效g张量、零场与超精细作用、热占据及微波偏振，比较能级和吸收谱。",
+      "pathway": "spin",
+      "route": "spin-resonance-lab",
+      "action": "spin_resonance_lab",
+      "presets": [
+        {
+          "id": "resonance-isotropic",
+          "title": "S=½ · 各向同性 Zeeman 基准",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-anisotropic-z",
+          "title": "各向异性 g · 磁场沿 z",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2,
+            "gY": 2.1,
+            "gZ": 2.3,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-anisotropic-x",
+          "title": "同一 g 张量 · 磁场沿 x",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2,
+            "gY": 2.1,
+            "gZ": 2.3,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 90,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-spin1-isotropic",
+          "title": "S=1 · 先关闭零场分裂",
+          "input": {
+            "spin": 1,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.05,
+            "theta": 35,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 8,
+            "frequencyPoints": 301,
+            "fieldMax": 0.3,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-spin1",
+          "title": "同一 S=1 · 加入零场分裂",
+          "input": {
+            "spin": 1,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 2.87,
+            "zeroFieldE": 0.15,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.05,
+            "theta": 35,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 8,
+            "frequencyPoints": 301,
+            "fieldMax": 0.3,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-hyperfine",
+          "title": "S=½、I=½ · 电子核自旋耦合",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.5,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.3,
+            "hyperfineParallel": 0.3,
+            "nuclearGamma": 0.04257748,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "theta"
+          }
+        },
+        {
+          "id": "resonance-longitudinal",
+          "title": "各向同性纯 Zeeman · 纵向偏振暗态",
+          "input": {
+            "spin": 0.5,
+            "nuclearSpin": 0.0,
+            "gX": 2.0,
+            "gY": 2.0,
+            "gZ": 2.0,
+            "zeroFieldD": 0.0,
+            "zeroFieldE": 0.0,
+            "hyperfinePerp": 0.0,
+            "hyperfineParallel": 0.0,
+            "nuclearGamma": 0.0,
+            "field": 0.34,
+            "theta": 0.0,
+            "phi": 0.0,
+            "temperature": 4.0,
+            "lineWidth": 0.05,
+            "frequencyMin": 0.0,
+            "frequencyMax": 15.0,
+            "frequencyPoints": 301,
+            "fieldMax": 0.7,
+            "fieldPoints": 61,
+            "polarization": "parallel"
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "resonance-zeeman",
+      "module": "resonance",
+      "title": "从 g 张量到方向依赖的共振",
+      "summary": "同一自旋中心旋转磁场时，共振位置和微波矩阵元一起改变。",
+      "preset": "resonance-anisotropic-z",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "先分清能量、频率与磁场",
+          "text": "本页以 H/h 表示 Hamiltonian，单位 GHz；磁场输入为 T。μB/h 约为13.996245 GHz/T，g 是无量纲有效张量。共振频率等于能级差除以 h，不能再额外乘一次2π。",
+          "formula": "H_Z/h=(μB/h) B·g·S"
+        },
+        {
+          "title": "各向异性要连同方向一起读",
+          "text": "gX、gY、gZ 是共同晶体主轴上的三个参数。theta 从 z 轴量起，phi 是 xy 平面的方位角。S=½、无核自旋、无其他作用时，能隙只取决于 |g n|；在给定 B 下，沿 z 与沿 x 对应不同共振。更一般模型中显示的几何 g_eff 不能代替完整对角化。",
+          "formula": "ν=(μB/h) B g_eff；g_eff²=gX² nx²+gY² ny²+gZ² nz²"
+        },
+        {
+          "title": "频率以外还要计算跃迁强度",
+          "text": "微波磁场的 theta 和 phi 偏振与静磁场正交，parallel 与静磁场平行。跃迁矩阵元包含 g 和微波方向。纯各向同性 Zeeman 模型的纵向驱动与 H 对易，因而没有有限频率吸收；各向异性或状态混合时不能直接沿用这条结论。",
+          "formula": "M=Σa e₁,a ga Sa；Wif=(pi−pf)|〈f|M|i〉|²"
+        }
+      ]
+    },
+    {
+      "id": "resonance-interactions",
+      "module": "resonance",
+      "title": "零场与超精细作用怎样改变自旋谱",
+      "summary": "用可手算极限检查能级，再观察外场下的混合与劈裂。",
+      "preset": "resonance-hyperfine",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "二阶零场分裂属于哪些自旋",
+          "text": "D 项区分 mS=0 与 mS=±1；E 项混合相差两个自旋投影的态。S=1/2 时这两个二阶算符恒为零，不能靠改变 D/E 劈裂一个孤立 Kramers 双重态。本页只保留这两个二阶参数，没有任意高阶晶场算符。",
+          "formula": "H_ZFS/h=D[Sz²−S(S+1)/3]+E(Sx²−Sy²)"
+        },
+        {
+          "title": "电子与一个核自旋",
+          "text": "可以加入一个 I 自旋。A⊥ 和 A∥ 分别控制横向自旋翻转与纵向耦合。核 Zeeman 项采用 −γN B·I，γN 输入为有符号的 GHz/T。S=I=½、B=0、各向同性 A 时得到 F=0 与 F=1 的解析能级；有限场会混合不同总自旋。",
+          "formula": "A S·I=A[F(F+1)−S(S+1)−I(I+1)]/2"
+        },
+        {
+          "title": "避免把有效参数当作自动输出",
+          "text": "已有多电子工具可在指定近似下给出一个基态 S，但单凭 S 不能得到 g、D、E 或 A。下折叠这些参数还需要 SOC、轨道态、低能子空间和投影约定。跨模块作业会先确认 d⁸ 模型中的 S=1，再用明确给定的参数研究有效自旋谱；这不是 NiO 的拟合谱。",
+          "formula": "多电子低能子空间 → 明确投影与 SOC → 有效自旋参数"
+        }
+      ]
+    },
+    {
+      "id": "resonance-selection",
+      "module": "resonance",
+      "title": "从能级到可观察吸收：占据、偏振与采样",
+      "summary": "能级差给出候选频率，实际谱线还需要矩阵元、热占据和充分采样。",
+      "preset": "resonance-spin1",
+      "references": [
+        "resonance-spin-hamiltonian",
+        "resonance-pepper"
+      ],
+      "sections": [
+        {
+          "title": "热占据保留在谱权重里",
+          "text": "热平衡占据按 Boltzmann 权重计算。吸收与受激发射相减后，每条正频跃迁的净权重含 pi−pf；升温会减小纯 Zeeman 双重态的占据差。程序不把每张谱归一为相同峰高，因而可以比较同一参数下的温度效应。",
+          "formula": "pn=exp[−(En−E0)/(kBT/h)]/Z"
+        },
+        {
+          "title": "简并态不能挑选任意一条本征矢",
+          "text": "同能子空间内数值本征矢可以任意旋转。本页将两个能量分组间的矩阵元模方求和，并使用每个简并态的相同占据；T=0 在整个基态简并空间均匀分配权重。这样谱线不会随求解器选取的基底改变。",
+          "formula": "WAB=(pA−pB) Tr(PA M† PB M PA)"
+        },
+        {
+          "title": "线宽和网格承担不同职责",
+          "text": "lineWidth 是 Lorentz 线形的半高半宽，以 GHz 计；每条线形在正频轴上单位归一。扫描网格越粗，越可能漏掉窄峰，程序比较数值积分与同一窗口的解析面积。此处是单晶弱激发频率吸收，不是常见场调制一阶导数实验谱，也不包含饱和和弛豫。",
+          "formula": "∫₀∞ L₊(ν;ν₀,γ)dν=1；积分谱权重=Σif Wif"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "resonance-zeeman-steps",
+      "module": "resonance",
+      "lesson": "resonance-zeeman",
+      "title": "从磁场方向推导共振频率",
+      "prompt": "S=½、I=0，g=(2,2.1,2.3)，B=0.34 T，没有零场或超精细作用。",
+      "steps": [
+        {
+          "prompt": "磁场沿 z 时，g_eff 是多少？",
+          "hint": "只保留 nz=1。",
+          "choices": [
+            "2",
+            "2.1",
+            "2.3"
+          ],
+          "answer": 2,
+          "explanation": "g_eff=|gZ|=2.3。"
+        },
+        {
+          "prompt": "此时频率约为多少？",
+          "hint": "13.996245×0.34×2.3，单位 GHz。",
+          "choices": [
+            "10.945 GHz",
+            "68.77 GHz",
+            "0.34 GHz"
+          ],
+          "answer": 0,
+          "explanation": "ν≈10.9451 GHz，输入已经使用 H/h，不能再乘2π。"
+        },
+        {
+          "prompt": "保持 B 不变，只把磁场转到 x 轴，共振移到哪里？",
+          "hint": "g_eff 变为2。",
+          "choices": [
+            "保持10.945 GHz",
+            "约9.517 GHz",
+            "变成0"
+          ],
+          "answer": 1,
+          "explanation": "沿 x 的ν≈9.51745 GHz，变化来自同一 g 张量的方向。"
+        },
+        {
+          "prompt": "各向同性纯 Zeeman 模型，用 parallel 微波驱动，会怎样？",
+          "hint": "驱动与H含相同自旋分量。",
+          "choices": [
+            "一定增强峰",
+            "出现双峰",
+            "无有限频率吸收"
+          ],
+          "answer": 2,
+          "explanation": "两算符对易，非简并能级间矩阵元为零；这不推广到所有各向异性模型。"
+        }
+      ]
+    },
+    {
+      "id": "resonance-interaction-steps",
+      "module": "resonance",
+      "lesson": "resonance-interactions",
+      "title": "手算零场分裂与电子核耦合",
+      "prompt": "先考虑 S=1、I=0、B=0、E=0；再比较 S=I=½ 的各向同性超精细模型。",
+      "steps": [
+        {
+          "prompt": "S=1 时，mS=0 的 D 项能量是多少？",
+          "hint": "S(S+1)/3=2/3。",
+          "choices": [
+            "−2D/3",
+            "D/3",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "mS=0 的能量为−2D/3；mS=±1 为D/3。"
+        },
+        {
+          "prompt": "若 D>0，两个能量分组之间的频率差是多少？",
+          "hint": "相减 D/3−(−2D/3)。",
+          "choices": [
+            "D/3",
+            "D",
+            "2D"
+          ],
+          "answer": 1,
+          "explanation": "两组间能量差为D GHz。"
+        },
+        {
+          "prompt": "S=I=½、B=0、A>0 时，单态与三重态的能量分别为多少？",
+          "hint": "用总角动量 F=0 和1。",
+          "choices": [
+            "−3A/4 与 A/4",
+            "−A 与 A",
+            "0 与 A/2"
+          ],
+          "answer": 0,
+          "explanation": "F=0 的能量是−3A/4，F=1 是A/4，间隔为A。"
+        },
+        {
+          "prompt": "已由多电子计算得到基态 S=1，能直接确定 D 吗？",
+          "hint": "低能自旋维数没有包含全部轨道和SOC信息。",
+          "choices": [
+            "D一定等于1 GHz",
+            "D一定为0",
+            "不能，还需额外微观信息或有效参数"
+          ],
+          "answer": 2,
+          "explanation": "S 规定自旋空间；g、D/E 等还需要微观投影或独立给定，不能自动从当前无SOC模型推断。"
+        }
+      ]
+    },
+    {
+      "id": "resonance-intensity-steps",
+      "module": "resonance",
+      "lesson": "resonance-selection",
+      "title": "判断谱峰强度与数值可信度",
+      "prompt": "固定一个纯 Zeeman 双重态，比较温度、偏振、线宽与网格。",
+      "steps": [
+        {
+          "prompt": "有限温度下的净吸收权重含哪个占据因子？",
+          "hint": "同时考虑吸收和受激发射。",
+          "choices": [
+            "pi+pf",
+            "pi−pf",
+            "恒为1"
+          ],
+          "answer": 1,
+          "explanation": "两个相反过程相减，净吸收含pi−pf。"
+        },
+        {
+          "prompt": "保持能隙不变而显著升温，占据差通常怎样变化？",
+          "hint": "两个能级的占据更接近。",
+          "choices": [
+            "减小",
+            "增大",
+            "完全不变"
+          ],
+          "answer": 0,
+          "explanation": "热平衡双重态的占据差为tanh[Δ/(2kBT)]，升温时减小。"
+        },
+        {
+          "prompt": "如果γ比频率网格间距小得多，峰高能否直接用于比较强度？",
+          "hint": "采样可能落不到窄峰中心。",
+          "choices": [
+            "任何网格都可以",
+            "只看图上的最高点",
+            "应先加密网格并检查积分面积"
+          ],
+          "answer": 2,
+          "explanation": "解析窗口面积与离散积分的比较能揭示漏采，峰高还受线宽影响。"
+        },
+        {
+          "prompt": "在一个简并能级内换一组本征矢，物理谱应怎样？",
+          "hint": "比较整个子空间，不任意选一个态。",
+          "choices": [
+            "随本征矢改变",
+            "子空间求和后的强度不变",
+            "只有零温才不变"
+          ],
+          "answer": 1,
+          "explanation": "投影算符迹和不依赖简并子空间内部的基底选择。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "resonance-g-orientation",
+      "module": "resonance",
+      "title": "理想顺磁中心：转动同一个 g 张量",
+      "summary": "比较同一个S=½有效中心在不同静磁场方向上的共振位置和偏振强度。",
+      "kind": "可解析单晶教学模型",
+      "assumption": "g=(2,2.1,2.3)为示意参数，没有指定实际离子或拟合材料。对称性约束不单独决定g的数值。",
+      "preset": "resonance-anisotropic-z",
+      "links": [
+        [
+          "物性张量与晶体方向",
+          "#compute/tensors"
+        ],
+        [
+          "SU(2)与自旋",
+          "#classroom/continuous"
+        ],
+        [
+          "有效自旋项目",
+          "#atlas/projects?project=spin-resonance"
+        ]
+      ]
+    },
+    {
+      "id": "resonance-single-nucleus",
+      "module": "resonance",
+      "title": "电子与单核：总自旋、混合与谱线",
+      "summary": "从零场单态/三重态的手算结果走向有限磁场的电子核耦合，观察频率与跃迁强度。",
+      "kind": "有限维有效自旋教学模型",
+      "assumption": "仅一个S=½电子自旋与一个I=½核自旋；A为示意值，不模拟具体分子的多核谱。微波驱动只作用于电子磁矩。",
+      "preset": "resonance-hyperfine",
+      "links": [
+        [
+          "角动量耦合课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "群表示与简并",
+          "#classroom/foundations"
+        ],
+        [
+          "实验与单位说明",
+          "docs/spin-resonance-lab.md"
+        ]
+      ]
+    },
+    {
+      "id": "resonance-local-spin",
+      "module": "resonance",
+      "title": "从 d⁸ 局域自旋到给定参数的 S=1 谱",
+      "summary": "先在已有五轨道模型中确认S=1，再比较关闭和开启D/E的有效自旋谱，辨认两种模型之间缺少的信息。",
+      "kind": "多电子背景 + 独立有效模型",
+      "assumption": "S=1来自指定的d⁸教学模型；g=2、D=2.87 GHz、E=0.15 GHz另行给定。它们不是NiO或任何缺陷中心的拟合参数，也没有从该无SOC多电子模型自动导出。",
+      "preset": "resonance-spin1",
+      "links": [
+        [
+          "已有 d⁸ 多电子计算",
+          "#compute/local-multiplet-lab?preset=multiplet-d8-nio"
+        ],
+        [
+          "NiO结构背景",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "跨模块自旋作业",
+          "#atlas/projects?project=spin-resonance"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "resonance-spin-hamiltonian",
+      "title": "EasySpin：有效自旋哈密顿量、Zeeman、零场与超精细相互作用",
+      "url": "https://www.easyspin.org/documentation/hamiltonian.html"
+    },
+    {
+      "id": "resonance-pepper",
+      "title": "EasySpin：固态 EPR 的实验与线形约定",
+      "url": "https://www.easyspin.org/documentation/pepper.html"
+    }
+  ]
+}

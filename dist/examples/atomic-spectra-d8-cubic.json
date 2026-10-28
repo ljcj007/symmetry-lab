@@ -1,0 +1,22 @@
+{
+  "configuration": "d8",
+  "polarization": "x",
+  "tenDq": 1.0,
+  "tetragonal": 0.0,
+  "F0": 4.0,
+  "F2": 10.0,
+  "F4": 6.0,
+  "pdF0": 6.0,
+  "pdF2": 6.0,
+  "pdG1": 4.0,
+  "pdG3": 2.5,
+  "socD": 0.08,
+  "socP": 11.5,
+  "fieldTesla": 0.0,
+  "temperature": 300.0,
+  "polarizationAngle": 45.0,
+  "width": 0.35,
+  "energyMin": -15.0,
+  "energyMax": 25.0,
+  "samples": 401
+}
