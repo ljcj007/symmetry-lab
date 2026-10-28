@@ -4,7 +4,7 @@ TOOLS = ('analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
          'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors', 'phase', 'diffraction', 'phonopy', 'phonon_modes', 'band_connectivity', 'phonon_thermo',
-         'distortion_lab', 'magnon_lab', 'qha_lab', 'pairing_lab', 'shg_lab', 'unfold_lab', 'crystal_field_lab', 'quantum_geometry_lab', 'electron_transport_lab')
+         'distortion_lab', 'magnon_lab', 'qha_lab', 'pairing_lab', 'shg_lab', 'unfold_lab', 'crystal_field_lab', 'quantum_geometry_lab', 'electron_transport_lab', 'hall_response_lab', 'device_transport_lab', 'local_multiplet_lab')
 
 
 def run(tool, payload, database=None, catalog=None, magnetic_database=None,
@@ -13,6 +13,9 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool in ('hall_response_lab', 'device_transport_lab', 'local_multiplet_lab'):
+        from importlib import import_module
+        return import_module(tool).run(payload)
     if tool == 'crystal_field_lab':
         from crystal_field_lab import run as calculate
         return calculate(payload)

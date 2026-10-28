@@ -1,7 +1,8 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261027-quantum1';
+const BUILD = '20261028-response1';
 const plans = {
+  hall_response_lab: ['hall_response_lab'], device_transport_lab: ['device_transport_lab'], local_multiplet_lab: ['local_multiplet_lab'],
   crystal_field_lab: ['crystal_field_lab'], quantum_geometry_lab: ['quantum_geometry_lab'], electron_transport_lab: ['electron_transport_lab'],
   pairing_lab: ['pairing_lab'], shg_lab: ['shg_lab'], unfold_lab: ['unfold_lab'],
   distortion_lab: ['distortion_lab'], magnon_lab: ['magnon_lab'],

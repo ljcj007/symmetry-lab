@@ -567,6 +567,51 @@
         "No general DFT Fourier interpolation, lattice thermal conductivity or material ZT prediction"
       ],
       "sha256": "7bdac7e38c509cbb5b46c66d77d949a490d054f66b3fb6c285d7f1ab0fd36361"
+    },
+    {
+      "path": "dist/python/hall_response_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Intrinsic two-band QWZ sheet Hall and transverse thermoelectric responses from full-BZ occupation/entropy-weighted Berry curvature",
+        "Finite-temperature chemical-potential scans, analytic gap checks and two-grid diagnostics"
+      ],
+      "limitations": [
+        "Fixed 2D teaching model; not a general Wannier/DFT or real-material solver",
+        "No longitudinal response tensor or open-circuit Nernst voltage; band-resolved response withheld at exact gap closure"
+      ],
+      "sha256": "34dfa83b0f6bd94d6879a945c6bfa42c5fae33c7ac2e2ee207f30a0dd00e12d5"
+    },
+    {
+      "path": "dist/python/device_transport_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Coherent elastic one-orbital uniform/SSH finite chains with two semi-infinite leads and exact retarded contact self-energies",
+        "Transmission, zero-temperature Landauer conductance, local spectral/injectivity densities and explicit regulator-loss flux checks"
+      ],
+      "limitations": [
+        "Noninteracting 1D model without SOC, finite-bias self-consistency, inelastic scattering or finite-temperature transport integration",
+        "Bond flux is dimensionless per incoming channel, not a finite-bias current in amperes; not a full Kwant port"
+      ],
+      "sha256": "a310c93f71610a3ff7620b2fd6b8f7c79633d9aa5c70882d175692d340989ac9"
+    },
+    {
+      "path": "dist/python/local_multiplet_lab.py",
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Fixed-electron-number five-d-orbital cubic crystal field plus Kanamori interactions, including spin flip and pair hopping",
+        "Exact block diagonalization, energy/spin joint subspaces, degeneracy-averaged occupations and crystal-field scans"
+      ],
+      "limitations": [
+        "No SOC; equal-J Kanamori approximation is not full spherical Slater F0/F2/F4 Coulomb interaction",
+        "No atomic LS term labels, material-fitted NiO spectrum, charge transfer or XAS/RIXS calculation"
+      ],
+      "sha256": "9166cb06b0fd09a22de23ad57a35ca471ae3a25b5dc76f3ed7064455749c6fc4"
     }
   ],
   "coordinate_conventions": {
@@ -600,7 +645,7 @@
       "native": "official PyPI spglib==2.8.0"
     }
   },
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "shared_api": {
     "module": "dist/python/browser_api.py",
     "cli": "dist/python/cli.py",

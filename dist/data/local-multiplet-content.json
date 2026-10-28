@@ -1,0 +1,422 @@
+{
+  "schema": "symmetry-lab-response-content-fragment-1",
+  "release": "20261028-response1",
+  "section": "response-materials",
+  "modules": [
+    {
+      "id": "multiplet",
+      "title": "多电子晶场与 Hund 多重态",
+      "summary": "在五轨道固定电子数模型中加入库仑排斥、完整 Hund 交换与成对跃迁，连接晶场、自旋和多电子占据。",
+      "pathway": "spin",
+      "route": "local-multiplet-lab",
+      "action": "local_multiplet_lab",
+      "presets": [
+        {
+          "id": "multiplet-d6-high",
+          "title": "d⁶ 弱晶场 · 高自旋",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 0.5,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "multiplet-d6-low",
+          "title": "d⁶ 强晶场 · 低自旋",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 6,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "multiplet-d2-hund",
+          "title": "d² 原子极限 · Hund 三重态",
+          "input": {
+            "electrons": 2,
+            "coordination": "octahedral",
+            "splitting": 0,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 4,
+            "scanPoints": 21
+          }
+        },
+        {
+          "id": "multiplet-d8-nio",
+          "title": "d⁸ 八面体 · NiO 配位背景",
+          "input": {
+            "electrons": 8,
+            "coordination": "octahedral",
+            "splitting": 1,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 5,
+            "scanPoints": 21
+          }
+        },
+        {
+          "id": "multiplet-j0",
+          "title": "d⁶ J=0 · 关闭 Hund 竞争",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 1,
+            "coulombU": 4,
+            "hundJ": 0,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "multiplet-fock",
+      "module": "multiplet",
+      "title": "从十个单电子态到固定 N 的 Fock 空间",
+      "summary": "多电子维数由费米占据决定，不能把单电子能级数当作多电子态数。",
+      "preset": "multiplet-d6-high",
+      "references": [
+        "multiplet-libcommute",
+        "multiplet-kanamori"
+      ],
+      "sections": [
+        {
+          "title": "每个自旋轨道只能占据一次",
+          "text": "沿用 xy、yz、xz、x²−y²、3z²−r² 五个实 d 轨道，每个有上下自旋。固定 N 时，从十个自旋轨道选 N 个组成反对称 Slater 行列式。程序的位串记录这些占据，交换产生的符号来自费米反对易关系。N=6 时有210个行列式，并非10个单电子能级乘6。",
+          "formula": "dim H_N=C(10,N)；{c_i,c†_j}=δ_ij"
+        },
+        {
+          "title": "先保留守恒量，再求能级",
+          "text": "本模型没有 SOC、磁场或自旋相关晶场，总电子数与 Sz 守恒，可按 N↑、N↓ 分块。完整 Hund 自旋翻转项保留总自旋 SU(2)。先在每块对角化 H，再在同能子空间对角化 S²，才能避免偶然简并中的任意数值混合。",
+          "formula": "[H,N]=[H,Sz]=[H,S²]=0；S²|S,M>=S(S+1)|S,M>"
+        },
+        {
+          "title": "正确读多电子能级和占据",
+          "text": "能级表将相同能量、相同 S 的态合为一组，简并度包含2S+1个磁分量以及可能的轨道重数。每个轨道占据介于0与2，五项之和为N。在联合简并子空间上取迹平均，结果不依赖求解器选择了哪组本征矢。这里不提供完整原子 LS 项符号。",
+          "formula": "n̄_m=Tr(P_group n_m)/dim(P_group)；Σ_m n̄_m=N"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-hund",
+      "module": "multiplet",
+      "title": "Hund 交换为什么需要自旋翻转与成对跃迁",
+      "summary": "从两电子解析极限核验相互作用，而不只用“尽量平行”记忆规则。",
+      "preset": "multiplet-d2-hund",
+      "references": [
+        "multiplet-kanamori",
+        "multiplet-libcommute"
+      ],
+      "sections": [
+        {
+          "title": "三种密度排斥与两个交换过程",
+          "text": "同轨道的异自旋电子付出U，不同轨道的异自旋密度项为U−2J，同自旋为U−3J。除此以外，−J S⁺_mS⁻_n 将不同轨道的自旋互换，+J P†_mP_n 将一对电子移到另一轨道。保留这两项后，不能把所有本征态当作某一张固定占据图。",
+          "formula": "U′=U−2J；H_flip=−JΣ_(m≠n)S⁺_mS⁻_n；H_pair=JΣ_(m≠n)P†_mP_n"
+        },
+        {
+          "title": "零晶场的 d² 可以手算",
+          "text": "五个等能轨道中，两个电子的自旋三重态对应反对称轨道对，能量U−3J，维数3×C(5,2)=30。其余15个自旋单态中，14个位于U−J，一个全对称双占据组合位于U+4J。J>0时三重态最低；程序用这一完整解析谱检验符号和重数。",
+          "formula": "d²：30×(U−3J,S=1)；14×(U−J,S=0)；1×(U+4J,S=0)"
+        },
+        {
+          "title": "固定 N 时，改变 U 为什么不改变自旋",
+          "text": "把三种密度项的U系数相加，恰好是所有已占据自旋轨道对的数目N(N−1)/2。因此增大U会平移整个固定N谱，不能在这个孤立模型中单独驱动高低自旋变化。J和晶场分裂改变相对能量；真实材料中的电荷涨落、配体和带宽属于更大的模型。",
+          "formula": "∂H/∂U=N(N−1)I/2；Δ(E_a−E_b)=0"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-competition",
+      "module": "multiplet",
+      "title": "晶场与 Hund 竞争：从 d⁶ 自旋切换到 NiO 的边界",
+      "summary": "比较弱场与强场的多电子基态，理解占据混合、交叉和模型适用范围。",
+      "preset": "multiplet-d6-low",
+      "references": [
+        "multiplet-nio",
+        "multiplet-kanamori"
+      ],
+      "sections": [
+        {
+          "title": "d⁶ 的两种极限",
+          "text": "八面体晶场中三个 t₂g 轨道低、两个 e_g 高。弱场下 Hund 交换有利于较大自旋，预设 Δ=0.5 eV、J=0.6 eV 的基态为S=2。强场预设 Δ=6 eV 在同样N、U、J下得到S=0；成对跃迁让占据略偏离完全封闭的t₂g⁶，所以应读计算的期望值。",
+          "formula": "ε(t₂g)=−2Δ/5；ε(e_g)=3Δ/5；S=2→S²=6，S=0→S²=0"
+        },
+        {
+          "title": "试探占据图能解释趋势，但不是精确临界点",
+          "text": "高自旋d⁶试探行列式具有t₂g⁴e_g²，晶场能为−0.4Δ；低自旋t₂g⁶试探态的晶场能为−2.4Δ。后者获得2Δ的晶场能优势，同时损失Hund交换优势。完整成对跃迁会混合双占据构型，需对角化后比较基态；扫描折线的相邻点也不能充当已求出的精确交叉。",
+          "formula": "E_CF(t₂g⁶)−E_CF(t₂g⁴e_g²)=−2Δ；交叉由完整多电子谱决定"
+        },
+        {
+          "title": "NiO 背景提供问题，不提供自动拟合参数",
+          "text": "NiO的局域Ni²⁺通常以d⁸配位背景讨论，多电子晶场需要库仑交换而不仅是单电子分裂图。这里使用统一J的Kanamori简化和原创参数；完整d壳层Slater相互作用有独立角向结构，配体杂化和电荷转移还会增加空间。本站不把当前能级解释为已拟合的NiO激发谱。",
+          "formula": "Kanamori(U,J) ≠ 完整 Slater(F⁰,F²,F⁴) ≠ 含配体的电荷转移模型"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "multiplet-fock-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-fock",
+      "title": "数清 d⁶ 的空间并判断 U 的作用",
+      "prompt": "五个 d 轨道，各含两种自旋。固定六个电子，不含 SOC；比较 U 与 U+0.2 eV。",
+      "steps": [
+        {
+          "prompt": "单电子自旋轨道有多少个？",
+          "hint": "轨道数乘每个轨道的自旋态数。",
+          "choices": [
+            "5",
+            "10",
+            "60"
+          ],
+          "answer": 1,
+          "explanation": "5×2=10，费米占据在这十个自旋轨道中选择。"
+        },
+        {
+          "prompt": "固定 N=6 的多电子空间维数是多少？",
+          "hint": "同一自旋轨道不能重复占据；不区分电子编号。",
+          "choices": [
+            "10×6=60",
+            "10⁶",
+            "C(10,6)=210"
+          ],
+          "answer": 2,
+          "explanation": "不同占据集合对应独立Slater行列式，共210个。"
+        },
+        {
+          "prompt": "U 增加0.2 eV，所有 d⁶ 能级共同增加多少？",
+          "hint": "六个电子有6×5/2对。",
+          "choices": [
+            "3 eV",
+            "0.2 eV",
+            "1.2 eV"
+          ],
+          "answer": 0,
+          "explanation": "ΔE=0.2×15=3 eV；这是共同平移。"
+        },
+        {
+          "prompt": "这次只改变 U，能由此让基态从 S=2 变成 S=0 吗？",
+          "hint": "比较同一N空间内的能量差。",
+          "choices": [
+            "一定会",
+            "当前模型中不会",
+            "只取决于网格点数"
+          ],
+          "answer": 1,
+          "explanation": "固定N的所有态获得相同平移，相对能量和本征态不变。"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-hund-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-hund",
+      "title": "手算 d² Hund 多重态的能量和维数",
+      "prompt": "取五个等能轨道、N=2、U=4 eV、J=0.6 eV，保留完整自旋翻转与成对跃迁。",
+      "steps": [
+        {
+          "prompt": "自旋三重态的能量 U−3J 为多少？",
+          "hint": "4−3×0.6。",
+          "choices": [
+            "3.4 eV",
+            "2.2 eV",
+            "4.6 eV"
+          ],
+          "answer": 1,
+          "explanation": "三重态能量为2.2 eV，J>0将其降到两类单态以下。"
+        },
+        {
+          "prompt": "三重态对应 C(5,2) 个反对称轨道对，合计多少态？",
+          "hint": "每个S=1多重态有2S+1=3个磁分量。",
+          "choices": [
+            "10",
+            "15",
+            "30"
+          ],
+          "answer": 2,
+          "explanation": "C(5,2)×3=10×3=30。"
+        },
+        {
+          "prompt": "14个单态位于U−J，全对称双占据单态位于U+4J，两能量是多少？",
+          "hint": "同一J分别乘−1与+4。",
+          "choices": [
+            "3.4 eV 与6.4 eV",
+            "2.2 eV 与4 eV",
+            "4 eV 与4.6 eV"
+          ],
+          "answer": 0,
+          "explanation": "这两个单态能量为3.4和6.4 eV；成对跃迁决定双占据组合的劈裂。"
+        },
+        {
+          "prompt": "30+14+1=45 应与哪一个独立计数一致？",
+          "hint": "从十个自旋轨道选两个。",
+          "choices": [
+            "5²=25",
+            "C(10,2)=45",
+            "10×2=20"
+          ],
+          "answer": 1,
+          "explanation": "完整固定N=2空间有45维，能级重数必须覆盖全部空间。"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-competition-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-competition",
+      "title": "从晶场占据推导自旋竞争的趋势",
+      "prompt": "比较八面体 d⁶ 的高自旋试探占据 t₂g⁴e_g² 与低自旋试探占据 t₂g⁶；Δ>0，轨道重心为零。",
+      "steps": [
+        {
+          "prompt": "高自旋试探态的晶场能是多少？",
+          "hint": "4×(−0.4Δ)+2×(0.6Δ)。",
+          "choices": [
+            "−2.4Δ",
+            "0.6Δ",
+            "−0.4Δ"
+          ],
+          "answer": 2,
+          "explanation": "晶场贡献为−1.6Δ+1.2Δ=−0.4Δ。"
+        },
+        {
+          "prompt": "低自旋试探态相对高自旋试探态获得多少晶场能？",
+          "hint": "6×(−0.4Δ)−(−0.4Δ)。",
+          "choices": [
+            "降低2Δ",
+            "升高2Δ",
+            "完全不变"
+          ],
+          "answer": 0,
+          "explanation": "能量差为−2Δ，因此较大晶场有利于低轨道的成对占据。"
+        },
+        {
+          "prompt": "计算得到S=2和S=0，对应S²分别是多少？",
+          "hint": "S²本征值是S(S+1)，单位ℏ²。",
+          "choices": [
+            "4和0",
+            "6和0",
+            "2和1"
+          ],
+          "answer": 1,
+          "explanation": "S=2给6，S=0给0；不能用S²数值直接当作S。"
+        },
+        {
+          "prompt": "能把两张试探占据图的交叉直接当成完整模型的精确临界Δ吗？",
+          "hint": "成对跃迁会混合构型，有限扫描也不是连续求根。",
+          "choices": [
+            "能，所有占据态都是本征态",
+            "能，只要U足够大",
+            "不能，应比较完整谱并在交叉附近加密"
+          ],
+          "answer": 2,
+          "explanation": "需要完整相互作用对角化；当前模型还不包含真实材料的配体、温度与结构自洽变化。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "multiplet-d6-competition",
+      "module": "multiplet",
+      "title": "理想 d⁶ 离子：从轨道分裂到高低自旋",
+      "summary": "保持电子数和相互作用不变，只改变晶场分裂，比较基态自旋、占据和最低激发间隔。",
+      "kind": "原创五轨道教学模型",
+      "assumption": "没有指定真实化合物或拟合参数；无SOC、磁场、配体杂化与温度。不从局域自旋切换推断真实材料相变温度。",
+      "preset": "multiplet-d6-high",
+      "links": [
+        [
+          "原有单电子晶场",
+          "#compute/crystal-field-lab?preset=octahedral-d"
+        ],
+        [
+          "角动量耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ]
+      ]
+    },
+    {
+      "id": "multiplet-nio-local",
+      "module": "multiplet",
+      "title": "NiO 背景：单电子图遗漏了什么",
+      "summary": "从已有NiO配位与轨道示意出发，检查固定d⁸空间中的交换、多电子占据和S=1背景。",
+      "kind": "材料背景 + 参数化局域模型",
+      "assumption": "本站采用统一J的Kanamori模型，不等于完整Slater多重态、配体电荷转移模型或实验NiO光谱；预设能量仅作教学。",
+      "preset": "multiplet-d8-nio",
+      "links": [
+        [
+          "NiO材料结构",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "单电子轨道课堂",
+          "#classroom/spin?module=orbitals"
+        ],
+        [
+          "磁群与共表示",
+          "#classroom/spin?track=magnetic"
+        ]
+      ]
+    },
+    {
+      "id": "multiplet-d2-audit",
+      "module": "multiplet",
+      "title": "d² 解析审计：用45维计数验证模型",
+      "summary": "用30+14+1的完整解析能级检验Hund交换、成对跃迁与简并计数，再通过U平移实验识别共同能量零点。",
+      "kind": "可手算的多电子基准",
+      "assumption": "零晶场、五个等能轨道、单个正Hund参数。给出的多重态属于Kanamori近似，不附加完整原子LS项符号。",
+      "preset": "multiplet-d2-hund",
+      "links": [
+        [
+          "点群与表示基础",
+          "#classroom/foundations"
+        ],
+        [
+          "SU(2)自旋耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "multiplet-kanamori",
+      "title": "TRIQS：Kanamori 密度、自旋翻转与成对跃迁",
+      "url": "https://triqs.github.io/triqs/latest/documentation/python_api/triqs.operators.util.hamiltonians.h_int_kanamori.html"
+    },
+    {
+      "id": "multiplet-libcommute",
+      "title": "libcommute：Kanamori Hamiltonian 与守恒子空间",
+      "url": "https://krivenko.github.io/libcommute/examples/kanamori.html"
+    },
+    {
+      "id": "multiplet-nio",
+      "title": "Quanty：NiO 多电子晶场基态与 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ]
+}

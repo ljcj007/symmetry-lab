@@ -1,0 +1,1365 @@
+{
+  "schema": "symmetry-lab-response-materials-1",
+  "release": "20261028-response1",
+  "modules": [
+    {
+      "id": "hall",
+      "title": "反常霍尔与横向热电",
+      "summary": "从曲率、占据和费米熵得到内禀片响应，联动化学势、温度、符号约定与网格诊断。",
+      "pathway": "observables",
+      "route": "hall-response-lab",
+      "action": "hall_response_lab",
+      "presets": [
+        {
+          "id": "hall-qwz-plateau",
+          "title": "QWZ · 零温霍尔平台",
+          "input": {
+            "mass": -1,
+            "energyScale": 1,
+            "temperature": 0,
+            "chemicalPotential": 0,
+            "mesh": 61,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-metal-entropy",
+          "title": "部分占据 · 横向热电",
+          "input": {
+            "mass": -1,
+            "energyScale": 0.4,
+            "temperature": 300,
+            "chemicalPotential": 0.55,
+            "mesh": 81,
+            "muMin": -1.4,
+            "muMax": 1.4,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-trivial",
+          "title": "平庸满下带 · 局部贡献抵消",
+          "input": {
+            "mass": 3,
+            "energyScale": 0.4,
+            "temperature": 0,
+            "chemicalPotential": 0,
+            "mesh": 61,
+            "muMin": -2.2,
+            "muMax": 2.2,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-closing",
+          "title": "解析闭隙 · 暂停带分辨响应",
+          "input": {
+            "mass": -2,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 0,
+            "mesh": 31,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-unresolved",
+          "title": "临界热点 · 粗网格反例",
+          "input": {
+            "mass": -1.99,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 0,
+            "mesh": 15,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-project-metal",
+          "title": "跨模块作业 · 同尺度金属点",
+          "input": {
+            "mass": -1,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 1.3,
+            "mesh": 121,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        }
+      ]
+    },
+    {
+      "id": "device",
+      "title": "器件量子输运",
+      "summary": "连接两根电极的一维器件：透射、电导、局域谱和通量连续性，比较势垒与SSH接触共振。",
+      "pathway": "crystal",
+      "route": "device-transport-lab",
+      "action": "device_transport_lab",
+      "presets": [
+        {
+          "id": "device-perfect",
+          "title": "完美量子线 · 一个透射通道",
+          "input": {
+            "model": "uniform",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "energy": 0.2,
+            "energyMin": -2.5,
+            "energyMax": 2.5,
+            "samples": 161,
+            "eta": 1e-07,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-barrier",
+          "title": "单点势垒 · 散射与反射",
+          "input": {
+            "model": "uniform",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 1.5,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "energy": 0.2,
+            "energyMin": -2.5,
+            "energyMax": 2.5,
+            "samples": 161,
+            "eta": 1e-07,
+            "spinDegeneracy": 2
+          }
+        },
+        {
+          "id": "device-ssh-weak",
+          "title": "SSH 端态 · 弱接触",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.15,
+            "contactRight": 0.15,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-07,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-ssh-strong",
+          "title": "同一 SSH 链 · 强接触",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.8,
+            "contactRight": 0.8,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-07,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-disconnected",
+          "title": "断开右电极 · 有局域态但无透射",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.15,
+            "contactRight": 0,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-07,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-resonance",
+          "title": "弱接触奇数链 · 共振透射",
+          "input": {
+            "model": "uniform",
+            "sites": 7,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 3,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.2,
+            "contactRight": 0.2,
+            "energy": 0,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-07,
+            "spinDegeneracy": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "multiplet",
+      "title": "多电子晶场与 Hund 多重态",
+      "summary": "在五轨道固定电子数模型中加入库仑排斥、完整 Hund 交换与成对跃迁，连接晶场、自旋和多电子占据。",
+      "pathway": "spin",
+      "route": "local-multiplet-lab",
+      "action": "local_multiplet_lab",
+      "presets": [
+        {
+          "id": "multiplet-d6-high",
+          "title": "d⁶ 弱晶场 · 高自旋",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 0.5,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "multiplet-d6-low",
+          "title": "d⁶ 强晶场 · 低自旋",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 6,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "multiplet-d2-hund",
+          "title": "d² 原子极限 · Hund 三重态",
+          "input": {
+            "electrons": 2,
+            "coordination": "octahedral",
+            "splitting": 0,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 4,
+            "scanPoints": 21
+          }
+        },
+        {
+          "id": "multiplet-d8-nio",
+          "title": "d⁸ 八面体 · NiO 配位背景",
+          "input": {
+            "electrons": 8,
+            "coordination": "octahedral",
+            "splitting": 1,
+            "coulombU": 4,
+            "hundJ": 0.6,
+            "selectedGroup": 0,
+            "scanMax": 5,
+            "scanPoints": 21
+          }
+        },
+        {
+          "id": "multiplet-j0",
+          "title": "d⁶ J=0 · 关闭 Hund 竞争",
+          "input": {
+            "electrons": 6,
+            "coordination": "octahedral",
+            "splitting": 1,
+            "coulombU": 4,
+            "hundJ": 0,
+            "selectedGroup": 0,
+            "scanMax": 6,
+            "scanPoints": 25
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "hall-occupation",
+      "module": "hall",
+      "title": "从 Berry 曲率到片霍尔响应",
+      "summary": "先固定电荷、坐标和联络约定，再把量子几何转成电流响应。",
+      "preset": "hall-qwz-plateau",
+      "references": [
+        "hall-w90",
+        "hall-qwz"
+      ],
+      "sections": [
+        {
+          "title": "明确哪个电流响应哪个场",
+          "text": "本站采用电子电荷−e（e>0）、联络A=i〈u|∂u〉和kx到ky的取向。σxy表示y向电场产生的x向电流。保持这些定义时，填满C=+1的下带得到负的σxy；这不与把σyx叫作霍尔电导的约定矛盾。",
+          "formula": "jx=σxy Ey−αxy∂yT；σyx=−σxy"
+        },
+        {
+          "title": "两条带都要计入占据",
+          "text": "QWZ的两条带能量为±s|d|，曲率正好相反。化学势进入上带后，新占据的上带会部分抵消下带的曲率贡献。两条带全空或全满时，该完整两带空间的净曲率响应为零。",
+          "formula": "σxy=−(e²/ℏ)Σn∫BZ d²k/(2π)² Ωn fn"
+        },
+        {
+          "title": "零温绝缘体与金属的区别",
+          "text": "零温且化学势在直接能隙内时，下带满、上带空，积分只剩下带Chern数。进入能带或升高温度后，占据不再是完整孤立带，响应一般不再量子化。二维片响应不需要人为指定真空层厚度。",
+          "formula": "C=(1/2π)∫BZ Ω−d²k；σxy=−C e²/h"
+        },
+        {
+          "title": "对称性决定哪些贡献可以抵消",
+          "text": "时间反演对称使对应的曲率与占据贡献成对抵消，从而禁止内禀电荷反常霍尔响应。破坏时间反演只说明可能非零，并不保证每种磁群都允许任意张量分量；晶体的其余对称也须检查。",
+          "formula": "Ωxy(−k)=−Ωxy(k)，f(−k)=f(k) ⇒ σxy=0"
+        }
+      ]
+    },
+    {
+      "id": "hall-entropy",
+      "module": "hall",
+      "title": "费米熵与横向热电",
+      "summary": "同一张曲率图，用占据和熵作不同权重，会产生不同的响应曲线。",
+      "preset": "hall-metal-entropy",
+      "references": [
+        "hall-xiao"
+      ],
+      "sections": [
+        {
+          "title": "温度梯度对应输运热电系数",
+          "text": "局部平衡中存在的磁化环流不能直接算作流过样品的输运电流。扣除它后，内禀横向热电系数可以写成曲率乘费米熵的布里渊区积分。",
+          "formula": "αxy=(e kB/ℏ)Σn∫BZ d²k/(2π)² Ωn sn"
+        },
+        {
+          "title": "满态与空态都没有费米熵",
+          "text": "s(f)在f=0和f=1时为零，在f=1/2时最大。化学势附近约几个kBT范围的态对热电响应最敏感。图中的熵加权曲率并非电子密度，也不能与占据加权曲率使用同一数值含义。",
+          "formula": "s(f)=−f ln f−(1−f)ln(1−f)；s(1/2)=ln2"
+        },
+        {
+          "title": "为什么霍尔平台中间的α可以为零",
+          "text": "本模型的两条带关于零能对称，曲率相反。在μ=0时，两条带的熵权重相同，αxy逐点抵消；但占据差仍可非零，σxy可以很大。改变μ正负，σxy保持偶对称而αxy变号。",
+          "formula": "σxy(μ)=σxy(−μ)，αxy(μ)=−αxy(−μ)"
+        },
+        {
+          "title": "与低温能量导数的连接",
+          "text": "在连续谱已收敛、零温霍尔曲线在热窗口内足够光滑时，热电响应可用Mott展开联系到其能量导数。对粗网格的阶梯占据直接做差分会制造尖峰；本实验使用熵核直接积分，并独立比较更密网格。此处若使用 SI 制的 kB，能量导数中的 ε 须以焦耳计；界面中的 eV 输入须先换算。",
+          "formula": "本页约定下：αxy≈−[π²kB²T/(3e)] ∂σxy⁰/∂ε |μ"
+        }
+      ]
+    },
+    {
+      "id": "hall-diagnostics",
+      "module": "hall",
+      "title": "从响应系数到可信的实验解释",
+      "summary": "区分局部曲率、积分系数和开路信号，并把收敛检查写进研究结论。",
+      "preset": "hall-unresolved",
+      "references": [
+        "hall-w90",
+        "hall-fe",
+        "hall-xiao"
+      ],
+      "sections": [
+        {
+          "title": "αxy不是开路Nernst电压",
+          "text": "实验若要求总电流为零，需要电场抵消温度梯度产生的电流。此时响应是完整电导张量逆矩阵乘完整热电张量。只知道内禀横向分量，无法自动补齐纵向散射响应，也不应拼接不同模型的张量。",
+          "formula": "j=σE−α∇T；j=0 ⇒ E=(σ⁻¹α)∇T"
+        },
+        {
+          "title": "网格整数与曲率积分收敛是两回事",
+          "text": "已有FHS课堂强调离散Chern整数，而本页直接对曲率做求积。每次运行比较N×N与2N×2N，并用解析下带Chern检验曲率积分。μ扫描中每个点另有数值稳定标记；选定点通过不代表所有扫描点通过。",
+          "formula": "IΩ(N)=2π〈Ω−〉N；检查IΩ与解析C及响应加密差"
+        },
+        {
+          "title": "解析闭隙时停止本页带分辨公式",
+          "text": "在m=−2、0、2处，即使奇数网格漏掉退化动量，解析间隙仍为零。本实现停止报告依赖孤立带的响应。它并不宣称所有闭隙材料的物理霍尔效应都无定义，而是说明当前算法的适用边界。",
+          "formula": "Eg=2s min(|m+2|,|m|,|m−2|)"
+        },
+        {
+          "title": "从教学模型走向材料",
+          "text": "bcc Fe可作为磁性金属的材料背景，学习SOC避免交叉附近的曲率热点和积分收敛。这里的QWZ参数没有拟合Fe。完整Wannier响应还依赖位置/连接矩阵、轨道嵌入等约定，不能把单个hr文件自动当作全部Berry信息。",
+          "formula": "模型复现、来源数据、单位和收敛记录应同时保留"
+        }
+      ]
+    },
+    {
+      "id": "device-open",
+      "module": "device",
+      "title": "从封闭能级到接上电极的器件",
+      "summary": "把有限链、半无限引线和两端电导放在同一个模型里。",
+      "preset": "device-perfect",
+      "references": [
+        "device-kwant",
+        "device-kwant-paper"
+      ],
+      "sections": [
+        {
+          "title": "器件需要边界条件",
+          "text": "封闭有限链只有离散本征能级。输运问题还需要左、右电极作为粒子库；在本模型中，两根相同半无限均匀链连接有限散射区首尾站点。散射区可为均匀链或交替键的SSH链，Hamiltonian的非对角元均取−t。",
+          "formula": "HD=Σi εi|i><i|−Σi ti(|i><i+1|+h.c.)"
+        },
+        {
+          "title": "电极只在带内提供传播通道",
+          "text": "均匀引线的能带范围为ε₀±2t₀。其迟致表面Green函数必须选择虚部非正、远离能带时趋向1/E的解。接触自能把开放边界写进有限矩阵；接触跃迁v不是一个独立的弛豫时间。",
+          "formula": "gʳ=[E+i0−ε₀−t₀²gʳ]⁻¹；Σ=v²gʳ，Γ=−2 ImΣ"
+        },
+        {
+          "title": "透射概率与电导的区别",
+          "text": "每个自旋的电极至多有一个传播通道，透射T在0到1之间。零温线性电导为gs(e²/h)T(EF)。gs=2只是两份相同且独立的自旋通道，不能用它代替真正的自旋轨道耦合；页面中的能量滑块指定EF。",
+          "formula": "G=gs(e²/h)T(EF)；e²/h≈38.7405 μS"
+        },
+        {
+          "title": "理想链是第一项基准",
+          "text": "散射区跃迁、在位能和接触都与电极匹配时，带内没有物理反射，η→0时T=1。数值正虚部会造成微小人工吸收，程序同时显示它及守恒残差。恰在带边的群速度为零，本实验不把该点当作开放传播通道。",
+          "formula": "匹配均匀链：|E−ε₀|<2t₀ ⇒ T→1"
+        }
+      ]
+    },
+    {
+      "id": "device-scattering",
+      "module": "device",
+      "title": "势垒、共振与局域谱",
+      "summary": "比较看起来都有谱峰、却可能有不同传输能力的器件。",
+      "preset": "device-barrier",
+      "references": [
+        "device-kwant",
+        "device-kwant-paper"
+      ],
+      "sections": [
+        {
+          "title": "一个站点也能反射电子",
+          "text": "在匹配均匀链中加入一个在位势V，有限的反射来自散射振幅干涉。对t=1、其他在位能为0的单点势垒，可用解析透射直接核验程序；移动势垒位置不改变无限均匀背景上的单散射体透射概率。",
+          "formula": "T(E)=(4t²−E²)/(4t²−E²+V²)，|E|<2t"
+        },
+        {
+          "title": "弱接触把离散能级变成共振",
+          "text": "弱接触有限链的透射峰通常位于被电极移动和展宽的能级附近。对称接触可在共振处给出很高的透射，但离开共振后T很低。增加接触既改变宽度也改变能级与干涉，不能仅凭接触更强推断固定能量的T必定增加。",
+          "formula": "T=ΓLΓR|GʳN1|²；Gʳ=[(E+iη)I−HD−ΣL−ΣR]⁻¹"
+        },
+        {
+          "title": "局域态密度不是通过概率",
+          "text": "LDOS描述所选能量在每个站点的局域谱权重；左、右注入密度进一步说明哪些谱权重可被各自电极激发。把一侧接触设为0时，LDOS仍可出现峰，而两端透射严格为0。图中的LDOS按每个自旋、每eV给出，不是电子占据数。",
+          "formula": "ρi=−ImGʳii/π；νL,i=ΓL|Gʳi1|²/(2π)"
+        },
+        {
+          "title": "扫描需要解析窄峰",
+          "text": "单条能量扫描的离散点不能证明所有共振都已采到。应同时缩小扫描窗口、增加采样点，并改变η；不要通过人为增加η把漂亮平滑曲线误当作已收敛结果。",
+          "formula": "ΔE=(Emax−Emin)/(Nsamples−1)"
+        }
+      ]
+    },
+    {
+      "id": "device-ssh",
+      "module": "device",
+      "title": "SSH 端态、接触与通量连续性",
+      "summary": "把已有Zak相位和有限链谱连接到真正开放的两端器件。",
+      "preset": "device-ssh-weak",
+      "references": [
+        "device-kwant",
+        "device-local"
+      ],
+      "sections": [
+        {
+          "title": "保持同一个胞内胞间约定",
+          "text": "这里第0条键连接站点0和1，定义为胞内键t₁=t×dimerRatio，下一条为胞间键t₂=t。偶数站点、弱胞内键的有限链可有低能端态；有限长度使两端波函数重叠，能量一般不精确为0。整体跃迁负号不改变SSH能带的Zak相位模2π，但比较时仍须保持轨道与晶胞约定。",
+          "formula": "t₁=t×dimerRatio；t₂=t；N=12的封闭链可与同参数周期模型比较"
+        },
+        {
+          "title": "端态存在不保证高电导",
+          "text": "同一N=12、t₁=.6、t₂=1的链，在E=.05 eV处，接触从.15改为.8 eV会改变共振宽度和耦合；需要计算T而不是只观察端点LDOS。本课程用预设让模型和能量保持不变，仅改变接触。",
+          "formula": "几何/拓扑诊断 → 封闭链能级 → 电极自能 → T(E)"
+        },
+        {
+          "title": "每条键上的流必须核对",
+          "text": "取左电极单位入射通量，ψ=√ΓLGʳe₁，正向键通量定义为从站点i流向i+1。没有真实散射或吸收时，各键通量相同；数值η引入的损失在每个站点都可精确计算。该无量纲通量不是有限偏压的安培电流。",
+          "formula": "Ji→i+1=−2Im(Hi,i+1 ψi+1ψi*)；Jin−Jout=2η|ψi|²"
+        },
+        {
+          "title": "把计算证据带回研究记录",
+          "text": "保存两种接触下的T(E)、选定能量、LDOS、η比较和连续性残差，再写出是否支持结论。Zak相位不能仅由两端透射峰反推出；真实材料仍需完整轨道、电极、散射与结构参数。",
+          "formula": "T+R+Aη=1；Aη=2ηΣi|ψi|²"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-fock",
+      "module": "multiplet",
+      "title": "从十个单电子态到固定 N 的 Fock 空间",
+      "summary": "多电子维数由费米占据决定，不能把单电子能级数当作多电子态数。",
+      "preset": "multiplet-d6-high",
+      "references": [
+        "multiplet-libcommute",
+        "multiplet-kanamori"
+      ],
+      "sections": [
+        {
+          "title": "每个自旋轨道只能占据一次",
+          "text": "沿用 xy、yz、xz、x²−y²、3z²−r² 五个实 d 轨道，每个有上下自旋。固定 N 时，从十个自旋轨道选 N 个组成反对称 Slater 行列式。程序的位串记录这些占据，交换产生的符号来自费米反对易关系。N=6 时有210个行列式，并非10个单电子能级乘6。",
+          "formula": "dim H_N=C(10,N)；{c_i,c†_j}=δ_ij"
+        },
+        {
+          "title": "先保留守恒量，再求能级",
+          "text": "本模型没有 SOC、磁场或自旋相关晶场，总电子数与 Sz 守恒，可按 N↑、N↓ 分块。完整 Hund 自旋翻转项保留总自旋 SU(2)。先在每块对角化 H，再在同能子空间对角化 S²，才能避免偶然简并中的任意数值混合。",
+          "formula": "[H,N]=[H,Sz]=[H,S²]=0；S²|S,M>=S(S+1)|S,M>"
+        },
+        {
+          "title": "正确读多电子能级和占据",
+          "text": "能级表将相同能量、相同 S 的态合为一组，简并度包含2S+1个磁分量以及可能的轨道重数。每个轨道占据介于0与2，五项之和为N。在联合简并子空间上取迹平均，结果不依赖求解器选择了哪组本征矢。这里不提供完整原子 LS 项符号。",
+          "formula": "n̄_m=Tr(P_group n_m)/dim(P_group)；Σ_m n̄_m=N"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-hund",
+      "module": "multiplet",
+      "title": "Hund 交换为什么需要自旋翻转与成对跃迁",
+      "summary": "从两电子解析极限核验相互作用，而不只用“尽量平行”记忆规则。",
+      "preset": "multiplet-d2-hund",
+      "references": [
+        "multiplet-kanamori",
+        "multiplet-libcommute"
+      ],
+      "sections": [
+        {
+          "title": "三种密度排斥与两个交换过程",
+          "text": "同轨道的异自旋电子付出U，不同轨道的异自旋密度项为U−2J，同自旋为U−3J。除此以外，−J S⁺_mS⁻_n 将不同轨道的自旋互换，+J P†_mP_n 将一对电子移到另一轨道。保留这两项后，不能把所有本征态当作某一张固定占据图。",
+          "formula": "U′=U−2J；H_flip=−JΣ_(m≠n)S⁺_mS⁻_n；H_pair=JΣ_(m≠n)P†_mP_n"
+        },
+        {
+          "title": "零晶场的 d² 可以手算",
+          "text": "五个等能轨道中，两个电子的自旋三重态对应反对称轨道对，能量U−3J，维数3×C(5,2)=30。其余15个自旋单态中，14个位于U−J，一个全对称双占据组合位于U+4J。J>0时三重态最低；程序用这一完整解析谱检验符号和重数。",
+          "formula": "d²：30×(U−3J,S=1)；14×(U−J,S=0)；1×(U+4J,S=0)"
+        },
+        {
+          "title": "固定 N 时，改变 U 为什么不改变自旋",
+          "text": "把三种密度项的U系数相加，恰好是所有已占据自旋轨道对的数目N(N−1)/2。因此增大U会平移整个固定N谱，不能在这个孤立模型中单独驱动高低自旋变化。J和晶场分裂改变相对能量；真实材料中的电荷涨落、配体和带宽属于更大的模型。",
+          "formula": "∂H/∂U=N(N−1)I/2；Δ(E_a−E_b)=0"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-competition",
+      "module": "multiplet",
+      "title": "晶场与 Hund 竞争：从 d⁶ 自旋切换到 NiO 的边界",
+      "summary": "比较弱场与强场的多电子基态，理解占据混合、交叉和模型适用范围。",
+      "preset": "multiplet-d6-low",
+      "references": [
+        "multiplet-nio",
+        "multiplet-kanamori"
+      ],
+      "sections": [
+        {
+          "title": "d⁶ 的两种极限",
+          "text": "八面体晶场中三个 t₂g 轨道低、两个 e_g 高。弱场下 Hund 交换有利于较大自旋，预设 Δ=0.5 eV、J=0.6 eV 的基态为S=2。强场预设 Δ=6 eV 在同样N、U、J下得到S=0；成对跃迁让占据略偏离完全封闭的t₂g⁶，所以应读计算的期望值。",
+          "formula": "ε(t₂g)=−2Δ/5；ε(e_g)=3Δ/5；S=2→S²=6，S=0→S²=0"
+        },
+        {
+          "title": "试探占据图能解释趋势，但不是精确临界点",
+          "text": "高自旋d⁶试探行列式具有t₂g⁴e_g²，晶场能为−0.4Δ；低自旋t₂g⁶试探态的晶场能为−2.4Δ。后者获得2Δ的晶场能优势，同时损失Hund交换优势。完整成对跃迁会混合双占据构型，需对角化后比较基态；扫描折线的相邻点也不能充当已求出的精确交叉。",
+          "formula": "E_CF(t₂g⁶)−E_CF(t₂g⁴e_g²)=−2Δ；交叉由完整多电子谱决定"
+        },
+        {
+          "title": "NiO 背景提供问题，不提供自动拟合参数",
+          "text": "NiO的局域Ni²⁺通常以d⁸配位背景讨论，多电子晶场需要库仑交换而不仅是单电子分裂图。这里使用统一J的Kanamori简化和原创参数；完整d壳层Slater相互作用有独立角向结构，配体杂化和电荷转移还会增加空间。本站不把当前能级解释为已拟合的NiO激发谱。",
+          "formula": "Kanamori(U,J) ≠ 完整 Slater(F⁰,F²,F⁴) ≠ 含配体的电荷转移模型"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hall-plateau-steps",
+      "module": "hall",
+      "lesson": "hall-occupation",
+      "title": "从曲率积分推到霍尔平台",
+      "prompt": "固定电子电荷−e、A=i〈u|∂u〉、xy取向；下带C=+1，上带C=−1。",
+      "steps": [
+        {
+          "prompt": "零温、μ在能隙内，两条带的占据是什么？",
+          "hint": "下带所有能量低于μ。",
+          "choices": [
+            "下带全满，上带全空",
+            "两带都半满",
+            "两带都全满"
+          ],
+          "answer": 0,
+          "explanation": "孤立下带完整占据是使用单带Chern给出量子化平台的前提。"
+        },
+        {
+          "prompt": "在本页定义jx=σxyEy下，σxy是多少？",
+          "hint": "公式前有电子电荷带来的负号。",
+          "choices": [
+            "+e²/h",
+            "−e²/h",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "σxy=−C e²/h；同一系统的σyx=+e²/h。"
+        },
+        {
+          "prompt": "把μ提高到两条带之上，会得到什么？",
+          "hint": "完整两带空间的曲率和逐点为零。",
+          "choices": [
+            "仍为−e²/h",
+            "变成−2e²/h",
+            "两条满带贡献抵消"
+          ],
+          "answer": 2,
+          "explanation": "上、下带曲率相反且占据相同，净内禀霍尔项为零。"
+        },
+        {
+          "prompt": "本模型输出的二维σxy单位是什么？",
+          "hint": "没有指定材料厚度。",
+          "choices": [
+            "S（片电导）",
+            "S/m，使用任意真空层厚度",
+            "eV"
+          ],
+          "answer": 0,
+          "explanation": "二维电流按每宽度计，片电导单位是S；三维转换需要物理厚度。"
+        }
+      ]
+    },
+    {
+      "id": "hall-entropy-steps",
+      "module": "hall",
+      "lesson": "hall-entropy",
+      "title": "用熵权重判断横向热电",
+      "prompt": "用QWZ的±E两带与相反曲率，推断μ和温度的作用。",
+      "steps": [
+        {
+          "prompt": "哪种占据的无量纲费米熵最大？",
+          "hint": "比较完全确定与最不确定的二元占据。",
+          "choices": [
+            "f=0",
+            "f=1/2",
+            "f=1"
+          ],
+          "answer": 1,
+          "explanation": "s(1/2)=ln2；满态与空态的熵均为0。"
+        },
+        {
+          "prompt": "μ=0时两条对称能带的熵相等，αxy怎样？",
+          "hint": "两条带的曲率相反。",
+          "choices": [
+            "等于Chern数",
+            "总等于σxy",
+            "逐点抵消为0"
+          ],
+          "answer": 2,
+          "explanation": "熵核相等而曲率相反，不能根据σxy非零就断定αxy非零。"
+        },
+        {
+          "prompt": "仅将μ从正值变成相反负值，本模型有何关系？",
+          "hint": "粒子空穴对称互换两条带的热窗口。",
+          "choices": [
+            "σxy不变，αxy变号",
+            "σxy与αxy都不变",
+            "σxy变号，αxy不变"
+          ],
+          "answer": 0,
+          "explanation": "σ为μ的偶函数，α为μ的奇函数，可作为计算校验。"
+        },
+        {
+          "prompt": "T=0时，热电系数应如何处理？",
+          "hint": "严格零温不再存在有限宽度的熵窗口。",
+          "choices": [
+            "由阶梯σ曲线粗差分给任意值",
+            "取严格极限αxy=0",
+            "强制等于量子化霍尔电导"
+          ],
+          "answer": 1,
+          "explanation": "金属低温α通常随T趋零；本实现明确采用αxy(T=0)=0。"
+        }
+      ]
+    },
+    {
+      "id": "hall-validity-steps",
+      "module": "hall",
+      "lesson": "hall-diagnostics",
+      "title": "为横向响应写一份可核验结论",
+      "prompt": "一组粗网格曲率积分给出看似漂亮的数值，决定还缺少哪些信息。",
+      "steps": [
+        {
+          "prompt": "m=−2的奇数网格没有采到闭隙点，能宣称有隙平台吗？",
+          "hint": "解析间隙不依赖显示网格。",
+          "choices": [
+            "只要采样全有隙就能",
+            "只要结果近整数就能",
+            "不能；解析闭隙使本页主响应留空"
+          ],
+          "answer": 2,
+          "explanation": "算法先使用解析间隙，防止漏采退化点。"
+        },
+        {
+          "prompt": "选定μ的N与2N结果接近，能证明整个μ扫描已收敛吗？",
+          "hint": "热窗口随化学势移动。",
+          "choices": [
+            "不能，每个扫描点须分别检查",
+            "能，所有参数共享一次收敛",
+            "只要网格是奇数就能"
+          ],
+          "answer": 0,
+          "explanation": "页面对每个扫描点保留独立的稳定标记。"
+        },
+        {
+          "prompt": "仅给出αxy，能直接读作开路Nernst电压吗？",
+          "hint": "开路必须满足整个电流矢量为零。",
+          "choices": [
+            "能，两者单位相同",
+            "不能，还需同一体系的完整σ与α张量",
+            "只需乘任意τ"
+          ],
+          "answer": 1,
+          "explanation": "开路热电张量为S=σ⁻¹α；αxy的单位A/K也不同于电压热电系数。"
+        },
+        {
+          "prompt": "把QWZ参数命名为Fe，是否等于算出了真实铁的响应？",
+          "hint": "模型参数与材料矩阵元的来源不同。",
+          "choices": [
+            "是，名称决定材料",
+            "是，只要曲线形状类似",
+            "否，需独立材料数据、约定和收敛验证"
+          ],
+          "answer": 2,
+          "explanation": "bcc Fe在这里提供物理背景；当前计算仍是明确的两带教学模型。"
+        }
+      ]
+    },
+    {
+      "id": "device-landauer-steps",
+      "module": "device",
+      "lesson": "device-open",
+      "title": "从一个传播通道到两端电导",
+      "prompt": "考虑t₀=t=1 eV、ε₀=0、接触完全匹配的均匀链，先取η→0。",
+      "steps": [
+        {
+          "prompt": "电极在什么能量区间有传播态？",
+          "hint": "由E=ε₀−2t₀cos k判断。",
+          "choices": [
+            "−2<E<2 eV",
+            "任意能量都开放",
+            "只有E=0"
+          ],
+          "answer": 0,
+          "explanation": "余弦范围为−1到1；带边群速度为零，不能当作通常的开放通道点。"
+        },
+        {
+          "prompt": "E=.2 eV、无势垒时，理想透射是多少？",
+          "hint": "散射区是无限均匀链的一段。",
+          "choices": [
+            "取决于站点数，必为1/N",
+            "T=1",
+            "T=0"
+          ],
+          "answer": 1,
+          "explanation": "完全匹配的链没有反射；η→0时每个自旋的一个通道完全透射。"
+        },
+        {
+          "prompt": "若只有一个自旋副本，此时电导是多少？",
+          "hint": "不要把常用2e²/h无条件套用。",
+          "choices": [
+            "2e²/h",
+            "e²/h",
+            "h/e²"
+          ],
+          "answer": 1,
+          "explanation": "gs=1，G=(e²/h)T=e²/h；它是电导，不是电阻。"
+        },
+        {
+          "prompt": "改成两个独立相同自旋副本，何者变化？",
+          "hint": "Hamiltonian和每自旋散射过程保持相同。",
+          "choices": [
+            "每自旋T变成2",
+            "每自旋LDOS变为0",
+            "总电导加倍，每自旋T不变"
+          ],
+          "answer": 2,
+          "explanation": "gs=2只把相同独立通道的电导相加；不引入SOC或自旋翻转。"
+        }
+      ]
+    },
+    {
+      "id": "device-barrier-steps",
+      "module": "device",
+      "lesson": "device-scattering",
+      "title": "手算单点势垒与断开电极",
+      "prompt": "取t=1 eV、所选E=0，在匹配量子线中加入一个V=2 eV的在位势。",
+      "steps": [
+        {
+          "prompt": "由解析公式得到T是多少？",
+          "hint": "代入(4t²−E²)/(4t²−E²+V²)。",
+          "choices": [
+            "1/2",
+            "1/4",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "分子为4，分母为4+4=8，因此T=1/2。"
+        },
+        {
+          "prompt": "η→0时反射R是多少？",
+          "hint": "单通道弹性散射满足T+R=1。",
+          "choices": [
+            "0",
+            "1/2",
+            "2"
+          ],
+          "answer": 1,
+          "explanation": "R=1−T=1/2；概率相加不能超过1。"
+        },
+        {
+          "prompt": "把右接触设为0，但仍保留有限链，哪项必须为0？",
+          "hint": "T含ΓLΓR，而LDOS仍来自有限链谱。",
+          "choices": [
+            "所有站点LDOS",
+            "所有有限链能级",
+            "两端透射T"
+          ],
+          "answer": 2,
+          "explanation": "右接触为零意味着ΓR=0，T=0；有局域谱权重并不意味着跨器件传输。"
+        },
+        {
+          "prompt": "两条扫描曲线看似没有窄峰，怎样检查最可靠？",
+          "hint": "区分能量分辨率与人为展宽。",
+          "choices": [
+            "只增加η使图更平滑",
+            "缩小扫描窗、加密采样并减小η比较",
+            "仅修改曲线颜色"
+          ],
+          "answer": 1,
+          "explanation": "加密能量采样与η收敛必须分别检查，粗网格可能漏采弱接触共振。"
+        }
+      ]
+    },
+    {
+      "id": "device-continuity-steps",
+      "module": "device",
+      "lesson": "device-ssh",
+      "title": "从端态到可检查的器件结论",
+      "prompt": "对同一SSH有限链，只改变接触强度，并使用有限正数η计算。",
+      "steps": [
+        {
+          "prompt": "端点LDOS很大，能否直接宣布两端电导很大？",
+          "hint": "一侧接触断开的反例仍可能有局域谱峰。",
+          "choices": [
+            "能，LDOS就是电导",
+            "不能，还取决于两侧耦合及传播",
+            "能，只要端点数为2"
+          ],
+          "answer": 1,
+          "explanation": "LDOS是局域谱量，T是连接左右电极的散射量。"
+        },
+        {
+          "prompt": "若T=.7、R=.29、Aη=.01，守恒是否通过？",
+          "hint": "人工损失不能从守恒式中省略。",
+          "choices": [
+            "通过，因为三者之和为1",
+            "失败，因为T+R≠1",
+            "无法检查"
+          ],
+          "answer": 0,
+          "explanation": "有限η会造成已报告的人工吸收；应核验T+R+Aη=1并再向η→0收敛。"
+        },
+        {
+          "prompt": "内部站点i的正确连续性检查是什么？",
+          "hint": "损失为正，入流大于出流。",
+          "choices": [
+            "Jin+Jout=0",
+            "Jout−Jin=2η|ψi|²",
+            "Jin−Jout=2η|ψi|²"
+          ],
+          "answer": 2,
+          "explanation": "迟致解析正虚部引入负的概率源；以正向通量定义，入流减出流等于损失。"
+        },
+        {
+          "prompt": "比较弱强接触后，应保存哪些信息支撑结论？",
+          "hint": "仅截一张峰形图不能复现计算。",
+          "choices": [
+            "只保存图片",
+            "只写SSH三个字",
+            "模型、终止方式、接触、能量、η与采样，以及T/LDOS和残差"
+          ],
+          "answer": 2,
+          "explanation": "要区分材料模型、边界条件与数值设置，并连接已有Zak/有限链证据，不能从一个透射峰独自确定拓扑。"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-fock-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-fock",
+      "title": "数清 d⁶ 的空间并判断 U 的作用",
+      "prompt": "五个 d 轨道，各含两种自旋。固定六个电子，不含 SOC；比较 U 与 U+0.2 eV。",
+      "steps": [
+        {
+          "prompt": "单电子自旋轨道有多少个？",
+          "hint": "轨道数乘每个轨道的自旋态数。",
+          "choices": [
+            "5",
+            "10",
+            "60"
+          ],
+          "answer": 1,
+          "explanation": "5×2=10，费米占据在这十个自旋轨道中选择。"
+        },
+        {
+          "prompt": "固定 N=6 的多电子空间维数是多少？",
+          "hint": "同一自旋轨道不能重复占据；不区分电子编号。",
+          "choices": [
+            "10×6=60",
+            "10⁶",
+            "C(10,6)=210"
+          ],
+          "answer": 2,
+          "explanation": "不同占据集合对应独立Slater行列式，共210个。"
+        },
+        {
+          "prompt": "U 增加0.2 eV，所有 d⁶ 能级共同增加多少？",
+          "hint": "六个电子有6×5/2对。",
+          "choices": [
+            "3 eV",
+            "0.2 eV",
+            "1.2 eV"
+          ],
+          "answer": 0,
+          "explanation": "ΔE=0.2×15=3 eV；这是共同平移。"
+        },
+        {
+          "prompt": "这次只改变 U，能由此让基态从 S=2 变成 S=0 吗？",
+          "hint": "比较同一N空间内的能量差。",
+          "choices": [
+            "一定会",
+            "当前模型中不会",
+            "只取决于网格点数"
+          ],
+          "answer": 1,
+          "explanation": "固定N的所有态获得相同平移，相对能量和本征态不变。"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-hund-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-hund",
+      "title": "手算 d² Hund 多重态的能量和维数",
+      "prompt": "取五个等能轨道、N=2、U=4 eV、J=0.6 eV，保留完整自旋翻转与成对跃迁。",
+      "steps": [
+        {
+          "prompt": "自旋三重态的能量 U−3J 为多少？",
+          "hint": "4−3×0.6。",
+          "choices": [
+            "3.4 eV",
+            "2.2 eV",
+            "4.6 eV"
+          ],
+          "answer": 1,
+          "explanation": "三重态能量为2.2 eV，J>0将其降到两类单态以下。"
+        },
+        {
+          "prompt": "三重态对应 C(5,2) 个反对称轨道对，合计多少态？",
+          "hint": "每个S=1多重态有2S+1=3个磁分量。",
+          "choices": [
+            "10",
+            "15",
+            "30"
+          ],
+          "answer": 2,
+          "explanation": "C(5,2)×3=10×3=30。"
+        },
+        {
+          "prompt": "14个单态位于U−J，全对称双占据单态位于U+4J，两能量是多少？",
+          "hint": "同一J分别乘−1与+4。",
+          "choices": [
+            "3.4 eV 与6.4 eV",
+            "2.2 eV 与4 eV",
+            "4 eV 与4.6 eV"
+          ],
+          "answer": 0,
+          "explanation": "这两个单态能量为3.4和6.4 eV；成对跃迁决定双占据组合的劈裂。"
+        },
+        {
+          "prompt": "30+14+1=45 应与哪一个独立计数一致？",
+          "hint": "从十个自旋轨道选两个。",
+          "choices": [
+            "5²=25",
+            "C(10,2)=45",
+            "10×2=20"
+          ],
+          "answer": 1,
+          "explanation": "完整固定N=2空间有45维，能级重数必须覆盖全部空间。"
+        }
+      ]
+    },
+    {
+      "id": "multiplet-competition-steps",
+      "module": "multiplet",
+      "lesson": "multiplet-competition",
+      "title": "从晶场占据推导自旋竞争的趋势",
+      "prompt": "比较八面体 d⁶ 的高自旋试探占据 t₂g⁴e_g² 与低自旋试探占据 t₂g⁶；Δ>0，轨道重心为零。",
+      "steps": [
+        {
+          "prompt": "高自旋试探态的晶场能是多少？",
+          "hint": "4×(−0.4Δ)+2×(0.6Δ)。",
+          "choices": [
+            "−2.4Δ",
+            "0.6Δ",
+            "−0.4Δ"
+          ],
+          "answer": 2,
+          "explanation": "晶场贡献为−1.6Δ+1.2Δ=−0.4Δ。"
+        },
+        {
+          "prompt": "低自旋试探态相对高自旋试探态获得多少晶场能？",
+          "hint": "6×(−0.4Δ)−(−0.4Δ)。",
+          "choices": [
+            "降低2Δ",
+            "升高2Δ",
+            "完全不变"
+          ],
+          "answer": 0,
+          "explanation": "能量差为−2Δ，因此较大晶场有利于低轨道的成对占据。"
+        },
+        {
+          "prompt": "计算得到S=2和S=0，对应S²分别是多少？",
+          "hint": "S²本征值是S(S+1)，单位ℏ²。",
+          "choices": [
+            "4和0",
+            "6和0",
+            "2和1"
+          ],
+          "answer": 1,
+          "explanation": "S=2给6，S=0给0；不能用S²数值直接当作S。"
+        },
+        {
+          "prompt": "能把两张试探占据图的交叉直接当成完整模型的精确临界Δ吗？",
+          "hint": "成对跃迁会混合构型，有限扫描也不是连续求根。",
+          "choices": [
+            "能，所有占据态都是本征态",
+            "能，只要U足够大",
+            "不能，应比较完整谱并在交叉附近加密"
+          ],
+          "answer": 2,
+          "explanation": "需要完整相互作用对角化；当前模型还不包含真实材料的配体、温度与结构自洽变化。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "hall-qwz-route",
+      "module": "hall",
+      "title": "QWZ：从量子几何走到霍尔平台",
+      "summary": "在同一符号约定下比较下带Chern、满带曲率积分和零温片霍尔响应。",
+      "kind": "可解析二维教学模型",
+      "assumption": "单个两带QWZ模型，不含自旋简并倍数；不把其边界谱直接当作已连接电极的器件电导。",
+      "preset": "hall-qwz-plateau",
+      "links": [
+        [
+          "量子几何与Chern",
+          "#compute/quantum-geometry-lab?preset=geometry-qwz-chern"
+        ],
+        [
+          "已有薄膜与表面谱",
+          "#magnetictb"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "hall-fe-background",
+      "module": "hall",
+      "title": "bcc Fe背景：SOC曲率热点与横向响应",
+      "summary": "以公开的bcc Fe教程说明为什么磁性金属的反常霍尔响应需要完整布里渊区积分，再用QWZ部分占据演示积分机制。",
+      "kind": "真实材料方法背景 + QWZ演示",
+      "assumption": "页面未导入或拟合Fe的Wannier矩阵元；所有可交互数值均来自QWZ，不能标为铁的预测或实验数据。",
+      "preset": "hall-metal-entropy",
+      "references": [
+        "hall-fe"
+      ],
+      "links": [
+        [
+          "磁群与共表示",
+          "#classroom/spin?track=magnetic"
+        ],
+        [
+          "纵向电子输运",
+          "#compute/electron-transport-lab"
+        ],
+        [
+          "公开Fe教程",
+          "https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_18/"
+        ]
+      ]
+    },
+    {
+      "id": "hall-critical-mesh",
+      "module": "hall",
+      "title": "临界热点：看似稳定的数字与真实适用范围",
+      "summary": "比较临界附近粗网格、加密网格和解析闭隙，给报告写出收敛范围。",
+      "kind": "数值诊断案例",
+      "assumption": "有限网格比较只是诊断；闭隙时当前带分辨算法停止，不能据此判断所有闭隙材料都没有物理横向响应。",
+      "preset": "hall-unresolved",
+      "links": [
+        [
+          "量子几何闭隙反例",
+          "#compute/quantum-geometry-lab?preset=geometry-qwz-closing"
+        ],
+        [
+          "物性张量",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "device-perfect-wire",
+      "module": "device",
+      "title": "理想量子线：从能带通道到电导量子",
+      "summary": "用完全匹配的有限链检验T≈1，再加入一个势垒，与解析散射公式核对。",
+      "kind": "原创单轨道教学器件",
+      "assumption": "一维非相互作用链、相同电极与零温线性响应；不拟合特定金属或纳米线。",
+      "preset": "device-perfect",
+      "links": [
+        [
+          "周期紧束缚与有限体系",
+          "#magnetictb"
+        ],
+        [
+          "半经典电子输运",
+          "#compute/electron-transport-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "device-ssh-contact",
+      "module": "device",
+      "title": "同一SSH链：Zak、端态和接触透射",
+      "summary": "沿用t₁=.6、t₂=1的约定，从周期模型走到N=12有限链，再比较弱强电极接触。",
+      "kind": "跨模块教学模型",
+      "assumption": "有限长度会劈裂端态；两端透射取决于接触和能量。没有计算真实聚乙炔器件，也不由单峰唯一判定拓扑。",
+      "preset": "device-ssh-weak",
+      "links": [
+        [
+          "SSH量子几何",
+          "#compute/quantum-geometry-lab?preset=geometry-ssh-topological"
+        ],
+        [
+          "二聚化与能带展开",
+          "#compute/unfold-lab"
+        ],
+        [
+          "器件跨模块项目",
+          "#atlas/projects?project=ssh-device"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "device-contact-resonance",
+      "module": "device",
+      "title": "弱接触共振：谱峰与透射峰的联系",
+      "summary": "比较奇数均匀链的低能共振和断开右电极的反例，检查能量采样与数值展宽。",
+      "kind": "数值方法与器件边界案例",
+      "assumption": "接触电极是理想半无限单通道链；η只是数值调节量，模型没有实际非弹性散射、有限偏压或电子间相互作用。",
+      "preset": "device-resonance",
+      "links": [
+        [
+          "器件输运课堂",
+          "#classroom/crystal?module=device"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ],
+        [
+          "方法与单位",
+          "docs/device-transport-lab.md"
+        ]
+      ]
+    },
+    {
+      "id": "multiplet-d6-competition",
+      "module": "multiplet",
+      "title": "理想 d⁶ 离子：从轨道分裂到高低自旋",
+      "summary": "保持电子数和相互作用不变，只改变晶场分裂，比较基态自旋、占据和最低激发间隔。",
+      "kind": "原创五轨道教学模型",
+      "assumption": "没有指定真实化合物或拟合参数；无SOC、磁场、配体杂化与温度。不从局域自旋切换推断真实材料相变温度。",
+      "preset": "multiplet-d6-high",
+      "links": [
+        [
+          "原有单电子晶场",
+          "#compute/crystal-field-lab?preset=octahedral-d"
+        ],
+        [
+          "角动量耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ]
+      ]
+    },
+    {
+      "id": "multiplet-nio-local",
+      "module": "multiplet",
+      "title": "NiO 背景：单电子图遗漏了什么",
+      "summary": "从已有NiO配位与轨道示意出发，检查固定d⁸空间中的交换、多电子占据和S=1背景。",
+      "kind": "材料背景 + 参数化局域模型",
+      "assumption": "本站采用统一J的Kanamori模型，不等于完整Slater多重态、配体电荷转移模型或实验NiO光谱；预设能量仅作教学。",
+      "preset": "multiplet-d8-nio",
+      "links": [
+        [
+          "NiO材料结构",
+          "#atlas/materials?material=nio"
+        ],
+        [
+          "单电子轨道课堂",
+          "#classroom/spin?module=orbitals"
+        ],
+        [
+          "磁群与共表示",
+          "#classroom/spin?track=magnetic"
+        ]
+      ]
+    },
+    {
+      "id": "multiplet-d2-audit",
+      "module": "multiplet",
+      "title": "d² 解析审计：用45维计数验证模型",
+      "summary": "用30+14+1的完整解析能级检验Hund交换、成对跃迁与简并计数，再通过U平移实验识别共同能量零点。",
+      "kind": "可手算的多电子基准",
+      "assumption": "零晶场、五个等能轨道、单个正Hund参数。给出的多重态属于Kanamori近似，不附加完整原子LS项符号。",
+      "preset": "multiplet-d2-hund",
+      "links": [
+        [
+          "点群与表示基础",
+          "#classroom/foundations"
+        ],
+        [
+          "SU(2)自旋耦合",
+          "#classroom/continuous"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "hall-xiao",
+      "title": "Xiao等：Berry相位与反常热电输运",
+      "url": "https://arxiv.org/abs/cond-mat/0604561"
+    },
+    {
+      "id": "hall-w90",
+      "title": "Wannier90：Berry联络、曲率与反常霍尔公式",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/berry/"
+    },
+    {
+      "id": "hall-fe",
+      "title": "Wannier90：bcc Fe的Berry曲率与霍尔响应",
+      "url": "https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_18/"
+    },
+    {
+      "id": "hall-qwz",
+      "title": "Qi、Wu、Zhang：二维拓扑晶格模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    },
+    {
+      "id": "device-kwant",
+      "title": "Kwant：量子线、电极与Landauer电导",
+      "url": "https://www.kwant-project.org/doc/1/tutorial/first_steps"
+    },
+    {
+      "id": "device-kwant-paper",
+      "title": "Groth et al.：Kwant量子输运方法论文",
+      "url": "https://arxiv.org/abs/1309.2926"
+    },
+    {
+      "id": "device-local",
+      "title": "Kwant：局域态密度与电流算符",
+      "url": "https://kwant-project.org/doc/1/tutorial/operators"
+    },
+    {
+      "id": "multiplet-kanamori",
+      "title": "TRIQS：Kanamori 密度、自旋翻转与成对跃迁",
+      "url": "https://triqs.github.io/triqs/latest/documentation/python_api/triqs.operators.util.hamiltonians.h_int_kanamori.html"
+    },
+    {
+      "id": "multiplet-libcommute",
+      "title": "libcommute：Kanamori Hamiltonian 与守恒子空间",
+      "url": "https://krivenko.github.io/libcommute/examples/kanamori.html"
+    },
+    {
+      "id": "multiplet-nio",
+      "title": "Quanty：NiO 多电子晶场基态与 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ]
+}

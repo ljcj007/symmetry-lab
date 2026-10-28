@@ -1,0 +1,459 @@
+{
+  "schema": "symmetry-lab-response-content-fragment-1",
+  "release": "20261028-response1",
+  "section": "response-materials",
+  "modules": [
+    {
+      "id": "hall",
+      "title": "反常霍尔与横向热电",
+      "summary": "从曲率、占据和费米熵得到内禀片响应，联动化学势、温度、符号约定与网格诊断。",
+      "pathway": "observables",
+      "route": "hall-response-lab",
+      "action": "hall_response_lab",
+      "presets": [
+        {
+          "id": "hall-qwz-plateau",
+          "title": "QWZ · 零温霍尔平台",
+          "input": {
+            "mass": -1,
+            "energyScale": 1,
+            "temperature": 0,
+            "chemicalPotential": 0,
+            "mesh": 61,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-metal-entropy",
+          "title": "部分占据 · 横向热电",
+          "input": {
+            "mass": -1,
+            "energyScale": 0.4,
+            "temperature": 300,
+            "chemicalPotential": 0.55,
+            "mesh": 81,
+            "muMin": -1.4,
+            "muMax": 1.4,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-trivial",
+          "title": "平庸满下带 · 局部贡献抵消",
+          "input": {
+            "mass": 3,
+            "energyScale": 0.4,
+            "temperature": 0,
+            "chemicalPotential": 0,
+            "mesh": 61,
+            "muMin": -2.2,
+            "muMax": 2.2,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-closing",
+          "title": "解析闭隙 · 暂停带分辨响应",
+          "input": {
+            "mass": -2,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 0,
+            "mesh": 31,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-unresolved",
+          "title": "临界热点 · 粗网格反例",
+          "input": {
+            "mass": -1.99,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 0,
+            "mesh": 15,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        },
+        {
+          "id": "hall-project-metal",
+          "title": "跨模块作业 · 同尺度金属点",
+          "input": {
+            "mass": -1,
+            "energyScale": 1,
+            "temperature": 300,
+            "chemicalPotential": 1.3,
+            "mesh": 121,
+            "muMin": -3.5,
+            "muMax": 3.5,
+            "scanPoints": 61
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "hall-occupation",
+      "module": "hall",
+      "title": "从 Berry 曲率到片霍尔响应",
+      "summary": "先固定电荷、坐标和联络约定，再把量子几何转成电流响应。",
+      "preset": "hall-qwz-plateau",
+      "references": [
+        "hall-w90",
+        "hall-qwz"
+      ],
+      "sections": [
+        {
+          "title": "明确哪个电流响应哪个场",
+          "text": "本站采用电子电荷−e（e>0）、联络A=i〈u|∂u〉和kx到ky的取向。σxy表示y向电场产生的x向电流。保持这些定义时，填满C=+1的下带得到负的σxy；这不与把σyx叫作霍尔电导的约定矛盾。",
+          "formula": "jx=σxy Ey−αxy∂yT；σyx=−σxy"
+        },
+        {
+          "title": "两条带都要计入占据",
+          "text": "QWZ的两条带能量为±s|d|，曲率正好相反。化学势进入上带后，新占据的上带会部分抵消下带的曲率贡献。两条带全空或全满时，该完整两带空间的净曲率响应为零。",
+          "formula": "σxy=−(e²/ℏ)Σn∫BZ d²k/(2π)² Ωn fn"
+        },
+        {
+          "title": "零温绝缘体与金属的区别",
+          "text": "零温且化学势在直接能隙内时，下带满、上带空，积分只剩下带Chern数。进入能带或升高温度后，占据不再是完整孤立带，响应一般不再量子化。二维片响应不需要人为指定真空层厚度。",
+          "formula": "C=(1/2π)∫BZ Ω−d²k；σxy=−C e²/h"
+        },
+        {
+          "title": "对称性决定哪些贡献可以抵消",
+          "text": "时间反演对称使对应的曲率与占据贡献成对抵消，从而禁止内禀电荷反常霍尔响应。破坏时间反演只说明可能非零，并不保证每种磁群都允许任意张量分量；晶体的其余对称也须检查。",
+          "formula": "Ωxy(−k)=−Ωxy(k)，f(−k)=f(k) ⇒ σxy=0"
+        }
+      ]
+    },
+    {
+      "id": "hall-entropy",
+      "module": "hall",
+      "title": "费米熵与横向热电",
+      "summary": "同一张曲率图，用占据和熵作不同权重，会产生不同的响应曲线。",
+      "preset": "hall-metal-entropy",
+      "references": [
+        "hall-xiao"
+      ],
+      "sections": [
+        {
+          "title": "温度梯度对应输运热电系数",
+          "text": "局部平衡中存在的磁化环流不能直接算作流过样品的输运电流。扣除它后，内禀横向热电系数可以写成曲率乘费米熵的布里渊区积分。",
+          "formula": "αxy=(e kB/ℏ)Σn∫BZ d²k/(2π)² Ωn sn"
+        },
+        {
+          "title": "满态与空态都没有费米熵",
+          "text": "s(f)在f=0和f=1时为零，在f=1/2时最大。化学势附近约几个kBT范围的态对热电响应最敏感。图中的熵加权曲率并非电子密度，也不能与占据加权曲率使用同一数值含义。",
+          "formula": "s(f)=−f ln f−(1−f)ln(1−f)；s(1/2)=ln2"
+        },
+        {
+          "title": "为什么霍尔平台中间的α可以为零",
+          "text": "本模型的两条带关于零能对称，曲率相反。在μ=0时，两条带的熵权重相同，αxy逐点抵消；但占据差仍可非零，σxy可以很大。改变μ正负，σxy保持偶对称而αxy变号。",
+          "formula": "σxy(μ)=σxy(−μ)，αxy(μ)=−αxy(−μ)"
+        },
+        {
+          "title": "与低温能量导数的连接",
+          "text": "在连续谱已收敛、零温霍尔曲线在热窗口内足够光滑时，热电响应可用Mott展开联系到其能量导数。对粗网格的阶梯占据直接做差分会制造尖峰；本实验使用熵核直接积分，并独立比较更密网格。此处若使用 SI 制的 kB，能量导数中的 ε 须以焦耳计；界面中的 eV 输入须先换算。",
+          "formula": "本页约定下：αxy≈−[π²kB²T/(3e)] ∂σxy⁰/∂ε |μ"
+        }
+      ]
+    },
+    {
+      "id": "hall-diagnostics",
+      "module": "hall",
+      "title": "从响应系数到可信的实验解释",
+      "summary": "区分局部曲率、积分系数和开路信号，并把收敛检查写进研究结论。",
+      "preset": "hall-unresolved",
+      "references": [
+        "hall-w90",
+        "hall-fe",
+        "hall-xiao"
+      ],
+      "sections": [
+        {
+          "title": "αxy不是开路Nernst电压",
+          "text": "实验若要求总电流为零，需要电场抵消温度梯度产生的电流。此时响应是完整电导张量逆矩阵乘完整热电张量。只知道内禀横向分量，无法自动补齐纵向散射响应，也不应拼接不同模型的张量。",
+          "formula": "j=σE−α∇T；j=0 ⇒ E=(σ⁻¹α)∇T"
+        },
+        {
+          "title": "网格整数与曲率积分收敛是两回事",
+          "text": "已有FHS课堂强调离散Chern整数，而本页直接对曲率做求积。每次运行比较N×N与2N×2N，并用解析下带Chern检验曲率积分。μ扫描中每个点另有数值稳定标记；选定点通过不代表所有扫描点通过。",
+          "formula": "IΩ(N)=2π〈Ω−〉N；检查IΩ与解析C及响应加密差"
+        },
+        {
+          "title": "解析闭隙时停止本页带分辨公式",
+          "text": "在m=−2、0、2处，即使奇数网格漏掉退化动量，解析间隙仍为零。本实现停止报告依赖孤立带的响应。它并不宣称所有闭隙材料的物理霍尔效应都无定义，而是说明当前算法的适用边界。",
+          "formula": "Eg=2s min(|m+2|,|m|,|m−2|)"
+        },
+        {
+          "title": "从教学模型走向材料",
+          "text": "bcc Fe可作为磁性金属的材料背景，学习SOC避免交叉附近的曲率热点和积分收敛。这里的QWZ参数没有拟合Fe。完整Wannier响应还依赖位置/连接矩阵、轨道嵌入等约定，不能把单个hr文件自动当作全部Berry信息。",
+          "formula": "模型复现、来源数据、单位和收敛记录应同时保留"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "hall-plateau-steps",
+      "module": "hall",
+      "lesson": "hall-occupation",
+      "title": "从曲率积分推到霍尔平台",
+      "prompt": "固定电子电荷−e、A=i〈u|∂u〉、xy取向；下带C=+1，上带C=−1。",
+      "steps": [
+        {
+          "prompt": "零温、μ在能隙内，两条带的占据是什么？",
+          "hint": "下带所有能量低于μ。",
+          "choices": [
+            "下带全满，上带全空",
+            "两带都半满",
+            "两带都全满"
+          ],
+          "answer": 0,
+          "explanation": "孤立下带完整占据是使用单带Chern给出量子化平台的前提。"
+        },
+        {
+          "prompt": "在本页定义jx=σxyEy下，σxy是多少？",
+          "hint": "公式前有电子电荷带来的负号。",
+          "choices": [
+            "+e²/h",
+            "−e²/h",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "σxy=−C e²/h；同一系统的σyx=+e²/h。"
+        },
+        {
+          "prompt": "把μ提高到两条带之上，会得到什么？",
+          "hint": "完整两带空间的曲率和逐点为零。",
+          "choices": [
+            "仍为−e²/h",
+            "变成−2e²/h",
+            "两条满带贡献抵消"
+          ],
+          "answer": 2,
+          "explanation": "上、下带曲率相反且占据相同，净内禀霍尔项为零。"
+        },
+        {
+          "prompt": "本模型输出的二维σxy单位是什么？",
+          "hint": "没有指定材料厚度。",
+          "choices": [
+            "S（片电导）",
+            "S/m，使用任意真空层厚度",
+            "eV"
+          ],
+          "answer": 0,
+          "explanation": "二维电流按每宽度计，片电导单位是S；三维转换需要物理厚度。"
+        }
+      ]
+    },
+    {
+      "id": "hall-entropy-steps",
+      "module": "hall",
+      "lesson": "hall-entropy",
+      "title": "用熵权重判断横向热电",
+      "prompt": "用QWZ的±E两带与相反曲率，推断μ和温度的作用。",
+      "steps": [
+        {
+          "prompt": "哪种占据的无量纲费米熵最大？",
+          "hint": "比较完全确定与最不确定的二元占据。",
+          "choices": [
+            "f=0",
+            "f=1/2",
+            "f=1"
+          ],
+          "answer": 1,
+          "explanation": "s(1/2)=ln2；满态与空态的熵均为0。"
+        },
+        {
+          "prompt": "μ=0时两条对称能带的熵相等，αxy怎样？",
+          "hint": "两条带的曲率相反。",
+          "choices": [
+            "等于Chern数",
+            "总等于σxy",
+            "逐点抵消为0"
+          ],
+          "answer": 2,
+          "explanation": "熵核相等而曲率相反，不能根据σxy非零就断定αxy非零。"
+        },
+        {
+          "prompt": "仅将μ从正值变成相反负值，本模型有何关系？",
+          "hint": "粒子空穴对称互换两条带的热窗口。",
+          "choices": [
+            "σxy不变，αxy变号",
+            "σxy与αxy都不变",
+            "σxy变号，αxy不变"
+          ],
+          "answer": 0,
+          "explanation": "σ为μ的偶函数，α为μ的奇函数，可作为计算校验。"
+        },
+        {
+          "prompt": "T=0时，热电系数应如何处理？",
+          "hint": "严格零温不再存在有限宽度的熵窗口。",
+          "choices": [
+            "由阶梯σ曲线粗差分给任意值",
+            "取严格极限αxy=0",
+            "强制等于量子化霍尔电导"
+          ],
+          "answer": 1,
+          "explanation": "金属低温α通常随T趋零；本实现明确采用αxy(T=0)=0。"
+        }
+      ]
+    },
+    {
+      "id": "hall-validity-steps",
+      "module": "hall",
+      "lesson": "hall-diagnostics",
+      "title": "为横向响应写一份可核验结论",
+      "prompt": "一组粗网格曲率积分给出看似漂亮的数值，决定还缺少哪些信息。",
+      "steps": [
+        {
+          "prompt": "m=−2的奇数网格没有采到闭隙点，能宣称有隙平台吗？",
+          "hint": "解析间隙不依赖显示网格。",
+          "choices": [
+            "只要采样全有隙就能",
+            "只要结果近整数就能",
+            "不能；解析闭隙使本页主响应留空"
+          ],
+          "answer": 2,
+          "explanation": "算法先使用解析间隙，防止漏采退化点。"
+        },
+        {
+          "prompt": "选定μ的N与2N结果接近，能证明整个μ扫描已收敛吗？",
+          "hint": "热窗口随化学势移动。",
+          "choices": [
+            "不能，每个扫描点须分别检查",
+            "能，所有参数共享一次收敛",
+            "只要网格是奇数就能"
+          ],
+          "answer": 0,
+          "explanation": "页面对每个扫描点保留独立的稳定标记。"
+        },
+        {
+          "prompt": "仅给出αxy，能直接读作开路Nernst电压吗？",
+          "hint": "开路必须满足整个电流矢量为零。",
+          "choices": [
+            "能，两者单位相同",
+            "不能，还需同一体系的完整σ与α张量",
+            "只需乘任意τ"
+          ],
+          "answer": 1,
+          "explanation": "开路热电张量为S=σ⁻¹α；αxy的单位A/K也不同于电压热电系数。"
+        },
+        {
+          "prompt": "把QWZ参数命名为Fe，是否等于算出了真实铁的响应？",
+          "hint": "模型参数与材料矩阵元的来源不同。",
+          "choices": [
+            "是，名称决定材料",
+            "是，只要曲线形状类似",
+            "否，需独立材料数据、约定和收敛验证"
+          ],
+          "answer": 2,
+          "explanation": "bcc Fe在这里提供物理背景；当前计算仍是明确的两带教学模型。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "hall-qwz-route",
+      "module": "hall",
+      "title": "QWZ：从量子几何走到霍尔平台",
+      "summary": "在同一符号约定下比较下带Chern、满带曲率积分和零温片霍尔响应。",
+      "kind": "可解析二维教学模型",
+      "assumption": "单个两带QWZ模型，不含自旋简并倍数；不把其边界谱直接当作已连接电极的器件电导。",
+      "preset": "hall-qwz-plateau",
+      "links": [
+        [
+          "量子几何与Chern",
+          "#compute/quantum-geometry-lab?preset=geometry-qwz-chern"
+        ],
+        [
+          "已有薄膜与表面谱",
+          "#magnetictb"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "hall-fe-background",
+      "module": "hall",
+      "title": "bcc Fe背景：SOC曲率热点与横向响应",
+      "summary": "以公开的bcc Fe教程说明为什么磁性金属的反常霍尔响应需要完整布里渊区积分，再用QWZ部分占据演示积分机制。",
+      "kind": "真实材料方法背景 + QWZ演示",
+      "assumption": "页面未导入或拟合Fe的Wannier矩阵元；所有可交互数值均来自QWZ，不能标为铁的预测或实验数据。",
+      "preset": "hall-metal-entropy",
+      "references": [
+        "hall-fe"
+      ],
+      "links": [
+        [
+          "磁群与共表示",
+          "#classroom/spin?track=magnetic"
+        ],
+        [
+          "纵向电子输运",
+          "#compute/electron-transport-lab"
+        ],
+        [
+          "公开Fe教程",
+          "https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_18/"
+        ]
+      ]
+    },
+    {
+      "id": "hall-critical-mesh",
+      "module": "hall",
+      "title": "临界热点：看似稳定的数字与真实适用范围",
+      "summary": "比较临界附近粗网格、加密网格和解析闭隙，给报告写出收敛范围。",
+      "kind": "数值诊断案例",
+      "assumption": "有限网格比较只是诊断；闭隙时当前带分辨算法停止，不能据此判断所有闭隙材料都没有物理横向响应。",
+      "preset": "hall-unresolved",
+      "links": [
+        [
+          "量子几何闭隙反例",
+          "#compute/quantum-geometry-lab?preset=geometry-qwz-closing"
+        ],
+        [
+          "物性张量",
+          "#classroom/observables?lesson=neumann"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "hall-xiao",
+      "title": "Xiao等：Berry相位与反常热电输运",
+      "url": "https://arxiv.org/abs/cond-mat/0604561"
+    },
+    {
+      "id": "hall-w90",
+      "title": "Wannier90：Berry联络、曲率与反常霍尔公式",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/berry/"
+    },
+    {
+      "id": "hall-fe",
+      "title": "Wannier90：bcc Fe的Berry曲率与霍尔响应",
+      "url": "https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_18/"
+    },
+    {
+      "id": "hall-qwz",
+      "title": "Qi、Wu、Zhang：二维拓扑晶格模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    }
+  ]
+}

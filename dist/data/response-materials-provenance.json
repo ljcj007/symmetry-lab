@@ -1,0 +1,290 @@
+{
+  "release": "20261028-response1",
+  "date": "2026-10-28",
+  "originalContent": true,
+  "scope": "Original teaching implementations and exercises; external publications and official documentation provide model/method references, not fitted material data or upstream software compatibility",
+  "counts": {
+    "modules": 3,
+    "lessons": 9,
+    "exercises": 9,
+    "cases": 9,
+    "sources": 10,
+    "exerciseSteps": 36,
+    "presets": 17,
+    "projects": 3
+  },
+  "projects": [
+    {
+      "id": "geometry-hall",
+      "module": "hall",
+      "title": "从波函数几何到横向响应"
+    },
+    {
+      "id": "ssh-device",
+      "module": "device",
+      "title": "从 SSH 体相到接触控制的透射"
+    },
+    {
+      "id": "orbital-multiplet",
+      "module": "multiplet",
+      "title": "从单电子轨道到多电子自旋"
+    }
+  ],
+  "sources": [
+    {
+      "id": "hall-xiao",
+      "title": "Xiao等：Berry相位与反常热电输运",
+      "url": "https://arxiv.org/abs/cond-mat/0604561"
+    },
+    {
+      "id": "hall-w90",
+      "title": "Wannier90：Berry联络、曲率与反常霍尔公式",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/postw90/berry/"
+    },
+    {
+      "id": "hall-fe",
+      "title": "Wannier90：bcc Fe的Berry曲率与霍尔响应",
+      "url": "https://wannier90.readthedocs.io/en/latest/tutorials/tutorial_18/"
+    },
+    {
+      "id": "hall-qwz",
+      "title": "Qi、Wu、Zhang：二维拓扑晶格模型",
+      "url": "https://arxiv.org/abs/cond-mat/0505308"
+    },
+    {
+      "id": "device-kwant",
+      "title": "Kwant：量子线、电极与Landauer电导",
+      "url": "https://www.kwant-project.org/doc/1/tutorial/first_steps"
+    },
+    {
+      "id": "device-kwant-paper",
+      "title": "Groth et al.：Kwant量子输运方法论文",
+      "url": "https://arxiv.org/abs/1309.2926"
+    },
+    {
+      "id": "device-local",
+      "title": "Kwant：局域态密度与电流算符",
+      "url": "https://kwant-project.org/doc/1/tutorial/operators"
+    },
+    {
+      "id": "multiplet-kanamori",
+      "title": "TRIQS：Kanamori 密度、自旋翻转与成对跃迁",
+      "url": "https://triqs.github.io/triqs/latest/documentation/python_api/triqs.operators.util.hamiltonians.h_int_kanamori.html"
+    },
+    {
+      "id": "multiplet-libcommute",
+      "title": "libcommute：Kanamori Hamiltonian 与守恒子空间",
+      "url": "https://krivenko.github.io/libcommute/examples/kanamori.html"
+    },
+    {
+      "id": "multiplet-nio",
+      "title": "Quanty：NiO 多电子晶场基态与 Slater 相互作用",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF; binary files hashed without conversion",
+  "refreshCommand": "python .openai/response-release.py",
+  "verifyCommand": "python .openai/response-release.py --check",
+  "files": [
+    {
+      "path": ".openai/response-release.py",
+      "sha256": "812fdbcc502b25d3253019b57ad51ed7187fadcb5892fcd9ccb80616bb4edf25"
+    },
+    {
+      "path": "README.md",
+      "sha256": "565771c9ffde1cae678e37ac89345520cb3430cf93c5ded441ccf2cc483e33ee"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "b6cd2e129fb338fadf5c0ab994b0d7744cb65d4651f6a9176a6380095c2645cb"
+    },
+    {
+      "path": "dist/classroom-ui.js",
+      "sha256": "11eb906c12f0a23c5c9e46e82ccb964239ae16fd9c621d71230185b687ebcf55"
+    },
+    {
+      "path": "dist/data/device-transport-content.json",
+      "sha256": "756e3502d7673f643048e05836178a10ff63f696844de4bec173c3eac63f3822"
+    },
+    {
+      "path": "dist/data/hall-response-content.json",
+      "sha256": "ed0115100475a29d39db041b740757e75fef11c49c9e2d0dc7cecc1d2f11a932"
+    },
+    {
+      "path": "dist/data/local-multiplet-content.json",
+      "sha256": "60988dc56f41f2bd6ad4dab9269b53c03eabf2a1b3bcf262db30b937de012e4a"
+    },
+    {
+      "path": "dist/data/response-materials.json",
+      "sha256": "9bd31512a7a2aadec8a33f287284e54eaaea062675f7032ba6007e78ac9a88c3"
+    },
+    {
+      "path": "dist/docs/device-transport-lab.md",
+      "sha256": "478dd2eea5a4c4cd5539c986347f7293d6b6f1189815491e0afd58fd237fe66c"
+    },
+    {
+      "path": "dist/docs/hall-response-lab.md",
+      "sha256": "c4d7ebd586873f5f67f672ce68d720ed1749b87bc5af70b585506a0c7308ac03"
+    },
+    {
+      "path": "dist/docs/local-multiplet-lab.md",
+      "sha256": "dcbd260a26e7adb2876be1513e25a891838eac06aef539dc8c73a9251819d516"
+    },
+    {
+      "path": "dist/docs/response-materials.md",
+      "sha256": "61703bfdaeb91cc53337df5e5115ebb66c53924449d4276f8881f47a53c0e350"
+    },
+    {
+      "path": "dist/examples/device-transport-barrier.json",
+      "sha256": "b4705c429c09b23d29ad0dff062a7e78e7c499a41262813d5b5bb963de396a2e"
+    },
+    {
+      "path": "dist/examples/device-transport-disconnected.json",
+      "sha256": "f0c9b15d507bc482726e0fc6cb88d3c44c1db2301ddcfa4ab76c60860fa3ce8a"
+    },
+    {
+      "path": "dist/examples/device-transport-perfect.json",
+      "sha256": "99f4587819aeca33f15fbe1f1d91697ac013f2ac9cb6e4ee55677f990b0141bf"
+    },
+    {
+      "path": "dist/examples/device-transport-resonance.json",
+      "sha256": "ad29c9b25cc9dfeb3690a4b41c60386301170a43c39b07fe5dae513a3bd9bd93"
+    },
+    {
+      "path": "dist/examples/device-transport-ssh-strong.json",
+      "sha256": "86b734ec4379ececb070b5a0b2e30fef581c7be1568d1a855bc8d0119057c101"
+    },
+    {
+      "path": "dist/examples/device-transport-ssh-weak.json",
+      "sha256": "64828f1475f728cbad1c297a3056bb30a285f96b2cb74bb8822a1faaf37a5ab9"
+    },
+    {
+      "path": "dist/examples/hall-response-closing.json",
+      "sha256": "682714a287e786992a2f7c9bf58a35a4ee455d96cf5bf65f8937e6dbd5f93c33"
+    },
+    {
+      "path": "dist/examples/hall-response-metal.json",
+      "sha256": "dc3dde038bc7b314f220b4ed5e55f8cefd0324c529631d636eeee856c06ce04d"
+    },
+    {
+      "path": "dist/examples/hall-response-plateau.json",
+      "sha256": "704f24a247abb3f34eb521b51ca6a323e151b826a24c73d05af49938946f5c9e"
+    },
+    {
+      "path": "dist/examples/hall-response-project-metal.json",
+      "sha256": "eb50ed8cbeecf7be8c5bb75aedc75a1d11e4a8ac282e45fec16c978acb269c89"
+    },
+    {
+      "path": "dist/examples/hall-response-trivial.json",
+      "sha256": "64eb3b2a3617674f5b5406f651c93a776b6fd780cd19e92c603d30b3c51046a7"
+    },
+    {
+      "path": "dist/examples/local-multiplet-d2-hund.json",
+      "sha256": "238235d7c93cb52b0c517d657ef245ddee6b123da44cdd5f99abb19caf188b52"
+    },
+    {
+      "path": "dist/examples/local-multiplet-d6-high.json",
+      "sha256": "89a5aea04a843a0eb981adac7c9f8ded69ccc6c779ceab2819b59d0ed854eca5"
+    },
+    {
+      "path": "dist/examples/local-multiplet-d6-low.json",
+      "sha256": "bf416acc2e52bff994f9b687380511fd8b1c03caa2723d10aee919eded5423bd"
+    },
+    {
+      "path": "dist/examples/local-multiplet-d8-nio.json",
+      "sha256": "0d2d2e6643d91800f8fed164027d9f1f4bb6ae07232a0faf5307385cf6749b74"
+    },
+    {
+      "path": "dist/examples/local-multiplet-j0.json",
+      "sha256": "eb3eece74d551472855c4b72a8f9b9471cc1386c5041f894b2a3c69dfc52bce6"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "8ad131aaf148f5a758644d965b996b8e0b0011af62055ddbf05d14deb050da3b"
+    },
+    {
+      "path": "dist/material-notebook.js",
+      "sha256": "e76bef619b1e3d72c14945f7272e317567ea32181063469c1f54f2310741090a"
+    },
+    {
+      "path": "dist/navigation-ui.js",
+      "sha256": "ab1df219120c96f30fbdea073c0c98af9685abc266481f47f1c5970e4e040882"
+    },
+    {
+      "path": "dist/python-client.js",
+      "sha256": "9ec2fdb96c5251c08609bb801888d3b62ea1bc7d63f60a1b00d108e6896f2535"
+    },
+    {
+      "path": "dist/python-worker.js",
+      "sha256": "240b82b5c4930993d29263abb4335187a2cc80b2896ca5bcd429495422bbccf4"
+    },
+    {
+      "path": "dist/python/browser_api.py",
+      "sha256": "48d415a285580fe2e7f31feaf4d4376dd4192763f5d3661b434af1113a39232f"
+    },
+    {
+      "path": "dist/python/device_transport_lab.py",
+      "sha256": "a310c93f71610a3ff7620b2fd6b8f7c79633d9aa5c70882d175692d340989ac9"
+    },
+    {
+      "path": "dist/python/hall_response_lab.py",
+      "sha256": "34dfa83b0f6bd94d6879a945c6bfa42c5fae33c7ac2e2ee207f30a0dd00e12d5"
+    },
+    {
+      "path": "dist/python/local_multiplet_lab.py",
+      "sha256": "9166cb06b0fd09a22de23ad57a35ca471ae3a25b5dc76f3ed7064455749c6fc4"
+    },
+    {
+      "path": "dist/response-materials-ui.js",
+      "sha256": "53abc839677072ec4411915c4b3ea61ac72a922bdc896590b2b77331310d76f8"
+    },
+    {
+      "path": "dist/response-materials.css",
+      "sha256": "76bf9f93d478d4993520d1b0c91e1a52f9c355167580874c0257dbbabba17893"
+    },
+    {
+      "path": "dist/response-projects.js",
+      "sha256": "252fafb70c7b69122fe32c84e15bc28af876bd71e0465435872a48b8365eb78d"
+    },
+    {
+      "path": "dist/response-views.js",
+      "sha256": "3c744dea06aaa49e530db7b04b1eadd903b5201d9eb4c5a47c619f85615d6927"
+    },
+    {
+      "path": "package.json",
+      "sha256": "26d9272026a017d0541ced0628df943f407550635ec2909f2f4461ef04a05855"
+    },
+    {
+      "path": "scripts/build-response-catalog.py",
+      "sha256": "85a22d6a20ebea25f458d28c350d588a08cb803ace629d3ac49f566ece9aa21c"
+    },
+    {
+      "path": "scripts/build-response-fixtures.py",
+      "sha256": "6fb532b05084db1c1761dd3d05e22aa1871bf148325b50efdecdf430d19393e3"
+    },
+    {
+      "path": "scripts/fixtures/response-materials.json",
+      "sha256": "5ec2ec5b7ccda1bf4e6067354318c1d3739d2a7c28fe3d5ef78d2966a050a28a"
+    },
+    {
+      "path": "scripts/test-python-device-transport.py",
+      "sha256": "9ef31f55117de4b5bf02f52d3133c8a6291368a9731798797ea835411c79580f"
+    },
+    {
+      "path": "scripts/test-python-hall-response.py",
+      "sha256": "ce98c16349d50e9f8d61bdf4ce51257f603c2e8e116423ce920d266e205f10b2"
+    },
+    {
+      "path": "scripts/test-python-local-multiplet.py",
+      "sha256": "11385400338bb78ec71b0e0f44fcf501e282d290fec705b5f8d49611bf6aae95"
+    },
+    {
+      "path": "scripts/test-python-response-content.py",
+      "sha256": "9b6792eb7efd3b2c0bf085c4f67b9a08a3fc1ce9d7a72d51007e60a525b75b77"
+    },
+    {
+      "path": "scripts/test-response-materials-ui.mjs",
+      "sha256": "0173941388b88876238a515774469e275bcb45bbecf9e93f9247cdd78a2092a1"
+    }
+  ]
+}

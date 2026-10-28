@@ -1,0 +1,515 @@
+{
+  "schema": "symmetry-lab-response-content-fragment-1",
+  "release": "20261028-response1",
+  "section": "response-materials",
+  "modules": [
+    {
+      "id": "device",
+      "title": "器件量子输运",
+      "summary": "连接两根电极的一维器件：透射、电导、局域谱和通量连续性，比较势垒与SSH接触共振。",
+      "pathway": "crystal",
+      "route": "device-transport-lab",
+      "action": "device_transport_lab",
+      "presets": [
+        {
+          "id": "device-perfect",
+          "title": "完美量子线 · 一个透射通道",
+          "input": {
+            "model": "uniform",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "energy": 0.2,
+            "energyMin": -2.5,
+            "energyMax": 2.5,
+            "samples": 161,
+            "eta": 1e-7,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-barrier",
+          "title": "单点势垒 · 散射与反射",
+          "input": {
+            "model": "uniform",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 1.5,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "energy": 0.2,
+            "energyMin": -2.5,
+            "energyMax": 2.5,
+            "samples": 161,
+            "eta": 1e-7,
+            "spinDegeneracy": 2
+          }
+        },
+        {
+          "id": "device-ssh-weak",
+          "title": "SSH 端态 · 弱接触",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.15,
+            "contactRight": 0.15,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-7,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-ssh-strong",
+          "title": "同一 SSH 链 · 强接触",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.8,
+            "contactRight": 0.8,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-7,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-disconnected",
+          "title": "断开右电极 · 有局域态但无透射",
+          "input": {
+            "model": "ssh",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.15,
+            "contactRight": 0,
+            "energy": 0.05,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-7,
+            "spinDegeneracy": 1
+          }
+        },
+        {
+          "id": "device-resonance",
+          "title": "弱接触奇数链 · 共振透射",
+          "input": {
+            "model": "uniform",
+            "sites": 7,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 0,
+            "barrierStart": 3,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 0.2,
+            "contactRight": 0.2,
+            "energy": 0,
+            "energyMin": -0.3,
+            "energyMax": 0.3,
+            "samples": 201,
+            "eta": 1e-7,
+            "spinDegeneracy": 1
+          }
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "device-open",
+      "module": "device",
+      "title": "从封闭能级到接上电极的器件",
+      "summary": "把有限链、半无限引线和两端电导放在同一个模型里。",
+      "preset": "device-perfect",
+      "references": [
+        "device-kwant",
+        "device-kwant-paper"
+      ],
+      "sections": [
+        {
+          "title": "器件需要边界条件",
+          "text": "封闭有限链只有离散本征能级。输运问题还需要左、右电极作为粒子库；在本模型中，两根相同半无限均匀链连接有限散射区首尾站点。散射区可为均匀链或交替键的SSH链，Hamiltonian的非对角元均取−t。",
+          "formula": "HD=Σi εi|i><i|−Σi ti(|i><i+1|+h.c.)"
+        },
+        {
+          "title": "电极只在带内提供传播通道",
+          "text": "均匀引线的能带范围为ε₀±2t₀。其迟致表面Green函数必须选择虚部非正、远离能带时趋向1/E的解。接触自能把开放边界写进有限矩阵；接触跃迁v不是一个独立的弛豫时间。",
+          "formula": "gʳ=[E+i0−ε₀−t₀²gʳ]⁻¹；Σ=v²gʳ，Γ=−2 ImΣ"
+        },
+        {
+          "title": "透射概率与电导的区别",
+          "text": "每个自旋的电极至多有一个传播通道，透射T在0到1之间。零温线性电导为gs(e²/h)T(EF)。gs=2只是两份相同且独立的自旋通道，不能用它代替真正的自旋轨道耦合；页面中的能量滑块指定EF。",
+          "formula": "G=gs(e²/h)T(EF)；e²/h≈38.7405 μS"
+        },
+        {
+          "title": "理想链是第一项基准",
+          "text": "散射区跃迁、在位能和接触都与电极匹配时，带内没有物理反射，η→0时T=1。数值正虚部会造成微小人工吸收，程序同时显示它及守恒残差。恰在带边的群速度为零，本实验不把该点当作开放传播通道。",
+          "formula": "匹配均匀链：|E−ε₀|<2t₀ ⇒ T→1"
+        }
+      ]
+    },
+    {
+      "id": "device-scattering",
+      "module": "device",
+      "title": "势垒、共振与局域谱",
+      "summary": "比较看起来都有谱峰、却可能有不同传输能力的器件。",
+      "preset": "device-barrier",
+      "references": [
+        "device-kwant",
+        "device-kwant-paper"
+      ],
+      "sections": [
+        {
+          "title": "一个站点也能反射电子",
+          "text": "在匹配均匀链中加入一个在位势V，有限的反射来自散射振幅干涉。对t=1、其他在位能为0的单点势垒，可用解析透射直接核验程序；移动势垒位置不改变无限均匀背景上的单散射体透射概率。",
+          "formula": "T(E)=(4t²−E²)/(4t²−E²+V²)，|E|<2t"
+        },
+        {
+          "title": "弱接触把离散能级变成共振",
+          "text": "弱接触有限链的透射峰通常位于被电极移动和展宽的能级附近。对称接触可在共振处给出很高的透射，但离开共振后T很低。增加接触既改变宽度也改变能级与干涉，不能仅凭接触更强推断固定能量的T必定增加。",
+          "formula": "T=ΓLΓR|GʳN1|²；Gʳ=[(E+iη)I−HD−ΣL−ΣR]⁻¹"
+        },
+        {
+          "title": "局域态密度不是通过概率",
+          "text": "LDOS描述所选能量在每个站点的局域谱权重；左、右注入密度进一步说明哪些谱权重可被各自电极激发。把一侧接触设为0时，LDOS仍可出现峰，而两端透射严格为0。图中的LDOS按每个自旋、每eV给出，不是电子占据数。",
+          "formula": "ρi=−ImGʳii/π；νL,i=ΓL|Gʳi1|²/(2π)"
+        },
+        {
+          "title": "扫描需要解析窄峰",
+          "text": "单条能量扫描的离散点不能证明所有共振都已采到。应同时缩小扫描窗口、增加采样点，并改变η；不要通过人为增加η把漂亮平滑曲线误当作已收敛结果。",
+          "formula": "ΔE=(Emax−Emin)/(Nsamples−1)"
+        }
+      ]
+    },
+    {
+      "id": "device-ssh",
+      "module": "device",
+      "title": "SSH 端态、接触与通量连续性",
+      "summary": "把已有Zak相位和有限链谱连接到真正开放的两端器件。",
+      "preset": "device-ssh-weak",
+      "references": [
+        "device-kwant",
+        "device-local"
+      ],
+      "sections": [
+        {
+          "title": "保持同一个胞内胞间约定",
+          "text": "这里第0条键连接站点0和1，定义为胞内键t₁=t×dimerRatio，下一条为胞间键t₂=t。偶数站点、弱胞内键的有限链可有低能端态；有限长度使两端波函数重叠，能量一般不精确为0。整体跃迁负号不改变SSH能带的Zak相位模2π，但比较时仍须保持轨道与晶胞约定。",
+          "formula": "t₁=t×dimerRatio；t₂=t；N=12的封闭链可与同参数周期模型比较"
+        },
+        {
+          "title": "端态存在不保证高电导",
+          "text": "同一N=12、t₁=.6、t₂=1的链，在E=.05 eV处，接触从.15改为.8 eV会改变共振宽度和耦合；需要计算T而不是只观察端点LDOS。本课程用预设让模型和能量保持不变，仅改变接触。",
+          "formula": "几何/拓扑诊断 → 封闭链能级 → 电极自能 → T(E)"
+        },
+        {
+          "title": "每条键上的流必须核对",
+          "text": "取左电极单位入射通量，ψ=√ΓLGʳe₁，正向键通量定义为从站点i流向i+1。没有真实散射或吸收时，各键通量相同；数值η引入的损失在每个站点都可精确计算。该无量纲通量不是有限偏压的安培电流。",
+          "formula": "Ji→i+1=−2Im(Hi,i+1 ψi+1ψi*)；Jin−Jout=2η|ψi|²"
+        },
+        {
+          "title": "把计算证据带回研究记录",
+          "text": "保存两种接触下的T(E)、选定能量、LDOS、η比较和连续性残差，再写出是否支持结论。Zak相位不能仅由两端透射峰反推出；真实材料仍需完整轨道、电极、散射与结构参数。",
+          "formula": "T+R+Aη=1；Aη=2ηΣi|ψi|²"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "device-landauer-steps",
+      "module": "device",
+      "lesson": "device-open",
+      "title": "从一个传播通道到两端电导",
+      "prompt": "考虑t₀=t=1 eV、ε₀=0、接触完全匹配的均匀链，先取η→0。",
+      "steps": [
+        {
+          "prompt": "电极在什么能量区间有传播态？",
+          "hint": "由E=ε₀−2t₀cos k判断。",
+          "choices": [
+            "−2<E<2 eV",
+            "任意能量都开放",
+            "只有E=0"
+          ],
+          "answer": 0,
+          "explanation": "余弦范围为−1到1；带边群速度为零，不能当作通常的开放通道点。"
+        },
+        {
+          "prompt": "E=.2 eV、无势垒时，理想透射是多少？",
+          "hint": "散射区是无限均匀链的一段。",
+          "choices": [
+            "取决于站点数，必为1/N",
+            "T=1",
+            "T=0"
+          ],
+          "answer": 1,
+          "explanation": "完全匹配的链没有反射；η→0时每个自旋的一个通道完全透射。"
+        },
+        {
+          "prompt": "若只有一个自旋副本，此时电导是多少？",
+          "hint": "不要把常用2e²/h无条件套用。",
+          "choices": [
+            "2e²/h",
+            "e²/h",
+            "h/e²"
+          ],
+          "answer": 1,
+          "explanation": "gs=1，G=(e²/h)T=e²/h；它是电导，不是电阻。"
+        },
+        {
+          "prompt": "改成两个独立相同自旋副本，何者变化？",
+          "hint": "Hamiltonian和每自旋散射过程保持相同。",
+          "choices": [
+            "每自旋T变成2",
+            "每自旋LDOS变为0",
+            "总电导加倍，每自旋T不变"
+          ],
+          "answer": 2,
+          "explanation": "gs=2只把相同独立通道的电导相加；不引入SOC或自旋翻转。"
+        }
+      ]
+    },
+    {
+      "id": "device-barrier-steps",
+      "module": "device",
+      "lesson": "device-scattering",
+      "title": "手算单点势垒与断开电极",
+      "prompt": "取t=1 eV、所选E=0，在匹配量子线中加入一个V=2 eV的在位势。",
+      "steps": [
+        {
+          "prompt": "由解析公式得到T是多少？",
+          "hint": "代入(4t²−E²)/(4t²−E²+V²)。",
+          "choices": [
+            "1/2",
+            "1/4",
+            "1"
+          ],
+          "answer": 0,
+          "explanation": "分子为4，分母为4+4=8，因此T=1/2。"
+        },
+        {
+          "prompt": "η→0时反射R是多少？",
+          "hint": "单通道弹性散射满足T+R=1。",
+          "choices": [
+            "0",
+            "1/2",
+            "2"
+          ],
+          "answer": 1,
+          "explanation": "R=1−T=1/2；概率相加不能超过1。"
+        },
+        {
+          "prompt": "把右接触设为0，但仍保留有限链，哪项必须为0？",
+          "hint": "T含ΓLΓR，而LDOS仍来自有限链谱。",
+          "choices": [
+            "所有站点LDOS",
+            "所有有限链能级",
+            "两端透射T"
+          ],
+          "answer": 2,
+          "explanation": "右接触为零意味着ΓR=0，T=0；有局域谱权重并不意味着跨器件传输。"
+        },
+        {
+          "prompt": "两条扫描曲线看似没有窄峰，怎样检查最可靠？",
+          "hint": "区分能量分辨率与人为展宽。",
+          "choices": [
+            "只增加η使图更平滑",
+            "缩小扫描窗、加密采样并减小η比较",
+            "仅修改曲线颜色"
+          ],
+          "answer": 1,
+          "explanation": "加密能量采样与η收敛必须分别检查，粗网格可能漏采弱接触共振。"
+        }
+      ]
+    },
+    {
+      "id": "device-continuity-steps",
+      "module": "device",
+      "lesson": "device-ssh",
+      "title": "从端态到可检查的器件结论",
+      "prompt": "对同一SSH有限链，只改变接触强度，并使用有限正数η计算。",
+      "steps": [
+        {
+          "prompt": "端点LDOS很大，能否直接宣布两端电导很大？",
+          "hint": "一侧接触断开的反例仍可能有局域谱峰。",
+          "choices": [
+            "能，LDOS就是电导",
+            "不能，还取决于两侧耦合及传播",
+            "能，只要端点数为2"
+          ],
+          "answer": 1,
+          "explanation": "LDOS是局域谱量，T是连接左右电极的散射量。"
+        },
+        {
+          "prompt": "若T=.7、R=.29、Aη=.01，守恒是否通过？",
+          "hint": "人工损失不能从守恒式中省略。",
+          "choices": [
+            "通过，因为三者之和为1",
+            "失败，因为T+R≠1",
+            "无法检查"
+          ],
+          "answer": 0,
+          "explanation": "有限η会造成已报告的人工吸收；应核验T+R+Aη=1并再向η→0收敛。"
+        },
+        {
+          "prompt": "内部站点i的正确连续性检查是什么？",
+          "hint": "损失为正，入流大于出流。",
+          "choices": [
+            "Jin+Jout=0",
+            "Jout−Jin=2η|ψi|²",
+            "Jin−Jout=2η|ψi|²"
+          ],
+          "answer": 2,
+          "explanation": "迟致解析正虚部引入负的概率源；以正向通量定义，入流减出流等于损失。"
+        },
+        {
+          "prompt": "比较弱强接触后，应保存哪些信息支撑结论？",
+          "hint": "仅截一张峰形图不能复现计算。",
+          "choices": [
+            "只保存图片",
+            "只写SSH三个字",
+            "模型、终止方式、接触、能量、η与采样，以及T/LDOS和残差"
+          ],
+          "answer": 2,
+          "explanation": "要区分材料模型、边界条件与数值设置，并连接已有Zak/有限链证据，不能从一个透射峰独自确定拓扑。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "device-perfect-wire",
+      "module": "device",
+      "title": "理想量子线：从能带通道到电导量子",
+      "summary": "用完全匹配的有限链检验T≈1，再加入一个势垒，与解析散射公式核对。",
+      "kind": "原创单轨道教学器件",
+      "assumption": "一维非相互作用链、相同电极与零温线性响应；不拟合特定金属或纳米线。",
+      "preset": "device-perfect",
+      "links": [
+        [
+          "周期紧束缚与有限体系",
+          "#magnetictb"
+        ],
+        [
+          "半经典电子输运",
+          "#compute/electron-transport-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "device-ssh-contact",
+      "module": "device",
+      "title": "同一SSH链：Zak、端态和接触透射",
+      "summary": "沿用t₁=.6、t₂=1的约定，从周期模型走到N=12有限链，再比较弱强电极接触。",
+      "kind": "跨模块教学模型",
+      "assumption": "有限长度会劈裂端态；两端透射取决于接触和能量。没有计算真实聚乙炔器件，也不由单峰唯一判定拓扑。",
+      "preset": "device-ssh-weak",
+      "links": [
+        [
+          "SSH量子几何",
+          "#compute/quantum-geometry-lab?preset=geometry-ssh-topological"
+        ],
+        [
+          "二聚化与能带展开",
+          "#compute/unfold-lab"
+        ],
+        [
+          "器件跨模块项目",
+          "#atlas/projects?project=ssh-device"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "device-contact-resonance",
+      "module": "device",
+      "title": "弱接触共振：谱峰与透射峰的联系",
+      "summary": "比较奇数均匀链的低能共振和断开右电极的反例，检查能量采样与数值展宽。",
+      "kind": "数值方法与器件边界案例",
+      "assumption": "接触电极是理想半无限单通道链；η只是数值调节量，模型没有实际非弹性散射、有限偏压或电子间相互作用。",
+      "preset": "device-resonance",
+      "links": [
+        [
+          "器件输运课堂",
+          "#classroom/crystal?module=device"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ],
+        [
+          "方法与单位",
+          "docs/device-transport-lab.md"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "device-kwant",
+      "title": "Kwant：量子线、电极与Landauer电导",
+      "url": "https://www.kwant-project.org/doc/1/tutorial/first_steps"
+    },
+    {
+      "id": "device-kwant-paper",
+      "title": "Groth et al.：Kwant量子输运方法论文",
+      "url": "https://arxiv.org/abs/1309.2926"
+    },
+    {
+      "id": "device-local",
+      "title": "Kwant：局域态密度与电流算符",
+      "url": "https://kwant-project.org/doc/1/tutorial/operators"
+    }
+  ]
+}

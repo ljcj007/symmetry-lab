@@ -1,5 +1,5 @@
-import {multiCurveSVG} from './material-research-ui.js?v=20261027-quantum1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261027-quantum1';
+import {multiCurveSVG} from './material-research-ui.js?v=20261028-response1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261028-response1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(5)):'—';
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');

@@ -1,0 +1,20 @@
+{
+  "model": "ssh",
+  "sites": 12,
+  "hopping": 1,
+  "dimerRatio": 0.6,
+  "gate": 0,
+  "barrier": 0,
+  "barrierStart": 6,
+  "barrierWidth": 1,
+  "leadHopping": 1,
+  "leadOnsite": 0,
+  "contactLeft": 0.15,
+  "contactRight": 0,
+  "energy": 0.05,
+  "energyMin": -0.3,
+  "energyMax": 0.3,
+  "samples": 201,
+  "eta": 1e-7,
+  "spinDegeneracy": 1
+}

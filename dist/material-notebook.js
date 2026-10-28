@@ -1,9 +1,9 @@
 // Browser-local, explicit research records. No network or automatic upload.
 export const NOTEBOOK_VERSION=1;
-export const RELEASE='20261027-quantum1';
+export const RELEASE='20261028-response1';
 export const MAX_PROJECT_BYTES=32*1024*1024;
-const ACTIONS=new Set('analyze induce product match_bands magnetictb crystkit symbolic carat crystkit_ext carat_integral integral_normalizer symbolic_interfaces arithmetic_centralizer symbolic_spacegroups structure_bc standard_labels teaching_labs phonons tensors phase diffraction phonopy phonon_modes band_connectivity phonon_thermo distortion_lab magnon_lab qha_lab pairing_lab shg_lab unfold_lab crystal_field_lab quantum_geometry_lab electron_transport_lab'.split(' '));
-const PROGRESS=['pointgroups.progress','academy.progress','academy.derivations','lie.progress','lie.derivations','observables.progress','structure-dynamics.progress','material-research.progress','coupled-materials.progress','electronic-materials.progress','quantum-materials.progress'].map(x=>'symmetry-lab.'+x+'.v1');
+const ACTIONS=new Set('analyze induce product match_bands magnetictb crystkit symbolic carat crystkit_ext carat_integral integral_normalizer symbolic_interfaces arithmetic_centralizer symbolic_spacegroups structure_bc standard_labels teaching_labs phonons tensors phase diffraction phonopy phonon_modes band_connectivity phonon_thermo distortion_lab magnon_lab qha_lab pairing_lab shg_lab unfold_lab crystal_field_lab quantum_geometry_lab electron_transport_lab hall_response_lab device_transport_lab local_multiplet_lab'.split(' '));
+const PROGRESS=['pointgroups.progress','academy.progress','academy.derivations','lie.progress','lie.derivations','observables.progress','structure-dynamics.progress','material-research.progress','coupled-materials.progress','electronic-materials.progress','quantum-materials.progress','response-materials.progress'].map(x=>'symmetry-lab.'+x+'.v1');
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const uid=()=>globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
@@ -37,6 +37,11 @@ export function validateProject(project){
  if(!Array.isArray(project.records)||project.records.length>40||!object(project.progress))throw Error('每个材料项目最多保存 40 次计算');
  for(const key of ['created','updated','release'])if(typeof project[key]!=='string'||project[key].length>100)throw Error('项目日期或版本格式不正确');
  const ids=new Set();for(const r of project.records){if(!object(r)||typeof r.id!=='string'||!r.id||r.id.length>100||ids.has(r.id)||!ACTIONS.has(r.action)||!object(r.input)||!object(r.result)||typeof r.title!=='string'||r.title.length>160||typeof r.notes!=='string'||r.notes.length>20000||r.route!==safeRecordRoute(r.route))throw Error('项目内的计算记录不完整或含不支持的工具');for(const key of ['created','release'])if(typeof r[key]!=='string'||r[key].length>100)throw Error('计算记录日期或版本格式不正确');if(r.material!==undefined&&(typeof r.material!=='string'||r.material.length>120))throw Error('计算记录材料标签格式不正确');if(r.draftInput!==undefined&&(typeof r.draftInput!=='string'||bytes(r.draftInput)>MAX_PROJECT_BYTES))throw Error('重算输入草稿须为不超过 32 MiB 的文本');ids.add(r.id);}
+ if(project.assignment!==undefined){
+  const a=project.assignment;if(!object(a)||!['geometry-hall','ssh-device','orbital-multiplet'].includes(a.id)||!object(a.steps)||Object.keys(a.steps).length>12||typeof a.conclusion!=='string'||a.conclusion.length>12000)throw Error('项目作业元数据不完整');
+  const allowed={ 'geometry-hall':['geometry','plateau','metal'],'ssh-device':['bulk','weak','strong'],'orbital-multiplet':['orbitals','high','low'] };
+  for(const [key,step]of Object.entries(a.steps)){if(!allowed[a.id].includes(key)||!object(step)||typeof step.recordId!=='string'||(step.recordId!==''&&!ids.has(step.recordId))||typeof step.interpretation!=='string'||step.interpretation.length>8000)throw Error('项目作业阶段或引用的计算记录无效');}
+ }
  validateProgress(project.progress);
  if(bytes(project)>MAX_PROJECT_BYTES)throw Error('项目超过 32 MiB，请拆成多个项目');return project;
 }
