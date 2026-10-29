@@ -8,116 +8,596 @@
     "route": "hubbard-cluster-lab",
     "action": "hubbard_lab",
     "fields": [
-      {"key": "sites", "label": "站点数 L", "type": "number", "default": 2, "min": 2, "max": 4, "step": 1},
-      {"key": "nUp", "label": "上自旋电子数 N↑（不超过 L）", "type": "number", "default": 1, "min": 0, "max": 4, "step": 1},
-      {"key": "nDown", "label": "下自旋电子数 N↓（不超过 L）", "type": "number", "default": 1, "min": 0, "max": 4, "step": 1},
-      {"key": "boundary", "label": "边界条件", "type": "select", "default": "open", "options": [["open", "开边界：相邻站点成键"], ["periodic", "周期边界：首尾相连；二站点仅一条键"]]},
-      {"key": "hopping", "label": "跃迁 t（eV）", "type": "number", "default": 1, "min": 0, "max": 3, "step": 0.1},
-      {"key": "interactionU", "label": "同站点排斥 U（eV）", "type": "number", "default": 4, "min": 0, "max": 30, "step": 0.5},
-      {"key": "alternatingPotential", "label": "交错位能差 Δ（eV；首站点为 +Δ/2）", "type": "number", "default": 0, "min": -10, "max": 10, "step": 0.5},
-      {"key": "scanMaxU", "label": "U 扫描上限（eV）", "type": "number", "default": 12, "min": 0, "max": 30, "step": 0.5},
-      {"key": "scanPoints", "label": "U 扫描点数", "type": "number", "default": 25, "min": 11, "max": 41, "step": 1}
+      {
+        "key": "sites",
+        "label": "站点数 L",
+        "type": "number",
+        "default": 2,
+        "min": 2,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "nUp",
+        "label": "上自旋电子数 N↑（不超过 L）",
+        "type": "number",
+        "default": 1,
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "nDown",
+        "label": "下自旋电子数 N↓（不超过 L）",
+        "type": "number",
+        "default": 1,
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "boundary",
+        "label": "边界条件",
+        "type": "select",
+        "default": "open",
+        "options": [
+          [
+            "open",
+            "开边界：相邻站点成键"
+          ],
+          [
+            "periodic",
+            "周期边界：首尾相连；二站点仅一条键"
+          ]
+        ]
+      },
+      {
+        "key": "hopping",
+        "label": "跃迁 t（eV）",
+        "type": "number",
+        "default": 1,
+        "min": 0,
+        "max": 3,
+        "step": 0.1
+      },
+      {
+        "key": "interactionU",
+        "label": "同站点排斥 U（eV）",
+        "type": "number",
+        "default": 4,
+        "min": 0,
+        "max": 30,
+        "step": 0.5
+      },
+      {
+        "key": "alternatingPotential",
+        "label": "交错位能差 Δ（eV；首站点为 +Δ/2）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.5
+      },
+      {
+        "key": "scanMaxU",
+        "label": "U 扫描上限（eV）",
+        "type": "number",
+        "default": 12,
+        "min": 0,
+        "max": 30,
+        "step": 0.5
+      },
+      {
+        "key": "scanPoints",
+        "label": "U 扫描点数",
+        "type": "number",
+        "default": 25,
+        "min": 11,
+        "max": 41,
+        "step": 1
+      }
     ],
     "presets": [
-      {"id": "dimer-half", "title": "半填充二聚体：单重态与超交换", "input": {"sites": 2, "nUp": 1, "nDown": 1, "boundary": "open", "hopping": 1, "interactionU": 4, "alternatingPotential": 0, "scanMaxU": 12, "scanPoints": 25}},
-      {"id": "chain-four", "title": "四站点开链：边界与自旋关联", "input": {"sites": 4, "nUp": 2, "nDown": 2, "boundary": "open", "hopping": 1, "interactionU": 8, "alternatingPotential": 0, "scanMaxU": 16, "scanPoints": 33}},
-      {"id": "ionic-dimer", "title": "不等价二聚体：位能差与双占据竞争", "input": {"sites": 2, "nUp": 1, "nDown": 1, "boundary": "open", "hopping": 1, "interactionU": 4, "alternatingPotential": 6, "scanMaxU": 12, "scanPoints": 25}},
-      {"id": "atomic-dimer", "title": "原子极限：简并基态如何平均", "input": {"sites": 2, "nUp": 1, "nDown": 1, "boundary": "open", "hopping": 0, "interactionU": 4, "alternatingPotential": 0, "scanMaxU": 12, "scanPoints": 25}}
+      {
+        "id": "dimer-half",
+        "title": "半填充二聚体：单重态与超交换",
+        "input": {
+          "sites": 2,
+          "nUp": 1,
+          "nDown": 1,
+          "boundary": "open",
+          "hopping": 1,
+          "interactionU": 4,
+          "alternatingPotential": 0,
+          "scanMaxU": 12,
+          "scanPoints": 25
+        }
+      },
+      {
+        "id": "chain-four",
+        "title": "四站点开链：边界与自旋关联",
+        "input": {
+          "sites": 4,
+          "nUp": 2,
+          "nDown": 2,
+          "boundary": "open",
+          "hopping": 1,
+          "interactionU": 8,
+          "alternatingPotential": 0,
+          "scanMaxU": 16,
+          "scanPoints": 33
+        }
+      },
+      {
+        "id": "ionic-dimer",
+        "title": "不等价二聚体：位能差与双占据竞争",
+        "input": {
+          "sites": 2,
+          "nUp": 1,
+          "nDown": 1,
+          "boundary": "open",
+          "hopping": 1,
+          "interactionU": 4,
+          "alternatingPotential": 6,
+          "scanMaxU": 12,
+          "scanPoints": 25
+        }
+      },
+      {
+        "id": "atomic-dimer",
+        "title": "原子极限：简并基态如何平均",
+        "input": {
+          "sites": 2,
+          "nUp": 1,
+          "nDown": 1,
+          "boundary": "open",
+          "hopping": 0,
+          "interactionU": 4,
+          "alternatingPotential": 0,
+          "scanMaxU": 12,
+          "scanPoints": 25
+        }
+      }
     ]
   },
   "lessons": [
     {
-      "id": "hubbard-basis", "module": "hubbard", "title": "先选粒子数扇区，再建立多体基底",
-      "summary": "把一个单粒子轨道的两种自旋扩展为占据数基底，并辨认费米符号和边界。", "preset": "dimer-half",
+      "id": "hubbard-basis",
+      "module": "hubbard",
+      "title": "先选粒子数扇区，再建立多体基底",
+      "summary": "把一个单粒子轨道的两种自旋扩展为占据数基底，并辨认费米符号和边界。",
+      "preset": "dimer-half",
       "sections": [
-        {"title": "每站点一个轨道，四种占据", "text": "每个站点允许空、仅↑、仅↓、↑↓四种局域状态。同自旋不能占据同一个轨道；反自旋可双占据，但付出能量 U。这里的单带指每站点一个空间轨道，并不表示电子没有自旋。", "formula": "nᵢσ ∈ {0,1}；N=N↑+N↓；Sᶻ=(N↑−N↓)/2"},
-        {"title": "用守恒量缩小矩阵", "text": "跃迁不翻转自旋，因此 N↑、N↓分别守恒。固定扇区的维数是两种自旋选位方式的乘积。二聚体 (1,1) 扇区有4个占据数组态基矢；四站点 (2,2) 扇区有36个，适合直接求全部本征值。", "formula": "dim H(N↑,N↓)=C(L,N↑) C(L,N↓)"},
-        {"title": "跳跃算符必须保留费米符号", "text": "矩阵元由产生、湮灭算符作用于同一个固定排序的占据数基底得到。跨过已占据费米模式会贡献负号。改变基底排序可以改变矩阵元素的符号，但一致变换后本征值和物理期望值不变。", "formula": "H=−t Σ⟨ij⟩σ(c†ᵢσcⱼσ+h.c.)+U Σᵢ nᵢ↑nᵢ↓+Σᵢ εᵢnᵢ"},
-        {"title": "边界条件先改变键表", "text": "开链只有相邻站点的 L−1 条键；周期链补上首尾键，每条无向键只计一次。本站二站点周期模型仍只有一条键，所以与开边界相同；三站点周期模型则是三角形。先检查键表，再比较谱，不能暗中把二聚体 t 加倍。", "formula": "εᵢ=(−1)ⁱ Δ/2，i=0,…,L−1"}
+        {
+          "title": "每站点一个轨道，四种占据",
+          "text": "每个站点允许空、仅↑、仅↓、↑↓四种局域状态。同自旋不能占据同一个轨道；反自旋可双占据，但付出能量 U。这里的单带指每站点一个空间轨道，并不表示电子没有自旋。",
+          "formula": "n_{iσ} ∈ {0,1}；N=N_{↑}+N_{↓}；S^z=(N_{↑}−N_{↓})/2"
+        },
+        {
+          "title": "用守恒量缩小矩阵",
+          "text": "跃迁不翻转自旋，因此 N_{↑}、N_{↓}分别守恒。固定扇区的维数是两种自旋选位方式的乘积。二聚体 (1,1) 扇区有4个占据数组态基矢；四站点 (2,2) 扇区有36个，适合直接求全部本征值。",
+          "formula": "dim H(N_{↑},N_{↓})=C(L,N_{↑}) C(L,N_{↓})"
+        },
+        {
+          "title": "跳跃算符必须保留费米符号",
+          "text": "矩阵元由产生、湮灭算符作用于同一个固定排序的占据数基底得到。跨过已占据费米模式会贡献负号。改变基底排序可以改变矩阵元素的符号，但一致变换后本征值和物理期望值不变。",
+          "formula": "H=−t Σ_{⟨ij⟩,σ}(c_{iσ}†c_{jσ}+h.c.)+U Σ_i n_{i↑}n_{i↓}+Σ_i ε_i n_i"
+        },
+        {
+          "title": "边界条件先改变键表",
+          "text": "开链只有相邻站点的 L−1 条键；周期链补上首尾键，每条无向键只计一次。本站二站点周期模型仍只有一条键，所以与开边界相同；三站点周期模型则是三角形。先检查键表，再比较谱，不能暗中把二聚体 t 加倍。",
+          "formula": "εᵢ=(−1)ⁱ Δ/2，i=0,…,L−1"
+        }
       ],
-      "references": ["hubbard-original", "hubbard-dimer"]
+      "references": [
+        "hubbard-original",
+        "hubbard-dimer"
+      ]
     },
     {
-      "id": "hubbard-superexchange", "module": "hubbard", "title": "二聚体的虚跃迁怎样产生反铁磁交换",
-      "summary": "用精确单重态—三重态分裂检验 4t²/U 的适用范围。", "preset": "dimer-half",
+      "id": "hubbard-superexchange",
+      "module": "hubbard",
+      "title": "二聚体的虚跃迁怎样产生反铁磁交换",
+      "summary": "用精确单重态—三重态分裂检验 4t²/U 的适用范围。",
+      "preset": "dimer-half",
       "sections": [
-        {"title": "先比较能利用双占据的自旋态", "text": "两个电子分居两站点时，单重态能通过跃迁与双占据组态混合，降低能量；三重态受到自旋及费米反对称性的限制。对称二聚体的三重态能量为0，最低单重态在 t>0 时低于0。", "formula": "E_S=[U−√(U²+16t²)]/2；E_T=0（Δ=0，N=2）"},
-        {"title": "精确分裂与大 U 展开", "text": "本实验专门比较 N=2 二聚体的最低 S=0 与 S=1 能量。Δ=0 时有解析表达式；U远大于t时，虚双占据的能量代价约为U，才得到4t²/U。U=0时精确分裂为2t，而大U近似不适用。", "formula": "J_ST=E_T−E_S=[√(U²+16t²)−U]/2 ≃ 4t²/U"},
-        {"title": "双占据没有突然消失", "text": "沿U扫描，有限t的对称二聚体双占据逐渐减小；它在有限正U下仍为非零。令 D=Σᵢ⟨nᵢ↑nᵢ↓⟩，则半填充二聚体有 D=∂E_S/∂U。减小D意味着电荷涨落受抑制，不等于已经发现热力学相变。", "formula": "D=[1−U/√(U²+16t²)]/2（Δ=0，t>0）"},
-        {"title": "自旋关联与交换能不是同一个量", "text": "⟨S₁·S₂⟩是无量纲关联；J_ST是能量。二聚体单重态中，双占据部分不携带局域自旋，所以⟨S₁·S₂⟩=−3(1−D)/4。U/t增大时关联趋向−3/4，但交换能尺度反而趋小。", "formula": "Sᵢ·Sⱼ=SᶻᵢSᶻⱼ+(S⁺ᵢS⁻ⱼ+S⁻ᵢS⁺ⱼ)/2"}
+        {
+          "title": "先比较能利用双占据的自旋态",
+          "text": "两个电子分居两站点时，单重态能通过跃迁与双占据组态混合，降低能量；三重态受到自旋及费米反对称性的限制。对称二聚体的三重态能量为0，最低单重态在 t>0 时低于0。",
+          "formula": "E_S=[U−√(U²+16t²)]/2；E_T=0（Δ=0，N=2）"
+        },
+        {
+          "title": "精确分裂与大 U 展开",
+          "text": "本实验专门比较 N=2 二聚体的最低 S=0 与 S=1 能量。Δ=0 时有解析表达式；U远大于t时，虚双占据的能量代价约为U，才得到4t²/U。U=0时精确分裂为2t，而大U近似不适用。",
+          "formula": "J_ST=E_T−E_S=[√(U²+16t²)−U]/2 ≃ 4t²/U"
+        },
+        {
+          "title": "双占据没有突然消失",
+          "text": "沿U扫描，有限t的对称二聚体双占据逐渐减小；它在有限正U下仍为非零。令 D=Σ_i⟨n_{i↑}n_{i↓}⟩，则半填充二聚体有 D=∂E_S/∂U。减小D意味着电荷涨落受抑制，不等于已经发现热力学相变。",
+          "formula": "D=[1−U/√(U²+16t²)]/2（Δ=0，t>0）"
+        },
+        {
+          "title": "自旋关联与交换能不是同一个量",
+          "text": "⟨S_1·S_2⟩是无量纲关联；J_ST是能量。二聚体单重态中，双占据部分不携带局域自旋，所以⟨S_1·S_2⟩=−3(1−D)/4。U/t增大时关联趋向−3/4，但交换能尺度反而趋小。",
+          "formula": "S_i·S_j=S^z_i S^z_j+(S^+_i S^-_j+S^-_i S^+_j)/2"
+        }
       ],
-      "references": ["hubbard-original", "hubbard-dimer"]
+      "references": [
+        "hubbard-original",
+        "hubbard-dimer"
+      ]
     },
     {
-      "id": "hubbard-gaps", "module": "hubbard", "title": "谱中的间隔究竟是哪一种隙",
-      "summary": "区分固定 Sz 扇区激发、二聚体 S/T 分裂与改变电子数的电荷增减能。", "preset": "chain-four",
+      "id": "hubbard-gaps",
+      "module": "hubbard",
+      "title": "谱中的间隔究竟是哪一种隙",
+      "summary": "区分固定 S^z 扇区激发、二聚体 S/T 分裂与改变电子数的电荷增减能。",
+      "preset": "chain-four",
       "sections": [
-        {"title": "固定扇区谱只回答指定空间内的问题", "text": "能谱来自输入的 (N↑,N↓) 扇区，因此固定N与Sz。扇区激发隙比较该扇区的基态能与高于整个基态简并子空间的下一能级；它未必是跨所有自旋扇区的最低激发，更不能自动命名为电荷隙。只有一个不同能级时，这个隙不定义。"},
-        {"title": "电荷增减需要重算相邻粒子数", "text": "对每个总N，先在所有允许的 (N↑,N↓) 中取最低基态能E₀(N)，再计算加一个与减一个电子的总能量代价。不能把用户选中的高能自旋扇区直接当作总N基态。空系统N=0和满系统N=2L缺少一侧粒子数，电荷增减隙不定义。", "formula": "Δc=E₀(N+1)+E₀(N−1)−2E₀(N)"},
-        {"title": "U=0 的小系统也能有非零间隔", "text": "对称二聚体半填充时，电荷增减隙为√(U²+16t²)−2t；U=0仍等于2t，因为只有离散的成键与反键轨道。这个有限尺寸间隔不是相互作用诱导的热力学Mott隙。改变L与边界会改变离散谱。", "formula": "Δc(L=2,N=2,Δ=0)=√(U²+16t²)−2t"},
-        {"title": "四站点可以检验机制，不能外推相图", "text": "比较四站点开链与环的局域密度、双占据和键间关联，能看出边界如何影响结果。但两个或四个站点不足以确定长程磁序、临界U或真实材料的金属—绝缘体转变。无限一维均匀模型的精确解是另一个问题，本站不实现Bethe Ansatz或热力学极限外推。"}
+        {
+          "title": "固定扇区谱只回答指定空间内的问题",
+          "text": "能谱来自输入的 (N_{↑},N_{↓}) 扇区，因此固定N与S^z。扇区激发隙比较该扇区的基态能与高于整个基态简并子空间的下一能级；它未必是跨所有自旋扇区的最低激发，更不能自动命名为电荷隙。只有一个不同能级时，这个隙不定义。"
+        },
+        {
+          "title": "电荷增减需要重算相邻粒子数",
+          "text": "对每个总N，先在所有允许的 (N_{↑},N_{↓}) 中取最低基态能E₀(N)，再计算加一个与减一个电子的总能量代价。不能把用户选中的高能自旋扇区直接当作总N基态。空系统N=0和满系统N=2L缺少一侧粒子数，电荷增减隙不定义。",
+          "formula": "Δ_c=E₀(N+1)+E₀(N−1)−2E₀(N)"
+        },
+        {
+          "title": "U=0 的小系统也能有非零间隔",
+          "text": "对称二聚体半填充时，电荷增减隙为√(U²+16t²)−2t；U=0仍等于2t，因为只有离散的成键与反键轨道。这个有限尺寸间隔不是相互作用诱导的热力学Mott隙。改变L与边界会改变离散谱。",
+          "formula": "Δ_c(L=2,N=2,Δ=0)=√(U²+16t²)−2t"
+        },
+        {
+          "title": "四站点可以检验机制，不能外推相图",
+          "text": "比较四站点开链与环的局域密度、双占据和键间关联，能看出边界如何影响结果。但两个或四个站点不足以确定长程磁序、临界U或真实材料的金属—绝缘体转变。无限一维均匀模型的精确解是另一个问题，本站不实现Bethe Ansatz或热力学极限外推。"
+        }
       ],
-      "references": ["hubbard-dimer", "hubbard-lieb-wu"]
+      "references": [
+        "hubbard-dimer",
+        "hubbard-lieb-wu"
+      ]
     },
     {
-      "id": "hubbard-ionic", "module": "hubbard", "title": "位能差、排斥与简并平均",
-      "summary": "通过不等价二聚体观察电荷偏移，再用原子极限检查基态平均的含义。", "preset": "ionic-dimer",
+      "id": "hubbard-ionic",
+      "module": "hubbard",
+      "title": "位能差、排斥与简并平均",
+      "summary": "通过不等价二聚体观察电荷偏移，再用原子极限检查基态平均的含义。",
+      "preset": "ionic-dimer",
       "sections": [
-        {"title": "正 Δ 把哪个站点抬高", "text": "内部从i=0编号，首站点的位能为+Δ/2，第二站点为−Δ/2。因此正Δ倾向把电子移向第二站点，而U抑制两电子同时占据它。单看总电子数守恒看不出这种重分布，要同时比较各站点密度与双占据。", "formula": "Σᵢ⟨nᵢ⟩=N；0≤⟨nᵢ↑nᵢ↓⟩≤1"},
-        {"title": "原子极限给出清楚的能量竞争", "text": "二聚体N=2、t=0时，各占一站点的位能和为0；两电子占据较低能站点的能量为U−|Δ|。两类组态在U=|Δ|相遇。打开有限t后组态混合，二聚体的密度变化通常表现为平滑交叉，不能称为体材料相变。", "formula": "E_分居=0；E_低位点双占据=U−|Δ|（t=0）"},
-        {"title": "简并时不能依赖任意本征向量", "text": "程序对所选固定扇区内的简并基态等权平均观测量，判定能量简并的容差为10⁻⁹ eV。这样结果不依赖数值对角化任选的简并基底。它不是有限温度计算，也没有自动混合不同Sz扇区；约束不同，平均值可以不同。", "formula": "⟨O⟩=(1/g)Σₐ₌₁ᵍ⟨ψₐ|O|ψₐ⟩"},
-        {"title": "严格 t=0 与 t→0⁺ 的区别", "text": "在Δ=0、U>0的二聚体 (1,1) 扇区，t=0有两个分居简并基态；等权平均得到⟨S₁·S₂⟩=−1/4。理论上非零t选择最低单重态，t→0⁺时关联趋向−3/4；数值计算需S/T分裂大于10⁻⁹ eV才能分辨，极小非零t也可能按简并平均。两种极限次序与数值容差都要注明。"}
+        {
+          "title": "正 Δ 把哪个站点抬高",
+          "text": "内部从i=0编号，首站点的位能为+Δ/2，第二站点为−Δ/2。因此正Δ倾向把电子移向第二站点，而U抑制两电子同时占据它。单看总电子数守恒看不出这种重分布，要同时比较各站点密度与双占据。",
+          "formula": "Σ_i⟨n_i⟩=N；0≤⟨n_{i↑}n_{i↓}⟩≤1"
+        },
+        {
+          "title": "原子极限给出清楚的能量竞争",
+          "text": "二聚体N=2、t=0时，各占一站点的位能和为0；两电子占据较低能站点的能量为U−|Δ|。两类组态在U=|Δ|相遇。打开有限t后组态混合，二聚体的密度变化通常表现为平滑交叉，不能称为体材料相变。",
+          "formula": "E_分居=0；E_低位点双占据=U−|Δ|（t=0）"
+        },
+        {
+          "title": "简并时不能依赖任意本征向量",
+          "text": "程序对所选固定扇区内的简并基态等权平均观测量，判定能量简并的容差为10⁻⁹ eV。这样结果不依赖数值对角化任选的简并基底。它不是有限温度计算，也没有自动混合不同S^z扇区；约束不同，平均值可以不同。",
+          "formula": "⟨O⟩=(1/g)Σₐ₌₁ᵍ⟨ψₐ|O|ψₐ⟩"
+        },
+        {
+          "title": "严格 t=0 与 t→0⁺ 的区别",
+          "text": "在Δ=0、U>0的二聚体 (1,1) 扇区，t=0有两个分居简并基态；等权平均得到⟨S_1·S_2⟩=−1/4。理论上非零t选择最低单重态，t→0⁺时关联趋向−3/4；数值计算需S/T分裂大于10⁻⁹ eV才能分辨，极小非零t也可能按简并平均。两种极限次序与数值容差都要注明。"
+        }
       ],
-      "references": ["hubbard-dimer", "hubbard-original"]
+      "references": [
+        "hubbard-dimer",
+        "hubbard-original"
+      ]
     }
   ],
   "exercises": [
     {
-      "id": "hubbard-basis-exercise", "module": "hubbard", "lesson": "hubbard-basis", "title": "从半填充到 36 维矩阵", "prompt": "使用四站点半填充预设，先手算基底规模，再核对边界。",
+      "id": "hubbard-basis-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-basis",
+      "title": "从半填充到 36 维矩阵",
+      "prompt": "使用四站点半填充预设，先手算基底规模，再核对边界。",
       "steps": [
-        {"prompt": "L=4、N↑=N↓=2 时，总电子数与 Sz 是多少？", "hint": "分别相加、相减。", "choices": ["N=4，Sz=0", "N=2，Sz=2", "N=8，Sz=0"], "answer": 0, "explanation": "N=2+2=4，每站点平均一个电子；Sz=(2−2)/2=0。"},
-        {"prompt": "固定 (2,2) 扇区的维数是多少？", "hint": "两种自旋分别从4个站点选2个。", "choices": ["16", "36", "256"], "answer": 1, "explanation": "C(4,2)²=6²=36；256是未固定任何粒子数的完整Fock空间维数。"},
-        {"prompt": "四站点开链改为周期链后，无向键数如何变？", "hint": "只补一条首尾键。", "choices": ["从3变为6", "从4变为8", "从3变为4"], "answer": 2, "explanation": "开链有01、12、23，周期链再加30；每条键的双向跃迁已包含在h.c.中。"},
-        {"prompt": "本站二站点周期模型是否应把跃迁 t 加倍？", "hint": "同一条无向键只计一次。", "choices": ["不应，二站点开边界与周期边界相同", "应，周期边界一定有两条独立键", "仅U=0时加倍"], "answer": 0, "explanation": "两站点首尾相连仍是同一对站点；重复加键会改变约定中的模型。"}
+        {
+          "prompt": "L=4、N_{↑}=N_{↓}=2 时，总电子数与 S^z 是多少？",
+          "hint": "分别相加、相减。",
+          "choices": [
+            "N=4，S^z=0",
+            "N=2，S^z=2",
+            "N=8，S^z=0"
+          ],
+          "answer": 0,
+          "explanation": "N=2+2=4，每站点平均一个电子；S^z=(2−2)/2=0。"
+        },
+        {
+          "prompt": "固定 (2,2) 扇区的维数是多少？",
+          "hint": "两种自旋分别从4个站点选2个。",
+          "choices": [
+            "16",
+            "36",
+            "256"
+          ],
+          "answer": 1,
+          "explanation": "C(4,2)²=6²=36；256是未固定任何粒子数的完整Fock空间维数。"
+        },
+        {
+          "prompt": "四站点开链改为周期链后，无向键数如何变？",
+          "hint": "只补一条首尾键。",
+          "choices": [
+            "从3变为6",
+            "从4变为8",
+            "从3变为4"
+          ],
+          "answer": 2,
+          "explanation": "开链有01、12、23，周期链再加30；每条键的双向跃迁已包含在h.c.中。"
+        },
+        {
+          "prompt": "本站二站点周期模型是否应把跃迁 t 加倍？",
+          "hint": "同一条无向键只计一次。",
+          "choices": [
+            "不应，二站点开边界与周期边界相同",
+            "应，周期边界一定有两条独立键",
+            "仅U=0时加倍"
+          ],
+          "answer": 0,
+          "explanation": "两站点首尾相连仍是同一对站点；重复加键会改变约定中的模型。"
+        }
       ]
     },
     {
-      "id": "hubbard-exchange-exercise", "module": "hubbard", "lesson": "hubbard-superexchange", "title": "用二聚体精确解检验超交换", "prompt": "取t=1 eV、U=4 eV、Δ=0、N=2，比较精确能量与近似。",
+      "id": "hubbard-exchange-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-superexchange",
+      "title": "用二聚体精确解检验超交换",
+      "prompt": "取t=1 eV、U=4 eV、Δ=0、N=2，比较精确能量与近似。",
       "steps": [
-        {"prompt": "最低单重态能量 E_S 是哪一个？", "hint": "计算(4−√32)/2。", "choices": ["+0.828427 eV", "−0.828427 eV", "−4 eV"], "answer": 1, "explanation": "跃迁混合双占据组态，使单重态能量降低到约−0.828427 eV。"},
-        {"prompt": "三重态能量为0，精确 S/T 分裂是多少？", "hint": "J_ST=E_T−E_S。", "choices": ["0 eV", "4 eV", "0.828427 eV"], "answer": 2, "explanation": "分裂为约0.828427 eV；它是正能量，不是负的自旋关联。"},
-        {"prompt": "4t²/U 在此给1 eV，应如何判断？", "hint": "U/t=4还不是无限大。", "choices": ["它是大U近似，此处高于精确值", "它必须与精确值完全一致", "精确解应替换成这个值"], "answer": 0, "explanation": "高阶项在有限U/t时仍有贡献；应沿U扫描观察相对误差如何减小。"},
-        {"prompt": "将U继续增大时，哪组趋势适用于此对称二聚体？", "hint": "比较D的解析式与J_ST≈4t²/U。", "choices": ["双占据增大、J_ST增大", "双占据减小、J_ST减小", "双占据不变、J_ST增大"], "answer": 1, "explanation": "电荷涨落和交换能均减小，同时自旋关联趋近−3/4；更强的反铁磁关联不意味着更大的交换能。"}
+        {
+          "prompt": "最低单重态能量 E_S 是哪一个？",
+          "hint": "计算(4−√32)/2。",
+          "choices": [
+            "+0.828427 eV",
+            "−0.828427 eV",
+            "−4 eV"
+          ],
+          "answer": 1,
+          "explanation": "跃迁混合双占据组态，使单重态能量降低到约−0.828427 eV。"
+        },
+        {
+          "prompt": "三重态能量为0，精确 S/T 分裂是多少？",
+          "hint": "J_ST=E_T−E_S。",
+          "choices": [
+            "0 eV",
+            "4 eV",
+            "0.828427 eV"
+          ],
+          "answer": 2,
+          "explanation": "分裂为约0.828427 eV；它是正能量，不是负的自旋关联。"
+        },
+        {
+          "prompt": "4t²/U 在此给1 eV，应如何判断？",
+          "hint": "U/t=4还不是无限大。",
+          "choices": [
+            "它是大U近似，此处高于精确值",
+            "它必须与精确值完全一致",
+            "精确解应替换成这个值"
+          ],
+          "answer": 0,
+          "explanation": "高阶项在有限U/t时仍有贡献；应沿U扫描观察相对误差如何减小。"
+        },
+        {
+          "prompt": "将U继续增大时，哪组趋势适用于此对称二聚体？",
+          "hint": "比较D的解析式与J_ST≈4t²/U。",
+          "choices": [
+            "双占据增大、J_ST增大",
+            "双占据减小、J_ST减小",
+            "双占据不变、J_ST增大"
+          ],
+          "answer": 1,
+          "explanation": "电荷涨落和交换能均减小，同时自旋关联趋近−3/4；更强的反铁磁关联不意味着更大的交换能。"
+        }
       ]
     },
     {
-      "id": "hubbard-gap-exercise", "module": "hubbard", "lesson": "hubbard-gaps", "title": "不要把三种能隙混为一谈", "prompt": "先考虑U=0的半填充二聚体，再考察粒子数边界。",
+      "id": "hubbard-gap-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-gaps",
+      "title": "不要把三种能隙混为一谈",
+      "prompt": "先考虑U=0的半填充二聚体，再考察粒子数边界。",
       "steps": [
-        {"prompt": "电荷增减隙使用哪组能量？", "hint": "需要改变总粒子数。", "choices": ["任意两个固定Sz能级之差", "同一N的两个自旋态之差", "E₀(N+1)+E₀(N−1)−2E₀(N)"], "answer": 2, "explanation": "其中每个E₀都要在该总N的所有允许自旋扇区中取最小值。"},
-        {"prompt": "t=1、U=Δ=0的二聚体半填充电荷增减隙是多少？", "hint": "使用√(U²+16t²)−2t。", "choices": ["2 eV", "0 eV", "4 eV"], "answer": 0, "explanation": "√16−2=2 eV，这是离散单粒子能级造成的有限尺寸间隔。"},
-        {"prompt": "这个U=0的非零间隔能证明Mott绝缘相吗？", "hint": "本例没有电子间排斥，也没有取热力学极限。", "choices": ["能，任何非零隙都叫Mott隙", "不能，需区分有限尺寸与相互作用效应", "能，只需换成周期边界"], "answer": 1, "explanation": "有限团簇谱本来离散；仅凭两个站点的能隙不能判断无限系统的相。"},
-        {"prompt": "N=0时应该怎样报告电荷增减隙？", "hint": "N−1没有物理粒子数扇区。", "choices": ["强制记为0", "将E₀(−1)设为E₀(0)", "不定义，并说明缺少一侧粒子数"], "answer": 2, "explanation": "空或满体系不能进行双侧增减；缺失值不能伪装成零能隙。"}
+        {
+          "prompt": "电荷增减隙使用哪组能量？",
+          "hint": "需要改变总粒子数。",
+          "choices": [
+            "任意两个固定S^z能级之差",
+            "同一N的两个自旋态之差",
+            "E₀(N+1)+E₀(N−1)−2E₀(N)"
+          ],
+          "answer": 2,
+          "explanation": "其中每个E₀都要在该总N的所有允许自旋扇区中取最小值。"
+        },
+        {
+          "prompt": "t=1、U=Δ=0的二聚体半填充电荷增减隙是多少？",
+          "hint": "使用√(U²+16t²)−2t。",
+          "choices": [
+            "2 eV",
+            "0 eV",
+            "4 eV"
+          ],
+          "answer": 0,
+          "explanation": "√16−2=2 eV，这是离散单粒子能级造成的有限尺寸间隔。"
+        },
+        {
+          "prompt": "这个U=0的非零间隔能证明Mott绝缘相吗？",
+          "hint": "本例没有电子间排斥，也没有取热力学极限。",
+          "choices": [
+            "能，任何非零隙都叫Mott隙",
+            "不能，需区分有限尺寸与相互作用效应",
+            "能，只需换成周期边界"
+          ],
+          "answer": 1,
+          "explanation": "有限团簇谱本来离散；仅凭两个站点的能隙不能判断无限系统的相。"
+        },
+        {
+          "prompt": "N=0时应该怎样报告电荷增减隙？",
+          "hint": "N−1没有物理粒子数扇区。",
+          "choices": [
+            "强制记为0",
+            "将E₀(−1)设为E₀(0)",
+            "不定义，并说明缺少一侧粒子数"
+          ],
+          "answer": 2,
+          "explanation": "空或满体系不能进行双侧增减；缺失值不能伪装成零能隙。"
+        }
       ]
     },
     {
-      "id": "hubbard-ionic-exercise", "module": "hubbard", "lesson": "hubbard-ionic", "title": "位能竞争与原子极限的平均", "prompt": "先取二聚体t=0、U=4、Δ=6 eV，再把Δ设为0。",
+      "id": "hubbard-ionic-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-ionic",
+      "title": "位能竞争与原子极限的平均",
+      "prompt": "先取二聚体t=0、U=4、Δ=6 eV，再把Δ设为0。",
       "steps": [
-        {"prompt": "正Δ=6时，两个站点的位能分别是多少？", "hint": "首站点对应内部索引i=0。", "choices": ["+3、−3 eV", "−3、+3 eV", "+6、−6 eV"], "answer": 0, "explanation": "ε₀=+Δ/2、ε₁=−Δ/2，第二站点较低。"},
-        {"prompt": "N=2、t=0时，两电子都在低能站点的能量是多少？", "hint": "U加两倍低站点位能。", "choices": ["+2 eV", "−2 eV", "0 eV"], "answer": 1, "explanation": "U−|Δ|=4−6=−2 eV，低于每站点一个电子的0 eV。"},
-        {"prompt": "改为Δ=0、保持t=0与U>0，(1,1)扇区基态应如何处理？", "hint": "两个分居组态简并。", "choices": ["任选一个并把选择视为唯一物理态", "只保留单重态", "在所选扇区的基态子空间等权平均"], "answer": 2, "explanation": "等权平均不依赖对角化返回的简并本征向量；程序不会自动纳入其他Sz扇区。"},
-        {"prompt": "这个严格t=0的固定Sz等权平均给出哪一个⟨S₁·S₂⟩？", "hint": "两个分居直积态都有Sz₁Sz₂=−1/4，等权混合的横向平均为0。", "choices": ["−1/4", "−3/4", "+1/4"], "answer": 0, "explanation": "−3/4对应纯单重态，也是t→0⁺的极限；严格t=0的简并平均与该极限不同。"}
+        {
+          "prompt": "正Δ=6时，两个站点的位能分别是多少？",
+          "hint": "首站点对应内部索引i=0。",
+          "choices": [
+            "+3、−3 eV",
+            "−3、+3 eV",
+            "+6、−6 eV"
+          ],
+          "answer": 0,
+          "explanation": "ε₀=+Δ/2、ε₁=−Δ/2，第二站点较低。"
+        },
+        {
+          "prompt": "N=2、t=0时，两电子都在低能站点的能量是多少？",
+          "hint": "U加两倍低站点位能。",
+          "choices": [
+            "+2 eV",
+            "−2 eV",
+            "0 eV"
+          ],
+          "answer": 1,
+          "explanation": "U−|Δ|=4−6=−2 eV，低于每站点一个电子的0 eV。"
+        },
+        {
+          "prompt": "改为Δ=0、保持t=0与U>0，(1,1)扇区基态应如何处理？",
+          "hint": "两个分居组态简并。",
+          "choices": [
+            "任选一个并把选择视为唯一物理态",
+            "只保留单重态",
+            "在所选扇区的基态子空间等权平均"
+          ],
+          "answer": 2,
+          "explanation": "等权平均不依赖对角化返回的简并本征向量；程序不会自动纳入其他S^z扇区。"
+        },
+        {
+          "prompt": "这个严格t=0的固定S^z等权平均给出哪一个⟨S_1·S_2⟩？",
+          "hint": "两个分居直积态都有S^z_1 S^z_2=−1/4，等权混合的横向平均为0。",
+          "choices": [
+            "−1/4",
+            "−3/4",
+            "+1/4"
+          ],
+          "answer": 0,
+          "explanation": "−3/4对应纯单重态，也是t→0⁺的极限；严格t=0的简并平均与该极限不同。"
+        }
       ]
     }
   ],
   "cases": [
-    {"id": "hubbard-organic-dimer", "module": "hubbard", "title": "分子二聚体的最小跃迁—排斥模型", "kind": "材料机制原型", "summary": "用两站点模型理解两个局域轨道之间的电子离域、双占据代价与单重态稳定化。", "assumption": "这是受分子二聚体启发的两个抽象轨道，不是某种有机盐的定量模型；未包括分子结构、晶格网络、长程库仑作用或拟合材料参数。", "preset": "dimer-half", "links": [["二聚体精确对角化", "#compute/hubbard-cluster-lab"], ["虚跃迁课堂", "#classroom/spin?module=hubbard"]]},
-    {"id": "hubbard-cu-chain", "module": "hubbard", "title": "从局域电子排斥到短程反铁磁关联", "kind": "低能模型练习", "summary": "在四站点半填充链上观察双占据受抑制和短程自旋关联，并比较开边界与环。", "assumption": "只借用铜氧体系讨论中的单轨道有效模型动机；本站四站点链没有显式氧p轨道、二维CuO₂结构或电荷转移能，不预测铜氧材料磁序、超导或Mott转变。", "preset": "chain-four", "links": [["四站点计算", "#compute/hubbard-cluster-lab"], ["能隙定义课堂", "#classroom/spin?module=hubbard"]]},
-    {"id": "hubbard-ionic-transfer", "module": "hubbard", "title": "不等价位点之间的电荷重分布", "kind": "机制对照案例", "summary": "改变Δ和U，比较电子偏向低位能站点与避免双占据的竞争，用密度而非仅用能量判断变化。", "assumption": "交错位能是外加的单轨道模型参数；它不等于真实配体到金属的电荷转移能，也没有自洽屏蔽、结构弛豫或材料参数拟合。", "preset": "ionic-dimer", "links": [["不等价二聚体", "#compute/hubbard-cluster-lab"], ["位能与简并课堂", "#classroom/spin?module=hubbard"]]},
-    {"id": "hubbard-atomic-limit", "module": "hubbard", "title": "严格原子极限的简并检查", "kind": "计算边界案例", "summary": "将t设为0，检查零双占据、基态简并及固定Sz等权平均，再与很小的非零t比较。", "assumption": "零温简并基态按所选粒子数扇区等权平均；这不是温度扫描，也不代表自发选择的磁性态。有限团簇无法单独确定热力学长程序。", "preset": "atomic-dimer", "links": [["原子极限实验", "#compute/hubbard-cluster-lab"], ["简并平均课堂", "#classroom/spin?module=hubbard"]]}
+    {
+      "id": "hubbard-organic-dimer",
+      "module": "hubbard",
+      "title": "分子二聚体的最小跃迁—排斥模型",
+      "kind": "材料机制原型",
+      "summary": "用两站点模型理解两个局域轨道之间的电子离域、双占据代价与单重态稳定化。",
+      "assumption": "这是受分子二聚体启发的两个抽象轨道，不是某种有机盐的定量模型；未包括分子结构、晶格网络、长程库仑作用或拟合材料参数。",
+      "preset": "dimer-half",
+      "links": [
+        [
+          "二聚体精确对角化",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "虚跃迁课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-cu-chain",
+      "module": "hubbard",
+      "title": "从局域电子排斥到短程反铁磁关联",
+      "kind": "低能模型练习",
+      "summary": "在四站点半填充链上观察双占据受抑制和短程自旋关联，并比较开边界与环。",
+      "assumption": "只借用铜氧体系讨论中的单轨道有效模型动机；本站四站点链没有显式氧p轨道、二维CuO₂结构或电荷转移能，不预测铜氧材料磁序、超导或Mott转变。",
+      "preset": "chain-four",
+      "links": [
+        [
+          "四站点计算",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "能隙定义课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-ionic-transfer",
+      "module": "hubbard",
+      "title": "不等价位点之间的电荷重分布",
+      "kind": "机制对照案例",
+      "summary": "改变Δ和U，比较电子偏向低位能站点与避免双占据的竞争，用密度而非仅用能量判断变化。",
+      "assumption": "交错位能是外加的单轨道模型参数；它不等于真实配体到金属的电荷转移能，也没有自洽屏蔽、结构弛豫或材料参数拟合。",
+      "preset": "ionic-dimer",
+      "links": [
+        [
+          "不等价二聚体",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "位能与简并课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-atomic-limit",
+      "module": "hubbard",
+      "title": "严格原子极限的简并检查",
+      "kind": "计算边界案例",
+      "summary": "将t设为0，检查零双占据、基态简并及固定S^z等权平均，再与很小的非零t比较。",
+      "assumption": "零温简并基态按所选粒子数扇区等权平均；这不是温度扫描，也不代表自发选择的磁性态。有限团簇无法单独确定热力学长程序。",
+      "preset": "atomic-dimer",
+      "links": [
+        [
+          "原子极限实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "简并平均课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    }
   ],
   "sources": [
-    {"id": "hubbard-original", "title": "J. Hubbard, Electron correlations in narrow energy bands, Proc. R. Soc. Lond. A 276, 238–257 (1963)", "url": "https://doi.org/10.1098/rspa.1963.0204"},
-    {"id": "hubbard-dimer", "title": "D. J. Carrascal et al., The Hubbard Dimer: A density functional case study of a many-body problem, J. Phys.: Condens. Matter 27, 393001 (2015)", "url": "https://arxiv.org/abs/1502.02194"},
-    {"id": "hubbard-lieb-wu", "title": "E. H. Lieb and F. Y. Wu, Absence of Mott Transition in an Exact Solution of the Short-Range, One-Band Model in One Dimension, Phys. Rev. Lett. 20, 1445–1448 (1968)", "url": "https://doi.org/10.1103/PhysRevLett.20.1445"}
+    {
+      "id": "hubbard-original",
+      "title": "J. Hubbard, Electron correlations in narrow energy bands, Proc. R. Soc. Lond. A 276, 238–257 (1963)",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "hubbard-dimer",
+      "title": "D. J. Carrascal et al., The Hubbard Dimer: A density functional case study of a many-body problem, J. Phys.: Condens. Matter 27, 393001 (2015)",
+      "url": "https://arxiv.org/abs/1502.02194"
+    },
+    {
+      "id": "hubbard-lieb-wu",
+      "title": "E. H. Lieb and F. Y. Wu, Absence of Mott Transition in an Exact Solution of the Short-Range, One-Band Model in One Dimension, Phys. Rev. Lett. 20, 1445–1448 (1968)",
+      "url": "https://doi.org/10.1103/PhysRevLett.20.1445"
+    }
   ]
 }

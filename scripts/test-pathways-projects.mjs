@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
+import {mathHTML} from '../dist/math-display.js';
+import {segmentFormula} from '../dist/math-notation.js';
 import {pathwaysAssignments,pathwaysEvidence} from '../dist/pathways-projects.js';
+
+const spinSource='⟨S_1·S_2⟩';
+assert.ok(JSON.stringify(pathwaysAssignments).includes(spinSource));
+const spinMarkup=segmentFormula(spinSource).filter(s=>s.type==='math').map(s=>mathHTML(s.tex)).join('');
+assert.equal((spinMarkup.match(/<msub>/g)||[]).length,2,'both site indices must remain subscripts');
 
 const json=path=>JSON.parse(fs.readFileSync(new URL('../'+path,import.meta.url),'utf8'));
 const catalog=json('dist/data/pathways-materials.json');

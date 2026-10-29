@@ -184,7 +184,7 @@ def calculate(payload=None):
             spectra.append(eigen)
         checks["screwSquareResidual"] = screw_residual
         core.require(screw_residual < 1e-8, "螺旋平方平移相位检验失败")
-        plots.append({"title": "2₁ 螺旋本征值 λ±=±exp(−iπkz)，相位分支在 kz+1 交换",
+        plots.append({"title": "2₁ 螺旋本征值 λ_{±}=±exp(−iπ k_z)，相位分支在 k_z+1 交换",
                       "xLabel": "kz（倒格分数坐标）", "yLabel": "无量纲本征值分量",
                       "series": [{"label": f"{sign} / {part}", "points": [[float(x), float(fun(y))] for x,y in zip(grid,branch)]}
                                  for sign,branch in zip(("λ+","λ−"), branches)

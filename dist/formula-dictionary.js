@@ -1,7 +1,7 @@
 // A read-only companion to the formula renderer; never rewrites source math.
-import {mathHTML} from './math-display.js?v=20261029-pathways1';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-pathways1';
-const RELEASE='20261029-pathways1';
+import {mathHTML} from './math-display.js?v=20261029-pathways1b';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-pathways1b';
+const RELEASE='20261029-pathways1b';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const selector='span.sl-math[data-math-source],.sl-equation[data-math-source],svg text[aria-label]';
 const interactive='button,a,input,select,textarea,code,[contenteditable="true"],[data-math-ignore],.fd-dialog,.fd-page';

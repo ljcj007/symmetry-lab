@@ -1,15 +1,15 @@
-import {renderPathwaysView,getPathwaysResult} from './pathways-ui.js?v=20261029-pathways1';
-import {renderSpectroscopyView,getSpectroscopyResult} from './spectroscopy-ui.js?v=20261029-pathways1';
-import {renderResponseMaterialsView,getResponseMaterialsResult} from './response-materials-ui.js?v=20261029-pathways1';
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261029-pathways1';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261029-pathways1';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261029-pathways1';
-import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261029-pathways1';
-import {renderStructureDynamicsView,getStructureDynamicsResult} from './structure-dynamics-ui.js?v=20261029-pathways1';
-import {renderMaterialResearchView,getMaterialResearchResult} from './material-research-ui.js?v=20261029-pathways1';
-import {renderCoupledMaterialsView,getCoupledMaterialsResult} from './coupled-materials-ui.js?v=20261029-pathways1';
-import {renderElectronicMaterialsView,getElectronicMaterialsResult} from './electronic-materials-ui.js?v=20261029-pathways1';
-import {renderQuantumMaterialsView,getQuantumMaterialsResult} from './quantum-materials-ui.js?v=20261029-pathways1';
+import {renderPathwaysView,getPathwaysResult} from './pathways-ui.js?v=20261029-pathways1b';
+import {renderSpectroscopyView,getSpectroscopyResult} from './spectroscopy-ui.js?v=20261029-pathways1b';
+import {renderResponseMaterialsView,getResponseMaterialsResult} from './response-materials-ui.js?v=20261029-pathways1b';
+import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261029-pathways1b';
+import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261029-pathways1b';
+import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261029-pathways1b';
+import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261029-pathways1b';
+import {renderStructureDynamicsView,getStructureDynamicsResult} from './structure-dynamics-ui.js?v=20261029-pathways1b';
+import {renderMaterialResearchView,getMaterialResearchResult} from './material-research-ui.js?v=20261029-pathways1b';
+import {renderCoupledMaterialsView,getCoupledMaterialsResult} from './coupled-materials-ui.js?v=20261029-pathways1b';
+import {renderElectronicMaterialsView,getElectronicMaterialsResult} from './electronic-materials-ui.js?v=20261029-pathways1b';
+import {renderQuantumMaterialsView,getQuantumMaterialsResult} from './quantum-materials-ui.js?v=20261029-pathways1b';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.

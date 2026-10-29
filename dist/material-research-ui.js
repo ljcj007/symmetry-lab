@@ -1,5 +1,5 @@
-import {svgMathText} from './math-svg.js?v=20261029-pathways1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-pathways1';
+import {svgMathText} from './math-svg.js?v=20261029-pathways1b';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-pathways1b';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');

@@ -1,15 +1,15 @@
-import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261029-pathways1';
-import {crystalSpan} from './crystal-notation.js?v=20261029-pathways1';
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261029-pathways1';
-import {renderResponseProjects} from './response-projects.js?v=20261029-pathways1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261029-pathways1';
-import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261029-pathways1';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261029-pathways1';
-import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261029-pathways1';
-import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261029-pathways1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261029-pathways1';
+import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261029-pathways1b';
+import {crystalSpan} from './crystal-notation.js?v=20261029-pathways1b';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261029-pathways1b';
+import {renderResponseProjects} from './response-projects.js?v=20261029-pathways1b';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261029-pathways1b';
+import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261029-pathways1b';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261029-pathways1b';
+import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261029-pathways1b';
+import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261029-pathways1b';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261029-pathways1b';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261029-pathways1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261029-pathways1b';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input);const result=await executePythonTask(action,input);captureCalculation(action,snapshot,result,context);return result;}
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
