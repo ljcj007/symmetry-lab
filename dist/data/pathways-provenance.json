@@ -707,13 +707,13 @@
     },
     {
       "path": "scripts/build-pathways-project-fixtures.py",
-      "sha256": "fbd9f1e66a93115c0a782b6cf022df83aac006777f1678bfa8bffb32a1bbcd0e",
-      "bytes": 933
+      "sha256": "c13467bf4ffa5d465e7600e489d269eb152adfa386892774324ba65ca433571c",
+      "bytes": 1265
     },
     {
       "path": "scripts/fixtures/pathways-projects.json",
-      "sha256": "7057da7ab47a8396e3bc95ce38c22f648bc659840bfbb6dfd5705c141f3ffdc1",
-      "bytes": 1734749
+      "sha256": "7d1fa47ccede9c64e63f755faef35a2cea1acc69bf985b1ebee41abe5c4acce3",
+      "bytes": 1734788
     },
     {
       "path": "scripts/fixtures/pathways.json.gz",
@@ -742,8 +742,8 @@
     },
     {
       "path": "scripts/test-pathways-projects.mjs",
-      "sha256": "71e636ac032524889a9607218d9292fe6b6265920b8ef88c691606e832bf4d29",
-      "bytes": 8732
+      "sha256": "5ccd65552e573ba2f34a99f05e1b83ca3a9d6e23ffd760de198bf662005703b5",
+      "bytes": 9345
     },
     {
       "path": "scripts/test-pathways-ui.mjs",

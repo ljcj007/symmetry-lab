@@ -69,8 +69,16 @@ for(const [module,key]of [['scattering','temperature'],['domainwall','onsite'],[
 if(process.argv.includes('--requests')){process.stdout.write(JSON.stringify(requests));process.exit(0);}
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/pathways-projects.json',import.meta.url),'utf8'));
 assert.deepEqual(fixture.requests,requests,'rebuild project fixtures after any template/preset change');
+assert.equal(fixture.sourceHashNormalization,'utf8-lf-v1');
+// Match Python's universal-newline UTF-8 normalization exactly. Only line
+// endings are canonicalized: source edits and other whitespace stay detectable.
+const sourceHash=text=>createHash('sha256').update(text.replace(/\r\n?/g,'\n'),'utf8').digest('hex');
+assert.equal(sourceHash('# 中文\r\nvalue = 1\r\n'),sourceHash('# 中文\nvalue = 1\n'));
+assert.equal(sourceHash('# 中文\rvalue = 1\r'),sourceHash('# 中文\nvalue = 1\n'));
+assert.notEqual(sourceHash('value = 1\n'),sourceHash('value = 2\n'));
+assert.notEqual(sourceHash('value = 1\n'),sourceHash('value = 1 \n'));
 for(const [name,hash]of Object.entries(fixture.sourceHashes)){
- const actual=createHash('sha256').update(fs.readFileSync(new URL('../dist/python/'+name,import.meta.url))).digest('hex');
+ const actual=sourceHash(fs.readFileSync(new URL('../dist/python/'+name,import.meta.url),'utf8'));
  assert.equal(actual,hash,'rebuild real Python fixtures after changing '+name);
 }
 const result=(project,stage)=>fixture.results[project+'/'+stage];
