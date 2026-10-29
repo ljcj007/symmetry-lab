@@ -1,3 +1,4 @@
+import {crystalSpan} from './crystal-notation.js?v=20261029-crystal1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sample = `NaCl conventional cell
@@ -61,7 +62,7 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
     if(!r){target.innerHTML=`<div class="empty-state">${state.busy?'<span class="spinner"></span>正在识别对称性并核对 BC 操作…':'导入结构后，显示 BC 原胞、基矢和原点变换。<br>也可以先使用 NaCl / CIF 示例。'}</div>`;return;}
     // The result schema is shared by CPython and the browser worker.
     const cell=r.bc_primitive;
-    target.innerHTML=`<div class="structure-summary"><span class="eyebrow">SPACE GROUP ${esc(r.group_number)}</span><h2>${esc(r.international)}</h2><p>${esc(r.bz_type||r.bravais)} · Hall ${esc(r.hall_number)}</p></div>
+    target.innerHTML=`<div class="structure-summary"><span class="eyebrow">SPACE GROUP ${esc(r.group_number)}</span><h2>${crystalSpan(r.international,'hm')}</h2><p>${esc(r.bz_type||r.bravais)} · Hall ${esc(r.hall_number)}</p></div>
       <div class="controls-row"><button class="primary small" id="structure-open-group">在工作台计算表示 →</button><button class="text-button" id="structure-json">↓ 完整 JSON</button></div>
       <div class="structure-downloads"><button class="secondary small" id="structure-poscar">↓ BC POSCAR</button><button class="secondary small" id="structure-cif">↓ BC CIF</button></div>
       <p class="mini-heading">BC 原胞基矢 / Å · 每行一个基矢</p>${matrix(cell.lattice)}<p class="form-note">${cell.positions.length} 个原子 · ${esc([...new Set(cell.species)].join(' / '))}</p>

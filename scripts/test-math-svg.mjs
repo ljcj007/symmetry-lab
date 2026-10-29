@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {svgMathSegments,svgMathText,needsSvgMath} from '../dist/math-svg.js';
+import {svgMathSegments,svgMathText,needsSvgMath,layoutSvgMath} from '../dist/math-svg.js';
 import {quantumCurveSVG,heatmapSVG} from '../dist/quantum-plots.js';
 
 const runs=value=>svgMathSegments(value).filter(s=>s.script);
@@ -19,12 +19,33 @@ const hostile=svgMathText('x_{<script>alert(1)</script>}');
 assert.doesNotMatch(hostile,/<script|<img|onclick=/);assert.match(hostile,/&lt;script&gt;/);
 const paired=svgMathText('k_x^2');
 assert.match(paired,/data-svg-math-source="k_x\^2"/);
-assert.match(paired,/baseline-shift="sub"/);assert.match(paired,/baseline-shift="super" dx="-0.6em"/);
-assert.equal(paired.replace(/<[^>]*>/g,''),'kx2','Layout must not insert phantom characters');
+assert.match(paired,/data-svg-script="sub" dy="0.28em"/);assert.match(paired,/data-svg-script="super" dy="-0.78em"/);assert.match(paired,/data-svg-script-pair/);assert.doesNotMatch(paired,/monospace|textLength|lengthAdjust|baseline-shift|dx=/);
+assert.equal(paired.replace(/<[^>]*>/g,'').replace(/&#8203;/g,''),'kx2','Visible math content must remain identical; zero-width advance is layout only');
+assert.match(paired,/data-svg-script-advance="true" dy="0.5em" aria-hidden="true">&#8203;/);
 const curve=quantumCurveSVG([{label:'T',points:[[0,0],[1,1]]}],{xLabel:'kₓ（rad）',yLabel:'e²/h'});
 assert.match(curve,/aria-label="e²\/h 随 kₓ（rad） 变化"/);
-assert.match(curve,/<text[^>]*><tspan data-svg-math-source="e²\/h">e<tspan baseline-shift="super"/);
+assert.match(curve,/<text[^>]*><tspan data-svg-math-source="e²\/h">e<tspan font-size="75%"><tspan data-svg-script="super" dy="-0.5em"/);
 const map=heatmapSVG([0,1],[0,1],[[0,1],[1,0]],{xLabel:'k_x',yLabel:'k_y',title:'Δ²'});
 assert.match(map,/data-svg-math-source="k_x"/);assert.match(map,/data-svg-math-source="k_y"/);assert.match(map,/data-svg-math-source="Δ²"/);
 assert.doesNotMatch(map,/aria-label="[^\"]*<tspan/,'Markup must never enter accessibility text attributes');
-console.log('SVG math: Unicode/ASCII scripts, paired alignment, source preservation, safe XML and shared plot integration passed.');
+
+assert.deepEqual(runs('C2z、C₂z、C3v'),[{text:'2z',script:'sub'},{text:'2z',script:'sub'},{text:'3v',script:'sub'}]);
+assert.equal(needsSvgMath('suffixC2z dataC3value'),false);
+assert.deepEqual(svgMathSegments('R̄⁻¹'),[{text:'R',script:null,accent:'bar'},{text:'−1',script:'super'}]);
+assert.deepEqual(runs('R̄⁻¹′'),[{text:'−1′',script:'super'}]);
+assert.deepEqual(svgMathSegments('k̄_x'),[{text:'k',script:null,accent:'bar'},{text:'x',script:'sub'}]);
+assert.deepEqual(svgMathSegments('C̄₂z'),[{text:'C',script:null,accent:'bar'},{text:'2z',script:'sub'}]);
+assert.deepEqual(svgMathSegments('10̄'),[{text:'10',script:null,accent:'bar'}]);
+assert.match(svgMathText('R̄⁻¹'),/text-decoration="overline"[^>]*>R<\/tspan><tspan font-size="75%"><tspan data-svg-script="super" dy="-0.5em"/);
+const attrs=()=>({values:{},setAttribute(k,v){this.values[k]=v;},removeAttribute(k){delete this.values[k];}});
+const first={...attrs(),getComputedTextLength:()=>17.25},second={...attrs(),getComputedTextLength:()=>8.875},advance=attrs();
+const pair={...attrs(),querySelector:s=>s.includes('first')?first:s.includes('second')?second:advance};
+const fakeRoot={matches:()=>false,querySelectorAll:()=>[pair]};
+assert.equal(layoutSvgMath(fakeRoot),1);assert.equal(second.values.dx,'-17.25');assert.equal(advance.values.dx,'8.375');
+assert.equal(layoutSvgMath(fakeRoot),1);assert.equal(second.values.dx,'-17.25','Measured layout must not accumulate offsets');
+first.getComputedTextLength=()=>5;second.getComputedTextLength=()=>21;
+layoutSvgMath(fakeRoot);assert.equal(second.values.dx,'-5');assert.equal(advance.values.dx,'0','The longer second script already supplies the required advance');
+
+console.log('SVG math: measured paired-script advances, base-bound overlines, operation indices, safe XML and shared plot integration passed.');
+
+assert.match(svgMathText("barC21p"),/data-svg-overline="true">C<\/tspan>/);assert.match(svgMathText("barC21p"),/>21<\/tspan>/);assert.match(svgMathText("barC21p"),/>′<\/tspan>/);

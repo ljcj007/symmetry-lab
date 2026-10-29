@@ -109,7 +109,7 @@ assert.equal(freeze.attributes.href,'#compute/phonon-modes?material=gaas');
 transfer.container.querySelector('#dyn-file-text').value='unsubmitted control edit';freeze.onclick();
 const researchData=JSON.parse(fs.readFileSync(new URL('../dist/data/material-research.json',import.meta.url),'utf8'));
 globalThis.fetch=async url=>String(url).includes('material-research.json')?{ok:true,json:async()=>researchData}:normalFetch(url);
-const {renderMaterialResearchView}=await import('../dist/material-research-ui.js?v=20261029-math3');
+const {renderMaterialResearchView}=await import('../dist/material-research-ui.js?v=20261029-crystal1');
 const handoffContainer=new Container();let handoffInput;
 await renderMaterialResearchView({container:handoffContainer,selection:{calculationOnly:true,module:'modes',material:'gaas'},run:async(action,input)=>{handoffInput=input;throw Error('Input captured for transfer regression');},download:()=>{}});
 assert.equal(handoffContainer.querySelector('#mr-preset').value,'custom');

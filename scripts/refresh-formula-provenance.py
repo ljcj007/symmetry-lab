@@ -14,7 +14,7 @@ import hashlib
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "20261029-math3"
+RELEASE = "20261029-crystal1"
 DATE = "2026-10-29"
 BACKUP = "backup/2026-10-29-before-formula-fix"
 BASE_COMMIT = "6514b43e9153315d857be59668a0790b4ca40993"
@@ -97,7 +97,7 @@ def formula_counts():
 def release_manifest():
     required = {
         "README.md", "package.json", "dist/index.html", "dist/app.js",
-        "dist/math-svg.js", "dist/docs/formula-display.md",
+        "dist/math-svg.js", "dist/docs/formula-display.md", "dist/docs/crystal-notation.md", "scripts/build-crystal-symbol-data.py", "scripts/test-crystal-notation-catalog.mjs",
         "scripts/refresh-formula-provenance.py",
         "dist/vendor/katex/katex.mjs", "dist/vendor/katex/katex.min.css",
         "dist/vendor/katex/LICENSE", "dist/vendor/katex/provenance.json",
@@ -107,7 +107,7 @@ def release_manifest():
     names = set(required)
     for pattern in ("*.js", "*.css", "*.html"):
         names.update(path.relative_to(ROOT).as_posix() for path in (ROOT / "dist").glob(pattern))
-    for pattern in ("test*math*.mjs", "test*formula*.mjs", "test*math*.py", "test*formula*.py"):
+    for pattern in ("test*math*.mjs", "test*formula*.mjs", "test*math*.py", "test*formula*.py", "test*crystal*.mjs"):
         names.update(path.relative_to(ROOT).as_posix() for path in (ROOT / "scripts").glob(pattern))
     names.update(path.relative_to(ROOT).as_posix() for path in (ROOT / "dist/vendor/katex").rglob("*") if path.is_file())
     notation = [name for name in names if name.startswith("dist/") and "notation" in name]

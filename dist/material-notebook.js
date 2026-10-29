@@ -1,6 +1,6 @@
 // Browser-local, explicit research records. No network or automatic upload.
 export const NOTEBOOK_VERSION=1;
-export const RELEASE='20261029-math3';
+export const RELEASE='20261029-crystal1';
 export const MAX_PROJECT_BYTES=32*1024*1024;
 const ACTIONS=new Set('analyze induce product match_bands magnetictb crystkit symbolic carat crystkit_ext carat_integral integral_normalizer symbolic_interfaces arithmetic_centralizer symbolic_spacegroups structure_bc standard_labels teaching_labs phonons tensors phase diffraction phonopy phonon_modes band_connectivity phonon_thermo distortion_lab magnon_lab qha_lab pairing_lab shg_lab unfold_lab crystal_field_lab quantum_geometry_lab electron_transport_lab hall_response_lab device_transport_lab local_multiplet_lab spin_resonance_lab andreev_lab atomic_spectra_lab'.split(' '));
 const PROGRESS=['pointgroups.progress','academy.progress','academy.derivations','lie.progress','lie.derivations','observables.progress','structure-dynamics.progress','material-research.progress','coupled-materials.progress','electronic-materials.progress','quantum-materials.progress','response-materials.progress','spectroscopy.progress'].map(x=>'symmetry-lab.'+x+'.v1');

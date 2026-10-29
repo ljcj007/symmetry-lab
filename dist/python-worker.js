@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261029-math3';
+const BUILD = '20261029-crystal1';
 const plans = {
   spin_resonance_lab: ['spin_resonance_lab'], andreev_lab: ['andreev_lab'], atomic_spectra_lab: ['atomic_spectra_lab'],
   hall_response_lab: ['hall_response_lab'], device_transport_lab: ['device_transport_lab'], local_multiplet_lab: ['local_multiplet_lab'],

@@ -28,7 +28,7 @@ export function runPythonTask(action, payload) {
   const seconds = nineJ ? 600 : 180;
   return new Promise((resolve, reject) => {
     if (!worker) {
-      worker = new Worker(new URL('./python-worker.js?v=20261029-math3', import.meta.url), {type: 'module'});
+      worker = new Worker(new URL('./python-worker.js?v=20261029-crystal1', import.meta.url), {type: 'module'});
       const createdWorker = worker;
       worker.onerror = event => {if(worker===createdWorker)stop(event.message || 'Python 模块加载失败，请重试。');};
       worker.onmessage = ({data}) => {

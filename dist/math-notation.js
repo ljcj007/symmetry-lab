@@ -1,3 +1,4 @@
+import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261029-crystal1';
 /** Presentation-only conversion of the site's plain scientific notation.
  * Never use these strings as computational input. Unknown syntax stays text.
  */
@@ -15,38 +16,67 @@ const escapeText=s=>String(s).replace(/[\\{}%$&#_^~]/g,c=>({'\\':'\\textbackslas
 const text=s=>'\\text{'+escapeText(s)+'}';
 function closeAt(s,start){const pairs={'(':')','[':']','{':'}'},stack=[pairs[s[start]]];if(!stack[0])return -1;for(let i=start+1;i<s.length;i++){const c=s[i];if(pairs[c])stack.push(pairs[c]);else if(')]}'.includes(c)){if(c!==stack.pop())return -1;if(!stack.length)return i;}}return -1;}
 function splitTop(s,delimiter=','){const out=[];let begin=0,depth=0;for(let i=0;i<s.length;i++){if('([{'.includes(s[i]))depth++;else if(')]}'.includes(s[i]))depth--;else if(s[i]===delimiter&&!depth){out.push(s.slice(begin,i));begin=i+1;}}out.push(s.slice(begin));return out;}
-function preprocess(s){return s.normalize('NFD').replace(/Σᵅ/g,'∑_(α)').replace(/Σ2(?=t)/g,'∑2').replace(/ΣJ(?=\()/g,'∑_(J)').replace(/ΣRαμ(?=\|)/g,'∑_(Rαμ)').replace(/Σ([μα])/g,'∑_($1)').replace(/Σarg(?=\()/g,'∑ arg').replace(/Σif(?=\s)/g,'∑_(if)').replace(/Σjα(?=\s)/g,'∑_(jα)').replace(/([στ])([xyz]{1,3})(?![A-Za-z_])/g,'$1_{$2}').replace(/(?<![A-Za-z_])kB(?![a-z_])/g,'k_B').replace(/μB(?![a-z_])/g,'μ_B').replace(/dₓ²₋ᵧ²/g,'d_{x^2-y^2}').replace(/E_x²[−-]y²/g,'E_{x^2-y^2}').replace(/E_z²/g,'E_{z^2}').replace(/(?<![A-Za-z0-9_])([CD])([1-6])([vhdi]?)(?![A-Za-z0-9_])/g,'$1_{$2$3}').replace(/(?<![A-Za-z0-9_])([CD])([₀-₉]+)([vhdiᵢᵥₕ])?/g,(_,g,n,a)=>g+'_{'+Array.from(n).map(c=>subs[c]).join('')+(subs[a]||a||'')+'}').replace(/(?<![A-Za-z0-9_])([OTI])([hd])(?![A-Za-z0-9_])/g,'$1_{$2}').replace(/Σ([ijkmnrcab]+(?:[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*))(,\s*[ijkmnrcab]+[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*)?/g,(_,a,b)=>'Σ_{'+a+(b||'')+'}').replace(/\r\n?/g,'\n');}
+function preprocess(s){return s.normalize('NFD').replace(/Σᵅ/g,'∑_(α)').replace(/Σ2(?=t)/g,'∑2').replace(/ΣJ(?=\()/g,'∑_(J)').replace(/ΣRαμ(?=\|)/g,'∑_(Rαμ)').replace(/Σ([μα])/g,'∑_($1)').replace(/Σarg(?=\()/g,'∑ arg').replace(/Σif(?=\s)/g,'∑_(if)').replace(/Σjα(?=\s)/g,'∑_(jα)').replace(/([στ])([xyz]{1,3})(?![A-Za-z_])/g,'$1_{$2}').replace(/(?<![A-Za-z_])kB(?![a-z_])/g,'k_B').replace(/μB(?![a-z_])/g,'μ_B').replace(/dₓ²₋ᵧ²/g,'d_{x^2-y^2}').replace(/E_x²[−-]y²/g,'E_{x^2-y^2}').replace(/E_z²/g,'E_{z^2}').replace(/(?<![A-Za-z0-9_])([CD])([1-6])([vhdi]?)(?![A-Za-z0-9_])/g,'$1_{$2$3}').replace(/(?<![A-Za-z0-9_])([CD])([₀-₉]+)([vhdiᵢᵥₕ])?(?![A-Za-z₀-₉])/g,(_,g,n,a)=>g+'_{'+Array.from(n).map(c=>subs[c]).join('')+(subs[a]||a||'')+'}').replace(/(?<![A-Za-z0-9_])([OTI])([hd])(?![A-Za-z0-9_])/g,'$1_{$2}').replace(/Σ([ijkmnrcab]+(?:[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*))(,\s*[ijkmnrcab]+[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*)?/g,(_,a,b)=>'Σ_{'+a+(b||'')+'}').replace(/\r\n?/g,'\n');}
 
 function convert(source,depth=0){
  if(depth>24)throw Error('Notation nesting limit');
- const s=source;let out='',i=0,previousAtom=false;
+ const s=source;let out='',i=0,previousAtom=false,lastAtom=null;const frames=[];
  const inner=x=>convert(x,depth+1);const scriptTex=x=>scriptLabels.has(x)?'\\mathrm{'+x+'}':inner(x);
- function script(start){let j=start;while(/\s/.test(s[j]||'')&&j<s.length)j++;if(j>=s.length)throw Error('Missing script');if('({'.includes(s[j])){const end=closeAt(s,j);if(end<0)throw Error('Unclosed script');return{tex:scriptTex(s.slice(j+1,end)),end:end+1};}let match=s.slice(j).match(/^(?:SOC|BdG|NS|CF|JT|ACBD|AC|BD|AB|CD|EF|C[1-6][xyz]|[A-Z]|[a-z]+|\d+)/);if(!match&&cjk.test(s[j]))match=s.slice(j).match(/^[\u3400-\u9fff\uf900-\ufaff]+/u);if(match){let end=j+match[0].length;while(subs[s[end]]||combining.test(s[end]||''))end++;if(s[end]===','){const continuation=s.slice(end).match(/^,[a-z]+(?![A-Za-z†‡′_₀-₉])/);if(continuation)end+=continuation[0].length;}return{tex:scriptTex(s.slice(j,end)),end};}return{tex:inner(s[j]),end:j+1};}
+ const accented=(atom,mark)=>{
+  if(mark==='̄'||mark==='̅')return '\\overline{'+atom+'}';
+  if(mark==='̿')return '\\overline{\\overline{'+atom+'}}';
+  const command={'̂':'hat','⃗':'vec','̃':'tilde','̇':'dot','̈':'ddot','̸':'not'}[mark];
+  if(!command)throw Error('Unsupported combining mark');
+  return '\\'+command+'{'+atom+'}';
+ };
+
+ // Scripts belong to the preceding mathematical atom, not to a free string
+ // suffix. One sub/sup pair also handles mixed ASCII and Unicode notation.
+ const atomText=a=>a.base+(a.sub===null?'':'_{'+a.sub+'}')+(a.sup===null?'':'^{'+a.sup+'}');
+ const emit=(atom,start=out.length)=>{out+=atom;lastAtom={start,base:out.slice(start),sub:null,sup:null,parentheticalSup:false};};
+ const attach=(kind,value,parenthetical=false)=>{
+  if(!previousAtom||!lastAtom)throw Error('Script without a base');
+  const key=kind==='_'?'sub':'sup';
+  if(key==='sup'&&lastAtom.sup!==null&&(lastAtom.parentheticalSup||/^(?:[+-]|(?:\\(?:prime|dagger|ddagger)\s*)+)$/.test(lastAtom.sup)&&/^[+−-]?\d/.test(value))){
+   // (T^(A))² is a power of a labelled operator; never flatten it to T^(A2).
+   const labelled={...lastAtom,sup:lastAtom.parentheticalSup?'('+lastAtom.sup+')':lastAtom.sup};
+   lastAtom={start:lastAtom.start,base:'\\left('+atomText(labelled)+'\\right)',sub:null,sup:null,parentheticalSup:false};
+  }
+  lastAtom[key]=(lastAtom[key]??'')+value;
+  if(key==='sup')lastAtom.parentheticalSup=parenthetical;
+  out=out.slice(0,lastAtom.start)+atomText(lastAtom);previousAtom=true;
+ };
+ function script(start){let j=start;while(/\s/.test(s[j]||'')&&j<s.length)j++;if(j>=s.length)throw Error('Missing script');if('({'.includes(s[j])){const end=closeAt(s,j);if(end<0)throw Error('Unclosed script');return{tex:scriptTex(s.slice(j+1,end)),end:end+1,parenthetical:s[j]==='('};}let match=s.slice(j).match(/^(?:SOC|BdG|NS|CF|JT|ACBD|AC|BD|AB|CD|EF|C[1-6][xyz]|[A-Z]|[a-z]+|[+−-]?\d+)/);if(!match&&cjk.test(s[j]))match=s.slice(j).match(/^[\u3400-\u9fff\uf900-\ufaff]+/u);if(match){let end=j+match[0].length;while(combining.test(s[end]||''))end++;if(s[end]===','){const continuation=s.slice(end).match(/^,[a-z]+(?![A-Za-z†‡′_₀-₉])/);if(continuation)end+=continuation[0].length;}return{tex:scriptTex(s.slice(j,end)),end};}let end=j+(s.codePointAt(j)>65535?2:1);while(combining.test(s[end]||''))end++;return{tex:inner(s.slice(j,end)),end};}
  while(i<s.length){
+  const crystal=crystalTokenAt(s,i);if(crystal){emit(crystal.atomBase??('{'+crystal.tex+'}'));previousAtom=true;if(crystal.atomSub)attach('_',crystal.atomSub);if(crystal.atomSup)attach('^',crystal.atomSup);i=crystal.end;continue;}
   let c=s[i];
-  if(c==='\n'){out+=' \\\\ ';i++;previousAtom=false;continue;}
+  if(c==='\n'){out+=' \\\\ ';i++;previousAtom=false;lastAtom=null;continue;}
   if(/\s/.test(c)){out+=' ';i++;continue;}
   if(c==='\\')throw Error('Literal TeX is not accepted by the plain-notation converter');
-  if(cjk.test(c)){let j=i+1;while(j<s.length&&(cjk.test(s[j])||/\s/.test(s[j])))j++;out+=text(s.slice(i,j));i=j;previousAtom=true;continue;}
+  if(cjk.test(c)){let j=i+1;while(j<s.length&&(cjk.test(s[j])||/\s/.test(s[j])))j++;emit(text(s.slice(i,j)));i=j;previousAtom=true;continue;}
   if(s.startsWith('[[',i)){
    const end=closeAt(s,i);if(end<0)throw Error('Unclosed matrix');const raw=s.slice(i+1,end),rows=splitTop(raw).map(x=>x.trim());
    if(rows.length&&rows.every(x=>x[0]==='['&&closeAt(x,0)===x.length-1)){
-    const cells=rows.map(r=>splitTop(r.slice(1,-1)));if(cells.every(r=>r.length===cells[0].length)&&cells[0].length){out+='\\begin{bmatrix}'+cells.map(r=>r.map(inner).join('&')).join('\\\\')+'\\end{bmatrix}';i=end+1;previousAtom=true;continue;}
+    const cells=rows.map(r=>splitTop(r.slice(1,-1)));if(cells.every(r=>r.length===cells[0].length)&&cells[0].length){emit('\\begin{bmatrix}'+cells.map(r=>r.map(inner).join('&')).join('\\\\')+'\\end{bmatrix}');i=end+1;previousAtom=true;continue;}
    }
   }
   if(c==='_'||c==='^'){
-   if(!previousAtom)throw Error('Script without a base');const value=script(i+1);out+=c+'{'+value.tex+'}';i=value.end;previousAtom=true;continue;
+   const value=script(i+1);attach(c,value.tex,Boolean(value.parenthetical));i=value.end;continue;
   }
   if(subs[c]||supers[c]){
-   if(!previousAtom)throw Error('Script without a base');const kind=subs[c]?'_':'^',map=subs[c]?subs:supers;let value='';while(i<s.length&&map[s[i]])value+=map[s[i++]];while(combining.test(s[i]||''))value+=s[i++];out+=kind+'{'+(value.includes('\\')?value:inner(value))+'}';previousAtom=true;continue;
+   const kind=subs[c]?'_':'^',map=subs[c]?subs:supers,decoration=/[†‡′″‴]/.test(c);let value='';while(i<s.length&&map[s[i]]&&(kind==='_'||/[†‡′″‴]/.test(s[i])===decoration))value+=map[s[i++]];let marks='';while(combining.test(s[i]||''))marks+=s[i++];const tex=value.includes('\\')?Array.from(marks).reduce(accented,value):inner(value+marks);attach(kind,tex);continue;
   }
+  if(c==="'"&&previousAtom){attach('^','\\prime ');i++;continue;}
   if(c==='√'){
-   let j=i+1;while(s[j]===' ')j++;if('([{'.includes(s[j]||'!')){const end=closeAt(s,j);if(end<0)throw Error('Unclosed root');out+='\\sqrt{'+inner(s.slice(j+1,end))+'}';i=end+1;}
-   else {const m=s.slice(j).match(/^\d+(?:\.\d+)?/);const value=m?m[0]:s[j];if(!value)throw Error('Missing root');out+='\\sqrt{'+inner(value)+'}';i=j+value.length;}previousAtom=true;continue;
+   let j=i+1;while(s[j]===' ')j++;if('([{'.includes(s[j]||'!')){const end=closeAt(s,j);if(end<0)throw Error('Unclosed root');emit('\\sqrt{'+inner(s.slice(j+1,end))+'}');i=end+1;}
+   else {const m=s.slice(j).match(/^\d+(?:\.\d+)?/);const value=m?m[0]:s[j];if(!value)throw Error('Missing root');emit('\\sqrt{'+inner(value)+'}');i=j+value.length;}previousAtom=true;continue;
   }
-  let atom='';
+  let atom='',atomStart=out.length;
   if(/[A-Za-z]/.test(c)){
-   const m=s.slice(i).match(/^[A-Za-z]+/)[0];atom=functions.has(m)?'\\'+m+' ':operators.has(m)&&(!groups.has(m)||s[i+m.length]==='(')?'\\operatorname{'+m+'}':m;i+=m.length;
+   const m=s.slice(i).match(/^[A-Za-z]+/)[0],isFunction=functions.has(m),isOperator=operators.has(m)&&(!groups.has(m)||s[i+m.length]==='(');
+   if((isFunction||isOperator)&&!(m.length>1&&combining.test(s[i+m.length]||''))){atom=isFunction?'\\'+m+' ':'\\operatorname{'+m+'}';}
+   else {out+=m.slice(0,-1);atom=m.at(-1);atomStart=out.length;}
+   i+=m.length;
   }else if(/[0-9]/.test(c)){const m=s.slice(i).match(/^\d+(?:\.\d+)?/)[0];atom=m;i+=m.length;}
   else if(greek[c]){atom='\\'+greek[c]+' ';i++;}
   else if(c==='Σ'){
@@ -62,12 +92,17 @@ function convert(source,depth=0){
   else if(c==='（'){atom='(';i++;}
   else if(c==='）'){atom=')';i++;}
   else if(c==='。'){atom='\\ .\\quad ';i++;}
-  else if(c==='['||c==='('||c===']'||c===')'||'+-=,.:/|!*<>\''.includes(c)){atom=c;i++;}
+  else if(c==='['||c==='('||c===']'||c===')'||'+-=,.:/|!*<>'.includes(c)){atom=c;i++;}
   else if(combining.test(c)){throw Error('Combining mark without a supported base');}
   else if(s.codePointAt(i)>65535){const glyph=String.fromCodePoint(s.codePointAt(i)),base=glyph.normalize('NFKD');if(/^[A-Za-z0-9]$/.test(base)){const cp=glyph.codePointAt(0),style=cp>=0x1d49c&&cp<=0x1d4cf?'mathcal':cp>=0x1d504&&cp<=0x1d537?'mathfrak':cp>=0x1d538&&cp<=0x1d56b?'mathbb':cp>=0x1d400&&cp<=0x1d433?'mathbf':'mathit';atom='\\'+style+'{'+base+'}';}else atom=text(glyph);i+=glyph.length;}else if(c.codePointAt(0)>127){atom=text(c);i++;}
   else throw Error('Unsupported notation');
-  while(i<s.length&&combining.test(s[i])){const mark=s[i++];if(mark==='̄')atom='\\overline{'+atom+'}';else if(mark==='̂')atom='\\hat{'+atom+'}';else if(mark==='⃗')atom='\\vec{'+atom+'}';else if(mark==='̃')atom='\\tilde{'+atom+'}';else if(mark==='̸')atom='\\not{'+atom+'}';else throw Error('Unsupported combining mark');}
-  out+=atom;previousAtom=!/^[=+,:;<>\-]$/.test(c)&&c!=='('&&c!=='[';
+  // A Unicode combining accent binds to this atom. In an ordinary Latin word
+  // the atom is its final letter; a numeral such as the SU(3) label 10 stays whole.
+  while(i<s.length&&combining.test(s[i]))atom=accented(atom,s[i++]);
+  const open=c==='('||c==='['||c==='{',close=c===')'||c===']'||c==='}';
+  if(open)frames.push({character:c,start:atomStart});
+  if(close){const frame=frames.at(-1);if(frame&&({'(':')','[':']','{':'}'})[frame.character]===c){atomStart=frame.start;frames.pop();}}
+  emit(atom,atomStart);previousAtom=!/^[=+,:;<>\-]$/.test(c)&&!open;
  }
  return out.trim();
 }
@@ -75,14 +110,14 @@ function convert(source,depth=0){
 /** Convert a single plain formula to TeX. null means preserve the original text. */
 export function normalizeMath(source){
  if(typeof source!=='string'||!source.trim()||source.length>30000||/<(?:img|script|iframe|style|div|span)\b/i.test(source))return null;
- try{const s=preprocess(source);const tex=convert(s).replace(/k_\{B\}/g,'k_{\\mathrm{B}}').replace(/\\mu _\{B\}/g,'\\mu _{\\mathrm{B}}').replace(/([A-Za-z])\^\{([A-Za-z])\}\^\{([^{}]+)\}/g,'($1^{($2)})^{$3}');return s.includes('\n')?'\\begin{gathered}'+tex+'\\end{gathered}':tex;}catch{return null;}
+ try{const s=preprocess(source);const tex=convert(s).replace(/k_\{B\}/g,'k_{\\mathrm{B}}').replace(/\\mu _\{B\}/g,'\\mu _{\\mathrm{B}}');return s.includes('\n')?'\\begin{gathered}'+tex+'\\end{gathered}':tex;}catch{return null;}
 }
 
 const scriptCharacters=new RegExp('['+Object.keys(subs).join('')+Object.keys(supers).join('')+']','u');
 const physicalComponents=/(?:[στ][xyz]{1,3}(?![A-Za-z_])|(?<![A-Za-z_])kB(?![a-z_])|μB(?![a-z_]))/u;
-const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̂⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝]/u;
+const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝]/u;
 function append(rows,row){if(!row.source)return;const prev=rows.at(-1);if(prev&&prev.type===row.type&&row.type==='text')prev.source+=row.source;else rows.push(row);}
-function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source))?{type:'math',source,tex}:{type:'text',source};}
+function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source)||findCrystalTokens(source).some(p=>p.kind))?{type:'math',source,tex}:{type:'text',source};}
 
 /** A formula block may contain prose. Keep prose and separators readable. */
 export function segmentFormula(source){
@@ -117,4 +152,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261029-math3';
+export const mathNotationVersion='20261029-crystal1';

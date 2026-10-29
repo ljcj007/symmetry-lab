@@ -56,6 +56,39 @@ assert.equal(segmentFormula(reviewedSums).map(p=>p.source).join(''),reviewedSums
 assert.equal(normalizeMath(''),null);assert.equal(normalizeMath(null),null);
 console.log('Math notation: physical scripts, group labels, Greek/combining/astral symbols, self-energy versus sums, matrices, mixed prose, opaque paths and safe fallback passed.');
 
-for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261029-math3","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
+for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261029-crystal1","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
 
 assert.ok(findInlineMath("exp(ik_z)").some(p=>p.type==='math'));
+
+// Accents must remain attached to an atom, including when scripts are present.
+const accentAndScriptCases=new Map([
+ ['AB̄',String.raw`A\overline{B}`],['xyẑ',String.raw`xy\hat{z}`],
+ ['exp̄',String.raw`ex\overline{p}`],['R̄',String.raw`\overline{R}`],
+ ['R̅',String.raw`\overline{R}`],['R̿',String.raw`\overline{\overline{R}}`],
+ ['R̄⁻¹',String.raw`\overline{R}^{-1}`],['C̄₂z',String.raw`\overline{\mathrm{C}}_{\mathrm{2z}}`],
+ ['k̄_x',String.raw`\overline{k}_{x}`],['R_ᾱ',String.raw`R_{\overline{\alpha }}`],
+ ['10̄',String.raw`\overline{10}`],['P4̄',String.raw`{\mathrm{P}\overline{4}}`],
+ ['C_2^2','C_{2}^{2}'],['C₂²','C_{2}^{2}'],['C_2²','C_{2}^{2}'],
+ ['C₂^2_z','C_{2z}^{2}'],['C₂_z','C_{2z}'],
+ ['x_1₂','x_{12}'],['x_i₂','x_{i2}'],['x_{i₂}','x_{i_{2}}'],
+ ['R′^-1',String.raw`\left(R^{\prime }\right)^{-1}`],
+ ['R′⁻¹',String.raw`\left(R^{\prime }\right)^{-1}`],
+ ["R'^{-1}",String.raw`\left(R^{\prime }\right)^{-1}`],
+ ['T_a^(A)²',String.raw`\left(T_{a}^{(A)}\right)^{2}`],
+ ['(AB)^(A)²',String.raw`\left((AB)^{(A)}\right)^{2}`],
+ ['χᵅ(C꜀)',String.raw`\chi ^{\alpha}(C_{c})`],
+]);
+for(const [source,tex]of accentAndScriptCases)assert.equal(render(source).tex,tex,source);
+const mathml=source=>katex.renderToString(normalizeMath(source),{...options,output:'mathml'}).replace(/<annotation[^>]*>[\s\S]*?<\/annotation>/,'');
+assert.match(mathml('AB̄'),/<mi>A<\/mi><mover accent="true"><mi>B<\/mi>/,'Only B carries the bar');
+assert.match(mathml('R̄⁻¹'),/<msup><mover accent="true"><mi>R<\/mi>/,'The inverse applies to the barred operator');
+assert.match(mathml('k̄_x'),/<msub><mover accent="true"><mi>k<\/mi>/,'A bar remains on the base, above its subscript');
+assert.match(mathml('10̄'),/<mover accent="true"><mn>10<\/mn>/,'The conjugate SU(3) numeral label stays a whole atom');
+assert.equal((mathml('C₂^2_z').match(/<msubsup>/g)||[]).length,1,'One base has one paired script structure');
+assert.match(mathml('C₂^2_z'),/<msubsup><mi>C<\/mi><mrow><mn>2<\/mn><mi>z<\/mi><\/mrow><mn>2<\/mn>/);
+for(const source of ['R̄⁻¹','C̄₂z','R′⁻¹','χᵅ(C꜀)','R̅⁻¹']){
+ const parts=findInlineMath(source);assert.equal(parts.map(p=>p.source).join(''),source);
+ assert.ok(parts.some(p=>p.type==='math'),source);
+ for(const p of parts.filter(p=>p.type==='math'))katex.renderToString(p.tex,options);
+}
+console.log('Math accents/scripts: single-atom bars, grouped numeral labels, overline aliases, paired scripts, primes/inverses and explicit nested indices passed.');

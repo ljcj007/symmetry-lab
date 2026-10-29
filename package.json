@@ -17,7 +17,7 @@
     "test:quantum": "python scripts/test-python-crystal-field-lab.py && python scripts/test-python-quantum-geometry-lab.py && python scripts/test-python-electron-transport-lab.py && python scripts/test-python-quantum-content.py && node scripts/test-quantum-materials-ui.mjs",
     "test:response": "python scripts/test-python-hall-response.py && python scripts/test-python-device-transport.py && python scripts/test-python-local-multiplet.py && python scripts/test-python-response-content.py && node scripts/test-response-materials-ui.mjs",
     "test:spectroscopy": "python scripts/test-python-spin-resonance.py && python scripts/test-python-andreev.py && python scripts/test-python-atomic-spectra.py && python scripts/test-python-spectroscopy-content.py && node scripts/test-spectroscopy-ui.mjs",
-    "test:math": "node scripts/test-math-notation.mjs && node scripts/test-math-svg.mjs && node scripts/test-math-catalog.mjs && node scripts/test-math-display.mjs"
+    "test:math": "node scripts/test-math-notation.mjs && node scripts/test-math-svg.mjs && node scripts/test-math-catalog.mjs && node scripts/test-math-display.mjs && node scripts/test-crystal-notation-catalog.mjs && node scripts/test-crystal-inline.mjs"
   },
   "license": "GPL-3.0-only"
 }

@@ -1,14 +1,14 @@
-import {renderSpectroscopyView,getSpectroscopyResult} from './spectroscopy-ui.js?v=20261029-math3';
-import {renderResponseMaterialsView,getResponseMaterialsResult} from './response-materials-ui.js?v=20261029-math3';
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261029-math3';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261029-math3';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261029-math3';
-import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261029-math3';
-import {renderStructureDynamicsView,getStructureDynamicsResult} from './structure-dynamics-ui.js?v=20261029-math3';
-import {renderMaterialResearchView,getMaterialResearchResult} from './material-research-ui.js?v=20261029-math3';
-import {renderCoupledMaterialsView,getCoupledMaterialsResult} from './coupled-materials-ui.js?v=20261029-math3';
-import {renderElectronicMaterialsView,getElectronicMaterialsResult} from './electronic-materials-ui.js?v=20261029-math3';
-import {renderQuantumMaterialsView,getQuantumMaterialsResult} from './quantum-materials-ui.js?v=20261029-math3';
+import {renderSpectroscopyView,getSpectroscopyResult} from './spectroscopy-ui.js?v=20261029-crystal1';
+import {renderResponseMaterialsView,getResponseMaterialsResult} from './response-materials-ui.js?v=20261029-crystal1';
+import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261029-crystal1';
+import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261029-crystal1';
+import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261029-crystal1';
+import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261029-crystal1';
+import {renderStructureDynamicsView,getStructureDynamicsResult} from './structure-dynamics-ui.js?v=20261029-crystal1';
+import {renderMaterialResearchView,getMaterialResearchResult} from './material-research-ui.js?v=20261029-crystal1';
+import {renderCoupledMaterialsView,getCoupledMaterialsResult} from './coupled-materials-ui.js?v=20261029-crystal1';
+import {renderElectronicMaterialsView,getElectronicMaterialsResult} from './electronic-materials-ui.js?v=20261029-crystal1';
+import {renderQuantumMaterialsView,getQuantumMaterialsResult} from './quantum-materials-ui.js?v=20261029-crystal1';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.

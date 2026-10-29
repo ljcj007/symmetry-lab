@@ -11,3 +11,5 @@ td .sl-math,th .sl-math{vertical-align:middle}
 button .sl-math{pointer-events:none}
 svg text tspan{letter-spacing:normal}
 @media(max-width:600px){.sl-equation{padding-inline:12px!important}.sl-equation .sl-math>.katex{font-size:1.08em}}
+
+.crystal-symbol{white-space:nowrap;display:inline-block;vertical-align:baseline;letter-spacing:normal}.crystal-symbol>.katex{font-size:1em;line-height:1.5}.crystal-symbol .mord{font-variant-ligatures:none}

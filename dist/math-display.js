@@ -1,9 +1,10 @@
 import katex from './vendor/katex/katex.mjs';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-math3';
-import {svgMathText} from './math-svg.js?v=20261029-math3';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-crystal1';
+import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261029-crystal1';
+import {crystalTex} from './crystal-notation.js?v=20261029-crystal1';
 
 const blocks='.pg-formula,.sc-formula,.lg-formula,.obs-formula,[data-math-block]';
-const owned='.sl-math,.katex,math,[data-math-ignore]';
+const owned='.sl-math,.katex,math,[data-math-ignore],.crystal-symbol[data-crystal-ready]';
 const excluded='script,style,textarea,input,select,option,pre,code,kbd,samp,svg,math,[contenteditable="true"],[data-math-ignore],.research-input,.exact-expression';
 const opts={throwOnError:true,trust:false,strict:'ignore',output:'htmlAndMathml',maxExpand:1000,maxSize:20};
 
@@ -29,6 +30,14 @@ function appendSegments(target,segments,display=false){
 
 export function typesetMath(root=document.body){
  if(!root?.isConnected||root.nodeType!==1||root.closest(owned))return;
+ for(const el of [...(root.matches('[data-crystal-kind]')?[root]:[]),...root.querySelectorAll('[data-crystal-kind]')]){
+  if(el.dataset.crystalReady)continue;const source=el.dataset.mathSource??el.textContent;
+  el.dataset.crystalReady='true';el.setAttribute('aria-label',source);
+  if(el.dataset.crystalKind==='literal')continue;
+  const tex=crystalTex(source,el.dataset.crystalKind,{fullbar:el.dataset.crystalFullbar==='true'});
+  if(tex){try{el.innerHTML=mathHTML(tex);el.classList.add('sl-math');}catch(error){el.dataset.crystalError=error.message;}}
+  else {el.dataset.crystalFallback='true';const fragment=document.createDocumentFragment();appendSegments(fragment,segmentFormula(source));el.replaceChildren(fragment);}
+ }
  const candidates=[...(root.matches(blocks)?[root]:[]),...root.querySelectorAll(blocks)];
  for(const el of candidates){
   if(el.dataset.mathReady||el.querySelector('math,.katex')||el.closest('[data-math-ignore]'))continue;
@@ -44,6 +53,7 @@ export function typesetMath(root=document.body){
   el.dataset.mathReady='true';el.setAttribute('aria-label',source);
   if(html!==source){el.innerHTML=html;el.dataset.mathSource=source;}
  }
+ layoutSvgMath(root);
  // These code-styled cells contain exact scientific values, not executable input.
  for(const el of root.querySelectorAll('.sc-result-facts code,.sc-symmetry-tests code,.lg-state-facts code,[data-math-inline]')){
   if(el.dataset.mathReady||el.querySelector('.katex'))continue;
@@ -73,5 +83,6 @@ export function startMathDisplay(root=document.body){
   if(pending.size&&!scheduled){scheduled=true;requestAnimationFrame(flush);}
  });
  typesetMath(root);observer.observe(root,{childList:true,subtree:true,characterData:true});
- return ()=>observer.disconnect();
+ const layout=()=>layoutSvgMath(root);document.fonts?.ready.then(layout);window.addEventListener('resize',layout);root.addEventListener('toggle',layout,true);
+ return ()=>{observer.disconnect();window.removeEventListener('resize',layout);root.removeEventListener('toggle',layout,true);};
 }
