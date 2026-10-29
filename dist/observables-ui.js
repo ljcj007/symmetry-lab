@@ -1,3 +1,4 @@
+import {svgMathText} from './math-svg.js?v=20261029-math1';
 // Shared classroom/calculator view. Scientific results are supplied by Python.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const options=(rows,value)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${id===value?'selected':''}>${esc(title)}</option>`).join('');
@@ -5,14 +6,14 @@ const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const params={phonons:{preset:'silicon',angle:45,polarization:'parallel',mode:'sum',channel:'raman',frequency_cm1:300,width_cm1:20,amplitude:.10,steps:48},tensors:{preset:'cubic_m3m',tensor:'dielectric',orientation_deg:0,field:[1,0,0],strain:[1,0,0,0,0,1],parameters:{},plane:'xy'}};
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261028-spectroscopy1').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
+const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261029-math1').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
 export const getObservablesResult=()=>lastResult;
 export function formatDecomposition(rows){return (rows||[]).map(r=>(r.multiplicity===1?'':r.multiplicity+' ')+r.irrep).join(' ⊕ ')||'无';}
 export function curveSVG(points,xLabel,yLabel){
  const clean=points.filter(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite));if(!clean.length)return '';
  const xs=clean.map(p=>p[0]),ys=clean.map(p=>p[1]),xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(0,...ys),ymax=Math.max(0,...ys),dx=xmax-xmin||1,dy=ymax-ymin||1;
  const line=clean.map(([x,y])=>`${60+600*(x-xmin)/dx},${250-205*(y-ymin)/dy}`).join(' ');
- return `<svg class="obs-curve" viewBox="0 0 720 305" role="img" aria-label="${esc(xLabel+'与'+yLabel+'曲线')}"><title>${esc(yLabel)}</title><path d="M60 25V250H680" fill="none" stroke="#9daea8"/><polyline points="${line}" fill="none" stroke="#287c66" stroke-width="3"/><text x="60" y="276">${esc(Number(xmin.toPrecision(4)))}</text><text x="620" y="276">${esc(Number(xmax.toPrecision(4)))}</text><text x="310" y="298">${esc(xLabel)}</text><text x="65" y="20">${esc(yLabel)} · max ${esc(Number(ymax.toPrecision(4)))}</text></svg>`;
+ return `<svg class="obs-curve" viewBox="0 0 720 305" role="img" aria-label="${esc(xLabel+'与'+yLabel+'曲线')}"><title>${svgMathText(yLabel)}</title><path d="M60 25V250H680" fill="none" stroke="#9daea8"/><polyline points="${line}" fill="none" stroke="#287c66" stroke-width="3"/><text x="60" y="276">${esc(Number(xmin.toPrecision(4)))}</text><text x="620" y="276">${esc(Number(xmax.toPrecision(4)))}</text><text x="310" y="298">${svgMathText(xLabel)}</text><text x="65" y="20">${svgMathText(yLabel)} · max ${esc(Number(ymax.toPrecision(4)))}</text></svg>`;
 }
 const sourcesHTML=(items=[])=>`<div class="obs-sources">${items.map(s=>{const url=typeof s==='string'?s:s.url;return /^https:\/\//.test(url||'')?`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(s.title||url)} ↗</a>`:'';}).join('')}</div>`;
 export async function renderObservablesView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{}}){

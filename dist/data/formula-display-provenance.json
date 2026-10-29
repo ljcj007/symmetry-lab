@@ -1,0 +1,483 @@
+{
+  "schema": "symmetry-lab-formula-display-provenance-1",
+  "release": "20261029-math1",
+  "date": "2026-10-29",
+  "scope": "Presentation-only formula, inline script and SVG label typesetting; original physical inputs, calculation cores, datasets, MathML and JSON exports are preserved",
+  "backup": {
+    "branch": "backup/2026-10-29-before-formula-fix",
+    "commit": "6514b43e9153315d857be59668a0790b4ca40993",
+    "url": "https://github.com/ljcj007/symmetry-lab/tree/backup/2026-10-29-before-formula-fix"
+  },
+  "counts": {
+    "formulaOccurrences": 629,
+    "uniqueFormulaStrings": 527,
+    "formulaDataFiles": 23,
+    "localWoff2Fonts": 20,
+    "rendererAssets": 4,
+    "testFiles": 4
+  },
+  "dependencies": [
+    {
+      "name": "KaTeX",
+      "version": "0.19.1",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/katex/-/katex-0.19.1.tgz",
+      "localOnly": true,
+      "manifest": "dist/vendor/katex/provenance.json"
+    }
+  ],
+  "sources": [
+    {
+      "title": "KaTeX official source",
+      "url": "https://github.com/KaTeX/KaTeX"
+    },
+    {
+      "title": "KaTeX supported functions",
+      "url": "https://katex.org/docs/supported"
+    },
+    {
+      "title": "KaTeX options",
+      "url": "https://katex.org/docs/options"
+    }
+  ],
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF; binary files hashed without conversion",
+  "refreshCommand": "python scripts/refresh-formula-provenance.py",
+  "verifyCommand": "python scripts/refresh-formula-provenance.py --check",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "716aa5a7d6835491f289e404fa21f159a0347955ccbb78399501f11521f488a8",
+      "bytes": 61200
+    },
+    {
+      "path": "dist/advanced-ui.js",
+      "sha256": "8cc6c7b48fff45ea9e65e74de10883d44c203545c7540e36955cb36f711be4ea",
+      "bytes": 30357
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "fc01e4597c83afffa03b5ea6795b7032e3203b805856fd97d438666a1afd7f54",
+      "bytes": 80431
+    },
+    {
+      "path": "dist/classroom-ui.js",
+      "sha256": "9a72b6c10fff047ac11bc998a79ccd899401b38ea2c2c5972ccc65d195b53f9a",
+      "bytes": 17376
+    },
+    {
+      "path": "dist/classroom.css",
+      "sha256": "5b3dfc44ec21cf71e6b5dba031bc61589379b5da9ff3487ef3721c3676895875",
+      "bytes": 5781
+    },
+    {
+      "path": "dist/compute-worker.js",
+      "sha256": "97b75ebb307cd6065e2e9ae22070ec8f4c3316c00a3d4abfafc68821629fdc3f",
+      "bytes": 562
+    },
+    {
+      "path": "dist/coupled-materials-ui.js",
+      "sha256": "94e3ed9d33ee6cdca95a13dc300037b25866dcfd2a3e9be11d5102d10a8bbeb0",
+      "bytes": 35358
+    },
+    {
+      "path": "dist/coupled-materials.css",
+      "sha256": "3c62ed834ed74129071bd3a42c3e36a496df0d5ad0ad090498f88b9acd8a506f",
+      "bytes": 1466
+    },
+    {
+      "path": "dist/coverage-ui.js",
+      "sha256": "008b5eff683533c61cfa9eca0d62247f3c1817b8549671d508104d60e1e9d0f4",
+      "bytes": 5221
+    },
+    {
+      "path": "dist/crystal-viewer.js",
+      "sha256": "7a37f0c1a99ea83ce6c144c29fc997366a1e8b25c658f0d5058f917720d08d4a",
+      "bytes": 8851
+    },
+    {
+      "path": "dist/docs/formula-display.md",
+      "sha256": "9ec201343fe6eb6a84e84e1c8eec6f25e126602beed5fcdff5b64f750b434300",
+      "bytes": 4202
+    },
+    {
+      "path": "dist/electronic-materials-ui.js",
+      "sha256": "6bf69df3356b5863557265f466d0b74c7dea13b0a98ec5ffaa495235f75264d1",
+      "bytes": 31704
+    },
+    {
+      "path": "dist/electronic-materials.css",
+      "sha256": "0f817139a4fd9c83289b6801f688220537d7d16e408ae3558ade5d0f0dead7f2",
+      "bytes": 2178
+    },
+    {
+      "path": "dist/engine.js",
+      "sha256": "81f87a7ff99235ac2d5032dcc99aa71acae62c960391a2d28ec6499c667a66f9",
+      "bytes": 33249
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "582086bfcfadc430b4d4b8c4eb3f60c53f17469828bb1c9d82b815fa0b8980c6",
+      "bytes": 4110
+    },
+    {
+      "path": "dist/induction.js",
+      "sha256": "5642102df833910a93abbbf395755d1400d6175cfab86fe837005f874b0efc82",
+      "bytes": 12486
+    },
+    {
+      "path": "dist/lie-group-ui.js",
+      "sha256": "7b91dc596266fb5b6bd95326dd6f1cee5904fc00ce15b983d0b4f8ec452c66f3",
+      "bytes": 43159
+    },
+    {
+      "path": "dist/lie-group.css",
+      "sha256": "40ce7367b5977e7f62489803e10778618e81db7cbe637d684cdde7a4c8158507",
+      "bytes": 25629
+    },
+    {
+      "path": "dist/lie-physics-ui.js",
+      "sha256": "a9e94e8c4288fc23ce6ab8d49e480764b18ce4e1700c264e690b6086ae9e0574",
+      "bytes": 18522
+    },
+    {
+      "path": "dist/material-notebook.js",
+      "sha256": "a7f9246873e961c628bc8e3381c99fc65e06119eb5116cdfb9889865c35cf100",
+      "bytes": 19957
+    },
+    {
+      "path": "dist/material-research-ui.js",
+      "sha256": "e9c6c274ad99ce72354ac40dc63569f24c7e3f79842bf30feb321c9cd8881ff2",
+      "bytes": 34592
+    },
+    {
+      "path": "dist/material-research.css",
+      "sha256": "ae229e401b3174f59d9c72b3fd953435e1957013ae6ce41239915d3c3f769173",
+      "bytes": 2257
+    },
+    {
+      "path": "dist/math-display.css",
+      "sha256": "29b4b56a663a5f624beac180e3318245147857e7652b419844b93d207320adb8",
+      "bytes": 1106
+    },
+    {
+      "path": "dist/math-display.js",
+      "sha256": "a00c93d26c5435875a258ab469e74d68be1781075563a5a3084e12541cf991af",
+      "bytes": 4366
+    },
+    {
+      "path": "dist/math-notation.js",
+      "sha256": "7b45186e4614f3dc04f8aba89fee0813ef1467d4647e647673efdbb0f8b25ec4",
+      "bytes": 14069
+    },
+    {
+      "path": "dist/math-svg.js",
+      "sha256": "afd26495eeb06c1b58f75131bd4d58aedd0a6c53a2fbb71e10a6383ac8cefd2d",
+      "bytes": 4394
+    },
+    {
+      "path": "dist/navigation-ui.js",
+      "sha256": "5c934793bf050e0d50202f094504375d2363c17fbf15d5c65e5c4587ef356f66",
+      "bytes": 24189
+    },
+    {
+      "path": "dist/navigation.css",
+      "sha256": "9ad027b27247d98390a4bdab1c074661a5b9544fab4730ec691d11c4c09db267",
+      "bytes": 5826
+    },
+    {
+      "path": "dist/observables-ui.js",
+      "sha256": "62c7094945f759a163156c02f5882365fdc1b66aa6a3a125c9cc88c0fd141c14",
+      "bytes": 25426
+    },
+    {
+      "path": "dist/observables.css",
+      "sha256": "7990b198b8fcd20dda6c0d8bddab0cdc0842b0f15960140f798df57e41148b8b",
+      "bytes": 5056
+    },
+    {
+      "path": "dist/pointgroup-ui.js",
+      "sha256": "94b0aea7f1128d61c18359a32a369067ae72a2a6cec0ad4c8f464a33f05735b3",
+      "bytes": 32670
+    },
+    {
+      "path": "dist/pointgroup.css",
+      "sha256": "dc68dc811c86a8291de8b98a195053ca21e21659a2a6326e384a8d7a7ad4065f",
+      "bytes": 19724
+    },
+    {
+      "path": "dist/python-client.js",
+      "sha256": "db2bb41af7d51839ec547a51d7a722b5e319d92caec9b1249fabaf02016047c6",
+      "bytes": 2576
+    },
+    {
+      "path": "dist/python-worker.js",
+      "sha256": "992dc9f8ae40396ea86074d4b6b3e38918fb9744802fa1d0ffd5c601b918889f",
+      "bytes": 9208
+    },
+    {
+      "path": "dist/quantum-materials-ui.js",
+      "sha256": "62c7f7a3d3194e1407a000168d072c58ac846883b6e56c764764cec5b8d03432",
+      "bytes": 30311
+    },
+    {
+      "path": "dist/quantum-materials.css",
+      "sha256": "60885549c962811301f62c987db91a0109edcb185ac444f5bc6e1a242709af64",
+      "bytes": 3169
+    },
+    {
+      "path": "dist/quantum-plots.js",
+      "sha256": "b9879866fdddd06dcd02d5932046f193ef258388dddae32a4025fab65ce36868",
+      "bytes": 6876
+    },
+    {
+      "path": "dist/research-ui.js",
+      "sha256": "f764ae1e3e1cb1ee54822bde734aef469ab6afce2f49a3101703bd97eab4f21b",
+      "bytes": 17686
+    },
+    {
+      "path": "dist/response-materials-ui.js",
+      "sha256": "080285cfb322a9cb787ebbd2b454455d8ab2073678921d10cd201fedbfcc3e93",
+      "bytes": 12195
+    },
+    {
+      "path": "dist/response-materials.css",
+      "sha256": "76bf9f93d478d4993520d1b0c91e1a52f9c355167580874c0257dbbabba17893",
+      "bytes": 1278
+    },
+    {
+      "path": "dist/response-projects.js",
+      "sha256": "9f113fb0ca7a4ce450fb8dbdc785ed28cb1dd2cbfb048b9df55d6255f8da62b4",
+      "bytes": 15536
+    },
+    {
+      "path": "dist/response-views.js",
+      "sha256": "aa7835d5d12ab0c976f83c1d6bfe2f8398d7782335a30825c4fdaa9e41958ed4",
+      "bytes": 11699
+    },
+    {
+      "path": "dist/spectroscopy-projects.js",
+      "sha256": "1c719e3909a46ad9076f6e64fc25355d023484e4ff30e690f1c53f5d12e2b25a",
+      "bytes": 6382
+    },
+    {
+      "path": "dist/spectroscopy-ui.js",
+      "sha256": "63a95dc59c0806d76d92c2c5e69be91a03318fe16c3e6625c3bf0d360527791e",
+      "bytes": 12179
+    },
+    {
+      "path": "dist/spectroscopy-views.js",
+      "sha256": "1c2abe3a07ee2ca44002bfac004374ca575d3a67630b405ca6e02dd14431607c",
+      "bytes": 13772
+    },
+    {
+      "path": "dist/spectroscopy.css",
+      "sha256": "5eabee6fc70c05aef145d2ce88475fb135e0a83bdf4eb64dc87e7627c2efdc06",
+      "bytes": 731
+    },
+    {
+      "path": "dist/spincolor-viewer.js",
+      "sha256": "dfa98c19f8d095366012578c6766c0527745b3b644fd2c776885195ce6cc611b",
+      "bytes": 9049
+    },
+    {
+      "path": "dist/structure-dynamics-ui.js",
+      "sha256": "5b4c84ff048d3fdcb10817857d1454c268c31ec3ec08d9d6fa35f92a6d36678d",
+      "bytes": 37712
+    },
+    {
+      "path": "dist/structure-dynamics.css",
+      "sha256": "10e445c8e5770d8beccc14c0bb2e9c84a3c91763b83495707fd3db4295b45f47",
+      "bytes": 1067
+    },
+    {
+      "path": "dist/structure-ui.js",
+      "sha256": "1beec765688c9d4ec64900703d9d982d649b46e10eac773665d548eb17041ef1",
+      "bytes": 11811
+    },
+    {
+      "path": "dist/style.css",
+      "sha256": "99cff928afb5c9bddac1f040f200b6c9f3b13f87dcb58da3704fa8f209d6e66e",
+      "bytes": 23871
+    },
+    {
+      "path": "dist/su3-cg-ui.js",
+      "sha256": "56ab642ec1bcee8cfa47f332252eaefbdb1928227c1da1c34adb1475a53cbfe9",
+      "bytes": 22382
+    },
+    {
+      "path": "dist/su3-ninej-ui.js",
+      "sha256": "67d575399d8cd0f68979c50e3f31529a6516c2228cf7a6b8b63b0eed9b08f1de",
+      "bytes": 30331
+    },
+    {
+      "path": "dist/su3-racah-ui.js",
+      "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215",
+      "bytes": 21923
+    },
+    {
+      "path": "dist/symmetry-course-ui.js",
+      "sha256": "40eb52c900fbf0362960228511b9c0577fd2fb3677e2a5e1c15f701d3043f8cd",
+      "bytes": 77528
+    },
+    {
+      "path": "dist/symmetry-course.css",
+      "sha256": "b6e557b04cb40927284e9fa3b2162e9b852921b8e0ed85c8b28ad31568352efc",
+      "bytes": 35342
+    },
+    {
+      "path": "dist/trace-parser.js",
+      "sha256": "20aaa82ad47f083005d3bb04e0ba112830ee324f88a3cafdf2e90061959c6f0c",
+      "bytes": 8356
+    },
+    {
+      "path": "dist/vendor/katex/LICENSE",
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3",
+      "bytes": 1107
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_AMS-Regular.woff2",
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "bytes": 28076
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "bytes": 6912
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "bytes": 6908
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2",
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "bytes": 11348
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2",
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "bytes": 11316
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Main-Bold.woff2",
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "bytes": 25324
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2",
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "bytes": 16780
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Main-Italic.woff2",
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "bytes": 16988
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Main-Regular.woff2",
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "bytes": 26272
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2",
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "bytes": 16400
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Math-Italic.woff2",
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "bytes": 16440
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2",
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "bytes": 12216
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2",
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "bytes": 12028
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2",
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "bytes": 10344
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Script-Regular.woff2",
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "bytes": 9644
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Size1-Regular.woff2",
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "bytes": 5468
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Size2-Regular.woff2",
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "bytes": 5208
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Size3-Regular.woff2",
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995",
+      "bytes": 3624
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Size4-Regular.woff2",
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "bytes": 4928
+    },
+    {
+      "path": "dist/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2",
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "bytes": 13568
+    },
+    {
+      "path": "dist/vendor/katex/katex.min.css",
+      "sha256": "1a18155222e88777a8ad26099cca6bddb1a5173c3f8e6aecb7904002114c14e1",
+      "bytes": 22659
+    },
+    {
+      "path": "dist/vendor/katex/katex.mjs",
+      "sha256": "5f0c3749f8b28ce1a63b68de34d3950bb4aa1a9e0130865e4b09ecc9a250c8b7",
+      "bytes": 603305
+    },
+    {
+      "path": "dist/vendor/katex/provenance.json",
+      "sha256": "81bd9a389404cc64f024cb3d5e9352d3da1d9fb059218efb8023bebaa1f52d74",
+      "bytes": 3593
+    },
+    {
+      "path": "package.json",
+      "sha256": "46a7e39438a37be7160187e942df0b531f76e369c7233e78828ab477d137f99c",
+      "bytes": 7034
+    },
+    {
+      "path": "scripts/refresh-formula-provenance.py",
+      "sha256": "0bf1936a60bd014aca4ca4b85e45996d10aa59053eeb8ac807a2aad4f1e62341",
+      "bytes": 7669
+    },
+    {
+      "path": "scripts/test-math-catalog.mjs",
+      "sha256": "1346e454a386d060b8428cfe3c721a9682734c69fd7309b5c5b857101f631a2d",
+      "bytes": 5539
+    },
+    {
+      "path": "scripts/test-math-display.mjs",
+      "sha256": "4690d9502c5dad8f6211cdb76e7d92abb4aefaa940cbe8d4675f99ba058b74d3",
+      "bytes": 1893
+    },
+    {
+      "path": "scripts/test-math-notation.mjs",
+      "sha256": "c53d859823676f02c2c10a9fef185b0274d6599af9c83e8ec57ee9bd5e6838f0",
+      "bytes": 4216
+    },
+    {
+      "path": "scripts/test-math-svg.mjs",
+      "sha256": "b395f8199b8974ff5d6598d88c22882effdccff79d4f96bd4209bf9d3d570272",
+      "bytes": 2819
+    }
+  ]
+}

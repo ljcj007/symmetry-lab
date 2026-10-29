@@ -1,5 +1,13 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+## 全站公式与上下角标（20261029-math1）
+
+修复课堂、分步推导、计算结果、材料案例与 SVG 图表中的公式排版。统一处理分组上/下标、Unicode 与 ASCII 混排、矩阵、多行公式及行内记号；保留原生 MathML、原始输入、代码、URL、数值计算和 JSON 导出，继续采用18px正文字号。
+
+修改前的网站源码已备份到 [backup/2026-10-29-before-formula-fix](https://github.com/ljcj007/symmetry-lab/tree/backup/2026-10-29-before-formula-fix)，起点为 [`6514b43`](https://github.com/ljcj007/symmetry-lab/commit/6514b43e9153315d857be59668a0790b4ca40993)。显示层使用本地托管的 **KaTeX 0.19.1**、MIT许可证和20个WOFF2字体，无需第三方公式CDN。动态切换课程、展开推导、更新结果时继续排版；SVG使用原生tspan基线位移。
+
+范围与维护说明见[公式显示](dist/docs/formula-display.md)，新增资源与来源哈希见[公式显示清单](dist/data/formula-display-provenance.json)。所有源码修改完成后运行 `python scripts/refresh-formula-provenance.py`，再加 `--check` 只读核验。旧清单保留历史版本与计数，仅刷新文件和Python模块哈希；脚本不改变计算、不打包或提交。
+
 ## 磁共振、超导结与多重态光谱（20261028-spectroscopy1）
 
 新增 **3个主题、9课、9道分步练习（36步）、9个材料与模型案例、18个可复现实验预设及3份跨模块项目作业**。项目中心保留原有3份作业，共6份。内容融入现有课堂、计算中心、材料图谱与研究记录，保留既有功能、五个主导航和18px正文字号。

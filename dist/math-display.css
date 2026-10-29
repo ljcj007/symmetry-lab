@@ -1,0 +1,13 @@
+/* Formula layout is independent of prose and keeps the existing 18px body. */
+.sl-equation{font-family:inherit!important;white-space:normal!important;overflow-wrap:normal!important;overflow-x:auto;overflow-y:hidden;line-height:1.9!important;padding-block:18px!important;max-width:100%;tab-size:4}
+.sl-equation-line{min-height:1.6em;white-space:pre-wrap;overflow-wrap:normal;word-break:normal;width:max-content;min-width:100%;padding:3px 0}
+.sl-math{display:inline-block;vertical-align:baseline;max-width:100%;text-indent:0;letter-spacing:normal;white-space:nowrap;overflow-wrap:normal;word-break:normal}
+.sl-math>.katex{font-size:1.08em;line-height:1.35;text-align:left;white-space:nowrap}
+.sl-equation .sl-math>.katex{font-size:1.12em}
+.sl-math .katex-html{user-select:none}
+.sl-math .katex .mord.text{font-family:inherit}
+.sl-equation .katex-display{margin:.35em 0}
+td .sl-math,th .sl-math{vertical-align:middle}
+button .sl-math{pointer-events:none}
+svg text tspan{letter-spacing:normal}
+@media(max-width:600px){.sl-equation{padding-inline:12px!important}.sl-equation .sl-math>.katex{font-size:1.08em}}

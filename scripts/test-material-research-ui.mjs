@@ -39,7 +39,7 @@ async function runUITests(){
  globalThis.document={createElement:tag=>new Element(tag)};
  globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')});
  const ui=await import('../dist/material-research-ui.js');
- const notebook=await import('../dist/material-notebook.js?v=20261028-spectroscopy1');
+ const notebook=await import('../dist/material-notebook.js?v=20261029-math1');
  const {parseClassroomRoute,buildClassroomHash,classroomPathways}=await import('../dist/classroom-ui.js');
  const {knownTool}=await import('../dist/navigation-ui.js');
  const calls=[];
