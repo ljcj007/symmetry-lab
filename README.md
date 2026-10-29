@@ -1,5 +1,19 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+## 位点、散射、畴壁与关联电子（20261029-pathways1）
+
+新增 **4个主题、14课、14道分步练习（56步）、14个材料与模型案例、26个实验预设、4份跨模块项目及66条公式与符号词典条目**。项目中心保留原有6份作业，共10份；沿用现有课堂、计算中心、材料图谱与研究记录，保留既有功能、五个主导航和18px正文字号。上述数量来自本次合并目录、项目定义和词典文件。
+
+- `#compute/band-representation-lab`：从实空间位点、s或完整p轨道构造 Bloch 表示，在精选普通空间群2、4、19、221的小群中分解。采用本站BC原胞设置，群4螺旋轴沿z；当前为无自旋单值模型，不计算能带能量，不冒充全空间群通用EBR或拓扑分类。
+- `#compute/dynamic-scattering-lab`：一维双原子纵向谐链的一声子相对散射强度，比较动量相位、Bose占据、Stokes/anti-Stokes、低能截断和分辨率。不是任意Phonopy文件的动态结构因子导入器，也不输出材料拟合的绝对截面。
+- `#compute/domain-wall-lab`：两个独立实验分别求φ⁴中心约束畴壁和SSH开放链局域谱；报告网格收敛、解除中心约束后的Hessian稳定性及空间窗口重叠。不会把铁电壁宽自动转换为SSH电子参数，近零能也不自动等于界面态。
+- `#compute/hubbard-cluster-lab`：2–4站点单带Hubbard精确对角化，计算简并基态等权平均、密度、双占据、自旋关联与U扫描；区分固定Sz扇区间隔、跨自旋扇区电荷增减隙及二聚体单重态–三重态分裂。有限团簇结果不证明热力学Mott相变。
+- `#atlas/pathways`、`#atlas/projects` 与 `#docs/dictionary`：案例连接计算和推导，项目保存参数匹配的证据与笔记；词典显示变量、单位、约定和适用条件，利用当前上下文消歧，无法确定时保留候选或未知提示，不改写原始公式。
+
+范围、课堂入口与复现说明见[四主题与词典总述](dist/docs/pathways.md)，文件哈希与一手来源见[本次来源清单](dist/data/pathways-provenance.json)。验证命令为 `npm run test:pathways`；完整旧模块回归继续使用 `npm test` 和 `npm run test:python`。
+
+最终源码和目录修改后运行 `python scripts/refresh-pathways-provenance.py`，再以 `--check` 只读核验。新脚本保留旧清单的release、计数与来源，刷新旧文件哈希、补齐Python模块登记，并仅重建本次发布清单；不依赖本地临时助手文件，不打包、提交或发布。
+
 ## 晶体群符号专项修正（20261029-crystal1）
 
 Hermann–Mauguin、Schönflies、操作名和不可约表示标签采用明确类型；紧凑空间群符号的螺旋下标由显式目录恢复，修正上划线、旋转方向、撇号及同基底上下标。全量验证3,546个符号，输入与导出继续使用原始标识符。通用公式修复重音范围，SVG改用真实字体几何定位。[规则、来源与验证](dist/docs/crystal-notation.md)。

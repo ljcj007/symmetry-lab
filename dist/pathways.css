@@ -1,0 +1,11 @@
+.pathways-page .qm-lab{grid-template-columns:minmax(235px,.75fr) minmax(0,1.65fr)}
+.pathways-page .obs-controls{max-height:none;align-self:start}
+.pathways-page [hidden]{display:none!important}
+.pathways-page .qm-results{min-width:0}
+.pathways-page .qm-results>section{margin:1.5rem 0}
+.pathways-page .qm-results details{margin:.8rem 0;border:1px solid var(--border,#dce5df);padding:.8rem;border-radius:10px;overflow:auto}
+.pathways-page .qm-results summary{cursor:pointer;font-weight:600}
+.pw-visual svg{width:100%;max-height:390px;background:#f5f8f4;border-radius:12px}
+.pathways-page input[type=range]{width:100%;accent-color:#247b65}
+.pathways-page .obs-controls label{overflow-wrap:anywhere}
+@media(max-width:1000px){.pathways-page .qm-lab{grid-template-columns:1fr}}

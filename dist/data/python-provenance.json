@@ -657,6 +657,134 @@
         "Transition energies are referenced to the final-configuration centroid, not an absolute experimental edge; radial factors are suppressed and LS terms are not automatically assigned"
       ],
       "sha256": "80e36eedfd59e06e4daea87fac85bca70681972c844a961b80ddf8b4ee9f8e0c"
+    },
+    {
+      "path": "dist/python/band_connectivity.py",
+      "sha256": "4b71f00483e26f61dbef28d10f4b5126d390bc4b294e0f118a3bb71480ffe314",
+      "bytes": 22849,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/band_rep_lab.py",
+      "sha256": "8d75068108d11ba13104b262fd8ccf694236fc0d2715bf3112bdd4b8c7b44a83",
+      "bytes": 18700,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Site orbits, stabilizers, periodic-gauge Bloch matrices and selected-k little-group decomposition for ordinary space groups 2, 4, 19 and 221; scalar s or complete polar p orbitals"
+      ],
+      "limitations": [
+        "BC primitive settings, including the group-4 screw along z; single-valued and no SOC/time reversal",
+        "No generic EBR classification, electronic energy calculation, structure identification or complete topological diagnosis"
+      ]
+    },
+    {
+      "path": "dist/python/browser_api.py",
+      "sha256": "05ccf6d57c9d5dab6df2b8d3230e2e91948fedc547b24f360d4ae28493c293e5",
+      "bytes": 6800,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/cli.py",
+      "sha256": "4dbe3931e81fa2fd21d44b5cff9562d57eb372a54f37bbd16ba8bd00c59cf32e",
+      "bytes": 2481,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/diffraction.py",
+      "sha256": "6312a9474d32630c8788e3047cfa1bd868922d2fdcb076b8229264188a643869",
+      "bytes": 14983,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/distortion_lab.py",
+      "sha256": "69f59d38171855f9068d6b2a2aa07efbf2f5977fcb77e0f95e17a51abc93f7e8",
+      "bytes": 38048,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/domain_wall_lab.py",
+      "sha256": "a8655606e6567c6e5de4b6e9f5c9c204cb945a726c891c15d17ae0dab8fdd3cf",
+      "bytes": 12465,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Independent scalar phi4 pinned-wall finite-grid stationary calculation with continuum and Hessian diagnostics",
+        "Independent finite open SSH chain with central-pair potential, LDOS and selected-subspace spatial projectors"
+      ],
+      "limitations": [
+        "Reduced continuum units do not automatically map to SSH parameters or fitted ferroelectric energies",
+        "Finite-grid residual is distinct from unconstrained stability; spatial windows may overlap and finite chains need not reach asymptotic dimerization"
+      ]
+    },
+    {
+      "path": "dist/python/dynamic_scattering_lab.py",
+      "sha256": "6e4aba71fdbf966feb15cdfe586b49538eb46ad8f513f3109783bb690b07547c",
+      "bytes": 16571,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "One-dimensional longitudinal diatomic harmonic chain with mass-normalized complex modes, coherent one-phonon amplitudes, Bose populations and positive/negative energy scattering"
+      ],
+      "limitations": [
+        "Synthetic chain with explicit energy cutoff and relative scattering weights; no arbitrary Phonopy dataset import",
+        "No fitted material cross section, Debye-Waller factor, elastic/multiphonon scattering or computed damping"
+      ]
+    },
+    {
+      "path": "dist/python/hubbard_lab.py",
+      "sha256": "3421a91e928bbc9f9b56694486694335c84d2a5d785fdbe2061c070caf5a2238",
+      "bytes": 17459,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Exact fermionic diagonalization of 2-4 site open/periodic single-band Hubbard clusters in fixed up/down particle sectors",
+        "Degenerate-ground-state trace averages, densities, double occupancy, spin correlations, U scans, all-Sz charge gaps and dimer singlet-triplet splitting"
+      ],
+      "limitations": [
+        "Two-site periodic model has one undirected bond; zero temperature and supplied model parameters",
+        "Finite-sector gaps and finite-cluster charge costs do not prove a thermodynamic Mott transition or material magnetic order"
+      ]
+    },
+    {
+      "path": "dist/python/magnon_lab.py",
+      "sha256": "ad543f40ac328ae0fb012cad7353b1ffe17cfe91349ce2f7c63ee6b325fd9dd6",
+      "bytes": 17449,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/phase_domains.py",
+      "sha256": "df9aac4624b6339ff178c36c8d198d49fd31fdcbb5ae5c482d218ea627f3116e",
+      "bytes": 11704,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/phonon_modes.py",
+      "sha256": "44327838b4d5ef9ee276951e84918c141e1c081fc820da0509014f9fc150ee64",
+      "bytes": 24255,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/phonon_thermo.py",
+      "sha256": "b0f7e78f3601a935998a9b3c6a02b6d10f1a95e6fbda3cfc05e58fb550ad4281",
+      "bytes": 23112,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/phonopy_import.py",
+      "sha256": "71d511cdf16041d50381832e5ee95766ddbf0fbdaf2fc580cf3d71d8a1f57ac7",
+      "bytes": 28560,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/qha_lab.py",
+      "sha256": "4505784a1b62e5f4442b3995407f449575bd39f8d497b0baf947ef202232d44f",
+      "bytes": 23271,
+      "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     }
   ],
   "coordinate_conventions": {

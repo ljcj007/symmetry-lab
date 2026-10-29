@@ -1,0 +1,2563 @@
+{
+  "schema": "symmetry-lab-pathways-1",
+  "release": "20261029-pathways1",
+  "modules": [
+    {
+      "id": "bandrep",
+      "title": "从位点轨道到能带表示",
+      "summary": "选择实空间位点和 s/p 轨道，追踪位点置换、整格余量、Bloch 相位与高对称 k 点不可约分解。",
+      "route": "band-representation-lab",
+      "action": "band_rep_lab",
+      "fields": [
+        {
+          "key": "group",
+          "label": "普通空间群（本站 BC 设置）",
+          "type": "select",
+          "default": 4,
+          "options": [
+            [
+              2,
+              "2 · P−1"
+            ],
+            [
+              4,
+              "4 · P2₁（轴 z）"
+            ],
+            [
+              19,
+              "19 · P2₁2₁2₁"
+            ],
+            [
+              221,
+              "221 · Pm−3m"
+            ]
+          ]
+        },
+        {
+          "key": "site",
+          "label": "位点种子（自动适用于所有群）",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            [
+              "auto",
+              "自动选择：2/221 原点；4/19 一般位置"
+            ],
+            [
+              "origin",
+              "原点：仅群 2/221"
+            ],
+            [
+              "body",
+              "体心反演中心：仅群 2/221"
+            ],
+            [
+              "general",
+              "一般位置：仅群 2/4/19"
+            ],
+            [
+              "faces",
+              "面心 3c：仅群 221"
+            ]
+          ]
+        },
+        {
+          "key": "orbitals",
+          "label": "每个位点的局域轨道",
+          "type": "select",
+          "default": "s",
+          "options": [
+            [
+              "s",
+              "s 标量（1 维）"
+            ],
+            [
+              "p",
+              "完整 pₓ,pᵧ,p_z 极性向量（3 维）"
+            ]
+          ]
+        },
+        {
+          "key": "kPoint",
+          "label": "倒格分数坐标中的 k 点",
+          "type": "select",
+          "default": "G",
+          "options": [
+            [
+              "G",
+              "Γ = (0,0,0)"
+            ],
+            [
+              "X",
+              "(1/2,0,0)"
+            ],
+            [
+              "Y",
+              "(0,1/2,0)"
+            ],
+            [
+              "Z",
+              "(0,0,1/2)"
+            ],
+            [
+              "M",
+              "(1/2,1/2,0)"
+            ],
+            [
+              "R",
+              "(1/2,1/2,1/2)"
+            ],
+            [
+              "line",
+              "(0,0,kz)：使用下面的参数"
+            ]
+          ]
+        },
+        {
+          "key": "kz",
+          "label": "线上 kz（仅选择 line 时使用）",
+          "type": "number",
+          "default": 0.25,
+          "min": 0,
+          "max": 0.5,
+          "step": 0.01
+        }
+      ],
+      "presets": [
+        {
+          "id": "screw-boundary",
+          "title": "螺旋轴边界：平方为何为 −1？",
+          "input": {
+            "group": 4,
+            "site": "auto",
+            "orbitals": "s",
+            "kPoint": "Z",
+            "kz": 0.5
+          }
+        },
+        {
+          "id": "inversion-pair",
+          "title": "两个一般位点：偶、奇各一份",
+          "input": {
+            "group": 2,
+            "site": "general",
+            "orbitals": "s",
+            "kPoint": "G"
+          }
+        },
+        {
+          "id": "body-parity",
+          "title": "移动轨道中心：体心 s 的边界宇称",
+          "input": {
+            "group": 2,
+            "site": "body",
+            "orbitals": "s",
+            "kPoint": "X"
+          }
+        },
+        {
+          "id": "orthorhombic-projective",
+          "title": "群 19 的 R 点：二维射影表示",
+          "input": {
+            "group": 19,
+            "site": "auto",
+            "orbitals": "s",
+            "kPoint": "R"
+          }
+        },
+        {
+          "id": "cubic-p",
+          "title": "立方中心 p 三重态",
+          "input": {
+            "group": 221,
+            "site": "origin",
+            "orbitals": "p",
+            "kPoint": "G"
+          }
+        },
+        {
+          "id": "perovskite-sites",
+          "title": "钙钛矿型面心位点：3c × p 的九维空间",
+          "input": {
+            "group": 221,
+            "site": "faces",
+            "orbitals": "p",
+            "kPoint": "R"
+          }
+        },
+        {
+          "id": "screw-gamma",
+          "title": "项目：螺旋群 Γ 点参照",
+          "input": {
+            "group": 4,
+            "site": "auto",
+            "orbitals": "s",
+            "kPoint": "G",
+            "kz": 0.25
+          }
+        }
+      ],
+      "pathway": "crystal"
+    },
+    {
+      "id": "scattering",
+      "title": "一声子动态结构因子",
+      "summary": "在双原子谐链中联动声子分支、相干干涉、Q投影与Bose统计，计算S(Q,E)热图和选定Q能谱。",
+      "route": "dynamic-scattering-lab",
+      "action": "dynamic_scattering_lab",
+      "fields": [
+        {
+          "key": "lattice",
+          "label": "原胞长度 a（Å）",
+          "type": "number",
+          "default": 4.0,
+          "min": 1,
+          "max": 10,
+          "step": "any"
+        },
+        {
+          "key": "massA",
+          "label": "A 原子质量（amu）",
+          "type": "number",
+          "default": 23.0,
+          "min": 1,
+          "max": 250,
+          "step": "any"
+        },
+        {
+          "key": "massB",
+          "label": "B 原子质量（amu）",
+          "type": "number",
+          "default": 35.45,
+          "min": 1,
+          "max": 250,
+          "step": "any"
+        },
+        {
+          "key": "springIntra",
+          "label": "胞内弹簧 K₁（eV/Å²）",
+          "type": "number",
+          "default": 2.0,
+          "min": 0.02,
+          "max": 20,
+          "step": "any"
+        },
+        {
+          "key": "springInter",
+          "label": "胞间弹簧 K₂（eV/Å²）",
+          "type": "number",
+          "default": 2.0,
+          "min": 0.02,
+          "max": 20,
+          "step": "any"
+        },
+        {
+          "key": "basisFraction",
+          "label": "B 的原胞分数位置 s",
+          "type": "number",
+          "default": 0.5,
+          "min": 0.05,
+          "max": 0.95,
+          "step": "any"
+        },
+        {
+          "key": "scatterA",
+          "label": "A 相干振幅 bA（相对）",
+          "type": "number",
+          "default": 1.0,
+          "min": -20,
+          "max": 20,
+          "step": "any"
+        },
+        {
+          "key": "scatterB",
+          "label": "B 相干振幅 bB（相对）",
+          "type": "number",
+          "default": 1.0,
+          "min": -20,
+          "max": 20,
+          "step": "any"
+        },
+        {
+          "key": "angle",
+          "label": "Q 与链轴夹角 θ（°）",
+          "type": "number",
+          "default": 0.0,
+          "min": 0,
+          "max": 180,
+          "step": "any"
+        },
+        {
+          "key": "selectedQ",
+          "label": "选定完整 Q（Å⁻¹）",
+          "type": "number",
+          "default": 1.8,
+          "min": -8,
+          "max": 8,
+          "step": "any"
+        },
+        {
+          "key": "temperature",
+          "label": "温度 T（K）",
+          "type": "number",
+          "default": 100.0,
+          "min": 0,
+          "max": 1500,
+          "step": "any"
+        },
+        {
+          "key": "sigma",
+          "label": "Gaussian 标准差 σ（meV）",
+          "type": "number",
+          "default": 0.5,
+          "min": 0.05,
+          "max": 8,
+          "step": "any"
+        },
+        {
+          "key": "energyCutoff",
+          "label": "低能排除阈值（meV）",
+          "type": "number",
+          "default": 0.25,
+          "min": 0.001,
+          "max": 2,
+          "step": "any"
+        },
+        {
+          "key": "qMin",
+          "label": "完整 Q 扫描起点（Å⁻¹）",
+          "type": "number",
+          "default": 0.0,
+          "min": -8,
+          "max": 8,
+          "step": "any"
+        },
+        {
+          "key": "qMax",
+          "label": "完整 Q 扫描终点（Å⁻¹）",
+          "type": "number",
+          "default": 4.0,
+          "min": -8,
+          "max": 8,
+          "step": "any"
+        },
+        {
+          "key": "qPoints",
+          "label": "Q 采样点数",
+          "type": "number",
+          "default": 81,
+          "min": 31,
+          "max": 121,
+          "step": 1
+        },
+        {
+          "key": "energyMin",
+          "label": "能量转移起点（meV）",
+          "type": "number",
+          "default": -50.0,
+          "min": -250,
+          "max": 250,
+          "step": "any"
+        },
+        {
+          "key": "energyMax",
+          "label": "能量转移终点（meV）",
+          "type": "number",
+          "default": 50.0,
+          "min": -250,
+          "max": 250,
+          "step": "any"
+        },
+        {
+          "key": "energyPoints",
+          "label": "能量采样点数",
+          "type": "number",
+          "default": 401,
+          "min": 101,
+          "max": 401,
+          "step": 1
+        },
+        {
+          "key": "channel",
+          "label": "热图显示通道",
+          "type": "select",
+          "default": "both",
+          "options": [
+            [
+              "both",
+              "Stokes + anti-Stokes"
+            ],
+            [
+              "stokes",
+              "Stokes · 创建声子"
+            ],
+            [
+              "antiStokes",
+              "anti-Stokes · 湮灭声子"
+            ]
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "scattering-diatomic",
+          "title": "双原子链 · 质量、色散与谱强",
+          "input": {
+            "lattice": 4.0,
+            "massA": 23.0,
+            "massB": 35.45,
+            "springIntra": 2.0,
+            "springInter": 2.0,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 0.0,
+            "selectedQ": 1.8,
+            "temperature": 100.0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-folded-even",
+          "title": "相同原子 · 偶数倒格区",
+          "input": {
+            "lattice": 4.0,
+            "massA": 20,
+            "massB": 20,
+            "springIntra": 3,
+            "springInter": 3,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 0.0,
+            "selectedQ": 3.5028758087526195,
+            "temperature": 100.0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-folded-odd",
+          "title": "相同原子 · 相邻奇数倒格区",
+          "input": {
+            "lattice": 4.0,
+            "massA": 20,
+            "massB": 20,
+            "springIntra": 3,
+            "springInter": 3,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 0.0,
+            "selectedQ": 1.9320794819577227,
+            "temperature": 100.0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-contrast",
+          "title": "改变相干对比 · bB 反号",
+          "input": {
+            "lattice": 4.0,
+            "massA": 23.0,
+            "massB": 35.45,
+            "springIntra": 2.0,
+            "springInter": 2.0,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": -1,
+            "angle": 0.0,
+            "selectedQ": 1.8,
+            "temperature": 100.0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-cold",
+          "title": "零温极限 · 只剩声子创建",
+          "input": {
+            "lattice": 4.0,
+            "massA": 23.0,
+            "massB": 35.45,
+            "springIntra": 2.0,
+            "springInter": 2.0,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 0.0,
+            "selectedQ": 1.8,
+            "temperature": 0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-warm",
+          "title": "300 K · 热占据增强湮灭支",
+          "input": {
+            "lattice": 4.0,
+            "massA": 23.0,
+            "massB": 35.45,
+            "springIntra": 2.0,
+            "springInter": 2.0,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 0.0,
+            "selectedQ": 1.8,
+            "temperature": 300,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        },
+        {
+          "id": "scattering-transverse",
+          "title": "Q 垂直链轴 · 纵向模式变暗",
+          "input": {
+            "lattice": 4.0,
+            "massA": 23.0,
+            "massB": 35.45,
+            "springIntra": 2.0,
+            "springInter": 2.0,
+            "basisFraction": 0.5,
+            "scatterA": 1.0,
+            "scatterB": 1.0,
+            "angle": 90,
+            "selectedQ": 1.8,
+            "temperature": 100.0,
+            "sigma": 0.5,
+            "qMin": 0.0,
+            "qMax": 4.0,
+            "energyMin": -50.0,
+            "energyMax": 50.0,
+            "energyCutoff": 0.25,
+            "qPoints": 81,
+            "energyPoints": 401,
+            "channel": "both"
+          }
+        }
+      ],
+      "pathway": "observables"
+    },
+    {
+      "id": "domainwall",
+      "title": "畴壁与局域态",
+      "summary": "从自由能梯度项到空间畴壁，再在独立SSH模型中观察界面电子态。",
+      "route": "domain-wall-lab",
+      "action": "domain_wall_lab",
+      "fields": [
+        {
+          "key": "experiment",
+          "label": "选择实验",
+          "default": "landau",
+          "type": "select",
+          "options": [
+            [
+              "landau",
+              "连续序参量畴壁"
+            ],
+            [
+              "ssh",
+              "SSH 界面与局域态"
+            ]
+          ]
+        },
+        {
+          "key": "kappa",
+          "label": "梯度系数 κ（约化）",
+          "default": 1,
+          "type": "number",
+          "min": 0.05,
+          "max": 8,
+          "step": "any",
+          "experiment": "landau"
+        },
+        {
+          "key": "beta",
+          "label": "双阱系数 β（约化）",
+          "default": 1,
+          "type": "number",
+          "min": 0.05,
+          "max": 8,
+          "step": "any",
+          "experiment": "landau"
+        },
+        {
+          "key": "amplitude",
+          "label": "极小值幅度 v（约化）",
+          "default": 1,
+          "type": "number",
+          "min": 0.2,
+          "max": 3,
+          "step": "any",
+          "experiment": "landau"
+        },
+        {
+          "key": "extent",
+          "label": "半区间长度 / ξ",
+          "default": 8,
+          "type": "number",
+          "min": 4,
+          "max": 16,
+          "step": "any",
+          "experiment": "landau"
+        },
+        {
+          "key": "gridPoints",
+          "label": "粗网格点数（奇数）",
+          "default": 81,
+          "type": "number",
+          "min": 41,
+          "max": 161,
+          "step": 2,
+          "experiment": "landau"
+        },
+        {
+          "key": "sites",
+          "label": "开放链格点数（偶数）",
+          "default": 60,
+          "type": "number",
+          "min": 20,
+          "max": 100,
+          "step": 2,
+          "experiment": "ssh"
+        },
+        {
+          "key": "hopping",
+          "label": "平均跃迁 t（eV）",
+          "default": 1,
+          "type": "number",
+          "min": 0.1,
+          "max": 3,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "dimerization",
+          "label": "渐近二聚化 δ",
+          "default": 0.4,
+          "type": "number",
+          "min": 0.05,
+          "max": 0.85,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "sshWidth",
+          "label": "界面宽度（键间距）",
+          "default": 2,
+          "type": "number",
+          "min": 0.5,
+          "max": 10,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "onsite",
+          "label": "中心两格点势（eV）",
+          "default": 0,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "probeEnergy",
+          "label": "观察能量（eV）",
+          "default": 0,
+          "type": "number",
+          "min": -6,
+          "max": 6,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "eta",
+          "label": "LDOS 展宽 η（eV）",
+          "default": 0.03,
+          "type": "number",
+          "min": 0.005,
+          "max": 0.2,
+          "step": "any",
+          "experiment": "ssh"
+        },
+        {
+          "key": "interface",
+          "label": "键序结构",
+          "default": "wall",
+          "type": "select",
+          "options": [
+            [
+              "wall",
+              "二聚化反号界面"
+            ],
+            [
+              "uniform",
+              "均匀二聚化参照"
+            ]
+          ],
+          "experiment": "ssh"
+        }
+      ],
+      "presets": [
+        {
+          "id": "wall-landau",
+          "title": "标量180°畴壁 · 基准",
+          "input": {
+            "experiment": "landau",
+            "kappa": 1,
+            "beta": 1,
+            "amplitude": 1,
+            "extent": 8,
+            "gridPoints": 81
+          }
+        },
+        {
+          "id": "wall-stiff",
+          "title": "增强梯度代价 · κ=4",
+          "input": {
+            "experiment": "landau",
+            "kappa": 4,
+            "beta": 1,
+            "amplitude": 1,
+            "extent": 8,
+            "gridPoints": 81
+          }
+        },
+        {
+          "id": "wall-ssh",
+          "title": "SSH 反号界面 · 手征对称",
+          "input": {
+            "experiment": "ssh",
+            "sites": 60,
+            "hopping": 1,
+            "dimerization": 0.4,
+            "sshWidth": 2,
+            "onsite": 0,
+            "interface": "wall"
+          }
+        },
+        {
+          "id": "wall-ssh-uniform",
+          "title": "均匀二聚化参照",
+          "input": {
+            "experiment": "ssh",
+            "sites": 60,
+            "hopping": 1,
+            "dimerization": 0.4,
+            "sshWidth": 2,
+            "onsite": 0,
+            "interface": "uniform"
+          }
+        },
+        {
+          "id": "wall-ssh-potential",
+          "title": "中心在位势 · 破坏手征对称",
+          "input": {
+            "experiment": "ssh",
+            "sites": 60,
+            "hopping": 1,
+            "dimerization": 0.4,
+            "sshWidth": 2,
+            "onsite": 0.4,
+            "interface": "wall"
+          }
+        },
+        {
+          "id": "wall-project-ssh",
+          "title": "项目：匹配 SSH 体相键强度",
+          "input": {
+            "experiment": "ssh",
+            "sites": 60,
+            "hopping": 0.8,
+            "dimerization": 0.25,
+            "sshWidth": 2,
+            "onsite": 0,
+            "probeEnergy": 0,
+            "eta": 0.03,
+            "interface": "wall"
+          }
+        },
+        {
+          "id": "wall-project-potential",
+          "title": "项目：匹配 SSH 体相键强度 · 中心势",
+          "input": {
+            "experiment": "ssh",
+            "sites": 60,
+            "hopping": 0.8,
+            "dimerization": 0.25,
+            "sshWidth": 2,
+            "onsite": 0.4,
+            "probeEnergy": 0,
+            "eta": 0.03,
+            "interface": "wall"
+          }
+        }
+      ],
+      "pathway": "structure-dynamics"
+    },
+    {
+      "id": "hubbard",
+      "title": "Hubbard 小团簇：从跃迁到关联",
+      "summary": "精确对角化 2–4 站点单带模型，比较多体能谱、双占据、自旋关联与电荷增减隙，沿 U 扫描检验二聚体交换尺度。",
+      "route": "hubbard-cluster-lab",
+      "action": "hubbard_lab",
+      "fields": [
+        {
+          "key": "sites",
+          "label": "站点数 L",
+          "type": "number",
+          "default": 2,
+          "min": 2,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "nUp",
+          "label": "上自旋电子数 N↑（不超过 L）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "nDown",
+          "label": "下自旋电子数 N↓（不超过 L）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "boundary",
+          "label": "边界条件",
+          "type": "select",
+          "default": "open",
+          "options": [
+            [
+              "open",
+              "开边界：相邻站点成键"
+            ],
+            [
+              "periodic",
+              "周期边界：首尾相连；二站点仅一条键"
+            ]
+          ]
+        },
+        {
+          "key": "hopping",
+          "label": "跃迁 t（eV）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "interactionU",
+          "label": "同站点排斥 U（eV）",
+          "type": "number",
+          "default": 4,
+          "min": 0,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "alternatingPotential",
+          "label": "交错位能差 Δ（eV；首站点为 +Δ/2）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.5
+        },
+        {
+          "key": "scanMaxU",
+          "label": "U 扫描上限（eV）",
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "scanPoints",
+          "label": "U 扫描点数",
+          "type": "number",
+          "default": 25,
+          "min": 11,
+          "max": 41,
+          "step": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "dimer-half",
+          "title": "半填充二聚体：单重态与超交换",
+          "input": {
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "scanMaxU": 12,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "chain-four",
+          "title": "四站点开链：边界与自旋关联",
+          "input": {
+            "sites": 4,
+            "nUp": 2,
+            "nDown": 2,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 8,
+            "alternatingPotential": 0,
+            "scanMaxU": 16,
+            "scanPoints": 33
+          }
+        },
+        {
+          "id": "ionic-dimer",
+          "title": "不等价二聚体：位能差与双占据竞争",
+          "input": {
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 6,
+            "scanMaxU": 12,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "atomic-dimer",
+          "title": "原子极限：简并基态如何平均",
+          "input": {
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 0,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "scanMaxU": 12,
+            "scanPoints": 25
+          }
+        },
+        {
+          "id": "dimer-project-strong",
+          "title": "项目：Hubbard 二聚体强耦合 U=12 eV",
+          "input": {
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 12,
+            "alternatingPotential": 0,
+            "scanMaxU": 12,
+            "scanPoints": 25
+          }
+        }
+      ],
+      "pathway": "spin"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "bandrep-real-space",
+      "module": "bandrep",
+      "title": "先数实空间位点，再谈能带表示",
+      "summary": "用轨道—稳定子关系区别位点诱导和全 k 星诱导。",
+      "preset": "inversion-pair",
+      "sections": [
+        {
+          "title": "一个种子生成完整轨道",
+          "text": "对种子 r₀ 作用所有 Seitz 代表元，再模整格平移去重。群 2 的一般位置生成 r₀ 与 −r₀；反演中心只生成一个位点。这里数的是一个原胞中的实空间位点，不是动量星臂。",
+          "formula": "m × |H| = |G/T|"
+        },
+        {
+          "title": "稳定子要真正固定该位点",
+          "text": "若 Rr₀+t 与 r₀ 只差整格向量 L，则将该代表元的平移改为 t−L，得到真正固定 r₀ 的位点稳定子元素。输出同时列出被减去的 L 与实际固定平移。",
+          "formula": "Rr₀+t−L = r₀"
+        },
+        {
+          "title": "局域自由度决定纤维维数",
+          "text": "每个位点放一个 s 轨道给 m 维 Bloch 纤维；放完整 p 三重态给 3m 维。p 在部分位点稳定子下可约，因此不能直接称为某个不可约局域表示，更不能自动称为 EBR。",
+          "formula": "dim B(k) = m × dim ρ"
+        },
+        {
+          "title": "在课堂与工作台之间核对",
+          "text": "先看位点表和稳定子表，再观察 Γ 点特征标分解。群 2 一般位置 s 的二维表示分成一份偶宇称和一份奇宇称。本地 D 编号随计算排序，应用反演特征标识别它们。"
+        }
+      ],
+      "references": [
+        "bandrep-cano-ebr",
+        "bandrep-bilbao-sitesym"
+      ]
+    },
+    {
+      "id": "bandrep-bloch-phase",
+      "module": "bandrep",
+      "title": "跨过原胞边界的位点如何带上相位",
+      "summary": "从周期 Bloch 和式推导整格余量、跨纤维作用和螺旋平方。",
+      "preset": "screw-boundary",
+      "sections": [
+        {
+          "title": "先固定规范",
+          "text": "采用周期规范：Bloch 系数只含晶格向量 T，不把轨道中心 rₐ 写进指数。平移 T_L 的本征相位因此为 exp(−2πi k·L)。换规范会改变矩阵元素，不能混用不同规范的公式。",
+          "formula": "|a,k⟩ = Σ_T exp(+2πi k·T)|T+rₐ⟩"
+        },
+        {
+          "title": "一次操作的两部分",
+          "text": "求解 Rrₐ+t=r_b+L 后，矩阵块是局域 s/p 变换乘以 exp[−2πi(R⁻ᵀk)·L]。一般操作把 k 纤维送到 R⁻ᵀk；只有保留 k 模倒格矢的小群操作才可在同一纤维内取物理特征标。",
+          "formula": "U_g(k)[b,a] = exp[−2πi(R_g⁻ᵀk)·L_ga] ρ(R_g)"
+        },
+        {
+          "title": "螺旋平方是平移",
+          "text": "本站群 4 的螺旋轴沿 z。2₁ 作用两次得到一个 z 向晶格平移，故 kz=1/2 时平方为 −I，本征值为 ±i。忽略位点越界的相位会错误地得到平方 +I。",
+          "formula": "U_S(k)² = exp(−2πi kz) I； λ± = ±exp(−iπkz)"
+        },
+        {
+          "title": "沿轴看分支交换",
+          "text": "第二张图画复本征值的实部与虚部，不是能带能量。kz 增加一个倒格周期时正负标记交换；具体能量简并、连通或绝缘性还需要 Hamiltonian 和其他约束，不能仅由这张曲线断言。"
+        }
+      ],
+      "references": [
+        "bandrep-cano-ebr",
+        "bandrep-elcoro-bcs"
+      ]
+    },
+    {
+      "id": "bandrep-decomposition",
+      "module": "bandrep",
+      "title": "从矩阵到特征标，再到小群分解",
+      "summary": "用群 19 的边界射影表示检验相位、维数与不可约分解。",
+      "preset": "orthorhombic-projective",
+      "sections": [
+        {
+          "title": "先保留 Seitz 乘法的晶格缺陷",
+          "text": "两个选定代表元的乘积不一定等于目录中的第三个代表元，可能多一个整格平移 Δ。固定 k 时这一差别成为因子系统，不能把商群的普通乘法强加给 Bloch 矩阵。",
+          "formula": "U_g U_h = exp(−2πi k·Δ_gh) U_j"
+        },
+        {
+          "title": "正交内积给重数",
+          "text": "用相同因子系统的已验证小群不可约特征标做内积。输出必须同时满足非负整数重数、原特征标重建和总维数守恒；仅列出一些表示名称不足以构成分解。",
+          "formula": "n_μ = (1/|G_k/T|) Σ_g χ_μ(g)* χ_B(g)"
+        },
+        {
+          "title": "四个 s 轨道为何不等于四个一维表示",
+          "text": "群 19 的一般轨道有四个位点。R=(1/2,1/2,1/2) 的螺旋相位产生非平凡射影乘法，结果是同一个二维小群不可约表示出现两次。这里的二维性来自空间操作与平移相位，并非施加自旋时间反演后的 Kramers 结论。",
+          "formula": "4 = 2 × 2"
+        },
+        {
+          "title": "局部结果与全局问题",
+          "text": "换到 Γ 点，因子系统平凡，s 四维纤维分成四个一维项。不同 k 的 D1 不是同一个全局能带标签。若要进一步连接能带，请进入兼容关系课堂；本模块不自动给出全区连通图或拓扑分类。"
+        }
+      ],
+      "references": [
+        "bandrep-cano-ebr",
+        "bandrep-elcoro-bcs"
+      ]
+    },
+    {
+      "id": "bandrep-cubic-sites",
+      "module": "bandrep",
+      "title": "钙钛矿型位点与轨道中心的区别",
+      "summary": "比较立方原点、体心与三个面心位点的诱导空间。",
+      "preset": "perovskite-sites",
+      "sections": [
+        {
+          "title": "把结构位点和电子填充分开",
+          "text": "Pm−3m 的 1a、1b、3c 是位点原型。3c 三个面心位点常用于理解理想立方钙钛矿的氧子晶格，但本实验只放置抽象局域轨道，没有电荷转移、共价杂化、真实氧能级或占据。",
+          "formula": "3c: (0,1/2,1/2), (1/2,0,1/2), (1/2,1/2,0)"
+        },
+        {
+          "title": "原点 p 是极性三重态",
+          "text": "在原点 Γ 点，局域 pₓ,pᵧ,p_z 形成 O_h 的三维极性向量表示，常用标签 T1u。反演矩阵为 −I₃，特征标 −3。程序仍只给经过验证的本地 D 标签，不擅自把它们当成标准数据库编号。",
+          "formula": "ρ_p(I) = −I₃； χ_p(I)=−3"
+        },
+        {
+          "title": "轨道中心影响边界特征标",
+          "text": "原点与体心 s 轨道局域反演均为偶，但体心种子反演后要减去 (−1,−1,−1) 才回到同一原胞位点，因此某些边界点宇称会变号。这说明必须保存轨道中心和 Bloch 规范。",
+          "formula": "χ_I(k;r₀) = exp(+4πi k·r₀)（s，反演中心）"
+        },
+        {
+          "title": "跨模块项目",
+          "text": "记录 1a-s、1b-s、3c-p 在 Γ、X、R 的维数与反演特征标，再去晶场课堂讨论局域轨道、去能带兼容关系课堂讨论连接。它们是同一结构问题的不同层次；只凭这些采样数据不能判断完整材料是否拓扑。"
+        }
+      ],
+      "references": [
+        "bandrep-cano-ebr",
+        "bandrep-elcoro-bcs",
+        "bandrep-spglib-dataset"
+      ]
+    },
+    {
+      "id": "scattering-chain",
+      "module": "scattering",
+      "title": "从双原子运动方程到两条声子分支",
+      "summary": "先固定质量归一化和 Bloch 规范，再看能量与实际位移。",
+      "preset": "scattering-diatomic",
+      "sections": [
+        {
+          "title": "原胞与两根弹簧",
+          "text": "A_l—B_l 的弹簧是 K₁，B_l—A_(l+1) 的弹簧是 K₂。原胞长度 a，B 位于 sa。K、质量和基底位置都是独立给定参数；改变 s 不会自动重新拟合弹簧。",
+          "formula": "V=½Σ_l[K₁(u_lB−u_lA)²+K₂(u_(l+1)A−u_lB)²]"
+        },
+        {
+          "title": "本征矢不等于原子的同单位位移",
+          "text": "程序在质量归一化基中求解二乘二厄米矩阵。Γ 点声学本征矢正比于(√mA,√mB)，除以√m后才得到两个原子同幅同相的实际位移。",
+          "formula": "u_lκ∝eκ(q)exp(iqla)/√mκ；Σκ|eκ|²=1"
+        },
+        {
+          "title": "两支能量的解析检查",
+          "text": "把 t 定义为(K₁+K₂)(1/mA+1/mB)，d 定义为4K₁K₂sin²(qa/2)/(mAmB)。λ±是动力学矩阵本征值，能量转换因子 C≈64.654 meV。Γ 点低支为刚体平移，高支为有限频率的相对运动。",
+          "formula": "λ±=[t±√(t²−4d)]/2；ε±=C√λ±"
+        },
+        {
+          "title": "为什么能谱里没有 Γ 点零频峰",
+          "text": "一声子公式含1/ε，不能把刚体平移直接代入。程序保留零频色散，但把低于显式截断的模从非弹性谱排除。未计算弹性或准弹性峰；这不是给声学模人为开隙。",
+          "formula": "ε<energyCutoff ⇒ 不计入一声子谱"
+        }
+      ],
+      "references": [
+        "scattering-scattering-phonopy-formulation",
+        "scattering-scattering-togo-2023"
+      ]
+    },
+    {
+      "id": "scattering-phase",
+      "module": "scattering",
+      "title": "相同声子，为何在相邻倒格区明暗不同？",
+      "summary": "区分完整 Q 与约化 q，把投影、基底相位和质量因子放进同一个振幅。",
+      "preset": "scattering-folded-even",
+      "sections": [
+        {
+          "title": "散射向量不是声子约化动量",
+          "text": "Q 是带符号的完整扫描坐标；Q∥=Qcosθ 是链轴投影。约化 q 折叠到第一布里渊区，Q∥−q 是倒格向量。两个相隔倒格向量的测量点可以有相同声子能量，却不必有相同强度。",
+          "formula": "Q∥=q+2πn/a"
+        },
+        {
+          "title": "先叠加振幅，再取平方",
+          "text": "相干散射必须把两个原子的复振幅先相加。b 是有符号相对散射振幅，e 是质量归一化本征矢。当前规范下创建振幅必须使用 e 的复共轭；漏掉相位或共轭都会改变消光。",
+          "formula": "Aν=Q∥Σκ bκ exp(iQ∥τκ)eκ(q)*/√mκ；Wν=(ℏ²/2amu)|Aν|²/εν"
+        },
+        {
+          "title": "在单原子折叠极限手算消光",
+          "text": "令两质量、两弹簧、两散射振幅分别相等，s=1/2。原胞只是把单原子链加倍。偶数倒格区的光学折叠支消光，奇数区的声学折叠支消光。切换偶数/奇数预设时 Hamiltonian 不变，只改变完整 Q。",
+          "formula": "Aac∝1+(−1)^n；Aop∝1−(−1)^n"
+        },
+        {
+          "title": "方向投影与简并需要分开处理",
+          "text": "Q垂直链轴时纵向 Q·e 为零，所以本模型全部变暗。改变角度同时改变约化q，不能仅看cos²θ。严格简并处逐本征矢强度不是唯一可观测量，程序按简并子空间总和报告。",
+          "formula": "Σν|Aν|²=Q∥²(bA²/mA+bB²/mB)"
+        }
+      ],
+      "references": [
+        "scattering-scattering-phonopy-dsf",
+        "scattering-scattering-phonopy-formulation"
+      ]
+    },
+    {
+      "id": "scattering-temperature",
+      "module": "scattering",
+      "title": "用 Stokes / anti-Stokes 读出温度与模型边界",
+      "summary": "从 Bose 因子推导详细平衡，并区分展宽、截断、材料数据与真实寿命。",
+      "preset": "scattering-warm",
+      "sections": [
+        {
+          "title": "正能量是探针损失能量",
+          "text": "本页 Stokes 在+ε，代表创建声子；anti-Stokes 在−ε，代表湮灭已有声子。前者包含 n+1，后者只含 n，因此零温仍可创建声子，却不能湮灭热声子。",
+          "formula": "n=1/[exp(ε/kBT)−1]；I+=W(n+1)，I−=Wn"
+        },
+        {
+          "title": "详细平衡检查的是单模权重",
+          "text": "本模型实力常数与实散射权重满足时间反演，因此同Q的创建/湮灭有相同裸权重。逐模比值直接检验Bose统计；若两过程都暗，比值没有实验意义。",
+          "formula": "I−/I+=exp(−ε/kBT)"
+        },
+        {
+          "title": "展宽不是寿命，采样不是积分",
+          "text": "Gaussian σ是给定分辨率的标准差，峰面积保持权重。程序用erf算有限窗口积分，并检查ΔE≤σ/2。峰尾跨过零能量和多峰叠加后，逐采样点强度比不再等于简单的详细平衡式。",
+          "formula": "FWHM=2√(2ln2)σ"
+        },
+        {
+          "title": "从模型迈向真实文件要补什么",
+          "text": "无限一维模型的长波涨落和本页省略的Debye–Waller不能忽略。本版不接收真实Phonopy散射输入：现有导入只保留所选单模的完整本征矢。真实计算需原胞、Å单位、质量、全模复本征矢、Q/q匹配、散射权重和合适的热振动因子。低能截断与有限Q网格必须随结果报告。"
+        }
+      ],
+      "references": [
+        "scattering-scattering-phonopy-dsf",
+        "scattering-scattering-togo-2023"
+      ]
+    },
+    {
+      "id": "wall-gradient",
+      "module": "domainwall",
+      "title": "从等价畴到空间中的畴壁",
+      "summary": "同样的两个极小值，为什么界面既不能无限陡，也不能无限宽？",
+      "preset": "wall-landau",
+      "references": [
+        "domainwall-tong"
+      ],
+      "sections": [
+        {
+          "title": "在局域自由能中加入梯度代价",
+          "text": "已有相变实验寻找均匀极小值。让φ随位置变化后，局域双阱希望每处取±v，梯度项希望相邻位置平滑；两者竞争决定壁宽。",
+          "formula": "F/A = ∫dx [κ(∂ₓφ)²/2 + β(φ²−v²)²/4]"
+        },
+        {
+          "title": "固定边界并求驻点",
+          "text": "固定左端−v、右端+v，对内部φ变分。边界变分为零，分部积分得到二阶方程；界面中心选为x=0。",
+          "formula": "κ ∂ₓ²φ = βφ(φ²−v²)"
+        },
+        {
+          "title": "连续解与宽度",
+          "text": "无限域解是连接两极小值的tanh。κ增大使突变更昂贵，壁变宽；v或β增大加强局域恢复力。",
+          "formula": "φ(x)=v tanh(x/ξ); ξ=√[2κ/(βv²)]"
+        },
+        {
+          "title": "教学量和材料量",
+          "text": "这里x、φ、自由能均采用约化单位。BaTiO₃只提供180°极性畴的背景；要计算材料壁能还需真实系数、静电边界与弹性耦合。"
+        }
+      ]
+    },
+    {
+      "id": "wall-energy",
+      "module": "domainwall",
+      "title": "畴壁能与网格收敛",
+      "summary": "比较解析张力、有限区间和离散解，理解计算诊断的用途。",
+      "preset": "wall-stiff",
+      "references": [
+        "domainwall-tong"
+      ],
+      "sections": [
+        {
+          "title": "壁能是相对均匀体相的额外代价",
+          "text": "将两端的均匀基态自由能设为零。连续平衡解上梯度项与局域势能相等；对整个空间积分获得每面积壁能。",
+          "formula": "σ = 2√(2κβ)v³/3"
+        },
+        {
+          "title": "做一个可手算的对比",
+          "text": "固定β=v=1，将κ从1改成4。宽度和壁能都增加到两倍。并非壁越宽就一定越便宜，因为改变的是模型参数。"
+        },
+        {
+          "title": "两个网格的作用",
+          "text": "程序固定相同有限区间，分别用N和2N−1个点求离散驻点。能量差是当前离散敏感性的指示；驻点残差很小并不等于连续解已收敛。"
+        },
+        {
+          "title": "稳定性与模型边界",
+          "text": "两端边界强制存在一面壁，反对称约束固定中心。此实验求固定中心约束的静态驻点，同时检查解除中心约束后的Hessian。粗网格可能产生不稳定方向，不能只靠残差宣布稳定；不预测畴成核、开关速度或三维畴形貌。"
+        }
+      ]
+    },
+    {
+      "id": "wall-localized",
+      "module": "domainwall",
+      "title": "SSH 畴壁怎样产生局域电子态",
+      "summary": "把键序反号、有限链能谱与局域态密度放在同一幅研究图中。",
+      "preset": "wall-ssh",
+      "references": [
+        "domainwall-ssh",
+        "domainwall-asboth"
+      ],
+      "sections": [
+        {
+          "title": "以键序作为另一种序参量",
+          "text": "在独立的SSH模型中，交替强弱键是二聚化序。让它在中心平滑反号，再与均匀二聚化链比较。这里的界面宽度按键间距计，与铁电壁宽不做数值等同。",
+          "formula": "H = −Σᵢ tᵢ(cᵢ†cᵢ₊₁+h.c.)"
+        },
+        {
+          "title": "手征对称与谱的配对",
+          "text": "没有在位势时，偶/奇子格符号算符与Hamiltonian反对易，能量成±E对。中心两格点在位势会破坏该对称并改变局域谱。",
+          "formula": "ΓH+HΓ=0"
+        },
+        {
+          "title": "为什么同时看能量和位置",
+          "text": "开放链可同时有端态和界面态，有限长度还会造成杂化。观察E=0附近的LDOS以及中心/边界权重，才能区分两者。短链或宽界面时两区域可能重叠，需查看区域索引和警告，不可把两份权重相加。",
+          "formula": "ρᵢ(E)=Σₙ |ψₙ(i)|² η/[π((E−Eₙ)²+η²)]"
+        },
+        {
+          "title": "避免任意简并本征矢的影响",
+          "text": "程序把|E|<tδ的全部态作为一个子空间，用投影算符对角元显示其密度；密度之和等于选中态数。该量对选中子空间内部换基不变。",
+          "formula": "Pᵢᵢ = Σₙ∈W |ψₙ(i)|²"
+        }
+      ]
+    },
+    {
+      "id": "hubbard-basis",
+      "module": "hubbard",
+      "title": "先选粒子数扇区，再建立多体基底",
+      "summary": "把一个单粒子轨道的两种自旋扩展为占据数基底，并辨认费米符号和边界。",
+      "preset": "dimer-half",
+      "sections": [
+        {
+          "title": "每站点一个轨道，四种占据",
+          "text": "每个站点允许空、仅↑、仅↓、↑↓四种局域状态。同自旋不能占据同一个轨道；反自旋可双占据，但付出能量 U。这里的单带指每站点一个空间轨道，并不表示电子没有自旋。",
+          "formula": "nᵢσ ∈ {0,1}；N=N↑+N↓；Sᶻ=(N↑−N↓)/2"
+        },
+        {
+          "title": "用守恒量缩小矩阵",
+          "text": "跃迁不翻转自旋，因此 N↑、N↓分别守恒。固定扇区的维数是两种自旋选位方式的乘积。二聚体 (1,1) 扇区有4个占据数组态基矢；四站点 (2,2) 扇区有36个，适合直接求全部本征值。",
+          "formula": "dim H(N↑,N↓)=C(L,N↑) C(L,N↓)"
+        },
+        {
+          "title": "跳跃算符必须保留费米符号",
+          "text": "矩阵元由产生、湮灭算符作用于同一个固定排序的占据数基底得到。跨过已占据费米模式会贡献负号。改变基底排序可以改变矩阵元素的符号，但一致变换后本征值和物理期望值不变。",
+          "formula": "H=−t Σ⟨ij⟩σ(c†ᵢσcⱼσ+h.c.)+U Σᵢ nᵢ↑nᵢ↓+Σᵢ εᵢnᵢ"
+        },
+        {
+          "title": "边界条件先改变键表",
+          "text": "开链只有相邻站点的 L−1 条键；周期链补上首尾键，每条无向键只计一次。本站二站点周期模型仍只有一条键，所以与开边界相同；三站点周期模型则是三角形。先检查键表，再比较谱，不能暗中把二聚体 t 加倍。",
+          "formula": "εᵢ=(−1)ⁱ Δ/2，i=0,…,L−1"
+        }
+      ],
+      "references": [
+        "hubbard-hubbard-original",
+        "hubbard-hubbard-dimer"
+      ]
+    },
+    {
+      "id": "hubbard-superexchange",
+      "module": "hubbard",
+      "title": "二聚体的虚跃迁怎样产生反铁磁交换",
+      "summary": "用精确单重态—三重态分裂检验 4t²/U 的适用范围。",
+      "preset": "dimer-half",
+      "sections": [
+        {
+          "title": "先比较能利用双占据的自旋态",
+          "text": "两个电子分居两站点时，单重态能通过跃迁与双占据组态混合，降低能量；三重态受到自旋及费米反对称性的限制。对称二聚体的三重态能量为0，最低单重态在 t>0 时低于0。",
+          "formula": "E_S=[U−√(U²+16t²)]/2；E_T=0（Δ=0，N=2）"
+        },
+        {
+          "title": "精确分裂与大 U 展开",
+          "text": "本实验专门比较 N=2 二聚体的最低 S=0 与 S=1 能量。Δ=0 时有解析表达式；U远大于t时，虚双占据的能量代价约为U，才得到4t²/U。U=0时精确分裂为2t，而大U近似不适用。",
+          "formula": "J_ST=E_T−E_S=[√(U²+16t²)−U]/2 ≃ 4t²/U"
+        },
+        {
+          "title": "双占据没有突然消失",
+          "text": "沿U扫描，有限t的对称二聚体双占据逐渐减小；它在有限正U下仍为非零。令 D=Σᵢ⟨nᵢ↑nᵢ↓⟩，则半填充二聚体有 D=∂E_S/∂U。减小D意味着电荷涨落受抑制，不等于已经发现热力学相变。",
+          "formula": "D=[1−U/√(U²+16t²)]/2（Δ=0，t>0）"
+        },
+        {
+          "title": "自旋关联与交换能不是同一个量",
+          "text": "⟨S₁·S₂⟩是无量纲关联；J_ST是能量。二聚体单重态中，双占据部分不携带局域自旋，所以⟨S₁·S₂⟩=−3(1−D)/4。U/t增大时关联趋向−3/4，但交换能尺度反而趋小。",
+          "formula": "Sᵢ·Sⱼ=SᶻᵢSᶻⱼ+(S⁺ᵢS⁻ⱼ+S⁻ᵢS⁺ⱼ)/2"
+        }
+      ],
+      "references": [
+        "hubbard-hubbard-original",
+        "hubbard-hubbard-dimer"
+      ]
+    },
+    {
+      "id": "hubbard-gaps",
+      "module": "hubbard",
+      "title": "谱中的间隔究竟是哪一种隙",
+      "summary": "区分固定 Sz 扇区激发、二聚体 S/T 分裂与改变电子数的电荷增减能。",
+      "preset": "chain-four",
+      "sections": [
+        {
+          "title": "固定扇区谱只回答指定空间内的问题",
+          "text": "能谱来自输入的 (N↑,N↓) 扇区，因此固定N与Sz。扇区激发隙比较该扇区的基态能与高于整个基态简并子空间的下一能级；它未必是跨所有自旋扇区的最低激发，更不能自动命名为电荷隙。只有一个不同能级时，这个隙不定义。"
+        },
+        {
+          "title": "电荷增减需要重算相邻粒子数",
+          "text": "对每个总N，先在所有允许的 (N↑,N↓) 中取最低基态能E₀(N)，再计算加一个与减一个电子的总能量代价。不能把用户选中的高能自旋扇区直接当作总N基态。空系统N=0和满系统N=2L缺少一侧粒子数，电荷增减隙不定义。",
+          "formula": "Δc=E₀(N+1)+E₀(N−1)−2E₀(N)"
+        },
+        {
+          "title": "U=0 的小系统也能有非零间隔",
+          "text": "对称二聚体半填充时，电荷增减隙为√(U²+16t²)−2t；U=0仍等于2t，因为只有离散的成键与反键轨道。这个有限尺寸间隔不是相互作用诱导的热力学Mott隙。改变L与边界会改变离散谱。",
+          "formula": "Δc(L=2,N=2,Δ=0)=√(U²+16t²)−2t"
+        },
+        {
+          "title": "四站点可以检验机制，不能外推相图",
+          "text": "比较四站点开链与环的局域密度、双占据和键间关联，能看出边界如何影响结果。但两个或四个站点不足以确定长程磁序、临界U或真实材料的金属—绝缘体转变。无限一维均匀模型的精确解是另一个问题，本站不实现Bethe Ansatz或热力学极限外推。"
+        }
+      ],
+      "references": [
+        "hubbard-hubbard-dimer",
+        "hubbard-hubbard-lieb-wu"
+      ]
+    },
+    {
+      "id": "hubbard-ionic",
+      "module": "hubbard",
+      "title": "位能差、排斥与简并平均",
+      "summary": "通过不等价二聚体观察电荷偏移，再用原子极限检查基态平均的含义。",
+      "preset": "ionic-dimer",
+      "sections": [
+        {
+          "title": "正 Δ 把哪个站点抬高",
+          "text": "内部从i=0编号，首站点的位能为+Δ/2，第二站点为−Δ/2。因此正Δ倾向把电子移向第二站点，而U抑制两电子同时占据它。单看总电子数守恒看不出这种重分布，要同时比较各站点密度与双占据。",
+          "formula": "Σᵢ⟨nᵢ⟩=N；0≤⟨nᵢ↑nᵢ↓⟩≤1"
+        },
+        {
+          "title": "原子极限给出清楚的能量竞争",
+          "text": "二聚体N=2、t=0时，各占一站点的位能和为0；两电子占据较低能站点的能量为U−|Δ|。两类组态在U=|Δ|相遇。打开有限t后组态混合，二聚体的密度变化通常表现为平滑交叉，不能称为体材料相变。",
+          "formula": "E_分居=0；E_低位点双占据=U−|Δ|（t=0）"
+        },
+        {
+          "title": "简并时不能依赖任意本征向量",
+          "text": "程序对所选固定扇区内的简并基态等权平均观测量，判定能量简并的容差为10⁻⁹ eV。这样结果不依赖数值对角化任选的简并基底。它不是有限温度计算，也没有自动混合不同Sz扇区；约束不同，平均值可以不同。",
+          "formula": "⟨O⟩=(1/g)Σₐ₌₁ᵍ⟨ψₐ|O|ψₐ⟩"
+        },
+        {
+          "title": "严格 t=0 与 t→0⁺ 的区别",
+          "text": "在Δ=0、U>0的二聚体 (1,1) 扇区，t=0有两个分居简并基态；等权平均得到⟨S₁·S₂⟩=−1/4。理论上非零t选择最低单重态，t→0⁺时关联趋向−3/4；数值计算需S/T分裂大于10⁻⁹ eV才能分辨，极小非零t也可能按简并平均。两种极限次序与数值容差都要注明。"
+        }
+      ],
+      "references": [
+        "hubbard-hubbard-dimer",
+        "hubbard-hubbard-original"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "bandrep-orbit-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-real-space",
+      "title": "群 2：把位点数变成纤维维数",
+      "prompt": "选择“一般位置二点轨道”和 s 轨道，在 Γ 点手工推导一次。",
+      "steps": [
+        {
+          "prompt": "一般位置 r₀ 的反演像是否与自身等价？",
+          "hint": "r₀=(0.17,0.23,0.31)，检查 2r₀ 是否为整向量。",
+          "choices": [
+            "不等价，轨道有两点",
+            "等价，轨道只有一点",
+            "由 k 点决定"
+          ],
+          "answer": 0,
+          "explanation": "2r₀ 不是整向量，r₀ 与 −r₀ 是两个原胞内位点。"
+        },
+        {
+          "prompt": "种子位点稳定子的阶是多少？",
+          "hint": "商群阶为2，使用轨道–稳定子关系。",
+          "choices": [
+            "4",
+            "1",
+            "2"
+          ],
+          "answer": 1,
+          "explanation": "2×|H|=2，所以 |H|=1。"
+        },
+        {
+          "prompt": "两个 s 轨道在 Γ 点反演矩阵的迹是多少？",
+          "hint": "反演交换两点，矩阵对角线上没有固定点贡献。",
+          "choices": [
+            "2",
+            "−2",
+            "0"
+          ],
+          "answer": 2,
+          "explanation": "位点置换矩阵是非对角的，反演特征标为0，恒等特征标为2。"
+        },
+        {
+          "prompt": "两个一维宇称表示的重数各是多少？",
+          "hint": "解 n_g+n_u=2，n_g−n_u=0。",
+          "choices": [
+            "偶、奇各1",
+            "两个偶，零个奇",
+            "零个偶，两个奇"
+          ],
+          "answer": 0,
+          "explanation": "同加和同减得到 n_g=n_u=1；维数也守恒。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-screw-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-bloch-phase",
+      "title": "群 4：从两个位点推导 ±i",
+      "prompt": "选择螺旋轴边界预设，沿程序的 BC z 轴设置推导。",
+      "steps": [
+        {
+          "prompt": "2₁ 螺旋连续两次的空间作用是什么？",
+          "hint": "半格平移叠加为一整格，二重旋转的平方是恒等。",
+          "choices": [
+            "沿 z 平移半格",
+            "沿 z 平移1格",
+            "恒等且没有平移"
+          ],
+          "answer": 1,
+          "explanation": "S²={E|0,0,1}；把点操作平方当成完整空间操作平方会丢掉平移。"
+        },
+        {
+          "prompt": "在 kz=1/2 的周期 Bloch 规范下，整格平移相位是多少？",
+          "hint": "代入 exp(−2πi kz)。",
+          "choices": [
+            "+1",
+            "0",
+            "−1"
+          ],
+          "answer": 2,
+          "explanation": "exp(−πi)=−1，因此 U_S²=−I。"
+        },
+        {
+          "prompt": "无自旋螺旋本征值应取哪一对？",
+          "hint": "解 λ²=−1。",
+          "choices": [
+            "+i 和 −i",
+            "+1 和 −1",
+            "两个 +i"
+          ],
+          "answer": 0,
+          "explanation": "二点 s 轨道提供两个分支 ±i；没有在此施加时间反演。"
+        },
+        {
+          "prompt": "图上 λ+、λ− 的分支交换是否已给出材料的能带能量？",
+          "hint": "本实验没有 Hamiltonian 参数。",
+          "choices": [
+            "已经证明绝缘且拓扑",
+            "没有，只是对称本征值",
+            "已经给出导带与价带"
+          ],
+          "answer": 1,
+          "explanation": "对称表示约束能量模型，但本身不是能量色散或完整拓扑分类。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-projective-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-decomposition",
+      "title": "群 19：二维射影小群表示的两份拷贝",
+      "prompt": "使用 R 点 s 轨道预设，逐项检查分解的依据。",
+      "steps": [
+        {
+          "prompt": "一般位点轨道有4点，每点一个 s，纤维维数是多少？",
+          "hint": "维数是位点数乘局域轨道数。",
+          "choices": [
+            "2",
+            "8",
+            "4"
+          ],
+          "answer": 2,
+          "explanation": "m=4、d=1，所以纤维维数4；没有额外自旋倍增。"
+        },
+        {
+          "prompt": "R 点可以忽略代表元相乘时多出的整格向量吗？",
+          "hint": "k 的分量为1/2，某些整数平移贡献负号。",
+          "choices": [
+            "不可以，会改变因子系统",
+            "可以，整格总是相位1",
+            "只在有SOC时才不能"
+          ],
+          "answer": 0,
+          "explanation": "Bloch 平移字符在边界可为−1，商群需用相应的射影表示。"
+        },
+        {
+          "prompt": "数值表显示只有一类二维不可约表示有贡献，它的重数是多少？",
+          "hint": "用总维数守恒 4=n×2。",
+          "choices": [
+            "4",
+            "2",
+            "1"
+          ],
+          "answer": 1,
+          "explanation": "两份二维表示正好给出四维诱导空间；特征标内积与重建可再独立验证。"
+        },
+        {
+          "prompt": "可以把这处二维性直接叫作自旋 Kramers 简并吗？",
+          "hint": "本模块不含自旋和时间反演。",
+          "choices": [
+            "可以，二维一定等于Kramers",
+            "只有群19才叫Kramers",
+            "不能，这里验证的是空间小群射影代数"
+          ],
+          "answer": 2,
+          "explanation": "Kramers 需相应反幺正对称性及平方−1；本实验只建立普通空间群的Bloch作用。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-cubic-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-cubic-sites",
+      "title": "三个面心位点上放 p 轨道",
+      "prompt": "以 3c-p 原型为起点，再与原点 p 对照。",
+      "steps": [
+        {
+          "prompt": "3c 的轨道多重性 m 是多少？",
+          "hint": "位点表中有三个坐标排列。",
+          "choices": [
+            "3",
+            "1",
+            "6"
+          ],
+          "answer": 0,
+          "explanation": "三个面心位置组成同一个 m=3 的轨道。"
+        },
+        {
+          "prompt": "每点完整 p 三重态给出的纤维维数是多少？",
+          "hint": "每点3个轨道，但没有自旋。",
+          "choices": [
+            "18",
+            "9",
+            "3"
+          ],
+          "answer": 1,
+          "explanation": "维数为3×3=9；18需另外加入自旋，此处没有。"
+        },
+        {
+          "prompt": "原点 p 三重态在反演下的特征标是多少？",
+          "hint": "极性向量各分量都反号。",
+          "choices": [
+            "+3",
+            "0",
+            "−3"
+          ],
+          "answer": 2,
+          "explanation": "反演矩阵为−I₃，迹为−3。不要把它当成轴向量。"
+        },
+        {
+          "prompt": "3c-p 的全部9维空间是否已经证明为一个 EBR？",
+          "hint": "首先要判断局域表示是否不可约，并检查完整 EBR 判据。",
+          "choices": [
+            "没有，程序只验证诱导表示与小群分解",
+            "是，任何位点轨道都是EBR",
+            "是，只要维数是奇数"
+          ],
+          "answer": 0,
+          "explanation": "p 在3c位点稳定子中可约，且本模块未实施通用 elementary 判定或全布里渊区拓扑分析。"
+        }
+      ]
+    },
+    {
+      "id": "scattering-mass-exercise",
+      "module": "scattering",
+      "lesson": "scattering-chain",
+      "title": "从平移零模推导质量因子",
+      "prompt": "使用双原子链预设，先在纸上检查Γ点，再读取计算结果。",
+      "steps": [
+        {
+          "prompt": "Γ 点刚体平移意味着哪种实际位移？",
+          "hint": "平移没有改变任何弹簧长度。",
+          "choices": [
+            "A、B同幅同相",
+            "A、B同幅反相",
+            "重原子必须静止"
+          ],
+          "answer": 0,
+          "explanation": "同幅同相保持所有相对距离，所以是零恢复力的声学模式。"
+        },
+        {
+          "prompt": "质量归一化本征矢 eA:eB 应是什么？",
+          "hint": "实际位移为eκ/√mκ。",
+          "choices": [
+            "mA:mB",
+            "√mA:√mB",
+            "1:1总是成立"
+          ],
+          "answer": 1,
+          "explanation": "为了让eA/√mA=eB/√mB，必须取eA:eB=√mA:√mB。"
+        },
+        {
+          "prompt": "在Γ点，光学能量的平方与哪个量成正比？",
+          "hint": "二乘二矩阵一个本征值为0，另一个等于迹。",
+          "choices": [
+            "K₁−K₂",
+            "mA+mB",
+            "(K₁+K₂)(1/mA+1/mB)"
+          ],
+          "answer": 2,
+          "explanation": "λop=TrD=(K₁+K₂)(1/mA+1/mB)，再乘能量转换常数的平方。"
+        },
+        {
+          "prompt": "应怎样把Γ点零频声学模放入当前非弹性谱？",
+          "hint": "公式有1/ε，本页没有弹性散射模型。",
+          "choices": [
+            "直接除以零",
+            "按显式低能截断排除并报告",
+            "把它替换成任意有限能量"
+          ],
+          "answer": 1,
+          "explanation": "保留零频色散，但从一声子非弹性公式排除；不能用展宽或任意能量伪造弹性峰。"
+        }
+      ]
+    },
+    {
+      "id": "scattering-extinction-exercise",
+      "module": "scattering",
+      "lesson": "scattering-phase",
+      "title": "相邻倒格区的消光交换",
+      "prompt": "比较“相同原子·偶数倒格区”和“相邻奇数倒格区”；两者只改变完整Q。",
+      "steps": [
+        {
+          "prompt": "Q增加2π/a后，约化q发生什么？",
+          "hint": "对倒格向量取模。",
+          "choices": [
+            "回到同一约化q",
+            "始终增加一倍",
+            "变成Γ点"
+          ],
+          "answer": 0,
+          "explanation": "约化q不变，因此同一Hamiltonian的声子能量相同。"
+        },
+        {
+          "prompt": "s=1/2时，跨一个倒格区给B基底增加什么相位？",
+          "hint": "计算exp[i(2π/a)(a/2)]。",
+          "choices": [
+            "+1",
+            "−1",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "额外相位为exp(iπ)=−1；A位于原点，不获得此额外相位。"
+        },
+        {
+          "prompt": "奇数倒格区，声学与光学振幅因子分别是什么？",
+          "hint": "代入1+(−1)^n与1−(−1)^n。",
+          "choices": [
+            "2与0",
+            "1与1",
+            "0与2"
+          ],
+          "answer": 2,
+          "explanation": "声学相干振幅抵消，光学相加；这不代表声学模式不存在。"
+        },
+        {
+          "prompt": "两个预设中的裸峰权重为何不能直接只用0或4来比较？",
+          "hint": "散射式还含完整Q投影、质量和1/能量。",
+          "choices": [
+            "还需保留Q∥²、质量与1/ε因子",
+            "因为程序改变了温度",
+            "因为相邻区一定有不同力常数"
+          ],
+          "answer": 0,
+          "explanation": "0/4是干涉因子；完整Q大小不同也会改变Q∥²，所以亮支的绝对相对权重不必相等。"
+        }
+      ]
+    },
+    {
+      "id": "scattering-bose-exercise",
+      "module": "scattering",
+      "lesson": "scattering-temperature",
+      "title": "从能量增益支推导详细平衡",
+      "prompt": "比较零温与300K预设，固定模型、Q、散射振幅、截断和展宽。",
+      "steps": [
+        {
+          "prompt": "T=0时哪些未展宽单模权重可以非零？",
+          "hint": "把n=0代入W(n+1)和Wn。",
+          "choices": [
+            "仅anti-Stokes",
+            "仅Stokes",
+            "两种都必须为零"
+          ],
+          "answer": 1,
+          "explanation": "Stokes保留零点创建的+1；anti-Stokes需要已有声子，因此权重为零。"
+        },
+        {
+          "prompt": "I−/I+可化简成什么？",
+          "hint": "n/(n+1)，令x=ε/kBT。",
+          "choices": [
+            "exp(−ε/kBT)",
+            "exp(+ε/kBT)",
+            "ε/kBT"
+          ],
+          "answer": 0,
+          "explanation": "n=1/(eˣ−1)，所以n/(n+1)=e⁻ˣ。"
+        },
+        {
+          "prompt": "若ε=kBT，anti-Stokes/Stokes比值约为多少？",
+          "hint": "使用e⁻¹。",
+          "choices": [
+            "2.718",
+            "1",
+            "0.368"
+          ],
+          "answer": 2,
+          "explanation": "比值约0.3679，小于1；温度升高时同一能量的两侧权重更接近。"
+        },
+        {
+          "prompt": "给Gaussian展宽加大σ，能否据此宣称寿命缩短？",
+          "hint": "这里σ是输入的能量分辨率，并未求非谐自能。",
+          "choices": [
+            "可以直接得真实寿命",
+            "不能，需要独立衰减模型与分辨率分析",
+            "能量积分必定随σ增加"
+          ],
+          "answer": 1,
+          "explanation": "单位面积Gaussian改变峰宽而不改变完整积分权重；本页没有计算声子寿命。"
+        }
+      ]
+    },
+    {
+      "id": "wall-gradient-ex",
+      "module": "domainwall",
+      "lesson": "wall-gradient",
+      "title": "一步步得到畴壁宽度",
+      "prompt": "β=κ=v=1，连接−1和+1。",
+      "steps": [
+        {
+          "prompt": "哪一项惩罚空间变化？",
+          "hint": "观察是否含位置导数。",
+          "choices": [
+            "β(φ²−v²)²/4",
+            "κ(∂ₓφ)²/2",
+            "一个常数"
+          ],
+          "answer": 1,
+          "explanation": "梯度项给快速空间变化带来能量代价。"
+        },
+        {
+          "prompt": "固定边界变分给出的驻点方程是？",
+          "hint": "梯度项需分部积分。",
+          "choices": [
+            "κφ″=βφ(φ²−v²)",
+            "κφ″=−βφ(φ²−v²)",
+            "φ=0处处成立"
+          ],
+          "answer": 0,
+          "explanation": "δF/δφ=−κφ″+βφ(φ²−v²)=0。"
+        },
+        {
+          "prompt": "把φ=v tanh(x/ξ)代入后ξ是多少？",
+          "hint": "比较tanh与sech²前系数。",
+          "choices": [
+            "1/√2",
+            "2",
+            "√2"
+          ],
+          "answer": 2,
+          "explanation": "ξ²=2κ/(βv²)，本例ξ=√2。"
+        },
+        {
+          "prompt": "只把κ增加4倍，ξ如何变化？",
+          "hint": "ξ与√κ成正比。",
+          "choices": [
+            "增加4倍",
+            "增加2倍",
+            "不变"
+          ],
+          "answer": 1,
+          "explanation": "梯度代价变大，平衡壁宽增加2倍。"
+        }
+      ]
+    },
+    {
+      "id": "wall-energy-ex",
+      "module": "domainwall",
+      "lesson": "wall-energy",
+      "title": "壁能与数值可信度",
+      "prompt": "核对基准模型与κ=4模型。",
+      "steps": [
+        {
+          "prompt": "基准无限连续壁能是多少？",
+          "hint": "代入σ=2√(2κβ)v³/3。",
+          "choices": [
+            "2√2/3",
+            "√2/3",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "κ=β=v=1，σ=2√2/3≈0.94281。"
+        },
+        {
+          "prompt": "κ=4而β,v不变时壁能是多少？",
+          "hint": "壁能也正比于√κ。",
+          "choices": [
+            "仍为2√2/3",
+            "8√2/3",
+            "4√2/3"
+          ],
+          "answer": 2,
+          "explanation": "壁宽和壁能都增加2倍。"
+        },
+        {
+          "prompt": "驻点残差很小，但网格能量差明显，应怎样做？",
+          "hint": "离散方程和连续极限是两项不同检验。",
+          "choices": [
+            "直接称为精确材料壁能",
+            "增加网格并比较相同区间",
+            "删除梯度项"
+          ],
+          "answer": 1,
+          "explanation": "需核对离散误差，并在必要时扩展有限区间。"
+        },
+        {
+          "prompt": "当前能量能直接写成BaTiO₃的J/m²吗？",
+          "hint": "这里没有给定真实长度/极化/能量标尺。",
+          "choices": [
+            "可以",
+            "只要曲线光滑即可",
+            "不可以，需要材料系数和单位标尺"
+          ],
+          "answer": 2,
+          "explanation": "约化教学模型只说明机制和参数标度。"
+        }
+      ]
+    },
+    {
+      "id": "wall-localized-ex",
+      "module": "domainwall",
+      "lesson": "wall-localized",
+      "title": "辨别界面态与端态",
+      "prompt": "比较wall-ssh、均匀链和中心在位势三个预设。",
+      "steps": [
+        {
+          "prompt": "SSH实验中空间反号的量是什么？",
+          "hint": "观察相邻强弱键。",
+          "choices": [
+            "磁场",
+            "键二聚化δ",
+            "电子数"
+          ],
+          "answer": 1,
+          "explanation": "交替跃迁的反号连接两种键序。"
+        },
+        {
+          "prompt": "没有在位势时哪条关系成立？",
+          "hint": "Γ在两子格取相反符号。",
+          "choices": [
+            "ΓH+HΓ=0",
+            "ΓH−HΓ=0且Γ=I",
+            "H=0"
+          ],
+          "answer": 0,
+          "explanation": "手征对称导致±E能谱配对，有限链仍可有杂化分裂。"
+        },
+        {
+          "prompt": "发现近零能级后，如何确认它在界面？",
+          "hint": "能量不能提供空间位置。",
+          "choices": [
+            "只看能量绝对值",
+            "只数本征值",
+            "同时看中心和边界的LDOS/投影权重"
+          ],
+          "answer": 2,
+          "explanation": "开放链也可能有端态，需要位置分辨证据。"
+        },
+        {
+          "prompt": "两个近简并态换一组正交基，哪个量不变？",
+          "hint": "对整个选中子空间求和。",
+          "choices": [
+            "某个任意本征矢的每个分量",
+            "Pᵢᵢ=Σ|ψₙ(i)|²",
+            "每个波函数的正负号"
+          ],
+          "answer": 1,
+          "explanation": "投影密度对选中子空间内部幺正换基不变。"
+        }
+      ]
+    },
+    {
+      "id": "hubbard-basis-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-basis",
+      "title": "从半填充到 36 维矩阵",
+      "prompt": "使用四站点半填充预设，先手算基底规模，再核对边界。",
+      "steps": [
+        {
+          "prompt": "L=4、N↑=N↓=2 时，总电子数与 Sz 是多少？",
+          "hint": "分别相加、相减。",
+          "choices": [
+            "N=4，Sz=0",
+            "N=2，Sz=2",
+            "N=8，Sz=0"
+          ],
+          "answer": 0,
+          "explanation": "N=2+2=4，每站点平均一个电子；Sz=(2−2)/2=0。"
+        },
+        {
+          "prompt": "固定 (2,2) 扇区的维数是多少？",
+          "hint": "两种自旋分别从4个站点选2个。",
+          "choices": [
+            "16",
+            "36",
+            "256"
+          ],
+          "answer": 1,
+          "explanation": "C(4,2)²=6²=36；256是未固定任何粒子数的完整Fock空间维数。"
+        },
+        {
+          "prompt": "四站点开链改为周期链后，无向键数如何变？",
+          "hint": "只补一条首尾键。",
+          "choices": [
+            "从3变为6",
+            "从4变为8",
+            "从3变为4"
+          ],
+          "answer": 2,
+          "explanation": "开链有01、12、23，周期链再加30；每条键的双向跃迁已包含在h.c.中。"
+        },
+        {
+          "prompt": "本站二站点周期模型是否应把跃迁 t 加倍？",
+          "hint": "同一条无向键只计一次。",
+          "choices": [
+            "不应，二站点开边界与周期边界相同",
+            "应，周期边界一定有两条独立键",
+            "仅U=0时加倍"
+          ],
+          "answer": 0,
+          "explanation": "两站点首尾相连仍是同一对站点；重复加键会改变约定中的模型。"
+        }
+      ]
+    },
+    {
+      "id": "hubbard-exchange-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-superexchange",
+      "title": "用二聚体精确解检验超交换",
+      "prompt": "取t=1 eV、U=4 eV、Δ=0、N=2，比较精确能量与近似。",
+      "steps": [
+        {
+          "prompt": "最低单重态能量 E_S 是哪一个？",
+          "hint": "计算(4−√32)/2。",
+          "choices": [
+            "+0.828427 eV",
+            "−0.828427 eV",
+            "−4 eV"
+          ],
+          "answer": 1,
+          "explanation": "跃迁混合双占据组态，使单重态能量降低到约−0.828427 eV。"
+        },
+        {
+          "prompt": "三重态能量为0，精确 S/T 分裂是多少？",
+          "hint": "J_ST=E_T−E_S。",
+          "choices": [
+            "0 eV",
+            "4 eV",
+            "0.828427 eV"
+          ],
+          "answer": 2,
+          "explanation": "分裂为约0.828427 eV；它是正能量，不是负的自旋关联。"
+        },
+        {
+          "prompt": "4t²/U 在此给1 eV，应如何判断？",
+          "hint": "U/t=4还不是无限大。",
+          "choices": [
+            "它是大U近似，此处高于精确值",
+            "它必须与精确值完全一致",
+            "精确解应替换成这个值"
+          ],
+          "answer": 0,
+          "explanation": "高阶项在有限U/t时仍有贡献；应沿U扫描观察相对误差如何减小。"
+        },
+        {
+          "prompt": "将U继续增大时，哪组趋势适用于此对称二聚体？",
+          "hint": "比较D的解析式与J_ST≈4t²/U。",
+          "choices": [
+            "双占据增大、J_ST增大",
+            "双占据减小、J_ST减小",
+            "双占据不变、J_ST增大"
+          ],
+          "answer": 1,
+          "explanation": "电荷涨落和交换能均减小，同时自旋关联趋近−3/4；更强的反铁磁关联不意味着更大的交换能。"
+        }
+      ]
+    },
+    {
+      "id": "hubbard-gap-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-gaps",
+      "title": "不要把三种能隙混为一谈",
+      "prompt": "先考虑U=0的半填充二聚体，再考察粒子数边界。",
+      "steps": [
+        {
+          "prompt": "电荷增减隙使用哪组能量？",
+          "hint": "需要改变总粒子数。",
+          "choices": [
+            "任意两个固定Sz能级之差",
+            "同一N的两个自旋态之差",
+            "E₀(N+1)+E₀(N−1)−2E₀(N)"
+          ],
+          "answer": 2,
+          "explanation": "其中每个E₀都要在该总N的所有允许自旋扇区中取最小值。"
+        },
+        {
+          "prompt": "t=1、U=Δ=0的二聚体半填充电荷增减隙是多少？",
+          "hint": "使用√(U²+16t²)−2t。",
+          "choices": [
+            "2 eV",
+            "0 eV",
+            "4 eV"
+          ],
+          "answer": 0,
+          "explanation": "√16−2=2 eV，这是离散单粒子能级造成的有限尺寸间隔。"
+        },
+        {
+          "prompt": "这个U=0的非零间隔能证明Mott绝缘相吗？",
+          "hint": "本例没有电子间排斥，也没有取热力学极限。",
+          "choices": [
+            "能，任何非零隙都叫Mott隙",
+            "不能，需区分有限尺寸与相互作用效应",
+            "能，只需换成周期边界"
+          ],
+          "answer": 1,
+          "explanation": "有限团簇谱本来离散；仅凭两个站点的能隙不能判断无限系统的相。"
+        },
+        {
+          "prompt": "N=0时应该怎样报告电荷增减隙？",
+          "hint": "N−1没有物理粒子数扇区。",
+          "choices": [
+            "强制记为0",
+            "将E₀(−1)设为E₀(0)",
+            "不定义，并说明缺少一侧粒子数"
+          ],
+          "answer": 2,
+          "explanation": "空或满体系不能进行双侧增减；缺失值不能伪装成零能隙。"
+        }
+      ]
+    },
+    {
+      "id": "hubbard-ionic-exercise",
+      "module": "hubbard",
+      "lesson": "hubbard-ionic",
+      "title": "位能竞争与原子极限的平均",
+      "prompt": "先取二聚体t=0、U=4、Δ=6 eV，再把Δ设为0。",
+      "steps": [
+        {
+          "prompt": "正Δ=6时，两个站点的位能分别是多少？",
+          "hint": "首站点对应内部索引i=0。",
+          "choices": [
+            "+3、−3 eV",
+            "−3、+3 eV",
+            "+6、−6 eV"
+          ],
+          "answer": 0,
+          "explanation": "ε₀=+Δ/2、ε₁=−Δ/2，第二站点较低。"
+        },
+        {
+          "prompt": "N=2、t=0时，两电子都在低能站点的能量是多少？",
+          "hint": "U加两倍低站点位能。",
+          "choices": [
+            "+2 eV",
+            "−2 eV",
+            "0 eV"
+          ],
+          "answer": 1,
+          "explanation": "U−|Δ|=4−6=−2 eV，低于每站点一个电子的0 eV。"
+        },
+        {
+          "prompt": "改为Δ=0、保持t=0与U>0，(1,1)扇区基态应如何处理？",
+          "hint": "两个分居组态简并。",
+          "choices": [
+            "任选一个并把选择视为唯一物理态",
+            "只保留单重态",
+            "在所选扇区的基态子空间等权平均"
+          ],
+          "answer": 2,
+          "explanation": "等权平均不依赖对角化返回的简并本征向量；程序不会自动纳入其他Sz扇区。"
+        },
+        {
+          "prompt": "这个严格t=0的固定Sz等权平均给出哪一个⟨S₁·S₂⟩？",
+          "hint": "两个分居直积态都有Sz₁Sz₂=−1/4，等权混合的横向平均为0。",
+          "choices": [
+            "−1/4",
+            "−3/4",
+            "+1/4"
+          ],
+          "answer": 0,
+          "explanation": "−3/4对应纯单重态，也是t→0⁺的极限；严格t=0的简并平均与该极限不同。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "bandrep-inversion-centers",
+      "module": "bandrep",
+      "title": "轨道中心与边界宇称",
+      "kind": "结构原型",
+      "summary": "比较同样局域偶对称的原点 s 与体心 s 在 X 点的反演特征标。",
+      "assumption": "抽象无自旋局域轨道；固定周期规范和同一原点，不能由两个采样点直接给出拓扑结论。",
+      "preset": "body-parity",
+      "links": [
+        [
+          "位点轨道计算",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "空间群课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-screw-chain",
+      "module": "bandrep",
+      "title": "三维螺旋晶体中的沿轴切线",
+      "kind": "非点式对称原型",
+      "summary": "在 SG4/19 的 z 向切线上追踪螺旋本征相位，连接实空间半格位移与动量空间因子系统。",
+      "assumption": "这是三维空间群作用在一条 k 线上的教学模型，没有指定实际材料或 hopping Hamiltonian。",
+      "preset": "screw-boundary",
+      "links": [
+        [
+          "螺旋相位演示",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "能带兼容关系",
+          "#compute/band-connectivity"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-perovskite",
+      "module": "bandrep",
+      "title": "理想立方钙钛矿的位点骨架",
+      "kind": "材料结构案例",
+      "summary": "用 Pm−3m 的 1a/1b/3c 理解不同子晶格，并计算三个面心位点上 p 轨道的九维表示。",
+      "assumption": "仅借用钙钛矿型位点骨架；不预测 SrTiO₃ 或 BaTiO₃ 的真实电子能带、填充、声子或相变。",
+      "preset": "perovskite-sites",
+      "links": [
+        [
+          "位点轨道实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "晶场与轨道",
+          "#compute/crystal-field-lab"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-projective-boundary",
+      "module": "bandrep",
+      "title": "群 19 的边界表示维数",
+      "kind": "跨模块项目",
+      "summary": "比较 Γ 与 R 的局部表示，再用已有兼容关系课堂讨论为何跨 k 追踪不能只认 D 编号。",
+      "assumption": "不附加反幺正对称性；空间射影表示的二维性与自旋 Kramers 机制须区分。",
+      "preset": "orthorhombic-projective",
+      "links": [
+        [
+          "R 点分解",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "能带连接课堂",
+          "#compute/band-connectivity"
+        ]
+      ]
+    },
+    {
+      "id": "scattering-ionic-prototype",
+      "module": "scattering",
+      "title": "二元离子晶格的质量对比原型",
+      "kind": "材料背景的理想模型",
+      "summary": "用A/B质量差理解声学与光学分支，再比较裸权重与可见谱强。",
+      "assumption": "仅借用二元离子的质量对比；一维弹簧和相对b均为教学参数，不拟合NaCl的三维色散、极化、长程库仑或实验谱。",
+      "preset": "scattering-diatomic",
+      "links": [
+        [
+          "动态结构因子",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "声子与光谱",
+          "#compute/phonons"
+        ],
+        [
+          "结构与振动课堂",
+          "#classroom/structure-dynamics"
+        ]
+      ]
+    },
+    {
+      "id": "scattering-zone-visibility",
+      "module": "scattering",
+      "title": "同一个振动模式在不同测量区变暗",
+      "kind": "散射几何案例",
+      "summary": "固定模型与约化q，只改变倒格区；联系基底干涉与衍射消光，并辨别两者不是同一个结构因子。",
+      "assumption": "单原子折叠极限、等b和s=1/2保证解析消光。非弹性振幅还含本征矢、质量和Q投影，不能直接复制弹性衍射强度。",
+      "preset": "scattering-folded-odd",
+      "links": [
+        [
+          "比较区间强度",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ],
+        [
+          "相位与模型边界",
+          "docs/dynamic-scattering.md"
+        ]
+      ]
+    },
+    {
+      "id": "scattering-phonopy-bridge",
+      "module": "scattering",
+      "title": "从Phonopy文件检查走向可测声子强度",
+      "kind": "数据衔接案例",
+      "summary": "先在已有工具核对结构、质量与单模，再列出一声子强度所需的完整输入；用热占据模型理解实验能量增益支。",
+      "assumption": "本版散射计算只运行双原子模型，不接受Phonopy文件。不能从频率、DOS或单模动画补造全模本征矢，也不能把教学热图当作导入材料的结果。",
+      "preset": "scattering-warm",
+      "links": [
+        [
+          "Phonopy数据检查",
+          "#compute/phonopy"
+        ],
+        [
+          "声子模式与冻结结构",
+          "#compute/phonon-modes"
+        ],
+        [
+          "热占据演示",
+          "#compute/dynamic-scattering-lab"
+        ]
+      ]
+    },
+    {
+      "id": "wall-ferroelectric",
+      "module": "domainwall",
+      "title": "BaTiO₃ 背景：从极性畴到标量壁",
+      "kind": "材料背景 · 约化模型",
+      "summary": "从已有极性畸变和六方向畴，选择相反两畴建立一维连续壁。",
+      "assumption": "标量180°教学壁；不包含材料拟合、弹性和静电边界。",
+      "preset": "wall-landau",
+      "links": [
+        [
+          "均匀相变与方向畴",
+          "#compute/phase"
+        ],
+        [
+          "结构畸变",
+          "#compute/distortion-modes"
+        ]
+      ]
+    },
+    {
+      "id": "wall-ssh-interface",
+      "module": "domainwall",
+      "title": "二聚化链：界面与端态同时出现",
+      "kind": "SSH 教学模型",
+      "summary": "用有限链能谱、LDOS和投影密度区分界面与边界的贡献。",
+      "assumption": "无自旋、无相互作用的一维模型，不是聚乙炔材料参数拟合。",
+      "preset": "wall-ssh",
+      "links": [
+        [
+          "SSH 体相几何",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "接触器件",
+          "#compute/device-transport-lab"
+        ]
+      ]
+    },
+    {
+      "id": "wall-local-potential",
+      "module": "domainwall",
+      "title": "局域势如何改变界面谱",
+      "kind": "对称性破缺对照",
+      "summary": "固定跃迁和长度，只在中心两格点加入势，比较手征残差和LDOS。",
+      "assumption": "局域在位势破坏手征对称；近零能子空间的阈值筛选会随能级移动改变。",
+      "preset": "wall-ssh-potential",
+      "links": [
+        [
+          "超胞与缺陷",
+          "#compute/unfold-lab"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-organic-dimer",
+      "module": "hubbard",
+      "title": "分子二聚体的最小跃迁—排斥模型",
+      "kind": "材料机制原型",
+      "summary": "用两站点模型理解两个局域轨道之间的电子离域、双占据代价与单重态稳定化。",
+      "assumption": "这是受分子二聚体启发的两个抽象轨道，不是某种有机盐的定量模型；未包括分子结构、晶格网络、长程库仑作用或拟合材料参数。",
+      "preset": "dimer-half",
+      "links": [
+        [
+          "二聚体精确对角化",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "虚跃迁课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-cu-chain",
+      "module": "hubbard",
+      "title": "从局域电子排斥到短程反铁磁关联",
+      "kind": "低能模型练习",
+      "summary": "在四站点半填充链上观察双占据受抑制和短程自旋关联，并比较开边界与环。",
+      "assumption": "只借用铜氧体系讨论中的单轨道有效模型动机；本站四站点链没有显式氧p轨道、二维CuO₂结构或电荷转移能，不预测铜氧材料磁序、超导或Mott转变。",
+      "preset": "chain-four",
+      "links": [
+        [
+          "四站点计算",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "能隙定义课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-ionic-transfer",
+      "module": "hubbard",
+      "title": "不等价位点之间的电荷重分布",
+      "kind": "机制对照案例",
+      "summary": "改变Δ和U，比较电子偏向低位能站点与避免双占据的竞争，用密度而非仅用能量判断变化。",
+      "assumption": "交错位能是外加的单轨道模型参数；它不等于真实配体到金属的电荷转移能，也没有自洽屏蔽、结构弛豫或材料参数拟合。",
+      "preset": "ionic-dimer",
+      "links": [
+        [
+          "不等价二聚体",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "位能与简并课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    },
+    {
+      "id": "hubbard-atomic-limit",
+      "module": "hubbard",
+      "title": "严格原子极限的简并检查",
+      "kind": "计算边界案例",
+      "summary": "将t设为0，检查零双占据、基态简并及固定Sz等权平均，再与很小的非零t比较。",
+      "assumption": "零温简并基态按所选粒子数扇区等权平均；这不是温度扫描，也不代表自发选择的磁性态。有限团簇无法单独确定热力学长程序。",
+      "preset": "atomic-dimer",
+      "links": [
+        [
+          "原子极限实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "简并平均课堂",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "bandrep-cano-ebr",
+      "title": "Cano et al., Building Blocks of Topological Quantum Chemistry: Elementary Band Representations, PRB 97, 035139 (2018)",
+      "url": "https://arxiv.org/abs/1709.01935"
+    },
+    {
+      "id": "bandrep-elcoro-bcs",
+      "title": "Elcoro et al., Double crystallographic groups and their representations on the Bilbao Crystallographic Server, J. Appl. Cryst. 50, 1457–1477 (2017)",
+      "url": "https://arxiv.org/abs/1706.09272"
+    },
+    {
+      "id": "bandrep-bilbao-sitesym",
+      "title": "Bilbao Crystallographic Server: SiteSym site-symmetry induction method",
+      "url": "https://cryst.ehu.eus/html/rep/sitesym/sitesym_help.html"
+    },
+    {
+      "id": "bandrep-spglib-dataset",
+      "title": "spglib official documentation: symmetry dataset and Wyckoff positions",
+      "url": "https://spglib.readthedocs.io/en/stable/dataset.html"
+    },
+    {
+      "id": "scattering-scattering-phonopy-dsf",
+      "title": "Phonopy: coherent one-phonon dynamic structure factor and phase conventions",
+      "url": "https://phonopy.github.io/phonopy/dynamic-structure-factor.html"
+    },
+    {
+      "id": "scattering-scattering-phonopy-formulation",
+      "title": "Phonopy: dynamical matrix and displacement eigenvectors",
+      "url": "https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix"
+    },
+    {
+      "id": "scattering-scattering-togo-2023",
+      "title": "Togo, Chaput, Tadano & Tanaka, Implementation strategies in phonopy and phono3py (2023)",
+      "url": "https://arxiv.org/abs/2301.05784"
+    },
+    {
+      "id": "domainwall-tong",
+      "title": "David Tong · Statistical Field Theory: domain walls",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sft/one.pdf"
+    },
+    {
+      "id": "domainwall-ssh",
+      "title": "Su, Schrieffer, Heeger (1979), Solitons in Polyacetylene",
+      "url": "https://doi.org/10.1103/PhysRevLett.42.1698"
+    },
+    {
+      "id": "domainwall-asboth",
+      "title": "Asbóth, Oroszlány, Pályi · A Short Course on Topological Insulators",
+      "url": "https://arxiv.org/abs/1509.02295"
+    },
+    {
+      "id": "hubbard-hubbard-original",
+      "title": "J. Hubbard, Electron correlations in narrow energy bands, Proc. R. Soc. Lond. A 276, 238–257 (1963)",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "hubbard-hubbard-dimer",
+      "title": "D. J. Carrascal et al., The Hubbard Dimer: A density functional case study of a many-body problem, J. Phys.: Condens. Matter 27, 393001 (2015)",
+      "url": "https://arxiv.org/abs/1502.02194"
+    },
+    {
+      "id": "hubbard-hubbard-lieb-wu",
+      "title": "E. H. Lieb and F. Y. Wu, Absence of Mott Transition in an Exact Solution of the Short-Range, One-Band Model in One Dimension, Phys. Rev. Lett. 20, 1445–1448 (1968)",
+      "url": "https://doi.org/10.1103/PhysRevLett.20.1445"
+    }
+  ]
+}

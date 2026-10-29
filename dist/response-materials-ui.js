@@ -1,6 +1,6 @@
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-crystal1';
-import {esc,num,table,notes,sources,defaultInputs,controlsHTML,readControls,resultHTML,bindResult} from './response-views.js?v=20261029-crystal1';
-import {renderResponseProjects} from './response-projects.js?v=20261029-crystal1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-pathways1';
+import {esc,num,table,notes,sources,defaultInputs,controlsHTML,readControls,resultHTML,bindResult} from './response-views.js?v=20261029-pathways1';
+import {renderResponseProjects} from './response-projects.js?v=20261029-pathways1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;

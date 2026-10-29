@@ -2,6 +2,7 @@
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
  {id:'observables',title:'声子光谱与物性',summary:'从原胞位移和对称操作，计算光谱选择定则与允许响应。',tools:[
+  ['compute/dynamic-scattering-lab','非弹性散射 · 动态结构因子','双原子链、偏振投影、热占据、Stokes/anti-Stokes 与 S(Q,E) 热图。','非弹性 散射 DSF 动态结构因子 phonon'],
   ['compute/spin-resonance-lab','磁共振 · 有效自旋与 EPR','各向异性 g、零场分裂、超精细作用、磁场方向与磁偶极跃迁谱。','EPR ESR resonance 磁共振 有效自旋 超精细'],
   ['compute/atomic-spectra-lab','多重态光谱 · 偏振 XAS','完整 Slater、SOC 与 d⁸/d⁹ 原子近似的 2p→3d 偏振吸收。','XAS XMCD XLD 多重态 偏振 选择定则 Slater'],
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],
@@ -15,12 +16,14 @@ export const toolGroups=[
   ['compute/tensors','物性张量 · 精确对称约束','介电、弹性、压电与磁电张量；点群预设、自定义生成元与旋转响应。','介电 弹性 压电 磁电 Neumann tensor'],
  ]},
  {id:'structure',title:'结构、相变与衍射',summary:'从真实结构出发，确定群与坐标约定。',tools:[
+  ['compute/domain-wall-lab','畴壁与局域态 · 连续场和 SSH 界面','梯度自由能、壁宽、壁能、网格诊断和界面局域谱。','domain wall 畴壁 界面 局域态 SSH'],
   ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
   ['compute/distortion-modes','结构畸变 · 模式分解与耦合','同胞结构对、原子对应、模式投影与重构，两序参量自由能。','畸变 分解 结构匹配 极性 八面体 模式耦合 BaTiO3 SrTiO3'],
   ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor'],
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[
+  ['compute/band-representation-lab','Wyckoff 位点 → 能带表示','精选三维空间群的位点轨道、Bloch 作用和小群分解。','Wyckoff 位点 诱导 band representation EBR'],
   ['workbench','不可约表示与磁共表示','空间群、磁空间群与磁点群；单值、双值、小群和全 k 星。','SOC 不可约 特征标 Bilbao BC'],
   ['compute/advanced/symbolic_spacegroups','符号空间群表示','沿符号 k 线构造精确小表示、共表示与诱导表示。','符号 k星'],
   ['compute/advanced/symbolic_interfaces','表示矩阵与投影','共核、交织算符、投影和半线性表示验证。','交织 投影 共核'],
@@ -34,6 +37,7 @@ export const toolGroups=[
   ['compute/lie/su3_ninej','SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
+  ['compute/hubbard-cluster-lab','Hubbard 小团簇 · 关联与交换','2–4格点精确对角化、双占据、自旋关联与有限团簇能隙。','Hubbard 关联 强关联 超交换 ED'],
   ['compute/andreev-lab','超导结 · Andreev 反射','正常金属—超导接触的电子/空穴反射、电导与通量检查。','Andreev NS BdG 超导 反射 接触'],
   ['compute/device-transport-lab','器件量子输运 · 双电极与透射','均匀 / SSH 链、接触、势垒、Landauer 电导与局域谱。','Landauer device 器件 电极 透射 散射'],
   ['compute/local-multiplet-lab','多电子晶场 · Hund 与多重态','固定 N 五轨道 Kanamori、自旋分类、轨道占据与高低自旋竞争。','Hund Kanamori multiplet 多电子 多重态 晶场'],
@@ -73,7 +77,10 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261029-crystal1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261029-pathways1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways])=>[
+  {route:'docs/dictionary',title:'公式与符号词典',summary:'按主题解释变量、单位、坐标约定与公式适用条件。',keywords:'公式 符号 单位 dictionary',kind:'词典'},
+  ...pathways.lessons.map(l=>({route:'classroom/'+pathways.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 位点 散射 畴壁 Hubbard',kind:'课程'})),
+  ...pathways.cases.map(c=>({route:'atlas/pathways?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 位点 散射 畴壁 Hubbard',kind:'材料'})),
   ...spectroscopy.lessons.map(l=>({route:'classroom/'+spectroscopy.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 磁共振 超导 反射 多重态 偏振 XAS',kind:'课程'})),
   ...spectroscopy.cases.map(c=>({route:'atlas/spectroscopy?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' EPR Andreev XAS',kind:'材料'})),
   ...response.lessons.map(l=>({route:"classroom/"+response.modules.find(m=>m.id===l.module).pathway+"?module="+l.module+"&lesson="+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+" 霍尔 横向 热电 器件 多电子 Hund",kind:"课程"})),
@@ -109,6 +116,8 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
+  ['atlas/pathways','位点、散射、畴壁与关联','从实空间位点走到能带表示、实验散射与空间及电子关联。'],
+  ['docs/dictionary','公式与符号词典','查看变量含义、单位、坐标与适用条件，联动推导与实验。'],
   ['atlas/spectroscopy','磁共振、超导结与偏振光谱','从有效自旋和电子空穴散射走到原子多重态的光谱信号。'],['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
   ['atlas/projects','跨模块项目作业','收录计算证据、撰写推导解释、导出完整项目和研究报告。'],
   ['atlas/quantum','轨道、量子几何与电子输运','从局域 d 轨道走到 Bloch 波函数几何与热电响应。'],
@@ -122,6 +131,8 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
   ['atlas/research','完成一份材料分析','模式识别 → 冻结模 / 能带连接 / 热力学 → 研究记录'],
+  ['atlas/pathways','位点、散射、畴壁与关联','从实空间位点走到能带表示、实验散射与空间及电子关联。'],
+  ['docs/dictionary','公式与符号词典','查看变量含义、单位、坐标与适用条件，联动推导与实验。'],
   ['atlas/spectroscopy','磁共振、超导结与偏振光谱','从有效自旋和电子空穴散射走到原子多重态的光谱信号。'],['atlas/response','横向响应、器件与多电子态','连接 Berry 几何、电极散射与局域多电子相互作用。'],
   ['atlas/projects','跨模块项目作业','收录计算证据、撰写推导解释、导出完整项目和研究报告。'],
   ['atlas/quantum','轨道、量子几何与电子输运','从局域 d 轨道走到 Bloch 波函数几何与热电响应。'],

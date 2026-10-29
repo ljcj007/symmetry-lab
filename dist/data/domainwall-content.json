@@ -1,0 +1,562 @@
+{
+  "release": "20261029-pathways1",
+  "module": {
+    "id": "domainwall",
+    "title": "畴壁与局域态",
+    "summary": "从自由能梯度项到空间畴壁，再在独立SSH模型中观察界面电子态。",
+    "route": "domain-wall-lab",
+    "action": "domain_wall_lab",
+    "fields": [
+      {
+        "key": "experiment",
+        "label": "选择实验",
+        "default": "landau",
+        "type": "select",
+        "options": [
+          [
+            "landau",
+            "连续序参量畴壁"
+          ],
+          [
+            "ssh",
+            "SSH 界面与局域态"
+          ]
+        ]
+      },
+      {
+        "key": "kappa",
+        "label": "梯度系数 κ（约化）",
+        "default": 1,
+        "type": "number",
+        "min": 0.05,
+        "max": 8,
+        "step": "any",
+        "experiment": "landau"
+      },
+      {
+        "key": "beta",
+        "label": "双阱系数 β（约化）",
+        "default": 1,
+        "type": "number",
+        "min": 0.05,
+        "max": 8,
+        "step": "any",
+        "experiment": "landau"
+      },
+      {
+        "key": "amplitude",
+        "label": "极小值幅度 v（约化）",
+        "default": 1,
+        "type": "number",
+        "min": 0.2,
+        "max": 3,
+        "step": "any",
+        "experiment": "landau"
+      },
+      {
+        "key": "extent",
+        "label": "半区间长度 / ξ",
+        "default": 8,
+        "type": "number",
+        "min": 4,
+        "max": 16,
+        "step": "any",
+        "experiment": "landau"
+      },
+      {
+        "key": "gridPoints",
+        "label": "粗网格点数（奇数）",
+        "default": 81,
+        "type": "number",
+        "min": 41,
+        "max": 161,
+        "step": 2,
+        "experiment": "landau"
+      },
+      {
+        "key": "sites",
+        "label": "开放链格点数（偶数）",
+        "default": 60,
+        "type": "number",
+        "min": 20,
+        "max": 100,
+        "step": 2,
+        "experiment": "ssh"
+      },
+      {
+        "key": "hopping",
+        "label": "平均跃迁 t（eV）",
+        "default": 1,
+        "type": "number",
+        "min": 0.1,
+        "max": 3,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "dimerization",
+        "label": "渐近二聚化 δ",
+        "default": 0.4,
+        "type": "number",
+        "min": 0.05,
+        "max": 0.85,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "sshWidth",
+        "label": "界面宽度（键间距）",
+        "default": 2,
+        "type": "number",
+        "min": 0.5,
+        "max": 10,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "onsite",
+        "label": "中心两格点势（eV）",
+        "default": 0,
+        "type": "number",
+        "min": -2,
+        "max": 2,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "probeEnergy",
+        "label": "观察能量（eV）",
+        "default": 0,
+        "type": "number",
+        "min": -6,
+        "max": 6,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "eta",
+        "label": "LDOS 展宽 η（eV）",
+        "default": 0.03,
+        "type": "number",
+        "min": 0.005,
+        "max": 0.2,
+        "step": "any",
+        "experiment": "ssh"
+      },
+      {
+        "key": "interface",
+        "label": "键序结构",
+        "default": "wall",
+        "type": "select",
+        "options": [
+          [
+            "wall",
+            "二聚化反号界面"
+          ],
+          [
+            "uniform",
+            "均匀二聚化参照"
+          ]
+        ],
+        "experiment": "ssh"
+      }
+    ],
+    "presets": [
+      {
+        "id": "wall-landau",
+        "title": "标量180°畴壁 · 基准",
+        "input": {
+          "experiment": "landau",
+          "kappa": 1,
+          "beta": 1,
+          "amplitude": 1,
+          "extent": 8,
+          "gridPoints": 81
+        }
+      },
+      {
+        "id": "wall-stiff",
+        "title": "增强梯度代价 · κ=4",
+        "input": {
+          "experiment": "landau",
+          "kappa": 4,
+          "beta": 1,
+          "amplitude": 1,
+          "extent": 8,
+          "gridPoints": 81
+        }
+      },
+      {
+        "id": "wall-ssh",
+        "title": "SSH 反号界面 · 手征对称",
+        "input": {
+          "experiment": "ssh",
+          "sites": 60,
+          "hopping": 1,
+          "dimerization": 0.4,
+          "sshWidth": 2,
+          "onsite": 0,
+          "interface": "wall"
+        }
+      },
+      {
+        "id": "wall-ssh-uniform",
+        "title": "均匀二聚化参照",
+        "input": {
+          "experiment": "ssh",
+          "sites": 60,
+          "hopping": 1,
+          "dimerization": 0.4,
+          "sshWidth": 2,
+          "onsite": 0,
+          "interface": "uniform"
+        }
+      },
+      {
+        "id": "wall-ssh-potential",
+        "title": "中心在位势 · 破坏手征对称",
+        "input": {
+          "experiment": "ssh",
+          "sites": 60,
+          "hopping": 1,
+          "dimerization": 0.4,
+          "sshWidth": 2,
+          "onsite": 0.4,
+          "interface": "wall"
+        }
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "wall-gradient",
+      "module": "domainwall",
+      "title": "从等价畴到空间中的畴壁",
+      "summary": "同样的两个极小值，为什么界面既不能无限陡，也不能无限宽？",
+      "preset": "wall-landau",
+      "references": [
+        "tong"
+      ],
+      "sections": [
+        {
+          "title": "在局域自由能中加入梯度代价",
+          "text": "已有相变实验寻找均匀极小值。让φ随位置变化后，局域双阱希望每处取±v，梯度项希望相邻位置平滑；两者竞争决定壁宽。",
+          "formula": "F/A = ∫dx [κ(∂ₓφ)²/2 + β(φ²−v²)²/4]"
+        },
+        {
+          "title": "固定边界并求驻点",
+          "text": "固定左端−v、右端+v，对内部φ变分。边界变分为零，分部积分得到二阶方程；界面中心选为x=0。",
+          "formula": "κ ∂ₓ²φ = βφ(φ²−v²)"
+        },
+        {
+          "title": "连续解与宽度",
+          "text": "无限域解是连接两极小值的tanh。κ增大使突变更昂贵，壁变宽；v或β增大加强局域恢复力。",
+          "formula": "φ(x)=v tanh(x/ξ); ξ=√[2κ/(βv²)]"
+        },
+        {
+          "title": "教学量和材料量",
+          "text": "这里x、φ、自由能均采用约化单位。BaTiO₃只提供180°极性畴的背景；要计算材料壁能还需真实系数、静电边界与弹性耦合。"
+        }
+      ]
+    },
+    {
+      "id": "wall-energy",
+      "module": "domainwall",
+      "title": "畴壁能与网格收敛",
+      "summary": "比较解析张力、有限区间和离散解，理解计算诊断的用途。",
+      "preset": "wall-stiff",
+      "references": [
+        "tong"
+      ],
+      "sections": [
+        {
+          "title": "壁能是相对均匀体相的额外代价",
+          "text": "将两端的均匀基态自由能设为零。连续平衡解上梯度项与局域势能相等；对整个空间积分获得每面积壁能。",
+          "formula": "σ = 2√(2κβ)v³/3"
+        },
+        {
+          "title": "做一个可手算的对比",
+          "text": "固定β=v=1，将κ从1改成4。宽度和壁能都增加到两倍。并非壁越宽就一定越便宜，因为改变的是模型参数。"
+        },
+        {
+          "title": "两个网格的作用",
+          "text": "程序固定相同有限区间，分别用N和2N−1个点求离散驻点。能量差是当前离散敏感性的指示；驻点残差很小并不等于连续解已收敛。"
+        },
+        {
+          "title": "稳定性与模型边界",
+          "text": "两端边界强制存在一面壁，反对称约束固定中心。此实验求固定中心约束的静态驻点，同时检查解除中心约束后的Hessian。粗网格可能产生不稳定方向，不能只靠残差宣布稳定；不预测畴成核、开关速度或三维畴形貌。"
+        }
+      ]
+    },
+    {
+      "id": "wall-localized",
+      "module": "domainwall",
+      "title": "SSH 畴壁怎样产生局域电子态",
+      "summary": "把键序反号、有限链能谱与局域态密度放在同一幅研究图中。",
+      "preset": "wall-ssh",
+      "references": [
+        "ssh",
+        "asboth"
+      ],
+      "sections": [
+        {
+          "title": "以键序作为另一种序参量",
+          "text": "在独立的SSH模型中，交替强弱键是二聚化序。让它在中心平滑反号，再与均匀二聚化链比较。这里的界面宽度按键间距计，与铁电壁宽不做数值等同。",
+          "formula": "H = −Σᵢ tᵢ(cᵢ†cᵢ₊₁+h.c.)"
+        },
+        {
+          "title": "手征对称与谱的配对",
+          "text": "没有在位势时，偶/奇子格符号算符与Hamiltonian反对易，能量成±E对。中心两格点在位势会破坏该对称并改变局域谱。",
+          "formula": "ΓH+HΓ=0"
+        },
+        {
+          "title": "为什么同时看能量和位置",
+          "text": "开放链可同时有端态和界面态，有限长度还会造成杂化。观察E=0附近的LDOS以及中心/边界权重，才能区分两者。短链或宽界面时两区域可能重叠，需查看区域索引和警告，不可把两份权重相加。",
+          "formula": "ρᵢ(E)=Σₙ |ψₙ(i)|² η/[π((E−Eₙ)²+η²)]"
+        },
+        {
+          "title": "避免任意简并本征矢的影响",
+          "text": "程序把|E|<tδ的全部态作为一个子空间，用投影算符对角元显示其密度；密度之和等于选中态数。该量对选中子空间内部换基不变。",
+          "formula": "Pᵢᵢ = Σₙ∈W |ψₙ(i)|²"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "wall-gradient-ex",
+      "module": "domainwall",
+      "lesson": "wall-gradient",
+      "title": "一步步得到畴壁宽度",
+      "prompt": "β=κ=v=1，连接−1和+1。",
+      "steps": [
+        {
+          "prompt": "哪一项惩罚空间变化？",
+          "hint": "观察是否含位置导数。",
+          "choices": [
+            "β(φ²−v²)²/4",
+            "κ(∂ₓφ)²/2",
+            "一个常数"
+          ],
+          "answer": 1,
+          "explanation": "梯度项给快速空间变化带来能量代价。"
+        },
+        {
+          "prompt": "固定边界变分给出的驻点方程是？",
+          "hint": "梯度项需分部积分。",
+          "choices": [
+            "κφ″=βφ(φ²−v²)",
+            "κφ″=−βφ(φ²−v²)",
+            "φ=0处处成立"
+          ],
+          "answer": 0,
+          "explanation": "δF/δφ=−κφ″+βφ(φ²−v²)=0。"
+        },
+        {
+          "prompt": "把φ=v tanh(x/ξ)代入后ξ是多少？",
+          "hint": "比较tanh与sech²前系数。",
+          "choices": [
+            "1/√2",
+            "2",
+            "√2"
+          ],
+          "answer": 2,
+          "explanation": "ξ²=2κ/(βv²)，本例ξ=√2。"
+        },
+        {
+          "prompt": "只把κ增加4倍，ξ如何变化？",
+          "hint": "ξ与√κ成正比。",
+          "choices": [
+            "增加4倍",
+            "增加2倍",
+            "不变"
+          ],
+          "answer": 1,
+          "explanation": "梯度代价变大，平衡壁宽增加2倍。"
+        }
+      ]
+    },
+    {
+      "id": "wall-energy-ex",
+      "module": "domainwall",
+      "lesson": "wall-energy",
+      "title": "壁能与数值可信度",
+      "prompt": "核对基准模型与κ=4模型。",
+      "steps": [
+        {
+          "prompt": "基准无限连续壁能是多少？",
+          "hint": "代入σ=2√(2κβ)v³/3。",
+          "choices": [
+            "2√2/3",
+            "√2/3",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "κ=β=v=1，σ=2√2/3≈0.94281。"
+        },
+        {
+          "prompt": "κ=4而β,v不变时壁能是多少？",
+          "hint": "壁能也正比于√κ。",
+          "choices": [
+            "仍为2√2/3",
+            "8√2/3",
+            "4√2/3"
+          ],
+          "answer": 2,
+          "explanation": "壁宽和壁能都增加2倍。"
+        },
+        {
+          "prompt": "驻点残差很小，但网格能量差明显，应怎样做？",
+          "hint": "离散方程和连续极限是两项不同检验。",
+          "choices": [
+            "直接称为精确材料壁能",
+            "增加网格并比较相同区间",
+            "删除梯度项"
+          ],
+          "answer": 1,
+          "explanation": "需核对离散误差，并在必要时扩展有限区间。"
+        },
+        {
+          "prompt": "当前能量能直接写成BaTiO₃的J/m²吗？",
+          "hint": "这里没有给定真实长度/极化/能量标尺。",
+          "choices": [
+            "可以",
+            "只要曲线光滑即可",
+            "不可以，需要材料系数和单位标尺"
+          ],
+          "answer": 2,
+          "explanation": "约化教学模型只说明机制和参数标度。"
+        }
+      ]
+    },
+    {
+      "id": "wall-localized-ex",
+      "module": "domainwall",
+      "lesson": "wall-localized",
+      "title": "辨别界面态与端态",
+      "prompt": "比较wall-ssh、均匀链和中心在位势三个预设。",
+      "steps": [
+        {
+          "prompt": "SSH实验中空间反号的量是什么？",
+          "hint": "观察相邻强弱键。",
+          "choices": [
+            "磁场",
+            "键二聚化δ",
+            "电子数"
+          ],
+          "answer": 1,
+          "explanation": "交替跃迁的反号连接两种键序。"
+        },
+        {
+          "prompt": "没有在位势时哪条关系成立？",
+          "hint": "Γ在两子格取相反符号。",
+          "choices": [
+            "ΓH+HΓ=0",
+            "ΓH−HΓ=0且Γ=I",
+            "H=0"
+          ],
+          "answer": 0,
+          "explanation": "手征对称导致±E能谱配对，有限链仍可有杂化分裂。"
+        },
+        {
+          "prompt": "发现近零能级后，如何确认它在界面？",
+          "hint": "能量不能提供空间位置。",
+          "choices": [
+            "只看能量绝对值",
+            "只数本征值",
+            "同时看中心和边界的LDOS/投影权重"
+          ],
+          "answer": 2,
+          "explanation": "开放链也可能有端态，需要位置分辨证据。"
+        },
+        {
+          "prompt": "两个近简并态换一组正交基，哪个量不变？",
+          "hint": "对整个选中子空间求和。",
+          "choices": [
+            "某个任意本征矢的每个分量",
+            "Pᵢᵢ=Σ|ψₙ(i)|²",
+            "每个波函数的正负号"
+          ],
+          "answer": 1,
+          "explanation": "投影密度对选中子空间内部幺正换基不变。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "wall-ferroelectric",
+      "module": "domainwall",
+      "title": "BaTiO₃ 背景：从极性畴到标量壁",
+      "kind": "材料背景 · 约化模型",
+      "summary": "从已有极性畸变和六方向畴，选择相反两畴建立一维连续壁。",
+      "assumption": "标量180°教学壁；不包含材料拟合、弹性和静电边界。",
+      "preset": "wall-landau",
+      "links": [
+        [
+          "均匀相变与方向畴",
+          "#compute/phase"
+        ],
+        [
+          "结构畸变",
+          "#compute/distortion-modes"
+        ]
+      ]
+    },
+    {
+      "id": "wall-ssh-interface",
+      "module": "domainwall",
+      "title": "二聚化链：界面与端态同时出现",
+      "kind": "SSH 教学模型",
+      "summary": "用有限链能谱、LDOS和投影密度区分界面与边界的贡献。",
+      "assumption": "无自旋、无相互作用的一维模型，不是聚乙炔材料参数拟合。",
+      "preset": "wall-ssh",
+      "links": [
+        [
+          "SSH 体相几何",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "接触器件",
+          "#compute/device-transport-lab"
+        ]
+      ]
+    },
+    {
+      "id": "wall-local-potential",
+      "module": "domainwall",
+      "title": "局域势如何改变界面谱",
+      "kind": "对称性破缺对照",
+      "summary": "固定跃迁和长度，只在中心两格点加入势，比较手征残差和LDOS。",
+      "assumption": "局域在位势破坏手征对称；近零能子空间的阈值筛选会随能级移动改变。",
+      "preset": "wall-ssh-potential",
+      "links": [
+        [
+          "超胞与缺陷",
+          "#compute/unfold-lab"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "tong",
+      "title": "David Tong · Statistical Field Theory: domain walls",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sft/one.pdf"
+    },
+    {
+      "id": "ssh",
+      "title": "Su, Schrieffer, Heeger (1979), Solitons in Polyacetylene",
+      "url": "https://doi.org/10.1103/PhysRevLett.42.1698"
+    },
+    {
+      "id": "asboth",
+      "title": "Asbóth, Oroszlány, Pályi · A Short Course on Topological Insulators",
+      "url": "https://arxiv.org/abs/1509.02295"
+    }
+  ]
+}

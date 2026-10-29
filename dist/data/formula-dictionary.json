@@ -1,0 +1,3240 @@
+{
+  "schemaVersion": 1,
+  "release": "20261029-pathways1",
+  "entries": [
+    {
+      "id": "seitz",
+      "title": "Seitz 空间操作",
+      "symbols": [
+        "{R|t}",
+        "{R | t}",
+        "Rr+t"
+      ],
+      "aliases": [],
+      "definition": "把旋转或反射与分数平移合为一个空间操作；右侧操作先作用。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "直接晶格分数坐标中的整数旋转矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "t",
+          "meaning": "平移向量",
+          "unit": "晶格分数坐标"
+        }
+      ],
+      "conventions": "乘法为 {R|t}{S|u}={RS|Ru+t}；分数坐标不等于笛卡尔坐标。",
+      "conditions": "比较不同资料前先统一晶胞、原点与坐标约定。",
+      "sources": [
+        "bilbao"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "seitz",
+        "space",
+        "crystal"
+      ],
+      "formulaAliases": [
+        "Rr+t",
+        "Rr + t",
+        "R_g r_a"
+      ],
+      "syntax": "seitz"
+    },
+    {
+      "id": "hm",
+      "title": "Hermann–Mauguin 晶体群符号",
+      "symbols": [
+        "P2_1",
+        "P2₁",
+        "P-1",
+        "Pm-3m",
+        "P2_12_12_1"
+      ],
+      "aliases": [
+        "空间群符号",
+        "Hermann Mauguin"
+      ],
+      "definition": "由晶格类型与按指定方向排列的旋转、螺旋和镜面成分标记晶体群。",
+      "variables": [
+        {
+          "symbol": "P",
+          "meaning": "原始晶格标记",
+          "unit": "群符号，无量纲"
+        },
+        {
+          "symbol": "2₁",
+          "meaning": "二重螺旋：二重旋转和半周期平移",
+          "unit": "群符号，无量纲"
+        }
+      ],
+      "conventions": "横线只标记相应反轴数字；下标是螺旋平移分数的一部分。",
+      "conditions": "必须结合设置阅读；不能把任意数字串自动切分为螺旋下标。",
+      "sources": [
+        "iucr-hm"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "space",
+        "catalog",
+        "crystal"
+      ],
+      "formulaAliases": [],
+      "kinds": [
+        "hm"
+      ]
+    },
+    {
+      "id": "character",
+      "title": "表示的特征标",
+      "symbols": [
+        "χ",
+        "χ(g)",
+        "Tr D",
+        "TrD"
+      ],
+      "aliases": [],
+      "definition": "表示矩阵的迹；在同一等价类或合适射影约定下用于分解与检验。",
+      "variables": [
+        {
+          "symbol": "D(g)",
+          "meaning": "群元素在态空间中的矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "χ(g)",
+          "meaning": "D(g) 的迹",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "χ(E) 等于表示维数；同一特征标表必须使用一致操作顺序与因子系统。",
+      "conditions": "反幺正操作不能直接当作普通线性矩阵取迹来套幺正特征标正交公式。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "representation",
+        "pointgroup",
+        "band",
+        "character",
+        "foundations",
+        "crystal"
+      ],
+      "formulaAliases": [
+        "χ(g)",
+        "Tr D"
+      ],
+      "ambiguity": "χ 的含义"
+    },
+    {
+      "id": "irrep",
+      "title": "不可约表示与分解重数",
+      "symbols": [
+        "D1",
+        "D2",
+        "n_μ",
+        "nμ"
+      ],
+      "aliases": [],
+      "definition": "不可约表示是在选定群作用下不能再分解的子空间；重数表示它出现的份数。",
+      "variables": [
+        {
+          "symbol": "n_μ",
+          "meaning": "不可约表示 μ 的重数",
+          "unit": "非负整数"
+        },
+        {
+          "symbol": "d_μ",
+          "meaning": "该不可约表示维数",
+          "unit": "正整数"
+        }
+      ],
+      "conventions": "本站 D1、D2 等通常是本次计算局部编号，不自动等于 BC/Bilbao 标签。",
+      "conditions": "分解需检验非负整数重数、特征标重建和总维数。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "representation",
+        "bandrep",
+        "irrep"
+      ],
+      "formulaAliases": [
+        "Σ d",
+        "n_μ"
+      ],
+      "kinds": [
+        "irrep"
+      ]
+    },
+    {
+      "id": "little-group",
+      "title": "小群与动量星",
+      "symbols": [
+        "G_k",
+        "Gk",
+        "k→R",
+        "k → R"
+      ],
+      "aliases": [],
+      "definition": "小群保留选定波矢模倒格矢；动量星收集它在完整群作用下的不同像。",
+      "variables": [
+        {
+          "symbol": "k",
+          "meaning": "原胞倒格坐标波矢",
+          "unit": "见当前模块坐标约定"
+        },
+        {
+          "symbol": "G_k",
+          "meaning": "保留 k 的空间群子群",
+          "unit": "群，无量纲"
+        }
+      ],
+      "conventions": "空间点操作对波矢作用为 R⁻ᵀk；反幺正操作另含负号。",
+      "conditions": "小群表示、全 k 星诱导与实空间位点诱导是不同构造。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "little",
+        "star",
+        "space",
+        "bandrep"
+      ],
+      "formulaAliases": [
+        "R⁻ᵀk",
+        "R^-T",
+        "G_k"
+      ]
+    },
+    {
+      "id": "factor-system",
+      "title": "平移缺陷与射影因子系统",
+      "symbols": [
+        "ω(g,h)",
+        "Δ_gh",
+        "Δgh"
+      ],
+      "aliases": [],
+      "definition": "Seitz 代表元乘积多出的整格平移，在固定 k 的表示中成为相位因子。",
+      "variables": [
+        {
+          "symbol": "Δ_gh",
+          "meaning": "代表元乘积与所选代表元之间的晶格向量",
+          "unit": "整数晶格坐标"
+        },
+        {
+          "symbol": "ω(g,h)",
+          "meaning": "乘法律中的复相位",
+          "unit": "无量纲，模长1"
+        }
+      ],
+      "conventions": "无自旋幺正情形有 U_gU_h=exp(−2πik·Δ_gh)U_j。",
+      "conditions": "自旋双值和反幺正情形还需相应符号与复共轭规则。",
+      "sources": [
+        "elcoro",
+        "cano"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "space",
+        "projective"
+      ],
+      "formulaAliases": [
+        "Δ_gh",
+        "U_g U_h",
+        "U_gU_h"
+      ]
+    },
+    {
+      "id": "double-group",
+      "title": "双群与 2π 旋转",
+      "symbols": [
+        "2π",
+        "barE",
+        "E̅"
+      ],
+      "aliases": [],
+      "definition": "引入中心元素记录旋量在 2π 旋转下的符号，使单值和双值表示可在群框架中处理。",
+      "variables": [
+        {
+          "symbol": "E̅",
+          "meaning": "提升到双群的 2π 旋转中心元素",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "D(E̅)",
+          "meaning": "旋量表示中等于 −I",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "双群中的横线含义必须结合具体元素约定；不能与 HM 反轴横线混为一谈。",
+      "conditions": "适用于半整数旋量的空间旋转；不等于自动加入时间反演。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "自旋课堂",
+          "#classroom/spin"
+        ]
+      ],
+      "contexts": [
+        "double",
+        "spin",
+        "spinor"
+      ],
+      "formulaAliases": [
+        "2π 旋转"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "antiunitary",
+      "title": "反幺正算符与复共轭",
+      "symbols": [
+        "A·K",
+        "UK",
+        "U K",
+        "εₜ"
+      ],
+      "aliases": [],
+      "definition": "反幺正作用由矩阵乘以复共轭组成，乘法中第二个矩阵可能需复共轭。",
+      "variables": [
+        {
+          "symbol": "K",
+          "meaning": "在所选基底中的复共轭操作",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "A",
+          "meaning": "反幺正操作的矩阵部分",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "(AK)(BK)=AB*，不能写成普通矩阵乘积 AB。",
+      "conditions": "用于磁共表示、时间反演和自旋空间群等；须注明基底。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "自旋课堂",
+          "#classroom/spin"
+        ]
+      ],
+      "contexts": [
+        "magnetic",
+        "corep",
+        "spin",
+        "antiferro"
+      ],
+      "formulaAliases": [
+        "A·K",
+        "U K"
+      ]
+    },
+    {
+      "id": "time-reversal",
+      "title": "时间反演与 Kramers 条件",
+      "symbols": [
+        "Θ",
+        "T²",
+        "S²=−1",
+        "T^2"
+      ],
+      "aliases": [],
+      "definition": "反幺正对称若保留该 k 且平方为 −1，可保证 Kramers 成对。",
+      "variables": [
+        {
+          "symbol": "Θ",
+          "meaning": "时间反演算符",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "Θ²",
+          "meaning": "依自旋和附加平移的组合而定",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "无自旋时间反演常为 +1，自旋1/2 为 −1；组合磁平移还贡献 Bloch 相位。",
+      "conditions": "仅见二维表示或 S²=−1 公式还不够，必须检查态被带回同一 k。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "自旋课堂",
+          "#classroom/spin"
+        ]
+      ],
+      "contexts": [
+        "magnetic",
+        "spin",
+        "kramers",
+        "antiferro"
+      ],
+      "formulaAliases": [
+        "Kramers",
+        "S² = −1"
+      ]
+    },
+    {
+      "id": "bloch-gauge",
+      "title": "周期 Bloch 规范",
+      "symbols": [
+        "exp(−2πi",
+        "exp(-2 pi i",
+        "|a,k>",
+        "|a,k⟩"
+      ],
+      "aliases": [],
+      "definition": "利用晶格平移构造波矢标记的轨道基，必须固定指数正负号和是否包含轨道中心。",
+      "variables": [
+        {
+          "symbol": "T",
+          "meaning": "直接晶格平移",
+          "unit": "整数晶格坐标"
+        },
+        {
+          "symbol": "rₐ",
+          "meaning": "原胞内轨道中心",
+          "unit": "晶格分数坐标"
+        }
+      ],
+      "conventions": "位点诱导模块采用 Σ_T exp(+2πik·T)|T+rₐ⟩；平移本征值为 exp(−2πik·L)。",
+      "conditions": "别的模块可用不同规范；矩阵比较前需做一致规范变换。",
+      "sources": [
+        "cano"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "bloch",
+        "space"
+      ],
+      "formulaAliases": [
+        "k·T",
+        "k·L",
+        "L_ga"
+      ]
+    },
+    {
+      "id": "k-fractional",
+      "title": "k：倒格分数坐标波矢",
+      "symbols": [
+        "k",
+        "kx",
+        "ky",
+        "kz",
+        "k_x",
+        "k_y",
+        "k_z",
+        "kₓ",
+        "kᵧ"
+      ],
+      "aliases": [],
+      "definition": "用倒格基矢分量表示波矢，整数分量差为同一个晶体动量。",
+      "variables": [
+        {
+          "symbol": "kᵢ",
+          "meaning": "倒格基矢分数分量",
+          "unit": "无量纲（reciprocal lattice units）"
+        },
+        {
+          "symbol": "2πk·T",
+          "meaning": "Bloch 指数角度",
+          "unit": "弧度"
+        }
+      ],
+      "conventions": "本站空间群、位点诱导、Phonopy 导入通常显式使用 2π；以模块标注为准。",
+      "conditions": "不能与模型使用的 rad 波矢直接代数混算。",
+      "sources": [
+        "cano",
+        "phonopy"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "band-representation",
+        "bandrep",
+        "space",
+        "phonopy",
+        "dynamic-scattering",
+        "scattering",
+        "crystal",
+        "phonon"
+      ],
+      "formulaAliases": [],
+      "ambiguity": "k 的坐标约定"
+    },
+    {
+      "id": "k-radian",
+      "title": "k：模型中的弧度波矢",
+      "symbols": [
+        "k",
+        "kx",
+        "ky",
+        "kz",
+        "k_x",
+        "k_y",
+        "k_z",
+        "kₓ",
+        "kᵧ"
+      ],
+      "aliases": [],
+      "definition": "某些紧束缚教学模型将晶格常数吸收进 k，让布里渊区写成 −π 到 π。",
+      "variables": [
+        {
+          "symbol": "kᵢ",
+          "meaning": "模型约化波矢",
+          "unit": "rad，或 a⁻¹；依模块而定"
+        },
+        {
+          "symbol": "a",
+          "meaning": "被吸收的晶格常数",
+          "unit": "依模块而定"
+        }
+      ],
+      "conventions": "若 H(k) 使用 sin k、cos k，常采用此约定；不能再额外乘一次 2π。",
+      "conditions": "此条只描述该规范，实际坐标应以当前输入与图轴为准。",
+      "sources": [
+        "wannier"
+      ],
+      "links": [
+        [
+          "量子几何",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "能带连接",
+          "#compute/band-connectivity"
+        ]
+      ],
+      "contexts": [
+        "quantum-geometry",
+        "band-connectivity",
+        "hall-response",
+        "electron-transport"
+      ],
+      "formulaAliases": [
+        "sin(k",
+        "cos(k"
+      ],
+      "ambiguity": "k 的坐标约定"
+    },
+    {
+      "id": "gamma-point",
+      "title": "Γ：布里渊区中心",
+      "symbols": [
+        "Γ",
+        "Gamma"
+      ],
+      "aliases": [],
+      "definition": "Γ 点表示零晶体动量 k=(0,0,0)。",
+      "variables": [
+        {
+          "symbol": "Γ",
+          "meaning": "布里渊区中心",
+          "unit": "倒格坐标为零"
+        },
+        {
+          "symbol": "k",
+          "meaning": "波矢",
+          "unit": "坐标单位依模块而定"
+        }
+      ],
+      "conventions": "Γ 作为 k 点不同于带下标的电极展宽 Γ_L、Γ_R，也不同于某些不可约表示的 Γ 标签。",
+      "conditions": "只凭一个 Γ 字母不能排除其他含义。",
+      "sources": [
+        "bilbao"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ],
+        [
+          "物性与光谱课堂",
+          "#classroom/observables"
+        ]
+      ],
+      "contexts": [
+        "space",
+        "bandrep",
+        "band-representation",
+        "phonon",
+        "pointgroup",
+        "crystal"
+      ],
+      "formulaAliases": [
+        "k=(0,0,0)"
+      ],
+      "ambiguity": "Γ 的含义"
+    },
+    {
+      "id": "gamma-broadening",
+      "title": "Γ：电极耦合展宽矩阵",
+      "symbols": [
+        "Γ",
+        "Γ_L",
+        "Γ_R",
+        "ΓL",
+        "ΓR"
+      ],
+      "aliases": [],
+      "definition": "电极自能的反厄米部分给出耦合展宽，参与相干输运透射率。",
+      "variables": [
+        {
+          "symbol": "Γ_α",
+          "meaning": "i(Σ_α−Σ_α†)",
+          "unit": "与 Hamiltonian 相同的能量单位，本站常为 eV"
+        },
+        {
+          "symbol": "Σ_α",
+          "meaning": "电极推迟自能",
+          "unit": "能量"
+        }
+      ],
+      "conventions": "推迟自能约定下 Γ_α 通常半正定；Γ 不是 Γ 点。",
+      "conditions": "弹性非相互作用双端模型；具体展宽参数 η 又是不同的量。",
+      "sources": [
+        "kwant"
+      ],
+      "links": [
+        [
+          "器件输运",
+          "#compute/device-transport-lab"
+        ]
+      ],
+      "contexts": [
+        "device",
+        "transport",
+        "self-energy",
+        "电极"
+      ],
+      "formulaAliases": [
+        "Σ_L",
+        "Σ_R",
+        "Gʳ",
+        "G^r"
+      ],
+      "ambiguity": "Γ 的含义"
+    },
+    {
+      "id": "U-unitary",
+      "title": "U：幺正变换或表示矩阵",
+      "symbols": [
+        "U",
+        "U_g",
+        "U†U",
+        "U_g(k)"
+      ],
+      "aliases": [],
+      "definition": "幺正矩阵保持态的内积，可表示基变换、时间演化或对称操作的线性部分。",
+      "variables": [
+        {
+          "symbol": "U",
+          "meaning": "作用在指定态空间中的矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "U†",
+          "meaning": "共轭转置",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "U†U=I；这里的 U 不代表电子在位排斥能。",
+      "conditions": "先核对 U 的输入、输出基底；反幺正作用还需复共轭 K。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "表示计算",
+          "#workbench"
+        ],
+        [
+          "连续群课堂",
+          "#classroom/continuous"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "band-representation",
+        "representation",
+        "lie",
+        "su2",
+        "su3",
+        "crystal",
+        "foundations",
+        "space"
+      ],
+      "formulaAliases": [
+        "U†U",
+        "U_g",
+        "U_g(k)"
+      ],
+      "ambiguity": "U 的含义"
+    },
+    {
+      "id": "U-hubbard",
+      "title": "U：电子在位相互作用能",
+      "symbols": [
+        "U",
+        "coulombU"
+      ],
+      "aliases": [],
+      "definition": "同一局域轨道上不同自旋电子同时占据时的能量代价；多轨道模型还需区分 U′ 和 Hund 耦合。",
+      "variables": [
+        {
+          "symbol": "U",
+          "meaning": "同轨道在位排斥",
+          "unit": "本站通常为 eV；有些模型用 t 为能量单位"
+        },
+        {
+          "symbol": "n↑n↓",
+          "meaning": "双占据投影算符",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "单带 Hubbard 项为 UΣ_i n_i↑n_i↓；它不是幺正矩阵。",
+      "conditions": "小团簇精确对角化不等于无限晶格相图或真实材料参数拟合。",
+      "sources": [
+        "hubbard"
+      ],
+      "links": [
+        [
+          "Hubbard 团簇实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=hubbard"
+        ]
+      ],
+      "contexts": [
+        "hubbard",
+        "multiplet",
+        "kanamori",
+        "coulomb"
+      ],
+      "formulaAliases": [
+        "n↑n↓",
+        "n_i↑",
+        "U−3J",
+        "U-3J"
+      ],
+      "ambiguity": "U 的含义"
+    },
+    {
+      "id": "U-spin",
+      "title": "U：自旋群中的独立自旋作用",
+      "symbols": [
+        "U",
+        "U_spin"
+      ],
+      "aliases": [],
+      "definition": "自旋群将实空间操作与独立自旋转动配对；空间和自旋作用一般不必相同。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "实空间点操作",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "U",
+          "meaning": "自旋方向上的转动或旋量矩阵",
+          "unit": "无量纲；依模块表示空间而定"
+        }
+      ],
+      "conventions": "区分经典三分量自旋转动与二分量 SU(2) 旋量；强 SOC 时需检查锁定约束。",
+      "conditions": "不是所有独立自旋转动都保留所选磁序，也不自动适用于SOC体系。",
+      "sources": [
+        "spin-space"
+      ],
+      "links": [
+        [
+          "自旋课堂",
+          "#classroom/spin"
+        ]
+      ],
+      "contexts": [
+        "track=spin",
+        "spin-group",
+        "自旋群",
+        "独立自旋"
+      ],
+      "formulaAliases": [],
+      "ambiguity": "U 的含义"
+    },
+    {
+      "id": "J-exchange",
+      "title": "J：交换耦合常数",
+      "symbols": [
+        "J",
+        "J_ij",
+        "Jij"
+      ],
+      "aliases": [],
+      "definition": "自旋 Hamiltonian 中控制相邻自旋相对排列的系数。",
+      "variables": [
+        {
+          "symbol": "J_ij",
+          "meaning": "格点 i,j 的交换耦合",
+          "unit": "能量；本站常为 meV"
+        },
+        {
+          "symbol": "S_i",
+          "meaning": "自旋算符或经典方向",
+          "unit": "是否含 ℏ 依模块而定"
+        }
+      ],
+      "conventions": "H=+J S_i·S_j 与 H=−J S_i·S_j 对正 J 的铁磁/反铁磁含义相反，必须看当前公式。",
+      "conditions": "线性自旋波还假设围绕给定稳定磁序的小涨落。",
+      "sources": [
+        "spinw"
+      ],
+      "links": [
+        [
+          "磁激发课堂",
+          "#classroom/spin?module=magnons"
+        ],
+        [
+          "动态散射实验",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=scattering"
+        ]
+      ],
+      "contexts": [
+        "magnon",
+        "dynamic-scattering",
+        "scattering",
+        "heisenberg",
+        "spinwave"
+      ],
+      "formulaAliases": [
+        "S_i·S_j",
+        "Sᵢ·Sⱼ",
+        "J_ij"
+      ],
+      "ambiguity": "J 的含义"
+    },
+    {
+      "id": "J-hund",
+      "title": "J：Hund 耦合",
+      "symbols": [
+        "J",
+        "J_H",
+        "hundJ"
+      ],
+      "aliases": [],
+      "definition": "多轨道相互作用中，Hund 耦合控制不同轨道的自旋偏好，并和交换、自旋翻转及成对跃迁项相联系。",
+      "variables": [
+        {
+          "symbol": "J_H",
+          "meaning": "Hund 耦合强度",
+          "unit": "能量，本站常为 eV"
+        },
+        {
+          "symbol": "U′",
+          "meaning": "不同轨道密度相互作用",
+          "unit": "能量"
+        }
+      ],
+      "conventions": "旋转不变 Kanamori 参数常采用 U′=U−2J；需保留模块实际实现的项。",
+      "conditions": "不能把单个 Hund 参数等同于完整 Slater 积分或全部原子多重态光谱。",
+      "sources": [
+        "kanamori"
+      ],
+      "links": [
+        [
+          "多电子晶场",
+          "#compute/local-multiplet-lab"
+        ]
+      ],
+      "contexts": [
+        "multiplet",
+        "kanamori",
+        "hund",
+        "coulomb"
+      ],
+      "formulaAliases": [
+        "U−3J",
+        "U-3J",
+        "U−2J",
+        "U-2J"
+      ],
+      "ambiguity": "J 的含义"
+    },
+    {
+      "id": "J-angular",
+      "title": "J：总角动量与量子数",
+      "symbols": [
+        "J",
+        "J²",
+        "J_z",
+        "Jz",
+        "j"
+      ],
+      "aliases": [],
+      "definition": "总角动量算符或其量子数，须从大小写和上下文区分。",
+      "variables": [
+        {
+          "symbol": "j",
+          "meaning": "角动量量子数",
+          "unit": "整数或半整数，无量纲"
+        },
+        {
+          "symbol": "J²",
+          "meaning": "平方算符，特征值 ℏ²j(j+1)",
+          "unit": "ℏ²"
+        }
+      ],
+      "conventions": "很多演示设置 ℏ=1；此时输出的是以 ℏ 为单位的约化角动量。",
+      "conditions": "晶场/SOC 环境中 J 未必是严格好量子数。",
+      "sources": [
+        "nist"
+      ],
+      "links": [
+        [
+          "连续群课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "原子光谱",
+          "#compute/atomic-spectra-lab"
+        ]
+      ],
+      "contexts": [
+        "su2",
+        "lie",
+        "atomic-spectra",
+        "angular",
+        "耦合"
+      ],
+      "formulaAliases": [
+        "j(j+1)",
+        "J²",
+        "J_z"
+      ],
+      "ambiguity": "J 的含义"
+    },
+    {
+      "id": "su2",
+      "title": "SU(2) 与旋量",
+      "symbols": [
+        "SU(2)",
+        "σ_x",
+        "σ_y",
+        "σ_z"
+      ],
+      "aliases": [
+        "Bloch 球",
+        "旋量"
+      ],
+      "definition": "二阶行列式为1的幺正矩阵群；可描述自旋1/2旋量和 Bloch 球旋转。",
+      "variables": [
+        {
+          "symbol": "θ",
+          "meaning": "转角",
+          "unit": "rad"
+        },
+        {
+          "symbol": "σᵢ",
+          "meaning": "Pauli 矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "自旋1/2旋转常取 U=exp(−iθ n·σ/2)，2π旋转使态变号。",
+      "conditions": "Bloch 球是纯二能级态的射线表示，不是物体真实位置。",
+      "sources": [
+        "nist"
+      ],
+      "links": [
+        [
+          "连续群课堂",
+          "#classroom/continuous"
+        ]
+      ],
+      "contexts": [
+        "su2",
+        "lie",
+        "spinor"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "su3-dynkin",
+      "title": "SU(3) 的 Dynkin 标记",
+      "symbols": [
+        "SU(3)",
+        "(p,q)",
+        "λ_a"
+      ],
+      "aliases": [
+        "Dynkin",
+        "权图"
+      ],
+      "definition": "用两个非负整数 (p,q) 标记 SU(3) 最高权表示。",
+      "variables": [
+        {
+          "symbol": "p,q",
+          "meaning": "Dynkin 指数",
+          "unit": "非负整数"
+        },
+        {
+          "symbol": "d(p,q)",
+          "meaning": "表示维数 (p+1)(q+1)(p+q+2)/2",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "基本表示3=(1,0)，共轭3̅=(0,1)，伴随8=(1,1)。",
+      "conditions": "SU(3) 表示与三维晶体空间群表示不是同一套标签。",
+      "sources": [
+        "pdg"
+      ],
+      "links": [
+        [
+          "SU(3) 直积",
+          "#compute/lie/su3_tensor"
+        ]
+      ],
+      "contexts": [
+        "su3",
+        "lie"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "cg",
+      "title": "Clebsch–Gordan 换基系数",
+      "symbols": [
+        "CG",
+        "⟨j₁m₁",
+        "C^{",
+        "C^"
+      ],
+      "aliases": [
+        "Clebsch",
+        "Gordan"
+      ],
+      "definition": "把直积基底与耦合后不可约分量基底联系起来的单位换基矩阵元素。",
+      "variables": [
+        {
+          "symbol": "C",
+          "meaning": "所选相位与基序下的换基系数",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "m",
+          "meaning": "权或磁量子数",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "每个不可约块的整体相位与重数空间基可改变；比较系数前须统一约定。",
+      "conditions": "SU(3) 可能存在外重数；仅报表示维数不能唯一确定 CG 系数。",
+      "sources": [
+        "nist",
+        "pdg"
+      ],
+      "links": [
+        [
+          "SU(3) CG",
+          "#compute/lie/su3_cg"
+        ]
+      ],
+      "contexts": [
+        "su2",
+        "su3",
+        "cg",
+        "clebsch"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "racah",
+      "title": "Racah / 6j 重耦合",
+      "symbols": [
+        "6j",
+        "Racah"
+      ],
+      "aliases": [
+        "重耦合"
+      ],
+      "definition": "三重张量积中，把两种逐次耦合括号结构联系起来。",
+      "variables": [
+        {
+          "symbol": "F",
+          "meaning": "重耦合矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "μ",
+          "meaning": "可能的重数通道指标",
+          "unit": "离散标签"
+        }
+      ],
+      "conventions": "矩阵依赖 CG 相位和通道基；SU(2) 的标量6j与SU(3)含外重数情形不能混用。",
+      "conditions": "须比较相同总输出表示和完整通道空间。",
+      "sources": [
+        "nist",
+        "pdg"
+      ],
+      "links": [
+        [
+          "SU(3) Racah",
+          "#compute/lie/su3_racah"
+        ]
+      ],
+      "contexts": [
+        "su3",
+        "racah",
+        "6j"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "ninej",
+      "title": "9j 与四体重耦合",
+      "symbols": [
+        "9j"
+      ],
+      "aliases": [
+        "四体重耦合"
+      ],
+      "definition": "比较四重张量积的两种成对耦合方案的重叠或换基。",
+      "variables": [
+        {
+          "symbol": "a,b,c,d",
+          "meaning": "四个输入表示",
+          "unit": "离散表示标签"
+        },
+        {
+          "symbol": "U_9j",
+          "meaning": "固定输出与重数通道的换基矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "不同规范下单个系数可变号；检查完整正交/幺正关系更可靠。",
+      "conditions": "更高维精确结果仍受资源上限约束；SU(3)通道可含外重数。",
+      "sources": [
+        "nist",
+        "pdg"
+      ],
+      "links": [
+        [
+          "SU(3) 9j",
+          "#compute/lie/su3_ninej"
+        ]
+      ],
+      "contexts": [
+        "su3",
+        "ninej",
+        "9j"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "berry-phase",
+      "title": "Berry 相位",
+      "symbols": [
+        "γ_B",
+        "Berry phase"
+      ],
+      "aliases": [
+        "Berry 相位"
+      ],
+      "definition": "态在参数空间闭合路径上平行输运积累的几何相位。",
+      "variables": [
+        {
+          "symbol": "γ_B",
+          "meaning": "闭合回路几何相位",
+          "unit": "rad，模2π"
+        },
+        {
+          "symbol": "u_nk",
+          "meaning": "周期 Bloch 本征态",
+          "unit": "归一态"
+        }
+      ],
+      "conventions": "离散重叠乘积的相位需要固定回路方向；单个态的局部相位不是可观测量。",
+      "conditions": "简并占据子空间要使用子空间重叠与非阿贝尔构造。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "量子几何",
+          "#compute/quantum-geometry-lab"
+        ]
+      ],
+      "contexts": [
+        "berry",
+        "geometry",
+        "wilson"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "berry-curvature",
+      "title": "Berry 曲率",
+      "symbols": [
+        "Ω",
+        "Ω_xy",
+        "Ωxy",
+        "F_xy"
+      ],
+      "aliases": [
+        "Berry 曲率"
+      ],
+      "definition": "几何相位在参数空间的局部曲率，可参与反常速度和内禀霍尔响应。",
+      "variables": [
+        {
+          "symbol": "Ω_xy",
+          "meaning": "相对所选 k 坐标的曲率分量",
+          "unit": "若k有长度⁻¹单位则为长度²；约化k下无量纲"
+        },
+        {
+          "symbol": "n",
+          "meaning": "能带指标",
+          "unit": "离散标签"
+        }
+      ],
+      "conventions": "正负号随 Berry 联络与回路方向约定；使用同一模块的 Chern 与霍尔公式。",
+      "conditions": "带交叉处单带表达需谨慎，数值积分需检查能隙和网格收敛。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "量子几何",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "反常霍尔",
+          "#compute/hall-response-lab"
+        ]
+      ],
+      "contexts": [
+        "geometry",
+        "hall",
+        "berry",
+        "chern"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true,
+      "ambiguity": "ω 的含义"
+    },
+    {
+      "id": "quantum-metric",
+      "title": "量子度量",
+      "symbols": [
+        "g_ij",
+        "gij",
+        "Re Q"
+      ],
+      "aliases": [
+        "量子度量"
+      ],
+      "definition": "量子几何张量的实部，度量邻近量子态射线之间的距离变化。",
+      "variables": [
+        {
+          "symbol": "g_ij",
+          "meaning": "参数空间度量分量",
+          "unit": "由所选参数坐标单位决定"
+        },
+        {
+          "symbol": "Q_ij",
+          "meaning": "量子几何张量",
+          "unit": "同样依参数坐标而定"
+        }
+      ],
+      "conventions": "规范不变，但不同参数坐标下分量单位和数值会变。",
+      "conditions": "需要孤立态或明确的多带投影子空间，不能用任意简并本征矢直接比较。",
+      "sources": [
+        "quantum-metric"
+      ],
+      "links": [
+        [
+          "量子几何",
+          "#compute/quantum-geometry-lab"
+        ]
+      ],
+      "contexts": [
+        "geometry",
+        "metric"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "chern",
+      "title": "Chern 数",
+      "symbols": [
+        "C",
+        "Chern"
+      ],
+      "aliases": [
+        "Chern数"
+      ],
+      "definition": "闭合二维布里渊区上占据子空间 Berry 曲率的积分不变量。",
+      "variables": [
+        {
+          "symbol": "C",
+          "meaning": "第一 Chern 数",
+          "unit": "整数，无量纲"
+        },
+        {
+          "symbol": "Ω",
+          "meaning": "Berry 曲率",
+          "unit": "依 k 坐标而定"
+        }
+      ],
+      "conventions": "常用 C=(1/2π)∫Ω d²k；需与曲率符号及取向一致。",
+      "conditions": "必须有分离的占据子空间并检查网格收敛；金属部分占据积分通常不是整数Chern数。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "量子几何",
+          "#compute/quantum-geometry-lab"
+        ]
+      ],
+      "contexts": [
+        "chern",
+        "geometry",
+        "hall"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "wilson",
+      "title": "Wilson 环与子空间平行输运",
+      "symbols": [
+        "Wilson",
+        "W(C)"
+      ],
+      "aliases": [
+        "Wilson 环"
+      ],
+      "definition": "沿闭合路径连乘占据子空间重叠，得到规范协变矩阵及规范不变本征相位。",
+      "variables": [
+        {
+          "symbol": "W",
+          "meaning": "Wilson 环矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "θ_n",
+          "meaning": "本征相位",
+          "unit": "rad，模2π"
+        }
+      ],
+      "conventions": "需要一致的占据带数和周期端点处理；单个相位分支的标号可交换。",
+      "conditions": "任意有限网格输出不自动构成完整Z₂或拓扑分类。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "紧束缚拓扑工具",
+          "#magnetictb"
+        ]
+      ],
+      "contexts": [
+        "wilson",
+        "geometry"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "tight-binding",
+      "title": "紧束缚 Bloch Hamiltonian",
+      "symbols": [
+        "H(k)",
+        "H_k"
+      ],
+      "aliases": [
+        "Hamiltonian",
+        "紧束缚"
+      ],
+      "definition": "由晶格间轨道跃迁经 Fourier 变换得到的能量矩阵。",
+      "variables": [
+        {
+          "symbol": "t_ab(R)",
+          "meaning": "轨道之间的跃迁矩阵元",
+          "unit": "能量，本站常为 eV"
+        },
+        {
+          "symbol": "R",
+          "meaning": "晶格位移",
+          "unit": "整数晶格坐标或约化长度"
+        }
+      ],
+      "conventions": "指数正号、2π和轨道中心规范以模块为准；H(k)必须厄米。",
+      "conditions": "教学模型参数不是默认的DFT拟合结果，也不自动包含相互作用。",
+      "sources": [
+        "wannier"
+      ],
+      "links": [
+        [
+          "紧束缚模型",
+          "#magnetictb"
+        ]
+      ],
+      "contexts": [
+        "tight",
+        "magnetictb",
+        "band",
+        "hubbard"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "fermi",
+      "title": "Fermi–Dirac 占据",
+      "symbols": [
+        "f(E)",
+        "f_nk",
+        "f_n"
+      ],
+      "aliases": [],
+      "definition": "费米子能级在温度和化学势给定时的平衡平均占据。",
+      "variables": [
+        {
+          "symbol": "μ",
+          "meaning": "化学势",
+          "unit": "与E相同能量单位"
+        },
+        {
+          "symbol": "k_B T",
+          "meaning": "热能",
+          "unit": "与E相同能量单位"
+        }
+      ],
+      "conventions": "f=1/[exp((E−μ)/(k_B T))+1]；零温极限需明确费米面处处理。",
+      "conditions": "不能将热占据自动当成固定粒子数结果，若固定N需另求μ。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "电子输运",
+          "#compute/electron-transport-lab"
+        ]
+      ],
+      "contexts": [
+        "transport",
+        "hall",
+        "fermi",
+        "hubbard"
+      ],
+      "formulaAliases": [
+        "k_B T",
+        "kBT",
+        "E−μ"
+      ]
+    },
+    {
+      "id": "seebeck",
+      "title": "Seebeck 系数",
+      "symbols": [
+        "S_xx",
+        "Sxx",
+        "Seebeck"
+      ],
+      "aliases": [
+        "热电势"
+      ],
+      "definition": "温度梯度与开路电场之间的线性响应系数。",
+      "variables": [
+        {
+          "symbol": "S",
+          "meaning": "热电势系数",
+          "unit": "V/K，本站常以 μV/K 显示"
+        },
+        {
+          "symbol": "τ",
+          "meaning": "弛豫时间",
+          "unit": "s，常数τ近似中部分比值会抵消"
+        }
+      ],
+      "conventions": "正负号取决于电场、温度梯度和电荷定义，使用模块给出的 j=0 约定。",
+      "conditions": "常数弛豫时间与能带模型限制精度；σ/τ不是实际σ。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "电子输运",
+          "#compute/electron-transport-lab"
+        ]
+      ],
+      "contexts": [
+        "electron-transport",
+        "seebeck",
+        "transport"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "hall",
+      "title": "内禀反常霍尔响应",
+      "symbols": [
+        "σ_xy",
+        "σxy"
+      ],
+      "aliases": [
+        "反常霍尔"
+      ],
+      "definition": "占据加权 Berry 曲率积分给出内禀横向电响应。",
+      "variables": [
+        {
+          "symbol": "σ_xy",
+          "meaning": "二维片电导或三维电导率",
+          "unit": "二维常为 e²/h；三维常为 S/m，依模块而定"
+        },
+        {
+          "symbol": "μ",
+          "meaning": "化学势",
+          "unit": "能量"
+        }
+      ],
+      "conventions": "二维模型的片响应不能直接写成三维体电导率。",
+      "conditions": "本站QWZ模型未包含散射外禀机制或完整材料输运。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "反常霍尔",
+          "#compute/hall-response-lab"
+        ]
+      ],
+      "contexts": [
+        "hall",
+        "geometry"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "nernst",
+      "title": "横向热电 α 与 Nernst 的区别",
+      "symbols": [
+        "α_xy",
+        "αxy"
+      ],
+      "aliases": [
+        "Nernst",
+        "横向热电"
+      ],
+      "definition": "α_xy描述横向热电流响应；开路Nernst电压还需要结合完整电导张量求解。",
+      "variables": [
+        {
+          "symbol": "α_xy",
+          "meaning": "横向热电系数",
+          "unit": "二维与三维单位不同，依模块显示"
+        },
+        {
+          "symbol": "S_xy",
+          "meaning": "开路横向热电势",
+          "unit": "V/K"
+        }
+      ],
+      "conventions": "不能把α_xy曲线直接标成Nernst电压；需检查张量反演及符号。",
+      "conditions": "当前教学模块主要给内禀、非相互作用模型贡献。",
+      "sources": [
+        "berry"
+      ],
+      "links": [
+        [
+          "横向热电",
+          "#compute/hall-response-lab"
+        ]
+      ],
+      "contexts": [
+        "hall",
+        "nernst",
+        "thermoelectric"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "retarded-green",
+      "title": "推迟 Green 函数",
+      "symbols": [
+        "Gʳ",
+        "G^r",
+        "G^R",
+        "η"
+      ],
+      "aliases": [],
+      "definition": "谱与输运常用的推迟 resolvent，正虚部保证相应因果边界。",
+      "variables": [
+        {
+          "symbol": "η",
+          "meaning": "数值正展宽",
+          "unit": "能量，本站常为 eV"
+        },
+        {
+          "symbol": "Gʳ",
+          "meaning": "[E+iη−H−Σʳ]⁻¹",
+          "unit": "能量⁻¹"
+        }
+      ],
+      "conventions": "η>0；电极耦合展宽Γ与η的物理含义不同。",
+      "conditions": "有限η会平滑离散谱并影响峰高，需检查收敛。",
+      "sources": [
+        "kwant"
+      ],
+      "links": [
+        [
+          "器件输运",
+          "#compute/device-transport-lab"
+        ],
+        [
+          "Hubbard 团簇实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=hubbard"
+        ]
+      ],
+      "contexts": [
+        "device",
+        "hubbard",
+        "green",
+        "spectral"
+      ],
+      "formulaAliases": [
+        "E+iη",
+        "Gʳ",
+        "G^r"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "landauer",
+      "title": "Landauer 透射与电导",
+      "symbols": [
+        "T(E)",
+        "Tr[Γ",
+        "Landauer"
+      ],
+      "aliases": [
+        "透射率"
+      ],
+      "definition": "相干双端模型中，透射概率决定线性响应电导。",
+      "variables": [
+        {
+          "symbol": "T(E)",
+          "meaning": "总透射通道权重",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "G",
+          "meaning": "线性电导",
+          "unit": "e²/h乘简并度，或 S"
+        }
+      ],
+      "conventions": "独立自旋通道的倍数必须显式计入，不能无条件乘2。",
+      "conditions": "弹性、相干、非相互作用假设；透射概率不等于有限偏压电流。",
+      "sources": [
+        "kwant"
+      ],
+      "links": [
+        [
+          "器件输运",
+          "#compute/device-transport-lab"
+        ]
+      ],
+      "contexts": [
+        "device",
+        "landauer"
+      ],
+      "formulaAliases": [
+        "Γ_L",
+        "Γ_R"
+      ]
+    },
+    {
+      "id": "andreev",
+      "title": "Andreev 反射",
+      "symbols": [
+        "R_A",
+        "R_ee",
+        "R_he",
+        "Δ"
+      ],
+      "aliases": [
+        "Andreev"
+      ],
+      "definition": "正常金属—超导界面上电子入射后转为空穴反射的过程，配对凝聚体吸收电荷。",
+      "variables": [
+        {
+          "symbol": "R_he",
+          "meaning": "电子到空穴反射概率",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "Δ",
+          "meaning": "配对势幅度",
+          "unit": "能量"
+        }
+      ],
+      "conventions": "BdG电子/空穴基和通量归一必须一致；电导还含普通反射贡献。",
+      "conditions": "教学模型未包含自洽序参量、非弹性散射或任意真实接触。",
+      "sources": [
+        "kwant-sc"
+      ],
+      "links": [
+        [
+          "超导结",
+          "#compute/andreev-lab"
+        ]
+      ],
+      "contexts": [
+        "andreev",
+        "bdg",
+        "superconduct"
+      ],
+      "formulaAliases": [],
+      "ambiguity": "Δ 的含义",
+      "requiresContext": true
+    },
+    {
+      "id": "crystal-field",
+      "title": "晶场分裂与轨道",
+      "symbols": [
+        "Δ",
+        "Dq",
+        "D_s",
+        "D_t"
+      ],
+      "aliases": [
+        "晶场",
+        "轨道分裂"
+      ],
+      "definition": "局域环境使同一原子壳层的轨道能级分裂，系数定义与坐标轴必须固定。",
+      "variables": [
+        {
+          "symbol": "Δ",
+          "meaning": "所选几何下两组能级间距",
+          "unit": "本站常为 eV"
+        },
+        {
+          "symbol": "λ",
+          "meaning": "自旋轨道耦合强度",
+          "unit": "能量"
+        }
+      ],
+      "conventions": "八面体与四面体的正Δ能级顺序不同；某些定义用10Dq。",
+      "conditions": "单电子能级模型不能直接预测多电子高低自旋或完整实验光谱。",
+      "sources": [
+        "quanty"
+      ],
+      "links": [
+        [
+          "晶场与轨道",
+          "#compute/crystal-field-lab"
+        ]
+      ],
+      "contexts": [
+        "crystal-field",
+        "multiplet",
+        "orbitals"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true,
+      "ambiguity": "Δ 的含义"
+    },
+    {
+      "id": "kanamori",
+      "title": "Kanamori 多轨道相互作用",
+      "symbols": [
+        "U′",
+        "U−3J",
+        "U-3J",
+        "Kanamori"
+      ],
+      "aliases": [],
+      "definition": "以局域密度排斥、Hund交换、自旋翻转及成对跃迁刻画选定多轨道子空间。",
+      "variables": [
+        {
+          "symbol": "U",
+          "meaning": "同轨道排斥",
+          "unit": "能量"
+        },
+        {
+          "symbol": "J",
+          "meaning": "Hund耦合",
+          "unit": "与U同单位"
+        }
+      ],
+      "conventions": "模块采用的参数关系和实际保留项应同时检查；U≥3J是某些教学输入约束。",
+      "conditions": "不是完整原子Slater积分模型；材料参数还涉及屏蔽与基底。",
+      "sources": [
+        "kanamori"
+      ],
+      "links": [
+        [
+          "多电子晶场",
+          "#compute/local-multiplet-lab"
+        ]
+      ],
+      "contexts": [
+        "multiplet",
+        "kanamori",
+        "hund"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "dipole",
+      "title": "光学偶极矩与偏振选择定则",
+      "symbols": [
+        "⟨f|d",
+        "ε·d",
+        "ε·r"
+      ],
+      "aliases": [
+        "偏振选择定则"
+      ],
+      "definition": "跃迁强度与偏振方向投影后的偶极矩阵元模平方相关。",
+      "variables": [
+        {
+          "symbol": "ε",
+          "meaning": "光偏振向量",
+          "unit": "归一方向，无量纲"
+        },
+        {
+          "symbol": "d",
+          "meaning": "电偶极算符",
+          "unit": "电荷×长度；约化模型单位依模块"
+        }
+      ],
+      "conventions": "强度常以相对值显示，需区分振幅、模平方与简并态平均。",
+      "conditions": "电偶极近似不自动包括磁偶极、声子辅助或实际线宽。",
+      "sources": [
+        "quanty"
+      ],
+      "links": [
+        [
+          "多重态光谱",
+          "#compute/atomic-spectra-lab"
+        ]
+      ],
+      "contexts": [
+        "atomic-spectra",
+        "spectra",
+        "dipole"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "spin-resonance",
+      "title": "有效自旋与磁共振",
+      "symbols": [
+        "μ_B",
+        "gμ",
+        "D S_z",
+        "E(S_x"
+      ],
+      "aliases": [
+        "EPR",
+        "Zeeman"
+      ],
+      "definition": "以有限维有效自旋 Hamiltonian 描述 Zeeman 和零场分裂及跃迁。",
+      "variables": [
+        {
+          "symbol": "g",
+          "meaning": "有效g张量",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "D,E",
+          "meaning": "零场分裂参数",
+          "unit": "依模块为能量或频率，必须保持转换一致"
+        }
+      ],
+      "conventions": "自旋矩阵常以ℏ=1使用；频率能量转换为 E=hν。",
+      "conditions": "有效自旋模型不等于对整个电子壳层的从头算求解。",
+      "sources": [
+        "magres"
+      ],
+      "links": [
+        [
+          "磁共振",
+          "#compute/spin-resonance-lab"
+        ]
+      ],
+      "contexts": [
+        "spin-resonance",
+        "resonance",
+        "epr"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "phonon-dynamical",
+      "title": "声子动力学矩阵",
+      "symbols": [
+        "D(q)",
+        "ω²",
+        "ω^2"
+      ],
+      "aliases": [],
+      "definition": "质量加权力常数的 Fourier 变换矩阵，本征值给角频率平方。",
+      "variables": [
+        {
+          "symbol": "ω",
+          "meaning": "角频率",
+          "unit": "rad/s；软件频率也可使用THz等约定"
+        },
+        {
+          "symbol": "M",
+          "meaning": "原子质量",
+          "unit": "统一质量单位"
+        }
+      ],
+      "conventions": "若显示频率ν，ω=2πν；负本征值通常以虚频符号表示不稳定模。",
+      "conditions": "任意正负频率数据不自动满足声学和规则或力常数收敛。",
+      "sources": [
+        "phonopy"
+      ],
+      "links": [
+        [
+          "声子导入",
+          "#compute/phonopy"
+        ]
+      ],
+      "contexts": [
+        "phonon",
+        "phonopy",
+        "scattering"
+      ],
+      "formulaAliases": [
+        "D(q)"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "phonon-eigenvector",
+      "title": "质量加权声子本征矢",
+      "symbols": [
+        "e_j",
+        "e_q",
+        "e(q)",
+        "eigenvector"
+      ],
+      "aliases": [
+        "质量加权",
+        "本征矢"
+      ],
+      "definition": "声子本征矢的归一和质量因子决定实际原子位移及散射振幅。",
+      "variables": [
+        {
+          "symbol": "e_j",
+          "meaning": "质量加权本征矢分量",
+          "unit": "约定下无量纲"
+        },
+        {
+          "symbol": "u_j",
+          "meaning": "实际位移",
+          "unit": "长度，和振幅约定有关"
+        }
+      ],
+      "conventions": "Phonopy相关输入常有u_j∝e_j/√M_j；不能把本征矢分量直接当成等幅原子位移。",
+      "conditions": "简并模可任意换基，比较物理量时应使用完整简并子空间。",
+      "sources": [
+        "phonopy"
+      ],
+      "links": [
+        [
+          "冻结声子模",
+          "#compute/phonon-modes"
+        ],
+        [
+          "动态散射实验",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=scattering"
+        ]
+      ],
+      "contexts": [
+        "phonon",
+        "phonopy",
+        "scattering"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "phonon-dos",
+      "title": "态密度与积分权重",
+      "symbols": [
+        "DOS",
+        "g(ω)"
+      ],
+      "aliases": [
+        "态密度"
+      ],
+      "definition": "用频率或能量分布描述模的数量，归一取决于每胞、每原子与输入权重。",
+      "variables": [
+        {
+          "symbol": "g(ω)",
+          "meaning": "态密度",
+          "unit": "每频率或每能量；依横轴单位"
+        },
+        {
+          "symbol": "w_q",
+          "meaning": "q点积分权重",
+          "unit": "常归一为和1"
+        }
+      ],
+      "conventions": "从频率换成能量轴时需要相应Jacobian；不能只换图轴文字。",
+      "conditions": "热力学积分要求覆盖完整网格或有正确DOS归一，能带路径不足以代替全区采样。",
+      "sources": [
+        "phonopy"
+      ],
+      "links": [
+        [
+          "声子热力学",
+          "#compute/phonon-thermo"
+        ]
+      ],
+      "contexts": [
+        "phonon",
+        "thermo",
+        "dos"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "vibrational-free-energy",
+      "title": "振动自由能与热容",
+      "symbols": [
+        "F_vib",
+        "C_V",
+        "Cv",
+        "n_B"
+      ],
+      "aliases": [
+        "振动自由能",
+        "Bose"
+      ],
+      "definition": "谐振子频率与Bose占据决定振动自由能、熵和定容热容。",
+      "variables": [
+        {
+          "symbol": "n_B",
+          "meaning": "1/[exp(ℏω/k_BT)−1]",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "C_V",
+          "meaning": "定容热容",
+          "unit": "每胞或每摩尔单位依模块"
+        }
+      ],
+      "conventions": "零点能为½ℏω；频率ν与角频率ω需正确换算。",
+      "conditions": "虚频不能直接代入稳定谐振子的热力学公式。",
+      "sources": [
+        "phonopy"
+      ],
+      "links": [
+        [
+          "声子热力学",
+          "#compute/phonon-thermo"
+        ]
+      ],
+      "contexts": [
+        "thermo",
+        "phonon",
+        "qha"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "qha",
+      "title": "准谐近似与热膨胀",
+      "symbols": [
+        "F(V,T)",
+        "α_V",
+        "γ_q"
+      ],
+      "aliases": [
+        "热膨胀",
+        "准谐"
+      ],
+      "definition": "通过多个体积的静态能和体积依赖声子自由能求平衡体积随温度的变化。",
+      "variables": [
+        {
+          "symbol": "V",
+          "meaning": "体积",
+          "unit": "依结构单位，常为 Å³/胞"
+        },
+        {
+          "symbol": "α_V",
+          "meaning": "体膨胀系数",
+          "unit": "K⁻¹"
+        }
+      ],
+      "conventions": "在每个体积仍使用谐振子，温度效应由频率对体积的依赖引入。",
+      "conditions": "不能把单个体积数据称为完整QHA；相不稳定和强非谐区需额外方法。",
+      "sources": [
+        "phonopy-qha"
+      ],
+      "links": [
+        [
+          "准谐近似",
+          "#compute/qha-lab"
+        ]
+      ],
+      "contexts": [
+        "qha",
+        "expansion"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "neumann-tensor",
+      "title": "Neumann 原理与物性张量",
+      "symbols": [
+        "T_ijk",
+        "T_ij",
+        "R_iα"
+      ],
+      "aliases": [
+        "Neumann",
+        "物性张量"
+      ],
+      "definition": "材料物性张量必须在其允许的对称作用下保持不变，可据此求独立分量。",
+      "variables": [
+        {
+          "symbol": "T",
+          "meaning": "所选物性张量",
+          "unit": "由介电/弹性/压电等物性决定"
+        },
+        {
+          "symbol": "R",
+          "meaning": "空间操作矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "极性/轴性与时间反演奇偶性决定额外符号；相同秩并不代表相同变换律。",
+      "conditions": "对称性只约束允许分量，不给出材料分量实际大小。",
+      "sources": [
+        "bilbao"
+      ],
+      "links": [
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ],
+      "contexts": [
+        "tensor",
+        "neumann",
+        "tensors"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "shg",
+      "title": "二次谐波与极化率",
+      "symbols": [
+        "χ^(2)",
+        "χ⁽²⁾",
+        "P(2ω)",
+        "χ"
+      ],
+      "aliases": [
+        "倍频",
+        "SHG"
+      ],
+      "definition": "二阶极化率把两个入射场分量耦合为二倍频极化。",
+      "variables": [
+        {
+          "symbol": "χ^(2)",
+          "meaning": "二阶极化率",
+          "unit": "SI常为m/V，教学图可用归一相对单位"
+        },
+        {
+          "symbol": "I_2ω",
+          "meaning": "探测通道相对强度",
+          "unit": "依模块归一"
+        }
+      ],
+      "conventions": "振幅先投影到出射偏振，再取模平方；旋转晶体时须变换完整张量。",
+      "conditions": "电偶极体SHG在反演对称晶体中受禁，表面/磁偶极等机制不包含在此简单判据中。",
+      "sources": [
+        "optics"
+      ],
+      "links": [
+        [
+          "SHG 实验",
+          "#compute/shg-lab"
+        ]
+      ],
+      "contexts": [
+        "shg",
+        "nonlinear"
+      ],
+      "formulaAliases": [],
+      "ambiguity": "χ 的含义"
+    },
+    {
+      "id": "landau",
+      "title": "Landau 序参量自由能",
+      "symbols": [
+        "F(P)",
+        "aP²",
+        "P⁴",
+        "P^4"
+      ],
+      "aliases": [
+        "Landau",
+        "序参量"
+      ],
+      "definition": "按序参量与对称性允许的项展开自由能，再分析驻点、稳定性与相变。",
+      "variables": [
+        {
+          "symbol": "P",
+          "meaning": "序参量；有时为极化，有时为无量纲幅度",
+          "unit": "依模块而定"
+        },
+        {
+          "symbol": "a,b,c",
+          "meaning": "自由能展开系数",
+          "unit": "由P与自由能单位决定"
+        }
+      ],
+      "conventions": "只有二阶导为正的驻点才是局部极小；还需比较自由能判断全局稳定。",
+      "conditions": "系数为教学参数，不自动对应特定真实材料的温度函数。",
+      "sources": [
+        "wall"
+      ],
+      "links": [
+        [
+          "结构相变",
+          "#compute/phase"
+        ],
+        [
+          "畴壁实验",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=domainwall"
+        ]
+      ],
+      "contexts": [
+        "phase",
+        "domain",
+        "landau"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "diffraction",
+      "title": "衍射结构因子与消光",
+      "symbols": [
+        "F_hkl",
+        "F(hkl)",
+        "hkl"
+      ],
+      "aliases": [
+        "消光",
+        "结构因子"
+      ],
+      "definition": "原胞散射体的复振幅相加，强度由模平方决定，位点相位可导致消光。",
+      "variables": [
+        {
+          "symbol": "h,k,l",
+          "meaning": "反射指数",
+          "unit": "整数"
+        },
+        {
+          "symbol": "f_j",
+          "meaning": "散射因子或相干散射长度",
+          "unit": "随探针和模块而定"
+        }
+      ],
+      "conventions": "必须区分晶格系统消光、基底干涉零点和结构因子太小；波长影响可达反射。",
+      "conditions": "教学棒谱不等于包含多重散射、仪器分辨与真实原子形状因子的完整实验图谱。",
+      "sources": [
+        "bilbao"
+      ],
+      "links": [
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ]
+      ],
+      "contexts": [
+        "diffraction",
+        "hkl",
+        "extinction"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "unfolding",
+      "title": "超胞能带展开权重",
+      "symbols": [
+        "W_n(k)",
+        "unfold"
+      ],
+      "aliases": [
+        "能带展开"
+      ],
+      "definition": "将超胞本征态投影到原胞平移特征扇区，恢复原胞动量分辨的谱权重。",
+      "variables": [
+        {
+          "symbol": "W",
+          "meaning": "所选原胞k扇区的权重",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "K",
+          "meaning": "超胞波矢",
+          "unit": "超胞倒格坐标"
+        }
+      ],
+      "conventions": "展开权重依赖原胞/超胞映射与轨道对应；谱权重不是新的一条本征能带。",
+      "conditions": "对无序、缺陷或磁超胞需保持同一轨道规范并核对权重求和规则。",
+      "sources": [
+        "unfold"
+      ],
+      "links": [
+        [
+          "能带展开",
+          "#compute/unfold-lab"
+        ]
+      ],
+      "contexts": [
+        "unfold",
+        "supercell"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "bandrep",
+      "title": "位点诱导的 Bloch 能带表示",
+      "symbols": [
+        "bandrep",
+        "B(k)",
+        "L_ga"
+      ],
+      "aliases": [
+        "位点诱导",
+        "能带表示"
+      ],
+      "definition": "从实空间种子、位点稳定子和完整位点轨道构造周期轨道基，再得到各k纤维的群作用。",
+      "variables": [
+        {
+          "symbol": "m",
+          "meaning": "原胞内位点轨道多重性",
+          "unit": "正整数"
+        },
+        {
+          "symbol": "d",
+          "meaning": "每个位点局域轨道维数",
+          "unit": "正整数"
+        }
+      ],
+      "conventions": "纤维维数为m×d；这不同于从动量小群诱导整个k星。",
+      "conditions": "精选SG2/4/19/221、无自旋s/p；不自动判断EBR的elementary性质或材料拓扑。",
+      "sources": [
+        "cano"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "band-representation"
+      ],
+      "formulaAliases": [
+        "dim B",
+        "L_ga"
+      ]
+    },
+    {
+      "id": "site-stabilizer",
+      "title": "位点轨道与稳定子",
+      "symbols": [
+        "m×|H|",
+        "m × |H|",
+        "G_r",
+        "H_r"
+      ],
+      "aliases": [
+        "稳定子",
+        "Wyckoff"
+      ],
+      "definition": "位点稳定子由真正固定种子的操作组成，轨道—稳定子关系控制诱导维数。",
+      "variables": [
+        {
+          "symbol": "H",
+          "meaning": "种子位点稳定子",
+          "unit": "有限点式群，阶为整数"
+        },
+        {
+          "symbol": "m",
+          "meaning": "原胞内轨道位点数",
+          "unit": "正整数"
+        }
+      ],
+      "conventions": "若Rr₀+t=r₀+L，应使用平移t−L的操作真正固定r₀。",
+      "conditions": "必须在同一个原胞、同一空间群作用下计数，不能混入k星臂数。",
+      "sources": [
+        "cano"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "band-representation",
+        "wyckoff"
+      ],
+      "formulaAliases": [
+        "Rr₀+t−L",
+        "|G/T|"
+      ]
+    },
+    {
+      "id": "screw-phase",
+      "title": "螺旋平方与 Bloch 相位",
+      "symbols": [
+        "λ±",
+        "U_S²",
+        "exp(−iπkz)"
+      ],
+      "aliases": [
+        "螺旋相位"
+      ],
+      "definition": "无自旋2₁螺旋作用两次得到整格平移，沿轴本征值随k积累相位。",
+      "variables": [
+        {
+          "symbol": "λ±",
+          "meaning": "螺旋本征值两分支",
+          "unit": "无量纲，模长1"
+        },
+        {
+          "symbol": "kz",
+          "meaning": "沿螺旋轴的倒格分量",
+          "unit": "此公式使用分数坐标"
+        }
+      ],
+      "conventions": "U_S²=exp(−2πikz)I，故λ±=±exp(−iπkz)，边界kz=1/2给±i。",
+      "conditions": "需操作确实保留所选k；自旋双值会多一个旋量符号。",
+      "sources": [
+        "cano",
+        "elcoro"
+      ],
+      "links": [
+        [
+          "位点诱导实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=bandrep"
+        ]
+      ],
+      "contexts": [
+        "bandrep",
+        "screw",
+        "band-representation"
+      ],
+      "formulaAliases": [
+        "λ±",
+        "U_S²"
+      ]
+    },
+    {
+      "id": "dsf",
+      "title": "动态结构因子 S(Q,ω)",
+      "symbols": [
+        "DSF",
+        "S(Q,ω)",
+        "S(Q,ω)",
+        "S(q,ω)"
+      ],
+      "aliases": [
+        "动态结构因子",
+        "非弹性散射"
+      ],
+      "definition": "频率和动量分辨的密度或自旋关联谱，决定所选散射近似下的可测强度。",
+      "variables": [
+        {
+          "symbol": "Q",
+          "meaning": "实验动量转移",
+          "unit": "Å⁻¹或倒格单位，依模块"
+        },
+        {
+          "symbol": "ω",
+          "meaning": "角频率；也可改用能量转移ℏω",
+          "unit": "依图轴单位"
+        }
+      ],
+      "conventions": "核声子散射与磁自旋散射的算符、质量因子和偏振投影不同。",
+      "conditions": "能量位置相同不代表峰强相同；需核对形式因子、温度、展宽与归一。",
+      "sources": [
+        "phonopy-dsf",
+        "spinw"
+      ],
+      "links": [
+        [
+          "动态散射实验",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=scattering"
+        ]
+      ],
+      "contexts": [
+        "scattering",
+        "dynamic-scattering",
+        "dsf"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "neutron-polarization",
+      "title": "磁散射的横向偏振投影",
+      "symbols": [
+        "δ_αβ−Q",
+        "Q̂",
+        "S_perp"
+      ],
+      "aliases": [
+        "横向投影",
+        "磁散射"
+      ],
+      "definition": "磁散射只探测垂直于动量转移方向的磁矩涨落分量。",
+      "variables": [
+        {
+          "symbol": "Q̂",
+          "meaning": "动量转移单位向量",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "δ_αβ−Q̂_αQ̂_β",
+          "meaning": "横向投影矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "Q=0时方向未定义，须使用所声明的极限或禁用该点。",
+      "conditions": "未包括真实材料磁形式因子和所有仪器因素时应称相对模型强度。",
+      "sources": [
+        "spinw"
+      ],
+      "links": [
+        [
+          "动态散射实验",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=scattering"
+        ]
+      ],
+      "contexts": [
+        "scattering",
+        "dynamic-scattering",
+        "dsf"
+      ],
+      "formulaAliases": [
+        "Q̂",
+        "δ_αβ"
+      ]
+    },
+    {
+      "id": "detailed-balance",
+      "title": "Bose 因子与详细平衡",
+      "symbols": [
+        "n_B+1",
+        "nB+1",
+        "S(Q,−ω)"
+      ],
+      "aliases": [
+        "详细平衡"
+      ],
+      "definition": "热平衡下能量损失和能量获得侧的散射权重由占据与详细平衡联系。",
+      "variables": [
+        {
+          "symbol": "n_B",
+          "meaning": "Bose占据",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "β",
+          "meaning": "1/(k_BT)",
+          "unit": "能量⁻¹"
+        }
+      ],
+      "conventions": "正负能量转移的定义必须先固定；产生激发与湮灭激发的权重分别含n_B+1与n_B。",
+      "conditions": "零温与零频极限需要专门处理，不应直接除以零。",
+      "sources": [
+        "phonopy-dsf"
+      ],
+      "links": [
+        [
+          "动态散射实验",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=scattering"
+        ]
+      ],
+      "contexts": [
+        "scattering",
+        "dynamic-scattering",
+        "dsf"
+      ],
+      "formulaAliases": [
+        "n_B+1",
+        "n_B + 1"
+      ]
+    },
+    {
+      "id": "domainwall",
+      "title": "畴壁与连续序参量剖面",
+      "symbols": [
+        "domainwall",
+        "P(x)",
+        "tanh"
+      ],
+      "aliases": [
+        "畴壁",
+        "畴壁宽度"
+      ],
+      "definition": "连接两个不同序参量极小值的空间非均匀解，壁宽与能量取决于局域势和梯度代价。",
+      "variables": [
+        {
+          "symbol": "P(x)",
+          "meaning": "空间变化的序参量",
+          "unit": "依模型，常为约化无量纲幅度"
+        },
+        {
+          "symbol": "x",
+          "meaning": "空间坐标",
+          "unit": "依模块，常为约化长度"
+        }
+      ],
+      "conventions": "简单对称φ⁴模型可有tanh型壁；这不意味着所有真实铁电或磁畴壁都为同一形式。",
+      "conditions": "实际带电畴壁、弹性约束和多分量转动需额外电场与耦合项。",
+      "sources": [
+        "wall"
+      ],
+      "links": [
+        [
+          "畴壁实验",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=domainwall"
+        ]
+      ],
+      "contexts": [
+        "domain",
+        "domainwall",
+        "domain-wall"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "gradient-energy",
+      "title": "Ginzburg 梯度能与壁宽",
+      "symbols": [
+        "κ",
+        "κ/2",
+        "dP/dx",
+        "∇P"
+      ],
+      "aliases": [
+        "梯度能"
+      ],
+      "definition": "对序参量空间不均匀性付出的能量代价，与局域势共同决定壁厚度。",
+      "variables": [
+        {
+          "symbol": "κ",
+          "meaning": "梯度能系数",
+          "unit": "由自由能、序参量及长度单位共同决定"
+        },
+        {
+          "symbol": "∂P/∂x",
+          "meaning": "序参量空间梯度",
+          "unit": "序参量单位/长度"
+        }
+      ],
+      "conventions": "常用f_grad=κ(∂P/∂x)²/2；省略1/2会改变系数和解析壁宽定义。",
+      "conditions": "只比较使用相同泛函归一与边界条件的壁宽数值。",
+      "sources": [
+        "wall"
+      ],
+      "links": [
+        [
+          "畴壁实验",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=domainwall"
+        ]
+      ],
+      "contexts": [
+        "domain",
+        "domainwall",
+        "domain-wall"
+      ],
+      "formulaAliases": [
+        "dP/dx",
+        "∇P"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "hubbard-cluster",
+      "title": "Hubbard 小团簇与多体基底",
+      "symbols": [
+        "Hubbard",
+        "c†",
+        "c_iσ"
+      ],
+      "aliases": [
+        "小团簇",
+        "精确对角化"
+      ],
+      "definition": "在给定粒子数和有限格点的Fock空间里保留跃迁及局域相互作用。",
+      "variables": [
+        {
+          "symbol": "t",
+          "meaning": "电子跃迁能",
+          "unit": "依模块为eV或选定能量单位"
+        },
+        {
+          "symbol": "N",
+          "meaning": "固定电子数",
+          "unit": "整数"
+        }
+      ],
+      "conventions": "费米子交换产生的符号必须保留；不能把多体基直接当作单粒子轨道基。",
+      "conditions": "有限团簇的能隙、谱峰与关联不等于热力学极限的完整Mott相变。",
+      "sources": [
+        "hubbard"
+      ],
+      "links": [
+        [
+          "Hubbard 团簇实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=hubbard"
+        ]
+      ],
+      "contexts": [
+        "hubbard",
+        "cluster"
+      ],
+      "formulaAliases": [
+        "c†",
+        "n_i↑"
+      ]
+    },
+    {
+      "id": "double-occupancy",
+      "title": "双占据与局域相关性",
+      "symbols": [
+        "n↑n↓",
+        "n_i↑n_i↓",
+        "D_occ"
+      ],
+      "aliases": [
+        "双占据"
+      ],
+      "definition": "双占据衡量同一轨道同时有上下自旋电子的概率，是局域排斥效应的诊断量。",
+      "variables": [
+        {
+          "symbol": "⟨n↑n↓⟩",
+          "meaning": "单个位点双占据平均",
+          "unit": "无量纲，范围0–1"
+        },
+        {
+          "symbol": "Σ_i⟨n↑n↓⟩",
+          "meaning": "总双占据",
+          "unit": "无量纲，范围依格点数"
+        }
+      ],
+      "conventions": "需说明每位点还是总量；非相互作用有限温度值也可非零。",
+      "conditions": "双占据下降本身不能证明无限体系存在Mott绝缘相。",
+      "sources": [
+        "hubbard"
+      ],
+      "links": [
+        [
+          "Hubbard 团簇实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=hubbard"
+        ]
+      ],
+      "contexts": [
+        "hubbard",
+        "cluster"
+      ],
+      "formulaAliases": [
+        "n↑n↓",
+        "n_i↑n_i↓"
+      ]
+    },
+    {
+      "id": "spectral-function",
+      "title": "多体谱函数与 Lehmann 权重",
+      "symbols": [
+        "A(ω)",
+        "Lehmann"
+      ],
+      "aliases": [
+        "谱函数",
+        "Lehmann"
+      ],
+      "definition": "电子添加/移除矩阵元及能量差构成谱函数，能展示相互作用产生的离散峰。",
+      "variables": [
+        {
+          "symbol": "ω",
+          "meaning": "此处常用能量转移作为横轴",
+          "unit": "依模块为eV或约化能量"
+        },
+        {
+          "symbol": "η",
+          "meaning": "有限宽度谱峰的展宽",
+          "unit": "同横轴单位"
+        }
+      ],
+      "conventions": "谱权重求和规则依算符、是否求和自旋/位点及归一而定。",
+      "conditions": "小团簇离散峰加展宽不是无限晶格连续谱，峰宽不应解释为寿命。",
+      "sources": [
+        "hubbard"
+      ],
+      "links": [
+        [
+          "Hubbard 团簇实验",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "材料学习路线",
+          "#atlas/pathways?module=hubbard"
+        ]
+      ],
+      "contexts": [
+        "hubbard",
+        "spectral",
+        "cluster"
+      ],
+      "formulaAliases": []
+    },
+    {
+      "id": "rotation-operator",
+      "title": "点操作名字、轴标记与旋转方向",
+      "symbols": [
+        "C2z",
+        "C31+",
+        "barC21p",
+        "m_z"
+      ],
+      "aliases": [
+        "操作符号"
+      ],
+      "definition": "本站操作名字保留上游BC标签；下标可能同时包含旋转阶数和轴编号，不能按空间群螺旋下标解释。",
+      "variables": [
+        {
+          "symbol": "C₂z",
+          "meaning": "二重旋转操作标签；实际作用以rotation矩阵为准",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "+/−、′/″",
+          "meaning": "上游约定中的旋转方向或轴标签，不一定表示时间反演",
+          "unit": "标签，无量纲"
+        }
+      ],
+      "conventions": "例如C31+的31是操作下标整体，不应自动改成3₁螺旋；磁群撇号与BC轴撇号须由上下文区分。",
+      "conditions": "要判断实际操作和轴方向，请核对对应R与t矩阵，不能只按名字猜测。",
+      "sources": [
+        "elcoro",
+        "bilbao"
+      ],
+      "links": [
+        [
+          "表示工作台",
+          "#workbench"
+        ]
+      ],
+      "contexts": [
+        "operation",
+        "space",
+        "crystal"
+      ],
+      "formulaAliases": [],
+      "kinds": [
+        "operation"
+      ]
+    },
+    {
+      "id": "schoenflies",
+      "title": "Schönflies 点群符号",
+      "symbols": [
+        "C3v",
+        "D4h",
+        "Oh",
+        "C2"
+      ],
+      "aliases": [
+        "Schoenflies",
+        "Schönflies"
+      ],
+      "definition": "用主旋转轴、镜面与其他生成操作标记点群的一套符号。",
+      "variables": [
+        {
+          "symbol": "C₃ᵥ",
+          "meaning": "主三重轴与竖直镜面的点群",
+          "unit": "群标签，无量纲"
+        },
+        {
+          "symbol": "Oₕ",
+          "meaning": "包含反演的完整立方点群",
+          "unit": "群标签，无量纲"
+        }
+      ],
+      "conventions": "C3v中的3v属于整体下标；HM晶格符号C2和Schönflies的C₂不是同一种语法。",
+      "conditions": "三维点群标签不能直接代替空间群、磁群或双群的完整定义。",
+      "sources": [
+        "bilbao"
+      ],
+      "links": [
+        [
+          "32点群课堂",
+          "#classroom/foundations"
+        ]
+      ],
+      "contexts": [
+        "pointgroup",
+        "schoenflies",
+        "foundations"
+      ],
+      "formulaAliases": [],
+      "kinds": [
+        "schoenflies"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "frequency",
+      "title": "角频率 ω、频率 ν 与能量转移",
+      "symbols": [
+        "ω",
+        "ν",
+        "hν",
+        "ℏω"
+      ],
+      "aliases": [
+        "角频率",
+        "频率",
+        "能量转移"
+      ],
+      "definition": "频率ν计数每秒周期，角频率ω计数每秒弧度，量子能量对应hν=ℏω。",
+      "variables": [
+        {
+          "symbol": "ν",
+          "meaning": "普通频率",
+          "unit": "Hz；模块也可能用THz或GHz"
+        },
+        {
+          "symbol": "ω",
+          "meaning": "角频率，ω=2πν",
+          "unit": "rad/s；若横轴改用ℏω则为能量"
+        }
+      ],
+      "conventions": "不能把THz频率直接当成角频率再乘ℏ；先核对模块横轴和h/ℏ换算。",
+      "conditions": "同样的ω字母在量子几何中也可能表示Berry曲率分量，必须结合当前模块与上下标。",
+      "sources": [
+        "phonopy",
+        "magres"
+      ],
+      "links": [
+        [
+          "声子与数据导入",
+          "#compute/phonopy"
+        ],
+        [
+          "磁共振",
+          "#compute/spin-resonance-lab"
+        ]
+      ],
+      "contexts": [
+        "phonon",
+        "phonopy",
+        "scattering",
+        "resonance",
+        "atomic-spectra",
+        "dsf"
+      ],
+      "formulaAliases": [],
+      "ambiguity": "ω 的含义",
+      "requiresContext": true
+    }
+  ],
+  "sources": [
+    {
+      "id": "iucr-hm",
+      "title": "IUCr：Hermann–Mauguin symbols",
+      "url": "https://dictionary.iucr.org/Hermann-Mauguin_symbols"
+    },
+    {
+      "id": "bilbao",
+      "title": "Bilbao Crystallographic Server：表示与位点对称工具",
+      "url": "https://www.cryst.ehu.es/"
+    },
+    {
+      "id": "cano",
+      "title": "Cano 等：Elementary Band Representations (2018)",
+      "url": "https://arxiv.org/abs/1709.01935"
+    },
+    {
+      "id": "elcoro",
+      "title": "Elcoro 等：Double crystallographic groups (2017)",
+      "url": "https://arxiv.org/abs/1706.09272"
+    },
+    {
+      "id": "phonopy",
+      "title": "Phonopy 官方：动力学矩阵与热力学公式",
+      "url": "https://phonopy.github.io/phonopy/formulation.html"
+    },
+    {
+      "id": "phonopy-dsf",
+      "title": "Phonopy 官方：Dynamic structure factor",
+      "url": "https://phonopy.github.io/phonopy/dynamic-structure-factor.html"
+    },
+    {
+      "id": "phonopy-qha",
+      "title": "Phonopy 官方：Quasi harmonic approximation",
+      "url": "https://phonopy.github.io/phonopy/qha.html"
+    },
+    {
+      "id": "nist",
+      "title": "NIST DLMF：3j、6j、9j symbols",
+      "url": "https://dlmf.nist.gov/34"
+    },
+    {
+      "id": "pdg",
+      "title": "PDG：SU(3) isoscalar factors and representation matrices",
+      "url": "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-su3-isoscalar-factors.pdf"
+    },
+    {
+      "id": "berry",
+      "title": "Xiao、Chang、Niu：Berry phase effects (2010)",
+      "url": "https://arxiv.org/abs/0907.2021"
+    },
+    {
+      "id": "wannier",
+      "title": "Wannier90 官方：插值与矩阵元",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/wannier90/methodology/"
+    },
+    {
+      "id": "kwant",
+      "title": "Kwant 官方：量子输运与电导",
+      "url": "https://kwant-project.org/doc/latest/tutorial/first_steps"
+    },
+    {
+      "id": "kwant-sc",
+      "title": "Kwant 官方：超导、守恒量与对称性",
+      "url": "https://kwant-project.org/doc/latest/tutorial/superconductors"
+    },
+    {
+      "id": "spinw",
+      "title": "SpinW 官方：自旋波与关联函数",
+      "url": "https://spinw.org/spinwdoc/spinw_spinwave"
+    },
+    {
+      "id": "hubbard",
+      "title": "Hubbard：Electron correlations in narrow energy bands (1963)",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "kanamori",
+      "title": "Georges、de’ Medici、Mravlje：Hund 耦合与多轨道相关性",
+      "url": "https://arxiv.org/abs/1207.3033"
+    },
+    {
+      "id": "wall",
+      "title": "Marton 等：BaTiO₃ 的 GLD 畴壁模型",
+      "url": "https://arxiv.org/abs/1001.1376"
+    },
+    {
+      "id": "quanty",
+      "title": "Quanty 官方：NiO 晶场与多电子态",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    },
+    {
+      "id": "optics",
+      "title": "Armstrong 等：Interactions between Light Waves in a Nonlinear Dielectric (1962)",
+      "url": "https://doi.org/10.1103/PhysRev.127.1918"
+    },
+    {
+      "id": "magres",
+      "title": "EasySpin 官方：自旋 Hamiltonian",
+      "url": "https://easyspin.org/easyspin/documentation/hamiltonian.html"
+    },
+    {
+      "id": "unfold",
+      "title": "Popescu、Zunger：能带展开 (2012)",
+      "url": "https://doi.org/10.1103/PhysRevB.85.085201"
+    },
+    {
+      "id": "spin-space",
+      "title": "Chen 等：Spin Space Groups: Full Classification and Applications",
+      "url": "https://arxiv.org/abs/2307.10364"
+    },
+    {
+      "id": "quantum-metric",
+      "title": "Provost、Vallée：Riemannian structure on manifolds of quantum states (1980)",
+      "url": "https://doi.org/10.1007/BF02193559"
+    }
+  ]
+}

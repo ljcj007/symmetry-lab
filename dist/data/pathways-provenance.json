@@ -1,0 +1,774 @@
+{
+  "schema": "symmetry-lab-pathways-provenance-1",
+  "release": "20261029-pathways1",
+  "date": "2026-10-29",
+  "originalContent": true,
+  "scope": "Four bounded Python teaching workflows, original lessons/model presets and cross-module assignments, plus a context-aware read-only formula dictionary; no generic EBR, real-material fitting or thermodynamic phase claim",
+  "counts": {
+    "modules": 4,
+    "lessons": 14,
+    "exercises": 14,
+    "cases": 14,
+    "exerciseSteps": 56,
+    "presets": 26,
+    "dictionaryEntries": 66,
+    "catalogSources": 13,
+    "dictionarySources": 23,
+    "sources": 36,
+    "uniqueSourceURLs": 32,
+    "projects": 4,
+    "retainedProjects": 6,
+    "projectCenterTotal": 10
+  },
+  "projects": [
+    {
+      "id": "site-bloch-little-group",
+      "module": "bandrep",
+      "title": "从实空间位点到螺旋轴小群"
+    },
+    {
+      "id": "bose-scattering",
+      "module": "scattering",
+      "title": "从谐振子热占据到双侧声子散射"
+    },
+    {
+      "id": "bulk-interface-localization",
+      "module": "domainwall",
+      "title": "从 SSH 体相到界面局域态"
+    },
+    {
+      "id": "hund-superexchange",
+      "module": "hubbard",
+      "title": "区分局域 Hund 自旋与站点间超交换"
+    }
+  ],
+  "models": [
+    {
+      "module": "band_rep_lab",
+      "coverage": [
+        "Site orbits, stabilizers, periodic-gauge Bloch matrices and selected-k little-group decomposition for ordinary space groups 2, 4, 19 and 221; scalar s or complete polar p orbitals"
+      ],
+      "limitations": [
+        "BC primitive settings, including the group-4 screw along z; single-valued and no SOC/time reversal",
+        "No generic EBR classification, electronic energy calculation, structure identification or complete topological diagnosis"
+      ]
+    },
+    {
+      "module": "dynamic_scattering_lab",
+      "coverage": [
+        "One-dimensional longitudinal diatomic harmonic chain with mass-normalized complex modes, coherent one-phonon amplitudes, Bose populations and positive/negative energy scattering"
+      ],
+      "limitations": [
+        "Synthetic chain with explicit energy cutoff and relative scattering weights; no arbitrary Phonopy dataset import",
+        "No fitted material cross section, Debye-Waller factor, elastic/multiphonon scattering or computed damping"
+      ]
+    },
+    {
+      "module": "domain_wall_lab",
+      "coverage": [
+        "Independent scalar phi4 pinned-wall finite-grid stationary calculation with continuum and Hessian diagnostics",
+        "Independent finite open SSH chain with central-pair potential, LDOS and selected-subspace spatial projectors"
+      ],
+      "limitations": [
+        "Reduced continuum units do not automatically map to SSH parameters or fitted ferroelectric energies",
+        "Finite-grid residual is distinct from unconstrained stability; spatial windows may overlap and finite chains need not reach asymptotic dimerization"
+      ]
+    },
+    {
+      "module": "hubbard_lab",
+      "coverage": [
+        "Exact fermionic diagonalization of 2-4 site open/periodic single-band Hubbard clusters in fixed up/down particle sectors",
+        "Degenerate-ground-state trace averages, densities, double occupancy, spin correlations, U scans, all-Sz charge gaps and dimer singlet-triplet splitting"
+      ],
+      "limitations": [
+        "Two-site periodic model has one undirected bond; zero temperature and supplied model parameters",
+        "Finite-sector gaps and finite-cluster charge costs do not prove a thermodynamic Mott transition or material magnetic order"
+      ]
+    }
+  ],
+  "dictionaryScope": "Definitions, variables, units and conventions are selected using route/formula context; unresolved ambiguity and unknown formulas are not guessed, and original source math is preserved.",
+  "sources": [
+    {
+      "id": "bandrep-cano-ebr",
+      "title": "Cano et al., Building Blocks of Topological Quantum Chemistry: Elementary Band Representations, PRB 97, 035139 (2018)",
+      "url": "https://arxiv.org/abs/1709.01935"
+    },
+    {
+      "id": "bandrep-elcoro-bcs",
+      "title": "Elcoro et al., Double crystallographic groups and their representations on the Bilbao Crystallographic Server, J. Appl. Cryst. 50, 1457–1477 (2017)",
+      "url": "https://arxiv.org/abs/1706.09272"
+    },
+    {
+      "id": "bandrep-bilbao-sitesym",
+      "title": "Bilbao Crystallographic Server: SiteSym site-symmetry induction method",
+      "url": "https://cryst.ehu.eus/html/rep/sitesym/sitesym_help.html"
+    },
+    {
+      "id": "bandrep-spglib-dataset",
+      "title": "spglib official documentation: symmetry dataset and Wyckoff positions",
+      "url": "https://spglib.readthedocs.io/en/stable/dataset.html"
+    },
+    {
+      "id": "scattering-scattering-phonopy-dsf",
+      "title": "Phonopy: coherent one-phonon dynamic structure factor and phase conventions",
+      "url": "https://phonopy.github.io/phonopy/dynamic-structure-factor.html"
+    },
+    {
+      "id": "scattering-scattering-phonopy-formulation",
+      "title": "Phonopy: dynamical matrix and displacement eigenvectors",
+      "url": "https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix"
+    },
+    {
+      "id": "scattering-scattering-togo-2023",
+      "title": "Togo, Chaput, Tadano & Tanaka, Implementation strategies in phonopy and phono3py (2023)",
+      "url": "https://arxiv.org/abs/2301.05784"
+    },
+    {
+      "id": "domainwall-tong",
+      "title": "David Tong · Statistical Field Theory: domain walls",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sft/one.pdf"
+    },
+    {
+      "id": "domainwall-ssh",
+      "title": "Su, Schrieffer, Heeger (1979), Solitons in Polyacetylene",
+      "url": "https://doi.org/10.1103/PhysRevLett.42.1698"
+    },
+    {
+      "id": "domainwall-asboth",
+      "title": "Asbóth, Oroszlány, Pályi · A Short Course on Topological Insulators",
+      "url": "https://arxiv.org/abs/1509.02295"
+    },
+    {
+      "id": "hubbard-hubbard-original",
+      "title": "J. Hubbard, Electron correlations in narrow energy bands, Proc. R. Soc. Lond. A 276, 238–257 (1963)",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "hubbard-hubbard-dimer",
+      "title": "D. J. Carrascal et al., The Hubbard Dimer: A density functional case study of a many-body problem, J. Phys.: Condens. Matter 27, 393001 (2015)",
+      "url": "https://arxiv.org/abs/1502.02194"
+    },
+    {
+      "id": "hubbard-hubbard-lieb-wu",
+      "title": "E. H. Lieb and F. Y. Wu, Absence of Mott Transition in an Exact Solution of the Short-Range, One-Band Model in One Dimension, Phys. Rev. Lett. 20, 1445–1448 (1968)",
+      "url": "https://doi.org/10.1103/PhysRevLett.20.1445"
+    },
+    {
+      "id": "dictionary-iucr-hm",
+      "title": "IUCr：Hermann–Mauguin symbols",
+      "url": "https://dictionary.iucr.org/Hermann-Mauguin_symbols"
+    },
+    {
+      "id": "dictionary-bilbao",
+      "title": "Bilbao Crystallographic Server：表示与位点对称工具",
+      "url": "https://www.cryst.ehu.es/"
+    },
+    {
+      "id": "dictionary-cano",
+      "title": "Cano 等：Elementary Band Representations (2018)",
+      "url": "https://arxiv.org/abs/1709.01935"
+    },
+    {
+      "id": "dictionary-elcoro",
+      "title": "Elcoro 等：Double crystallographic groups (2017)",
+      "url": "https://arxiv.org/abs/1706.09272"
+    },
+    {
+      "id": "dictionary-phonopy",
+      "title": "Phonopy 官方：动力学矩阵与热力学公式",
+      "url": "https://phonopy.github.io/phonopy/formulation.html"
+    },
+    {
+      "id": "dictionary-phonopy-dsf",
+      "title": "Phonopy 官方：Dynamic structure factor",
+      "url": "https://phonopy.github.io/phonopy/dynamic-structure-factor.html"
+    },
+    {
+      "id": "dictionary-phonopy-qha",
+      "title": "Phonopy 官方：Quasi harmonic approximation",
+      "url": "https://phonopy.github.io/phonopy/qha.html"
+    },
+    {
+      "id": "dictionary-nist",
+      "title": "NIST DLMF：3j、6j、9j symbols",
+      "url": "https://dlmf.nist.gov/34"
+    },
+    {
+      "id": "dictionary-pdg",
+      "title": "PDG：SU(3) isoscalar factors and representation matrices",
+      "url": "https://pdg.lbl.gov/2024/reviews/rpp2024-rev-su3-isoscalar-factors.pdf"
+    },
+    {
+      "id": "dictionary-berry",
+      "title": "Xiao、Chang、Niu：Berry phase effects (2010)",
+      "url": "https://arxiv.org/abs/0907.2021"
+    },
+    {
+      "id": "dictionary-wannier",
+      "title": "Wannier90 官方：插值与矩阵元",
+      "url": "https://wannier90.readthedocs.io/en/latest/user_guide/wannier90/methodology/"
+    },
+    {
+      "id": "dictionary-kwant",
+      "title": "Kwant 官方：量子输运与电导",
+      "url": "https://kwant-project.org/doc/latest/tutorial/first_steps"
+    },
+    {
+      "id": "dictionary-kwant-sc",
+      "title": "Kwant 官方：超导、守恒量与对称性",
+      "url": "https://kwant-project.org/doc/latest/tutorial/superconductors"
+    },
+    {
+      "id": "dictionary-spinw",
+      "title": "SpinW 官方：自旋波与关联函数",
+      "url": "https://spinw.org/spinwdoc/spinw_spinwave"
+    },
+    {
+      "id": "dictionary-hubbard",
+      "title": "Hubbard：Electron correlations in narrow energy bands (1963)",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "dictionary-kanamori",
+      "title": "Georges、de’ Medici、Mravlje：Hund 耦合与多轨道相关性",
+      "url": "https://arxiv.org/abs/1207.3033"
+    },
+    {
+      "id": "dictionary-wall",
+      "title": "Marton 等：BaTiO₃ 的 GLD 畴壁模型",
+      "url": "https://arxiv.org/abs/1001.1376"
+    },
+    {
+      "id": "dictionary-quanty",
+      "title": "Quanty 官方：NiO 晶场与多电子态",
+      "url": "https://www.quanty.org/documentation/tutorials/nio_crystal_field/groundstate"
+    },
+    {
+      "id": "dictionary-optics",
+      "title": "Armstrong 等：Interactions between Light Waves in a Nonlinear Dielectric (1962)",
+      "url": "https://doi.org/10.1103/PhysRev.127.1918"
+    },
+    {
+      "id": "dictionary-magres",
+      "title": "EasySpin 官方：自旋 Hamiltonian",
+      "url": "https://easyspin.org/easyspin/documentation/hamiltonian.html"
+    },
+    {
+      "id": "dictionary-unfold",
+      "title": "Popescu、Zunger：能带展开 (2012)",
+      "url": "https://doi.org/10.1103/PhysRevB.85.085201"
+    },
+    {
+      "id": "dictionary-spin-space",
+      "title": "Chen 等：Spin Space Groups: Full Classification and Applications",
+      "url": "https://arxiv.org/abs/2307.10364"
+    },
+    {
+      "id": "dictionary-quantum-metric",
+      "title": "Provost、Vallée：Riemannian structure on manifolds of quantum states (1980)",
+      "url": "https://doi.org/10.1007/BF02193559"
+    }
+  ],
+  "sourceNote": "Primary research, author teaching notes and official technical documentation are method/context references; no imported measured dataset or complete upstream software implementation is claimed.",
+  "hashConvention": "SHA-256 of UTF-8 text normalized to LF; binary files hashed without conversion",
+  "historicalMetadataPolicy": "Retain prior release/date/count/source fields; refresh existing file/module digests and register omitted Python files without reclassifying their historical coverage.",
+  "refreshCommand": "python scripts/refresh-pathways-provenance.py",
+  "verifyCommand": "python scripts/refresh-pathways-provenance.py --check",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "8d054fabcea8c78f6329bc81b76c4a848b1aa11a70e1fdfa33fea13190375e0e",
+      "bytes": 64260
+    },
+    {
+      "path": "dist/advanced-ui.js",
+      "sha256": "09b5540e779bf613a17af477704f7fc6bdf6d012225e3cb0708911b322d08c57",
+      "bytes": 30365
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "452a09669a259b71d57caf1464d92d5730dcbefbfe1f0e240cbac6060ef9dd7c",
+      "bytes": 83833
+    },
+    {
+      "path": "dist/classroom-ui.js",
+      "sha256": "01219247cc21f7a63aee917bc967490e44b8166e15d9e7b924b02d8b830e0212",
+      "bytes": 18263
+    },
+    {
+      "path": "dist/classroom.css",
+      "sha256": "5b3dfc44ec21cf71e6b5dba031bc61589379b5da9ff3487ef3721c3676895875",
+      "bytes": 5781
+    },
+    {
+      "path": "dist/compute-worker.js",
+      "sha256": "97b75ebb307cd6065e2e9ae22070ec8f4c3316c00a3d4abfafc68821629fdc3f",
+      "bytes": 562
+    },
+    {
+      "path": "dist/coupled-materials-ui.js",
+      "sha256": "6c4c2198f6b68a6c7c5f1b2d9410fd05ab0a7db778c2cfd116673888f54bc5eb",
+      "bytes": 35366
+    },
+    {
+      "path": "dist/coupled-materials.css",
+      "sha256": "3c62ed834ed74129071bd3a42c3e36a496df0d5ad0ad090498f88b9acd8a506f",
+      "bytes": 1466
+    },
+    {
+      "path": "dist/coverage-ui.js",
+      "sha256": "9af780b21b6e31f5b52e5b261d3b6c6a90befa77869c6e768ef9af8308373cd5",
+      "bytes": 5225
+    },
+    {
+      "path": "dist/crystal-notation.js",
+      "sha256": "08d61dbbf69d4988ac59578cc21f6ea02267e58b37d9abe2947acb453ef91dae",
+      "bytes": 9051
+    },
+    {
+      "path": "dist/crystal-symbol-data.js",
+      "sha256": "0c80225fc25e44a5b880944943bae83724592f3b1ee3c365a264fc438c61d665",
+      "bytes": 31583
+    },
+    {
+      "path": "dist/crystal-viewer.js",
+      "sha256": "7a37f0c1a99ea83ce6c144c29fc997366a1e8b25c658f0d5058f917720d08d4a",
+      "bytes": 8851
+    },
+    {
+      "path": "dist/data/bandrep-content.json",
+      "sha256": "40e748d6f8d55f0d154e32125e96e01bcc76ec3b6513ff4d545338f4988dcfc2",
+      "bytes": 22802
+    },
+    {
+      "path": "dist/data/domainwall-content.json",
+      "sha256": "a25dcbae6f97ca45a39a79475c52d2002e1af271086fc0692f733a5902ef7e34",
+      "bytes": 17532
+    },
+    {
+      "path": "dist/data/formula-dictionary.json",
+      "sha256": "30ad90619ec2b1b8bebf819fa1a27dd70d2a83c943982517b8bf3165bba2a18d",
+      "bytes": 83718
+    },
+    {
+      "path": "dist/data/hubbard-content.json",
+      "sha256": "12751fdf12150d9ed9d9335964a95dcabf9cf79e3db2806021368b120b256013",
+      "bytes": 19425
+    },
+    {
+      "path": "dist/data/pathways-materials.json",
+      "sha256": "7ef12f72f33b262e33820fccad4409095b240725976ec0c653164420b8547a5a",
+      "bytes": 92205
+    },
+    {
+      "path": "dist/data/scattering-content.json",
+      "sha256": "2c58a73ab844017ffbb2c07f37d29c629e3b5f9aad189958683db851c2d5a746",
+      "bytes": 24497
+    },
+    {
+      "path": "dist/data/space-groups.json",
+      "sha256": "989fd1ae629ee2cf12fe45e27c9827b02c9ffeba4994ff157e8792f25b52992f",
+      "bytes": 2183459
+    },
+    {
+      "path": "dist/docs/band-representations.md",
+      "sha256": "24d02d7cc293418fc19c49e32e9708f3e37614a552f0d27c7c44713079e9207a",
+      "bytes": 5259
+    },
+    {
+      "path": "dist/docs/domain-walls.md",
+      "sha256": "61db490bc3448b71d26782cac178d6cc6905bf63ce1dc74552a6bf0663666544",
+      "bytes": 9218
+    },
+    {
+      "path": "dist/docs/dynamic-scattering.md",
+      "sha256": "c65b49dfb74fc9df8ac4b200c5555755140f8f4790caa2fb3136345c59ab2321",
+      "bytes": 8318
+    },
+    {
+      "path": "dist/docs/hubbard-clusters.md",
+      "sha256": "cde2180cc52f5ee8ac4981473f874ed153adbd2aa3ec5c595da44cbc0049234c",
+      "bytes": 8435
+    },
+    {
+      "path": "dist/docs/pathways.md",
+      "sha256": "d41eb3195a2e65decdedf767b57b460431ed86abf09082003e495eb245fbc2fb",
+      "bytes": 7047
+    },
+    {
+      "path": "dist/electronic-materials-ui.js",
+      "sha256": "2434ab5282ebc00cd2b06b28bd02c0f4204e2e6996f9fbadab361ccfe869db18",
+      "bytes": 31712
+    },
+    {
+      "path": "dist/electronic-materials.css",
+      "sha256": "0f817139a4fd9c83289b6801f688220537d7d16e408ae3558ade5d0f0dead7f2",
+      "bytes": 2178
+    },
+    {
+      "path": "dist/engine.js",
+      "sha256": "81f87a7ff99235ac2d5032dcc99aa71acae62c960391a2d28ec6499c667a66f9",
+      "bytes": 33249
+    },
+    {
+      "path": "dist/formula-dictionary.css",
+      "sha256": "a84d24914b379b46d0147dc6c7bb911ebd259d8d7ff8ca012d5fd558d3d11977",
+      "bytes": 3252
+    },
+    {
+      "path": "dist/formula-dictionary.js",
+      "sha256": "67e432910d9f3ddd0f673b4ffce49f43aa33b54e986e4c1b314447b10e9ee413",
+      "bytes": 16949
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "20a39fcd827aa1a632128a8a68b6ee50dd8f4c4780330fff09648f13230aa268",
+      "bytes": 4312
+    },
+    {
+      "path": "dist/induction.js",
+      "sha256": "5642102df833910a93abbbf395755d1400d6175cfab86fe837005f874b0efc82",
+      "bytes": 12486
+    },
+    {
+      "path": "dist/lie-group-ui.js",
+      "sha256": "7e5126242778bd7bcff77fc132456e1a596b9389839018974c6d6e54ddc84d29",
+      "bytes": 43171
+    },
+    {
+      "path": "dist/lie-group.css",
+      "sha256": "40ce7367b5977e7f62489803e10778618e81db7cbe637d684cdde7a4c8158507",
+      "bytes": 25629
+    },
+    {
+      "path": "dist/lie-physics-ui.js",
+      "sha256": "a16b907532d2354c887bfbbb447c6ace4eda3587e7a5ea0bbc9b891134ce85ce",
+      "bytes": 18534
+    },
+    {
+      "path": "dist/material-notebook.js",
+      "sha256": "466849a625ebc8c9e3a20bfe479863fd74e0376f8d75198a6c2ae089e7c8d6bf",
+      "bytes": 20345
+    },
+    {
+      "path": "dist/material-research-ui.js",
+      "sha256": "2a2cd24b19e87d47812b2280e7325d3aa071bd27da48b4398b10aeaee2f28712",
+      "bytes": 34600
+    },
+    {
+      "path": "dist/material-research.css",
+      "sha256": "ae229e401b3174f59d9c72b3fd953435e1957013ae6ce41239915d3c3f769173",
+      "bytes": 2257
+    },
+    {
+      "path": "dist/math-display.css",
+      "sha256": "eb9d57d2fc3dbe078f55c24a2e7da0cba02957aeb64858a624251a0810617952",
+      "bytes": 1313
+    },
+    {
+      "path": "dist/math-display.js",
+      "sha256": "f477b3f11c438e75e05996cc86ed5f1e12cce44fc961d2afaa1f22570df2fbab",
+      "bytes": 5829
+    },
+    {
+      "path": "dist/math-notation.js",
+      "sha256": "516e7beea445661bff7417dc810beafcefec759f3c234f0ff02c4217402efb6b",
+      "bytes": 16905
+    },
+    {
+      "path": "dist/math-svg.js",
+      "sha256": "f4abb7d4f51e577dc9020840979977295a27e924ce2f6878cd2ab8aaf703510e",
+      "bytes": 7592
+    },
+    {
+      "path": "dist/navigation-ui.js",
+      "sha256": "98a72227a24149d304d24f836236d071a770776022417bffd7b84b9b8fb05c23",
+      "bytes": 26203
+    },
+    {
+      "path": "dist/navigation.css",
+      "sha256": "9ad027b27247d98390a4bdab1c074661a5b9544fab4730ec691d11c4c09db267",
+      "bytes": 5826
+    },
+    {
+      "path": "dist/observables-ui.js",
+      "sha256": "88838bfbacaf48fea0f202df0fa82408ba73b36ab7066ea8d2580405043ac29a",
+      "bytes": 25434
+    },
+    {
+      "path": "dist/observables.css",
+      "sha256": "7990b198b8fcd20dda6c0d8bddab0cdc0842b0f15960140f798df57e41148b8b",
+      "bytes": 5056
+    },
+    {
+      "path": "dist/pathways-projects.js",
+      "sha256": "fab1083bd7741d4cde3966a12339a4f73193bf43805098b9a2485f41cbed3df1",
+      "bytes": 12156
+    },
+    {
+      "path": "dist/pathways-ui.js",
+      "sha256": "410c79935ec6ee0390042e7ec53404612731b59efeccd46259747983f70cacc2",
+      "bytes": 11941
+    },
+    {
+      "path": "dist/pathways-views.js",
+      "sha256": "bc05560305560ad13b6cc90be7c170f40b80174178d98ba730a1f6f19eb61110",
+      "bytes": 4323
+    },
+    {
+      "path": "dist/pathways.css",
+      "sha256": "18c52d5d6d0d0e19364c82283cb3a50040984b9d3c9cd690acc2eabc2bd4ef7e",
+      "bytes": 773
+    },
+    {
+      "path": "dist/pointgroup-ui.js",
+      "sha256": "c777177e70e9f4e0566ff98a452e04bb7735f16b1441122a7824da1136604c31",
+      "bytes": 33200
+    },
+    {
+      "path": "dist/pointgroup.css",
+      "sha256": "dc68dc811c86a8291de8b98a195053ca21e21659a2a6326e384a8d7a7ad4065f",
+      "bytes": 19724
+    },
+    {
+      "path": "dist/python-client.js",
+      "sha256": "ae6949d32886342ed2e4e7902978ddceb93e048dac353fa6cdbda8ec849fbd4e",
+      "bytes": 2580
+    },
+    {
+      "path": "dist/python-worker.js",
+      "sha256": "e9ed369d14694911982784fe8c20dc71715915d063fb81f122ce895205c110f5",
+      "bytes": 9383
+    },
+    {
+      "path": "dist/python/band_rep_lab.py",
+      "sha256": "8d75068108d11ba13104b262fd8ccf694236fc0d2715bf3112bdd4b8c7b44a83",
+      "bytes": 18700
+    },
+    {
+      "path": "dist/python/browser_api.py",
+      "sha256": "05ccf6d57c9d5dab6df2b8d3230e2e91948fedc547b24f360d4ae28493c293e5",
+      "bytes": 6800
+    },
+    {
+      "path": "dist/python/domain_wall_lab.py",
+      "sha256": "a8655606e6567c6e5de4b6e9f5c9c204cb945a726c891c15d17ae0dab8fdd3cf",
+      "bytes": 12465
+    },
+    {
+      "path": "dist/python/dynamic_scattering_lab.py",
+      "sha256": "6e4aba71fdbf966feb15cdfe586b49538eb46ad8f513f3109783bb690b07547c",
+      "bytes": 16571
+    },
+    {
+      "path": "dist/python/hubbard_lab.py",
+      "sha256": "3421a91e928bbc9f9b56694486694335c84d2a5d785fdbe2061c070caf5a2238",
+      "bytes": 17459
+    },
+    {
+      "path": "dist/python/symmetry_core.py",
+      "sha256": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0",
+      "bytes": 46450
+    },
+    {
+      "path": "dist/quantum-materials-ui.js",
+      "sha256": "ad97065ee5b546544a68a8ea2469df22a997ef6068cc3f9c26959e5ff7b5b438",
+      "bytes": 30319
+    },
+    {
+      "path": "dist/quantum-materials.css",
+      "sha256": "60885549c962811301f62c987db91a0109edcb185ac444f5bc6e1a242709af64",
+      "bytes": 3169
+    },
+    {
+      "path": "dist/quantum-plots.js",
+      "sha256": "4e975f50829de233489bbaf5d63a71563a7383496d9a54d685fc23637008f978",
+      "bytes": 6880
+    },
+    {
+      "path": "dist/research-ui.js",
+      "sha256": "f764ae1e3e1cb1ee54822bde734aef469ab6afce2f49a3101703bd97eab4f21b",
+      "bytes": 17686
+    },
+    {
+      "path": "dist/response-materials-ui.js",
+      "sha256": "9d3e4ee63adf77794e5e5d692cca32393f4a73f7cbee2caae89549c227496ae7",
+      "bytes": 12207
+    },
+    {
+      "path": "dist/response-materials.css",
+      "sha256": "76bf9f93d478d4993520d1b0c91e1a52f9c355167580874c0257dbbabba17893",
+      "bytes": 1278
+    },
+    {
+      "path": "dist/response-projects.js",
+      "sha256": "6b82d13738d4dd36bebfdf919bd9e2e478fbb8207e3bd1bfa36487d2466e37cd",
+      "bytes": 15741
+    },
+    {
+      "path": "dist/response-views.js",
+      "sha256": "8bd2c27429dbdbdd7286c98bc9b11bbdaf69d63748b795c93a78ff02e1071836",
+      "bytes": 11703
+    },
+    {
+      "path": "dist/spectroscopy-projects.js",
+      "sha256": "3f0a860fc492d98238738ebdcc1eac5928b48d258b46e9cf13280930eb294d3b",
+      "bytes": 6386
+    },
+    {
+      "path": "dist/spectroscopy-ui.js",
+      "sha256": "ba6a5e978bfce5edd2e2094bf742099766c604472c819d268b0a7b71814977e0",
+      "bytes": 12191
+    },
+    {
+      "path": "dist/spectroscopy-views.js",
+      "sha256": "dcc8ea235cce39a2ba0ef84c66223412c00682ac4fcd15dafa176a84e53adc36",
+      "bytes": 13784
+    },
+    {
+      "path": "dist/spectroscopy.css",
+      "sha256": "5eabee6fc70c05aef145d2ce88475fb135e0a83bdf4eb64dc87e7627c2efdc06",
+      "bytes": 731
+    },
+    {
+      "path": "dist/spincolor-viewer.js",
+      "sha256": "dfa98c19f8d095366012578c6766c0527745b3b644fd2c776885195ce6cc611b",
+      "bytes": 9049
+    },
+    {
+      "path": "dist/structure-dynamics-ui.js",
+      "sha256": "e26e50f0ef576f4c6c0619f6653e2cc47d065e494264ff6677c88dbb61d0fc37",
+      "bytes": 37732
+    },
+    {
+      "path": "dist/structure-dynamics.css",
+      "sha256": "10e445c8e5770d8beccc14c0bb2e9c84a3c91763b83495707fd3db4295b45f47",
+      "bytes": 1067
+    },
+    {
+      "path": "dist/structure-ui.js",
+      "sha256": "27b37ec23a692e3417baa8f61ff827cb0039c6193e31270fdd37e666abe4ac63",
+      "bytes": 11896
+    },
+    {
+      "path": "dist/style.css",
+      "sha256": "99cff928afb5c9bddac1f040f200b6c9f3b13f87dcb58da3704fa8f209d6e66e",
+      "bytes": 23871
+    },
+    {
+      "path": "dist/su3-cg-ui.js",
+      "sha256": "56ab642ec1bcee8cfa47f332252eaefbdb1928227c1da1c34adb1475a53cbfe9",
+      "bytes": 22382
+    },
+    {
+      "path": "dist/su3-ninej-ui.js",
+      "sha256": "67d575399d8cd0f68979c50e3f31529a6516c2228cf7a6b8b63b0eed9b08f1de",
+      "bytes": 30331
+    },
+    {
+      "path": "dist/su3-racah-ui.js",
+      "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215",
+      "bytes": 21923
+    },
+    {
+      "path": "dist/symmetry-course-ui.js",
+      "sha256": "b0dcebb357f19de8601418dc7047859c8ea86ca4cef461d7a43df599c6259af5",
+      "bytes": 77911
+    },
+    {
+      "path": "dist/symmetry-course.css",
+      "sha256": "b6e557b04cb40927284e9fa3b2162e9b852921b8e0ed85c8b28ad31568352efc",
+      "bytes": 35342
+    },
+    {
+      "path": "dist/trace-parser.js",
+      "sha256": "20aaa82ad47f083005d3bb04e0ba112830ee324f88a3cafdf2e90061959c6f0c",
+      "bytes": 8356
+    },
+    {
+      "path": "package.json",
+      "sha256": "f6731ce584f16b7fd83ddaa0dafb7074edabfcc36232c96c470b72218c2ebf76",
+      "bytes": 7843
+    },
+    {
+      "path": "scripts/build-domainwall-catalog.py",
+      "sha256": "f55b06908ff73c868deac65c0dedb0b20d538a26aec50068d4f8846efba2b07b",
+      "bytes": 11486
+    },
+    {
+      "path": "scripts/build-pathways-catalog.py",
+      "sha256": "78481fb1a374a316fe07939d7318e1bf0bdd761694f93f4a771158d8eabb8b3e",
+      "bytes": 1905
+    },
+    {
+      "path": "scripts/build-pathways-fixtures.py",
+      "sha256": "1f95832b3c6e12bc3053e0f365841818eaedbd445a48348526c2734b765ca7ff",
+      "bytes": 969
+    },
+    {
+      "path": "scripts/build-pathways-project-fixtures.py",
+      "sha256": "fbd9f1e66a93115c0a782b6cf022df83aac006777f1678bfa8bffb32a1bbcd0e",
+      "bytes": 933
+    },
+    {
+      "path": "scripts/fixtures/pathways-projects.json",
+      "sha256": "7057da7ab47a8396e3bc95ce38c22f648bc659840bfbb6dfd5705c141f3ffdc1",
+      "bytes": 1734749
+    },
+    {
+      "path": "scripts/fixtures/pathways.json.gz",
+      "sha256": "6ebdac056213b9d6b64f1fb56b83d959b0f9d1bbd2e0fb507dfd3dde1c2c0aed",
+      "bytes": 2187116
+    },
+    {
+      "path": "scripts/refresh-formula-provenance.py",
+      "sha256": "93ef773006198c72b3881d7ffe9b8b9b629d54adbe980746b074dc329471a878",
+      "bytes": 7811
+    },
+    {
+      "path": "scripts/refresh-pathways-provenance.py",
+      "sha256": "47930e1850fbbfcf112ef69a7904c02bf20fc8a3276c84dd73011d1049ef6992",
+      "bytes": 12780
+    },
+    {
+      "path": "scripts/test-formula-dictionary.mjs",
+      "sha256": "d39672e5078c4ea65b4ff76729c10fe339e85f01e9b924b933b1e98c30ea29b1",
+      "bytes": 14561
+    },
+    {
+      "path": "scripts/test-pathways-project-ui.mjs",
+      "sha256": "2c40176bb9050d8f185cae03229713809bf8ea8101037b479fd95ff7666c1380",
+      "bytes": 12799
+    },
+    {
+      "path": "scripts/test-pathways-projects.mjs",
+      "sha256": "71e636ac032524889a9607218d9292fe6b6265920b8ef88c691606e832bf4d29",
+      "bytes": 8732
+    },
+    {
+      "path": "scripts/test-pathways-ui.mjs",
+      "sha256": "06bddea03b1cc8afa4b7fc195bee1943cd3ce08763b73b906fd12413d9e80504",
+      "bytes": 5053
+    },
+    {
+      "path": "scripts/test-python-band-rep.py",
+      "sha256": "410c164fdc8c5beb43544b7359a8ca5e7c0a7ce0e5349e4dd19eedad6bff965d",
+      "bytes": 9898
+    },
+    {
+      "path": "scripts/test-python-domain-wall.py",
+      "sha256": "047562ebdae289e7a7d1d8bf2f4b4b3671ea19ed3f79a47a5fd94c8955db6f5f",
+      "bytes": 13037
+    },
+    {
+      "path": "scripts/test-python-dynamic-scattering.py",
+      "sha256": "66ab1d020e5a877611761a72a96eec56bfead6d49c23a062f11372e96d36594e",
+      "bytes": 8397
+    },
+    {
+      "path": "scripts/test-python-hubbard.py",
+      "sha256": "41cca35e7ffd25487b5094a24f82aca787a04da0142c2e14afe92ba8b9fbf141",
+      "bytes": 12242
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import {num} from './response-views.js?v=20261029-crystal1';
+import {num} from './response-views.js?v=20261029-pathways1';
 const ion={electrons:8,coordination:'octahedral',splitting:1,coulombU:4,hundJ:.6};
 const effectiveSpin={spin:1,nuclearSpin:0,gX:2,gY:2,gZ:2,field:.05,theta:35,phi:0,polarization:'theta',temperature:4,hyperfinePerp:0,hyperfineParallel:0,nuclearGamma:0};
 const contact={sites:12,hopping:1,chemicalPotential:0,gate:0,barrier:0,barrierStart:6,contactLeft:1,contactRight:1,energy:.2,eta:1e-7};

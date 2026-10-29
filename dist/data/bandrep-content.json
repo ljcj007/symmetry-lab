@@ -1,0 +1,634 @@
+{
+  "schemaVersion": 1,
+  "release": "20261029-pathways1",
+  "module": {
+    "id": "bandrep",
+    "title": "从位点轨道到能带表示",
+    "summary": "选择实空间位点和 s/p 轨道，追踪位点置换、整格余量、Bloch 相位与高对称 k 点不可约分解。",
+    "route": "band-representation-lab",
+    "action": "band_rep_lab",
+    "fields": [
+      {
+        "key": "group",
+        "label": "普通空间群（本站 BC 设置）",
+        "type": "select",
+        "default": 4,
+        "options": [
+          [
+            2,
+            "2 · P−1"
+          ],
+          [
+            4,
+            "4 · P2₁（轴 z）"
+          ],
+          [
+            19,
+            "19 · P2₁2₁2₁"
+          ],
+          [
+            221,
+            "221 · Pm−3m"
+          ]
+        ]
+      },
+      {
+        "key": "site",
+        "label": "位点种子（自动适用于所有群）",
+        "type": "select",
+        "default": "auto",
+        "options": [
+          [
+            "auto",
+            "自动选择：2/221 原点；4/19 一般位置"
+          ],
+          [
+            "origin",
+            "原点：仅群 2/221"
+          ],
+          [
+            "body",
+            "体心反演中心：仅群 2/221"
+          ],
+          [
+            "general",
+            "一般位置：仅群 2/4/19"
+          ],
+          [
+            "faces",
+            "面心 3c：仅群 221"
+          ]
+        ]
+      },
+      {
+        "key": "orbitals",
+        "label": "每个位点的局域轨道",
+        "type": "select",
+        "default": "s",
+        "options": [
+          [
+            "s",
+            "s 标量（1 维）"
+          ],
+          [
+            "p",
+            "完整 pₓ,pᵧ,p_z 极性向量（3 维）"
+          ]
+        ]
+      },
+      {
+        "key": "kPoint",
+        "label": "倒格分数坐标中的 k 点",
+        "type": "select",
+        "default": "G",
+        "options": [
+          [
+            "G",
+            "Γ = (0,0,0)"
+          ],
+          [
+            "X",
+            "(1/2,0,0)"
+          ],
+          [
+            "Y",
+            "(0,1/2,0)"
+          ],
+          [
+            "Z",
+            "(0,0,1/2)"
+          ],
+          [
+            "M",
+            "(1/2,1/2,0)"
+          ],
+          [
+            "R",
+            "(1/2,1/2,1/2)"
+          ],
+          [
+            "line",
+            "(0,0,kz)：使用下面的参数"
+          ]
+        ]
+      },
+      {
+        "key": "kz",
+        "label": "线上 kz（仅选择 line 时使用）",
+        "type": "number",
+        "default": 0.25,
+        "min": 0,
+        "max": 0.5,
+        "step": 0.01
+      }
+    ],
+    "presets": [
+      {
+        "id": "screw-boundary",
+        "title": "螺旋轴边界：平方为何为 −1？",
+        "input": {
+          "group": 4,
+          "site": "auto",
+          "orbitals": "s",
+          "kPoint": "Z",
+          "kz": 0.5
+        }
+      },
+      {
+        "id": "inversion-pair",
+        "title": "两个一般位点：偶、奇各一份",
+        "input": {
+          "group": 2,
+          "site": "general",
+          "orbitals": "s",
+          "kPoint": "G"
+        }
+      },
+      {
+        "id": "body-parity",
+        "title": "移动轨道中心：体心 s 的边界宇称",
+        "input": {
+          "group": 2,
+          "site": "body",
+          "orbitals": "s",
+          "kPoint": "X"
+        }
+      },
+      {
+        "id": "orthorhombic-projective",
+        "title": "群 19 的 R 点：二维射影表示",
+        "input": {
+          "group": 19,
+          "site": "auto",
+          "orbitals": "s",
+          "kPoint": "R"
+        }
+      },
+      {
+        "id": "cubic-p",
+        "title": "立方中心 p 三重态",
+        "input": {
+          "group": 221,
+          "site": "origin",
+          "orbitals": "p",
+          "kPoint": "G"
+        }
+      },
+      {
+        "id": "perovskite-sites",
+        "title": "钙钛矿型面心位点：3c × p 的九维空间",
+        "input": {
+          "group": 221,
+          "site": "faces",
+          "orbitals": "p",
+          "kPoint": "R"
+        }
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "bandrep-real-space",
+      "module": "bandrep",
+      "title": "先数实空间位点，再谈能带表示",
+      "summary": "用轨道—稳定子关系区别位点诱导和全 k 星诱导。",
+      "preset": "inversion-pair",
+      "sections": [
+        {
+          "title": "一个种子生成完整轨道",
+          "text": "对种子 r₀ 作用所有 Seitz 代表元，再模整格平移去重。群 2 的一般位置生成 r₀ 与 −r₀；反演中心只生成一个位点。这里数的是一个原胞中的实空间位点，不是动量星臂。",
+          "formula": "m × |H| = |G/T|"
+        },
+        {
+          "title": "稳定子要真正固定该位点",
+          "text": "若 Rr₀+t 与 r₀ 只差整格向量 L，则将该代表元的平移改为 t−L，得到真正固定 r₀ 的位点稳定子元素。输出同时列出被减去的 L 与实际固定平移。",
+          "formula": "Rr₀+t−L = r₀"
+        },
+        {
+          "title": "局域自由度决定纤维维数",
+          "text": "每个位点放一个 s 轨道给 m 维 Bloch 纤维；放完整 p 三重态给 3m 维。p 在部分位点稳定子下可约，因此不能直接称为某个不可约局域表示，更不能自动称为 EBR。",
+          "formula": "dim B(k) = m × dim ρ"
+        },
+        {
+          "title": "在课堂与工作台之间核对",
+          "text": "先看位点表和稳定子表，再观察 Γ 点特征标分解。群 2 一般位置 s 的二维表示分成一份偶宇称和一份奇宇称。本地 D 编号随计算排序，应用反演特征标识别它们。"
+        }
+      ],
+      "references": [
+        "cano-ebr",
+        "bilbao-sitesym"
+      ]
+    },
+    {
+      "id": "bandrep-bloch-phase",
+      "module": "bandrep",
+      "title": "跨过原胞边界的位点如何带上相位",
+      "summary": "从周期 Bloch 和式推导整格余量、跨纤维作用和螺旋平方。",
+      "preset": "screw-boundary",
+      "sections": [
+        {
+          "title": "先固定规范",
+          "text": "采用周期规范：Bloch 系数只含晶格向量 T，不把轨道中心 rₐ 写进指数。平移 T_L 的本征相位因此为 exp(−2πi k·L)。换规范会改变矩阵元素，不能混用不同规范的公式。",
+          "formula": "|a,k⟩ = Σ_T exp(+2πi k·T)|T+rₐ⟩"
+        },
+        {
+          "title": "一次操作的两部分",
+          "text": "求解 Rrₐ+t=r_b+L 后，矩阵块是局域 s/p 变换乘以 exp[−2πi(R⁻ᵀk)·L]。一般操作把 k 纤维送到 R⁻ᵀk；只有保留 k 模倒格矢的小群操作才可在同一纤维内取物理特征标。",
+          "formula": "U_g(k)[b,a] = exp[−2πi(R_g⁻ᵀk)·L_ga] ρ(R_g)"
+        },
+        {
+          "title": "螺旋平方是平移",
+          "text": "本站群 4 的螺旋轴沿 z。2₁ 作用两次得到一个 z 向晶格平移，故 kz=1/2 时平方为 −I，本征值为 ±i。忽略位点越界的相位会错误地得到平方 +I。",
+          "formula": "U_S(k)² = exp(−2πi kz) I； λ± = ±exp(−iπkz)"
+        },
+        {
+          "title": "沿轴看分支交换",
+          "text": "第二张图画复本征值的实部与虚部，不是能带能量。kz 增加一个倒格周期时正负标记交换；具体能量简并、连通或绝缘性还需要 Hamiltonian 和其他约束，不能仅由这张曲线断言。"
+        }
+      ],
+      "references": [
+        "cano-ebr",
+        "elcoro-bcs"
+      ]
+    },
+    {
+      "id": "bandrep-decomposition",
+      "module": "bandrep",
+      "title": "从矩阵到特征标，再到小群分解",
+      "summary": "用群 19 的边界射影表示检验相位、维数与不可约分解。",
+      "preset": "orthorhombic-projective",
+      "sections": [
+        {
+          "title": "先保留 Seitz 乘法的晶格缺陷",
+          "text": "两个选定代表元的乘积不一定等于目录中的第三个代表元，可能多一个整格平移 Δ。固定 k 时这一差别成为因子系统，不能把商群的普通乘法强加给 Bloch 矩阵。",
+          "formula": "U_g U_h = exp(−2πi k·Δ_gh) U_j"
+        },
+        {
+          "title": "正交内积给重数",
+          "text": "用相同因子系统的已验证小群不可约特征标做内积。输出必须同时满足非负整数重数、原特征标重建和总维数守恒；仅列出一些表示名称不足以构成分解。",
+          "formula": "n_μ = (1/|G_k/T|) Σ_g χ_μ(g)* χ_B(g)"
+        },
+        {
+          "title": "四个 s 轨道为何不等于四个一维表示",
+          "text": "群 19 的一般轨道有四个位点。R=(1/2,1/2,1/2) 的螺旋相位产生非平凡射影乘法，结果是同一个二维小群不可约表示出现两次。这里的二维性来自空间操作与平移相位，并非施加自旋时间反演后的 Kramers 结论。",
+          "formula": "4 = 2 × 2"
+        },
+        {
+          "title": "局部结果与全局问题",
+          "text": "换到 Γ 点，因子系统平凡，s 四维纤维分成四个一维项。不同 k 的 D1 不是同一个全局能带标签。若要进一步连接能带，请进入兼容关系课堂；本模块不自动给出全区连通图或拓扑分类。"
+        }
+      ],
+      "references": [
+        "cano-ebr",
+        "elcoro-bcs"
+      ]
+    },
+    {
+      "id": "bandrep-cubic-sites",
+      "module": "bandrep",
+      "title": "钙钛矿型位点与轨道中心的区别",
+      "summary": "比较立方原点、体心与三个面心位点的诱导空间。",
+      "preset": "perovskite-sites",
+      "sections": [
+        {
+          "title": "把结构位点和电子填充分开",
+          "text": "Pm−3m 的 1a、1b、3c 是位点原型。3c 三个面心位点常用于理解理想立方钙钛矿的氧子晶格，但本实验只放置抽象局域轨道，没有电荷转移、共价杂化、真实氧能级或占据。",
+          "formula": "3c: (0,1/2,1/2), (1/2,0,1/2), (1/2,1/2,0)"
+        },
+        {
+          "title": "原点 p 是极性三重态",
+          "text": "在原点 Γ 点，局域 pₓ,pᵧ,p_z 形成 O_h 的三维极性向量表示，常用标签 T1u。反演矩阵为 −I₃，特征标 −3。程序仍只给经过验证的本地 D 标签，不擅自把它们当成标准数据库编号。",
+          "formula": "ρ_p(I) = −I₃； χ_p(I)=−3"
+        },
+        {
+          "title": "轨道中心影响边界特征标",
+          "text": "原点与体心 s 轨道局域反演均为偶，但体心种子反演后要减去 (−1,−1,−1) 才回到同一原胞位点，因此某些边界点宇称会变号。这说明必须保存轨道中心和 Bloch 规范。",
+          "formula": "χ_I(k;r₀) = exp(+4πi k·r₀)（s，反演中心）"
+        },
+        {
+          "title": "跨模块项目",
+          "text": "记录 1a-s、1b-s、3c-p 在 Γ、X、R 的维数与反演特征标，再去晶场课堂讨论局域轨道、去能带兼容关系课堂讨论连接。它们是同一结构问题的不同层次；只凭这些采样数据不能判断完整材料是否拓扑。"
+        }
+      ],
+      "references": [
+        "cano-ebr",
+        "elcoro-bcs",
+        "spglib-dataset"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "bandrep-orbit-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-real-space",
+      "title": "群 2：把位点数变成纤维维数",
+      "prompt": "选择“一般位置二点轨道”和 s 轨道，在 Γ 点手工推导一次。",
+      "steps": [
+        {
+          "prompt": "一般位置 r₀ 的反演像是否与自身等价？",
+          "hint": "r₀=(0.17,0.23,0.31)，检查 2r₀ 是否为整向量。",
+          "choices": [
+            "不等价，轨道有两点",
+            "等价，轨道只有一点",
+            "由 k 点决定"
+          ],
+          "answer": 0,
+          "explanation": "2r₀ 不是整向量，r₀ 与 −r₀ 是两个原胞内位点。"
+        },
+        {
+          "prompt": "种子位点稳定子的阶是多少？",
+          "hint": "商群阶为2，使用轨道–稳定子关系。",
+          "choices": [
+            "4",
+            "1",
+            "2"
+          ],
+          "answer": 1,
+          "explanation": "2×|H|=2，所以 |H|=1。"
+        },
+        {
+          "prompt": "两个 s 轨道在 Γ 点反演矩阵的迹是多少？",
+          "hint": "反演交换两点，矩阵对角线上没有固定点贡献。",
+          "choices": [
+            "2",
+            "−2",
+            "0"
+          ],
+          "answer": 2,
+          "explanation": "位点置换矩阵是非对角的，反演特征标为0，恒等特征标为2。"
+        },
+        {
+          "prompt": "两个一维宇称表示的重数各是多少？",
+          "hint": "解 n_g+n_u=2，n_g−n_u=0。",
+          "choices": [
+            "偶、奇各1",
+            "两个偶，零个奇",
+            "零个偶，两个奇"
+          ],
+          "answer": 0,
+          "explanation": "同加和同减得到 n_g=n_u=1；维数也守恒。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-screw-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-bloch-phase",
+      "title": "群 4：从两个位点推导 ±i",
+      "prompt": "选择螺旋轴边界预设，沿程序的 BC z 轴设置推导。",
+      "steps": [
+        {
+          "prompt": "2₁ 螺旋连续两次的空间作用是什么？",
+          "hint": "半格平移叠加为一整格，二重旋转的平方是恒等。",
+          "choices": [
+            "沿 z 平移半格",
+            "沿 z 平移1格",
+            "恒等且没有平移"
+          ],
+          "answer": 1,
+          "explanation": "S²={E|0,0,1}；把点操作平方当成完整空间操作平方会丢掉平移。"
+        },
+        {
+          "prompt": "在 kz=1/2 的周期 Bloch 规范下，整格平移相位是多少？",
+          "hint": "代入 exp(−2πi kz)。",
+          "choices": [
+            "+1",
+            "0",
+            "−1"
+          ],
+          "answer": 2,
+          "explanation": "exp(−πi)=−1，因此 U_S²=−I。"
+        },
+        {
+          "prompt": "无自旋螺旋本征值应取哪一对？",
+          "hint": "解 λ²=−1。",
+          "choices": [
+            "+i 和 −i",
+            "+1 和 −1",
+            "两个 +i"
+          ],
+          "answer": 0,
+          "explanation": "二点 s 轨道提供两个分支 ±i；没有在此施加时间反演。"
+        },
+        {
+          "prompt": "图上 λ+、λ− 的分支交换是否已给出材料的能带能量？",
+          "hint": "本实验没有 Hamiltonian 参数。",
+          "choices": [
+            "已经证明绝缘且拓扑",
+            "没有，只是对称本征值",
+            "已经给出导带与价带"
+          ],
+          "answer": 1,
+          "explanation": "对称表示约束能量模型，但本身不是能量色散或完整拓扑分类。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-projective-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-decomposition",
+      "title": "群 19：二维射影小群表示的两份拷贝",
+      "prompt": "使用 R 点 s 轨道预设，逐项检查分解的依据。",
+      "steps": [
+        {
+          "prompt": "一般位点轨道有4点，每点一个 s，纤维维数是多少？",
+          "hint": "维数是位点数乘局域轨道数。",
+          "choices": [
+            "2",
+            "8",
+            "4"
+          ],
+          "answer": 2,
+          "explanation": "m=4、d=1，所以纤维维数4；没有额外自旋倍增。"
+        },
+        {
+          "prompt": "R 点可以忽略代表元相乘时多出的整格向量吗？",
+          "hint": "k 的分量为1/2，某些整数平移贡献负号。",
+          "choices": [
+            "不可以，会改变因子系统",
+            "可以，整格总是相位1",
+            "只在有SOC时才不能"
+          ],
+          "answer": 0,
+          "explanation": "Bloch 平移字符在边界可为−1，商群需用相应的射影表示。"
+        },
+        {
+          "prompt": "数值表显示只有一类二维不可约表示有贡献，它的重数是多少？",
+          "hint": "用总维数守恒 4=n×2。",
+          "choices": [
+            "4",
+            "2",
+            "1"
+          ],
+          "answer": 1,
+          "explanation": "两份二维表示正好给出四维诱导空间；特征标内积与重建可再独立验证。"
+        },
+        {
+          "prompt": "可以把这处二维性直接叫作自旋 Kramers 简并吗？",
+          "hint": "本模块不含自旋和时间反演。",
+          "choices": [
+            "可以，二维一定等于Kramers",
+            "只有群19才叫Kramers",
+            "不能，这里验证的是空间小群射影代数"
+          ],
+          "answer": 2,
+          "explanation": "Kramers 需相应反幺正对称性及平方−1；本实验只建立普通空间群的Bloch作用。"
+        }
+      ]
+    },
+    {
+      "id": "bandrep-cubic-exercise",
+      "module": "bandrep",
+      "lesson": "bandrep-cubic-sites",
+      "title": "三个面心位点上放 p 轨道",
+      "prompt": "以 3c-p 原型为起点，再与原点 p 对照。",
+      "steps": [
+        {
+          "prompt": "3c 的轨道多重性 m 是多少？",
+          "hint": "位点表中有三个坐标排列。",
+          "choices": [
+            "3",
+            "1",
+            "6"
+          ],
+          "answer": 0,
+          "explanation": "三个面心位置组成同一个 m=3 的轨道。"
+        },
+        {
+          "prompt": "每点完整 p 三重态给出的纤维维数是多少？",
+          "hint": "每点3个轨道，但没有自旋。",
+          "choices": [
+            "18",
+            "9",
+            "3"
+          ],
+          "answer": 1,
+          "explanation": "维数为3×3=9；18需另外加入自旋，此处没有。"
+        },
+        {
+          "prompt": "原点 p 三重态在反演下的特征标是多少？",
+          "hint": "极性向量各分量都反号。",
+          "choices": [
+            "+3",
+            "0",
+            "−3"
+          ],
+          "answer": 2,
+          "explanation": "反演矩阵为−I₃，迹为−3。不要把它当成轴向量。"
+        },
+        {
+          "prompt": "3c-p 的全部9维空间是否已经证明为一个 EBR？",
+          "hint": "首先要判断局域表示是否不可约，并检查完整 EBR 判据。",
+          "choices": [
+            "没有，程序只验证诱导表示与小群分解",
+            "是，任何位点轨道都是EBR",
+            "是，只要维数是奇数"
+          ],
+          "answer": 0,
+          "explanation": "p 在3c位点稳定子中可约，且本模块未实施通用 elementary 判定或全布里渊区拓扑分析。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "bandrep-inversion-centers",
+      "module": "bandrep",
+      "title": "轨道中心与边界宇称",
+      "kind": "结构原型",
+      "summary": "比较同样局域偶对称的原点 s 与体心 s 在 X 点的反演特征标。",
+      "assumption": "抽象无自旋局域轨道；固定周期规范和同一原点，不能由两个采样点直接给出拓扑结论。",
+      "preset": "body-parity",
+      "links": [
+        [
+          "位点轨道计算",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "空间群课堂",
+          "#classroom/crystal"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-screw-chain",
+      "module": "bandrep",
+      "title": "三维螺旋晶体中的沿轴切线",
+      "kind": "非点式对称原型",
+      "summary": "在 SG4/19 的 z 向切线上追踪螺旋本征相位，连接实空间半格位移与动量空间因子系统。",
+      "assumption": "这是三维空间群作用在一条 k 线上的教学模型，没有指定实际材料或 hopping Hamiltonian。",
+      "preset": "screw-boundary",
+      "links": [
+        [
+          "螺旋相位演示",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "能带兼容关系",
+          "#compute/band-connectivity"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-perovskite",
+      "module": "bandrep",
+      "title": "理想立方钙钛矿的位点骨架",
+      "kind": "材料结构案例",
+      "summary": "用 Pm−3m 的 1a/1b/3c 理解不同子晶格，并计算三个面心位点上 p 轨道的九维表示。",
+      "assumption": "仅借用钙钛矿型位点骨架；不预测 SrTiO₃ 或 BaTiO₃ 的真实电子能带、填充、声子或相变。",
+      "preset": "perovskite-sites",
+      "links": [
+        [
+          "位点轨道实验",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "晶场与轨道",
+          "#compute/crystal-field-lab"
+        ]
+      ]
+    },
+    {
+      "id": "bandrep-projective-boundary",
+      "module": "bandrep",
+      "title": "群 19 的边界表示维数",
+      "kind": "跨模块项目",
+      "summary": "比较 Γ 与 R 的局部表示，再用已有兼容关系课堂讨论为何跨 k 追踪不能只认 D 编号。",
+      "assumption": "不附加反幺正对称性；空间射影表示的二维性与自旋 Kramers 机制须区分。",
+      "preset": "orthorhombic-projective",
+      "links": [
+        [
+          "R 点分解",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "能带连接课堂",
+          "#compute/band-connectivity"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "cano-ebr",
+      "title": "Cano et al., Building Blocks of Topological Quantum Chemistry: Elementary Band Representations, PRB 97, 035139 (2018)",
+      "url": "https://arxiv.org/abs/1709.01935"
+    },
+    {
+      "id": "elcoro-bcs",
+      "title": "Elcoro et al., Double crystallographic groups and their representations on the Bilbao Crystallographic Server, J. Appl. Cryst. 50, 1457–1477 (2017)",
+      "url": "https://arxiv.org/abs/1706.09272"
+    },
+    {
+      "id": "bilbao-sitesym",
+      "title": "Bilbao Crystallographic Server: SiteSym site-symmetry induction method",
+      "url": "https://cryst.ehu.eus/html/rep/sitesym/sitesym_help.html"
+    },
+    {
+      "id": "spglib-dataset",
+      "title": "spglib official documentation: symmetry dataset and Wyckoff positions",
+      "url": "https://spglib.readthedocs.io/en/stable/dataset.html"
+    }
+  ]
+}
