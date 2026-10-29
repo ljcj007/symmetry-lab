@@ -9,6 +9,14 @@ const opts={throwOnError:true,trust:false,strict:'ignore',output:'htmlAndMathml'
 
 export function mathHTML(tex,display=false){return katex.renderToString(tex,{...opts,displayMode:display});}
 
+// Use original notation for record titles instead of KaTeX's HTML + MathML text.
+export function mathSourceText(node){
+ if(!node)return '';
+ if(node.dataset?.mathSource!==undefined)return node.dataset.mathSource;
+ if(node.nodeType===3)return node.nodeValue||'';
+ return [...(node.childNodes||[])].map(mathSourceText).join('');
+}
+
 function appendSegments(target,segments,display=false){
  for(const s of segments){
   if(s.type==='math'&&s.tex){

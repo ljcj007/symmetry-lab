@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {mathHTML} from '../dist/math-display.js';
+import {mathHTML,mathSourceText} from '../dist/math-display.js';
+
+assert.equal(mathSourceText({childNodes:[{nodeType:3,nodeValue:'精确 '},{dataset:{mathSource:'SU(3)'},childNodes:[{nodeType:3,nodeValue:'duplicated display'}]},{nodeType:3,nodeValue:' 换基'}]}),'精确 SU(3) 换基');
 
 const html=mathHTML('x_{i+1}^{-2}+\\frac{1}{2}');
 assert.match(html,/<msubsup>/);

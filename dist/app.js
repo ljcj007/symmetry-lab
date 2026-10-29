@@ -1,4 +1,4 @@
-import {startMathDisplay} from './math-display.js?v=20261029-math1';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261029-math1';
 import {renderResponseProjects} from './response-projects.js?v=20261029-math1';
 import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261029-math1';
 import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261029-math1';
@@ -8,7 +8,7 @@ import {renderStructureView,getStructureResult} from './structure-ui.js?v=202610
 import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261029-math1';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261029-math1';
-async function runPythonTask(action,input){const context={route:state.route,title:document.querySelector('#page-title')?.textContent||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input);const result=await executePythonTask(action,input);captureCalculation(action,snapshot,result,context);return result;}
+async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input);const result=await executePythonTask(action,input);captureCalculation(action,snapshot,result,context);return result;}
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
