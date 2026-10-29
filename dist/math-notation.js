@@ -104,9 +104,9 @@ export function segmentFormula(source){
 export function findInlineMath(source){
  source=String(source??'');const rows=[];
  // Explicit $...$ / \(...\) delimiters are intentionally not executed as TeX.
- const chunks=source.split(/(https?:\/\/[^\s，。；]+|[A-Za-z0-9_./-]+\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)\b|[A-Za-z]:[\\/][^\s，。；]+)/g);
+ const chunks=source.split(/(\b[a-z][a-z0-9]+(?:_[A-Za-z0-9]{2,})+\b|https?:\/\/[^\s，。；]+|[A-Za-z0-9_./-]+\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)\b|[A-Za-z]:[\\/][^\s，。；]+)/g);
  for(const chunk of chunks){
-  if(/^(?:https?:\/\/|[A-Za-z]:[\\/])/.test(chunk)||/\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)$/.test(chunk)){append(rows,{type:'text',source:chunk});continue;}
+  if(/^[a-z][a-z0-9]+(?:_[A-Za-z0-9]{2,})+$/.test(chunk)||/^(?:https?:\/\/|[A-Za-z]:[\\/])/.test(chunk)||/\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)$/.test(chunk)){append(rows,{type:'text',source:chunk});continue;}
   const bits=chunk.split(/([\u3400-\u9fff\uf900-\ufaff，。；：、！？]+|\s{2,}|\n)/u);
   for(const bit of bits){if(!bit)continue;if(cjk.test(bit)||/^[，。；：、！？\s]+$/.test(bit)){append(rows,{type:'text',source:bit});continue;}
    // Do not italicize a long English sentence just because it contains a subscript.
@@ -117,4 +117,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261029-math1';
+export const mathNotationVersion='20261029-math2';

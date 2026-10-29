@@ -1,5 +1,5 @@
-import {heatmapSVG,orbitalSVG,quantumCurveSVG as multiCurveSVG} from './quantum-plots.js?v=20261029-math1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-math1';
+import {heatmapSVG,orbitalSVG,quantumCurveSVG as multiCurveSVG} from './quantum-plots.js?v=20261029-math2';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-math2';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?(x!==0&&(Math.abs(x)>=1e5||Math.abs(x)<1e-3)?x.toExponential(4):Number(x.toPrecision(5))):'—';
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
