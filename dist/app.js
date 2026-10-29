@@ -1,13 +1,13 @@
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261029-math2';
-import {renderResponseProjects} from './response-projects.js?v=20261029-math2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261029-math2';
-import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261029-math2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261029-math2';
-import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261029-math2';
-import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261029-math2';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261029-math2';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261029-math3';
+import {renderResponseProjects} from './response-projects.js?v=20261029-math3';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261029-math3';
+import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261029-math3';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261029-math3';
+import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261029-math3';
+import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261029-math3';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261029-math3';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261029-math2';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261029-math3';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input);const result=await executePythonTask(action,input);captureCalculation(action,snapshot,result,context);return result;}
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];

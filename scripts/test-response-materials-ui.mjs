@@ -8,9 +8,9 @@ const fixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/response-materials
 const saved=new Map();globalThis.localStorage={getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)};globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/response-materials-ui.js');
-const views=await import('../dist/response-views.js?v=20261029-math2');
-const projectUI=await import('../dist/response-projects.js?v=20261029-math2');
-const notebook=await import('../dist/material-notebook.js?v=20261029-math2');
+const views=await import('../dist/response-views.js?v=20261029-math3');
+const projectUI=await import('../dist/response-projects.js?v=20261029-math3');
+const notebook=await import('../dist/material-notebook.js?v=20261029-math3');
 const safe=html=>assert.doesNotMatch(html,/NaN|Infinity|undefined/);
 const calls=[];let selectedFixture='hall-qwz-plateau';
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[selectedFixture]);};

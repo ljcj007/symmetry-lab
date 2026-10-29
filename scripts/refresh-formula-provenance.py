@@ -14,7 +14,7 @@ import hashlib
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
-RELEASE = "20261029-math2"
+RELEASE = "20261029-math3"
 DATE = "2026-10-29"
 BACKUP = "backup/2026-10-29-before-formula-fix"
 BASE_COMMIT = "6514b43e9153315d857be59668a0790b4ca40993"

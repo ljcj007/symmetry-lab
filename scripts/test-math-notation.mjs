@@ -14,6 +14,13 @@ const exact=new Map([
  ['𝒟(g)',String.raw`\mathcal{D}(g)`],['3̄',String.raw`\overline{3}`],['10̄',String.raw`\overline{10}`],
  ['ū',String.raw`\overline{u}`],['r̂',String.raw`\hat{r}`],['j⃗',String.raw`\vec{j}`],
  ['χᵅ',String.raw`\chi ^{\alpha}`],['C꜀','C_{c}'],
+ ['Σᵅ(dᵅ)²=h',String.raw`\sum _{\alpha}(d^{\alpha})^{2}=h`],
+ ['Σ2tᵢ',String.raw`\sum 2t_{i}`],['ΣJ(2J+1)',String.raw`\sum _{J}(2J+1)`],
+ ['ΣRαμ|bRαμ|²',String.raw`\sum _{R\alpha \mu}|bR\alpha \mu |^{2}`],
+ ['Σμ |bRαμ|²',String.raw`\sum _{\mu} |bR\alpha \mu |^{2}`],['Σα P(R,α)',String.raw`\sum _{\alpha} P(R,\alpha )`],
+ ['Σα nα dα=3N',String.raw`\sum _{\alpha} n\alpha  d\alpha =3N`],
+ ['Σarg(U)',String.raw`\sum  \arg (U)`],['Σif Wif',String.raw`\sum _{if} Wif`],['Σjα |eν,jα|²=1',String.raw`\sum _{j\alpha} |e\nu ,j\alpha |^{2}=1`],
+ ['ΣL+ΣR',String.raw`\Sigma L+\Sigma R`],['Σ_R',String.raw`\Sigma _{R}`],
  ['Σ_L',String.raw`\Sigma _{L}`],['Σ^r',String.raw`\Sigma ^{r}`],['Σ(E)',String.raw`\Sigma (E)`],
  ['Σ_abcd',String.raw`\sum _{abcd}`],['Σ_E',String.raw`\sum _{E}`],['Σₐ',String.raw`\sum _{a}`],
 ]);
@@ -43,9 +50,12 @@ for(const source of ['atomic_spectra_lab.py','dist/data/input_cell.json','C:/dat
 for(const source of [String.raw`\href{javascript:alert(1)}{x}`,String.raw`\htmlClass{evil}{x}`,'<img src=x onerror=alert(1)>','x_{','x^'])assert.equal(normalizeMath(source),null,source);
 for(const source of ['σx','σy','σz','τxy','kBT','μB B'])assert.ok(findInlineMath(source).some(p=>p.type==='math'),source);
 for(const source of ['checkB','kBox','σxyz_api'])assert.doesNotMatch(normalizeMath(source),/\\mathrm\{B\}|\\sigma _/);
+assert.doesNotMatch(normalizeMath('Σarg(U)'),/sum _\{ar\}/);
+const reviewedSums='Σᵅ(dᵅ)²=h；Σarg(U)；Σif Wif；Σjα |eν,jα|²=1';
+assert.equal(segmentFormula(reviewedSums).map(p=>p.source).join(''),reviewedSums);
 assert.equal(normalizeMath(''),null);assert.equal(normalizeMath(null),null);
 console.log('Math notation: physical scripts, group labels, Greek/combining/astral symbols, self-energy versus sums, matrices, mixed prose, opaque paths and safe fallback passed.');
 
-for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261029-math2","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
+for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261029-math3","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
 
 assert.ok(findInlineMath("exp(ik_z)").some(p=>p.type==='math'));

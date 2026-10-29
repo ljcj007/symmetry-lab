@@ -1,6 +1,6 @@
 import katex from './vendor/katex/katex.mjs';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-math2';
-import {svgMathText} from './math-svg.js?v=20261029-math2';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-math3';
+import {svgMathText} from './math-svg.js?v=20261029-math3';
 
 const blocks='.pg-formula,.sc-formula,.lg-formula,.obs-formula,[data-math-block]';
 const owned='.sl-math,.katex,math,[data-math-ignore]';

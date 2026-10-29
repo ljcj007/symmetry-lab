@@ -6,7 +6,7 @@ const symbols={'½':'\\frac{1}{2}','¼':'\\frac{1}{4}','¾':'\\frac{3}{4}','⅓'
 const subs={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','₊':'+','₋':'-','₌':'=','₍':'(','₎':')','ₐ':'a','ₑ':'e','ₕ':'h','ᵢ':'i','ⱼ':'j','ₖ':'k','ₗ':'l','ₘ':'m','ₙ':'n','ₒ':'o','ₚ':'p','ᵣ':'r','ₛ':'s','ₜ':'t','ᵤ':'u','ᵥ':'v','ₓ':'x','ᵦ':'β','ᵧ':'y','ᵨ':'ρ','ᵩ':'φ','ᵪ':'χ','꜀':'c'};
 const supers={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁼':'=','⁽':'(','⁾':')','ᵀ':'T','ᴴ':'H','ᵃ':'a','ᵇ':'b','ᶜ':'c','ᵈ':'d','ᵉ':'e','ᶠ':'f','ᵍ':'g','ʰ':'h','ⁱ':'i','ʲ':'j','ᵏ':'k','ˡ':'l','ᵐ':'m','ⁿ':'n','ᵒ':'o','ᵖ':'p','ʳ':'r','ˢ':'s','ᵗ':'t','ᵘ':'u','ᵛ':'v','ʷ':'w','ˣ':'x','ʸ':'y','ᶻ':'z','†':'\\dagger ','‡':'\\ddagger ','′':'\\prime ','″':'\\prime\\prime ','‴':'\\prime\\prime\\prime ','ᵅ':'α','ᵝ':'β','ᵞ':'γ','ᵟ':'δ','ᵋ':'ε','ᶿ':'θ','ᶥ':'ι','ᵠ':'φ','ᵡ':'χ'};
 const scriptLabels=new Set(['SOC','BdG','NS','CF','JT','ACBD','eff','static','vib','total','in','out','max','min','pair','orb','spin','device','rel','group']);
-const functions=new Set(['sin','cos','tan','sinh','cosh','tanh','arcsin','arccos','arctan','exp','log','ln','lim','min','max','det','dim','ker','gcd']);
+const functions=new Set(['sin','cos','tan','sinh','cosh','tanh','arcsin','arccos','arctan','exp','log','ln','lim','min','max','det','dim','ker','gcd','arg']);
 const operators=new Set(['SU','SO','O','U','GL','SL','Sp','Tr','tr','Re','Im','rank','diag','sgn','Var','Sym','span','mod','FWHM','XMCD','XLD']);
 const groups=new Set(['SU','SO','O','U','GL','SL','Sp']);
 const cjk=/[\u3400-\u9fff\uf900-\ufaff]/u;
@@ -15,7 +15,7 @@ const escapeText=s=>String(s).replace(/[\\{}%$&#_^~]/g,c=>({'\\':'\\textbackslas
 const text=s=>'\\text{'+escapeText(s)+'}';
 function closeAt(s,start){const pairs={'(':')','[':']','{':'}'},stack=[pairs[s[start]]];if(!stack[0])return -1;for(let i=start+1;i<s.length;i++){const c=s[i];if(pairs[c])stack.push(pairs[c]);else if(')]}'.includes(c)){if(c!==stack.pop())return -1;if(!stack.length)return i;}}return -1;}
 function splitTop(s,delimiter=','){const out=[];let begin=0,depth=0;for(let i=0;i<s.length;i++){if('([{'.includes(s[i]))depth++;else if(')]}'.includes(s[i]))depth--;else if(s[i]===delimiter&&!depth){out.push(s.slice(begin,i));begin=i+1;}}out.push(s.slice(begin));return out;}
-function preprocess(s){return s.normalize('NFD').replace(/([στ])([xyz]{1,3})(?![A-Za-z_])/g,'$1_{$2}').replace(/(?<![A-Za-z_])kB(?![a-z_])/g,'k_B').replace(/μB(?![a-z_])/g,'μ_B').replace(/dₓ²₋ᵧ²/g,'d_{x^2-y^2}').replace(/E_x²[−-]y²/g,'E_{x^2-y^2}').replace(/E_z²/g,'E_{z^2}').replace(/(?<![A-Za-z0-9_])([CD])([1-6])([vhdi]?)(?![A-Za-z0-9_])/g,'$1_{$2$3}').replace(/(?<![A-Za-z0-9_])([CD])([₀-₉]+)([vhdiᵢᵥₕ])?/g,(_,g,n,a)=>g+'_{'+Array.from(n).map(c=>subs[c]).join('')+(subs[a]||a||'')+'}').replace(/(?<![A-Za-z0-9_])([OTI])([hd])(?![A-Za-z0-9_])/g,'$1_{$2}').replace(/Σ([ijkmnrcab]+(?:[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*))(,\s*[ijkmnrcab]+[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*)?/g,(_,a,b)=>'Σ_{'+a+(b||'')+'}').replace(/\r\n?/g,'\n');}
+function preprocess(s){return s.normalize('NFD').replace(/Σᵅ/g,'∑_(α)').replace(/Σ2(?=t)/g,'∑2').replace(/ΣJ(?=\()/g,'∑_(J)').replace(/ΣRαμ(?=\|)/g,'∑_(Rαμ)').replace(/Σ([μα])/g,'∑_($1)').replace(/Σarg(?=\()/g,'∑ arg').replace(/Σif(?=\s)/g,'∑_(if)').replace(/Σjα(?=\s)/g,'∑_(jα)').replace(/([στ])([xyz]{1,3})(?![A-Za-z_])/g,'$1_{$2}').replace(/(?<![A-Za-z_])kB(?![a-z_])/g,'k_B').replace(/μB(?![a-z_])/g,'μ_B').replace(/dₓ²₋ᵧ²/g,'d_{x^2-y^2}').replace(/E_x²[−-]y²/g,'E_{x^2-y^2}').replace(/E_z²/g,'E_{z^2}').replace(/(?<![A-Za-z0-9_])([CD])([1-6])([vhdi]?)(?![A-Za-z0-9_])/g,'$1_{$2$3}').replace(/(?<![A-Za-z0-9_])([CD])([₀-₉]+)([vhdiᵢᵥₕ])?/g,(_,g,n,a)=>g+'_{'+Array.from(n).map(c=>subs[c]).join('')+(subs[a]||a||'')+'}').replace(/(?<![A-Za-z0-9_])([OTI])([hd])(?![A-Za-z0-9_])/g,'$1_{$2}').replace(/Σ([ijkmnrcab]+(?:[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*))(,\s*[ijkmnrcab]+[₀-₉₊₋ᵢⱼₖₗₘₙᵣₛₜₓ]*)?/g,(_,a,b)=>'Σ_{'+a+(b||'')+'}').replace(/\r\n?/g,'\n');}
 
 function convert(source,depth=0){
  if(depth>24)throw Error('Notation nesting limit');
@@ -117,4 +117,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261029-math2';
+export const mathNotationVersion='20261029-math3';

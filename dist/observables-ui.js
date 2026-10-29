@@ -1,4 +1,4 @@
-import {svgMathText} from './math-svg.js?v=20261029-math2';
+import {svgMathText} from './math-svg.js?v=20261029-math3';
 // Shared classroom/calculator view. Scientific results are supplied by Python.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const options=(rows,value)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${id===value?'selected':''}>${esc(title)}</option>`).join('');
@@ -6,7 +6,7 @@ const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const params={phonons:{preset:'silicon',angle:45,polarization:'parallel',mode:'sum',channel:'raman',frequency_cm1:300,width_cm1:20,amplitude:.10,steps:48},tensors:{preset:'cubic_m3m',tensor:'dielectric',orientation_deg:0,field:[1,0,0],strain:[1,0,0,0,0,1],parameters:{},plane:'xy'}};
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261029-math2').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
+const catalog=()=>catalogPromise??=(fetch('data/material-observables.json?v=20261029-math3').then(r=>{if(!r.ok)throw Error('材料物性课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;}));
 export const getObservablesResult=()=>lastResult;
 export function formatDecomposition(rows){return (rows||[]).map(r=>(r.multiplicity===1?'':r.multiplicity+' ')+r.irrep).join(' ⊕ ')||'无';}
 export function curveSVG(points,xLabel,yLabel){
