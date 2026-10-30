@@ -6,10 +6,10 @@ const storage=new Map(),KEY='symmetry-lab.comparison.v1',LIMIT=3*1024*1024;
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const notebook=await import('../dist/material-notebook.js?v=20261030-bridges1');
-const lab=await import('../dist/comparison-lab.js?v=20261030-bridges1');
-const projects=await import('../dist/response-projects.js?v=20261030-bridges1');
-const {bridgesAssignments}=await import('../dist/bridges-projects.js?v=20261030-bridges1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-symmetry1');
+const lab=await import('../dist/comparison-lab.js?v=20261030-symmetry1');
+const projects=await import('../dist/response-projects.js?v=20261030-symmetry1');
+const {bridgesAssignments}=await import('../dist/bridges-projects.js?v=20261030-symmetry1');
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/bridges-projects.json',import.meta.url),'utf8'));
 const copy=x=>JSON.parse(JSON.stringify(x));
 const state=()=>JSON.parse(storage.get(KEY));
@@ -177,7 +177,7 @@ view.container.innerHTML='<p>另一个页面</p>';staleHandler();assert.deepEqua
 
 // The four new assignments are integrated into the existing fourteen-project
 // center and notebook whitelist, including actual collection and copy import.
-assert.equal(projects.assignmentTemplates.length,14);
+assert.equal(projects.assignmentTemplates.length,17);
 for(const template of bridgesAssignments){
  assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
  let project=notebook.makeProject({title:template.title});

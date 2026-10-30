@@ -1,0 +1,734 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-symmetry1",
+  "module": {
+    "id": "conservation",
+    "title": "连续对称性、守恒量与简并保护",
+    "summary": "逐项检查生成元的对易子与Lindblad伴随作用，比较实际轨迹、时间反演保护和一致换基。",
+    "pathway": "continuous",
+    "route": "conservation-lab",
+    "action": "conservation_lab",
+    "fields": [
+      {
+        "key": "experiment",
+        "label": "自旋模型",
+        "type": "select",
+        "default": "pair",
+        "options": [
+          [
+            "pair",
+            "两个自旋1/2"
+          ],
+          [
+            "single",
+            "单个自旋1/2"
+          ]
+        ]
+      },
+      {
+        "key": "initialState",
+        "label": "初态（反平行、单重态仅限双自旋）",
+        "type": "select",
+        "default": "plus_x",
+        "options": [
+          [
+            "up",
+            "↑ / ↑↑"
+          ],
+          [
+            "down",
+            "↓ / ↓↓"
+          ],
+          [
+            "plus_x",
+            "+x / +x⊗+x"
+          ],
+          [
+            "antiparallel",
+            "↑↓"
+          ],
+          [
+            "singlet",
+            "双自旋单重态"
+          ],
+          [
+            "mixed",
+            "最大混合态 I/d"
+          ]
+        ]
+      },
+      {
+        "key": "observable",
+        "label": "重点检查的观测量",
+        "type": "select",
+        "default": "sz",
+        "options": [
+          [
+            "sx",
+            "总自旋 S_x"
+          ],
+          [
+            "sy",
+            "总自旋 S_y"
+          ],
+          [
+            "sz",
+            "总自旋 S_z"
+          ],
+          [
+            "s2",
+            "总自旋 S²"
+          ],
+          [
+            "energy",
+            "H/ℏ"
+          ]
+        ]
+      },
+      {
+        "key": "jx",
+        "label": "交换 J_x（rad/ns）",
+        "type": "number",
+        "default": 1,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "jy",
+        "label": "交换 J_y（rad/ns）",
+        "type": "number",
+        "default": 1,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "jz",
+        "label": "交换 J_z（rad/ns）",
+        "type": "number",
+        "default": 1,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "fieldX",
+        "label": "统一横场系数 h_x（rad/ns）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "fieldZ",
+        "label": "统一纵场系数 h_z（rad/ns）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "gradientZ",
+        "label": "纵场差 δ（rad/ns；两站点差，系数为δ/2）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "gamma1",
+        "label": "独立 ↑→↓ 弛豫率 γ_1（ns⁻¹）",
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "gammaPhi",
+        "label": "独立z纯退相干率 γ_φ（ns⁻¹）",
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "duration",
+        "label": "演化时间（ns）",
+        "type": "number",
+        "default": 8,
+        "min": 0,
+        "max": 30,
+        "step": 0.5
+      },
+      {
+        "key": "points",
+        "label": "采样点数",
+        "type": "number",
+        "default": 161,
+        "min": 2,
+        "max": 301,
+        "step": 1
+      },
+      {
+        "key": "basisAngle",
+        "label": "约定对照：绕y的被动换基角（度）",
+        "type": "number",
+        "default": 45,
+        "min": -180,
+        "max": 180,
+        "step": 5
+      }
+    ],
+    "presets": [
+      {
+        "id": "conservation-su2",
+        "title": "各向同性交换：三个旋转生成元守恒",
+        "input": {
+          "experiment": "pair",
+          "initialState": "plus_x",
+          "observable": "sx",
+          "jx": 1,
+          "jy": 1,
+          "jz": 1,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-u1",
+        "title": "XXZ：保留z连续旋转",
+        "input": {
+          "experiment": "pair",
+          "initialState": "plus_x",
+          "observable": "sx",
+          "jx": 1,
+          "jy": 1,
+          "jz": 1.7,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-discrete",
+        "title": "XYZ：离散旋转不保证Sz守恒",
+        "input": {
+          "experiment": "pair",
+          "initialState": "up",
+          "observable": "sz",
+          "jx": 1,
+          "jy": 0.4,
+          "jz": 1.7,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-bath",
+        "title": "相同交换加入局域纯退相干",
+        "input": {
+          "experiment": "pair",
+          "initialState": "plus_x",
+          "observable": "sx",
+          "jx": 1,
+          "jy": 1,
+          "jz": 1,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0.2,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-kramers",
+        "title": "单自旋：无场Kramers配对",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "observable": "sz",
+          "jx": 0,
+          "jy": 0,
+          "jz": 0,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-field",
+        "title": "单自旋：纵场破坏时间反演",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "observable": "sx",
+          "jx": 0,
+          "jy": 0,
+          "jz": 0,
+          "fieldX": 0,
+          "fieldZ": 0.6,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-density-unitary",
+        "title": "与密度矩阵对照：纵场闭系统",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "observable": "sz",
+          "jx": 0,
+          "jy": 0,
+          "jz": 0,
+          "fieldX": 0,
+          "fieldZ": 0.6,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 12,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-density-bath",
+        "title": "与密度矩阵对照：Sz守恒而相干衰减",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "observable": "sz",
+          "jx": 0,
+          "jy": 0,
+          "jz": 0,
+          "fieldX": 0,
+          "fieldZ": 0.6,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0.25,
+          "duration": 12,
+          "points": 161,
+          "basisAngle": 45
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "id": "conservation-su2-predict",
+        "preset": "conservation-su2",
+        "question": "各向同性交换中，每个交换项与S_x的对易子都必须单独为零吗？",
+        "choices": [
+          "必须，每项都单独为零",
+          "不必，y与z项的对易子可相消",
+          "不必检查对易子"
+        ],
+        "answer": 1,
+        "explanation": "J_y=J_z时两项贡献相消，完整Hamiltonian与总S_x对易。先求矩阵和，再求范数。"
+      },
+      {
+        "id": "conservation-bath-predict",
+        "preset": "conservation-bath",
+        "question": "各向同性交换保留SU(2)，加入局域z纯退相干后总S_x仍必然守恒吗？",
+        "choices": [
+          "是，Hamiltonian对称足够",
+          "否，还要检查完整L†S_x",
+          "只要选取单重态就对所有初态守恒"
+        ],
+        "answer": 1,
+        "explanation": "Hamiltonian部分与S_x对易，但局域z纯退相干使L†S_x=−γ_φ S_x；对所有初态的守恒已被破坏。"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "conservation-generators",
+      "module": "conservation",
+      "title": "从连续旋转到完整算符守恒",
+      "summary": "用生成元与对易子连接SU(2)、U(1)、离散对称和实际动力学。",
+      "preset": "conservation-su2",
+      "references": [
+        "tong",
+        "qutip"
+      ],
+      "sections": [
+        {
+          "title": "Noether主线与本实验的范围",
+          "text": "连续作用量对称性联系守恒量；本实验使用有限量子系统的对应判据。对不显含时间的Hermitian算符Q，所有初态都守恒等价于完整Hamiltonian与Q对易。有限两自旋模型不能验证热力学极限自发破缺。",
+          "formula": "U(θ)=exp(−iθQ)；d⟨Q⟩/dt=i⟨[H/ℏ,Q]⟩"
+        },
+        {
+          "title": "从SU(2)到U(1)",
+          "text": "全局旋转生成元是两个自旋之和。各向同性交换与三个分量都对易。XXZ保留绕z连续旋转，但一般不保留绕x和y连续旋转。均匀纵场也保留Sz。仅有S²守恒并不保证SU(2)：本双自旋1/2的无梯度XYZ模型也可保留S²，却不保留三个旋转生成元。",
+          "formula": "S_α=S_{Aα}+S_{Bα}；H/ℏ=Σ_α J_α S_{Aα}S_{Bα}+h_x S_x+h_z S_z"
+        },
+        {
+          "title": "逐项不守恒可以相消",
+          "text": "各向同性交换的y项、z项分别与Sx不对易，但两者的矩阵贡献相消。只把逐项范数相加会错误地宣布破缺；点击约束来源应同时查看矩阵和完整残差。",
+          "formula": "[H_y+H_z,S_x]=[H_y,S_x]+[H_z,S_x]"
+        },
+        {
+          "title": "离散旋转不是同一个条件",
+          "text": "无场XYZ可以保留π旋转，却不保留由相同轴生成的任意角旋转。有限角度的对易关系不能直接替代生成元的对易关系；坐标轴均不守恒也不排除某个斜轴上的额外对称。",
+          "formula": "[H,exp(−iπS_z)]=0 不推出 [H,S_z]=0"
+        }
+      ]
+    },
+    {
+      "id": "conservation-open",
+      "module": "conservation",
+      "title": "Hamiltonian对称与耗散系统守恒",
+      "summary": "区分模型的算符恒等式、一个初态的平坦轨迹和浴通道的影响。",
+      "preset": "conservation-bath",
+      "references": [
+        "lindblad",
+        "qutip"
+      ],
+      "sections": [
+        {
+          "title": "检查整个生成元",
+          "text": "Lindblad主方程把Hamiltonian演化和每个耗散通道一起定义。对时间无关Q，d⟨Q⟩/dt=⟨L†Q⟩；若要对所有初态守恒，须使完整算符L†Q为零。",
+          "formula": "L†Q=i[H/ℏ,Q]+Σ_c(C_c†QC_c−{C_c†C_c,Q}/2)"
+        },
+        {
+          "title": "纯退相干会保留什么",
+          "text": "本实验各站点的z通道使横向总自旋衰减，对总Sz的耗散贡献为零。若Hamiltonian本身还与Sz对易，则Sz保持守恒。加入↑→↓弛豫后，Sz通常不再守恒。",
+          "formula": "C_φ=√(γ_φ/2)σ_z；D†S_x=−γ_φ S_x"
+        },
+        {
+          "title": "平坦曲线并不能证明对称性",
+          "text": "闭系统的最大混合态I/d在任何时间无关Hamiltonian下不变。即使[H,Sz]不为零，它的⟨Sz⟩也一直为零。应把轨迹与算符残差并排比较，再改变初态。",
+          "formula": "[H,I/d]=0"
+        },
+        {
+          "title": "数值轨迹与实际物理模型",
+          "text": "计算使用常量生成元矩阵指数，并检查迹、厄米性与半正定性。采样过稀可能漏掉振荡，但不应该改变同一时刻的物理态；本地浴并不自动满足真实材料的详细平衡。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-protection",
+      "module": "conservation",
+      "title": "时间反演保护与一致换基",
+      "summary": "用物理反幺正算符判断简并来源，再验证换基后的不变量。",
+      "preset": "conservation-kramers",
+      "references": [
+        "kramers",
+        "qutip"
+      ],
+      "sections": [
+        {
+          "title": "先指定物理时间反演",
+          "text": "单自旋1/2的物理时间反演可写成T=−iσ_yK，平方为−I。两个可区分自旋的总时间反演作用于两者，平方为+I；不能把其中一个自旋的Kramers条件直接套在整体。",
+          "formula": "T=U_T K；T²=U_T U_T*"
+        },
+        {
+          "title": "简并需要保护条件",
+          "text": "对于本实验没有动量标签的有限Hamiltonian，T²=−I且T与H对易保证Kramers配对。单自旋外场破坏T，扫描εSz可观察能级分裂。双自旋T²=+I本身没有这个结论。",
+          "formula": "U_T H* U_T†=H"
+        },
+        {
+          "title": "双自旋多重态的其他来源",
+          "text": "各向同性交换的三重态简并可由SU(2)解释；它不是T²=+I带来的Kramers简并。对于其他数值重合，程序只报告能级重数，不把重合一律命名为偶然或拓扑保护。"
+        },
+        {
+          "title": "换基必须同时改变所有对象",
+          "text": "对新基矢=旧基矢×U，H、Q、ρ及每个C均变为U†AU，反幺正矩阵变为U†U_T U*。计算比较能级、期望值、演化态和伴随作用的协变性；被动换基不同于实际转动样品而固定外场。",
+          "formula": "A′=U†AU；ρ′=U†ρU；U_T′=U†U_T U*"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "conservation-generators-exercise",
+      "module": "conservation",
+      "lesson": "conservation-generators",
+      "title": "逐项检查SU(2)到U(1)的破缺",
+      "prompt": "依次比较各向同性、XXZ和XYZ预设，保留系数单位与S=σ/2约定。",
+      "steps": [
+        {
+          "prompt": "对于所有初态的闭系统Q守恒，应检查哪个量？",
+          "hint": "Q不显含时间，检查算符恒等式。",
+          "choices": [
+            "一条曲线是否平坦",
+            "完整[H,Q]是否为零",
+            "Q的迹是否为零"
+          ],
+          "answer": 1,
+          "explanation": "完整对易子为零才给出对所有初态的保证。"
+        },
+        {
+          "prompt": "各向同性交换的每一项都必须与Sx单独对易吗？",
+          "hint": "矩阵相加后再计算范数。",
+          "choices": [
+            "必须",
+            "不必，非零贡献可能相消",
+            "只有初态纯时必须"
+          ],
+          "answer": 1,
+          "explanation": "y和z交换项的贡献在Jy=Jz时相消。"
+        },
+        {
+          "prompt": "XXZ中Jx=Jy≠Jz且无横场，哪个坐标轴生成元仍守恒？",
+          "hint": "绕z旋转会混合x与y分量。",
+          "choices": [
+            "Sx",
+            "Sy",
+            "Sz"
+          ],
+          "answer": 2,
+          "explanation": "Jx=Jy保留绕z的连续旋转。"
+        },
+        {
+          "prompt": "XYZ保留绕z的π旋转，是否必然保留Sz？",
+          "hint": "有限角度对称性弱于任意角度连续对称。",
+          "choices": [
+            "是",
+            "否，须另查[H,Sz]",
+            "只有将单位改成eV后才守恒"
+          ],
+          "answer": 1,
+          "explanation": "离散旋转不自动给出连续生成元守恒。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-open-exercise",
+      "module": "conservation",
+      "lesson": "conservation-open",
+      "title": "识别一条平坦轨迹造成的误判",
+      "prompt": "先用最大混合态运行闭系统XYZ，再加入不同浴通道。",
+      "steps": [
+        {
+          "prompt": "闭系统初态I/d的期望值不变，证明所有Q都守恒吗？",
+          "hint": "一个初态不等于所有初态。",
+          "choices": [
+            "证明",
+            "不证明",
+            "只证明所有自旋分量守恒"
+          ],
+          "answer": 1,
+          "explanation": "I/d与任意H对易，其特殊轨迹不能替代算符判据。"
+        },
+        {
+          "prompt": "有耗散时，对所有初态的守恒条件是什么？",
+          "hint": "浴通道也进入动力学生成元。",
+          "choices": [
+            "只需[H,Q]=0",
+            "L†Q=0",
+            "只需Trρ=1"
+          ],
+          "answer": 1,
+          "explanation": "必须把Hamiltonian和全部通道的伴随作用相加。"
+        },
+        {
+          "prompt": "局域z纯退相干对总Sz的耗散贡献如何？",
+          "hint": "σz与z测量算符对易。",
+          "choices": [
+            "为零",
+            "必定使Sz变负",
+            "必定使迹衰减"
+          ],
+          "answer": 0,
+          "explanation": "该通道保留z布居；还须检查Hamiltonian是否与Sz对易。"
+        },
+        {
+          "prompt": "增加↑→↓弛豫后，能沿用只含纯退相干的守恒结论吗？",
+          "hint": "通道改变意味着L†改变。",
+          "choices": [
+            "能",
+            "不能，须重新检查完整生成元",
+            "只要能量简并就能"
+          ],
+          "answer": 1,
+          "explanation": "弛豫通常改变Sz，不可仅靠旧Hamiltonian对称性推断。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-protection-exercise",
+      "module": "conservation",
+      "lesson": "conservation-protection",
+      "title": "区分Kramers配对、SU(2)多重态与换基",
+      "prompt": "比较无场单自旋、加场单自旋及各向同性双自旋。",
+      "steps": [
+        {
+          "prompt": "单自旋1/2的物理T²是什么？",
+          "hint": "T含复共轭，不能只计算U_T²并忽略K。",
+          "choices": [
+            "+I",
+            "−I",
+            "零"
+          ],
+          "answer": 1,
+          "explanation": "T²=U_TU_T*=−I。"
+        },
+        {
+          "prompt": "两个可区分自旋1/2整体T²是什么？",
+          "hint": "总T作用于两个自旋。",
+          "choices": [
+            "−I",
+            "+I",
+            "取决于选用x还是z基底"
+          ],
+          "answer": 1,
+          "explanation": "两个负号相乘为正，整体不由Kramers定理强制配对。"
+        },
+        {
+          "prompt": "各向同性交换双自旋的三重态简并可由什么解释？",
+          "hint": "检查三个总自旋分量。",
+          "choices": [
+            "全局SU(2)",
+            "T²=+I单独强制",
+            "数值求解器必定生成三重根"
+          ],
+          "answer": 0,
+          "explanation": "SU(2)把同一总自旋多重态的不同分量联系起来。"
+        },
+        {
+          "prompt": "被动换基时只改变H、不改变ρ和Q，能比较同一物理期望吗？",
+          "hint": "态、算符、耗散通道都要用同一U。",
+          "choices": [
+            "能",
+            "不能",
+            "只要保持矩阵维数就能"
+          ],
+          "answer": 1,
+          "explanation": "一致变换后的能谱、期望和L†协变；不一致变换改变了所描述的问题。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "conservation-dimer",
+      "module": "conservation",
+      "title": "分子磁体二聚体：交换对称与守恒",
+      "kind": "材料机制原型",
+      "summary": "从低能有效交换走向SU(2)与XXZ的不同守恒量，再对照Hubbard二聚体。",
+      "assumption": "两个有效自旋和教学系数；不从结构自动拟合交换，有限二聚体不代表长程磁序。",
+      "preset": "conservation-su2",
+      "links": [
+        [
+          "Hubbard小团簇",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "磁交换约束",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "CG耦合课堂",
+          "#classroom/coupling"
+        ]
+      ]
+    },
+    {
+      "id": "conservation-noisy-spin",
+      "module": "conservation",
+      "title": "同一交换Hamiltonian，不同环境通道",
+      "kind": "量子动力学对照",
+      "summary": "保持交换参数，比较闭系统和局域纯退相干的完整守恒条件与实际轨迹。",
+      "assumption": "现象学Markov通道，不从晶格对称性直接推出退相干速率，不模拟非Markov浴。",
+      "preset": "conservation-bath",
+      "links": [
+        [
+          "密度矩阵实验",
+          "#compute/density-matrix-lab"
+        ],
+        [
+          "有效自旋共振",
+          "#compute/spin-resonance-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ]
+      ]
+    },
+    {
+      "id": "conservation-kramers-case",
+      "module": "conservation",
+      "title": "单自旋的时间反演保护与外场破缺",
+      "kind": "简并诊断模型",
+      "summary": "从T²=−I出发加入受控外场，再与双自旋的T²=+I和SU(2)多重态比较。",
+      "assumption": "仅诊断指定有限自旋空间，无晶体动量；不把结果直接外推到所有k点的能带。",
+      "preset": "conservation-kramers",
+      "links": [
+        [
+          "双群与反幺正课堂",
+          "#classroom/spin"
+        ],
+        [
+          "局部能带约束",
+          "#compute/symmetry-workshop"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "tong",
+      "title": "David Tong：连续对称性、Noether定理与守恒流",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html"
+    },
+    {
+      "id": "lindblad",
+      "title": "G. Lindblad, On the generators of quantum dynamical semigroups (1976)",
+      "url": "https://doi.org/10.1007/BF01608499"
+    },
+    {
+      "id": "qutip",
+      "title": "QuTiP：闭系统与Lindblad动力学的算符约定",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html"
+    },
+    {
+      "id": "kramers",
+      "title": "MIT Quantum Theory: time reversal and Kramers theorem",
+      "url": "https://web.mit.edu/8.861/www/lect_notes/Lecture15-1.pdf"
+    }
+  ]
+}

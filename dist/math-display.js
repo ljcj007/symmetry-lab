@@ -1,7 +1,7 @@
 import katex from './vendor/katex/katex.mjs';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261030-bridges1';
-import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261030-bridges1';
-import {crystalTex} from './crystal-notation.js?v=20261030-bridges1';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261030-symmetry1';
+import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261030-symmetry1';
+import {crystalTex} from './crystal-notation.js?v=20261030-symmetry1';
 
 const blocks='.pg-formula,.sc-formula,.lg-formula,.obs-formula,[data-math-block]';
 const owned='.sl-math,.katex,math,[data-math-ignore],.crystal-symbol[data-crystal-ready]';

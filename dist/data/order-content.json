@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-symmetry1",
+  "module": {
+    "id": "order",
+    "title": "序参量、剩余对称性与不变量",
+    "summary": "从有限点群的极向量表示自动生成二、四、六阶不变量，追踪指定方向的稳定子群、母群轨道、外场劈裂与坐标约定。",
+    "route": "order-parameter-lab",
+    "action": "order_parameter_lab",
+    "pathway": "structure-dynamics",
+    "fields": [
+      {
+        "key": "pointGroup",
+        "label": "母群与极向量表示",
+        "type": "select",
+        "default": "c4v",
+        "options": [
+          [
+            "c4v",
+            "C₄ᵥ：二维 (η_x,η_y)"
+          ],
+          [
+            "oh",
+            "O_h：三维 (η_x,η_y,η_z)"
+          ]
+        ]
+      },
+      {
+        "key": "etaX",
+        "label": "η_x（无量纲）",
+        "type": "number",
+        "default": 1,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "etaY",
+        "label": "η_y（无量纲）",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "etaZ",
+        "label": "η_z（三维时使用）",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "a2",
+        "label": "二阶系数 a₂",
+        "type": "number",
+        "default": -1,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "b4",
+        "label": "四阶 Ση_i⁴ 系数 b₄",
+        "type": "number",
+        "default": 1,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "c4",
+        "label": "四阶 Σ_{i<j}η_i²η_j² 系数 c₄",
+        "type": "number",
+        "default": 3,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "d6",
+        "label": "六阶 Ση_i⁶ 系数 d₆",
+        "type": "number",
+        "default": 0.1,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "e6",
+        "label": "六阶 Σ_{i≠j}η_i⁴η_j² 系数 e₆",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "f6",
+        "label": "六阶 η_x²η_y²η_z² 系数 f₆（三维）",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "fieldX",
+        "label": "外场 h_x：能量项 −h_xη_x",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "basisAngle",
+        "label": "被动坐标旋转角（度）",
+        "type": "number",
+        "default": 30,
+        "min": -360,
+        "max": 360,
+        "step": 5
+      }
+    ],
+    "presets": [
+      {
+        "id": "order-axis",
+        "title": "四重母群：沿x的四个等价方向",
+        "input": {
+          "pointGroup": "c4v",
+          "etaX": 1,
+          "etaY": 0,
+          "etaZ": 0,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0,
+          "basisAngle": 30
+        }
+      },
+      {
+        "id": "order-diagonal",
+        "title": "相同长度、沿对角线：仍有四个轨道态",
+        "input": {
+          "pointGroup": "c4v",
+          "etaX": 0.7071067811865475,
+          "etaY": 0.7071067811865475,
+          "etaZ": 0,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0,
+          "basisAngle": 30
+        }
+      },
+      {
+        "id": "order-cubic-axis",
+        "title": "立方极性序参量：六个轴向畴",
+        "input": {
+          "pointGroup": "oh",
+          "etaX": 0,
+          "etaY": 0,
+          "etaZ": 1,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0,
+          "basisAngle": 30
+        }
+      },
+      {
+        "id": "order-cubic-diagonal",
+        "title": "立方体对角线：八个轨道态",
+        "input": {
+          "pointGroup": "oh",
+          "etaX": 0.5773502691896258,
+          "etaY": 0.5773502691896258,
+          "etaZ": 0.5773502691896258,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0,
+          "basisAngle": 30
+        }
+      },
+      {
+        "id": "order-field",
+        "title": "外场区分立方母群中的六个轴向状态",
+        "input": {
+          "pointGroup": "oh",
+          "etaX": 1,
+          "etaY": 0,
+          "etaZ": 0,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0.3,
+          "basisAngle": 30
+        }
+      },
+      {
+        "id": "order-convention",
+        "title": "一般方向与被动换坐标",
+        "input": {
+          "pointGroup": "oh",
+          "etaX": 0.6,
+          "etaY": 0.8,
+          "etaZ": 0.4,
+          "a2": -1,
+          "b4": 1,
+          "c4": 3,
+          "d6": 0.1,
+          "e6": 0,
+          "f6": 0,
+          "fieldX": 0.2,
+          "basisAngle": 37
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "id": "order-orbit",
+        "preset": "order-axis",
+        "question": "C₄ᵥ 的二维极向量沿x，母群轨道包含几个不同方向？",
+        "choices": [
+          "4",
+          "8",
+          "2"
+        ],
+        "answer": 0,
+        "explanation": "母群阶数8，保持该非零向量的稳定子群阶数2，轨道数为8/2=4。不是每个操作都产生新方向。"
+      },
+      {
+        "id": "order-field-splitting",
+        "preset": "order-field",
+        "question": "给立方极向量加入 −h_xη_x 后，六个母群轴向轨道态还全部等能吗？",
+        "choices": [
+          "是，母群不变",
+          "否，外场降低能量函数的对称性",
+          "仅改变坐标名称"
+        ],
+        "answer": 1,
+        "explanation": "该预设h_x=0.3，使+x、−x与垂直x的四个方向出现三种能量。母群轨道不等于外场后全部简并畴。"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "order-isotropy",
+      "module": "order",
+      "title": "从序参量方向到保留操作与畴",
+      "summary": "把指定状态的对称性、能量函数的对称性和等价状态轨道分开计算。",
+      "preset": "order-cubic-axis",
+      "references": [
+        "isodistort"
+      ],
+      "sections": [
+        {
+          "title": "先声明表示",
+          "text": "本实验中序参量是C₄ᵥ的二维极向量，或O_h的三维极向量。点群矩阵作用于η；O_h极向量的反演为−I。氧八面体转动是轴向量，不能直接套用此反演规则。",
+          "formula": "η → D(g)η"
+        },
+        {
+          "title": "状态的稳定子群",
+          "text": "逐个操作检验D(g)η=η，保留下来的操作构成稳定子群。零向量保留母群；非零方向可以降对称。计算采用1e−9的数值比较阈值，实际矩阵以精确整数生成。",
+          "formula": "H_η = {g ∈ G : D(g)η = η}"
+        },
+        {
+          "title": "轨道不等于操作列表",
+          "text": "不同操作可能把η送到同一个方向，所以需要去重。O_h沿坐标轴产生六个方向，沿体对角线产生八个；它们来自不同稳定子群。仅指定方向尚未证明自由能在此达到极小。",
+          "formula": "|Gη| = |G| / |H_η|"
+        },
+        {
+          "title": "材料联系与边界",
+          "text": "BaTiO₃极化的轴向或对角线方向可作为图像背景；本工具没有自动构造真实原子位移、空间群子群、平移畴或实验相图。请到结构畸变和相变模块研究给定模式与能量。"
+        }
+      ]
+    },
+    {
+      "id": "order-invariants",
+      "module": "order",
+      "title": "逐个生成元推导允许的自由能项",
+      "summary": "从单项式群平均得到独立不变量，再用实际系数画能面截线。",
+      "preset": "order-axis",
+      "references": [
+        "isotropy"
+      ],
+      "sections": [
+        {
+          "title": "从一个单项式开始",
+          "text": "对η_x²等单项式施加所有群操作并平均。被符号相消的单项式不产生不变量；等价单项式给出重复的轨道和。保留独立轨道和后可选最小整数系数归一。",
+          "formula": "P_G f(η) = (1/|G|) Σ_g f(D(g)η)"
+        },
+        {
+          "title": "约束有可追溯来源",
+          "text": "点击某条系数关系，可看到生成元矩阵、变换前后的指数和符号。镜面使η_xη_y变号，要求它的系数为零；四重旋转则要求η_x²与η_y²的系数相同。",
+          "formula": "F(D(g)η) = F(η)"
+        },
+        {
+          "title": "允许形式不决定系数",
+          "text": "C₄ᵥ在二、四、六阶分别有1、2、2个独立不变量；O_h分别有1、2、3个。系数是教学输入，对称性不决定正负或大小。二阶连续各向同性可以只是低阶截断的偶然性质。",
+          "formula": "F = a₂ I₂ + b₄ I₄a + c₄ I₄b + d₆ I₆a + e₆ I₆b + f₆ I₆c"
+        },
+        {
+          "title": "径向极小与完整稳定",
+          "text": "沿所选方向解一元多项式的全部实驻点；它们不等于多维自由能的全部极小。角向扫描固定xy半径和z分量；曲线平坦或局部极小不能单独证明热力学相。最高阶有界性使用充分条件，并明确未通过时的限制。"
+        }
+      ]
+    },
+    {
+      "id": "order-field-convention",
+      "module": "order",
+      "title": "显式破缺、畴能量与坐标约定",
+      "summary": "区分改变外场这个物理操作和被动改变坐标这个记号操作。",
+      "preset": "order-convention",
+      "references": [
+        "isodistort",
+        "isotropy"
+      ],
+      "sections": [
+        {
+          "title": "外场不是自动保留母群",
+          "text": "加入固定实验室x方向的线性场后，只保留同时使场不变的操作。母群轨道仍用于比较，但其不同方向可出现能量劈裂。",
+          "formula": "F_h(η) = F₀(η) − h·η"
+        },
+        {
+          "title": "三个群的区别",
+          "text": "分别观察母群G、使外场不变的能量对称群G_h，以及使场与状态都不变的交集。不能只根据某个状态的稳定子群宣布整个Hamiltonian已经自发破缺。",
+          "formula": "H_{η,h} = H_η ∩ G_h"
+        },
+        {
+          "title": "被动坐标变换",
+          "text": "Q的列是新坐标轴在旧坐标中的分量。η、场、群矩阵和能量表达式必须同时变换；仅旋转序参量但不改能量各向异性通常是改变物理状态。",
+          "formula": "η′ = Qᵀη；D′ = Qᵀ D Q；F′(η′) = F(Qη′)"
+        },
+        {
+          "title": "验证而非逐项对号",
+          "text": "比较两种坐标下的能量、稳定子群阶数和操作作用的协变残差。矩阵元素改变是正常现象；能量和轨道计数才是此处需要保持的结果。"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "order-isotropy-exercise",
+      "module": "order",
+      "lesson": "order-isotropy",
+      "title": "由六个轴向方向推回稳定子群",
+      "prompt": "使用立方轴向预设，先推导再计算。",
+      "steps": [
+        {
+          "prompt": "O_h的极向量反演矩阵是什么？",
+          "hint": "极向量在反演下变号。",
+          "choices": [
+            "−I",
+            "I",
+            "仅交换x和y"
+          ],
+          "answer": 0,
+          "explanation": "反演把非零极性向量η变为−η。"
+        },
+        {
+          "prompt": "由(0,0,1)能得到多少不同轴向方向？",
+          "hint": "计数正负三个坐标轴。",
+          "choices": [
+            "3",
+            "6",
+            "48"
+          ],
+          "answer": 1,
+          "explanation": "六个方向为±x、±y、±z。"
+        },
+        {
+          "prompt": "母群阶数48，轨道为6，稳定子群阶数是多少？",
+          "hint": "使用轨道—稳定子关系。",
+          "choices": [
+            "48",
+            "6",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "48/6=8，当前方向的点群为C₄ᵥ。"
+        },
+        {
+          "prompt": "指定η沿z是否已经证明这是平衡铁电相？",
+          "hint": "状态对称性与能量极小是不同检查。",
+          "choices": [
+            "没有，还需能量与完整稳定性",
+            "已经证明所有温度稳定",
+            "只需看到η非零"
+          ],
+          "answer": 0,
+          "explanation": "需检查能量、曲率与模型范围，不能由轨道计数推出相图。"
+        }
+      ]
+    },
+    {
+      "id": "order-invariants-exercise",
+      "module": "order",
+      "lesson": "order-invariants",
+      "title": "用镜面和旋转排除错误自由能",
+      "prompt": "在C₄ᵥ二维极向量中逐步构造允许项。",
+      "steps": [
+        {
+          "prompt": "xz镜面作用下η_xη_y怎样变化？",
+          "hint": "η_x不变，η_y变号。",
+          "choices": [
+            "变号",
+            "不变",
+            "变成常数"
+          ],
+          "answer": 0,
+          "explanation": "因此该项若单独出现，其系数必须为零。"
+        },
+        {
+          "prompt": "四重旋转对aη_x²+bη_y²施加什么约束？",
+          "hint": "交换两项后能量应相同。",
+          "choices": [
+            "a=−b",
+            "a=b",
+            "a和b均必须为0"
+          ],
+          "answer": 1,
+          "explanation": "旋转要求两个二次项系数一致。"
+        },
+        {
+          "prompt": "两个独立四阶不变量是哪一组？",
+          "hint": "检查镜面与四重旋转。",
+          "choices": [
+            "η_x⁴、η_y⁴各自独立",
+            "η_xη_y、η_x³η_y",
+            "η_x⁴+η_y⁴，η_x²η_y²"
+          ],
+          "answer": 2,
+          "explanation": "轨道和提供两个线性独立的四阶不变量。"
+        },
+        {
+          "prompt": "对称性允许c₄意味着什么？",
+          "hint": "允许不等于决定。",
+          "choices": [
+            "其值仍需物理模型或输入确定",
+            "其值必为1",
+            "其值一定非零"
+          ],
+          "answer": 0,
+          "explanation": "对称约束确定形式，不能给出真实材料的参数大小。"
+        }
+      ]
+    },
+    {
+      "id": "order-field-convention-exercise",
+      "module": "order",
+      "lesson": "order-field-convention",
+      "title": "分清场驱动变化与坐标变化",
+      "prompt": "使用外场预设和一般方向换坐标预设。",
+      "steps": [
+        {
+          "prompt": "加入−h_xη_x且h_x>0时，±x哪一个能量更低？",
+          "hint": "母群不变量对正负x相同，线性项不同。",
+          "choices": [
+            "−x",
+            "+x",
+            "仍必定相同"
+          ],
+          "answer": 1,
+          "explanation": "+x对应负的线性场能，较−x低。"
+        },
+        {
+          "prompt": "有外场后母群六个轴向状态还能都称简并畴吗？",
+          "hint": "检查每个状态的实际能量。",
+          "choices": [
+            "不能，母群轨道可被外场劈裂",
+            "可以，因为空间方向仍有6个",
+            "只看轨道数即可"
+          ],
+          "answer": 0,
+          "explanation": "应采用外场后能量函数的对称群来判断对称保护的等能。"
+        },
+        {
+          "prompt": "换到Q定义的新坐标时，群矩阵应如何变？",
+          "hint": "用η=Qη′代入Dη。",
+          "choices": [
+            "QD",
+            "DQ",
+            "QᵀDQ"
+          ],
+          "answer": 2,
+          "explanation": "序参量与操作须一致换基，才保持作用关系。"
+        },
+        {
+          "prompt": "何者应在被动换坐标下保持？",
+          "hint": "矩阵条目不必相同。",
+          "choices": [
+            "每个矩阵元素",
+            "能量和稳定子群阶数",
+            "η_x的数值"
+          ],
+          "answer": 1,
+          "explanation": "不变量结果保持，坐标分量与矩阵元素一般改变。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "order-ferroelectric",
+      "module": "order",
+      "title": "立方极性序参量与铁电畴方向",
+      "kind": "BaTiO₃机制背景",
+      "summary": "比较立方极向量沿轴、面对角线与体对角线时的剩余点群和轨道数，再连接给定结构畸变。",
+      "assumption": "只使用极化方向的点群图像；未拟合BaTiO₃参数，未推导具体温度相序、原子模式或完整空间群。",
+      "preset": "order-cubic-axis",
+      "links": [
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ],
+        [
+          "结构畸变模式",
+          "#compute/distortion-modes"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "order-interface",
+      "module": "order",
+      "title": "四重环境中的面内有序方向",
+      "kind": "二维表示教学模型",
+      "summary": "在相同序参量长度下比较沿轴和对角线的能量，检查四阶与六阶各向异性。",
+      "assumption": "抽象C₄ᵥ二维极向量，不自动描述任意表面磁序；若改成轴向磁序需要重新声明表示。",
+      "preset": "order-diagonal",
+      "links": [
+        [
+          "对称性推导工坊",
+          "#compute/symmetry-workshop"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "order-poling",
+      "module": "order",
+      "title": "外场选向与两套坐标下的一次实验",
+      "kind": "显式破缺与约定对照",
+      "summary": "用外场选择方向，再一致旋转向量、场、操作与能量，辨认物理变化和坐标变化。",
+      "assumption": "均匀序参量、教学线性场，没有畴壁运动、迟滞动力学、真实电场单位或反演实测数据。",
+      "preset": "order-field",
+      "links": [
+        [
+          "畴壁与局域态",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "isodistort",
+      "title": "ISODISTORT：畸变模式、序参量方向与稳定子群",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "isotropy",
+      "title": "ISOTROPY 用户手册：不变量与序参量",
+      "url": "https://iso.byu.edu/isotropy_doc.php"
+    }
+  ]
+}

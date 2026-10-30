@@ -9,7 +9,7 @@ globalThis.document={createElement:tag=>new Element(tag)};
 const animationQueue=[];globalThis.requestAnimationFrame=callback=>{animationQueue.push(callback);return animationQueue.length;};
 globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')});
 const ui=await import('../dist/coupled-materials-ui.js');
-const notebook=await import('../dist/material-notebook.js?v=20261030-bridges1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-symmetry1');
 const {parseClassroomRoute,buildClassroomHash,classroomPathways}=await import('../dist/classroom-ui.js');
 const {knownTool}=await import('../dist/navigation-ui.js');
 const calls=[];

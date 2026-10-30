@@ -1,16 +1,16 @@
-import {renderComparisonLab} from './comparison-lab.js?v=20261030-bridges1';
-import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261030-bridges1';
-import {crystalSpan} from './crystal-notation.js?v=20261030-bridges1';
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261030-bridges1';
-import {renderResponseProjects} from './response-projects.js?v=20261030-bridges1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261030-bridges1';
-import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261030-bridges1';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261030-bridges1';
-import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261030-bridges1';
-import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261030-bridges1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261030-bridges1';
+import {renderComparisonLab} from './comparison-lab.js?v=20261030-symmetry1';
+import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261030-symmetry1';
+import {crystalSpan} from './crystal-notation.js?v=20261030-symmetry1';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261030-symmetry1';
+import {renderResponseProjects} from './response-projects.js?v=20261030-symmetry1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261030-symmetry1';
+import {renderAdvancedView,getAdvancedResult,selectAdvancedTool} from './advanced-ui.js?v=20261030-symmetry1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261030-symmetry1';
+import {renderResearchView,getResearchResult,setResearchInput} from './research-ui.js?v=20261030-symmetry1';
+import {renderStructureView,getStructureResult} from './structure-ui.js?v=20261030-symmetry1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261030-symmetry1';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261030-bridges1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261030-symmetry1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input);const result=await executePythonTask(action,input);captureCalculation(action,snapshot,result,context);return result;}
 
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -22,7 +22,7 @@ const labels={workbench:['对称性工作台','从空间群到磁空间群，探
 labels.magnetictb=['磁性紧束缚模型','用晶体对称性约束跃迁参数，计算能带、薄膜和拓扑量。'];
 labels.advanced=['精确代数与高维群','整数类与仿射类、算术中心化子、符号表示与 Hamiltonian，全部由 Python 在浏览器计算。'];
 labels.crystkit=['晶体群工具','精确仿射运算、生成元、点轨道与空间群识别。'];
-for(const view of ['pointgroups','academy','lie','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','bridges','pathways'])labels[view]=['群论课堂','从晶体的离散对称到 SU(2)、SU(3) 的连续变换，结合课程、交互实验与练习学习。'];
+for(const view of ['pointgroups','academy','lie','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','principles','bridges','pathways'])labels[view]=['群论课堂','从晶体的离散对称到 SU(2)、SU(3) 的连续变换，结合课程、交互实验与练习学习。'];
 labels.home=['总览','从课程、计算任务或晶体材料出发，探索对称性。'];
 labels.compute=['计算中心','按任务查找工具，复用课堂中的计算器与精确算法。'];
 labels.atlas=['群与材料图谱','统一查阅群目录、晶体结构和磁性材料实例。'];
@@ -59,6 +59,11 @@ function setView(request,options={}){
    course=parseClassroomRoute('classroom/crystal?'+query);course.embeddedOnly=true;course.atlasOnly=true;view='pathways';primary='atlas';
  }
  else if(path==='atlas/compare'){view='compare';primary='atlas';}
+ else if(path==='atlas/principles'){
+   const module=['order','exchange','conservation'].includes(params.get('module'))?params.get('module'):'order',query=new URLSearchParams({module,tab:'cases'});
+   for(const key of ['preset','material'])if(params.has(key))query.set(key,params.get(key));
+   course=parseClassroomRoute('classroom/structure-dynamics?'+query);course.embeddedOnly=true;course.atlasOnly=true;view='principles';primary='atlas';
+ }
  else if(path==='atlas/bridges'){
    const module=['manybody','polaron','density','workshop'].includes(params.get('module'))?params.get('module'):'manybody',query=new URLSearchParams({module,tab:'cases'});
    for(const key of ['preset','material'])if(params.has(key))query.set(key,params.get(key));
@@ -108,13 +113,13 @@ function setView(request,options={}){
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
  state.route=route;state.view=view;state.primary=primary;state.courseRoute=course;
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
- const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
+ const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
  $('#page-title').textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];
  updateBreadcrumb(title);
  $$('.nav-item').forEach(n=>{const selected=n.dataset.view===primary;n.classList.toggle('active',selected);if(selected)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});
  $('#export-top').classList.toggle('hidden',['home','compute','atlas','classroom','docs','dictionary','notebook','compare','projects'].includes(view));
  const context=$('#view-context');
- context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':'<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
+ context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':'<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+='<div class="mr-notebook-link"><a href="#atlas/notebook">记录最近计算 / 打开材料项目 →</a><a href="#atlas/compare">参数对照与预测 →</a></div>';
  rememberRoute(route);
  if(options.render!==false)render();
@@ -122,13 +127,16 @@ function setView(request,options={}){
 function updateBreadcrumb(detail){
  const top=primaryTitles[state.primary]||'总览';
  if(state.courseRoute?.calculationOnly)detail=knownTool(state.route.split('?')[0])?.title||detail;
- else if(state.primary==='atlas'&&state.courseRoute)detail=state.view==='pointgroups'?'32 晶体学点群':['dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','bridges','pathways'].includes(state.view)?'材料研究路线':'晶体与磁性材料';
+ else if(state.primary==='atlas'&&state.courseRoute)detail=state.view==='pointgroups'?'32 晶体学点群':['dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','principles','bridges','pathways'].includes(state.view)?'材料研究路线':'晶体与磁性材料';
  detail=String(detail||'').replace(new RegExp('^'+top+'\\s*/\\s*'),'');
  if(state.primary==='classroom')detail=detail.replace(/^学习中心\s*\/\s*/,'').replace(/^学习中心$/,'学习总览');
  $('#breadcrumb').innerHTML=state.primary==='home'?'<b>总览</b>':`<a href="#home" data-route="home">总览</a><span aria-hidden="true">/</span><a href="#${state.primary}" data-route="${state.primary}">${top}</a>${detail&&detail!==top?`<span aria-hidden="true">/</span><b>${esc(detail)}</b>`:''}`;
 }
 function syncCourseRoute(hash,options={}){
  if(state.primary==='atlas'&&options.render===false){
+   if(state.view==='principles'){
+     const parsed=parseClassroomRoute(hash),params=new URLSearchParams();for(const key of ['module','material','preset'])if(parsed?.[key])params.set(key,parsed[key]);return setView('atlas/principles'+(params.size?'?'+params:''),options);
+   }
    if(state.view==='bridges'){
      const parsed=parseClassroomRoute(hash),params=new URLSearchParams();for(const key of ['module','material','preset'])if(parsed?.[key])params.set(key,parsed[key]);
      return setView('atlas/bridges'+(params.size?'?'+params:''),options);

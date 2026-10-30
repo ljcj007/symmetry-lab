@@ -56,7 +56,7 @@ assert.equal(segmentFormula(reviewedSums).map(p=>p.source).join(''),reviewedSums
 assert.equal(normalizeMath(''),null);assert.equal(normalizeMath(null),null);
 console.log('Math notation: physical scripts, group labels, Greek/combining/astral symbols, self-energy versus sums, matrices, mixed prose, opaque paths and safe fallback passed.');
 
-for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261030-bridges1","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
+for(const metadata of ["teaching_labs · 2026-10-29T00:27:25.310Z · 20261030-symmetry1","atomic_spectra_lab","zero_field_splitting"]){const parts=findInlineMath(metadata);assert.equal(parts.map(p=>p.source).join(''),metadata);assert.ok(parts.every(p=>p.type==='text'),metadata);}
 
 assert.ok(findInlineMath("exp(ik_z)").some(p=>p.type==='math'));
 

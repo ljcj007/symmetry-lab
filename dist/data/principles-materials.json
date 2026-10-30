@@ -1,0 +1,2110 @@
+{
+  "schema": "symmetry-lab-principles-1",
+  "release": "20261030-symmetry1",
+  "modules": [
+    {
+      "id": "order",
+      "title": "序参量、剩余对称性与不变量",
+      "summary": "从有限点群的极向量表示自动生成二、四、六阶不变量，追踪指定方向的稳定子群、母群轨道、外场劈裂与坐标约定。",
+      "route": "order-parameter-lab",
+      "action": "order_parameter_lab",
+      "pathway": "structure-dynamics",
+      "fields": [
+        {
+          "key": "pointGroup",
+          "label": "母群与极向量表示",
+          "type": "select",
+          "default": "c4v",
+          "options": [
+            [
+              "c4v",
+              "C₄ᵥ：二维 (η_x,η_y)"
+            ],
+            [
+              "oh",
+              "O_h：三维 (η_x,η_y,η_z)"
+            ]
+          ]
+        },
+        {
+          "key": "etaX",
+          "label": "η_x（无量纲）",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "etaY",
+          "label": "η_y（无量纲）",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "etaZ",
+          "label": "η_z（三维时使用）",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "a2",
+          "label": "二阶系数 a₂",
+          "type": "number",
+          "default": -1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "b4",
+          "label": "四阶 Ση_i⁴ 系数 b₄",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "c4",
+          "label": "四阶 Σ_{i<j}η_i²η_j² 系数 c₄",
+          "type": "number",
+          "default": 3,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "d6",
+          "label": "六阶 Ση_i⁶ 系数 d₆",
+          "type": "number",
+          "default": 0.1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "e6",
+          "label": "六阶 Σ_{i≠j}η_i⁴η_j² 系数 e₆",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "f6",
+          "label": "六阶 η_x²η_y²η_z² 系数 f₆（三维）",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "fieldX",
+          "label": "外场 h_x：能量项 −h_xη_x",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "basisAngle",
+          "label": "被动坐标旋转角（度）",
+          "type": "number",
+          "default": 30,
+          "min": -360,
+          "max": 360,
+          "step": 5
+        }
+      ],
+      "presets": [
+        {
+          "id": "order-axis",
+          "title": "四重母群：沿x的四个等价方向",
+          "input": {
+            "pointGroup": "c4v",
+            "etaX": 1,
+            "etaY": 0,
+            "etaZ": 0,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0,
+            "basisAngle": 30
+          }
+        },
+        {
+          "id": "order-diagonal",
+          "title": "相同长度、沿对角线：仍有四个轨道态",
+          "input": {
+            "pointGroup": "c4v",
+            "etaX": 0.7071067811865475,
+            "etaY": 0.7071067811865475,
+            "etaZ": 0,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0,
+            "basisAngle": 30
+          }
+        },
+        {
+          "id": "order-cubic-axis",
+          "title": "立方极性序参量：六个轴向畴",
+          "input": {
+            "pointGroup": "oh",
+            "etaX": 0,
+            "etaY": 0,
+            "etaZ": 1,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0,
+            "basisAngle": 30
+          }
+        },
+        {
+          "id": "order-cubic-diagonal",
+          "title": "立方体对角线：八个轨道态",
+          "input": {
+            "pointGroup": "oh",
+            "etaX": 0.5773502691896258,
+            "etaY": 0.5773502691896258,
+            "etaZ": 0.5773502691896258,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0,
+            "basisAngle": 30
+          }
+        },
+        {
+          "id": "order-field",
+          "title": "外场区分立方母群中的六个轴向状态",
+          "input": {
+            "pointGroup": "oh",
+            "etaX": 1,
+            "etaY": 0,
+            "etaZ": 0,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0.3,
+            "basisAngle": 30
+          }
+        },
+        {
+          "id": "order-convention",
+          "title": "一般方向与被动换坐标",
+          "input": {
+            "pointGroup": "oh",
+            "etaX": 0.6,
+            "etaY": 0.8,
+            "etaZ": 0.4,
+            "a2": -1,
+            "b4": 1,
+            "c4": 3,
+            "d6": 0.1,
+            "e6": 0,
+            "f6": 0,
+            "fieldX": 0.2,
+            "basisAngle": 37
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "order-orbit",
+          "preset": "order-axis",
+          "question": "C₄ᵥ 的二维极向量沿x，母群轨道包含几个不同方向？",
+          "choices": [
+            "4",
+            "8",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "母群阶数8，保持该非零向量的稳定子群阶数2，轨道数为8/2=4。不是每个操作都产生新方向。"
+        },
+        {
+          "id": "order-field-splitting",
+          "preset": "order-field",
+          "question": "给立方极向量加入 −h_xη_x 后，六个母群轴向轨道态还全部等能吗？",
+          "choices": [
+            "是，母群不变",
+            "否，外场降低能量函数的对称性",
+            "仅改变坐标名称"
+          ],
+          "answer": 1,
+          "explanation": "该预设h_x=0.3，使+x、−x与垂直x的四个方向出现三种能量。母群轨道不等于外场后全部简并畴。"
+        }
+      ]
+    },
+    {
+      "id": "exchange",
+      "title": "键对称性、交换张量与 DMI",
+      "summary": "逐个生成元约束有向键的交换矩阵，区分轴向自旋与端点交换，再比较经典倾斜、量子能级和坐标约定。",
+      "route": "exchange-symmetry-lab",
+      "action": "exchange_symmetry_lab",
+      "pathway": "spin",
+      "fields": [
+        {
+          "key": "isotropic",
+          "label": "各向同性交换 J（单位：meV；正值偏好反平行）",
+          "type": "number",
+          "default": 1,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "anisotropyX",
+          "label": "无迹对称对角项 Γ_{xx}（单位：meV）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "anisotropyY",
+          "label": "无迹对称对角项 Γ_{yy}（单位：meV；Γ_{zz}=−Γ_{xx}−Γ_{yy}）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "symmetricXY",
+          "label": "对称交换 Γ_{xy}=Γ_{yx}（单位：meV）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "symmetricXZ",
+          "label": "对称交换 Γ_{xz}=Γ_{zx}（单位：meV）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "symmetricYZ",
+          "label": "对称交换 Γ_{yz}=Γ_{zy}（单位：meV）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "dx",
+          "label": "DMI 分量 D_x（单位：meV；有向键 i→j）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "dy",
+          "label": "DMI 分量 D_y（单位：meV；有向键 i→j）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "dz",
+          "label": "DMI 分量 D_z（单位：meV；有向键 i→j）",
+          "type": "number",
+          "default": 0.6,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "inversion",
+          "label": "键中心反演：交换两个端点",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "关闭"
+            ],
+            [
+              1,
+              "保留"
+            ]
+          ]
+        },
+        {
+          "key": "mirrorXY",
+          "label": "包含键的 xy 镜面",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              0,
+              "关闭"
+            ],
+            [
+              1,
+              "保留"
+            ]
+          ]
+        },
+        {
+          "key": "mirrorXZ",
+          "label": "包含键的 xz 镜面",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "关闭"
+            ],
+            [
+              1,
+              "保留"
+            ]
+          ]
+        },
+        {
+          "key": "mirrorYZ",
+          "label": "垂直键的 yz 镜面：交换端点",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "关闭"
+            ],
+            [
+              1,
+              "保留"
+            ]
+          ]
+        },
+        {
+          "key": "rotationOrder",
+          "label": "绕有向键 x 轴旋转",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "不施加旋转"
+            ],
+            [
+              2,
+              "二重旋转"
+            ],
+            [
+              4,
+              "四重旋转"
+            ]
+          ]
+        },
+        {
+          "key": "conventionAngle",
+          "label": "仅换坐标：新坐标轴绕旧 z 轴转角（°）",
+          "type": "number",
+          "default": 0,
+          "min": -180,
+          "max": 180,
+          "step": 5
+        },
+        {
+          "key": "swapSites",
+          "label": "仅换约定：是否交换端点标签 i、j",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "保持 i→j"
+            ],
+            [
+              1,
+              "交换 i 与 j"
+            ]
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "exchange-plane",
+          "title": "包含键的镜面：只允许法向D",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0,
+            "dy": 0,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-inversion",
+          "title": "加上键中心反演：DMI消失",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0.3,
+            "dy": 0.4,
+            "dz": 0.6,
+            "inversion": 1,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-perpendicular",
+          "title": "垂直键的镜面：端点交换的作用",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0.3,
+            "dy": 0.4,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 0,
+            "mirrorXZ": 0,
+            "mirrorYZ": 1,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-axis",
+          "title": "四重键轴：轴向D与相等横向交换",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0.3,
+            "anisotropyY": 0.7,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0.2,
+            "dx": 0.5,
+            "dy": 0.4,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 0,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 4,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-convention",
+          "title": "同一相互作用：换坐标并反转键标签",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0,
+            "dy": 0,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 37,
+            "swapSites": 1
+          }
+        },
+        {
+          "id": "exchange-heisenberg",
+          "title": "无DMI的Heisenberg单重态与三重态",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0,
+            "dy": 0,
+            "dz": 0,
+            "inversion": 0,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-order-axis",
+          "title": "项目：剩余 xz 镜面的磁键",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0.3,
+            "dy": 0.4,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 0,
+            "mirrorXZ": 1,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-order-convention",
+          "title": "项目：同一磁键的坐标与端点约定",
+          "input": {
+            "isotropic": 1,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0.3,
+            "dy": 0.4,
+            "dz": 0.6,
+            "inversion": 0,
+            "mirrorXY": 0,
+            "mirrorXZ": 1,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 37,
+            "swapSites": 1
+          }
+        },
+        {
+          "id": "exchange-dynamics-dmi",
+          "title": "项目：对接 1rad/ns 的允许 DMI",
+          "input": {
+            "isotropic": 0.0006582119569,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0,
+            "dy": 0,
+            "dz": 0.00039492717414,
+            "inversion": 0,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        },
+        {
+          "id": "exchange-dynamics-inversion",
+          "title": "项目：对接 1rad/ns 的反演键",
+          "input": {
+            "isotropic": 0.0006582119569,
+            "anisotropyX": 0,
+            "anisotropyY": 0,
+            "symmetricXY": 0,
+            "symmetricXZ": 0,
+            "symmetricYZ": 0,
+            "dx": 0,
+            "dy": 0,
+            "dz": 0.00039492717414,
+            "inversion": 1,
+            "mirrorXY": 1,
+            "mirrorXZ": 0,
+            "mirrorYZ": 0,
+            "rotationOrder": 0,
+            "conventionAngle": 0,
+            "swapSites": 0
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "exchange-inversion-dmi",
+          "preset": "exchange-inversion",
+          "question": "保留键中心反演后，输入非零Dx、Dy、Dz会怎样？",
+          "choices": [
+            "三个D分量都被禁止",
+            "只禁止Dx",
+            "DMI变成更大的各向同性交换"
+          ],
+          "answer": 0,
+          "explanation": "反演不改变轴向自旋的分量，却交换两个端点，因此J=J^T，反对称交换D=0。"
+        },
+        {
+          "id": "exchange-label-reversal",
+          "preset": "exchange-convention",
+          "question": "仅交换端点标签并一致换坐标，双自旋能谱会怎样？",
+          "choices": [
+            "能谱保持不变",
+            "所有能量变号",
+            "能谱必须分裂得更大"
+          ],
+          "answer": 0,
+          "explanation": "J转置并作正交相似变换，等价于量子自旋的交换与换基；D分量可变，但四个能量保持。"
+        }
+      ]
+    },
+    {
+      "id": "conservation",
+      "title": "连续对称性、守恒量与简并保护",
+      "summary": "逐项检查生成元的对易子与Lindblad伴随作用，比较实际轨迹、时间反演保护和一致换基。",
+      "pathway": "continuous",
+      "route": "conservation-lab",
+      "action": "conservation_lab",
+      "fields": [
+        {
+          "key": "experiment",
+          "label": "自旋模型",
+          "type": "select",
+          "default": "pair",
+          "options": [
+            [
+              "pair",
+              "两个自旋1/2"
+            ],
+            [
+              "single",
+              "单个自旋1/2"
+            ]
+          ]
+        },
+        {
+          "key": "initialState",
+          "label": "初态（反平行、单重态仅限双自旋）",
+          "type": "select",
+          "default": "plus_x",
+          "options": [
+            [
+              "up",
+              "↑ / ↑↑"
+            ],
+            [
+              "down",
+              "↓ / ↓↓"
+            ],
+            [
+              "plus_x",
+              "+x / +x⊗+x"
+            ],
+            [
+              "antiparallel",
+              "↑↓"
+            ],
+            [
+              "singlet",
+              "双自旋单重态"
+            ],
+            [
+              "mixed",
+              "最大混合态 I/d"
+            ]
+          ]
+        },
+        {
+          "key": "observable",
+          "label": "重点检查的观测量",
+          "type": "select",
+          "default": "sz",
+          "options": [
+            [
+              "sx",
+              "总自旋 S_x"
+            ],
+            [
+              "sy",
+              "总自旋 S_y"
+            ],
+            [
+              "sz",
+              "总自旋 S_z"
+            ],
+            [
+              "s2",
+              "总自旋 S²"
+            ],
+            [
+              "energy",
+              "H/ℏ"
+            ]
+          ]
+        },
+        {
+          "key": "jx",
+          "label": "交换 J_x（rad/ns）",
+          "type": "number",
+          "default": 1,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "jy",
+          "label": "交换 J_y（rad/ns）",
+          "type": "number",
+          "default": 1,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "jz",
+          "label": "交换 J_z（rad/ns）",
+          "type": "number",
+          "default": 1,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "fieldX",
+          "label": "统一横场系数 h_x（rad/ns）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "fieldZ",
+          "label": "统一纵场系数 h_z（rad/ns）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "gradientZ",
+          "label": "纵场差 δ（rad/ns；两站点差，系数为δ/2）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "gamma1",
+          "label": "独立 ↑→↓ 弛豫率 γ_1（ns⁻¹）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "gammaPhi",
+          "label": "独立z纯退相干率 γ_φ（ns⁻¹）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "duration",
+          "label": "演化时间（ns）",
+          "type": "number",
+          "default": 8,
+          "min": 0,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "points",
+          "label": "采样点数",
+          "type": "number",
+          "default": 161,
+          "min": 2,
+          "max": 301,
+          "step": 1
+        },
+        {
+          "key": "basisAngle",
+          "label": "约定对照：绕y的被动换基角（度）",
+          "type": "number",
+          "default": 45,
+          "min": -180,
+          "max": 180,
+          "step": 5
+        }
+      ],
+      "presets": [
+        {
+          "id": "conservation-su2",
+          "title": "各向同性交换：三个旋转生成元守恒",
+          "input": {
+            "experiment": "pair",
+            "initialState": "plus_x",
+            "observable": "sx",
+            "jx": 1,
+            "jy": 1,
+            "jz": 1,
+            "fieldX": 0,
+            "fieldZ": 0,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-u1",
+          "title": "XXZ：保留z连续旋转",
+          "input": {
+            "experiment": "pair",
+            "initialState": "plus_x",
+            "observable": "sx",
+            "jx": 1,
+            "jy": 1,
+            "jz": 1.7,
+            "fieldX": 0,
+            "fieldZ": 0,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-discrete",
+          "title": "XYZ：离散旋转不保证Sz守恒",
+          "input": {
+            "experiment": "pair",
+            "initialState": "up",
+            "observable": "sz",
+            "jx": 1,
+            "jy": 0.4,
+            "jz": 1.7,
+            "fieldX": 0,
+            "fieldZ": 0,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-bath",
+          "title": "相同交换加入局域纯退相干",
+          "input": {
+            "experiment": "pair",
+            "initialState": "plus_x",
+            "observable": "sx",
+            "jx": 1,
+            "jy": 1,
+            "jz": 1,
+            "fieldX": 0,
+            "fieldZ": 0,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0.2,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-kramers",
+          "title": "单自旋：无场Kramers配对",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "observable": "sz",
+            "jx": 0,
+            "jy": 0,
+            "jz": 0,
+            "fieldX": 0,
+            "fieldZ": 0,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-field",
+          "title": "单自旋：纵场破坏时间反演",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "observable": "sx",
+            "jx": 0,
+            "jy": 0,
+            "jz": 0,
+            "fieldX": 0,
+            "fieldZ": 0.6,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 8,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-density-unitary",
+          "title": "与密度矩阵对照：纵场闭系统",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "observable": "sz",
+            "jx": 0,
+            "jy": 0,
+            "jz": 0,
+            "fieldX": 0,
+            "fieldZ": 0.6,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "duration": 12,
+            "points": 161,
+            "basisAngle": 45
+          }
+        },
+        {
+          "id": "conservation-density-bath",
+          "title": "与密度矩阵对照：Sz守恒而相干衰减",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "observable": "sz",
+            "jx": 0,
+            "jy": 0,
+            "jz": 0,
+            "fieldX": 0,
+            "fieldZ": 0.6,
+            "gradientZ": 0,
+            "gamma1": 0,
+            "gammaPhi": 0.25,
+            "duration": 12,
+            "points": 161,
+            "basisAngle": 45
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "conservation-su2-predict",
+          "preset": "conservation-su2",
+          "question": "各向同性交换中，每个交换项与S_x的对易子都必须单独为零吗？",
+          "choices": [
+            "必须，每项都单独为零",
+            "不必，y与z项的对易子可相消",
+            "不必检查对易子"
+          ],
+          "answer": 1,
+          "explanation": "J_y=J_z时两项贡献相消，完整Hamiltonian与总S_x对易。先求矩阵和，再求范数。"
+        },
+        {
+          "id": "conservation-bath-predict",
+          "preset": "conservation-bath",
+          "question": "各向同性交换保留SU(2)，加入局域z纯退相干后总S_x仍必然守恒吗？",
+          "choices": [
+            "是，Hamiltonian对称足够",
+            "否，还要检查完整L†S_x",
+            "只要选取单重态就对所有初态守恒"
+          ],
+          "answer": 1,
+          "explanation": "Hamiltonian部分与S_x对易，但局域z纯退相干使L†S_x=−γ_φ S_x；对所有初态的守恒已被破坏。"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "order-isotropy",
+      "module": "order",
+      "title": "从序参量方向到保留操作与畴",
+      "summary": "把指定状态的对称性、能量函数的对称性和等价状态轨道分开计算。",
+      "preset": "order-cubic-axis",
+      "references": [
+        "order-isodistort"
+      ],
+      "sections": [
+        {
+          "title": "先声明表示",
+          "text": "本实验中序参量是C₄ᵥ的二维极向量，或O_h的三维极向量。点群矩阵作用于η；O_h极向量的反演为−I。氧八面体转动是轴向量，不能直接套用此反演规则。",
+          "formula": "η → D(g)η"
+        },
+        {
+          "title": "状态的稳定子群",
+          "text": "逐个操作检验D(g)η=η，保留下来的操作构成稳定子群。零向量保留母群；非零方向可以降对称。计算采用1e−9的数值比较阈值，实际矩阵以精确整数生成。",
+          "formula": "H_η = {g ∈ G : D(g)η = η}"
+        },
+        {
+          "title": "轨道不等于操作列表",
+          "text": "不同操作可能把η送到同一个方向，所以需要去重。O_h沿坐标轴产生六个方向，沿体对角线产生八个；它们来自不同稳定子群。仅指定方向尚未证明自由能在此达到极小。",
+          "formula": "|Gη| = |G| / |H_η|"
+        },
+        {
+          "title": "材料联系与边界",
+          "text": "BaTiO₃极化的轴向或对角线方向可作为图像背景；本工具没有自动构造真实原子位移、空间群子群、平移畴或实验相图。请到结构畸变和相变模块研究给定模式与能量。"
+        }
+      ]
+    },
+    {
+      "id": "order-invariants",
+      "module": "order",
+      "title": "逐个生成元推导允许的自由能项",
+      "summary": "从单项式群平均得到独立不变量，再用实际系数画能面截线。",
+      "preset": "order-axis",
+      "references": [
+        "order-isotropy"
+      ],
+      "sections": [
+        {
+          "title": "从一个单项式开始",
+          "text": "对η_x²等单项式施加所有群操作并平均。被符号相消的单项式不产生不变量；等价单项式给出重复的轨道和。保留独立轨道和后可选最小整数系数归一。",
+          "formula": "P_G f(η) = (1/|G|) Σ_g f(D(g)η)"
+        },
+        {
+          "title": "约束有可追溯来源",
+          "text": "点击某条系数关系，可看到生成元矩阵、变换前后的指数和符号。镜面使η_xη_y变号，要求它的系数为零；四重旋转则要求η_x²与η_y²的系数相同。",
+          "formula": "F(D(g)η) = F(η)"
+        },
+        {
+          "title": "允许形式不决定系数",
+          "text": "C₄ᵥ在二、四、六阶分别有1、2、2个独立不变量；O_h分别有1、2、3个。系数是教学输入，对称性不决定正负或大小。二阶连续各向同性可以只是低阶截断的偶然性质。",
+          "formula": "F = a₂ I₂ + b₄ I₄a + c₄ I₄b + d₆ I₆a + e₆ I₆b + f₆ I₆c"
+        },
+        {
+          "title": "径向极小与完整稳定",
+          "text": "沿所选方向解一元多项式的全部实驻点；它们不等于多维自由能的全部极小。角向扫描固定xy半径和z分量；曲线平坦或局部极小不能单独证明热力学相。最高阶有界性使用充分条件，并明确未通过时的限制。"
+        }
+      ]
+    },
+    {
+      "id": "order-field-convention",
+      "module": "order",
+      "title": "显式破缺、畴能量与坐标约定",
+      "summary": "区分改变外场这个物理操作和被动改变坐标这个记号操作。",
+      "preset": "order-convention",
+      "references": [
+        "order-isodistort",
+        "order-isotropy"
+      ],
+      "sections": [
+        {
+          "title": "外场不是自动保留母群",
+          "text": "加入固定实验室x方向的线性场后，只保留同时使场不变的操作。母群轨道仍用于比较，但其不同方向可出现能量劈裂。",
+          "formula": "F_h(η) = F₀(η) − h·η"
+        },
+        {
+          "title": "三个群的区别",
+          "text": "分别观察母群G、使外场不变的能量对称群G_h，以及使场与状态都不变的交集。不能只根据某个状态的稳定子群宣布整个Hamiltonian已经自发破缺。",
+          "formula": "H_{η,h} = H_η ∩ G_h"
+        },
+        {
+          "title": "被动坐标变换",
+          "text": "Q的列是新坐标轴在旧坐标中的分量。η、场、群矩阵和能量表达式必须同时变换；仅旋转序参量但不改能量各向异性通常是改变物理状态。",
+          "formula": "η′ = Qᵀη；D′ = Qᵀ D Q；F′(η′) = F(Qη′)"
+        },
+        {
+          "title": "验证而非逐项对号",
+          "text": "比较两种坐标下的能量、稳定子群阶数和操作作用的协变残差。矩阵元素改变是正常现象；能量和轨道计数才是此处需要保持的结果。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-bond-constraints",
+      "module": "exchange",
+      "title": "从一条键的对称性得到允许交换",
+      "summary": "同一个空间操作既变换自旋分量，也可能交换键的两个端点。",
+      "preset": "exchange-plane",
+      "references": [
+        "exchange-moriya",
+        "exchange-feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "先声明有向键和自旋约定",
+          "text": "把i放在(−1/2,0,0)、j放在(1/2,0,0)。J是实3×3矩阵，量子自旋S=σ/2无量纲，所有交换系数单位为meV。翻转箭头不是新增相互作用。",
+          "formula": "H_{ij}=S_i^T J_{ij} S_j"
+        },
+        {
+          "title": "自旋是轴向量",
+          "text": "空间位置按R变换，真实自旋按A=det(R)R变换。反演使位置反向而保持自旋分量；镜面下不能把自旋当作普通位移。",
+          "formula": "A=det(R)R"
+        },
+        {
+          "title": "端点交换决定是否转置",
+          "text": "操作保持两个端点时，变换后的能量由A^TJA给出；操作交换端点时，需要再把自旋次序恢复为i在左、j在右，因此出现J^T。界面会列出该操作生成的每一条线性系数关系。",
+          "formula": "J=A^T J A；J=A^T J^T A"
+        },
+        {
+          "title": "一个生成元的结论与完整群",
+          "text": "沿x的键位于xy镜面内，允许的D垂直于这个镜面；键中心反演要求J对称，禁止全部DMI。程序对所选生成元求共同解，并检查生成群闭包。对称性只决定允许空间，不给出真实材料的交换大小。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-classical-quantum",
+      "module": "exchange",
+      "title": "经典倾斜与量子能级是不同问题",
+      "summary": "相同交换矩阵作用于单位经典箭头或自旋1/2算符时，结果的解释和归一化不同。",
+      "preset": "exchange-plane",
+      "references": [
+        "exchange-moriya",
+        "exchange-feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "把交换矩阵拆开",
+          "text": "J的迹给出各向同性部分，对称无迹部分给出各向异性，反对称部分对应D·(Si×Sj)。本站约定Jxy−Jyx=2Dz，先核对这个符号再比较文献。",
+          "formula": "J=J_{iso} I+Γ+K(D)；H_D=D·(S_i×S_j)"
+        },
+        {
+          "title": "单位经典箭头的全局极小值",
+          "text": "对两个单位向量，最低双线性能量等于J最大奇异值的负值。左右奇异向量给出一个极小态代表；简并时代表不唯一。另画出的xy平面试探曲线固定第一个自旋，不能普遍等同于全局最小值。",
+          "formula": "E_{min}=−s_{max}(J)"
+        },
+        {
+          "title": "量子二聚体直接对角化",
+          "text": "用σa⊗σb/4构造4×4矩阵。当只有各向同性反铁磁J时，单重态能量−3J/4，三重态能量J/4。经典能量−J与量子能量−3J/4不能未经归一化就相等比较。",
+          "formula": "H=Σ_{ab} J_{ab} σ_a⊗σ_b/4"
+        },
+        {
+          "title": "倾斜箭头不是量子局域磁矩",
+          "text": "界面报告量子基态简并子空间的等权密度矩阵和自旋关联。两个自旋1/2整体的时间反演平方是+1，时间反演本身不保证Kramers配对；能级简并也可能依赖特殊参数。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-conventions",
+      "module": "exchange",
+      "title": "换坐标、交换端点与可比较的物理结果",
+      "summary": "区别改变对称约束、改变相互作用和仅改变表示约定。",
+      "preset": "exchange-convention",
+      "references": [
+        "exchange-moriya",
+        "exchange-feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "坐标轴旋转采用被动约定",
+          "text": "新轴相对旧轴绕z旋转θ，分量满足v′=Q^Tv。交换矩阵随两侧自旋分量一致变换；这里是右手坐标轴的正交旋转。",
+          "formula": "J′=Q^T J Q；D′=Q^T D"
+        },
+        {
+          "title": "交换有向键的端点",
+          "text": "把i与j互换后，J变为J^T，D变号。与此同时叉积中的两个自旋也交换次序，能量不会因此改变。",
+          "formula": "J_{ji}=J_{ij}^T；D_{ji}=−D_{ij}"
+        },
+        {
+          "title": "用不变量而非分量外观比较",
+          "text": "界面同时列出原张量、换约定后的张量和两套量子能级。矩阵元素看起来不同，四个能量、经典极小能量与自旋夹角应保持。改变对称性开关则可能真正改变模型。"
+        },
+        {
+          "title": "与材料模型的连接",
+          "text": "这里使用一条抽象键说明Moriya约束。可连接磁振子和有效自旋共振课程，但不从一条键自动推断晶格磁序，也不将教学D值当作某种材料的计算结果。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-generators",
+      "module": "conservation",
+      "title": "从连续旋转到完整算符守恒",
+      "summary": "用生成元与对易子连接SU(2)、U(1)、离散对称和实际动力学。",
+      "preset": "conservation-su2",
+      "references": [
+        "conservation-tong",
+        "conservation-qutip"
+      ],
+      "sections": [
+        {
+          "title": "Noether主线与本实验的范围",
+          "text": "连续作用量对称性联系守恒量；本实验使用有限量子系统的对应判据。对不显含时间的Hermitian算符Q，所有初态都守恒等价于完整Hamiltonian与Q对易。有限两自旋模型不能验证热力学极限自发破缺。",
+          "formula": "U(θ)=exp(−iθQ)；d⟨Q⟩/dt=i⟨[H/ℏ,Q]⟩"
+        },
+        {
+          "title": "从SU(2)到U(1)",
+          "text": "全局旋转生成元是两个自旋之和。各向同性交换与三个分量都对易。XXZ保留绕z连续旋转，但一般不保留绕x和y连续旋转。均匀纵场也保留Sz。仅有S²守恒并不保证SU(2)：本双自旋1/2的无梯度XYZ模型也可保留S²，却不保留三个旋转生成元。",
+          "formula": "S_α=S_{Aα}+S_{Bα}；H/ℏ=Σ_α J_α S_{Aα}S_{Bα}+h_x S_x+h_z S_z"
+        },
+        {
+          "title": "逐项不守恒可以相消",
+          "text": "各向同性交换的y项、z项分别与Sx不对易，但两者的矩阵贡献相消。只把逐项范数相加会错误地宣布破缺；点击约束来源应同时查看矩阵和完整残差。",
+          "formula": "[H_y+H_z,S_x]=[H_y,S_x]+[H_z,S_x]"
+        },
+        {
+          "title": "离散旋转不是同一个条件",
+          "text": "无场XYZ可以保留π旋转，却不保留由相同轴生成的任意角旋转。有限角度的对易关系不能直接替代生成元的对易关系；坐标轴均不守恒也不排除某个斜轴上的额外对称。",
+          "formula": "[H,exp(−iπS_z)]=0 不推出 [H,S_z]=0"
+        }
+      ]
+    },
+    {
+      "id": "conservation-open",
+      "module": "conservation",
+      "title": "Hamiltonian对称与耗散系统守恒",
+      "summary": "区分模型的算符恒等式、一个初态的平坦轨迹和浴通道的影响。",
+      "preset": "conservation-bath",
+      "references": [
+        "conservation-lindblad",
+        "conservation-qutip"
+      ],
+      "sections": [
+        {
+          "title": "检查整个生成元",
+          "text": "Lindblad主方程把Hamiltonian演化和每个耗散通道一起定义。对时间无关Q，d⟨Q⟩/dt=⟨L†Q⟩；若要对所有初态守恒，须使完整算符L†Q为零。",
+          "formula": "L†Q=i[H/ℏ,Q]+Σ_c(C_c†QC_c−{C_c†C_c,Q}/2)"
+        },
+        {
+          "title": "纯退相干会保留什么",
+          "text": "本实验各站点的z通道使横向总自旋衰减，对总Sz的耗散贡献为零。若Hamiltonian本身还与Sz对易，则Sz保持守恒。加入↑→↓弛豫后，Sz通常不再守恒。",
+          "formula": "C_φ=√(γ_φ/2)σ_z；D†S_x=−γ_φ S_x"
+        },
+        {
+          "title": "平坦曲线并不能证明对称性",
+          "text": "闭系统的最大混合态I/d在任何时间无关Hamiltonian下不变。即使[H,Sz]不为零，它的⟨Sz⟩也一直为零。应把轨迹与算符残差并排比较，再改变初态。",
+          "formula": "[H,I/d]=0"
+        },
+        {
+          "title": "数值轨迹与实际物理模型",
+          "text": "计算使用常量生成元矩阵指数，并检查迹、厄米性与半正定性。采样过稀可能漏掉振荡，但不应该改变同一时刻的物理态；本地浴并不自动满足真实材料的详细平衡。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-protection",
+      "module": "conservation",
+      "title": "时间反演保护与一致换基",
+      "summary": "用物理反幺正算符判断简并来源，再验证换基后的不变量。",
+      "preset": "conservation-kramers",
+      "references": [
+        "conservation-kramers",
+        "conservation-qutip"
+      ],
+      "sections": [
+        {
+          "title": "先指定物理时间反演",
+          "text": "单自旋1/2的物理时间反演可写成T=−iσ_yK，平方为−I。两个可区分自旋的总时间反演作用于两者，平方为+I；不能把其中一个自旋的Kramers条件直接套在整体。",
+          "formula": "T=U_T K；T²=U_T U_T*"
+        },
+        {
+          "title": "简并需要保护条件",
+          "text": "对于本实验没有动量标签的有限Hamiltonian，T²=−I且T与H对易保证Kramers配对。单自旋外场破坏T，扫描εSz可观察能级分裂。双自旋T²=+I本身没有这个结论。",
+          "formula": "U_T H* U_T†=H"
+        },
+        {
+          "title": "双自旋多重态的其他来源",
+          "text": "各向同性交换的三重态简并可由SU(2)解释；它不是T²=+I带来的Kramers简并。对于其他数值重合，程序只报告能级重数，不把重合一律命名为偶然或拓扑保护。"
+        },
+        {
+          "title": "换基必须同时改变所有对象",
+          "text": "对新基矢=旧基矢×U，H、Q、ρ及每个C均变为U†AU，反幺正矩阵变为U†U_T U*。计算比较能级、期望值、演化态和伴随作用的协变性；被动换基不同于实际转动样品而固定外场。",
+          "formula": "A′=U†AU；ρ′=U†ρU；U_T′=U†U_T U*"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "order-isotropy-exercise",
+      "module": "order",
+      "lesson": "order-isotropy",
+      "title": "由六个轴向方向推回稳定子群",
+      "prompt": "使用立方轴向预设，先推导再计算。",
+      "steps": [
+        {
+          "prompt": "O_h的极向量反演矩阵是什么？",
+          "hint": "极向量在反演下变号。",
+          "choices": [
+            "−I",
+            "I",
+            "仅交换x和y"
+          ],
+          "answer": 0,
+          "explanation": "反演把非零极性向量η变为−η。"
+        },
+        {
+          "prompt": "由(0,0,1)能得到多少不同轴向方向？",
+          "hint": "计数正负三个坐标轴。",
+          "choices": [
+            "3",
+            "6",
+            "48"
+          ],
+          "answer": 1,
+          "explanation": "六个方向为±x、±y、±z。"
+        },
+        {
+          "prompt": "母群阶数48，轨道为6，稳定子群阶数是多少？",
+          "hint": "使用轨道—稳定子关系。",
+          "choices": [
+            "48",
+            "6",
+            "8"
+          ],
+          "answer": 2,
+          "explanation": "48/6=8，当前方向的点群为C₄ᵥ。"
+        },
+        {
+          "prompt": "指定η沿z是否已经证明这是平衡铁电相？",
+          "hint": "状态对称性与能量极小是不同检查。",
+          "choices": [
+            "没有，还需能量与完整稳定性",
+            "已经证明所有温度稳定",
+            "只需看到η非零"
+          ],
+          "answer": 0,
+          "explanation": "需检查能量、曲率与模型范围，不能由轨道计数推出相图。"
+        }
+      ]
+    },
+    {
+      "id": "order-invariants-exercise",
+      "module": "order",
+      "lesson": "order-invariants",
+      "title": "用镜面和旋转排除错误自由能",
+      "prompt": "在C₄ᵥ二维极向量中逐步构造允许项。",
+      "steps": [
+        {
+          "prompt": "xz镜面作用下η_xη_y怎样变化？",
+          "hint": "η_x不变，η_y变号。",
+          "choices": [
+            "变号",
+            "不变",
+            "变成常数"
+          ],
+          "answer": 0,
+          "explanation": "因此该项若单独出现，其系数必须为零。"
+        },
+        {
+          "prompt": "四重旋转对aη_x²+bη_y²施加什么约束？",
+          "hint": "交换两项后能量应相同。",
+          "choices": [
+            "a=−b",
+            "a=b",
+            "a和b均必须为0"
+          ],
+          "answer": 1,
+          "explanation": "旋转要求两个二次项系数一致。"
+        },
+        {
+          "prompt": "两个独立四阶不变量是哪一组？",
+          "hint": "检查镜面与四重旋转。",
+          "choices": [
+            "η_x⁴、η_y⁴各自独立",
+            "η_xη_y、η_x³η_y",
+            "η_x⁴+η_y⁴，η_x²η_y²"
+          ],
+          "answer": 2,
+          "explanation": "轨道和提供两个线性独立的四阶不变量。"
+        },
+        {
+          "prompt": "对称性允许c₄意味着什么？",
+          "hint": "允许不等于决定。",
+          "choices": [
+            "其值仍需物理模型或输入确定",
+            "其值必为1",
+            "其值一定非零"
+          ],
+          "answer": 0,
+          "explanation": "对称约束确定形式，不能给出真实材料的参数大小。"
+        }
+      ]
+    },
+    {
+      "id": "order-field-convention-exercise",
+      "module": "order",
+      "lesson": "order-field-convention",
+      "title": "分清场驱动变化与坐标变化",
+      "prompt": "使用外场预设和一般方向换坐标预设。",
+      "steps": [
+        {
+          "prompt": "加入−h_xη_x且h_x>0时，±x哪一个能量更低？",
+          "hint": "母群不变量对正负x相同，线性项不同。",
+          "choices": [
+            "−x",
+            "+x",
+            "仍必定相同"
+          ],
+          "answer": 1,
+          "explanation": "+x对应负的线性场能，较−x低。"
+        },
+        {
+          "prompt": "有外场后母群六个轴向状态还能都称简并畴吗？",
+          "hint": "检查每个状态的实际能量。",
+          "choices": [
+            "不能，母群轨道可被外场劈裂",
+            "可以，因为空间方向仍有6个",
+            "只看轨道数即可"
+          ],
+          "answer": 0,
+          "explanation": "应采用外场后能量函数的对称群来判断对称保护的等能。"
+        },
+        {
+          "prompt": "换到Q定义的新坐标时，群矩阵应如何变？",
+          "hint": "用η=Qη′代入Dη。",
+          "choices": [
+            "QD",
+            "DQ",
+            "QᵀDQ"
+          ],
+          "answer": 2,
+          "explanation": "序参量与操作须一致换基，才保持作用关系。"
+        },
+        {
+          "prompt": "何者应在被动换坐标下保持？",
+          "hint": "矩阵条目不必相同。",
+          "choices": [
+            "每个矩阵元素",
+            "能量和稳定子群阶数",
+            "η_x的数值"
+          ],
+          "answer": 1,
+          "explanation": "不变量结果保持，坐标分量与矩阵元素一般改变。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-bond-exercise",
+      "module": "exchange",
+      "lesson": "exchange-bond-constraints",
+      "title": "逐步推导键中心反演如何禁止DMI",
+      "prompt": "先保留包含键的xy镜面，再打开键中心反演；把位置变换、自旋变换和端点次序分别写清。",
+      "steps": [
+        {
+          "prompt": "空间反演R=−I对轴向自旋的变换矩阵是什么？",
+          "hint": "计算det(R)R。",
+          "choices": [
+            "A=I",
+            "A=−I",
+            "A=0"
+          ],
+          "answer": 0,
+          "explanation": "det(−I)=−1，所以A=I；自旋是轴向量。"
+        },
+        {
+          "prompt": "键中心反演是否交换i、j？",
+          "hint": "两个端点位于x=±1/2。",
+          "choices": [
+            "不交换",
+            "交换",
+            "只交换z分量"
+          ],
+          "answer": 1,
+          "explanation": "反演把两端点互换，需要把输出的自旋次序重新排为i在左。"
+        },
+        {
+          "prompt": "能量不变给出哪条矩阵条件？",
+          "hint": "A=I，但端点交换。",
+          "choices": [
+            "J=−J",
+            "J=0",
+            "J=J^T"
+          ],
+          "answer": 2,
+          "explanation": "反演约束去掉反对称部分，保留任意实对称交换矩阵。"
+        },
+        {
+          "prompt": "D向量的结论是什么？",
+          "hint": "D由J的反对称部分给出。",
+          "choices": [
+            "D=0，但对称交换仍可存在",
+            "所有交换都为0",
+            "D大小由点群唯一决定"
+          ],
+          "answer": 0,
+          "explanation": "反演禁止DMI；它没有要求各向同性或全部对称各向异性也消失。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-classical-exercise",
+      "module": "exchange",
+      "lesson": "exchange-classical-quantum",
+      "title": "从双线性型走到经典倾斜与量子能谱",
+      "prompt": "先用J=1meV、D=0，再加载Dz=0.6meV；分别读取经典和量子结果。",
+      "steps": [
+        {
+          "prompt": "只有J=1时，单位经典反平行箭头的能量是多少？",
+          "hint": "单位箭头点积为−1。",
+          "choices": [
+            "−1meV",
+            "−3/4meV",
+            "+1/4meV"
+          ],
+          "answer": 0,
+          "explanation": "经典单位箭头的能量为J n1·n2=−1meV。"
+        },
+        {
+          "prompt": "同一个J下，自旋1/2量子单重态的能量是多少？",
+          "hint": "Si·Sj=(Stot²−Si²−Sj²)/2。",
+          "choices": [
+            "−1meV",
+            "−3/4meV",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "每个自旋有Si²=3/4，单重态Stot²=0，所以能量−3J/4。"
+        },
+        {
+          "prompt": "对J I加Dz的二维反对称块，经典全局最低能量是什么？",
+          "hint": "该块的最大奇异值为sqrt(J²+Dz²)。",
+          "choices": [
+            "−J−Dz",
+            "−J/4",
+            "−sqrt(J²+Dz²)"
+          ],
+          "answer": 2,
+          "explanation": "单位向量双线性型的下界是最大奇异值的负值。"
+        },
+        {
+          "prompt": "经典倾斜图是否证明量子基态有相同局域磁矩？",
+          "hint": "比较经典向量与量子基态密度矩阵中〈Si〉。",
+          "choices": [
+            "不能，需单独计算量子期望值",
+            "能，图中的箭头就是量子期望值",
+            "只要能量为负就能"
+          ],
+          "answer": 0,
+          "explanation": "两者是不同模型的态；有限量子二聚体的基态关联不等于经典局域箭头。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-convention-exercise",
+      "module": "exchange",
+      "lesson": "exchange-conventions",
+      "title": "用端点交换和转轴检查DMI符号约定",
+      "prompt": "加载约定对照预设，先看交换标签，再看37°被动转轴。",
+      "steps": [
+        {
+          "prompt": "只把i和j标签交换，交换矩阵怎样变？",
+          "hint": "将Sj^T J Si重写为Si在左。",
+          "choices": [
+            "J^T",
+            "−J",
+            "J⁻¹"
+          ],
+          "answer": 0,
+          "explanation": "标量相互作用在交换顺序后对应转置矩阵。"
+        },
+        {
+          "prompt": "相应的D向量怎样变？",
+          "hint": "反对称矩阵转置变号。",
+          "choices": [
+            "大小加倍",
+            "D→−D",
+            "保持所有分量不变"
+          ],
+          "answer": 1,
+          "explanation": "D翻转与Si×Sj翻转同时发生，物理能量不变。"
+        },
+        {
+          "prompt": "按v′=Q^Tv换坐标，矩阵怎样变？",
+          "hint": "用旧分量v=Qv′代回双线性型。",
+          "choices": [
+            "QJQ^T",
+            "Q^TJ",
+            "Q^TJQ"
+          ],
+          "answer": 2,
+          "explanation": "两侧分量都须同时变换，得到被动坐标公式。"
+        },
+        {
+          "prompt": "哪一项最适合核对这只是约定改变？",
+          "hint": "不要只逐元素比较不同坐标的J。",
+          "choices": [
+            "四个量子能级和经典最小能量",
+            "Jxy必须逐项相等",
+            "Dz必须保持正号"
+          ],
+          "answer": 0,
+          "explanation": "完整能谱与标量能量保持，分量和D符号可随约定改变。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-generators-exercise",
+      "module": "conservation",
+      "lesson": "conservation-generators",
+      "title": "逐项检查SU(2)到U(1)的破缺",
+      "prompt": "依次比较各向同性、XXZ和XYZ预设，保留系数单位与S=σ/2约定。",
+      "steps": [
+        {
+          "prompt": "对于所有初态的闭系统Q守恒，应检查哪个量？",
+          "hint": "Q不显含时间，检查算符恒等式。",
+          "choices": [
+            "一条曲线是否平坦",
+            "完整[H,Q]是否为零",
+            "Q的迹是否为零"
+          ],
+          "answer": 1,
+          "explanation": "完整对易子为零才给出对所有初态的保证。"
+        },
+        {
+          "prompt": "各向同性交换的每一项都必须与Sx单独对易吗？",
+          "hint": "矩阵相加后再计算范数。",
+          "choices": [
+            "必须",
+            "不必，非零贡献可能相消",
+            "只有初态纯时必须"
+          ],
+          "answer": 1,
+          "explanation": "y和z交换项的贡献在Jy=Jz时相消。"
+        },
+        {
+          "prompt": "XXZ中Jx=Jy≠Jz且无横场，哪个坐标轴生成元仍守恒？",
+          "hint": "绕z旋转会混合x与y分量。",
+          "choices": [
+            "Sx",
+            "Sy",
+            "Sz"
+          ],
+          "answer": 2,
+          "explanation": "Jx=Jy保留绕z的连续旋转。"
+        },
+        {
+          "prompt": "XYZ保留绕z的π旋转，是否必然保留Sz？",
+          "hint": "有限角度对称性弱于任意角度连续对称。",
+          "choices": [
+            "是",
+            "否，须另查[H,Sz]",
+            "只有将单位改成eV后才守恒"
+          ],
+          "answer": 1,
+          "explanation": "离散旋转不自动给出连续生成元守恒。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-open-exercise",
+      "module": "conservation",
+      "lesson": "conservation-open",
+      "title": "识别一条平坦轨迹造成的误判",
+      "prompt": "先用最大混合态运行闭系统XYZ，再加入不同浴通道。",
+      "steps": [
+        {
+          "prompt": "闭系统初态I/d的期望值不变，证明所有Q都守恒吗？",
+          "hint": "一个初态不等于所有初态。",
+          "choices": [
+            "证明",
+            "不证明",
+            "只证明所有自旋分量守恒"
+          ],
+          "answer": 1,
+          "explanation": "I/d与任意H对易，其特殊轨迹不能替代算符判据。"
+        },
+        {
+          "prompt": "有耗散时，对所有初态的守恒条件是什么？",
+          "hint": "浴通道也进入动力学生成元。",
+          "choices": [
+            "只需[H,Q]=0",
+            "L†Q=0",
+            "只需Trρ=1"
+          ],
+          "answer": 1,
+          "explanation": "必须把Hamiltonian和全部通道的伴随作用相加。"
+        },
+        {
+          "prompt": "局域z纯退相干对总Sz的耗散贡献如何？",
+          "hint": "σz与z测量算符对易。",
+          "choices": [
+            "为零",
+            "必定使Sz变负",
+            "必定使迹衰减"
+          ],
+          "answer": 0,
+          "explanation": "该通道保留z布居；还须检查Hamiltonian是否与Sz对易。"
+        },
+        {
+          "prompt": "增加↑→↓弛豫后，能沿用只含纯退相干的守恒结论吗？",
+          "hint": "通道改变意味着L†改变。",
+          "choices": [
+            "能",
+            "不能，须重新检查完整生成元",
+            "只要能量简并就能"
+          ],
+          "answer": 1,
+          "explanation": "弛豫通常改变Sz，不可仅靠旧Hamiltonian对称性推断。"
+        }
+      ]
+    },
+    {
+      "id": "conservation-protection-exercise",
+      "module": "conservation",
+      "lesson": "conservation-protection",
+      "title": "区分Kramers配对、SU(2)多重态与换基",
+      "prompt": "比较无场单自旋、加场单自旋及各向同性双自旋。",
+      "steps": [
+        {
+          "prompt": "单自旋1/2的物理T²是什么？",
+          "hint": "T含复共轭，不能只计算U_T²并忽略K。",
+          "choices": [
+            "+I",
+            "−I",
+            "零"
+          ],
+          "answer": 1,
+          "explanation": "T²=U_TU_T*=−I。"
+        },
+        {
+          "prompt": "两个可区分自旋1/2整体T²是什么？",
+          "hint": "总T作用于两个自旋。",
+          "choices": [
+            "−I",
+            "+I",
+            "取决于选用x还是z基底"
+          ],
+          "answer": 1,
+          "explanation": "两个负号相乘为正，整体不由Kramers定理强制配对。"
+        },
+        {
+          "prompt": "各向同性交换双自旋的三重态简并可由什么解释？",
+          "hint": "检查三个总自旋分量。",
+          "choices": [
+            "全局SU(2)",
+            "T²=+I单独强制",
+            "数值求解器必定生成三重根"
+          ],
+          "answer": 0,
+          "explanation": "SU(2)把同一总自旋多重态的不同分量联系起来。"
+        },
+        {
+          "prompt": "被动换基时只改变H、不改变ρ和Q，能比较同一物理期望吗？",
+          "hint": "态、算符、耗散通道都要用同一U。",
+          "choices": [
+            "能",
+            "不能",
+            "只要保持矩阵维数就能"
+          ],
+          "answer": 1,
+          "explanation": "一致变换后的能谱、期望和L†协变；不一致变换改变了所描述的问题。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "order-ferroelectric",
+      "module": "order",
+      "title": "立方极性序参量与铁电畴方向",
+      "kind": "BaTiO₃机制背景",
+      "summary": "比较立方极向量沿轴、面对角线与体对角线时的剩余点群和轨道数，再连接给定结构畸变。",
+      "assumption": "只使用极化方向的点群图像；未拟合BaTiO₃参数，未推导具体温度相序、原子模式或完整空间群。",
+      "preset": "order-cubic-axis",
+      "links": [
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ],
+        [
+          "结构畸变模式",
+          "#compute/distortion-modes"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "order-interface",
+      "module": "order",
+      "title": "四重环境中的面内有序方向",
+      "kind": "二维表示教学模型",
+      "summary": "在相同序参量长度下比较沿轴和对角线的能量，检查四阶与六阶各向异性。",
+      "assumption": "抽象C₄ᵥ二维极向量，不自动描述任意表面磁序；若改成轴向磁序需要重新声明表示。",
+      "preset": "order-diagonal",
+      "links": [
+        [
+          "对称性推导工坊",
+          "#compute/symmetry-workshop"
+        ],
+        [
+          "晶体对称课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "order-poling",
+      "module": "order",
+      "title": "外场选向与两套坐标下的一次实验",
+      "kind": "显式破缺与约定对照",
+      "summary": "用外场选择方向，再一致旋转向量、场、操作与能量，辨认物理变化和坐标变化。",
+      "assumption": "均匀序参量、教学线性场，没有畴壁运动、迟滞动力学、真实电场单位或反演实测数据。",
+      "preset": "order-field",
+      "links": [
+        [
+          "畴壁与局域态",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "exchange-centrosymmetric-bond",
+      "module": "exchange",
+      "title": "中心对称磁性二聚体：禁止与允许的边界",
+      "kind": "键对称性教学模型",
+      "summary": "从非零候选D出发加入键中心反演，逐条观察反对称交换被去除。",
+      "assumption": "抽象双自旋键，未拟合具体材料；有中心反演只禁止DMI，不保证交换各向同性。",
+      "preset": "exchange-inversion",
+      "links": [
+        [
+          "Hubbard二聚体与低能自旋",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "交换对称性实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "对称性推导工坊",
+          "#compute/symmetry-workshop"
+        ]
+      ]
+    },
+    {
+      "id": "exchange-ligand-mirror",
+      "module": "exchange",
+      "title": "配体环境改变后允许的D方向",
+      "kind": "配位几何机制原型",
+      "summary": "比较包含键的镜面与垂直键的镜面，分清轴向量变换和端点交换。",
+      "assumption": "所选镜面是输入的理想局域对称性，没有从任意CIF提取交换路径；图中的D大小不是第一性原理预测。",
+      "preset": "exchange-perpendicular",
+      "links": [
+        [
+          "晶体与空间操作",
+          "#classroom/crystal"
+        ],
+        [
+          "现有XXZ磁振子",
+          "#compute/magnon-lab"
+        ],
+        [
+          "交换约束与DMI",
+          "#compute/exchange-symmetry-lab"
+        ]
+      ]
+    },
+    {
+      "id": "exchange-dimer-convention",
+      "module": "exchange",
+      "title": "两份交换参数表为何看起来不同",
+      "kind": "约定与复现案例",
+      "summary": "在同一个二聚体上换坐标与端点标签，用量子能谱校验它们描述同一物理相互作用。",
+      "assumption": "仅包含右手坐标正交旋转与端点交换；未处理任意局域旋转规范、空间群标准设置转换或材料拟合。",
+      "preset": "exchange-convention",
+      "links": [
+        [
+          "密度矩阵与交换动力学",
+          "#compute/density-matrix-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ]
+      ]
+    },
+    {
+      "id": "conservation-dimer",
+      "module": "conservation",
+      "title": "分子磁体二聚体：交换对称与守恒",
+      "kind": "材料机制原型",
+      "summary": "从低能有效交换走向SU(2)与XXZ的不同守恒量，再对照Hubbard二聚体。",
+      "assumption": "两个有效自旋和教学系数；不从结构自动拟合交换，有限二聚体不代表长程磁序。",
+      "preset": "conservation-su2",
+      "links": [
+        [
+          "Hubbard小团簇",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "磁交换约束",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "CG耦合课堂",
+          "#classroom/coupling"
+        ]
+      ]
+    },
+    {
+      "id": "conservation-noisy-spin",
+      "module": "conservation",
+      "title": "同一交换Hamiltonian，不同环境通道",
+      "kind": "量子动力学对照",
+      "summary": "保持交换参数，比较闭系统和局域纯退相干的完整守恒条件与实际轨迹。",
+      "assumption": "现象学Markov通道，不从晶格对称性直接推出退相干速率，不模拟非Markov浴。",
+      "preset": "conservation-bath",
+      "links": [
+        [
+          "密度矩阵实验",
+          "#compute/density-matrix-lab"
+        ],
+        [
+          "有效自旋共振",
+          "#compute/spin-resonance-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ]
+      ]
+    },
+    {
+      "id": "conservation-kramers-case",
+      "module": "conservation",
+      "title": "单自旋的时间反演保护与外场破缺",
+      "kind": "简并诊断模型",
+      "summary": "从T²=−I出发加入受控外场，再与双自旋的T²=+I和SU(2)多重态比较。",
+      "assumption": "仅诊断指定有限自旋空间，无晶体动量；不把结果直接外推到所有k点的能带。",
+      "preset": "conservation-kramers",
+      "links": [
+        [
+          "双群与反幺正课堂",
+          "#classroom/spin"
+        ],
+        [
+          "局部能带约束",
+          "#compute/symmetry-workshop"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "order-isodistort",
+      "title": "ISODISTORT：畸变模式、序参量方向与稳定子群",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "order-isotropy",
+      "title": "ISOTROPY 用户手册：不变量与序参量",
+      "url": "https://iso.byu.edu/isotropy_doc.php"
+    },
+    {
+      "id": "exchange-moriya",
+      "title": "T. Moriya, Anisotropic Superexchange Interaction and Weak Ferromagnetism, Phys. Rev. 120, 91 (1960)",
+      "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.120.91"
+    },
+    {
+      "id": "exchange-feynman-angular",
+      "title": "Feynman Lectures III, Chapter 18: Angular Momentum and axial-vector transformations",
+      "url": "https://www.feynmanlectures.caltech.edu/III_18.html"
+    },
+    {
+      "id": "conservation-tong",
+      "title": "David Tong：连续对称性、Noether定理与守恒流",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html"
+    },
+    {
+      "id": "conservation-lindblad",
+      "title": "G. Lindblad, On the generators of quantum dynamical semigroups (1976)",
+      "url": "https://doi.org/10.1007/BF01608499"
+    },
+    {
+      "id": "conservation-qutip",
+      "title": "QuTiP：闭系统与Lindblad动力学的算符约定",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html"
+    },
+    {
+      "id": "conservation-kramers",
+      "title": "MIT Quantum Theory: time reversal and Kramers theorem",
+      "url": "https://web.mit.edu/8.861/www/lect_notes/Lecture15-1.pdf"
+    }
+  ]
+}

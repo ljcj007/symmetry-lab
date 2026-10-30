@@ -1,0 +1,793 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-symmetry1",
+  "module": {
+    "id": "exchange",
+    "title": "键对称性、交换张量与 DMI",
+    "summary": "逐个生成元约束有向键的交换矩阵，区分轴向自旋与端点交换，再比较经典倾斜、量子能级和坐标约定。",
+    "route": "exchange-symmetry-lab",
+    "action": "exchange_symmetry_lab",
+    "pathway": "spin",
+    "fields": [
+      {
+        "key": "isotropic",
+        "label": "各向同性交换 J（单位：meV；正值偏好反平行）",
+        "type": "number",
+        "default": 1,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "anisotropyX",
+        "label": "无迹对称对角项 Γ_{xx}（单位：meV）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "anisotropyY",
+        "label": "无迹对称对角项 Γ_{yy}（单位：meV；Γ_{zz}=−Γ_{xx}−Γ_{yy}）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "symmetricXY",
+        "label": "对称交换 Γ_{xy}=Γ_{yx}（单位：meV）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "symmetricXZ",
+        "label": "对称交换 Γ_{xz}=Γ_{zx}（单位：meV）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "symmetricYZ",
+        "label": "对称交换 Γ_{yz}=Γ_{zy}（单位：meV）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "dx",
+        "label": "DMI 分量 D_x（单位：meV；有向键 i→j）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "dy",
+        "label": "DMI 分量 D_y（单位：meV；有向键 i→j）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "dz",
+        "label": "DMI 分量 D_z（单位：meV；有向键 i→j）",
+        "type": "number",
+        "default": 0.6,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "inversion",
+        "label": "键中心反演：交换两个端点",
+        "type": "select",
+        "default": 0,
+        "options": [
+          [
+            0,
+            "关闭"
+          ],
+          [
+            1,
+            "保留"
+          ]
+        ]
+      },
+      {
+        "key": "mirrorXY",
+        "label": "包含键的 xy 镜面",
+        "type": "select",
+        "default": 1,
+        "options": [
+          [
+            0,
+            "关闭"
+          ],
+          [
+            1,
+            "保留"
+          ]
+        ]
+      },
+      {
+        "key": "mirrorXZ",
+        "label": "包含键的 xz 镜面",
+        "type": "select",
+        "default": 0,
+        "options": [
+          [
+            0,
+            "关闭"
+          ],
+          [
+            1,
+            "保留"
+          ]
+        ]
+      },
+      {
+        "key": "mirrorYZ",
+        "label": "垂直键的 yz 镜面：交换端点",
+        "type": "select",
+        "default": 0,
+        "options": [
+          [
+            0,
+            "关闭"
+          ],
+          [
+            1,
+            "保留"
+          ]
+        ]
+      },
+      {
+        "key": "rotationOrder",
+        "label": "绕有向键 x 轴旋转",
+        "type": "select",
+        "default": 0,
+        "options": [
+          [
+            0,
+            "不施加旋转"
+          ],
+          [
+            2,
+            "二重旋转"
+          ],
+          [
+            4,
+            "四重旋转"
+          ]
+        ]
+      },
+      {
+        "key": "conventionAngle",
+        "label": "仅换坐标：新坐标轴绕旧 z 轴转角（°）",
+        "type": "number",
+        "default": 0,
+        "min": -180,
+        "max": 180,
+        "step": 5
+      },
+      {
+        "key": "swapSites",
+        "label": "仅换约定：是否交换端点标签 i、j",
+        "type": "select",
+        "default": 0,
+        "options": [
+          [
+            0,
+            "保持 i→j"
+          ],
+          [
+            1,
+            "交换 i 与 j"
+          ]
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "id": "exchange-plane",
+        "title": "包含键的镜面：只允许法向D",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0,
+          "dy": 0,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-inversion",
+        "title": "加上键中心反演：DMI消失",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0.3,
+          "dy": 0.4,
+          "dz": 0.6,
+          "inversion": 1,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-perpendicular",
+        "title": "垂直键的镜面：端点交换的作用",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0.3,
+          "dy": 0.4,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 0,
+          "mirrorXZ": 0,
+          "mirrorYZ": 1,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-axis",
+        "title": "四重键轴：轴向D与相等横向交换",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0.3,
+          "anisotropyY": 0.7,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0.2,
+          "dx": 0.5,
+          "dy": 0.4,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 0,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 4,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-convention",
+        "title": "同一相互作用：换坐标并反转键标签",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0,
+          "dy": 0,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 37,
+          "swapSites": 1
+        }
+      },
+      {
+        "id": "exchange-heisenberg",
+        "title": "无DMI的Heisenberg单重态与三重态",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0,
+          "dy": 0,
+          "dz": 0,
+          "inversion": 0,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-order-axis",
+        "title": "项目：剩余 xz 镜面的磁键",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0.3,
+          "dy": 0.4,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 0,
+          "mirrorXZ": 1,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-order-convention",
+        "title": "项目：同一磁键的坐标与端点约定",
+        "input": {
+          "isotropic": 1,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0.3,
+          "dy": 0.4,
+          "dz": 0.6,
+          "inversion": 0,
+          "mirrorXY": 0,
+          "mirrorXZ": 1,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 37,
+          "swapSites": 1
+        }
+      },
+      {
+        "id": "exchange-dynamics-dmi",
+        "title": "项目：对接 1rad/ns 的允许 DMI",
+        "input": {
+          "isotropic": 0.0006582119569,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0,
+          "dy": 0,
+          "dz": 0.00039492717414,
+          "inversion": 0,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      },
+      {
+        "id": "exchange-dynamics-inversion",
+        "title": "项目：对接 1rad/ns 的反演键",
+        "input": {
+          "isotropic": 0.0006582119569,
+          "anisotropyX": 0,
+          "anisotropyY": 0,
+          "symmetricXY": 0,
+          "symmetricXZ": 0,
+          "symmetricYZ": 0,
+          "dx": 0,
+          "dy": 0,
+          "dz": 0.00039492717414,
+          "inversion": 1,
+          "mirrorXY": 1,
+          "mirrorXZ": 0,
+          "mirrorYZ": 0,
+          "rotationOrder": 0,
+          "conventionAngle": 0,
+          "swapSites": 0
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "id": "exchange-inversion-dmi",
+        "preset": "exchange-inversion",
+        "question": "保留键中心反演后，输入非零Dx、Dy、Dz会怎样？",
+        "choices": [
+          "三个D分量都被禁止",
+          "只禁止Dx",
+          "DMI变成更大的各向同性交换"
+        ],
+        "answer": 0,
+        "explanation": "反演不改变轴向自旋的分量，却交换两个端点，因此J=J^T，反对称交换D=0。"
+      },
+      {
+        "id": "exchange-label-reversal",
+        "preset": "exchange-convention",
+        "question": "仅交换端点标签并一致换坐标，双自旋能谱会怎样？",
+        "choices": [
+          "能谱保持不变",
+          "所有能量变号",
+          "能谱必须分裂得更大"
+        ],
+        "answer": 0,
+        "explanation": "J转置并作正交相似变换，等价于量子自旋的交换与换基；D分量可变，但四个能量保持。"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "exchange-bond-constraints",
+      "module": "exchange",
+      "title": "从一条键的对称性得到允许交换",
+      "summary": "同一个空间操作既变换自旋分量，也可能交换键的两个端点。",
+      "preset": "exchange-plane",
+      "references": [
+        "moriya",
+        "feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "先声明有向键和自旋约定",
+          "text": "把i放在(−1/2,0,0)、j放在(1/2,0,0)。J是实3×3矩阵，量子自旋S=σ/2无量纲，所有交换系数单位为meV。翻转箭头不是新增相互作用。",
+          "formula": "H_{ij}=S_i^T J_{ij} S_j"
+        },
+        {
+          "title": "自旋是轴向量",
+          "text": "空间位置按R变换，真实自旋按A=det(R)R变换。反演使位置反向而保持自旋分量；镜面下不能把自旋当作普通位移。",
+          "formula": "A=det(R)R"
+        },
+        {
+          "title": "端点交换决定是否转置",
+          "text": "操作保持两个端点时，变换后的能量由A^TJA给出；操作交换端点时，需要再把自旋次序恢复为i在左、j在右，因此出现J^T。界面会列出该操作生成的每一条线性系数关系。",
+          "formula": "J=A^T J A；J=A^T J^T A"
+        },
+        {
+          "title": "一个生成元的结论与完整群",
+          "text": "沿x的键位于xy镜面内，允许的D垂直于这个镜面；键中心反演要求J对称，禁止全部DMI。程序对所选生成元求共同解，并检查生成群闭包。对称性只决定允许空间，不给出真实材料的交换大小。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-classical-quantum",
+      "module": "exchange",
+      "title": "经典倾斜与量子能级是不同问题",
+      "summary": "相同交换矩阵作用于单位经典箭头或自旋1/2算符时，结果的解释和归一化不同。",
+      "preset": "exchange-plane",
+      "references": [
+        "moriya",
+        "feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "把交换矩阵拆开",
+          "text": "J的迹给出各向同性部分，对称无迹部分给出各向异性，反对称部分对应D·(Si×Sj)。本站约定Jxy−Jyx=2Dz，先核对这个符号再比较文献。",
+          "formula": "J=J_{iso} I+Γ+K(D)；H_D=D·(S_i×S_j)"
+        },
+        {
+          "title": "单位经典箭头的全局极小值",
+          "text": "对两个单位向量，最低双线性能量等于J最大奇异值的负值。左右奇异向量给出一个极小态代表；简并时代表不唯一。另画出的xy平面试探曲线固定第一个自旋，不能普遍等同于全局最小值。",
+          "formula": "E_{min}=−s_{max}(J)"
+        },
+        {
+          "title": "量子二聚体直接对角化",
+          "text": "用σa⊗σb/4构造4×4矩阵。当只有各向同性反铁磁J时，单重态能量−3J/4，三重态能量J/4。经典能量−J与量子能量−3J/4不能未经归一化就相等比较。",
+          "formula": "H=Σ_{ab} J_{ab} σ_a⊗σ_b/4"
+        },
+        {
+          "title": "倾斜箭头不是量子局域磁矩",
+          "text": "界面报告量子基态简并子空间的等权密度矩阵和自旋关联。两个自旋1/2整体的时间反演平方是+1，时间反演本身不保证Kramers配对；能级简并也可能依赖特殊参数。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-conventions",
+      "module": "exchange",
+      "title": "换坐标、交换端点与可比较的物理结果",
+      "summary": "区别改变对称约束、改变相互作用和仅改变表示约定。",
+      "preset": "exchange-convention",
+      "references": [
+        "moriya",
+        "feynman-angular"
+      ],
+      "sections": [
+        {
+          "title": "坐标轴旋转采用被动约定",
+          "text": "新轴相对旧轴绕z旋转θ，分量满足v′=Q^Tv。交换矩阵随两侧自旋分量一致变换；这里是右手坐标轴的正交旋转。",
+          "formula": "J′=Q^T J Q；D′=Q^T D"
+        },
+        {
+          "title": "交换有向键的端点",
+          "text": "把i与j互换后，J变为J^T，D变号。与此同时叉积中的两个自旋也交换次序，能量不会因此改变。",
+          "formula": "J_{ji}=J_{ij}^T；D_{ji}=−D_{ij}"
+        },
+        {
+          "title": "用不变量而非分量外观比较",
+          "text": "界面同时列出原张量、换约定后的张量和两套量子能级。矩阵元素看起来不同，四个能量、经典极小能量与自旋夹角应保持。改变对称性开关则可能真正改变模型。"
+        },
+        {
+          "title": "与材料模型的连接",
+          "text": "这里使用一条抽象键说明Moriya约束。可连接磁振子和有效自旋共振课程，但不从一条键自动推断晶格磁序，也不将教学D值当作某种材料的计算结果。"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exchange-bond-exercise",
+      "module": "exchange",
+      "lesson": "exchange-bond-constraints",
+      "title": "逐步推导键中心反演如何禁止DMI",
+      "prompt": "先保留包含键的xy镜面，再打开键中心反演；把位置变换、自旋变换和端点次序分别写清。",
+      "steps": [
+        {
+          "prompt": "空间反演R=−I对轴向自旋的变换矩阵是什么？",
+          "hint": "计算det(R)R。",
+          "choices": [
+            "A=I",
+            "A=−I",
+            "A=0"
+          ],
+          "answer": 0,
+          "explanation": "det(−I)=−1，所以A=I；自旋是轴向量。"
+        },
+        {
+          "prompt": "键中心反演是否交换i、j？",
+          "hint": "两个端点位于x=±1/2。",
+          "choices": [
+            "不交换",
+            "交换",
+            "只交换z分量"
+          ],
+          "answer": 1,
+          "explanation": "反演把两端点互换，需要把输出的自旋次序重新排为i在左。"
+        },
+        {
+          "prompt": "能量不变给出哪条矩阵条件？",
+          "hint": "A=I，但端点交换。",
+          "choices": [
+            "J=−J",
+            "J=0",
+            "J=J^T"
+          ],
+          "answer": 2,
+          "explanation": "反演约束去掉反对称部分，保留任意实对称交换矩阵。"
+        },
+        {
+          "prompt": "D向量的结论是什么？",
+          "hint": "D由J的反对称部分给出。",
+          "choices": [
+            "D=0，但对称交换仍可存在",
+            "所有交换都为0",
+            "D大小由点群唯一决定"
+          ],
+          "answer": 0,
+          "explanation": "反演禁止DMI；它没有要求各向同性或全部对称各向异性也消失。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-classical-exercise",
+      "module": "exchange",
+      "lesson": "exchange-classical-quantum",
+      "title": "从双线性型走到经典倾斜与量子能谱",
+      "prompt": "先用J=1meV、D=0，再加载Dz=0.6meV；分别读取经典和量子结果。",
+      "steps": [
+        {
+          "prompt": "只有J=1时，单位经典反平行箭头的能量是多少？",
+          "hint": "单位箭头点积为−1。",
+          "choices": [
+            "−1meV",
+            "−3/4meV",
+            "+1/4meV"
+          ],
+          "answer": 0,
+          "explanation": "经典单位箭头的能量为J n1·n2=−1meV。"
+        },
+        {
+          "prompt": "同一个J下，自旋1/2量子单重态的能量是多少？",
+          "hint": "Si·Sj=(Stot²−Si²−Sj²)/2。",
+          "choices": [
+            "−1meV",
+            "−3/4meV",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "每个自旋有Si²=3/4，单重态Stot²=0，所以能量−3J/4。"
+        },
+        {
+          "prompt": "对J I加Dz的二维反对称块，经典全局最低能量是什么？",
+          "hint": "该块的最大奇异值为sqrt(J²+Dz²)。",
+          "choices": [
+            "−J−Dz",
+            "−J/4",
+            "−sqrt(J²+Dz²)"
+          ],
+          "answer": 2,
+          "explanation": "单位向量双线性型的下界是最大奇异值的负值。"
+        },
+        {
+          "prompt": "经典倾斜图是否证明量子基态有相同局域磁矩？",
+          "hint": "比较经典向量与量子基态密度矩阵中〈Si〉。",
+          "choices": [
+            "不能，需单独计算量子期望值",
+            "能，图中的箭头就是量子期望值",
+            "只要能量为负就能"
+          ],
+          "answer": 0,
+          "explanation": "两者是不同模型的态；有限量子二聚体的基态关联不等于经典局域箭头。"
+        }
+      ]
+    },
+    {
+      "id": "exchange-convention-exercise",
+      "module": "exchange",
+      "lesson": "exchange-conventions",
+      "title": "用端点交换和转轴检查DMI符号约定",
+      "prompt": "加载约定对照预设，先看交换标签，再看37°被动转轴。",
+      "steps": [
+        {
+          "prompt": "只把i和j标签交换，交换矩阵怎样变？",
+          "hint": "将Sj^T J Si重写为Si在左。",
+          "choices": [
+            "J^T",
+            "−J",
+            "J⁻¹"
+          ],
+          "answer": 0,
+          "explanation": "标量相互作用在交换顺序后对应转置矩阵。"
+        },
+        {
+          "prompt": "相应的D向量怎样变？",
+          "hint": "反对称矩阵转置变号。",
+          "choices": [
+            "大小加倍",
+            "D→−D",
+            "保持所有分量不变"
+          ],
+          "answer": 1,
+          "explanation": "D翻转与Si×Sj翻转同时发生，物理能量不变。"
+        },
+        {
+          "prompt": "按v′=Q^Tv换坐标，矩阵怎样变？",
+          "hint": "用旧分量v=Qv′代回双线性型。",
+          "choices": [
+            "QJQ^T",
+            "Q^TJ",
+            "Q^TJQ"
+          ],
+          "answer": 2,
+          "explanation": "两侧分量都须同时变换，得到被动坐标公式。"
+        },
+        {
+          "prompt": "哪一项最适合核对这只是约定改变？",
+          "hint": "不要只逐元素比较不同坐标的J。",
+          "choices": [
+            "四个量子能级和经典最小能量",
+            "Jxy必须逐项相等",
+            "Dz必须保持正号"
+          ],
+          "answer": 0,
+          "explanation": "完整能谱与标量能量保持，分量和D符号可随约定改变。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "exchange-centrosymmetric-bond",
+      "module": "exchange",
+      "title": "中心对称磁性二聚体：禁止与允许的边界",
+      "kind": "键对称性教学模型",
+      "summary": "从非零候选D出发加入键中心反演，逐条观察反对称交换被去除。",
+      "assumption": "抽象双自旋键，未拟合具体材料；有中心反演只禁止DMI，不保证交换各向同性。",
+      "preset": "exchange-inversion",
+      "links": [
+        [
+          "Hubbard二聚体与低能自旋",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "交换对称性实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "对称性推导工坊",
+          "#compute/symmetry-workshop"
+        ]
+      ]
+    },
+    {
+      "id": "exchange-ligand-mirror",
+      "module": "exchange",
+      "title": "配体环境改变后允许的D方向",
+      "kind": "配位几何机制原型",
+      "summary": "比较包含键的镜面与垂直键的镜面，分清轴向量变换和端点交换。",
+      "assumption": "所选镜面是输入的理想局域对称性，没有从任意CIF提取交换路径；图中的D大小不是第一性原理预测。",
+      "preset": "exchange-perpendicular",
+      "links": [
+        [
+          "晶体与空间操作",
+          "#classroom/crystal"
+        ],
+        [
+          "现有XXZ磁振子",
+          "#compute/magnon-lab"
+        ],
+        [
+          "交换约束与DMI",
+          "#compute/exchange-symmetry-lab"
+        ]
+      ]
+    },
+    {
+      "id": "exchange-dimer-convention",
+      "module": "exchange",
+      "title": "两份交换参数表为何看起来不同",
+      "kind": "约定与复现案例",
+      "summary": "在同一个二聚体上换坐标与端点标签，用量子能谱校验它们描述同一物理相互作用。",
+      "assumption": "仅包含右手坐标正交旋转与端点交换；未处理任意局域旋转规范、空间群标准设置转换或材料拟合。",
+      "preset": "exchange-convention",
+      "links": [
+        [
+          "密度矩阵与交换动力学",
+          "#compute/density-matrix-lab"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "moriya",
+      "title": "T. Moriya, Anisotropic Superexchange Interaction and Weak Ferromagnetism, Phys. Rev. 120, 91 (1960)",
+      "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.120.91"
+    },
+    {
+      "id": "feynman-angular",
+      "title": "Feynman Lectures III, Chapter 18: Angular Momentum and axial-vector transformations",
+      "url": "https://www.feynmanlectures.caltech.edu/III_18.html"
+    }
+  ]
+}

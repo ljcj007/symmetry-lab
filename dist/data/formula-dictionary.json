@@ -3997,6 +3997,585 @@
         "det(R)R"
       ],
       "requiresContext": true
+    },
+    {
+      "id": "order-eta",
+      "title": "序参量向量",
+      "symbols": [
+        "η",
+        "η_x",
+        "η_y",
+        "η_z"
+      ],
+      "aliases": [
+        "order parameter",
+        "序参量"
+      ],
+      "definition": "用表示空间中的向量描述有序方向和幅度，必须先声明群如何作用。",
+      "variables": [
+        {
+          "symbol": "η",
+          "meaning": "二维或三维极向量序参量",
+          "unit": "本实验无量纲"
+        }
+      ],
+      "conventions": "C₄ᵥ使用xy二维极向量；O_h使用xyz三维极向量，反演为−I。",
+      "conditions": "不等同于真实原子模式或绝对极化；与谱线展宽η是不同含义。",
+      "sources": [
+        "principles-isodistort"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "order-parameter",
+        "module=order"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "D(g)η"
+      ]
+    },
+    {
+      "id": "order-stabilizer",
+      "title": "稳定子群与母群轨道",
+      "symbols": [
+        "H_η",
+        "Gη",
+        "|Gη|"
+      ],
+      "aliases": [
+        "isotropy",
+        "stabilizer",
+        "轨道稳定子"
+      ],
+      "definition": "保持指定序参量的操作构成稳定子群；母群轨道包含所有对称相关状态。",
+      "variables": [
+        {
+          "symbol": "G",
+          "meaning": "声明的母群",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "H_η",
+          "meaning": "满足D(g)η=η的子群",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "|Gη|=|G|/|H_η|；不同操作可给出同一轨道状态。",
+      "conditions": "有显式外场时母群轨道中的状态不再必定等能；给定方向不等于平衡相。",
+      "sources": [
+        "principles-isodistort"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "order-parameter",
+        "module=order",
+        "order-isotropy"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "|G| / |H_η|"
+      ]
+    },
+    {
+      "id": "order-reynolds",
+      "title": "Reynolds 群平均与不变量",
+      "symbols": [
+        "P_G",
+        "P_G f"
+      ],
+      "aliases": [
+        "Reynolds",
+        "不变量群平均"
+      ],
+      "definition": "对有限群作用后的多项式求平均，投影到不变多项式空间。",
+      "variables": [
+        {
+          "symbol": "P_G",
+          "meaning": "群平均投影",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "f",
+          "meaning": "待投影的多项式",
+          "unit": "随多项式定义"
+        }
+      ],
+      "conventions": "P_G f=(1/|G|)Σ_g f(D(g)η)，为线性幂等投影；零像和重复像不能当作独立基。",
+      "conditions": "本实验为带符号置换表示，输出最小整数轨道和；不自动决定自由能系数。",
+      "sources": [
+        "principles-isotropy"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "order-parameter",
+        "module=order",
+        "order-reynolds"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "f(D(g)η)"
+      ]
+    },
+    {
+      "id": "passive-coordinate",
+      "title": "被动坐标变换",
+      "symbols": [
+        "QᵀRQ",
+        "Q^T R Q",
+        "η′"
+      ],
+      "aliases": [
+        "被动换坐标",
+        "坐标约定"
+      ],
+      "definition": "改变描述同一物理状态的坐标轴，并同步转换所有向量、张量和操作。",
+      "variables": [
+        {
+          "symbol": "Q",
+          "meaning": "新坐标轴在旧坐标中的列向量",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "R",
+          "meaning": "原坐标的空间操作",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "v′=Qᵀv，R′=QᵀRQ；标量函数F′(v′)=F(Qv′)。",
+      "conditions": "不同于只旋转物理向量并保持实验室能量表达式不变；量子基变换须使用相应幺正U。",
+      "sources": [
+        "principles-isotropy"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "order-parameter",
+        "exchange-symmetry",
+        "passive-coordinate"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "F(Qη′)",
+        "QᵀDQ"
+      ]
+    },
+    {
+      "id": "bond-J",
+      "title": "有向键交换张量",
+      "symbols": [
+        "J",
+        "J_ij",
+        "J_{ij}"
+      ],
+      "aliases": [
+        "Moriya",
+        "交换张量"
+      ],
+      "definition": "将两个站点的真实自旋通过一般实3×3矩阵耦合。",
+      "variables": [
+        {
+          "symbol": "J_ij",
+          "meaning": "有向键i→j的交换张量",
+          "unit": "meV"
+        },
+        {
+          "symbol": "S_i",
+          "meaning": "第i个自旋，量子计算为σ/2",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "H_ij=S_iᵀJ_ijS_j；交换端点时J_ji=J_ijᵀ。约束必须区分操作是否交换两端。",
+      "conditions": "不能以一般体物性张量代替键约束；对称性只限定形式，不给出参数大小。",
+      "sources": [
+        "principles-moriya"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "exchange-symmetry",
+        "module=exchange",
+        "bond-exchange"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "S_i^T J_{ij} S_j"
+      ],
+      "ambiguity": "J 的含义"
+    },
+    {
+      "id": "bond-D",
+      "title": "Dzyaloshinskii–Moriya 向量",
+      "symbols": [
+        "D",
+        "D_x",
+        "D_y",
+        "D_z"
+      ],
+      "aliases": [
+        "DMI",
+        "反对称交换"
+      ],
+      "definition": "交换张量反对称部分对应的轴向向量，决定D·(S_i×S_j)项。",
+      "variables": [
+        {
+          "symbol": "D",
+          "meaning": "依赖有向键次序的DMI向量",
+          "unit": "meV"
+        }
+      ],
+      "conventions": "本实验Jxy−Jyx=2Dz，循环置换得到Dx、Dy；交换i与j同时令D→−D。",
+      "conditions": "键中心反演约束D为零；缺少反演仅移除这一禁止条件，不保证D非零。",
+      "sources": [
+        "principles-moriya"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "exchange-symmetry",
+        "module=exchange",
+        "bond-dmi"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "D·(S_i×S_j)"
+      ]
+    },
+    {
+      "id": "bond-symmetric-anisotropy",
+      "title": "对称无迹交换各向异性",
+      "symbols": [
+        "Γ",
+        "Γ_ij"
+      ],
+      "aliases": [
+        "对称交换各向异性"
+      ],
+      "definition": "从交换张量的对称部分减去迹的三分之一，得到对称无迹各向异性。",
+      "variables": [
+        {
+          "symbol": "Γ",
+          "meaning": "对称无迹3×3交换矩阵",
+          "unit": "meV"
+        }
+      ],
+      "conventions": "J=J_iso I+Γ+A(D)，Γ=(J+Jᵀ)/2−Tr(J)I/3。",
+      "conditions": "这里Γ是交换矩阵，不是布里渊区中心或电极展宽。",
+      "sources": [
+        "principles-moriya"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "exchange-symmetry",
+        "module=exchange"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "J_iso I+Γ"
+      ],
+      "ambiguity": "Γ 的含义"
+    },
+    {
+      "id": "bond-axial-spin",
+      "title": "真实自旋的轴向量变换",
+      "symbols": [
+        "det(R)R",
+        "A=det(R)R"
+      ],
+      "aliases": [
+        "轴向量",
+        "axial vector"
+      ],
+      "definition": "真实自旋在空间正交操作下按轴向量变换，镜面和反演不能套用极向量规则。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "极向量空间操作",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "A",
+          "meaning": "作用于自旋分量的轴向量矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "S→det(R)RS；反演下真实自旋不变。键操作还可能交换站点。",
+      "conditions": "只适用于声明的真实自旋；任意轨道赝自旋需要独立表示矩阵。",
+      "sources": [
+        "principles-moriya"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/exchange-symmetry-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "exchange-symmetry",
+        "module=exchange",
+        "bond-axial"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "A^TJ^TA"
+      ]
+    },
+    {
+      "id": "conservation-Q",
+      "title": "生成元与待检验守恒量",
+      "symbols": [
+        "Q",
+        "S_tot",
+        "S_{tot}"
+      ],
+      "aliases": [
+        "Noether",
+        "守恒量",
+        "生成元"
+      ],
+      "definition": "Q为Hermitian观测量；当它生成连续幺正变换时，可通过对易子检验Hamiltonian对称性。",
+      "variables": [
+        {
+          "symbol": "Q",
+          "meaning": "选定的生成元或观测量",
+          "unit": "依具体算符；本实验自旋无量纲"
+        }
+      ],
+      "conventions": "U(θ)=exp(−iθQ)；对无显含时间的Q，封闭系统守恒要求[H,Q]=0。",
+      "conditions": "某个初态的期望值恰好平坦并不证明完整算符守恒；开放系统须检查L†Q。",
+      "sources": [
+        "principles-noether"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/conservation-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "conservation-lab",
+        "module=conservation"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "exp(−iθQ)"
+      ]
+    },
+    {
+      "id": "conservation-commutator",
+      "title": "对易子与闭系统守恒",
+      "symbols": [
+        "[H,Q]",
+        "[H/ℏ,Q]"
+      ],
+      "aliases": [
+        "commutator",
+        "对易子"
+      ],
+      "definition": "对易子检验连续对称变换与Hamiltonian是否相容，并给出闭系统观测量变化的算符。",
+      "variables": [
+        {
+          "symbol": "H/ℏ",
+          "meaning": "角频率单位的Hamiltonian",
+          "unit": "rad/ns"
+        },
+        {
+          "symbol": "Q",
+          "meaning": "无显含时间的观测量",
+          "unit": "依定义"
+        }
+      ],
+      "conventions": "d⟨Q⟩/dt=i⟨[H/ℏ,Q]⟩，未设ℏ=1混用能量与角频率。",
+      "conditions": "本实验报告Frobenius范数；必须先把所有算符贡献相加，再判断总和是否为零。",
+      "sources": [
+        "principles-noether"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/conservation-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "conservation-lab",
+        "module=conservation",
+        "noether-commutator"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "[H/ℏ,Q]"
+      ]
+    },
+    {
+      "id": "conservation-adjoint",
+      "title": "Lindblad 伴随生成元与守恒",
+      "symbols": [
+        "L†Q",
+        "L†",
+        "L^†Q"
+      ],
+      "aliases": [
+        "Lindblad adjoint",
+        "伴随生成元"
+      ],
+      "definition": "完整开放系统的守恒条件由生成元对观测量的伴随作用决定。",
+      "variables": [
+        {
+          "symbol": "L†",
+          "meaning": "Lindblad生成元的伴随",
+          "unit": "ns⁻¹"
+        },
+        {
+          "symbol": "C_c",
+          "meaning": "含速率平方根的跳跃算符",
+          "unit": "ns⁻¹ᐟ²"
+        }
+      ],
+      "conventions": "L†Q=i[H/ℏ,Q]+Σ_c(C_c†QC_c−{C_c†C_c,Q}/2)。",
+      "conditions": "需检查完整算符为零；Hamiltonian守恒量可能被耗散破坏，各通道贡献也可能相消。",
+      "sources": [
+        "bridges-qutip-master"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/conservation-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "conservation-lab",
+        "module=conservation",
+        "adjoint-conservation"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "C_c†QC_c"
+      ]
+    },
+    {
+      "id": "conservation-kramers",
+      "title": "有限自旋系统的 Kramers 保护诊断",
+      "symbols": [
+        "U_T U_T*",
+        "T²=−I",
+        "T²=+I"
+      ],
+      "aliases": [
+        "Kramers",
+        "简并保护"
+      ],
+      "definition": "检查反幺正时间反演的平方与Hamiltonian对称性，判断是否满足Kramers保护条件。",
+      "variables": [
+        {
+          "symbol": "U_T",
+          "meaning": "T=U_TK的幺正部分",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "K",
+          "meaning": "指定基底中的复共轭",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "本实验单自旋1/2有T²=−I；两个自旋1/2整体有T²=+I。换基时U_T′=U†U_TU*。",
+      "conditions": "还需时间反演保持Hamiltonian；这里无晶格动量，不等同于全布里渊区磁空间群诊断。",
+      "sources": [
+        "elcoro"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/conservation-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "conservation-lab",
+        "module=conservation",
+        "antiunitary-protection"
+      ],
+      "requiresContext": true,
+      "formulaAliases": [
+        "U_T U_T*"
+      ]
     }
   ],
   "sources": [
@@ -4149,7 +4728,28 @@
       "id": "bridges-qsymm",
       "title": "Qsymm 官方：由对称约束生成 Hamiltonian",
       "url": "https://qsymm.readthedocs.io/latest/"
+    },
+    {
+      "id": "principles-isodistort",
+      "title": "ISODISTORT：序参量与稳定子群",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "principles-isotropy",
+      "title": "ISOTROPY：不变量与序参量",
+      "url": "https://iso.byu.edu/isotropy_doc.php"
+    },
+    {
+      "id": "principles-moriya",
+      "title": "Moriya, Anisotropic Superexchange Interaction and Weak Ferromagnetism (1960)",
+      "url": "https://doi.org/10.1103/PhysRev.120.91"
+    },
+    {
+      "id": "principles-noether",
+      "title": "David Tong：连续对称性与 Noether 定理",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html"
     }
   ],
-  "extensionRelease": "20261030-bridges1"
+  "extensionRelease": "20261030-bridges1",
+  "principlesRelease": "20261030-symmetry1"
 }

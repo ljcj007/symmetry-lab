@@ -1,7 +1,8 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261030-bridges1';
+const BUILD = '20261030-symmetry1';
 const plans = {
+  order_parameter_lab: ['order_parameter_lab'], exchange_symmetry_lab: ['exchange_symmetry_lab'], conservation_lab: ['density_matrix_lab','conservation_lab'],
   manybody_spectra_lab: ['hubbard_lab','manybody_spectra_lab'], polaron_lab: ['polaron_lab'], density_matrix_lab: ['density_matrix_lab'], symmetry_workshop: ['symmetry_workshop'],
   band_rep_lab: ['symmetry_core', 'band_rep_lab'], dynamic_scattering_lab: ['dynamic_scattering_lab'], domain_wall_lab: ['domain_wall_lab'], hubbard_lab: ['hubbard_lab'],
   spin_resonance_lab: ['spin_resonance_lab'], andreev_lab: ['andreev_lab'], atomic_spectra_lab: ['atomic_spectra_lab'],
