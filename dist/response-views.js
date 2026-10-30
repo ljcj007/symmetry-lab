@@ -1,4 +1,4 @@
-import {heatmapSVG,quantumCurveSVG as curve} from './quantum-plots.js?v=20261030-symmetry1';
+import {heatmapSVG,quantumCurveSVG as curve} from './quantum-plots.js?v=20261030-construction1';
 export const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const num=x=>Number.isFinite(x)?(x!==0&&(Math.abs(x)>=1e5||Math.abs(x)<1e-3)?x.toExponential(4):Number(x.toPrecision(5))):'—';
 export const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;

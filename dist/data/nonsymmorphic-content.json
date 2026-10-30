@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-construction1",
+  "module": {
+    "id": "nonsymmorphic",
+    "title": "螺旋、滑移与动量相关简并",
+    "summary": "从半平移构造周期 Bloch 表示，检验小群与时间反演，再用真实两带或四带 Hamiltonian 追踪端点配对、中间交叉和开隙扰动。",
+    "route": "nonsymmorphic-lab",
+    "action": "nonsymmorphic_lab",
+    "pathway": "crystal",
+    "fields": [
+      {
+        "key": "operation",
+        "label": "三维空间操作",
+        "type": "select",
+        "default": "glide",
+        "options": [
+          [
+            "glide",
+            "滑移 {m_y|a_x/2}"
+          ],
+          [
+            "screw",
+            "二重螺旋 {C₂x|a_x/2}"
+          ]
+        ]
+      },
+      {
+        "key": "spinful",
+        "label": "单值或双值表示",
+        "type": "select",
+        "default": "true",
+        "options": [
+          [
+            "true",
+            "自旋 1/2：四带双值模型"
+          ],
+          [
+            "false",
+            "无自旋：两带单值模型"
+          ]
+        ]
+      },
+      {
+        "key": "hopping",
+        "label": "跃迁 t（任意能量单位）",
+        "type": "number",
+        "default": 1,
+        "min": 0.05,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "spinOrbit",
+        "label": "双值耦合 λ（单值模型忽略）",
+        "type": "number",
+        "default": 0.65,
+        "min": 0.05,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "mass",
+        "label": "破坏 G 的质量 m，保留 T",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "zeeman",
+        "label": "破坏 T 的系数 b，保留 G",
+        "type": "number",
+        "default": 0,
+        "min": -100,
+        "max": 100,
+        "step": 0.1
+      },
+      {
+        "key": "shift",
+        "label": "共同色散 ε cos(k_x)",
+        "type": "number",
+        "default": 0,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "kFraction",
+        "label": "回放与作业位置 f_x=k_x/(2π)",
+        "type": "number",
+        "default": 0.2,
+        "min": -0.5,
+        "max": 0.5,
+        "step": 0.01
+      },
+      {
+        "key": "transverseY",
+        "label": "横向倒格分量 f_y：检验小群",
+        "type": "number",
+        "default": 0,
+        "min": -0.5,
+        "max": 0.5,
+        "step": 0.05
+      },
+      {
+        "key": "transverseZ",
+        "label": "横向倒格分量 f_z：检验小群/TRIM",
+        "type": "number",
+        "default": 0,
+        "min": -0.5,
+        "max": 0.5,
+        "step": 0.05
+      },
+      {
+        "key": "points",
+        "label": "能带采样点（另含解析交叉点）",
+        "type": "number",
+        "default": 121,
+        "min": 41,
+        "max": 401,
+        "step": 20
+      }
+    ],
+    "presets": [
+      {
+        "id": "nonsymmorphic-hourglass",
+        "title": "滑移双值：从真实矩阵得到伙伴交换",
+        "input": {
+          "operation": "glide",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.2,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-screw",
+        "title": "二重螺旋：比较相同平移因子与不同旋转轴",
+        "input": {
+          "operation": "screw",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 1,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0.3,
+          "kFraction": 0.25,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-mass",
+        "title": "破坏滑移开隙，但端点 Kramers 仍在",
+        "input": {
+          "operation": "glide",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0.3,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.2,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-spinless",
+        "title": "无自旋：X 点复标签配对并非 Kramers",
+        "input": {
+          "operation": "glide",
+          "spinful": "false",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.5,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-offline",
+        "title": "离开螺旋小群：不要只凭能带图判断保护",
+        "input": {
+          "operation": "screw",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.2,
+          "transverseY": 0.2,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-break-time",
+        "title": "强 T 破缺：保留 G 也可打开整条中间隙",
+        "input": {
+          "operation": "glide",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 5,
+          "shift": 0,
+          "kFraction": 0.2,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-screw-single",
+        "title": "单值螺旋边界：与 SG4 诱导表示核对",
+        "input": {
+          "operation": "screw",
+          "spinful": "false",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.5,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      },
+      {
+        "id": "nonsymmorphic-screw-double",
+        "title": "同一螺旋边界：加入自旋双值因子",
+        "input": {
+          "operation": "screw",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 0.65,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.5,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "id": "nonsymmorphic-kramers-mass",
+        "preset": "nonsymmorphic-mass",
+        "question": "只加入 mτ_z 并打开中间交叉后，双值模型的两个 TRIM 端点会怎样？",
+        "choices": [
+          "端点仍有 Kramers 配对",
+          "所有简并必然消失",
+          "T²变成+I"
+        ],
+        "answer": 0,
+        "explanation": "mτ_z 破 G 但保 T，且物理自旋 T²=−I 不变。中间交叉与端点 Kramers 由不同条件保护。"
+      },
+      {
+        "id": "nonsymmorphic-offline-predict",
+        "preset": "nonsymmorphic-offline",
+        "question": "在 f_y=0.2 的螺旋模型切线上，仍画出相似交叉是否已经证明螺旋小群保护？",
+        "choices": [
+          "是，形状相同即可",
+          "否，Rk−k不是倒格矢",
+          "只要矩阵够大就可以"
+        ],
+        "answer": 1,
+        "explanation": "二重螺旋绕 x 轴使 f_y→−f_y；差为−0.4，不是整数。横向平坦教学模型保留的交叉不能据此称为该 k 的晶体小群保护。"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "nonsymmorphic-bloch",
+      "module": "nonsymmorphic",
+      "title": "从实空间半平移构造 Bloch 表示",
+      "summary": "先追踪位点置换，再加入跨胞相位与自旋旋转。",
+      "preset": "nonsymmorphic-hourglass",
+      "references": [
+        "wang-hourglass",
+        "wieder-kane"
+      ],
+      "sections": [
+        {
+          "title": "三维操作与不变动量",
+          "text": "滑移 {m_y|a_x/2} 反射 y，螺旋 {C₂x|a_x/2} 反转 y、z。沿 (f_x,0,0) 两者保持动量；一般位置须检验 Rk−k 是否为倒格矢。非小群操作把态送到另一个动量，不能直接作为同一能带的量子数。",
+          "formula": "Rk = k + K"
+        },
+        {
+          "title": "周期 Bloch 基底",
+          "text": "胞内 A 在 x=0、B 在 x=a/2。半平移把 A 送到 B，把 B 送到下一胞 A。采用晶胞标签的 Fourier 约定，跨胞项是 exp(−ik_x)，得到 S=[[0,exp(−ik_x)],[1,0]]。这里 k_x 是弧度，界面 f_x=k_x/(2π)。",
+          "formula": "S(k_x)² = e^(−ik_x) I"
+        },
+        {
+          "title": "单值与双值的差异",
+          "text": "无自旋 G=S。自旋 1/2 取 G=S⊗iσ_axis；滑移取 axis=y、螺旋取 axis=x。二次自旋旋转给 −I，故特征值多一个 i。这个选择包含一个明确的双群中心符号约定。",
+          "formula": "g_± = ±e^(−ik_x/2)（单值）；g_± = ±i e^(−ik_x/2)（双值）"
+        },
+        {
+          "title": "表示回放与周期缝合",
+          "text": "逐帧查看 S、G、G² 与 H。k_x 增加 2π 时矩阵回到自身，缝合矩阵为 I；连续追踪的正负本征值标签却会互换。这是标签的单值性问题，不能靠任意画线或漏掉相位处理。",
+          "formula": "G(k_x+2π)=G(k_x)"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-partner",
+      "module": "nonsymmorphic",
+      "title": "时间反演、伙伴交换与真实能带交叉",
+      "summary": "把双值端点 Kramers 条件、滑移标签和中间能带连接逐步串起来。",
+      "preset": "nonsymmorphic-hourglass",
+      "references": [
+        "wang-hourglass",
+        "ma-khgsb",
+        "wang-3d-hourglass"
+      ],
+      "sections": [
+        {
+          "title": "端点与反幺正平方",
+          "text": "物理时间反演为 T=(I⊗iσ_y)K，T²=−I。只有 −k 等价于 k 且 Hamiltonian 保 T，才能在同一个动量应用 Kramers 定理。一般内部 k 点的 T 将态送到 −k，并不自动给同点双重简并。",
+          "formula": "U_T H(k)^* U_T† = H(−k)"
+        },
+        {
+          "title": "两端配对方式不相同",
+          "text": "双值 Γ 端的标签是 ±i，T 将共轭标签互换；X 端标签为 ±1，T 的伙伴具有同一标签。孤立四带在连接两端时必须改变配对。计算在每个简并能量块内部对角化 G，不把任意数值本征矢误当 G 本征态。",
+          "formula": "Γ：(+i,−i)；X：(+1,+1) 或 (−1,−1)"
+        },
+        {
+          "title": "由 Hamiltonian 得到交叉",
+          "text": "定义 A=(1+cos k)τ_x+sin k τ_y，B=sin k τ_x+(1−cos k)τ_y，取 H₀=t A⊗I+λ B⊗σ_axis。它是严格周期、保 G、保 T 的四带模型。正参数 t、λ 时，内部两带在 k_*=2 arctan(t/λ) 相交；图中每个点均为该矩阵的能量。",
+          "formula": "E = ±2[t cos(k/2) ± λ sin(k/2)]"
+        },
+        {
+          "title": "单值模型与材料边界",
+          "text": "单值模型在 X 的 G 标签是 ±i，T 把二者交换，可以强制配对，但 T²=+I，不能称自旋 Kramers 简并。KHgSb 的实验与理论展示了非对称型表面能带的材料背景；本计算仅取最小线模型，未重现实测参数或完整表面拓扑。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-breaking",
+      "module": "nonsymmorphic",
+      "title": "最小破缺、全线开隙与子空间作业",
+      "summary": "用实际扰动验证保护，区分移走交叉、真正开隙与仍然保留的端点配对。",
+      "preset": "nonsymmorphic-mass",
+      "references": [
+        "wang-hourglass",
+        "wang-3d-hourglass"
+      ],
+      "sections": [
+        {
+          "title": "保 T、破 G 的质量",
+          "text": "mτ_z⊗I 与 H₀ 的轨道非对角项反对易，破坏 G 协变但保 T。每个无质量能量分支变成带质量的平方根，中间直接隙的全线最小值为 2|m|，双值端点 Kramers 仍保留。共同色散 ε cos k 只把同 k 的能量一起移动。",
+          "formula": "Δ_middle,min = 2|m|（b=0）"
+        },
+        {
+          "title": "保 G、破 T 的比较实验",
+          "text": "双值模型的 b I⊗σ_axis 保 G、破 T。小 b 可能只是移动交叉，所以挑战使用足够大的 b，并给出全线正能隙下界。单值比较项是 b B(k)，不是电子 Zeeman 场。不能把在原交叉位置开隙当成整条路径开隙。",
+          "formula": "Δ_middle,min ≥ 2|b|−4√(t²+λ²)−2|m|（双值强场界）"
+        },
+        {
+          "title": "群—子群关系图的含义",
+          "text": "这里图示的是 G、T 两个指定约束及其删除关系，先模去平移与双群中心；标签商的阶数为 4、2、1。实际 G² 的平移相位与 T² 的负号仍由矩阵保存。此图不是任意三维空间群的完整子群目录。"
+        },
+        {
+          "title": "按子空间判分",
+          "text": "在指定 k 求最低能量的全部本征矢，按列提交矩阵。简并时不同数值求解器可产生不同基，整体相位及内部酉混合都等价。正确的检查是维数、正交投影和 H 的子空间不变性，而不是逐元素要求本征矢完全一致。",
+          "formula": "P = V(V†V)^(−1)V†；(I−P)HP = 0"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "nonsymmorphic-bloch-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-bloch",
+      "title": "从两个位点推导滑移特征值",
+      "prompt": "使用滑移双值预设，跟随表示构造回放完成四步推导。",
+      "steps": [
+        {
+          "prompt": "为什么 S 的跨胞矩阵元包含 e^(−ik_x)？",
+          "hint": "B 经半平移落到下一晶胞。",
+          "choices": [
+            "记录跨一个晶胞的 Bloch 相位",
+            "仅为绘图配色",
+            "因为 T²=−1"
+          ],
+          "answer": 0,
+          "explanation": "相位来自实空间跨胞位移，自旋平方是下一步的独立因子。"
+        },
+        {
+          "prompt": "无自旋时 S² 等于什么？",
+          "hint": "连续两次半平移。",
+          "choices": [
+            "I 对所有 k 恒成立",
+            "e^(−ik_x)I",
+            "−I 对所有 k 恒成立"
+          ],
+          "answer": 1,
+          "explanation": "两次位点置换回到原位点类型，同时跨过一个晶格周期。"
+        },
+        {
+          "prompt": "双值自旋因子平方为 −I 后，G² 是什么？",
+          "hint": "轨道和自旋因子相乘。",
+          "choices": [
+            "−e^(−ik_x)I",
+            "e^(−2ik_x)I",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "不能丢掉分数平移相位，也不能丢掉自旋 2π 旋转的负号。"
+        },
+        {
+          "prompt": "k_x→k_x+2π 时，连续标号 g₊ 与矩阵 G 各怎样变化？",
+          "hint": "分别查看半角指数和完整矩阵。",
+          "choices": [
+            "两者都变号",
+            "g₊换到另一标签，G保持周期",
+            "G不再酉"
+          ],
+          "answer": 1,
+          "explanation": "单个本征值分支的标签交换与周期 Bloch 基底并不矛盾。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-partner-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-partner",
+      "title": "由端点标签推导中间交叉",
+      "prompt": "保持 m=b=0 且横向分量为零，先推导再检查数值能带。",
+      "steps": [
+        {
+          "prompt": "双值 Γ 端 T 作用于 +i 标签会得到什么？",
+          "hint": "反幺正操作共轭标量。",
+          "choices": [
+            "+i",
+            "−i",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "同一 Kramers 对携带相反的纯虚 G 标签。"
+        },
+        {
+          "prompt": "双值 X 端 +1 标签的 Kramers 伙伴携带什么？",
+          "hint": "实数的共轭不变。",
+          "choices": [
+            "+1",
+            "必为−1",
+            "没有伙伴"
+          ],
+          "answer": 0,
+          "explanation": "当 T 对称且 T²=−I，伙伴同能；实 G 标签保持不变。"
+        },
+        {
+          "prompt": "t=λ>0 时，内部交叉的 f_x 是多少？",
+          "hint": "t cos(k/2)=λ sin(k/2)，f_x=k/(2π)。",
+          "choices": [
+            "0",
+            "1/4",
+            "1/2"
+          ],
+          "answer": 1,
+          "explanation": "k/2=π/4，故 k=π/2、f_x=1/4。"
+        },
+        {
+          "prompt": "无自旋 X 点配对能否称为 T²=−I 的 Kramers 简并？",
+          "hint": "先计算时间反演平方。",
+          "choices": [
+            "能，所有二重简并都是",
+            "不能，T²=+I；需联合复 G 标签解释",
+            "能，只要能带交叉"
+          ],
+          "answer": 1,
+          "explanation": "单值 T²=+I 不独自强制配对；在 X 它交换互为共轭的不同 G 扇区。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-breaking-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-breaking",
+      "title": "证明开隙，保留正确的简并结论",
+      "prompt": "比较无扰动与 m=0.3 的结果，并完成子空间作业。",
+      "steps": [
+        {
+          "prompt": "mτ_z 与半平移非对角轨道结构是什么关系？",
+          "hint": "τ_z 与 τ_x、τ_y 反对易。",
+          "choices": [
+            "保持 G 不变",
+            "破坏 G，但不破坏物理 T",
+            "仅改变单位"
+          ],
+          "answer": 1,
+          "explanation": "G 交换 A/B，τ_z 区分 A/B；实且自旋无关的 τ_z 保 T。"
+        },
+        {
+          "prompt": "m=0.3、b=0 时整条 Γ—X 的中间最小直接隙是多少？",
+          "hint": "使用反对易质量平方关系。",
+          "choices": [
+            "0.3",
+            "0.6",
+            "必为0"
+          ],
+          "answer": 1,
+          "explanation": "无质量交叉处的上下能量为±|m|，全线最小直接隙为2|m|。"
+        },
+        {
+          "prompt": "小 Zeeman 项在原交叉点造成非零隙，能否立刻宣称全线绝缘？",
+          "hint": "交叉可能移动，直接隙和间接隙还不同。",
+          "choices": [
+            "能",
+            "不能，必须检查整条路径；材料绝缘还需全布里渊区",
+            "只需增加线宽"
+          ],
+          "answer": 1,
+          "explanation": "挑战给出全线直接隙下界；此结果仍不是三维材料的全局绝缘证明。"
+        },
+        {
+          "prompt": "两个同维正交基的本征矢逐项不同，但投影矩阵相同，应怎样判分？",
+          "hint": "比较子空间而非任意选基。",
+          "choices": [
+            "视为同一个正确子空间",
+            "全部判错",
+            "只允许实数整体正号"
+          ],
+          "answer": 0,
+          "explanation": "整体相位和子空间内部的酉换基不改变物理子空间；还需检验维数与 H 不变性。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "nonsymmorphic-khgsb",
+      "module": "nonsymmorphic",
+      "title": "KHgSb：从滑移表面态到伙伴交换",
+      "kind": "KHgSb 材料背景与最小线模型",
+      "summary": "连接 Wyckoff 位点的跨胞相位、双值表示和实际对角化；比较 m=0 与 m≠0 时中间交叉及端点配对。",
+      "assumption": "参考材料理论与实验，但当前四带参数未拟合 KHgSb；不据此宣布真实样品的拓扑指数。",
+      "preset": "nonsymmorphic-hourglass",
+      "links": [
+        [
+          "从 Wyckoff 位点到能带表示",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "SU(2) 与双值旋转",
+          "#classroom"
+        ],
+        [
+          "量子几何与拓扑诊断",
+          "#compute/quantum-geometry-lab"
+        ]
+      ]
+    },
+    {
+      "id": "nonsymmorphic-screw-chain",
+      "module": "nonsymmorphic",
+      "title": "螺旋链：相同平移相位、不同旋转轴",
+      "kind": "三维二重螺旋的轴上线模型",
+      "summary": "以两位点链为结构背景，把镜面旋转轴 y 改为螺旋轴 x；记录本征相位、端点配对和不变动量条件。",
+      "assumption": "构造的是 {C₂x|a_x/2} 的合法教学表示；未指定完整材料空间群，也不是所有螺旋阶数的分类。",
+      "preset": "nonsymmorphic-screw",
+      "links": [
+        [
+          "有限波矢有序与超胞",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ],
+        [
+          "空间群与双群课堂",
+          "#classroom"
+        ]
+      ]
+    },
+    {
+      "id": "nonsymmorphic-distorted-chain",
+      "module": "nonsymmorphic",
+      "title": "交替位点势：分辨空间破缺与时间反演破缺",
+      "kind": "位点不等价与磁场的模型比较",
+      "summary": "给 A/B 加相反位点势或给自旋加沿轴磁场，分别检验 G、T 协变；用全线下界完成最小破缺挑战。",
+      "assumption": "m 与 b 是明示模型参数；位点势不自动等同于某种真实结构畸变，也不输出完整空间群。",
+      "preset": "nonsymmorphic-mass",
+      "links": [
+        [
+          "序参量与剩余对称性",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "有限波矢与超胞",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "对称适应基与选择定则",
+          "#compute/salc-lab"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "wang-hourglass",
+      "title": "Wang, Alexandradinata, Cava & Bernevig (2016), Hourglass fermions, Nature 532, 189–194",
+      "url": "https://www.nature.com/articles/nature17410"
+    },
+    {
+      "id": "ma-khgsb",
+      "title": "Ma et al. (2017), Experimental evidence of hourglass fermion in the candidate nonsymmorphic topological insulator KHgSb",
+      "url": "https://doi.org/10.1126/sciadv.1602415"
+    },
+    {
+      "id": "wang-3d-hourglass",
+      "title": "Wang et al., Hourglass semimetals with nonsymmorphic symmetries in three dimensions (primary preprint)",
+      "url": "https://arxiv.org/abs/1702.06140"
+    },
+    {
+      "id": "wieder-kane",
+      "title": "Wieder & Kane (2016), Spin-orbit semimetals in the layer groups",
+      "url": "https://doi.org/10.1103/PhysRevB.94.155108"
+    }
+  ]
+}

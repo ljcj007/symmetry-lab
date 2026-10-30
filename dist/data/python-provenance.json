@@ -681,8 +681,8 @@
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "3aae55df04d39e7cd300f067c5c59c1e25485a5e722e8f190becb8a8392f8ac0",
-      "bytes": 7100,
+      "sha256": "1a678d09b6e7c17bccb7d22f9520330ae53760f4fe89e88432abfae301c9c656",
+      "bytes": 7242,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -896,6 +896,70 @@
       "limitations": [
         "Finite Hilbert spaces with H/hbar in rad/ns and rates in inverse ns; no thermodynamic spontaneous-symmetry-breaking or Goldstone proof",
         "Commutation with the Hamiltonian alone does not imply open-system conservation; a level coincidence or commuting observable alone does not prove robust degeneracy protection"
+      ]
+    },
+    {
+      "path": "dist/python/salc_lab.py",
+      "sha256": "ab58759178e9da1798ac8399976e39c533d4e67b83ec298e839a7af33da9f7f0",
+      "bytes": 19473,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Exact four-site C4v permutation representations with one or two equivalent copies; character and matrix-element projectors, replayed SALC construction and full matrix elements",
+        "Finite-group selection multiplicities distinguished from actual polarized intensities; repeated-irrep Schur blocks, true finite subgroup graph and enumerated constraint-removal challenges"
+      ],
+      "limitations": [
+        "Only the declared four/eight-dimensional orthogonal scalar-orbital model, not arbitrary materials, orbital geometries or a complete SALC catalogue",
+        "Allowed transitions can have zero matrix elements; a repeated isotypic component does not automatically have one common energy"
+      ]
+    },
+    {
+      "path": "dist/python/wavevector_lab.py",
+      "sha256": "bd054f799c83cf43bb0f22a3560a436b00688bb166900e8ae70fd13303f38ec7",
+      "bytes": 20045,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Commensurate N=2/3/4 square scalar modes, exact C4v stars and conjugate real pairing, finite supercell semidirect-product permutations",
+        "Actual pattern stabilizers, finite subgroup inclusion, parent/translation orbits, compatible rectangular periods, minimal translation indices and normalized DFT intensities"
+      ],
+      "limitations": [
+        "Known square parent lattice and one scalar per site; no arbitrary three-dimensional space-group classification, incommensurate superspace or real-material stability prediction",
+        "Scalar Fourier weights omit atomic form factors, displacement/polarization and experimental geometry; a compatible rectangular cell need not be a primitive oblique cell"
+      ]
+    },
+    {
+      "path": "dist/python/nonsymmorphic_lab.py",
+      "sha256": "1e27ca48f6165c800a5125d08f3b2028ed57e6388fad658c49b14347da9b7320",
+      "bytes": 17970,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Periodic two/four-band Bloch teaching matrices for embedded three-dimensional glide or twofold screw operations, with momentum little-group and TRIM checks",
+        "Single/double-valued square relations, degenerate-block operation diagonalization, endpoint partner pairing, analytic crossing and anticommuting-mass gap checks; actual perturbation challenges"
+      ],
+      "limitations": [
+        "One-dimensional momentum-line toy model, not fitted material bands, a full three-dimensional nonsymmorphic classification or global topological index",
+        "Middle direct gaps do not prove indirect or three-dimensional insulating gaps; label subgroup diagrams quotient translations and the double-group center"
+      ]
+    },
+    {
+      "path": "dist/python/symmetry_grading.py",
+      "sha256": "29eb662b0bb12cf5aba7c9fbfee90b2888d5002e0d89547c62e8be18b110ef26",
+      "bytes": 5787,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Numeric matrix and subspace assignment grading with complex JSON inputs, rank/projector comparisons and explicit invariance checks",
+        "Equivalent non-singular changes of subspace basis and overall complex phases do not change the grading target"
+      ],
+      "limitations": [
+        "Grades only the declared finite matrix/subspace task with numerical tolerances; does not automatically grade unrestricted written derivations",
+        "Stored task and reference data are public teaching data, not an assessment-security or plagiarism-detection system"
       ]
     }
   ],

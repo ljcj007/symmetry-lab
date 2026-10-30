@@ -1,6 +1,6 @@
-import {svgMathText} from './math-svg.js?v=20261030-symmetry1';
-import {quantumCurveSVG as curve} from './quantum-plots.js?v=20261030-symmetry1';
-import {esc,num,table,notes,sources} from './response-views.js?v=20261030-symmetry1';
+import {svgMathText} from './math-svg.js?v=20261030-construction1';
+import {quantumCurveSVG as curve} from './quantum-plots.js?v=20261030-construction1';
+import {esc,num,table,notes,sources} from './response-views.js?v=20261030-construction1';
 export {esc,num,table,notes,sources};
 const choice=(values)=>values.map(x=>[x,String(x)]);
 export const fields={

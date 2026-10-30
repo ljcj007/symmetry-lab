@@ -8,9 +8,9 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261030-symmetry1');
-const notebook=await import('../dist/material-notebook.js?v=20261030-symmetry1');
-const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261030-symmetry1');
+const projects=await import('../dist/response-projects.js?v=20261030-construction1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-construction1');
+const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261030-construction1');
 const normalize=value=>JSON.parse(JSON.stringify(value));
 const saved=async id=>(await notebook.listProjects()).find(p=>p.id===id);
 const mount=async(template)=>{
@@ -31,10 +31,10 @@ const stageRecord=(project,step)=>project.records.find(r=>r.id===project.assignm
 const safeSummary=record=>{const summary=projects.evidenceSummary(record);assert.equal(typeof summary,'string');assert.doesNotMatch(summary,/NaN|Infinity|undefined/);return summary;};
 const importFile=body=>({size:Buffer.byteLength(body),text:async()=>body});
 
-assert.equal(projects.assignmentTemplates.length,17,'all fourteen previous projects and three new symmetry projects coexist');
+assert.equal(projects.assignmentTemplates.length,20,'all seventeen previous projects and three construction projects coexist');
 assert.equal(pathwaysAssignments.length,4);
 for(const template of pathwaysAssignments)assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
-// Preserve all six existing assignment kinds and an ordinary material notebook
+// Preserve all sixteen other assignment kinds and an ordinary material notebook
 // while creating/importing new projects through the actual project UI.
 const originals=new Map();
 for(const template of projects.assignmentTemplates.filter(t=>!pathwaysAssignments.some(p=>p.id===t.id))){
@@ -50,7 +50,7 @@ let checkedConstraints=0;
 for(const template of pathwaysAssignments){
  let view=await mount(template);
  assert.equal(view.$('#pj-template').value,template.id);
- assert.equal(view.$('#pj-template').querySelectorAll('option').length,17);
+ assert.equal(view.$('#pj-template').querySelectorAll('option').length,20);
  assert.equal(view.$('#pj-save'),null,'no project exists before the UI creates it');
  const beforeNew=await notebook.listProjects();
  await view.$('#pj-new').onclick();
@@ -182,4 +182,4 @@ assert.equal(recollected.assignment.steps[first.id].interpretation,previous.assi
 assert.equal((await saved(completed.get(template.id).id)).records.length,3,'copy recollection leaves the original intact');
 for(const [id,original]of originals)assert.deepEqual(await saved(id),original,'existing assignments and ordinary notebooks remain intact');
 assert.equal((await notebook.listProjects()).length,originals.size+8);
-console.log(`Pathways project UI: 4 new projects / 12 real stages, ${checkedConstraints} strict constraints, nested k matching, collection/history, restored notes, JSON/Markdown exports, safe copy imports and 6 preserved older assignments passed.`);
+console.log(`Pathways project UI: 4 new projects / 12 real stages, ${checkedConstraints} strict constraints, nested k matching, collection/history, restored notes, JSON/Markdown exports, safe copy imports and 16 preserved other assignments passed.`);

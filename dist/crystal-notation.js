@@ -1,5 +1,5 @@
 // Context-specific crystallographic notation. Raw identifiers stay in data attributes.
-import {hmAliases,knownHmSymbols,knownOperations} from './crystal-symbol-data.js?v=20261030-symmetry1';
+import {hmAliases,knownHmSymbols,knownOperations} from './crystal-symbol-data.js?v=20261030-construction1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sub={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ᵢ':'i','ᵥ':'v','ₕ':'h','ₛ':'s'};
 const sup={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','ᵀ':'T'};

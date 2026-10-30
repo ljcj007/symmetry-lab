@@ -4576,6 +4576,582 @@
       "formulaAliases": [
         "U_T U_T*"
       ]
+    },
+    {
+      "id": "salc-character-projector",
+      "title": "同型分量的字符投影",
+      "symbols": [
+        "P_α",
+        "P_alpha"
+      ],
+      "aliases": [
+        "SALC",
+        "字符投影",
+        "isotypic projector"
+      ],
+      "definition": "用不可约特征标加权群平均，从给定表示空间中取出该不可约表示的全部副本。",
+      "variables": [
+        {
+          "symbol": "d_α",
+          "meaning": "不可约表示维数",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "χ_α",
+          "meaning": "不可约特征标",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "D(g)",
+          "meaning": "当前轨道基中的群矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "P_α=(d_α/|G|)Σ_g χ_α(g)^*D(g)。迹等于该同型分量的总维数。",
+      "conditions": "本实验采用 C₄ᵥ 的四轨道或两副本表示；投影到重复表示时不自动挑出某一个副本。",
+      "sources": [
+        "construction-dresselhaus"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/salc-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "salc-lab",
+        "module=salc"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "salc-partner-projector",
+      "title": "矩阵元投影与伙伴函数",
+      "symbols": [
+        "P_mn",
+        "P_{mn}"
+      ],
+      "aliases": [
+        "partner projection",
+        "伙伴投影",
+        "矩阵元投影"
+      ],
+      "definition": "用不可约表示矩阵元代替特征标，可构造同一不可约表示内相互变换的伙伴。",
+      "variables": [
+        {
+          "symbol": "D^α_mn",
+          "meaning": "目标不可约表示的矩阵元",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "m,n",
+          "meaning": "伙伴指标",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "P_mn=(d_α/|G|)Σ_g D^α_mn(g)^*D(g)。给定参考表示与坐标约定后才能解释伙伴标签。",
+      "conditions": "非对角 P_mn 一般不是正交投影矩阵；伙伴相位和等价基的内部换基不改变表示空间。",
+      "sources": [
+        "construction-dresselhaus"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/salc-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "salc-lab",
+        "module=salc"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "salc-selection-multiplicity",
+      "title": "统一选择定则与实际矩阵元",
+      "symbols": [
+        "n_allowed",
+        "χ_f^*χ_Oχ_i"
+      ],
+      "aliases": [
+        "允许重数",
+        "selection rule",
+        "允许不等于非零"
+      ],
+      "definition": "判断算符表示与初态的直积是否包含末态表示；包含重数大于零只表示对称性允许。",
+      "variables": [
+        {
+          "symbol": "χ_i",
+          "meaning": "初态表示特征标",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "χ_f",
+          "meaning": "末态表示特征标",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "χ_O",
+          "meaning": "算符表示特征标",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "n_allowed=(1/|G|)Σ_g χ_f(g)^*χ_O(g)χ_i(g)。实际强度由指定算符的矩阵元模平方计算。",
+      "conditions": "偏振、具体波函数和约化矩阵元仍可令允许跃迁为零；不把有限群包含重数当作 SU(2) 的通用 CG 系数。",
+      "sources": [
+        "construction-dresselhaus",
+        "construction-wigner-eckart"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/salc-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "salc-lab",
+        "module=salc"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "salc-schur",
+      "title": "重复不可约表示的 Schur 结构",
+      "symbols": [
+        "H_copy",
+        "H_E"
+      ],
+      "aliases": [
+        "Schur",
+        "重复不可约表示",
+        "副本空间"
+      ],
+      "definition": "当同一不可约表示多次出现，对称 Hamiltonian 可混合副本，但必须在伙伴空间上与表示相容。",
+      "variables": [
+        {
+          "symbol": "H_copy",
+          "meaning": "作用在等价副本空间的 Hermitian 矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "I_partner",
+          "meaning": "伙伴空间单位阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "H_E=H_copy⊗I_partner，采用先副本后伙伴的基底顺序。",
+      "conditions": "重复 E 的四维同型空间通常可分成两个不同能量的双重态；不能把四维同型空间直接称为受保护四重简并。",
+      "sources": [
+        "construction-dresselhaus"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/salc-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "salc-lab",
+        "module=salc"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "wavevector-star",
+      "title": "波矢星与共轭实模式",
+      "symbols": [
+        "star(q)",
+        "q_star"
+      ],
+      "aliases": [
+        "q星",
+        "波矢星",
+        "共轭配对"
+      ],
+      "definition": "波矢星收集母点群作用下模倒格矢等价后的全部不同臂；实场要求 q 与 −q 的系数互为复共轭。",
+      "variables": [
+        {
+          "symbol": "q",
+          "meaning": "母倒格分数波矢",
+          "unit": "倒格分数"
+        },
+        {
+          "symbol": "A_j",
+          "meaning": "共轭对实幅度",
+          "unit": "教学幅度"
+        },
+        {
+          "symbol": "φ_j",
+          "meaning": "该共轭对相位",
+          "unit": "弧度"
+        }
+      ],
+      "conventions": "f(r)=Σ_j A_j cos(2πq_j·r+φ_j)。非自共轭对给出 cos/sin；q≡−q 时只有一个实模式。",
+      "conditions": "当前是已知方格标量模式、N=2/3/4 的可公度实验，不是任意三维空间群表示数据库。",
+      "sources": [
+        "principles-isodistort"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "wavevector-lab",
+        "module=wavevector"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "wavevector-translation-index",
+      "title": "平移稳定子、超胞指数与平移畴",
+      "symbols": [
+        "H∩T",
+        "N_translation"
+      ],
+      "aliases": [
+        "平移畴",
+        "最小平移指数",
+        "斜胞"
+      ],
+      "definition": "实际场保留的平移形成 H∩T，平移轨道的大小等于该子群在声明平移群中的指数。",
+      "variables": [
+        {
+          "symbol": "T",
+          "meaning": "声明 N×N 超胞内的平移群",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "H",
+          "meaning": "当前图案在有限母群中的稳定子",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "N_translation=|T|/|H∩T|；矩形周期 L_x L_y 可能大于这个最小平移指数。",
+      "conditions": "图中群均为有限周期商群。指数不是自动给出的三维标准晶胞，也不证明哪个图案热力学稳定。",
+      "sources": [
+        "principles-isodistort"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "wavevector-lab",
+        "module=wavevector"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "wavevector-fourier",
+      "title": "标量调制的 Fourier 系数与卫星权重",
+      "symbols": [
+        "F(q)",
+        "I(q)"
+      ],
+      "aliases": [
+        "卫星强度",
+        "DFT",
+        "Fourier权重"
+      ],
+      "definition": "把离散实空间模式分解成各倒格网格上的复系数，模平方提供模型的相对权重。",
+      "variables": [
+        {
+          "symbol": "F(q)",
+          "meaning": "按 1/N² 归一化的二维 DFT",
+          "unit": "教学幅度"
+        },
+        {
+          "symbol": "I(q)",
+          "meaning": "标量模式权重",
+          "unit": "教学幅度平方"
+        }
+      ],
+      "conventions": "F(q)=N⁻²Σ_r f(r)exp(−2πiq·r)；I(q)=|F(q)|²；F(−q)=F(q)^*。",
+      "conditions": "未包含原子散射因子、位移 Q·u 或磁偏振；不能直接当作实验衍射截面。",
+      "sources": [
+        "construction-numpy-fft"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "wavevector-lab",
+        "module=wavevector"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "wavevector-parseval",
+      "title": "Parseval 检验与相位预测",
+      "symbols": [
+        "Σ_q|F(q)|²",
+        "A²/4"
+      ],
+      "aliases": [
+        "Parseval",
+        "相位与强度",
+        "实场均方"
+      ],
+      "definition": "用实场均方与全部 Fourier 权重之和的相等检查归一化，并区分复系数相位和强度。",
+      "variables": [
+        {
+          "symbol": "N",
+          "meaning": "声明超胞的边长",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "A",
+          "meaning": "非自共轭单 q 余弦幅度",
+          "unit": "教学幅度"
+        }
+      ],
+      "conventions": "Σ_q|F(q)|²=N⁻²Σ_r|f(r)|²。互异的 q/−q 各有 A²/4 强度，整体相位不改变它们。",
+      "conditions": "自共轭臂只有一个实自由度，相位只乘 cosφ；不能无条件套用两个不同卫星的结论。",
+      "sources": [
+        "construction-numpy-fft"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "wavevector-lab",
+        "module=wavevector"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "nonsym-square",
+      "title": "螺旋或滑移的 Bloch 平方关系",
+      "symbols": [
+        "G(k)²",
+        "G(k)^2"
+      ],
+      "aliases": [
+        "nonsymmorphic",
+        "滑移平方",
+        "螺旋平方"
+      ],
+      "definition": "重复半平移操作产生一个整格平移，同时保留单值或双值表示的中心符号。",
+      "variables": [
+        {
+          "symbol": "k_x",
+          "meaning": "沿操作平移方向的弧度波矢",
+          "unit": "弧度"
+        },
+        {
+          "symbol": "G(k)",
+          "meaning": "周期 Bloch 基底中的操作矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "s",
+          "meaning": "单值为 0，双值为 1/2",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "G(k)²=(−1)^(2s)exp(−ik_x)I；输入倒格分数 f_x 时 k_x=2πf_x。",
+      "conditions": "需先满足 Rk−k 为倒格整数的小群条件。模型把三维操作限制在一条动量线上，不覆盖完整空间群分类。",
+      "sources": [
+        "construction-hourglass",
+        "construction-layer-groups"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/nonsymmorphic-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "nonsymmorphic-lab",
+        "module=nonsymmorphic"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "nonsym-eigenvalues",
+      "title": "动量依赖的滑移或螺旋本征值",
+      "symbols": [
+        "g_±",
+        "g_plus",
+        "g_minus"
+      ],
+      "aliases": [
+        "动量标签",
+        "滑移本征值",
+        "伙伴交换"
+      ],
+      "definition": "本征值是平方关系的两支平方根；即使矩阵严格周期，单支标签也可在穿越一个倒格周期后交换。",
+      "variables": [
+        {
+          "symbol": "g_±",
+          "meaning": "操作的两个本征值支",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "k_x",
+          "meaning": "弧度波矢",
+          "unit": "弧度"
+        }
+      ],
+      "conventions": "双值：g_±=±i exp(−ik_x/2)；单值：g_±=±exp(−ik_x/2)。",
+      "conditions": "能量简并块内应先重新对角化 G，再读标签；数值求解器任意选取的能量基矢不一定是 G 本征态。",
+      "sources": [
+        "construction-hourglass"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/nonsymmorphic-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "nonsymmorphic-lab",
+        "module=nonsymmorphic"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "nonsym-kramers-pairing",
+      "title": "TRIM 两端的 Kramers 伙伴配对",
+      "symbols": [
+        "U_T H(k)^* U_T†",
+        "T²=−I"
+      ],
+      "aliases": [
+        "hourglass",
+        "Kramers伙伴",
+        "端点配对"
+      ],
+      "definition": "反幺正时间反演联系 k 与 −k；在 TRIM 上结合 T²=−I 与动量依赖操作标签，比较两端伙伴配对。",
+      "variables": [
+        {
+          "symbol": "U_T",
+          "meaning": "T=U_TK 的幺正部分",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "TRIM",
+          "meaning": "满足 2k 为倒格整数的动量",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "U_T H(k)^* U_T†=H(−k)。本模型双值 Γ 端伙伴标签相反，X 端伙伴标签相同。",
+      "conditions": "伙伴交换诊断同时要求整条线属于 G 小群、两端为 TRIM、G 与 T 均为对称；只看到能带重合不足以证明保护。",
+      "sources": [
+        "construction-hourglass",
+        "construction-layer-groups"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/nonsymmorphic-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "nonsymmorphic-lab",
+        "module=nonsymmorphic"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "nonsym-mass",
+      "title": "破滑移或螺旋的反对易质量项",
+      "symbols": [
+        "mτ_z",
+        "Δ_direct"
+      ],
+      "aliases": [
+        "质量项",
+        "直接隙",
+        "最小破缺"
+      ],
+      "definition": "在当前明确的两带或四带模型中加入反对易质量，可检验破坏哪项约束能够打开中间直接隙。",
+      "variables": [
+        {
+          "symbol": "m",
+          "meaning": "τ_z 质量系数",
+          "unit": "教学能量"
+        },
+        {
+          "symbol": "Δ_direct",
+          "meaning": "全动量线最小中间直接隙",
+          "unit": "教学能量"
+        }
+      ],
+      "conventions": "H_m=H₀+mτ_z⊗I；在 b=0 的本模型中 Δ_direct=2|m|。",
+      "conditions": "该结论来自所声明的矩阵及反对易关系，不是任意螺旋材料的能隙公式；直接隙不等于间接隙或三维绝缘判据。",
+      "sources": [
+        "construction-hourglass"
+      ],
+      "links": [
+        [
+          "打开对应实验",
+          "#compute/nonsymmorphic-lab"
+        ],
+        [
+          "参数与结果对照",
+          "#atlas/compare"
+        ]
+      ],
+      "contexts": [
+        "nonsymmorphic-lab",
+        "module=nonsymmorphic"
+      ],
+      "requiresContext": true
     }
   ],
   "sources": [
@@ -4748,8 +5324,34 @@
       "id": "principles-noether",
       "title": "David Tong：连续对称性与 Noether 定理",
       "url": "https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html"
+    },
+    {
+      "id": "construction-dresselhaus",
+      "title": "M. S. Dresselhaus, Applications of Group Theory to the Physics of Solids (MIT, 2002)",
+      "url": "https://faculty.washington.edu/srsharpe/507/dresselhaus.pdf"
+    },
+    {
+      "id": "construction-wigner-eckart",
+      "title": "R. G. Littlejohn, Irreducible Tensor Operators and the Wigner–Eckart Theorem (2019)",
+      "url": "https://bohr.physics.berkeley.edu/classes/221/1112/notes/wigeck.pdf"
+    },
+    {
+      "id": "construction-numpy-fft",
+      "title": "NumPy 官方文档：离散 Fourier 变换的约定",
+      "url": "https://numpy.org/doc/stable/reference/routines.fft.html"
+    },
+    {
+      "id": "construction-hourglass",
+      "title": "Wang et al., Hourglass fermions, Nature 532, 189–194 (2016)",
+      "url": "https://www.nature.com/articles/nature17410"
+    },
+    {
+      "id": "construction-layer-groups",
+      "title": "Wieder & Kane, Spin-orbit semimetals in the layer groups (2016)",
+      "url": "https://doi.org/10.1103/PhysRevB.94.155108"
     }
   ],
   "extensionRelease": "20261030-bridges1",
-  "principlesRelease": "20261030-symmetry1"
+  "principlesRelease": "20261030-symmetry1",
+  "constructionRelease": "20261030-construction1"
 }

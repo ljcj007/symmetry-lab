@@ -6,10 +6,10 @@ const storage=new Map(),KEY='symmetry-lab.comparison.v1',LIMIT=3*1024*1024;
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const notebook=await import('../dist/material-notebook.js?v=20261030-symmetry1');
-const lab=await import('../dist/comparison-lab.js?v=20261030-symmetry1');
-const projects=await import('../dist/response-projects.js?v=20261030-symmetry1');
-const {bridgesAssignments}=await import('../dist/bridges-projects.js?v=20261030-symmetry1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-construction1');
+const lab=await import('../dist/comparison-lab.js?v=20261030-construction1');
+const projects=await import('../dist/response-projects.js?v=20261030-construction1');
+const {bridgesAssignments}=await import('../dist/bridges-projects.js?v=20261030-construction1');
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/bridges-projects.json',import.meta.url),'utf8'));
 const copy=x=>JSON.parse(JSON.stringify(x));
 const state=()=>JSON.parse(storage.get(KEY));
@@ -175,9 +175,9 @@ view.$('#cmp-prediction').value='在当前页面保存';view.$('#cmp-save-predic
 const staleHandler=view.$('#cmp-save-prediction').onclick,stale=copy(state());
 view.container.innerHTML='<p>另一个页面</p>';staleHandler();assert.deepEqual(state(),stale,'detached handlers do not mutate stored prediction');
 
-// The four new assignments are integrated into the existing fourteen-project
+// The four bridge assignments coexist with the full twenty-project
 // center and notebook whitelist, including actual collection and copy import.
-assert.equal(projects.assignmentTemplates.length,17);
+assert.equal(projects.assignmentTemplates.length,20);
 for(const template of bridgesAssignments){
  assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
  let project=notebook.makeProject({title:template.title});
@@ -208,4 +208,4 @@ for(const template of bridgesAssignments){
  assert.deepEqual((await notebook.listProjects()).find(p=>p.id===project.id),project,'import leaves original assignment intact');
 }
 console.log(`Parameter comparison: ${actions.length} allowed calculators, same-tool/model/version checks, A/prediction/B locking, restoration, complete JSON/notebook copies, safe imports and disabled/stale handlers passed.`);
-console.log('Project integration: all four new templates / twelve actual stages collect, report and import as independent notebook copies; fourteen templates coexist.');
+console.log('Project integration: all four bridge templates / twelve actual stages collect, report and import as independent notebook copies; twenty templates coexist.');

@@ -1,0 +1,1872 @@
+{
+  "schema": "symmetry-lab-construction-1",
+  "release": "20261030-construction1",
+  "modules": [
+    {
+      "id": "salc",
+      "title": "对称适应基与统一选择定则",
+      "summary": "从四站点真实置换矩阵构造SALC，回放字符与矩阵元投影，再比较对称允许、实际矩阵元和偏振强度。",
+      "route": "salc-lab",
+      "action": "salc_lab",
+      "pathway": "foundations",
+      "fields": [
+        {
+          "key": "copies",
+          "label": "等价四轨道副本数",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "1套：四维"
+            ],
+            [
+              2,
+              "2套：八维，含重复不可约表示"
+            ]
+          ]
+        },
+        {
+          "key": "targetIrrep",
+          "label": "投影和子空间作业目标",
+          "type": "select",
+          "default": "E",
+          "options": [
+            [
+              "A1",
+              "A₁：全对称"
+            ],
+            [
+              "B1",
+              "B₁：x²−y²型"
+            ],
+            [
+              "E",
+              "E：二维伙伴"
+            ]
+          ]
+        },
+        {
+          "key": "seedSite",
+          "label": "第1副本中的种子轨道",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              0,
+              "站点1：+x"
+            ],
+            [
+              1,
+              "站点2：+y"
+            ],
+            [
+              2,
+              "站点3：−x"
+            ],
+            [
+              3,
+              "站点4：−y"
+            ]
+          ]
+        },
+        {
+          "key": "operatorType",
+          "label": "实际算符类型",
+          "type": "select",
+          "default": "dipole",
+          "options": [
+            [
+              "dipole",
+              "E：面内极向量偶极"
+            ],
+            [
+              "scalar",
+              "A₁：单位算符"
+            ],
+            [
+              "quadrupole",
+              "B₁：X²−Y²"
+            ],
+            [
+              "axial",
+              "A₂：环流型厄米算符"
+            ]
+          ]
+        },
+        {
+          "key": "polarizationAngle",
+          "label": "线偏振角 θ（度，仅作用于偶极）",
+          "type": "number",
+          "default": 0,
+          "min": -360,
+          "max": 360,
+          "step": 5
+        },
+        {
+          "key": "operatorScale",
+          "label": "算符幅值（相对单位）",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "hop",
+          "label": "相邻站点跃迁 t（相对单位）",
+          "type": "number",
+          "default": -1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "crossHop",
+          "label": "副本间同位点跃迁（仅两副本）",
+          "type": "number",
+          "default": 0.3,
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "copyOffset",
+          "label": "第二副本能量偏移（仅两副本）",
+          "type": "number",
+          "default": 0.5,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "anisotropy",
+          "label": "B₁型扰动幅值 δ（群平均后加入）",
+          "type": "number",
+          "default": 0.4,
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "retainC4",
+          "label": "保留四重旋转约束",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "保留 C₄z"
+            ],
+            [
+              0,
+              "移除 C₄z 约束"
+            ]
+          ]
+        },
+        {
+          "key": "retainMirror",
+          "label": "保留xz镜面约束",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "保留 m_xz"
+            ],
+            [
+              0,
+              "移除 m_xz 约束"
+            ]
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "salc-four-sites",
+          "title": "四站点：逐项构造E伙伴",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "E",
+            "seedSite": 0,
+            "operatorType": "dipole",
+            "polarizationAngle": 0,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
+        },
+        {
+          "id": "salc-polarization",
+          "title": "45度偏振：两个伙伴等强",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "E",
+            "seedSite": 1,
+            "operatorType": "dipole",
+            "polarizationAngle": 45,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
+        },
+        {
+          "id": "salc-repeated",
+          "title": "八维表示：副本混合与伙伴简并",
+          "input": {
+            "copies": 2,
+            "targetIrrep": "E",
+            "seedSite": 0,
+            "operatorType": "scalar",
+            "polarizationAngle": 0,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.6,
+            "copyOffset": 0.8,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
+        },
+        {
+          "id": "salc-breaking",
+          "title": "移除四重约束：A₁—B₁混合",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "B1",
+            "seedSite": 0,
+            "operatorType": "quadrupole",
+            "polarizationAngle": 0,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.6,
+            "retainC4": 0,
+            "retainMirror": 1
+          }
+        },
+        {
+          "id": "salc-axial",
+          "title": "A₂环流算符：E内部的复矩阵元",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "E",
+            "seedSite": 0,
+            "operatorType": "axial",
+            "polarizationAngle": 0,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
+        },
+        {
+          "id": "salc-allowed-zero",
+          "title": "允许却为零：关闭算符幅值",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "A1",
+            "seedSite": 0,
+            "operatorType": "dipole",
+            "polarizationAngle": 0,
+            "operatorScale": 0,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "salc-predict-polarization",
+          "preset": "salc-polarization",
+          "question": "从x偏振转到45度偏振时，副本1中A₁到E_x、E_y的强度怎样变化？",
+          "choices": [
+            "两个伙伴各为1/4，总强度仍为1/2",
+            "两个伙伴各为1/2，总强度加倍",
+            "E_y始终禁戒"
+          ],
+          "answer": 0,
+          "explanation": "本模型X与Y分别连接到E_x与E_y；强度为cos²θ/2和sin²θ/2。单个伙伴强度随偏振变，总和不变。"
+        },
+        {
+          "id": "salc-predict-zero",
+          "preset": "salc-allowed-zero",
+          "question": "把偶极幅值设为0后，A₁→E的群论包含重数和实际强度分别怎样变化？",
+          "choices": [
+            "重数变为0，强度为0",
+            "重数仍为1，实际强度为0",
+            "只要重数为1就一定有强度"
+          ],
+          "answer": 1,
+          "explanation": "表示类型仍声明为E；重数是表示之间的关系，算符前的数值系数为0不会改变该关系。实际矩阵元全部为零。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector",
+      "title": "有限波矢有序、q 星与超胞",
+      "summary": "在已知方格层的标量模式中，构造可公度 q 星与实模式，枚举超胞稳定子和平移畴，并把实空间图案与相对 Fourier 卫星权重联动。",
+      "route": "wavevector-lab",
+      "action": "wavevector_lab",
+      "pathway": "structure-dynamics",
+      "fields": [
+        {
+          "key": "period",
+          "label": "声明超胞 N×N",
+          "type": "select",
+          "default": 4,
+          "options": [
+            [
+              2,
+              "2×2：4 位点"
+            ],
+            [
+              3,
+              "3×3：9 位点"
+            ],
+            [
+              4,
+              "4×4：16 位点"
+            ]
+          ]
+        },
+        {
+          "key": "qx",
+          "label": "q_x 分子（q_x / N）",
+          "type": "number",
+          "default": 1,
+          "min": -4,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "qy",
+          "label": "q_y 分子（q_y / N）",
+          "type": "number",
+          "default": 0,
+          "min": -4,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "pattern",
+          "label": "激活的共轭对",
+          "type": "select",
+          "default": "single",
+          "options": [
+            [
+              "single",
+              "单对：输入 q 与 −q"
+            ],
+            [
+              "multi",
+              "多对：完整星的各共轭对"
+            ]
+          ]
+        },
+        {
+          "key": "amplitude",
+          "label": "首对幅度 A（无量纲）",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "transverseRatio",
+          "label": "其他共轭对 / 首对幅度",
+          "type": "number",
+          "default": 1,
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "phaseDegrees",
+          "label": "首对相位 φ / 度",
+          "type": "number",
+          "default": 0,
+          "min": -360,
+          "max": 360,
+          "step": 5
+        },
+        {
+          "key": "relativePhaseDegrees",
+          "label": "其他共轭对相对相位 / 度",
+          "type": "number",
+          "default": 0,
+          "min": -360,
+          "max": 360,
+          "step": 5
+        }
+      ],
+      "presets": [
+        {
+          "id": "wavevector-stripe",
+          "title": "四周期条纹：单 q 共轭对",
+          "input": {
+            "period": 4,
+            "qx": 1,
+            "qy": 0,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        },
+        {
+          "id": "wavevector-double",
+          "title": "四周期交叉图案：等幅双 q",
+          "input": {
+            "period": 4,
+            "qx": 1,
+            "qy": 0,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "multi"
+          }
+        },
+        {
+          "id": "wavevector-checker",
+          "title": "二周期棋盘格：自共轭边界点",
+          "input": {
+            "period": 2,
+            "qx": 1,
+            "qy": 1,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        },
+        {
+          "id": "wavevector-phase",
+          "title": "三周期条纹：一般相位",
+          "input": {
+            "period": 3,
+            "qx": 1,
+            "qy": 0,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 20,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        },
+        {
+          "id": "wavevector-unequal",
+          "title": "不等幅双 q：相差四分之一周期",
+          "input": {
+            "period": 4,
+            "qx": 1,
+            "qy": 0,
+            "amplitude": 1,
+            "transverseRatio": 0.5,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 90,
+            "pattern": "multi"
+          }
+        },
+        {
+          "id": "wavevector-diagonal",
+          "title": "三周期斜条纹：矩形胞与最小指数",
+          "input": {
+            "period": 3,
+            "qx": 1,
+            "qy": 1,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        },
+        {
+          "id": "wavevector-period-two",
+          "title": "二周期条纹：A/B 交替势的空间模式",
+          "input": {
+            "period": 2,
+            "qx": 1,
+            "qy": 0,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "wavevector-predict-phase",
+          "question": "四周期单 q 条纹只改变整体相位，保持 A=1 时，两个非零卫星的 |F|² 如何变化？",
+          "choices": [
+            "每个仍为 1/4，但实空间图案和复系数相位可变",
+            "两个卫星均变为 0",
+            "强度必随 cos²φ 变化"
+          ],
+          "answer": 0,
+          "preset": "wavevector-stripe",
+          "explanation": "q 与 −q 在 N=4 的这组条纹中是不同臂；F(q)=e^(iφ)/2，所以每个强度恒为 1/4。自共轭边界点只有一个实自由度，是不同情形。"
+        },
+        {
+          "id": "wavevector-predict-cell",
+          "question": "N=3、q=(1/3,1/3) 的单 q 斜条纹，矩形周期为 3×3。最小平移指数是多少？",
+          "choices": [
+            "9，必等于矩形面积",
+            "3，因为 (1,−1) 仍是保留平移",
+            "1，因为相位可以选择"
+          ],
+          "answer": 1,
+          "preset": "wavevector-diagonal",
+          "explanation": "保留平移满足 tx+ty=0 mod 3，共有 3 个。声明平移群有 9 个元素，故指数为 9/3=3。矩形超胞容纳了三个最小斜胞。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic",
+      "title": "螺旋、滑移与动量相关简并",
+      "summary": "从半平移构造周期 Bloch 表示，检验小群与时间反演，再用真实两带或四带 Hamiltonian 追踪端点配对、中间交叉和开隙扰动。",
+      "route": "nonsymmorphic-lab",
+      "action": "nonsymmorphic_lab",
+      "pathway": "crystal",
+      "fields": [
+        {
+          "key": "operation",
+          "label": "三维空间操作",
+          "type": "select",
+          "default": "glide",
+          "options": [
+            [
+              "glide",
+              "滑移 {m_y|a_x/2}"
+            ],
+            [
+              "screw",
+              "二重螺旋 {C₂x|a_x/2}"
+            ]
+          ]
+        },
+        {
+          "key": "spinful",
+          "label": "单值或双值表示",
+          "type": "select",
+          "default": "true",
+          "options": [
+            [
+              "true",
+              "自旋 1/2：四带双值模型"
+            ],
+            [
+              "false",
+              "无自旋：两带单值模型"
+            ]
+          ]
+        },
+        {
+          "key": "hopping",
+          "label": "跃迁 t（任意能量单位）",
+          "type": "number",
+          "default": 1,
+          "min": 0.05,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "spinOrbit",
+          "label": "双值耦合 λ（单值模型忽略）",
+          "type": "number",
+          "default": 0.65,
+          "min": 0.05,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "mass",
+          "label": "破坏 G 的质量 m，保留 T",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "zeeman",
+          "label": "破坏 T 的系数 b，保留 G",
+          "type": "number",
+          "default": 0,
+          "min": -100,
+          "max": 100,
+          "step": 0.1
+        },
+        {
+          "key": "shift",
+          "label": "共同色散 ε cos(k_x)",
+          "type": "number",
+          "default": 0,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "kFraction",
+          "label": "回放与作业位置 f_x=k_x/(2π)",
+          "type": "number",
+          "default": 0.2,
+          "min": -0.5,
+          "max": 0.5,
+          "step": 0.01
+        },
+        {
+          "key": "transverseY",
+          "label": "横向倒格分量 f_y：检验小群",
+          "type": "number",
+          "default": 0,
+          "min": -0.5,
+          "max": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "transverseZ",
+          "label": "横向倒格分量 f_z：检验小群/TRIM",
+          "type": "number",
+          "default": 0,
+          "min": -0.5,
+          "max": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "points",
+          "label": "能带采样点（另含解析交叉点）",
+          "type": "number",
+          "default": 121,
+          "min": 41,
+          "max": 401,
+          "step": 20
+        }
+      ],
+      "presets": [
+        {
+          "id": "nonsymmorphic-hourglass",
+          "title": "滑移双值：从真实矩阵得到伙伴交换",
+          "input": {
+            "operation": "glide",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.2,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-screw",
+          "title": "二重螺旋：比较相同平移因子与不同旋转轴",
+          "input": {
+            "operation": "screw",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 1,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0.3,
+            "kFraction": 0.25,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-mass",
+          "title": "破坏滑移开隙，但端点 Kramers 仍在",
+          "input": {
+            "operation": "glide",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0.3,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.2,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-spinless",
+          "title": "无自旋：X 点复标签配对并非 Kramers",
+          "input": {
+            "operation": "glide",
+            "spinful": "false",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.5,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-offline",
+          "title": "离开螺旋小群：不要只凭能带图判断保护",
+          "input": {
+            "operation": "screw",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.2,
+            "transverseY": 0.2,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-break-time",
+          "title": "强 T 破缺：保留 G 也可打开整条中间隙",
+          "input": {
+            "operation": "glide",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 5,
+            "shift": 0,
+            "kFraction": 0.2,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-screw-single",
+          "title": "单值螺旋边界：与 SG4 诱导表示核对",
+          "input": {
+            "operation": "screw",
+            "spinful": "false",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.5,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-screw-double",
+          "title": "同一螺旋边界：加入自旋双值因子",
+          "input": {
+            "operation": "screw",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 0.65,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.5,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "nonsymmorphic-kramers-mass",
+          "preset": "nonsymmorphic-mass",
+          "question": "只加入 mτ_z 并打开中间交叉后，双值模型的两个 TRIM 端点会怎样？",
+          "choices": [
+            "端点仍有 Kramers 配对",
+            "所有简并必然消失",
+            "T²变成+I"
+          ],
+          "answer": 0,
+          "explanation": "mτ_z 破 G 但保 T，且物理自旋 T²=−I 不变。中间交叉与端点 Kramers 由不同条件保护。"
+        },
+        {
+          "id": "nonsymmorphic-offline-predict",
+          "preset": "nonsymmorphic-offline",
+          "question": "在 f_y=0.2 的螺旋模型切线上，仍画出相似交叉是否已经证明螺旋小群保护？",
+          "choices": [
+            "是，形状相同即可",
+            "否，Rk−k不是倒格矢",
+            "只要矩阵够大就可以"
+          ],
+          "answer": 1,
+          "explanation": "二重螺旋绕 x 轴使 f_y→−f_y；差为−0.4，不是整数。横向平坦教学模型保留的交叉不能据此称为该 k 的晶体小群保护。"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "salc-build",
+      "module": "salc",
+      "title": "从站点移动到对称适应线性组合",
+      "summary": "自己生成置换表示，逐项观察相消、投影、归一化和E伙伴构造。",
+      "preset": "salc-four-sites",
+      "references": [
+        "salc-dresselhaus-projection"
+      ],
+      "sections": [
+        {
+          "title": "第一步：固定轨道顺序与操作约定",
+          "text": "四个正交标量轨道位于+x、+y、−x、−y。主动C₄z把站点1送到2，因此置换矩阵第1列在第2行为1。由C₄z和xz镜面生成全部8个操作，并逐对验证矩阵乘法与空间操作一致。",
+          "formula": "D(g)|r_j〉 = |g r_j〉"
+        },
+        {
+          "title": "第二步：用字符找出需要的子空间",
+          "text": "每个置换矩阵的迹等于该操作保留的轨道数。与不可约字符取内积，四维表示分成A₁、B₁和E；A₂与B₂重数为0。字符投影回放中，先看带权累加，最后才归一化。",
+          "formula": "m_α = (1/8) Σ_g χ_α(g)^* χ_D(g)；Γ_D = A₁ ⊕ B₁ ⊕ E"
+        },
+        {
+          "title": "第三步：字符投影与伙伴投影各做什么",
+          "text": "A₁得到(1,1,1,1)/2，B₁得到(1,−1,1,−1)/2。E的字符投影只选出二维空间；用P_xx选出E_x，再用P_yx产生E_y，得到(1,0,−1,0)/√2与(0,1,0,−1)/√2。种子从+x换成+y会改变得到的伙伴，不改变目标子空间。",
+          "formula": "P_α = (d_α/8) Σ_g χ_α(g)^* D(g)；P_mn = (2/8) Σ_g D^(E)_mn(g)^* D(g)"
+        },
+        {
+          "title": "第四步：验证整个基而不是记住符号",
+          "text": "把所有SALC作为U的列，检查U†U=I、投影幂等和完备、U†D(g)U共同分块。整体变号或复相位不会改变子空间，作业按列空间判分。两副本时需提交整个目标同型子空间，不能只给第一副本。",
+          "formula": "P_α² = P_α；Σ_α P_α = I；U†U = I"
+        }
+      ]
+    },
+    {
+      "id": "salc-selection",
+      "module": "salc",
+      "title": "同一条规则连接偏振、算符与跃迁",
+      "summary": "先计算表示包含关系，再计算实际矩阵元；明确区分禁戒、允许和非零。",
+      "preset": "salc-polarization",
+      "references": [
+        "salc-dresselhaus-selection",
+        "salc-littlejohn-wigner"
+      ],
+      "sections": [
+        {
+          "title": "第一步：给算符声明变换类型",
+          "text": "本模型X、Y组成E极向量；单位算符属于A₁，X²−Y²属于B₁，厄米环流算符i(D(C₄)−D(C₄)†)/2属于A₂。以D(g)O_jD(g)†的实际矩阵检验算符变换，不能根据算符名字猜测所有材料中的行为。",
+          "formula": "D(g) O_j D(g)† = Σ_i O_i D^(O)_ij(g)"
+        },
+        {
+          "title": "第二步：计算群论禁止的块",
+          "text": "末态表示必须包含在算符表示与初态表示的张量积中。字符内积为0时，所有伙伴之间的整个耦合块为零；大于0只意味着存在群论允许的耦合形式。此处表格直接比较每个参考SALC块的包含重数和实际模方总和。",
+          "formula": "n = (1/8) Σ_g χ_f(g)^* χ_O(g) χ_i(g)"
+        },
+        {
+          "title": "第三步：用偏振算出允许块的强度",
+          "text": "采用O_θ=cosθ X+sinθ Y。副本1的A₁到E_x强度为cos²θ/2，到E_y为sin²θ/2，合计1/2。x偏振下E_y矩阵元为零，但整个A₁→E通道仍允许；把算符幅值设0则全部强度为零。图中角度扫描始终对应偶极探针。",
+          "formula": "I_fi = |〈f|O_θ|i〉|²；I_(A₁→E_x)+I_(A₁→E_y)=1/2"
+        },
+        {
+          "title": "第四步：连接Wigner–Eckart但区分群",
+          "text": "有限群与SU(2)都可把对称性给定的几何结构与体系决定的约化矩阵元分开。SU(2)的角动量三角关系和m选择规则属于其自身表示；不能直接给C₄ᵥ贴上SU(2)的CG系数。含多条耦合通道或重复副本时，需要额外通道标签和多个约化量。",
+          "formula": "Γ_f ⊂ Γ_O ⊗ Γ_i"
+        }
+      ]
+    },
+    {
+      "id": "salc-multiplicity",
+      "module": "salc",
+      "title": "重复表示、子群与最小破缺",
+      "summary": "在八维空间中区分伙伴和副本，再用真实群平均验证何时解除母群禁戒。",
+      "preset": "salc-repeated",
+      "references": [
+        "salc-dresselhaus-projection",
+        "salc-dresselhaus-selection"
+      ],
+      "sections": [
+        {
+          "title": "第一步：增加等价副本不会增加新表示种类",
+          "text": "两套四轨道各自按相同操作置换，表示为2A₁⊕2B₁⊕2E。两个E伙伴属于一个二维不可约表示，两个E副本则属于重数空间。字符投影得到秩4的E同型子空间，单个种子的投影只是一条向量。",
+          "formula": "D_E(g) = I_副本 ⊗ D^(E)(g)"
+        },
+        {
+          "title": "第二步：对称Hamiltonian可以混合副本",
+          "text": "副本间同位点跃迁和第二副本能量偏移都保持母群。在E块中，副本混合矩阵与伙伴空间单位矩阵直积；因此副本混合改变两组能量，却保留每组的E双重简并。能量本征向量的内部旋转不是对称性失效。",
+          "formula": "H_E = H_副本 ⊗ I₂"
+        },
+        {
+          "title": "第三步：从保留生成元重新生成子群",
+          "text": "保留C₄z和镜面得到C₄ᵥ；仅保留旋转得到C₄；仅保留xz镜面得到Cₛ；全移除得到C₁。对B₁型势作保留群平均，再加入Hamiltonian。结果保证与该子群对易；特殊参数下可能还保留额外对称。这里的图只表示四个指定子群。",
+          "formula": "V_H = (1/|H|) Σ_(g∈H) D(g) V D(g)†"
+        },
+        {
+          "title": "第四步：用矩阵而非删标签判定破缺",
+          "text": "最小破缺挑战要求使A₁—B₁混合不再被保留群禁止。枚举移除的生成元集合，实际构造子群、平均势并检测〈A₁|V_H|B₁〉。降对称后仍可用母群SALC作为参考基，但实际能量本征态可能混合这些标签；应结合算符矩阵重新判断跃迁。",
+          "formula": "M_(A₁,B₁) = U_(A₁)† V_H U_(B₁)"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-star",
+      "module": "wavevector",
+      "title": "从一个 q 到真实可见的多臂图案",
+      "summary": "区别波矢星、共轭配对、实表示空间与当前激活的模式。",
+      "preset": "wavevector-stripe",
+      "sections": [
+        {
+          "title": "先声明母晶格和模式基",
+          "text": "采用方格层、每个格点一个无量纲标量。位点 r=(x,y) 按 x 先变、y 后变排列，平面嵌入三维的 z=0。C₄ᵥ 操作不改变此标量的符号；它可作占据偏离或垂直位移的模式幅度。未知真实晶体模式必须另行构建。",
+          "formula": "g:r↦Rr+t mod N；D(g)f(r)=f(g⁻¹r)"
+        },
+        {
+          "title": "用点操作构造 q 星",
+          "text": "q 的分子按 N 取模，即相差母倒格矢视为同一臂。对于 N=4 的 (1,0)/4，C₄ 依次产生 (0,1)/4、(3,0)/4、(0,3)/4。星包含对称相关的可能分量，单个图案不必把所有臂都激活。",
+          "formula": "star(q)={Rq mod Z²:R∈C₄ᵥ}"
+        },
+        {
+          "title": "共轭配对使场为实数",
+          "text": "非自共轭 q 与 −q 提供一对 cos/sin 实基。输入相位控制这两个实基的组合。自共轭点 q≡−q 只有一个实基；例如 N=2 的 (1,1)/2，其 sin 模式在所有格点上均为零。",
+          "formula": "A cos(2πq·r+φ)=(A/2)[e^(iφ)e^(2πiq·r)+e^(−iφ)e^(−2πiq·r)]"
+        },
+        {
+          "title": "回放表示构造并提交子空间",
+          "text": "回放依次展示整数旋转、星臂、正交实基、逐对叠加、真实平移和投影重建。作业目标是完整星张成的空间，接受非奇异内部换基；只交当前一个场通常不足以覆盖完整星。",
+          "formula": "P=B(B†B)⁻¹B†；B→BM（M 可逆）不改变 P"
+        }
+      ],
+      "references": [
+        "wavevector-isodistort",
+        "wavevector-isodisplace"
+      ]
+    },
+    {
+      "id": "wavevector-cell",
+      "module": "wavevector",
+      "title": "超胞、图案稳定子与平移畴",
+      "summary": "对实际图案逐个作用群元素，检查保留对称性与有限群的真实包含关系。",
+      "preset": "wavevector-diagonal",
+      "sections": [
+        {
+          "title": "相容超胞首先是周期边界条件",
+          "text": "本实验选 N=2、3、4，保证输入有理波矢与 N×N 超胞相容。实际图案可能拥有更短周期。对全部非零 Fourier 分量检查 q·t 为整数，可找出保留平移；相位抵消掉的零模式不应继续限制周期。",
+          "formula": "f(r+t)=f(r) ⇔ e^(2πiq·t)=1（对每个非零 Fourier 分量）"
+        },
+        {
+          "title": "矩形胞不一定最小",
+          "text": "斜条纹 f=cos[2π(x+y)/3] 的 x、y 各自周期都是 3，但 (1,−1) 保留图案。因此 3×3 是相容矩形胞，最小斜胞面积指数只有 3。界面同时给出矩形周期和精确平移指数，避免混为一谈。",
+          "formula": "[T:H∩T]=N²/|H∩T|"
+        },
+        {
+          "title": "稳定子作用在整张图案上",
+          "text": "枚举 (Z_N×Z_N)⋊C₄ᵥ 中的 8N² 个抽象元素，对每个位点值比较 D(g)f 与 f。H 包括点操作与平移的组合；只检查 q 是否被固定，或只检查纯点操作，都会漏掉图案的相位条件。",
+          "formula": "H={g∈G:D(g)f=f}"
+        },
+        {
+          "title": "用图检验包含关系，再数对称相关状态",
+          "text": "关系图展示 G、平移群 T、当前稳定子 H、交 H∩T 与单位群；相同子群会合并。边表示真实包含关系。全部图案数是 |G|/|H|；只由平移产生的反相畴数是 |T|/|H∩T|。有限商群不能直接替代三维空间群标准标签。",
+          "formula": "|Gf|=|G|/|H|；|Tf|=|T|/|H∩T|"
+        }
+      ],
+      "references": [
+        "wavevector-isodistort",
+        "wavevector-isodisplace"
+      ]
+    },
+    {
+      "id": "wavevector-satellites",
+      "module": "wavevector",
+      "title": "实空间叠加、卫星权重与可验证预测",
+      "summary": "把模式的相位和幅度与 Fourier 权重对应，区分计算模型和真实衍射实验。",
+      "preset": "wavevector-double",
+      "sections": [
+        {
+          "title": "固定 Fourier 约定",
+          "text": "使用负指数和 1/N² 归一化。图中 k=x+Ny 是倒格网格编号，表格给出真正的二维 q 与复系数。实场要求负波矢系数为复共轭。",
+          "formula": "F(q)=N⁻²Σ_r f(r)e^(−2πiq·r)"
+        },
+        {
+          "title": "单 q 的幅度与相位实验",
+          "text": "对于互异的 q 与 −q，A cos(2πq·r+φ) 在两臂各有强度 A²/4。平移改变复系数相位，却不改变这两个强度。试着先预测相位滑块的效果，再观察图案、复系数和强度三者。",
+          "formula": "F(q)=(A/2)e^(iφ)；I(q)=|F(q)|²=A²/4"
+        },
+        {
+          "title": "双 q 把权重放到不同臂",
+          "text": "本模型的不同共轭对占据不同倒格点，因此相对幅度改变不同臂的权重；相对相位可改变实空间图案和稳定子，而不改变非自共轭臂各自强度。选择不等幅预设，检验四重对称是否仍保留。",
+          "formula": "Σ_q|F(q)|²=N⁻²Σ_r|f(r)|²"
+        },
+        {
+          "title": "把教学预测接入材料项目",
+          "text": "先报告声明的母晶格、模式、q 星、稳定子和平移指数，再把模式权重带到衍射或动态结构因子模块。真实实验还需原子种类、散射因子、Q·u、磁偏振和仪器几何。对称允许的图案并不自动成为能量最低相。",
+          "formula": "实验强度需要结构因子；标量模式 |F|² 仅提供相对 Fourier 权重"
+        }
+      ],
+      "references": [
+        "wavevector-numpy-fft",
+        "wavevector-isodistort"
+      ]
+    },
+    {
+      "id": "nonsymmorphic-bloch",
+      "module": "nonsymmorphic",
+      "title": "从实空间半平移构造 Bloch 表示",
+      "summary": "先追踪位点置换，再加入跨胞相位与自旋旋转。",
+      "preset": "nonsymmorphic-hourglass",
+      "references": [
+        "nonsymmorphic-wang-hourglass",
+        "nonsymmorphic-wieder-kane"
+      ],
+      "sections": [
+        {
+          "title": "三维操作与不变动量",
+          "text": "滑移 {m_y|a_x/2} 反射 y，螺旋 {C₂x|a_x/2} 反转 y、z。沿 (f_x,0,0) 两者保持动量；一般位置须检验 Rk−k 是否为倒格矢。非小群操作把态送到另一个动量，不能直接作为同一能带的量子数。",
+          "formula": "Rk = k + K"
+        },
+        {
+          "title": "周期 Bloch 基底",
+          "text": "胞内 A 在 x=0、B 在 x=a/2。半平移把 A 送到 B，把 B 送到下一胞 A。采用晶胞标签的 Fourier 约定，跨胞项是 exp(−ik_x)，得到 S=[[0,exp(−ik_x)],[1,0]]。这里 k_x 是弧度，界面 f_x=k_x/(2π)。",
+          "formula": "S(k_x)² = e^(−ik_x) I"
+        },
+        {
+          "title": "单值与双值的差异",
+          "text": "无自旋 G=S。自旋 1/2 取 G=S⊗iσ_axis；滑移取 axis=y、螺旋取 axis=x。二次自旋旋转给 −I，故特征值多一个 i。这个选择包含一个明确的双群中心符号约定。",
+          "formula": "g_± = ±e^(−ik_x/2)（单值）；g_± = ±i e^(−ik_x/2)（双值）"
+        },
+        {
+          "title": "表示回放与周期缝合",
+          "text": "逐帧查看 S、G、G² 与 H。k_x 增加 2π 时矩阵回到自身，缝合矩阵为 I；连续追踪的正负本征值标签却会互换。这是标签的单值性问题，不能靠任意画线或漏掉相位处理。",
+          "formula": "G(k_x+2π)=G(k_x)"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-partner",
+      "module": "nonsymmorphic",
+      "title": "时间反演、伙伴交换与真实能带交叉",
+      "summary": "把双值端点 Kramers 条件、滑移标签和中间能带连接逐步串起来。",
+      "preset": "nonsymmorphic-hourglass",
+      "references": [
+        "nonsymmorphic-wang-hourglass",
+        "nonsymmorphic-ma-khgsb",
+        "nonsymmorphic-wang-3d-hourglass"
+      ],
+      "sections": [
+        {
+          "title": "端点与反幺正平方",
+          "text": "物理时间反演为 T=(I⊗iσ_y)K，T²=−I。只有 −k 等价于 k 且 Hamiltonian 保 T，才能在同一个动量应用 Kramers 定理。一般内部 k 点的 T 将态送到 −k，并不自动给同点双重简并。",
+          "formula": "U_T H(k)^* U_T† = H(−k)"
+        },
+        {
+          "title": "两端配对方式不相同",
+          "text": "双值 Γ 端的标签是 ±i，T 将共轭标签互换；X 端标签为 ±1，T 的伙伴具有同一标签。孤立四带在连接两端时必须改变配对。计算在每个简并能量块内部对角化 G，不把任意数值本征矢误当 G 本征态。",
+          "formula": "Γ：(+i,−i)；X：(+1,+1) 或 (−1,−1)"
+        },
+        {
+          "title": "由 Hamiltonian 得到交叉",
+          "text": "定义 A=(1+cos k)τ_x+sin k τ_y，B=sin k τ_x+(1−cos k)τ_y，取 H₀=t A⊗I+λ B⊗σ_axis。它是严格周期、保 G、保 T 的四带模型。正参数 t、λ 时，内部两带在 k_*=2 arctan(t/λ) 相交；图中每个点均为该矩阵的能量。",
+          "formula": "E = ±2[t cos(k/2) ± λ sin(k/2)]"
+        },
+        {
+          "title": "单值模型与材料边界",
+          "text": "单值模型在 X 的 G 标签是 ±i，T 把二者交换，可以强制配对，但 T²=+I，不能称自旋 Kramers 简并。KHgSb 的实验与理论展示了非对称型表面能带的材料背景；本计算仅取最小线模型，未重现实测参数或完整表面拓扑。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-breaking",
+      "module": "nonsymmorphic",
+      "title": "最小破缺、全线开隙与子空间作业",
+      "summary": "用实际扰动验证保护，区分移走交叉、真正开隙与仍然保留的端点配对。",
+      "preset": "nonsymmorphic-mass",
+      "references": [
+        "nonsymmorphic-wang-hourglass",
+        "nonsymmorphic-wang-3d-hourglass"
+      ],
+      "sections": [
+        {
+          "title": "保 T、破 G 的质量",
+          "text": "mτ_z⊗I 与 H₀ 的轨道非对角项反对易，破坏 G 协变但保 T。每个无质量能量分支变成带质量的平方根，中间直接隙的全线最小值为 2|m|，双值端点 Kramers 仍保留。共同色散 ε cos k 只把同 k 的能量一起移动。",
+          "formula": "Δ_middle,min = 2|m|（b=0）"
+        },
+        {
+          "title": "保 G、破 T 的比较实验",
+          "text": "双值模型的 b I⊗σ_axis 保 G、破 T。小 b 可能只是移动交叉，所以挑战使用足够大的 b，并给出全线正能隙下界。单值比较项是 b B(k)，不是电子 Zeeman 场。不能把在原交叉位置开隙当成整条路径开隙。",
+          "formula": "Δ_middle,min ≥ 2|b|−4√(t²+λ²)−2|m|（双值强场界）"
+        },
+        {
+          "title": "群—子群关系图的含义",
+          "text": "这里图示的是 G、T 两个指定约束及其删除关系，先模去平移与双群中心；标签商的阶数为 4、2、1。实际 G² 的平移相位与 T² 的负号仍由矩阵保存。此图不是任意三维空间群的完整子群目录。"
+        },
+        {
+          "title": "按子空间判分",
+          "text": "在指定 k 求最低能量的全部本征矢，按列提交矩阵。简并时不同数值求解器可产生不同基，整体相位及内部酉混合都等价。正确的检查是维数、正交投影和 H 的子空间不变性，而不是逐元素要求本征矢完全一致。",
+          "formula": "P = V(V†V)^(−1)V†；(I−P)HP = 0"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "salc-build-exercise",
+      "module": "salc",
+      "lesson": "salc-build",
+      "title": "亲自构造四站点的E子空间",
+      "prompt": "先写出矩阵作用，再使用构造回放与子空间作业检查。",
+      "steps": [
+        {
+          "prompt": "C₄z把+x轨道送到哪里？",
+          "hint": "主动逆时针旋转90度。",
+          "choices": [
+            "+y",
+            "−x",
+            "+x"
+          ],
+          "answer": 0,
+          "explanation": "在指定站点顺序中，D(C₄)第1列第2行为1。"
+        },
+        {
+          "prompt": "该四维置换表示包含哪些不可约分量？",
+          "hint": "检查字符内积，维数也必须相加为4。",
+          "choices": [
+            "A₁⊕B₁⊕E",
+            "A₁⊕A₂⊕B₁⊕B₂",
+            "2E"
+          ],
+          "answer": 0,
+          "explanation": "投影秩依次为1、0、1、0、2，得到A₁、B₁、E各一份。"
+        },
+        {
+          "prompt": "P_E作用于+x种子后，归一化向量是哪一个？",
+          "hint": "E_x在+x与−x上符号相反。",
+          "choices": [
+            "(1,1,1,1)/2",
+            "(1,0,−1,0)/√2",
+            "(1,−1,1,−1)/2"
+          ],
+          "answer": 1,
+          "explanation": "字符投影先得到(1,0,−1,0)/2，归一化后分母变为√2。"
+        },
+        {
+          "prompt": "提交[E_x+E_y，E_x−E_y]作为E子空间是否应通过？",
+          "hint": "作业比较满列秩列空间，不要求相同基向量。",
+          "choices": [
+            "应通过，两列张成同一二维子空间",
+            "不通过，必须逐元素相等",
+            "不通过，因为两列不是原来的伙伴"
+          ],
+          "answer": 0,
+          "explanation": "可逆内部换基保持投影算符与不变子空间，归一化也可以由判分器重新处理。"
+        }
+      ]
+    },
+    {
+      "id": "salc-selection-exercise",
+      "module": "salc",
+      "lesson": "salc-selection",
+      "title": "从表示到偏振依赖的实际强度",
+      "prompt": "使用四站点模型、单位偶极幅值和x偏振，随后把角度改为45度。",
+      "steps": [
+        {
+          "prompt": "面内X、Y算符在C₄ᵥ中属于什么表示？",
+          "hint": "它们在旋转下互相组合。",
+          "choices": [
+            "A₁",
+            "E",
+            "A₂"
+          ],
+          "answer": 1,
+          "explanation": "两分量按照笛卡尔二维极向量矩阵变换。"
+        },
+        {
+          "prompt": "A₁→E的偶极通道是否被群论禁止？",
+          "hint": "E⊗A₁=E。",
+          "choices": [
+            "没有被禁止",
+            "一定被禁止",
+            "只有B₁算符才允许"
+          ],
+          "answer": 0,
+          "explanation": "末态E在张量积中出现一次，但是否非零仍需算矩阵元。"
+        },
+        {
+          "prompt": "x偏振时两个E伙伴的强度分别是多少？",
+          "hint": "X只在±x站点非零，E_y只在±y站点非零。",
+          "choices": [
+            "1/2和0",
+            "1/2和1/2",
+            "0和0"
+          ],
+          "answer": 0,
+          "explanation": "〈E_x|X|A₁〉=1/√2，而〈E_y|X|A₁〉=0。"
+        },
+        {
+          "prompt": "把偏振转到45度后，两个强度之和是多少？",
+          "hint": "使用cos²θ+sin²θ=1。",
+          "choices": [
+            "1",
+            "1/2",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "两个伙伴各为1/4，总强度保持1/2。这个结论针对完整E伙伴空间和当前模型归一化。"
+        }
+      ]
+    },
+    {
+      "id": "salc-multiplicity-exercise",
+      "module": "salc",
+      "lesson": "salc-multiplicity",
+      "title": "副本混合后还保护什么？",
+      "prompt": "使用八维预设，比较副本耦合、伙伴简并和子群约束。",
+      "steps": [
+        {
+          "prompt": "八维模型中的完整E同型子空间维数是多少？",
+          "hint": "两个副本，每个E都有两个伙伴。",
+          "choices": [
+            "2",
+            "4",
+            "8"
+          ],
+          "answer": 1,
+          "explanation": "重数2乘不可约维数2，得到投影秩4。"
+        },
+        {
+          "prompt": "保持C₄ᵥ的Hamiltonian能否混合两份E？",
+          "hint": "Schur约束作用于伙伴空间，不强制重数空间为对角。",
+          "choices": [
+            "可以混合副本，但伙伴块仍相同",
+            "不可以，所有副本必须独立",
+            "可以任意劈裂同一个E的两个伙伴"
+          ],
+          "answer": 0,
+          "explanation": "H_E=H_副本⊗I₂允许非零副本间跃迁，每个副本混合本征值仍有伙伴简并。"
+        },
+        {
+          "prompt": "仅移除xz镜面约束，保留C₄z后得到哪个保证保留的群？",
+          "hint": "对剩余生成元取闭包。",
+          "choices": [
+            "C₁",
+            "C₄",
+            "Cₛ"
+          ],
+          "answer": 1,
+          "explanation": "C₄z的幂仍产生E、C₄z、C₂z和C₄z⁻¹，不能把它们也随镜面删除。"
+        },
+        {
+          "prompt": "一个降对称本征态混合A₁与B₁时，能否直接用单独A₁标签判断其全部跃迁？",
+          "hint": "标签指母群参考基，实际态已发生混合。",
+          "choices": [
+            "不能，须用保留群或实际态矩阵元",
+            "可以，只保留最大分量的标签",
+            "可以，母群标签永远不可混合"
+          ],
+          "answer": 0,
+          "explanation": "需重新检查子群表示及实际能量本征基中的算符；母群SALC仍是合法的计算基。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-star-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-star",
+      "title": "逐步构造四周期条纹的实表示",
+      "prompt": "采用 N=4、q=(1,0)/4 单 q 预设，并使用回放核对。",
+      "steps": [
+        {
+          "prompt": "一次 C₄ 把 (1,0)/4 送到哪里？",
+          "hint": "使用矩阵 [[0,−1],[1,0]]。",
+          "choices": [
+            "(0,1)/4",
+            "(1,1)/4",
+            "(0,0)"
+          ],
+          "answer": 0,
+          "explanation": "C₄(1,0)=(0,1)。再次作用得到负 x 臂，再次得到负 y 臂。"
+        },
+        {
+          "prompt": "这组完整 q 星有几条不同臂？",
+          "hint": "波矢相差整数母倒格矢才等价。",
+          "choices": [
+            "1",
+            "2",
+            "4"
+          ],
+          "answer": 2,
+          "explanation": "(1,0)、(0,1)、(3,0)、(0,3) 模 4 不同。"
+        },
+        {
+          "prompt": "完整星的实子空间维数是多少？",
+          "hint": "两对非自共轭臂，每对提供 cos 和 sin。",
+          "choices": [
+            "2",
+            "4",
+            "8"
+          ],
+          "answer": 1,
+          "explanation": "每个共轭对提供两个实自由度，合计 4；不是把每条臂再任意赋两个独立实数。"
+        },
+        {
+          "prompt": "将这四个基向量乘一个可逆 4×4 矩阵，作业应如何判分？",
+          "hint": "比较张成子空间而非矩阵逐项相同。",
+          "choices": [
+            "只要张成同一空间，应通过",
+            "只要任意列不同就失败",
+            "维数变成 16"
+          ],
+          "answer": 0,
+          "explanation": "可逆内部换基保持列空间和正交投影矩阵。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-cell-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-cell",
+      "title": "从斜条纹求最小平移指数",
+      "prompt": "采用 N=3、q=(1,1)/3 的单 q 预设，先写条件，再验证稳定子。",
+      "steps": [
+        {
+          "prompt": "哪些整数平移保留 f=cos[2π(x+y)/3]？",
+          "hint": "先让 Fourier 相位因子等于 1。",
+          "choices": [
+            "tx+ty=0 mod 3",
+            "tx−ty=1 mod 3",
+            "任意平移"
+          ],
+          "answer": 0,
+          "explanation": "非零 Fourier 分量要求 exp[2πi(tx+ty)/3]=1。"
+        },
+        {
+          "prompt": "声明的 3×3 平移群中，有几个保留平移？",
+          "hint": "可枚举 (0,0)、(1,2)、(2,1)。",
+          "choices": [
+            "1",
+            "3",
+            "9"
+          ],
+          "answer": 1,
+          "explanation": "三个平移构成 H∩T，闭合且包含单位元。"
+        },
+        {
+          "prompt": "最小平移指数与相容矩形胞面积分别是多少？",
+          "hint": "指数由 |T|/|H∩T| 算，矩形周期分别求。",
+          "choices": [
+            "9 与 9",
+            "3 与 3",
+            "3 与 9"
+          ],
+          "answer": 2,
+          "explanation": "指数为 9/3=3；x、y 各自周期为 3，矩形胞面积为 9。"
+        },
+        {
+          "prompt": "有限商群 G 的阶数 72，计算得 H 阶数 12，全部对称相关图案数是多少？",
+          "hint": "应用轨道—稳定子定理。",
+          "choices": [
+            "6",
+            "12",
+            "72"
+          ],
+          "answer": 0,
+          "explanation": "72/12=6，其中从当前图案只作平移得到 3 个；其余来自不同取向。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-spectrum-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-satellites",
+      "title": "由实场推导卫星权重并检验限制",
+      "prompt": "从 N=4 的单 q 条纹开始，再比较棋盘格和双 q。",
+      "steps": [
+        {
+          "prompt": "A=1 的非自共轭单 q 条纹，每个非零卫星的强度是多少？",
+          "hint": "将余弦写成两个复指数。",
+          "choices": [
+            "1",
+            "1/2",
+            "1/4"
+          ],
+          "answer": 2,
+          "explanation": "每个 Fourier 系数模长 1/2，因此每个强度 1/4。"
+        },
+        {
+          "prompt": "此时所有 Fourier 强度之和应为多少？",
+          "hint": "Parseval 将其等同于实场均方。",
+          "choices": [
+            "1/2",
+            "1/4",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "有两个强度 1/4 的臂，总和为 1/2，等于四周期余弦的离散均方。"
+        },
+        {
+          "prompt": "N=2 的棋盘格把 φ 从 0 改为 90°，为什么场消失？",
+          "hint": "它的 q 与 −q 模倒格矢相同。",
+          "choices": [
+            "证明所有卫星都不依赖相位",
+            "sin 模式在这些格点上为零，唯一实模式乘 cosφ",
+            "因为群阶数变成零"
+          ],
+          "answer": 1,
+          "explanation": "自共轭臂只有一个实自由度，不能沿用两个互异臂各有固定强度的结论。"
+        },
+        {
+          "prompt": "已求出标量模式 |F|²，是否等于真实位移衍射强度？",
+          "hint": "真实散射还依赖原子与实验几何。",
+          "choices": [
+            "直接就是绝对强度",
+            "只要改单位即可",
+            "还需结构因子、Q·u 等信息"
+          ],
+          "answer": 2,
+          "explanation": "此处是模式 Fourier 权重；真实原子散射、偏振与几何因子未包含。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-bloch-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-bloch",
+      "title": "从两个位点推导滑移特征值",
+      "prompt": "使用滑移双值预设，跟随表示构造回放完成四步推导。",
+      "steps": [
+        {
+          "prompt": "为什么 S 的跨胞矩阵元包含 e^(−ik_x)？",
+          "hint": "B 经半平移落到下一晶胞。",
+          "choices": [
+            "记录跨一个晶胞的 Bloch 相位",
+            "仅为绘图配色",
+            "因为 T²=−1"
+          ],
+          "answer": 0,
+          "explanation": "相位来自实空间跨胞位移，自旋平方是下一步的独立因子。"
+        },
+        {
+          "prompt": "无自旋时 S² 等于什么？",
+          "hint": "连续两次半平移。",
+          "choices": [
+            "I 对所有 k 恒成立",
+            "e^(−ik_x)I",
+            "−I 对所有 k 恒成立"
+          ],
+          "answer": 1,
+          "explanation": "两次位点置换回到原位点类型，同时跨过一个晶格周期。"
+        },
+        {
+          "prompt": "双值自旋因子平方为 −I 后，G² 是什么？",
+          "hint": "轨道和自旋因子相乘。",
+          "choices": [
+            "−e^(−ik_x)I",
+            "e^(−2ik_x)I",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "不能丢掉分数平移相位，也不能丢掉自旋 2π 旋转的负号。"
+        },
+        {
+          "prompt": "k_x→k_x+2π 时，连续标号 g₊ 与矩阵 G 各怎样变化？",
+          "hint": "分别查看半角指数和完整矩阵。",
+          "choices": [
+            "两者都变号",
+            "g₊换到另一标签，G保持周期",
+            "G不再酉"
+          ],
+          "answer": 1,
+          "explanation": "单个本征值分支的标签交换与周期 Bloch 基底并不矛盾。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-partner-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-partner",
+      "title": "由端点标签推导中间交叉",
+      "prompt": "保持 m=b=0 且横向分量为零，先推导再检查数值能带。",
+      "steps": [
+        {
+          "prompt": "双值 Γ 端 T 作用于 +i 标签会得到什么？",
+          "hint": "反幺正操作共轭标量。",
+          "choices": [
+            "+i",
+            "−i",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "同一 Kramers 对携带相反的纯虚 G 标签。"
+        },
+        {
+          "prompt": "双值 X 端 +1 标签的 Kramers 伙伴携带什么？",
+          "hint": "实数的共轭不变。",
+          "choices": [
+            "+1",
+            "必为−1",
+            "没有伙伴"
+          ],
+          "answer": 0,
+          "explanation": "当 T 对称且 T²=−I，伙伴同能；实 G 标签保持不变。"
+        },
+        {
+          "prompt": "t=λ>0 时，内部交叉的 f_x 是多少？",
+          "hint": "t cos(k/2)=λ sin(k/2)，f_x=k/(2π)。",
+          "choices": [
+            "0",
+            "1/4",
+            "1/2"
+          ],
+          "answer": 1,
+          "explanation": "k/2=π/4，故 k=π/2、f_x=1/4。"
+        },
+        {
+          "prompt": "无自旋 X 点配对能否称为 T²=−I 的 Kramers 简并？",
+          "hint": "先计算时间反演平方。",
+          "choices": [
+            "能，所有二重简并都是",
+            "不能，T²=+I；需联合复 G 标签解释",
+            "能，只要能带交叉"
+          ],
+          "answer": 1,
+          "explanation": "单值 T²=+I 不独自强制配对；在 X 它交换互为共轭的不同 G 扇区。"
+        }
+      ]
+    },
+    {
+      "id": "nonsymmorphic-breaking-exercise",
+      "module": "nonsymmorphic",
+      "lesson": "nonsymmorphic-breaking",
+      "title": "证明开隙，保留正确的简并结论",
+      "prompt": "比较无扰动与 m=0.3 的结果，并完成子空间作业。",
+      "steps": [
+        {
+          "prompt": "mτ_z 与半平移非对角轨道结构是什么关系？",
+          "hint": "τ_z 与 τ_x、τ_y 反对易。",
+          "choices": [
+            "保持 G 不变",
+            "破坏 G，但不破坏物理 T",
+            "仅改变单位"
+          ],
+          "answer": 1,
+          "explanation": "G 交换 A/B，τ_z 区分 A/B；实且自旋无关的 τ_z 保 T。"
+        },
+        {
+          "prompt": "m=0.3、b=0 时整条 Γ—X 的中间最小直接隙是多少？",
+          "hint": "使用反对易质量平方关系。",
+          "choices": [
+            "0.3",
+            "0.6",
+            "必为0"
+          ],
+          "answer": 1,
+          "explanation": "无质量交叉处的上下能量为±|m|，全线最小直接隙为2|m|。"
+        },
+        {
+          "prompt": "小 Zeeman 项在原交叉点造成非零隙，能否立刻宣称全线绝缘？",
+          "hint": "交叉可能移动，直接隙和间接隙还不同。",
+          "choices": [
+            "能",
+            "不能，必须检查整条路径；材料绝缘还需全布里渊区",
+            "只需增加线宽"
+          ],
+          "answer": 1,
+          "explanation": "挑战给出全线直接隙下界；此结果仍不是三维材料的全局绝缘证明。"
+        },
+        {
+          "prompt": "两个同维正交基的本征矢逐项不同，但投影矩阵相同，应怎样判分？",
+          "hint": "比较子空间而非任意选基。",
+          "choices": [
+            "视为同一个正确子空间",
+            "全部判错",
+            "只允许实数整体正号"
+          ],
+          "answer": 0,
+          "explanation": "整体相位和子空间内部的酉换基不改变物理子空间；还需检验维数与 H 不变性。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "salc-four-ligands",
+      "module": "salc",
+      "title": "方形配位局域环境：四配体组合",
+      "kind": "局域轨道教学模型",
+      "summary": "把四个等价配体方向的标量轨道组合成A₁、B₁和E，用偏振连接到局域晶场与轨道课程。",
+      "assumption": "仅采用C₄ᵥ子群与四个标量轨道。真实平方平面配位可有更高对称；本例没有中心原子轨道、化学重叠、反演宇称或材料拟合。",
+      "preset": "salc-four-sites",
+      "links": [
+        [
+          "晶场与轨道",
+          "#compute/crystal-field-lab"
+        ],
+        [
+          "点群课堂",
+          "#classroom/foundations"
+        ],
+        [
+          "统一选择定则计算",
+          "#compute/salc-lab"
+        ]
+      ]
+    },
+    {
+      "id": "salc-two-manifolds",
+      "module": "salc",
+      "title": "两套局域轨道：伙伴和副本不是一回事",
+      "kind": "八维重数空间模型",
+      "summary": "两套等价轨道通过同位点跃迁混合，观察E伙伴简并与副本能量分离，提交完整四维E子空间。",
+      "assumption": "两副本可代表两组同变换性质的基轨道；图中的上下分层只用于区分副本，不表示已确定真实双层晶体空间群。",
+      "preset": "salc-repeated",
+      "links": [
+        [
+          "多电子晶场与多重态",
+          "#compute/local-multiplet-lab"
+        ],
+        [
+          "SU(2)与SU(3)课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ]
+      ]
+    },
+    {
+      "id": "salc-distortion-selection",
+      "module": "salc",
+      "title": "局域各向异性：解除母群混合禁戒",
+      "kind": "对称破缺跨模块案例",
+      "summary": "用B₁型站点势连接SALC构造、局域轨道劈裂、序参量与光学选择规则；先预测最少移除的生成元再检查真实矩阵块。",
+      "assumption": "扰动是给定的X²−Y²型势；未从弹性常数或第一性原理推出畸变幅值，也不自动建立完整空间群子群关系。",
+      "preset": "salc-breaking",
+      "links": [
+        [
+          "序参量与对称性破缺",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "多重态光谱与选择定则",
+          "#compute/atomic-spectra-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "wavevector-square-layer",
+      "module": "wavevector",
+      "title": "方格层的条纹与双 q 有序",
+      "kind": "层状材料的占据模式教学模型",
+      "summary": "在同一个方格母晶格上比较单 q 条纹和等幅双 q 交叉图案，追踪稳定子、取向变化与平移畴。",
+      "assumption": "每个位点只有一个标量偏离，没有真实化学结构和能量参数；不能据此认定任何特定材料的基态。",
+      "preset": "wavevector-double",
+      "links": [
+        [
+          "序参量与对称性破缺",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ]
+      ]
+    },
+    {
+      "id": "wavevector-checker-layer",
+      "module": "wavevector",
+      "title": "棋盘格与反相畴：两个亚格的交换",
+      "kind": "二周期占据或垂直位移模型",
+      "summary": "通过 N=2 的自共轭边界点，观察一次原胞平移交换两个图案，理解自共轭波矢的单实自由度。",
+      "assumption": "模式值是占据偏离或位移幅度，不直接是占据率；N=2 位点作用并不忠实，保留完整抽象有限群计数。",
+      "preset": "wavevector-checker",
+      "links": [
+        [
+          "畴壁与局域态",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "对称适应基与选择定则",
+          "#compute/salc-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "wavevector-oblique-layer",
+      "module": "wavevector",
+      "title": "斜条纹：从超胞图案到卫星峰",
+      "kind": "可公度结构调制教学模型",
+      "summary": "比较 3×3 矩形超胞与指数为 3 的最小平移胞，使用 Fourier 权重预测相位变化前后的卫星强度。",
+      "assumption": "固定方格母晶格与标量模式，省略真实结构因子；不把相容胞当作三维标准晶胞，也不输出任意空间群标签。",
+      "preset": "wavevector-diagonal",
+      "links": [
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ],
+        [
+          "非弹性散射与动态结构因子",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "nonsymmorphic-khgsb",
+      "module": "nonsymmorphic",
+      "title": "KHgSb：从滑移表面态到伙伴交换",
+      "kind": "KHgSb 材料背景与最小线模型",
+      "summary": "连接 Wyckoff 位点的跨胞相位、双值表示和实际对角化；比较 m=0 与 m≠0 时中间交叉及端点配对。",
+      "assumption": "参考材料理论与实验，但当前四带参数未拟合 KHgSb；不据此宣布真实样品的拓扑指数。",
+      "preset": "nonsymmorphic-hourglass",
+      "links": [
+        [
+          "从 Wyckoff 位点到能带表示",
+          "#compute/band-representation-lab"
+        ],
+        [
+          "SU(2) 与双值旋转",
+          "#classroom"
+        ],
+        [
+          "量子几何与拓扑诊断",
+          "#compute/quantum-geometry-lab"
+        ]
+      ]
+    },
+    {
+      "id": "nonsymmorphic-screw-chain",
+      "module": "nonsymmorphic",
+      "title": "螺旋链：相同平移相位、不同旋转轴",
+      "kind": "三维二重螺旋的轴上线模型",
+      "summary": "以两位点链为结构背景，把镜面旋转轴 y 改为螺旋轴 x；记录本征相位、端点配对和不变动量条件。",
+      "assumption": "构造的是 {C₂x|a_x/2} 的合法教学表示；未指定完整材料空间群，也不是所有螺旋阶数的分类。",
+      "preset": "nonsymmorphic-screw",
+      "links": [
+        [
+          "有限波矢有序与超胞",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ],
+        [
+          "空间群与双群课堂",
+          "#classroom"
+        ]
+      ]
+    },
+    {
+      "id": "nonsymmorphic-distorted-chain",
+      "module": "nonsymmorphic",
+      "title": "交替位点势：分辨空间破缺与时间反演破缺",
+      "kind": "位点不等价与磁场的模型比较",
+      "summary": "给 A/B 加相反位点势或给自旋加沿轴磁场，分别检验 G、T 协变；用全线下界完成最小破缺挑战。",
+      "assumption": "m 与 b 是明示模型参数；位点势不自动等同于某种真实结构畸变，也不输出完整空间群。",
+      "preset": "nonsymmorphic-mass",
+      "links": [
+        [
+          "序参量与剩余对称性",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "有限波矢与超胞",
+          "#compute/wavevector-lab"
+        ],
+        [
+          "对称适应基与选择定则",
+          "#compute/salc-lab"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "salc-dresselhaus-projection",
+      "title": "M. S. Dresselhaus, Applications of Group Theory to the Physics of Solids：第2—4章，Schur引理、字符与矩阵元投影（MIT课程讲义，2002）",
+      "url": "https://faculty.washington.edu/srsharpe/507/dresselhaus.pdf"
+    },
+    {
+      "id": "salc-dresselhaus-selection",
+      "title": "M. S. Dresselhaus, Applications of Group Theory to the Physics of Solids：直积、选择定则和对称适应基（作者课程讲义）",
+      "url": "https://faculty.washington.edu/srsharpe/507/dresselhaus.pdf"
+    },
+    {
+      "id": "salc-littlejohn-wigner",
+      "title": "R. G. Littlejohn, Berkeley Physics 221A Notes 19：Irreducible Tensor Operators and the Wigner–Eckart Theorem",
+      "url": "https://bohr.physics.berkeley.edu/classes/221/1112/notes/wigeck.pdf"
+    },
+    {
+      "id": "wavevector-isodistort",
+      "title": "ISODISTORT 官方说明：模式、波矢、序参量方向和畴",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "wavevector-isodisplace",
+      "title": "Campbell et al. (2006), ISODISPLACE, J. Appl. Cryst. 39, 607–614",
+      "url": "https://doi.org/10.1107/S0021889806014075"
+    },
+    {
+      "id": "wavevector-numpy-fft",
+      "title": "NumPy 官方 DFT 约定：指数符号、归一化与实输入共轭关系",
+      "url": "https://numpy.org/doc/stable/reference/routines.fft.html"
+    },
+    {
+      "id": "nonsymmorphic-wang-hourglass",
+      "title": "Wang, Alexandradinata, Cava & Bernevig (2016), Hourglass fermions, Nature 532, 189–194",
+      "url": "https://www.nature.com/articles/nature17410"
+    },
+    {
+      "id": "nonsymmorphic-ma-khgsb",
+      "title": "Ma et al. (2017), Experimental evidence of hourglass fermion in the candidate nonsymmorphic topological insulator KHgSb",
+      "url": "https://doi.org/10.1126/sciadv.1602415"
+    },
+    {
+      "id": "nonsymmorphic-wang-3d-hourglass",
+      "title": "Wang et al., Hourglass semimetals with nonsymmorphic symmetries in three dimensions (primary preprint)",
+      "url": "https://arxiv.org/abs/1702.06140"
+    },
+    {
+      "id": "nonsymmorphic-wieder-kane",
+      "title": "Wieder & Kane (2016), Spin-orbit semimetals in the layer groups",
+      "url": "https://doi.org/10.1103/PhysRevB.94.155108"
+    }
+  ]
+}

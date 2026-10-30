@@ -17,6 +17,7 @@ export const toolGroups=[
   ['compute/tensors','物性张量 · 精确对称约束','介电、弹性、压电与磁电张量；点群预设、自定义生成元与旋转响应。','介电 弹性 压电 磁电 Neumann tensor'],
  ]},
  {id:'structure',title:'结构、相变与衍射',summary:'从真实结构出发，确定群与坐标约定。',tools:[
+  ['compute/wavevector-lab','有限波矢有序 · 波矢星与超胞','从实模式组合到平移畴、有限超胞群和 Fourier 强度。','q星 超胞 公度 调制 反相畴'],
   ['compute/order-parameter-lab','序参量 · 不变量与对称性破缺','从群操作生成多项式不变量，追踪序参量方向、稳定子群与畴。','Landau 序参量 子群 破缺 不变量'],
   ['compute/domain-wall-lab','畴壁与局域态 · 连续场和 SSH 界面','梯度自由能、壁宽、壁能、网格诊断和界面局域谱。','domain wall 畴壁 界面 局域态 SSH'],
   ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
@@ -39,6 +40,8 @@ export const toolGroups=[
   ['compute/lie/su3_ninej','SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
+  ['compute/salc-lab','对称适应基 · 选择定则与矩阵判分','投影回放、SALC 分块、偏振矩阵元和等价子空间。','SALC Wigner Eckart 投影算符 选择定则'],
+  ['compute/nonsymmorphic-lab','螺旋与滑移 · 动量相关简并','Bloch 相位、伙伴配对、沙漏连接与受控破缺。','nonsymmorphic hourglass 螺旋 滑移 沙漏'],
   ['compute/exchange-symmetry-lab','键对称性 · 磁交换与 DMI','轴向量、端点交换约束、交换张量分解与自旋倾斜。','Moriya DMI 反对称交换'],
   ['compute/conservation-lab','连续对称性 · 守恒与简并诊断','逐项对易子、耗散守恒条件、时间反演和一致换基。','Noether 诺特 生成元 守恒 Kramers'],
   ['compute/polaron-lab','电子—声子耦合 · Holstein 极化子','二站点量子声子、电子—晶格关联与截断收敛。','Holstein 极化子 电子声子 耦合'],
@@ -84,8 +87,10 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials','bridges-materials','principles-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261030-symmetry1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways,bridges,principles])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials','bridges-materials','principles-materials','construction-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261030-construction1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways,bridges,principles,construction])=>[
   {route:'docs/dictionary',title:'公式与符号词典',summary:'按主题解释变量、单位、坐标约定与公式适用条件。',keywords:'公式 符号 单位 dictionary',kind:'词典'},
+  ...construction.lessons.map(l=>({route:'classroom/'+construction.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' SALC 波矢 超胞 滑移 选择定则',kind:'课程'})),
+  ...construction.cases.map(c=>({route:'atlas/construction?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 模式 超胞 表示',kind:'材料'})),
   ...principles.lessons.map(l=>({route:'classroom/'+principles.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 对称 破缺 DMI 守恒 不变量',kind:'课程'})),
   ...principles.cases.map(c=>({route:'atlas/principles?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 序参量 交换 守恒',kind:'材料'})),
   ...bridges.lessons.map(l=>({route:'classroom/'+bridges.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 多体 谱函数 极化子 密度矩阵 对称性',kind:'课程'})),
@@ -127,6 +132,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
+  ['atlas/construction','表示、超胞与能带连接','从对称适应基、有限波矢走到动量相关简并，配构造回放与矩阵作业。'],
   ['atlas/principles','对称性、破缺与守恒','从序参量、键交换张量到生成元，追踪约束来源与物理后果。'],
   ['atlas/bridges','多体谱、极化子与量子态','从多体跃迁、电子晶格关联走到纠缠和退相干，配对称性推导工坊。'],
   ['atlas/compare','参数对照与预测验证','固定A再计算B，比较同一工具的输入、可比曲线和数值差异。'],
@@ -145,6 +151,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
   ['atlas/research','完成一份材料分析','模式识别 → 冻结模 / 能带连接 / 热力学 → 研究记录'],
+  ['atlas/construction','表示、超胞与能带连接','从对称适应基、有限波矢走到动量相关简并，配构造回放与矩阵作业。'],
   ['atlas/principles','对称性、破缺与守恒','从序参量、键交换张量到生成元，追踪约束来源与物理后果。'],
   ['atlas/bridges','多体谱、极化子与量子态','从多体跃迁、电子晶格关联走到纠缠和退相干，配对称性推导工坊。'],
   ['atlas/compare','参数对照与预测验证','固定A再计算B，比较同一工具的输入、可比曲线和数值差异。'],

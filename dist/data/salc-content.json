@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-construction1",
+  "module": {
+    "id": "salc",
+    "title": "对称适应基与统一选择定则",
+    "summary": "从四站点真实置换矩阵构造SALC，回放字符与矩阵元投影，再比较对称允许、实际矩阵元和偏振强度。",
+    "route": "salc-lab",
+    "action": "salc_lab",
+    "pathway": "foundations",
+    "fields": [
+      {"key":"copies","label":"等价四轨道副本数","type":"select","default":1,"options":[[1,"1套：四维"],[2,"2套：八维，含重复不可约表示"]]},
+      {"key":"targetIrrep","label":"投影和子空间作业目标","type":"select","default":"E","options":[["A1","A₁：全对称"],["B1","B₁：x²−y²型"],["E","E：二维伙伴"]]},
+      {"key":"seedSite","label":"第1副本中的种子轨道","type":"select","default":0,"options":[[0,"站点1：+x"],[1,"站点2：+y"],[2,"站点3：−x"],[3,"站点4：−y"]]},
+      {"key":"operatorType","label":"实际算符类型","type":"select","default":"dipole","options":[["dipole","E：面内极向量偶极"],["scalar","A₁：单位算符"],["quadrupole","B₁：X²−Y²"],["axial","A₂：环流型厄米算符"]]},
+      {"key":"polarizationAngle","label":"线偏振角 θ（度，仅作用于偶极）","type":"number","default":0,"min":-360,"max":360,"step":5},
+      {"key":"operatorScale","label":"算符幅值（相对单位）","type":"number","default":1,"min":-5,"max":5,"step":0.1},
+      {"key":"hop","label":"相邻站点跃迁 t（相对单位）","type":"number","default":-1,"min":-5,"max":5,"step":0.1},
+      {"key":"crossHop","label":"副本间同位点跃迁（仅两副本）","type":"number","default":0.3,"min":-3,"max":3,"step":0.1},
+      {"key":"copyOffset","label":"第二副本能量偏移（仅两副本）","type":"number","default":0.5,"min":-5,"max":5,"step":0.1},
+      {"key":"anisotropy","label":"B₁型扰动幅值 δ（群平均后加入）","type":"number","default":0.4,"min":-3,"max":3,"step":0.1},
+      {"key":"retainC4","label":"保留四重旋转约束","type":"select","default":1,"options":[[1,"保留 C₄z"],[0,"移除 C₄z 约束"]]},
+      {"key":"retainMirror","label":"保留xz镜面约束","type":"select","default":1,"options":[[1,"保留 m_xz"],[0,"移除 m_xz 约束"]]}
+    ],
+    "presets": [
+      {"id":"salc-four-sites","title":"四站点：逐项构造E伙伴","input":{"copies":1,"targetIrrep":"E","seedSite":0,"operatorType":"dipole","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
+      {"id":"salc-polarization","title":"45度偏振：两个伙伴等强","input":{"copies":1,"targetIrrep":"E","seedSite":1,"operatorType":"dipole","polarizationAngle":45,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
+      {"id":"salc-repeated","title":"八维表示：副本混合与伙伴简并","input":{"copies":2,"targetIrrep":"E","seedSite":0,"operatorType":"scalar","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.6,"copyOffset":0.8,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
+      {"id":"salc-breaking","title":"移除四重约束：A₁—B₁混合","input":{"copies":1,"targetIrrep":"B1","seedSite":0,"operatorType":"quadrupole","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.6,"retainC4":0,"retainMirror":1}},
+      {"id":"salc-axial","title":"A₂环流算符：E内部的复矩阵元","input":{"copies":1,"targetIrrep":"E","seedSite":0,"operatorType":"axial","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
+      {"id":"salc-allowed-zero","title":"允许却为零：关闭算符幅值","input":{"copies":1,"targetIrrep":"A1","seedSite":0,"operatorType":"dipole","polarizationAngle":0,"operatorScale":0,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}}
+    ],
+    "predictions": [
+      {"id":"salc-predict-polarization","preset":"salc-polarization","question":"从x偏振转到45度偏振时，副本1中A₁到E_x、E_y的强度怎样变化？","choices":["两个伙伴各为1/4，总强度仍为1/2","两个伙伴各为1/2，总强度加倍","E_y始终禁戒"],"answer":0,"explanation":"本模型X与Y分别连接到E_x与E_y；强度为cos²θ/2和sin²θ/2。单个伙伴强度随偏振变，总和不变。"},
+      {"id":"salc-predict-zero","preset":"salc-allowed-zero","question":"把偶极幅值设为0后，A₁→E的群论包含重数和实际强度分别怎样变化？","choices":["重数变为0，强度为0","重数仍为1，实际强度为0","只要重数为1就一定有强度"],"answer":1,"explanation":"表示类型仍声明为E；重数是表示之间的关系，算符前的数值系数为0不会改变该关系。实际矩阵元全部为零。"}
+    ]
+  },
+  "lessons": [
+    {
+      "id":"salc-build","module":"salc","title":"从站点移动到对称适应线性组合","summary":"自己生成置换表示，逐项观察相消、投影、归一化和E伙伴构造。","preset":"salc-four-sites","references":["dresselhaus-projection"],
+      "sections":[
+        {"title":"第一步：固定轨道顺序与操作约定","text":"四个正交标量轨道位于+x、+y、−x、−y。主动C₄z把站点1送到2，因此置换矩阵第1列在第2行为1。由C₄z和xz镜面生成全部8个操作，并逐对验证矩阵乘法与空间操作一致。","formula":"D(g)|r_j〉 = |g r_j〉"},
+        {"title":"第二步：用字符找出需要的子空间","text":"每个置换矩阵的迹等于该操作保留的轨道数。与不可约字符取内积，四维表示分成A₁、B₁和E；A₂与B₂重数为0。字符投影回放中，先看带权累加，最后才归一化。","formula":"m_α = (1/8) Σ_g χ_α(g)^* χ_D(g)；Γ_D = A₁ ⊕ B₁ ⊕ E"},
+        {"title":"第三步：字符投影与伙伴投影各做什么","text":"A₁得到(1,1,1,1)/2，B₁得到(1,−1,1,−1)/2。E的字符投影只选出二维空间；用P_xx选出E_x，再用P_yx产生E_y，得到(1,0,−1,0)/√2与(0,1,0,−1)/√2。种子从+x换成+y会改变得到的伙伴，不改变目标子空间。","formula":"P_α = (d_α/8) Σ_g χ_α(g)^* D(g)；P_mn = (2/8) Σ_g D^(E)_mn(g)^* D(g)"},
+        {"title":"第四步：验证整个基而不是记住符号","text":"把所有SALC作为U的列，检查U†U=I、投影幂等和完备、U†D(g)U共同分块。整体变号或复相位不会改变子空间，作业按列空间判分。两副本时需提交整个目标同型子空间，不能只给第一副本。","formula":"P_α² = P_α；Σ_α P_α = I；U†U = I"}
+      ]
+    },
+    {
+      "id":"salc-selection","module":"salc","title":"同一条规则连接偏振、算符与跃迁","summary":"先计算表示包含关系，再计算实际矩阵元；明确区分禁戒、允许和非零。","preset":"salc-polarization","references":["dresselhaus-selection","littlejohn-wigner"],
+      "sections":[
+        {"title":"第一步：给算符声明变换类型","text":"本模型X、Y组成E极向量；单位算符属于A₁，X²−Y²属于B₁，厄米环流算符i(D(C₄)−D(C₄)†)/2属于A₂。以D(g)O_jD(g)†的实际矩阵检验算符变换，不能根据算符名字猜测所有材料中的行为。","formula":"D(g) O_j D(g)† = Σ_i O_i D^(O)_ij(g)"},
+        {"title":"第二步：计算群论禁止的块","text":"末态表示必须包含在算符表示与初态表示的张量积中。字符内积为0时，所有伙伴之间的整个耦合块为零；大于0只意味着存在群论允许的耦合形式。此处表格直接比较每个参考SALC块的包含重数和实际模方总和。","formula":"n = (1/8) Σ_g χ_f(g)^* χ_O(g) χ_i(g)"},
+        {"title":"第三步：用偏振算出允许块的强度","text":"采用O_θ=cosθ X+sinθ Y。副本1的A₁到E_x强度为cos²θ/2，到E_y为sin²θ/2，合计1/2。x偏振下E_y矩阵元为零，但整个A₁→E通道仍允许；把算符幅值设0则全部强度为零。图中角度扫描始终对应偶极探针。","formula":"I_fi = |〈f|O_θ|i〉|²；I_(A₁→E_x)+I_(A₁→E_y)=1/2"},
+        {"title":"第四步：连接Wigner–Eckart但区分群","text":"有限群与SU(2)都可把对称性给定的几何结构与体系决定的约化矩阵元分开。SU(2)的角动量三角关系和m选择规则属于其自身表示；不能直接给C₄ᵥ贴上SU(2)的CG系数。含多条耦合通道或重复副本时，需要额外通道标签和多个约化量。","formula":"Γ_f ⊂ Γ_O ⊗ Γ_i"}
+      ]
+    },
+    {
+      "id":"salc-multiplicity","module":"salc","title":"重复表示、子群与最小破缺","summary":"在八维空间中区分伙伴和副本，再用真实群平均验证何时解除母群禁戒。","preset":"salc-repeated","references":["dresselhaus-projection","dresselhaus-selection"],
+      "sections":[
+        {"title":"第一步：增加等价副本不会增加新表示种类","text":"两套四轨道各自按相同操作置换，表示为2A₁⊕2B₁⊕2E。两个E伙伴属于一个二维不可约表示，两个E副本则属于重数空间。字符投影得到秩4的E同型子空间，单个种子的投影只是一条向量。","formula":"D_E(g) = I_副本 ⊗ D^(E)(g)"},
+        {"title":"第二步：对称Hamiltonian可以混合副本","text":"副本间同位点跃迁和第二副本能量偏移都保持母群。在E块中，副本混合矩阵与伙伴空间单位矩阵直积；因此副本混合改变两组能量，却保留每组的E双重简并。能量本征向量的内部旋转不是对称性失效。","formula":"H_E = H_副本 ⊗ I₂"},
+        {"title":"第三步：从保留生成元重新生成子群","text":"保留C₄z和镜面得到C₄ᵥ；仅保留旋转得到C₄；仅保留xz镜面得到Cₛ；全移除得到C₁。对B₁型势作保留群平均，再加入Hamiltonian。结果保证与该子群对易；特殊参数下可能还保留额外对称。这里的图只表示四个指定子群。","formula":"V_H = (1/|H|) Σ_(g∈H) D(g) V D(g)†"},
+        {"title":"第四步：用矩阵而非删标签判定破缺","text":"最小破缺挑战要求使A₁—B₁混合不再被保留群禁止。枚举移除的生成元集合，实际构造子群、平均势并检测〈A₁|V_H|B₁〉。降对称后仍可用母群SALC作为参考基，但实际能量本征态可能混合这些标签；应结合算符矩阵重新判断跃迁。","formula":"M_(A₁,B₁) = U_(A₁)† V_H U_(B₁)"}
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id":"salc-build-exercise","module":"salc","lesson":"salc-build","title":"亲自构造四站点的E子空间","prompt":"先写出矩阵作用，再使用构造回放与子空间作业检查。",
+      "steps":[
+        {"prompt":"C₄z把+x轨道送到哪里？","hint":"主动逆时针旋转90度。","choices":["+y","−x","+x"],"answer":0,"explanation":"在指定站点顺序中，D(C₄)第1列第2行为1。"},
+        {"prompt":"该四维置换表示包含哪些不可约分量？","hint":"检查字符内积，维数也必须相加为4。","choices":["A₁⊕B₁⊕E","A₁⊕A₂⊕B₁⊕B₂","2E"],"answer":0,"explanation":"投影秩依次为1、0、1、0、2，得到A₁、B₁、E各一份。"},
+        {"prompt":"P_E作用于+x种子后，归一化向量是哪一个？","hint":"E_x在+x与−x上符号相反。","choices":["(1,1,1,1)/2","(1,0,−1,0)/√2","(1,−1,1,−1)/2"],"answer":1,"explanation":"字符投影先得到(1,0,−1,0)/2，归一化后分母变为√2。"},
+        {"prompt":"提交[E_x+E_y，E_x−E_y]作为E子空间是否应通过？","hint":"作业比较满列秩列空间，不要求相同基向量。","choices":["应通过，两列张成同一二维子空间","不通过，必须逐元素相等","不通过，因为两列不是原来的伙伴"],"answer":0,"explanation":"可逆内部换基保持投影算符与不变子空间，归一化也可以由判分器重新处理。"}
+      ]
+    },
+    {
+      "id":"salc-selection-exercise","module":"salc","lesson":"salc-selection","title":"从表示到偏振依赖的实际强度","prompt":"使用四站点模型、单位偶极幅值和x偏振，随后把角度改为45度。",
+      "steps":[
+        {"prompt":"面内X、Y算符在C₄ᵥ中属于什么表示？","hint":"它们在旋转下互相组合。","choices":["A₁","E","A₂"],"answer":1,"explanation":"两分量按照笛卡尔二维极向量矩阵变换。"},
+        {"prompt":"A₁→E的偶极通道是否被群论禁止？","hint":"E⊗A₁=E。","choices":["没有被禁止","一定被禁止","只有B₁算符才允许"],"answer":0,"explanation":"末态E在张量积中出现一次，但是否非零仍需算矩阵元。"},
+        {"prompt":"x偏振时两个E伙伴的强度分别是多少？","hint":"X只在±x站点非零，E_y只在±y站点非零。","choices":["1/2和0","1/2和1/2","0和0"],"answer":0,"explanation":"〈E_x|X|A₁〉=1/√2，而〈E_y|X|A₁〉=0。"},
+        {"prompt":"把偏振转到45度后，两个强度之和是多少？","hint":"使用cos²θ+sin²θ=1。","choices":["1","1/2","0"],"answer":1,"explanation":"两个伙伴各为1/4，总强度保持1/2。这个结论针对完整E伙伴空间和当前模型归一化。"}
+      ]
+    },
+    {
+      "id":"salc-multiplicity-exercise","module":"salc","lesson":"salc-multiplicity","title":"副本混合后还保护什么？","prompt":"使用八维预设，比较副本耦合、伙伴简并和子群约束。",
+      "steps":[
+        {"prompt":"八维模型中的完整E同型子空间维数是多少？","hint":"两个副本，每个E都有两个伙伴。","choices":["2","4","8"],"answer":1,"explanation":"重数2乘不可约维数2，得到投影秩4。"},
+        {"prompt":"保持C₄ᵥ的Hamiltonian能否混合两份E？","hint":"Schur约束作用于伙伴空间，不强制重数空间为对角。","choices":["可以混合副本，但伙伴块仍相同","不可以，所有副本必须独立","可以任意劈裂同一个E的两个伙伴"],"answer":0,"explanation":"H_E=H_副本⊗I₂允许非零副本间跃迁，每个副本混合本征值仍有伙伴简并。"},
+        {"prompt":"仅移除xz镜面约束，保留C₄z后得到哪个保证保留的群？","hint":"对剩余生成元取闭包。","choices":["C₁","C₄","Cₛ"],"answer":1,"explanation":"C₄z的幂仍产生E、C₄z、C₂z和C₄z⁻¹，不能把它们也随镜面删除。"},
+        {"prompt":"一个降对称本征态混合A₁与B₁时，能否直接用单独A₁标签判断其全部跃迁？","hint":"标签指母群参考基，实际态已发生混合。","choices":["不能，须用保留群或实际态矩阵元","可以，只保留最大分量的标签","可以，母群标签永远不可混合"],"answer":0,"explanation":"需重新检查子群表示及实际能量本征基中的算符；母群SALC仍是合法的计算基。"}
+      ]
+    }
+  ],
+  "cases": [
+    {"id":"salc-four-ligands","module":"salc","title":"方形配位局域环境：四配体组合","kind":"局域轨道教学模型","summary":"把四个等价配体方向的标量轨道组合成A₁、B₁和E，用偏振连接到局域晶场与轨道课程。","assumption":"仅采用C₄ᵥ子群与四个标量轨道。真实平方平面配位可有更高对称；本例没有中心原子轨道、化学重叠、反演宇称或材料拟合。","preset":"salc-four-sites","links":[["晶场与轨道","#compute/crystal-field-lab"],["点群课堂","#classroom/foundations"],["统一选择定则计算","#compute/salc-lab"]]},
+    {"id":"salc-two-manifolds","module":"salc","title":"两套局域轨道：伙伴和副本不是一回事","kind":"八维重数空间模型","summary":"两套等价轨道通过同位点跃迁混合，观察E伙伴简并与副本能量分离，提交完整四维E子空间。","assumption":"两副本可代表两组同变换性质的基轨道；图中的上下分层只用于区分副本，不表示已确定真实双层晶体空间群。","preset":"salc-repeated","links":[["多电子晶场与多重态","#compute/local-multiplet-lab"],["SU(2)与SU(3)课堂","#classroom/continuous"],["参数对照","#atlas/compare"]]},
+    {"id":"salc-distortion-selection","module":"salc","title":"局域各向异性：解除母群混合禁戒","kind":"对称破缺跨模块案例","summary":"用B₁型站点势连接SALC构造、局域轨道劈裂、序参量与光学选择规则；先预测最少移除的生成元再检查真实矩阵块。","assumption":"扰动是给定的X²−Y²型势；未从弹性常数或第一性原理推出畸变幅值，也不自动建立完整空间群子群关系。","preset":"salc-breaking","links":[["序参量与对称性破缺","#compute/order-parameter-lab"],["多重态光谱与选择定则","#compute/atomic-spectra-lab"],["材料研究记录","#atlas/notebook"]]}
+  ],
+  "sources": [
+    {"id":"dresselhaus-projection","title":"M. S. Dresselhaus, Applications of Group Theory to the Physics of Solids：第2—4章，Schur引理、字符与矩阵元投影（MIT课程讲义，2002）","url":"https://faculty.washington.edu/srsharpe/507/dresselhaus.pdf"},
+    {"id":"dresselhaus-selection","title":"M. S. Dresselhaus, Applications of Group Theory to the Physics of Solids：直积、选择定则和对称适应基（作者课程讲义）","url":"https://faculty.washington.edu/srsharpe/507/dresselhaus.pdf"},
+    {"id":"littlejohn-wigner","title":"R. G. Littlejohn, Berkeley Physics 221A Notes 19：Irreducible Tensor Operators and the Wigner–Eckart Theorem","url":"https://bohr.physics.berkeley.edu/classes/221/1112/notes/wigeck.pdf"}
+  ]
+}

@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-construction1",
+  "module": {
+    "id": "wavevector",
+    "title": "有限波矢有序、q 星与超胞",
+    "summary": "在已知方格层的标量模式中，构造可公度 q 星与实模式，枚举超胞稳定子和平移畴，并把实空间图案与相对 Fourier 卫星权重联动。",
+    "route": "wavevector-lab",
+    "action": "wavevector_lab",
+    "pathway": "structure-dynamics",
+    "fields": [
+      {
+        "key": "period",
+        "label": "声明超胞 N×N",
+        "type": "select",
+        "default": 4,
+        "options": [
+          [
+            2,
+            "2×2：4 位点"
+          ],
+          [
+            3,
+            "3×3：9 位点"
+          ],
+          [
+            4,
+            "4×4：16 位点"
+          ]
+        ]
+      },
+      {
+        "key": "qx",
+        "label": "q_x 分子（q_x / N）",
+        "type": "number",
+        "default": 1,
+        "min": -4,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "qy",
+        "label": "q_y 分子（q_y / N）",
+        "type": "number",
+        "default": 0,
+        "min": -4,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "pattern",
+        "label": "激活的共轭对",
+        "type": "select",
+        "default": "single",
+        "options": [
+          [
+            "single",
+            "单对：输入 q 与 −q"
+          ],
+          [
+            "multi",
+            "多对：完整星的各共轭对"
+          ]
+        ]
+      },
+      {
+        "key": "amplitude",
+        "label": "首对幅度 A（无量纲）",
+        "type": "number",
+        "default": 1,
+        "min": -5,
+        "max": 5,
+        "step": 0.1
+      },
+      {
+        "key": "transverseRatio",
+        "label": "其他共轭对 / 首对幅度",
+        "type": "number",
+        "default": 1,
+        "min": -3,
+        "max": 3,
+        "step": 0.1
+      },
+      {
+        "key": "phaseDegrees",
+        "label": "首对相位 φ / 度",
+        "type": "number",
+        "default": 0,
+        "min": -360,
+        "max": 360,
+        "step": 5
+      },
+      {
+        "key": "relativePhaseDegrees",
+        "label": "其他共轭对相对相位 / 度",
+        "type": "number",
+        "default": 0,
+        "min": -360,
+        "max": 360,
+        "step": 5
+      }
+    ],
+    "presets": [
+      {
+        "id": "wavevector-stripe",
+        "title": "四周期条纹：单 q 共轭对",
+        "input": {
+          "period": 4,
+          "qx": 1,
+          "qy": 0,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
+      },
+      {
+        "id": "wavevector-double",
+        "title": "四周期交叉图案：等幅双 q",
+        "input": {
+          "period": 4,
+          "qx": 1,
+          "qy": 0,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 0,
+          "pattern": "multi"
+        }
+      },
+      {
+        "id": "wavevector-checker",
+        "title": "二周期棋盘格：自共轭边界点",
+        "input": {
+          "period": 2,
+          "qx": 1,
+          "qy": 1,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
+      },
+      {
+        "id": "wavevector-phase",
+        "title": "三周期条纹：一般相位",
+        "input": {
+          "period": 3,
+          "qx": 1,
+          "qy": 0,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 20,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
+      },
+      {
+        "id": "wavevector-unequal",
+        "title": "不等幅双 q：相差四分之一周期",
+        "input": {
+          "period": 4,
+          "qx": 1,
+          "qy": 0,
+          "amplitude": 1,
+          "transverseRatio": 0.5,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 90,
+          "pattern": "multi"
+        }
+      },
+      {
+        "id": "wavevector-diagonal",
+        "title": "三周期斜条纹：矩形胞与最小指数",
+        "input": {
+          "period": 3,
+          "qx": 1,
+          "qy": 1,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
+      },
+      {
+        "id": "wavevector-period-two",
+        "title": "二周期条纹：A/B 交替势的空间模式",
+        "input": {
+          "period": 2,
+          "qx": 1,
+          "qy": 0,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 0,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
+      }
+    ],
+    "predictions": [
+      {
+        "id": "wavevector-predict-phase",
+        "question": "四周期单 q 条纹只改变整体相位，保持 A=1 时，两个非零卫星的 |F|² 如何变化？",
+        "choices": [
+          "每个仍为 1/4，但实空间图案和复系数相位可变",
+          "两个卫星均变为 0",
+          "强度必随 cos²φ 变化"
+        ],
+        "answer": 0,
+        "preset": "wavevector-stripe",
+        "explanation": "q 与 −q 在 N=4 的这组条纹中是不同臂；F(q)=e^(iφ)/2，所以每个强度恒为 1/4。自共轭边界点只有一个实自由度，是不同情形。"
+      },
+      {
+        "id": "wavevector-predict-cell",
+        "question": "N=3、q=(1/3,1/3) 的单 q 斜条纹，矩形周期为 3×3。最小平移指数是多少？",
+        "choices": [
+          "9，必等于矩形面积",
+          "3，因为 (1,−1) 仍是保留平移",
+          "1，因为相位可以选择"
+        ],
+        "answer": 1,
+        "preset": "wavevector-diagonal",
+        "explanation": "保留平移满足 tx+ty=0 mod 3，共有 3 个。声明平移群有 9 个元素，故指数为 9/3=3。矩形超胞容纳了三个最小斜胞。"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "wavevector-star",
+      "module": "wavevector",
+      "title": "从一个 q 到真实可见的多臂图案",
+      "summary": "区别波矢星、共轭配对、实表示空间与当前激活的模式。",
+      "preset": "wavevector-stripe",
+      "sections": [
+        {
+          "title": "先声明母晶格和模式基",
+          "text": "采用方格层、每个格点一个无量纲标量。位点 r=(x,y) 按 x 先变、y 后变排列，平面嵌入三维的 z=0。C₄ᵥ 操作不改变此标量的符号；它可作占据偏离或垂直位移的模式幅度。未知真实晶体模式必须另行构建。",
+          "formula": "g:r↦Rr+t mod N；D(g)f(r)=f(g⁻¹r)"
+        },
+        {
+          "title": "用点操作构造 q 星",
+          "text": "q 的分子按 N 取模，即相差母倒格矢视为同一臂。对于 N=4 的 (1,0)/4，C₄ 依次产生 (0,1)/4、(3,0)/4、(0,3)/4。星包含对称相关的可能分量，单个图案不必把所有臂都激活。",
+          "formula": "star(q)={Rq mod Z²:R∈C₄ᵥ}"
+        },
+        {
+          "title": "共轭配对使场为实数",
+          "text": "非自共轭 q 与 −q 提供一对 cos/sin 实基。输入相位控制这两个实基的组合。自共轭点 q≡−q 只有一个实基；例如 N=2 的 (1,1)/2，其 sin 模式在所有格点上均为零。",
+          "formula": "A cos(2πq·r+φ)=(A/2)[e^(iφ)e^(2πiq·r)+e^(−iφ)e^(−2πiq·r)]"
+        },
+        {
+          "title": "回放表示构造并提交子空间",
+          "text": "回放依次展示整数旋转、星臂、正交实基、逐对叠加、真实平移和投影重建。作业目标是完整星张成的空间，接受非奇异内部换基；只交当前一个场通常不足以覆盖完整星。",
+          "formula": "P=B(B†B)⁻¹B†；B→BM（M 可逆）不改变 P"
+        }
+      ],
+      "references": [
+        "isodistort",
+        "isodisplace"
+      ]
+    },
+    {
+      "id": "wavevector-cell",
+      "module": "wavevector",
+      "title": "超胞、图案稳定子与平移畴",
+      "summary": "对实际图案逐个作用群元素，检查保留对称性与有限群的真实包含关系。",
+      "preset": "wavevector-diagonal",
+      "sections": [
+        {
+          "title": "相容超胞首先是周期边界条件",
+          "text": "本实验选 N=2、3、4，保证输入有理波矢与 N×N 超胞相容。实际图案可能拥有更短周期。对全部非零 Fourier 分量检查 q·t 为整数，可找出保留平移；相位抵消掉的零模式不应继续限制周期。",
+          "formula": "f(r+t)=f(r) ⇔ e^(2πiq·t)=1（对每个非零 Fourier 分量）"
+        },
+        {
+          "title": "矩形胞不一定最小",
+          "text": "斜条纹 f=cos[2π(x+y)/3] 的 x、y 各自周期都是 3，但 (1,−1) 保留图案。因此 3×3 是相容矩形胞，最小斜胞面积指数只有 3。界面同时给出矩形周期和精确平移指数，避免混为一谈。",
+          "formula": "[T:H∩T]=N²/|H∩T|"
+        },
+        {
+          "title": "稳定子作用在整张图案上",
+          "text": "枚举 (Z_N×Z_N)⋊C₄ᵥ 中的 8N² 个抽象元素，对每个位点值比较 D(g)f 与 f。H 包括点操作与平移的组合；只检查 q 是否被固定，或只检查纯点操作，都会漏掉图案的相位条件。",
+          "formula": "H={g∈G:D(g)f=f}"
+        },
+        {
+          "title": "用图检验包含关系，再数对称相关状态",
+          "text": "关系图展示 G、平移群 T、当前稳定子 H、交 H∩T 与单位群；相同子群会合并。边表示真实包含关系。全部图案数是 |G|/|H|；只由平移产生的反相畴数是 |T|/|H∩T|。有限商群不能直接替代三维空间群标准标签。",
+          "formula": "|Gf|=|G|/|H|；|Tf|=|T|/|H∩T|"
+        }
+      ],
+      "references": [
+        "isodistort",
+        "isodisplace"
+      ]
+    },
+    {
+      "id": "wavevector-satellites",
+      "module": "wavevector",
+      "title": "实空间叠加、卫星权重与可验证预测",
+      "summary": "把模式的相位和幅度与 Fourier 权重对应，区分计算模型和真实衍射实验。",
+      "preset": "wavevector-double",
+      "sections": [
+        {
+          "title": "固定 Fourier 约定",
+          "text": "使用负指数和 1/N² 归一化。图中 k=x+Ny 是倒格网格编号，表格给出真正的二维 q 与复系数。实场要求负波矢系数为复共轭。",
+          "formula": "F(q)=N⁻²Σ_r f(r)e^(−2πiq·r)"
+        },
+        {
+          "title": "单 q 的幅度与相位实验",
+          "text": "对于互异的 q 与 −q，A cos(2πq·r+φ) 在两臂各有强度 A²/4。平移改变复系数相位，却不改变这两个强度。试着先预测相位滑块的效果，再观察图案、复系数和强度三者。",
+          "formula": "F(q)=(A/2)e^(iφ)；I(q)=|F(q)|²=A²/4"
+        },
+        {
+          "title": "双 q 把权重放到不同臂",
+          "text": "本模型的不同共轭对占据不同倒格点，因此相对幅度改变不同臂的权重；相对相位可改变实空间图案和稳定子，而不改变非自共轭臂各自强度。选择不等幅预设，检验四重对称是否仍保留。",
+          "formula": "Σ_q|F(q)|²=N⁻²Σ_r|f(r)|²"
+        },
+        {
+          "title": "把教学预测接入材料项目",
+          "text": "先报告声明的母晶格、模式、q 星、稳定子和平移指数，再把模式权重带到衍射或动态结构因子模块。真实实验还需原子种类、散射因子、Q·u、磁偏振和仪器几何。对称允许的图案并不自动成为能量最低相。",
+          "formula": "实验强度需要结构因子；标量模式 |F|² 仅提供相对 Fourier 权重"
+        }
+      ],
+      "references": [
+        "numpy-fft",
+        "isodistort"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "wavevector-star-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-star",
+      "title": "逐步构造四周期条纹的实表示",
+      "prompt": "采用 N=4、q=(1,0)/4 单 q 预设，并使用回放核对。",
+      "steps": [
+        {
+          "prompt": "一次 C₄ 把 (1,0)/4 送到哪里？",
+          "hint": "使用矩阵 [[0,−1],[1,0]]。",
+          "choices": [
+            "(0,1)/4",
+            "(1,1)/4",
+            "(0,0)"
+          ],
+          "answer": 0,
+          "explanation": "C₄(1,0)=(0,1)。再次作用得到负 x 臂，再次得到负 y 臂。"
+        },
+        {
+          "prompt": "这组完整 q 星有几条不同臂？",
+          "hint": "波矢相差整数母倒格矢才等价。",
+          "choices": [
+            "1",
+            "2",
+            "4"
+          ],
+          "answer": 2,
+          "explanation": "(1,0)、(0,1)、(3,0)、(0,3) 模 4 不同。"
+        },
+        {
+          "prompt": "完整星的实子空间维数是多少？",
+          "hint": "两对非自共轭臂，每对提供 cos 和 sin。",
+          "choices": [
+            "2",
+            "4",
+            "8"
+          ],
+          "answer": 1,
+          "explanation": "每个共轭对提供两个实自由度，合计 4；不是把每条臂再任意赋两个独立实数。"
+        },
+        {
+          "prompt": "将这四个基向量乘一个可逆 4×4 矩阵，作业应如何判分？",
+          "hint": "比较张成子空间而非矩阵逐项相同。",
+          "choices": [
+            "只要张成同一空间，应通过",
+            "只要任意列不同就失败",
+            "维数变成 16"
+          ],
+          "answer": 0,
+          "explanation": "可逆内部换基保持列空间和正交投影矩阵。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-cell-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-cell",
+      "title": "从斜条纹求最小平移指数",
+      "prompt": "采用 N=3、q=(1,1)/3 的单 q 预设，先写条件，再验证稳定子。",
+      "steps": [
+        {
+          "prompt": "哪些整数平移保留 f=cos[2π(x+y)/3]？",
+          "hint": "先让 Fourier 相位因子等于 1。",
+          "choices": [
+            "tx+ty=0 mod 3",
+            "tx−ty=1 mod 3",
+            "任意平移"
+          ],
+          "answer": 0,
+          "explanation": "非零 Fourier 分量要求 exp[2πi(tx+ty)/3]=1。"
+        },
+        {
+          "prompt": "声明的 3×3 平移群中，有几个保留平移？",
+          "hint": "可枚举 (0,0)、(1,2)、(2,1)。",
+          "choices": [
+            "1",
+            "3",
+            "9"
+          ],
+          "answer": 1,
+          "explanation": "三个平移构成 H∩T，闭合且包含单位元。"
+        },
+        {
+          "prompt": "最小平移指数与相容矩形胞面积分别是多少？",
+          "hint": "指数由 |T|/|H∩T| 算，矩形周期分别求。",
+          "choices": [
+            "9 与 9",
+            "3 与 3",
+            "3 与 9"
+          ],
+          "answer": 2,
+          "explanation": "指数为 9/3=3；x、y 各自周期为 3，矩形胞面积为 9。"
+        },
+        {
+          "prompt": "有限商群 G 的阶数 72，计算得 H 阶数 12，全部对称相关图案数是多少？",
+          "hint": "应用轨道—稳定子定理。",
+          "choices": [
+            "6",
+            "12",
+            "72"
+          ],
+          "answer": 0,
+          "explanation": "72/12=6，其中从当前图案只作平移得到 3 个；其余来自不同取向。"
+        }
+      ]
+    },
+    {
+      "id": "wavevector-spectrum-exercise",
+      "module": "wavevector",
+      "lesson": "wavevector-satellites",
+      "title": "由实场推导卫星权重并检验限制",
+      "prompt": "从 N=4 的单 q 条纹开始，再比较棋盘格和双 q。",
+      "steps": [
+        {
+          "prompt": "A=1 的非自共轭单 q 条纹，每个非零卫星的强度是多少？",
+          "hint": "将余弦写成两个复指数。",
+          "choices": [
+            "1",
+            "1/2",
+            "1/4"
+          ],
+          "answer": 2,
+          "explanation": "每个 Fourier 系数模长 1/2，因此每个强度 1/4。"
+        },
+        {
+          "prompt": "此时所有 Fourier 强度之和应为多少？",
+          "hint": "Parseval 将其等同于实场均方。",
+          "choices": [
+            "1/2",
+            "1/4",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "有两个强度 1/4 的臂，总和为 1/2，等于四周期余弦的离散均方。"
+        },
+        {
+          "prompt": "N=2 的棋盘格把 φ 从 0 改为 90°，为什么场消失？",
+          "hint": "它的 q 与 −q 模倒格矢相同。",
+          "choices": [
+            "证明所有卫星都不依赖相位",
+            "sin 模式在这些格点上为零，唯一实模式乘 cosφ",
+            "因为群阶数变成零"
+          ],
+          "answer": 1,
+          "explanation": "自共轭臂只有一个实自由度，不能沿用两个互异臂各有固定强度的结论。"
+        },
+        {
+          "prompt": "已求出标量模式 |F|²，是否等于真实位移衍射强度？",
+          "hint": "真实散射还依赖原子与实验几何。",
+          "choices": [
+            "直接就是绝对强度",
+            "只要改单位即可",
+            "还需结构因子、Q·u 等信息"
+          ],
+          "answer": 2,
+          "explanation": "此处是模式 Fourier 权重；真实原子散射、偏振与几何因子未包含。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "wavevector-square-layer",
+      "module": "wavevector",
+      "title": "方格层的条纹与双 q 有序",
+      "kind": "层状材料的占据模式教学模型",
+      "summary": "在同一个方格母晶格上比较单 q 条纹和等幅双 q 交叉图案，追踪稳定子、取向变化与平移畴。",
+      "assumption": "每个位点只有一个标量偏离，没有真实化学结构和能量参数；不能据此认定任何特定材料的基态。",
+      "preset": "wavevector-double",
+      "links": [
+        [
+          "序参量与对称性破缺",
+          "#compute/order-parameter-lab"
+        ],
+        [
+          "结构相变与畴",
+          "#compute/phase"
+        ],
+        [
+          "参数对照",
+          "#atlas/compare"
+        ]
+      ]
+    },
+    {
+      "id": "wavevector-checker-layer",
+      "module": "wavevector",
+      "title": "棋盘格与反相畴：两个亚格的交换",
+      "kind": "二周期占据或垂直位移模型",
+      "summary": "通过 N=2 的自共轭边界点，观察一次原胞平移交换两个图案，理解自共轭波矢的单实自由度。",
+      "assumption": "模式值是占据偏离或位移幅度，不直接是占据率；N=2 位点作用并不忠实，保留完整抽象有限群计数。",
+      "preset": "wavevector-checker",
+      "links": [
+        [
+          "畴壁与局域态",
+          "#compute/domain-wall-lab"
+        ],
+        [
+          "对称适应基与选择定则",
+          "#compute/salc-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "wavevector-oblique-layer",
+      "module": "wavevector",
+      "title": "斜条纹：从超胞图案到卫星峰",
+      "kind": "可公度结构调制教学模型",
+      "summary": "比较 3×3 矩形超胞与指数为 3 的最小平移胞，使用 Fourier 权重预测相位变化前后的卫星强度。",
+      "assumption": "固定方格母晶格与标量模式，省略真实结构因子；不把相容胞当作三维标准晶胞，也不输出任意空间群标签。",
+      "preset": "wavevector-diagonal",
+      "links": [
+        [
+          "衍射消光",
+          "#compute/diffraction"
+        ],
+        [
+          "非弹性散射与动态结构因子",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "isodistort",
+      "title": "ISODISTORT 官方说明：模式、波矢、序参量方向和畴",
+      "url": "https://iso.byu.edu/isodistorthelp.php"
+    },
+    {
+      "id": "isodisplace",
+      "title": "Campbell et al. (2006), ISODISPLACE, J. Appl. Cryst. 39, 607–614",
+      "url": "https://doi.org/10.1107/S0021889806014075"
+    },
+    {
+      "id": "numpy-fft",
+      "title": "NumPy 官方 DFT 约定：指数符号、归一化与实输入共轭关系",
+      "url": "https://numpy.org/doc/stable/reference/routines.fft.html"
+    }
+  ]
+}

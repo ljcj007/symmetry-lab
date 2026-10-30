@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
-import {principlesAssignments,principlesEvidence,HBAR_MEV_NS} from '../dist/principles-projects.js?v=20261030-symmetry1';
-import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261030-symmetry1';
+import {principlesAssignments,principlesEvidence,HBAR_MEV_NS} from '../dist/principles-projects.js?v=20261030-construction1';
+import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261030-construction1';
 
 const json=name=>JSON.parse(fs.readFileSync(new URL('../'+name,import.meta.url),'utf8'));
 const modules=['order','exchange','conservation','density'].map(id=>json('dist/data/'+id+'-content.json').module);
@@ -85,8 +85,8 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261030-symmetry1');
-const notebook=await import('../dist/material-notebook.js?v=20261030-symmetry1');
+const projects=await import('../dist/response-projects.js?v=20261030-construction1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-construction1');
 const normalize=value=>JSON.parse(JSON.stringify(value));
 const saved=async id=>(await notebook.listProjects()).find(p=>p.id===id);
 const mount=async(template)=>{
@@ -108,10 +108,10 @@ const safeSummary=record=>{const summary=projects.evidenceSummary(record);assert
 const importFile=body=>({size:Buffer.byteLength(body),text:async()=>body});
 
 for(const template of principlesAssignments)assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
-// Preserve all fourteen existing assignment kinds and an ordinary material notebook
+// Preserve all seventeen other assignment kinds and an ordinary material notebook
 // while creating/importing new projects through the actual project UI.
-assert.equal(projects.assignmentTemplates.length,17);
-assert.equal(projects.assignmentTemplates.filter(t=>!principlesAssignments.some(p=>p.id===t.id)).length,14);
+assert.equal(projects.assignmentTemplates.length,20);
+assert.equal(projects.assignmentTemplates.filter(t=>!principlesAssignments.some(p=>p.id===t.id)).length,17);
 const originals=new Map();
 for(const template of projects.assignmentTemplates.filter(t=>!principlesAssignments.some(p=>p.id===t.id))){
  const project=notebook.makeProject({title:'已有项目 · '+template.title,notes:'保留旧记录。'});
@@ -126,7 +126,7 @@ let checkedConstraints=0;
 for(const template of principlesAssignments){
  let view=await mount(template);
  assert.equal(view.$('#pj-template').value,template.id);
- assert.equal(view.$('#pj-template').querySelectorAll('option').length,17);
+ assert.equal(view.$('#pj-template').querySelectorAll('option').length,20);
  assert.equal(view.$('#pj-save'),null,'no project exists before the UI creates it');
  const beforeNew=await notebook.listProjects();
  await view.$('#pj-new').onclick();
@@ -258,4 +258,4 @@ assert.equal(recollected.assignment.steps[first.id].interpretation,previous.assi
 assert.equal((await saved(completed.get(template.id).id)).records.length,3,'copy recollection leaves the original intact');
 for(const [id,original]of originals)assert.deepEqual(await saved(id),original,'existing assignments and ordinary notebooks remain intact');
 assert.equal((await notebook.listProjects()).length,originals.size+6);
-console.log(`Principles projects: 3 projects / 9 genuine Python stages, ${checkedConstraints} strict input constraints; matched physics, source hashes, collection/history, restored notes, JSON/Markdown exports, independent copy imports, 14 older assignments and ordinary notebook preserved.`);
+console.log(`Principles projects: 3 projects / 9 genuine Python stages, ${checkedConstraints} strict input constraints; matched physics, source hashes, collection/history, restored notes, JSON/Markdown exports, independent copy imports, 17 other assignments and ordinary notebook preserved.`);
