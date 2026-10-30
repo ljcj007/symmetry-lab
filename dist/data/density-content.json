@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-bridges1",
+  "module": {
+    "id": "density",
+    "title": "密度矩阵、纠缠与退相干",
+    "summary": "从一个自旋的 Bloch 球走向双自旋约化态，比较相干演化、经典混合与 Lindblad 耗散，并用负性识别双自旋混态纠缠。",
+    "route": "density-matrix-lab",
+    "action": "density_matrix_lab",
+    "fields": [
+      {
+        "key": "experiment",
+        "label": "实验规模",
+        "type": "select",
+        "default": "single",
+        "options": [
+          [
+            "single",
+            "单自旋：Rabi 与退相干"
+          ],
+          [
+            "pair",
+            "双自旋：交换与纠缠"
+          ]
+        ]
+      },
+      {
+        "key": "initialState",
+        "label": "初态（反平行、单重态、经典混合仅用于双自旋）",
+        "type": "select",
+        "default": "plus_z",
+        "options": [
+          [
+            "plus_z",
+            "↑ / ↑↑"
+          ],
+          [
+            "minus_z",
+            "↓ / ↓↓"
+          ],
+          [
+            "plus_x",
+            "+x / +x⊗+x"
+          ],
+          [
+            "antiparallel",
+            "双自旋 ↑↓"
+          ],
+          [
+            "singlet",
+            "双自旋单重态"
+          ],
+          [
+            "classical",
+            "双自旋 ↑↓ 与 ↓↑ 经典等权混合"
+          ],
+          [
+            "thermal",
+            "当前 Hamiltonian 的热初态"
+          ]
+        ]
+      },
+      {
+        "key": "drive",
+        "label": "驱动 Ω（rad/ns）",
+        "type": "number",
+        "default": 1,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "detuning",
+        "label": "失谐 Δ（rad/ns）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "exchange",
+        "label": "交换 J（rad/ns；H/ℏ 含 J S_A·S_B）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "gradient",
+        "label": "局域失谐差 δ（rad/ns；A−B）",
+        "type": "number",
+        "default": 0,
+        "min": -10,
+        "max": 10,
+        "step": 0.1,
+        "experiment": "pair"
+      },
+      {
+        "key": "gamma1",
+        "label": "↑→↓ 弛豫率 γ₁（ns⁻¹）",
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "gammaPhi",
+        "label": "纯退相干率 γ_φ（ns⁻¹）",
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      },
+      {
+        "key": "thermalScale",
+        "label": "热初态 kBT/ℏ（rad/ns；仅热初态使用）",
+        "type": "number",
+        "default": 1,
+        "min": 0,
+        "max": 10,
+        "step": 0.1
+      },
+      {
+        "key": "duration",
+        "label": "总演化时间（ns）",
+        "type": "number",
+        "default": 12,
+        "min": 0,
+        "max": 50,
+        "step": 0.5
+      },
+      {
+        "key": "points",
+        "label": "时间采样点数",
+        "type": "number",
+        "default": 161,
+        "min": 2,
+        "max": 301,
+        "step": 1
+      }
+    ],
+    "presets": [
+      {
+        "id": "rabi-unitary",
+        "title": "理想 Rabi：观察 Bloch 向量旋转",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_z",
+          "drive": 1,
+          "detuning": 0,
+          "exchange": 0,
+          "gradient": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "thermalScale": 1,
+          "duration": 12,
+          "points": 161
+        }
+      },
+      {
+        "id": "rabi-damped",
+        "title": "有阻尼的 Rabi：包络与稳态",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_z",
+          "drive": 1,
+          "detuning": 0,
+          "exchange": 0,
+          "gradient": 0,
+          "gamma1": 0.2,
+          "gammaPhi": 0.1,
+          "thermalScale": 1,
+          "duration": 20,
+          "points": 201
+        }
+      },
+      {
+        "id": "dephasing-plusx",
+        "title": "纯退相干：布居不变而相干消失",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "drive": 0,
+          "detuning": 0.6,
+          "exchange": 0,
+          "gradient": 0,
+          "gamma1": 0,
+          "gammaPhi": 0.25,
+          "thermalScale": 1,
+          "duration": 12,
+          "points": 161
+        }
+      },
+      {
+        "id": "singlet",
+        "title": "单重态：整体纯、局部混合",
+        "input": {
+          "experiment": "pair",
+          "initialState": "singlet",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 1,
+          "gradient": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "thermalScale": 1,
+          "duration": 12,
+          "points": 161
+        }
+      },
+      {
+        "id": "classical",
+        "title": "经典混合：相同局部态但没有纠缠",
+        "input": {
+          "experiment": "pair",
+          "initialState": "classical",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 1,
+          "gradient": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "thermalScale": 1,
+          "duration": 12,
+          "points": 161
+        }
+      },
+      {
+        "id": "exchange",
+        "title": "交换产生纠缠：从 ↑↓ 出发",
+        "input": {
+          "experiment": "pair",
+          "initialState": "antiparallel",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 1,
+          "gradient": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "thermalScale": 1,
+          "duration": 6.283185307179586,
+          "points": 161
+        }
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "density-pure-mixed",
+      "module": "density",
+      "title": "叠加、混合与部分迹",
+      "summary": "用相同的局部测量结果，辨认不同的整体量子态。",
+      "preset": "singlet",
+      "sections": [
+        {
+          "title": "密度矩阵保留什么信息",
+          "text": "纯态写为外积，统计混合写为外积的加权和。对角元是给定基底中的测量概率，非对角元含相干；换基会改变矩阵外观，却不改变纯度。",
+          "formula": "ρ=Σ_a p_a |ψ_a⟩⟨ψ_a|；Trρ=1；P=Tr(ρ²)"
+        },
+        {
+          "title": "叠加不是经典随机选择",
+          "text": "+x 纯态与 ↑、↓ 等权混合在 z 方向测量都各有一半概率；前者在 x 方向确定为正，后者仍是随机。应比较完整密度矩阵，而不只看某一组布居。",
+          "formula": "ρ_{+x}=(I+σ_x)/2；ρ_{mix}=I/2"
+        },
+        {
+          "title": "只观察 A 时要对 B 求部分迹",
+          "text": "双自旋单重态是整体纯态，但任意一方的约化态是 I/2。另一方被忽略，并不表示整体曾进行经典随机混合。",
+          "formula": "ρ_A=Tr_Bρ；|S⟩=(|↑↓⟩−|↓↑⟩)/√2"
+        },
+        {
+          "title": "相同局部态不保证相同整体纠缠",
+          "text": "单重态与反平行经典等权混合都有 S(ρ_A)=1 bit；两者整体纯度分别为1和1/2，负性分别为1/2和0。局部熵仅在整体纯态时直接量化这一划分的纠缠。",
+          "formula": "S(ρ_A)=−Tr(ρ_A log₂ρ_A)"
+        }
+      ],
+      "references": [
+        "density-qutip-tensor",
+        "density-negativity"
+      ]
+    },
+    {
+      "id": "density-lindblad",
+      "module": "density",
+      "title": "从 Rabi 振荡到弛豫与退相干",
+      "summary": "先建立无耗散基准，再分开观察布居损失与相干损失。",
+      "preset": "rabi-damped",
+      "sections": [
+        {
+          "title": "先固定旋转角的单位",
+          "text": "本实验 Ω、Δ 是 H/ℏ 的系数，单位 rad/ns；时间为 ns。共振且从 ↑ 出发时，↑ 概率在 cos²(Ωt/2) 与0之间振荡。角频率与周期频率相差2π。",
+          "formula": "H/ℏ=(Ωσ_x+Δσ_z)/2；P_{↑}(t)=cos²(Ωt/2)（Δ=0，无耗散）"
+        },
+        {
+          "title": "↑ 到 ↓ 的幅度阻尼",
+          "text": "选择 C₁=√γ₁ |↓⟩⟨↑|，无驱动时 ↑ 布居以 γ₁ 衰减。通道方向固定；它不会随 detuning 符号自动翻转。",
+          "formula": "C_1=√γ_1 |↓⟩⟨↑|；ρ_{↑↑}(t)=ρ_{↑↑}(0) exp(−γ_1 t)"
+        },
+        {
+          "title": "纯退相干只破坏固定基底的相干",
+          "text": "选择 C_φ=√(γ_φ/2) σ_z；没有横向驱动时，对角元不变，非对角元包络按 γ_φ 衰减。单自旋 Bloch 向量由球面缩向 z 轴。",
+          "formula": "C_φ=√(γ_φ/2) σ_z；|ρ_{↑↓}(t)|=|ρ_{↑↓}(0)| exp(−γ_φ t)（γ_1=0，Ω=0）"
+        },
+        {
+          "title": "T₁ 与 T₂ 不是两个任意独立的拟合参数",
+          "text": "本通道约定给出无驱动、无交换单自旋的纵向与横向包络。存在驱动和双自旋耦合时，完整曲线未必是单一指数。",
+          "formula": "1/T_1=γ_1；1/T_2=γ_1/2+γ_φ"
+        }
+      ],
+      "references": [
+        "density-qutip-master"
+      ]
+    },
+    {
+      "id": "density-exchange",
+      "module": "density",
+      "title": "从 CG 耦合基到交换产生纠缠",
+      "summary": "把 ↑↓ 分解为单重态与三重态，观察相对相位怎样形成纠缠。",
+      "preset": "exchange",
+      "sections": [
+        {
+          "title": "选择耦合基解释演化",
+          "text": "两个自旋1/2组成 S=0 和 S=1。反平行直积态同时含单重态和三重态；各分量在各向同性交换下获得不同的相位。",
+          "formula": "|↑↓⟩=(|T_0⟩+|S⟩)/√2；H/ℏ=J S_A·S_B"
+        },
+        {
+          "title": "交换能级差决定拍频",
+          "text": "本模块 J 已是角频率，单重态 H/ℏ 本征值为 −3J/4，三重态为 J/4。去除整体相位后，从 ↑↓ 出发在两个反平行组态之间演化。",
+          "formula": "|ψ(t)⟩=cos(Jt/2)|↑↓⟩−i sin(Jt/2)|↓↑⟩"
+        },
+        {
+          "title": "纯态的局部熵能揭示纠缠",
+          "text": "Jt=π/2 时两种组态等权但有相对相位，整体仍然纯，局部为 I/2。Jt=π 时系统变成另一反平行直积态，纠缠再次为零。",
+          "formula": "N(ρ)=|sin(Jt)|/2（纯交换、初态 ↑↓）"
+        },
+        {
+          "title": "混态要另看纠缠判据",
+          "text": "在双自旋上对 B 做部分转置，负本征值的绝对值之和给出负性。它适用于这里的2×2混态；不要把局部熵单独当作混态纠缠。",
+          "formula": "N(ρ)=(||ρ^{T_B}||_1−1)/2"
+        }
+      ],
+      "references": [
+        "density-qutip-tensor",
+        "density-negativity"
+      ]
+    },
+    {
+      "id": "density-assumptions",
+      "module": "density",
+      "title": "从模型约定到可信的演化结果",
+      "summary": "区分初态温度、现象学环境和数值采样，检查结果的物理性。",
+      "preset": "dephasing-plusx",
+      "sections": [
+        {
+          "title": "初始热态和环境温度不同",
+          "text": "thermalScale 只用于当前 H 的初态 Gibbs 权重。设为零时，程序在10⁻¹⁰ rad/ns容差内的整个基态子空间等权平均。它不会自动决定弛豫率或详细平衡。",
+          "formula": "ρ(0)=exp[−(H/ℏ)/θ]/Z；θ=k_B T/ℏ"
+        },
+        {
+          "title": "本地通道不自动使耦合系统热化",
+          "text": "本实验的 ↑→↓ 与 σ_z 通道定义在固定局部基底中；有驱动或交换时，它们不一定按完整 H 的能量本征态跃迁。不能把所选 γ₁、γ_φ 解释为真实材料浴的完整微观描述。",
+          "formula": "dρ/dt=−i[H/ℏ,ρ]+Σ_a(C_aρC_a†−{C_a†C_a,ρ}/2)"
+        },
+        {
+          "title": "迹和半正定性需要同时检查",
+          "text": "密度矩阵必须厄米、迹为1且本征值非负。程序报告全轨迹误差，不通过重新归一化或删去负本征值修补动力学。很小的负值可能是浮点误差，但明显负值应被拒绝。",
+          "formula": "ρ=ρ†；Trρ=1；λ_min(ρ)≥0"
+        },
+        {
+          "title": "采样过稀与求解错误不是同一件事",
+          "text": "常量生成元以矩阵指数传播，可在指定时刻求解；但如果时间点太稀，绘图会漏掉振荡。增加采样点应恢复图形细节，而不应改变相同时刻的物理态。",
+          "formula": "ρ(t+Δt)=exp(LΔt)ρ(t)（向量化后）"
+        }
+      ],
+      "references": [
+        "density-qutip-master"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "density-pure-mixed-exercise",
+      "module": "density",
+      "lesson": "density-pure-mixed",
+      "title": "辨认相同局部态背后的不同整体态",
+      "prompt": "对照单重态与反平行经典混合预设。",
+      "steps": [
+        {
+          "prompt": "单重态的整体纯度是多少？",
+          "hint": "纯态密度矩阵满足 ρ²=ρ。",
+          "choices": [
+            "1",
+            "1/2",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "单重态是归一化纯态，Trρ²=1。"
+        },
+        {
+          "prompt": "忽略 B 后，A 的约化密度矩阵是什么？",
+          "hint": "两种自旋测量结果等概率，且求部分迹后局部相干为零。",
+          "choices": [
+            "|↑⟩⟨↑|",
+            "I/2",
+            "零矩阵"
+          ],
+          "answer": 1,
+          "explanation": "ρ_A=I/2，所以局部熵为1 bit。"
+        },
+        {
+          "prompt": "反平行经典等权混合是否也有局部熵1 bit？",
+          "hint": "分别对两个反平行直积态取部分迹再求平均。",
+          "choices": [
+            "没有，熵为0",
+            "只有加入驱动后才有",
+            "有，但它是可分的经典混合"
+          ],
+          "answer": 2,
+          "explanation": "它与单重态局部态相同，但整体负性为0。"
+        },
+        {
+          "prompt": "哪一个量能区分这两个例子的纠缠？",
+          "hint": "使用双自旋部分转置谱。",
+          "choices": [
+            "负性：单重态1/2，经典混合0",
+            "仅局部熵：两个都为1就都纠缠",
+            "仅 z 方向布居"
+          ],
+          "answer": 0,
+          "explanation": "负性区分两者；局部熵对一般混态不是单独的纠缠量。"
+        }
+      ]
+    },
+    {
+      "id": "density-lindblad-exercise",
+      "module": "density",
+      "lesson": "density-lindblad",
+      "title": "分清 T₁、T₂ 与纯退相干",
+      "prompt": "取无驱动单自旋 γ₁=0.4、γ_φ=0.1 ns⁻¹。",
+      "steps": [
+        {
+          "prompt": "T₁ 是多少？",
+          "hint": "T₁=1/γ₁。",
+          "choices": [
+            "0.4 ns",
+            "2.5 ns",
+            "5 ns"
+          ],
+          "answer": 1,
+          "explanation": "1/0.4=2.5 ns。"
+        },
+        {
+          "prompt": "横向包络衰减率是多少？",
+          "hint": "γ₂=γ₁/2+γ_φ。",
+          "choices": [
+            "0.5 ns⁻¹",
+            "0.2 ns⁻¹",
+            "0.3 ns⁻¹"
+          ],
+          "answer": 2,
+          "explanation": "0.4/2+0.1=0.3 ns⁻¹，T₂=10/3 ns。"
+        },
+        {
+          "prompt": "只保留纯退相干且 Ω=0，z 布居会怎样？",
+          "hint": "σ_z 通道与该基底的投影算符对易。",
+          "choices": [
+            "不变",
+            "全部立即转到 ↓",
+            "必定变成各1/2"
+          ],
+          "answer": 0,
+          "explanation": "纯退相干衰减非对角元，不直接改变此条件下的布居。"
+        },
+        {
+          "prompt": "drive=1 rad/ns 时的普通频率是多少？",
+          "hint": "角频率除以2π。",
+          "choices": [
+            "1 周期/ns",
+            "1/(2π) 周期/ns",
+            "2π 周期/ns"
+          ],
+          "answer": 1,
+          "explanation": "H/ℏ 使用角频率，不能把1 rad/ns直接读作1 GHz。"
+        }
+      ]
+    },
+    {
+      "id": "density-exchange-exercise",
+      "module": "density",
+      "lesson": "density-exchange",
+      "title": "从交换能级到最大纠缠时刻",
+      "prompt": "取 J=1 rad/ns、Ω=Δ=δ=γ₁=γ_φ=0，初态 ↑↓。",
+      "steps": [
+        {
+          "prompt": "单重态与三重态的 H/ℏ 本征值分别是什么？",
+          "hint": "用 S_A·S_B=[S²−S_A²−S_B²]/2。",
+          "choices": [
+            "−3/4 与 1/4 rad/ns",
+            "−1 与 1 rad/ns",
+            "0 与 0 rad/ns"
+          ],
+          "answer": 0,
+          "explanation": "两个自旋1/2有 S_A²=S_B²=3/4，S为0或1。"
+        },
+        {
+          "prompt": "第一次两种反平行组态等权发生在何时？",
+          "hint": "cos²(t/2)=sin²(t/2)。",
+          "choices": [
+            "π ns",
+            "π/2 ns",
+            "2π ns"
+          ],
+          "answer": 1,
+          "explanation": "t=π/2 ns时两个概率均为1/2。"
+        },
+        {
+          "prompt": "此时整体纯度、局部熵和负性分别是多少？",
+          "hint": "幺正演化保纯，局部态为I/2。",
+          "choices": [
+            "1/2、1、0",
+            "1、0、0",
+            "1、1 bit、1/2"
+          ],
+          "answer": 2,
+          "explanation": "整体纯且最大纠缠；局部混合由纠缠产生。"
+        },
+        {
+          "prompt": "到 t=π ns 时纠缠是否继续增长？",
+          "hint": "此时 cos(t/2)=0。",
+          "choices": [
+            "否，成为 ↓↑ 直积态，负性回到0",
+            "是，负性变为1",
+            "纯度变为0"
+          ],
+          "answer": 0,
+          "explanation": "有限双自旋存在相干往返，纠缠不必单调增长。"
+        }
+      ]
+    },
+    {
+      "id": "density-assumptions-exercise",
+      "module": "density",
+      "lesson": "density-assumptions",
+      "title": "检查热初态、耗散与数值结论",
+      "prompt": "在热初态实验中打开局域耗散，再比较稀密时间采样。",
+      "steps": [
+        {
+          "prompt": "thermalScale 决定什么？",
+          "hint": "它进入初始Gibbs权重。",
+          "choices": [
+            "初态 kBT/ℏ",
+            "自动推导全部环境噪声",
+            "直接等于 γ₁"
+          ],
+          "answer": 0,
+          "explanation": "初态温度尺度与耗散通道参数是独立输入。"
+        },
+        {
+          "prompt": "当前局域 ↑→↓ 通道是否保证带交换的系统趋于同温 Gibbs 态？",
+          "hint": "检查是否按完整能级差构造详细平衡。",
+          "choices": [
+            "保证，任何Lindblad方程都热化",
+            "不保证，本通道未施加该详细平衡",
+            "只要迹为1就保证"
+          ],
+          "answer": 1,
+          "explanation": "完全正且保迹不等于满足某个指定Hamiltonian的热平衡条件。"
+        },
+        {
+          "prompt": "演化结果具有迹1，但有明显负本征值，能否作为物理态？",
+          "hint": "概率不能为负。",
+          "choices": [
+            "可以，迹1已足够",
+            "可以，手动删掉负值即可",
+            "不可以，需查明数值或模型错误"
+          ],
+          "answer": 2,
+          "explanation": "厄米性、归一化和半正定性缺一不可。"
+        },
+        {
+          "prompt": "增加时间采样点应主要改变什么？",
+          "hint": "常量生成元在同一时刻的传播由同一矩阵指数给出。",
+          "choices": [
+            "显示细节；相同时刻的态应在容差内一致",
+            "任意改变稳态",
+            "强制使纯度等于1"
+          ],
+          "answer": 0,
+          "explanation": "过稀采样会漏掉振荡，但不能通过改变采样人为改变物理演化。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "density-resonance",
+      "module": "density",
+      "title": "有效自旋共振的相干与耗散",
+      "kind": "实验机制模型",
+      "summary": "用一个有效自旋连接磁共振课堂与Rabi演化，分别开关弛豫和纯退相干。",
+      "assumption": "参数为教学值；不从材料结构或频域线宽自动推断T₁、T₂，不包含粉末平均、脉冲回波或噪声谱拟合。",
+      "preset": "rabi-damped",
+      "links": [
+        [
+          "有效自旋磁共振",
+          "#compute/spin-resonance-lab"
+        ],
+        [
+          "SU(2) 旋量课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "密度矩阵实验",
+          "#compute/density-matrix-lab"
+        ]
+      ]
+    },
+    {
+      "id": "density-dimer",
+      "module": "density",
+      "title": "双自旋交换与可控纠缠",
+      "kind": "分子磁体机制原型",
+      "summary": "以两个有效自旋解释交换能级、相对相位与纠缠生成，并回到Hubbard二聚体讨论低能近似。",
+      "assumption": "双自旋模型仅保留每站点一个自旋1/2；Hubbard模型含电荷涨落，只有适当低能和大U条件下才可比较交换尺度。",
+      "preset": "exchange",
+      "links": [
+        [
+          "Hubbard 小团簇",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "角动量耦合课堂",
+          "#classroom/coupling"
+        ],
+        [
+          "交换演化",
+          "#compute/density-matrix-lab"
+        ]
+      ]
+    },
+    {
+      "id": "density-local-global",
+      "module": "density",
+      "title": "相同局部测量与不同整体关联",
+      "kind": "量子态诊断案例",
+      "summary": "对照单重态和经典混合；局部Bloch球中心相同，整体密度矩阵与纠缠判据不同。",
+      "assumption": "这是两个可区分自旋的理想态比较；不将混态的局部熵直接解释为纠缠，也不据此预测真实材料的宏观量子资源。",
+      "preset": "singlet",
+      "links": [
+        [
+          "纯态与混态课堂",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "density-qutip-master",
+      "title": "QuTiP：Lindblad 主方程、纯态与混态演化及适用假设",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html"
+    },
+    {
+      "id": "density-qutip-tensor",
+      "title": "QuTiP：张量积与部分迹",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/guide-tensor.html"
+    },
+    {
+      "id": "density-negativity",
+      "title": "Vidal 与 Werner, Computable measure of entanglement, Phys. Rev. A 65, 032314 (2002)",
+      "url": "https://doi.org/10.1103/PhysRevA.65.032314"
+    }
+  ]
+}

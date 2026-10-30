@@ -8,10 +8,10 @@ const fixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/spectroscopy.json'
 const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};globalThis.document={createElement:t=>new Element(t)};
 globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/spectroscopy-ui.js');
-const views=await import('../dist/spectroscopy-views.js?v=20261029-pathways1b');
-const projects=await import('../dist/response-projects.js?v=20261029-pathways1b');
-const notebook=await import('../dist/material-notebook.js?v=20261029-pathways1b');
-const templates=(await import('../dist/spectroscopy-projects.js?v=20261029-pathways1b')).spectroscopyAssignments;
+const views=await import('../dist/spectroscopy-views.js?v=20261030-bridges1');
+const projects=await import('../dist/response-projects.js?v=20261030-bridges1');
+const notebook=await import('../dist/material-notebook.js?v=20261030-bridges1');
+const templates=(await import('../dist/spectroscopy-projects.js?v=20261030-bridges1')).spectroscopyAssignments;
 let chosen=data.modules[0].presets[0].id;const calls=[];
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[chosen]);};
 const mount=async(selection={},runner=run)=>{const container=new Container(),downloads=[],navigations=[],cancelled=[];await ui.renderSpectroscopyView({container,selection,run:runner,download:(body,name)=>downloads.push({body,name}),cancelRun:()=>cancelled.push(true),onNavigate:p=>navigations.push(p)});return{container,downloads,navigations,cancelled,$:s=>container.querySelector(s)};};
@@ -19,7 +19,7 @@ const submit=async v=>{v.$('#spx-form').onsubmit({preventDefault(){}});await flu
 const change=(v,id,value)=>{const el=v.$('#spx-'+id);el.value=String(value);v.$('#spx-form').oninput({target:el});};
 const safe=html=>assert.doesNotMatch(html,/\b(?:NaN|Infinity|undefined)\b/);
 assert.equal(classroomPathways.length,7);
-assert.equal(projects.assignmentTemplates.length,10);
+assert.equal(projects.assignmentTemplates.length,14);
 for(const m of data.modules){
  assert.ok(knownTool('compute/'+m.route));const route=parseClassroomRoute('compute/'+m.route+'?module=wrong&tab=derive');assert.equal(route.module,m.id);assert.equal(route.section,'spectroscopy');assert.equal(route.tab,'lab');assert.deepEqual(parseClassroomRoute(buildClassroomHash(route)),route);
  for(const p of m.presets){chosen=p.id;const v=await mount({module:m.id,calculationOnly:true,preset:p.id});await submit(v);assert.equal(calls.at(-1).action,m.action);for(const [k,value]of Object.entries(p.input))assert.deepEqual(calls.at(-1).input[k],value,p.id+':'+k);safe(v.$('#spx-result').innerHTML);assert.ok(v.$('#spx-result').querySelector('svg'));v.$('#spx-export').onclick();assert.equal(JSON.parse(v.downloads[0].body).module,m.id);}

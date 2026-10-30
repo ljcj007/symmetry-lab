@@ -3118,6 +3118,885 @@
       "formulaAliases": [],
       "ambiguity": "ω 的含义",
       "requiresContext": true
+    },
+    {
+      "id": "manybody-lehmann",
+      "title": "多体添加、移除谱与 Lehmann 展开",
+      "symbols": [
+        "A_{iσ}^{+}",
+        "A_{iσ}^{−}",
+        "Lehmann"
+      ],
+      "aliases": [
+        "多体谱",
+        "添加谱",
+        "移除谱"
+      ],
+      "definition": "把电子添加或移除的谱分解成多体初态到相邻粒子数末态的跃迁。能级差决定峰位置，真实矩阵元决定峰是否可见。",
+      "variables": [
+        {
+          "symbol": "A_{iσ}^{±}",
+          "meaning": "指定轨道、自旋的添加或移除谱密度",
+          "unit": "eV⁻¹"
+        },
+        {
+          "symbol": "μ",
+          "meaning": "相邻粒子数谱的能量参考化学势",
+          "unit": "eV"
+        },
+        {
+          "symbol": "c_{iσ}†",
+          "meaning": "添加一个电子的算符",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "添加使用 c†，移除使用 c；必须注明频率轴的能量参考、所选粒子数扇区和简并平均。这里的谱横轴使用能量。",
+      "conditions": "有限团簇的离散跃迁不等同于宏观材料连续谱；单一能级差不保证非零跃迁强度。",
+      "sources": [
+        "bridges-quanty-spectra",
+        "hubbard"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/observables?module=manybody"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "manybody",
+        "hubbard",
+        "lehmann"
+      ],
+      "formulaAliases": [
+        "A_{iσ}^{+}",
+        "A_{iσ}^{−}"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "manybody-spectral-weight",
+      "title": "跃迁谱权重与费米和规则",
+      "symbols": [
+        "w_{fi}",
+        "w_f",
+        "W_{add}",
+        "W_{remove}"
+      ],
+      "aliases": [
+        "谱权重",
+        "sum rule",
+        "和规则"
+      ],
+      "definition": "跃迁谱权重是跃迁矩阵元模平方，按声明的初态概率平均。局域单自旋电子谱的添加、移除权重之和由费米反对易关系固定。",
+      "variables": [
+        {
+          "symbol": "w_{fi}",
+          "meaning": "从初态i到末态f的权重",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "W_{add}",
+          "meaning": "完整添加谱的积分权重",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "W_{remove}",
+          "meaning": "完整移除谱的积分权重",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "n_{iσ}",
+          "meaning": "局域单自旋占据",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "归一化局域算符下 W_remove=⟨n_{iσ}⟩、W_add=1−⟨n_{iσ}⟩。展宽后的有限能窗数值积分可能遗漏尾部；应另核对未展宽权重求和。",
+      "conditions": "对轨道、自旋求和或改变跃迁算符会改变归一化；不能把本局域和规则机械套到任意响应。",
+      "sources": [
+        "bridges-quanty-spectra",
+        "hubbard"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/observables?module=manybody"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "manybody",
+        "lehmann"
+      ],
+      "formulaAliases": [
+        "W_{add}+W_{remove}",
+        "|⟨f|c"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "manybody-eta",
+      "title": "谱线展宽 η 与 Lorentz 半高半宽",
+      "symbols": [
+        "η",
+        "η/π"
+      ],
+      "aliases": [
+        "谱线展宽",
+        "HWHM",
+        "Lorentz"
+      ],
+      "definition": "把离散谱峰画成有限宽度的 Lorentz 曲线时使用的能量展宽；本多体谱教学实验把它作为显示与解析延拓参数。",
+      "variables": [
+        {
+          "symbol": "η",
+          "meaning": "Lorentz 曲线半高半宽",
+          "unit": "eV"
+        },
+        {
+          "symbol": "E",
+          "meaning": "相对指定能量参考的谱坐标",
+          "unit": "eV"
+        }
+      ],
+      "conventions": "Lorentz 形状为 (η/π)/[(E−E_f)²+η²]，半高全宽为2η。数值η不是密度矩阵模块的退相干率γ，也不自动对应实测寿命。",
+      "conditions": "比较线宽前核对半高半宽、全高半宽和能量/频率单位；有限积分窗口不会包含全部Lorentz尾部。",
+      "sources": [
+        "bridges-quanty-spectra"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/observables?module=manybody"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "manybody",
+        "lehmann"
+      ],
+      "formulaAliases": [
+        "η/π"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "manybody-U",
+      "title": "多体谱模型中的在位排斥 U",
+      "symbols": [
+        "U"
+      ],
+      "aliases": [],
+      "definition": "Hubbard 谱实验中两个反自旋电子在同一站点双占据所需的相互作用能；它改变相邻粒子数扇区及跃迁权重。",
+      "variables": [
+        {
+          "symbol": "U",
+          "meaning": "在位排斥能",
+          "unit": "eV"
+        },
+        {
+          "symbol": "n_{i↑}n_{i↓}",
+          "meaning": "站点i的双占据投影",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "Hamiltonian 中含 UΣ_i n_{i↑}n_{i↓}；这里的 U 是实能量参数，不是晶体表示中的幺正矩阵。",
+      "conditions": "仅用于当前有限单轨道团簇，不能由U大小单独断言宏观Mott相变。",
+      "sources": [
+        "hubbard",
+        "bridges-quanty-spectra"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/observables?module=manybody"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "manybody"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true,
+      "ambiguity": "U 的含义"
+    },
+    {
+      "id": "holstein-coupling",
+      "title": "Holstein 局域电子—声子耦合 g",
+      "symbols": [
+        "g",
+        "H_{ep}"
+      ],
+      "aliases": [
+        "Holstein",
+        "电子声子耦合"
+      ],
+      "definition": "在本站二站点Holstein模型中，局域电子占据与无量纲振子位移耦合，调制位点能而非直接调制跃迁。",
+      "variables": [
+        {
+          "symbol": "g",
+          "meaning": "局域耦合常数",
+          "unit": "eV"
+        },
+        {
+          "symbol": "X_i",
+          "meaning": "b_i+b_i†，无量纲位移",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "n_i",
+          "meaning": "第i站点电子占据",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "H_ep=gΣ_i n_i X_i。这里的拉丁字母g既不是希腊字母Γ所标记的布里渊区中心，也不是磁共振的无量纲g因子。",
+      "conditions": "模型固定一个电子、两个独立局域振子；没有由Phonopy文件自动拟合电子—声子矩阵元。",
+      "sources": [
+        "bridges-holstein",
+        "bridges-epw"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/structure-dynamics?module=polaron"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "polaron",
+        "holstein"
+      ],
+      "formulaAliases": [
+        "H_{ep}",
+        "gΣ_i n_i X_i"
+      ],
+      "requiresContext": true,
+      "ambiguity": "g 的含义"
+    },
+    {
+      "id": "polaron-conditional-displacement",
+      "title": "电子条件下的振动云",
+      "symbols": [
+        "X_j",
+        "⟨n_i X_j⟩",
+        "⟨X_j⟩_{n_i=1}"
+      ],
+      "aliases": [
+        "条件位移",
+        "振动云"
+      ],
+      "definition": "先限制电子位于站点i，再观察振子j的平均无量纲位移。联合关联可揭示均匀电子密度中隐藏的振动云。",
+      "variables": [
+        {
+          "symbol": "X_j",
+          "meaning": "b_j+b_j†，不是以Å表示的真实原子位移",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "⟨n_i X_j⟩",
+          "meaning": "电子占据与振子位移的联合期望",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "⟨n_i⟩",
+          "meaning": "条件事件的概率",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "条件位移等于⟨n_i X_j⟩/⟨n_i⟩；分母近零时不定义。均匀电子密度不意味着联合关联为零。",
+      "conditions": "条件位移不是自发对称破缺的直接证据；二站点模型不确定真实材料极化子半径或自俘获临界点。",
+      "sources": [
+        "bridges-holstein"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/structure-dynamics?module=polaron"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "polaron",
+        "holstein"
+      ],
+      "formulaAliases": [
+        "⟨n_i X_j⟩/⟨n_i⟩"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "polaron-cutoff",
+      "title": "声子截断与最高层概率",
+      "symbols": [
+        "N_{max}",
+        "P_i(N_{max})",
+        "δE"
+      ],
+      "aliases": [
+        "声子截断",
+        "cutoff",
+        "最高层概率"
+      ],
+      "definition": "将每个振子的无限数态空间限制为0至N_max，得到可对角化有限矩阵；需另外检查被删去空间的影响。",
+      "variables": [
+        {
+          "symbol": "N_{max}",
+          "meaning": "每个局域振子的最高允许声子数",
+          "unit": "非负整数"
+        },
+        {
+          "symbol": "P_i(N_{max})",
+          "meaning": "第i振子位于最高允许层的概率",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "δE",
+          "meaning": "相邻截断基态能量差的绝对值",
+          "unit": "eV"
+        }
+      ],
+      "conventions": "本模型维数为2(N_max+1)²。相邻截断检查同时看能量、局域量与最高层权重；本征残差检查的是有限矩阵，不等同于截断收敛。",
+      "conditions": "当前参数通过检查不能保证整条耦合扫描都收敛；相邻截断差也不是严格的全局误差上界。",
+      "sources": [
+        "bridges-holstein",
+        "bridges-epw"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/structure-dynamics?module=polaron"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "polaron",
+        "holstein"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true
+    },
+    {
+      "id": "density-matrix",
+      "title": "密度矩阵与 Bloch 向量",
+      "symbols": [
+        "ρ",
+        "ρ(t)",
+        "ρ_{↑↓}"
+      ],
+      "aliases": [
+        "density matrix",
+        "Bloch",
+        "量子态"
+      ],
+      "definition": "密度矩阵统一表示纯态与统计混合；在指定基底中，对角元为测量概率，非对角元记录相干。",
+      "variables": [
+        {
+          "symbol": "ρ",
+          "meaning": "厄米、半正定且迹为1的态算符",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "ρ_{↑↓}",
+          "meaning": "固定z基底的相干矩阵元",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "r",
+          "meaning": "Bloch向量，分量为Pauli矩阵期望值",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "单自旋ρ=(I+r·σ)/2；基底↑、↓，双自旋按↑↑、↑↓、↓↑、↓↓排序。换基改变矩阵元，不改变纯度。",
+      "conditions": "把ρ解释为质量密度或电荷密度前需检查模块；此词条仅指量子态。",
+      "sources": [
+        "bridges-qutip-master",
+        "bridges-qutip-tensor"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density",
+        "polaron"
+      ],
+      "formulaAliases": [
+        "Trρ=1",
+        "ρ_{↑↓}"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "density-purity",
+      "title": "整体纯度与约化纯度",
+      "symbols": [
+        "P",
+        "Tr(ρ²)",
+        "Trρ²",
+        "P_e"
+      ],
+      "aliases": [
+        "purity",
+        "约化纯度"
+      ],
+      "definition": "密度矩阵平方的迹描述该态的混合程度。有限维归一化纯态的纯度为1，最大混合态的纯度为维数倒数。",
+      "variables": [
+        {
+          "symbol": "P",
+          "meaning": "Tr(ρ²)，整体态纯度",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "P_e",
+          "meaning": "电子约化态的纯度",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "d",
+          "meaning": "当前态空间维数",
+          "unit": "正整数"
+        }
+      ],
+      "conventions": "1/d≤P≤1。整体纯态的约化纯度下降与子系统纠缠有关；整体已是混态时，经典混合也可降低约化纯度。",
+      "conditions": "纯度不是一般混态的纠缠度量；不能把低纯度直接读作更强纠缠。",
+      "sources": [
+        "bridges-qutip-master",
+        "bridges-qutip-tensor"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density",
+        "polaron"
+      ],
+      "formulaAliases": [
+        "Tr(ρ²)",
+        "Trρ²"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "density-partial-trace",
+      "title": "部分迹、约化态与局部熵",
+      "symbols": [
+        "ρ_A",
+        "Tr_Bρ",
+        "S(ρ_A)"
+      ],
+      "aliases": [
+        "partial trace",
+        "部分迹",
+        "约化熵",
+        "纠缠熵"
+      ],
+      "definition": "对未观察子系统B取部分迹得到A的约化态；局部熵衡量A的混合性，但一般同时包含经典统计与量子纠缠效应。",
+      "variables": [
+        {
+          "symbol": "ρ_A",
+          "meaning": "Tr_Bρ，子系统A的约化密度矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "S(ρ_A)",
+          "meaning": "−Tr(ρ_A log₂ρ_A)",
+          "unit": "bit"
+        },
+        {
+          "symbol": "Tr_B",
+          "meaning": "对B基底指标求迹",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "只有整体纯态时，S(ρ_A)才是该二分划分的纠缠熵。单重态与反平行经典混合均可有ρ_A=I/2和局部熵1 bit。",
+      "conditions": "局部测量不能单独重建全部整体关联；比较纠缠时还需整体态和适当判据。",
+      "sources": [
+        "bridges-qutip-tensor",
+        "bridges-negativity"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density",
+        "polaron"
+      ],
+      "formulaAliases": [
+        "Tr_Bρ",
+        "S(ρ_A)"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "density-negativity",
+      "title": "部分转置负性：双自旋混态纠缠",
+      "symbols": [
+        "N(ρ)",
+        "ρ^{T_B}"
+      ],
+      "aliases": [
+        "negativity",
+        "负性",
+        "部分转置"
+      ],
+      "definition": "对B子系统做部分转置后，把负本征值的绝对值相加，得到可用于本双自旋混态的纠缠量。",
+      "variables": [
+        {
+          "symbol": "ρ^{T_B}",
+          "meaning": "在固定乘积基底中对B的矩阵指标转置",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "N(ρ)",
+          "meaning": "部分转置负性",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "||ρ^{T_B}||_1",
+          "meaning": "部分转置矩阵的迹范数",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "N(ρ)=(||ρ^{T_B}||_1−1)/2；单重态为1/2，反平行经典混合为0。它不同于局部熵。",
+      "conditions": "本实验为2×2系统，零负性对应可分态；不要将该完备性直接外推至所有高维混态。",
+      "sources": [
+        "bridges-negativity"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density"
+      ],
+      "formulaAliases": [
+        "ρ^{T_B}",
+        "N(ρ)"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "density-lindblad-rates",
+      "title": "Lindblad 弛豫与纯退相干速率",
+      "symbols": [
+        "γ",
+        "γ_1",
+        "γ_φ",
+        "γ_2",
+        "T_1",
+        "T_2"
+      ],
+      "aliases": [
+        "Lindblad",
+        "退相干",
+        "T1",
+        "T2"
+      ],
+      "definition": "用固定Markov通道描述布居弛豫和相干衰减；此处γ为速率，不能与谱函数中以能量计的展宽η直接混用。",
+      "variables": [
+        {
+          "symbol": "γ_1",
+          "meaning": "↑→↓通道的布居衰减率",
+          "unit": "ns⁻¹"
+        },
+        {
+          "symbol": "γ_φ",
+          "meaning": "σ_z通道产生的纯退相干率",
+          "unit": "ns⁻¹"
+        },
+        {
+          "symbol": "γ_2",
+          "meaning": "γ_1/2+γ_φ，无驱动自由单自旋的横向包络率",
+          "unit": "ns⁻¹"
+        },
+        {
+          "symbol": "T_1",
+          "meaning": "1/γ_1",
+          "unit": "ns"
+        },
+        {
+          "symbol": "T_2",
+          "meaning": "1/γ_2",
+          "unit": "ns"
+        }
+      ],
+      "conventions": "C_1=√γ_1 |↓⟩⟨↑|，C_φ=√(γ_φ/2)σ_z。γ的下标与单位必须保留；大写Γ也常表示布里渊区中心或电极展宽。",
+      "conditions": "驱动与交换下完整曲线不必为单指数；固定局域通道不自动满足含相互作用Hamiltonian的热详细平衡。",
+      "sources": [
+        "bridges-qutip-master"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density"
+      ],
+      "formulaAliases": [
+        "γ_1/2+γ_φ"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "density-drive",
+      "title": "自旋驱动角频率 Ω",
+      "symbols": [
+        "Ω"
+      ],
+      "aliases": [
+        "Rabi",
+        "驱动角频率"
+      ],
+      "definition": "单自旋Hamiltonian除以ℏ后的横向系数，控制共振Rabi旋转。它与量子几何中的Berry曲率使用相同字母但含义和单位不同。",
+      "variables": [
+        {
+          "symbol": "Ω",
+          "meaning": "H/ℏ中σ_x/2的系数",
+          "unit": "rad/ns"
+        },
+        {
+          "symbol": "Ω/(2π)",
+          "meaning": "对应普通周期频率",
+          "unit": "周期/ns"
+        }
+      ],
+      "conventions": "共振、无耗散且从↑出发时 P_↑(t)=cos²(Ωt/2)。不要把rad/ns直接当作周期/ns。",
+      "conditions": "此为常量有效驱动模型，未包含完整实验脉冲、旋转波近似误差或真实仪器噪声。",
+      "sources": [
+        "bridges-qutip-master"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true,
+      "ambiguity": "ω 的含义"
+    },
+    {
+      "id": "density-exchange",
+      "title": "双自旋演化中的交换角频率 J",
+      "symbols": [
+        "J"
+      ],
+      "aliases": [
+        "交换角频率"
+      ],
+      "definition": "在密度矩阵实验中，J是H/ℏ中S_A·S_B的系数，设定单重态与三重态之间的相位演化尺度。",
+      "variables": [
+        {
+          "symbol": "J",
+          "meaning": "交换能除以ℏ",
+          "unit": "rad/ns"
+        },
+        {
+          "symbol": "S_A",
+          "meaning": "σ_A/2，A的自旋1/2算符",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "S_B",
+          "meaning": "σ_B/2，B的自旋1/2算符",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "正J对应反铁磁交换；H/ℏ中单重态与三重态本征值分别为−3J/4、J/4。该输入不是Hubbard界面中以eV给出的能量，转换需ℏ。",
+      "conditions": "双自旋模型忽略Hubbard模型中的电荷涨落；只有说明低能条件和单位换算后才能比较两个模块的交换尺度。",
+      "sources": [
+        "bridges-qutip-tensor",
+        "bridges-qutip-master"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "density"
+      ],
+      "formulaAliases": [],
+      "requiresContext": true,
+      "ambiguity": "J 的含义"
+    },
+    {
+      "id": "kp-covariance",
+      "title": "对称约束与 Pauli 能带分裂",
+      "symbols": [
+        "H(Rk)",
+        "d_0(k)",
+        "E_{±}(k)"
+      ],
+      "aliases": [
+        "k.p",
+        "允许项",
+        "对称约束",
+        "Pauli"
+      ],
+      "definition": "把二维2×2 Hamiltonian写为单位矩阵项和三个Pauli项，对全部动量施加生成元恒等式，求允许的实系数空间。",
+      "variables": [
+        {
+          "symbol": "U",
+          "meaning": "真实自旋双重态的对称操作矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "d_0(k)",
+          "meaning": "两条能带的共同位移",
+          "unit": "eV"
+        },
+        {
+          "symbol": "d(k)",
+          "meaning": "Pauli系数三维向量",
+          "unit": "eV"
+        }
+      ],
+      "conventions": "幺正空间操作满足H(Rk)=UH(k)U†；反幺正操作还含复共轭。能量E_±=d_0±|d|。工坊使用Γ附近二阶展开和指定单项式系数的欧氏正交投影。",
+      "conditions": "投影系数不是材料拟合；关闭生成元后不再声称保留原群，局部开隙也不直接给出完整布里渊区拓扑数。",
+      "sources": [
+        "bridges-qsymm"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/crystal?module=workshop"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "workshop"
+      ],
+      "formulaAliases": [
+        "H(Rk)",
+        "d_0(k) ± |d(k)|"
+      ],
+      "requiresContext": true
+    },
+    {
+      "id": "kp-axial-spin",
+      "title": "镜面下的极向量与轴向量",
+      "symbols": [
+        "det(R)R",
+        "σ_x",
+        "σ_y",
+        "σ_z"
+      ],
+      "aliases": [
+        "轴向量",
+        "极向量",
+        "镜面",
+        "Rashba"
+      ],
+      "definition": "动量作为极向量按R变换，真实自旋作为轴向量按det(R)R变换；两者在镜面下不同。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "三维正交空间操作",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "det(R)R",
+          "meaning": "自旋轴向量的变换矩阵",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "σ",
+          "meaning": "真实自旋双重态的Pauli矩阵向量",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "xz镜面使(k_x,k_y)→(k_x,−k_y)，使(σ_x,σ_y,σ_z)→(−σ_x,σ_y,−σ_z)。反演使动量变号而真实自旋不变。",
+      "conditions": "只适用于工坊声明的同宇称真实自旋双重态；任意轨道赝自旋需使用其实际小表示，不能照搬轴向量规则。",
+      "sources": [
+        "bridges-qsymm",
+        "magres"
+      ],
+      "links": [
+        [
+          "相关课堂与推导",
+          "#classroom/crystal?module=workshop"
+        ],
+        [
+          "公式与符号词典",
+          "#docs/dictionary"
+        ]
+      ],
+      "contexts": [
+        "workshop"
+      ],
+      "formulaAliases": [
+        "det(R)R"
+      ],
+      "requiresContext": true
     }
   ],
   "sources": [
@@ -3235,6 +4114,42 @@
       "id": "quantum-metric",
       "title": "Provost、Vallée：Riemannian structure on manifolds of quantum states (1980)",
       "url": "https://doi.org/10.1007/BF02193559"
+    },
+    {
+      "id": "bridges-quanty-spectra",
+      "title": "Quanty 官方：跃迁算符、格林函数与光谱",
+      "url": "https://www.quanty.org/documentation/basics/spectra"
+    },
+    {
+      "id": "bridges-holstein",
+      "title": "Holstein：The molecular-crystal model (1959)",
+      "url": "https://doi.org/10.1016/0003-4916(59)90002-8"
+    },
+    {
+      "id": "bridges-epw",
+      "title": "Lee 等：Electron-phonon physics from first principles using the EPW code (2023)",
+      "url": "https://arxiv.org/abs/2302.08085"
+    },
+    {
+      "id": "bridges-qutip-master",
+      "title": "QuTiP 官方：Lindblad 主方程与适用假设",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html"
+    },
+    {
+      "id": "bridges-qutip-tensor",
+      "title": "QuTiP 官方：张量积与部分迹",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/guide-tensor.html"
+    },
+    {
+      "id": "bridges-negativity",
+      "title": "Vidal 与 Werner：Computable measure of entanglement (2002)",
+      "url": "https://doi.org/10.1103/PhysRevA.65.032314"
+    },
+    {
+      "id": "bridges-qsymm",
+      "title": "Qsymm 官方：由对称约束生成 Hamiltonian",
+      "url": "https://qsymm.readthedocs.io/latest/"
     }
-  ]
+  ],
+  "extensionRelease": "20261030-bridges1"
 }

@@ -1,6 +1,6 @@
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261029-pathways1b';
-import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './pathways-views.js?v=20261029-pathways1b';
-import {renderResponseProjects} from './response-projects.js?v=20261029-pathways1b';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261030-bridges1';
+import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './pathways-views.js?v=20261030-bridges1';
+import {renderResponseProjects} from './response-projects.js?v=20261030-bridges1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;

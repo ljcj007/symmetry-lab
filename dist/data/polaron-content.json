@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-bridges1",
+  "module": {
+    "id": "polaron",
+    "title": "电子—声子耦合与极化子",
+    "summary": "在二站点单电子 Holstein 模型中同时求电子与量子振子，观察条件振动云、声子分布和电子相干，并用相邻声子截断检查收敛。",
+    "route": "polaron-lab",
+    "action": "polaron_lab",
+    "fields": [
+      {"key":"hopping","label":"电子跃迁 t（eV）","type":"number","default":1,"min":0,"max":3,"step":0.1},
+      {"key":"phononEnergy","label":"声子量子能量 ℏω（eV）","type":"number","default":1,"min":0.2,"max":3,"step":0.1},
+      {"key":"coupling","label":"局域耦合 g（eV）","type":"number","default":0.8,"min":0,"max":3,"step":0.1},
+      {"key":"siteBias","label":"位能差 Δ=ε₀−ε₁（eV）","type":"number","default":0,"min":-4,"max":4,"step":0.2},
+      {"key":"cutoff","label":"每振子的最大声子数","type":"number","default":6,"min":2,"max":10,"step":1},
+      {"key":"scanMaxCoupling","label":"g 扫描上限（eV）","type":"number","default":1.6,"min":0,"max":3,"step":0.2},
+      {"key":"scanPoints","label":"扫描点数（1表示仅当前g）","type":"number","default":7,"min":1,"max":9,"step":1}
+    ],
+    "presets": [
+      {"id":"uncoupled","title":"无耦合基准：电子与振子可分离","input":{"hopping":1,"phononEnergy":1,"coupling":0,"siteBias":0,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
+      {"id":"symmetric-cloud","title":"对称振动云：密度均匀仍有关联","input":{"hopping":1,"phononEnergy":1,"coupling":0.8,"siteBias":0,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
+      {"id":"atomic-shift","title":"原子极限：位移振子的解析检验","input":{"hopping":0,"phononEnergy":1,"coupling":0.7,"siteBias":0.8,"cutoff":8,"scanMaxCoupling":1.4,"scanPoints":7}},
+      {"id":"biased-cloud","title":"不等价位点：电荷与振动云偏移","input":{"hopping":1,"phononEnergy":1,"coupling":0.8,"siteBias":1.2,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
+      {"id":"strong-cloud","title":"较强耦合：先检查声子基底","input":{"hopping":1,"phononEnergy":1,"coupling":1.6,"siteBias":0,"cutoff":8,"scanMaxCoupling":2,"scanPoints":7}},
+      {"id":"truncation-warning","title":"故意不足的截断：数值残差不等于收敛","input":{"hopping":1,"phononEnergy":0.5,"coupling":1.6,"siteBias":0,"cutoff":2,"scanMaxCoupling":1.6,"scanPoints":5}}
+    ]
+  },
+  "lessons": [
+    {
+      "id":"polaron-hamiltonian","module":"polaron","title":"让电子与局域振子进入同一个量子模型",
+      "summary":"分清位点能耦合、键耦合与声子能量，先从无耦合极限建立基准。","preset":"uncoupled",
+      "sections":[
+        {"title":"从两条独立曲线走向共同的态","text":"电子在两个局域轨道之间跃迁，每个站点还有一个量子谐振子。完整基底同时标记电子站点与两个声子占据数。这里固定一个电子及其自旋分量；不加入电子间排斥。","formula":"|i,n_0,n_1⟩；dim H=2(N_{max}+1)²"},
+        {"title":"Holstein 耦合改变位点能","text":"电子占据某站点时，该站点振子的位移改变局域电子能量。跃迁t保持常数。模型的振子坐标X无量纲，没有给定质量和频率到长度的换算，因此不能把X数值直接称为Å。","formula":"H=−t(c_0†c_1+c_1†c_0)+Δ(n_0−n_1)/2+ℏω Σ_i b_i†b_i+g Σ_i n_i X_i；X_i=b_i+b_i†"},
+        {"title":"先检查 g=0","text":"无耦合时，电子二能级与两个振子的谱直接相加。Δ=0、t>0的基态是电子成键态乘两个振子真空，总声子数为零、电子约化纯度为1；这不意味着振子的坐标没有零点涨落。","formula":"E_0=−√(t²+Δ²/4)（g=0）；⟨b_i†b_i⟩=0"},
+        {"title":"和现有 SSH、声子课程怎样衔接","text":"Holstein的局域位移调制位点能，SSH型键位移则调制跃迁。已有SSH模型的键参数不能直接当成这里的g；已有Phonopy频率也不自动给出电子—声子矩阵元。三者可以对照机制，但必须分别定义参数。","formula":"Holstein：ε_i→ε_i+gX_i；SSH型：t_{ij}→t_{ij}+δt_{ij}"}
+      ],"references":["holstein-original","epw-methods"]
+    },
+    {
+      "id":"polaron-conditional-cloud","module":"polaron","title":"均匀电子密度里也可以藏着振动云",
+      "summary":"从原子极限的位移振子，走向对称基态中的电子—声子关联。","preset":"symmetric-cloud",
+      "sections":[
+        {"title":"原子极限可以直接配方","text":"t=0时先固定电子所在站点。被占据振子的势能面发生位移，单振子基态能降低g²/(ℏω)，声子平均数为[g/(ℏω)]²。正g给出负X位移；能量已省略两个振子的总零点能ℏω。","formula":"ℏω b†b+g(b+b†)=ℏω(b†+g/ℏω)(b+g/ℏω)−g²/ℏω"},
+        {"title":"平均分布不能替代关联","text":"当Δ=0且基态不简并时，站点交换对称要求两个电子占据都为1/2。电子与伴随的振动云可以共同离域，所以均匀密度并不排除电子—声子关联。二站点结果不能据此声称无限晶体发生自俘获相变。","formula":"⟨n_0⟩=⟨n_1⟩=1/2；⟨n_i X_j⟩一般不等于⟨n_i⟩⟨X_j⟩"},
+        {"title":"先问电子在哪，再读振子","text":"条件位移把联合关联除以该站点电子占据。图中两条曲线分别以电子在站点0或1为条件，能区分本地和远端振动云。占据概率近零时条件量未定义，界面留空。","formula":"⟨X_j⟩_{n_i=1}=⟨n_i X_j⟩/⟨n_i⟩"},
+        {"title":"与密度矩阵课程衔接","text":"对振子取部分迹得到电子约化密度矩阵。非简并零温整体纯态中，电子约化纯度低于1表明电子与振子纠缠。严格t=0、Δ=0的简并基态由程序等权混合，此时低纯度也可能来自经典混合，不能直接当纠缠量。","formula":"ρ_e=Tr_{ph}ρ；P_e=Tr(ρ_e²)"}
+      ],"references":["holstein-original","holstein-small"]
+    },
+    {
+      "id":"polaron-truncation","module":"polaron","title":"结果算得很精确，为什么仍可能不收敛",
+      "summary":"同时检查能量变化、局域观测量和最高声子层概率，辨认有限基底的误差。","preset":"truncation-warning",
+      "sections":[
+        {"title":"每个振子的空间本来无限","text":"谐振子的声子数没有上限。浏览器实验把每个振子限制为0至最大声子数，完整对角化的是这个有限矩阵。当前输入最高10；额外对照用11，最大288维。","formula":"n_i^{ph}=0,…,N_{max}；dim H=2(N_{max}+1)²"},
+        {"title":"变分能量从上方接近","text":"增加截断会扩大嵌套变分空间，所以基态能量不能升高（容许浮点误差）。程序自动比较相邻两个截断的能量，同时比较电子占据、声子占据和电子—位移关联。","formula":"E_0(N_{max}+1)≤E_0(N_{max})"},
+        {"title":"最高层概率暴露被截掉的尾部","text":"如果最高允许声子层仍有明显概率，截断边缘正在影响波函数。当前诊断要求能量变化小于10⁻⁴eV、指定局域量变化小于0.01、每个振子的最高层概率小于10⁻³。通过相邻检查仍不是严格全局误差界。","formula":"P_i(N_{max})=Σ_{其余自由度}|ψ|²（固定振子i处于最高层）"},
+        {"title":"扫描不能沿用一个点的结论","text":"扫描固定当前截断，耦合增大时声子数通常增加，因此每个点都显示最高层概率。只有当前参数额外计算更高截断。矩阵残差小只说明这个矩阵被正确求解，不能保证被截掉的声子空间无关紧要。","formula":"||Hψ−Eψ||小 ≠ 声子截断误差小"}
+      ],"references":["holstein-small","epw-methods"]
+    }
+  ],
+  "exercises":[
+    {
+      "id":"polaron-free-exercise","module":"polaron","lesson":"polaron-hamiltonian","title":"从无耦合极限建立检查点",
+      "prompt":"取t=1、ℏω=1、g=Δ=0 eV，每振子最大声子数为6。",
+      "steps":[
+        {"prompt":"完整矩阵维数是多少？","hint":"一个电子有两种位置，每个振子有7个数态。","choices":["14","98","49"],"answer":1,"explanation":"2×7×7=98；不能只保留两个振子共用的一个数态标签。"},
+        {"prompt":"省略零点能后基态能量是多少？","hint":"电子成键态能量是−t，振子都在真空。","choices":["−1 eV","0 eV","+1 eV"],"answer":0,"explanation":"电子能量−1 eV，两个振子的b†b都为0。"},
+        {"prompt":"此时电子约化纯度是多少？","hint":"整体态是电子与振子态的直积。","choices":["0","1/2","1"],"answer":2,"explanation":"对振子取迹不使电子变成混合态，所以Tr(ρ_e²)=1。"},
+        {"prompt":"加入本模块的g项直接调制什么？","hint":"耦合项为gΣ_i n_i X_i。","choices":["电子跃迁t","局域位点能","声子数上限"],"answer":1,"explanation":"这是Holstein位点耦合；键位移调制跃迁属于另一类耦合，不能混用参数。"}
+      ]
+    },
+    {
+      "id":"polaron-cloud-exercise","module":"polaron","lesson":"polaron-conditional-cloud","title":"完成平方，再辨认条件振动云",
+      "prompt":"先考虑t=0、ℏω=1、g=0.5 eV，电子已知位于一个站点。",
+      "steps":[
+        {"prompt":"被占据振子带来的基态能降低是多少？","hint":"配方后的常数项是−g²/(ℏω)。","choices":["−0.25 eV","−0.5 eV","+0.25 eV"],"answer":0,"explanation":"−0.5²/1=−0.25 eV，未包括电子站点位能。"},
+        {"prompt":"被占据振子的⟨X⟩是多少？","hint":"位移后的湮灭算符是真空算符，⟨b⟩=−g/(ℏω)。","choices":["−0.5","−1","+1"],"answer":1,"explanation":"X=b+b†，故⟨X⟩=−2g/(ℏω)=−1，无量纲。"},
+        {"prompt":"恢复跃迁和站点交换对称后，电子密度均匀能说明什么？","hint":"密度是单个期望值，条件关联还包含联合信息。","choices":["一定没有电子—声子关联","一定已经自发局域","需继续查看⟨n_i X_j⟩和条件位移"],"answer":2,"explanation":"均匀密度可与共同离域的振动云并存，不能只用密度判断。"},
+        {"prompt":"若程序对简并基态等权平均，低电子纯度能直接量化纠缠吗？","hint":"整体密度矩阵已可能是混态。","choices":["能，任何混合都等于纠缠","不能，经典混合也会降低纯度","能，只要声子数非零"],"answer":1,"explanation":"只有整体纯态条件下，约化混合程度才直接表征该二分的纠缠；混态需要另外的判据。"}
+      ]
+    },
+    {
+      "id":"polaron-cutoff-exercise","module":"polaron","lesson":"polaron-truncation","title":"让截断误差成为可检查的实验变量",
+      "prompt":"运行“故意不足的截断”预设，再逐步增大每振子的最大声子数。",
+      "steps":[
+        {"prompt":"增加声子截断后，变分基态能量应怎样变化？","hint":"新增基矢不会删掉原先可用的试探态。","choices":["不升高","必然升高","必须完全不变"],"answer":0,"explanation":"嵌套空间的变分最小值不升高；变化大小反映截断敏感性。"},
+        {"prompt":"哪个诊断最直接检查声子概率是否挤到边界？","hint":"检查最后一个允许的数态。","choices":["电子密度是否均匀","最高声子层的概率","矩阵是否实数"],"answer":1,"explanation":"最高层仍有明显权重时，未纳入的更高声子态可能重要。"},
+        {"prompt":"本征残差达到10⁻¹²，能否单独证明声子截断足够？","hint":"残差检查的是已经构造好的有限矩阵。","choices":["能","只需矩阵维数大于20就能","不能，还要扩大截断比较"],"answer":2,"explanation":"有限矩阵可被极准确求解，同时仍遗漏重要的高声子数组态。"},
+        {"prompt":"当前g点通过相邻截断诊断后，整条g扫描是否自动通过？","hint":"扫描点拥有不同振动云和声子分布。","choices":["不会，必须逐点检查","会，截断是同一个数","会，只要两端能量平滑"],"answer":0,"explanation":"当前点的对照不能替代其他点；本实验扫描报告每点最高层概率，需要时单独选中该参数做双截断。"}
+      ]
+    }
+  ],
+  "cases":[
+    {"id":"polaron-molecular-dimer","module":"polaron","title":"分子二聚体中的载流子与局域振动","kind":"材料机制原型","summary":"用局域轨道与振子说明电子离域时也能携带振动云，比较无耦合与有限耦合。","assumption":"两个抽象站点和给定能量参数，不拟合具体分子的振动频率、跃迁或光谱；固定单电子。","preset":"symmetric-cloud","links":[["电子—声子实验","#compute/polaron-lab"],["Hubbard二聚体对照","#compute/hubbard-cluster-lab"],["密度矩阵课堂","#classroom/spin?module=density"]]},
+    {"id":"polaron-local-versus-bond","module":"polaron","title":"局域耦合与共轭链键耦合的机制对照","kind":"跨模型比较","summary":"从Holstein的位点能调制出发，对照SSH链的交替键和畴壁；先辨认耦合发生在哪个矩阵元。","assumption":"这里只比较机制，不把二站点Holstein结果等同于聚乙炔自洽结构、SSH畴壁或真实极化子半径。","preset":"biased-cloud","links":[["Holstein局域耦合","#compute/polaron-lab"],["SSH量子几何","#compute/quantum-geometry-lab"],["SSH畴壁与局域态","#compute/domain-wall-lab"]]},
+    {"id":"polaron-truncation-case","module":"polaron","title":"强振动云的数值收敛实验","kind":"计算方法案例","summary":"在较大的g/(ℏω)下，比较精确本征残差、最高层概率和相邻截断能量变化。","assumption":"故意包含截断不足的参数，供识别数值假象；不能将未收敛曲线当真实材料相变或定量光谱。","preset":"truncation-warning","links":[["声子截断实验","#compute/polaron-lab"],["声子热力学约定","#compute/phonon-thermo"],["电子—声子课堂","#classroom/structure-dynamics?module=polaron"]]}
+  ],
+  "sources":[
+    {"id":"holstein-original","title":"T. Holstein, Studies of polaron motion: Part I. The molecular-crystal model, Annals of Physics 8, 325–342 (1959)","url":"https://doi.org/10.1016/0003-4916(59)90002-8"},
+    {"id":"holstein-small","title":"T. Holstein, Studies of polaron motion: Part II. The small polaron, Annals of Physics 8, 343–389 (1959)","url":"https://doi.org/10.1016/0003-4916(59)90003-X"},
+    {"id":"epw-methods","title":"H. Lee et al., Electron-phonon physics from first principles using the EPW code (2023)","url":"https://arxiv.org/abs/2302.08085"}
+  ]
+}

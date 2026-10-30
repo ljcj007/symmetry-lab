@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "release": "20261030-bridges1",
+  "module": {
+    "id": "manybody",
+    "title": "多体谱函数与动态响应",
+    "summary": "从2–4站点Hubbard本征态计算真实添加、移除与连通响应矩阵元，点击谱峰追踪初末态，用和规则核对谱权重。",
+    "route": "manybody-spectra-lab",
+    "action": "manybody_spectra_lab",
+    "fields": [
+      {"key":"experiment","label":"实验类型","type":"select","default":"single_particle","options":[["single_particle","单粒子添加/移除谱"],["response","固定粒子数的连通响应"]]},
+      {"key":"sites","label":"站点数 L","type":"number","default":2,"min":2,"max":4,"step":1},
+      {"key":"nUp","label":"上自旋电子数 N↑（不超过L）","type":"number","default":1,"min":0,"max":4,"step":1},
+      {"key":"nDown","label":"下自旋电子数 N↓（不超过L）","type":"number","default":1,"min":0,"max":4,"step":1},
+      {"key":"boundary","label":"边界条件","type":"select","default":"open","options":[["open","开链"],["periodic","首尾相连；两站点只计一条键"]]},
+      {"key":"hopping","label":"跃迁 t（eV）","type":"number","default":1,"min":0,"max":3,"step":0.1},
+      {"key":"interactionU","label":"同站点排斥 U（eV）","type":"number","default":4,"min":0,"max":30,"step":0.5},
+      {"key":"alternatingPotential","label":"交错位能 Δ（eV；0号站点为+Δ/2）","type":"number","default":0,"min":-10,"max":10,"step":0.5},
+      {"key":"probe","label":"探针的空间形状","type":"select","default":"local","options":[["local","选定局域站点"],["momentum","归一化有限链傅里叶探针"]]},
+      {"key":"site","label":"局域探针站点（从0开始；不超过L−1）","type":"number","default":0,"min":0,"max":3,"step":1},
+      {"key":"q","label":"傅里叶探针 q a/π（局域探针时忽略）","type":"number","default":1,"min":-2,"max":2,"step":0.1},
+      {"key":"spin","label":"单粒子探针的自旋","type":"select","default":"up","experiment":"single_particle","options":[["up","上自旋"],["down","下自旋"]]},
+      {"key":"chemicalPotential","label":"谱能量零点 μ（eV；不改变粒子数）","type":"number","default":2,"min":-20,"max":40,"step":0.1,"experiment":"single_particle"},
+      {"key":"responseKind","label":"连通响应算符","type":"select","default":"spin","experiment":"response","options":[["spin","纵向自旋 S_z"],["charge","电荷密度 n"]]},
+      {"key":"eta","label":"Lorentz半高半宽 η（eV）","type":"number","default":0.08,"min":0.01,"max":0.8,"step":0.01},
+      {"key":"points","label":"谱线采样点数","type":"number","default":601,"min":201,"max":1201,"step":1}
+    ],
+    "presets": [
+      {"id":"free-dimer","title":"无相互作用二聚体：两个局域谱峰","input":{"experiment":"single_particle","sites":2,"nUp":1,"nDown":1,"boundary":"open","hopping":1,"interactionU":0,"alternatingPotential":0,"probe":"local","site":0,"q":1,"spin":"up","chemicalPotential":0,"responseKind":"spin","eta":0.08,"points":601}},
+      {"id":"interacting-dimer","title":"相互作用二聚体：添加与移除谱权重","input":{"experiment":"single_particle","sites":2,"nUp":1,"nDown":1,"boundary":"open","hopping":1,"interactionU":4,"alternatingPotential":0,"probe":"local","site":0,"q":1,"spin":"up","chemicalPotential":2,"responseKind":"spin","eta":0.08,"points":601}},
+      {"id":"spin-dimer","title":"q=π的自旋谱：单重态到三重态","input":{"experiment":"response","sites":2,"nUp":1,"nDown":1,"boundary":"open","hopping":1,"interactionU":4,"alternatingPotential":0,"probe":"momentum","site":0,"q":1,"spin":"up","chemicalPotential":2,"responseKind":"spin","eta":0.05,"points":601}},
+      {"id":"charge-dimer","title":"同一二聚体的电荷激发","input":{"experiment":"response","sites":2,"nUp":1,"nDown":1,"boundary":"open","hopping":1,"interactionU":4,"alternatingPotential":0,"probe":"momentum","site":0,"q":1,"spin":"up","chemicalPotential":2,"responseKind":"charge","eta":0.08,"points":601}},
+      {"id":"atomic-spin","title":"原子极限：简并平均仍有零能涨落","input":{"experiment":"response","sites":2,"nUp":1,"nDown":1,"boundary":"open","hopping":0,"interactionU":4,"alternatingPotential":0,"probe":"momentum","site":0,"q":1,"spin":"up","chemicalPotential":2,"responseKind":"spin","eta":0.05,"points":601}},
+      {"id":"four-site","title":"四站点有限环：动量探针的谱重分配","input":{"experiment":"single_particle","sites":4,"nUp":2,"nDown":2,"boundary":"periodic","hopping":1,"interactionU":4,"alternatingPotential":0,"probe":"momentum","site":0,"q":0.5,"spin":"up","chemicalPotential":2,"responseKind":"spin","eta":0.12,"points":801}}
+    ]
+  },
+  "lessons": [
+    {
+      "id":"manybody-lehmann","module":"manybody","title":"从多体能级到添加与移除谱","summary":"相邻粒子数扇区的能量差决定峰位置，电子算符矩阵元决定峰是否可见。","preset":"free-dimer",
+      "sections":[
+        {"title":"一次测量选择一个算符","text":"初态固定N↑、N↓。添加一个上自旋电子将系统带到(N↑+1,N↓)扇区，移除则进入(N↑−1,N↓)。因此不能把同一N扇区的所有能级直接当作光电子峰；真正可见的跃迁还要有非零产生或湮灭算符矩阵元。","formula":"w_f^{+}=|⟨f,N+1|c†|0,N⟩|^2；w_f^{−}=|⟨f,N−1|c|0,N⟩|^2"},
+        {"title":"能量零点与电子数是两项设置","text":"横轴采用能量而非角频率，单位eV。μ只从所有单粒子峰的位置中减去，不改变初态的固定电子数或占据。任意μ不保证添加谱都在正半轴、移除谱都在负半轴；不能把移动μ的按钮解释为自动掺杂。","formula":"E_f^{+}=E_f(N+1)−E_0(N)−μ；E_f^{−}=E_0(N)−E_f(N−1)−μ"},
+        {"title":"局域探针与傅里叶探针看见不同权重","text":"本站局域探针作用于一个站点；傅里叶探针是所有站点振幅的归一化叠加。对开放二聚体，q=0组合选中成键轨道，q a/π=1组合选中反键轨道。开放链中的q表示探针相位，不能把它当作严格的周期晶体动量量子数。","formula":"c_q=L^{−1/2}Σ_j exp(−iπqj)c_j；输入q=q_{physical}a/π"},
+        {"title":"同一组极点给出格林函数和谱函数","text":"迟致格林函数的实部、虚部由同一组离散跃迁构造。η>0保证正确迟致边界，显示时产生Lorentz线形。峰面积由矩阵元决定，而峰高还依赖η。这里只计算有限团簇的单粒子谱，不含真实光电子实验的轨道偶极矩阵元与仪器几何。","formula":"G^R(E)=Σ_f w_f/(E−E_f+iη)；A(E)=−Im G^R(E)/π"}
+      ],"references":["manybody-lehmann","manybody-hubbard"]
+    },
+    {
+      "id":"manybody-response","module":"manybody","title":"从等时关联到动态自旋与电荷响应","summary":"同一哈密顿量可被不同算符探测；比较自旋峰、电荷峰与相邻粒子数的单粒子峰。","preset":"spin-dimer",
+      "sections":[
+        {"title":"响应保持总粒子数","text":"密度与纵向自旋算符不增加或移除电子，本模块的响应末态留在同一(N↑,N↓)扇区。纵向自旋采用S_z=(n↑−n↓)/2且ℏ=1。这里输出的是动态结构因子型谱S(q,E)，并非未经说明的复磁化率，也不自动乘3变成完整矢量自旋谱。","formula":"O_q=L^{−1/2}Σ_j exp(−iπqj)O_j；O_j=n_j 或 S_{zj}"},
+        {"title":"连通响应先减去平均值","text":"用δO=O−⟨O⟩I移去相干的平均背景。对固定N，q=0的总密度连通谱必须消失；对固定N↑、N↓，q=0的总S_z连通谱也消失。程序把这两个守恒极限作为物理检查，而不是人为删除不想显示的峰。","formula":"S_O(q,E)=Σ_f |⟨f|δO_q|0⟩|^2 δ(E−E_f+E_0)"},
+        {"title":"自旋峰与电荷峰回答不同问题","text":"对称半填充二聚体的q a/π=1纵向自旋探针连接基态单重态与三重态；电荷探针连接奇对称双占据态。设D=√(U²+16t²)，两峰能量分别为(D−U)/2与(D+U)/2。即使它们来自同一哈密顿量，也不能把两个谱混成一种普适能隙。","formula":"E_{spin}=(D−U)/2；E_{charge}=(D+U)/2；D=√(U^2+16t^2)"},
+        {"title":"积分动态谱返回等时涨落","text":"对末态完备求和，所有离散跃迁权重之和等于初态连通等时关联。该关系把已有Hubbard关联课堂与动态谱连起来。简并基态采用等权迹；若零能基态之间仍有涨落，它们也属于这个和规则，不能只保留正能峰再声称积分完整。","formula":"∫S_O(q,E)dE=Tr(ρ_0 δO_q†δO_q)"}
+      ],"references":["manybody-dimer","manybody-lehmann"]
+    },
+    {
+      "id":"manybody-checks","module":"manybody","title":"用和规则、简并平均与极限检验光谱","summary":"区分离散权重、线宽、采样与物理结论，观察简并初态的真实零能涨落。","preset":"atomic-spin",
+      "sections":[
+        {"title":"一个归一费米探针的总权重为1","text":"本实验每次选择一种自旋与一个归一探针。费米反对易关系给出移除权重为占据数n，添加权重为1−n，合起来为1。不能在没有说明的情况下再乘自旋倍数，也不能把局域谱与全部站点求和的态密度使用同一归一化。","formula":"Σ_f w_f^{−}=⟨c†c⟩；Σ_f w_f^{+}=1−⟨c†c⟩；Σ_f(w_f^{+}+w_f^{−})=1"},
+        {"title":"简并态需要对子空间求迹","text":"初态在所选扇区10⁻⁹ eV容差内等权平均，末态按简并能级组求和。这样权重不依赖数值对角化任选的简并基底。点击一个谱峰后，末态密度使用P_f Oρ₀O†P_f/w_f；它体现该探针实际到达的条件末态，不一定等于整个末态能级组的等权平均。","formula":"ρ_0=P_0/g；w_f=Tr(P_f Oρ_0 O†)"},
+        {"title":"严格原子极限保留零能涨落","text":"二聚体t=0、U>0、(N↑,N↓)=(1,1)时，两个分居组态简并。q a/π=1的S_z探针在这两个组态中取相反值，平均为0，但平方平均为1/2。因此连通谱仍有权重1/2的零能峰；减去均值不等于删除所有零能响应。它也不证明长程磁序。","formula":"⟨O⟩=0；⟨O†O⟩=1/2；S_O(E)=(1/2)δ(E)（t=0）"},
+        {"title":"线宽和绘图网格不能创造新物理","text":"η是绘图Lorentz半高半宽，不是本计算求出的物理寿命。离散峰权重用于精确和规则，有限绘图窗口会缺失Lorentz尾部；程序报告该部分且不重新归一化。能量间隔大于η/3时提示峰高欠采样。两到四站点的有限谱不能直接确定无限材料相图。","formula":"L_η(E)=η/[π(E^2+η^2)]；∫_{−∞}^{∞}L_η(E)dE=1"}
+      ],"references":["manybody-lehmann","manybody-dimer"]
+    }
+  ],
+  "exercises": [
+    {"id":"manybody-lehmann-exercise","module":"manybody","lesson":"manybody-lehmann","title":"从无相互作用二聚体读出局域谱","prompt":"取t=1 eV、U=Δ=μ=0、N↑=N↓=1；先用局域探针，再改为傅里叶探针。","steps":[
+      {"prompt":"移除一个上自旋电子后应进入哪个扇区？","hint":"只改变被湮灭的那种自旋数。","choices":["(N↑,N↓)=(0,1)","(1,1)","(1,0)"],"answer":0,"explanation":"c↑将上自旋电子数从1降到0；对应末态来自不同粒子数扇区，不能只读初态扇区的激发能。"},
+      {"prompt":"局域探针在何处有峰、各有多大权重？","hint":"单粒子成键与反键能为−t与+t，局域轨道在两者上各占一半。","choices":["仅E=0、权重1","E=−1与+1 eV，各1/2","E=−2与+2 eV，各1"],"answer":1,"explanation":"初态填满成键轨道；移除峰在−1 eV，添加峰在+1 eV，总权重1。"},
+      {"prompt":"只把μ改为0.3 eV，哪项变化正确？","hint":"每个单粒子峰坐标都减去μ。","choices":["电子数自动增加","两个峰都向右移0.3 eV","两个峰变为−1.3与0.7 eV，权重不变"],"answer":2,"explanation":"这里μ只设置谱的零点；固定N↑、N↓的初态保持不变，不是自动掺杂计算。"},
+      {"prompt":"恢复μ=0，改为q=0归一傅里叶探针，会看见什么？","hint":"两站点相同相位相加选中成键轨道。","choices":["仅移除峰E=−1 eV，权重1","仅添加峰E=+1 eV，权重1","两峰都消失"],"answer":0,"explanation":"q=0探针完全位于已占据的成键模式；Pauli原理阻止再添加同自旋电子。"}
+    ]},
+    {"id":"manybody-response-exercise","module":"manybody","lesson":"manybody-response","title":"同一二聚体为何有不同的动态能隙","prompt":"取t=1 eV、U=4 eV、Δ=0的半填充二聚体，使用q a/π=1探针。","steps":[
+      {"prompt":"密度或S_z响应会改变总电子数吗？","hint":"两个算符都含一个产生与一个湮灭操作。","choices":["会增加一个","不会，末态仍在同一粒子数扇区","会减少一个"],"answer":1,"explanation":"响应谱与单粒子增减谱涉及不同算符和末态空间，所以不能仅凭能量位置把它们互相替代。"},
+      {"prompt":"D=√32 eV时，自旋峰的能量是多少？","hint":"计算(D−U)/2。","choices":["4.828427 eV","2 eV","0.828427 eV"],"answer":2,"explanation":"自旋峰连接最低单重态与三重态；此处是约0.828427 eV。"},
+      {"prompt":"同样参数下，电荷峰的能量是多少？","hint":"这次计算(D+U)/2。","choices":["4.828427 eV","0.828427 eV","0 eV"],"answer":0,"explanation":"电荷算符连接奇对称双占据态，激发能约4.828427 eV，与自旋峰不同。"},
+      {"prompt":"把q改为0，固定N的连通总密度谱应怎样？","hint":"总密度在这个扇区就是N乘恒等算符。","choices":["保留权重N²的连通零能峰","全部为零","只保留自旋峰"],"answer":1,"explanation":"δN=N−⟨N⟩I=0；相干平均背景被扣除后，固定粒子数没有总密度涨落。"}
+    ]},
+    {"id":"manybody-checks-exercise","module":"manybody","lesson":"manybody-checks","title":"不把线宽、简并与峰高误当物理结论","prompt":"先看严格原子极限的自旋响应，再比较同一单粒子谱的两种显示半宽。","steps":[
+      {"prompt":"t=0、U>0、N↑=N↓=1时，如何处理两个分居基态？","hint":"结果应不依赖对角化选出的简并基底。","choices":["任选一个并称为唯一基态","在该扇区简并子空间等权平均","只留下纯单重态"],"answer":1,"explanation":"严格t=0的基态混合与t→0⁺选择的单重态不同；计算保留已声明的固定扇区与简并平均。"},
+      {"prompt":"q a/π=1的纵向探针均值为0，连通谱的零能权重是多少？","hint":"两个分居组态的探针值为±1/√2。","choices":["0","1","1/2"],"answer":2,"explanation":"均值为0而平方平均为1/2；简并混合态仍有零能涨落，不能一律删除。"},
+      {"prompt":"只把Lorentz半宽η加倍，哪个量应保持不变？","hint":"η作用在每个离散峰的显示核。","choices":["每个离散跃迁的权重","每个峰的峰高","有限绘图窗口内的所有像素值"],"answer":0,"explanation":"离散矩阵元权重与η无关；峰高与有限窗口面积可能改变，因而不能靠峰高判断占据数。"},
+      {"prompt":"单粒子绘图窗口面积略小于1，但离散权重和为1，首先应检查什么？","hint":"Lorentz线形在任意有限窗口外都有尾部。","choices":["立即把所有数据强制归一到1","窗口尾部和采样精度，并核对程序报告的解析面积","宣布违反费米反对易关系"],"answer":1,"explanation":"完整和规则与有限窗口积分应分别报告；扩窗或加密网格可以诊断显示误差，不能用重归一化掩盖差别。"}
+    ]}
+  ],
+  "cases": [
+    {"id":"manybody-dimer-add-remove","module":"manybody","title":"分子二聚体：从成键能级到电子增减谱","kind":"材料机制原型","summary":"把局域与成键/反键探针放在同一二聚体上，比较U=0与U>0时峰的位置和可见权重。","assumption":"两个抽象轨道借鉴分子二聚体图像；未拟合有机盐、未计算真实光电子偶极矩阵元、表面效应或实验绝对截面。","preset":"interacting-dimer","links":[["多体谱实验","#compute/manybody-spectra-lab"],["Hubbard初态与关联","#compute/hubbard-cluster-lab"],["光谱课堂","#classroom/observables?module=manybody"]]},
+    {"id":"manybody-spin-charge","module":"manybody","title":"同一局域关联体系的自旋与电荷探针","kind":"跨探针机制对照","summary":"对同一个半填充二聚体，比较低能自旋峰与高能电荷峰，使用等时关联校验谱面积。","assumption":"该二聚体只说明不同算符探测不同激发；不能把曲线直接标成真实中子、RIXS或光学实验截面，亦不从两站点预测长程磁序。","preset":"spin-dimer","links":[["纵向动态响应","#compute/manybody-spectra-lab"],["声子动态结构因子","#compute/dynamic-scattering-lab"],["有效自旋共振","#compute/spin-resonance-lab"]]},
+    {"id":"manybody-finite-ring","module":"manybody","title":"有限关联环：谱权重如何随探针动量重排","kind":"有限尺寸教学模型","summary":"在四站点周期环上改变归一傅里叶探针，观察允许跃迁、峰面积与局域占据之间的联系。","assumption":"四站点仅有有限组严格允许动量；其他q是指定相位的探针。离散峰、展宽与有限能隙不能被当作无限体系Mott相图或真实ARPES能带。","preset":"four-site","links":[["四站点谱","#compute/manybody-spectra-lab"],["有限团簇能隙","#compute/hubbard-cluster-lab"],["单粒子器件谱","#compute/device-transport-lab"]]}
+  ],
+  "sources": [
+    {"id":"manybody-lehmann","title":"TRIQS: atomic retarded Green function from the Lehmann representation","url":"https://triqs.github.io/triqs/latest/documentation/cpp_api/triqs/atom_diag/atomic_g_w.html"},
+    {"id":"manybody-hubbard","title":"J. Hubbard (1963), Electron correlations in narrow energy bands","url":"https://doi.org/10.1098/rspa.1963.0204"},
+    {"id":"manybody-dimer","title":"D. J. Carrascal et al. (2015), The Hubbard Dimer: a density functional case study of a many-body problem","url":"https://arxiv.org/abs/1502.02194"}
+  ]
+}

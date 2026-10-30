@@ -1,5 +1,5 @@
 """Shared, allowlisted JSON API for CPython and the browser Worker."""
-TOOLS = ('band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab', 'analyze', 'induce', 'product', 'match_bands', 'magnetictb',
+TOOLS = ('manybody_spectra_lab', 'polaron_lab', 'density_matrix_lab', 'symmetry_workshop', 'band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab', 'analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
@@ -13,7 +13,7 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
-    if tool in ('band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab'):
+    if tool in ('manybody_spectra_lab', 'polaron_lab', 'density_matrix_lab', 'symmetry_workshop', 'band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab'):
         from importlib import import_module
         return import_module(tool).calculate(payload)
     if tool in ('hall_response_lab', 'device_transport_lab', 'local_multiplet_lab', 'spin_resonance_lab', 'andreev_lab', 'atomic_spectra_lab'):

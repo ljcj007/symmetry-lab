@@ -1,14 +1,19 @@
 // A read-only companion to the formula renderer; never rewrites source math.
-import {mathHTML} from './math-display.js?v=20261029-pathways1b';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261029-pathways1b';
-const RELEASE='20261029-pathways1b';
+import {mathHTML} from './math-display.js?v=20261030-bridges1';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261030-bridges1';
+const RELEASE='20261030-bridges1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const selector='span.sl-math[data-math-source],.sl-equation[data-math-source],svg text[aria-label]';
 const interactive='button,a,input,select,textarea,code,[contenteditable="true"],[data-math-ignore],.fd-dialog,.fd-page';
 const letters=/[\p{L}\p{N}]/u;
 const texNames={Gamma:'Γ',Delta:'Δ',Omega:'Ω',Sigma:'Σ',Theta:'Θ',alpha:'α',beta:'β',gamma:'γ',delta:'δ',epsilon:'ε',lambda:'λ',mu:'μ',sigma:'σ',omega:'ω',rho:'ρ',chi:'χ',hbar:'ℏ',otimes:'⊗'};
 export function normalizeDictionaryText(value){
- return String(value??'').normalize('NFKC').replace(/\\([A-Za-z]+)/g,(all,name)=>texNames[name]||(['mathrm','mathbf','mathcal','operatorname','text'].includes(name)?'':name)).replace(/[\s_{}^]/g,'').replace(/[−–]/g,'-').toLowerCase();
+ // Keep the physical distinction between relaxation T_2 and time reversal T².
+ // Protect it before NFKC folds Unicode subscripts and superscripts to digits.
+ const typed=String(value??'').replace(/(?<![A-Za-z])T(?:_\{?([12])\}?|([₁₂]))/gu,(_,digit,unicode)=>'Tsub'+(digit||(unicode==='₁'?'1':'2'))).replace(/(?<![A-Za-z])T(?:\^\{?2\}?|²)/gu,'Tsup2');
+ // Latin search remains case-insensitive. Greek case is physical notation:
+ // Γ/γ (wavevector centre/rate), Ω/ω (curvature or drive/frequency), Δ/δ.
+ return typed.normalize('NFKC').replace(/\\([A-Za-z]+)/g,(all,name)=>texNames[name]||(['mathrm','mathbf','mathcal','operatorname','text'].includes(name)?'':name)).replace(/[\s_{}^]/g,'').replace(/[−–]/g,'-').replace(/[A-Z]/g,c=>c.toLowerCase());
 }
 function includesSymbol(text,symbol){
  const s=normalizeDictionaryText(text),token=normalizeDictionaryText(symbol);if(!token)return false;
@@ -152,11 +157,14 @@ export function startFormulaDictionary(root=document.body){
  };
  const show=async(element)=>{
   ensureDialog();invoker=element;const current=++job,source=String(formulaDictionarySource(element)),scope=scopeFor(element);opened=true;
+  const linked=element.closest?.('[data-formula-context]')?.querySelector('.br-current-values');
+  const linkedText=linked?Array.from(linked.querySelectorAll('tr')).map(row=>Array.from(row.querySelectorAll('td')).map(cell=>cell.textContent.trim()).join('：')).filter(Boolean).join('\n'):'';
+  const calculationContext=linked?`<section class="fd-linked-values"><h3>当前计算中的取值</h3><p>${esc(linkedText.slice(0,6000))}</p><p>对应图形已高亮；关闭释义后可查看。这里的数值只属于当前这次计算。</p></section>`:'';
   content.innerHTML=sourceHTML(source)+'<p role="status">正在查找相关定义…</p>';
   if(!dialog.open){if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
   dialog.querySelector('.fd-close').focus();
   try{const catalog=await loadFormulaDictionary();if(stopped||!opened||current!==job)return;
-   content.innerHTML=sourceHTML(source)+resultHTML(source,scope,catalog)+`<p class="fd-dialog-search"><a href="#docs/dictionary?q=${esc(encodeURIComponent(source))}">在词典中搜索这段公式 →</a></p>`;
+   content.innerHTML=sourceHTML(source)+calculationContext+resultHTML(source,scope,catalog)+`<p class="fd-dialog-search"><a href="#docs/dictionary?q=${esc(encodeURIComponent(source))}">在词典中搜索这段公式 →</a></p>`;
   }catch(error){if(!stopped&&opened&&current===job){content.innerHTML=sourceHTML(source)+`<p role="alert">${esc(error.message)}</p><button type="button" class="fd-dialog-retry">重试查词</button><p><a href="#docs/dictionary">打开词典搜索页 →</a></p>`;content.querySelector('button').onclick=()=>show(element);}}
  };
  const targetFor=event=>{const el=event.target?.closest?.('[data-fd-trigger]');return el&&eligible(el,root)?el:null;};

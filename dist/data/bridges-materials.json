@@ -1,0 +1,2508 @@
+{
+  "schema": "symmetry-lab-bridges-1",
+  "release": "20261030-bridges1",
+  "modules": [
+    {
+      "id": "manybody",
+      "title": "多体谱函数与动态响应",
+      "summary": "从2–4站点Hubbard本征态计算真实添加、移除与连通响应矩阵元，点击谱峰追踪初末态，用和规则核对谱权重。",
+      "route": "manybody-spectra-lab",
+      "action": "manybody_spectra_lab",
+      "fields": [
+        {
+          "key": "experiment",
+          "label": "实验类型",
+          "type": "select",
+          "default": "single_particle",
+          "options": [
+            [
+              "single_particle",
+              "单粒子添加/移除谱"
+            ],
+            [
+              "response",
+              "固定粒子数的连通响应"
+            ]
+          ]
+        },
+        {
+          "key": "sites",
+          "label": "站点数 L",
+          "type": "number",
+          "default": 2,
+          "min": 2,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "nUp",
+          "label": "上自旋电子数 N↑（不超过L）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "nDown",
+          "label": "下自旋电子数 N↓（不超过L）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4,
+          "step": 1
+        },
+        {
+          "key": "boundary",
+          "label": "边界条件",
+          "type": "select",
+          "default": "open",
+          "options": [
+            [
+              "open",
+              "开链"
+            ],
+            [
+              "periodic",
+              "首尾相连；两站点只计一条键"
+            ]
+          ]
+        },
+        {
+          "key": "hopping",
+          "label": "跃迁 t（eV）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "interactionU",
+          "label": "同站点排斥 U（eV）",
+          "type": "number",
+          "default": 4,
+          "min": 0,
+          "max": 30,
+          "step": 0.5
+        },
+        {
+          "key": "alternatingPotential",
+          "label": "交错位能 Δ（eV；0号站点为+Δ/2）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.5
+        },
+        {
+          "key": "probe",
+          "label": "探针的空间形状",
+          "type": "select",
+          "default": "local",
+          "options": [
+            [
+              "local",
+              "选定局域站点"
+            ],
+            [
+              "momentum",
+              "归一化有限链傅里叶探针"
+            ]
+          ]
+        },
+        {
+          "key": "site",
+          "label": "局域探针站点（从0开始；不超过L−1）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 3,
+          "step": 1
+        },
+        {
+          "key": "q",
+          "label": "傅里叶探针 q a/π（局域探针时忽略）",
+          "type": "number",
+          "default": 1,
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        },
+        {
+          "key": "spin",
+          "label": "单粒子探针的自旋",
+          "type": "select",
+          "default": "up",
+          "experiment": "single_particle",
+          "options": [
+            [
+              "up",
+              "上自旋"
+            ],
+            [
+              "down",
+              "下自旋"
+            ]
+          ]
+        },
+        {
+          "key": "chemicalPotential",
+          "label": "谱能量零点 μ（eV；不改变粒子数）",
+          "type": "number",
+          "default": 2,
+          "min": -20,
+          "max": 40,
+          "step": 0.1,
+          "experiment": "single_particle"
+        },
+        {
+          "key": "responseKind",
+          "label": "连通响应算符",
+          "type": "select",
+          "default": "spin",
+          "experiment": "response",
+          "options": [
+            [
+              "spin",
+              "纵向自旋 S_z"
+            ],
+            [
+              "charge",
+              "电荷密度 n"
+            ]
+          ]
+        },
+        {
+          "key": "eta",
+          "label": "Lorentz半高半宽 η（eV）",
+          "type": "number",
+          "default": 0.08,
+          "min": 0.01,
+          "max": 0.8,
+          "step": 0.01
+        },
+        {
+          "key": "points",
+          "label": "谱线采样点数",
+          "type": "number",
+          "default": 601,
+          "min": 201,
+          "max": 1201,
+          "step": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "free-dimer",
+          "title": "无相互作用二聚体：两个局域谱峰",
+          "input": {
+            "experiment": "single_particle",
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 0,
+            "alternatingPotential": 0,
+            "probe": "local",
+            "site": 0,
+            "q": 1,
+            "spin": "up",
+            "chemicalPotential": 0,
+            "responseKind": "spin",
+            "eta": 0.08,
+            "points": 601
+          }
+        },
+        {
+          "id": "interacting-dimer",
+          "title": "相互作用二聚体：添加与移除谱权重",
+          "input": {
+            "experiment": "single_particle",
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "probe": "local",
+            "site": 0,
+            "q": 1,
+            "spin": "up",
+            "chemicalPotential": 2,
+            "responseKind": "spin",
+            "eta": 0.08,
+            "points": 601
+          }
+        },
+        {
+          "id": "spin-dimer",
+          "title": "q=π的自旋谱：单重态到三重态",
+          "input": {
+            "experiment": "response",
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "probe": "momentum",
+            "site": 0,
+            "q": 1,
+            "spin": "up",
+            "chemicalPotential": 2,
+            "responseKind": "spin",
+            "eta": 0.05,
+            "points": 601
+          }
+        },
+        {
+          "id": "charge-dimer",
+          "title": "同一二聚体的电荷激发",
+          "input": {
+            "experiment": "response",
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "probe": "momentum",
+            "site": 0,
+            "q": 1,
+            "spin": "up",
+            "chemicalPotential": 2,
+            "responseKind": "charge",
+            "eta": 0.08,
+            "points": 601
+          }
+        },
+        {
+          "id": "atomic-spin",
+          "title": "原子极限：简并平均仍有零能涨落",
+          "input": {
+            "experiment": "response",
+            "sites": 2,
+            "nUp": 1,
+            "nDown": 1,
+            "boundary": "open",
+            "hopping": 0,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "probe": "momentum",
+            "site": 0,
+            "q": 1,
+            "spin": "up",
+            "chemicalPotential": 2,
+            "responseKind": "spin",
+            "eta": 0.05,
+            "points": 601
+          }
+        },
+        {
+          "id": "four-site",
+          "title": "四站点有限环：动量探针的谱重分配",
+          "input": {
+            "experiment": "single_particle",
+            "sites": 4,
+            "nUp": 2,
+            "nDown": 2,
+            "boundary": "periodic",
+            "hopping": 1,
+            "interactionU": 4,
+            "alternatingPotential": 0,
+            "probe": "momentum",
+            "site": 0,
+            "q": 0.5,
+            "spin": "up",
+            "chemicalPotential": 2,
+            "responseKind": "spin",
+            "eta": 0.12,
+            "points": 801
+          }
+        }
+      ],
+      "pathway": "observables",
+      "predictions": [
+        {
+          "id": "manybody-spectral-sum",
+          "preset": "interacting-dimer",
+          "question": "固定自旋的归一局域探针，添加与移除谱的总离散权重是多少？",
+          "choices": [
+            "1",
+            "电子总数2",
+            "随显示展宽任意变化"
+          ],
+          "answer": 0,
+          "explanation": "反对易关系给出总权重1；谱峰高度、有限窗口面积与完整离散权重不同。"
+        },
+        {
+          "id": "manybody-spin-gap",
+          "preset": "spin-dimer",
+          "question": "二聚体反对称纵向自旋探针的低能峰主要对应哪种激发？",
+          "choices": [
+            "添加一个电子",
+            "同粒子数的单重态到三重态激发",
+            "纯粹的洛伦兹展宽噪声"
+          ],
+          "answer": 1,
+          "explanation": "自旋算符不改变粒子数；该二聚体的自旋激发能约为0.8284 eV，必须同时检查真实矩阵元。"
+        }
+      ]
+    },
+    {
+      "id": "polaron",
+      "title": "电子—声子耦合与极化子",
+      "summary": "在二站点单电子 Holstein 模型中同时求电子与量子振子，观察条件振动云、声子分布和电子相干，并用相邻声子截断检查收敛。",
+      "route": "polaron-lab",
+      "action": "polaron_lab",
+      "fields": [
+        {
+          "key": "hopping",
+          "label": "电子跃迁 t（eV）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "phononEnergy",
+          "label": "声子量子能量 ℏω（eV）",
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "coupling",
+          "label": "局域耦合 g（eV）",
+          "type": "number",
+          "default": 0.8,
+          "min": 0,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "siteBias",
+          "label": "位能差 Δ=ε₀−ε₁（eV）",
+          "type": "number",
+          "default": 0,
+          "min": -4,
+          "max": 4,
+          "step": 0.2
+        },
+        {
+          "key": "cutoff",
+          "label": "每振子的最大声子数",
+          "type": "number",
+          "default": 6,
+          "min": 2,
+          "max": 10,
+          "step": 1
+        },
+        {
+          "key": "scanMaxCoupling",
+          "label": "g 扫描上限（eV）",
+          "type": "number",
+          "default": 1.6,
+          "min": 0,
+          "max": 3,
+          "step": 0.2
+        },
+        {
+          "key": "scanPoints",
+          "label": "扫描点数（1表示仅当前g）",
+          "type": "number",
+          "default": 7,
+          "min": 1,
+          "max": 9,
+          "step": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "uncoupled",
+          "title": "无耦合基准：电子与振子可分离",
+          "input": {
+            "hopping": 1,
+            "phononEnergy": 1,
+            "coupling": 0,
+            "siteBias": 0,
+            "cutoff": 6,
+            "scanMaxCoupling": 1.6,
+            "scanPoints": 7
+          }
+        },
+        {
+          "id": "symmetric-cloud",
+          "title": "对称振动云：密度均匀仍有关联",
+          "input": {
+            "hopping": 1,
+            "phononEnergy": 1,
+            "coupling": 0.8,
+            "siteBias": 0,
+            "cutoff": 6,
+            "scanMaxCoupling": 1.6,
+            "scanPoints": 7
+          }
+        },
+        {
+          "id": "atomic-shift",
+          "title": "原子极限：位移振子的解析检验",
+          "input": {
+            "hopping": 0,
+            "phononEnergy": 1,
+            "coupling": 0.7,
+            "siteBias": 0.8,
+            "cutoff": 8,
+            "scanMaxCoupling": 1.4,
+            "scanPoints": 7
+          }
+        },
+        {
+          "id": "biased-cloud",
+          "title": "不等价位点：电荷与振动云偏移",
+          "input": {
+            "hopping": 1,
+            "phononEnergy": 1,
+            "coupling": 0.8,
+            "siteBias": 1.2,
+            "cutoff": 6,
+            "scanMaxCoupling": 1.6,
+            "scanPoints": 7
+          }
+        },
+        {
+          "id": "strong-cloud",
+          "title": "较强耦合：先检查声子基底",
+          "input": {
+            "hopping": 1,
+            "phononEnergy": 1,
+            "coupling": 1.6,
+            "siteBias": 0,
+            "cutoff": 8,
+            "scanMaxCoupling": 2,
+            "scanPoints": 7
+          }
+        },
+        {
+          "id": "truncation-warning",
+          "title": "故意不足的截断：数值残差不等于收敛",
+          "input": {
+            "hopping": 1,
+            "phononEnergy": 0.5,
+            "coupling": 1.6,
+            "siteBias": 0,
+            "cutoff": 2,
+            "scanMaxCoupling": 1.6,
+            "scanPoints": 5
+          }
+        }
+      ],
+      "pathway": "structure-dynamics",
+      "predictions": [
+        {
+          "id": "polaron-symmetric-cloud",
+          "preset": "symmetric-cloud",
+          "question": "对称二聚体中两个站点占据均为0.5，能否据此断言没有振动云？",
+          "choices": [
+            "能，均匀密度意味着没有耦合",
+            "不能，应检查条件位移与电子—声子关联",
+            "能，只需看总电子数"
+          ],
+          "answer": 1,
+          "explanation": "整体保持站点交换对称仍可有非平凡条件振动云；电子位置与局域振动可以相关。"
+        },
+        {
+          "id": "polaron-cutoff-cloud",
+          "preset": "truncation-warning",
+          "question": "声子能低、耦合强而截断仅2时，矩阵求解残差小是否足以相信结果？",
+          "choices": [
+            "足够",
+            "只要能量为负就足够",
+            "不足，还要检查截断收敛和最高声子层权重"
+          ],
+          "answer": 2,
+          "explanation": "有限截断矩阵可以被精确求解，却仍不能代表未截断模型。比较更高截断及顶部概率。"
+        }
+      ]
+    },
+    {
+      "id": "density",
+      "title": "密度矩阵、纠缠与退相干",
+      "summary": "从一个自旋的 Bloch 球走向双自旋约化态，比较相干演化、经典混合与 Lindblad 耗散，并用负性识别双自旋混态纠缠。",
+      "route": "density-matrix-lab",
+      "action": "density_matrix_lab",
+      "fields": [
+        {
+          "key": "experiment",
+          "label": "实验规模",
+          "type": "select",
+          "default": "single",
+          "options": [
+            [
+              "single",
+              "单自旋：Rabi 与退相干"
+            ],
+            [
+              "pair",
+              "双自旋：交换与纠缠"
+            ]
+          ]
+        },
+        {
+          "key": "initialState",
+          "label": "初态（反平行、单重态、经典混合仅用于双自旋）",
+          "type": "select",
+          "default": "plus_z",
+          "options": [
+            [
+              "plus_z",
+              "↑ / ↑↑"
+            ],
+            [
+              "minus_z",
+              "↓ / ↓↓"
+            ],
+            [
+              "plus_x",
+              "+x / +x⊗+x"
+            ],
+            [
+              "antiparallel",
+              "双自旋 ↑↓"
+            ],
+            [
+              "singlet",
+              "双自旋单重态"
+            ],
+            [
+              "classical",
+              "双自旋 ↑↓ 与 ↓↑ 经典等权混合"
+            ],
+            [
+              "thermal",
+              "当前 Hamiltonian 的热初态"
+            ]
+          ]
+        },
+        {
+          "key": "drive",
+          "label": "驱动 Ω（rad/ns）",
+          "type": "number",
+          "default": 1,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "detuning",
+          "label": "失谐 Δ（rad/ns）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "exchange",
+          "label": "交换 J（rad/ns；H/ℏ 含 J S_A·S_B）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "gradient",
+          "label": "局域失谐差 δ（rad/ns；A−B）",
+          "type": "number",
+          "default": 0,
+          "min": -10,
+          "max": 10,
+          "step": 0.1,
+          "experiment": "pair"
+        },
+        {
+          "key": "gamma1",
+          "label": "↑→↓ 弛豫率 γ₁（ns⁻¹）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "gammaPhi",
+          "label": "纯退相干率 γ_φ（ns⁻¹）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "step": 0.05
+        },
+        {
+          "key": "thermalScale",
+          "label": "热初态 kBT/ℏ（rad/ns；仅热初态使用）",
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 10,
+          "step": 0.1
+        },
+        {
+          "key": "duration",
+          "label": "总演化时间（ns）",
+          "type": "number",
+          "default": 12,
+          "min": 0,
+          "max": 50,
+          "step": 0.5
+        },
+        {
+          "key": "points",
+          "label": "时间采样点数",
+          "type": "number",
+          "default": 161,
+          "min": 2,
+          "max": 301,
+          "step": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "rabi-unitary",
+          "title": "理想 Rabi：观察 Bloch 向量旋转",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_z",
+            "drive": 1,
+            "detuning": 0,
+            "exchange": 0,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "thermalScale": 1,
+            "duration": 12,
+            "points": 161
+          }
+        },
+        {
+          "id": "rabi-damped",
+          "title": "有阻尼的 Rabi：包络与稳态",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_z",
+            "drive": 1,
+            "detuning": 0,
+            "exchange": 0,
+            "gradient": 0,
+            "gamma1": 0.2,
+            "gammaPhi": 0.1,
+            "thermalScale": 1,
+            "duration": 20,
+            "points": 201
+          }
+        },
+        {
+          "id": "dephasing-plusx",
+          "title": "纯退相干：布居不变而相干消失",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "drive": 0,
+            "detuning": 0.6,
+            "exchange": 0,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0.25,
+            "thermalScale": 1,
+            "duration": 12,
+            "points": 161
+          }
+        },
+        {
+          "id": "singlet",
+          "title": "单重态：整体纯、局部混合",
+          "input": {
+            "experiment": "pair",
+            "initialState": "singlet",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "thermalScale": 1,
+            "duration": 12,
+            "points": 161
+          }
+        },
+        {
+          "id": "classical",
+          "title": "经典混合：相同局部态但没有纠缠",
+          "input": {
+            "experiment": "pair",
+            "initialState": "classical",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "thermalScale": 1,
+            "duration": 12,
+            "points": 161
+          }
+        },
+        {
+          "id": "exchange",
+          "title": "交换产生纠缠：从 ↑↓ 出发",
+          "input": {
+            "experiment": "pair",
+            "initialState": "antiparallel",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0,
+            "thermalScale": 1,
+            "duration": 6.283185307179586,
+            "points": 161
+          }
+        },
+        {
+          "id": "exchange-dephasing",
+          "title": "项目：相同交换模型加入纯退相干",
+          "input": {
+            "experiment": "pair",
+            "initialState": "antiparallel",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0,
+            "gammaPhi": 0.15,
+            "thermalScale": 1,
+            "duration": 6.283185307179586,
+            "points": 161
+          }
+        }
+      ],
+      "pathway": "spin",
+      "predictions": [
+        {
+          "id": "density-singlet-mixture",
+          "preset": "singlet",
+          "question": "单重态的单自旋约化态是最大混合态，双自旋整体是什么？",
+          "choices": [
+            "纯纠缠态",
+            "经典混合态",
+            "未归一化态"
+          ],
+          "answer": 0,
+          "explanation": "整体纯度为1、负性为0.5；局部熵非零不意味着整体混合。"
+        },
+        {
+          "id": "density-pure-dephasing",
+          "preset": "dephasing-plusx",
+          "question": "无横向驱动、只有z失谐与纯退相干时，主要发生什么？",
+          "choices": [
+            "自旋向上概率必须趋于0",
+            "相干衰减，z占据保持",
+            "密度矩阵迹逐渐损失"
+          ],
+          "answer": 1,
+          "explanation": "相干在进动中衰减，z占据不变；Lindblad演化保持迹，不能将数值吸收η当作退相干率。"
+        }
+      ]
+    },
+    {
+      "id": "workshop",
+      "title": "对称性推导工坊：允许项与能带",
+      "summary": "开关生成元，逐步检查二阶二维自旋模型的矩阵约束、系数关系与能带变化。",
+      "route": "symmetry-workshop",
+      "action": "symmetry_workshop",
+      "fields": [
+        {
+          "key": "pointGroup",
+          "label": "起始生成元",
+          "type": "select",
+          "default": "c4v",
+          "options": [
+            [
+              "c2v",
+              "C₂ᵥ"
+            ],
+            [
+              "c3v",
+              "C₃ᵥ"
+            ],
+            [
+              "c4v",
+              "C₄ᵥ"
+            ]
+          ]
+        },
+        {
+          "key": "rotation",
+          "label": "保留绕 z 轴旋转",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "启用"
+            ],
+            [
+              0,
+              "关闭"
+            ]
+          ]
+        },
+        {
+          "key": "mirror",
+          "label": "保留 xz 镜面",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "启用"
+            ],
+            [
+              0,
+              "关闭"
+            ]
+          ]
+        },
+        {
+          "key": "inversion",
+          "label": "额外施加反演",
+          "type": "select",
+          "default": 0,
+          "options": [
+            [
+              1,
+              "启用"
+            ],
+            [
+              0,
+              "关闭"
+            ]
+          ]
+        },
+        {
+          "key": "timeReversal",
+          "label": "保留时间反演",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "启用"
+            ],
+            [
+              0,
+              "关闭"
+            ]
+          ]
+        },
+        {
+          "key": "rashba",
+          "label": "Rashba 型系数 α（约化 k 坐标；能量 eV）",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "dresselhaus",
+          "label": "输入各向异性系数 β（约化 k 坐标；能量 eV）",
+          "type": "number",
+          "default": 0.5,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "mass",
+          "label": "输入 σ_z 常数项 m（约化 k 坐标；能量 eV）",
+          "type": "number",
+          "default": 0.4,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "fieldX",
+          "label": "输入 σ_x 常数项 b_x（约化 k 坐标；能量 eV）",
+          "type": "number",
+          "default": 0.3,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        },
+        {
+          "key": "curvature",
+          "label": "输入各向同性曲率 c（约化 k 坐标；能量 eV）",
+          "type": "number",
+          "default": 1,
+          "min": -5,
+          "max": 5,
+          "step": 0.1
+        }
+      ],
+      "presets": [
+        {
+          "id": "workshop-rashba",
+          "title": "C₄ᵥ 与时间反演：Rashba 约束",
+          "input": {
+            "pointGroup": "c4v",
+            "rotation": 1,
+            "mirror": 1,
+            "inversion": 0,
+            "timeReversal": 1,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        },
+        {
+          "id": "workshop-inversion",
+          "title": "加入反演：抑制自旋分裂",
+          "input": {
+            "pointGroup": "c4v",
+            "rotation": 1,
+            "mirror": 1,
+            "inversion": 1,
+            "timeReversal": 1,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        },
+        {
+          "id": "workshop-c2v",
+          "title": "C₂ᵥ：允许不同曲率与线性系数",
+          "input": {
+            "pointGroup": "c2v",
+            "rotation": 1,
+            "mirror": 1,
+            "inversion": 0,
+            "timeReversal": 1,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        },
+        {
+          "id": "workshop-c3v",
+          "title": "C₃ᵥ：二阶约束空间",
+          "input": {
+            "pointGroup": "c3v",
+            "rotation": 1,
+            "mirror": 1,
+            "inversion": 0,
+            "timeReversal": 1,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        },
+        {
+          "id": "workshop-free",
+          "title": "关闭所有生成元：原始输入",
+          "input": {
+            "pointGroup": "c4v",
+            "rotation": 0,
+            "mirror": 0,
+            "inversion": 0,
+            "timeReversal": 0,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        },
+        {
+          "id": "workshop-magnetic",
+          "title": "只保留旋转：允许 z 磁性项",
+          "input": {
+            "pointGroup": "c4v",
+            "rotation": 1,
+            "mirror": 0,
+            "inversion": 0,
+            "timeReversal": 0,
+            "rashba": 1,
+            "dresselhaus": 0.5,
+            "mass": 0.4,
+            "fieldX": 0.3,
+            "curvature": 1
+          }
+        }
+      ],
+      "pathway": "crystal",
+      "predictions": [
+        {
+          "id": "workshop-inversion-tr",
+          "preset": "workshop-inversion",
+          "question": "在当前同宇称自旋双态中，同时保留反演和时间反演，能带会怎样？",
+          "choices": [
+            "每个k保持两重简并",
+            "只在Γ简并",
+            "Rashba劈裂加倍"
+          ],
+          "answer": 0,
+          "explanation": "时间反演要求自旋部分为奇，反演要求它为偶；两者合并使d(k)=0。"
+        },
+        {
+          "id": "workshop-magnetic-term",
+          "preset": "workshop-magnetic",
+          "question": "只保留z旋转时，输入常数mσ_z会怎样？",
+          "choices": [
+            "被旋转禁止",
+            "保留并产生Γ劈裂",
+            "只改变两带共同能量"
+          ],
+          "answer": 1,
+          "explanation": "σ_z与z旋转对易。此预设m=0.4 eV，Γ点分裂为0.8 eV。"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "manybody-lehmann",
+      "module": "manybody",
+      "title": "从多体能级到添加与移除谱",
+      "summary": "相邻粒子数扇区的能量差决定峰位置，电子算符矩阵元决定峰是否可见。",
+      "preset": "free-dimer",
+      "sections": [
+        {
+          "title": "一次测量选择一个算符",
+          "text": "初态固定N↑、N↓。添加一个上自旋电子将系统带到(N↑+1,N↓)扇区，移除则进入(N↑−1,N↓)。因此不能把同一N扇区的所有能级直接当作光电子峰；真正可见的跃迁还要有非零产生或湮灭算符矩阵元。",
+          "formula": "w_f^{+}=|⟨f,N+1|c†|0,N⟩|^2；w_f^{−}=|⟨f,N−1|c|0,N⟩|^2"
+        },
+        {
+          "title": "能量零点与电子数是两项设置",
+          "text": "横轴采用能量而非角频率，单位eV。μ只从所有单粒子峰的位置中减去，不改变初态的固定电子数或占据。任意μ不保证添加谱都在正半轴、移除谱都在负半轴；不能把移动μ的按钮解释为自动掺杂。",
+          "formula": "E_f^{+}=E_f(N+1)−E_0(N)−μ；E_f^{−}=E_0(N)−E_f(N−1)−μ"
+        },
+        {
+          "title": "局域探针与傅里叶探针看见不同权重",
+          "text": "本站局域探针作用于一个站点；傅里叶探针是所有站点振幅的归一化叠加。对开放二聚体，q=0组合选中成键轨道，q a/π=1组合选中反键轨道。开放链中的q表示探针相位，不能把它当作严格的周期晶体动量量子数。",
+          "formula": "c_q=L^{−1/2}Σ_j exp(−iπqj)c_j；输入q=q_{physical}a/π"
+        },
+        {
+          "title": "同一组极点给出格林函数和谱函数",
+          "text": "迟致格林函数的实部、虚部由同一组离散跃迁构造。η>0保证正确迟致边界，显示时产生Lorentz线形。峰面积由矩阵元决定，而峰高还依赖η。这里只计算有限团簇的单粒子谱，不含真实光电子实验的轨道偶极矩阵元与仪器几何。",
+          "formula": "G^R(E)=Σ_f w_f/(E−E_f+iη)；A(E)=−Im G^R(E)/π"
+        }
+      ],
+      "references": [
+        "manybody-manybody-lehmann",
+        "manybody-manybody-hubbard"
+      ]
+    },
+    {
+      "id": "manybody-response",
+      "module": "manybody",
+      "title": "从等时关联到动态自旋与电荷响应",
+      "summary": "同一哈密顿量可被不同算符探测；比较自旋峰、电荷峰与相邻粒子数的单粒子峰。",
+      "preset": "spin-dimer",
+      "sections": [
+        {
+          "title": "响应保持总粒子数",
+          "text": "密度与纵向自旋算符不增加或移除电子，本模块的响应末态留在同一(N↑,N↓)扇区。纵向自旋采用S_z=(n↑−n↓)/2且ℏ=1。这里输出的是动态结构因子型谱S(q,E)，并非未经说明的复磁化率，也不自动乘3变成完整矢量自旋谱。",
+          "formula": "O_q=L^{−1/2}Σ_j exp(−iπqj)O_j；O_j=n_j 或 S_{zj}"
+        },
+        {
+          "title": "连通响应先减去平均值",
+          "text": "用δO=O−⟨O⟩I移去相干的平均背景。对固定N，q=0的总密度连通谱必须消失；对固定N↑、N↓，q=0的总S_z连通谱也消失。程序把这两个守恒极限作为物理检查，而不是人为删除不想显示的峰。",
+          "formula": "S_O(q,E)=Σ_f |⟨f|δO_q|0⟩|^2 δ(E−E_f+E_0)"
+        },
+        {
+          "title": "自旋峰与电荷峰回答不同问题",
+          "text": "对称半填充二聚体的q a/π=1纵向自旋探针连接基态单重态与三重态；电荷探针连接奇对称双占据态。设D=√(U²+16t²)，两峰能量分别为(D−U)/2与(D+U)/2。即使它们来自同一哈密顿量，也不能把两个谱混成一种普适能隙。",
+          "formula": "E_{spin}=(D−U)/2；E_{charge}=(D+U)/2；D=√(U^2+16t^2)"
+        },
+        {
+          "title": "积分动态谱返回等时涨落",
+          "text": "对末态完备求和，所有离散跃迁权重之和等于初态连通等时关联。该关系把已有Hubbard关联课堂与动态谱连起来。简并基态采用等权迹；若零能基态之间仍有涨落，它们也属于这个和规则，不能只保留正能峰再声称积分完整。",
+          "formula": "∫S_O(q,E)dE=Tr(ρ_0 δO_q†δO_q)"
+        }
+      ],
+      "references": [
+        "manybody-manybody-dimer",
+        "manybody-manybody-lehmann"
+      ]
+    },
+    {
+      "id": "manybody-checks",
+      "module": "manybody",
+      "title": "用和规则、简并平均与极限检验光谱",
+      "summary": "区分离散权重、线宽、采样与物理结论，观察简并初态的真实零能涨落。",
+      "preset": "atomic-spin",
+      "sections": [
+        {
+          "title": "一个归一费米探针的总权重为1",
+          "text": "本实验每次选择一种自旋与一个归一探针。费米反对易关系给出移除权重为占据数n，添加权重为1−n，合起来为1。不能在没有说明的情况下再乘自旋倍数，也不能把局域谱与全部站点求和的态密度使用同一归一化。",
+          "formula": "Σ_f w_f^{−}=⟨c†c⟩；Σ_f w_f^{+}=1−⟨c†c⟩；Σ_f(w_f^{+}+w_f^{−})=1"
+        },
+        {
+          "title": "简并态需要对子空间求迹",
+          "text": "初态在所选扇区10⁻⁹ eV容差内等权平均，末态按简并能级组求和。这样权重不依赖数值对角化任选的简并基底。点击一个谱峰后，末态密度使用P_f Oρ₀O†P_f/w_f；它体现该探针实际到达的条件末态，不一定等于整个末态能级组的等权平均。",
+          "formula": "ρ_0=P_0/g；w_f=Tr(P_f Oρ_0 O†)"
+        },
+        {
+          "title": "严格原子极限保留零能涨落",
+          "text": "二聚体t=0、U>0、(N↑,N↓)=(1,1)时，两个分居组态简并。q a/π=1的S_z探针在这两个组态中取相反值，平均为0，但平方平均为1/2。因此连通谱仍有权重1/2的零能峰；减去均值不等于删除所有零能响应。它也不证明长程磁序。",
+          "formula": "⟨O⟩=0；⟨O†O⟩=1/2；S_O(E)=(1/2)δ(E)（t=0）"
+        },
+        {
+          "title": "线宽和绘图网格不能创造新物理",
+          "text": "η是绘图Lorentz半高半宽，不是本计算求出的物理寿命。离散峰权重用于精确和规则，有限绘图窗口会缺失Lorentz尾部；程序报告该部分且不重新归一化。能量间隔大于η/3时提示峰高欠采样。两到四站点的有限谱不能直接确定无限材料相图。",
+          "formula": "L_η(E)=η/[π(E^2+η^2)]；∫_{−∞}^{∞}L_η(E)dE=1"
+        }
+      ],
+      "references": [
+        "manybody-manybody-lehmann",
+        "manybody-manybody-dimer"
+      ]
+    },
+    {
+      "id": "polaron-hamiltonian",
+      "module": "polaron",
+      "title": "让电子与局域振子进入同一个量子模型",
+      "summary": "分清位点能耦合、键耦合与声子能量，先从无耦合极限建立基准。",
+      "preset": "uncoupled",
+      "sections": [
+        {
+          "title": "从两条独立曲线走向共同的态",
+          "text": "电子在两个局域轨道之间跃迁，每个站点还有一个量子谐振子。完整基底同时标记电子站点与两个声子占据数。这里固定一个电子及其自旋分量；不加入电子间排斥。",
+          "formula": "|i,n_0,n_1⟩；dim H=2(N_{max}+1)²"
+        },
+        {
+          "title": "Holstein 耦合改变位点能",
+          "text": "电子占据某站点时，该站点振子的位移改变局域电子能量。跃迁t保持常数。模型的振子坐标X无量纲，没有给定质量和频率到长度的换算，因此不能把X数值直接称为Å。",
+          "formula": "H=−t(c_0†c_1+c_1†c_0)+Δ(n_0−n_1)/2+ℏω Σ_i b_i†b_i+g Σ_i n_i X_i；X_i=b_i+b_i†"
+        },
+        {
+          "title": "先检查 g=0",
+          "text": "无耦合时，电子二能级与两个振子的谱直接相加。Δ=0、t>0的基态是电子成键态乘两个振子真空，总声子数为零、电子约化纯度为1；这不意味着振子的坐标没有零点涨落。",
+          "formula": "E_0=−√(t²+Δ²/4)（g=0）；⟨b_i†b_i⟩=0"
+        },
+        {
+          "title": "和现有 SSH、声子课程怎样衔接",
+          "text": "Holstein的局域位移调制位点能，SSH型键位移则调制跃迁。已有SSH模型的键参数不能直接当成这里的g；已有Phonopy频率也不自动给出电子—声子矩阵元。三者可以对照机制，但必须分别定义参数。",
+          "formula": "Holstein：ε_i→ε_i+gX_i；SSH型：t_{ij}→t_{ij}+δt_{ij}"
+        }
+      ],
+      "references": [
+        "polaron-holstein-original",
+        "polaron-epw-methods"
+      ]
+    },
+    {
+      "id": "polaron-conditional-cloud",
+      "module": "polaron",
+      "title": "均匀电子密度里也可以藏着振动云",
+      "summary": "从原子极限的位移振子，走向对称基态中的电子—声子关联。",
+      "preset": "symmetric-cloud",
+      "sections": [
+        {
+          "title": "原子极限可以直接配方",
+          "text": "t=0时先固定电子所在站点。被占据振子的势能面发生位移，单振子基态能降低g²/(ℏω)，声子平均数为[g/(ℏω)]²。正g给出负X位移；能量已省略两个振子的总零点能ℏω。",
+          "formula": "ℏω b†b+g(b+b†)=ℏω(b†+g/ℏω)(b+g/ℏω)−g²/ℏω"
+        },
+        {
+          "title": "平均分布不能替代关联",
+          "text": "当Δ=0且基态不简并时，站点交换对称要求两个电子占据都为1/2。电子与伴随的振动云可以共同离域，所以均匀密度并不排除电子—声子关联。二站点结果不能据此声称无限晶体发生自俘获相变。",
+          "formula": "⟨n_0⟩=⟨n_1⟩=1/2；⟨n_i X_j⟩一般不等于⟨n_i⟩⟨X_j⟩"
+        },
+        {
+          "title": "先问电子在哪，再读振子",
+          "text": "条件位移把联合关联除以该站点电子占据。图中两条曲线分别以电子在站点0或1为条件，能区分本地和远端振动云。占据概率近零时条件量未定义，界面留空。",
+          "formula": "⟨X_j⟩_{n_i=1}=⟨n_i X_j⟩/⟨n_i⟩"
+        },
+        {
+          "title": "与密度矩阵课程衔接",
+          "text": "对振子取部分迹得到电子约化密度矩阵。非简并零温整体纯态中，电子约化纯度低于1表明电子与振子纠缠。严格t=0、Δ=0的简并基态由程序等权混合，此时低纯度也可能来自经典混合，不能直接当纠缠量。",
+          "formula": "ρ_e=Tr_{ph}ρ；P_e=Tr(ρ_e²)"
+        }
+      ],
+      "references": [
+        "polaron-holstein-original",
+        "polaron-holstein-small"
+      ]
+    },
+    {
+      "id": "polaron-truncation",
+      "module": "polaron",
+      "title": "结果算得很精确，为什么仍可能不收敛",
+      "summary": "同时检查能量变化、局域观测量和最高声子层概率，辨认有限基底的误差。",
+      "preset": "truncation-warning",
+      "sections": [
+        {
+          "title": "每个振子的空间本来无限",
+          "text": "谐振子的声子数没有上限。浏览器实验把每个振子限制为0至最大声子数，完整对角化的是这个有限矩阵。当前输入最高10；额外对照用11，最大288维。",
+          "formula": "n_i^{ph}=0,…,N_{max}；dim H=2(N_{max}+1)²"
+        },
+        {
+          "title": "变分能量从上方接近",
+          "text": "增加截断会扩大嵌套变分空间，所以基态能量不能升高（容许浮点误差）。程序自动比较相邻两个截断的能量，同时比较电子占据、声子占据和电子—位移关联。",
+          "formula": "E_0(N_{max}+1)≤E_0(N_{max})"
+        },
+        {
+          "title": "最高层概率暴露被截掉的尾部",
+          "text": "如果最高允许声子层仍有明显概率，截断边缘正在影响波函数。当前诊断要求能量变化小于10⁻⁴eV、指定局域量变化小于0.01、每个振子的最高层概率小于10⁻³。通过相邻检查仍不是严格全局误差界。",
+          "formula": "P_i(N_{max})=Σ_{其余自由度}|ψ|²（固定振子i处于最高层）"
+        },
+        {
+          "title": "扫描不能沿用一个点的结论",
+          "text": "扫描固定当前截断，耦合增大时声子数通常增加，因此每个点都显示最高层概率。只有当前参数额外计算更高截断。矩阵残差小只说明这个矩阵被正确求解，不能保证被截掉的声子空间无关紧要。",
+          "formula": "||Hψ−Eψ||小 ≠ 声子截断误差小"
+        }
+      ],
+      "references": [
+        "polaron-holstein-small",
+        "polaron-epw-methods"
+      ]
+    },
+    {
+      "id": "density-pure-mixed",
+      "module": "density",
+      "title": "叠加、混合与部分迹",
+      "summary": "用相同的局部测量结果，辨认不同的整体量子态。",
+      "preset": "singlet",
+      "sections": [
+        {
+          "title": "密度矩阵保留什么信息",
+          "text": "纯态写为外积，统计混合写为外积的加权和。对角元是给定基底中的测量概率，非对角元含相干；换基会改变矩阵外观，却不改变纯度。",
+          "formula": "ρ=Σ_a p_a |ψ_a⟩⟨ψ_a|；Trρ=1；P=Tr(ρ²)"
+        },
+        {
+          "title": "叠加不是经典随机选择",
+          "text": "+x 纯态与 ↑、↓ 等权混合在 z 方向测量都各有一半概率；前者在 x 方向确定为正，后者仍是随机。应比较完整密度矩阵，而不只看某一组布居。",
+          "formula": "ρ_{+x}=(I+σ_x)/2；ρ_{mix}=I/2"
+        },
+        {
+          "title": "只观察 A 时要对 B 求部分迹",
+          "text": "双自旋单重态是整体纯态，但任意一方的约化态是 I/2。另一方被忽略，并不表示整体曾进行经典随机混合。",
+          "formula": "ρ_A=Tr_Bρ；|S⟩=(|↑↓⟩−|↓↑⟩)/√2"
+        },
+        {
+          "title": "相同局部态不保证相同整体纠缠",
+          "text": "单重态与反平行经典等权混合都有 S(ρ_A)=1 bit；两者整体纯度分别为1和1/2，负性分别为1/2和0。局部熵仅在整体纯态时直接量化这一划分的纠缠。",
+          "formula": "S(ρ_A)=−Tr(ρ_A log₂ρ_A)"
+        }
+      ],
+      "references": [
+        "density-density-qutip-tensor",
+        "density-density-negativity"
+      ]
+    },
+    {
+      "id": "density-lindblad",
+      "module": "density",
+      "title": "从 Rabi 振荡到弛豫与退相干",
+      "summary": "先建立无耗散基准，再分开观察布居损失与相干损失。",
+      "preset": "rabi-damped",
+      "sections": [
+        {
+          "title": "先固定旋转角的单位",
+          "text": "本实验 Ω、Δ 是 H/ℏ 的系数，单位 rad/ns；时间为 ns。共振且从 ↑ 出发时，↑ 概率在 cos²(Ωt/2) 与0之间振荡。角频率与周期频率相差2π。",
+          "formula": "H/ℏ=(Ωσ_x+Δσ_z)/2；P_{↑}(t)=cos²(Ωt/2)（Δ=0，无耗散）"
+        },
+        {
+          "title": "↑ 到 ↓ 的幅度阻尼",
+          "text": "选择 C₁=√γ₁ |↓⟩⟨↑|，无驱动时 ↑ 布居以 γ₁ 衰减。通道方向固定；它不会随 detuning 符号自动翻转。",
+          "formula": "C_1=√γ_1 |↓⟩⟨↑|；ρ_{↑↑}(t)=ρ_{↑↑}(0) exp(−γ_1 t)"
+        },
+        {
+          "title": "纯退相干只破坏固定基底的相干",
+          "text": "选择 C_φ=√(γ_φ/2) σ_z；没有横向驱动时，对角元不变，非对角元包络按 γ_φ 衰减。单自旋 Bloch 向量由球面缩向 z 轴。",
+          "formula": "C_φ=√(γ_φ/2) σ_z；|ρ_{↑↓}(t)|=|ρ_{↑↓}(0)| exp(−γ_φ t)（γ_1=0，Ω=0）"
+        },
+        {
+          "title": "T₁ 与 T₂ 不是两个任意独立的拟合参数",
+          "text": "本通道约定给出无驱动、无交换单自旋的纵向与横向包络。存在驱动和双自旋耦合时，完整曲线未必是单一指数。",
+          "formula": "1/T_1=γ_1；1/T_2=γ_1/2+γ_φ"
+        }
+      ],
+      "references": [
+        "density-density-qutip-master"
+      ]
+    },
+    {
+      "id": "density-exchange",
+      "module": "density",
+      "title": "从 CG 耦合基到交换产生纠缠",
+      "summary": "把 ↑↓ 分解为单重态与三重态，观察相对相位怎样形成纠缠。",
+      "preset": "exchange",
+      "sections": [
+        {
+          "title": "选择耦合基解释演化",
+          "text": "两个自旋1/2组成 S=0 和 S=1。反平行直积态同时含单重态和三重态；各分量在各向同性交换下获得不同的相位。",
+          "formula": "|↑↓⟩=(|T_0⟩+|S⟩)/√2；H/ℏ=J S_A·S_B"
+        },
+        {
+          "title": "交换能级差决定拍频",
+          "text": "本模块 J 已是角频率，单重态 H/ℏ 本征值为 −3J/4，三重态为 J/4。去除整体相位后，从 ↑↓ 出发在两个反平行组态之间演化。",
+          "formula": "|ψ(t)⟩=cos(Jt/2)|↑↓⟩−i sin(Jt/2)|↓↑⟩"
+        },
+        {
+          "title": "纯态的局部熵能揭示纠缠",
+          "text": "Jt=π/2 时两种组态等权但有相对相位，整体仍然纯，局部为 I/2。Jt=π 时系统变成另一反平行直积态，纠缠再次为零。",
+          "formula": "N(ρ)=|sin(Jt)|/2（纯交换、初态 ↑↓）"
+        },
+        {
+          "title": "混态要另看纠缠判据",
+          "text": "在双自旋上对 B 做部分转置，负本征值的绝对值之和给出负性。它适用于这里的2×2混态；不要把局部熵单独当作混态纠缠。",
+          "formula": "N(ρ)=(||ρ^{T_B}||_1−1)/2"
+        }
+      ],
+      "references": [
+        "density-density-qutip-tensor",
+        "density-density-negativity"
+      ]
+    },
+    {
+      "id": "density-assumptions",
+      "module": "density",
+      "title": "从模型约定到可信的演化结果",
+      "summary": "区分初态温度、现象学环境和数值采样，检查结果的物理性。",
+      "preset": "dephasing-plusx",
+      "sections": [
+        {
+          "title": "初始热态和环境温度不同",
+          "text": "thermalScale 只用于当前 H 的初态 Gibbs 权重。设为零时，程序在10⁻¹⁰ rad/ns容差内的整个基态子空间等权平均。它不会自动决定弛豫率或详细平衡。",
+          "formula": "ρ(0)=exp[−(H/ℏ)/θ]/Z；θ=k_B T/ℏ"
+        },
+        {
+          "title": "本地通道不自动使耦合系统热化",
+          "text": "本实验的 ↑→↓ 与 σ_z 通道定义在固定局部基底中；有驱动或交换时，它们不一定按完整 H 的能量本征态跃迁。不能把所选 γ₁、γ_φ 解释为真实材料浴的完整微观描述。",
+          "formula": "dρ/dt=−i[H/ℏ,ρ]+Σ_a(C_aρC_a†−{C_a†C_a,ρ}/2)"
+        },
+        {
+          "title": "迹和半正定性需要同时检查",
+          "text": "密度矩阵必须厄米、迹为1且本征值非负。程序报告全轨迹误差，不通过重新归一化或删去负本征值修补动力学。很小的负值可能是浮点误差，但明显负值应被拒绝。",
+          "formula": "ρ=ρ†；Trρ=1；λ_min(ρ)≥0"
+        },
+        {
+          "title": "采样过稀与求解错误不是同一件事",
+          "text": "常量生成元以矩阵指数传播，可在指定时刻求解；但如果时间点太稀，绘图会漏掉振荡。增加采样点应恢复图形细节，而不应改变相同时刻的物理态。",
+          "formula": "ρ(t+Δt)=exp(LΔt)ρ(t)（向量化后）"
+        }
+      ],
+      "references": [
+        "density-density-qutip-master"
+      ]
+    },
+    {
+      "id": "workshop-identity",
+      "module": "workshop",
+      "title": "从矩阵恒等式到系数约束",
+      "summary": "这里的两个分量是真实自旋双重态，具有相同反演宇称。Pauli 矩阵按轴向量变换；换成任意两个轨道，必须重新指定表示矩阵。",
+      "preset": "workshop-rashba",
+      "sections": [
+        {
+          "title": "先固定表示空间",
+          "text": "这里的两个分量是真实自旋双重态，具有相同反演宇称。Pauli 矩阵按轴向量变换；换成任意两个轨道，必须重新指定表示矩阵。",
+          "formula": "H(k)=d_0(k)I+d_x(k)σ_x+d_y(k)σ_y+d_z(k)σ_z"
+        },
+        {
+          "title": "比较所有动量的系数",
+          "text": "二阶二维多项式有6个单项式，每个乘以4个Hermitian基矩阵，共24个实系数。生成元给出齐次线性约束；不能只在几个高对称点比较能量。",
+          "formula": "H(Rk)=U H(k) U†"
+        },
+        {
+          "title": "先求允许空间，再投影",
+          "text": "将输入系数正交投影至约束矩阵的零空间。系数之间可能需要组合：单个 k_x σ_y 并不独立满足 C₄ 旋转，而 Rashba 组合可以。",
+          "formula": "H_R=α(k_y σ_x−k_x σ_y)"
+        },
+        {
+          "title": "查看投影的含义",
+          "text": "工坊给出每项前后系数、独立维数、完整多项式残差和Γ附近曲线。零空间求解是数值的；系数投影依赖声明的单项式欧氏度量，不能当作材料参数拟合。",
+          "formula": "A a=0"
+        }
+      ],
+      "references": [
+        "workshop-qsymm"
+      ]
+    },
+    {
+      "id": "workshop-spin",
+      "module": "workshop",
+      "title": "为什么反演加时间反演消除这里的自旋分裂",
+      "summary": "对于真实自旋一半，时间反演包含复共轭，平方为−1。标量部分对动量为偶，自旋部分为奇。",
+      "preset": "workshop-inversion",
+      "sections": [
+        {
+          "title": "时间反演反转自旋",
+          "text": "对于真实自旋一半，时间反演包含复共轭，平方为−1。标量部分对动量为偶，自旋部分为奇。",
+          "formula": "d_0(−k)=d_0(k)；d(−k)=−d(k)"
+        },
+        {
+          "title": "反演不反转轴向量自旋",
+          "text": "本工坊两个态同宇称，反演表示为共同的正或负单位阵。反演约束使自旋部分也成为偶函数。",
+          "formula": "d(−k)=d(k)"
+        },
+        {
+          "title": "同一项同时为奇和偶",
+          "text": "两个条件合并后自旋部分消失，因此两条能带在每个k简并。这个结论依赖所用同宇称双态空间，不可照搬到任意多轨道有效模型。",
+          "formula": "d(k)=0"
+        },
+        {
+          "title": "开关与群名要一致",
+          "text": "关闭镜面或旋转后，页面只声称保留剩余生成元。额外加入反演可能扩大对称群，不能仍把它简单叫原来的 C₄ᵥ。",
+          "formula": "E_{±}=d_0±|d|"
+        }
+      ],
+      "references": [
+        "workshop-qsymm"
+      ]
+    },
+    {
+      "id": "workshop-breaking",
+      "module": "workshop",
+      "title": "用受控对照辨认磁性开隙",
+      "summary": "绕z旋转允许常数 σ_z；xz镜面将轴向量z分量反转，时间反演也反转它。只有解除对应限制，输入m才能保留。",
+      "preset": "workshop-magnetic",
+      "sections": [
+        {
+          "title": "保留旋转时的常数项",
+          "text": "绕z旋转允许常数 σ_z；xz镜面将轴向量z分量反转，时间反演也反转它。只有解除对应限制，输入m才能保留。",
+          "formula": "H_m=mσ_z"
+        },
+        {
+          "title": "只改变一个开关",
+          "text": "把“只保留旋转”结果固定为A，再只启用时间反演计算B。比较Γ点劈裂和同一条k路径；不要同时改变m和生成元。",
+          "formula": "Δ_Γ=2|d(0)|"
+        },
+        {
+          "title": "色散不等于完整拓扑诊断",
+          "text": "这个低阶Γ附近模型没有完整布里渊区及晶格正则化。即使出现质量项，也不能由这一条局部能带曲线确定材料Chern数。",
+          "formula": "E_{±}(k)=d_0(k)±|d(k)|"
+        },
+        {
+          "title": "回到矩阵条件解释现象",
+          "text": "项目结论应写出被破坏的生成元、改变的系数和物理后果。若图上看似简并，仍要检验完整系数约束，避免数值或路径偶然简并。",
+          "formula": "H(−k)=σ_y H(k)* σ_y"
+        }
+      ],
+      "references": [
+        "workshop-qsymm"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "manybody-lehmann-exercise",
+      "module": "manybody",
+      "lesson": "manybody-lehmann",
+      "title": "从无相互作用二聚体读出局域谱",
+      "prompt": "取t=1 eV、U=Δ=μ=0、N↑=N↓=1；先用局域探针，再改为傅里叶探针。",
+      "steps": [
+        {
+          "prompt": "移除一个上自旋电子后应进入哪个扇区？",
+          "hint": "只改变被湮灭的那种自旋数。",
+          "choices": [
+            "(N↑,N↓)=(0,1)",
+            "(1,1)",
+            "(1,0)"
+          ],
+          "answer": 0,
+          "explanation": "c↑将上自旋电子数从1降到0；对应末态来自不同粒子数扇区，不能只读初态扇区的激发能。"
+        },
+        {
+          "prompt": "局域探针在何处有峰、各有多大权重？",
+          "hint": "单粒子成键与反键能为−t与+t，局域轨道在两者上各占一半。",
+          "choices": [
+            "仅E=0、权重1",
+            "E=−1与+1 eV，各1/2",
+            "E=−2与+2 eV，各1"
+          ],
+          "answer": 1,
+          "explanation": "初态填满成键轨道；移除峰在−1 eV，添加峰在+1 eV，总权重1。"
+        },
+        {
+          "prompt": "只把μ改为0.3 eV，哪项变化正确？",
+          "hint": "每个单粒子峰坐标都减去μ。",
+          "choices": [
+            "电子数自动增加",
+            "两个峰都向右移0.3 eV",
+            "两个峰变为−1.3与0.7 eV，权重不变"
+          ],
+          "answer": 2,
+          "explanation": "这里μ只设置谱的零点；固定N↑、N↓的初态保持不变，不是自动掺杂计算。"
+        },
+        {
+          "prompt": "恢复μ=0，改为q=0归一傅里叶探针，会看见什么？",
+          "hint": "两站点相同相位相加选中成键轨道。",
+          "choices": [
+            "仅移除峰E=−1 eV，权重1",
+            "仅添加峰E=+1 eV，权重1",
+            "两峰都消失"
+          ],
+          "answer": 0,
+          "explanation": "q=0探针完全位于已占据的成键模式；Pauli原理阻止再添加同自旋电子。"
+        }
+      ]
+    },
+    {
+      "id": "manybody-response-exercise",
+      "module": "manybody",
+      "lesson": "manybody-response",
+      "title": "同一二聚体为何有不同的动态能隙",
+      "prompt": "取t=1 eV、U=4 eV、Δ=0的半填充二聚体，使用q a/π=1探针。",
+      "steps": [
+        {
+          "prompt": "密度或S_z响应会改变总电子数吗？",
+          "hint": "两个算符都含一个产生与一个湮灭操作。",
+          "choices": [
+            "会增加一个",
+            "不会，末态仍在同一粒子数扇区",
+            "会减少一个"
+          ],
+          "answer": 1,
+          "explanation": "响应谱与单粒子增减谱涉及不同算符和末态空间，所以不能仅凭能量位置把它们互相替代。"
+        },
+        {
+          "prompt": "D=√32 eV时，自旋峰的能量是多少？",
+          "hint": "计算(D−U)/2。",
+          "choices": [
+            "4.828427 eV",
+            "2 eV",
+            "0.828427 eV"
+          ],
+          "answer": 2,
+          "explanation": "自旋峰连接最低单重态与三重态；此处是约0.828427 eV。"
+        },
+        {
+          "prompt": "同样参数下，电荷峰的能量是多少？",
+          "hint": "这次计算(D+U)/2。",
+          "choices": [
+            "4.828427 eV",
+            "0.828427 eV",
+            "0 eV"
+          ],
+          "answer": 0,
+          "explanation": "电荷算符连接奇对称双占据态，激发能约4.828427 eV，与自旋峰不同。"
+        },
+        {
+          "prompt": "把q改为0，固定N的连通总密度谱应怎样？",
+          "hint": "总密度在这个扇区就是N乘恒等算符。",
+          "choices": [
+            "保留权重N²的连通零能峰",
+            "全部为零",
+            "只保留自旋峰"
+          ],
+          "answer": 1,
+          "explanation": "δN=N−⟨N⟩I=0；相干平均背景被扣除后，固定粒子数没有总密度涨落。"
+        }
+      ]
+    },
+    {
+      "id": "manybody-checks-exercise",
+      "module": "manybody",
+      "lesson": "manybody-checks",
+      "title": "不把线宽、简并与峰高误当物理结论",
+      "prompt": "先看严格原子极限的自旋响应，再比较同一单粒子谱的两种显示半宽。",
+      "steps": [
+        {
+          "prompt": "t=0、U>0、N↑=N↓=1时，如何处理两个分居基态？",
+          "hint": "结果应不依赖对角化选出的简并基底。",
+          "choices": [
+            "任选一个并称为唯一基态",
+            "在该扇区简并子空间等权平均",
+            "只留下纯单重态"
+          ],
+          "answer": 1,
+          "explanation": "严格t=0的基态混合与t→0⁺选择的单重态不同；计算保留已声明的固定扇区与简并平均。"
+        },
+        {
+          "prompt": "q a/π=1的纵向探针均值为0，连通谱的零能权重是多少？",
+          "hint": "两个分居组态的探针值为±1/√2。",
+          "choices": [
+            "0",
+            "1",
+            "1/2"
+          ],
+          "answer": 2,
+          "explanation": "均值为0而平方平均为1/2；简并混合态仍有零能涨落，不能一律删除。"
+        },
+        {
+          "prompt": "只把Lorentz半宽η加倍，哪个量应保持不变？",
+          "hint": "η作用在每个离散峰的显示核。",
+          "choices": [
+            "每个离散跃迁的权重",
+            "每个峰的峰高",
+            "有限绘图窗口内的所有像素值"
+          ],
+          "answer": 0,
+          "explanation": "离散矩阵元权重与η无关；峰高与有限窗口面积可能改变，因而不能靠峰高判断占据数。"
+        },
+        {
+          "prompt": "单粒子绘图窗口面积略小于1，但离散权重和为1，首先应检查什么？",
+          "hint": "Lorentz线形在任意有限窗口外都有尾部。",
+          "choices": [
+            "立即把所有数据强制归一到1",
+            "窗口尾部和采样精度，并核对程序报告的解析面积",
+            "宣布违反费米反对易关系"
+          ],
+          "answer": 1,
+          "explanation": "完整和规则与有限窗口积分应分别报告；扩窗或加密网格可以诊断显示误差，不能用重归一化掩盖差别。"
+        }
+      ]
+    },
+    {
+      "id": "polaron-free-exercise",
+      "module": "polaron",
+      "lesson": "polaron-hamiltonian",
+      "title": "从无耦合极限建立检查点",
+      "prompt": "取t=1、ℏω=1、g=Δ=0 eV，每振子最大声子数为6。",
+      "steps": [
+        {
+          "prompt": "完整矩阵维数是多少？",
+          "hint": "一个电子有两种位置，每个振子有7个数态。",
+          "choices": [
+            "14",
+            "98",
+            "49"
+          ],
+          "answer": 1,
+          "explanation": "2×7×7=98；不能只保留两个振子共用的一个数态标签。"
+        },
+        {
+          "prompt": "省略零点能后基态能量是多少？",
+          "hint": "电子成键态能量是−t，振子都在真空。",
+          "choices": [
+            "−1 eV",
+            "0 eV",
+            "+1 eV"
+          ],
+          "answer": 0,
+          "explanation": "电子能量−1 eV，两个振子的b†b都为0。"
+        },
+        {
+          "prompt": "此时电子约化纯度是多少？",
+          "hint": "整体态是电子与振子态的直积。",
+          "choices": [
+            "0",
+            "1/2",
+            "1"
+          ],
+          "answer": 2,
+          "explanation": "对振子取迹不使电子变成混合态，所以Tr(ρ_e²)=1。"
+        },
+        {
+          "prompt": "加入本模块的g项直接调制什么？",
+          "hint": "耦合项为gΣ_i n_i X_i。",
+          "choices": [
+            "电子跃迁t",
+            "局域位点能",
+            "声子数上限"
+          ],
+          "answer": 1,
+          "explanation": "这是Holstein位点耦合；键位移调制跃迁属于另一类耦合，不能混用参数。"
+        }
+      ]
+    },
+    {
+      "id": "polaron-cloud-exercise",
+      "module": "polaron",
+      "lesson": "polaron-conditional-cloud",
+      "title": "完成平方，再辨认条件振动云",
+      "prompt": "先考虑t=0、ℏω=1、g=0.5 eV，电子已知位于一个站点。",
+      "steps": [
+        {
+          "prompt": "被占据振子带来的基态能降低是多少？",
+          "hint": "配方后的常数项是−g²/(ℏω)。",
+          "choices": [
+            "−0.25 eV",
+            "−0.5 eV",
+            "+0.25 eV"
+          ],
+          "answer": 0,
+          "explanation": "−0.5²/1=−0.25 eV，未包括电子站点位能。"
+        },
+        {
+          "prompt": "被占据振子的⟨X⟩是多少？",
+          "hint": "位移后的湮灭算符是真空算符，⟨b⟩=−g/(ℏω)。",
+          "choices": [
+            "−0.5",
+            "−1",
+            "+1"
+          ],
+          "answer": 1,
+          "explanation": "X=b+b†，故⟨X⟩=−2g/(ℏω)=−1，无量纲。"
+        },
+        {
+          "prompt": "恢复跃迁和站点交换对称后，电子密度均匀能说明什么？",
+          "hint": "密度是单个期望值，条件关联还包含联合信息。",
+          "choices": [
+            "一定没有电子—声子关联",
+            "一定已经自发局域",
+            "需继续查看⟨n_i X_j⟩和条件位移"
+          ],
+          "answer": 2,
+          "explanation": "均匀密度可与共同离域的振动云并存，不能只用密度判断。"
+        },
+        {
+          "prompt": "若程序对简并基态等权平均，低电子纯度能直接量化纠缠吗？",
+          "hint": "整体密度矩阵已可能是混态。",
+          "choices": [
+            "能，任何混合都等于纠缠",
+            "不能，经典混合也会降低纯度",
+            "能，只要声子数非零"
+          ],
+          "answer": 1,
+          "explanation": "只有整体纯态条件下，约化混合程度才直接表征该二分的纠缠；混态需要另外的判据。"
+        }
+      ]
+    },
+    {
+      "id": "polaron-cutoff-exercise",
+      "module": "polaron",
+      "lesson": "polaron-truncation",
+      "title": "让截断误差成为可检查的实验变量",
+      "prompt": "运行“故意不足的截断”预设，再逐步增大每振子的最大声子数。",
+      "steps": [
+        {
+          "prompt": "增加声子截断后，变分基态能量应怎样变化？",
+          "hint": "新增基矢不会删掉原先可用的试探态。",
+          "choices": [
+            "不升高",
+            "必然升高",
+            "必须完全不变"
+          ],
+          "answer": 0,
+          "explanation": "嵌套空间的变分最小值不升高；变化大小反映截断敏感性。"
+        },
+        {
+          "prompt": "哪个诊断最直接检查声子概率是否挤到边界？",
+          "hint": "检查最后一个允许的数态。",
+          "choices": [
+            "电子密度是否均匀",
+            "最高声子层的概率",
+            "矩阵是否实数"
+          ],
+          "answer": 1,
+          "explanation": "最高层仍有明显权重时，未纳入的更高声子态可能重要。"
+        },
+        {
+          "prompt": "本征残差达到10⁻¹²，能否单独证明声子截断足够？",
+          "hint": "残差检查的是已经构造好的有限矩阵。",
+          "choices": [
+            "能",
+            "只需矩阵维数大于20就能",
+            "不能，还要扩大截断比较"
+          ],
+          "answer": 2,
+          "explanation": "有限矩阵可被极准确求解，同时仍遗漏重要的高声子数组态。"
+        },
+        {
+          "prompt": "当前g点通过相邻截断诊断后，整条g扫描是否自动通过？",
+          "hint": "扫描点拥有不同振动云和声子分布。",
+          "choices": [
+            "不会，必须逐点检查",
+            "会，截断是同一个数",
+            "会，只要两端能量平滑"
+          ],
+          "answer": 0,
+          "explanation": "当前点的对照不能替代其他点；本实验扫描报告每点最高层概率，需要时单独选中该参数做双截断。"
+        }
+      ]
+    },
+    {
+      "id": "density-pure-mixed-exercise",
+      "module": "density",
+      "lesson": "density-pure-mixed",
+      "title": "辨认相同局部态背后的不同整体态",
+      "prompt": "对照单重态与反平行经典混合预设。",
+      "steps": [
+        {
+          "prompt": "单重态的整体纯度是多少？",
+          "hint": "纯态密度矩阵满足 ρ²=ρ。",
+          "choices": [
+            "1",
+            "1/2",
+            "0"
+          ],
+          "answer": 0,
+          "explanation": "单重态是归一化纯态，Trρ²=1。"
+        },
+        {
+          "prompt": "忽略 B 后，A 的约化密度矩阵是什么？",
+          "hint": "两种自旋测量结果等概率，且求部分迹后局部相干为零。",
+          "choices": [
+            "|↑⟩⟨↑|",
+            "I/2",
+            "零矩阵"
+          ],
+          "answer": 1,
+          "explanation": "ρ_A=I/2，所以局部熵为1 bit。"
+        },
+        {
+          "prompt": "反平行经典等权混合是否也有局部熵1 bit？",
+          "hint": "分别对两个反平行直积态取部分迹再求平均。",
+          "choices": [
+            "没有，熵为0",
+            "只有加入驱动后才有",
+            "有，但它是可分的经典混合"
+          ],
+          "answer": 2,
+          "explanation": "它与单重态局部态相同，但整体负性为0。"
+        },
+        {
+          "prompt": "哪一个量能区分这两个例子的纠缠？",
+          "hint": "使用双自旋部分转置谱。",
+          "choices": [
+            "负性：单重态1/2，经典混合0",
+            "仅局部熵：两个都为1就都纠缠",
+            "仅 z 方向布居"
+          ],
+          "answer": 0,
+          "explanation": "负性区分两者；局部熵对一般混态不是单独的纠缠量。"
+        }
+      ]
+    },
+    {
+      "id": "density-lindblad-exercise",
+      "module": "density",
+      "lesson": "density-lindblad",
+      "title": "分清 T₁、T₂ 与纯退相干",
+      "prompt": "取无驱动单自旋 γ₁=0.4、γ_φ=0.1 ns⁻¹。",
+      "steps": [
+        {
+          "prompt": "T₁ 是多少？",
+          "hint": "T₁=1/γ₁。",
+          "choices": [
+            "0.4 ns",
+            "2.5 ns",
+            "5 ns"
+          ],
+          "answer": 1,
+          "explanation": "1/0.4=2.5 ns。"
+        },
+        {
+          "prompt": "横向包络衰减率是多少？",
+          "hint": "γ₂=γ₁/2+γ_φ。",
+          "choices": [
+            "0.5 ns⁻¹",
+            "0.2 ns⁻¹",
+            "0.3 ns⁻¹"
+          ],
+          "answer": 2,
+          "explanation": "0.4/2+0.1=0.3 ns⁻¹，T₂=10/3 ns。"
+        },
+        {
+          "prompt": "只保留纯退相干且 Ω=0，z 布居会怎样？",
+          "hint": "σ_z 通道与该基底的投影算符对易。",
+          "choices": [
+            "不变",
+            "全部立即转到 ↓",
+            "必定变成各1/2"
+          ],
+          "answer": 0,
+          "explanation": "纯退相干衰减非对角元，不直接改变此条件下的布居。"
+        },
+        {
+          "prompt": "drive=1 rad/ns 时的普通频率是多少？",
+          "hint": "角频率除以2π。",
+          "choices": [
+            "1 周期/ns",
+            "1/(2π) 周期/ns",
+            "2π 周期/ns"
+          ],
+          "answer": 1,
+          "explanation": "H/ℏ 使用角频率，不能把1 rad/ns直接读作1 GHz。"
+        }
+      ]
+    },
+    {
+      "id": "density-exchange-exercise",
+      "module": "density",
+      "lesson": "density-exchange",
+      "title": "从交换能级到最大纠缠时刻",
+      "prompt": "取 J=1 rad/ns、Ω=Δ=δ=γ₁=γ_φ=0，初态 ↑↓。",
+      "steps": [
+        {
+          "prompt": "单重态与三重态的 H/ℏ 本征值分别是什么？",
+          "hint": "用 S_A·S_B=[S²−S_A²−S_B²]/2。",
+          "choices": [
+            "−3/4 与 1/4 rad/ns",
+            "−1 与 1 rad/ns",
+            "0 与 0 rad/ns"
+          ],
+          "answer": 0,
+          "explanation": "两个自旋1/2有 S_A²=S_B²=3/4，S为0或1。"
+        },
+        {
+          "prompt": "第一次两种反平行组态等权发生在何时？",
+          "hint": "cos²(t/2)=sin²(t/2)。",
+          "choices": [
+            "π ns",
+            "π/2 ns",
+            "2π ns"
+          ],
+          "answer": 1,
+          "explanation": "t=π/2 ns时两个概率均为1/2。"
+        },
+        {
+          "prompt": "此时整体纯度、局部熵和负性分别是多少？",
+          "hint": "幺正演化保纯，局部态为I/2。",
+          "choices": [
+            "1/2、1、0",
+            "1、0、0",
+            "1、1 bit、1/2"
+          ],
+          "answer": 2,
+          "explanation": "整体纯且最大纠缠；局部混合由纠缠产生。"
+        },
+        {
+          "prompt": "到 t=π ns 时纠缠是否继续增长？",
+          "hint": "此时 cos(t/2)=0。",
+          "choices": [
+            "否，成为 ↓↑ 直积态，负性回到0",
+            "是，负性变为1",
+            "纯度变为0"
+          ],
+          "answer": 0,
+          "explanation": "有限双自旋存在相干往返，纠缠不必单调增长。"
+        }
+      ]
+    },
+    {
+      "id": "density-assumptions-exercise",
+      "module": "density",
+      "lesson": "density-assumptions",
+      "title": "检查热初态、耗散与数值结论",
+      "prompt": "在热初态实验中打开局域耗散，再比较稀密时间采样。",
+      "steps": [
+        {
+          "prompt": "thermalScale 决定什么？",
+          "hint": "它进入初始Gibbs权重。",
+          "choices": [
+            "初态 kBT/ℏ",
+            "自动推导全部环境噪声",
+            "直接等于 γ₁"
+          ],
+          "answer": 0,
+          "explanation": "初态温度尺度与耗散通道参数是独立输入。"
+        },
+        {
+          "prompt": "当前局域 ↑→↓ 通道是否保证带交换的系统趋于同温 Gibbs 态？",
+          "hint": "检查是否按完整能级差构造详细平衡。",
+          "choices": [
+            "保证，任何Lindblad方程都热化",
+            "不保证，本通道未施加该详细平衡",
+            "只要迹为1就保证"
+          ],
+          "answer": 1,
+          "explanation": "完全正且保迹不等于满足某个指定Hamiltonian的热平衡条件。"
+        },
+        {
+          "prompt": "演化结果具有迹1，但有明显负本征值，能否作为物理态？",
+          "hint": "概率不能为负。",
+          "choices": [
+            "可以，迹1已足够",
+            "可以，手动删掉负值即可",
+            "不可以，需查明数值或模型错误"
+          ],
+          "answer": 2,
+          "explanation": "厄米性、归一化和半正定性缺一不可。"
+        },
+        {
+          "prompt": "增加时间采样点应主要改变什么？",
+          "hint": "常量生成元在同一时刻的传播由同一矩阵指数给出。",
+          "choices": [
+            "显示细节；相同时刻的态应在容差内一致",
+            "任意改变稳态",
+            "强制使纯度等于1"
+          ],
+          "answer": 0,
+          "explanation": "过稀采样会漏掉振荡，但不能通过改变采样人为改变物理演化。"
+        }
+      ]
+    },
+    {
+      "id": "workshop-identity-exercise",
+      "module": "workshop",
+      "lesson": "workshop-identity",
+      "title": "从矩阵恒等式到系数约束：分步验证",
+      "prompt": "先根据表示和生成元推导，再在工坊运行预设核对。",
+      "steps": [
+        {
+          "prompt": "二阶二维单项式有几个？",
+          "hint": "包括常数、两个一次项、三个二次项。",
+          "choices": [
+            "6",
+            "4",
+            "9"
+          ],
+          "answer": 0,
+          "explanation": "乘以4个Pauli基矩阵，共24个实系数。"
+        },
+        {
+          "prompt": "判定对称性应检查什么？",
+          "hint": "矩阵还包含本征态信息。",
+          "choices": [
+            "几处能量相同",
+            "所有k的矩阵恒等式",
+            "只看Γ点"
+          ],
+          "answer": 1,
+          "explanation": "比较整个多项式系数，而非单独的能量。"
+        },
+        {
+          "prompt": "C₄ᵥ中的线性自旋项应怎样检查？",
+          "hint": "旋转会混合x与y。",
+          "choices": [
+            "逐个删掉所有一次项",
+            "只留k_x",
+            "检验Rashba等完整组合"
+          ],
+          "answer": 2,
+          "explanation": "生成元可约束系数之间的关系。"
+        },
+        {
+          "prompt": "投影后的系数是什么？",
+          "hint": "这里没有实验拟合。",
+          "choices": [
+            "指定系数度量下的允许模型",
+            "真实材料唯一参数",
+            "精确实验能带"
+          ],
+          "answer": 0,
+          "explanation": "这是明确表示空间和截断阶数下的教学投影。"
+        }
+      ]
+    },
+    {
+      "id": "workshop-spin-exercise",
+      "module": "workshop",
+      "lesson": "workshop-spin",
+      "title": "为什么反演加时间反演消除这里的自旋分裂：分步验证",
+      "prompt": "先根据表示和生成元推导，再在工坊运行预设核对。",
+      "steps": [
+        {
+          "prompt": "时间反演要求d(k)怎样变化？",
+          "hint": "自旋在时间反演下反号。",
+          "choices": [
+            "奇函数",
+            "偶函数",
+            "不受限"
+          ],
+          "answer": 0,
+          "explanation": "d(−k)=−d(k)。"
+        },
+        {
+          "prompt": "同宇称双态中的反演要求d(k)怎样变化？",
+          "hint": "自旋是轴向量。",
+          "choices": [
+            "奇函数",
+            "偶函数",
+            "只能有z分量"
+          ],
+          "answer": 1,
+          "explanation": "反演不翻转自旋，故为偶函数。"
+        },
+        {
+          "prompt": "两个条件合并得到什么？",
+          "hint": "同时为奇和偶。",
+          "choices": [
+            "线性项加倍",
+            "只在Γ为零",
+            "处处为零"
+          ],
+          "answer": 2,
+          "explanation": "此模型中d(k)=0，因此没有自旋分裂。"
+        },
+        {
+          "prompt": "关闭镜面后能否仍声称保留完整原点群？",
+          "hint": "剩余生成元才是约束依据。",
+          "choices": [
+            "不能，应列出剩余约束",
+            "始终可以",
+            "只看曲线即可"
+          ],
+          "answer": 0,
+          "explanation": "生成元开关改变对称条件。"
+        }
+      ]
+    },
+    {
+      "id": "workshop-breaking-exercise",
+      "module": "workshop",
+      "lesson": "workshop-breaking",
+      "title": "用受控对照辨认磁性开隙：分步验证",
+      "prompt": "先根据表示和生成元推导，再在工坊运行预设核对。",
+      "steps": [
+        {
+          "prompt": "只有z旋转时常数mσ_z是否允许？",
+          "hint": "σ_z与z旋转对易。",
+          "choices": [
+            "允许",
+            "必定禁止",
+            "依赖k_x"
+          ],
+          "answer": 0,
+          "explanation": "z旋转保留轴向量z分量。"
+        },
+        {
+          "prompt": "只启用时间反演后该常数项怎样？",
+          "hint": "常数不能是k的奇函数。",
+          "choices": [
+            "加倍",
+            "被禁止",
+            "不变"
+          ],
+          "answer": 1,
+          "explanation": "时间反演禁止该常数磁性项。"
+        },
+        {
+          "prompt": "本模型Γ劈裂如何求？",
+          "hint": "求2×2 Hermitian矩阵本征值。",
+          "choices": [
+            "|d_0|",
+            "|m|/2",
+            "2|d(0)|"
+          ],
+          "answer": 2,
+          "explanation": "两条能量差是2|d|。"
+        },
+        {
+          "prompt": "一条Γ附近开隙曲线能否给出材料Chern数？",
+          "hint": "缺少完整布里渊区。",
+          "choices": [
+            "不能",
+            "能，开隙就是1",
+            "能，开隙就是0"
+          ],
+          "answer": 0,
+          "explanation": "局部模型的开隙与全局拓扑诊断不同。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "manybody-dimer-add-remove",
+      "module": "manybody",
+      "title": "分子二聚体：从成键能级到电子增减谱",
+      "kind": "材料机制原型",
+      "summary": "把局域与成键/反键探针放在同一二聚体上，比较U=0与U>0时峰的位置和可见权重。",
+      "assumption": "两个抽象轨道借鉴分子二聚体图像；未拟合有机盐、未计算真实光电子偶极矩阵元、表面效应或实验绝对截面。",
+      "preset": "interacting-dimer",
+      "links": [
+        [
+          "多体谱实验",
+          "#compute/manybody-spectra-lab"
+        ],
+        [
+          "Hubbard初态与关联",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "光谱课堂",
+          "#classroom/observables?module=manybody"
+        ]
+      ]
+    },
+    {
+      "id": "manybody-spin-charge",
+      "module": "manybody",
+      "title": "同一局域关联体系的自旋与电荷探针",
+      "kind": "跨探针机制对照",
+      "summary": "对同一个半填充二聚体，比较低能自旋峰与高能电荷峰，使用等时关联校验谱面积。",
+      "assumption": "该二聚体只说明不同算符探测不同激发；不能把曲线直接标成真实中子、RIXS或光学实验截面，亦不从两站点预测长程磁序。",
+      "preset": "spin-dimer",
+      "links": [
+        [
+          "纵向动态响应",
+          "#compute/manybody-spectra-lab"
+        ],
+        [
+          "声子动态结构因子",
+          "#compute/dynamic-scattering-lab"
+        ],
+        [
+          "有效自旋共振",
+          "#compute/spin-resonance-lab"
+        ]
+      ]
+    },
+    {
+      "id": "manybody-finite-ring",
+      "module": "manybody",
+      "title": "有限关联环：谱权重如何随探针动量重排",
+      "kind": "有限尺寸教学模型",
+      "summary": "在四站点周期环上改变归一傅里叶探针，观察允许跃迁、峰面积与局域占据之间的联系。",
+      "assumption": "四站点仅有有限组严格允许动量；其他q是指定相位的探针。离散峰、展宽与有限能隙不能被当作无限体系Mott相图或真实ARPES能带。",
+      "preset": "four-site",
+      "links": [
+        [
+          "四站点谱",
+          "#compute/manybody-spectra-lab"
+        ],
+        [
+          "有限团簇能隙",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "单粒子器件谱",
+          "#compute/device-transport-lab"
+        ]
+      ]
+    },
+    {
+      "id": "polaron-molecular-dimer",
+      "module": "polaron",
+      "title": "分子二聚体中的载流子与局域振动",
+      "kind": "材料机制原型",
+      "summary": "用局域轨道与振子说明电子离域时也能携带振动云，比较无耦合与有限耦合。",
+      "assumption": "两个抽象站点和给定能量参数，不拟合具体分子的振动频率、跃迁或光谱；固定单电子。",
+      "preset": "symmetric-cloud",
+      "links": [
+        [
+          "电子—声子实验",
+          "#compute/polaron-lab"
+        ],
+        [
+          "Hubbard二聚体对照",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "密度矩阵课堂",
+          "#classroom/spin?module=density"
+        ]
+      ]
+    },
+    {
+      "id": "polaron-local-versus-bond",
+      "module": "polaron",
+      "title": "局域耦合与共轭链键耦合的机制对照",
+      "kind": "跨模型比较",
+      "summary": "从Holstein的位点能调制出发，对照SSH链的交替键和畴壁；先辨认耦合发生在哪个矩阵元。",
+      "assumption": "这里只比较机制，不把二站点Holstein结果等同于聚乙炔自洽结构、SSH畴壁或真实极化子半径。",
+      "preset": "biased-cloud",
+      "links": [
+        [
+          "Holstein局域耦合",
+          "#compute/polaron-lab"
+        ],
+        [
+          "SSH量子几何",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "SSH畴壁与局域态",
+          "#compute/domain-wall-lab"
+        ]
+      ]
+    },
+    {
+      "id": "polaron-truncation-case",
+      "module": "polaron",
+      "title": "强振动云的数值收敛实验",
+      "kind": "计算方法案例",
+      "summary": "在较大的g/(ℏω)下，比较精确本征残差、最高层概率和相邻截断能量变化。",
+      "assumption": "故意包含截断不足的参数，供识别数值假象；不能将未收敛曲线当真实材料相变或定量光谱。",
+      "preset": "truncation-warning",
+      "links": [
+        [
+          "声子截断实验",
+          "#compute/polaron-lab"
+        ],
+        [
+          "声子热力学约定",
+          "#compute/phonon-thermo"
+        ],
+        [
+          "电子—声子课堂",
+          "#classroom/structure-dynamics?module=polaron"
+        ]
+      ]
+    },
+    {
+      "id": "density-resonance",
+      "module": "density",
+      "title": "有效自旋共振的相干与耗散",
+      "kind": "实验机制模型",
+      "summary": "用一个有效自旋连接磁共振课堂与Rabi演化，分别开关弛豫和纯退相干。",
+      "assumption": "参数为教学值；不从材料结构或频域线宽自动推断T₁、T₂，不包含粉末平均、脉冲回波或噪声谱拟合。",
+      "preset": "rabi-damped",
+      "links": [
+        [
+          "有效自旋磁共振",
+          "#compute/spin-resonance-lab"
+        ],
+        [
+          "SU(2) 旋量课堂",
+          "#classroom/continuous"
+        ],
+        [
+          "密度矩阵实验",
+          "#compute/density-matrix-lab"
+        ]
+      ]
+    },
+    {
+      "id": "density-dimer",
+      "module": "density",
+      "title": "双自旋交换与可控纠缠",
+      "kind": "分子磁体机制原型",
+      "summary": "以两个有效自旋解释交换能级、相对相位与纠缠生成，并回到Hubbard二聚体讨论低能近似。",
+      "assumption": "双自旋模型仅保留每站点一个自旋1/2；Hubbard模型含电荷涨落，只有适当低能和大U条件下才可比较交换尺度。",
+      "preset": "exchange",
+      "links": [
+        [
+          "Hubbard 小团簇",
+          "#compute/hubbard-cluster-lab"
+        ],
+        [
+          "角动量耦合课堂",
+          "#classroom/coupling"
+        ],
+        [
+          "交换演化",
+          "#compute/density-matrix-lab"
+        ]
+      ]
+    },
+    {
+      "id": "density-local-global",
+      "module": "density",
+      "title": "相同局部测量与不同整体关联",
+      "kind": "量子态诊断案例",
+      "summary": "对照单重态和经典混合；局部Bloch球中心相同，整体密度矩阵与纠缠判据不同。",
+      "assumption": "这是两个可区分自旋的理想态比较；不将混态的局部熵直接解释为纠缠，也不据此预测真实材料的宏观量子资源。",
+      "preset": "singlet",
+      "links": [
+        [
+          "纯态与混态课堂",
+          "#classroom/spin?module=density"
+        ],
+        [
+          "符号词典",
+          "#docs/dictionary"
+        ],
+        [
+          "研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "workshop-interface",
+      "module": "workshop",
+      "title": "界面反演破缺与 Rashba 型项",
+      "kind": "对称性机制原型",
+      "summary": "用 C₄ᵥ 双态模型理解表面或界面允许的线性自旋动量耦合。",
+      "assumption": "约化k、示意系数与同宇称真实自旋双态；不是特定界面的拟合能带。",
+      "preset": "workshop-rashba",
+      "links": [
+        [
+          "能带相容关系",
+          "#compute/band-connectivity"
+        ],
+        [
+          "自旋与双群",
+          "#classroom/spin"
+        ]
+      ]
+    },
+    {
+      "id": "workshop-magnetism",
+      "module": "workshop",
+      "title": "磁性项如何受镜面和时间反演限制",
+      "kind": "教学模型",
+      "summary": "关闭生成元后追踪σ_z系数与Γ点劈裂，区分能谱后果和约束来源。",
+      "assumption": "未构造磁空间群完整小表示；只对声明的2×2模型施加生成元。",
+      "preset": "workshop-magnetic",
+      "links": [
+        [
+          "量子几何与拓扑诊断",
+          "#compute/quantum-geometry-lab"
+        ],
+        [
+          "符号Hamiltonian",
+          "#compute/advanced/symbolic"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "manybody-manybody-lehmann",
+      "title": "TRIQS: atomic retarded Green function from the Lehmann representation",
+      "url": "https://triqs.github.io/triqs/latest/documentation/cpp_api/triqs/atom_diag/atomic_g_w.html"
+    },
+    {
+      "id": "manybody-manybody-hubbard",
+      "title": "J. Hubbard (1963), Electron correlations in narrow energy bands",
+      "url": "https://doi.org/10.1098/rspa.1963.0204"
+    },
+    {
+      "id": "manybody-manybody-dimer",
+      "title": "D. J. Carrascal et al. (2015), The Hubbard Dimer: a density functional case study of a many-body problem",
+      "url": "https://arxiv.org/abs/1502.02194"
+    },
+    {
+      "id": "polaron-holstein-original",
+      "title": "T. Holstein, Studies of polaron motion: Part I. The molecular-crystal model, Annals of Physics 8, 325–342 (1959)",
+      "url": "https://doi.org/10.1016/0003-4916(59)90002-8"
+    },
+    {
+      "id": "polaron-holstein-small",
+      "title": "T. Holstein, Studies of polaron motion: Part II. The small polaron, Annals of Physics 8, 343–389 (1959)",
+      "url": "https://doi.org/10.1016/0003-4916(59)90003-X"
+    },
+    {
+      "id": "polaron-epw-methods",
+      "title": "H. Lee et al., Electron-phonon physics from first principles using the EPW code (2023)",
+      "url": "https://arxiv.org/abs/2302.08085"
+    },
+    {
+      "id": "density-density-qutip-master",
+      "title": "QuTiP：Lindblad 主方程、纯态与混态演化及适用假设",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/dynamics/dynamics-master.html"
+    },
+    {
+      "id": "density-density-qutip-tensor",
+      "title": "QuTiP：张量积与部分迹",
+      "url": "https://qutip.readthedocs.io/en/stable/guide/guide-tensor.html"
+    },
+    {
+      "id": "density-density-negativity",
+      "title": "Vidal 与 Werner, Computable measure of entanglement, Phys. Rev. A 65, 032314 (2002)",
+      "url": "https://doi.org/10.1103/PhysRevA.65.032314"
+    },
+    {
+      "id": "workshop-qsymm",
+      "title": "Qsymm: symmetry-constrained continuum Hamiltonian generation",
+      "url": "https://qsymm.readthedocs.io/latest/"
+    }
+  ]
+}

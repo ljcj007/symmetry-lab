@@ -1,4 +1,4 @@
-import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261029-pathways1b';
+import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261030-bridges1';
 /** Presentation-only conversion of the site's plain scientific notation.
  * Never use these strings as computational input. Unknown syntax stays text.
  */
@@ -152,4 +152,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261029-pathways1b';
+export const mathNotationVersion='20261030-bridges1';

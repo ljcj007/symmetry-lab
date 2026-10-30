@@ -681,8 +681,8 @@
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "05ccf6d57c9d5dab6df2b8d3230e2e91948fedc547b24f360d4ae28493c293e5",
-      "bytes": 6800,
+      "sha256": "ffd0b5b31d2fd5e875c0a91c6240355e9ad8df6104df2e58f17097afe0c794d1",
+      "bytes": 6964,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -785,6 +785,70 @@
       "sha256": "4505784a1b62e5f4442b3995407f449575bd39f8d497b0baf947ef202232d44f",
       "bytes": 23271,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
+    },
+    {
+      "path": "dist/python/manybody_spectra_lab.py",
+      "sha256": "c5498cd6d82b3a5c873ebde2a75432e679209449d78945a366e13d2d61cc4763",
+      "bytes": 22437,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Zero-temperature 2-4 site Hubbard Lehmann addition/removal spectra from genuine fermionic transition matrix elements",
+        "Connected longitudinal spin/density spectra, degenerate-subspace trace averages, conditioned final-state observables and discrete zeroth/first-moment sum rules"
+      ],
+      "limitations": [
+        "Fixed up/down particle sector; supplied chemical potential shifts spectral reference but does not set filling",
+        "Relative finite-cluster spectra and numerical Lorentz broadening; no material cross sections, finite-temperature spectra, DMFT or thermodynamic phase claim"
+      ]
+    },
+    {
+      "path": "dist/python/polaron_lab.py",
+      "sha256": "0d349f82791a15fce6687636a25e48313b292f8621df8eecaf5bd9b9f3df0f45",
+      "bytes": 15984,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "One electron on two Holstein sites, two truncated local quantum oscillators, electronic reduced density and conditional displacement clouds",
+        "Neighboring phonon-cutoff comparison, top-level probabilities and bounded coupling scans"
+      ],
+      "limitations": [
+        "Synthetic supplied parameters, omitted oscillator zero-point energy and dimensionless displacement; no structure-based coupling fit",
+        "An adjacent-cutoff diagnostic is not a rigorous global error bound; finite symmetric density alone neither proves nor excludes electron-phonon correlations"
+      ]
+    },
+    {
+      "path": "dist/python/density_matrix_lab.py",
+      "sha256": "f85d445a48e298c288c9723d06c33d6d635535065a491e9506ab207ad3cda908",
+      "bytes": 14785,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "One/two spin-1/2 density matrices under a constant Hamiltonian and independent phenomenological Lindblad channels",
+        "Bloch trajectories, partial traces, total purity, local entropy, two-qubit negativity and trajectory trace/Hermiticity/positivity diagnostics"
+      ],
+      "limitations": [
+        "Angular-frequency coefficients in rad/ns and rates in inverse ns; fixed up-to-down relaxation direction",
+        "Initial Gibbs temperature does not define a thermal bath; no non-Markov environment, pulse sequence or automatic detailed-balance thermalization"
+      ]
+    },
+    {
+      "path": "dist/python/symmetry_workshop.py",
+      "sha256": "fc7d504badd66f54bcf8d784b4153b5d9459441467cfea357bd2921357137d19",
+      "bytes": 7090,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy teaching implementation",
+      "coverage": [
+        "Real coefficient nullspace of a two-dimensional spin-half k.p polynomial through order two for selected C2v/C3v/C4v generators",
+        "Optional mirror, rotation, same-parity inversion and time-reversal constraints, coefficient projection and local two-band comparisons"
+      ],
+      "limitations": [
+        "Specified same-parity physical-spin doublet near Gamma, with axial-vector mirror transformation; not an arbitrary orbital pseudospin representation",
+        "Projection uses the displayed coefficient Euclidean metric; no material fit, generic new k.p solver, full-Brillouin-zone spectrum or topological invariant"
+      ]
     }
   ],
   "coordinate_conventions": {
