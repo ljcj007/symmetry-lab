@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {Container,Element,flush} from './test-material-research-ui.mjs';
+import {createResourceLoader,createGroupLoader,fetchJSON} from '../dist/resource-loader.js';
+const read=p=>fs.readFileSync(new URL(p,import.meta.url),'utf8');
+let calls=0,release;const loader=createResourceLoader(()=>{calls++;return new Promise(r=>release=r);});
+const p=loader.get('sg'),q=loader.get('sg');await flush();assert.equal(calls,1);release(42);assert.equal(await p,42);assert.equal(await q,42);assert.equal(await loader.get('sg'),42);assert.equal(calls,1);
+let failed=true;const retry=createResourceLoader(()=>{if(failed)throw Error('offline');return 3;});await assert.rejects(retry.get('a'));failed=false;assert.equal(await retry.get('a'),3);
+await assert.rejects(fetchJSON('never',{timeout:8,fetcher:()=>new Promise(()=>{})}),/超时/);
+const requests=[];const groups=createGroupLoader(async u=>{requests.push(u);return {ok:true,json:async()=>({groups:[1],points:[2]})};});assert.equal(requests.length,0);await Promise.all([groups.get('msg'),groups.get('msg')]);assert.deepEqual(requests,['data/magnetic-groups.json']);assert.equal(groups.peek('sg'),undefined);
+
+globalThis.localStorage={getItem:()=>null,setItem:()=>{}};globalThis.document={compatMode:'CSS1Compat',createElement:t=>new Element(t)};
+let indexCalls=0,failIndex=true;
+globalThis.fetch=async url=>{indexCalls++;assert.match(String(url),/search-index/);if(failIndex)throw Error('offline');return {ok:true,json:async()=>JSON.parse(read('../dist/data/search-index.json'))};};
+const nav=await import('../dist/navigation-ui.js');const home=new Container();await nav.renderNavigationHub({container:home,view:'home'});assert.equal(indexCalls,0,'Home must not fetch any catalogs');assert.match(home.querySelector('#hub-body').innerHTML,/基础入门[\s\S]*物理应用[\s\S]*进阶研究/);
+const search=home.querySelector('#site-search');search.value='GaAs';search.oninput();await flush();assert.equal(indexCalls,1);assert.ok(home.querySelector('#search-retry'));failIndex=false;await home.querySelector('#search-retry').onclick();assert.equal(indexCalls,2);assert.match(home.querySelector('#site-search-results').innerHTML,/GaAs/);await search.onfocus();assert.equal(indexCalls,2);
+const {parseClassroomRoute,buildClassroomHash}=await import('../dist/classroom-ui.js');for(const route of ['compute/shg-flagship','classroom/observables?module=shg-story']){const parsed=parseClassroomRoute(route);assert.equal(parsed.section,'flagship');assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed);}assert.ok(nav.knownTool('compute/shg-flagship'));
+
+const fixture=JSON.parse(read('./fixtures/shg-flagship.json'));assert.equal(createHash('sha256').update(read('../dist/python/shg_lab.py').replace(/\r\n?/g,'\n')).digest('hex'),fixture.sourceSHA256);
+const ui=await import('../dist/shg-flagship.js');const notebook=await import('../dist/material-notebook.js?v=20261031-entry1');
+const canonical=o=>JSON.stringify(Object.keys(o).sort().map(k=>[k,o[k]]));
+const calculations=[];const run=async(action,input)=>{assert.equal(action,'shg_lab');calculations.push(structuredClone(input));const found=fixture.cases.find(x=>canonical(x.input)===canonical(input));assert.ok(found,'A real Python fixture must match the complete input');return structuredClone(found.result);};
+const mount=(calculate=run)=>{const container=new Container(),downloads=[],cancels=[];ui.renderSHGFlagship({container,run:calculate,cancelRun:()=>cancels.push(1),download:(body,name)=>downloads.push({body,name})});return {container,$:s=>container.querySelector(s),downloads,cancels};};
+const change=(v,id,value)=>{const el=v.$('#'+id);el.value=value;el.onchange?.({target:el});};const type=(v,id,value)=>{const el=v.$('#'+id);el.value=value;el.oninput({target:el});};
+const predict=v=>{for(const id of ['si','gaas','bto'])change(v,'shg-p-'+id,'allowed');v.$('#shg-predict').onclick();};
+const v=mount();assert.equal(v.$('#shg-calculate').disabled,true);predict(v);await v.$('#shg-calculate').onclick();assert.equal(calculations.length,3);assert.match(v.$('#shg-results').innerHTML,/需要修正/);assert.ok(v.$('#shg-results').querySelector('svg'));
+assert.deepEqual(fixture.cases.slice(0,3).map(x=>x.result.tensor.dimension),[0,1,3]);
+change(v,'shg-q1','tensor');change(v,'shg-q2','possible');type(v,'shg-explanation','反演将 Si 的电偶极张量全部置零；GaAs 和四方 BaTiO3 仍需测量投影。');v.$('#shg-explain').onclick();assert.match(v.$('#shg-explanation-status').innerHTML,/概念自测已通过/);
+change(v,'shg-counter-prediction','yes');await v.$('#shg-counter').onclick();assert.equal(calculations.length,5);assert.match(v.$('#shg-counter-results').innerHTML,/入射 0°/);
+change(v,'shg-inference','inversion');type(v,'shg-conclusion','GaAs 的两个几何都有 1 个独立分量，正入射为零，45° 非零。');v.$('#shg-complete').onclick();assert.equal(v.$('#shg-export'),null);
+change(v,'shg-inference','geometry');v.$('#shg-complete').onclick();v.$('#shg-export').onclick();const report=JSON.parse(v.downloads[0].body);assert.equal(report.predictions.si,'allowed','Original incorrect prediction remains evidence');assert.equal(report.counterPrediction,'yes');assert.equal(report.assessment.completed,true);assert.equal(report.calculations.length,3);assert.equal(report.counterexamples.length,2);assert.equal(report.counterexamples[0].result.scan.maxIntensity,0);assert.ok(report.counterexamples[1].result.scan.maxIntensity>0);assert.equal(notebook.latestCalculation().result.learningEvidence.flagship.assessment.completed,true);
+change(v,'shg-incidence','20');assert.equal(ui.getSHGFlagshipResult(),null);assert.equal(v.$('#shg-complete').disabled,true);assert.equal(v.$('#shg-results').innerHTML,'');
+let finish;const delayed=mount(()=>new Promise(r=>finish=r));predict(delayed);const pending=delayed.$('#shg-calculate').onclick();await flush();delayed.$('#shg-cancel').onclick();finish(fixture.cases[0].result);await pending;assert.equal(delayed.cancels.length,1);assert.equal(ui.getSHGFlagshipResult(),null);assert.equal(delayed.$('#shg-results').innerHTML,'');
+let end;const away=mount(()=>new Promise(r=>end=r));predict(away);const task=away.$('#shg-calculate').onclick();await flush();away.container.innerHTML='<p>Another page</p>';end(fixture.cases[0].result);await task;assert.equal(away.container.innerHTML,'<p>Another page</p>');
+console.log('Learning experience: deferred catalogs, retry, timeout, deduplication, routes, real SHG evidence, wrong predictions, cancellation, stale results, export and notebook verified.');

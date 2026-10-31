@@ -1,4 +1,4 @@
-import {num} from './response-views.js?v=20261031-frontiers1';
+import {num} from './response-views.js?v=20261031-entry1';
 
 const dimer={sites:2,nUp:1,nDown:1,boundary:'open',hopping:1,interactionU:4,alternatingPotential:0};
 const cloud={hopping:1,phononEnergy:1,siteBias:0,cutoff:6,scanMaxCoupling:1.6,scanPoints:7};

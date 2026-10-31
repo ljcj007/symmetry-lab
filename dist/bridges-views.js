@@ -1,6 +1,6 @@
-import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261031-frontiers1';
-import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261031-frontiers1';
-import {svgMathText} from './math-svg.js?v=20261031-frontiers1';
+import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261031-entry1';
+import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261031-entry1';
+import {svgMathText} from './math-svg.js?v=20261031-entry1';
 export {esc,num,table,notes,sources,controlsHTML,readControls};
 const val=x=>typeof x==='number'?num(x):x===null||x===undefined?'—':typeof x==='object'?JSON.stringify(x):String(x);
 const transitionLabel=x=>({addition:'添加电子',removal:'移除电子',response:'连通响应'}[x]||x);

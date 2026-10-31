@@ -1,4 +1,4 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261031-frontiers1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261031-entry1';
 export {esc,num,table,notes,sources,readControls};
 export function controlsHTML(module,values){const keys=module.id==='order'?['etaX','etaY','etaZ','basisAngle']:module.id==='exchange'?['dz','conventionAngle']:['fieldZ','gammaPhi','basisAngle'];return baseControls({...module,fields:module.fields.map(f=>f.type==='number'&&f.key!=='points'?{...f,step:'any'}:f)},values)+`<details class="pr-sliders"><summary>拖动参数进行对照</summary><p>拖动同步更新上方输入；点击计算后更新结果。</p>${module.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${esc(f.key)}" min="${f.min??-5}" max="${f.max??5}" step="${f.step??.1}" value="${esc(values[f.key])}"></label>`).join('')}</details>`;}
 const value=x=>typeof x==='number'?num(x):x===null||x===undefined?'—':typeof x==='object'?JSON.stringify(x):String(x);

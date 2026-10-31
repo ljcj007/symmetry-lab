@@ -1,5 +1,5 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261031-frontiers1';
-import {quantumCurveSVG} from './quantum-plots.js?v=20261031-frontiers1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261031-entry1';
+import {quantumCurveSVG} from './quantum-plots.js?v=20261031-entry1';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?'是':'否'):typeof x==='number'?num(x):x==null?'未提供':typeof x==='object'?JSON.stringify(x):String(x);
 const labels={exchangeSides:'交换上下两侧',fourfold:'保留四重旋转',inversion:'空间反演',chiral:'几何手性',polar:'允许极向量',Rx:'绕 x 的 π 旋转',Rz:'绕 z 的 π 旋转',T:'时间反演'};

@@ -1,28 +1,33 @@
-import {renderFrontiersView,getFrontiersResult} from './frontiers-ui.js?v=20261031-frontiers1';
-import {renderConnectionsView,getConnectionsResult} from './connections-ui.js?v=20261031-frontiers1';
-import {renderConstructionView,getConstructionResult} from './construction-ui.js?v=20261031-frontiers1';
-import {renderPrinciplesView,getPrinciplesResult} from './principles-ui.js?v=20261031-frontiers1';
-import {renderBridgesView,getBridgesResult} from './bridges-ui.js?v=20261031-frontiers1';
-import {renderPathwaysView,getPathwaysResult} from './pathways-ui.js?v=20261031-frontiers1';
-import {renderSpectroscopyView,getSpectroscopyResult} from './spectroscopy-ui.js?v=20261031-frontiers1';
-import {renderResponseMaterialsView,getResponseMaterialsResult} from './response-materials-ui.js?v=20261031-frontiers1';
-import {renderPointgroupView,getPointgroupResult} from './pointgroup-ui.js?v=20261031-frontiers1';
-import {renderSymmetryCourseView,getSymmetryCourseResult} from './symmetry-course-ui.js?v=20261031-frontiers1';
-import {renderLieGroupView,getLieGroupResult} from './lie-group-ui.js?v=20261031-frontiers1';
-import {renderObservablesView,getObservablesResult} from './observables-ui.js?v=20261031-frontiers1';
-import {renderStructureDynamicsView,getStructureDynamicsResult} from './structure-dynamics-ui.js?v=20261031-frontiers1';
-import {renderMaterialResearchView,getMaterialResearchResult} from './material-research-ui.js?v=20261031-frontiers1';
-import {renderCoupledMaterialsView,getCoupledMaterialsResult} from './coupled-materials-ui.js?v=20261031-frontiers1';
-import {renderElectronicMaterialsView,getElectronicMaterialsResult} from './electronic-materials-ui.js?v=20261031-frontiers1';
-import {renderQuantumMaterialsView,getQuantumMaterialsResult} from './quantum-materials-ui.js?v=20261031-frontiers1';
+import {createResourceLoader} from './resource-loader.js?v=20261031-entry1';
+const courseDefinitions={
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261031-entry1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+,'connections':{load:()=>import('./connections-ui.js?v=20261031-entry1'),render:'renderConnectionsView',result:'getConnectionsResult'}
+,'construction':{load:()=>import('./construction-ui.js?v=20261031-entry1'),render:'renderConstructionView',result:'getConstructionResult'}
+,'principles':{load:()=>import('./principles-ui.js?v=20261031-entry1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
+,'bridges':{load:()=>import('./bridges-ui.js?v=20261031-entry1'),render:'renderBridgesView',result:'getBridgesResult'}
+,'pathways':{load:()=>import('./pathways-ui.js?v=20261031-entry1'),render:'renderPathwaysView',result:'getPathwaysResult'}
+,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261031-entry1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
+,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261031-entry1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
+,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261031-entry1'),render:'renderPointgroupView',result:'getPointgroupResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261031-entry1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'lie':{load:()=>import('./lie-group-ui.js?v=20261031-entry1'),render:'renderLieGroupView',result:'getLieGroupResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261031-entry1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261031-entry1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'material-research':{load:()=>import('./material-research-ui.js?v=20261031-entry1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261031-entry1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261031-entry1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
+,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261031-entry1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
+,'flagship':{load:()=>import('./shg-flagship.js?v=20261031-entry1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
+};
+const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
-export const classroomSections=[{id:'frontiers',slug:'frontiers',title:'层群、手性与多体拓扑'},{id:'connections',slug:'connections',title:'同粒子、缺陷与互易响应'},{id:'construction',slug:'construction',title:'表示构造、超胞与能带连接'},{id:'principles',slug:'principles',title:'对称性、破缺与守恒'},{id:'bridges',slug:'bridges',title:'多体谱、极化子与量子态'},{id:'pathways',slug:'pathways',title:'位点、散射、畴壁与关联'},{id:'spectroscopy',slug:'spectroscopy',title:'磁共振、超导结与多重态光谱'},{id:'response-materials',slug:'response',title:'横向响应、器件与多电子态'},{id:'quantum-materials',slug:'quantum',title:'轨道、量子几何与电子输运'},{id:'electronic-materials',slug:'electronic',title:'电子配对、非线性光学与能带展开'},{id:'coupled-materials',slug:'mechanisms',title:'畸变、磁激发与热膨胀'},{id:'material-research',slug:'research',title:'材料分析专题'},{id:'pointgroups',slug:'pointgroups',title:'基础与点群'},{id:'academy',slug:'crystal',title:'晶体对称与内部自由度'},{id:'lie',slug:'lie',title:'连续群与表示'},{id:'observables',slug:'observables',title:'材料物性与光谱'},{id:'dynamics',slug:'structure-dynamics',title:'结构、相变与实验'}];
+export const classroomSections=[{id:'flagship',slug:'shg-flagship',title:'SHG 旗舰实验'},{id:'frontiers',slug:'frontiers',title:'层群、手性与多体拓扑'},{id:'connections',slug:'connections',title:'同粒子、缺陷与互易响应'},{id:'construction',slug:'construction',title:'表示构造、超胞与能带连接'},{id:'principles',slug:'principles',title:'对称性、破缺与守恒'},{id:'bridges',slug:'bridges',title:'多体谱、极化子与量子态'},{id:'pathways',slug:'pathways',title:'位点、散射、畴壁与关联'},{id:'spectroscopy',slug:'spectroscopy',title:'磁共振、超导结与多重态光谱'},{id:'response-materials',slug:'response',title:'横向响应、器件与多电子态'},{id:'quantum-materials',slug:'quantum',title:'轨道、量子几何与电子输运'},{id:'electronic-materials',slug:'electronic',title:'电子配对、非线性光学与能带展开'},{id:'coupled-materials',slug:'mechanisms',title:'畸变、磁激发与热膨胀'},{id:'material-research',slug:'research',title:'材料分析专题'},{id:'pointgroups',slug:'pointgroups',title:'基础与点群'},{id:'academy',slug:'crystal',title:'晶体对称与内部自由度'},{id:'lie',slug:'lie',title:'连续群与表示'},{id:'observables',slug:'observables',title:'材料物性与光谱'},{id:'dynamics',slug:'structure-dynamics',title:'结构、相变与实验'}];
 export const classroomPathways=[
   {id:'foundations',section:'pointgroups',title:'基础与表示',summary:'从对称操作、群与特征标开始，建立读懂表示的语言。',level:'入门',prerequisite:'向量与矩阵基础',links:[['三层对称性诊断','module=audit'],['置换群与同粒子统计','module=statistics'],['对称适应基与统一选择定则','module=salc'],['32 点群与特征标',''],['对称操作演示','tab=lab'],['概念练习','tab=quiz']]},
   {id:'crystal',section:'academy',track:'space',title:'晶体对称',summary:'把点群推广到三维周期结构，理解平移、螺旋轴和滑移面。',level:'基础 → 进阶',prerequisite:'点群与表示',links:[['层群、表面与界面对称性','module=layers'],['螺旋、滑移与动量简并','module=nonsymmorphic'],['对称性推导工坊','module=workshop'],['从 Wyckoff 位点到能带表示','module=bandrep'],['器件量子输运','module=device'],['量子几何与拓扑诊断','module=geometry'],['超胞与能带展开','module=unfold'],['能带相容关系与连接','module=bands'],['空间群与 Bloch 相位','track=space'],['Seitz 操作实验','tab=lab&experiment=seitz'],['典型材料与三维结构','tab=materials']]},
-  {id:'observables',section:'observables',title:'材料物性与光谱',summary:'从原胞振动、选择定则到物性张量，用材料案例检验对称性的预测。',level:'基础 → 应用',prerequisite:'点群、特征标与矩阵',links:[['手性、极性与伪对称实验','module=chirality'],['互易关系与响应约束','module=reciprocity'],['多体谱函数与响应','module=manybody'],['非弹性散射与动态结构因子','module=scattering'],['多重态光谱与偏振选择定则','module=spectra'],['反常霍尔与横向热电','module=hall'],['跨模块项目作业','module=hall&tab=project'],['电子输运与热电','module=transport'],['非线性光学与 SHG','module=shg'],['准谐近似与热膨胀','module=qha'],['声子热力学','module=thermo'],['晶体振动与光谱','lesson=mechanical-modes'],['物性张量与响应','lesson=neumann'],['交互实验','tab=lab'],['分步练习','tab=derive'],['材料案例','tab=cases']]},
+  {id:'observables',section:'observables',title:'材料物性与光谱',summary:'从原胞振动、选择定则到物性张量，用材料案例检验对称性的预测。',level:'基础 → 应用',prerequisite:'点群、特征标与矩阵',links:[['Si、GaAs 与 BaTiO₃ · SHG 旗舰实验','module=shg-story'],['手性、极性与伪对称实验','module=chirality'],['互易关系与响应约束','module=reciprocity'],['多体谱函数与响应','module=manybody'],['非弹性散射与动态结构因子','module=scattering'],['多重态光谱与偏振选择定则','module=spectra'],['反常霍尔与横向热电','module=hall'],['跨模块项目作业','module=hall&tab=project'],['电子输运与热电','module=transport'],['非线性光学与 SHG','module=shg'],['准谐近似与热膨胀','module=qha'],['声子热力学','module=thermo'],['晶体振动与光谱','lesson=mechanical-modes'],['物性张量与响应','lesson=neumann'],['交互实验','tab=lab'],['分步练习','tab=derive'],['材料案例','tab=cases']]},
   {id:'structure-dynamics',section:'dynamics',title:'结构、相变与实验',summary:'连接序参量、极性畴、衍射消光和 Phonopy 真实数据导入。',level:'基础 → 应用',prerequisite:'空间群、振动与矩阵',links:[['序参量流形与拓扑缺陷','module=defects'],['有限波矢有序与超胞','module=wavevector'],['序参量与对称性破缺','module=order'],['电子—声子耦合与极化子','module=polaron'],['畴壁与局域态','module=domainwall'],['结构畸变分解与模式耦合','module=distortion'],['声子模式识别与冻结模','module=modes'],['相变与畴','lesson=landau-stability'],['衍射相位与消光','lesson=structure-factor'],['声子数据与软模','lesson=phonopy-files'],['交互实验','tab=lab'],['分步练习','tab=derive'],['材料路线','tab=cases']]},
   {id:'spin',section:'academy',track:'double',title:'自旋与扩展对称',summary:'区分旋量双覆盖、时间反演、颜色置换与独立自旋转动。',level:'进阶',prerequisite:'点群、空间群与线性代数',links:[['射影表示与多体 SPT','module=spt'],['键对称性、磁交换与 DMI','module=exchange'],['密度矩阵、纠缠与退相干','module=density'],['Hubbard 小团簇','module=hubbard'],['磁共振与有效自旋','module=resonance'],['超导结与 Andreev 反射','module=andreev'],['多电子晶场与多重态','module=multiplet'],['晶场、轨道与 Jahn–Teller','module=orbitals'],['超导配对与 BdG','module=pairing'],['磁交换与自旋波','module=magnons'],['双群与旋量','track=double'],['磁群与共表示','track=magnetic'],['色群与标签置换','track=color'],['自旋点群与空间群','track=spin']]},
   {id:'continuous',section:'lie',track:'continuous',title:'连续群与物理',summary:'认识 SU(2)、SU(3) 的生成元、权图以及量子态的连续变换。',level:'基础 → 进阶',prerequisite:'复数、矩阵与量子态',links:[['连续对称性与守恒量','module=conservation'],['生成元与物理应用','track=continuous'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['SU(3) 与权图','tab=lab&experiment=su3']]},
@@ -30,6 +35,7 @@ export const classroomPathways=[
 ];
 const queryFields=['module','tab','lesson','experiment','preset','track','material','exercise','group','level','project'];
 const specialistModules={
+ 'shg-story':{section:'flagship',pathway:'observables',route:'shg-flagship'},
  layers:{section:'frontiers',pathway:'crystal',route:'layer-symmetry-lab'},
  chirality:{section:'frontiers',pathway:'observables',route:'chirality-polarity-lab'},
  spt:{section:'frontiers',pathway:'spin',route:'manybody-spt-lab'},
@@ -86,8 +92,9 @@ export function parseClassroomRoute(route){
   else if(path==='classroom')result={section:'overview',pathway:'overview'};
   else {
     const slug=path.startsWith('classroom/')?path.slice(10):path;
-    const legacy={frontiers:'crystal',connections:'foundations',construction:'foundations',principles:'structure-dynamics',pointgroups:'foundations',academy:'crystal',lie:'continuous',research:'structure-dynamics',mechanisms:'structure-dynamics',electronic:'spin',quantum:'spin',response:'observables',spectroscopy:'spin',pathways:'crystal',bridges:'observables'};
+    const legacy={'shg-flagship':'observables',frontiers:'crystal',connections:'foundations',construction:'foundations',principles:'structure-dynamics',pointgroups:'foundations',academy:'crystal',lie:'continuous',research:'structure-dynamics',mechanisms:'structure-dynamics',electronic:'spin',quantum:'spin',response:'observables',spectroscopy:'spin',pathways:'crystal',bridges:'observables'};
     result=defaultsFor(legacy[slug]||slug);if(!result)return null;
+    if(slug==='shg-flagship')result.module='shg-story';
     if(slug==='research')result.module='modes';
     if(slug==='mechanisms')result.module='distortion';
     if(slug==='electronic')result.module='pairing';
@@ -110,7 +117,7 @@ export function parseClassroomRoute(route){
   return result;
 }
 export function buildClassroomHash(selection={}){
-  const module=specialist(selection.module),specialSection=['frontiers','connections','construction','principles','bridges','pathways','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(selection.section);
+  const module=specialist(selection.module),specialSection=['flagship','frontiers','connections','construction','principles','bridges','pathways','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(selection.section);
   const pathway=selection.pathway||module?.pathway||({pointgroups:'foundations',academy:'crystal',lie:'continuous'}[selection.section])||'overview';
   const path=selection.calculationOnly?(specialSection?'compute/'+(module?.route||(selection.section==='coupled-materials'?'distortion-modes':'phonon-modes')):selection.section==='dynamics'?'compute/'+(['phase','diffraction','phonopy'].includes(selection.experiment)?selection.experiment:'phase'):selection.section==='observables'?'compute/'+(selection.experiment==='tensors'?'tensors':'phonons'):'compute/lie/'+encodeURIComponent(selection.experiment||'su3_cg')):pathway==='overview'?'classroom':'classroom/'+pathway;
   const params=new URLSearchParams();
@@ -122,9 +129,13 @@ export function resolveClassroomRoute(route,last='pointgroups'){
   return parseClassroomRoute(route)?.section||null;
 }
 export const classroomHash=section=>'#classroom/'+(classroomSections.find(item=>item.id===section)||classroomSections.find(item=>item.id==='pointgroups')).slug;
-const renderers={frontiers:renderFrontiersView,connections:renderConnectionsView,construction:renderConstructionView,principles:renderPrinciplesView,bridges:renderBridgesView,pathways:renderPathwaysView,spectroscopy:renderSpectroscopyView,'response-materials':renderResponseMaterialsView,'quantum-materials':renderQuantumMaterialsView,'electronic-materials':renderElectronicMaterialsView,'coupled-materials':renderCoupledMaterialsView,'material-research':renderMaterialResearchView,pointgroups:renderPointgroupView,academy:renderSymmetryCourseView,lie:renderLieGroupView,observables:renderObservablesView,dynamics:renderStructureDynamicsView};
-const results={frontiers:getFrontiersResult,connections:getConnectionsResult,construction:getConstructionResult,principles:getPrinciplesResult,bridges:getBridgesResult,pathways:getPathwaysResult,spectroscopy:getSpectroscopyResult,'response-materials':getResponseMaterialsResult,'quantum-materials':getQuantumMaterialsResult,'electronic-materials':getElectronicMaterialsResult,'coupled-materials':getCoupledMaterialsResult,'material-research':getMaterialResearchResult,pointgroups:getPointgroupResult,academy:getSymmetryCourseResult,lie:getLieGroupResult,observables:getObservablesResult,dynamics:getStructureDynamicsResult};
-export function getClassroomResult(section){const course=results[section]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
+const renderers=Object.fromEntries(Object.keys(courseDefinitions).map(section=>[section,async options=>{
+ const host=options.container;host.innerHTML='<div class="loading-card" role="status">正在读取本节课程…</div>';const marker=host.firstElementChild;
+ const current=()=>host.isConnected!==false&&host.firstElementChild===marker;
+ try{const module=await courseModules.get(section);if(current())return module[courseDefinitions[section].render](options);}
+ catch(error){if(current()){host.innerHTML='<div class="notice error">课程暂未载入。'+esc(error.message)+' <button class="secondary" data-course-retry>重试本节课程</button></div>';host.querySelector('[data-course-retry]').onclick=()=>renderers[section](options);}}
+}]));
+export function getClassroomResult(section){const course=courseModules.peek(section)?.[courseDefinitions[section]?.result]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
 
 export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,courseRenderers=renderers}){
   let selection=typeof route==='string'?parseClassroomRoute(route):route;
@@ -134,7 +145,7 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   const pathLink=(id,query='')=>'#classroom/'+id+(query?'?'+query:'');
   const directory=`<nav class="classroom-directory" aria-label="学习路线与主题"><a href="#classroom" data-course-route="#classroom" class="classroom-all ${overview?'active':''}">学习总览</a>${classroomPathways.map((item,index)=>`<section><a href="${pathLink(item.id)}" data-course-route="${pathLink(item.id)}" class="classroom-path ${selection.pathway===item.id?'active':''}" ${selection.pathway===item.id?'aria-current="page"':''}><small>0${index+1}</small><strong>${item.title}</strong></a>${selection.pathway===item.id?`<div class="classroom-topics">${item.links.map(([title,query])=>`<a href="${esc(pathLink(item.id,query))}" data-course-route="${esc(pathLink(item.id,query))}">${esc(title)}</a>`).join('')}</div>`:''}</section>`).join('')}</nav>`;
   const cards=classroomPathways.map((item,index)=>`<a class="classroom-path-card" href="${pathLink(item.id)}" data-course-route="${pathLink(item.id)}"><span class="classroom-card-number">0${index+1}<small>${item.level}</small></span><h2>${item.title}</h2><p>${item.summary}</p><div>建议基础：${item.prerequisite}</div><strong>进入路线 →</strong></a>`).join('');
-  container.innerHTML=`<div class="classroom-page ${embedded?'classroom-embedded':'classroom-shell'}">${embedded?'':directory}<div class="classroom-main">${overview?`<header class="classroom-overview"><span>按知识路径学习</span><h2>从第一种对称操作，走到多体重耦合。</h2><p>先选择路线，再在同一单元中阅读、操作和练习。点群与空间群是空间层级，双值表示、磁性与内部自由度在各自主题中说明。</p></header><div class="classroom-path-grid">${cards}</div><aside class="classroom-next"><h3>已经有具体计算问题？</h3><p>计算中心提供完整参数；课程中的实验使用相同计算核心，并附教学预设。</p><a href="#compute">打开计算中心 →</a></aside>`:`${embedded?'':`<div class="classroom-course-heading"><span>${esc(pathway?.level||'课程')} · 建议基础：${esc(pathway?.prerequisite||'线性代数')}</span><a href="#classroom" data-course-route="#classroom">全部路线</a></div>`}<section id="classroom-course" aria-label="${esc(pathway?.title||'计算工具')}"></section>`}</div></div>`;
+  container.innerHTML=`<div class="classroom-page ${embedded?'classroom-embedded':'classroom-shell'}">${embedded?'':directory}<div class="classroom-main">${overview?`<header class="classroom-overview"><span>按知识路径学习</span><h2>从第一种对称操作，走到多体重耦合。</h2><p>先选择路线，再在同一单元中阅读、操作和练习。点群与空间群是空间层级，双值表示、磁性与内部自由度在各自主题中说明。</p></header><aside class="classroom-next"><h3>从一个完整实验开始</h3><a href="#classroom/observables?module=shg-story">为什么 Si、GaAs 与 BaTiO₃ 的 SHG 不同？预测 → 计算 → 解释 → 反例</a></aside><div class="classroom-path-grid">${cards}</div><aside class="classroom-next"><h3>已经有具体计算问题？</h3><p>计算中心提供完整参数；课程中的实验使用相同计算核心，并附教学预设。</p><a href="#compute">打开计算中心 →</a></aside>`:`${embedded?'':`<div class="classroom-course-heading"><span>${esc(pathway?.level||'课程')} · 建议基础：${esc(pathway?.prerequisite||'线性代数')}</span><a href="#classroom" data-course-route="#classroom">全部路线</a></div>`}<section id="classroom-course" aria-label="${esc(pathway?.title||'计算工具')}"></section>`}</div></div>`;
   const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
   const move=(hash,options)=>{if(!current())return;if(onNavigate)onNavigate(hash,options);else {const next=parseClassroomRoute(hash);if(next&&next.section!=='overview')onSection(next.section);}};
   root.querySelectorAll('[data-course-route]').forEach(link=>link.onclick=event=>{event?.preventDefault();move(link.dataset.courseRoute);});

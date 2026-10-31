@@ -8,10 +8,10 @@ const fixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/spectroscopy.json'
 const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};globalThis.document={createElement:t=>new Element(t)};
 globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/spectroscopy-ui.js');
-const views=await import('../dist/spectroscopy-views.js?v=20261031-frontiers1');
-const projects=await import('../dist/response-projects.js?v=20261031-frontiers1');
-const notebook=await import('../dist/material-notebook.js?v=20261031-frontiers1');
-const templates=(await import('../dist/spectroscopy-projects.js?v=20261031-frontiers1')).spectroscopyAssignments;
+const views=await import('../dist/spectroscopy-views.js?v=20261031-entry1');
+const projects=await import('../dist/response-projects.js?v=20261031-entry1');
+const notebook=await import('../dist/material-notebook.js?v=20261031-entry1');
+const templates=(await import('../dist/spectroscopy-projects.js?v=20261031-entry1')).spectroscopyAssignments;
 let chosen=data.modules[0].presets[0].id;const calls=[];
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[chosen]);};
 const mount=async(selection={},runner=run)=>{const container=new Container(),downloads=[],navigations=[],cancelled=[];await ui.renderSpectroscopyView({container,selection,run:runner,download:(body,name)=>downloads.push({body,name}),cancelRun:()=>cancelled.push(true),onNavigate:p=>navigations.push(p)});return{container,downloads,navigations,cancelled,$:s=>container.querySelector(s)};};
