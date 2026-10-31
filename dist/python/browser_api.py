@@ -1,5 +1,5 @@
 """Shared, allowlisted JSON API for CPython and the browser Worker."""
-TOOLS = ('statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'salc_lab', 'wavevector_lab', 'nonsymmorphic_lab', 'symmetry_grading', 'order_parameter_lab', 'exchange_symmetry_lab', 'conservation_lab', 'manybody_spectra_lab', 'polaron_lab', 'density_matrix_lab', 'symmetry_workshop', 'band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab', 'analyze', 'induce', 'product', 'match_bands', 'magnetictb',
+TOOLS = ('layer_symmetry_lab', 'chirality_polarity_lab', 'manybody_spt_lab', 'symmetry_linked', 'frontier_inverse', 'statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'salc_lab', 'wavevector_lab', 'nonsymmorphic_lab', 'symmetry_grading', 'order_parameter_lab', 'exchange_symmetry_lab', 'conservation_lab', 'manybody_spectra_lab', 'polaron_lab', 'density_matrix_lab', 'symmetry_workshop', 'band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab', 'analyze', 'induce', 'product', 'match_bands', 'magnetictb',
          'crystkit', 'symbolic', 'carat', 'crystkit_ext',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
@@ -13,6 +13,9 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Unknown calculation tool')
     if not isinstance(payload, dict):
         raise ValueError('Calculation input must be a JSON object')
+    if tool in ('layer_symmetry_lab', 'chirality_polarity_lab', 'manybody_spt_lab', 'symmetry_linked', 'frontier_inverse'):
+        from symmetry_frontiers import run as calculate
+        return calculate(tool, payload)
     if tool in ('statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade'):
         from symmetry_connections import run as calculate
         return calculate(tool, payload)

@@ -1,0 +1,10 @@
+.frontiers-page .ft-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.frontiers-page .ft-vectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.frontiers-page fieldset{min-width:0;border:1px solid var(--line,#dce5dc);border-radius:8px;padding:.8rem}
+.frontiers-page .ft-check{display:flex;align-items:center;gap:.7rem}
+.frontiers-page .ft-check input{width:1.15rem;height:1.15rem;flex-shrink:0}
+.frontiers-page .ct-panel{overflow-wrap:anywhere}
+.frontiers-page .ct-panel input[type=range]{padding:0}
+@media(max-width:1050px){.frontiers-page .ft-vectors{grid-template-columns:1fr}}
+@media(max-width:800px){.frontiers-page .ft-pair{grid-template-columns:1fr}}
+.frontiers-page .ft-pair svg text{font-size:24px}

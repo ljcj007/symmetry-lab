@@ -88,15 +88,15 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "e89334d0801cb174e90cee2231a3649db0269e2be6f8b0a5afda7cfdd327eafd"
+      "sha256": "8a8c51c24f5992e892a6f27161445b97e81d208f3283abbfb9c9a47cd068e818"
     },
     {
       "path": "dist/app.js",
-      "sha256": "ea31d002f79113b7778f48d39ba0c1d6d612a92767e0515b13e67e7f4cf5d701"
+      "sha256": "bffc32a70a0f95847d2df7869402fbb91f942388c6748298e77479d0a527c2f8"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "c20c0b5298fa81233617a73ef83c66d5aaa41b5036bae52a9335857eb0fd7ed1"
+      "sha256": "9758c05b214f9edb3916254cd43d4d7c7b8bc82b824a8656d787a044ee0ff942"
     },
     {
       "path": "dist/data/device-transport-content.json",
@@ -196,27 +196,27 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "cd4c6a62672ec33b44c5f91a81a2b9c65a05e6a474c9ae87c1630ae775ec3d72"
+      "sha256": "e7def5fe99e36be274d3d6e0d807ad7bfc14cb1cceca2f98afc99be4080e04be"
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "80bc674167a4ed372a412c88b8058738f631556c790c64213313d78064a6fdad"
+      "sha256": "aca27450be069188fb4a6b4fd11ada93c5fa36ffeda139db3ea52e61a63b6079"
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "6b5448ec31560bcab7f2982fbfc43f3e9683a76d6d8efc60e0da928884c7b476"
+      "sha256": "aeae4a0d2322a4d1ca0ac7424e719858bc90931b5c4ecba4738ec7443da1ebef"
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "b9f72d70705921a08c68ae497a3b91a274dc73d9eb8c58f8dd72e6fdcbe10fde"
+      "sha256": "1aad7bfe5a067aaf5b2c9e2c774d127a9004774b7a2c0f0b4a9d62d27115063f"
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "1dc1ca994b664974671aa2e854c5656e364851ba8a6e767e3d4087bc04e73349"
+      "sha256": "f65f25731f5ca82999563f5a64b0144c4838b7d0d403f6ef8aaed246685614cf"
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "6f5c0acf967448a8c8a1071d3e9141b2c0e3826cdd03f91697b978fff1f729ad"
+      "sha256": "2dc46b5f9046ead30e6eb7bf6ab6c5ff1b972ff6437688cb2251529236237e77"
     },
     {
       "path": "dist/python/device_transport_lab.py",
@@ -232,7 +232,7 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "704426f9a0d3396ce5cefa39729d7408ec3fdff3ee5635553063866a02a34629"
+      "sha256": "9bdda7b701c14b17fb67a5b727f39539b02998664d4aa081dfbd63527313e649"
     },
     {
       "path": "dist/response-materials.css",
@@ -240,15 +240,15 @@
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "d62c472c52cfc628fdbb27b84f5aa7178e15800132c5a38eff473d2a2997682d"
+      "sha256": "fa625bf09da86c3cec42e52f9cb5bc10522d2d881282c8f44343f91bb5481288"
     },
     {
       "path": "dist/response-views.js",
-      "sha256": "8a914af4a6bcb030a85f56c1043419987cd4b88af9bbfec35327eb76ab3c5781"
+      "sha256": "612720955058872922a17964784a034c05786439bc70e8c3836476420fd6f9bd"
     },
     {
       "path": "package.json",
-      "sha256": "ccc664c17e35360762086509c648d8b6a541921f393e2bfeb2a6db1b29228940"
+      "sha256": "ce833db6e0db2857e92dd584abba0b8f1000f8ca26ed482162bfabdc32769e85"
     },
     {
       "path": "scripts/build-response-catalog.py",
@@ -280,7 +280,7 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "c09c821448ab07a95d9702e0814498cd52a5523e89eec8fb2e4ff0cad54bba0b"
+      "sha256": "fe49bd69199fd83604b26fc7a54768c966d048e6dae569af10893611286d7ff4"
     }
   ],
   "provenanceMaintenance": {

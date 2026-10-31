@@ -1,4 +1,4 @@
-import {num} from './response-views.js?v=20261031-connections1';
+import {num} from './response-views.js?v=20261031-frontiers1';
 const local={copies:1,targetIrrep:'E',seedSite:0,operatorType:'dipole',polarizationAngle:0,operatorScale:1,hop:-1,crossHop:.3,copyOffset:.5,anisotropy:.4,retainC4:1,retainMirror:1};
 const repeated={...local,copies:2,operatorType:'scalar',crossHop:.6,copyOffset:.8};
 const star={period:4,qx:1,qy:0,amplitude:1,transverseRatio:1,phaseDegrees:0,relativePhaseDegrees:0,pattern:'single'};

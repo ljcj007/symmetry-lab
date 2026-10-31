@@ -1,5 +1,5 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261031-connections1';
-import {heatmapSVG} from './quantum-plots.js?v=20261031-connections1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261031-frontiers1';
+import {heatmapSVG} from './quantum-plots.js?v=20261031-frontiers1';
 export {esc,num,table,notes,sources,readControls};
 const ints=new Set(['copies','seedSite','period','qx','qy','points']);
 export function controlsHTML(module,values){const keys={salc:['polarizationAngle','anisotropy'],wavevector:['phaseDegrees','relativePhaseDegrees','transverseRatio'],nonsymmorphic:['kFraction','mass','zeeman']}[module.id]||[];return baseControls({...module,fields:module.fields.map(f=>f.type==='number'&&!ints.has(f.key)?{...f,step:'any'}:f)},values)+`<details class="ct-sliders"><summary>拖动参数进行对照</summary><p>拖动同步更新输入；点击计算后更新结果。</p>${module.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${esc(f.key)}" min="${f.min??-5}" max="${f.max??5}" step="${f.step??.1}" value="${esc(values[f.key])}"></label>`).join('')}</details>`;}

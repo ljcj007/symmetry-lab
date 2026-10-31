@@ -530,3 +530,13 @@ python scripts/test-spglib-wasm.py
 计算使用浏览器 Python，新增核心 `dist/python/symmetry_connections.py`。课程与案例位于 `dist/data/connections-materials.json`；独立诊断入口 `#compute/symmetry-audit`，材料入口 `#atlas/connections`。
 
 模型范围、变量约定、验证和数据保存说明见 [同粒子、缺陷与互易响应](dist/docs/connections.md)。这批功能不宣称任意同伦群、任意 S_n 表示或真实材料参数拟合。
+
+
+## 层群、手性与多体 SPT（20261031-frontiers1）
+
+新增三组课堂、18 个交互预设、36 个分步练习步骤、9 个材料背景/模型案例和 3 个跨模块项目，接入全部原有课堂、计算中心和材料图谱。共享三空间操作联动、容差与伪对称证据、逆向候选集合判分和有限扰动路径。沿用放大字号、公式词典与浏览器本地计算。
+
+- [模型、约定、边界与验证](dist/docs/frontiers.md)
+- 图谱入口：`#atlas/frontiers`；计算入口：`#compute/layer-symmetry-lab`、`#compute/chirality-polarity-lab`、`#compute/manybody-spt-lab`。
+- 层模型只报告立方母体继承操作；手性模型限有限点集；SPT 使用 N=3–5 的精确对角化，只有 AKLT 点输出解析虚拟射影证据。未把有限模型或有限采样伪装成任意晶体分类或无限链相图。
+- 专项验证：`npm run test:frontiers`。

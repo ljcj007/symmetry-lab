@@ -1,4 +1,4 @@
-import {crystalSpan} from './crystal-notation.js?v=20261031-connections1';
+import {crystalSpan} from './crystal-notation.js?v=20261031-frontiers1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const sample = `NaCl conventional cell

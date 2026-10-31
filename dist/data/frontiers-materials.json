@@ -1,0 +1,1455 @@
+{
+  "release": "20261031-frontiers1",
+  "modules": [
+    {
+      "id": "layers",
+      "title": "层群、表面与界面对称性",
+      "summary": "从三维母体切出有限薄层，保留面内周期，逐原子检查边界、元素与堆垛的作用。",
+      "pathway": "crystal",
+      "route": "layer-symmetry-lab",
+      "action": "layer_symmetry_lab",
+      "fields": [
+        {
+          "key": "face",
+          "label": "母体切面",
+          "type": "select",
+          "default": "001",
+          "options": [
+            [
+              "001",
+              "(001) 方形面"
+            ],
+            [
+              "110",
+              "(110) 矩形面"
+            ],
+            [
+              "111",
+              "(111) 三角面"
+            ]
+          ]
+        },
+        {
+          "key": "layers",
+          "label": "有限原子层数",
+          "type": "number",
+          "default": 4,
+          "min": 1,
+          "max": 6,
+          "step": 1
+        },
+        {
+          "key": "bulk",
+          "label": "层成分",
+          "type": "select",
+          "default": "mono",
+          "options": [
+            [
+              "mono",
+              "相同元素层"
+            ],
+            [
+              "alternating",
+              "A/B 交替层"
+            ]
+          ]
+        },
+        {
+          "key": "cut",
+          "label": "交替层切割起点",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "step": 1
+        },
+        {
+          "key": "interface",
+          "label": "界面标签",
+          "type": "select",
+          "default": "same",
+          "options": [
+            [
+              "same",
+              "同质两侧"
+            ],
+            [
+              "hetero",
+              "异质两侧"
+            ]
+          ]
+        },
+        {
+          "key": "termination",
+          "label": "表面终止",
+          "type": "select",
+          "default": "same",
+          "options": [
+            [
+              "same",
+              "保留原层标签"
+            ],
+            [
+              "marker",
+              "上表面标记 C"
+            ]
+          ]
+        },
+        {
+          "key": "registry",
+          "label": "上半部分错位（第一面内基矢）",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "key": "pathEnd",
+          "label": "错位路径终点",
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        }
+      ],
+      "presets": [
+        {
+          "id": "layer-square",
+          "title": "对称 (001) 四层",
+          "input": {}
+        },
+        {
+          "id": "layer-110",
+          "title": "(110) 面内矩形",
+          "input": {
+            "face": "110"
+          }
+        },
+        {
+          "id": "layer-111",
+          "title": "(111) 面内三角",
+          "input": {
+            "face": "111"
+          }
+        },
+        {
+          "id": "layer-surface",
+          "title": "只标记上表面",
+          "input": {
+            "termination": "marker"
+          }
+        },
+        {
+          "id": "layer-interface",
+          "title": "异质错位界面",
+          "input": {
+            "interface": "hetero",
+            "registry": 0.23
+          }
+        },
+        {
+          "id": "layer-alternating",
+          "title": "奇数交替层与切割起点",
+          "input": {
+            "bulk": "alternating",
+            "layers": 5,
+            "cut": 1
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "layers-predict-0",
+          "preset": "layer-square",
+          "question": "对称四层薄膜允许交换上下表面吗？",
+          "choices": [
+            "允许",
+            "不允许"
+          ],
+          "answer": 0,
+          "explanation": "本预设的两侧元素与几何相同；逐原子配准找到翻转法向的操作。"
+        },
+        {
+          "id": "layers-predict-1",
+          "preset": "layer-surface",
+          "question": "仅上表面标记后，交换两侧的操作会怎样？",
+          "choices": [
+            "仍然全部保留",
+            "不再保留"
+          ],
+          "answer": 1,
+          "explanation": "表面 C 与另一侧元素不等价，原子标签匹配失败。"
+        }
+      ]
+    },
+    {
+      "id": "chirality",
+      "title": "手性、极性与伪对称实验",
+      "summary": "镜像配准、极向量约束与距离容差分别检验；再用独立偏振模型理解往返旋转。",
+      "pathway": "observables",
+      "route": "chirality-polarity-lab",
+      "action": "chirality_polarity_lab",
+      "fields": [
+        {
+          "key": "motif",
+          "label": "有限结构原型",
+          "type": "select",
+          "default": "d3",
+          "options": [
+            [
+              "d3",
+              "D3 手性非极性"
+            ],
+            [
+              "pyramid",
+              "C4v 极性锥体"
+            ],
+            [
+              "octahedron",
+              "Oh 八面体"
+            ],
+            [
+              "tetra",
+              "四个不同标签的位点"
+            ]
+          ]
+        },
+        {
+          "key": "handedness",
+          "label": "构型与其镜像",
+          "type": "select",
+          "default": 1,
+          "options": [
+            [
+              1,
+              "原构型"
+            ],
+            [
+              -1,
+              "镜像构型"
+            ]
+          ]
+        },
+        {
+          "key": "noise",
+          "label": "确定性位移幅度",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 0.12,
+          "step": 0.005
+        },
+        {
+          "key": "tolerance",
+          "label": "候选操作的距离容差",
+          "type": "number",
+          "default": 0.01,
+          "min": 1e-06,
+          "max": 0.3,
+          "step": 0.005
+        },
+        {
+          "key": "optical",
+          "label": "独立往返偏振模型",
+          "type": "select",
+          "default": "natural",
+          "options": [
+            [
+              "natural",
+              "自然旋光"
+            ],
+            [
+              "faraday",
+              "Faraday 旋转"
+            ]
+          ]
+        },
+        {
+          "key": "angle",
+          "label": "单程旋转角（度，教学输入）",
+          "type": "number",
+          "default": 20,
+          "min": -90,
+          "max": 90,
+          "step": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "chiral-d3",
+          "title": "手性但无极向量方向",
+          "input": {}
+        },
+        {
+          "id": "chiral-polar",
+          "title": "极性但含镜面",
+          "input": {
+            "motif": "pyramid"
+          }
+        },
+        {
+          "id": "chiral-centro",
+          "title": "有反演的八面体",
+          "input": {
+            "motif": "octahedron"
+          }
+        },
+        {
+          "id": "chiral-tetra",
+          "title": "四个不同标签的手性构型",
+          "input": {
+            "motif": "tetra"
+          }
+        },
+        {
+          "id": "chiral-mirror",
+          "title": "同构型的镜像与 Faraday 对照",
+          "input": {
+            "motif": "tetra",
+            "handedness": -1,
+            "optical": "faraday"
+          }
+        },
+        {
+          "id": "chiral-noise",
+          "title": "从精确对称到伪对称",
+          "input": {
+            "noise": 0.04,
+            "tolerance": 0.06
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "chirality-predict-2",
+          "preset": "chiral-d3",
+          "question": "手性 D3 原型一定允许非零极向量吗？",
+          "choices": [
+            "一定允许",
+            "不允许"
+          ],
+          "answer": 1,
+          "explanation": "本模型所有旋转共同保持的极向量子空间为零维。"
+        },
+        {
+          "id": "chirality-predict-3",
+          "preset": "chiral-polar",
+          "question": "有极轴的锥体一定手性吗？",
+          "choices": [
+            "一定",
+            "不一定"
+          ],
+          "answer": 1,
+          "explanation": "本 C4v 点集保留镜面，镜像能经正旋转及同类原子配准重合。"
+        }
+      ]
+    },
+    {
+      "id": "spt",
+      "title": "射影表示与多体 SPT",
+      "summary": "从 AKLT 自旋 1 链到虚拟自旋 1/2，联动边界、纠缠谱、保护操作与有限尺寸扰动路径。",
+      "pathway": "spin",
+      "route": "manybody-spt-lab",
+      "action": "manybody_spt_lab",
+      "fields": [
+        {
+          "key": "sites",
+          "label": "自旋 1 位点数（有限链）",
+          "type": "number",
+          "default": 4,
+          "min": 3,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "key": "boundary",
+          "label": "边界",
+          "type": "select",
+          "default": "periodic",
+          "options": [
+            [
+              "periodic",
+              "周期边界"
+            ],
+            [
+              "open",
+              "开边界"
+            ]
+          ]
+        },
+        {
+          "key": "anisotropy",
+          "label": "单离子各向异性 D/J",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 8,
+          "step": 0.1
+        },
+        {
+          "key": "field",
+          "label": "倾斜场 h/J",
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "key": "fieldPattern",
+          "label": "场的空间分布",
+          "type": "select",
+          "default": "gradient",
+          "options": [
+            [
+              "gradient",
+              "位点梯度"
+            ],
+            [
+              "uniform",
+              "均匀"
+            ]
+          ]
+        },
+        {
+          "key": "pathAxis",
+          "label": "路径改变的参数",
+          "type": "select",
+          "default": "anisotropy",
+          "options": [
+            [
+              "anisotropy",
+              "D/J"
+            ],
+            [
+              "field",
+              "h/J"
+            ]
+          ]
+        },
+        {
+          "key": "pathEnd",
+          "label": "路径终点（D ≤ 8；h ≤ 1）",
+          "type": "number",
+          "default": 4,
+          "min": 0,
+          "max": 8,
+          "step": 0.1
+        }
+      ],
+      "presets": [
+        {
+          "id": "spt-aklt",
+          "title": "周期 AKLT 点",
+          "input": {}
+        },
+        {
+          "id": "spt-edge",
+          "title": "开边界与四维基态空间",
+          "input": {
+            "boundary": "open"
+          }
+        },
+        {
+          "id": "spt-large-d",
+          "title": "强单离子各向异性",
+          "input": {
+            "anisotropy": 8,
+            "pathEnd": 8
+          }
+        },
+        {
+          "id": "spt-uniform",
+          "title": "均匀场：仍需检查反演",
+          "input": {
+            "field": 0.3,
+            "fieldPattern": "uniform",
+            "pathAxis": "field",
+            "pathEnd": 0.8
+          }
+        },
+        {
+          "id": "spt-gradient",
+          "title": "梯度场与保护条件",
+          "input": {
+            "field": 0.3,
+            "pathAxis": "field",
+            "pathEnd": 0.8
+          }
+        },
+        {
+          "id": "spt-size",
+          "title": "五位点有限尺寸对照",
+          "input": {
+            "sites": 5
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "spt-predict-4",
+          "preset": "spt-edge",
+          "question": "理想开边界 AKLT 链的基态空间维数？",
+          "choices": [
+            "1",
+            "4",
+            "9"
+          ],
+          "answer": 1,
+          "explanation": "本页无扰动开链得到四维基态空间，对应两个边缘自旋 1/2。"
+        },
+        {
+          "id": "spt-predict-5",
+          "preset": "spt-uniform",
+          "question": "均匀倾斜场破坏 T 后，空间反演还可能保持吗？",
+          "choices": [
+            "可能保持",
+            "一定破坏"
+          ],
+          "answer": 0,
+          "explanation": "空间反演置换位点，均匀场系数不变。"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "layer-periodicity",
+      "module": "layers",
+      "title": "二维周期不等于二维空间",
+      "summary": "平面群作用于二维图案；层群作用于三维空间中的对象，但只有两个独立周期平移。层群可以含翻转法向的操作。教材中的 17 个平面群与 80 个层群回答不同问题。",
+      "preset": "layer-square",
+      "references": [
+        "layer-bcs",
+        "layer-db"
+      ],
+      "sections": [
+        {
+          "title": "先指定周期方向",
+          "text": "平面群作用于二维图案；层群作用于三维空间中的对象，但只有两个独立周期平移。层群可以含翻转法向的操作。教材中的 17 个平面群与 80 个层群回答不同问题。",
+          "formula": "r′ = R r + t"
+        },
+        {
+          "title": "把边界写进匹配规则",
+          "text": "面内坐标按两条晶格基矢取模，法向不取模。把薄膜塞进有真空的三维周期晶胞，是计算表示；不能直接把超胞的全部周期平移当作孤立薄膜的实际操作。",
+          "formula": "R n = ±n"
+        },
+        {
+          "title": "检查一个真实映射",
+          "text": "本页从简单立方母体切出薄层，枚举保持晶面方向的矩阵，再查找面内平移。每个原子必须映到同标签原子，且整个映射为双射。",
+          "formula": "{R|t}{S|u} = {RS|R u+t}"
+        }
+      ]
+    },
+    {
+      "id": "layer-termination",
+      "module": "layers",
+      "title": "切面、终止与两侧交换",
+      "summary": "(001)、(110)、(111) 的面内度量不同。同一个法向也不能唯一指定原子终止；成分、层数和切割起点都属于结构输入。",
+      "preset": "layer-surface",
+      "references": [
+        "layer-bcs",
+        "layer-db"
+      ],
+      "sections": [
+        {
+          "title": "几何面与具体表面",
+          "text": "(001)、(110)、(111) 的面内度量不同。同一个法向也不能唯一指定原子终止；成分、层数和切割起点都属于结构输入。",
+          "formula": "R n = ±n"
+        },
+        {
+          "title": "辨认翻转法向的操作",
+          "text": "Rn=−n 的操作交换薄膜两侧。它可能保持对称薄膜，却破坏只有一侧的吸附标记或异质界面；这不是由群符号单独决定的。",
+          "formula": "R n = −n"
+        },
+        {
+          "title": "保持动量和自旋的角色",
+          "text": "在正交笛卡尔坐标中，波矢随 R 变换；自旋为轴矢量，另有 det(R)。时间反演会同时反转波矢和自旋，而不移动原子坐标。",
+          "formula": "S′ = det(R) R S"
+        }
+      ]
+    },
+    {
+      "id": "layer-registry",
+      "module": "layers",
+      "title": "堆垛路径与界面共同对称性",
+      "summary": "上半层沿面内基矢连续平移，比较每个操作对全部原子的映射。界面共同对称性还依赖横向配准，不能只比较两侧的抽象点群名称。",
+      "preset": "layer-interface",
+      "references": [
+        "layer-bcs",
+        "layer-db"
+      ],
+      "sections": [
+        {
+          "title": "用同一面内晶格比较两侧",
+          "text": "上半层沿面内基矢连续平移，比较每个操作对全部原子的映射。界面共同对称性还依赖横向配准，不能只比较两侧的抽象点群名称。",
+          "formula": "r′ = R r + t"
+        },
+        {
+          "title": "追踪特殊配准点",
+          "text": "一般错位可能降低操作数，特殊配准可恢复部分操作。七点曲线是取样记录，不保证发现所有特殊点；可手动输入其他分数错位。",
+          "formula": "t = s a_1"
+        },
+        {
+          "title": "把对称许可接到物性",
+          "text": "将保留操作带到物性张量课堂，可以继续约束响应分量；操作减少不保证某项响应变大，也不替代微观材料参数。",
+          "formula": "R P = P"
+        }
+      ]
+    },
+    {
+      "id": "chiral-mirror",
+      "module": "chirality",
+      "title": "结构镜像与正旋转配准",
+      "summary": "主动镜像改变构型。被动换基仅改变同一构型的坐标，同时也必须变换晶格和操作矩阵。本实验用明确的 x 反号生成镜像。",
+      "preset": "chiral-d3",
+      "references": [
+        "chirality-iucr",
+        "spglib-tol"
+      ],
+      "sections": [
+        {
+          "title": "区分主动镜像与坐标描述",
+          "text": "主动镜像改变构型。被动换基仅改变同一构型的坐标，同时也必须变换晶格和操作矩阵。本实验用明确的 x 反号生成镜像。",
+          "formula": "det(R) = −1"
+        },
+        {
+          "title": "只允许保向刚体配准",
+          "text": "枚举同种原子的所有对应，再寻找行列式 +1 的最佳旋转。不同标签不能互换。配准残差为零说明这个有限点集与镜像可重合。",
+          "formula": "det(R) = +1"
+        },
+        {
+          "title": "回到空间群的层次",
+          "text": "手性晶体结构只能具有保向操作，涉及 65 个 Sohncke 群型；其中 22 个群型组成 11 对对映群型。其余 Sohncke 群型也可容纳手性结构。",
+          "formula": "R r = r′"
+        }
+      ]
+    },
+    {
+      "id": "chiral-polarity",
+      "module": "chirality",
+      "title": "手性、极性与铁电性的不同问题",
+      "summary": "极向量必须被每个群操作保持。将所有 (R−I) 约束联立，可以得到允许方向的维数；D3 原型为零，C4v 锥体只允许轴向。",
+      "preset": "chiral-polar",
+      "references": [
+        "chirality-iucr",
+        "spglib-tol"
+      ],
+      "sections": [
+        {
+          "title": "直接求允许极向量",
+          "text": "极向量必须被每个群操作保持。将所有 (R−I) 约束联立，可以得到允许方向的维数；D3 原型为零，C4v 锥体只允许轴向。",
+          "formula": "(R−I) P = 0"
+        },
+        {
+          "title": "手性与极性分别验证",
+          "text": "D3 点集可以手性而非极性；C4v 锥体可以极性却因镜面而非手性。无反演也不能替代这两个独立判断。",
+          "formula": "R P = P"
+        },
+        {
+          "title": "用独立实验讨论响应",
+          "text": "极性只说明对称性许可，不给出自发极化大小或可逆切换。偏振往返模型使用外加旋转角，并明确自然旋光与 Faraday 的回程约定。",
+          "formula": "R(−θ) R(θ) = I"
+        }
+      ]
+    },
+    {
+      "id": "chiral-tolerance",
+      "module": "chirality",
+      "title": "容差、伪对称与逆向鉴别",
+      "summary": "沿固定扰动方向给理想点集加入已知幅度。严格当前构型的对称与理想母构型的近似操作分开记录；几何误差使用模型长度。",
+      "preset": "chiral-noise",
+      "references": [
+        "chirality-iucr",
+        "spglib-tol"
+      ],
+      "sections": [
+        {
+          "title": "先量化实际位移",
+          "text": "沿固定扰动方向给理想点集加入已知幅度。严格当前构型的对称与理想母构型的近似操作分开记录；几何误差使用模型长度。",
+          "formula": "δ = max_i |R r_i − r_{p(i)}|"
+        },
+        {
+          "title": "接受集合还要检查闭合",
+          "text": "逐操作通过距离阈值并不自动保证组合也通过。容差扫描显示接受数与每个候选的最大残差，闭合失败时不输出严格群名。",
+          "formula": "R_1 R_2 ∈ G"
+        },
+        {
+          "title": "从有限证据排除候选",
+          "text": "依次测定手性、极向量许可和反演等性质，保留与全部已知证据相容的候选。不能把“剩一个教学候选”理解为证明任意真实材料的结构。",
+          "formula": "R P = P"
+        }
+      ]
+    },
+    {
+      "id": "spt-aklt-parent",
+      "module": "spt",
+      "title": "从价键图像到 AKLT 母 Hamiltonian",
+      "summary": "AKLT 图像将每个位点的两个虚拟自旋 1/2 投影到对称自旋 1 子空间，相邻位点的虚拟自旋组成单重态。这连接已有置换与 CG 课程。",
+      "preset": "spt-aklt",
+      "references": [
+        "aklt",
+        "pollmann"
+      ],
+      "sections": [
+        {
+          "title": "把两个虚拟自旋投影成自旋 1",
+          "text": "AKLT 图像将每个位点的两个虚拟自旋 1/2 投影到对称自旋 1 子空间，相邻位点的虚拟自旋组成单重态。这连接已有置换与 CG 课程。",
+          "formula": "1/2 ⊗ 1/2 = 0 ⊕ 1"
+        },
+        {
+          "title": "构造每一条键",
+          "text": "两个自旋 1 的总自旋为 0、1、2。S·S 的本征值为 −2、−1、1，本页键算符在前两者为零、在总自旋 2 为 2。",
+          "formula": "h = S_i·S_j + (S_i·S_j)²/3 + 2/3"
+        },
+        {
+          "title": "边界改变低能空间",
+          "text": "周期链与开链使用不同键集合。理想开链的边缘自由度产生四维基态空间；有限扰动下需重新计算，不能固定假设简并仍然精确。",
+          "formula": "1/2 ⊗ 1/2 = 0 ⊕ 1"
+        }
+      ]
+    },
+    {
+      "id": "spt-schmidt",
+      "module": "spt",
+      "title": "Schmidt 分解、纠缠谱与射影表示",
+      "summary": "先说明边界和基态简并。本页对简并子空间的投影选择确定纯态；其他边缘态可能给出不同的有限链纠缠谱。",
+      "preset": "spt-edge",
+      "references": [
+        "aklt",
+        "pollmann"
+      ],
+      "sections": [
+        {
+          "title": "明确所选量子态",
+          "text": "先说明边界和基态简并。本页对简并子空间的投影选择确定纯态；其他边缘态可能给出不同的有限链纠缠谱。",
+          "formula": "ρ_A = Tr_B |ψ⟩⟨ψ|"
+        },
+        {
+          "title": "从系数矩阵得到概率",
+          "text": "按二分切口重排波函数系数，对矩阵做奇异值分解。奇异值平方是 Schmidt 概率，总和为 1；纠缠熵是这些概率的函数。",
+          "formula": "S = −Σ λ_i log(λ_i)"
+        },
+        {
+          "title": "识别虚拟空间的群作用",
+          "text": "AKLT 点的虚拟 π 旋转可取 Pauli 矩阵。两者反对易，而物理整数自旋的对应 D2 操作对易，显示线性表示与射影表示的差别。",
+          "formula": "U_x U_z = −U_z U_x"
+        }
+      ]
+    },
+    {
+      "id": "spt-protection",
+      "module": "spt",
+      "title": "扰动路径与保护条件",
+      "summary": "时间反演是反幺正操作，需共轭 H；空间反演交换位点，不能只反转自旋。均匀倾斜场可能保留空间反演，梯度场可进一步破坏它。",
+      "preset": "spt-uniform",
+      "references": [
+        "aklt",
+        "pollmann"
+      ],
+      "sections": [
+        {
+          "title": "分别检验每个保护操作",
+          "text": "时间反演是反幺正操作，需共轭 H；空间反演交换位点，不能只反转自旋。均匀倾斜场可能保留空间反演，梯度场可进一步破坏它。",
+          "formula": "U H* U† = H"
+        },
+        {
+          "title": "沿路径记录同一组诊断",
+          "text": "固定链长、边界与其他参数，仅改变 D 或 h，联动低能间距、基态空间维数及四个对称残差。通过的对称性可由数值残差直接核验。",
+          "formula": "U H U† = H"
+        },
+        {
+          "title": "区分有限观察与体相结论",
+          "text": "有限链没有严格的热力学相变诊断。需要比较尺寸、边界和保护条件；一般扰动时本站不自动把能级变化翻译成体相拓扑标签。",
+          "formula": "U_x U_z = −U_z U_x"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "layer-periodicity-steps",
+      "module": "layers",
+      "lesson": "layer-periodicity",
+      "title": "二维周期不等于二维空间：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "层群的周期性是？",
+          "hint": "层群可作用于有厚度的对象。",
+          "choices": [
+            "三维空间中两个独立周期方向",
+            "必须所有原子共面",
+            "三个方向都周期"
+          ],
+          "answer": 0,
+          "explanation": "层群可作用于有厚度的对象。"
+        },
+        {
+          "prompt": "薄膜法向坐标能否像面内一样取模？",
+          "hint": "计算超胞与物理边界要区分。",
+          "choices": [
+            "能，任何超胞都真实周期",
+            "只在层数为偶数时能",
+            "不能；孤立边界必须保留"
+          ],
+          "answer": 2,
+          "explanation": "计算超胞与物理边界要区分。"
+        },
+        {
+          "prompt": "原子映射还必须保持什么？",
+          "hint": "每个同种原子要有唯一对应。",
+          "choices": [
+            "只要原子总数相同",
+            "元素标签与双射关系",
+            "只要最近距离较小"
+          ],
+          "answer": 1,
+          "explanation": "每个同种原子要有唯一对应。"
+        },
+        {
+          "prompt": "仿射操作相乘的平移部分？",
+          "hint": "第二个平移先被第一个旋转作用。",
+          "choices": [
+            "R u+t",
+            "t+u，永远如此",
+            "R t+u"
+          ],
+          "answer": 0,
+          "explanation": "第二个平移先被第一个旋转作用。"
+        }
+      ]
+    },
+    {
+      "id": "layer-termination-steps",
+      "module": "layers",
+      "lesson": "layer-termination",
+      "title": "切面、终止与两侧交换：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "Rn=−n 表示？",
+          "hint": "这是空间操作对法向的作用。",
+          "choices": [
+            "所有原子都不动",
+            "时间反演",
+            "交换法向两侧"
+          ],
+          "answer": 2,
+          "explanation": "这是空间操作对法向的作用。"
+        },
+        {
+          "prompt": "仅上表面标记 C 后如何检查？",
+          "hint": "上下两侧可能已不等价。",
+          "choices": [
+            "仍然必须保留原有反演",
+            "重新匹配全部元素标签",
+            "只检查母体群名称"
+          ],
+          "answer": 1,
+          "explanation": "上下两侧可能已不等价。"
+        },
+        {
+          "prompt": "镜面下自旋如何变换？",
+          "hint": "自旋是轴矢量。",
+          "choices": [
+            "det(R) R S",
+            "恒等于 R S",
+            "总是保持 S 不变"
+          ],
+          "answer": 0,
+          "explanation": "自旋是轴矢量。"
+        },
+        {
+          "prompt": "时间反演对 r、k、S 的作用？",
+          "hint": "静态位置不因时间反演而移动。",
+          "choices": [
+            "三者都反号",
+            "三者都不变",
+            "r 不变，k 和 S 反号"
+          ],
+          "answer": 2,
+          "explanation": "静态位置不因时间反演而移动。"
+        }
+      ]
+    },
+    {
+      "id": "layer-registry-steps",
+      "module": "layers",
+      "lesson": "layer-registry",
+      "title": "堆垛路径与界面共同对称性：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "界面共同对称性还依赖？",
+          "hint": "配准关系是结构的一部分。",
+          "choices": [
+            "只依赖两侧原子总数",
+            "两侧的相对堆垛位置",
+            "只依赖各自抽象点群"
+          ],
+          "answer": 1,
+          "explanation": "配准关系是结构的一部分。"
+        },
+        {
+          "prompt": "一般错位与特殊错位的操作数？",
+          "hint": "特殊分数错位可能恢复操作。",
+          "choices": [
+            "可能不同，需逐点检验",
+            "必定相同",
+            "必定单调下降"
+          ],
+          "answer": 0,
+          "explanation": "特殊分数错位可能恢复操作。"
+        },
+        {
+          "prompt": "七点路径能否找全特殊点？",
+          "hint": "有限采样不证明连续区间全部行为。",
+          "choices": [
+            "一定能",
+            "只需曲线看起来平滑",
+            "不能，应增加检查点"
+          ],
+          "answer": 2,
+          "explanation": "有限采样不证明连续区间全部行为。"
+        },
+        {
+          "prompt": "允许新的张量分量意味着？",
+          "hint": "许可与实际数值分开。",
+          "choices": [
+            "它与任何微观参数无关",
+            "对称性不再强制它为零",
+            "它必然很大"
+          ],
+          "answer": 1,
+          "explanation": "许可与实际数值分开。"
+        }
+      ]
+    },
+    {
+      "id": "chiral-mirror-steps",
+      "module": "chirality",
+      "lesson": "chiral-mirror",
+      "title": "结构镜像与正旋转配准：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "主动镜像使用什么变换？",
+          "hint": "主动作用与描述变换不同。",
+          "choices": [
+            "行列式 −1 的空间操作",
+            "任意坐标换基",
+            "时间反演"
+          ],
+          "answer": 0,
+          "explanation": "主动作用与描述变换不同。"
+        },
+        {
+          "prompt": "检验镜像可重合时允许什么旋转？",
+          "hint": "加入反射会让镜像判定失去意义。",
+          "choices": [
+            "任意反射也允许",
+            "只能恒等操作",
+            "行列式 +1 的刚体旋转"
+          ],
+          "answer": 2,
+          "explanation": "加入反射会让镜像判定失去意义。"
+        },
+        {
+          "prompt": "不同元素能否任意互换？",
+          "hint": "配准必须保持物理标签。",
+          "choices": [
+            "仅原子数相同时能",
+            "不能",
+            "能，几何才重要"
+          ],
+          "answer": 1,
+          "explanation": "配准必须保持物理标签。"
+        },
+        {
+          "prompt": "65 个 Sohncke 类型全部都是对映群型吗？",
+          "hint": "结构手性与群型手性不是同一层次。",
+          "choices": [
+            "不是；22 个构成 11 对",
+            "是，构成 65 对",
+            "只有其中 11 个允许手性结构"
+          ],
+          "answer": 0,
+          "explanation": "结构手性与群型手性不是同一层次。"
+        }
+      ]
+    },
+    {
+      "id": "chiral-polarity-steps",
+      "module": "chirality",
+      "lesson": "chiral-polarity",
+      "title": "手性、极性与铁电性的不同问题：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "允许极向量应满足？",
+          "hint": "需要联立全部操作。",
+          "choices": [
+            "只对一个旋转成立",
+            "只要没有反演即可",
+            "所有操作下 R P=P"
+          ],
+          "answer": 2,
+          "explanation": "需要联立全部操作。"
+        },
+        {
+          "prompt": "D3 手性原型能否没有极向量方向？",
+          "hint": "手性与极性分别判定。",
+          "choices": [
+            "取决于原子质量",
+            "可以",
+            "不可以，手性必定极性"
+          ],
+          "answer": 1,
+          "explanation": "手性与极性分别判定。"
+        },
+        {
+          "prompt": "C4v 锥体的镜面意味着？",
+          "hint": "镜面与允许轴向极向量可以共存。",
+          "choices": [
+            "可以极性而非手性",
+            "一定没有极向量",
+            "一定具有中心反演"
+          ],
+          "answer": 0,
+          "explanation": "镜面与允许轴向极向量可以共存。"
+        },
+        {
+          "prompt": "极性是否证明可逆铁电切换？",
+          "hint": "铁电性包含材料及切换条件。",
+          "choices": [
+            "一定证明",
+            "只需改变坐标原点",
+            "不能，还需物理证据"
+          ],
+          "answer": 2,
+          "explanation": "铁电性包含材料及切换条件。"
+        }
+      ]
+    },
+    {
+      "id": "chiral-tolerance-steps",
+      "module": "chirality",
+      "lesson": "chiral-tolerance",
+      "title": "容差、伪对称与逆向鉴别：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "伪对称实验的容差衡量？",
+          "hint": "单位是本模型长度。",
+          "choices": [
+            "群的阶数",
+            "给定候选下的原子映射距离",
+            "电子能隙"
+          ],
+          "answer": 1,
+          "explanation": "单位是本模型长度。"
+        },
+        {
+          "prompt": "每个候选单独通过阈值就一定成群吗？",
+          "hint": "近似判据可能破坏组合闭合。",
+          "choices": [
+            "不一定，还需闭合检查",
+            "一定",
+            "只需群阶是偶数"
+          ],
+          "answer": 0,
+          "explanation": "近似判据可能破坏组合闭合。"
+        },
+        {
+          "prompt": "增大容差恢复更多候选意味着？",
+          "hint": "数值接受与物理对称分开。",
+          "choices": [
+            "材料必然发生相变",
+            "已证明严格高对称",
+            "接受了更大几何误差"
+          ],
+          "answer": 2,
+          "explanation": "数值接受与物理对称分开。"
+        },
+        {
+          "prompt": "逆向实验仍有两个候选时应怎样报告？",
+          "hint": "有限证据允许不唯一结论。",
+          "choices": [
+            "把两者群阶取平均",
+            "保留二者并选择下一项测量",
+            "随机选一个群名"
+          ],
+          "answer": 1,
+          "explanation": "有限证据允许不唯一结论。"
+        }
+      ]
+    },
+    {
+      "id": "spt-aklt-parent-steps",
+      "module": "spt",
+      "lesson": "spt-aklt-parent",
+      "title": "从价键图像到 AKLT 母 Hamiltonian：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "两个自旋 1/2 的对称子空间为？",
+          "hint": "对称投影保留三维子空间。",
+          "choices": [
+            "自旋 1 三重态",
+            "自旋 0 单重态",
+            "自旋 2 五重态"
+          ],
+          "answer": 0,
+          "explanation": "对称投影保留三维子空间。"
+        },
+        {
+          "prompt": "两个自旋 1 的总自旋可取？",
+          "hint": "角动量加法决定分解。",
+          "choices": [
+            "只有 1",
+            "1/2、3/2",
+            "0、1、2"
+          ],
+          "answer": 2,
+          "explanation": "角动量加法决定分解。"
+        },
+        {
+          "prompt": "总自旋 2 时本页键能量为？",
+          "hint": "代入 S·S=1 得 1+1/3+2/3。",
+          "choices": [
+            "−2",
+            "2",
+            "0"
+          ],
+          "answer": 1,
+          "explanation": "代入 S·S=1 得 1+1/3+2/3。"
+        },
+        {
+          "prompt": "周期链改成开链需要？",
+          "hint": "边界改变实际 Hamiltonian。",
+          "choices": [
+            "移除末端与首端的键",
+            "只改图像标签",
+            "只把总能量除以链长"
+          ],
+          "answer": 0,
+          "explanation": "边界改变实际 Hamiltonian。"
+        }
+      ]
+    },
+    {
+      "id": "spt-schmidt-steps",
+      "module": "spt",
+      "lesson": "spt-schmidt",
+      "title": "Schmidt 分解、纠缠谱与射影表示：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "简并基态的纠缠谱先要说明？",
+          "hint": "不同边缘态可有不同纠缠。",
+          "choices": [
+            "只给最低能量",
+            "只给链长",
+            "选定了哪个纯态或混合态"
+          ],
+          "answer": 2,
+          "explanation": "不同边缘态可有不同纠缠。"
+        },
+        {
+          "prompt": "Schmidt 概率来自？",
+          "hint": "概率非负且总和为 1。",
+          "choices": [
+            "矩阵元素的直接平均",
+            "系数矩阵奇异值的平方",
+            "能量本征值本身"
+          ],
+          "answer": 1,
+          "explanation": "概率非负且总和为 1。"
+        },
+        {
+          "prompt": "虚拟 Ux 与 Uz 的关系？",
+          "hint": "AKLT 虚拟自旋为半整数。",
+          "choices": [
+            "反对易",
+            "恒等矩阵",
+            "任意次序都相同"
+          ],
+          "answer": 0,
+          "explanation": "AKLT 虚拟自旋为半整数。"
+        },
+        {
+          "prompt": "离开 AKLT 点能否直接沿用页面的 −1 标签？",
+          "hint": "解析固定点证据与扰动态诊断分开。",
+          "choices": [
+            "一定可以",
+            "只看最低能量即可",
+            "不能，应重新求一般态的不变量"
+          ],
+          "answer": 2,
+          "explanation": "解析固定点证据与扰动态诊断分开。"
+        }
+      ]
+    },
+    {
+      "id": "spt-protection-steps",
+      "module": "spt",
+      "lesson": "spt-protection",
+      "title": "扰动路径与保护条件：逐步推导",
+      "prompt": "先判断模型、操作和适用条件，再用实验结果检验。",
+      "steps": [
+        {
+          "prompt": "时间反演检验包含哪一步？",
+          "hint": "反幺正操作必须包含共轭。",
+          "choices": [
+            "只交换空间坐标",
+            "对 Hamiltonian 取复共轭",
+            "只对能量反号"
+          ],
+          "answer": 1,
+          "explanation": "反幺正操作必须包含共轭。"
+        },
+        {
+          "prompt": "均匀场破坏时间反演后是否所有保护都消失？",
+          "hint": "不同保护对称性分别判断。",
+          "choices": [
+            "不一定，还要检查空间反演",
+            "一定消失",
+            "能隙一定立即闭合"
+          ],
+          "answer": 0,
+          "explanation": "不同保护对称性分别判断。"
+        },
+        {
+          "prompt": "受控路径应怎样改变参数？",
+          "hint": "受控比较方便解释来源。",
+          "choices": [
+            "同时改变尺寸与边界和场",
+            "只改变曲线标题",
+            "固定其余参数，仅改变指定项"
+          ],
+          "answer": 2,
+          "explanation": "受控比较方便解释来源。"
+        },
+        {
+          "prompt": "小链的能级变化能否直接定位体相相变？",
+          "hint": "有限尺寸与热力学极限不同。",
+          "choices": [
+            "任何非零隙都证明平庸",
+            "不能，需要尺寸及其他诊断",
+            "任何交叉都可以"
+          ],
+          "answer": 1,
+          "explanation": "有限尺寸与热力学极限不同。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "surface-cubic",
+      "module": "layers",
+      "title": "立方母体的三个切面",
+      "preset": "layer-square",
+      "kind": "薄膜几何原型",
+      "summary": "比较 001、110、111 的面内晶格与母体继承操作。",
+      "assumption": "简单立方单原子母体；不是特定元素表面的弛豫结果。",
+      "links": [
+        [
+          "空间群课堂",
+          "#classroom/crystal"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "hetero-stack",
+      "module": "layers",
+      "title": "异质层与横向堆垛",
+      "preset": "layer-interface",
+      "kind": "界面原型",
+      "summary": "区分各侧自身的对称与整体界面的共同操作。",
+      "assumption": "相同面内晶格的化学标签原型，不模拟实际晶格失配或能带。",
+      "links": [
+        [
+          "器件输运",
+          "#classroom/crystal?module=device"
+        ],
+        [
+          "螺旋与滑移",
+          "#classroom/crystal?module=nonsymmorphic"
+        ]
+      ]
+    },
+    {
+      "id": "termination-case",
+      "module": "layers",
+      "title": "单面吸附与表面标记",
+      "preset": "layer-surface",
+      "kind": "边界条件原型",
+      "summary": "用只有一侧的元素标记检查上下表面是否仍可交换。",
+      "assumption": "标记只改变标签，不含吸附力学、表面电荷与结构弛豫。",
+      "links": [
+        [
+          "结构相变",
+          "#classroom/structure-dynamics?module=order"
+        ],
+        [
+          "材料研究记录",
+          "#atlas/notebook"
+        ]
+      ]
+    },
+    {
+      "id": "quartz-analogy",
+      "module": "chirality",
+      "title": "石英：手性与非极性的辨析",
+      "preset": "chiral-d3",
+      "kind": "材料对称性背景",
+      "summary": "以石英点群 32 为背景，在 D3 有限点集上求允许极向量。",
+      "assumption": "有限点集仅复现点群层面的约束，不是石英原胞，也不预测旋光系数。",
+      "links": [
+        [
+          "32 点群",
+          "#classroom/foundations"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "id": "polar-analogy",
+      "module": "chirality",
+      "title": "四方极性结构：许可与切换",
+      "preset": "chiral-polar",
+      "kind": "铁电材料背景",
+      "summary": "借助 C4v 原型理解极轴、镜面和电场切换证据的区别。",
+      "assumption": "锥体不是 BaTiO3 原胞；未计算 Berry 极化或铁电翻转势垒。",
+      "links": [
+        [
+          "序参量与畴",
+          "#classroom/structure-dynamics?module=order"
+        ],
+        [
+          "非线性光学",
+          "#classroom/observables?module=shg"
+        ]
+      ]
+    },
+    {
+      "id": "pseudo-structure",
+      "module": "chirality",
+      "title": "结构优化残差与伪对称",
+      "preset": "chiral-noise",
+      "kind": "结构分析方法",
+      "summary": "将可控小位移与识别阈值分开调节，保留每个候选的距离证据。",
+      "assumption": "有限点集的母构型候选检查；任意 POSCAR/CIF 仍由既有结构工具处理。",
+      "links": [
+        [
+          "晶体结构分析",
+          "#structure"
+        ],
+        [
+          "互易关系",
+          "#classroom/observables?module=reciprocity"
+        ]
+      ]
+    },
+    {
+      "id": "aklt-fixed",
+      "module": "spt",
+      "title": "AKLT 价键固体",
+      "preset": "spt-aklt",
+      "kind": "精确可解固定点",
+      "summary": "把虚拟自旋、交换投影、有限链基态与纠缠联系起来。",
+      "assumption": "模型是理论固定点，不拟合真实自旋链材料的交换参数。",
+      "links": [
+        [
+          "同粒子统计",
+          "#classroom/foundations?module=statistics"
+        ],
+        [
+          "SU(2) 耦合",
+          "#classroom/coupling"
+        ]
+      ]
+    },
+    {
+      "id": "spin-chain-edge",
+      "module": "spt",
+      "title": "Haldane 链与边缘自由度",
+      "preset": "spt-edge",
+      "kind": "量子自旋链背景",
+      "summary": "对比周期和开边界，观察边缘空间及纯态选择对纠缠的影响。",
+      "assumption": "N=3–5 的 AKLT 链，不把小链谱当作热力学极限的实验谱。",
+      "links": [
+        [
+          "磁交换",
+          "#classroom/spin?module=exchange"
+        ],
+        [
+          "密度矩阵",
+          "#classroom/spin?module=density"
+        ]
+      ]
+    },
+    {
+      "id": "spt-path-case",
+      "module": "spt",
+      "title": "各向异性与破缺场路径",
+      "preset": "spt-gradient",
+      "kind": "受控扰动原型",
+      "summary": "逐点追踪对称性残差、低能间距和保护条件。",
+      "assumption": "有限七点路径不能替代无限链相图；一般扰动不自动标定 SPT 类。",
+      "links": [
+        [
+          "拓扑与量子几何",
+          "#classroom/crystal?module=geometry"
+        ],
+        [
+          "Hubbard 小团簇",
+          "#classroom/spin?module=hubbard"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "layer-bcs",
+      "title": "Bilbao · 层群与截面对称性",
+      "url": "https://www.cryst.ehu.es/cgi-bin/subperiodic/programs/nph-sections?gnum=47&what=table"
+    },
+    {
+      "id": "layer-db",
+      "title": "de la Flor 等 · 层群数据库与 Brillouin 区",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8573847/"
+    },
+    {
+      "id": "chirality-iucr",
+      "title": "Nespolo、Aroyo、Souvignier · 空间群层次与手性",
+      "url": "https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html"
+    },
+    {
+      "id": "spglib-tol",
+      "title": "spglib · 笛卡尔距离容差的定义",
+      "url": "https://spglib.readthedocs.io/en/v2.8.0/variable.html"
+    },
+    {
+      "id": "aklt",
+      "title": "Affleck、Kennedy、Lieb、Tasaki · Valence-bond ground states",
+      "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.59.799"
+    },
+    {
+      "id": "pollmann",
+      "title": "Pollmann 等 · 一维拓扑相的纠缠谱",
+      "url": "https://arxiv.org/abs/0910.1811"
+    }
+  ]
+}

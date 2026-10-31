@@ -1,5 +1,5 @@
-import {captureCalculation} from './material-notebook.js?v=20261031-connections1';
-import {esc,num,table} from './response-views.js?v=20261031-connections1';
+import {captureCalculation} from './material-notebook.js?v=20261031-frontiers1';
+import {esc,num,table} from './response-views.js?v=20261031-frontiers1';
 let latest=null;
 export const getAuditResult=()=>latest;
 export function renderAuditView({container,run,cancelRun,download,onLocation=()=>{}}){

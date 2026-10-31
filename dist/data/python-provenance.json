@@ -681,8 +681,8 @@
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "6f5c0acf967448a8c8a1071d3e9141b2c0e3826cdd03f91697b978fff1f729ad",
-      "bytes": 7543,
+      "sha256": "2dc46b5f9046ead30e6eb7bf6ab6c5ff1b972ff6437688cb2251529236237e77",
+      "bytes": 7870,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -974,6 +974,20 @@
       ],
       "limitations": [
         "Finite models only; no arbitrary homotopy, S_n or material fitting; see dist/docs/connections.md"
+      ]
+    },
+    {
+      "path": "dist/python/symmetry_frontiers.py",
+      "sha256": "ed0468cf3bff688a98c7e22962e289d2cac812c068620dcb38579c69ac9d01da",
+      "bytes": 24759,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy finite symmetry teaching models",
+      "coverage": [
+        "Inherited cubic slab operations and affine closure, finite motif mirror matching and polarity, tolerance diagnostics, finite AKLT chains, linked vector actions and computed inverse experiments"
+      ],
+      "limitations": [
+        "No arbitrary layer-group naming, unrestricted crystal chirality determination or infinite-chain SPT classification; see docs/frontiers.md"
       ]
     }
   ],

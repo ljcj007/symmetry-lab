@@ -5444,6 +5444,341 @@
         "σ = X^T S X",
         "λ_min(S) ≥ 0"
       ]
+    },
+    {
+      "id": "frontiers-layer-normal",
+      "title": "层法向与边界操作",
+      "symbols": [
+        "R n = ±n",
+        "R n = −n"
+      ],
+      "aliases": [
+        "层法向与边界操作"
+      ],
+      "definition": "层的保留操作可以保持或翻转法向；实际是否成立还需检查全部原子与两侧成分。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "主动笛卡尔正交操作",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "n",
+          "meaning": "单位法向",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "法向有限、两个面内方向周期；不把真空超胞的法向平移当作孤立薄膜操作。",
+      "sources": [
+        "frontiers-layer-bcs"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/crystal?module=layers"
+        ],
+        [
+          "交互计算",
+          "#compute/layer-symmetry-lab"
+        ]
+      ],
+      "contexts": [
+        "layers",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "R n = ±n",
+        "R n = −n"
+      ]
+    },
+    {
+      "id": "frontiers-axial-spin",
+      "title": "极矢量与轴矢量联动",
+      "symbols": [
+        "S′ = det(R) R S",
+        "k′ = R k"
+      ],
+      "aliases": [
+        "极矢量与轴矢量联动"
+      ],
+      "definition": "空间不正操作作用于自旋时多出行列式符号；时间反演另行反转波矢与自旋。",
+      "variables": [
+        {
+          "symbol": "S",
+          "meaning": "轴矢量自旋",
+          "unit": "按模型缩放"
+        },
+        {
+          "symbol": "k",
+          "meaning": "笛卡尔波矢",
+          "unit": "弧度/长度"
+        },
+        {
+          "symbol": "R",
+          "meaning": "正交矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "采用主动操作。复波函数的反幺正变换还必须包含共轭。",
+      "sources": [
+        "frontiers-layer-db"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/crystal?module=layers"
+        ],
+        [
+          "交互计算",
+          "#compute/layer-symmetry-lab"
+        ]
+      ],
+      "contexts": [
+        "layers",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "S′ = det(R) R S",
+        "k′ = R k"
+      ]
+    },
+    {
+      "id": "frontiers-polar-space",
+      "title": "允许极向量子空间",
+      "symbols": [
+        "(R−I) P = 0",
+        "R P = P"
+      ],
+      "aliases": [
+        "允许极向量子空间"
+      ],
+      "definition": "联立所有操作的不变性方程得到允许极向量方向。",
+      "variables": [
+        {
+          "symbol": "P",
+          "meaning": "候选极向量；此处不代表已计算的自发极化",
+          "unit": "按物理对象定义"
+        },
+        {
+          "symbol": "I",
+          "meaning": "单位矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "对称性许可不证明材料存在自发极化或可逆铁电切换。",
+      "sources": [
+        "frontiers-chirality-iucr"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/observables?module=chirality"
+        ],
+        [
+          "交互计算",
+          "#compute/chirality-polarity-lab"
+        ]
+      ],
+      "contexts": [
+        "chirality",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "(R−I) P = 0",
+        "R P = P"
+      ]
+    },
+    {
+      "id": "frontiers-mirror-fit",
+      "title": "镜像与保向刚体配准",
+      "symbols": [
+        "det(R) = +1",
+        "det(R) = −1"
+      ],
+      "aliases": [
+        "镜像与保向刚体配准"
+      ],
+      "definition": "镜像使用不正操作；与镜像比较重合时只允许正旋转、平移及同种原子的对应。",
+      "variables": [
+        {
+          "symbol": "R",
+          "meaning": "空间正交矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "当前工具限有限点集；不直接决定周期晶体的绝对结构。",
+      "sources": [
+        "frontiers-chirality-iucr"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/observables?module=chirality"
+        ],
+        [
+          "交互计算",
+          "#compute/chirality-polarity-lab"
+        ]
+      ],
+      "contexts": [
+        "chirality",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "det(R) = +1",
+        "det(R) = −1"
+      ]
+    },
+    {
+      "id": "frontiers-pseudo-distance",
+      "title": "伪对称操作的映射误差",
+      "symbols": [
+        "δ = max_i |R r_i − r_{p(i)}|"
+      ],
+      "aliases": [
+        "伪对称操作的映射误差"
+      ],
+      "definition": "逐个候选操作计算指定原子对应下的最大位移；容差接受集合还需检查闭合。",
+      "variables": [
+        {
+          "symbol": "δ",
+          "meaning": "最大映射距离",
+          "unit": "模型长度"
+        },
+        {
+          "symbol": "r_i",
+          "meaning": "原子位置",
+          "unit": "模型长度"
+        },
+        {
+          "symbol": "p(i)",
+          "meaning": "候选操作给出的原子对应",
+          "unit": "索引"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "本页的固定母构型候选不是 spglib 的完整空间群搜索算法。",
+      "sources": [
+        "frontiers-spglib-tol"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/observables?module=chirality"
+        ],
+        [
+          "交互计算",
+          "#compute/chirality-polarity-lab"
+        ]
+      ],
+      "contexts": [
+        "chirality",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "δ = max_i |R r_i − r_{p(i)}|"
+      ]
+    },
+    {
+      "id": "frontiers-schmidt",
+      "title": "Schmidt 概率与纠缠熵",
+      "symbols": [
+        "ρ_A = Tr_B |ψ⟩⟨ψ|",
+        "S = −Σ λ_i log(λ_i)"
+      ],
+      "aliases": [
+        "Schmidt 概率与纠缠熵"
+      ],
+      "definition": "纯态二分后的奇异值平方给出 Schmidt 概率；以自然对数计算纠缠熵。",
+      "variables": [
+        {
+          "symbol": "λ_i",
+          "meaning": "非负且归一化的 Schmidt 概率",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "S",
+          "meaning": "纠缠熵",
+          "unit": "nat"
+        },
+        {
+          "symbol": "ρ_A",
+          "meaning": "子系统 A 的约化密度矩阵",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "简并基态须明确选定纯态；混合态的约化谱不能直接视为纯态纠缠。",
+      "sources": [
+        "frontiers-pollmann"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/spin?module=spt"
+        ],
+        [
+          "交互计算",
+          "#compute/manybody-spt-lab"
+        ]
+      ],
+      "contexts": [
+        "spt",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "ρ_A = Tr_B |ψ⟩⟨ψ|",
+        "S = −Σ λ_i log(λ_i)"
+      ]
+    },
+    {
+      "id": "frontiers-projective",
+      "title": "AKLT 虚拟射影表示",
+      "symbols": [
+        "U_x U_z = −U_z U_x"
+      ],
+      "aliases": [
+        "AKLT 虚拟射影表示"
+      ],
+      "definition": "虚拟半整数自旋的两个 π 旋转反对易，体现与物理整数自旋线性表示不同的射影相位。",
+      "variables": [
+        {
+          "symbol": "U_x",
+          "meaning": "虚拟空间 x 方向 π 旋转的相位约定代表",
+          "unit": "无量纲"
+        },
+        {
+          "symbol": "U_z",
+          "meaning": "虚拟空间 z 方向 π 旋转的相位约定代表",
+          "unit": "无量纲"
+        }
+      ],
+      "conventions": "采用本页标注的主动操作、笛卡尔坐标和模型单位。",
+      "conditions": "本页解析矩阵仅用于 AKLT 固定点，不自动分类一般扰动链。",
+      "sources": [
+        "frontiers-aklt"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/spin?module=spt"
+        ],
+        [
+          "交互计算",
+          "#compute/manybody-spt-lab"
+        ]
+      ],
+      "contexts": [
+        "spt",
+        "frontiers"
+      ],
+      "formulaAliases": [
+        "U_x U_z = −U_z U_x"
+      ]
     }
   ],
   "sources": [
@@ -5661,10 +5996,41 @@
       "id": "connections-casimir",
       "title": "Casimir (1945) · Microscopic reversibility",
       "url": "https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.17.343"
+    },
+    {
+      "id": "frontiers-layer-bcs",
+      "title": "Bilbao · 层群与截面对称性",
+      "url": "https://www.cryst.ehu.es/cgi-bin/subperiodic/programs/nph-sections?gnum=47&what=table"
+    },
+    {
+      "id": "frontiers-layer-db",
+      "title": "de la Flor 等 · 层群数据库与 Brillouin 区",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8573847/"
+    },
+    {
+      "id": "frontiers-chirality-iucr",
+      "title": "Nespolo、Aroyo、Souvignier · 空间群层次与手性",
+      "url": "https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html"
+    },
+    {
+      "id": "frontiers-spglib-tol",
+      "title": "spglib · 笛卡尔距离容差的定义",
+      "url": "https://spglib.readthedocs.io/en/v2.8.0/variable.html"
+    },
+    {
+      "id": "frontiers-aklt",
+      "title": "Affleck、Kennedy、Lieb、Tasaki · Valence-bond ground states",
+      "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.59.799"
+    },
+    {
+      "id": "frontiers-pollmann",
+      "title": "Pollmann 等 · 一维拓扑相的纠缠谱",
+      "url": "https://arxiv.org/abs/0910.1811"
     }
   ],
   "extensionRelease": "20261030-bridges1",
   "principlesRelease": "20261030-symmetry1",
   "constructionRelease": "20261030-construction1",
-  "connectionsRelease": "20261031-connections1"
+  "connectionsRelease": "20261031-connections1",
+  "frontiersRelease": "20261031-frontiers1"
 }
