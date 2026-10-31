@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261031-entry1';
+const BUILD = '20261031-entry2';
 const plans = {
   layer_symmetry_lab:['symmetry_frontiers'],chirality_polarity_lab:['symmetry_frontiers'],manybody_spt_lab:['symmetry_frontiers'],symmetry_linked:['symmetry_frontiers'],frontier_inverse:['symmetry_frontiers'],
   statistics_lab:['symmetry_connections'],defects_lab:['symmetry_connections'],reciprocity_lab:['symmetry_connections'],symmetry_audit:['symmetry_connections'],symbolic_step_grade:['symmetry_connections'],

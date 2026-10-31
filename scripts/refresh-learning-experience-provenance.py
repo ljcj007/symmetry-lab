@@ -14,7 +14,7 @@ def build():
             name=p.relative_to(ROOT).as_posix()
             if name!=NAME:files.append(dict(path=name,sha256='pending',bytes=0))
     for name in ['README.md','package.json']:files.append(dict(path=name,sha256='pending',bytes=0))
-    manifests[NAME]=dict(release='20261031-entry1',sourceHashNormalization='utf8-lf-v1',counts=dict(homeLevels=3,flagshipExperiments=1,materials=3,stages=4,searchEntries=len(json.loads((ROOT/'dist/data/search-index.json').read_text(encoding='utf8'))['entries'])),scope='Existing SHG Python core; ideal bulk electric-dipole teaching models, not measured optical coefficients. See docs/learning-experience.md.',files=files)
+    manifests[NAME]=dict(release='20261031-entry2',sourceHashNormalization='utf8-lf-v1',counts=dict(homeLevels=3,flagshipExperiments=1,materials=3,stages=4,searchEntries=len(json.loads((ROOT/'dist/data/search-index.json').read_text(encoding='utf8'))['entries'])),scope='Existing SHG Python core; ideal bulk electric-dipole teaching models, not measured optical coefficients. See docs/learning-experience.md.',files=files)
     return prior.ManifestGraph(manifests).all_outputs()
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args();changed=[]

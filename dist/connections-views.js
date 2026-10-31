@@ -1,5 +1,5 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261031-entry1';
-import {heatmapSVG,quantumCurveSVG} from './quantum-plots.js?v=20261031-entry1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261031-entry2';
+import {heatmapSVG,quantumCurveSVG} from './quantum-plots.js?v=20261031-entry2';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?'是':'否'):typeof x==='number'?num(x):x==null?'未定义':String(x);
 const clean=r=>{const c=structuredClone(r);delete c.learningEvidence;return c;};

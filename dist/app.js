@@ -1,15 +1,15 @@
-import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261031-entry1';
-import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261031-entry1';
-import {crystalSpan} from './crystal-notation.js?v=20261031-entry1';
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261031-entry1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261031-entry1';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261031-entry1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261031-entry1';
+import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261031-entry2';
+import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261031-entry2';
+import {crystalSpan} from './crystal-notation.js?v=20261031-entry2';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261031-entry2';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261031-entry2';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261031-entry2';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261031-entry2';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261031-entry1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261031-entry2';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
 
-const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261031-entry1'),projects:()=>import('./response-projects.js?v=20261031-entry1'),advanced:()=>import('./advanced-ui.js?v=20261031-entry1'),research:()=>import('./research-ui.js?v=20261031-entry1'),structure:()=>import('./structure-ui.js?v=20261031-entry1')})[key]());
+const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261031-entry2'),projects:()=>import('./response-projects.js?v=20261031-entry2'),advanced:()=>import('./advanced-ui.js?v=20261031-entry2'),research:()=>import('./research-ui.js?v=20261031-entry2'),structure:()=>import('./structure-ui.js?v=20261031-entry2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);

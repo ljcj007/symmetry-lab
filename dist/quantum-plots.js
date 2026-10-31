@@ -1,4 +1,4 @@
-import {svgMathText} from './math-svg.js?v=20261031-entry1';
+import {svgMathText} from './math-svg.js?v=20261031-entry2';
 // Pure SVG views of Python results; these functions do not perform spectroscopy.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=x=>Number.isFinite(x)?Number(x.toPrecision(4)):'—';

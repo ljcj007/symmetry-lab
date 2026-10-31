@@ -1,6 +1,6 @@
-import {latestCalculation,makeProject,addRecord,validateJSON,saveProject,RELEASE,safeRecordRoute} from './material-notebook.js?v=20261031-entry1';
-import {esc,num,table} from './response-views.js?v=20261031-entry1';
-import {quantumCurveSVG} from './quantum-plots.js?v=20261031-entry1';
+import {latestCalculation,makeProject,addRecord,validateJSON,saveProject,RELEASE,safeRecordRoute} from './material-notebook.js?v=20261031-entry2';
+import {esc,num,table} from './response-views.js?v=20261031-entry2';
+import {quantumCurveSVG} from './quantum-plots.js?v=20261031-entry2';
 const KEY='symmetry-lab.comparison.v1',MAX_BYTES=3*1024*1024;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const print=x=>typeof x==='number'?num(x):x===undefined?'未提供':typeof x==='string'?x:JSON.stringify(x);

@@ -1,5 +1,5 @@
-import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261031-entry1';
-import {esc,num,table,notes,sources} from './response-views.js?v=20261031-entry1';
+import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261031-entry2';
+import {esc,num,table,notes,sources} from './response-views.js?v=20261031-entry2';
 export {esc,num,table,notes,sources};
 const display=x=>typeof x==='number'?num(x):typeof x==='object'?JSON.stringify(x):String(x??'—');
 export function controlsHTML(module,values){return module.fields.map(f=>`<label ${f.experiment&&f.experiment!==values.experiment?'hidden':''}>${esc(f.label)}${f.type==='select'?`<select id="pw-${f.key}">${f.options.map(([v,t])=>`<option value="${esc(v)}" ${String(values[f.key])===String(v)?'selected':''}>${esc(t)}</option>`).join('')}</select>`:`<input id="pw-${f.key}" type="number" value="${esc(values[f.key])}" min="${f.min}" max="${f.max}" step="${f.step??'any'}" required>`}</label>`).join('')+`<p class="obs-small">调整参数后点击计算。图形、数值和校验使用同一份 Python 结果。</p>`;}

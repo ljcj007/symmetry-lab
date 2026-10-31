@@ -8,9 +8,9 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261031-entry1');
-const notebook=await import('../dist/material-notebook.js?v=20261031-entry1');
-const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261031-entry1');
+const projects=await import('../dist/response-projects.js?v=20261031-entry2');
+const notebook=await import('../dist/material-notebook.js?v=20261031-entry2');
+const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261031-entry2');
 const normalize=value=>JSON.parse(JSON.stringify(value));
 const saved=async id=>(await notebook.listProjects()).find(p=>p.id===id);
 const mount=async(template)=>{

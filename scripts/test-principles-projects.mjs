@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
-import {principlesAssignments,principlesEvidence,HBAR_MEV_NS} from '../dist/principles-projects.js?v=20261031-entry1';
-import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261031-entry1';
+import {principlesAssignments,principlesEvidence,HBAR_MEV_NS} from '../dist/principles-projects.js?v=20261031-entry2';
+import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261031-entry2';
 
 const json=name=>JSON.parse(fs.readFileSync(new URL('../'+name,import.meta.url),'utf8'));
 const modules=['order','exchange','conservation','density'].map(id=>json('dist/data/'+id+'-content.json').module);
@@ -85,8 +85,8 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261031-entry1');
-const notebook=await import('../dist/material-notebook.js?v=20261031-entry1');
+const projects=await import('../dist/response-projects.js?v=20261031-entry2');
+const notebook=await import('../dist/material-notebook.js?v=20261031-entry2');
 const normalize=value=>JSON.parse(JSON.stringify(value));
 const saved=async id=>(await notebook.listProjects()).find(p=>p.id===id);
 const mount=async(template)=>{
