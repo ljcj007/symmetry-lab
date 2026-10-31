@@ -1,0 +1,10 @@
+.connections-page .ct-panel{margin:1rem 0;padding:1.25rem;border:1px solid var(--line,#dce5dc);border-radius:12px;background:#fff}
+.connections-page .ct-panel>button{margin:.35rem .35rem .35rem 0;white-space:normal;text-align:left}
+.connections-page .ct-panel label{display:block;margin:.7rem 0}
+.connections-page .ct-panel input,.connections-page .ct-panel select,.connections-page .ct-panel textarea{font:inherit;max-width:100%;width:100%;padding:.6rem;border:1px solid #bed0c3;border-radius:7px;background:#fff}
+.connections-page .ct-panel svg{max-width:100%;height:auto;display:block}
+.connections-page .ct-panel svg text{font-size:18px}
+.cn-pair-grid,.cn-audit-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+#cn-texture{touch-action:none;cursor:crosshair}
+.connections-page .ct-panel pre{white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:900px){.cn-pair-grid,.cn-audit-controls{grid-template-columns:1fr}.connections-page .ct-panel{padding:.8rem}}

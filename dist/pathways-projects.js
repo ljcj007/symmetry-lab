@@ -1,4 +1,4 @@
-import {num} from './response-views.js?v=20261030-construction1';
+import {num} from './response-views.js?v=20261031-connections1';
 
 const screw={group:4,site:'auto',orbitals:'s'};
 const scattering={lattice:4,massA:23,massB:35.45,springIntra:2,springInter:2,basisFraction:.5,scatterA:1,scatterB:1,angle:0,selectedQ:1.8,sigma:.5,energyCutoff:.25,channel:'both'};

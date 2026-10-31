@@ -1,7 +1,8 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261030-construction1';
+const BUILD = '20261031-connections1';
 const plans = {
+  statistics_lab:['symmetry_connections'],defects_lab:['symmetry_connections'],reciprocity_lab:['symmetry_connections'],symmetry_audit:['symmetry_connections'],symbolic_step_grade:['symmetry_connections'],
   salc_lab:['salc_lab'],wavevector_lab:['wavevector_lab'],nonsymmorphic_lab:['nonsymmorphic_lab'],symmetry_grading:['symmetry_grading'],
   order_parameter_lab: ['order_parameter_lab'], exchange_symmetry_lab: ['exchange_symmetry_lab'], conservation_lab: ['density_matrix_lab','conservation_lab'],
   manybody_spectra_lab: ['hubbard_lab','manybody_spectra_lab'], polaron_lab: ['polaron_lab'], density_matrix_lab: ['density_matrix_lab'], symmetry_workshop: ['symmetry_workshop'],
@@ -51,7 +52,7 @@ async function prepare(id, action, payload) {
     runtime.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_magnetic_database = None\n_label_database = None\n_carat_catalogs = {}');
   }
   const needsLabels = action === 'standard_labels' || (action === 'analyze' && payload.group_number !== undefined);
-  const exact = needsLabels || ['phase', 'tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
+  const exact = needsLabels || ['statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'phase', 'tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
   const su3CG = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_cg';
   const exactCG = su3CG && payload.arithmetic === 'exact';
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';

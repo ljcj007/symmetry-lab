@@ -681,8 +681,8 @@
     },
     {
       "path": "dist/python/browser_api.py",
-      "sha256": "1a678d09b6e7c17bccb7d22f9520330ae53760f4fe89e88432abfae301c9c656",
-      "bytes": 7242,
+      "sha256": "6f5c0acf967448a8c8a1071d3e9141b2c0e3826cdd03f91697b978fff1f729ad",
+      "bytes": 7543,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -960,6 +960,20 @@
       "limitations": [
         "Grades only the declared finite matrix/subspace task with numerical tolerances; does not automatically grade unrestricted written derivations",
         "Stored task and reference data are public teaching data, not an assessment-security or plagiarism-detection system"
+      ]
+    },
+    {
+      "path": "dist/python/symmetry_connections.py",
+      "sha256": "8addbb207355c38fcede6ad90983edae1d37f02606f8c765d5646e03b6b12b49",
+      "bytes": 19867,
+      "upstream": [],
+      "license": "GPL-3.0-only",
+      "implementation": "Original NumPy/SymPy finite teaching models",
+      "coverage": [
+        "Exact S2/S3 permutation algebra, XY/director loop winding, linear response reciprocity, antiunitary audit and bounded symbolic grading"
+      ],
+      "limitations": [
+        "Finite models only; no arbitrary homotopy, S_n or material fitting; see dist/docs/connections.md"
       ]
     }
   ],

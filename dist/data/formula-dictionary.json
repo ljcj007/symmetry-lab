@@ -5152,6 +5152,298 @@
         "module=nonsymmorphic"
       ],
       "requiresContext": true
+    },
+    {
+      "id": "connections-complete-exchange",
+      "title": "完整粒子交换",
+      "symbols": [
+        "P_orb",
+        "P_spin",
+        "η_total = η_orb η_spin"
+      ],
+      "aliases": [
+        "完整粒子交换"
+      ],
+      "definition": "交换同时作用于粒子的全部自由度；电子的轨道与自旋交换符号相乘。",
+      "variables": [
+        {
+          "symbol": "P_orb",
+          "meaning": "交换同时作用于粒子的全部自由度；电子的轨道与自旋交换符号相乘。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "对于相同费米子总符号为 −1，玻色子为 +1。局域可区分张量因子不自动满足粒子统计条件。",
+      "sources": [
+        "connections-neil"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/foundations?module=statistics"
+        ],
+        [
+          "交互计算",
+          "#compute/statistics-lab"
+        ]
+      ],
+      "contexts": [
+        "statistics",
+        "connections"
+      ],
+      "formulaAliases": [
+        "P_orb",
+        "P_spin",
+        "η_total = η_orb η_spin"
+      ]
+    },
+    {
+      "id": "connections-pauli-projector",
+      "title": "费米反对称投影",
+      "symbols": [
+        "P_-",
+        "P_- = (I − P)/2"
+      ],
+      "aliases": [
+        "费米反对称投影"
+      ],
+      "definition": "二粒子交换 P²=I 时，(I−P)/2 是反对称正交投影。",
+      "variables": [
+        {
+          "symbol": "P_-",
+          "meaning": "二粒子交换 P²=I 时，(I−P)/2 是反对称正交投影。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "零范数投影表示候选态被消去，不可归一化；投影不决定能量。",
+      "sources": [
+        "connections-neil"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/foundations?module=statistics"
+        ],
+        [
+          "交互计算",
+          "#compute/statistics-lab"
+        ]
+      ],
+      "contexts": [
+        "statistics",
+        "connections"
+      ],
+      "formulaAliases": [
+        "P_-",
+        "P_- = (I − P)/2"
+      ]
+    },
+    {
+      "id": "connections-young-idempotent",
+      "title": "Young 幂等归一化",
+      "symbols": [
+        "Y^2 = 3Y"
+      ],
+      "aliases": [
+        "Young 幂等归一化"
+      ],
+      "definition": "指定 S₃ 表格下 Y=(I+P₁₂)(I−P₁₃)，Y/3 幂等。",
+      "variables": [
+        {
+          "symbol": "Y^2 = 3Y",
+          "meaning": "指定 S₃ 表格下 Y=(I+P₁₂)(I−P₁₃)，Y/3 幂等。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "算符乘积右侧先作用；此 Young 幂等算符通常非厄米，不等同混合中心正交投影。",
+      "sources": [
+        "connections-neil"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/foundations?module=statistics"
+        ],
+        [
+          "交互计算",
+          "#compute/statistics-lab"
+        ]
+      ],
+      "contexts": [
+        "statistics",
+        "connections"
+      ],
+      "formulaAliases": [
+        "Y^2 = 3Y"
+      ]
+    },
+    {
+      "id": "connections-order-manifold",
+      "title": "序参量流形与剩余对称性",
+      "symbols": [
+        "G/H",
+        "M = G/H"
+      ],
+      "aliases": [
+        "序参量流形与剩余对称性"
+      ],
+      "definition": "G 是模型对称群，H 是选定有序态的稳定子；G/H 是其对称相关状态轨道。",
+      "variables": [
+        {
+          "symbol": "G/H",
+          "meaning": "G 是模型对称群，H 是选定有序态的稳定子；G/H 是其对称相关状态轨道。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "须先规定允许态空间和固定边界；不能仅由群标签推断缺陷能量稳定性。",
+      "sources": [
+        "connections-tong"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/structure-dynamics?module=defects"
+        ],
+        [
+          "交互计算",
+          "#compute/topological-defects-lab"
+        ]
+      ],
+      "contexts": [
+        "defects",
+        "connections"
+      ],
+      "formulaAliases": [
+        "G/H",
+        "M = G/H"
+      ]
+    },
+    {
+      "id": "connections-defect-winding",
+      "title": "闭环绕数",
+      "symbols": [
+        "w = Δθ/(2π)",
+        "n ≡ −n"
+      ],
+      "aliases": [
+        "闭环绕数"
+      ],
+      "definition": "XY 环路上角度增量除以 2π 得整数绕数；平面向列使用单值双角场。",
+      "variables": [
+        {
+          "symbol": "w = Δθ/(2π)",
+          "meaning": "XY 环路上角度增量除以 2π 得整数绕数；平面向列使用单值双角场。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "环路不穿过核心、采样充分；向列的角度绕转可为半整数，其双角场绕数仍为整数。这里是平面 RP¹。",
+      "sources": [
+        "connections-tong"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/structure-dynamics?module=defects"
+        ],
+        [
+          "交互计算",
+          "#compute/topological-defects-lab"
+        ]
+      ],
+      "contexts": [
+        "defects",
+        "connections"
+      ],
+      "formulaAliases": [
+        "w = Δθ/(2π)",
+        "n ≡ −n"
+      ]
+    },
+    {
+      "id": "connections-onsager-casimir",
+      "title": "Onsager–Casimir 互易",
+      "symbols": [
+        "L_ij(B,M) = ε_i ε_j L_ji(−B,−M)"
+      ],
+      "aliases": [
+        "Onsager–Casimir 互易"
+      ],
+      "definition": "反转全部时间反演奇参量，再交换响应指标并乘变量奇偶因子。",
+      "variables": [
+        {
+          "symbol": "L_ij(B,M) = ε_i ε_j L_ji(−B,−M)",
+          "meaning": "反转全部时间反演奇参量，再交换响应指标并乘变量奇偶因子。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "限定线性近稳态与一致的熵共轭力约定；不要求同一磁态下矩阵对称，也不自动保证非负耗散。",
+      "sources": [
+        "connections-casimir"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/observables?module=reciprocity"
+        ],
+        [
+          "交互计算",
+          "#compute/reciprocity-lab"
+        ]
+      ],
+      "contexts": [
+        "reciprocity",
+        "connections"
+      ],
+      "formulaAliases": [
+        "L_ij(B,M) = ε_i ε_j L_ji(−B,−M)"
+      ]
+    },
+    {
+      "id": "connections-entropy-response",
+      "title": "对称耗散与非负熵产生",
+      "symbols": [
+        "σ = X^T S X",
+        "λ_min(S) ≥ 0"
+      ],
+      "aliases": [
+        "对称耗散与非负熵产生"
+      ],
+      "definition": "实共轭力的熵产生只依赖响应矩阵的对称部分 S。",
+      "variables": [
+        {
+          "symbol": "σ = X^T S X",
+          "meaning": "实共轭力的熵产生只依赖响应矩阵的对称部分 S。",
+          "unit": "按本页缩放约定；群、投影和绕数均无量纲"
+        }
+      ],
+      "conventions": "采用对应课堂中明确给出的基、坐标和变量约定。",
+      "conditions": "要求对所有力非负时，S 必须半正定；单次激励的正结果不足以证明。",
+      "sources": [
+        "connections-onsager"
+      ],
+      "links": [
+        [
+          "对应课堂",
+          "#classroom/observables?module=reciprocity"
+        ],
+        [
+          "交互计算",
+          "#compute/reciprocity-lab"
+        ]
+      ],
+      "contexts": [
+        "reciprocity",
+        "connections"
+      ],
+      "formulaAliases": [
+        "σ = X^T S X",
+        "λ_min(S) ≥ 0"
+      ]
     }
   ],
   "sources": [
@@ -5349,9 +5641,30 @@
       "id": "construction-layer-groups",
       "title": "Wieder & Kane, Spin-orbit semimetals in the layer groups (2016)",
       "url": "https://doi.org/10.1103/PhysRevB.94.155108"
+    },
+    {
+      "id": "connections-neil",
+      "title": "Ethan Neil · Identical particles",
+      "url": "https://etneil.github.io/grad_qm_lec_notes/identical_particles.html"
+    },
+    {
+      "id": "connections-tong",
+      "title": "David Tong · Continuous symmetries and vortices",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sft/sfthtml/S4.html"
+    },
+    {
+      "id": "connections-onsager",
+      "title": "Onsager (1931) · Reciprocal relations II",
+      "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.38.2265"
+    },
+    {
+      "id": "connections-casimir",
+      "title": "Casimir (1945) · Microscopic reversibility",
+      "url": "https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.17.343"
     }
   ],
   "extensionRelease": "20261030-bridges1",
   "principlesRelease": "20261030-symmetry1",
-  "constructionRelease": "20261030-construction1"
+  "constructionRelease": "20261030-construction1",
+  "connectionsRelease": "20261031-connections1"
 }

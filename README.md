@@ -516,3 +516,17 @@ python scripts/test-spglib-wasm.py
 - `phonon_spectra.py` 从三种二原子 fcc 原胞的位点置换与笛卡尔旋转计算 Γ 点机械特征标，精确约化声学与光学表示；提供 IR / 一阶非共振 Raman 允许性、相对位移动画及给定偏振几何的相对因子。谱峰位置和线宽是用户假设输入，不是声子频率预测。
 - `property_tensors.py` 用精确生成元约束介电、弹性、压电与线性平衡磁电张量，支持自定义正交笛卡尔矩阵及时间反演。显示独立参数、零元、相等关系与旋转响应。自由参数的数值为演示输入，不推断真实材料常数；不处理耗散输运 Onsager 关系。
 - 课程与案例数据：`dist/data/material-observables.json`；方法、来源与范围：`dist/docs/material-observables.md`。新增测试入口 `npm run test:observables`；完整 JavaScript / Python 回归继续在发布流水线运行。
+
+
+## 2026-10-31：同粒子、拓扑缺陷与互易响应
+
+新增 9 课、36 个分步练习步骤、19 个计算预设、6 个预测题、9 个材料背景与模型案例，以及 3 个跨模块项目（项目中心合计 23 个）。保留已有功能、18px 正文字号与公式排版。
+
+- 置换群：两电子完整轨道 × 自旋交换、Pauli 投影、S₃ 中心投影与指定 Young 幂等算符。
+- 缺陷：XY / 平面向列闭环绕数、核心有效性检查、可移动环路与 Ising 畴壁构型。
+- 响应：Onsager–Casimir、完整磁态反转、空间协变和非负耗散检验。
+- 共享交互：三层对称性诊断台、反例挑战、带假设的精确符号判分、A/B 完整证据与报告。
+
+计算使用浏览器 Python，新增核心 `dist/python/symmetry_connections.py`。课程与案例位于 `dist/data/connections-materials.json`；独立诊断入口 `#compute/symmetry-audit`，材料入口 `#atlas/connections`。
+
+模型范围、变量约定、验证和数据保存说明见 [同粒子、缺陷与互易响应](dist/docs/connections.md)。这批功能不宣称任意同伦群、任意 S_n 表示或真实材料参数拟合。

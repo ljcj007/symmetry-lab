@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
-import {constructionAssignments,constructionEvidence} from '../dist/construction-projects.js?v=20261030-construction1';
-import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261030-construction1';
+import {constructionAssignments,constructionEvidence} from '../dist/construction-projects.js?v=20261031-connections1';
+import {parseClassroomRoute} from '../dist/classroom-ui.js?v=20261031-connections1';
 
 const read=name=>JSON.parse(fs.readFileSync(new URL('../'+name,import.meta.url),'utf8'));
 const modules=['salc','wavevector','nonsymmorphic','bandrep'].map(id=>read('dist/data/'+id+'-content.json').module);
@@ -95,11 +95,11 @@ const {Container,Element,flush}=await import('./test-material-research-ui.mjs');
 const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261030-construction1');
-const notebook=await import('../dist/material-notebook.js?v=20261030-construction1');
+const projects=await import('../dist/response-projects.js?v=20261031-connections1');
+const notebook=await import('../dist/material-notebook.js?v=20261031-connections1');
 const clone=x=>JSON.parse(JSON.stringify(x));
-assert.equal(projects.assignmentTemplates.length,20);
-assert.equal(projects.assignmentTemplates.filter(t=>!constructionAssignments.some(p=>p.id===t.id)).length,17);
+assert.equal(projects.assignmentTemplates.length,23);
+assert.equal(projects.assignmentTemplates.filter(t=>!constructionAssignments.some(p=>p.id===t.id)).length,20);
 const original=notebook.makeProject({title:'旧研究记录',notes:'不得覆盖'});await notebook.saveProject(original);
 const mount=async(template,byModule=false)=>{const container=new Container(),downloads=[];await projects.renderResponseProjects({container,selection:byModule?{module:template.module}:{project:template.id},download:(body,name,type)=>downloads.push({body,name,type})});return{container,downloads,$:s=>container.querySelector(s)};};
 let constraints=0;
@@ -107,7 +107,7 @@ for(const template of constructionAssignments){
  assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
  const filtered=await mount(template,true);
  assert.equal(filtered.$('#pj-template').value,template.id,'classroom/module link selects its assignment');
- assert.equal(filtered.$('#pj-template').querySelectorAll('option').length,20,'all projects remain selectable');
+ assert.equal(filtered.$('#pj-template').querySelectorAll('option').length,23,'all projects remain selectable');
  let view=await mount(template),before=await notebook.listProjects();await view.$('#pj-new').onclick();
  const project=(await notebook.listProjects()).find(p=>!before.some(v=>v.id===p.id));assert.ok(project);
  for(const step of template.steps){

@@ -8,9 +8,9 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const projects=await import('../dist/response-projects.js?v=20261030-construction1');
-const notebook=await import('../dist/material-notebook.js?v=20261030-construction1');
-const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261030-construction1');
+const projects=await import('../dist/response-projects.js?v=20261031-connections1');
+const notebook=await import('../dist/material-notebook.js?v=20261031-connections1');
+const {pathwaysAssignments}=await import('../dist/pathways-projects.js?v=20261031-connections1');
 const normalize=value=>JSON.parse(JSON.stringify(value));
 const saved=async id=>(await notebook.listProjects()).find(p=>p.id===id);
 const mount=async(template)=>{
@@ -31,7 +31,7 @@ const stageRecord=(project,step)=>project.records.find(r=>r.id===project.assignm
 const safeSummary=record=>{const summary=projects.evidenceSummary(record);assert.equal(typeof summary,'string');assert.doesNotMatch(summary,/NaN|Infinity|undefined/);return summary;};
 const importFile=body=>({size:Buffer.byteLength(body),text:async()=>body});
 
-assert.equal(projects.assignmentTemplates.length,20,'all seventeen previous projects and three construction projects coexist');
+assert.equal(projects.assignmentTemplates.length,23,'all seventeen previous projects and three construction projects coexist');
 assert.equal(pathwaysAssignments.length,4);
 for(const template of pathwaysAssignments)assert.deepEqual(projects.assignmentTemplates.find(t=>t.id===template.id),template);
 // Preserve all sixteen other assignment kinds and an ordinary material notebook
@@ -50,7 +50,7 @@ let checkedConstraints=0;
 for(const template of pathwaysAssignments){
  let view=await mount(template);
  assert.equal(view.$('#pj-template').value,template.id);
- assert.equal(view.$('#pj-template').querySelectorAll('option').length,20);
+ assert.equal(view.$('#pj-template').querySelectorAll('option').length,23);
  assert.equal(view.$('#pj-save'),null,'no project exists before the UI creates it');
  const beforeNew=await notebook.listProjects();
  await view.$('#pj-new').onclick();

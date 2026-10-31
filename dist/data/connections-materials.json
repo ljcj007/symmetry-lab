@@ -1,0 +1,1470 @@
+{
+  "schema": "symmetry-lab-connections-1",
+  "release": "20261031-connections1",
+  "modules": [
+    {
+      "id": "statistics",
+      "title": "置换群与同粒子统计",
+      "route": "statistics-lab",
+      "action": "statistics_lab",
+      "pathway": "foundations",
+      "summary": "把置换群、轨道 × 自旋和 Pauli 条件连起来，逐步构造完整波函数。",
+      "fields": [
+        {
+          "key": "mode",
+          "label": "粒子空间",
+          "default": "two",
+          "type": "select",
+          "options": [
+            [
+              "two",
+              "两电子：轨道 × 自旋"
+            ],
+            [
+              "three",
+              "S₃：三个二能级因子"
+            ]
+          ]
+        },
+        {
+          "key": "orbital",
+          "label": "两电子轨道态",
+          "default": "symmetric",
+          "type": "select",
+          "options": [
+            [
+              "same",
+              "同一轨道 aa"
+            ],
+            [
+              "symmetric",
+              "(ab + ba) / √2"
+            ],
+            [
+              "antisymmetric",
+              "(ab − ba) / √2"
+            ]
+          ]
+        },
+        {
+          "key": "spin",
+          "label": "两电子自旋态",
+          "default": "singlet",
+          "type": "select",
+          "options": [
+            [
+              "singlet",
+              "单重态"
+            ],
+            [
+              "triplet0",
+              "三重态 m=0"
+            ],
+            [
+              "upup",
+              "三重态 m=1"
+            ]
+          ]
+        },
+        {
+          "key": "swap",
+          "label": "S₃ 交换操作",
+          "default": "12",
+          "type": "select",
+          "options": [
+            [
+              "12",
+              "交换 1 与 2"
+            ],
+            [
+              "23",
+              "交换 2 与 3"
+            ],
+            [
+              "13",
+              "交换 1 与 3"
+            ]
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "id": "pauli-singlet",
+          "title": "对称轨道 × 单重态",
+          "input": {}
+        },
+        {
+          "id": "pauli-forbidden",
+          "title": "反例：同轨道 × 三重态",
+          "input": {
+            "orbital": "same",
+            "spin": "upup"
+          }
+        },
+        {
+          "id": "pauli-triplet",
+          "title": "反对称轨道 × 三重态",
+          "input": {
+            "orbital": "antisymmetric",
+            "spin": "triplet0"
+          }
+        },
+        {
+          "id": "pauli-same",
+          "title": "同轨道 × 单重态",
+          "input": {
+            "orbital": "same"
+          }
+        },
+        {
+          "id": "young-three",
+          "title": "S₃ 中心投影与 Young 算符",
+          "input": {
+            "mode": "three"
+          }
+        },
+        {
+          "id": "young-swap",
+          "title": "交换两个不同因子",
+          "input": {
+            "mode": "three",
+            "swap": "23"
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "predict-pauli",
+          "preset": "pauli-forbidden",
+          "question": "同轨道与同自旋组合，费米投影范数平方是多少？",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "总态对称，反对称投影为零。"
+        },
+        {
+          "id": "predict-young",
+          "preset": "young-three",
+          "question": "三个二能级因子的全反对称空间有多大？",
+          "choices": [
+            "0 维",
+            "1 维",
+            "3 维"
+          ],
+          "answer": 0,
+          "explanation": "单粒子维数 2 小于粒子数 3。"
+        }
+      ]
+    },
+    {
+      "id": "defects",
+      "title": "序参量流形与拓扑缺陷",
+      "route": "topological-defects-lab",
+      "action": "defects_lab",
+      "pathway": "structure-dynamics",
+      "summary": "从可能的有序态到畴壁与涡旋，用闭环、核心和边界条件检验拓扑分类。",
+      "fields": [
+        {
+          "key": "model",
+          "label": "序参量空间",
+          "default": "xy",
+          "type": "select",
+          "options": [
+            [
+              "xy",
+              "XY：平面矢量 S¹"
+            ],
+            [
+              "nematic",
+              "平面向列：RP¹"
+            ],
+            [
+              "ising",
+              "Ising：两个离散真空"
+            ]
+          ]
+        },
+        {
+          "key": "texture",
+          "label": "XY / 向列纹理",
+          "default": "pair",
+          "type": "select",
+          "options": [
+            [
+              "pair",
+              "涡旋—反涡旋对"
+            ],
+            [
+              "single",
+              "单个涡旋"
+            ]
+          ]
+        },
+        {
+          "key": "separation",
+          "label": "核心间距 d",
+          "default": 2,
+          "type": "number",
+          "min": 0,
+          "max": 4,
+          "step": 0.1
+        },
+        {
+          "key": "loopX",
+          "label": "环路中心 x / 畴壁中心",
+          "default": -1,
+          "type": "number",
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "loopY",
+          "label": "环路中心 y",
+          "default": 0,
+          "type": "number",
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "radius",
+          "label": "环路半径 / 畴壁宽度",
+          "default": 0.6,
+          "type": "number",
+          "min": 0.1,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "phase",
+          "label": "整体转角（度）",
+          "default": 0,
+          "type": "number",
+          "min": -180,
+          "max": 180,
+          "step": 5
+        }
+      ],
+      "presets": [
+        {
+          "id": "vortex-one",
+          "title": "环路包围一个涡旋",
+          "input": {}
+        },
+        {
+          "id": "vortex-pair",
+          "title": "环路包围一对缺陷",
+          "input": {
+            "loopX": 0,
+            "radius": 2
+          }
+        },
+        {
+          "id": "vortex-core",
+          "title": "反例：环路经过核心",
+          "input": {
+            "loopX": 0,
+            "radius": 1
+          }
+        },
+        {
+          "id": "vortex-merged",
+          "title": "成对解析场合并终点",
+          "input": {
+            "separation": 0,
+            "loopX": 0
+          }
+        },
+        {
+          "id": "nematic-half",
+          "title": "平面向列的半圈转角",
+          "input": {
+            "model": "nematic"
+          }
+        },
+        {
+          "id": "ising-wall",
+          "title": "固定异号边界的畴壁",
+          "input": {
+            "model": "ising",
+            "loopX": 0,
+            "radius": 0.7
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "predict-pair",
+          "preset": "vortex-pair",
+          "question": "包围一正一负涡旋，净绕数是多少？",
+          "choices": [
+            "0",
+            "1",
+            "2"
+          ],
+          "answer": 0,
+          "explanation": "电荷相消不等于区域内没有核心。"
+        },
+        {
+          "id": "predict-core",
+          "preset": "vortex-core",
+          "question": "环路经过核心还能报告整数吗？",
+          "choices": [
+            "可以四舍五入",
+            "本环路诊断无效"
+          ],
+          "answer": 1,
+          "explanation": "核心上角度无定义，需移动环路。"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity",
+      "title": "互易关系与响应约束",
+      "route": "reciprocity-lab",
+      "action": "reciprocity_lab",
+      "pathway": "observables",
+      "summary": "同时追踪空间操作、时间反演奇偶和磁畴反转，分清互易性、Hall 响应与耗散。",
+      "fields": [
+        {
+          "key": "model",
+          "label": "响应变量",
+          "default": "hall",
+          "type": "select",
+          "options": [
+            [
+              "hall",
+              "二维电响应 / Hall"
+            ],
+            [
+              "thermo",
+              "电荷—能量：两偶变量"
+            ],
+            [
+              "mixed",
+              "抽象通道：一偶一奇"
+            ]
+          ]
+        },
+        {
+          "key": "space",
+          "label": "Hall 的空间操作",
+          "default": "c4",
+          "type": "select",
+          "options": [
+            [
+              "c1",
+              "恒等操作"
+            ],
+            [
+              "c4",
+              "四重旋转"
+            ],
+            [
+              "mirror",
+              "镜面：同时变换轴矢量 Bz、Mz"
+            ]
+          ]
+        },
+        {
+          "key": "a",
+          "label": "对角响应 a",
+          "default": 1,
+          "type": "number",
+          "min": 0.05,
+          "max": 4,
+          "step": 0.1
+        },
+        {
+          "key": "b",
+          "label": "对角响应 b",
+          "default": 1.4,
+          "type": "number",
+          "min": 0.05,
+          "max": 4,
+          "step": 0.1
+        },
+        {
+          "key": "cross",
+          "label": "对称耦合系数 c",
+          "default": 0.25,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        },
+        {
+          "key": "odd",
+          "label": "反对称耦合系数 d",
+          "default": 0.4,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        },
+        {
+          "key": "field",
+          "label": "外磁场 B（无量纲）",
+          "default": 0.6,
+          "type": "number",
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "magnetization",
+          "label": "磁化 M（无量纲）",
+          "default": 0.3,
+          "type": "number",
+          "min": -3,
+          "max": 3,
+          "step": 0.1
+        },
+        {
+          "key": "reverseM",
+          "label": "比较实验是否同时反转 M",
+          "default": "yes",
+          "type": "select",
+          "options": [
+            [
+              "yes",
+              "是：反转 B 与 M"
+            ],
+            [
+              "no",
+              "否：只反转 B"
+            ]
+          ]
+        },
+        {
+          "key": "violation",
+          "label": "故意加入的互易破坏项 δ",
+          "default": 0,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        },
+        {
+          "key": "forceX",
+          "label": "共轭力 X₁",
+          "default": 1,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        },
+        {
+          "key": "forceY",
+          "label": "共轭力 X₂",
+          "default": 0,
+          "type": "number",
+          "min": -2,
+          "max": 2,
+          "step": 0.1
+        }
+      ],
+      "presets": [
+        {
+          "id": "onsager-hall",
+          "title": "反转全部奇参量",
+          "input": {}
+        },
+        {
+          "id": "onsager-domain",
+          "title": "反例：只翻转外磁场",
+          "input": {
+            "reverseM": "no"
+          }
+        },
+        {
+          "id": "onsager-mirror",
+          "title": "镜面与轴矢量协变",
+          "input": {
+            "space": "mirror"
+          }
+        },
+        {
+          "id": "onsager-thermo",
+          "title": "电热共轭通道",
+          "input": {
+            "model": "thermo",
+            "field": 0,
+            "magnetization": 0
+          }
+        },
+        {
+          "id": "onsager-mixed",
+          "title": "一偶一奇变量",
+          "input": {
+            "model": "mixed"
+          }
+        },
+        {
+          "id": "onsager-broken",
+          "title": "反例：违反互易的候选矩阵",
+          "input": {
+            "violation": 0.4
+          }
+        },
+        {
+          "id": "onsager-active",
+          "title": "反例：互易但非被动",
+          "input": {
+            "model": "thermo",
+            "cross": 2,
+            "field": 0,
+            "magnetization": 0
+          }
+        }
+      ],
+      "predictions": [
+        {
+          "id": "predict-domain",
+          "preset": "onsager-domain",
+          "question": "只翻转 B，M 保持，所选比较残差会为零吗？",
+          "choices": [
+            "会",
+            "当前预设不会"
+          ],
+          "answer": 1,
+          "explanation": "此预设 M 非零，完整反转残差仍为零。"
+        },
+        {
+          "id": "predict-passive",
+          "preset": "onsager-active",
+          "question": "满足互易就能保证所有方向非负耗散吗？",
+          "choices": [
+            "能",
+            "不能"
+          ],
+          "answer": 1,
+          "explanation": "过大的对称交叉项可产生负本征值。"
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "statistics-complete-exchange",
+      "module": "statistics",
+      "title": "交换的是完整粒子",
+      "summary": "电子具有轨道与自旋自由度。交换两个相同电子时，两部分都必须交换。玻色子的完整态取对称交换条件，费米子取反对称条件；局域可区分自旋无需强加粒子统计条件。",
+      "preset": "pauli-singlet",
+      "references": [
+        "neil"
+      ],
+      "sections": [
+        {
+          "title": "先确定单粒子自由度",
+          "text": "电子具有轨道与自旋自由度。交换两个相同电子时，两部分都必须交换。玻色子的完整态取对称交换条件，费米子取反对称条件；局域可区分自旋无需强加粒子统计条件。",
+          "formula": "P = P_orb ⊗ P_spin"
+        },
+        {
+          "title": "构造自旋与轨道的组合",
+          "text": "单重态自旋反对称，三重态自旋对称。完整电子波函数必须反对称，所以两部分交换奇偶相反。",
+          "formula": "η_total = η_orb η_spin"
+        },
+        {
+          "title": "把允许性与能量分开",
+          "text": "交换条件筛去不允许的态。剩余态谁低谁高，需要具体 Hamiltonian；Pauli 原理本身不给出 Hund 能量差。",
+          "formula": "P_- = (I − P)/2"
+        }
+      ]
+    },
+    {
+      "id": "statistics-pauli-projector",
+      "module": "statistics",
+      "title": "用投影找出 Pauli 禁戒",
+      "summary": "二体交换算符的平方为单位。由此构造对称和反对称正交投影。",
+      "preset": "pauli-forbidden",
+      "references": [
+        "neil"
+      ],
+      "sections": [
+        {
+          "title": "交换两次回到原态",
+          "text": "二体交换算符的平方为单位。由此构造对称和反对称正交投影。",
+          "formula": "P^2 = I"
+        },
+        {
+          "title": "为什么系数是二分之一",
+          "text": "展开 (I−P)²=2(I−P)，幂等性要求非零归一化系数为 1/2。",
+          "formula": "P_-^2 = P_-"
+        },
+        {
+          "title": "零向量不是归一化失败",
+          "text": "同轨道且同自旋的两个电子总态对称，反对称投影严格为零。这是统计禁戒，不是数值误差。",
+          "formula": "P_- ψ = 0"
+        }
+      ]
+    },
+    {
+      "id": "statistics-young-sectors",
+      "module": "statistics",
+      "title": "S₃、中心投影与 Young 对称化",
+      "summary": "三个二能级张量因子有八维空间。S₃ 的六个操作在这个空间中产生具体置换矩阵。",
+      "preset": "young-three",
+      "references": [
+        "neil"
+      ],
+      "sections": [
+        {
+          "title": "六个置换的作用",
+          "text": "三个二能级张量因子有八维空间。S₃ 的六个操作在这个空间中产生具体置换矩阵。",
+          "formula": "dim V = 2^3"
+        },
+        {
+          "title": "完整的中心分解",
+          "text": "等权平均给对称投影，带置换符号平均给反对称投影，其余为混合中心投影；三个秩依次为 4、0、4。",
+          "formula": "P_mix = I − P_sym − P_alt"
+        },
+        {
+          "title": "Young 与正交投影不同",
+          "text": "指定表格第一行 1、2，第二行 3，按先列反对称再行对称作用，Y=(I+P₁₂)(I−P₁₃)。Y/3 幂等但非厄米。",
+          "formula": "Y^2 = 3Y"
+        }
+      ]
+    },
+    {
+      "id": "defects-manifold",
+      "module": "defects",
+      "title": "从剩余对称性到序参量空间",
+      "summary": "G 是模型的对称群，H 是一个选定有序态保持的子群；轨道 G/H 给出与其对称相关的可能状态。",
+      "preset": "vortex-one",
+      "references": [
+        "tong"
+      ],
+      "sections": [
+        {
+          "title": "G 与 H 描述不同对象",
+          "text": "G 是模型的对称群，H 是一个选定有序态保持的子群；轨道 G/H 给出与其对称相关的可能状态。",
+          "formula": "M = G/H"
+        },
+        {
+          "title": "离散点、圆和球",
+          "text": "Ising 的两个真空不连通；平面 XY 有序态构成圆；三维单位矢量构成球。不同允许态空间有不同的缺陷分类。",
+          "formula": "S^1"
+        },
+        {
+          "title": "约束决定分类适用范围",
+          "text": "XY 环绕角度的整数绕数依赖序参量留在平面且环路上有定义。允许出平面或核心失序时，需要重新检查条件。",
+          "formula": "w = Δθ/(2π)"
+        }
+      ]
+    },
+    {
+      "id": "defects-winding",
+      "module": "defects",
+      "title": "闭环、核心与绕数",
+      "summary": "相邻采样点的主值相位差相加，除以 2π 得到绕数；采样步长太大会把大转角折叠。",
+      "preset": "vortex-pair",
+      "references": [
+        "tong"
+      ],
+      "sections": [
+        {
+          "title": "沿闭环累加相位",
+          "text": "相邻采样点的主值相位差相加，除以 2π 得到绕数；采样步长太大会把大转角折叠。",
+          "formula": "w = Δθ/(2π)"
+        },
+        {
+          "title": "环路不能穿过核心",
+          "text": "核心处角度没有定义。程序同时检查核心距离、最大相位步长和解析包围电荷。",
+          "formula": "ψ = exp(iθ)"
+        },
+        {
+          "title": "成对湮灭需要过程条件",
+          "text": "包围一对正负涡旋的净绕数为零，但其中仍有两个核心。间距参数为零给出均匀解析终点；滑动此参数不是动力学模拟。",
+          "formula": "w_total = w_1 + w_2"
+        }
+      ]
+    },
+    {
+      "id": "defects-director",
+      "module": "defects",
+      "title": "指向矢、半圈转角与畴壁",
+      "summary": "平面向列将 n 与 −n 视为同态，所以 θ 的周期是 π。这里是 RP¹，不是三维 RP²。",
+      "preset": "nematic-half",
+      "references": [
+        "tong"
+      ],
+      "sections": [
+        {
+          "title": "平面指向矢正反等价",
+          "text": "平面向列将 n 与 −n 视为同态，所以 θ 的周期是 π。这里是 RP¹，不是三维 RP²。",
+          "formula": "n ≡ −n"
+        },
+        {
+          "title": "使用单值双角场",
+          "text": "exp(2iθ) 沿闭环绕一圈，对应指向矢角度绕转 π，即 Δθ/(2π)=1/2。",
+          "formula": "ψ = exp(2iθ)"
+        },
+        {
+          "title": "拓扑与能量分开",
+          "text": "拓扑分类讨论在规定边界与非奇异约束下能否连续变形；稳定性还需要自由能、尺寸与边界条件。",
+          "formula": "Δθ/(2π) = 1/2"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-onsager",
+      "module": "reciprocity",
+      "title": "从变量奇偶到互易关系",
+      "summary": "在线性、近稳态框架下，用与熵产生相匹配的流和力定义 L。ε 是对应热力学状态变量的时间反演奇偶。",
+      "preset": "onsager-hall",
+      "references": [
+        "onsager"
+      ],
+      "sections": [
+        {
+          "title": "先选共轭变量",
+          "text": "在线性、近稳态框架下，用与熵产生相匹配的流和力定义 L。ε 是对应热力学状态变量的时间反演奇偶。",
+          "formula": "J = L X"
+        },
+        {
+          "title": "同时反转奇参量",
+          "text": "比较 Lᵢⱼ(B,M) 和 εᵢεⱼLⱼᵢ(−B,−M)。这里 B 与磁化 M 都必须反转。",
+          "formula": "L_ij(B,M) = ε_i ε_j L_ji(−B,−M)"
+        },
+        {
+          "title": "同一磁场不必对称",
+          "text": "二维 Hall 的反对称分量可随 B+M 变号，因此在非零磁态下矩阵可不对称而仍满足互易。",
+          "formula": "L = S + A"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-spatial-response",
+      "module": "reciprocity",
+      "title": "空间约束与磁畴反转",
+      "summary": "二维四重旋转强制对角电响应相等；反对称 Hall 项在此旋转下可保留。",
+      "preset": "onsager-mirror",
+      "references": [
+        "casimir"
+      ],
+      "sections": [
+        {
+          "title": "旋转约束空间分量",
+          "text": "二维四重旋转强制对角电响应相等；反对称 Hall 项在此旋转下可保留。",
+          "formula": "L = R L R^T"
+        },
+        {
+          "title": "镜面也作用于外参量",
+          "text": "面内镜面的行列式为 −1，垂直平面的轴矢量 Bz、Mz 同时变号。应检查不同磁态之间的协变。",
+          "formula": "L(−B,−M) = R L(B,M) R^T"
+        },
+        {
+          "title": "标量通道不能误用空间矩阵",
+          "text": "电荷—能量是两种通道，二维空间旋转不直接作用于这两个通道编号。工具只对 Hall 空间分量应用所选空间操作。",
+          "formula": "J_i = Σ_j L_ij X_j"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-dissipation",
+      "module": "reciprocity",
+      "title": "耗散、互易与成对实验",
+      "summary": "任意实矩阵可分解为对称 S 和反对称 A；实共轭力下 XᵀAX=0。",
+      "preset": "onsager-active",
+      "references": [
+        "onsager"
+      ],
+      "sections": [
+        {
+          "title": "分解对称与反对称部分",
+          "text": "任意实矩阵可分解为对称 S 和反对称 A；实共轭力下 XᵀAX=0。",
+          "formula": "S = (L + L^T)/2"
+        },
+        {
+          "title": "检查所有激励而非单次实验",
+          "text": "某个 X 下熵产生为正，不保证所有 X 都如此。需要 S 的全部本征值非负。",
+          "formula": "σ = X^T S X"
+        },
+        {
+          "title": "让证据支持结论",
+          "text": "保存 A、B 两组完整输入和结果，说明反转了什么、保留了什么，并比较互易残差与最小耗散本征值。",
+          "formula": "λ_min(S) ≥ 0"
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "statistics-complete-exchange-practice",
+      "module": "statistics",
+      "lesson": "statistics-complete-exchange",
+      "title": "交换的是完整粒子 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "完整交换作用在哪？",
+          "choices": [
+            "只在轨道",
+            "只在自旋",
+            "轨道和自旋同时"
+          ],
+          "answer": 2,
+          "hint": "每个电子的全部自由度要一起交换。",
+          "explanation": "每个电子的全部自由度要一起交换。"
+        },
+        {
+          "prompt": "单重态的自旋交换符号？",
+          "choices": [
+            "+1",
+            "−1",
+            "0"
+          ],
+          "answer": 1,
+          "hint": "交换 ↑↓ 和 ↓↑ 使差组合变号。",
+          "explanation": "交换 ↑↓ 和 ↓↑ 使差组合变号。"
+        },
+        {
+          "prompt": "对称轨道 × 单重态总符号？",
+          "choices": [
+            "−1",
+            "+1",
+            "不能确定"
+          ],
+          "answer": 0,
+          "hint": "(+1)×(−1)=−1，满足费米条件。",
+          "explanation": "(+1)×(−1)=−1，满足费米条件。"
+        },
+        {
+          "prompt": "满足 Pauli 就确定基态了吗？",
+          "choices": [
+            "是",
+            "还需 Hamiltonian",
+            "一定是三重态"
+          ],
+          "answer": 1,
+          "hint": "允许性与能量排序是不同问题。",
+          "explanation": "允许性与能量排序是不同问题。"
+        }
+      ]
+    },
+    {
+      "id": "statistics-pauli-projector-practice",
+      "module": "statistics",
+      "lesson": "statistics-pauli-projector",
+      "title": "用投影找出 Pauli 禁戒 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "P² 是什么？",
+          "choices": [
+            "P",
+            "I",
+            "−I"
+          ],
+          "answer": 1,
+          "hint": "两次交换恢复全部标签。",
+          "explanation": "两次交换恢复全部标签。"
+        },
+        {
+          "prompt": "c(I−P) 非零幂等时 c=?",
+          "choices": [
+            "1",
+            "1/2",
+            "1/3"
+          ],
+          "answer": 1,
+          "hint": "用 2c²=c 并排除零解。",
+          "explanation": "用 2c²=c 并排除零解。"
+        },
+        {
+          "prompt": "同轨道 aa 的轨道奇偶？",
+          "choices": [
+            "偶",
+            "奇",
+            "未定义"
+          ],
+          "answer": 0,
+          "hint": "交换两个相同轨道不改变态。",
+          "explanation": "交换两个相同轨道不改变态。"
+        },
+        {
+          "prompt": "同轨道 × ↑↑ 投影为零后应怎样？",
+          "choices": [
+            "除以零归一化",
+            "增加精度继续",
+            "判为被禁止的候选态"
+          ],
+          "answer": 2,
+          "hint": "精确零范数揭示完整态违反反对称条件。",
+          "explanation": "精确零范数揭示完整态违反反对称条件。"
+        }
+      ]
+    },
+    {
+      "id": "statistics-young-sectors-practice",
+      "module": "statistics",
+      "lesson": "statistics-young-sectors",
+      "title": "S₃、中心投影与 Young 对称化 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "三个二能级张量因子总维数？",
+          "choices": [
+            "6",
+            "8",
+            "3"
+          ],
+          "answer": 1,
+          "hint": "每因子维数 2，总维数 2³。",
+          "explanation": "每因子维数 2，总维数 2³。"
+        },
+        {
+          "prompt": "反对称秩零意味着 S₃ 无符号表示？",
+          "choices": [
+            "是",
+            "否，只是在此模型未出现",
+            "S₃ 不是群"
+          ],
+          "answer": 1,
+          "hint": "群的不可约表示与给定空间的重数要区分。",
+          "explanation": "群的不可约表示与给定空间的重数要区分。"
+        },
+        {
+          "prompt": "Y²=3Y 时幂等归一化？",
+          "choices": [
+            "Y/2",
+            "Y/3",
+            "3Y"
+          ],
+          "answer": 1,
+          "hint": "直接平方验证。",
+          "explanation": "直接平方验证。"
+        },
+        {
+          "prompt": "幂等必然正交投影吗？",
+          "choices": [
+            "是",
+            "还需厄米性",
+            "还需满秩"
+          ],
+          "answer": 1,
+          "hint": "Y/3 给出具体的非厄米幂等反例。",
+          "explanation": "Y/3 给出具体的非厄米幂等反例。"
+        }
+      ]
+    },
+    {
+      "id": "defects-manifold-practice",
+      "module": "defects",
+      "lesson": "defects-manifold",
+      "title": "从剩余对称性到序参量空间 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "H 是什么？",
+          "choices": [
+            "模型全部对称",
+            "所选态保持的对称",
+            "测量仪器名称"
+          ],
+          "answer": 1,
+          "hint": "模型与态的对称性分层描述。",
+          "explanation": "模型与态的对称性分层描述。"
+        },
+        {
+          "prompt": "XY 的单位平面矢量空间？",
+          "choices": [
+            "两点",
+            "圆 S¹",
+            "球 S²"
+          ],
+          "answer": 1,
+          "hint": "一个角度模 2π。",
+          "explanation": "一个角度模 2π。"
+        },
+        {
+          "prompt": "Ising 畴壁关联什么？",
+          "choices": [
+            "真空不连通",
+            "任意非零绕数",
+            "自旋一定守恒"
+          ],
+          "answer": 0,
+          "hint": "两个离散连通分支与畴壁相关。",
+          "explanation": "两个离散连通分支与畴壁相关。"
+        },
+        {
+          "prompt": "放开出平面自由度后？",
+          "choices": [
+            "原分类自动不变",
+            "需重查允许态空间",
+            "所有能量都变零"
+          ],
+          "answer": 1,
+          "hint": "同伦分类以规定的目标空间为前提。",
+          "explanation": "同伦分类以规定的目标空间为前提。"
+        }
+      ]
+    },
+    {
+      "id": "defects-winding-practice",
+      "module": "defects",
+      "lesson": "defects-winding",
+      "title": "闭环、核心与绕数 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "只包围正涡旋的绕数？",
+          "choices": [
+            "1",
+            "0",
+            "−1"
+          ],
+          "answer": 0,
+          "hint": "按逆时针环路与正角度约定。",
+          "explanation": "按逆时针环路与正角度约定。"
+        },
+        {
+          "prompt": "包围一正一负净绕数？",
+          "choices": [
+            "2",
+            "0",
+            "未必整数"
+          ],
+          "answer": 1,
+          "hint": "两个电荷相加为零。",
+          "explanation": "两个电荷相加为零。"
+        },
+        {
+          "prompt": "净绕数零能证明区域内无缺陷？",
+          "choices": [
+            "能",
+            "不能，可能有缺陷对",
+            "只看颜色即可"
+          ],
+          "answer": 1,
+          "hint": "净电荷与核心数量不同。",
+          "explanation": "净电荷与核心数量不同。"
+        },
+        {
+          "prompt": "环路经过核心时？",
+          "choices": [
+            "照样四舍五入",
+            "报告诊断无效并移动环路",
+            "一律取零"
+          ],
+          "answer": 1,
+          "hint": "相位未定义不能产生可靠整数。",
+          "explanation": "相位未定义不能产生可靠整数。"
+        }
+      ]
+    },
+    {
+      "id": "defects-director-practice",
+      "module": "defects",
+      "lesson": "defects-director",
+      "title": "指向矢、半圈转角与畴壁 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "平面向列角度周期？",
+          "choices": [
+            "π",
+            "2π",
+            "4π"
+          ],
+          "answer": 0,
+          "hint": "n 与 −n 等价。",
+          "explanation": "n 与 −n 等价。"
+        },
+        {
+          "prompt": "哪个场是单值的？",
+          "choices": [
+            "exp(iθ)",
+            "exp(2iθ)",
+            "θ 本身无周期"
+          ],
+          "answer": 1,
+          "hint": "θ→θ+π 时双角场不变。",
+          "explanation": "θ→θ+π 时双角场不变。"
+        },
+        {
+          "prompt": "双角场绕数 1 的角度绕转？",
+          "choices": [
+            "2π",
+            "π",
+            "0"
+          ],
+          "answer": 1,
+          "hint": "除以双角系数 2。",
+          "explanation": "除以双角系数 2。"
+        },
+        {
+          "prompt": "有拓扑荷就一定能量稳定？",
+          "choices": [
+            "是",
+            "否，要指定能量与边界",
+            "只与网格大小有关"
+          ],
+          "answer": 1,
+          "hint": "分类和稳定性不能相互替代。",
+          "explanation": "分类和稳定性不能相互替代。"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-onsager-practice",
+      "module": "reciprocity",
+      "lesson": "reciprocity-onsager",
+      "title": "从变量奇偶到互易关系 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "ε 对应什么？",
+          "choices": [
+            "随便给流贴标签",
+            "指定热力学状态变量的奇偶",
+            "只取空间反演奇偶"
+          ],
+          "answer": 1,
+          "hint": "先说明变量和共轭力的定义。",
+          "explanation": "先说明变量和共轭力的定义。"
+        },
+        {
+          "prompt": "有 B 与 M 时要反转？",
+          "choices": [
+            "只 B",
+            "B 与 M",
+            "只测量电线"
+          ],
+          "answer": 1,
+          "hint": "全部时间反演奇控制量一并反转。",
+          "explanation": "全部时间反演奇控制量一并反转。"
+        },
+        {
+          "prompt": "Hall 矩阵非对称必然违反互易？",
+          "choices": [
+            "是",
+            "否",
+            "只看一个数"
+          ],
+          "answer": 1,
+          "hint": "互易连接反向磁态的转置矩阵。",
+          "explanation": "互易连接反向磁态的转置矩阵。"
+        },
+        {
+          "prompt": "电荷与能量的变量奇偶？",
+          "choices": [
+            "均为偶",
+            "均为奇",
+            "一偶一奇"
+          ],
+          "answer": 0,
+          "hint": "常规电热共轭通道使用两偶状态变量。",
+          "explanation": "常规电热共轭通道使用两偶状态变量。"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-spatial-response-practice",
+      "module": "reciprocity",
+      "lesson": "reciprocity-spatial-response",
+      "title": "空间约束与磁畴反转 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "C₄ 对二维对角响应要求？",
+          "choices": [
+            "两对角元相等",
+            "所有元为零",
+            "所有元相等"
+          ],
+          "answer": 0,
+          "hint": "旋转交换 x 与 y 方向。",
+          "explanation": "旋转交换 x 与 y 方向。"
+        },
+        {
+          "prompt": "面内镜面对 Bz 的作用？",
+          "choices": [
+            "不变",
+            "变号",
+            "平方"
+          ],
+          "answer": 1,
+          "hint": "B 是轴矢量，需带行列式因子。",
+          "explanation": "B 是轴矢量，需带行列式因子。"
+        },
+        {
+          "prompt": "非零磁态的镜面通常连接？",
+          "choices": [
+            "相同磁态",
+            "相反 B、M 的磁态",
+            "任意材料"
+          ],
+          "answer": 1,
+          "hint": "不能把跨磁态协变当同一磁态不变。",
+          "explanation": "不能把跨磁态协变当同一磁态不变。"
+        },
+        {
+          "prompt": "热电两通道可直接当 x,y 吗？",
+          "choices": [
+            "可以",
+            "不可以，需另定义空间指标",
+            "只在高温可以"
+          ],
+          "answer": 1,
+          "hint": "通道索引与空间分量索引不同。",
+          "explanation": "通道索引与空间分量索引不同。"
+        }
+      ]
+    },
+    {
+      "id": "reciprocity-dissipation-practice",
+      "module": "reciprocity",
+      "lesson": "reciprocity-dissipation",
+      "title": "耗散、互易与成对实验 · 推导",
+      "prompt": "逐步说明假设、变换和可验证的结论，再改变参数寻找边界。",
+      "steps": [
+        {
+          "prompt": "熵产生依赖哪部分？",
+          "choices": [
+            "只反对称",
+            "只对称",
+            "两个都相同"
+          ],
+          "answer": 1,
+          "hint": "反对称部分的二次型恒为零。",
+          "explanation": "反对称部分的二次型恒为零。"
+        },
+        {
+          "prompt": "一个激励下正耗散足够吗？",
+          "choices": [
+            "足够",
+            "还要检查全部方向",
+            "仅检查迹即可"
+          ],
+          "answer": 1,
+          "hint": "最小本征值决定是否存在负方向。",
+          "explanation": "最小本征值决定是否存在负方向。"
+        },
+        {
+          "prompt": "互易矩阵一定被动吗？",
+          "choices": [
+            "是",
+            "否",
+            "只要对角元正就行"
+          ],
+          "answer": 1,
+          "hint": "过大的对称交叉项可使 S 有负本征值。",
+          "explanation": "过大的对称交叉项可使 S 有负本征值。"
+        },
+        {
+          "prompt": "报告应保留什么？",
+          "choices": [
+            "只保留漂亮图",
+            "两组参数、结果和解释",
+            "只保留总分"
+          ],
+          "answer": 1,
+          "hint": "可复现比较需要完整输入与输出。",
+          "explanation": "可复现比较需要完整输入与输出。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "module": "statistics",
+      "id": "helium",
+      "title": "氦原子两电子：交换条件",
+      "preset": "pauli-same",
+      "kind": "局域原子背景",
+      "summary": "将同一空间轨道与自旋单重态组合，解释两电子为何可占据同一空间轨道。",
+      "assumption": "只计算两轨道 × 自旋的交换条件，不拟合氦能级或电子相关。",
+      "links": [
+        [
+          "多电子多重态",
+          "#classroom/spin?module=multiplet"
+        ],
+        [
+          "原子谱",
+          "#classroom/observables?module=spectra"
+        ]
+      ]
+    },
+    {
+      "module": "statistics",
+      "id": "molecular",
+      "title": "双中心轨道与单重 / 三重态",
+      "preset": "pauli-triplet",
+      "kind": "分子与小团簇背景",
+      "summary": "比较两个局域轨道的对称和反对称组合，连接交换条件与 Hubbard 小团簇。",
+      "assumption": "a、b 为正交教学轨道；没有使用真实 H₂ 的非正交轨道积分或势能面。",
+      "links": [
+        [
+          "Hubbard 小团簇",
+          "#classroom/spin?module=hubbard"
+        ],
+        [
+          "SALC",
+          "#classroom/foundations?module=salc"
+        ]
+      ]
+    },
+    {
+      "module": "statistics",
+      "id": "three-spins",
+      "title": "三个二能级自由度的置换",
+      "preset": "young-three",
+      "kind": "有限表示模型",
+      "summary": "构造对称与混合子空间，对照 SU(2) 耦合和 Young 对称化。",
+      "assumption": "这里的张量因子可为三个局域自旋；局域可区分自由度不强制全部费米反对称。",
+      "links": [
+        [
+          "SU(2) 与重耦合",
+          "#classroom/coupling"
+        ],
+        [
+          "密度矩阵",
+          "#classroom/spin?module=density"
+        ]
+      ]
+    },
+    {
+      "module": "defects",
+      "id": "easy-plane",
+      "title": "易平面磁体的涡旋模型",
+      "preset": "vortex-one",
+      "kind": "磁性纹理背景",
+      "summary": "观察平面方向场的绕转，讨论易平面约束与缺陷核心。",
+      "assumption": "解析 XY 纹理，没有拟合交换、DMI、偶极或核心能量。",
+      "links": [
+        [
+          "交换与 DMI",
+          "#classroom/spin?module=exchange"
+        ],
+        [
+          "磁激发",
+          "#classroom/spin?module=magnons"
+        ]
+      ]
+    },
+    {
+      "module": "defects",
+      "id": "nematic",
+      "title": "平面向列液晶的指向矢",
+      "preset": "nematic-half",
+      "kind": "软物质背景",
+      "summary": "比较带箭头的矢量与正反等价的指向矢，使用双角场读取半圈转角。",
+      "assumption": "严格限制平面 RP¹；不覆盖三维 RP² 缺陷或实际液晶边界锚定。",
+      "links": [
+        [
+          "连续对称性",
+          "#classroom/continuous?module=conservation"
+        ],
+        [
+          "序参量",
+          "#classroom/structure-dynamics?module=order"
+        ]
+      ]
+    },
+    {
+      "module": "defects",
+      "id": "ising",
+      "title": "双稳态序参量与畴壁",
+      "preset": "ising-wall",
+      "kind": "标量有序模型",
+      "summary": "固定异号边界，移动畴壁并改变宽度，再到畴壁工具研究具体自由能。",
+      "assumption": "实标量 tanh 构型只展示过零条件；真实铁电或磁畴还需多分量及长程作用。",
+      "links": [
+        [
+          "畴壁与局域态",
+          "#classroom/structure-dynamics?module=domainwall"
+        ],
+        [
+          "动态结构因子",
+          "#classroom/observables?module=scattering"
+        ]
+      ]
+    },
+    {
+      "module": "reciprocity",
+      "id": "magnetic-hall",
+      "title": "磁性薄膜的 Hall 互易实验",
+      "preset": "onsager-domain",
+      "kind": "测量几何背景",
+      "summary": "分别翻转外磁场和磁畴，追踪交换激励与读出通道的比较条件。",
+      "assumption": "无量纲 2×2 教学响应；不等于任意四端器件的完整接触电阻矩阵。",
+      "links": [
+        [
+          "反常 Hall",
+          "#classroom/observables?module=hall"
+        ],
+        [
+          "器件输运",
+          "#classroom/crystal?module=device"
+        ]
+      ]
+    },
+    {
+      "module": "reciprocity",
+      "id": "thermoelectric",
+      "title": "Seebeck 与 Peltier 的共轭变量",
+      "preset": "onsager-thermo",
+      "kind": "热电材料背景",
+      "summary": "先统一温度与电化学势的共轭力约定，再讨论交叉响应的互易。",
+      "assumption": "本页使用缩放的熵共轭量；不能不换单位就把矩阵元当作实验 S 与 Π。",
+      "links": [
+        [
+          "电子输运与热电",
+          "#classroom/observables?module=transport"
+        ],
+        [
+          "物性张量",
+          "#compute/tensors"
+        ]
+      ]
+    },
+    {
+      "module": "reciprocity",
+      "id": "mixed-parity",
+      "title": "一偶一奇变量与耗散反例",
+      "preset": "onsager-mixed",
+      "kind": "抽象响应模型",
+      "summary": "把变量奇偶、矩阵转置和磁态反转分别操作，检查允许响应及非负耗散。",
+      "assumption": "一偶一奇为抽象近稳态变量；不是电荷和能量这两个均偶的通道。",
+      "links": [
+        [
+          "对称性推导",
+          "#classroom/crystal?module=workshop"
+        ],
+        [
+          "守恒与退相干",
+          "#classroom/continuous?module=conservation"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "neil",
+      "title": "Ethan Neil · Identical particles",
+      "url": "https://etneil.github.io/grad_qm_lec_notes/identical_particles.html"
+    },
+    {
+      "id": "tong",
+      "title": "David Tong · Continuous symmetries and vortices",
+      "url": "https://www.damtp.cam.ac.uk/user/tong/sft/sfthtml/S4.html"
+    },
+    {
+      "id": "onsager",
+      "title": "Onsager (1931) · Reciprocal relations II",
+      "url": "https://journals.aps.org/pr/abstract/10.1103/PhysRev.38.2265"
+    },
+    {
+      "id": "casimir",
+      "title": "Casimir (1945) · Microscopic reversibility",
+      "url": "https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.17.343"
+    }
+  ]
+}

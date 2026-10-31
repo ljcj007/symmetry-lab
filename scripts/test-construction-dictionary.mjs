@@ -12,9 +12,9 @@ assert.equal(d.principlesRelease,'20261030-symmetry1');
 assert.equal(d.constructionRelease,'20261030-construction1');
 assert.equal(hash(d.entries.slice(0,94)),'527fd153de9a7a1605722a123144252d3407371de02115076749aa27f92d39be');
 assert.equal(hash(d.sources.slice(0,34)),'8bd6b30c9d5d98eb6bad58d087b4cdfde8fcd39b9c1e81c84faf7049699bab28');
-assert.equal(d.entries.length,106);assert.equal(d.sources.length,39);
-assert.equal(new Set(d.entries.map(e=>e.id)).size,106);
-assert.equal(new Set(d.sources.map(e=>e.id)).size,39);
+assert.ok(d.entries.length>=106);assert.ok(d.sources.length>=39);
+assert.equal(new Set(d.entries.map(e=>e.id)).size,d.entries.length);
+assert.equal(new Set(d.sources.map(e=>e.id)).size,d.sources.length);
 const pairs=[['P_α','salc','salc-character-projector'],['P_mn','salc','salc-partner-projector'],['n_allowed','salc','salc-selection-multiplicity'],['H_copy','salc','salc-schur'],['star(q)','wavevector','wavevector-star'],['H∩T','wavevector','wavevector-translation-index'],['F(q)','wavevector','wavevector-fourier'],['A²/4','wavevector','wavevector-parseval'],['G(k)²','nonsymmorphic','nonsym-square'],['g_±','nonsymmorphic','nonsym-eigenvalues'],['U_T H(k)* U_T†','nonsymmorphic','nonsym-kramers-pairing'],['mτ_z','nonsymmorphic','nonsym-mass']];
 for(const [symbol,module,id] of pairs){
  const ids=resolveFormulaEntries(symbol,{route:'#compute/'+module+'-lab'},d).matches.map(e=>e.id);

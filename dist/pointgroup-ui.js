@@ -1,4 +1,4 @@
-import {crystalSpan} from './crystal-notation.js?v=20261030-construction1';
+import {crystalSpan} from './crystal-notation.js?v=20261031-connections1';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

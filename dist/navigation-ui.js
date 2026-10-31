@@ -2,6 +2,10 @@
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
  {id:'observables',title:'声子光谱与物性',summary:'从原胞位移和对称操作，计算光谱选择定则与允许响应。',tools:[
+  ['compute/symmetry-audit','三层对称性诊断工坊','分别检查模型、状态与探针，支持幺正与时间反演。','三层 诊断 反例 时间反演'],
+  ['compute/statistics-lab','置换群与同粒子统计','完整交换、Pauli 投影、S₃ 与 Young 算符。','Pauli Young 置换 费米 玻色'],
+  ['compute/topological-defects-lab','序参量流形与拓扑缺陷','XY 涡旋、向列指向矢、闭环绕数与边界。','涡旋 拓扑 畴壁 同伦'],
+  ['compute/reciprocity-lab','互易关系与响应约束','空间协变、Onsager–Casimir、磁畴反转与耗散。','Onsager Casimir Hall 互易 耗散'],
   ['compute/manybody-spectra-lab','多体谱函数 · 添加、移除与响应','有限Hubbard团簇的真实跃迁矩阵元、谱权重和规则与峰态联动。','Lehmann 多体 谱函数 自旋 响应'],
   ['compute/dynamic-scattering-lab','非弹性散射 · 动态结构因子','双原子链、偏振投影、热占据、Stokes/anti-Stokes 与 S(Q,E) 热图。','非弹性 散射 DSF 动态结构因子 phonon'],
   ['compute/spin-resonance-lab','磁共振 · 有效自旋与 EPR','各向异性 g、零场分裂、超精细作用、磁场方向与磁偶极跃迁谱。','EPR ESR resonance 磁共振 有效自旋 超精细'],
@@ -87,8 +91,10 @@ const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-r
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
 let catalogPromise;
 async function learningEntries(){
- if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials','bridges-materials','principles-materials','construction-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261030-construction1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways,bridges,principles,construction])=>[
+ if(!catalogPromise)catalogPromise=Promise.all(['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials','bridges-materials','principles-materials','construction-materials','connections-materials'].map(async name=>{const r=await fetch(`data/${name}.json?v=20261031-connections1`);if(!r.ok)throw Error('课程索引暂未载入');return r.json();})).then(([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways,bridges,principles,construction,connections])=>[
   {route:'docs/dictionary',title:'公式与符号词典',summary:'按主题解释变量、单位、坐标约定与公式适用条件。',keywords:'公式 符号 单位 dictionary',kind:'词典'},
+  ...connections.lessons.map(l=>({route:'classroom/'+connections.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 置换 拓扑缺陷 互易 Pauli Onsager',kind:'课程'})),
+  ...connections.cases.map(c=>({route:'atlas/connections?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 同粒子 缺陷 响应',kind:'材料'})),
   ...construction.lessons.map(l=>({route:'classroom/'+construction.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' SALC 波矢 超胞 滑移 选择定则',kind:'课程'})),
   ...construction.cases.map(c=>({route:'atlas/construction?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 模式 超胞 表示',kind:'材料'})),
   ...principles.lessons.map(l=>({route:'classroom/'+principles.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 对称 破缺 DMI 守恒 不变量',kind:'课程'})),
@@ -132,6 +138,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
+  ['atlas/connections','同粒子、缺陷与互易响应','从完整粒子交换、序参量流形走到响应约束，附三层检查和证据报告。'],
   ['atlas/construction','表示、超胞与能带连接','从对称适应基、有限波矢走到动量相关简并，配构造回放与矩阵作业。'],
   ['atlas/principles','对称性、破缺与守恒','从序参量、键交换张量到生成元，追踪约束来源与物理后果。'],
   ['atlas/bridges','多体谱、极化子与量子态','从多体跃迁、电子晶格关联走到纠缠和退相干，配对称性推导工坊。'],
@@ -151,6 +158,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>knownTool(route)||{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':route,summary:'恢复上次访问的位置',kind:'最近'});
   body.innerHTML=`<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB</span><h2>理解对称性，<br>再把它用于计算。</h2><p>从一节课程、一份晶体结构，或一个表示出发。</p><div class="nav-home-actions">${link('classroom','开始学习 →','primary')}${link('compute','开始计算 →','secondary')}${link('atlas','浏览群与材料','text-button')}</div></section><section class="nav-path-section"><h2>常用学习与计算路径</h2><div class="nav-card-grid">${[
   ['atlas/research','完成一份材料分析','模式识别 → 冻结模 / 能带连接 / 热力学 → 研究记录'],
+  ['atlas/connections','同粒子、缺陷与互易响应','从完整粒子交换、序参量流形走到响应约束，附三层检查和证据报告。'],
   ['atlas/construction','表示、超胞与能带连接','从对称适应基、有限波矢走到动量相关简并，配构造回放与矩阵作业。'],
   ['atlas/principles','对称性、破缺与守恒','从序参量、键交换张量到生成元，追踪约束来源与物理后果。'],
   ['atlas/bridges','多体谱、极化子与量子态','从多体跃迁、电子晶格关联走到纠缠和退相干，配对称性推导工坊。'],
