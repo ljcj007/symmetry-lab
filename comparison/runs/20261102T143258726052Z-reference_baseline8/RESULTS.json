@@ -1,0 +1,400 @@
+{
+  "status": "PASS_NUMERICAL_SAME_INPUT",
+  "label": "reference_baseline8",
+  "source_location": "fe/experiments/reference_17/baseline8/scratch/Fe.save",
+  "scope": "Same-input C4z little-group matrices and finite-k numerical phase counts; no external global-gluing test or topological claim.",
+  "external_product": "IrRep computes the symmetry matrices. The four-root count decomposition is performed by this adapter, not imported as an IrRep band-label report.",
+  "convention": {
+    "active_cartesian_rotation": [
+      [
+        0,
+        -1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "fractional_rotation": [
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        -1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "spin_phase_eighths": [
+      -1,
+      1
+    ],
+    "count_order_phase_eighths": [
+      7,
+      1,
+      3,
+      5
+    ],
+    "irrep_canonical_spin_lift_multiplier": 1,
+    "irrep_spin_lift_matches_target_after_sign": 1.5795729029387268e-16,
+    "matrix_orientation": "IrRep row-wavefunction matrix transposed to source-column -> target-column coefficients",
+    "normalization": false,
+    "unitary_projection": false,
+    "magnetic_direction_constraint": [
+      0,
+      0,
+      -1
+    ]
+  },
+  "source_qe_version": "7.5",
+  "energy_constants": {
+    "IrRep_Hartree_eV": 27.211386,
+    "independent_Hartree_eV": 27.211386245988
+  },
+  "actual_irrep_C4_calls": 2,
+  "comparison_semantics": {
+    "IrRep": "Coordinate map G^-1 B from right_inverse(WF); unitary=False does not remove Gram inverse.",
+    "independent_raw": "Overlap B=Phi^dagger T Phi; same-coordinate comparison uses solve(G,B), with G=Phi^dagger Phi.",
+    "energy": "Convert both documented Hartree-to-eV constants to the independent checker constant; no fitted offset.",
+    "thresholds": {
+      "raw_coefficient": 1e-12,
+      "same_coordinate_matrix": 1e-10,
+      "phase_counts": 1e-09,
+      "common_constant_energy_eV": 1e-10
+    }
+  },
+  "input_files_sha256": {
+    "data-file-schema.xml": "ef51c25b9a9522244561ef29bd2a2282909f41dccf668b51b80b6323c6fc79ee",
+    "wfc1.dat": "d8790aec219e5d377dc4bc411236d07764f4b7a5735c6d2eecbd7a4398c67096",
+    "wfc10.dat": "233892dba685459b0fdd12a2a1026412fc1e68dd149fbd753135eb347ebff725",
+    "wfc11.dat": "402a9f11530663d441a51acd573afbc0e6ce4995729bb73efc098dcb062a0bb7",
+    "wfc12.dat": "5b10bb4d26b57e325d8deed6eed8c299ececc1ba7fb72f26a71d0e40a503f56c",
+    "wfc13.dat": "97f0bd173aacc2679767309786cdb6889558882d056619442ea7cf9b4a2a84d1",
+    "wfc2.dat": "055b91969faeff580633f46b3b8cca1fcd690f347bb2cf759cc77e18d9e08949",
+    "wfc3.dat": "e0add101030da9148af2ccba082a4b955caf4493e50831ccb35f9a0ac79cdee6",
+    "wfc4.dat": "0d65e360fcfbd4e67c27c276e00d5eab38c70f5c4ba1042ea3d4b86f581abc14",
+    "wfc5.dat": "86f984830403c15cb5110587f058712da53a6d55aa321dda60e450c309f5696f",
+    "wfc6.dat": "5862f61c15bfdacb481a00387de1ddafd9ca4f07a29ac3a5fce13f1dbd929729",
+    "wfc7.dat": "be89d0cd82273618409c88d4ff2430c5ee20c4eb4266a12e3f906d44f1680560",
+    "wfc8.dat": "9972059cf69e40d9efee8d1be19e20a87c82a4915729f4b16b3636bdf9c04028",
+    "wfc9.dat": "48ddf73e92c0008e6fa148e9194bf625523f2a05d747a2d932e4e25de88104fe",
+    "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd"
+  },
+  "input_files_unchanged": true,
+  "rows": [
+    {
+      "index_one_based": 1,
+      "k_fractional": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "raw_band18_prefix_status": "ASSIGNED_NUMERICALLY",
+      "delta18_eV": 5.473662969662399,
+      "irrep_unrounded_phase_counts": [
+        [
+          4.000000000000007,
+          -1.585546108255707e-15
+        ],
+        [
+          4.0,
+          3.638163040396086e-15
+        ],
+        [
+          4.999999999999995,
+          2.0524103551436544e-15
+        ],
+        [
+          4.999999999999998,
+          -4.105027287284031e-15
+        ]
+      ],
+      "raw_unrounded_phase_counts": [
+        [
+          4.0000000000000036,
+          -5.186656791149747e-15
+        ],
+        [
+          4.000000000000005,
+          1.5199329849458089e-15
+        ],
+        [
+          4.9999999999999964,
+          6.1943462869531644e-15
+        ],
+        [
+          4.999999999999995,
+          -2.5553780563648576e-15
+        ]
+      ],
+      "irrep_nearest_integer_counts": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "raw_nearest_integer_counts": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "assigned_counts_only_if_raw_prefix_resolved": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "coefficient_max_abs_discrepancy": 0.0,
+      "matrix32_direct_overlap_discrepancy": 1.8881687758771524e-09,
+      "matrix32_same_coordinate_discrepancy": 1.6011864169946886e-15,
+      "gram32_max_abs_nonorthogonality": 1.888178946529706e-09,
+      "matrix18_direct_overlap_discrepancy": 4.4845475401728255e-15,
+      "phase_count_max_abs_discrepancy": 5.734622145858374e-15,
+      "energy_eV_different_constant_discrepancy": 4.5895233569126503e-07,
+      "energy_eV_common_constant_discrepancy": 7.105427357601002e-15,
+      "irrep_full_plane_wave_count": 1745,
+      "raw_prefix_diagnostics": {
+        "status": "ASSIGNED_NUMERICALLY",
+        "rank": 18,
+        "phase_eighths": [
+          7,
+          1,
+          3,
+          5
+        ],
+        "multiplicities": [
+          4,
+          4,
+          5,
+          5
+        ],
+        "measured_multiplicities": [
+          [
+            4.0000000000000036,
+            -4.7677728888127754e-15
+          ],
+          [
+            4.000000000000005,
+            2.1886170678360147e-15
+          ],
+          [
+            4.9999999999999964,
+            5.4146399016004426e-15
+          ],
+          [
+            4.999999999999995,
+            -2.807728505008055e-15
+          ]
+        ],
+        "raw_gram_error": 3.05011973515988e-15,
+        "subspace_leakage": 2.884666956031803e-10,
+        "unitarity_error": 4.0740975022951854e-15,
+        "spinful_fourth_power_error": 6.850874432675083e-15,
+        "distance_to_integer": 6.476117644664884e-15
+      }
+    },
+    {
+      "index_one_based": 2,
+      "k_fractional": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 3,
+      "k_fractional": [
+        0.0,
+        0.5,
+        0.0
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 4,
+      "k_fractional": [
+        0.0,
+        0.5,
+        0.5
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 5,
+      "k_fractional": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 6,
+      "k_fractional": [
+        0.5,
+        0.0,
+        0.5
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 7,
+      "k_fractional": [
+        0.5,
+        0.5,
+        0.0
+      ],
+      "status": "NOT_C4Z_LITTLE_GROUP_POINT"
+    },
+    {
+      "index_one_based": 8,
+      "k_fractional": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "raw_band18_prefix_status": "ASSIGNED_NUMERICALLY",
+      "delta18_eV": 0.8557864759332894,
+      "irrep_unrounded_phase_counts": [
+        [
+          3.999999999999998,
+          8.793111811778934e-16
+        ],
+        [
+          5.000000000000003,
+          -2.1219158842473797e-15
+        ],
+        [
+          4.000000000000001,
+          3.659490663402828e-15
+        ],
+        [
+          4.999999999999999,
+          -2.5834194140271166e-15
+        ]
+      ],
+      "raw_unrounded_phase_counts": [
+        [
+          3.9999999999999964,
+          -4.711878161610845e-16
+        ],
+        [
+          5.000000000000005,
+          -2.21884526369081e-16
+        ],
+        [
+          3.9999999999999982,
+          8.959084532484522e-16
+        ],
+        [
+          5.0,
+          -3.6936956441206237e-16
+        ]
+      ],
+      "irrep_nearest_integer_counts": [
+        4,
+        5,
+        4,
+        5
+      ],
+      "raw_nearest_integer_counts": [
+        4,
+        5,
+        4,
+        5
+      ],
+      "assigned_counts_only_if_raw_prefix_resolved": [
+        4,
+        5,
+        4,
+        5
+      ],
+      "coefficient_max_abs_discrepancy": 0.0,
+      "matrix32_direct_overlap_discrepancy": 3.0028318949311383e-15,
+      "matrix32_same_coordinate_discrepancy": 1.4895204919483639e-15,
+      "gram32_max_abs_nonorthogonality": 3.0010197683394163e-15,
+      "matrix18_direct_overlap_discrepancy": 1.942097114741681e-15,
+      "phase_count_max_abs_discrepancy": 3.838897599477075e-15,
+      "energy_eV_different_constant_discrepancy": 5.961946669685858e-07,
+      "energy_eV_common_constant_discrepancy": 3.552713678800501e-15,
+      "irrep_full_plane_wave_count": 1830,
+      "raw_prefix_diagnostics": {
+        "status": "ASSIGNED_NUMERICALLY",
+        "rank": 18,
+        "phase_eighths": [
+          7,
+          1,
+          3,
+          5
+        ],
+        "multiplicities": [
+          4,
+          5,
+          4,
+          5
+        ],
+        "measured_multiplicities": [
+          [
+            3.999999999999997,
+            -8.871129264652383e-16
+          ],
+          [
+            5.000000000000005,
+            7.435729444743946e-16
+          ],
+          [
+            3.999999999999998,
+            9.510110805494306e-16
+          ],
+          [
+            5.0,
+            -9.740045522523624e-16
+          ]
+        ],
+        "raw_gram_error": 1.1284215961845313e-15,
+        "subspace_leakage": 8.412289931613536e-12,
+        "unitarity_error": 2.32543585396395e-15,
+        "spinful_fourth_power_error": 5.133032972509552e-15,
+        "distance_to_integer": 5.380696359367508e-15
+      }
+    }
+  ],
+  "seconds": 0.2899044000005233,
+  "dependencies": {
+    "irrep": "2.1.0",
+    "numpy": "2.5.2",
+    "spglib": "2.7.0",
+    "scipy": "1.18.0"
+  },
+  "source_sha256": {
+    "comparison/compare_irrep_c4.py": "6656fed7dd0ae6f6b60d672620d5849c05f7b723b6d586aad473d704c008e94a",
+    "irrep/bandstructure.py": "6bc53711cf4dce11adf1ce21e3465404c52e53f29e0423ac3738b5f9f3bef429",
+    "irrep/gvectors.py": "74d6d1dc2de04644063414bb5987277a777a89a0109beea55314bc474b0ea30e",
+    "irrep/readfiles.py": "f5a0eb6bb53777411783aec7ba791f5491df74b4986fd82677e426b0fa00619f",
+    "irrep/spacegroup.py": "0288e5b8664f9e238abb40b867c73f94186d2e60de9feb9a472d957b80e1311b",
+    "fe/analyze_fe.py": "a57f1325d9ee7e014623981e88f11744cd047e3e901e0f344994455ef013447c",
+    "fe/vendor/qe_reader.py": "f4d8976a9d8eb886bce9cafefd82b14e8b9f6caf5536947f84b9048173d81864"
+  },
+  "output_sha256": {
+    "irrep.stdout.txt": "2b3f633b44a25d16b0496e3368d7525dd8c24ce4f66524d65ec8ef9bc3224b10",
+    "same_input_matrices.npz": "e58f9c937fe29ec0f847d49ec92ec1ad0b37ba5933d8f9a7c4b0968ae2e375f0"
+  }
+}

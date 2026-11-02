@@ -1,0 +1,17 @@
+{
+  "status": "PASS_REQUESTED_LAYER",
+  "layer": "local",
+  "passed": [
+    "geometry",
+    "local"
+  ],
+  "counts": {
+    "planes": 15,
+    "cells": 165,
+    "incidences": 852,
+    "period_pairs": 83,
+    "period_squares": 15,
+    "period_cubes": 1,
+    "catalogues": 5
+  }
+}

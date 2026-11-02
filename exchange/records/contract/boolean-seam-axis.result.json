@@ -1,0 +1,10 @@
+{
+  "status": "INVALID",
+  "stage": "period",
+  "reason": "integer seam axis required",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary"
+  ]
+}

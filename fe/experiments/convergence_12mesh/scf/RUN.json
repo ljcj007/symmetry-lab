@@ -1,0 +1,24 @@
+{
+  "schema": "symmetry-lab.fe-qe-run.v1",
+  "stage": "scf",
+  "started_utc": "2026-11-02T14:17:34.684034+00:00",
+  "executable": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase13\\fe\\software\\qe-7.5\\bin\\pw.exe",
+  "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+  "input_sha256": "b267bb3b4954c659292450f59090a0674bbb1c45a52a997cc12b478d175eeb5e",
+  "pseudopotential_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+  "threads": 4,
+  "system_software_modified": false,
+  "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+  "source_scf_density_sha256": {},
+  "source_scf_save": null,
+  "returncode": 0,
+  "wall_seconds": 71.96967339515686,
+  "job_done_marker": true,
+  "stdout_sha256": "5f7fede59f596b584717fe41eb260a898fcf3d7222bf267c3d0e0999434b495a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "saved_density_sha256": {
+    "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+  },
+  "status": "QE_COMPLETED",
+  "scf_converged": true
+}

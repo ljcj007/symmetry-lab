@@ -1,0 +1,286 @@
+{
+  "status": "PASS",
+  "source": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase13\\fe\\experiments\\reference_17\\baseline8\\scratch\\Fe.save",
+  "metadata": {
+    "qe_version": "7.5",
+    "calculation": "nscf",
+    "lattice_bohr": [
+      [
+        2.71175,
+        2.71175,
+        2.71175
+      ],
+      [
+        -2.71175,
+        2.71175,
+        2.71175
+      ],
+      [
+        -2.71175,
+        -2.71175,
+        2.71175
+      ]
+    ],
+    "alat_bohr": 5.4235,
+    "ecutwfc_Ry": 120.0,
+    "hashes": {
+      "data-file-schema.xml": "ef51c25b9a9522244561ef29bd2a2282909f41dccf668b51b80b6323c6fc79ee",
+      "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd"
+    },
+    "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+    "pseudopotential_only_CRLF_normalized_for_identity": true,
+    "energy_unit": "eV",
+    "energy_conversion_Hartree_to_eV": 27.211386245988
+  },
+  "records": [
+    {
+      "k_fractional": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "wavefunction_sha256": "d8790aec219e5d377dc4bc411236d07764f4b7a5735c6d2eecbd7a4398c67096",
+      "local_algebra": {
+        "physical": {
+          "C4_fourth_minus_identity": 6.51568819846099e-15,
+          "inversion_square": 5.36199056276084e-15,
+          "commutation": 4.346777812688521e-15,
+          "C4_unitarity": 4.040539277962515e-15,
+          "inversion_unitarity": 5.360746030471997e-15
+        },
+        "forged": {
+          "C4_fourth_minus_identity": 6.51568819846099e-15,
+          "inversion_square": 5.36199056276084e-15,
+          "commutation": 4.346777812688521e-15,
+          "C4_unitarity": 4.040539277962515e-15,
+          "inversion_unitarity": 5.360746030471997e-15
+        }
+      },
+      "physical_joint_counts": [
+        {
+          "C4_phase_eighths": 7,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 7,
+          "inversion": -1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": -1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": -1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": -1,
+          "multiplicity": 2
+        }
+      ],
+      "outer_gap_eV": 5.473662969662399,
+      "energy_covariance_residuals_eV": {
+        "C4": 7.651978705280692e-14,
+        "inversion": 4.8401610949133076e-14,
+        "forged_inversion": 4.8401610949133076e-14
+      },
+      "forged_joint_counts": [
+        {
+          "C4_phase_eighths": 7,
+          "inversion": 1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 7,
+          "inversion": -1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": 1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": -1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": 1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": -1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": 1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": -1,
+          "multiplicity": 3
+        }
+      ],
+      "physical_binding_residual": 2.7307938247556197e-10,
+      "forged_binding_residual": 2.000000000000001,
+      "complex_gauge_forged_binding_residual": 2.0,
+      "local_check_of_both": "PASS_NUMERICALLY",
+      "raw_source_binding_physical": "PASS_NUMERICALLY",
+      "raw_source_binding_forged": "REJECTED_NUMERICALLY"
+    },
+    {
+      "k_fractional": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "wavefunction_sha256": "9972059cf69e40d9efee8d1be19e20a87c82a4915729f4b16b3636bdf9c04028",
+      "local_algebra": {
+        "physical": {
+          "C4_fourth_minus_identity": 3.613321716805399e-15,
+          "inversion_square": 2.137827396656178e-15,
+          "commutation": 1.3115537657851956e-15,
+          "C4_unitarity": 1.871700488755833e-15,
+          "inversion_unitarity": 2.1244538798032815e-15
+        },
+        "forged": {
+          "C4_fourth_minus_identity": 3.613321716805399e-15,
+          "inversion_square": 2.137827396656178e-15,
+          "commutation": 1.3115537657851956e-15,
+          "C4_unitarity": 1.871700488755833e-15,
+          "inversion_unitarity": 2.1244538798032815e-15
+        }
+      },
+      "physical_joint_counts": [
+        {
+          "C4_phase_eighths": 7,
+          "inversion": 1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 7,
+          "inversion": -1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": -1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": 1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": -1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": 1,
+          "multiplicity": 4
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": -1,
+          "multiplicity": 1
+        }
+      ],
+      "outer_gap_eV": 0.8557864759332894,
+      "energy_covariance_residuals_eV": {
+        "C4": 4.579115064820176e-14,
+        "inversion": 2.00340138346548e-14,
+        "forged_inversion": 2.00340138346548e-14
+      },
+      "forged_joint_counts": [
+        {
+          "C4_phase_eighths": 7,
+          "inversion": 1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 7,
+          "inversion": -1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": 1,
+          "multiplicity": 2
+        },
+        {
+          "C4_phase_eighths": 1,
+          "inversion": -1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": 1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 3,
+          "inversion": -1,
+          "multiplicity": 3
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": 1,
+          "multiplicity": 1
+        },
+        {
+          "C4_phase_eighths": 5,
+          "inversion": -1,
+          "multiplicity": 4
+        }
+      ],
+      "physical_binding_residual": 9.102415936278245e-12,
+      "forged_binding_residual": 2.0,
+      "complex_gauge_forged_binding_residual": 2.0000000000000013,
+      "local_check_of_both": "PASS_NUMERICALLY",
+      "raw_source_binding_physical": "PASS_NUMERICALLY",
+      "raw_source_binding_forged": "REJECTED_NUMERICALLY"
+    }
+  ],
+  "scope": "Two actual Fe endpoint wavefunctions, C4z x inversion unitary subgroup; no claim of an external-tool failure",
+  "fault": "Multiply inversion by -1 while retaining the physical operation and raw wavefunctions",
+  "matrix_repair_or_interpolation": false,
+  "new_DFT_launched": false,
+  "source_sha256": {
+    "fe_inversion_fault.py": "97743fbdb53bfb383c2bdd6ccfeca1ab865e1ab205c101f380a7285685d34d2f",
+    "analyze_fe.py": "a57f1325d9ee7e014623981e88f11744cd047e3e901e0f344994455ef013447c",
+    "qe_reader.py": "f4d8976a9d8eb886bce9cafefd82b14e8b9f6caf5536947f84b9048173d81864"
+  }
+}

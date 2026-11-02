@@ -1,0 +1,10 @@
+{
+  "status": "INVALID",
+  "stage": "period",
+  "reason": "selected seam binding",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary"
+  ]
+}

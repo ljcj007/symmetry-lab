@@ -1,0 +1,24 @@
+{
+  "schema": "symmetry-lab.fe-qe-run.v1",
+  "stage": "path",
+  "started_utc": "2026-11-02T14:11:39.394816+00:00",
+  "executable": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase13\\fe\\software\\qe-7.5\\bin\\pw.exe",
+  "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+  "input_sha256": "dbf94e0ebdf552c65a6c71c151ab94e58af3bf970fbf2d9c5fce5f7a3bfb4394",
+  "pseudopotential_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+  "threads": 4,
+  "system_software_modified": false,
+  "source_scf_density_sha256": {
+    "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+  },
+  "source_scf_save": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase13\\fe\\experiments\\reference_17\\scf\\scratch\\Fe.save",
+  "returncode": 0,
+  "wall_seconds": 4.612488031387329,
+  "job_done_marker": true,
+  "stdout_sha256": "fb7b0f6aa51d47e1e0ebd0060791b717dcd42b71fdd3b8b72d52f4c0536e5497",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "saved_density_sha256": {
+    "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+  },
+  "status": "QE_COMPLETED"
+}

@@ -1,0 +1,543 @@
+{
+  "schema": "mirror-grey-workflow-ablation-results-v1",
+  "status": "PASS",
+  "cases": 11,
+  "recipient_cli_executions": 55,
+  "records": [
+    {
+      "id": "valid-original",
+      "expected_first_failure": null,
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "7ec9ecf8effe9f8f32ad7cc5d46fd47c4686c76c06b4c56e5ae4faf79ee6c0e2",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.3399316000068211,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-original.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.0755320000025677,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-original.boundary.json"
+        },
+        "period": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.135148700006539,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-original.period.json"
+        },
+        "atlas": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.7291680999987875,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-original.atlas.json"
+        },
+        "source": {
+          "status": "CERTIFIED",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.7317977999991854,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-original.source.json"
+        }
+      }
+    },
+    {
+      "id": "valid-complex-frame",
+      "expected_first_failure": null,
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "d3650d3a0c034677552a64673b1a65e632e6dc52b085ea6b63dc4eab083e9805",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.5850903000027756,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-complex-frame.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.477085899998201,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-complex-frame.boundary.json"
+        },
+        "period": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.5657585000008112,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-complex-frame.period.json"
+        },
+        "atlas": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 2.1110948999994434,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-complex-frame.atlas.json"
+        },
+        "source": {
+          "status": "CERTIFIED",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 2.1253731999968295,
+          "matches_expectation": true,
+          "result_path": "outputs/valid-complex-frame.source.json"
+        }
+      }
+    },
+    {
+      "id": "wrong-stabilizer",
+      "expected_first_failure": "geometry",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "aa247e0fc409b20638d6bd3d5482cfb2daff4d4e6c480209e35320d34a854e30",
+      "layers": {
+        "local": {
+          "status": "INVALID",
+          "stage": "geometry",
+          "exit_code": 2,
+          "seconds": 0.20247370000288356,
+          "matches_expectation": true,
+          "result_path": "outputs/wrong-stabilizer.local.json"
+        },
+        "boundary": {
+          "status": "INVALID",
+          "stage": "geometry",
+          "exit_code": 2,
+          "seconds": 0.1949830000012298,
+          "matches_expectation": true,
+          "result_path": "outputs/wrong-stabilizer.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "geometry",
+          "exit_code": 2,
+          "seconds": 0.1945311000017682,
+          "matches_expectation": true,
+          "result_path": "outputs/wrong-stabilizer.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "geometry",
+          "exit_code": 2,
+          "seconds": 0.19501580000360264,
+          "matches_expectation": true,
+          "result_path": "outputs/wrong-stabilizer.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "geometry",
+          "exit_code": 2,
+          "seconds": 0.19623819999833358,
+          "matches_expectation": true,
+          "result_path": "outputs/wrong-stabilizer.source.json"
+        }
+      }
+    },
+    {
+      "id": "omit-anti-conjugation",
+      "expected_first_failure": "local",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "6099761b696de4642085c4549a518b3ea35c9e3d8f0de625c569e6738c8db745",
+      "layers": {
+        "local": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.19863690000056522,
+          "matches_expectation": true,
+          "result_path": "outputs/omit-anti-conjugation.local.json"
+        },
+        "boundary": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.19885169999906793,
+          "matches_expectation": true,
+          "result_path": "outputs/omit-anti-conjugation.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.19823449999967124,
+          "matches_expectation": true,
+          "result_path": "outputs/omit-anti-conjugation.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.19599680000101216,
+          "matches_expectation": true,
+          "result_path": "outputs/omit-anti-conjugation.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.197419500000251,
+          "matches_expectation": true,
+          "result_path": "outputs/omit-anti-conjugation.source.json"
+        }
+      }
+    },
+    {
+      "id": "duplicate-mirror-branch",
+      "expected_first_failure": "local",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "9a07684e35c63afba01b63f0fcb2934ace4e118bcc6eb5217730cbb7c70234d3",
+      "layers": {
+        "local": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.2025017999985721,
+          "matches_expectation": true,
+          "result_path": "outputs/duplicate-mirror-branch.local.json"
+        },
+        "boundary": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.20277850000275066,
+          "matches_expectation": true,
+          "result_path": "outputs/duplicate-mirror-branch.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.20527489999949466,
+          "matches_expectation": true,
+          "result_path": "outputs/duplicate-mirror-branch.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.20212069999979576,
+          "matches_expectation": true,
+          "result_path": "outputs/duplicate-mirror-branch.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "local",
+          "exit_code": 2,
+          "seconds": 0.20130860000062967,
+          "matches_expectation": true,
+          "result_path": "outputs/duplicate-mirror-branch.source.json"
+        }
+      }
+    },
+    {
+      "id": "unitary-wrong-boundary",
+      "expected_first_failure": "boundary",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "6a8594303b4394ca63d94d24e2c4f5ca442685f44949d8977b6d0d9e83cd4e22",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.3337573999961023,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-boundary.local.json"
+        },
+        "boundary": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.42383020000124816,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-boundary.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.4293842999977642,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-boundary.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.4308916000009049,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-boundary.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.42903300000034506,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-boundary.source.json"
+        }
+      }
+    },
+    {
+      "id": "omitted-boundary",
+      "expected_first_failure": "boundary",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "35c680b873e7653bcc49bf6de567b093e60ab3a3d2f6ce9c62798a79f47915b0",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.34098549999907846,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-boundary.local.json"
+        },
+        "boundary": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.43958520000160206,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-boundary.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.4304014000008465,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-boundary.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.4226706999979797,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-boundary.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "boundary",
+          "exit_code": 2,
+          "seconds": 0.4272865000020829,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-boundary.source.json"
+        }
+      }
+    },
+    {
+      "id": "unitary-wrong-seam",
+      "expected_first_failure": "period",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "7f0cc18be7bb26267c2eb6d13dee1498c3ab890a1d726984f223b4214aacd2c1",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.33224970000446774,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-seam.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.0732392000063555,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-seam.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.088367800002743,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-seam.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.0777191999950446,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-seam.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.0957697999983793,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-seam.source.json"
+        }
+      }
+    },
+    {
+      "id": "omitted-period-identification",
+      "expected_first_failure": "period",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "fa93c0e1d3287540984ecf64009c54fad66917b2dece97a018a072afe939430e",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.333256199999596,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-period-identification.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.108678399999917,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-period-identification.boundary.json"
+        },
+        "period": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.1006740999946487,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-period-identification.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.084797700001218,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-period-identification.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "period",
+          "exit_code": 2,
+          "seconds": 1.1089653000017279,
+          "matches_expectation": true,
+          "result_path": "outputs/omitted-period-identification.source.json"
+        }
+      }
+    },
+    {
+      "id": "unitary-wrong-atlas",
+      "expected_first_failure": "atlas",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "aed72b8d85b50a6999366c8534c3cc17bc810747921a3dce2f64c3486e39401f",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.33947620000253664,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-atlas.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.0859163000059198,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-atlas.boundary.json"
+        },
+        "period": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.136579600002733,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-atlas.period.json"
+        },
+        "atlas": {
+          "status": "INVALID",
+          "stage": "atlas",
+          "exit_code": 2,
+          "seconds": 1.2670061999961035,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-atlas.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "atlas",
+          "exit_code": 2,
+          "seconds": 1.279694800003199,
+          "matches_expectation": true,
+          "result_path": "outputs/unitary-wrong-atlas.source.json"
+        }
+      }
+    },
+    {
+      "id": "internally-consistent-wrong-source-character",
+      "expected_first_failure": "source",
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "4429013464178293aff8d82072533f3eeadaf7bb5feca0442e611860a5e97611",
+      "layers": {
+        "local": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 0.3347055000049295,
+          "matches_expectation": true,
+          "result_path": "outputs/internally-consistent-wrong-source-character.local.json"
+        },
+        "boundary": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.0792492999971728,
+          "matches_expectation": true,
+          "result_path": "outputs/internally-consistent-wrong-source-character.boundary.json"
+        },
+        "period": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.1483272000041325,
+          "matches_expectation": true,
+          "result_path": "outputs/internally-consistent-wrong-source-character.period.json"
+        },
+        "atlas": {
+          "status": "PASS_REQUESTED_LAYER",
+          "stage": null,
+          "exit_code": 0,
+          "seconds": 1.754538599998341,
+          "matches_expectation": true,
+          "result_path": "outputs/internally-consistent-wrong-source-character.atlas.json"
+        },
+        "source": {
+          "status": "INVALID",
+          "stage": "source",
+          "exit_code": 2,
+          "seconds": 1.7850311000001966,
+          "matches_expectation": true,
+          "result_path": "outputs/internally-consistent-wrong-source-character.source.json"
+        }
+      }
+    }
+  ],
+  "comparison_scope": "Each layer is an actually executed prefix of our recipient. No layer is attributed to an external package; external spgrep calls are recorded separately.",
+  "source_hashes": {
+    "produce.py": "bcf71ecf87c87bae247751a75568bef5def9a2689b94651a4b8a459e5d6665aa",
+    "verify.py": "9e6d4d3c2cae65975a76b27f584e13617e609a5f8228fb41aa3fe02f59de51d0",
+    "run_benchmark.py": "8e27204c99a33876d6de67e7ec89f90290abf31d6f5e9590164b483a419d2a82",
+    "exact_paths.py": "2d9a4feaae5b2c48c06faffa3e48917687d0bd40dc67d2d4c74a4d524bd59d1f"
+  }
+}

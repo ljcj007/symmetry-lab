@@ -1,0 +1,20 @@
+{
+  "schema": "symmetry-lab.fe-portable-source-inventory.v1",
+  "python_minimum": "3.11",
+  "runtime_dependencies": ["numpy>=1.26,<3"],
+  "include": [
+    "analyze_fe.py", "prepare_fe.py", "run_fe.py", "source_data.py",
+    "test_fe.py", "validate_fe.py", "refine_fe.py", "requirements.txt", "vendor/qe_reader.py",
+    "README.md", "RESEARCH_LOG.md", "SOFTWARE.md", "SOURCE_MANIFEST.json", "LICENSE.source-data",
+    "reports/PATH_AUDIT.json", "reports/OLD_8_POINT_ANALYSIS.json",
+    "reports/OLD_8_POINT_ANALYSIS.csv", "reports/SYNTHETIC_COUNTEREXAMPLES.json",
+    "reports/TESTS.txt", "reports/TEST_REPORT.json", "reports/NUMERICAL_CLOSURE.json",
+    "reports/RAW_BINDINGS.json"
+  ],
+  "exclude": ["software/", "test_artifacts/", "__pycache__/", "experiments/*/scratch/"],
+  "download_commands": [
+    "python source_data.py",
+    "python source_data.py --include-wavefunctions"
+  ],
+  "note": "Reference replay needs the pinned wavefunctions; generated-input tests need the small source inputs. Source download verifies lengths and SHA256 and performs no DFT. Importing a new self-computed Fe.save needs its pseudopotential but not the old workspace directory."
+}

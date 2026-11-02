@@ -1,0 +1,41 @@
+{
+  "schema": "symmetry-exchange-source-manifest-v1",
+  "model": "spinful diagonal mirror plus time reversal, 3D torus",
+  "license": "GPL-3.0 (inherited project license; see LICENSE)",
+  "status": "Source-only research snapshot; public hosting and external replication are separate events.",
+  "dependencies": [
+    {
+      "path": "vendor/exact_paths.py",
+      "origin": "research/ncs-program/phase11/exact_paths.py",
+      "sha256": "2d9a4feaae5b2c48c06faffa3e48917687d0bd40dc67d2d4c74a4d524bd59d1f",
+      "independence": "shared exact arithmetic, not claimed independent"
+    },
+    {
+      "path": "vendor/exact_geometry.py",
+      "origin": "research/ncs-program/phase13/geometry/exact_geometry.py",
+      "sha256": "54c9980017de6635f5f08120548ab067b00afee9daf00b492b4b88aa1d730494",
+      "independence": "independent geometry enumeration; producer only consumes its fixed geometry fixture"
+    }
+  ],
+  "production_routes": 1,
+  "full_global_models_in_this_snapshot": 1,
+  "numerical_external_comparison": "Five actual spgrep unitary-kernel calls; no external global-fault claim",
+  "included": "Own source, inherited GPL license, exact fixture, author-run records. No external package binaries, manuscript drafts, wavefunction binaries or deployment workflows.",
+  "files": {
+    "README.md": "145e69f1902f4281b57628d3690ff12de8d1811edfc9ae63e191dc09315ec874",
+    "SPECIFICATION.md": "c030e8d03f3e3587b40789b3c4a22032e5ffeda65ae58ae268cb96a7ba5eb57a",
+    "THEOREMS.md": "bef3af511356fbf9130ed19b0b5429a76a61b160dbdd2baa4f68082a9f2ab092",
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "produce.py": "bcf71ecf87c87bae247751a75568bef5def9a2689b94651a4b8a459e5d6665aa",
+    "verify.py": "9e6d4d3c2cae65975a76b27f584e13617e609a5f8228fb41aa3fe02f59de51d0",
+    "run_benchmark.py": "8e27204c99a33876d6de67e7ec89f90290abf31d6f5e9590164b483a419d2a82",
+    "test_contract.py": "24d5c99df0eb612403ace7d50a4f0d9d0789e9fdece00083aef8dad7d1885263",
+    "external_probe.py": "e47819532cade4fd7e7173a7a8ad91e990521c46540184f5de250131cd8c394d",
+    "vendor/exact_paths.py": "2d9a4feaae5b2c48c06faffa3e48917687d0bd40dc67d2d4c74a4d524bd59d1f",
+    "vendor/exact_geometry.py": "54c9980017de6635f5f08120548ab067b00afee9daf00b492b4b88aa1d730494",
+    "fixtures/mirror/problem.json": "8acf5ae008cbfcd244cc812d5c1927a17fa7cfcf9900147da126d6714d1a722f",
+    "fixtures/mirror/certificate.json": "32b378778ef528f753e567ea49f93cb852cc409fc71798f728eaed3e0318f4a9",
+    "fixtures/geometry.problem.json": "9906679ae1fb250e7e7d35d07d8127e98cb6c562cd460b9c9d62ddfa3b088933",
+    "fixtures/geometry.certificate.json": "3837d005c079a430a6b40f0bb2cb371307dde5574936153c49034fe68c1a5ad3"
+  }
+}

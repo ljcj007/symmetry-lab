@@ -1,0 +1,330 @@
+{
+  "schema": "mirror-grey-global-problem-v1",
+  "model": "spinful-diagonal-mirror-grey",
+  "rank": 2,
+  "geometry_problem": {
+    "schema": "rational-arrangement-v1",
+    "dimension": 3,
+    "period_axes": [
+      0,
+      1,
+      2
+    ],
+    "operations": [
+      {
+        "id": "E",
+        "anti": false,
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "M",
+        "anti": false,
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "T",
+        "anti": true,
+        "rotation": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "MT",
+        "anti": true,
+        "rotation": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "charts": [
+    {
+      "id": "v000",
+      "lower": [
+        "-3/8",
+        "-3/8",
+        "-3/8"
+      ],
+      "upper": [
+        "3/8",
+        "3/8",
+        "3/8"
+      ]
+    },
+    {
+      "id": "v001",
+      "lower": [
+        "-3/8",
+        "-3/8",
+        "1/8"
+      ],
+      "upper": [
+        "3/8",
+        "3/8",
+        "7/8"
+      ]
+    },
+    {
+      "id": "v010",
+      "lower": [
+        "-3/8",
+        "1/8",
+        "-3/8"
+      ],
+      "upper": [
+        "3/8",
+        "7/8",
+        "3/8"
+      ]
+    },
+    {
+      "id": "v011",
+      "lower": [
+        "-3/8",
+        "1/8",
+        "1/8"
+      ],
+      "upper": [
+        "3/8",
+        "7/8",
+        "7/8"
+      ]
+    },
+    {
+      "id": "v100",
+      "lower": [
+        "1/8",
+        "-3/8",
+        "-3/8"
+      ],
+      "upper": [
+        "7/8",
+        "3/8",
+        "3/8"
+      ]
+    },
+    {
+      "id": "v101",
+      "lower": [
+        "1/8",
+        "-3/8",
+        "1/8"
+      ],
+      "upper": [
+        "7/8",
+        "3/8",
+        "7/8"
+      ]
+    },
+    {
+      "id": "v110",
+      "lower": [
+        "1/8",
+        "1/8",
+        "-3/8"
+      ],
+      "upper": [
+        "7/8",
+        "7/8",
+        "3/8"
+      ]
+    },
+    {
+      "id": "v111",
+      "lower": [
+        "1/8",
+        "1/8",
+        "1/8"
+      ],
+      "upper": [
+        "7/8",
+        "7/8",
+        "7/8"
+      ]
+    }
+  ],
+  "source_carrier": {
+    "E": [
+      [
+        [
+          {
+            "coefficient": "1",
+            "phase": "0",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        []
+      ],
+      [
+        [],
+        [
+          {
+            "coefficient": "1",
+            "phase": "0",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ]
+      ]
+    ],
+    "M": [
+      [
+        [],
+        [
+          {
+            "coefficient": "-1",
+            "phase": "3/8",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "coefficient": "-1",
+            "phase": "1/8",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        []
+      ]
+    ],
+    "T": [
+      [
+        [],
+        [
+          {
+            "coefficient": "1",
+            "phase": "0",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "coefficient": "-1",
+            "phase": "0",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        []
+      ]
+    ],
+    "MT": [
+      [
+        [
+          {
+            "coefficient": "1",
+            "phase": "3/8",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        []
+      ],
+      [
+        [],
+        [
+          {
+            "coefficient": "-1",
+            "phase": "1/8",
+            "frequency": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ]
+      ]
+    ]
+  },
+  "spin_convention": "M^2=T^2=-I; MT=TM semilinearly",
+  "scope": "Complete selected little-group family and declared torus gluing; not a DFT band-gap or arbitrary equivariant-bundle certificate."
+}

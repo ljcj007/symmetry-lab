@@ -1,0 +1,544 @@
+{
+  "status": "PASS",
+  "cli_count": 30,
+  "cli_cases": [
+    {
+      "case": "diagonal-mirror-grey",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 15,
+          "cells": 165,
+          "incidences": 852,
+          "period_pairs": 83,
+          "period_squares": 15,
+          "period_cubes": 1
+        },
+        "dimensions": {
+          "0": 27,
+          "1": 66,
+          "2": 56,
+          "3": 16
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "plain-three-torus-cube",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 6,
+          "cells": 27,
+          "incidences": 98,
+          "period_pairs": 27,
+          "period_squares": 9,
+          "period_cubes": 1
+        },
+        "dimensions": {
+          "0": 8,
+          "1": 12,
+          "2": 6,
+          "3": 1
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "general-rational-oblique-region",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 8,
+          "cells": 63,
+          "incidences": 262,
+          "period_pairs": 0,
+          "period_squares": 0,
+          "period_cubes": 0
+        },
+        "dimensions": {
+          "0": 16,
+          "1": 28,
+          "2": 16,
+          "3": 3
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "three-coordinate-periodic-oblique-arrangement",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 9,
+          "cells": 81,
+          "incidences": 344,
+          "period_pairs": 63,
+          "period_squares": 15,
+          "period_cubes": 1
+        },
+        "dimensions": {
+          "0": 20,
+          "1": 36,
+          "2": 21,
+          "3": 4
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "exact-thin-region-no-tolerance-collapse",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 7,
+          "cells": 41,
+          "incidences": 160,
+          "period_pairs": 0,
+          "period_squares": 0,
+          "period_cubes": 0
+        },
+        "dimensions": {
+          "0": 11,
+          "1": 18,
+          "2": 10,
+          "3": 2
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "equivalent-plane-normalization",
+      "expected": "CERTIFIED",
+      "observed": {
+        "status": "CERTIFIED",
+        "scope": "exact stratification, stabilizers, incidences and periodic geometry",
+        "counts": {
+          "planes": 15,
+          "cells": 165,
+          "incidences": 852,
+          "period_pairs": 83,
+          "period_squares": 15,
+          "period_cubes": 1
+        },
+        "dimensions": {
+          "0": 27,
+          "1": 66,
+          "2": 56,
+          "3": 16
+        }
+      },
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "case": "omitted-dimension-0-cell",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-dimension-1-cell",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-dimension-2-cell",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-dimension-3-cell",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-planes",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed planes"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-incidences",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed incidences"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-period_pairs",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_pairs"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-period_squares",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_squares"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "omitted-period_cubes",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_cubes"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "wrong-exact-vertex",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "wrong-interior-witness",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "lost-special-point-enhancement",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "boolean-not-integer-dimension",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "float-not-exact-integer",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed cells"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "wrong-period-target",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_pairs"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "wrong-period-intermediate-cell",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_squares"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "missing-one-of-six-cube-paths",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "mismatch in independently reconstructed period_cubes"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "same-corners-different-face-interior-cuts",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "periodic face arrangements do not agree cell by cell"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "nonboolean-antiunitary-flag",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "anti must be boolean"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "nonintegral-lattice-action",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "rotation must be an integral unimodular lattice action"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "four-coordinate-plane-normal",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "plane normal must have exactly three coordinates"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "list-is-not-a-problem-object",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "unsupported problem schema or dimension"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "scientific-exponent-not-rational-token",
+      "expected": "INVALID",
+      "observed": {
+        "status": "INVALID",
+        "reason": "rational string must contain an integer or fraction"
+      },
+      "exit_code": 1,
+      "pass": true
+    },
+    {
+      "case": "rational-bit-budget",
+      "expected": "UNRESOLVED",
+      "observed": {
+        "status": "UNRESOLVED",
+        "reason": "rational bit budget exceeded"
+      },
+      "exit_code": 2,
+      "pass": true
+    }
+  ],
+  "resource_checks": [
+    {
+      "limit": "max_planes",
+      "value": 6,
+      "result": {
+        "status": "UNRESOLVED",
+        "reason": "plane budget exceeded"
+      },
+      "pass": true
+    },
+    {
+      "limit": "max_vertices",
+      "value": 8,
+      "result": {
+        "status": "UNRESOLVED",
+        "reason": "vertex budget exceeded"
+      },
+      "pass": true
+    },
+    {
+      "limit": "max_cells",
+      "value": 27,
+      "result": {
+        "status": "UNRESOLVED",
+        "reason": "cell budget exceeded"
+      },
+      "pass": true
+    },
+    {
+      "limit": "max_triples",
+      "value": 1,
+      "result": {
+        "status": "UNRESOLVED",
+        "reason": "plane intersection budget exceeded"
+      },
+      "pass": true
+    },
+    {
+      "limit": "max_incidence_pairs",
+      "value": 1,
+      "result": {
+        "status": "UNRESOLVED",
+        "reason": "incidence budget exceeded"
+      },
+      "pass": true
+    }
+  ],
+  "independent_census": {
+    "status": "PASS",
+    "vertices": 27,
+    "barycentres": 877,
+    "cells": 165,
+    "scope": "independent Cramer intersection and exhaustive barycentre enumeration; planes are shared input"
+  },
+  "stabilizer_checks": [
+    {
+      "case": "oblique-mirror",
+      "point": [
+        "1/3",
+        "1/3",
+        "1/7"
+      ],
+      "cell": "c0040",
+      "observed": [
+        "E",
+        "M"
+      ],
+      "expected": [
+        "E",
+        "M"
+      ],
+      "pass": true
+    },
+    {
+      "case": "T-only",
+      "point": [
+        "0",
+        "1/2",
+        "0"
+      ],
+      "cell": "c0014",
+      "observed": [
+        "E",
+        "T"
+      ],
+      "expected": [
+        "E",
+        "T"
+      ],
+      "pass": true
+    },
+    {
+      "case": "anti-only-line",
+      "point": [
+        "1/3",
+        "2/3",
+        "0"
+      ],
+      "cell": "c0021",
+      "observed": [
+        "E",
+        "MT"
+      ],
+      "expected": [
+        "E",
+        "MT"
+      ],
+      "pass": true
+    },
+    {
+      "case": "generic",
+      "point": [
+        "1/7",
+        "2/7",
+        "3/7"
+      ],
+      "cell": "c0039",
+      "observed": [
+        "E"
+      ],
+      "expected": [
+        "E"
+      ],
+      "pass": true
+    },
+    {
+      "case": "all-group",
+      "point": [
+        "1/2",
+        "1/2",
+        "1/2"
+      ],
+      "cell": "c0082",
+      "observed": [
+        "E",
+        "M",
+        "T",
+        "MT"
+      ],
+      "expected": [
+        "E",
+        "M",
+        "T",
+        "MT"
+      ],
+      "pass": true
+    }
+  ],
+  "cube_euler_characteristic": 1,
+  "source_sha256": {
+    "exact_geometry.py": "54c9980017de6635f5f08120548ab067b00afee9daf00b492b4b88aa1d730494",
+    "independent_census.py": "cbf65edd598c32d9bac1361b15792a2ce95f4a2ca3512a17c82fc3995a215041",
+    "test_geometry.py": "98bebb2c97baf35e096934fc554b6d28d596a079cc242915cbe50a3a69acec85"
+  }
+}

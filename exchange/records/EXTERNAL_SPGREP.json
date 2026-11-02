@@ -1,0 +1,362 @@
+{
+  "status": "PASS",
+  "package": "spgrep",
+  "version": "0.8.0",
+  "api": "spgrep.symmetry.enumerate.enumerate_unitary_irreps",
+  "source_sha256": "3826e8c2f0e286a183d62ea1903508cbdabb13d4d13cd4db0ced0b4b93f36a91",
+  "actual_calls": 5,
+  "records": [
+    {
+      "little_class": "E",
+      "input_unitary_rotations": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "input_factor": [
+        [
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      ],
+      "irreps_real_imag": [
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ]
+        ]
+      ],
+      "indicators": [
+        1
+      ],
+      "dimension_and_character_check": true,
+      "max_character_discrepancy": 0.0
+    },
+    {
+      "little_class": "M",
+      "input_unitary_rotations": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "input_factor": [
+        [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ]
+        ]
+      ],
+      "irreps_real_imag": [
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -0.0,
+                -1.0
+              ]
+            ]
+          ]
+        ]
+      ],
+      "indicators": [
+        0,
+        0
+      ],
+      "dimension_and_character_check": true,
+      "max_character_discrepancy": 0.0
+    },
+    {
+      "little_class": "T",
+      "input_unitary_rotations": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "input_factor": [
+        [
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      ],
+      "irreps_real_imag": [
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ]
+        ]
+      ],
+      "indicators": [
+        1
+      ],
+      "dimension_and_character_check": true,
+      "max_character_discrepancy": 0.0
+    },
+    {
+      "little_class": "MT",
+      "input_unitary_rotations": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "input_factor": [
+        [
+          [
+            1.0,
+            0.0
+          ]
+        ]
+      ],
+      "irreps_real_imag": [
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ]
+        ]
+      ],
+      "indicators": [
+        1
+      ],
+      "dimension_and_character_check": true,
+      "max_character_discrepancy": 0.0
+    },
+    {
+      "little_class": "FULL",
+      "input_unitary_rotations": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "input_factor": [
+        [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ]
+        ]
+      ],
+      "irreps_real_imag": [
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        ],
+        [
+          [
+            [
+              [
+                1.0,
+                0.0
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -0.0,
+                -1.0
+              ]
+            ]
+          ]
+        ]
+      ],
+      "indicators": [
+        0,
+        0
+      ],
+      "dimension_and_character_check": true,
+      "max_character_discrepancy": 0.0
+    }
+  ],
+  "scope": "Unitary-kernel representation generation only. Antiunitary catalogue completion is our analytic producer. No external boundary, seam, atlas or source-binding check was executed or alleged to fail."
+}

@@ -1,0 +1,11 @@
+{
+  "status": "BASELINE_MISMATCH_REQUIRES_REVIEW",
+  "absolute_max_energy_difference_eV": 0.34951284085108725,
+  "mean_energy_difference_eV": -0.034072398261894635,
+  "energy_tolerance_eV": 0.05,
+  "energy_offset_fitted_or_removed": false,
+  "c4_prefix_multiplicities_match": true,
+  "compared_C4_invariant_points": 2,
+  "same_original_SCF_Hamiltonian_proved": false,
+  "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+}

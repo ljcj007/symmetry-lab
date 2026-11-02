@@ -1,0 +1,11 @@
+{
+  "status": "INVALID",
+  "stage": "atlas",
+  "reason": "atlas-to-carrier binding",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period"
+  ]
+}

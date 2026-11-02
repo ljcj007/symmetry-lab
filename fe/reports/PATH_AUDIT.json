@@ -1,0 +1,93 @@
+{
+  "active_cartesian_rotation": [
+    [
+      0,
+      -1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "fractional_rotation": [
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      -1
+    ],
+    [
+      0,
+      1,
+      1
+    ]
+  ],
+  "reciprocal_action": [
+    [
+      1,
+      -1,
+      1
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ]
+  ],
+  "spin_lift_diagonal_phase_eighths": [
+    -1,
+    1
+  ],
+  "eigenvalue_phase_eighths": [
+    7,
+    1,
+    3,
+    5
+  ],
+  "spin_axial_residual": 3.1401849173675503e-16,
+  "path": "q(t)=(t,t,t), 0<=t<=1/2; q in primitive reciprocal coordinates",
+  "target_H_fractional": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "target_H_cartesian_inverse_bohr": [
+    0.0,
+    0.0,
+    1.1585111657010394
+  ],
+  "source_win_H_fractional": [
+    0.5,
+    -0.5,
+    -0.5
+  ],
+  "source_win_H_cartesian_inverse_bohr": [
+    1.1585111657010394,
+    0.0,
+    0.0
+  ],
+  "H_endpoint_reciprocal_offset": [
+    0,
+    -1,
+    -1
+  ],
+  "same_endpoint_mod_reciprocal_lattice": true,
+  "same_Gamma_to_H_path": false,
+  "warning": "The source Fe.win follows Cartesian x, whereas the C4z obstruction follows Cartesian z."
+}

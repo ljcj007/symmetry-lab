@@ -1,0 +1,35 @@
+{
+  "status": "PASS_NUMERICAL_CROSS_CHECK",
+  "scope": "Independent HiGHS strict-feasibility census; not an exact certificate proof",
+  "imports_exact_checker": false,
+  "lp_calls": 2358,
+  "feasible_prefix_counts": [
+    2,
+    3,
+    5,
+    10,
+    15,
+    25,
+    30,
+    70,
+    75,
+    90,
+    105,
+    105,
+    125,
+    125,
+    165
+  ],
+  "final_sign_strata": 165,
+  "stabilizer_witnesses": 165,
+  "sum_3d_volume": 0.9999999999999998,
+  "closed_cube_euler_characteristic": 1,
+  "numpy_version": "2.5.2",
+  "scipy_version": "1.18.0",
+  "source_sha256": "59ba5c14e756d86bbbf94ab38ffb34f5f11ef9295d68a2d693f41152838f87c2",
+  "input_sha256": {
+    "geometry\\diagonal_mirror.problem.json": "9906679ae1fb250e7e7d35d07d8127e98cb6c562cd460b9c9d62ddfa3b088933",
+    "geometry\\diagonal_mirror.certificate.json": "3837d005c079a430a6b40f0bb2cb371307dde5574936153c49034fe68c1a5ad3"
+  },
+  "seconds": 3.492770600001677
+}

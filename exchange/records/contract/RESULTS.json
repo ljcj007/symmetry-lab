@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "cases": 17,
+  "records": [
+    {
+      "id": "missing-z-period-axis",
+      "expected_status": "INVALID",
+      "expected_stage": "contract",
+      "actual_status": "INVALID",
+      "actual_stage": "contract",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "no-period-axis",
+      "expected_status": "INVALID",
+      "expected_stage": "contract",
+      "actual_status": "INVALID",
+      "actual_stage": "contract",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "nonobject-geometry-problem",
+      "expected_status": "INVALID",
+      "expected_stage": "contract",
+      "actual_status": "INVALID",
+      "actual_stage": "contract",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "omitted-period-axis-means-all-three",
+      "expected_status": "CERTIFIED",
+      "expected_stage": null,
+      "actual_status": "CERTIFIED",
+      "actual_stage": null,
+      "matches_expectation": true,
+      "exit_code": 0
+    },
+    {
+      "id": "forged-physical-scope",
+      "expected_status": "INVALID",
+      "expected_stage": "contract",
+      "actual_status": "INVALID",
+      "actual_stage": "contract",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "float-rank",
+      "expected_status": "INVALID",
+      "expected_stage": "contract",
+      "actual_status": "INVALID",
+      "actual_stage": "contract",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "boolean-reference-dimension",
+      "expected_status": "INVALID",
+      "expected_stage": "local",
+      "actual_status": "INVALID",
+      "actual_stage": "local",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "boolean-selected-multiplicity",
+      "expected_status": "INVALID",
+      "expected_stage": "local",
+      "actual_status": "INVALID",
+      "actual_stage": "local",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "atlas-chart-budget",
+      "expected_status": "UNRESOLVED",
+      "expected_stage": "atlas",
+      "actual_status": "UNRESOLVED",
+      "actual_stage": "atlas",
+      "matches_expectation": true,
+      "exit_code": 3
+    },
+    {
+      "id": "atlas-coverage-budget",
+      "expected_status": "UNRESOLVED",
+      "expected_stage": "atlas",
+      "actual_status": "UNRESOLVED",
+      "actual_stage": "atlas",
+      "matches_expectation": true,
+      "exit_code": 3
+    },
+    {
+      "id": "unsupported-field",
+      "expected_status": "UNRESOLVED",
+      "expected_stage": "local",
+      "actual_status": "UNRESOLVED",
+      "actual_stage": "local",
+      "matches_expectation": true,
+      "exit_code": 3
+    },
+    {
+      "id": "huge-rational",
+      "expected_status": "UNRESOLVED",
+      "expected_stage": "atlas",
+      "actual_status": "UNRESOLVED",
+      "actual_stage": "atlas",
+      "matches_expectation": true,
+      "exit_code": 3
+    },
+    {
+      "id": "duplicate-cell",
+      "expected_status": "INVALID",
+      "expected_stage": "local",
+      "actual_status": "INVALID",
+      "actual_stage": "local",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "duplicate-atlas-component",
+      "expected_status": "INVALID",
+      "expected_stage": "atlas",
+      "actual_status": "INVALID",
+      "actual_stage": "atlas",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "boolean-seam-axis",
+      "expected_status": "INVALID",
+      "expected_stage": "period",
+      "actual_status": "INVALID",
+      "actual_stage": "period",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "boolean-atlas-shift",
+      "expected_status": "INVALID",
+      "expected_stage": "atlas",
+      "actual_status": "INVALID",
+      "actual_stage": "atlas",
+      "matches_expectation": true,
+      "exit_code": 2
+    },
+    {
+      "id": "stale-binding",
+      "matches_expectation": true,
+      "actual_status": "INVALID",
+      "actual_stage": "contract"
+    }
+  ],
+  "source_sha256": "9e6d4d3c2cae65975a76b27f584e13617e609a5f8228fb41aa3fe02f59de51d0"
+}

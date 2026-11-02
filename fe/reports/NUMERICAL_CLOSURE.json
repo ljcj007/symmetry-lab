@@ -1,0 +1,575 @@
+{
+  "schema": "symmetry-lab.fe-numerical-closure.v1",
+  "status": "REAL_DFT_BRANCH_ORDER_REVERSALS_WITH_MESH_SENSITIVITY",
+  "created_utc": "2026-11-02T14:27:16.970720+00:00",
+  "source_manifest": {
+    "path": "SOURCE_MANIFEST.json",
+    "sha256": "5a32e80531ce97ae006a5634188d33787cad9c65e023002061ff0c325f7202cc"
+  },
+  "software_acquisition": {
+    "path": "software/ACQUISITION.json",
+    "sha256": "6b8e81108bcee0bdccf768dfd27265a5c09e28272a3b02449ec2c0e68b9b6faf"
+  },
+  "pw_executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+  "QE_version": "7.5",
+  "published_source_QE_version": "7.3.1",
+  "published_source_sha256_inventory_preserved": true,
+  "selected_spectral_prefix_rank": 18,
+  "occupied_bundle_claimed": false,
+  "path": "q(t)=(t,t,t), 0<=t<=1/2, Cartesian z",
+  "C4_eigenvalue_phase_eighths": [
+    7,
+    1,
+    3,
+    5
+  ],
+  "real_QE_run_count": 29,
+  "SCF_runs": 3,
+  "NSCF_runs": 26,
+  "NSCF_k_point_evaluations": 500,
+  "sum_QE_stage_wall_seconds": 362.9480891227722,
+  "k_point_count_includes_repeated_endpoints_and_repeated_mesh_profiles": true,
+  "profiles": [
+    {
+      "SCF_mesh": [
+        4,
+        4,
+        4
+      ],
+      "SCF_moment_Bohr_magneton": [
+        -2.767596119064124e-16,
+        2.765544204237642e-16,
+        -1.9379964645834
+      ],
+      "SCF_fermi_energy_eV": 13.02572829498936,
+      "SCF_charge_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "SCF_execution": {
+        "path": "experiments/reference_17/scf/RUN.json",
+        "sha256": "03f68389b22fc92a3984ac104f3baf9681f1f0cebf06b9f74e88d0738d51f794"
+      },
+      "baseline8_execution": {
+        "path": "experiments/reference_17/baseline8/RUN.json",
+        "sha256": "5a84d9ea512040422d5b614b5012b01cfdbe50ce198b2f411c97d304830a989f"
+      },
+      "baseline8_comparison_to_published": {
+        "status": "REPRODUCED_WITHIN_DECLARED_NUMERICAL_PROFILE",
+        "absolute_max_energy_difference_eV": 2.5083254939772814e-07,
+        "mean_energy_difference_eV": -9.852886145855777e-10,
+        "energy_tolerance_eV": 0.05,
+        "energy_offset_fitted_or_removed": false,
+        "c4_prefix_multiplicities_match": true,
+        "compared_C4_invariant_points": 2,
+        "same_original_SCF_Hamiltonian_proved": false,
+        "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+      },
+      "fine_path_execution": {
+        "path": "experiments/fine_101/path/RUN.json",
+        "sha256": "fce19bf31053fcb349cc9958898f35d8f033e6c5fe48683693a4440b3a003b65"
+      },
+      "fine_path_analysis": {
+        "path": "experiments/fine_101/path/ANALYSIS.json",
+        "sha256": "202f7743102b21903f6a4fa0eb8d14506cdbde09eecfd35bfadaf2eb17c2a162"
+      },
+      "fine_path_points": 101,
+      "fine_path_minimum_sampled_delta18_eV": 0.0010912787555170667,
+      "refinement": {
+        "path": "experiments/refined_4mesh/RESULT.json",
+        "sha256": "e4d0e953354c9a133e5cf50f98182ab89b00c579798d9ada5eae2c6cfac97bf4"
+      },
+      "refinement_points": 45,
+      "strict_endpoint_recomputation": {
+        "path": "experiments/strict_4mesh/COMPARISON.json",
+        "sha256": "87c51b245f0628b50bcc739266216b592ba34dd84289111c789a8b7c19aa0e4f"
+      },
+      "crossings": [
+        {
+          "t_interval": [
+            0.11529785156249998,
+            0.115302734375
+          ],
+          "t_width": 4.882812500009437e-06,
+          "phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            3.739091171439668e-05,
+            -1.6851787876248636e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            3.739091163623698e-05,
+            -1.6851787663085815e-05
+          ],
+          "strict_energy_change_max_eV": 3.8042458072595764e-11,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1773,
+            1773
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129",
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129"
+          ],
+          "max_endpoint_energy_covariance_eV": 1.2678119738664673e-13,
+          "approximate_crossing_energy_absolute_eV": 37.54507962930926,
+          "approximate_crossing_energy_relative_to_EF_eV": 24.519351334319897
+        },
+        {
+          "t_interval": [
+            0.18489746093750004,
+            0.18490234374999998
+          ],
+          "t_width": 4.882812499940048e-06,
+          "phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.4763389696147442e-05,
+            -2.8221584578602688e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            2.4763389639304023e-05,
+            -2.8221584713605807e-05
+          ],
+          "strict_energy_change_max_eV": 4.121147867408581e-13,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1761,
+            1761
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283",
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283"
+          ],
+          "max_endpoint_energy_covariance_eV": 9.224378385008137e-14,
+          "approximate_crossing_energy_absolute_eV": 34.32919181742156,
+          "approximate_crossing_energy_relative_to_EF_eV": 21.3034635224322
+        },
+        {
+          "t_interval": [
+            0.229384765625,
+            0.2293896484375
+          ],
+          "t_width": 4.882812500023315e-06,
+          "phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            1.2269280333043753e-05,
+            -3.993161841009396e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            1.226928034014918e-05,
+            -3.993161841009396e-05
+          ],
+          "strict_energy_change_max_eV": 5.5706550483591855e-12,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1765,
+            1765
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412",
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412"
+          ],
+          "max_endpoint_energy_covariance_eV": 8.784459414844446e-14,
+          "approximate_crossing_energy_absolute_eV": 32.86847691302863,
+          "approximate_crossing_energy_relative_to_EF_eV": 19.84274861803927
+        }
+      ]
+    },
+    {
+      "SCF_mesh": [
+        8,
+        8,
+        8
+      ],
+      "SCF_moment_Bohr_magneton": [
+        -1.3839122864979e-16,
+        1.385884033920367e-16,
+        -2.261147498047748
+      ],
+      "SCF_fermi_energy_eV": 12.61739970291722,
+      "SCF_charge_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "SCF_execution": {
+        "path": "experiments/convergence_8mesh/scf/RUN.json",
+        "sha256": "cd42e2f18778af119a6b6d20d8b2b8a62cc85c3ea0d221875f24702120864c3f"
+      },
+      "baseline8_execution": {
+        "path": "experiments/convergence_8mesh/baseline8/RUN.json",
+        "sha256": "ddd858285a5ad6367c29c0877c3be7f57ec08f4582919854483c84d14742fa5e"
+      },
+      "baseline8_comparison_to_published": {
+        "status": "BASELINE_MISMATCH_REQUIRES_REVIEW",
+        "absolute_max_energy_difference_eV": 0.39442134954250996,
+        "mean_energy_difference_eV": -0.03884624686217751,
+        "energy_tolerance_eV": 0.05,
+        "energy_offset_fitted_or_removed": false,
+        "c4_prefix_multiplicities_match": true,
+        "compared_C4_invariant_points": 2,
+        "same_original_SCF_Hamiltonian_proved": false,
+        "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+      },
+      "fine_path_execution": {
+        "path": "experiments/convergence_8mesh/path/RUN.json",
+        "sha256": "c2c76de5c2dd6d85d4d03cd20c92968fb1b6035ba9edadcf9d20e5ca14a80155"
+      },
+      "fine_path_analysis": {
+        "path": "experiments/convergence_8mesh/path/ANALYSIS.json",
+        "sha256": "66b69f3ccedd90654be7c986833c9a5ea20402a6f9e386edf9973b930ddce6bf"
+      },
+      "fine_path_points": 101,
+      "fine_path_minimum_sampled_delta18_eV": 0.0115273175528543,
+      "refinement": {
+        "path": "experiments/refined_8mesh/RESULT.json",
+        "sha256": "981418ddb2cd72ad0ebdaab05d000f6df9172ce5ee3ff8ee1f2c6958420bbda0"
+      },
+      "refinement_points": 45,
+      "strict_endpoint_recomputation": {
+        "path": "experiments/strict_8mesh/COMPARISON.json",
+        "sha256": "33caf599312410da546f34f4542649dae7d4b3a140b5458f1bdf8d3c757e303a"
+      },
+      "crossings": [
+        {
+          "t_interval": [
+            0.1159423828125,
+            0.115947265625
+          ],
+          "t_width": 4.882812500009437e-06,
+          "phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.169182770472844e-05,
+            -3.337487233068259e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            2.169182767630673e-05,
+            -3.33748723591043e-05
+          ],
+          "strict_energy_change_max_eV": 3.064570819333312e-11,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1773,
+            1773
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129",
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129"
+          ],
+          "max_endpoint_energy_covariance_eV": 1.132791566899982e-13,
+          "approximate_crossing_energy_absolute_eV": 37.515939914025026,
+          "approximate_crossing_energy_relative_to_EF_eV": 24.898540211107807
+        },
+        {
+          "t_interval": [
+            0.1863330078125,
+            0.186337890625
+          ],
+          "t_width": 4.882812499995559e-06,
+          "phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.270808285942394e-05,
+            -3.107040708982822e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            2.2708082944689068e-05,
+            -3.1070406947719675e-05
+          ],
+          "strict_energy_change_max_eV": 3.481659405224491e-13,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1761,
+            1761
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283",
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283"
+          ],
+          "max_endpoint_energy_covariance_eV": 7.402864196563017e-14,
+          "approximate_crossing_energy_absolute_eV": 34.281213977873875,
+          "approximate_crossing_energy_relative_to_EF_eV": 21.663814274956657
+        },
+        {
+          "t_interval": [
+            0.236796875,
+            0.23680175781249999
+          ],
+          "t_width": 4.882812499995559e-06,
+          "phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.0884606179549792e-05,
+            -2.6738847786589304e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            2.0884606307447484e-05,
+            -2.673884782211644e-05
+          ],
+          "strict_energy_change_max_eV": 8.697043085703626e-12,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1765,
+            1765
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412",
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412"
+          ],
+          "max_endpoint_energy_covariance_eV": 7.204040481414022e-14,
+          "approximate_crossing_energy_absolute_eV": 32.68024617662107,
+          "approximate_crossing_energy_relative_to_EF_eV": 20.06284647370385
+        }
+      ]
+    },
+    {
+      "SCF_mesh": [
+        12,
+        12,
+        12
+      ],
+      "SCF_moment_Bohr_magneton": [
+        -1.40385636107265e-19,
+        2.663596753076611e-19,
+        -2.257630798771569
+      ],
+      "SCF_fermi_energy_eV": 12.630992172221985,
+      "SCF_charge_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "SCF_execution": {
+        "path": "experiments/convergence_12mesh/scf/RUN.json",
+        "sha256": "c07d46a719d30286ff7ce36919b141b058d04742d04ad58bf2e461922006d05a"
+      },
+      "baseline8_execution": {
+        "path": "experiments/convergence_12mesh/baseline8/RUN.json",
+        "sha256": "7ff8eda2fc4357631f3ec61802dd78e25a9d1e1991ebbbc84e761a601116fd57"
+      },
+      "baseline8_comparison_to_published": {
+        "status": "BASELINE_MISMATCH_REQUIRES_REVIEW",
+        "absolute_max_energy_difference_eV": 0.34951284085108725,
+        "mean_energy_difference_eV": -0.034072398261894635,
+        "energy_tolerance_eV": 0.05,
+        "energy_offset_fitted_or_removed": false,
+        "c4_prefix_multiplicities_match": true,
+        "compared_C4_invariant_points": 2,
+        "same_original_SCF_Hamiltonian_proved": false,
+        "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+      },
+      "fine_path_execution": {
+        "path": "experiments/convergence_12mesh/path/RUN.json",
+        "sha256": "73ca0cad705791e4cb99ee37c60369a6c689806566ece5c9a2f29065607d7306"
+      },
+      "fine_path_analysis": {
+        "path": "experiments/convergence_12mesh/path/ANALYSIS.json",
+        "sha256": "4eb096c0b7f30fa48c09f6a7398c34e43fba3cda2b8dde15740dfd9ac4812d3c"
+      },
+      "fine_path_points": 101,
+      "fine_path_minimum_sampled_delta18_eV": 0.012848472208553119,
+      "refinement": {
+        "path": "experiments/refined_12mesh/RESULT.json",
+        "sha256": "959500c981e25e64f804c97d6efd0a07e5e6d600229e57414c9689787f0015f9"
+      },
+      "refinement_points": 48,
+      "strict_endpoint_recomputation": {
+        "path": "experiments/strict_12mesh/COMPARISON.json",
+        "sha256": "4f2cb395c07410a2428f4d5ffdf51f6e14d36e05255e7e2c6d06411413161490"
+      },
+      "crossings": [
+        {
+          "t_interval": [
+            0.1137841796875,
+            0.1137890625
+          ],
+          "t_width": 4.882812499995559e-06,
+          "phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            1.2860313141516144e-05,
+            -4.525904829222327e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            1.2860313304940973e-05,
+            -4.525904829222327e-05
+          ],
+          "strict_energy_change_max_eV": 9.521272659185342e-12,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1773,
+            1773
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129",
+            "71c378e3c6132afe5ad801daa3e4bfff985cd22d2a5e289f5e56fcd609bb4129"
+          ],
+          "max_endpoint_energy_covariance_eV": 1.1923614257882315e-13,
+          "approximate_crossing_energy_absolute_eV": 37.60991089291895,
+          "approximate_crossing_energy_relative_to_EF_eV": 24.97891872069696
+        },
+        {
+          "t_interval": [
+            0.18884277343749997,
+            0.1888525390625
+          ],
+          "t_width": 9.765625000018874e-06,
+          "phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            4.854388131292353e-05,
+            -6.562100554674544e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            4.854388141950494e-05,
+            -6.562100544016403e-05
+          ],
+          "strict_energy_change_max_eV": 2.4158453015843406e-13,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1761,
+            1761
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283",
+            "27d7a9974cd15929f91f843816dfa124e1f45f7df1bfcbb29a82caa19b589283"
+          ],
+          "max_endpoint_energy_covariance_eV": 8.891874174255081e-14,
+          "approximate_crossing_energy_absolute_eV": 34.16541856453903,
+          "approximate_crossing_energy_relative_to_EF_eV": 21.534426392317044
+        },
+        {
+          "t_interval": [
+            0.231298828125,
+            0.23130859375
+          ],
+          "t_width": 9.765625000018874e-06,
+          "phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            5.67205830606099e-05,
+            -4.580392823783086e-05
+          ],
+          "strict_signed_gap_Eb_minus_Ea_eV": [
+            5.6720583010871906e-05,
+            -4.580392829467428e-05
+          ],
+          "strict_energy_change_max_eV": 6.558309451065725e-12,
+          "endpoint_prefix_status": [
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP",
+            "UNRESOLVED_SMALL_OR_CLOSED_OUTER_GAP"
+          ],
+          "endpoint_plane_wave_counts": [
+            1765,
+            1765
+          ],
+          "endpoint_G_sets_identical": true,
+          "endpoint_G_set_sha256": [
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412",
+            "ba511c2c789ac0f74f3f6ad3f4d277737bdbd89304bb63f355f5ce555a162412"
+          ],
+          "max_endpoint_energy_covariance_eV": 7.746891469623196e-14,
+          "approximate_crossing_energy_absolute_eV": 32.79980155140571,
+          "approximate_crossing_energy_relative_to_EF_eV": 20.16880937918372
+        }
+      ]
+    }
+  ],
+  "mesh_changes": [
+    {
+      "from_mesh": 4,
+      "to_mesh": 8,
+      "absolute_max_all_eight_point_band_energy_change_eV": 0.39442134954251706,
+      "C4_endpoint_prefix_multiplicities_preserved": true,
+      "crossing_midpoint_shifts": [
+        0.0006445312499999967,
+        0.0014355468749999989,
+        0.007412109375000003
+      ]
+    },
+    {
+      "from_mesh": 8,
+      "to_mesh": 12,
+      "absolute_max_all_eight_point_band_energy_change_eV": 0.04573323214125935,
+      "C4_endpoint_prefix_multiplicities_preserved": true,
+      "crossing_midpoint_shifts": [
+        -0.002158203124999994,
+        0.002512207031249991,
+        -0.00549560546874997
+      ]
+    }
+  ],
+  "all_raw_bindings": {
+    "path": "reports/RAW_BINDINGS.json",
+    "sha256": "a434c0b7c67dd6e75cc4fe6090cbd382e30bfa25df6bf531b6e9b7a0c37201bf"
+  },
+  "findings": [
+    "The published eight-point spectrum is reproduced without an energy shift to 2.51e-7 eV.",
+    "Three C4 branch-energy order reversals occur for each of the 4^3, 8^3 and 12^3 SCF grids.",
+    "Each final short interval has opposite signed branch gaps, rechecked at a stricter NSCF threshold.",
+    "Crossing locations move with the SCF grid, much more than the local refinement widths."
+  ],
+  "not_proved": [
+    "A rigorously enclosed DFT eigenvalue error or exact real-material root",
+    "Physical convergence of crossing positions to the reported local t widths",
+    "Global continuity of the finite-cutoff matrices merely from endpoint G-set agreement",
+    "An occupied-band topological invariant or a Fermi-level material prediction",
+    "No additional crossings outside the three observed branch-order reversals"
+  ],
+  "unchanged": [
+    "published Phase 1-12 source data",
+    "website",
+    "original 0.05 eV reproduction gate",
+    "1 meV prefix resolution guard"
+  ],
+  "raw_data_retained_locally": true,
+  "interpolation_used_for_claimed_points": false
+}

@@ -1,0 +1,11 @@
+{
+  "status": "INVALID",
+  "stage": "atlas",
+  "reason": "integer atlas shift triple required",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period"
+  ]
+}

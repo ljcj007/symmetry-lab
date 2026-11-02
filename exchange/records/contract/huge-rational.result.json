@@ -1,0 +1,11 @@
+{
+  "status": "UNRESOLVED",
+  "stage": "atlas",
+  "reason": "rational encoding bit budget",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period"
+  ]
+}

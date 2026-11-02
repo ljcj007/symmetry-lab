@@ -1,0 +1,1547 @@
+{
+  "schema": "symmetry-lab.fe-frozen-run-bindings.v1",
+  "runs": [
+    {
+      "execution": {
+        "path": "experiments/convergence_12mesh/baseline8/RUN.json",
+        "sha256": "7ff8eda2fc4357631f3ec61802dd78e25a9d1e1991ebbbc84e761a601116fd57"
+      },
+      "stage": "baseline8",
+      "wall_seconds": 4.309954881668091,
+      "input": {
+        "path": "experiments/convergence_12mesh/baseline8/pw.in",
+        "sha256": "6b083d882f42fe9676a19d87a16504688424d27e6b3b6ec45abf704bf8229b85"
+      },
+      "stdout": {
+        "path": "experiments/convergence_12mesh/baseline8/pw.out",
+        "sha256": "6b531696301fee84ce17bfd4f6e00b0c7542c97ae59db83eea893b1d20c5ed0a"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_12mesh/baseline8/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 8,
+      "analysis": {
+        "path": "experiments/convergence_12mesh/baseline8/ANALYSIS.json",
+        "sha256": "f7f1218681dd8b9f32b35042d6595808e5dfd78c1d0822ca94b556eea9156edf"
+      },
+      "source_metadata": {
+        "path": "experiments/convergence_12mesh/baseline8/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "322b9e3e40cb2f20a8a0661c377870ad998c2df939d72601d13ef17cdaf55422",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "919903b769d8b9c52b5567b91afef5d3d2b7624555c29a83e3fb15a0474fa7c3",
+          "wfc8.dat": "f881d4228a4fe5c319236224a1b4c5f739556e97adac47b0dd240146997ac9cb"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/convergence_12mesh/path/RUN.json",
+        "sha256": "73ca0cad705791e4cb99ee37c60369a6c689806566ece5c9a2f29065607d7306"
+      },
+      "stage": "path",
+      "wall_seconds": 51.09990215301514,
+      "input": {
+        "path": "experiments/convergence_12mesh/path/pw.in",
+        "sha256": "2b99189367cd88c2516dea860046525d36a393764f6e2e0f0c3a898ee312ebbf"
+      },
+      "stdout": {
+        "path": "experiments/convergence_12mesh/path/pw.out",
+        "sha256": "f2b7449cf84b7b0f9ae7965fb8782c84c7a0e85330684a6a6dd7cd32675fb04b"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_12mesh/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 101,
+      "analysis": {
+        "path": "experiments/convergence_12mesh/path/ANALYSIS.json",
+        "sha256": "4eb096c0b7f30fa48c09f6a7398c34e43fba3cda2b8dde15740dfd9ac4812d3c"
+      },
+      "source_metadata": {
+        "path": "experiments/convergence_12mesh/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "a67e3cd563a6c31d98e08b2aa66a1f9d1b6011461a73bc6060307f9cc53c609f",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "919903b769d8b9c52b5567b91afef5d3d2b7624555c29a83e3fb15a0474fa7c3",
+          "wfc2.dat": "b40f53d8b4e56861993ffa4d68d36b050822a4a8121b942ef467c719b6fcc398",
+          "wfc3.dat": "edcbf05f7f1dda7f070fe33e85e77e4da6dcc52b5abc3c5693f963c262e76cef",
+          "wfc4.dat": "03ce70e037106daba2aeade1c4dfbe49c96aa8bfec32f385528812a97ba99d80",
+          "wfc5.dat": "fa1cc8d48972e0d457fad8c32d38076f6683d1a5614a12a3639462f7663ef637",
+          "wfc6.dat": "04f246c65db5af7629494e2e649ff84aa30f527c8a5408d0960adc1e129e2232",
+          "wfc7.dat": "52abbc6456d70e233a099062731e8511a2d9f60a55410b846df815ab0b41ead3",
+          "wfc8.dat": "9283ed81afa6d84188cee25dfd182ced50992e452166ab71586485c1ec2bd158",
+          "wfc9.dat": "f9876593ccbcbcdd9421d40b26fa0bcc2a1f7bae4cfa2e649b4cd2a2b37979ef",
+          "wfc10.dat": "9ca56240ecaf2870ffb457014b5a20537d1a15cf4dc7a7cacc793b9da9b65b8a",
+          "wfc11.dat": "dcb205f3b6ea8be1fba6f2484d0b12df490fcc8d2e6d1377f124bf9cf962a4b0",
+          "wfc12.dat": "b7ae62679d914cdc0948c43870eb36128debf2c2e5d197b72c0d11a4490f920a",
+          "wfc13.dat": "83df17207365c5d93d4ba0b8b737a876c06ad82da545bfb5bfdb6f5f4fd90dd2",
+          "wfc14.dat": "463f6f3670183906efc882a2485324ffad6e248ed5e438336cfad345dbfef827",
+          "wfc15.dat": "2805cb4689cbdd93cf1a7f8d2bce7c62fa5b93d93d90bf7c405ac938826e997c",
+          "wfc16.dat": "621e83acf55848495fc61a9955c8f068ae46d89cb4bf75d71cc290c85ec832ae",
+          "wfc17.dat": "94236ea36e0111468b5df23b20e39dd3c1866a8e98972368294605cf788d0fcc",
+          "wfc18.dat": "cec7cc9694342bdecd7db6080b7542bd88fc89d8b86df7c48bc3359c5214fdf4",
+          "wfc19.dat": "46bb9dce3a9162bbba83e1e1b087a058a450eb1360caa43e44e7acdedea488e9",
+          "wfc20.dat": "30b4e806a98aa0931b0162c1a79dae34acb6ec621fd43b23b72fadaff6fe0156",
+          "wfc21.dat": "d8ba57358ad0adf12dd9e0657997fa3218d97f7b882b544ee829845367de6fde",
+          "wfc22.dat": "5a2b360585b4263a7b5fbc3a874d11a1532f85b8a47932b99353031fb349a546",
+          "wfc23.dat": "2e2e432627d2ac4ceae0d515d42b8ceccca9959703556542b6c3bde5e5b6c82d",
+          "wfc24.dat": "e5c12c0c8bd7cb1c1810f056f4abb28a2fa50ef1f6ab01acea3bea5f09c51058",
+          "wfc25.dat": "71b78101162b4ceb76e14b1024f982d171ffaced053585d0cae969878e5200ec",
+          "wfc26.dat": "d882e501d2e3509e6b43a8949ee8e72066eb81cd3811e3577050791fbd78a3e0",
+          "wfc27.dat": "7ffa36ac6abb1745d7f604113907940635b67b2befa06a57515884e16a0dc687",
+          "wfc28.dat": "0dce455507003bb0a723bd22247cf7b110f9d99e18ae6594fde034ac3a5e821a",
+          "wfc29.dat": "2687237b53bd8409ad7c39d98afac88a15d08c514183c6e4979e289dd4b097bc",
+          "wfc30.dat": "e4b7923badc951eb5cb86778629345a43b7f9d3a2e9a42af3b2df03e083cc2b6",
+          "wfc31.dat": "aacbc8d212e87c1ca1be8689ab20e974b68633a2fa543062877f72639f7ac93e",
+          "wfc32.dat": "e8dbbc61ad64a78af9900c89cc4a79cd737b229547808332c82c1c37f82250d7",
+          "wfc33.dat": "0abbc973ae1ec21bde423a12fa4fa302b4e7c8130acaab4ce3938a8bcee8f942",
+          "wfc34.dat": "a3b6b894b81ca145b71fd707f2af419b45dff8682a712216520be019e6b58b5a",
+          "wfc35.dat": "5ebe01b5e1506ae471dda859efa14103d8cc3edbdcd82acafd933e888adc7d01",
+          "wfc36.dat": "2ae6012eafc5b50768b7ff5d161029002170ddb8d330fbf04abb0226b42ccac9",
+          "wfc37.dat": "162520f035f8861dceb3405cdc0f29196343726d47c88653b9c687374e91049b",
+          "wfc38.dat": "bb1e8785dc613a21015034557eabc364751358bc515c8ea8104ff9465ccb18fc",
+          "wfc39.dat": "3b89b125bda0d0db452e05d637209fb40b4635bb7d16f97f2448934a55a7c622",
+          "wfc40.dat": "b248c2964b9262b22afd0082680f45a13f1a3478300f6f2e4f31ea3e0a15e47d",
+          "wfc41.dat": "f717b6394788361f05f8720698a9d9402dcc5b53f70860adff6a173a1a83500a",
+          "wfc42.dat": "b98a406d96ff3840de785b8c2bd1e877f43f5d5a81668d2d4383d1efbeeb6524",
+          "wfc43.dat": "2b016224a12ed2e0e5c42a4070a09bd94e1fdbe154cd63c989e81c96f10376aa",
+          "wfc44.dat": "16d2238c36cbe437cf9b5396e1fab6c916caf58da6a5eea9fd69b793109b6b9c",
+          "wfc45.dat": "91faad13babed52a06012e04ef15d59a866c10113252b3469d36cf1aa8c86b7f",
+          "wfc46.dat": "641bb6a1c65074de0c66bbe1246411e83458f610ad25c439da324fceeb257f86",
+          "wfc47.dat": "7f68cc51b3241d57e5fa50bb07f4200d740b40878f6ef62d61148331968135e2",
+          "wfc48.dat": "08b89a99ad8e130c34f4dbc2ca5828882ceea39e2991fa93ce0a593cb6bb5c5c",
+          "wfc49.dat": "50adaf87a4fddaac87fcfa156d10a99faf9628e010fd98fd0e69c37717625b19",
+          "wfc50.dat": "31136182805f7289d46b3a68ebd70f9ac04aa1fa37772d047db6f8e49e8d11ec",
+          "wfc51.dat": "4e8ad04e257816e670c6856efae68432a4360ab30f08fe03ec7e555ecf980f77",
+          "wfc52.dat": "d9465ecbec610bc5228cd099010dab805eeb844146840b1fe1c9d262d9f20659",
+          "wfc53.dat": "1cca0d082c0a07f229b6fe03eb25e434bcbe58ea30e0ce3f7f8c7b836b2fffd3",
+          "wfc54.dat": "bd9256e23bbe31a7dd666106a2547396f465e19e2ced3d14f81d914286f856ed",
+          "wfc55.dat": "b2073b980d34a8a7eba6f132a860fbd34ccca2da6b5a543b07b1b0eac6d45993",
+          "wfc56.dat": "7f735dc3361c13cc7c9fc2bb4c068e6a37b304e876facef35392f9c1102be7b6",
+          "wfc57.dat": "5f942e15c1f07c08b44a1f2c386c388071518f415335cbe808729edeff8d312d",
+          "wfc58.dat": "4ea45bfc98d1e6811408b1eeb07fa28781ffbe0ec55ef3788cf0f65f2764cfa9",
+          "wfc59.dat": "11030ee24747ca59412d4f0d617aedd4d5bba84d9ec0b2692d163aa5e34cec09",
+          "wfc60.dat": "13f3a25f04580e6034a43ff40f018febb423963beda7bb5b2bdd1ab4ab255308",
+          "wfc61.dat": "a220a7330eff40180f382dcb20bf8c4b92af68da3f73d8e0fe7c2feccce33bab",
+          "wfc62.dat": "6495a83059444617833a8272eeef313b3d5d6786c1d3c3a32200170dbecfb9a9",
+          "wfc63.dat": "4533263aa8ef16819808be422902522c777c95a13fe227665a550875994f3c72",
+          "wfc64.dat": "0cb66154d80c3d26229d7b654305ebf9cfc6ea38dcd3ae18144b553f4af4e877",
+          "wfc65.dat": "a28a672fb6b40b7a3d437e7c1e91b4164532a456b73e178b42deeea036af6533",
+          "wfc66.dat": "d524d15c790398282ad0a5fb6d6739b3c46ad6576d9350fbebd8ed8028357771",
+          "wfc67.dat": "3de055e6008714c0d8af11d9da7b0c80921c4c4f34e205738dbbb6200ec11f09",
+          "wfc68.dat": "b8ad33058e6c7d1fd3d31940163c6b12e420e680b4062d952394dee4ba0a376e",
+          "wfc69.dat": "9f124e5f3253d0d85b52cfbdca5ad1406d6d6a7bb6c1d3959d5ca008c71c90ae",
+          "wfc70.dat": "62c0ab8ba6d1b1b4edbcbbf5dadbe669a4a193216ea350e697de8138b660e243",
+          "wfc71.dat": "65795c7a63d28a4b56516f434711203d82a61aaec2746e87839af15c99c49a3d",
+          "wfc72.dat": "ac65bc4243287a86ac8d70d99c8ff7a4e7461d9ed60cf0f71586bda2dc32a249",
+          "wfc73.dat": "005794f95f906a2b3db4d2e862dacb507098bbf22cb5ff7dd6c771300f33b565",
+          "wfc74.dat": "eb6f5a6bcc71301a43dd839cf45e21aae3e139572cc8d070c789dffe38e5a625",
+          "wfc75.dat": "88f679b65820a53dd02af3183e42f046152fed08386372caf7108fec81b39613",
+          "wfc76.dat": "79d295381a12b21ac4cce7977b73a6faec256f4eee288cbb1dea22a5baef7d51",
+          "wfc77.dat": "149f2f48a5927fbb398d32d867eb9f6c74c9d4557ccf5dccc18abcb982a92e72",
+          "wfc78.dat": "a46444955d2dfde81603a74d13b8bcf05a7c64779a1346193d673a51657031ee",
+          "wfc79.dat": "c88f8fa12ab3e303850673d3c1cd9b2948890ec712ab0497e4dfb48b9a54fef0",
+          "wfc80.dat": "bb9426fd9f73565f921d5b5b635fb46a240912e6034acc804a85b9f0c94a5f6b",
+          "wfc81.dat": "80176f634b851125c016b4395882d458f325030b06b26a7e2298f01c074163e5",
+          "wfc82.dat": "6e5a4c4386613f7d80665b7493a084f11b10736e3c4be6e9d221fbba9996735a",
+          "wfc83.dat": "aa0ff1de6fa73384638068a9d0ef1f6252fa77155b961c25d8cdc884218cd3a7",
+          "wfc84.dat": "f6b09d0a9824a9fb5f9837afa0595ea82dacbe8703df9b5056d2bae2b3b860d3",
+          "wfc85.dat": "2ffb06ff4836a44ac331c9d2228f545731e371732876737dfceb7c9f6508b793",
+          "wfc86.dat": "98c375dce3d1e953182b2d77d4e74efd6eb3f90e2358f782a68dca728b2cad95",
+          "wfc87.dat": "88c2e1a7a96b1079c5a729097e2cea87d105e2327da8d773329b650aabded1df",
+          "wfc88.dat": "dc967be7940c62c750f90bb4e2617809d58cdbd86a48d48ba33543e16996da1c",
+          "wfc89.dat": "b5528ca81569120d7ccdd2feb1a9fc5b5174eeeb60d371ace3fe0edfa6c92d69",
+          "wfc90.dat": "e709aa86eccfba6c8ec9ab6a266925b508ed530de51be5e361f02e5af9a049c4",
+          "wfc91.dat": "10be630f7e7cb9b29e64e554bddb06748f113c3f0bd355818a479dd6ad7a92f0",
+          "wfc92.dat": "5ffe41456868a53c49f34dff1e125eb1f9d5b6edb411c00fba75f993256b2299",
+          "wfc93.dat": "709cfe677785d112deadb5c47c0aa6f082b47ed6a39549b4b58570ce8ee5a428",
+          "wfc94.dat": "340a6aac158a6177ae40b38ff4e708935dc79d3a09b6f5f220c84db174a4b508",
+          "wfc95.dat": "14cebce8978ed74844ca1bcc9a23794c35d8bd751214a60ce505724c0a7ec3f3",
+          "wfc96.dat": "b2d06823256450f7e168984192d9d6c1fd24524467cee9a435de65b8fc14dcd3",
+          "wfc97.dat": "2cb180bb6c3165774659bc8dddee98ff6330e9527226e01aeb2c5a89213b6eff",
+          "wfc98.dat": "ed6b2a877ba104ce123d9cb9271c028a9fc3892d2f59c037a6402f55360165ed",
+          "wfc99.dat": "67327273b8f9fc3ba7e97fad923b65b69bae7f918892d0059b6bb3858436a437",
+          "wfc100.dat": "8a4f7ef46af8e81b0a132dab3f9efd6f40f61958b540d46a00df4d1a08c3d208",
+          "wfc101.dat": "1018484b35ecd06b162daa10b1dc507095db341c223202e81b9ab88b497a3a36"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/convergence_12mesh/scf/RUN.json",
+        "sha256": "c07d46a719d30286ff7ce36919b141b058d04742d04ad58bf2e461922006d05a"
+      },
+      "stage": "scf",
+      "wall_seconds": 71.96967339515686,
+      "input": {
+        "path": "experiments/convergence_12mesh/scf/pw.in",
+        "sha256": "b267bb3b4954c659292450f59090a0674bbb1c45a52a997cc12b478d175eeb5e"
+      },
+      "stdout": {
+        "path": "experiments/convergence_12mesh/scf/pw.out",
+        "sha256": "5f7fede59f596b584717fe41eb260a898fcf3d7222bf267c3d0e0999434b495a"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_12mesh/scf/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {},
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/convergence_8mesh/baseline8/RUN.json",
+        "sha256": "ddd858285a5ad6367c29c0877c3be7f57ec08f4582919854483c84d14742fa5e"
+      },
+      "stage": "baseline8",
+      "wall_seconds": 4.217501640319824,
+      "input": {
+        "path": "experiments/convergence_8mesh/baseline8/pw.in",
+        "sha256": "6b083d882f42fe9676a19d87a16504688424d27e6b3b6ec45abf704bf8229b85"
+      },
+      "stdout": {
+        "path": "experiments/convergence_8mesh/baseline8/pw.out",
+        "sha256": "005bc53d5e1647eb33910d5fbae83b81b097738139ba58d2be69ca369fd86e0b"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_8mesh/baseline8/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 8,
+      "analysis": {
+        "path": "experiments/convergence_8mesh/baseline8/ANALYSIS.json",
+        "sha256": "c5884b7cb0cf7fe843fac07901ea35011993db645645db1e2181e7699a76f3bd"
+      },
+      "source_metadata": {
+        "path": "experiments/convergence_8mesh/baseline8/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "033f616efe3407c2ad49a1f359500e6f15e0f5c42b8d30374ac87a9440db13b7",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "9f9a8299edef2f38e90ddd118721bf0ba349da661a46de9c7916f4923da06366",
+          "wfc8.dat": "bddf1224846f23a0f020a42fd7dbc7f93e6b9abe18da2ded6050608f3a8c505d"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/convergence_8mesh/path/RUN.json",
+        "sha256": "c2c76de5c2dd6d85d4d03cd20c92968fb1b6035ba9edadcf9d20e5ca14a80155"
+      },
+      "stage": "path",
+      "wall_seconds": 51.501824617385864,
+      "input": {
+        "path": "experiments/convergence_8mesh/path/pw.in",
+        "sha256": "2b99189367cd88c2516dea860046525d36a393764f6e2e0f0c3a898ee312ebbf"
+      },
+      "stdout": {
+        "path": "experiments/convergence_8mesh/path/pw.out",
+        "sha256": "68b699d98cbe9b024f6d9bb5f8c076877edc6be3004bfec5c433f9e945f06fad"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_8mesh/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 101,
+      "analysis": {
+        "path": "experiments/convergence_8mesh/path/ANALYSIS.json",
+        "sha256": "66b69f3ccedd90654be7c986833c9a5ea20402a6f9e386edf9973b930ddce6bf"
+      },
+      "source_metadata": {
+        "path": "experiments/convergence_8mesh/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "8d91eefc128bb7a9856615a64b6c0c0b562a192d396c6a9b952c07d0f32947e2",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "9f9a8299edef2f38e90ddd118721bf0ba349da661a46de9c7916f4923da06366",
+          "wfc2.dat": "2280c7961a5ef8c1092c27a8f8c249cf5948a6f4a478cd741055d3ff7681b7f4",
+          "wfc3.dat": "951f494b233fb2374f3c2cdb90027370104a4eaf96ddc4896a72e2d6fc82ee38",
+          "wfc4.dat": "8317ea7a61fed062ebb2828809ffe11aa2a36f94ff1741b9d9e3a0a3381cb417",
+          "wfc5.dat": "2edfaa91441ec58ba208a040426c3598c5d2a52cd8cadd1782ea766c7af4440a",
+          "wfc6.dat": "90c5cd30911d1cb92aaa90dedfe904a0b153d401eff3b94f99ed1991235dad0e",
+          "wfc7.dat": "23adcd514fd7d55b66ef5a75a4eaeaa9d3a77a9ce19bae1a22c187cba11351ff",
+          "wfc8.dat": "474c86938dd813607601439a46717852d771420d9abf605ad14600b64292a5b4",
+          "wfc9.dat": "70b222e70714c28fbc4d345e5e9e07e33704072ecfbf6878711cd50681c4e813",
+          "wfc10.dat": "4071f19ba32fa8bc7d7406a562c79aa64a61e91888aa89c2b290e9fab3726cff",
+          "wfc11.dat": "6b43d0dfeff60892e669098e0e24fd676b07f478c3a2c3aef20f2d2654491ad3",
+          "wfc12.dat": "62342dae6ef7d2b931a1fc5801ba37283d8122dba90c006a68bf6bf04d46753b",
+          "wfc13.dat": "744cb66d50066fa90d9c1d64e884393907e8c8abb360cb2c867b44078bee8f9a",
+          "wfc14.dat": "aa95bf90befd6cb4ec93e3e46a85879d5e4832a7964f8ebf10a50da91a81635e",
+          "wfc15.dat": "dc34ce139cc0c2c08d819937c6a379143c6e43e70545a919c75e66006765994a",
+          "wfc16.dat": "c2755c35927def4c987ad82663c6ff3ad4c696b12b4f7c5e9ae5349586cbc783",
+          "wfc17.dat": "6843600c576246cdc11b2b9121059da8a628f33de4ed19b7418ef2b1a9ff8e8b",
+          "wfc18.dat": "f3c83646db0a31427253175e22f478810b3c5b3f382f9869712e3095cbb30bcd",
+          "wfc19.dat": "5cf870b64da3a0140635c0a645379fe5c8df6c918426554c6705ef726429a1fd",
+          "wfc20.dat": "c60adfa88b8fcec39de1d13592290a2b4773ea8be0eacd0edb4b5fee388c4623",
+          "wfc21.dat": "1b612da445cff0a845e340ba49e646638677f4e8df0075b8ea05e1f01ccb2a0e",
+          "wfc22.dat": "dcc6d73e9afbedb3fc365b0fa3264e48957a9c19f2a815283baafa7884ed1cd8",
+          "wfc23.dat": "6b62bab7c14dd361d982f11e5ce9257ccc524f6a453bf0f3246bae29898a968b",
+          "wfc24.dat": "5430968e323060bfe674707318a964a3697b3023f9904cf45fd1d6e1a71e9aab",
+          "wfc25.dat": "00e169e2007109565db9bf8c4124d963060575edc8e374ec3f15397bfb581c90",
+          "wfc26.dat": "f00d7ff3999ae8735e6bb8f068b76db2bf6579318e1804ddb55ff9fd9253e366",
+          "wfc27.dat": "51926c0070f1714875083dfbaa8da27b028f87bf2bb2dc3f23997d9af8891e94",
+          "wfc28.dat": "77606a092a71bd2c0cd95f96eeefbd80ab467af578f854d0be7b056a8894599f",
+          "wfc29.dat": "8aebe243224428510bde9a3105ce365105e7fe3ea4c8b2003452fc29f6e41a0d",
+          "wfc30.dat": "7b8fd74c5034b6e63b61c597dfc04956e379ba718a718ee0fe532b2ce762024a",
+          "wfc31.dat": "8b1727984d43242306c9e143738da5a165dfece845554b7d4298d04e7e39e0a3",
+          "wfc32.dat": "6137b51cc704a8977d2d45e75766cc2fd2689d38437dbf84ae37b451d001e1ae",
+          "wfc33.dat": "e4962f701dc192f29454bad416b29c9f9e684105f0865cb38651668a8ed02f56",
+          "wfc34.dat": "9c3612cb9b2f8aaaa9bfab038cb8c341151489f2ceeb513601f38ee39bad6ee5",
+          "wfc35.dat": "6bdd45a97cb79576b912eb29ad3c5413bea08009d7b58d4111b96a5effdafba0",
+          "wfc36.dat": "76f68400151c02c53b7740ea0c9984fa9293f83a0d14583a20696b4afc7620aa",
+          "wfc37.dat": "d440b5914165ad081a030728e7f75a880af89e0351241f3bbd04989c2a2a846c",
+          "wfc38.dat": "7e5222a6ba253e12e97f2db0d9ca143b09364b7933eb60b65fe3e010310b8b40",
+          "wfc39.dat": "724d0b7ed5ed9f8d0894ad974bf7feb29253901572f181997e8c53ffac8118e6",
+          "wfc40.dat": "ce206022ae1603795bf021f6ed16b1e1c7d5403955dc9e9fb578f3bb0dfc4ef9",
+          "wfc41.dat": "fd0bad22205e53e04813f080af859117421c461687ac5e0b5b10dac96d6cb10a",
+          "wfc42.dat": "963168bd915e8a7cabcbd2bbb305e860e2e6401d87530caa98b2d05adc3c0eb6",
+          "wfc43.dat": "0409d0785906b3a16e183366dbcc580184a1584573f78e6878881e65e237d0d9",
+          "wfc44.dat": "9924942ece46318e1acbf655fb549721b340ad343c8a43b4237e9fae9d2afc08",
+          "wfc45.dat": "92ae29f9d9fe3b8251edd22a3c30b9e93dd186d5d12175e822890a443ec04ced",
+          "wfc46.dat": "aa01cc22f635b524a3524d77a4d0ffb6e6f64a30301d018f2fc9c27a4369c785",
+          "wfc47.dat": "39ff7e0606523285e1cbf289de391051663450e2ae350dd4eb635a2716367903",
+          "wfc48.dat": "bd37452a070beef6c57698f0226881118c05900c85c7db009605d8d3752e5558",
+          "wfc49.dat": "bf2e482f0f6a98cefd4cf40cf899afeb96016ff8dc0208a0aa1790642730bcb5",
+          "wfc50.dat": "3b36246768256d725d50a2b61a792bd24a74cb8daa56a0e4106144bd962fad69",
+          "wfc51.dat": "41f24bef00ac309430bdf7f7a3f0775ce9be33fa3d60c51845086bf732d2d306",
+          "wfc52.dat": "a61ab83ac2f5f9b4d3a86cb19a91e7a34f44383c3a05ee05e6fd0b05899a44e2",
+          "wfc53.dat": "97068352f53cd02834e9c7ea212042765c658c264b32b8fe68d062c3fd1c129d",
+          "wfc54.dat": "7d229b7d597af521a31910f417bc462638329d0547ec53ec97637f50fce8636f",
+          "wfc55.dat": "a1017dc70f00b2d39fc8d70018a67cc05296a2664db1e21b71c133401be58d7d",
+          "wfc56.dat": "364e686e776fc7e1de753c1d9c1e3768043f3ee379f56e9822905e86ca2111fb",
+          "wfc57.dat": "24f21fe874d017a74c9e5b87d368032c293dfbd77ba27303358a494df6abea5a",
+          "wfc58.dat": "07af0b51a6647ca623b5196d328fd2fceb59446be0167bd3b2457edcf98f82d7",
+          "wfc59.dat": "4f81d686860df193e6e7e564bc0f719b48f14413499676d04b99a86ab2b871a2",
+          "wfc60.dat": "3090318f8584a1f0729aaa0115c4cfe2c1720bbe4374eec73118c097fc4e3bd9",
+          "wfc61.dat": "d86d5ffd2dfbaf3c34ad18e7ee7366f23aa868f0b51fa48c4aa6d344c24492a1",
+          "wfc62.dat": "136f37f23ce56e125ee17ad24a1a40d5a3100b21adbcaffa216be7f9a56653b3",
+          "wfc63.dat": "b057dd15127f3ddadfec3b0d77705302918ccba2d0c48ea32e7747fa6ffaf596",
+          "wfc64.dat": "44c162830be96607f3de7679072de605e438923c1c3c627d32e4bceab1b3f5b2",
+          "wfc65.dat": "918885f9fccf774af51cb2ee6d14705587fe611df1064b2775e0981980bb75f6",
+          "wfc66.dat": "1a28ba00e930da33975ed613c953dadfe29e045cccc41dd186bfee131cc1babf",
+          "wfc67.dat": "32e83e509f8982726f1cfba256414578a2b048b4f61559e4afca6934500a0b04",
+          "wfc68.dat": "60390c85d9bb9d197cf0fc1dad153c3044d59b3458b0d43af7426b11d68d31ad",
+          "wfc69.dat": "ed5d0cb8b7d80e90984cae4bd445f18744dd5b04409e5959186ea2d7a388f8f0",
+          "wfc70.dat": "e2b3d3d133fa8692ce8a65815090a0a7570c1c2cb9d51853e01bf2f1d7cc4fae",
+          "wfc71.dat": "015cdeb93959f143630b82535f3b81c603d3f70a8d2c10e8b1bb70ec7c58f6c2",
+          "wfc72.dat": "51408104d52e3c2cb393a574baba544fd5b9b3cb749da2006c9a104bc0a794bc",
+          "wfc73.dat": "37d58fe42427f282193849a009227a88d503d658b57b887436b5604e1b974c07",
+          "wfc74.dat": "8dea900a7cb4e6b826ce2a60ee9243962435e859441882113ae885eaa602988b",
+          "wfc75.dat": "d62d4ae240fa681f98e1d9f91b3fcd524d389983a019006299ac32d9091d982c",
+          "wfc76.dat": "b3a813044a04974554a4627224966b875daefb88084609bbd70fbdd837cdf958",
+          "wfc77.dat": "c401fa4c0de30ac8b69b85b013c9f26c6560ab9483e080694cc4c498f5279391",
+          "wfc78.dat": "1b22ed73c7636b317dcbc2d88ca2f2921f89b8adba165bda2de5aa472a3ece63",
+          "wfc79.dat": "7fa649a2dac2b420d49f1960d13d28c06db711b0f55f8e47d32bafbfe277e56f",
+          "wfc80.dat": "4fd123acd75955774af0c334c62efeaaa82186f9d6cd97ce91f90078ef29147b",
+          "wfc81.dat": "0df5ad2c802197e19c6ee6b5dd5251219eeada011ee7ad727728e5d5c50c7216",
+          "wfc82.dat": "19ed2b346a5aca8d7a0683ec3cd70bbcd9f83dcbcc4fc73293316187f3b9c56d",
+          "wfc83.dat": "c8a9c89b869f69eb1dbe28d8eabc0144c88923bd51be9f1d4a64b5b0d9a42798",
+          "wfc84.dat": "2b7e92993111421e452ce8628ca0f734cf2b9261ad16878d21f51d9bb4c494ae",
+          "wfc85.dat": "9965165d6d9868d3eb00dea9eff9cb8bfbee46c51d0b194cff53d2ee341af0e9",
+          "wfc86.dat": "10f3e35c6f31d280672fa0836fc637459d57fb36edf9b2be629ec764b1668848",
+          "wfc87.dat": "8c969960237aa9e41f735044a6fbf5f6c5e1975ba86b8aec0fa21a2849e78e4e",
+          "wfc88.dat": "5838a202955f9755cf398ff95fef5043839963dbbf391ab74413b7bc5d36a035",
+          "wfc89.dat": "80cfac1650bbbcd67f32edc05e247eb0aaa89015bb27acf6a534529339862889",
+          "wfc90.dat": "42ad9b91e21f2d47877d2d82d767563d62277aa8240a21de2dcc6d1c230f3380",
+          "wfc91.dat": "03ba723b98bafc88fd2b8903e00c571c5796c01e78084fedb91a02fbd9ce654a",
+          "wfc92.dat": "d15212c2243abf014e812e28b8145039960cd3ec5662b72092ef0629a7f03c10",
+          "wfc93.dat": "f393dcd151917771c698e2b5738cdf058e9930dadfa1e35bbe77c3c99a57bb06",
+          "wfc94.dat": "0e373b22ba7bef687022b1acc2fe9b8aad61641c86c51396134bc3e1f2b04d7e",
+          "wfc95.dat": "71b3d40a6096d197fd5e8858e64c5ca63f90c02ebc50b1ac0bbe7e4748a7ea7d",
+          "wfc96.dat": "05f97ab2e1ab7f5b40b329fd60918d53c0dbe2e456344f21e3ec2f187d9c21a2",
+          "wfc97.dat": "3f2f3f8c9cc4c91be38135803e1c9e646ee1f41ab02fa007d18379fa57ebd7e8",
+          "wfc98.dat": "4b2d99d0f908e65ce15f5cc77c30fcdf6078f05dd3e25f9139ee6381b908efc6",
+          "wfc99.dat": "13c37a2a52614d3c8c6454ff4b960d5740f4da9beee583e74b66d685b8f56bed",
+          "wfc100.dat": "95d1e2e0f0e681324c00dbd1e1fdf2c8f37d2969410f0d7fdfc695f481e1360c",
+          "wfc101.dat": "119ed8ce35d420fa0e51a99802056ee9bc02f21a7f3b09096e88c5048c64e3b3"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/convergence_8mesh/scf/RUN.json",
+        "sha256": "cd42e2f18778af119a6b6d20d8b2b8a62cc85c3ea0d221875f24702120864c3f"
+      },
+      "stage": "scf",
+      "wall_seconds": 27.797435760498047,
+      "input": {
+        "path": "experiments/convergence_8mesh/scf/pw.in",
+        "sha256": "7846b53d4e1fe9650861f246b65996e67434981069bdaac7ba381c1f38f7d882"
+      },
+      "stdout": {
+        "path": "experiments/convergence_8mesh/scf/pw.out",
+        "sha256": "26a234c9d5772e0c412512519974acd4166dab5aece2e67e2d20c64516f5f1fa"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/convergence_8mesh/scf/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {},
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/fine_101/path/RUN.json",
+        "sha256": "fce19bf31053fcb349cc9958898f35d8f033e6c5fe48683693a4440b3a003b65"
+      },
+      "stage": "path",
+      "wall_seconds": 51.166494846343994,
+      "input": {
+        "path": "experiments/fine_101/path/pw.in",
+        "sha256": "2b99189367cd88c2516dea860046525d36a393764f6e2e0f0c3a898ee312ebbf"
+      },
+      "stdout": {
+        "path": "experiments/fine_101/path/pw.out",
+        "sha256": "c6e53340d279b7f52ed4840c2de648195406635cb20e2f8ef0381b39ecaadaa3"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/fine_101/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 101,
+      "analysis": {
+        "path": "experiments/fine_101/path/ANALYSIS.json",
+        "sha256": "202f7743102b21903f6a4fa0eb8d14506cdbde09eecfd35bfadaf2eb17c2a162"
+      },
+      "source_metadata": {
+        "path": "experiments/fine_101/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "7f696a0a0fa0008cae4d6a279946e2ec1f15ae4ebffd508821f2f9a73aa91802",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "d8790aec219e5d377dc4bc411236d07764f4b7a5735c6d2eecbd7a4398c67096",
+          "wfc2.dat": "bb6d9b907ce8a94b23f8cc50aea307aaae924266ea82cf5e97042d5f6c954821",
+          "wfc3.dat": "645a7624529cbcb60caff9303886ae664dbf67d37d50fc25e5b2246e87ed428d",
+          "wfc4.dat": "2977dad7b454dfe5ca3e0be722360cd1b950e052ee6fb0c38ddba36b9315e36f",
+          "wfc5.dat": "864e914fc67059b767d53b905a46f9e5519f46f245756b4c52cfed0c6bbcd35e",
+          "wfc6.dat": "c9133af187643e6cb5300dadea46d6c2b91cef9516cdad7ac82c394fc903d8f3",
+          "wfc7.dat": "231d429003932c7257ac58ba31e5e7d61eee1d80c009f32ea57b522dffb62361",
+          "wfc8.dat": "58752a314a5c0e14bd7a6555b352b5a00394be2fe9f89c82ffaafb004da0af73",
+          "wfc9.dat": "1e4ab0d73af0c0a27facc1a511f256bd4989769ad55f3dc4ce45906cc1fd10a2",
+          "wfc10.dat": "423b315e91e157628c8bc9b86e6e99a01f0bcbaf9383a5facfda6646bdf856e3",
+          "wfc11.dat": "1e7e3d66e7b4308927aa2d5baa0f7dd96a9dd9f49a9afcbc66abe83580504e8c",
+          "wfc12.dat": "2ffa4a394f191ed3ad55c1f93b03d65ed021cfaab55fb1d49fa468d46b595e7a",
+          "wfc13.dat": "e6db1f2066cfb0f12d31eef70c5a812850a7743d732b25a5621e336deec8830c",
+          "wfc14.dat": "6e4c8a97e85f61448598530a064ae61aa5306fa3ab02247ef36ceba187f89b96",
+          "wfc15.dat": "bbe0946e07be2ff76c618df7d89b7a2026f7073872a1a415eb028e76923771ea",
+          "wfc16.dat": "2407480f3a33a2f5a360ad31021eaa89fd1cae8c28f4fa78d2c6ea93d0cc1a4e",
+          "wfc17.dat": "aa1e62544c09d7ff79a91b42acdec8e45ef013b708bfb240e403757e79e57e8c",
+          "wfc18.dat": "4536c3a8638b4c306c8b79b27c5b758045d2cfe6e7b6bb8aeee85bfa4c799890",
+          "wfc19.dat": "7e26422f35519b13f604a68a0bbafea1a348f73c55154948dc8e2c7f8dd8dc60",
+          "wfc20.dat": "581229d3aea903da46375dd62c9430e3b6354ea6cccd0e93094b692f0bcfe45b",
+          "wfc21.dat": "6c363514bb6caadc2469d8da52dcee2c6aaede309af3dd51ec4bcacb46d8b2cb",
+          "wfc22.dat": "2a1b410074ff46ba6ecca44a68ac6dd8316deabc33b8e08e7eb332017b335eea",
+          "wfc23.dat": "d4cd07e87ad76abcbcab8a35602823bc93eb174a1a99928f75cd5cc1986bd959",
+          "wfc24.dat": "1017c39a0df5a8d7872b485e888b1b719af9d07329f7770590b0032af45fc8b5",
+          "wfc25.dat": "b34f5afecd77961c5a2b1828c00308ef44b877fd0d813bbfa2b26b6fbcc2fa5d",
+          "wfc26.dat": "9a7d3c68040c7826f7fb7e1eb2fbb7122c65a0b37abfdb5aa761d0d361e4a7f9",
+          "wfc27.dat": "3ac4e3386872b66c083aad71a0e7b32a9c9669dd674f69a8dcc8314717297314",
+          "wfc28.dat": "7aa9e43a6163efa6646a8260abae463bbfb6f78e193718b0037dfde969581b99",
+          "wfc29.dat": "89743c336922aa4030d2846d8d0a65a4e7235dbc9b50276124879a140b3fd1af",
+          "wfc30.dat": "f7c2bc5207778cacfb0dbaaec474b91cec79c4a6ed941dbec4ea02feb044bf27",
+          "wfc31.dat": "029386752553cbc3ffdfb0a703b4debfc338dbc968c546a9f8289be3675da76a",
+          "wfc32.dat": "85fa4d20e6e1ef400382d10fad8a3797480df95e999204ccdfac3762a9ef9305",
+          "wfc33.dat": "3490c7816e7a5889eea88036b057dca3b5c5037de302286eba6161b2d9be939f",
+          "wfc34.dat": "07e3fb18546c8abd9d5f3bf55a0ed1a058520b39fd1e43d84c2a8cb717d0aceb",
+          "wfc35.dat": "c899f3bd075b036594b4f3e2ba119d8867267d1687d7a98bf8bcf18449803c3f",
+          "wfc36.dat": "b58de19f5b98cc2dd6a2f308f6a48f6cc2f141d691d3f1201d7f58f0d7af1e46",
+          "wfc37.dat": "0096b257db8a6dad1a9ba6e504dca19245be5d76004d64edb098d71ae7c778e2",
+          "wfc38.dat": "45b23a5ba8f6ec65bdbdd278b1bded65a15d777ec0d4a4a7be0ac1b4db3e66b6",
+          "wfc39.dat": "11dfb587870af84616e938d7cce2d778653efc8cadd480e7b95f5cf4599a70e1",
+          "wfc40.dat": "c08cdc1d40010e65b83ea780fe32268a512c5844da1317576ab5230533f19b71",
+          "wfc41.dat": "07ac1cde31d18466e328093ef629dada285d324ac7879c7bdc4de35d37f4cdf1",
+          "wfc42.dat": "2287b1872291d6b9a42475ece413082a51460635a9e7bdd1ced1a8edc13f1d9e",
+          "wfc43.dat": "7def9783a9de2e78e48eda1fe9f073c1c3b5f3042f930c6d2a0d52d180a1c593",
+          "wfc44.dat": "e6886a5ba0c336316e78d37b3e1e4745ed7b2a0956214cb16a6b89724de0d6f3",
+          "wfc45.dat": "876a904aeaf3a0b272e49b179d0f78e2141899bf4e7eb7e34790773ffc2ead80",
+          "wfc46.dat": "136dedf4d0a4e40cd12b34f3dfb362a890bc9302166425c12f8a3d6841ee3eb3",
+          "wfc47.dat": "76353e99875af0cea116f85640d6eecc70ebf81b662e2075590c0d6d4d203b6a",
+          "wfc48.dat": "a6efe19b790d9bcdb34b88befc8ec15410140407c390ce3bbe84959c14cca336",
+          "wfc49.dat": "28387edd7eaec2fef9d4b46f9a5d0b72b40a3f88c8e8cd0b4c4bebf333de0fe5",
+          "wfc50.dat": "e1295f815f108a581a453546ce588628a29dae5a500c99bea5854de0d0e7603d",
+          "wfc51.dat": "40d8c27283dbecb93241426f259005a7076236643fd8dc155b4280fc0724a102",
+          "wfc52.dat": "7a67cce2c58368f1a0e32b3ac7e682defda25d25373839f9dc40386cb7f247a1",
+          "wfc53.dat": "b17792ba7454ab60a0c7766d4b58112068bdf6326aa1c49598a691c88efb0b40",
+          "wfc54.dat": "847f265265058c44bc6e740fe894278df40716598d1eee8c4aaaaec45526dbc0",
+          "wfc55.dat": "7fe3153bbbd1aac643fcc0cbf70bd03bc061b2de5f3d7a697f44b6eda59795fb",
+          "wfc56.dat": "bf9a7abdc93f5d71f45093600341321dee766e060674890b4bf3f9d4c0c2b53b",
+          "wfc57.dat": "4e5caba361110b41d9fb5f8f334331bcf0f4ec417eec3723834769b1011a34a7",
+          "wfc58.dat": "5c18b92cb1d903afb07c5f43cd14b3e972cbf7da3f546cf72707e0821b8a5226",
+          "wfc59.dat": "2527d3ee8bee0c69f8ec52bf799f1730e6b96820fdc8d4f33aedfa8cd83b20bb",
+          "wfc60.dat": "44191fc0e0a21f01a8ec0ffef45ab79ae51f1b7c737ca3b7a3f29047981aaa91",
+          "wfc61.dat": "53da258d72cf294efb9950c6a8b18b364ae096ff9921c9e3027bdc64fe30117a",
+          "wfc62.dat": "48fc17943026fcad68e9186adcafd86c9cda56367f16068195ca0d0762fb825f",
+          "wfc63.dat": "ff7a32c022b597eb0371fffb06db95bcd3a5be6a71c51ceea6eee90c9e6ed895",
+          "wfc64.dat": "b5b5f8fbb25948d8f774de64dce860ff49c80652f399a080cf0df6fffcbd9ecf",
+          "wfc65.dat": "9bf388e023317ca3e94b679fc1d0460400527257c7af81585dd5963d0795d313",
+          "wfc66.dat": "b30884604f779fcc9903f036f1a35a798af06c15624de805bb258cf8f199ace5",
+          "wfc67.dat": "ada6934b141ad6b70bf7907c32d0b6112758cc127023c5e4c5f0205574da99ab",
+          "wfc68.dat": "5a227594eb68164331b0973be0c70a6ceae0bbbf4d2a9197dcf44b520f1ee0dc",
+          "wfc69.dat": "b4509fc74af1b4a7f4bbcb4157d10bc4576920b7a29727adc09fde718c9d0a02",
+          "wfc70.dat": "c4728dea2e180abaff11174d46cc7edb876f94cb4112b225c1bb46036ee6a731",
+          "wfc71.dat": "8a382a82feae62a55b5a88e4a5b2b2769d6b40f54d4e1751bd74ec0dbe0c2cd9",
+          "wfc72.dat": "07545ccb693d983d0a272957eab57ae6c1e277eb5602c62b11bced75d4ff799f",
+          "wfc73.dat": "213ea318fff13c351f2aaf55d022310f9c6b82656e48c602d2adbffadf06fcb3",
+          "wfc74.dat": "c2b1f9e31221634a8d18946630bb94a7a5e5ec0eaddafeb93ed302eed5ff2e81",
+          "wfc75.dat": "5d6856301619b247067ae73ff12ba85d6fe85ce5042ed0e4a4541481cde434f8",
+          "wfc76.dat": "d8eee8a94e74ae142ac9c9eb918b6755920d4b5ae066cafda16e38e3ed63213d",
+          "wfc77.dat": "2d74ec769fa2a1a5c8019c69e2ad79ea57328989ac1b84ebef4e83ff5b2c0ff2",
+          "wfc78.dat": "bd98a05714d3911e9364faac435739a6ad6ef7ac7659ad0471004d40862143c4",
+          "wfc79.dat": "951baadb3c14bd24b3a4cf259cb48467850317b5ac9ad28c6216df38fe659a58",
+          "wfc80.dat": "7eab58b1f6715d86bf7375783972244e5ec80712e1cb5c299f8e64f9c52e5e6f",
+          "wfc81.dat": "7e94e5643643dc56742e3d7d0f8887d81e02f383ba87df688ebf15b2e844b2e8",
+          "wfc82.dat": "a024a5de31757cf0c4ed6d2cb194df82fae2285ad810fc1edc91d6915ed5fad8",
+          "wfc83.dat": "6675808cd0b263bfcd5ede4e455c9a2262b1bc19966259e1a128228ca28bf6a0",
+          "wfc84.dat": "3a8b33fd93c260d4e115fe951ad9dc69814cd8a2c24d0acdba161784d6b0b274",
+          "wfc85.dat": "82e73b3e5d9c3d4861322c76cf4a94483cbbfe1299de0635cbcbe654f67db7a7",
+          "wfc86.dat": "1f4cfbacda7eab438f7a61af150d26bff884e015ce3c64bd7802d4d4596fa428",
+          "wfc87.dat": "0b72b22554c8005df1c545ea70d32cf4c4fdca43702bc1f033352e07c789c155",
+          "wfc88.dat": "b9fa5725c3eb77b59fb6ebe06e6c1d6110cd0ea10d87edb8c805b8446d13338b",
+          "wfc89.dat": "aaf8455e288d85a059040e439ec316381478a2af62798f053a20d3025f3b807e",
+          "wfc90.dat": "f616ab6f8eb0ee8379860b9a817093a92c659ae72d17c4801a27e4c2f1bb2713",
+          "wfc91.dat": "8e3fd0eb1bcdfff6360a12c59dcc22fd38b237c75b57796d78751d1b23d8ed6e",
+          "wfc92.dat": "f89a8af5a84350aaea9b0d071c67521634faa0ac75c852b3c6152392bffbe52e",
+          "wfc93.dat": "cf2210d69f893377abc99109c42945b6e7c317160d46bb514438837a219e245d",
+          "wfc94.dat": "df7a53a9f629565e74b73a6166fcc1c2fc8a2e574627725683ccb86cbb2cfd0f",
+          "wfc95.dat": "8a266b4270680c4e2f68c72195f3a8c5680c82eafb45f198d8205a1c0cbed69a",
+          "wfc96.dat": "49fb988902024dcbe582767b811a36ce4eab9db58f212a853a5aaadbbc7e8b7c",
+          "wfc97.dat": "ad2445661f4e1e90174a34d29ff0c9f61f14bbb119648d355be2be41044611cc",
+          "wfc98.dat": "2a3907ad06cb0f7d1a0d48f5ae51ea9e76bce12e68b9e38a931e67ba6fd852e7",
+          "wfc99.dat": "ff65880dfe22f2a8bf7b2b9996f8f20c3a483b63ec8b937ed119876520443ad0",
+          "wfc100.dat": "21814e55b88e991ead2fddb0575aceb2c9818219adc446bb6b6ffc7e43e1d99a",
+          "wfc101.dat": "889cf34cff915116466625c00ddca2f8be818d512a03019d89a038ef57e37bd9"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/reference_17/baseline8/RUN.json",
+        "sha256": "5a84d9ea512040422d5b614b5012b01cfdbe50ce198b2f411c97d304830a989f"
+      },
+      "stage": "baseline8",
+      "wall_seconds": 4.245873212814331,
+      "input": {
+        "path": "experiments/reference_17/baseline8/pw.in",
+        "sha256": "6b083d882f42fe9676a19d87a16504688424d27e6b3b6ec45abf704bf8229b85"
+      },
+      "stdout": {
+        "path": "experiments/reference_17/baseline8/pw.out",
+        "sha256": "a602e3b306338f827460ab7f815171fbe4edba7699147c8e88a5d7f3c6843ca3"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/reference_17/baseline8/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 8,
+      "analysis": {
+        "path": "experiments/reference_17/baseline8/ANALYSIS.json",
+        "sha256": "b1c985e26096fb5e66247ff4a7e9274580ff6902f85b734cdaa8888630b6799a"
+      },
+      "source_metadata": {
+        "path": "experiments/reference_17/baseline8/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "ef51c25b9a9522244561ef29bd2a2282909f41dccf668b51b80b6323c6fc79ee",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "d8790aec219e5d377dc4bc411236d07764f4b7a5735c6d2eecbd7a4398c67096",
+          "wfc8.dat": "9972059cf69e40d9efee8d1be19e20a87c82a4915729f4b16b3636bdf9c04028"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/reference_17/path/RUN.json",
+        "sha256": "194fa36849c72d5fd183bd7c489185739edf70f439c9aa0b299c0d66b96a9b9c"
+      },
+      "stage": "path",
+      "wall_seconds": 9.029234170913696,
+      "input": {
+        "path": "experiments/reference_17/path/pw.in",
+        "sha256": "5ef7cb13143828fbb0539cafe1ac23af523e36ef14df31ac555ea1d42ede74f8"
+      },
+      "stdout": {
+        "path": "experiments/reference_17/path/pw.out",
+        "sha256": "ac9e8b4673cc6e14af72d9f62a0d06901a8c9b8a875848776c6e36c5940c8803"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/reference_17/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 17,
+      "analysis": {
+        "path": "experiments/reference_17/path/ANALYSIS.json",
+        "sha256": "93baa56c588dda2bdfe553aafc7b02f3818ba09c1282c9a272e6ba3249baf7a9"
+      },
+      "source_metadata": {
+        "path": "experiments/reference_17/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "bfbc61a67f4e7fc9a1e52a8520e39d56d1bacd72d735de9cfbf8544975d5ee63",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "d8790aec219e5d377dc4bc411236d07764f4b7a5735c6d2eecbd7a4398c67096",
+          "wfc2.dat": "f86a2311ef2926ef2c75973331f41a0d31457d0512af1c864a7dbbc20d5fd9b9",
+          "wfc3.dat": "bbd5430e69c9614da82299df8d1bdd2fe64d24ead7f913100aaaa2cf17f24bb1",
+          "wfc4.dat": "65d1b278b2137e3b489c649d2e98bf12d8a8ffd522413685cfcd5805cb125783",
+          "wfc5.dat": "091c41060b614062938576052b125cf386ee09d4ad452956e750a25505ba97ff",
+          "wfc6.dat": "10cd709960be91d75d75765958e8f4ff5535a55222c2362641822ad0406d6964",
+          "wfc7.dat": "8444f74b7dc50af4fb28a5f1522cb0c7fd018f5349bacfd1941ece18898f70c5",
+          "wfc8.dat": "3d26a7ebff1a914e8c10deb74d90ab1a1567821b32aeb3586100f8c7d4f73a40",
+          "wfc9.dat": "16527a146bb6e5bf718e8966480053b6a6d9b8f36de048c79cbd20561e58676b",
+          "wfc10.dat": "f59aa994cff6ff8b6056982498f032a2c96af969dc51451593133ed8a4e7b52c",
+          "wfc11.dat": "a487ed605d851be09b0876973039f43b0b0179fa9b6b0889eb0676f342bd1623",
+          "wfc12.dat": "40f583e34824f3270de97dc0da16329ebdb1614f4a3652cfef73699f1b52e37f",
+          "wfc13.dat": "24ca8bb01f596aee3f3b255d7d061950442fc892d2e6d4e71cd89310551a3dbd",
+          "wfc14.dat": "359ef433ae54ba56957dc14778b68f74f8ed738dd70010b9eb9d090f04be0b76",
+          "wfc15.dat": "64f4f05b98d30f0cf74194fba38c8ec191cf248578e7041a164b4534983e43eb",
+          "wfc16.dat": "7a9b0ce7665ea68256bc5c68a205fd9641b6d3b4cfc1acb3cf0824c666da5678",
+          "wfc17.dat": "bb2feadc501f035dde402aa783eeacc81bb8ae4aebbbb759e1923e48974dd809"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/reference_17/scf/RUN.json",
+        "sha256": "03f68389b22fc92a3984ac104f3baf9681f1f0cebf06b9f74e88d0738d51f794"
+      },
+      "stage": "scf",
+      "wall_seconds": 5.468933343887329,
+      "input": {
+        "path": "experiments/reference_17/scf/pw.in",
+        "sha256": "c596d8c27061141ef787eb49ff2051e5bcccfe24fd39d5a2954a3898cc33a2e5"
+      },
+      "stdout": {
+        "path": "experiments/reference_17/scf/pw.out",
+        "sha256": "4e74f6c0b22dd6698b4bf414b8818cdcecc22f11225b4cd45495751b71342dd5"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/reference_17/scf/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {},
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_01/path/RUN.json",
+        "sha256": "a68455c7a3181fb38287407f1e2301b3cf53c10c3d76d2a711aeec10724687bf"
+      },
+      "stage": "path",
+      "wall_seconds": 4.379124402999878,
+      "input": {
+        "path": "experiments/refined_12mesh/round_01/path/pw.in",
+        "sha256": "dc0b2e567da683071e908f7403e23ae8bd35fac270457ebd7481c62b6bc47999"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_01/path/pw.out",
+        "sha256": "6d348030a856c883936d5e1e3b6d461ea36241bee2f27f91ccfede676a36d25a"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_01/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_01/path/ANALYSIS.json",
+        "sha256": "d2f27761efa14d36243751c0afa589ffe5d3d13b3bfe7f55a45eae2cc0c48167"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_01/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "960d466218ffc245ec955c1a66cc3bbfa25332e66e86a59cc5dc19831da1d69f",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "bc7fbedd953069c40fd8384efbd0ea7b433e155e41173f22581b5031b84ca29a",
+          "wfc2.dat": "0a6983101cb7f990d819e6e98e5894873b9fb107cc8ad24f9c02a723ed5659d6",
+          "wfc3.dat": "b58af6c2efe2275426ba482e6c076002142bab3fa29ebdce8957bc305265e7b4",
+          "wfc4.dat": "f4390b8450592829858b6a5b779068621f78c6fee31de63f12ce67872e08ee88",
+          "wfc5.dat": "ede397515a30be1c3dbd69d90fa4bec92c7a9159c1be6df90289790d4c2c50e5",
+          "wfc6.dat": "e6a98107bec43a912db4ec4e2f226060e186871f348e625886a34f370abc250a",
+          "wfc7.dat": "bb4ae0988fe0b2e57eaa9e236c4fcc5fe2f05153e6964d427182f0254774cf34",
+          "wfc8.dat": "400566df0dc52718aa9036939d89917610aa154de2bc65c19e85e8c0eefa0926",
+          "wfc9.dat": "3ce95f867156bf78ab9e896d2f21032cc48d1332ee65808946c24fcdcf206bda"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_02/path/RUN.json",
+        "sha256": "aee72c633d0ee390adce6f97c0ae6fbfc2361893809c944abbbb871c5afb3056"
+      },
+      "stage": "path",
+      "wall_seconds": 4.366529226303101,
+      "input": {
+        "path": "experiments/refined_12mesh/round_02/path/pw.in",
+        "sha256": "cb786e890c17d362a0bde1e2bc5dabc15bbd4ed52353616bd8711b4232a75512"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_02/path/pw.out",
+        "sha256": "617f08766e7e531255719c73c702881feecc8849da30d07d615d06cea88a42ba"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_02/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_02/path/ANALYSIS.json",
+        "sha256": "7806aa6d05a727c193a682d475e8ec9cc00ef5ad35bfe71ba4e2df34921839af"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_02/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "3835994aa7dc2ebc5c8c90c7bc8853eec008b47fe4f0412153568164fae527c8",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "5126cd00a73aeef1820ef9f1b2a80ddd8b550bea39836fdc79b7c6d4e242feae",
+          "wfc2.dat": "d59437004daccfe85d0d80b6c28d87a804d3cbd05e2dbe6f5be50f24a9bcd099",
+          "wfc3.dat": "ab1528873943bb747e8477d037de75d05e401cc364a5806b1afad54d918dc8ac",
+          "wfc4.dat": "d68e4f7688c9a3821aded4ec6cd252591429a64036fcda9046907ba45d8bcfea",
+          "wfc5.dat": "e3db72f0b6633536ccb713b3b0ca67f065f45e2496ae0cac5b78daec4a585fdf",
+          "wfc6.dat": "052019be4f47103052730f8c9850ee903db387dac437d673d0146688c30300e5",
+          "wfc7.dat": "e72439f6ff77483eecf83fe29715cc4ce71937356fe48e4b5f44f710e467fa94",
+          "wfc8.dat": "4b7fb3cc47bdce10ce4bd52c2d2769d4c22d9e6259c9552ff2c2ea40d0615446",
+          "wfc9.dat": "1fc3a02cff4f1b4a79aa272b8ef908433e9ff9dd331f2a47dd618126c1cafa65"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_03/path/RUN.json",
+        "sha256": "850f01084ada1ba2548c9aebe7d991d0cffffec496078b9e4df02612426722d3"
+      },
+      "stage": "path",
+      "wall_seconds": 4.387946605682373,
+      "input": {
+        "path": "experiments/refined_12mesh/round_03/path/pw.in",
+        "sha256": "6c795053f3715a128fee1712bc92422032feac8274f06ae249e6c678a2f676bb"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_03/path/pw.out",
+        "sha256": "70ced4c25ff14d366d0cb09ae4e5c880db05f2af1e0bf68c7ff1a36e26fe3731"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_03/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_03/path/ANALYSIS.json",
+        "sha256": "35668579c0e6f1938e788514414bbe95ad42d4e2bd86074a656e2c12ab695146"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_03/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "8581b653747234dd9887c46783b8f95e2eed0b5000ff4af641a9e29e37bac86d",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "70370b6606ce5b34f5bfbbdb3ca735266773ddd15d20e784d1fa25ab460cfc6a",
+          "wfc2.dat": "7bb3a6eb5f29c96c4e7d8f3c42c0ec6c8e15b1309324b96d9e7a4fbcf0d0419c",
+          "wfc3.dat": "d3bcb951b5e4a67ade234ce36d0da93d97979cddd2075b7d9c8322c0d7013486",
+          "wfc4.dat": "55502b9b759f2de0735565455e28e172ad84ed8865fe80af230a9c69c99a6056",
+          "wfc5.dat": "2af01ee1018ccd7db0d695a58856628e5055b10b8cf5788ed26c638f056da0fa",
+          "wfc6.dat": "1621a1ce8a285b1478502082cb94fffe6a845a39336a1d05b818fa71364d7ba1",
+          "wfc7.dat": "1b4b0135fbb1eb3a26a34ae9c29308f34d6da9a23214375467aa758e1433debf",
+          "wfc8.dat": "8d9c6accdac11764407c28dec304fe2fb918659afcc8b6827cc05c53b6829346",
+          "wfc9.dat": "d16ff0bbbbc0ed2e4c6925a27890de407f71eaf2383312dab151639d56269752"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_04/path/RUN.json",
+        "sha256": "52257251ff35f473e52f45354e63d0ae9ba347eeb983c35b40a8fa3b333efdf3"
+      },
+      "stage": "path",
+      "wall_seconds": 4.401529312133789,
+      "input": {
+        "path": "experiments/refined_12mesh/round_04/path/pw.in",
+        "sha256": "71c94f0d7996c99d1b390916c6a61cdc8fa02d9ed6666aa9c0675a12463201b5"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_04/path/pw.out",
+        "sha256": "9542ec2b75bc8a4cb24ac3620bd11067658c6fdb125b74fb2cd3e95ea3ee9829"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_04/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_04/path/ANALYSIS.json",
+        "sha256": "cef3c9162a594bc0c83bb6c4820a6dad1c52d7788a9cdd88d23f71a748673452"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_04/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "bdceb5173b68a083cd5be0fde4dffecf530e37f5fcf089ce8798927bc74752fa",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "f58c14bd8bb87227e4415353bc4174ed14376a429088e943929f84720067686d",
+          "wfc2.dat": "6deb79aa54e87bce5d69ebcc6dd571f09bb175d4d639395b5ab22401a491fcaa",
+          "wfc3.dat": "0b4a762b990c41b81ff2ba5f59c636b5c9260ed1c83988723285ec8b88c3a05a",
+          "wfc4.dat": "c2d2e072d93637b72cbfce2cbb2ab26d896855b78a2c0c8733229dd6e8e1a6a8",
+          "wfc5.dat": "a182ce5899494f4090de08562aa27fdb0d98fc484f41e7878924bced0abb5058",
+          "wfc6.dat": "f4b60b335b0be6c23585ee78c3bb79e49d865390360490d05f6d21378b8de3b3",
+          "wfc7.dat": "fff67b05bebd3651c746f423f213a3f248a1061f7aae5157a19d86f2effa6f68",
+          "wfc8.dat": "4cd9494718d36cb70b801710e85425db0b034ffceabdef7ba9449f878c46e6db",
+          "wfc9.dat": "22cf293a668a31de5eebd94f9a4ed6f4576e747761c2bb9d36c9d42c9607e4f5"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_05/path/RUN.json",
+        "sha256": "3b19ee0bf0ff96585a7d698d4cf0e95dea0b900466d2314d970342e75389d2cc"
+      },
+      "stage": "path",
+      "wall_seconds": 4.407109498977661,
+      "input": {
+        "path": "experiments/refined_12mesh/round_05/path/pw.in",
+        "sha256": "5f4a7e3c183a56590d0da100d9416acf148190e3d6c6ab6046422f4b16cc3662"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_05/path/pw.out",
+        "sha256": "1b479b7f5a5cec63b6c25f82892f4746500bd5c9f651fd87eb0518d3d998f762"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_05/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_05/path/ANALYSIS.json",
+        "sha256": "a7a43a7253de1826e10678bbeaaebab6a89be63871010511fa113cc9e1a61c50"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_05/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "6eac7299228076107e13ca8176b312756dfa4195cd994c5c678119260028181d",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "e1cabcaca39fc8c3a0c9c4dd66de128fdce743993931a8e941c701c0a4c30fa8",
+          "wfc2.dat": "a436876a45e3a44c50b0c6cbae77b87dda3c93d6561646bf1406ccfb498dd67f",
+          "wfc3.dat": "e3689583cd0192cff59f93ba12700456a45fb3aa534d9ee55054ab10acb376e0",
+          "wfc4.dat": "fdd8650c532c36aad7a331870b886330d13b5d68103a157322c8b0128879229c",
+          "wfc5.dat": "53fb57620e1cd47e81ea50b8c50d985671c080d7f08b7f0a1237ce88b380486a",
+          "wfc6.dat": "ffa311a4140a7fcb494d36f7fe52f3e4bb727dd4ad48fbac9015eab76c2c88b9",
+          "wfc7.dat": "12e3ebada4a9eaaaaba933b2a6bff9562c881364d756b8955cfa6e6de6ed18af",
+          "wfc8.dat": "85e9f37f6d1fbecdbfac346818567485688b000b2bf1021888633ef0068cbc52",
+          "wfc9.dat": "d420633a2f44f37cccc1d5555201ae7588c8b1d871f2f8dc0a333196c629d173"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_12mesh/round_06/path/RUN.json",
+        "sha256": "cf1bd4a543b3d07c5985c8cbf4b5f59b1eb3a282adac04ff9f175bb39629361c"
+      },
+      "stage": "path",
+      "wall_seconds": 1.8067951202392578,
+      "input": {
+        "path": "experiments/refined_12mesh/round_06/path/pw.in",
+        "sha256": "3741df6d997fcd6ce0a386b3c5f41f9f946bd91d7c70f8e2986b76c2b43342d0"
+      },
+      "stdout": {
+        "path": "experiments/refined_12mesh/round_06/path/pw.out",
+        "sha256": "c3af100f652296240228e36743762d992366614663182b0faf783f3fc7c3e39f"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_12mesh/round_06/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 3,
+      "analysis": {
+        "path": "experiments/refined_12mesh/round_06/path/ANALYSIS.json",
+        "sha256": "af6e5821b3519ffb47ae81445783cb9098d1f8268372803cafd81bb7f29569a1"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_12mesh/round_06/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "d28bfceb2e872ad8139b4f4614c9606890d687ac98690580eaa245e22c033f1c",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "0d1a115e91ae990c89f693e9684861c26ab195a90880efdead69237da3747efc",
+          "wfc2.dat": "2efc9b1fc4b3552840002fc55dd5869e8c37d84b6bfbb501e05f51514f96c609",
+          "wfc3.dat": "7174e610d6cfc84d295e1fda696aba1ce07a1d2ddd84b26b6decaa9c0b00591a"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_4mesh/round_01/path/RUN.json",
+        "sha256": "3be0981aef06f90e7fa79c539cc5420f0833bc9468c28c17aa7c1b298d385c9d"
+      },
+      "stage": "path",
+      "wall_seconds": 4.3742852210998535,
+      "input": {
+        "path": "experiments/refined_4mesh/round_01/path/pw.in",
+        "sha256": "a2f1105d94f0cd2bfe998c88a6824cf610f77e6aae6be7681b7478cc63acf95e"
+      },
+      "stdout": {
+        "path": "experiments/refined_4mesh/round_01/path/pw.out",
+        "sha256": "1216e5635499419daf21701e588eec315827cb7da27c98294996dc0638510050"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_4mesh/round_01/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_4mesh/round_01/path/ANALYSIS.json",
+        "sha256": "80d6d666c0ffb5300c70ee0dc06e5bf65e3a96a7120dffb1c21412fee8d21213"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_4mesh/round_01/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "5aa4e8c9e391388a7761f1de7bf8ee78113196445c60e03ae15e04ff31c72aff",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "0a7f95c16678e37c2aa25a45a58a63b4aa245777407f9017a79a8a8691c8a89a",
+          "wfc2.dat": "07e825540782c6b483c9aac397a0d46dd44f8c97b5fd98a926419e4c9b3716e1",
+          "wfc3.dat": "06e8c473c2a1831a3358239a4ad1f5fb814d1adc2088ac918e163947c70bf863",
+          "wfc4.dat": "f070d32d9d49bc8856ef7aae8524d6269cc4f52603a3ea31e806f292f61d363b",
+          "wfc5.dat": "c87a7bc9953a10524cb84f9773669d4e4dd48d04aac960c9b3f0d1f1dcc6e625",
+          "wfc6.dat": "c6c136915ba6f54add6f4fc7d7e2984395b4b6a8fce84542f540b1f6c7414996",
+          "wfc7.dat": "558f3290decd1c5989264217d72170b9a9892a4ed780c26cfcb2a6af945dd5ed",
+          "wfc8.dat": "4ce43824a65161ccd23108f6af93f6f1fb9365423705b467937ce14a60d2b8ad",
+          "wfc9.dat": "9fefeb42cd0e19dd0408cc670dc07b3ee095a095ada90ef0b1fdf8e0ee055d80"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_4mesh/round_02/path/RUN.json",
+        "sha256": "31d191996e8c552cb6d093442c1880a26b967eb809919b75bf3a53374b3cf2c8"
+      },
+      "stage": "path",
+      "wall_seconds": 4.612488031387329,
+      "input": {
+        "path": "experiments/refined_4mesh/round_02/path/pw.in",
+        "sha256": "dbf94e0ebdf552c65a6c71c151ab94e58af3bf970fbf2d9c5fce5f7a3bfb4394"
+      },
+      "stdout": {
+        "path": "experiments/refined_4mesh/round_02/path/pw.out",
+        "sha256": "fb7b0f6aa51d47e1e0ebd0060791b717dcd42b71fdd3b8b72d52f4c0536e5497"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_4mesh/round_02/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_4mesh/round_02/path/ANALYSIS.json",
+        "sha256": "a2130011113232f8ba4e0b08ac3b3bf345b86c1168d791f086e2b03d323b582d"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_4mesh/round_02/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "6924947501344ad8ab54a103045576244085d434747a8afd51ae7e25e3fb2f50",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "5a7e650b42a18c050d6f97791f05eb840ba44b75496a736d42c8d09508dab59e",
+          "wfc2.dat": "8dd2d5019d5310873f748bc2279fbed2b2bf47d7618ef7a3a35b3c780f8500db",
+          "wfc3.dat": "11e3a78006472529c80b4bcec43e472c6c5ea8a37dd58fa96f95424fa039ee30",
+          "wfc4.dat": "f11adc37ab1329b5b9b87408b815fd4fffd4b2ee551a34b6a87bc0c0a75f63d5",
+          "wfc5.dat": "708ec366e802820c05bf2240bafaa8975362dddb9ca99d723b9df0d565dc71e4",
+          "wfc6.dat": "0de1826a260a4501158af8ac9e188cea02951caf73fc699ecee658c21d6f02a2",
+          "wfc7.dat": "e2f5759e54bb0865de5746cd4a847cc1dbdd6f15cc445d7920b300fa095a1607",
+          "wfc8.dat": "b819c89bddb0113cb082e18bceb462bc4e8c2cdba08aee8b37691f3ebb6c7ea2",
+          "wfc9.dat": "7ea09cb095bb0cd094388202cf4b8fdb2e3186bc6a647593cf04e6ec5026f476"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_4mesh/round_03/path/RUN.json",
+        "sha256": "9634cc9c6b2f9061fd1961ae01662390c11eb9d3ecccc2069021436d6694fd1a"
+      },
+      "stage": "path",
+      "wall_seconds": 4.42591404914856,
+      "input": {
+        "path": "experiments/refined_4mesh/round_03/path/pw.in",
+        "sha256": "c6f29dbba23f4aa29f50257358cb5a638a7f884c066d8b2843938bc053c1ddc3"
+      },
+      "stdout": {
+        "path": "experiments/refined_4mesh/round_03/path/pw.out",
+        "sha256": "6a4191baf33b4ffa77e79a428e967c8dd132d1af679ad74f9d9973b767861414"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_4mesh/round_03/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_4mesh/round_03/path/ANALYSIS.json",
+        "sha256": "eeff1db6c8cc6bc8f9dc0fa010781e711d77033ce2c242c8eb0bee287d362410"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_4mesh/round_03/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "fc0fd1e195e5af7bec8852eab25711e8a7f94c2cbf97540881c578d150fe8d21",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "0a4cc3beff8a2ce8c51b0e903c1a411964ef5188b8636e10dcd30551fa1e9f02",
+          "wfc2.dat": "a08db69245b4577173907e8fa1b1fbfb1352be4b4ada5329cc05405354b6f436",
+          "wfc3.dat": "343861f67bada8ce92293e20b38a8a6689394a2fc5c55cfeedf2dad3aea2c4ac",
+          "wfc4.dat": "aa8e367b0ff443ff796809e21958dff89184a67582cd7cf6dd21838446b23691",
+          "wfc5.dat": "07d6a48584b72a6cf151dc325e00e02ceaf5151cc67573d5b1570892182bc137",
+          "wfc6.dat": "695d65b52aef626745da435e30fdd5816a8453cf9b72fffa4150703f1f42e4df",
+          "wfc7.dat": "5527b82038fddaf481875cd758c1b13f291f2d4d3eed95a9c94220924c1ced40",
+          "wfc8.dat": "8418aded8f2b140e53186a28f19c5df2a4301eeb4d9d074baa1989802867c1b6",
+          "wfc9.dat": "e07a9846b847d106480059773bf112be8d6b18655faceb69ea4cb4bcbceead1a"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_4mesh/round_04/path/RUN.json",
+        "sha256": "11bb11fb3fc587dd508611584916ae40f807b620a468c4f65151d949c1e57072"
+      },
+      "stage": "path",
+      "wall_seconds": 4.4477152824401855,
+      "input": {
+        "path": "experiments/refined_4mesh/round_04/path/pw.in",
+        "sha256": "1d98d06da53b1db0548ed25aa7f39d4c15a08df7f1cd0ec4289d06088816eeb6"
+      },
+      "stdout": {
+        "path": "experiments/refined_4mesh/round_04/path/pw.out",
+        "sha256": "b46c7413fdab52333334e1c6bff40850ea629009c707d7717b60334bf78057bb"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_4mesh/round_04/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_4mesh/round_04/path/ANALYSIS.json",
+        "sha256": "98a46d7ac4be7a17d6add2038a31e99f81cfe6e29aefa28618a260549bb26cc2"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_4mesh/round_04/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "27207942db10e1265f15806ed9d05222c6a92273c4b328356f862bc08bc57f19",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "7659756087028a84145b8e4d1926a5a610a21c8ab6aad75e529dc30efbf44596",
+          "wfc2.dat": "6566065c26e30bcf91434cfe052c79f5d827e71935a8ff91e9c0800e0ea53f0b",
+          "wfc3.dat": "8dd5920ad4f7edd3010af203960a9706118655ada8bf126df712fd73fca9732e",
+          "wfc4.dat": "58e5f9d326874c7dc96590e493ff38de16def59fb7795c6b06ed8efcc2b304d2",
+          "wfc5.dat": "950ef001ebe07244b9870000cc92937799e8e2997c658df2271fe84a97fc1d36",
+          "wfc6.dat": "5a35ba44d3208b3b0c61846dfb05d4d1c7dbc2f29629c451acce5db233a34159",
+          "wfc7.dat": "2fabdf8c20c7e027c72431fac4f3378bfac34d324ca488a218843ca4864ddc55",
+          "wfc8.dat": "98cbff5f979653a539dddaad39fc09bb7b04d2890b142fd1b2d0b28fb53cab66",
+          "wfc9.dat": "b8e34c07977dafa6863cd9b66531d55e8d10f00ce5e3d458c1bc03bd3cbf636e"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_4mesh/round_05/path/RUN.json",
+        "sha256": "2476a695968f8ebcf1ea7cc1a4acc518485fbc5531669a5e52a999152875865e"
+      },
+      "stage": "path",
+      "wall_seconds": 4.666421890258789,
+      "input": {
+        "path": "experiments/refined_4mesh/round_05/path/pw.in",
+        "sha256": "0946ee65b9640aae4ab6c38877fb6c09bdde52e6c89ada014d417e9258982d77"
+      },
+      "stdout": {
+        "path": "experiments/refined_4mesh/round_05/path/pw.out",
+        "sha256": "4f427b3d6edf92a60854f8f33779dccef3d1bc4505e71b846e50123bfb81a56a"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_4mesh/round_05/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_4mesh/round_05/path/ANALYSIS.json",
+        "sha256": "37a8774a3114d7a1e34549a5b620fc79364adee66c16ca705627025a2c11165f"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_4mesh/round_05/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "7a22ff976030defb765c15a1fc1e9795c9893e4500a832d832cadf40a2d942cb",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "ccad17fbe6526347733e1c56f28d7e8472ad2fcf58a3e90414e638bc8c3fefd4",
+          "wfc2.dat": "56cabbd7cd80e5f61f5897b7ce4daca99c461d1fb925a98f6146eafdb3279379",
+          "wfc3.dat": "54ba1bdbe1b81171435118bc74eba55e7cc0bc5fa88d12e3eb4f71d2295aad7f",
+          "wfc4.dat": "cda44be68aa148e668b23277dd90e318bdce2d934aca04595177dd703cb24261",
+          "wfc5.dat": "60f85ccf972b3f3c234c2cab3198f828a22285a6ec122ccc759b87ae5a11b370",
+          "wfc6.dat": "6c9c63b21bf8d98544b9063f51d5f4057c9039a7c4825d627b5c20055e580a51",
+          "wfc7.dat": "d2348f3206352214572b8e036424bee902ee0b6750665c0dc1afc6a1017353c1",
+          "wfc8.dat": "957384dec1f817094981d261cc9b149d5d023995455acfca34a4d99fcf2b647e",
+          "wfc9.dat": "7467478cb1018419446d5a8652f03e3eca1a7f47e473c1c7219fd1de01edacba"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_8mesh/round_01/path/RUN.json",
+        "sha256": "f65937ccff7749abb7bf41b1222871e31534186900bf9d2f2a0522d5884aed12"
+      },
+      "stage": "path",
+      "wall_seconds": 4.978785753250122,
+      "input": {
+        "path": "experiments/refined_8mesh/round_01/path/pw.in",
+        "sha256": "be01e9214818b7ed897d9156154091fda0f871e0c0ec14bcdb0339f96688798d"
+      },
+      "stdout": {
+        "path": "experiments/refined_8mesh/round_01/path/pw.out",
+        "sha256": "1a6fefcd7044a7a6748998bf987158b0a83c572a3b6b80418ae01c7dd7baf328"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_8mesh/round_01/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_8mesh/round_01/path/ANALYSIS.json",
+        "sha256": "5173590ae3fdff34349d9dcc7de3e338189c9e186527ae71d8ae4f9b3808ecf2"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_8mesh/round_01/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "f819000cfc78b91d5ec539f121663d365d77335fcca072723ce6705e8d8b8af7",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "389ec8c96ee224e9e576fad53dfd0c9bb2bd31abe0c7113b4bad29c39068860e",
+          "wfc2.dat": "27a7f7cb460b41cc25379f0b35c5ea5aaf0c4c93745887b75b4bfa48dae82791",
+          "wfc3.dat": "60d25c3415df28939880704197525797cc7fc3f8d778bb9238c45a2ac3464560",
+          "wfc4.dat": "f1f552102f54f4cd0488911cca3c56810e7b54ad514a1b513942d10e9f585c4c",
+          "wfc5.dat": "1e7565b950b8d90b7e4a101d33e524895eadfdea0fa8870ea635b57215ef4630",
+          "wfc6.dat": "ba6bc5f3f092ac2420552241b59fb79541c66cac68940bd40d90f61401795384",
+          "wfc7.dat": "e2bdc4d29f530351b1ee4ed6269312e1c6a0e10e046f4a52a62343197ed9d841",
+          "wfc8.dat": "4282cd69b9c08ef69fccc5ff45eadeb2a82c83041633cd3adc061f1946fb4b2a",
+          "wfc9.dat": "59d8c90fe46d3a3f63a1e12a2e62dc7d0b9dc22b073b376d48ce8ec6aba3e765"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_8mesh/round_02/path/RUN.json",
+        "sha256": "bbc748a836611a83bdfd13bdee882962a892ead0bb691ccdcdbc3d291d4ea484"
+      },
+      "stage": "path",
+      "wall_seconds": 5.018582105636597,
+      "input": {
+        "path": "experiments/refined_8mesh/round_02/path/pw.in",
+        "sha256": "0a70b09abe868b858b8ba278af9c47023eeeba7aa88bd6078ccc22812eac8781"
+      },
+      "stdout": {
+        "path": "experiments/refined_8mesh/round_02/path/pw.out",
+        "sha256": "825f8bdd82f51aeccab74aae1a95c89c68dfeeeec62274dde214cdf6bfb96277"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_8mesh/round_02/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_8mesh/round_02/path/ANALYSIS.json",
+        "sha256": "b72d5e392d14ee28913c8223639ce9b9a003723ef2d76b209e23042bb68fe49b"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_8mesh/round_02/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "7ca0d7911c31196d5f857ff9668cfa5f8bb980ca9cfeb6f3fcd73409494a7138",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "60ccfb7f0d6c1ec6ee969a34dd7ea55ba8b12191f54ab6f442f172060c2e4563",
+          "wfc2.dat": "2a424ace83a993d8ceca4fe153b9e0c052560a68a34cd10c325f7230101157ea",
+          "wfc3.dat": "1ec331765cdba9630c257d107e68766b477e42f4afe4f03f8a4a86332f3f7762",
+          "wfc4.dat": "bda0dd4c378408200881565c09a4b366e64765190df238cdd685c6ed391e2050",
+          "wfc5.dat": "6a57c2c4cf77726e880ffee4d065fdac0e4744cd5a852e1aed47ffcc5892632e",
+          "wfc6.dat": "af96568032d73a14114652d1c25e692ddef86db206b78e5c28c47719761eb0ca",
+          "wfc7.dat": "5f96492f2cfab7f183831ed1d8b3f7b6fe5159f159a410752471d83a537dac52",
+          "wfc8.dat": "7c9e1f555a34dc84f9e596727d154e9873bb7a67f64574060cd8b02af4117e8c",
+          "wfc9.dat": "5a2e649b78f16dc433919a23b6e2d171c0daff8f4d3ba223c49148cbbeecd208"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_8mesh/round_03/path/RUN.json",
+        "sha256": "9772304a653fd58de125b787443b0ccd1ffccb5e0163e8c691348f45a0d6548d"
+      },
+      "stage": "path",
+      "wall_seconds": 5.332621335983276,
+      "input": {
+        "path": "experiments/refined_8mesh/round_03/path/pw.in",
+        "sha256": "0be08552effaa97e2209dbf9ed2ed464645595a0fbc7853baa80f8c5f70008fe"
+      },
+      "stdout": {
+        "path": "experiments/refined_8mesh/round_03/path/pw.out",
+        "sha256": "176e852981b8b974b9f3ee6f4ddbfca41959fef520c0be063a6a8256600a945d"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_8mesh/round_03/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_8mesh/round_03/path/ANALYSIS.json",
+        "sha256": "237f62d3c8cc3275ddea5614cbbe90468f05fe5fc035a7fc244fa6b11c0d819c"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_8mesh/round_03/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "b7ed07fd5b4e3708e68039112d9efd96117afb70f6197ba046ae8114f4df23a1",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "7f5fb548ef63e36188d488c7af87926587e106b7b6ac8bcaf4febd385c1cfb2e",
+          "wfc2.dat": "8767ce2d6c1154a2686673cc8cf361be9a1178b06c6c334109653ec43c7c4d8e",
+          "wfc3.dat": "589019123bf06db2a8813d8dd8b1a3485dc0bef5cb9fbdf7a9868bc3512a0039",
+          "wfc4.dat": "9dbe940fb8f8d674b005d5c41b7efb2214b8c3f42e2a4f686fc0df1445d8fb70",
+          "wfc5.dat": "c60f77e1016cbaf676e9c93db60fe7ac587791101bcf74b8ccd67c1a723ee2b3",
+          "wfc6.dat": "220fe47ec91cfcc7ef3e734633894421560731b8dcc190bbaf1db12771c2f671",
+          "wfc7.dat": "440f383f269129fd9b6d88793dc9e0b712a1e3561c1f7793c50d9cab3a375bdf",
+          "wfc8.dat": "9320e0925bab53d68f1bd5f6fe5b7f33ff6f2b33aa38ab6bf6a920b0f180e13d",
+          "wfc9.dat": "66d65fc2c7541136f979474c3b498adda689d6bfd58fcafb99c17df0ddbb07a3"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_8mesh/round_04/path/RUN.json",
+        "sha256": "3c04f3c6a899b95bfe205d5a86dbab268245e89250d015e783b0c52e0f7cff78"
+      },
+      "stage": "path",
+      "wall_seconds": 5.354642629623413,
+      "input": {
+        "path": "experiments/refined_8mesh/round_04/path/pw.in",
+        "sha256": "fa657f6046d4aa9ae0eb286f73f25125ddc80d30eaa1555fc442f92bf7d8bcde"
+      },
+      "stdout": {
+        "path": "experiments/refined_8mesh/round_04/path/pw.out",
+        "sha256": "5fa71dde8c7c8092c0f6e7566fe73909c6f4f4ead67012b05fe76d419fa716fa"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_8mesh/round_04/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_8mesh/round_04/path/ANALYSIS.json",
+        "sha256": "54c5ccc2b69ab8dd357092384485afb6d721d7cf5923ad456380acb292bb3549"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_8mesh/round_04/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "1bb0e5d8fd97fce6468312d657dfb274f62447a41aa6393eb70f3c79abd16f13",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "9d8a33ae1d23175113644478b4f972870ff170597aed5ec0dde49516900e20ac",
+          "wfc2.dat": "a7a6fdeef6023d770120747226edf6dcfbd86240a91a6baf98a6b413a09326f0",
+          "wfc3.dat": "a4528a5e2aa9fb38ba59c2d2dda2ae2aaefacdc7160fde441d29b6700e1b7bdb",
+          "wfc4.dat": "c25d9f5658d1911ea9ab8dbb1a0c8b6b01bccbafaf627531983f4259e4686ec3",
+          "wfc5.dat": "2d4765cb65a0651fd3a33ab61e2a8dc09fda7b9777689fca4b762b7785b50b19",
+          "wfc6.dat": "65cbaca81f2af27cc94966504afefe0a9e3fa23f62bba98c8758cfeb5a46b516",
+          "wfc7.dat": "982dfd5b9b065413f9228d01be3ab98c4408c7399fbc794c57f52ee5b9b16ec1",
+          "wfc8.dat": "dbb2a82d3583a3ada38c885804e316a979317ddd166d719da80fb8bcca2dd3e0",
+          "wfc9.dat": "9cd7ee6c083e238294694100c95b9770422d9b8d65f8f79f56107c871a4bcfa1"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/refined_8mesh/round_05/path/RUN.json",
+        "sha256": "0587bb9844426290b739f2b67fbbf39198237cf9f506852cdaec92038fc34dff"
+      },
+      "stage": "path",
+      "wall_seconds": 5.174600124359131,
+      "input": {
+        "path": "experiments/refined_8mesh/round_05/path/pw.in",
+        "sha256": "036b8ae24a2c6cc4752ab32cf59c27cbf3f4ecd265aa33ff9b311caca837a37e"
+      },
+      "stdout": {
+        "path": "experiments/refined_8mesh/round_05/path/pw.out",
+        "sha256": "168b55f778e1517d9e4b081bba7c6a89f345796defb00d6c9974ef38cd6368de"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/refined_8mesh/round_05/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 9,
+      "analysis": {
+        "path": "experiments/refined_8mesh/round_05/path/ANALYSIS.json",
+        "sha256": "b71bdd6fc9c803058bbbed1d84ead91a6bad5130cae666c9c25f8e133e758de9"
+      },
+      "source_metadata": {
+        "path": "experiments/refined_8mesh/round_05/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "0ff7f5814dff83fbc9f1dd6d5cb4837991c3425396b178d2bfded7985443b57e",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "ef37d5846bc8af0b625e4a73281fd9c7b1f75eda4b478965bd16c2ec31d133ad",
+          "wfc2.dat": "c372697de438d8a0545502f2d1a39082a150de1e220fc2e59c5b2c30be68720b",
+          "wfc3.dat": "a5ef125a888e433c2a295a2cae587aa1588928a042029dc1467cdefd064a0404",
+          "wfc4.dat": "48d0edb990a7de01f025877ddf516e7b713d891dc52966ab84af761dd622280d",
+          "wfc5.dat": "9ba356555caaa45160fd7ed2a0295ccd075a2648940f2dc3ec07a36e03898908",
+          "wfc6.dat": "274d02eb5377e69dcf1ade866b3c4933928b71eaa47cfb2f43da7029c65adb3c",
+          "wfc7.dat": "e360293b107b428e1eb4e2cc7cb6825974c352cd35ef23082bd46f7a04f82881",
+          "wfc8.dat": "5147fc0576b0fc4850141a01889506f37eff8359bcd46a74a4313a7ed280ed16",
+          "wfc9.dat": "db346fd38dc476d26598e0561579360d2e4a1c0c70c1ca62c44f3510b266c80a"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/strict_12mesh/path/RUN.json",
+        "sha256": "d5da364b3ce956982e0799709b1dd13048caa8c5d22f5be61876f65fcd00afab"
+      },
+      "stage": "path",
+      "wall_seconds": 3.2720158100128174,
+      "input": {
+        "path": "experiments/strict_12mesh/path/pw.in",
+        "sha256": "508b82bbf955075030c1dc3f093fa667811dd77d596844aeb6e0f20fa470b578"
+      },
+      "stdout": {
+        "path": "experiments/strict_12mesh/path/pw.out",
+        "sha256": "8dd8b7491b9b080ca0f6d667112ac28f36c1584c4eba948d0b86ccf77354e156"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/strict_12mesh/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "k_points": 6,
+      "analysis": {
+        "path": "experiments/strict_12mesh/path/ANALYSIS.json",
+        "sha256": "070e0619d2e296e321aa57443545f7fc02ad93522cab5536874323d458c27900"
+      },
+      "source_metadata": {
+        "path": "experiments/strict_12mesh/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "bb72581deac4244184e9db4fcc0f388b88b5890d320d23cedc3ccdb28fb7133a",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "dcd914dda33f1b5ffcb558b49cd408f722e4fa821bec81d9d022d63f4cd3a452",
+          "wfc2.dat": "fd039f1a6eebf9645808133f661cb28903a43132fb8a3980c2a2c6a77098c01b",
+          "wfc3.dat": "fffcd3f8172162b8af53e19ff8d64f41ad3f25fa72de08618677c2c84343caa4",
+          "wfc4.dat": "2577f6483985c72a89916a8ca9a011e1879ebd01ebc56c539f751baeab276105",
+          "wfc5.dat": "71c7fe7ba4a500ab7a4e407c6094f5eb421e3d813901a5855abc64da7da03877",
+          "wfc6.dat": "563424051734cf4969961f4f10746b28e83ed8e41580876fadcb8a8ddce106b8"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/strict_4mesh/path/RUN.json",
+        "sha256": "d460a8b2f4e68d6a6c779d42b12a8d1a3a6b8fc99ca2b51c2f4615159b41248e"
+      },
+      "stage": "path",
+      "wall_seconds": 3.359530448913574,
+      "input": {
+        "path": "experiments/strict_4mesh/path/pw.in",
+        "sha256": "71ca314d77e17a6cc583505b6c5c44ecb54b923b0d2834a7dc0a59933d89522f"
+      },
+      "stdout": {
+        "path": "experiments/strict_4mesh/path/pw.out",
+        "sha256": "c901d9ccd8bbba84bb2873941688ebbf14ad59558210f4ec48893684cf2a618b"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/strict_4mesh/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "k_points": 6,
+      "analysis": {
+        "path": "experiments/strict_4mesh/path/ANALYSIS.json",
+        "sha256": "25ee557df4eea6fb6cccaf7c67047fc44fb19e6e0fb12d0d57584328a4fbfd71"
+      },
+      "source_metadata": {
+        "path": "experiments/strict_4mesh/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "1bea9e0704b796b452dfcb08a27c03097d4061c0a2f43c886660bb19b1a81f04",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "b79e9217f3786e3601f4590747f559933417db69d908c537a84582faeb83e452",
+          "wfc2.dat": "c7ab1fcef780c3f1aaf8a2a36c146a1d8b22ae9a86ef6600021efafc5a075627",
+          "wfc3.dat": "6a934d6e2f0367a6fc24ab9ad5c72e81e06285ca8adde39b447aac560ae67910",
+          "wfc4.dat": "fd2b44f6a9b1b7bd2d569f0b3e49680feb2c60bc3b04117cbabd494206497e51",
+          "wfc5.dat": "41ab16ffb0a98001626a1120d317a89696ded335aa8c37e3632bc8d044257ffc",
+          "wfc6.dat": "a8ac509433bb6b8afea4aa8641d2c92c0577edc67dab00fe5ceaef126dd85d01"
+        }
+      }
+    },
+    {
+      "execution": {
+        "path": "experiments/strict_8mesh/path/RUN.json",
+        "sha256": "698088caf374be721bef9187f02b5fc9d241b832251a1aa156da52e5dec50981"
+      },
+      "stage": "path",
+      "wall_seconds": 3.374624252319336,
+      "input": {
+        "path": "experiments/strict_8mesh/path/pw.in",
+        "sha256": "0b519e6942f730001a5c2b62cda423345e745da6c72502f5f831f8ea15e322e5"
+      },
+      "stdout": {
+        "path": "experiments/strict_8mesh/path/pw.out",
+        "sha256": "2060d6310c9ab9e1c41bba9a451fdea237cd5c581b36551f14b1d161806a8b7d"
+      },
+      "input_pseudopotential": {
+        "path": "experiments/strict_8mesh/path/Fe.jry.pbe.UPF",
+        "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+      },
+      "source_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "saved_density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "k_points": 6,
+      "analysis": {
+        "path": "experiments/strict_8mesh/path/ANALYSIS.json",
+        "sha256": "2fd200cffef031fbb2dd27ab52f083e9848756575fad865ebfeaece4f26569b6"
+      },
+      "source_metadata": {
+        "path": "experiments/strict_8mesh/path/scratch/Fe.save",
+        "files_sha256": {
+          "data-file-schema.xml": "835878c42864f9077bbf143b138eed4d24b4143a3a84660fed0097b1d766217e",
+          "Fe.jry.pbe.UPF": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+          "wfc1.dat": "a9c8ebe3f784cf8f57db1274659effcdad8a18c1564ec0b6701396d709c49c6a",
+          "wfc2.dat": "645bae5d8ed66d85844bf107debbd826f139c3ebf2c3b60cf9171530b0c5f042",
+          "wfc3.dat": "9681e1daa2b93e2b53d9f9548327136d6dfe19b843b57128ced9d25546b87e9e",
+          "wfc4.dat": "7d156b97ccdb1b107af4cead8c134f4c7593443d13740c4cbd1dcb87711ceb88",
+          "wfc5.dat": "4fc2ad15f087f9318915455adf75a479b7f635e2acb66de2726a6bc0ded244da",
+          "wfc6.dat": "04008fb8f09c0c4eff3956030d289707502132b2686b1d457f08c3ff73912bf4"
+        }
+      }
+    }
+  ]
+}

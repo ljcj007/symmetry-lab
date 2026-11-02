@@ -1,0 +1,151 @@
+{
+  "schema": "symmetry-lab.fe-recompute-input.v1",
+  "executed": false,
+  "source_directory": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase9\\data\\electronic\\Fe-222-pw",
+  "scf_mesh": [
+    4,
+    4,
+    4
+  ],
+  "path_parameter_exact": [
+    "1547/8192",
+    "9669/51200",
+    "38677/204800"
+  ],
+  "path_point_count": 3,
+  "nscf_conv_thr_Ry": 1e-10,
+  "max_seconds_per_stage": 900,
+  "wavefunction_cutoff_Ry": 120,
+  "charge_cutoff_Ry": 480,
+  "new_SCF_is_not_the_original_saved_potential": true,
+  "expected_old_endpoint_multiplicities": {
+    "Gamma": [
+      4,
+      4,
+      5,
+      5
+    ],
+    "H_z": [
+      4,
+      5,
+      4,
+      5
+    ]
+  },
+  "baseline_profile": {
+    "absolute_energy_tolerance_eV": 0.05,
+    "energy_origin_shift": false
+  },
+  "changes_from_published_inputs": [
+    "separate scratch directories preserve every completed stage",
+    "ecutrho=480 Ry makes the published default explicit",
+    "noinv=true prevents unrequested inverse-k generation in NSCF",
+    "finite wallclock guard and high verbosity for reproducibility"
+  ],
+  "input_files_sha256": {
+    "scf/pw.in": "c596d8c27061141ef787eb49ff2051e5bcccfe24fd39d5a2954a3898cc33a2e5",
+    "scf/Fe.jry.pbe.UPF": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+    "baseline8/pw.in": "6b083d882f42fe9676a19d87a16504688424d27e6b3b6ec45abf704bf8229b85",
+    "baseline8/Fe.jry.pbe.UPF": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+    "path/pw.in": "3741df6d997fcd6ce0a386b3c5f41f9f946bd91d7c70f8e2986b76c2b43342d0",
+    "path/Fe.jry.pbe.UPF": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5"
+  },
+  "original_input_sha256": {
+    "Fe_pw_scf_in": "2aa8218d2ed0bc42e698ddad65392af7cb9c65423062c0eb76e000a6ad559360",
+    "Fe_pw_nscf_in": "2d49b287c992cc972f86714bd58ae02eee36152b037e7c8a4d7190ff33095568",
+    "Fe.win": "c8728ad6c04783473c63dffcf39fa95ac0f5928bf07b7c35e5cf4214ea037b0c"
+  },
+  "path_conventions": {
+    "active_cartesian_rotation": [
+      [
+        0,
+        -1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "fractional_rotation": [
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        -1
+      ],
+      [
+        0,
+        1,
+        1
+      ]
+    ],
+    "reciprocal_action": [
+      [
+        1,
+        -1,
+        1
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ]
+    ],
+    "spin_lift_diagonal_phase_eighths": [
+      -1,
+      1
+    ],
+    "eigenvalue_phase_eighths": [
+      7,
+      1,
+      3,
+      5
+    ],
+    "spin_axial_residual": 3.1401849173675503e-16,
+    "path": "q(t)=(t,t,t), 0<=t<=1/2; q in primitive reciprocal coordinates",
+    "target_H_fractional": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "target_H_cartesian_inverse_bohr": [
+      0.0,
+      0.0,
+      1.1585111657010394
+    ],
+    "source_win_H_fractional": [
+      0.5,
+      -0.5,
+      -0.5
+    ],
+    "source_win_H_cartesian_inverse_bohr": [
+      1.1585111657010394,
+      0.0,
+      0.0
+    ],
+    "H_endpoint_reciprocal_offset": [
+      0,
+      -1,
+      -1
+    ],
+    "same_endpoint_mod_reciprocal_lattice": true,
+    "same_Gamma_to_H_path": false,
+    "warning": "The source Fe.win follows Cartesian x, whereas the C4z obstruction follows Cartesian z."
+  }
+}

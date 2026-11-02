@@ -1,0 +1,172 @@
+{
+  "schema": "same-input-external-IrRep-C4-summary-v1",
+  "status": "PASS_NUMERICAL_SAME_INPUT",
+  "cases": [
+    {
+      "id": "reference_baseline8",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "record_path": "runs/20261102T143258726052Z-reference_baseline8/RESULTS.json",
+      "record_sha256": "1049294e24c824efe42101327face720ad5e82caf36cf8f04cb3086931f61c87",
+      "QE_version": "7.5",
+      "input_kpoints": 8,
+      "actual_C4_little_group_calls": 2,
+      "points_outside_C4_little_group": 6,
+      "input_files_unchanged": true,
+      "maxima": {
+        "coefficient_max_abs_discrepancy": 0.0,
+        "matrix32_same_coordinate_discrepancy": 1.6011864169946886e-15,
+        "matrix18_direct_overlap_discrepancy": 4.4845475401728255e-15,
+        "phase_count_max_abs_discrepancy": 5.734622145858374e-15,
+        "energy_eV_common_constant_discrepancy": 7.105427357601002e-15
+      },
+      "all_nearest_counts_match": true,
+      "all_prefixes_numerically_resolved": true,
+      "first_last_counts": [
+        [
+          4,
+          4,
+          5,
+          5
+        ],
+        [
+          4,
+          5,
+          4,
+          5
+        ]
+      ],
+      "count_change_brackets": [],
+      "dependencies": {
+        "irrep": "2.1.0",
+        "numpy": "2.5.2",
+        "spglib": "2.7.0",
+        "scipy": "1.18.0"
+      }
+    },
+    {
+      "id": "fine101_path",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "record_path": "runs/20261102T143259621179Z-fine101_path/RESULTS.json",
+      "record_sha256": "20b495439f7b3284fb8454a8ae6ad374fe75cabcb6ca623d0b74459a356f5274",
+      "QE_version": "7.5",
+      "input_kpoints": 101,
+      "actual_C4_little_group_calls": 101,
+      "points_outside_C4_little_group": 0,
+      "input_files_unchanged": true,
+      "maxima": {
+        "coefficient_max_abs_discrepancy": 0.0,
+        "matrix32_same_coordinate_discrepancy": 2.5047773128236086e-15,
+        "matrix18_direct_overlap_discrepancy": 1.1350736689654702e-14,
+        "phase_count_max_abs_discrepancy": 1.2535603121171473e-14,
+        "energy_eV_common_constant_discrepancy": 1.4210854715202004e-14
+      },
+      "all_nearest_counts_match": true,
+      "all_prefixes_numerically_resolved": true,
+      "first_last_counts": [
+        [
+          4,
+          4,
+          5,
+          5
+        ],
+        [
+          4,
+          5,
+          4,
+          5
+        ]
+      ],
+      "count_change_brackets": [
+        {
+          "left_t": 0.11499999999999999,
+          "right_t": 0.11999999999999998,
+          "left_counts": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "right_counts": [
+            4,
+            5,
+            5,
+            4
+          ]
+        },
+        {
+          "left_t": 0.18,
+          "right_t": 0.185,
+          "left_counts": [
+            4,
+            5,
+            5,
+            4
+          ],
+          "right_counts": [
+            4,
+            4,
+            5,
+            5
+          ]
+        },
+        {
+          "left_t": 0.225,
+          "right_t": 0.22999999999999998,
+          "left_counts": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "right_counts": [
+            4,
+            5,
+            4,
+            5
+          ]
+        }
+      ],
+      "dependencies": {
+        "irrep": "2.1.0",
+        "numpy": "2.5.2",
+        "spglib": "2.7.0",
+        "scipy": "1.18.0"
+      }
+    }
+  ],
+  "retained_attempts": [
+    {
+      "record_path": "runs/20261102T142925815314Z-reference_baseline8/RESULTS.json",
+      "record_sha256": "5eefd208d0d202ef5a2c7808144854bdef446d1bea9edb4cdf1c74c313b7c3ea",
+      "status": "MISMATCH",
+      "reason_if_initial_mismatch": "Initial comparator compared coordinate G^-1 B directly with overlap B and used two different published Hartree-to-eV constants. Retained raw arrays reproduce those differences; corrected comparison changes semantics, not tolerances."
+    },
+    {
+      "record_path": "runs/20261102T143112236415Z-reference_baseline8/RESULTS.json",
+      "record_sha256": "a42c8b0919f3e1bb23cdbe00bd11db896be830eb137b329badcd7786a90e449f",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "reason_if_initial_mismatch": null
+    },
+    {
+      "record_path": "runs/20261102T143113125825Z-fine101_path/RESULTS.json",
+      "record_sha256": "733e5bb02e512ec466fd019de836e13bab687d4109c5bc948e5a2f45f8ac7544",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "reason_if_initial_mismatch": null
+    },
+    {
+      "record_path": "runs/20261102T143258726052Z-reference_baseline8/RESULTS.json",
+      "record_sha256": "1049294e24c824efe42101327face720ad5e82caf36cf8f04cb3086931f61c87",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "reason_if_initial_mismatch": null
+    },
+    {
+      "record_path": "runs/20261102T143259621179Z-fine101_path/RESULTS.json",
+      "record_sha256": "20b495439f7b3284fb8454a8ae6ad374fe75cabcb6ca623d0b74459a356f5274",
+      "status": "PASS_NUMERICAL_SAME_INPUT",
+      "reason_if_initial_mismatch": null
+    }
+  ],
+  "exactness": "Floating-point same-input comparison, not an exact interval certificate.",
+  "tool_scope": "Actual IrRep matrix computation and binary parsing; four-root decomposition by this adapter. No external global gluing or across-path target test.",
+  "shared_conventions": "Same XML/raw spinors, +pi/2 Cartesian z rotation, documented SU(2) lift, root order [7,1,3,5]. No wavefunction fit, polar repair, fitted energy shift or matrix cutoff."
+}

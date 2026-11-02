@@ -1,0 +1,12 @@
+{
+  "status": "INVALID",
+  "stage": "source",
+  "reason": "source-carrier gauge binding M",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period",
+    "atlas"
+  ]
+}

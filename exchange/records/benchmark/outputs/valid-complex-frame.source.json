@@ -1,0 +1,26 @@
+{
+  "status": "CERTIFIED",
+  "layer": "source",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period",
+    "atlas",
+    "source"
+  ],
+  "counts": {
+    "planes": 15,
+    "cells": 165,
+    "incidences": 852,
+    "period_pairs": 83,
+    "period_squares": 15,
+    "period_cubes": 1,
+    "catalogues": 5,
+    "restriction_chains": 1264,
+    "atlas_overlaps": 216,
+    "atlas_triples": 2744
+  },
+  "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+  "scope": "Complete selected little-group family and declared torus gluing; not a DFT band-gap or arbitrary equivariant-bundle certificate."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "rational-arrangement-v1",
+  "dimension": 3,
+  "period_axes": [0, 1, 2],
+  "operations": [
+    {"id":"E", "anti":false, "rotation":[[1,0,0],[0,1,0],[0,0,1]]},
+    {"id":"M", "anti":false, "rotation":[[0,1,0],[1,0,0],[0,0,1]]},
+    {"id":"T", "anti":true, "rotation":[[1,0,0],[0,1,0],[0,0,1]]},
+    {"id":"MT", "anti":true, "rotation":[[0,1,0],[1,0,0],[0,0,1]]}
+  ]
+}

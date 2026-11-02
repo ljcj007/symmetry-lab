@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "package": "portability_check/20261102T143028313094Z",
+  "test_count": 19,
+  "returncode": 0,
+  "network_used": false,
+  "phase9_code_required": false,
+  "fixtures_copied_after_full_pinned_hash_verification": true,
+  "exported_code_sha256": {
+    "analyze_fe.py": "a57f1325d9ee7e014623981e88f11744cd047e3e901e0f344994455ef013447c",
+    "prepare_fe.py": "8c739acc5234e18c31d08a70989b35e50c0d89606eb7ff1f97f4c4f0f006fa34",
+    "run_fe.py": "78ed1ca272f3966830e3d90ea4ea8de50dc6eee72cf22ecd24285910c904bc95",
+    "source_data.py": "424fb8771cb7e97e12b79d560a3c46ec7aefd07ecd38c3b912996c32f101e1a4",
+    "test_fe.py": "dda2a9bd64da12e5e307d238c1c858ab0e1d2bccd5aad16b8b1c1bd97cd55631",
+    "validate_fe.py": "984e5b2081a8f0894aa1f5d3b17b8df0f25ad207f2724c17d0debb300e44a9ad",
+    "refine_fe.py": "2f8255b8ee969c7c7aabdde7f383c4014f72e99a9fb3f5678844684083928e6c",
+    "vendor/qe_reader.py": "f4d8976a9d8eb886bce9cafefd82b14e8b9f6caf5536947f84b9048173d81864"
+  },
+  "stdout_sha256": "ceec162ecdbe039a50b5d162027b934f165bdbb061afdf36492c9262707d5b1f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

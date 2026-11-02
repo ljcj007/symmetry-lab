@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/QMatSuite/quantum-espresso-windows-exe/releases/download/qe-7.5-win-oneapi-msmpi/qe-7.5-win-oneapi-msmpi.zip",
+  "archive_sha256": "e50ec7368a5b7a964eb5084e0a13464ba2628d4e147c16227e876002ea34fdf7",
+  "archive_bytes": 400430691,
+  "download_and_extract_seconds": 5.047686338424683,
+  "pw_executables": [
+    "software\\qe-7.5\\bin\\pw.exe"
+  ],
+  "system_installation": false,
+  "executed": false
+}

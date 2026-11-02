@@ -1,0 +1,149 @@
+{
+  "status": "PASS",
+  "scope": "Independent floating evaluation of submitted Fourier JSON; no producer/verifier/arithmetic-core import. Supplementary numerical cross-check, not exact proof.",
+  "points": [
+    [
+      "1/7",
+      "2/9",
+      "3/11"
+    ],
+    [
+      "0",
+      "1/2",
+      "0"
+    ],
+    [
+      "1/3",
+      "1/3",
+      "1/7"
+    ],
+    [
+      "1/3",
+      "2/3",
+      "0"
+    ],
+    [
+      "1/2",
+      "1/2",
+      "1/2"
+    ]
+  ],
+  "counts": {
+    "gauge_unitarity": 5,
+    "source_binding": 20,
+    "semilinear_group": 80,
+    "cell_unitarity": 825,
+    "selected_decomposition": 1240,
+    "boundary_binding": 4260,
+    "source_period": 15,
+    "period_covariance": 60,
+    "seam_binding": 415,
+    "mirror_axial_spin": 3,
+    "time_reversal_spin": 3
+  },
+  "total_comparisons": 6926,
+  "max_residual": {
+    "gauge_unitarity": 2.220446049250313e-16,
+    "source_binding": 4.308824046522781e-16,
+    "semilinear_group": 6.106226635438361e-16,
+    "cell_unitarity": 2.220446049250313e-16,
+    "selected_decomposition": 4.710277376051326e-16,
+    "boundary_binding": 2.482534153247273e-16,
+    "source_period": 3.387880961136568e-16,
+    "period_covariance": 1.9119139715078642e-15,
+    "seam_binding": 3.376611507232129e-16,
+    "mirror_axial_spin": 2.220446049250313e-16,
+    "time_reversal_spin": 0
+  },
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "numpy": "2.5.2"
+  },
+  "contract_probes": [
+    {
+      "case": "overstated-scope-rebound",
+      "expected_stage": "contract",
+      "result": {
+        "status": "INVALID",
+        "stage": "contract",
+        "reason": "fixed scope and spin-convention declaration",
+        "passed": []
+      },
+      "exit_code": 2,
+      "problem_sha256": "91c5ac8eb21ef29950d0b325c51dd200292b25f4bcab4ecaccf9d7eb25c7c59d",
+      "certificate_sha256": "fe98c932b2ffc0882e8741b2083ebb8faacb1722f05e29e0237a540db3dda592",
+      "pass": true
+    },
+    {
+      "case": "missing-period-axes-rebound",
+      "expected_stage": "contract",
+      "result": {
+        "status": "INVALID",
+        "stage": "contract",
+        "reason": "global contract requires all three periodic axes",
+        "passed": []
+      },
+      "exit_code": 2,
+      "problem_sha256": "2d5ef0a2bff250ffac72e1129551e310b01834af19291ef98ffa1b0fc04a183a",
+      "certificate_sha256": "5b746c9ef410c853063d2444fcfe79a40cd6c1c39862a1034b26dda452ff524e",
+      "pass": true
+    },
+    {
+      "case": "nonobject-geometry-rebound",
+      "expected_stage": "contract",
+      "result": {
+        "status": "INVALID",
+        "stage": "contract",
+        "reason": "geometry problem must be an object",
+        "passed": []
+      },
+      "exit_code": 2,
+      "problem_sha256": "95bba311f899e3683a94a0bfdcb3ad0d0a1e767894a9213ef07f213f6e42a5dc",
+      "certificate_sha256": "76e680b6ad5d0a0b7f019de46ca539ed5f7b97f50bf540bfe7f23aabf0a4f450",
+      "pass": true
+    },
+    {
+      "case": "boolean-seam-axis",
+      "expected_stage": "period",
+      "result": {
+        "status": "INVALID",
+        "stage": "period",
+        "reason": "integer seam axis required",
+        "passed": [
+          "geometry",
+          "local",
+          "boundary"
+        ]
+      },
+      "exit_code": 2,
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "e61515dfbf63aa453347728a91e953521b0c952ca2c52cdfc84147c0046df688",
+      "pass": true
+    },
+    {
+      "case": "boolean-atlas-shift",
+      "expected_stage": "atlas",
+      "result": {
+        "status": "INVALID",
+        "stage": "atlas",
+        "reason": "integer atlas shift triple required",
+        "passed": [
+          "geometry",
+          "local",
+          "boundary",
+          "period"
+        ]
+      },
+      "exit_code": 2,
+      "problem_sha256": "b76a108f78ec6874c3623d1e6799f27e8808574a0d6a883f920499a144050c2e",
+      "certificate_sha256": "0e1d0f8746773988831f8cbe1aea8d912eed53b4f3b136e241c9cf1f630735a2",
+      "pass": true
+    }
+  ],
+  "reviewed_source_sha256": {
+    "exchange/fixtures/mirror/problem.json": "8acf5ae008cbfcd244cc812d5c1927a17fa7cfcf9900147da126d6714d1a722f",
+    "exchange/fixtures/mirror/certificate.json": "32b378778ef528f753e567ea49f93cb852cc409fc71798f728eaed3e0318f4a9",
+    "exchange/verify.py": "9e6d4d3c2cae65975a76b27f584e13617e609a5f8228fb41aa3fe02f59de51d0",
+    "reviews/review_exchange_independently.py": "927287ae02a513444008facbb3404e55dc69d394fad8ceb1640242b35bd5164b"
+  }
+}

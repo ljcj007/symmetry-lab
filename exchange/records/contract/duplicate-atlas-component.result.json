@@ -1,0 +1,11 @@
+{
+  "status": "INVALID",
+  "stage": "atlas",
+  "reason": "all actual lifted atlas overlap components",
+  "passed": [
+    "geometry",
+    "local",
+    "boundary",
+    "period"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PWSCF_7_5_BANNER_OBSERVED",
+  "returncode": 1,
+  "wall_seconds": 0.02728104591369629,
+  "executable": "<AUTHOR_WORKSPACE>\\research\\ncs-program\\phase13\\fe\\software\\qe-7.5\\bin\\pw.exe",
+  "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+  "archive_sha256": "e50ec7368a5b7a964eb5084e0a13464ba2628d4e147c16227e876002ea34fdf7",
+  "new_DFT_calculation": false,
+  "stdout_sha256": "a44ec47fbf1d82c8421fbecda0e8e50d6d4d72975ba963213476f132b867f382",
+  "stderr_sha256": "4f4dd88274e19c3bfb62ffe2dc2f4a8597406d321af5b756534f1fb3970f3016"
+}

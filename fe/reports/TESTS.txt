@@ -1,0 +1,24 @@
+test_CRLF_is_only_permitted_pseudopotential_change (test_fe.FeTests.test_CRLF_is_only_permitted_pseudopotential_change) ... ok
+test_baseline_change_detected (test_fe.FeTests.test_baseline_change_detected) ... ok
+test_closed_gap_prefix_is_unresolved (test_fe.FeTests.test_closed_gap_prefix_is_unresolved) ... ok
+test_gauge_mix_in_degenerate_cluster (test_fe.FeTests.test_gauge_mix_in_degenerate_cluster) ... ok
+test_initial_refinement_rejects_other_density_and_changed_raw_input (test_fe.FeTests.test_initial_refinement_rejects_other_density_and_changed_raw_input) ... ok
+test_missing_plane_wave_weight_rejected (test_fe.FeTests.test_missing_plane_wave_weight_rejected) ... ok
+test_nan_and_unsorted_rejected (test_fe.FeTests.test_nan_and_unsorted_rejected) ... ok
+test_old_cube_is_not_a_path_import (test_fe.FeTests.test_old_cube_is_not_a_path_import) ... ok
+test_opposite_spin_lift_is_not_same_active_rotation (test_fe.FeTests.test_opposite_spin_lift_is_not_same_active_rotation) ... ok
+test_path_is_z_and_default_win_is_x (test_fe.FeTests.test_path_is_z_and_default_win_is_x) ... ok
+test_real_crossing_changes_prefix_labels (test_fe.FeTests.test_real_crossing_changes_prefix_labels) ... ok
+test_real_published_endpoints_from_raw_coefficients (test_fe.FeTests.test_real_published_endpoints_from_raw_coefficients) ... ok
+test_reference_cutoffs_and_path_input (test_fe.FeTests.test_reference_cutoffs_and_path_input) ... ok
+test_refinement_rejects_bad_or_missing_energy_covariance (test_fe.FeTests.test_refinement_rejects_bad_or_missing_energy_covariance) ... ok
+test_same_labels_do_not_claim_global_gap (test_fe.FeTests.test_same_labels_do_not_claim_global_gap) ... ok
+test_signed_branch_energy_order_reverses (test_fe.FeTests.test_signed_branch_energy_order_reverses) ... ok
+test_spinless_operator_rejected (test_fe.FeTests.test_spinless_operator_rejected) ... ok
+test_spinor_double_cover (test_fe.FeTests.test_spinor_double_cover) ... ok
+test_unoccupied_rotation_across_energy_rejected (test_fe.FeTests.test_unoccupied_rotation_across_energy_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.156s
+
+OK

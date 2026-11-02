@@ -1,6 +1,0 @@
-{
-  "action": "algebra",
-  "operation": "nullspace",
-  "matrix": [["a", "sqrt(2)", 0], [0, 0, "a"]],
-  "assumptions": {"a": "real"}
-}

@@ -1,0 +1,134 @@
+{
+  "repo": "wannier-berri/wannier-berri",
+  "commit": "41e5b7cf753e71854900433c340cba5302efe82f",
+  "downloaded_at_utc": "2026-11-02T11:45:12.747419+00:00",
+  "files": [
+    {
+      "path": "Fe_pw_scf_in",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe_pw_scf_in",
+      "bytes": 535,
+      "sha256": "2aa8218d2ed0bc42e698ddad65392af7cb9c65423062c0eb76e000a6ad559360",
+      "git_blob_sha1": "465faa620a1f0c8f7e47d1ad28e13cb144bd16c1"
+    },
+    {
+      "path": "Fe_pw_nscf_in",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe_pw_nscf_in",
+      "bytes": 966,
+      "sha256": "2d49b287c992cc972f86714bd58ae02eee36152b037e7c8a4d7190ff33095568",
+      "git_blob_sha1": "8519c4c30c3715cb0ee8be89191898a7db400a6c"
+    },
+    {
+      "path": "Fe.win",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.win",
+      "bytes": 1197,
+      "sha256": "c8728ad6c04783473c63dffcf39fa95ac0f5928bf07b7c35e5cf4214ea037b0c",
+      "git_blob_sha1": "9646542bad9d3413a2cfca31f78bd45b666eb8e9"
+    },
+    {
+      "path": "Fe.save/data-file-schema.xml",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/data-file-schema.xml",
+      "bytes": 51937,
+      "sha256": "9ddd1ccdf0c7109b2244d9784eda1218b2e31926751e2aef92b3553cf610c325",
+      "git_blob_sha1": "4acee6e8700105c9fda065838004f5e9d233819a"
+    },
+    {
+      "path": "Fe.save/wfc1.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc1.dat",
+      "bytes": 1808240,
+      "sha256": "814603a736b780ccd2bfe79808cf6bff5bfa35b78031ad5b68ffda03c5a9ffa5",
+      "git_blob_sha1": "675fbe814e7e9658ff67f571e26dbea0a7cf03c8"
+    },
+    {
+      "path": "Fe.save/wfc2.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc2.dat",
+      "bytes": 1829996,
+      "sha256": "a443cf61c42c7ef3afb9ab7d47864291fa279c10a799a00da8dc77ca3977c7e0",
+      "git_blob_sha1": "3cc6a1afc7fafb9349a3d0299027795666954639"
+    },
+    {
+      "path": "Fe.save/wfc3.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc3.dat",
+      "bytes": 1829996,
+      "sha256": "92a50f3695707defe59497fde2198fea95ec9f47d7ee3ef64cd5ce5c9ca9f4ff",
+      "git_blob_sha1": "f3d5b5a29d5c64ce7a2fa307c1ebeb9a1e2d390c"
+    },
+    {
+      "path": "Fe.save/wfc4.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc4.dat",
+      "bytes": 1829996,
+      "sha256": "dcf06f22301cb14beac8bb4ec6be23a8281c6683265e86195e64cb94fcb83703",
+      "git_blob_sha1": "d535d6b8c6f54b8afb97189e5a01cb476956543e"
+    },
+    {
+      "path": "Fe.save/wfc5.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc5.dat",
+      "bytes": 1829996,
+      "sha256": "131112d67e3b269f646781d4a52d9688ba74df3dcc4174370052d31974deed36",
+      "git_blob_sha1": "29899323d637bbb615889f1313edaa6997a23a0b"
+    },
+    {
+      "path": "Fe.save/wfc6.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc6.dat",
+      "bytes": 1829996,
+      "sha256": "03d72823e249a490724b093e1a6d504b2e3ccd4352faf379bc69bf80df4f3823",
+      "git_blob_sha1": "4f68d414be86703f541ae3e430fd601fd4dbe57d"
+    },
+    {
+      "path": "Fe.save/wfc7.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc7.dat",
+      "bytes": 1829996,
+      "sha256": "846a3543b0187663f60d039471eae9e3cf35653eda039605b2c7d56bb7b2d09c",
+      "git_blob_sha1": "9f6b6afa264a39bfd0faf37fbb254f0c54356e7d"
+    },
+    {
+      "path": "Fe.save/wfc8.dat",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/wfc8.dat",
+      "bytes": 1896300,
+      "sha256": "4c53e395ddfbe11f26edfa82230cd5bece917c20d982d7d541f24051c6054451",
+      "git_blob_sha1": "7e1867c9d22daa541d8cff4bc8d02eaf79dd5cf4"
+    },
+    {
+      "path": "Fe.save/Fe.jry.pbe.UPF",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.save/Fe.jry.pbe.UPF",
+      "bytes": 289235,
+      "sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "git_blob_sha1": "5c9ffb86a051f100aa47f06071ceb79c9093cae7"
+    },
+    {
+      "path": "LICENSE.wannierberri",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/LICENSE",
+      "bytes": 17990,
+      "sha256": "ddb9db7630752f8fdc6898f7c99a99eaeeac5213627ecb093df9c82f56175dc7",
+      "git_blob_sha1": "f90922eea38e2ece3344ba02c28b620b1c8ef56b"
+    },
+    {
+      "path": "Fe.mmn.npz",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.mmn.npz",
+      "bytes": 1464345,
+      "sha256": "4a23c0daf3ce8614f457a1837980b0ca8dfbc8ceabab370786ad8504c2bd2f60",
+      "git_blob_sha1": "42ba8e7e0d0e0931155c17cfd398aa3e98663ee9"
+    },
+    {
+      "path": "Fe.eig.npz",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.eig.npz",
+      "bytes": 3796,
+      "sha256": "0adc4c0779c057456aa9c14cc301c8d57cdc7fccc2a2645f3aa1f9bb987fe997",
+      "git_blob_sha1": "962a68da59853c281529f21488ef9af9bd2abdda"
+    },
+    {
+      "path": "Fe.bkvec.npz",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.bkvec.npz",
+      "bytes": 9260,
+      "sha256": "b86c2689e66afa95bf244e98feed174f609fc0ce8fe27505f9eb459cefd94c96",
+      "git_blob_sha1": "ea2f2e2c0781171581b294a51c54313696dd7b18"
+    },
+    {
+      "path": "Fe.nnkp",
+      "url": "https://raw.githubusercontent.com/wannier-berri/wannier-berri/41e5b7cf753e71854900433c340cba5302efe82f/tests/data/Fe-222-pw/Fe.nnkp",
+      "bytes": 6486,
+      "sha256": "b13e6804d5f764e216d003c800ad0cb740f38cbdf9b986e22ff4e4e7dbc88dd2",
+      "git_blob_sha1": "92407527266ac2332435f630ff82b45d68b63160"
+    }
+  ],
+  "overlap_files_downloaded_at_utc": "2026-11-02T11:56:54.083105+00:00"
+}

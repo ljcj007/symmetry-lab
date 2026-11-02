@@ -1,0 +1,1524 @@
+{
+  "status": "PASS",
+  "scope": "Independent raw binary C4 eigenvalue, energy, and provenance audit. Numerical finite-k evidence, not rigorous DFT error control.",
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "numpy": "2.5.2"
+  },
+  "source_manifest_files_verified": 18,
+  "source_commit": "41e5b7cf753e71854900433c340cba5302efe82f",
+  "qe_archive": {
+    "status": "PASS",
+    "sha256": "e50ec7368a5b7a964eb5084e0a13464ba2628d4e147c16227e876002ea34fdf7",
+    "bytes": 400430691,
+    "scope": "Byte identity with recorded distributor digest; not independent compiler audit."
+  },
+  "analyses": {
+    "fe/reports/OLD_8_POINT_ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 2,
+      "resolved_prefixes": 2,
+      "resolved_clusters": 36,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.1102230246251565e-16,
+        "binary_xml_k": 0.0,
+        "prefix_root_distance": 4.867286621919703e-15,
+        "cluster_root_distance": 3.6654177513682334e-15,
+        "covariance_difference_eV": 1.713623551015162e-17
+      },
+      "source_files_checked": 4,
+      "pseudopotential_raw_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.8035056949620836e-11,
+      "minimum_sampled_delta18_eV": 0.8557864759334777,
+      "analysis_sha256": "452d7f536690ca6848073cae2e9eb072929e54421b1db77bd77f115f67447f84"
+    },
+    "fe/experiments/convergence_12mesh/baseline8/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 2,
+      "resolved_prefixes": 2,
+      "resolved_clusters": 36,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.1102230246251565e-16,
+        "binary_xml_k": 0.0,
+        "prefix_root_distance": 3.611212654972683e-15,
+        "cluster_root_distance": 3.1421469200065623e-15,
+        "covariance_difference_eV": 5.648238316626763e-17
+      },
+      "source_files_checked": 4,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 5.573126309250149e-12,
+      "minimum_sampled_delta18_eV": 0.8500896575052046,
+      "analysis_sha256": "f7f1218681dd8b9f32b35042d6595808e5dfd78c1d0822ca94b556eea9156edf"
+    },
+    "fe/experiments/convergence_12mesh/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 101,
+      "resolved_prefixes": 101,
+      "resolved_clusters": 1917,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.6653345369377348e-16,
+        "binary_xml_k": 2.220446049250313e-16,
+        "prefix_root_distance": 6.017777490926536e-15,
+        "cluster_root_distance": 3.853929388444262e-15,
+        "covariance_difference_eV": 4.611273957868999e-16
+      },
+      "source_files_checked": 103,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 5.573126309250149e-12,
+      "minimum_sampled_delta18_eV": 0.012848472208553119,
+      "analysis_sha256": "4eb096c0b7f30fa48c09f6a7398c34e43fba3cda2b8dde15740dfd9ac4812d3c"
+    },
+    "fe/experiments/convergence_8mesh/baseline8/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 2,
+      "resolved_prefixes": 2,
+      "resolved_clusters": 36,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.1102230246251565e-16,
+        "binary_xml_k": 0.0,
+        "prefix_root_distance": 4.161485559260061e-15,
+        "cluster_root_distance": 3.510833468576701e-15,
+        "covariance_difference_eV": 9.576230960772332e-17
+      },
+      "source_files_checked": 4,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 4.715279015358616e-12,
+      "minimum_sampled_delta18_eV": 0.7907264293471563,
+      "analysis_sha256": "c5884b7cb0cf7fe843fac07901ea35011993db645645db1e2181e7699a76f3bd"
+    },
+    "fe/experiments/convergence_8mesh/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 101,
+      "resolved_prefixes": 101,
+      "resolved_clusters": 1917,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.6653345369377348e-16,
+        "binary_xml_k": 2.220446049250313e-16,
+        "prefix_root_distance": 6.972342022896242e-15,
+        "cluster_root_distance": 4.157040317942297e-15,
+        "covariance_difference_eV": 4.1358263542824835e-16
+      },
+      "source_files_checked": 103,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 2.4516256164426316e-11,
+      "minimum_sampled_delta18_eV": 0.0115273175528543,
+      "analysis_sha256": "66b69f3ccedd90654be7c986833c9a5ea20402a6f9e386edf9973b930ddce6bf"
+    },
+    "fe/experiments/fine_101/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 101,
+      "resolved_prefixes": 101,
+      "resolved_clusters": 1916,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.6653345369377348e-16,
+        "binary_xml_k": 2.220446049250313e-16,
+        "prefix_root_distance": 1.1082784313214814e-14,
+        "cluster_root_distance": 4.239249638446193e-15,
+        "covariance_difference_eV": 4.972415495095217e-16
+      },
+      "source_files_checked": 103,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 2.1943126418610707e-11,
+      "minimum_sampled_delta18_eV": 0.0010912787555170667,
+      "analysis_sha256": "202f7743102b21903f6a4fa0eb8d14506cdbde09eecfd35bfadaf2eb17c2a162"
+    },
+    "fe/experiments/reference_17/baseline8/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 2,
+      "resolved_prefixes": 2,
+      "resolved_clusters": 36,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.1102230246251565e-16,
+        "binary_xml_k": 0.0,
+        "prefix_root_distance": 3.4273359795629357e-15,
+        "cluster_root_distance": 2.531698018113677e-15,
+        "covariance_difference_eV": 5.671722828442432e-17
+      },
+      "source_files_checked": 4,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.607519113486961e-11,
+      "minimum_sampled_delta18_eV": 0.8557864759332894,
+      "analysis_sha256": "b1c985e26096fb5e66247ff4a7e9274580ff6902f85b734cdaa8888630b6799a"
+    },
+    "fe/experiments/reference_17/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 17,
+      "resolved_prefixes": 17,
+      "resolved_clusters": 320,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 1.6653345369377348e-16,
+        "binary_xml_k": 2.220446049250313e-16,
+        "prefix_root_distance": 4.669540497562317e-15,
+        "cluster_root_distance": 3.2652638748082427e-15,
+        "covariance_difference_eV": 2.049323771962372e-16
+      },
+      "source_files_checked": 19,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.607519113486961e-11,
+      "minimum_sampled_delta18_eV": 0.03034420905609636,
+      "analysis_sha256": "93baa56c588dda2bdfe553aafc7b02f3818ba09c1282c9a272e6ba3249baf7a9"
+    },
+    "fe/experiments/refined_12mesh/round_01/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 7,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 2.7755575615628914e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 8.636935761597507e-15,
+        "cluster_root_distance": 3.636721891222372e-15,
+        "covariance_difference_eV": 2.6122399671136905e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.2890053983396777e-13,
+      "minimum_sampled_delta18_eV": 0.00042120266125778016,
+      "analysis_sha256": "d2f27761efa14d36243751c0afa589ffe5d3d13b3bfe7f55a45eae2cc0c48167"
+    },
+    "fe/experiments/refined_12mesh/round_02/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 9,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 8.326672684688674e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 8.188600426433445e-15,
+        "cluster_root_distance": 3.697226037623726e-15,
+        "covariance_difference_eV": 3.772766436140482e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.0433067453083596e-13,
+      "minimum_sampled_delta18_eV": 0.0025364531385179134,
+      "analysis_sha256": "7806aa6d05a727c193a682d475e8ec9cc00ef5ad35bfe71ba4e2df34921839af"
+    },
+    "fe/experiments/refined_12mesh/round_03/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 5,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 5.551115123125783e-17,
+        "prefix_root_distance": 4.352584022962493e-15,
+        "cluster_root_distance": 2.7487830685268716e-15,
+        "covariance_difference_eV": 2.740998480742772e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.154229258114072e-13,
+      "minimum_sampled_delta18_eV": 0.00021966405923734555,
+      "analysis_sha256": "35668579c0e6f1938e788514414bbe95ad42d4e2bd86074a656e2c12ab695146"
+    },
+    "fe/experiments/refined_12mesh/round_04/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 170,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.531698018113677e-15,
+        "covariance_difference_eV": 1.4648379187911881e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.0603112077156397e-13,
+      "minimum_sampled_delta18_eV": 8.530090177316652e-06,
+      "analysis_sha256": "cef3c9162a594bc0c83bb6c4820a6dad1c52d7788a9cdd88d23f71a748673452"
+    },
+    "fe/experiments/refined_12mesh/round_05/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 169,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 2.7755575615628914e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 3.853929388444262e-15,
+        "covariance_difference_eV": 2.7105666737626985e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.1056454433035333e-13,
+      "minimum_sampled_delta18_eV": 5.45667615625689e-06,
+      "analysis_sha256": "a7a43a7253de1826e10678bbeaaebab6a89be63871010511fa113cc9e1a61c50"
+    },
+    "fe/experiments/refined_12mesh/round_06/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 3,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 56,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 0.0,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.1812421540521875e-15,
+        "covariance_difference_eV": 6.155022162761918e-17
+      },
+      "source_files_checked": 5,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 8.191042263843282e-14,
+      "minimum_sampled_delta18_eV": 8.530090177316652e-06,
+      "analysis_sha256": "af6e5821b3519ffb47ae81445783cb9098d1f8268372803cafd81bb7f29569a1"
+    },
+    "fe/experiments/refined_4mesh/round_01/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 9,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 4.167405171867302e-15,
+        "cluster_root_distance": 2.132668787380004e-15,
+        "covariance_difference_eV": 1.6782549440547836e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 9.041522110274871e-14,
+      "minimum_sampled_delta18_eV": 0.006826765733741524,
+      "analysis_sha256": "80d6d666c0ffb5300c70ee0dc06e5bf65e3a96a7120dffb1c21412fee8d21213"
+    },
+    "fe/experiments/refined_4mesh/round_02/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 7,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 5.1034043367087296e-15,
+        "cluster_root_distance": 3.070725159912542e-15,
+        "covariance_difference_eV": 2.3657973275543714e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 9.939015720585302e-14,
+      "minimum_sampled_delta18_eV": 0.00011668107524798188,
+      "analysis_sha256": "a2130011113232f8ba4e0b08ac3b3bf345b86c1168d791f086e2b03d323b582d"
+    },
+    "fe/experiments/refined_4mesh/round_03/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 5,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 5.551115123125783e-17,
+        "prefix_root_distance": 4.1213057840373734e-15,
+        "cluster_root_distance": 3.602669438238049e-15,
+        "covariance_difference_eV": 4.3656480375290405e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.0125857141412101e-13,
+      "minimum_sampled_delta18_eV": 0.00024032168546739285,
+      "analysis_sha256": "eeff1db6c8cc6bc8f9dc0fa010781e711d77033ce2c242c8eb0bee287d362410"
+    },
+    "fe/experiments/refined_4mesh/round_04/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.7487830685268716e-15,
+        "covariance_difference_eV": 1.1370844849529388e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 9.668380803166854e-14,
+      "minimum_sampled_delta18_eV": 2.8221584578602688e-05,
+      "analysis_sha256": "98a46d7ac4be7a17d6add2038a31e99f81cfe6e29aefa28618a260549bb26cc2"
+    },
+    "fe/experiments/refined_4mesh/round_05/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 3.3839044131518772e-15,
+        "covariance_difference_eV": 2.109213438184856e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.2015562686031328e-13,
+      "minimum_sampled_delta18_eV": 1.2269280333043753e-05,
+      "analysis_sha256": "37a8774a3114d7a1e34549a5b620fc79364adee66c16ca705627025a2c11165f"
+    },
+    "fe/experiments/refined_8mesh/round_01/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 8,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 5.551115123125783e-17,
+        "prefix_root_distance": 5.181305113656458e-15,
+        "cluster_root_distance": 3.6654177513682334e-15,
+        "covariance_difference_eV": 2.923060878373829e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 9.832164570519129e-14,
+      "minimum_sampled_delta18_eV": 0.0009344660620911327,
+      "analysis_sha256": "5173590ae3fdff34349d9dcc7de3e338189c9e186527ae71d8ae4f9b3808ecf2"
+    },
+    "fe/experiments/refined_8mesh/round_02/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 7,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 5.843191427130974e-15,
+        "cluster_root_distance": 3.3009303617866924e-15,
+        "covariance_difference_eV": 4.322390678619537e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.0328090296875013e-13,
+      "minimum_sampled_delta18_eV": 7.680496286610605e-05,
+      "analysis_sha256": "b72d5e392d14ee28913c8223639ce9b9a003723ef2d76b209e23042bb68fe49b"
+    },
+    "fe/experiments/refined_8mesh/round_03/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 4,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 4.220308060520365e-15,
+        "cluster_root_distance": 2.7487830685268716e-15,
+        "covariance_difference_eV": 2.0115300256504984e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 8.280601939872523e-14,
+      "minimum_sampled_delta18_eV": 2.0884606179549792e-05,
+      "analysis_sha256": "237f62d3c8cc3275ddea5614cbbe90468f05fe5fc035a7fc244fa6b11c0d819c"
+    },
+    "fe/experiments/refined_8mesh/round_04/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 2.7755575615628914e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.933174772761872e-15,
+        "covariance_difference_eV": 1.1923254511407136e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 8.692621502932819e-14,
+      "minimum_sampled_delta18_eV": 0.00013867582057258687,
+      "analysis_sha256": "54c5ccc2b69ab8dd357092384485afb6d721d7cf5923ad456380acb292bb3549"
+    },
+    "fe/experiments/refined_8mesh/round_05/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 9,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 171,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.987304636342383e-15,
+        "covariance_difference_eV": 1.6189047040897534e-16
+      },
+      "source_files_checked": 11,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 9.524269032767954e-14,
+      "minimum_sampled_delta18_eV": 2.169182770472844e-05,
+      "analysis_sha256": "b71bdd6fc9c803058bbbed1d84ead91a6bad5130cae666c9c25f8e133e758de9"
+    },
+    "fe/experiments/strict_12mesh/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 6,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 114,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 3.1811328642149315e-15,
+        "covariance_difference_eV": 2.0997242688617046e-16
+      },
+      "source_files_checked": 8,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.1923614257882315e-13,
+      "minimum_sampled_delta18_eV": 1.2860313304940973e-05,
+      "analysis_sha256": "070e0619d2e296e321aa57443545f7fc02ad93522cab5536874323d458c27900"
+    },
+    "fe/experiments/strict_4mesh/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 6,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 114,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 3.771491508311582e-15,
+        "covariance_difference_eV": 7.594496805194359e-17
+      },
+      "source_files_checked": 8,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.2678119738664673e-13,
+      "minimum_sampled_delta18_eV": 1.226928034014918e-05,
+      "analysis_sha256": "25ee557df4eea6fb6cccaf7c67047fc44fb19e6e0fb12d0d57584328a4fbfd71"
+    },
+    "fe/experiments/strict_8mesh/path/ANALYSIS.json": {
+      "status": "PASS",
+      "raw_points": 6,
+      "resolved_prefixes": 0,
+      "resolved_clusters": 114,
+      "maxima": {
+        "energy_difference_eV": 0.0,
+        "q_difference": 5.551115123125783e-17,
+        "binary_xml_k": 1.1102230246251565e-16,
+        "prefix_root_distance": 0.0,
+        "cluster_root_distance": 2.987304636342383e-15,
+        "covariance_difference_eV": 2.618218620343528e-16
+      },
+      "source_files_checked": 8,
+      "pseudopotential_raw_sha256": "570320d994a97cede7fb1250dbcc8db0cc3174599e1c332b088063da41b6bccd",
+      "pseudopotential_LF_sha256": "371345212f2e0e81bfb97b9562099b39e3901399513a980386643bff2c3270d5",
+      "max_recorded_energy_covariance_eV": 1.132791566899982e-13,
+      "minimum_sampled_delta18_eV": 2.0884606307447484e-05,
+      "analysis_sha256": "2fd200cffef031fbb2dd27ab52f083e9848756575fad865ebfeaece4f26569b6"
+    }
+  },
+  "executions": {
+    "fe/experiments/convergence_12mesh/baseline8/RUN.json": {
+      "status": "PASS",
+      "stage": "baseline8",
+      "run_sha256": "7ff8eda2fc4357631f3ec61802dd78e25a9d1e1991ebbbc84e761a601116fd57",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.309954881668091,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/convergence_12mesh/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "73ca0cad705791e4cb99ee37c60369a6c689806566ece5c9a2f29065607d7306",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 51.09990215301514,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/convergence_12mesh/scf/RUN.json": {
+      "status": "PASS",
+      "stage": "scf",
+      "run_sha256": "c07d46a719d30286ff7ce36919b141b058d04742d04ad58bf2e461922006d05a",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 71.96967339515686,
+      "diagonalization_thresholds": [
+        "1.00E-02",
+        "5.95E-03",
+        "5.95E-03",
+        "1.44E-04",
+        "3.65E-05",
+        "6.86E-06",
+        "6.86E-06",
+        "1.07E-07",
+        "5.75E-09",
+        "1.71E-09"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/convergence_8mesh/baseline8/RUN.json": {
+      "status": "PASS",
+      "stage": "baseline8",
+      "run_sha256": "ddd858285a5ad6367c29c0877c3be7f57ec08f4582919854483c84d14742fa5e",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 4.217501640319824,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/convergence_8mesh/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "c2c76de5c2dd6d85d4d03cd20c92968fb1b6035ba9edadcf9d20e5ca14a80155",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 51.501824617385864,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/convergence_8mesh/scf/RUN.json": {
+      "status": "PASS",
+      "stage": "scf",
+      "run_sha256": "cd42e2f18778af119a6b6d20d8b2b8a62cc85c3ea0d221875f24702120864c3f",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 27.797435760498047,
+      "diagonalization_thresholds": [
+        "1.00E-02",
+        "5.95E-03",
+        "5.95E-03",
+        "1.34E-04",
+        "1.89E-05",
+        "7.58E-06",
+        "4.70E-06",
+        "7.39E-07",
+        "6.18E-08",
+        "1.90E-09",
+        "8.61E-10"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/fine_101/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "fce19bf31053fcb349cc9958898f35d8f033e6c5fe48683693a4440b3a003b65",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 51.166494846343994,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/reference_17/baseline8/RUN.json": {
+      "status": "PASS",
+      "stage": "baseline8",
+      "run_sha256": "5a84d9ea512040422d5b614b5012b01cfdbe50ce198b2f411c97d304830a989f",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.245873212814331,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/reference_17/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "194fa36849c72d5fd183bd7c489185739edf70f439c9aa0b299c0d66b96a9b9c",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 9.029234170913696,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/reference_17/scf/RUN.json": {
+      "status": "PASS",
+      "stage": "scf",
+      "run_sha256": "03f68389b22fc92a3984ac104f3baf9681f1f0cebf06b9f74e88d0738d51f794",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 5.468933343887329,
+      "diagonalization_thresholds": [
+        "1.00E-02",
+        "6.40E-03",
+        "6.40E-03",
+        "1.76E-04",
+        "1.02E-04",
+        "8.52E-07",
+        "3.20E-07",
+        "4.13E-09",
+        "2.90E-09"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_01/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "a68455c7a3181fb38287407f1e2301b3cf53c10c3d76d2a711aeec10724687bf",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.379124402999878,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_02/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "aee72c633d0ee390adce6f97c0ae6fbfc2361893809c944abbbb871c5afb3056",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.366529226303101,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_03/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "850f01084ada1ba2548c9aebe7d991d0cffffec496078b9e4df02612426722d3",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.387946605682373,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_04/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "52257251ff35f473e52f45354e63d0ae9ba347eeb983c35b40a8fa3b333efdf3",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.401529312133789,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_05/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "3b19ee0bf0ff96585a7d698d4cf0e95dea0b900466d2314d970342e75389d2cc",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 4.407109498977661,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_12mesh/round_06/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "cf1bd4a543b3d07c5985c8cbf4b5f59b1eb3a282adac04ff9f175bb39629361c",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 1.8067951202392578,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_4mesh/round_01/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "3be0981aef06f90e7fa79c539cc5420f0833bc9468c28c17aa7c1b298d385c9d",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.3742852210998535,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_4mesh/round_02/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "31d191996e8c552cb6d093442c1880a26b967eb809919b75bf3a53374b3cf2c8",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.612488031387329,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_4mesh/round_03/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "9634cc9c6b2f9061fd1961ae01662390c11eb9d3ecccc2069021436d6694fd1a",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.42591404914856,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_4mesh/round_04/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "11bb11fb3fc587dd508611584916ae40f807b620a468c4f65151d949c1e57072",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.4477152824401855,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_4mesh/round_05/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "2476a695968f8ebcf1ea7cc1a4acc518485fbc5531669a5e52a999152875865e",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 4.666421890258789,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "not recorded in initial launch format",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_8mesh/round_01/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "f65937ccff7749abb7bf41b1222871e31534186900bf9d2f2a0522d5884aed12",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 4.978785753250122,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_8mesh/round_02/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "bbc748a836611a83bdfd13bdee882962a892ead0bb691ccdcdbc3d291d4ea484",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 5.018582105636597,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_8mesh/round_03/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "9772304a653fd58de125b787443b0ccd1ffccb5e0163e8c691348f45a0d6548d",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 5.332621335983276,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_8mesh/round_04/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "3c04f3c6a899b95bfe205d5a86dbab268245e89250d015e783b0c52e0f7cff78",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 5.354642629623413,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/refined_8mesh/round_05/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "0587bb9844426290b739f2b67fbbf39198237cf9f506852cdaec92038fc34dff",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 5.174600124359131,
+      "diagonalization_thresholds": [
+        "1.25E-12"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/strict_12mesh/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "d5da364b3ce956982e0799709b1dd13048caa8c5d22f5be61876f65fcd00afab",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "37c590e79c7130c4e5c278203f3cc5064eacc0433fbd26a2709efbce65a9f14c"
+      },
+      "wall_seconds": 3.2720158100128174,
+      "diagonalization_thresholds": [
+        "1.00E-13"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/strict_4mesh/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "d460a8b2f4e68d6a6c779d42b12a8d1a3a6b8fc99ca2b51c2f4615159b41248e",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "7a9b711faa0f834a3446634915bf3f512a9a12ff239aed36b061ed884a15f96c"
+      },
+      "wall_seconds": 3.359530448913574,
+      "diagonalization_thresholds": [
+        "1.00E-13"
+      ],
+      "purpose": "PUBLISHED_4MESH_PROFILE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    },
+    "fe/experiments/strict_8mesh/path/RUN.json": {
+      "status": "PASS",
+      "stage": "path",
+      "run_sha256": "698088caf374be721bef9187f02b5fc9d241b832251a1aa156da52e5dec50981",
+      "executable_sha256": "287ea5f329fd31d68f55516747ee6d67e5fdab7d05eb67403538944c54df0107",
+      "density_sha256": {
+        "charge-density.dat": "4b0101e9314cfe629eb8132a7fa737a03462e40963148e4b20ebf46c9e278c98"
+      },
+      "wall_seconds": 3.374624252319336,
+      "diagonalization_thresholds": [
+        "1.00E-13"
+      ],
+      "purpose": "SCF_MESH_CONVERGENCE_NOT_SOURCE_REPRODUCTION",
+      "source_SCF_equals_original_missing_SCF_proved": false
+    }
+  },
+  "baseline": {
+    "status": "REPRODUCED_WITHIN_DECLARED_NUMERICAL_PROFILE",
+    "absolute_max_energy_difference_eV": 2.5083254939772814e-07,
+    "mean_energy_difference_eV": -9.852886145855777e-10,
+    "energy_tolerance_eV": 0.05,
+    "energy_offset_fitted_or_removed": false,
+    "c4_prefix_multiplicities_match": true,
+    "compared_C4_invariant_points": 2,
+    "same_original_SCF_Hamiltonian_proved": false,
+    "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+  },
+  "baseline_energy_count": 256,
+  "baseline_no_energy_shift_removed": true,
+  "refinements": {
+    "fe/experiments/refined_12mesh/RESULT.json": {
+      "status": "PASS",
+      "summary_sha256": "959500c981e25e64f804c97d6efd0a07e5e6d600229e57414c9689787f0015f9",
+      "intervals": [
+        {
+          "t_interval": [
+            0.1137841796875,
+            0.1137890625
+          ],
+          "t_width": 4.882812499995559e-06,
+          "C4_phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            1.2860313141516144e-05,
+            -4.525904829222327e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1773,
+              1773
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.2295395782397236,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.18884277343749997,
+            0.1888525390625
+          ],
+          "t_width": 9.765625000018874e-06,
+          "C4_phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            4.854388131292353e-05,
+            -6.562100554674544e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1761,
+              1761
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.029036438734664216,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.231298828125,
+            0.23130859375
+          ],
+          "t_width": 9.765625000018874e-06,
+          "C4_phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            5.67205830606099e-05,
+            -4.580392823783086e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1765,
+              1765
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.1612031321366345,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        }
+      ]
+    },
+    "fe/experiments/refined_4mesh/RESULT.json": {
+      "status": "PASS",
+      "summary_sha256": "e4d0e953354c9a133e5cf50f98182ab89b00c579798d9ada5eae2c6cfac97bf4",
+      "intervals": [
+        {
+          "t_interval": [
+            0.11529785156249998,
+            0.115302734375
+          ],
+          "t_width": 4.882812500009437e-06,
+          "C4_phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            3.739091171439668e-05,
+            -1.6851787876248636e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1773,
+              1773
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.17079390028362695,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.18489746093750004,
+            0.18490234374999998
+          ],
+          "t_width": 4.882812499940048e-06,
+          "C4_phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.4763389696147442e-05,
+            -2.8221584578602688e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1761,
+              1761
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.015771771525251665,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.229384765625,
+            0.2293896484375
+          ],
+          "t_width": 4.882812500023315e-06,
+          "C4_phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            1.2269280333043753e-05,
+            -3.993161841009396e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1765,
+              1765
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.15566121298603264,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        }
+      ]
+    },
+    "fe/experiments/refined_8mesh/RESULT.json": {
+      "status": "PASS",
+      "summary_sha256": "981418ddb2cd72ad0ebdaab05d000f6df9172ce5ee3ff8ee1f2c6958420bbda0",
+      "intervals": [
+        {
+          "t_interval": [
+            0.1159423828125,
+            0.115947265625
+          ],
+          "t_width": 4.882812500009437e-06,
+          "C4_phase_eighths_a_b": [
+            5,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.169182770472844e-05,
+            -3.337487233068259e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1773,
+              1773
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.1457721437357975,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.1863330078125,
+            0.186337890625
+          ],
+          "t_width": 4.882812499995559e-06,
+          "C4_phase_eighths_a_b": [
+            1,
+            5
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.270808285942394e-05,
+            -3.107040708982822e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1761,
+              1761
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.020617614150509667,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        },
+        {
+          "t_interval": [
+            0.236796875,
+            0.23680175781249999
+          ],
+          "t_width": 4.882812499995559e-06,
+          "C4_phase_eighths_a_b": [
+            3,
+            1
+          ],
+          "signed_gap_Eb_minus_Ea_eV": [
+            2.0884606179549792e-05,
+            -2.6738847786589304e-05
+          ],
+          "plane_wave_interval_check": {
+            "endpoint_npw": [
+              1765,
+              1765
+            ],
+            "endpoint_G_sets_equal": true,
+            "finite_G_candidates": 9261,
+            "integer_coordinate_bounds": [
+              10,
+              10,
+              10
+            ],
+            "possible_cutoff_crossings_in_closed_interval": 0,
+            "minimum_numeric_cutoff_margin_Ry": 0.17690323059488833,
+            "fixed_basis_supported_numerically": true,
+            "scope": "Exhaustive finite G candidates bounded by the dual lattice, quadratic kinetic-energy extrema; floating arithmetic, not rigorous interval arithmetic."
+          }
+        }
+      ]
+    }
+  },
+  "inversion_fault": {
+    "status": "PASS",
+    "report_sha256": "94cc4bf315cd5176a2aabfb84693b2200c63cdbb9585fa89273263d9a5bb6045",
+    "endpoints": [
+      {
+        "index": 1,
+        "physical_binding_residual": 2.730793827277121e-10,
+        "forged_binding_residual": 1.9999999999999996,
+        "joint_eigenspace_count_matches": true
+      },
+      {
+        "index": 8,
+        "physical_binding_residual": 9.10241596857169e-12,
+        "forged_binding_residual": 2.000000000000001,
+        "joint_eigenspace_count_matches": true
+      }
+    ],
+    "scope": "Independent raw decoder and C4 nullspace/parity eigenspace counts; numerical, unitary subgroup only."
+  },
+  "strict_endpoint_repeats": {
+    "4": {
+      "status": "PASS",
+      "conv_thr_Ry": 1e-12,
+      "max_energy_change_eV": 3.8042458072595764e-11,
+      "endpoint_pairs": [
+        {
+          "t_interval": [
+            0.11529785156249998,
+            0.115302734375
+          ],
+          "strict_signed_gaps_eV": [
+            3.739091163623698e-05,
+            -1.6851787663085815e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.18489746093750004,
+            0.18490234374999998
+          ],
+          "strict_signed_gaps_eV": [
+            2.4763389639304023e-05,
+            -2.8221584713605807e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.229384765625,
+            0.2293896484375
+          ],
+          "strict_signed_gaps_eV": [
+            1.226928034014918e-05,
+            -3.993161841009396e-05
+          ]
+        }
+      ],
+      "analysis_sha256": "25ee557df4eea6fb6cccaf7c67047fc44fb19e6e0fb12d0d57584328a4fbfd71"
+    },
+    "8": {
+      "status": "PASS",
+      "conv_thr_Ry": 1e-12,
+      "max_energy_change_eV": 3.064570819333312e-11,
+      "endpoint_pairs": [
+        {
+          "t_interval": [
+            0.1159423828125,
+            0.115947265625
+          ],
+          "strict_signed_gaps_eV": [
+            2.169182767630673e-05,
+            -3.33748723591043e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.1863330078125,
+            0.186337890625
+          ],
+          "strict_signed_gaps_eV": [
+            2.2708082944689068e-05,
+            -3.1070406947719675e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.236796875,
+            0.23680175781249999
+          ],
+          "strict_signed_gaps_eV": [
+            2.0884606307447484e-05,
+            -2.673884782211644e-05
+          ]
+        }
+      ],
+      "analysis_sha256": "2fd200cffef031fbb2dd27ab52f083e9848756575fad865ebfeaece4f26569b6"
+    },
+    "12": {
+      "status": "PASS",
+      "conv_thr_Ry": 1e-12,
+      "max_energy_change_eV": 9.521272659185342e-12,
+      "endpoint_pairs": [
+        {
+          "t_interval": [
+            0.1137841796875,
+            0.1137890625
+          ],
+          "strict_signed_gaps_eV": [
+            1.2860313304940973e-05,
+            -4.525904829222327e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.18884277343749997,
+            0.1888525390625
+          ],
+          "strict_signed_gaps_eV": [
+            4.854388141950494e-05,
+            -6.562100544016403e-05
+          ]
+        },
+        {
+          "t_interval": [
+            0.231298828125,
+            0.23130859375
+          ],
+          "strict_signed_gaps_eV": [
+            5.6720583010871906e-05,
+            -4.580392829467428e-05
+          ]
+        }
+      ],
+      "analysis_sha256": "070e0619d2e296e321aa57443545f7fc02ad93522cab5536874323d458c27900"
+    }
+  },
+  "mesh_baselines": {
+    "convergence_12mesh": {
+      "status": "BASELINE_MISMATCH_REQUIRES_REVIEW",
+      "absolute_max_energy_difference_eV": 0.34951284085108725,
+      "mean_energy_difference_eV": -0.034072398261894635,
+      "energy_tolerance_eV": 0.05,
+      "energy_offset_fitted_or_removed": false,
+      "c4_prefix_multiplicities_match": true,
+      "compared_C4_invariant_points": 2,
+      "same_original_SCF_Hamiltonian_proved": false,
+      "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+    },
+    "convergence_8mesh": {
+      "status": "BASELINE_MISMATCH_REQUIRES_REVIEW",
+      "absolute_max_energy_difference_eV": 0.39442134954250996,
+      "mean_energy_difference_eV": -0.03884624686217751,
+      "energy_tolerance_eV": 0.05,
+      "energy_offset_fitted_or_removed": false,
+      "c4_prefix_multiplicities_match": true,
+      "compared_C4_invariant_points": 2,
+      "same_original_SCF_Hamiltonian_proved": false,
+      "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+    },
+    "reference_17": {
+      "status": "REPRODUCED_WITHIN_DECLARED_NUMERICAL_PROFILE",
+      "absolute_max_energy_difference_eV": 2.5083254939772814e-07,
+      "mean_energy_difference_eV": -9.852886145855777e-10,
+      "energy_tolerance_eV": 0.05,
+      "energy_offset_fitted_or_removed": false,
+      "c4_prefix_multiplicities_match": true,
+      "compared_C4_invariant_points": 2,
+      "same_original_SCF_Hamiltonian_proved": false,
+      "new_SCF_and_old_NSCF_cannot_be_identified_from_band_agreement_alone": true
+    }
+  },
+  "raw_points_checked": 484,
+  "resolved_prefixes_checked": 389,
+  "resolved_clusters_checked": 9174,
+  "source_hashes": {
+    "reviews/review_fe_independently.py": "6d1e73957751aee647b65c0c1d18ea05bde4503d65cccc9601865994a715ca91",
+    "fe/analyze_fe.py": "a57f1325d9ee7e014623981e88f11744cd047e3e901e0f344994455ef013447c",
+    "fe/refine_fe.py": "2f8255b8ee969c7c7aabdde7f383c4014f72e99a9fb3f5678844684083928e6c",
+    "fe/run_fe.py": "78ed1ca272f3966830e3d90ea4ea8de50dc6eee72cf22ecd24285910c904bc95",
+    "fe/prepare_fe.py": "8c739acc5234e18c31d08a70989b35e50c0d89606eb7ff1f97f4c4f0f006fa34",
+    "fe/vendor/qe_reader.py": "f4d8976a9d8eb886bce9cafefd82b14e8b9f6caf5536947f84b9048173d81864"
+  }
+}
