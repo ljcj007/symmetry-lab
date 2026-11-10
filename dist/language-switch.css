@@ -1,0 +1,14 @@
+.topbar{height:auto;min-height:72px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.top-right{min-width:0;max-width:100%;flex-wrap:wrap;gap:6px}
+.top-right #data-status{min-width:0;overflow-wrap:anywhere}
+.language-switch{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:76px;min-height:44px;padding:6px 12px;margin-left:8px;border:1px solid #91aca0;border-radius:7px;background:#fff;color:#175f49;font-size:16px;line-height:1.4;font-weight:600;white-space:nowrap;text-decoration:none}
+.language-switch:hover{background:#edf5ef;border-color:#4a896c}
+.language-switch:focus-visible{outline:3px solid #276e9a;outline-offset:3px}
+@media(max-width:690px){.topbar{min-height:46px;padding-top:8px;padding-bottom:8px;gap:7px}.top-right{gap:4px}.language-switch{min-width:68px;margin-left:3px;padding:6px 9px;font-size:16px}}
+/* English labels need wrapping, while the existing reading size stays intact. */
+html[lang="en"] .sidebar .nav-item{white-space:normal;height:auto;line-height:1.4;min-height:56px}
+html[lang="en"] .sidebar .nav-desktop-label{min-width:0;overflow-wrap:normal}
+html[lang="en"] .sidebar .nav-icon{flex-shrink:0}
+html[lang="en"] .sidebar{overflow-x:hidden}
+html[lang="en"] .classroom-path strong{min-width:0;overflow-wrap:anywhere}
+@media(max-width:690px){html[lang="en"] .sidebar .nav-item{min-height:66px;font-size:16px;flex:0 0 50px;width:50px;padding:8px 4px}html[lang="en"] .nav-mobile-label{max-width:100%;overflow-wrap:normal}}

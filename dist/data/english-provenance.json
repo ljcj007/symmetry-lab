@@ -1,0 +1,1978 @@
+{
+  "release": "20261110-en1",
+  "sourceHashNormalization": "utf8-lf-v1",
+  "scope": "Static English teaching and interface edition; shared Python computation cores, crystallographic data, calculation inputs and numeric results. See docs/english-edition.md.",
+  "counts": {
+    "sourceUnits": 21447,
+    "translatedUnits": 21447,
+    "missingUnits": 0,
+    "generatedFiles": 352
+  },
+  "files": [
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "e1c422d65a7974927a488a42c8cfbd6ac5e589c193580d465ce66aa9e058b6b2",
+      "bytes": 1758
+    },
+    {
+      "path": "README.md",
+      "sha256": "7d91ad948a527e50abed2513e85277200dee03919e8dd773b7e448aa5b69f03d",
+      "bytes": 75079
+    },
+    {
+      "path": "dist/docs/english-edition.md",
+      "sha256": "3e90ff0ee7d798b5409f2ba7fc254bd26ccbfa54c0959855d46b20492f364355",
+      "bytes": 3129
+    },
+    {
+      "path": "dist/en/advanced-ui.js",
+      "sha256": "fd79d54af6581743d04640b09beb74bb3ccd9d9b5cfd15ad0410143148831840",
+      "bytes": 34302
+    },
+    {
+      "path": "dist/en/app.js",
+      "sha256": "8809efe9537c3f4820c27e8bcfc647839d7d1b8e9e3c6d6931eb522011c61169",
+      "bytes": 100810
+    },
+    {
+      "path": "dist/en/bridges-projects.js",
+      "sha256": "dd143c54cba03890cd669d5d447ec5be7282e229da7ec7ccd5642c7d216f4312",
+      "bytes": 15002
+    },
+    {
+      "path": "dist/en/bridges-ui.js",
+      "sha256": "8ada2afd52a7727739bd9354ae7adbebaac5b77c0b1c378b1d84fb13655a77cd",
+      "bytes": 15313
+    },
+    {
+      "path": "dist/en/bridges-views.js",
+      "sha256": "5e2a19db25475bfc6bc0e52102ba3fe5a6884e3bff78d4990284f7d665d867a7",
+      "bytes": 11495
+    },
+    {
+      "path": "dist/en/classroom-ui.js",
+      "sha256": "26812e30ec4e5be6b1e98a241c8bad98d8790cf14c73142d6ea7b225a36a819e",
+      "bytes": 24924
+    },
+    {
+      "path": "dist/en/comparison-lab.js",
+      "sha256": "ad1293ef3ee7ca57578ad784b5090925c825be18ba07d6f8838565786c1661c3",
+      "bytes": 10490
+    },
+    {
+      "path": "dist/en/compute-worker.js",
+      "sha256": "5322d625b087e0f32a58f00b6a34612d377e039d30029dd9e9884a0b1cdbcdb1",
+      "bytes": 566
+    },
+    {
+      "path": "dist/en/connections-projects.js",
+      "sha256": "359cbb4f17e1a9eeebdc95a8b33095b0e81cf7b5d2a2240c44c2afc08dff1c8a",
+      "bytes": 6967
+    },
+    {
+      "path": "dist/en/connections-ui.js",
+      "sha256": "51f127beef5e3b61d37b5e229f8b1121c5eebc94f3c0e763daeff594d1539b19",
+      "bytes": 17194
+    },
+    {
+      "path": "dist/en/connections-views.js",
+      "sha256": "31bf4aa41abce59d628add9a26af0c7a131e168b8935e73e704b676e3449cb64",
+      "bytes": 12319
+    },
+    {
+      "path": "dist/en/construction-projects.js",
+      "sha256": "174bf2040a4213b8c7ace888c9bb3d7c3f361b6875914290d7a9a3e99dae995d",
+      "bytes": 11548
+    },
+    {
+      "path": "dist/en/construction-ui.js",
+      "sha256": "3cb497b164f7545ad44dc792402fb13bc3e83469dd188e4cb78a45c74b99f99e",
+      "bytes": 16891
+    },
+    {
+      "path": "dist/en/construction-views.js",
+      "sha256": "c01c9c2251b757b0f30e050ecd0a24cc46806ce5b3c0d7e0868e8d8e72706c36",
+      "bytes": 16264
+    },
+    {
+      "path": "dist/en/coupled-materials-ui.js",
+      "sha256": "81f81269820b70442e692c85deca2b909643c1c134b61e0bd1c6b16f6a82fafa",
+      "bytes": 37436
+    },
+    {
+      "path": "dist/en/coverage-ui.js",
+      "sha256": "8a07191273499ac3826e23e7eb3a59c97910ab04bb8a9425bda33a78722cbf8b",
+      "bytes": 5426
+    },
+    {
+      "path": "dist/en/crystal-notation.js",
+      "sha256": "1f7b71b1cc410f61d7eea61f0632c639646eecae74bb2418a21886fe45656446",
+      "bytes": 9045
+    },
+    {
+      "path": "dist/en/crystal-symbol-data.js",
+      "sha256": "0c80225fc25e44a5b880944943bae83724592f3b1ee3c365a264fc438c61d665",
+      "bytes": 31583
+    },
+    {
+      "path": "dist/en/crystal-viewer.js",
+      "sha256": "fa75ab5d0aecd5eddb0f5999f5c42c82f8db9719c669aec0c166789e1e5a9467",
+      "bytes": 9131
+    },
+    {
+      "path": "dist/en/data/andreev-content.json",
+      "sha256": "dde34c40e1257027e4d07f2f07efa3433c9e9b02ed0b40238554e75df71b1898",
+      "bytes": 16153
+    },
+    {
+      "path": "dist/en/data/atomic-spectra-content.json",
+      "sha256": "980e39311898f3ab8295018a1ea74c6d0781966742a08437138fb2f5c94dea01",
+      "bytes": 17667
+    },
+    {
+      "path": "dist/en/data/bandrep-content.json",
+      "sha256": "4d8c850eeabb5857d81e90dbdef13e183e5e2e647ea19fd832cd072b489ecf51",
+      "bytes": 20232
+    },
+    {
+      "path": "dist/en/data/bridges-materials.json",
+      "sha256": "253b398656dc2052931aef0adb8ddfcd80272f5a8aaf9335897e2a1a8e200786",
+      "bytes": 77580
+    },
+    {
+      "path": "dist/en/data/bridges-provenance.json",
+      "sha256": "40c487a103d5615d79c6dddef9e41c8e06916cf8c674a9c6803e6b1f8dd180d1",
+      "bytes": 45715
+    },
+    {
+      "path": "dist/en/data/connections-materials.json",
+      "sha256": "0c95ff18542f7eeb27f31c4ea7138862186a6228382b0963c17b59833e423b5a",
+      "bytes": 36945
+    },
+    {
+      "path": "dist/en/data/connections-provenance.json",
+      "sha256": "67e3b8f2fccf696b6aa374d684c00d3bb4d22c705ed7c0179da57e5f2bc5d43c",
+      "bytes": 88030
+    },
+    {
+      "path": "dist/en/data/conservation-content.json",
+      "sha256": "41e01e63583cfb00e641eb30b5700280f3f5d3e71306414eedc125aceb2866dd",
+      "bytes": 19055
+    },
+    {
+      "path": "dist/en/data/construction-materials.json",
+      "sha256": "c752262caf5fc562fe77beeff9fbe86890f77786e17756f770a3ccde1ac35019",
+      "bytes": 59700
+    },
+    {
+      "path": "dist/en/data/construction-provenance.json",
+      "sha256": "17d47d6266f59a2b1918693432dbd96373250d041d02e1acfdd5cb4962e6deb8",
+      "bytes": 52236
+    },
+    {
+      "path": "dist/en/data/coupled-materials-provenance.json",
+      "sha256": "8dd1d099e3701e74f54b2508c9cac0b47c651f4e583ae7e0118469b3d06f7eac",
+      "bytes": 2530
+    },
+    {
+      "path": "dist/en/data/coupled-materials.json",
+      "sha256": "d4b4eb2bade9ee80417f414d094f0796f4596db309a7d8fb889af9072da6fe54",
+      "bytes": 29676
+    },
+    {
+      "path": "dist/en/data/crystal-field-content.json",
+      "sha256": "2ac8b685f616f9409ca9292b89261dcb5ee6186aef009330f779dcc15b5d1796",
+      "bytes": 16906
+    },
+    {
+      "path": "dist/en/data/density-content.json",
+      "sha256": "b628ef61d4e9b8f17aa52eca282defd6cf73b8bd4e5e8082d2cd016f482d67ea",
+      "bytes": 20059
+    },
+    {
+      "path": "dist/en/data/device-transport-content.json",
+      "sha256": "3272803b94728ab28d8b3aeb0a3c36bf007d89bf991cb70b7b4b557a0179d56d",
+      "bytes": 17652
+    },
+    {
+      "path": "dist/en/data/domainwall-content.json",
+      "sha256": "aade907cf29e4401aa71ca703f745f747f9e01e015334c14cdff2f4be3db9f40",
+      "bytes": 14644
+    },
+    {
+      "path": "dist/en/data/electron-transport-content.json",
+      "sha256": "7ccdc5b605da0be6d378ae183bf1a9f652daa069b31dbbbae4c103af028f926a",
+      "bytes": 15025
+    },
+    {
+      "path": "dist/en/data/electronic-materials-provenance.json",
+      "sha256": "4a78b1d71a95f2f43ca5769f73f10dd071c2e0aa70fa96d8567c17d32359eba1",
+      "bytes": 3726
+    },
+    {
+      "path": "dist/en/data/electronic-materials.json",
+      "sha256": "44055456ad1703e478931228ad407c540fd85e313fda84292df0d0f186db5769",
+      "bytes": 45753
+    },
+    {
+      "path": "dist/en/data/engine-validation.json",
+      "sha256": "63adf50d4ed20bf82d7dbe0fd273d2fc0489957ca17e0dbebd619cdf6d4d812d",
+      "bytes": 376
+    },
+    {
+      "path": "dist/en/data/exact-python-validation.json",
+      "sha256": "d9afb4bcb537108418fc36b681c5f8eb303876d82a1dfae18534e52b7fdf4ccd",
+      "bytes": 18742
+    },
+    {
+      "path": "dist/en/data/examples/distortion-batio3.json",
+      "sha256": "09d09635ae23d78279564a3bcbcf008cfd7417c98a7b36149264a5b24e28f4c8",
+      "bytes": 3158
+    },
+    {
+      "path": "dist/en/data/examples/distortion-srtio3.json",
+      "sha256": "c56f9f4f9f23d7082e0544ce26d3008853a4c1b8936d37ca7827f86ce750aa80",
+      "bytes": 17579
+    },
+    {
+      "path": "dist/en/data/examples/magnon-afm-instability.json",
+      "sha256": "de5e18acd940fb7066d3a23229e22658e75950758c8cafc1494e026a09dfd585",
+      "bytes": 404
+    },
+    {
+      "path": "dist/en/data/examples/magnon-afm-polarization.json",
+      "sha256": "7400af661272e715794b3b909e65d4b858aa04f68325a2c4cee51e7ea9d2eb13",
+      "bytes": 391
+    },
+    {
+      "path": "dist/en/data/examples/magnon-fm-goldstone.json",
+      "sha256": "3cbc7ca075afc4e55b5e4d704706e912d973a15f30f9265cecaa431b1215d388",
+      "bytes": 348
+    },
+    {
+      "path": "dist/en/data/examples/phonon-modes-silicon.json",
+      "sha256": "9ebcd6a3a210cfebb47502b61380c09a8d91577964e3aec9835b7f3430a94670",
+      "bytes": 4527
+    },
+    {
+      "path": "dist/en/data/examples/phonopy-demo.yaml",
+      "sha256": "9e292543a8bfd87e7421e341e723823205da6d48ddbde8bd2bf316eab7b32772",
+      "bytes": 30242
+    },
+    {
+      "path": "dist/en/data/examples/qha-multivolume-demo.json",
+      "sha256": "3b79b80cced27496e7c59327b6d7e7d5df7cb9d74a7e1dfdf0031b9c17a42992",
+      "bytes": 7736
+    },
+    {
+      "path": "dist/en/data/examples/qha-thermal-files-demo.json",
+      "sha256": "4c38c0e2bd190ef2a2720e7bbad095e071fe16d707ee66013ed501237cead57e",
+      "bytes": 31123
+    },
+    {
+      "path": "dist/en/data/examples/thermal-properties-demo.yaml",
+      "sha256": "fdf63fbcdda055ffb169dea4bc80f56b5358e5b2cd6337216ffb62a9a025187a",
+      "bytes": 1260
+    },
+    {
+      "path": "dist/en/data/examples/thermo-mesh-demo.yaml",
+      "sha256": "cab74ec2beb809b570a0d2414e70cf28c3a33c96008ef672270f7ad485111a05",
+      "bytes": 482
+    },
+    {
+      "path": "dist/en/data/exchange-content.json",
+      "sha256": "93c6d2c7d4788c4238148c3943bb14f848c4679c01ec272d7cb4132ab9e701ae",
+      "bytes": 19321
+    },
+    {
+      "path": "dist/en/data/formula-dictionary.json",
+      "sha256": "cfac0bc0e93c16627cf7be98ddf9c7b9396b69cf44b9e632e51eb6c7397c7e7f",
+      "bytes": 134957
+    },
+    {
+      "path": "dist/en/data/formula-display-provenance.json",
+      "sha256": "ff30a4e8433c6259514edb5da683a3be3bc5f9ed83cc8743e3f264666a8e446e",
+      "bytes": 13438
+    },
+    {
+      "path": "dist/en/data/frontiers-materials.json",
+      "sha256": "1f90bbc1beaeec28e2bcce3693d776904526ea78595fd0aebd092f332fb73a28",
+      "bytes": 40649
+    },
+    {
+      "path": "dist/en/data/frontiers-provenance.json",
+      "sha256": "4dd45b8ad14254cd3ff622eacfd2adc2d4c2194c1f08a35ac351ba5f4a20b170",
+      "bytes": 90297
+    },
+    {
+      "path": "dist/en/data/hall-response-content.json",
+      "sha256": "367b24a91939f73a6866837d74eff885e692aec63c429c124c394fef66fa3a03",
+      "bytes": 17288
+    },
+    {
+      "path": "dist/en/data/hubbard-content.json",
+      "sha256": "0d70792b040491f3c8bba51e6c97199677cec7461505d9caccadcd7236240ac2",
+      "bytes": 22015
+    },
+    {
+      "path": "dist/en/data/learning-experience-provenance.json",
+      "sha256": "30b8b6ed73b9996b37809b42e441584b15d5398331f46173f38cebd90cfadd7f",
+      "bytes": 91017
+    },
+    {
+      "path": "dist/en/data/lie-derivations.json",
+      "sha256": "9eeca5177e6dcb09f922e00fd2e058bdf2bd1d9d452b93c2cfa83c5edec3c854",
+      "bytes": 96612
+    },
+    {
+      "path": "dist/en/data/lie-group-lessons.json",
+      "sha256": "0470211a2b8b89f9fa4a88695ec53d9e7632afeafec3954d5e0ff0fd70275e76",
+      "bytes": 164834
+    },
+    {
+      "path": "dist/en/data/lie-group-provenance.json",
+      "sha256": "3e4f104923520a7b9c68f2564b7a8ef3b62f29cb924f6b72cfa148fbeb007405",
+      "bytes": 15765
+    },
+    {
+      "path": "dist/en/data/local-multiplet-content.json",
+      "sha256": "467fe66ed7a1fd41ef8bd99bc6a14d58abf229caf9d65c412f246e070433a46d",
+      "bytes": 15038
+    },
+    {
+      "path": "dist/en/data/manybody-content.json",
+      "sha256": "c8cca3bc34e1318ee86aede31191f4a653e7964853ed8c95b4cc9bac6beaf253",
+      "bytes": 21432
+    },
+    {
+      "path": "dist/en/data/material-observables-provenance.json",
+      "sha256": "ec9dad4b5244443f4ece5233313c40344cff1709031fd266bb5389721dc07ee4",
+      "bytes": 5473
+    },
+    {
+      "path": "dist/en/data/material-observables.json",
+      "sha256": "382c25463c70ec620f0775f151178cfd2cf99e902a363f9d864eb7258e0ed72f",
+      "bytes": 43386
+    },
+    {
+      "path": "dist/en/data/material-research-provenance.json",
+      "sha256": "6ea2e81ccad6842bfec9f7427af4f588a4e79730802e34459dbb12342de61cdb",
+      "bytes": 1516
+    },
+    {
+      "path": "dist/en/data/material-research.json",
+      "sha256": "86d29b8eb5b99546f90950edbebdd0b8e34213a3fb50266b15b57ae441ba5597",
+      "bytes": 31483
+    },
+    {
+      "path": "dist/en/data/math-audit-provenance.json",
+      "sha256": "8f54c8d661099c479ac6a5e50b0991467fedc7950da9fa6926f9aa0aed7cb3c0",
+      "bytes": 91556
+    },
+    {
+      "path": "dist/en/data/nonsymmorphic-content.json",
+      "sha256": "2485c83ece5d4695bd1109a5d2d60e23011d590064ccda7cc2b67cbe9ab48d8d",
+      "bytes": 19440
+    },
+    {
+      "path": "dist/en/data/order-content.json",
+      "sha256": "92b7865711a1ae6e66caf77062b2515ca0b575d3c76e33fe4aac65403e69c2b3",
+      "bytes": 16339
+    },
+    {
+      "path": "dist/en/data/pathways-materials.json",
+      "sha256": "728bb16feb6f5080af978f8091368dad401eb9426b2b88fd3311c062c5c4a236",
+      "bytes": 78784
+    },
+    {
+      "path": "dist/en/data/pathways-provenance.json",
+      "sha256": "d7d541a5308456447edc0159619d85730893113805ba37a4f8fda26a5f34412f",
+      "bytes": 22424
+    },
+    {
+      "path": "dist/en/data/pointgroup-atlas.json",
+      "sha256": "58a0cb06cf5af91f9c2ec49fe9220f37b74631d5535dc041ab92fadba03f08b1",
+      "bytes": 208243
+    },
+    {
+      "path": "dist/en/data/pointgroup-lessons.json",
+      "sha256": "2cb8671b285e0c200fbc631f35c1bd20ab889032fb6d1a4fe33edd269a35aea9",
+      "bytes": 37954
+    },
+    {
+      "path": "dist/en/data/pointgroup-provenance.json",
+      "sha256": "90028ec138e9248fd467df4d88336aaaf6bd1975f036ebdb03aea1a5d38d0af7",
+      "bytes": 3135
+    },
+    {
+      "path": "dist/en/data/polaron-content.json",
+      "sha256": "ac5b74db30ffcfc3479406cc2192e31a7f2ce3e111ec841341b823d7f2290c8a",
+      "bytes": 17429
+    },
+    {
+      "path": "dist/en/data/principles-materials.json",
+      "sha256": "604bcc24772ac42822bddf74408a892209cc91c3a7ed6fd28cf4bebd5f16f729",
+      "bytes": 56348
+    },
+    {
+      "path": "dist/en/data/principles-provenance.json",
+      "sha256": "efd0a7b9daa147bcc420c17b3dee5437308041d04758756c34d46b8e2a108ff9",
+      "bytes": 47601
+    },
+    {
+      "path": "dist/en/data/provenance.json",
+      "sha256": "b353dbfd7b0d12d97a4e1367370b41cb211d580599aac956b7152f3fc97b0c61",
+      "bytes": 3929
+    },
+    {
+      "path": "dist/en/data/python-messages.json",
+      "sha256": "33a8b9fb9708281f3aad1a76a59299f9c4fe6c860dbaf9eee17ec496765edb85",
+      "bytes": 421674
+    },
+    {
+      "path": "dist/en/data/python-provenance.json",
+      "sha256": "ebdd06a8497a62e8e1fb31a9cd979b59967ee9171669b30e89339282704d39f0",
+      "bytes": 48641
+    },
+    {
+      "path": "dist/en/data/python-symmetry-validation.json",
+      "sha256": "84a7ca42114a512df018a9e827d178c6ef9843761137354c96ba298ea29d8c3c",
+      "bytes": 515
+    },
+    {
+      "path": "dist/en/data/quantum-geometry-content.json",
+      "sha256": "b43d8c8d264c344ae40c121f3551663ec54f4a47762f15b95f2afeec7034218f",
+      "bytes": 16063
+    },
+    {
+      "path": "dist/en/data/quantum-materials-provenance.json",
+      "sha256": "fdc87ae70016501e59335e2d855577aad0c8c9dcff61070f69c56665e3ba05c6",
+      "bytes": 4792
+    },
+    {
+      "path": "dist/en/data/quantum-materials.json",
+      "sha256": "159bb33ca78a9fa2f26ac3d68eec28ce59b65b89f0a8a570979327a6e7689728",
+      "bytes": 47699
+    },
+    {
+      "path": "dist/en/data/response-materials-provenance.json",
+      "sha256": "c9ae0279470f2dc06514de57c2aebc9e31af75b79cf916590a502c9c6f4f1f0c",
+      "bytes": 8734
+    },
+    {
+      "path": "dist/en/data/response-materials.json",
+      "sha256": "e53817ba1828a5ce3b6b5eabaa1c810b11f0823a56b030975790bad51966b5e5",
+      "bytes": 49588
+    },
+    {
+      "path": "dist/en/data/salc-content.json",
+      "sha256": "3cca82c44d1360d29eabea347d28ed2b5312439e7e643149502ae76ab38baf30",
+      "bytes": 20190
+    },
+    {
+      "path": "dist/en/data/scattering-content.json",
+      "sha256": "c6030f911fa0e86500c49b5117fd1d50850847dc2d0ade6fb53aa3b2b466156a",
+      "bytes": 19963
+    },
+    {
+      "path": "dist/en/data/search-index.json",
+      "sha256": "2f96b6e9cf91d26cec9b43955c1746cd706d12e1e2547629bd45bf421b8e140c",
+      "bytes": 437929
+    },
+    {
+      "path": "dist/en/data/spectroscopy-materials.json",
+      "sha256": "1237c96f2a232cc49d9dc535d31c9ddacb2e82825357b09786ebead693c8276a",
+      "bytes": 49720
+    },
+    {
+      "path": "dist/en/data/spectroscopy-provenance.json",
+      "sha256": "40bca7b3f577563d5d7d2ab648a14b07a51b757ec98b9a3dc8e3ce8472c4d1ec",
+      "bytes": 11063
+    },
+    {
+      "path": "dist/en/data/spin-resonance-content.json",
+      "sha256": "f51e9155522a2cfc000f8ef9af0c4cd1e44cea76eb0049be9313db6a95103716",
+      "bytes": 16318
+    },
+    {
+      "path": "dist/en/data/structure-dynamics-provenance.json",
+      "sha256": "0fc19e8a5e78105537b91306e42483f45e4e5a779ef82cce95fd1184b5d68d44",
+      "bytes": 1142
+    },
+    {
+      "path": "dist/en/data/structure-dynamics.json",
+      "sha256": "9f3c0585b58b0703b373b3cb44d64ee5889d44fda2ad79d36a2460913e2cf5b4",
+      "bytes": 46708
+    },
+    {
+      "path": "dist/en/data/symbolic-api-coverage.json",
+      "sha256": "89ed9612aebdb5af8b3796d3b01d59ddc4c02e5d0c9f7e5331677b959880772e",
+      "bytes": 160155
+    },
+    {
+      "path": "dist/en/data/symmetry-course-atlas.json",
+      "sha256": "afd22bfe48143502e344e73bc57798630902c4b010eccacbb27ae1d74ebcc675",
+      "bytes": 470159
+    },
+    {
+      "path": "dist/en/data/symmetry-course-lessons.json",
+      "sha256": "0253f3dec211020c3f3cf4dabdb12bbd8e3f11f0cdf91501d41b07b4fd4d5b53",
+      "bytes": 92938
+    },
+    {
+      "path": "dist/en/data/symmetry-course-provenance.json",
+      "sha256": "9c95d84ffb447f60de918243f8c78c68de777f5c91cfaecf174899da62785114",
+      "bytes": 14153
+    },
+    {
+      "path": "dist/en/data/symmetry-derivations.json",
+      "sha256": "0fdac2bb32e9788c0ebe4e4a535d977334a1acf939448959d3b095de002a3152",
+      "bytes": 38805
+    },
+    {
+      "path": "dist/en/data/symmetry-materials.json",
+      "sha256": "d2fb5b9a8203c3a95e84629cd4ce20ce12aa2639b6e20658d4f5ba77c93f22dc",
+      "bytes": 34537
+    },
+    {
+      "path": "dist/en/data/wavevector-content.json",
+      "sha256": "9d591cd133723f368dbb9febbbfa667f834c264db54d2a3bbd35e22cec764eb9",
+      "bytes": 18151
+    },
+    {
+      "path": "dist/en/data/workshop-content.json",
+      "sha256": "cd9e92a011858f803ce086fad71b034e1b9231ec0782352b511f2b590bd31bcc",
+      "bytes": 13587
+    },
+    {
+      "path": "dist/en/docs/affine-properties.md",
+      "sha256": "60cb37938e0b291338d246842a315cdc9dac508df80f5ef24cf75490c52f8b53",
+      "bytes": 2525
+    },
+    {
+      "path": "dist/en/docs/andreev-lab.md",
+      "sha256": "fcf08ebad028f1bb8e995f3d9bae3b311d28a817be4257c18d79f029e75414ba",
+      "bytes": 5220
+    },
+    {
+      "path": "dist/en/docs/arithmetic-centralizer.md",
+      "sha256": "417e5aa60a97fa65981223374792da1c2aa8ecaf50c6a1b96aa478dd0697a0d2",
+      "bytes": 15542
+    },
+    {
+      "path": "dist/en/docs/atomic-spectra-lab.md",
+      "sha256": "274f5f72475a05305b499e002725bf80970c02a0ada2e013c6a078d1349a3965",
+      "bytes": 7858
+    },
+    {
+      "path": "dist/en/docs/band-representations.md",
+      "sha256": "99f9d1c2da0477a703286648cb14c88a32e4864fb0c34c902f2b32af22324493",
+      "bytes": 6143
+    },
+    {
+      "path": "dist/en/docs/bridges.md",
+      "sha256": "d0272e2a0c4dbdf61921abf3efbb02127a72c0506a5e2b7ccb05a84a2e8e751f",
+      "bytes": 11490
+    },
+    {
+      "path": "dist/en/docs/connections.md",
+      "sha256": "12791869b4ae3829afabc55a1f6dbbf22023fda86c70a08452ea7b267d0b964c",
+      "bytes": 4916
+    },
+    {
+      "path": "dist/en/docs/conservation.md",
+      "sha256": "a204673681de5dbfb711d7fbc66276911a01097566b6dd1244922ccefe0cabe8",
+      "bytes": 7855
+    },
+    {
+      "path": "dist/en/docs/construction.md",
+      "sha256": "d1f5e880869164baba793f94cb398ec7c0c08a9cdd29eb4d88eb81de5be4186f",
+      "bytes": 7886
+    },
+    {
+      "path": "dist/en/docs/coupled-materials.md",
+      "sha256": "001ad5c97cc5fa7fcaf8bceaa5c6afdd440c96f33837dab728246ac5541213f5",
+      "bytes": 19965
+    },
+    {
+      "path": "dist/en/docs/crystal-field-lab.md",
+      "sha256": "e2b101c5cbcf90bd85e270c45f1cb191996c2a2c9d91b3d733f7eec48bf15815",
+      "bytes": 7707
+    },
+    {
+      "path": "dist/en/docs/crystal-notation.md",
+      "sha256": "94cf836dd5ea06bbe775f13f7908e9b01d7744f24af0588b728917e2d33e0f87",
+      "bytes": 3245
+    },
+    {
+      "path": "dist/en/docs/density-matrix.md",
+      "sha256": "ed9528709176fa78554f9fb612d32ffce452b842b52d199e3541b6a942927ab4",
+      "bytes": 5242
+    },
+    {
+      "path": "dist/en/docs/device-transport-lab.md",
+      "sha256": "39cd30046956923fb1bc80e06bd79cf6d4430e16d26aaaa54e0d1c8e9e218f3f",
+      "bytes": 7504
+    },
+    {
+      "path": "dist/en/docs/domain-walls.md",
+      "sha256": "bdb22df83de5813a59bbabe42bdfec0c092c4afdfc63f978cd4242054c5cc302",
+      "bytes": 10348
+    },
+    {
+      "path": "dist/en/docs/dynamic-scattering.md",
+      "sha256": "5557bddfc53a75dd84915e09eca7e4b4075a0db241c190c7f012c158390ca2f4",
+      "bytes": 9244
+    },
+    {
+      "path": "dist/en/docs/electron-transport-lab.md",
+      "sha256": "7720bcc2582ea9a3ad2cfd93b9c1a5f705696a0dd80ce32da60762066961c494",
+      "bytes": 7025
+    },
+    {
+      "path": "dist/en/docs/electronic-materials.md",
+      "sha256": "9949ba4308d9475f8fa6eb230a46f163d6f4bbc5f22926a2cb4197c4669db5a7",
+      "bytes": 6884
+    },
+    {
+      "path": "dist/en/docs/english-edition.md",
+      "sha256": "3e90ff0ee7d798b5409f2ba7fc254bd26ccbfa54c0959855d46b20492f364355",
+      "bytes": 3129
+    },
+    {
+      "path": "dist/en/docs/exchange-symmetry.md",
+      "sha256": "741bab156ec72a717a392a61744575742a569e8808f4005517f340ca8ac53d40",
+      "bytes": 7332
+    },
+    {
+      "path": "dist/en/docs/formula-dictionary.md",
+      "sha256": "bba48e82ab99d1efbb73a33486c195280d0112d76cfcd91c14391b6ef16a7531",
+      "bytes": 8485
+    },
+    {
+      "path": "dist/en/docs/formula-display.md",
+      "sha256": "37b3ecf6425fd7477f916faffb2da341e57dc8b8e8b02abf79a5b9c76fd8234d",
+      "bytes": 6182
+    },
+    {
+      "path": "dist/en/docs/frontiers.md",
+      "sha256": "5c477d7499cd4f04d4b25ece2d17a85d6373289d05d7d4c1fc2457a6f6f93673",
+      "bytes": 4393
+    },
+    {
+      "path": "dist/en/docs/hall-response-lab.md",
+      "sha256": "373706ab07f7e067c0038d98a2c7981b118ef4c24be1eea31c7d617b3b1210da",
+      "bytes": 5363
+    },
+    {
+      "path": "dist/en/docs/hubbard-clusters.md",
+      "sha256": "c7729b0170d12f224e443cee9c47f216c4930433871bdf8ecf75a42f693826d1",
+      "bytes": 9406
+    },
+    {
+      "path": "dist/en/docs/integral-classification.md",
+      "sha256": "efe30eae0890eaa6896f2492c9ea307d37c0c3dc4ea70196bf01bf648459d854",
+      "bytes": 13242
+    },
+    {
+      "path": "dist/en/docs/integral-normalizer.md",
+      "sha256": "fba00017309466307abaed88972683038a80922cf7f8e47a03a023cdedcedc90",
+      "bytes": 10944
+    },
+    {
+      "path": "dist/en/docs/learning-experience.md",
+      "sha256": "b290dadaa367184d20917a6305e014f6526feb475181b3de00a047bb5de7b9c5",
+      "bytes": 3930
+    },
+    {
+      "path": "dist/en/docs/lie-groups.md",
+      "sha256": "941ad92ee7f89b94b9678c26697c36a8f3cb02c02c38194c699cc14269fbc1fc",
+      "bytes": 49420
+    },
+    {
+      "path": "dist/en/docs/local-multiplet-lab.md",
+      "sha256": "833f8e4a24e5108a50197251b6340781c1bce00df4d02b22c55152535026bcbd",
+      "bytes": 6836
+    },
+    {
+      "path": "dist/en/docs/manybody-spectra.md",
+      "sha256": "af4fc300f4375dadcf8b78cbaf9d4f775aac12ff08dcac73e1daacf2d04c37d3",
+      "bytes": 8757
+    },
+    {
+      "path": "dist/en/docs/material-observables.md",
+      "sha256": "25ef4caa6ca8e4d14e7790c7954d35e30a8bd1233f679c6d1bdc0d6c1bef14a6",
+      "bytes": 5490
+    },
+    {
+      "path": "dist/en/docs/material-research.md",
+      "sha256": "7a1b8695802cb439421941b201cbfaa7219835c97c8d0ded0ef66f85f3bbd06e",
+      "bytes": 13658
+    },
+    {
+      "path": "dist/en/docs/materials-classroom.md",
+      "sha256": "152963637542fddbbbb7688093e4a2d0f0a2df1ff1ac14ca044df5495c334f69",
+      "bytes": 6887
+    },
+    {
+      "path": "dist/en/docs/nonsymmorphic.md",
+      "sha256": "2eec4266bd139d02d66bbe4c81e6b9d7381e893916298ff746200429c32db064",
+      "bytes": 5273
+    },
+    {
+      "path": "dist/en/docs/order-parameter.md",
+      "sha256": "12196ae2f26f78c3378b5276d527e2d45e23921ac962d0f1f4ee934178f1894c",
+      "bytes": 4231
+    },
+    {
+      "path": "dist/en/docs/pairing-lab.md",
+      "sha256": "8e8dc4e76977f122bc8de2831ce06e4bdce871360d7d087e5bccc5f8e909315a",
+      "bytes": 5580
+    },
+    {
+      "path": "dist/en/docs/pathways.md",
+      "sha256": "fd67f096de2125af4c8a36d81a773bc021796c8d02484e5c8337b1a3295a7651",
+      "bytes": 7917
+    },
+    {
+      "path": "dist/en/docs/phonopy-import.md",
+      "sha256": "86f33722bd0fe139c1d62232a0c2980ae82710f8912ccdfb8186c37ba88e21e3",
+      "bytes": 5793
+    },
+    {
+      "path": "dist/en/docs/pointgroup-course.md",
+      "sha256": "f8d2fc5ec4efb362642d33bd0a45dd86a8768b456e0009ecc193defcc415d2a8",
+      "bytes": 7707
+    },
+    {
+      "path": "dist/en/docs/polaron-lab.md",
+      "sha256": "7d9e3ebdf7971ac238b3edebb1b30b2f2feeb58b17716ac1d20786325dbeebe9",
+      "bytes": 5458
+    },
+    {
+      "path": "dist/en/docs/principles.md",
+      "sha256": "67dccd68eadeeb341bfb89f4ab5ea03086ec98f402467d4f6d3420e8b704a7e6",
+      "bytes": 8068
+    },
+    {
+      "path": "dist/en/docs/quantum-geometry-lab.md",
+      "sha256": "055c9ad178c7380b8888c2ccb8d807ddfc18998c35d07f2578b95dd60b4dc093",
+      "bytes": 7841
+    },
+    {
+      "path": "dist/en/docs/quantum-materials.md",
+      "sha256": "df1ffc6009cd600d984aa1e390ba1bd31d902c858a22a2e2183126a9fe7091b2",
+      "bytes": 4458
+    },
+    {
+      "path": "dist/en/docs/response-materials.md",
+      "sha256": "186aa279fa8f676792b4035e9350009fd421d40c1a54018d1f14b4623b841e8f",
+      "bytes": 4602
+    },
+    {
+      "path": "dist/en/docs/salc.md",
+      "sha256": "1376453d99838b95208e446b396b782f5ffc47689d8ab69ea538fce24ee59e4c",
+      "bytes": 5362
+    },
+    {
+      "path": "dist/en/docs/shg-lab.md",
+      "sha256": "44198258740284ffa026ad9c87011bdb6c5a25169ad28529e2eea9e7d9e2ff29",
+      "bytes": 6968
+    },
+    {
+      "path": "dist/en/docs/spectroscopy.md",
+      "sha256": "eb78c6e6eb409c0be8ee6221d6fc6bc9b6a3caf7aba01d18eb3a6e1e257956f6",
+      "bytes": 7742
+    },
+    {
+      "path": "dist/en/docs/spglib-browser.md",
+      "sha256": "6af481cc2c5654c09b78148cc71e744998c10df02ae53efb19bb17de82b3734d",
+      "bytes": 3214
+    },
+    {
+      "path": "dist/en/docs/spin-resonance-lab.md",
+      "sha256": "3ce6467ab643aaf77dede7dc19c0888a724f9b035ecaead300788096c2b82709",
+      "bytes": 6765
+    },
+    {
+      "path": "dist/en/docs/standard-labels.md",
+      "sha256": "d202af6198ac7277abccf438be5278024000ee30305209055c6ad223e7ff4dd3",
+      "bytes": 6523
+    },
+    {
+      "path": "dist/en/docs/structure-bc.md",
+      "sha256": "0f2a255354f1814503a8eedb36ccd2400c488b831ed3e1b7770f92e4a6a6e315",
+      "bytes": 5727
+    },
+    {
+      "path": "dist/en/docs/structure-dynamics.md",
+      "sha256": "824655f3de357676c6d6ab4c009a9ee53061c9d2e44c635ac227938b3d9ec5a5",
+      "bytes": 9189
+    },
+    {
+      "path": "dist/en/docs/symbolic-interfaces.md",
+      "sha256": "94a0f7f5e7a64226147e275bb37d359607b3157d1a791c37d9b04f2723448b13",
+      "bytes": 9099
+    },
+    {
+      "path": "dist/en/docs/symbolic-spacegroups.md",
+      "sha256": "9ae3d5bab942562a7bf82810e517a7a71cc340d72e0fb0b42ff4b21fcc5cd85d",
+      "bytes": 13026
+    },
+    {
+      "path": "dist/en/docs/symmetry-course.md",
+      "sha256": "92f90bf8bbad0f77f51429ba5529270ed9e28a349003d619ceb6cb8d641d2210",
+      "bytes": 16257
+    },
+    {
+      "path": "dist/en/docs/symmetry-workshop.md",
+      "sha256": "ac4ce92708b399a03074626dd550d28dad53fafda6d7da981282bd15e3baa40b",
+      "bytes": 4487
+    },
+    {
+      "path": "dist/en/docs/unfold-lab.md",
+      "sha256": "10debb2fcb8c2c7650ac1082c8fe45ae753ba4cca8fe688e22dcc89872e1fe9c",
+      "bytes": 6815
+    },
+    {
+      "path": "dist/en/docs/wavevector.md",
+      "sha256": "28d16023d4a2338c9d8636af2aa2dff3c87faa653a16b4be9064f6bd6bbfdfc6",
+      "bytes": 6995
+    },
+    {
+      "path": "dist/en/electronic-materials-ui.js",
+      "sha256": "00f202d38f963b647ede3c24df5b4db5d5a7467c8da6304724ab46c8eb7a108a",
+      "bytes": 33881
+    },
+    {
+      "path": "dist/en/engine.js",
+      "sha256": "81f87a7ff99235ac2d5032dcc99aa71acae62c960391a2d28ec6499c667a66f9",
+      "bytes": 33249
+    },
+    {
+      "path": "dist/en/entry-home.js",
+      "sha256": "5bee664c8de4633cf631667ac67e2a96bf987123c69e0dcc5582364433763583",
+      "bytes": 3071
+    },
+    {
+      "path": "dist/en/examples/andreev-barrier.json",
+      "sha256": "a9c6e818dbaf31cdaa2a5c0812321854f2ec3b73a21fcfc262815d2249c6bf0b",
+      "bytes": 331
+    },
+    {
+      "path": "dist/en/examples/andreev-project-normal.json",
+      "sha256": "d83189a541f6c2aa032ae1d6b596eb899519c0673f969aadcbcb5f7e4ae83759",
+      "bytes": 327
+    },
+    {
+      "path": "dist/en/examples/andreev-project-paired.json",
+      "sha256": "4c7ee9c1cea6632f1666e504f6764e2a6c3c4ce24f531f7971f4e64454e0424a",
+      "bytes": 329
+    },
+    {
+      "path": "dist/en/examples/andreev-small-gap.json",
+      "sha256": "73df7dd5514f5470971b8c54b7b705ce39d8c4437223d60f75806a851e5e6b0f",
+      "bytes": 330
+    },
+    {
+      "path": "dist/en/examples/andreev-threshold.json",
+      "sha256": "68066e9af0b0c9345e400010da0edd5eb3b6c0553e8d2757f6268522419d9201",
+      "bytes": 329
+    },
+    {
+      "path": "dist/en/examples/arithmetic-c3-order.json",
+      "sha256": "add34021289a38d817ab55053ee378716282fda2f626a6d243e4b0314fda409a",
+      "bytes": 61
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-d8-cubic.json",
+      "sha256": "028dad36164d0f0fa463639314df864fe40f4968225c37e36ee85f420af41d5b",
+      "bytes": 372
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-d9-limit.json",
+      "sha256": "27ee2a4cf3f7fe8483f800a024a61eeda5f16c7651f6f618989d2fc1a8679ba0",
+      "bytes": 346
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-field-xmcd.json",
+      "sha256": "c273f98d2a5917d474cc19dd1f005e596f8f2607c86a47560380c6124609a6f1",
+      "bytes": 370
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-project-x.json",
+      "sha256": "f8dbb1fd19c16de2513403f95eac08372d27667b79bbc810a2e2477c7620133a",
+      "bytes": 372
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-project-z.json",
+      "sha256": "2bb90f3fc57e4620bcc967b35976dc2fb4df5c1a37038ad52dcfd4e2f52b750e",
+      "bytes": 372
+    },
+    {
+      "path": "dist/en/examples/atomic-spectra-valence-soc-off.json",
+      "sha256": "867d6afcae133df3a9ab53f7d0a2603c4fafc0f73826958aa2a32e387626c7cc",
+      "bytes": 369
+    },
+    {
+      "path": "dist/en/examples/carat-affine-6d.json",
+      "sha256": "ff13283e1008938b2ad565e2770e83889c14c55517be9ba0a818a10ee66c1a16",
+      "bytes": 124
+    },
+    {
+      "path": "dist/en/examples/carat-catalog-6d.json",
+      "sha256": "2162aa12b57d0e1b9880ae90f95e13d5d9ed69aa3a65041c69703379600a81f5",
+      "bytes": 89
+    },
+    {
+      "path": "dist/en/examples/carat-classify-6d.json",
+      "sha256": "647ae7027288f8043efe58a30b4756616e9bad8bc34bbad6f6c7427b3f1cf311",
+      "bytes": 249
+    },
+    {
+      "path": "dist/en/examples/carat-lattices-4d.json",
+      "sha256": "f4be9b8d2f93feba886d4493819c8021c78da9b1c019bdf8de9505344e24dedb",
+      "bytes": 120
+    },
+    {
+      "path": "dist/en/examples/centralizer-a5-normalizer.json",
+      "sha256": "8d1ba5e30b66e57d6781aa3203168e12ac8ab13543a5b75454d81bf6d9306b7a",
+      "bytes": 1063
+    },
+    {
+      "path": "dist/en/examples/centralizer-a5.json",
+      "sha256": "9688fccb65fa672d1d53c8834e5b445b9b1484a2fba1d6f5e12538fdfd290785",
+      "bytes": 1064
+    },
+    {
+      "path": "dist/en/examples/centralizer-glued.json",
+      "sha256": "f6aaf87bd9b06b3411e6b183645c578f6f426333d7a048d78fccd675d779a649",
+      "bytes": 567
+    },
+    {
+      "path": "dist/en/examples/centralizer-hurwitz.json",
+      "sha256": "64b0a56d5c8c506eca11f408dac4bc77a32ed4855da8173d190fc47d0d686a45",
+      "bytes": 564
+    },
+    {
+      "path": "dist/en/examples/centralizer-order.json",
+      "sha256": "32e1c36399c823a9a66cac515dff36ae33e51e8ee124ed70363da7979b8e916f",
+      "bytes": 557
+    },
+    {
+      "path": "dist/en/examples/centralizer-quaternion-mixed.json",
+      "sha256": "ae228ab6b00fc639ea3b4df15ad5863b00f9514e456cf3f2d5ec1424067a918f",
+      "bytes": 1093
+    },
+    {
+      "path": "dist/en/examples/color-group-space.json",
+      "sha256": "68b74e79ace3c3b92b3c32775d48ddf9949b948864959f515b75bf569fa9648d",
+      "bytes": 83
+    },
+    {
+      "path": "dist/en/examples/crystal-field-jahn-teller.json",
+      "sha256": "610eb82b0d5c79341ffa2dc8b72ab3d15633f7e39fbc5977c5a3ce0cc191b07d",
+      "bytes": 176
+    },
+    {
+      "path": "dist/en/examples/crystal-field-negative-soc.json",
+      "sha256": "dbd6594dc53f8ac9a353d651212c02dba4d10bbbbf1c11541b364b9790e2a33c",
+      "bytes": 173
+    },
+    {
+      "path": "dist/en/examples/crystal-field-octahedral.json",
+      "sha256": "3a441ae05bab7a83b25f8bcf16e6ae297c106d69058e3808ecc3018d52007aac",
+      "bytes": 213
+    },
+    {
+      "path": "dist/en/examples/crystal-field-tetrahedral.json",
+      "sha256": "d0b0b1f6a935e0d8c73abe6950313e16ffba9b035947e804d0a8448124b4e13a",
+      "bytes": 173
+    },
+    {
+      "path": "dist/en/examples/crystkit-conjugacy.json",
+      "sha256": "e9b105de122bde516aeaa95ffac07a45193cf9f64b8dfd21e5c15fad131b2ab2",
+      "bytes": 108
+    },
+    {
+      "path": "dist/en/examples/crystkit-ext-infinite-generators.json",
+      "sha256": "5fd5ec4bf55fce707d9911f6bf17a2a992a447d0cab2e318035ba9723bf5c2d1",
+      "bytes": 111
+    },
+    {
+      "path": "dist/en/examples/crystkit-ext-infinite-normalizer.json",
+      "sha256": "e622d27ccdd4ca245cca0af4dc8e604402bc142698e0db0ceaa574af9aa31211",
+      "bytes": 149
+    },
+    {
+      "path": "dist/en/examples/crystkit-ext-screw.json",
+      "sha256": "8374baea093c2e369c73c160e2dcf2e8f96bad083c3ab1d95aace0cf826da04c",
+      "bytes": 148
+    },
+    {
+      "path": "dist/en/examples/crystkit-ext-six-dimensional.json",
+      "sha256": "0972b8862f17ac4fef9a39602508458497bf422924abf46556a98f117926131b",
+      "bytes": 244
+    },
+    {
+      "path": "dist/en/examples/crystkit-ext-wallpaper.json",
+      "sha256": "233f528100928185c051a423656ca8cae07d85fb2040acce42bba3d5d7acdbbd",
+      "bytes": 128
+    },
+    {
+      "path": "dist/en/examples/crystkit-finite-orders.json",
+      "sha256": "1200897fd7b63e94143664de241b2627a32664d43f95866fa571027c6ce981b3",
+      "bytes": 50
+    },
+    {
+      "path": "dist/en/examples/crystkit-normalizer-orbit.json",
+      "sha256": "8e4102fed0d92c8fd9974ff30ce03cecd1e8a04d429da4b943137ed2bf308c6d",
+      "bytes": 112
+    },
+    {
+      "path": "dist/en/examples/crystkit-simplify.json",
+      "sha256": "b401c4e825cfc5ea7736958c45a562ba8af286466f64f88e8c262f4725f553d5",
+      "bytes": 260
+    },
+    {
+      "path": "dist/en/examples/crystkit-space-group.json",
+      "sha256": "15ae2eab4b7197eb5b16917a7cbecc857d160214cac462340342352c7e45d48c",
+      "bytes": 109
+    },
+    {
+      "path": "dist/en/examples/device-transport-barrier.json",
+      "sha256": "b4705c429c09b23d29ad0dff062a7e78e7c499a41262813d5b5bb963de396a2e",
+      "bytes": 344
+    },
+    {
+      "path": "dist/en/examples/device-transport-disconnected.json",
+      "sha256": "f0c9b15d507bc482726e0fc6cb88d3c44c1db2301ddcfa4ab76c60860fa3ce8a",
+      "bytes": 342
+    },
+    {
+      "path": "dist/en/examples/device-transport-perfect.json",
+      "sha256": "99f4587819aeca33f15fbe1f1d91697ac013f2ac9cb6e4ee55677f990b0141bf",
+      "bytes": 342
+    },
+    {
+      "path": "dist/en/examples/device-transport-resonance.json",
+      "sha256": "ad29c9b25cc9dfeb3690a4b41c60386301170a43c39b07fe5dae513a3bd9bd93",
+      "bytes": 343
+    },
+    {
+      "path": "dist/en/examples/device-transport-ssh-strong.json",
+      "sha256": "86b734ec4379ececb070b5a0b2e30fef581c7be1568d1a855bc8d0119057c101",
+      "bytes": 343
+    },
+    {
+      "path": "dist/en/examples/device-transport-ssh-weak.json",
+      "sha256": "64828f1475f728cbad1c297a3056bb30a285f96b2cb74bb8822a1faaf37a5ab9",
+      "bytes": 345
+    },
+    {
+      "path": "dist/en/examples/double-group-screw.json",
+      "sha256": "9d275e7b7b4a36b8ed0b42260d4a772e7c04ae0f8c43f69c0f7e2b4a591c24e5",
+      "bytes": 69
+    },
+    {
+      "path": "dist/en/examples/electron-transport-import.json",
+      "sha256": "daf0bc33a1fe1e2e674283599bccd14239a13087f371206f6b53f7750e1beb4c",
+      "bytes": 33936
+    },
+    {
+      "path": "dist/en/examples/electron-transport-sheet.json",
+      "sha256": "ae423c47533a0e13b7705496bac1f04b89645ec158913299f3b5f093d5283b67",
+      "bytes": 181
+    },
+    {
+      "path": "dist/en/examples/electron-transport-sparse.json",
+      "sha256": "7cacd269f7dc6a643539c224f7d6a0df7e1f0b53a12b704389fd2917a935305b",
+      "bytes": 179
+    },
+    {
+      "path": "dist/en/examples/electron-transport-volume.json",
+      "sha256": "25491cd8e457e7f3de187052547e2bf7684f4c64a9e4b9d87d89e75e5b991dbc",
+      "bytes": 196
+    },
+    {
+      "path": "dist/en/examples/hall-response-closing.json",
+      "sha256": "682714a287e786992a2f7c9bf58a35a4ee455d96cf5bf65f8937e6dbd5f93c33",
+      "bytes": 152
+    },
+    {
+      "path": "dist/en/examples/hall-response-metal.json",
+      "sha256": "dc3dde038bc7b314f220b4ed5e55f8cefd0324c529631d636eeee856c06ce04d",
+      "bytes": 157
+    },
+    {
+      "path": "dist/en/examples/hall-response-plateau.json",
+      "sha256": "704f24a247abb3f34eb521b51ca6a323e151b826a24c73d05af49938946f5c9e",
+      "bytes": 150
+    },
+    {
+      "path": "dist/en/examples/hall-response-project-metal.json",
+      "sha256": "eb50ed8cbeecf7be8c5bb75aedc75a1d11e4a8ac282e45fec16c978acb269c89",
+      "bytes": 155
+    },
+    {
+      "path": "dist/en/examples/hall-response-trivial.json",
+      "sha256": "64eb3b2a3617674f5b5406f651c93a776b6fd780cd19e92c603d30b3c51046a7",
+      "bytes": 151
+    },
+    {
+      "path": "dist/en/examples/integral-affine-noncyclic-6d.json",
+      "sha256": "783931a23a7ca2f3576d7831286558ba47875cdb18e48958c7a7eca2d963a088",
+      "bytes": 98
+    },
+    {
+      "path": "dist/en/examples/integral-conductor-3d.json",
+      "sha256": "6267c565f75ac7587555e1679c4b62dc00b687c22ac1b0cf81a5e694ebffe2a7",
+      "bytes": 110
+    },
+    {
+      "path": "dist/en/examples/integral-conductor-cyclic-6d.json",
+      "sha256": "a8fe1546e8080bd074486b52155f70c7345c50071792d3df362c1a1b3911437a",
+      "bytes": 192
+    },
+    {
+      "path": "dist/en/examples/integral-conductor-tensor-4d.json",
+      "sha256": "eb4fe401035d1698f52cc3437e3fa161b300143f6ba95ddd791f128f98585d55",
+      "bytes": 193
+    },
+    {
+      "path": "dist/en/examples/integral-cyclic3-6d.json",
+      "sha256": "0b1a2cc339d5979f33f5f2d672e8f33faa25f61488d70b941fc5966d8d40e66f",
+      "bytes": 72
+    },
+    {
+      "path": "dist/en/examples/integral-involution-6d.json",
+      "sha256": "29332f0f9838faaaa9faf88ceda018655a64ba6b54077d78ee04ee232fdc4cba",
+      "bytes": 72
+    },
+    {
+      "path": "dist/en/examples/integral-isometry.json",
+      "sha256": "a77203f30e97d7b681334a878b03299f7fe5587e3806e77ae33b32fad20b9724",
+      "bytes": 135
+    },
+    {
+      "path": "dist/en/examples/integral-noncyclic-6d.json",
+      "sha256": "9097f7201d3c7577d15611f962e5d250799c51cc9db4a36c8f76768e554ceb79",
+      "bytes": 93
+    },
+    {
+      "path": "dist/en/examples/interfaces-common-kernel.json",
+      "sha256": "6097c87ac9299cc9241a34128d98a5d0c6be18a56f6516e11755dca7ff0410f8",
+      "bytes": 174
+    },
+    {
+      "path": "dist/en/examples/interfaces-cyclotomic-kernel.json",
+      "sha256": "c755e3a1ca4d14d860de7891620bcf11cefd61b2a3338430f6af6db5786d6ac0",
+      "bytes": 192
+    },
+    {
+      "path": "dist/en/examples/interfaces-cyclotomic.json",
+      "sha256": "90ee6894cd81e7b4612cf0e4cea86d0dd536bcf22cb208a07a6addca0e8a4442",
+      "bytes": 161
+    },
+    {
+      "path": "dist/en/examples/interfaces-gauge.json",
+      "sha256": "25afc96731579daf3ade583094448ec2a964e3fb2cda2f1b6c10a250826ed660",
+      "bytes": 226
+    },
+    {
+      "path": "dist/en/examples/interfaces-intertwiner.json",
+      "sha256": "213270fb4850871ebcacb2642a5f71f47d90add2ea526dc68e495d25eec3d775",
+      "bytes": 342
+    },
+    {
+      "path": "dist/en/examples/interfaces-projector.json",
+      "sha256": "d1be6d683410ec6e31c88926235d37a3e2d58df2e02e3b4537938542efe5d6d0",
+      "bytes": 397
+    },
+    {
+      "path": "dist/en/examples/interfaces-screw-cocycle.json",
+      "sha256": "beb42d6f7e09777a54a46a6a91865aea2b718db075e19bee9ed3d67b2ba980bd",
+      "bytes": 594
+    },
+    {
+      "path": "dist/en/examples/interfaces-seitz.json",
+      "sha256": "07c9f12f948bdc56ce0bd9bad41b6105b4652062ce68bee696042250c78dc2d0",
+      "bytes": 410
+    },
+    {
+      "path": "dist/en/examples/interfaces-symmetrize.json",
+      "sha256": "a30c416378d777773782a34b0a40fa4f17f2f3a9e12a04770d2081570973c6c9",
+      "bytes": 531
+    },
+    {
+      "path": "dist/en/examples/interfaces-translate-star.json",
+      "sha256": "c8b4ac04465f1bab9abd54aa92d8aaf857d6cbcd346bd6c010facf09bfd04c77",
+      "bytes": 219
+    },
+    {
+      "path": "dist/en/examples/interfaces-wigner-kramers.json",
+      "sha256": "5e764599e641b3d91ffe7223392377ee02976ca0db270c1459a981f9464541ee",
+      "bytes": 291
+    },
+    {
+      "path": "dist/en/examples/labels-parameter.json",
+      "sha256": "23b0a1bd5dd0c184a2f071a969806a39a7f9fe6b4354db9038ba9a9b8a5f4151",
+      "bytes": 100
+    },
+    {
+      "path": "dist/en/examples/labels-screw.json",
+      "sha256": "14d4eed66c893a26741324b2193177f84f21c7b68320e35588957f5a95164cc9",
+      "bytes": 72
+    },
+    {
+      "path": "dist/en/examples/labels-spinful.json",
+      "sha256": "f54955409a1ace2917752ef242ca89e865cde5e0832f3e5dfa2d954ae453e10f",
+      "bytes": 77
+    },
+    {
+      "path": "dist/en/examples/local-multiplet-d2-hund.json",
+      "sha256": "238235d7c93cb52b0c517d657ef245ddee6b123da44cdd5f99abb19caf188b52",
+      "bytes": 162
+    },
+    {
+      "path": "dist/en/examples/local-multiplet-d6-high.json",
+      "sha256": "89a5aea04a843a0eb981adac7c9f8ded69ccc6c779ceab2819b59d0ed854eca5",
+      "bytes": 164
+    },
+    {
+      "path": "dist/en/examples/local-multiplet-d6-low.json",
+      "sha256": "bf416acc2e52bff994f9b687380511fd8b1c03caa2723d10aee919eded5423bd",
+      "bytes": 162
+    },
+    {
+      "path": "dist/en/examples/local-multiplet-d8-nio.json",
+      "sha256": "0d2d2e6643d91800f8fed164027d9f1f4bb6ae07232a0faf5307385cf6749b74",
+      "bytes": 162
+    },
+    {
+      "path": "dist/en/examples/local-multiplet-j0.json",
+      "sha256": "eb3eece74d551472855c4b72a8f9b9471cc1386c5041f894b2a3c69dfc52bce6",
+      "bytes": 160
+    },
+    {
+      "path": "dist/en/examples/magnetictb-chern.json",
+      "sha256": "900ebd243fabbd7e5ab15ad2d31d0747985661214dde3cb3fad41642257a4f9f",
+      "bytes": 2292
+    },
+    {
+      "path": "dist/en/examples/magnetictb-graphene.json",
+      "sha256": "8f57daeb3cabf4822fe308d430dca1a75ebf86e3ebc97472673bf0f7b6477d6b",
+      "bytes": 15862
+    },
+    {
+      "path": "dist/en/examples/magnetictb-spinful-chain.json",
+      "sha256": "379defa7a574b9017d820e3ae120948c4d121112a9be2ae3df19cb34fc47d25c",
+      "bytes": 1734
+    },
+    {
+      "path": "dist/en/examples/magnetictb-ssh.json",
+      "sha256": "2e6ef4b25756e79690a2395d0aaeddddcc22fdcad226c125c55f1f0bb477ae6b",
+      "bytes": 1457
+    },
+    {
+      "path": "dist/en/examples/normalizer-affine6.json",
+      "sha256": "d925c537edbb32b48262700c17f83c4b0b123dab6e474ee3ab77f653e5ef9089",
+      "bytes": 593
+    },
+    {
+      "path": "dist/en/examples/normalizer-cyclotomic5.json",
+      "sha256": "35c1bec6fa5b32c6b63ef44e981e608c813608e9edef8a140be1d9de70c4a2e3",
+      "bytes": 315
+    },
+    {
+      "path": "dist/en/examples/normalizer-dihedral7.json",
+      "sha256": "8a7473e5b01240e16d002123e6518b0e06c7b9aedcf5b8e063bb4b437f9d3047",
+      "bytes": 1079
+    },
+    {
+      "path": "dist/en/examples/normalizer-glued6.json",
+      "sha256": "2d860829b44133a6041c390c44f55eb326b2c4d448f04c8301607fe74b049c18",
+      "bytes": 563
+    },
+    {
+      "path": "dist/en/examples/normalizer-tensor6.json",
+      "sha256": "d26e71ad7e58c7d89fc0c1f5a2a937ad86bc5f265bbbc0457deb1ac44cdc0fd9",
+      "bytes": 1079
+    },
+    {
+      "path": "dist/en/examples/pairing-kitaev-endstates.json",
+      "sha256": "476054790d6930d0558b729d6aed8ef8c0d67d01f6b58054b357bf84cdbfec04",
+      "bytes": 147
+    },
+    {
+      "path": "dist/en/examples/pairing-square-chiral.json",
+      "sha256": "81d5323d7d566f6ed4b8463fe3c94bec7d845921902763d6ca714bbc3acbfcc0",
+      "bytes": 173
+    },
+    {
+      "path": "dist/en/examples/pairing-square-d.json",
+      "sha256": "21bde1ae792b1925e100ea8cdf6f20057ba393ce24e4a218184963cb82d0ee05",
+      "bytes": 178
+    },
+    {
+      "path": "dist/en/examples/provenance.json",
+      "sha256": "27e97e9957b7589899016574e76bfa309cd3636ef3b86a44f24ae10c3fc86396",
+      "bytes": 1069
+    },
+    {
+      "path": "dist/en/examples/quantum-geometry-closing.json",
+      "sha256": "a6628b6e3ac96b2d09a82f37b0a0549baede9a41013a254f60efe509d61ee6da",
+      "bytes": 135
+    },
+    {
+      "path": "dist/en/examples/quantum-geometry-qwz.json",
+      "sha256": "c571a51e24543359c0675fb65a8c4f5be8d647271f3bb5f5d699932c5e070345",
+      "bytes": 139
+    },
+    {
+      "path": "dist/en/examples/quantum-geometry-ssh.json",
+      "sha256": "81476b3341e09070104f869fa9db3b7ec3b2286dddc49934b31942b31d00c2a3",
+      "bytes": 127
+    },
+    {
+      "path": "dist/en/examples/shg-batio3-complex.json",
+      "sha256": "5de1a44d0ce24d325f8019c3155f9d85dd65bde206115d352fb1c555816062ec",
+      "bytes": 259
+    },
+    {
+      "path": "dist/en/examples/shg-centrosymmetric-zero.json",
+      "sha256": "ef7bae8c2ef7286f6e1eb9560c9551bd87eeb8225d8e23a6af44903eb02b75f2",
+      "bytes": 144
+    },
+    {
+      "path": "dist/en/examples/shg-gaas-001.json",
+      "sha256": "cbe874ed3909da365c3fb935127b28447db70a946c2eb2d0abf6595415200935",
+      "bytes": 141
+    },
+    {
+      "path": "dist/en/examples/spin-group-space.json",
+      "sha256": "71c768db95ff39986334fb08fd008383f2a5ce3b780efd14feebf96535a1bb0a",
+      "bytes": 72
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-anisotropic-x.json",
+      "sha256": "6e2a248eab827590762f6fbe697916d952b3d25193e32eaef39da0eef8f30d2b",
+      "bytes": 423
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-anisotropic-z.json",
+      "sha256": "bcf06120a98eefff32e24e8332e374a2657b92d138475db8fe2922186ccf367b",
+      "bytes": 424
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-hyperfine.json",
+      "sha256": "4d74a504e26f38bb04d203d580a572714f98657d3e1c5cedf5aa5badb0e394fb",
+      "bytes": 433
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-isotropic.json",
+      "sha256": "fbc8dc9f25c6b65d9b72ffcaafdd84ee3f75fb206bf1f4b9a3ffa476571eb784",
+      "bytes": 426
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-longitudinal.json",
+      "sha256": "e2c65ee0637577bd8475e6c1436c195eacb43f44f982033e3ee2be77974df18a",
+      "bytes": 429
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-spin1-isotropic.json",
+      "sha256": "d144f565a0f4962e009b625d69c51e812b7b573cde9917ded765e7b19079ba5d",
+      "bytes": 420
+    },
+    {
+      "path": "dist/en/examples/spin-resonance-spin1.json",
+      "sha256": "220aa1aa4e3268ebc63485b6a854fa0c25609d824c77497ec50d9c03ca01c8bf",
+      "bytes": 422
+    },
+    {
+      "path": "dist/en/examples/structure-screw-cif.json",
+      "sha256": "2bb8cba8cb62c0fba2e4c3837d58097a133f74267fcc365fbdefad05180fa6c7",
+      "bytes": 504
+    },
+    {
+      "path": "dist/en/examples/structure-silicon.json",
+      "sha256": "cba0741d1bb3fc203db82b1baf9c97e5b22ca42ec87e819f45a3950ef6e068dd",
+      "bytes": 203
+    },
+    {
+      "path": "dist/en/examples/su3-cg-exact-ten-three.json",
+      "sha256": "3e3e5ca6a8e1336a53978edb5a7dc2da628fef5d2ac875cc60548b1fdc5dbb86",
+      "bytes": 176
+    },
+    {
+      "path": "dist/en/examples/su3-cg-high-adjoint.json",
+      "sha256": "683cfbf6e366d953f3a9441bf7e8e9de01ba2796c8d1f78027bf459070d3c58e",
+      "bytes": 179
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-10-input.json",
+      "sha256": "3ebe9e1ea24f3e91bc3f3dfe9782b21e280a4c34bbb98466f29ecd70659bbda2",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-10-permutation.json",
+      "sha256": "c617f363272b6f96c0f26126220ef865f66b4cab7a723f7d02963c3c8f313fcf",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-15-input.json",
+      "sha256": "8d3c5c959c49cc373e354723590fc3a30b5bb8cbf51af3f2ee88326b2a8523d1",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-27-input.json",
+      "sha256": "9a7de8e1d0938e203acf28ed52bf92fc0b0759122f3f5d18eecb2c290cca20c3",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-adjoint-octet.json",
+      "sha256": "0b64d556c7cde835f4a8709d83ad3bc33c1bb4aef0c2cdf39afc9a3a46856751",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-adjoint-singlet.json",
+      "sha256": "cd513005ad1f857cd9be08f509e943add604889ed1489a78f2182dfce8c5b342",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-color.json",
+      "sha256": "ead70aea3eb9dc326e914e4f0f205ea4a8e72b49f1ff39ea834903fe368f44c2",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-ninej-four.json",
+      "sha256": "2594cceaf2a00bc1084eb316639607f6a641bf494ffac12f295c19c9d5a8b243",
+      "bytes": 172
+    },
+    {
+      "path": "dist/en/examples/su3-racah-octets.json",
+      "sha256": "9e5c723ed27738138efa15ffec003d77e7b65c8a208441b1621ff87cd15f1eef",
+      "bytes": 164
+    },
+    {
+      "path": "dist/en/examples/su3-racah-three.json",
+      "sha256": "e45779e8e146dd68f55ef467a79fb84d4c593e97c70f55b3c86aabfcab17dea5",
+      "bytes": 164
+    },
+    {
+      "path": "dist/en/examples/symbolic-algebra.json",
+      "sha256": "89158ead8e67a5356d4f34e37ea9f55f2a3d06e1b23613627a4fbabecaf54657",
+      "bytes": 134
+    },
+    {
+      "path": "dist/en/examples/symbolic-chain.json",
+      "sha256": "ee7701e03740df5b77de45d3344968ca93b4574c5a1d6b1429b6db9d49707d99",
+      "bytes": 500
+    },
+    {
+      "path": "dist/en/examples/symbolic-cyclotomic.json",
+      "sha256": "81c9cb3325ea87d0d2c171a8273790e50f883f3c5392c6c4fff9b248c8c15eaa",
+      "bytes": 124
+    },
+    {
+      "path": "dist/en/examples/symbolic-f-orbitals.json",
+      "sha256": "ecfd27a592f8d4ae15f73a0871998d3647b2d802d40ac84ff9c43406addf806c",
+      "bytes": 194
+    },
+    {
+      "path": "dist/en/examples/symbolic-graphene.json",
+      "sha256": "dfe948833dacff35d2ec8ecae68ba2b3cce44126136c626ed9a3b4a00de92d2b",
+      "bytes": 15491
+    },
+    {
+      "path": "dist/en/examples/symbolic-kp.json",
+      "sha256": "069d7a9aee963fc23f8cffff3a7795552c728215cfd7d55a8191e45e6072fb48",
+      "bytes": 271
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-central.json",
+      "sha256": "4fe8923ef195952e806621ff91becce3df6f8bbee468d490ae7ee8e64530f47e",
+      "bytes": 104
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-compat.json",
+      "sha256": "8c6a679dfe58e625404128d4b60d21ffb99db75b29bbd1c2b19c523fd07f081a",
+      "bytes": 86
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-fullstar.json",
+      "sha256": "db8431815321729b88901169d7376a69c44e27287804cd1b46fb01e14d3f7045",
+      "bytes": 88
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-magnetic.json",
+      "sha256": "510bc88170b68c538759378802ba749e6f86ef6466453f483439b19742d03af9",
+      "bytes": 91
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-screw.json",
+      "sha256": "1dc6d5f006c81a01e7ab9c3246198ae148877784fafbbe206fe3963e41175c81",
+      "bytes": 83
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-spinful.json",
+      "sha256": "a416ce573af126c55009e1569064c71254c71c271dfba773bb95032f162723e3",
+      "bytes": 108
+    },
+    {
+      "path": "dist/en/examples/symbolic-sg-tetrahedral.json",
+      "sha256": "dc4270dbdb99986a1436bd132d98095838784d034dedaf5312d1490b379a07fb",
+      "bytes": 83
+    },
+    {
+      "path": "dist/en/examples/symbolic-ssh.json",
+      "sha256": "9ec9bd779300344b568830e149f1dae2c2dd7189d0ebf8f9ba0bca709fc2c603",
+      "bytes": 341
+    },
+    {
+      "path": "dist/en/examples/trace-msg.txt",
+      "sha256": "601c6d53ad1e26e3a065f5ae250ea7b6eb4bab8c6d0e63def41ca6085d953e22",
+      "bytes": 2406
+    },
+    {
+      "path": "dist/en/examples/unfold-dimerized.json",
+      "sha256": "f375c37e92aceee56c42a2d7d50940448a9f96b73b7e2b629ac85ba601bb43ca",
+      "bytes": 140
+    },
+    {
+      "path": "dist/en/examples/unfold-import.json",
+      "sha256": "8d97e1167b5c142401a6e75d4be6397d1971a85b7e004fa91ea0f0c8b604a99f",
+      "bytes": 2337
+    },
+    {
+      "path": "dist/en/examples/unfold-impurity.json",
+      "sha256": "7664905eb07448d0f11c345adf7c4b76b44072db1f12a1cb602832a9f07a211d",
+      "bytes": 159
+    },
+    {
+      "path": "dist/en/examples/unfold-perfect.json",
+      "sha256": "5128d138d5764ac33d8c9ff0b5c402a340521688827906dba4ef78bda3055363",
+      "bytes": 116
+    },
+    {
+      "path": "dist/en/examples/unfold-vacancy.json",
+      "sha256": "5794e5b1f2a501f657f60ead882479eee74c9648360ce609e3083852a107eeca",
+      "bytes": 135
+    },
+    {
+      "path": "dist/en/formula-dictionary.js",
+      "sha256": "e671ef9b1102075059af762bace7910c65f005e46e10078fd16d073015f9afc7",
+      "bytes": 18513
+    },
+    {
+      "path": "dist/en/frontiers-projects.js",
+      "sha256": "3e2c59ff6f93a362b399dc75506dbccefaaba32f5f09be99e5b0efe29cdd7ad8",
+      "bytes": 7794
+    },
+    {
+      "path": "dist/en/frontiers-ui.js",
+      "sha256": "a772ae76fce711a03c0ca63da08d54e61fa8cccf4918cae46d7cd2a29c70cfa7",
+      "bytes": 16803
+    },
+    {
+      "path": "dist/en/frontiers-views.js",
+      "sha256": "e944416cd927e1012d35dc3ba75a9f19d25e86e48e619d00928c377df8525fe7",
+      "bytes": 17959
+    },
+    {
+      "path": "dist/en/index.html",
+      "sha256": "2be02e2fa376dde4ef905b42cf92aa52abb1216cb601adf320dd62bcf4544692",
+      "bytes": 5530
+    },
+    {
+      "path": "dist/en/induction.js",
+      "sha256": "5642102df833910a93abbbf395755d1400d6175cfab86fe837005f874b0efc82",
+      "bytes": 12486
+    },
+    {
+      "path": "dist/en/lie-group-ui.js",
+      "sha256": "0f1c9a65147357dda039c6aea235e908bf2190583c9ccc438bf6d5c2c72386aa",
+      "bytes": 45043
+    },
+    {
+      "path": "dist/en/lie-physics-ui.js",
+      "sha256": "f7629917db4f0d6cd70d86645b44ed45844acb005691501e113008d05c0bc5d2",
+      "bytes": 19738
+    },
+    {
+      "path": "dist/en/material-notebook.js",
+      "sha256": "5a2aa3395c6329eb13f6a8294aefafbef708bc828c9922ad24f116c3c8fc886e",
+      "bytes": 23506
+    },
+    {
+      "path": "dist/en/material-research-ui.js",
+      "sha256": "9a4fd7008315b730ca9b80bfd4074bf89ddaf884cf633a382cd79b454555cc83",
+      "bytes": 36229
+    },
+    {
+      "path": "dist/en/math-display.js",
+      "sha256": "ca539affbc8f9ceeb3eee65458b4c0ed0ed68bdf7f8f8939f1048ea1d6e37ea6",
+      "bytes": 7992
+    },
+    {
+      "path": "dist/en/math-notation.js",
+      "sha256": "d4e19711280f0d385005e29b94fa3daf8671c0df75973f6c4d1cf9c53cbed8bf",
+      "bytes": 21598
+    },
+    {
+      "path": "dist/en/math-svg.js",
+      "sha256": "f4abb7d4f51e577dc9020840979977295a27e924ce2f6878cd2ab8aaf703510e",
+      "bytes": 7592
+    },
+    {
+      "path": "dist/en/navigation-ui.js",
+      "sha256": "e51adb6ef185c367af88a61a0e940d13566f06a5cdeebe345c4760af8ef88d4d",
+      "bytes": 27199
+    },
+    {
+      "path": "dist/en/observables-ui.js",
+      "sha256": "e04b368b4651b974d979f558d8baaa0a3d3091963b2c7c8672f6946e12c2e5b5",
+      "bytes": 27088
+    },
+    {
+      "path": "dist/en/pathways-projects.js",
+      "sha256": "e5865b3d11367d41b2b2569a73d407abe2592c648ae54b70a5557de4e882ff6e",
+      "bytes": 14946
+    },
+    {
+      "path": "dist/en/pathways-ui.js",
+      "sha256": "cba5f6c0ba0a7a652daa9157b33d54f6b72f219e9ca875cdfedb99642edd0eb2",
+      "bytes": 12350
+    },
+    {
+      "path": "dist/en/pathways-views.js",
+      "sha256": "7263e3afb4408e492348398a8cb13cd1ce525f6e72f8fe60a5565991dda6a272",
+      "bytes": 4489
+    },
+    {
+      "path": "dist/en/pointgroup-ui.js",
+      "sha256": "859607702e036a313c386e425f7a418f07a7ac1ad85e391d6d00df76e9360c6f",
+      "bytes": 35412
+    },
+    {
+      "path": "dist/en/principles-projects.js",
+      "sha256": "7ee7e00963d62c4db2a077c9013a85ee5e8c883ce3a188537010997ea5619713",
+      "bytes": 10828
+    },
+    {
+      "path": "dist/en/principles-ui.js",
+      "sha256": "0254687f2140a433919f7f7eb92c73291b4cbccd37d41f94402d5f0bd957f856",
+      "bytes": 15808
+    },
+    {
+      "path": "dist/en/principles-views.js",
+      "sha256": "7b0fbd76d9b8915f98bc2129e91b7b04396b59c7b2e16ae791497e37d6d66af8",
+      "bytes": 9558
+    },
+    {
+      "path": "dist/en/python-client.js",
+      "sha256": "42ba1fdda308d18a585892ffab21bd5253c446f4bf6e9415da7ba52e0b286a22",
+      "bytes": 2709
+    },
+    {
+      "path": "dist/en/python-worker.js",
+      "sha256": "5e501f7ee565f4c8111dbd500ba38eec2cadd838f6c86084df2b6e5baaa92ddd",
+      "bytes": 10981
+    },
+    {
+      "path": "dist/en/quantum-materials-ui.js",
+      "sha256": "e7b12bb177cb076c3055e20a76e5935093be921607fbb20c3b9c9022d84a6e41",
+      "bytes": 32384
+    },
+    {
+      "path": "dist/en/quantum-plots.js",
+      "sha256": "e423adf2d21508931f3711387d9254194f3c4495ee55991326513476fd60b868",
+      "bytes": 7044
+    },
+    {
+      "path": "dist/en/research-ui.js",
+      "sha256": "f6ce631e1939afaf5c92191e29f70ea5087fe73cb1f0105d044c4693f79b46ea",
+      "bytes": 18899
+    },
+    {
+      "path": "dist/en/resource-loader.js",
+      "sha256": "1dbb492ee3332cc71ae55c66fcea324522fceb1295417d6a6ec841cfd30d0125",
+      "bytes": 1401
+    },
+    {
+      "path": "dist/en/response-materials-ui.js",
+      "sha256": "50302e26937db43caf95765d114a26789cc5e4c3a4e591cd45957c32697683c5",
+      "bytes": 12613
+    },
+    {
+      "path": "dist/en/response-projects.js",
+      "sha256": "61bb08f4da4b687999347e8fbf416e9d2699078ca2be43af0daff8251f8b6501",
+      "bytes": 18179
+    },
+    {
+      "path": "dist/en/response-views.js",
+      "sha256": "052d8c560dd821d305b5978e296df48fd9bc0dc84a9bde63e035e4cc167192bb",
+      "bytes": 12939
+    },
+    {
+      "path": "dist/en/shg-flagship.js",
+      "sha256": "f41f15439fba3bd852608af4e97faf6ab959d0dafb2248c30a90d2b9af33d68d",
+      "bytes": 22270
+    },
+    {
+      "path": "dist/en/spectroscopy-projects.js",
+      "sha256": "e5ccf758480659f6f364fe9703d51d49acd6cddef206b1d19d8dac246224fcb5",
+      "bytes": 7741
+    },
+    {
+      "path": "dist/en/spectroscopy-ui.js",
+      "sha256": "4b3cb3efaf36a3d47b6814bd63df36847d7bd769764d96977a89b5ff16125faa",
+      "bytes": 12668
+    },
+    {
+      "path": "dist/en/spectroscopy-views.js",
+      "sha256": "af9abd682a1b79323b2b774cb873359518224d26a0bba9ff6bb9d7f70f07153a",
+      "bytes": 15509
+    },
+    {
+      "path": "dist/en/spincolor-viewer.js",
+      "sha256": "df3c42fda82c1b4e172b04a3d645352029cfa72ea7f5c12ad6d7a58bfbadc9f3",
+      "bytes": 9328
+    },
+    {
+      "path": "dist/en/structure-dynamics-ui.js",
+      "sha256": "8e8406015280f1eb3967f450b462b8b9fd8082b298eb2f79a7b87f9a4866c4f4",
+      "bytes": 39601
+    },
+    {
+      "path": "dist/en/structure-ui.js",
+      "sha256": "afd3eda3b8f503b471c2a3bb255f7b3636ba7107f70c18e1bb7ff6c0a9b2c60a",
+      "bytes": 12656
+    },
+    {
+      "path": "dist/en/su3-cg-ui.js",
+      "sha256": "3792a2fe385bcce586024e16e2ea518125e88fbf5a25a782436098cadea2a543",
+      "bytes": 24008
+    },
+    {
+      "path": "dist/en/su3-ninej-ui.js",
+      "sha256": "0fb01ed657ef183c9194a79da7db47fffda2c5da04c270db2abfb89ee332e297",
+      "bytes": 32349
+    },
+    {
+      "path": "dist/en/su3-racah-ui.js",
+      "sha256": "fef317a1877e86978bb77c193d08ddf305c323fee56aab0cd5c380aa58ee1b7f",
+      "bytes": 23466
+    },
+    {
+      "path": "dist/en/symmetry-audit-ui.js",
+      "sha256": "51ec4d5d1213b6cb5209d8eb10091d26b563578b20ad913134f89742117a9ce9",
+      "bytes": 4145
+    },
+    {
+      "path": "dist/en/symmetry-course-ui.js",
+      "sha256": "c7cd64c9533a761c574f9a9c3fb8139c2d368ff9667ed677b1048f6fa237ec5e",
+      "bytes": 83251
+    },
+    {
+      "path": "dist/en/trace-parser.js",
+      "sha256": "8afb929ae2f6e3d47afe0621e54247229676fe0488c0269460192a2730b34575",
+      "bytes": 8767
+    },
+    {
+      "path": "dist/en/translation-report.json",
+      "sha256": "81bd4f5f329986f35032ae2f585551db44312d20c66e87429e00f3425acf6824",
+      "bytes": 637
+    },
+    {
+      "path": "dist/english-results.js",
+      "sha256": "c92fa5ab6d463d76d706802115d1be7d3650592893f2137faa6a0a9f484f7de8",
+      "bytes": 7815
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "881c0aa53f5bc7e794e2a26037c231be80477b5d66948d7c2a80aa2f4a0cc6e1",
+      "bytes": 5292
+    },
+    {
+      "path": "dist/language-switch.css",
+      "sha256": "699aed486c597ad16e2435e7e6523de19a8fcd0e23c91cc04d2ced2c65d2f3a4",
+      "bytes": 1492
+    },
+    {
+      "path": "dist/language-switch.js",
+      "sha256": "24cb63ba6f04287bec7fee3f6b1b2b09dfaa2ca5b55d62a43b21d81fb566bf42",
+      "bytes": 3810
+    },
+    {
+      "path": "dist/math-notation.js",
+      "sha256": "d4e19711280f0d385005e29b94fa3daf8671c0df75973f6c4d1cf9c53cbed8bf",
+      "bytes": 21598
+    },
+    {
+      "path": "locales/en-corrections.json",
+      "sha256": "2e89a5edcf8c69557b550a9cb043892a11bf82a581a0a4ab42c949d81762b9a5",
+      "bytes": 16183
+    },
+    {
+      "path": "locales/en-draft.json",
+      "sha256": "1ef0059add3e14ba8812974a15ad506a3e88b0b118cc31a0ab6d0fb7c56de862",
+      "bytes": 1516557
+    },
+    {
+      "path": "locales/en-editorial.json",
+      "sha256": "dca21feca79d0e501f88c3ac2432f8d1534702b4d226437bdf2d1de916b4ca2c",
+      "bytes": 40946
+    },
+    {
+      "path": "locales/en-glossary.json",
+      "sha256": "51cf95a82d95c423386ac6d834c1759fb9199930a4bc8a83a3c93df8c8b25f63",
+      "bytes": 9761
+    },
+    {
+      "path": "locales/en-manual-1.json",
+      "sha256": "b4fa6e226fd2fb07700cabdc17da7ed60bc1e3e9179eb7d18bfb68440774ac68",
+      "bytes": 671262
+    },
+    {
+      "path": "locales/en-manual-2.json",
+      "sha256": "b16e2001fbe4090d8abfb87afcf501323ecc5449169774e3399b9557d193fe98",
+      "bytes": 648643
+    },
+    {
+      "path": "locales/en-manual-3.json",
+      "sha256": "70c749af57809bad826bc0a159888f67594852224df2eb5aec2d59099ba269df",
+      "bytes": 603159
+    },
+    {
+      "path": "locales/en-manual-extra.json",
+      "sha256": "81ed729ce0c22d4ade7792c0c28ea06bed3e9d8c222e388c8e07ad5c176d56e6",
+      "bytes": 49612
+    },
+    {
+      "path": "locales/en-meta.json",
+      "sha256": "9268c3749ff43f7626c4acd6f5154e5b5a798bdf2ca486b5f3ca290a6d589804",
+      "bytes": 26672
+    },
+    {
+      "path": "locales/en-python-sources.json",
+      "sha256": "a73d135e2013642582db8c24e56bd9a7d783afe9c36083329eb0252b785f92c0",
+      "bytes": 793870
+    },
+    {
+      "path": "locales/en-python-templates.json",
+      "sha256": "df9ae3054ccf8a5fe8c93ab20503107bd0e55e890fc2bf541e78900b2f2fcca3",
+      "bytes": 18387
+    },
+    {
+      "path": "locales/en-quality-dictionary.json",
+      "sha256": "da2fa9f5e4d675220bce57f87c3c1e4cfd03986e8d89474c67891ac33bab3944",
+      "bytes": 31305
+    },
+    {
+      "path": "locales/en-quality-physics.json",
+      "sha256": "a3a34ab61bc71f4cad170b22df5321f2fe3c9c58330f7686a388538780a3186d",
+      "bytes": 27919
+    },
+    {
+      "path": "locales/en-quality-teaching-1.json",
+      "sha256": "fd7eafda4296f1d429833e7db78e30c49fe546d76397d27422c22f11b53b7158",
+      "bytes": 34914
+    },
+    {
+      "path": "locales/en-quality-teaching-2.json",
+      "sha256": "a8a5613d222737a1151d35b2dc0c89172e53478628429d1bec88f26643d9bb4b",
+      "bytes": 166866
+    },
+    {
+      "path": "locales/en-quality.json",
+      "sha256": "146ef1ec019a53057f32dfe254a4ec16bab795246694e1636d796326c4c023aa",
+      "bytes": 131243
+    },
+    {
+      "path": "locales/en-science.json",
+      "sha256": "5719bd8bbc7f077d5fd8398dcded601f41779b90bba9060bae13258f2bfeb433",
+      "bytes": 74756
+    },
+    {
+      "path": "locales/en-sources.json",
+      "sha256": "47e27ca25686fb19f9ec54a652e150f37a4d9c4835fe4ca4869bc635da41c861",
+      "bytes": 3405801
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "b04ee4f0362cf4d9c5b9503956c18340d1826a17550c807811191b3a4a1df72c",
+      "bytes": 685
+    },
+    {
+      "path": "package.json",
+      "sha256": "7d962c6ca83ef450b482f6551db17640388e82a1787ab00ed3efa35325922d2d",
+      "bytes": 11023
+    },
+    {
+      "path": "scripts/audit-english-results.mjs",
+      "sha256": "ab8e32548251f384561bb6c63a70c5ee1a066db014035e4d6b4163e6017ae275",
+      "bytes": 3116
+    },
+    {
+      "path": "scripts/build-english.mjs",
+      "sha256": "de19807637653261e19f33bbae4916b9005efcda41ddd30858f923729fcbc97b",
+      "bytes": 9488
+    },
+    {
+      "path": "scripts/collect-english.mjs",
+      "sha256": "5d2c88d6666f4bf29de809e3fb8bb91512f8765dfac398dd2d1748486d63a9fd",
+      "bytes": 436
+    },
+    {
+      "path": "scripts/collect-fixture-messages.mjs",
+      "sha256": "8e3e0e76c4d3a3019b55f22f826b121adaf6ce620712540ea4fa6e01a56381cf",
+      "bytes": 1140
+    },
+    {
+      "path": "scripts/english-catalog.mjs",
+      "sha256": "3a57d4e99958ebeb0c404a4fcec6bce90960628585c43eefcdc26d67d63a4f8d",
+      "bytes": 801
+    },
+    {
+      "path": "scripts/english-source.mjs",
+      "sha256": "8a2f8a46074ee396f4fa962c483d52c9862c3521630fd1ea5446a3123fef39dd",
+      "bytes": 5452
+    },
+    {
+      "path": "scripts/extract-python-messages.py",
+      "sha256": "377f5dbe8ba97d27a8d890358c2ee0726d888fa21ab534c9a64d34be3a5f061e",
+      "bytes": 2751
+    },
+    {
+      "path": "scripts/package-source.py",
+      "sha256": "1020d083c80326e717713b3872a1b8387955d5b636fa2e80e7462d6a03c74265",
+      "bytes": 1274
+    },
+    {
+      "path": "scripts/prepare-english.mjs",
+      "sha256": "45c948f4b5aa18dbfca0009b97d39d17071c2db9ce31ffaef1ea9bf2864cea42",
+      "bytes": 2093
+    },
+    {
+      "path": "scripts/refresh-english-provenance.py",
+      "sha256": "757c03f88eaf4de4a3d3bcde72b74abeb5a81abe48e6fca3f398831394757a15",
+      "bytes": 3243
+    },
+    {
+      "path": "scripts/test-english-edition.mjs",
+      "sha256": "8a8ad9fb81fb33f7cd186a6cde91930242d5761cf9b497bd7c7c9a61cfcfbd89",
+      "bytes": 7272
+    },
+    {
+      "path": "scripts/test-english-results.mjs",
+      "sha256": "4f81bb80a88f0353d68e4d88a001077496293c6a864c5badf1704cac7ab97da9",
+      "bytes": 9544
+    },
+    {
+      "path": "scripts/test-language-switch.mjs",
+      "sha256": "21c19b28340a903aeace7c701048ff5f1e300592b06253d2a5e8024d684bb6d1",
+      "bytes": 5095
+    }
+  ]
+}

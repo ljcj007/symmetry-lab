@@ -7,7 +7,8 @@ import katex from '../dist/vendor/katex/katex.mjs';
 import {segmentFormula,findInlineMath} from '../dist/math-notation.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
-const dataRoot=path.join(root,'dist/data');
+const english=process.argv.includes('--english');
+const dataRoot=path.join(root,english?'dist/en/data':'dist/data');
 const snapshots=new Map(),formulas=[],inline=[];
 const marker=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀᴴ†′̄̅̿̂̇̈⃗Åα-ωΑ-Ω]/u;
 const displayFields=new Set(['title','name','summary','description','text','formula','prompt','hint','choices','explanation','answer','result','steps','assumption','phase','kind','meaning','unit','symbol','symbols','label','note','conventions','conditions','definition','question','goals','goal','prerequisite','formulaAliases','paragraphs','givens','pitfall','chapter','objectives','scope','limitations','referenceNote','modelLabel','convention','physics','setting','conclusion']);
@@ -122,7 +123,7 @@ assert.match(observables.lessons[4].sections[1].formula,/C_\{ijkl\}=C_\{jikl\}=C
 assert.match(observables.lessons[4].sections[3].formula,/χ_\{lab\}=Qχ_\{crystal\}Qᵀ/);
 assert.match(read('andreev-content.json').lessons[0].sections[1].formula,/R_\{ee\}\+R_\{he\}/);
 assert.match(read('quantum-geometry-content.json').lessons[0].sections[0].formula,/Q_\{μν\}=⟨∂_μ u/);
-assert.match(read('lie-derivations.json').exercises[14].steps[3].formula,/C_\{完整\}†C_\{完整\}/);
+assert.match(read('lie-derivations.json').exercises[14].steps[3].formula,english?/C_\{full\}†C_\{full\}/:/C_\{完整\}†C_\{完整\}/);
 
 // Each combined classroom must carry the same edited lesson/exercise text as
 // its source module. Only module routing metadata differs; calculations and

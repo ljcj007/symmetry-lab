@@ -1,5 +1,5 @@
-import {captureCalculation} from './material-notebook.js?v=20261110-math1';
-import {esc,num,table} from './response-views.js?v=20261110-math1';
+import {captureCalculation} from './material-notebook.js?v=20261110-en1';
+import {esc,num,table} from './response-views.js?v=20261110-en1';
 let latest=null;
 export const getAuditResult=()=>latest;
 export function renderAuditView({container,run,cancelRun,download,onLocation=()=>{}}){

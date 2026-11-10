@@ -1,0 +1,6 @@
+{
+  "format": "cif",
+  "symprec": 0.00001,
+  "text": "data_screw\n_cell_length_a 3.0(2)\n_cell_length_b 4.0\n_cell_length_c 5.0\n_cell_angle_alpha 90\n_cell_angle_beta 101.2(1)\n_cell_angle_gamma 90\nloop_\n_space_group_symop_id\n_space_group_symop_operation_xyz\n1 'x,y,z'\n2 '-x,y+1/2,-z'\nloop_\n_atom_site_label\n_atom_site_type_symbol\n_atom_site_fract_x\n_atom_site_fract_y\n_atom_site_fract_z\n_atom_site_occupancy\nNa1 Na 0.123 0.234 0.345 1\nCl1 Cl 0.271 0.414 0.159 1\n",
+  "k": [0, 0.25, 0]
+}

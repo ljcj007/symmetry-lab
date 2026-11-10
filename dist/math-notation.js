@@ -1,4 +1,4 @@
-import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261110-math1';
+import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261110-en1';
 /** Presentation-only conversion of the site's plain scientific notation.
  * Never use these strings as computational input. Unknown syntax stays text.
  */
@@ -6,7 +6,7 @@ const greek={'α':'alpha','β':'beta','γ':'gamma','δ':'delta','ε':'varepsilon
 const symbols={'½':'\\frac{1}{2}','¼':'\\frac{1}{4}','¾':'\\frac{3}{4}','⅓':'\\frac{1}{3}','⅔':'\\frac{2}{3}','≪':'\\ll ','≫':'\\gg ','⊃':'\\supset ','⊇':'\\supseteq ','⋊':'\\rtimes ','−':'-','–':'-','×':'\\times ','·':'\\cdot ','⋅':'\\cdot ','⊗':'\\otimes ','⊕':'\\oplus ','∝':'\\propto ','≈':'\\approx ','≃':'\\simeq ','≅':'\\cong ','≠':'\\ne ','≤':'\\le ','≥':'\\ge ','→':'\\to ','↔':'\\leftrightarrow ','⇒':'\\Rightarrow ','⇔':'\\Leftrightarrow ','∈':'\\in ','∉':'\\notin ','⊂':'\\subset ','⊆':'\\subseteq ','∩':'\\cap ','∪':'\\cup ','∞':'\\infty ','∂':'\\partial ','∇':'\\nabla ','∫':'\\int ','∮':'\\oint ','∑':'\\sum ','∏':'\\prod ','±':'\\pm ','∓':'\\mp ','↑':'\\uparrow ','↓':'\\downarrow ','⊥':'\\perp ','∥':'\\parallel ','…':'\\ldots ','⋯':'\\cdots ','⋮':'\\vdots ','⋱':'\\ddots ','⟨':'\\langle ','〈':'\\langle ','⟩':'\\rangle ','〉':'\\rangle ','∅':'\\varnothing ','≡':'\\equiv ','∼':'\\sim ','°':'^{\\circ}','∧':'\\wedge ','∨':'\\vee ','¬':'\\neg ','∀':'\\forall ','∃':'\\exists ','↦':'\\mapsto '};
 const subs={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','₊':'+','₋':'-','₌':'=','₍':'(','₎':')','ₐ':'a','ₑ':'e','ₕ':'h','ᵢ':'i','ⱼ':'j','ₖ':'k','ₗ':'l','ₘ':'m','ₙ':'n','ₒ':'o','ₚ':'p','ᵣ':'r','ₛ':'s','ₜ':'t','ᵤ':'u','ᵥ':'v','ₓ':'x','ᵦ':'β','ᵧ':'y','ᵨ':'ρ','ᵩ':'φ','ᵪ':'χ','꜀':'c'};
 const supers={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁼':'=','⁽':'(','⁾':')','ᵀ':'T','ᴴ':'H','ᵃ':'a','ᵇ':'b','ᶜ':'c','ᵈ':'d','ᵉ':'e','ᶠ':'f','ᵍ':'g','ʰ':'h','ⁱ':'i','ʲ':'j','ᵏ':'k','ˡ':'l','ᵐ':'m','ⁿ':'n','ᵒ':'o','ᵖ':'p','ʳ':'r','ˢ':'s','ᵗ':'t','ᵘ':'u','ᵛ':'v','ʷ':'w','ˣ':'x','ʸ':'y','ᶻ':'z','†':'\\dagger ','‡':'\\ddagger ','′':'\\prime ','″':'\\prime\\prime ','‴':'\\prime\\prime\\prime ','ᵅ':'α','ᵝ':'β','ᵞ':'γ','ᵟ':'δ','ᵋ':'ε','ᶿ':'θ','ᶥ':'ι','ᵠ':'φ','ᵡ':'χ'};
-const scriptLabels=new Set(['SOC','BdG','NS','CF','JT','ACBD','BC','input','mech','fix','eff','static','vib','total','in','out','max','min','pair','orb','spin','device','rel','group']);
+const scriptLabels=new Set(['SOC','BdG','NS','CF','JT','ACBD','BC','input','mech','ac','opt','copy','full','old','separate','fix','eff','static','vib','total','in','out','max','min','pair','orb','spin','device','rel','group']);
 const functions=new Set(['sin','cos','tan','sinh','cosh','tanh','arcsin','arccos','arctan','exp','log','ln','lim','min','max','det','dim','ker','gcd','arg']);
 const operators=new Set(['SU','SO','O','U','GL','SL','Sp','Tr','tr','Re','Im','rank','diag','sgn','Var','Sym','span','mod','FWHM','XMCD','XLD']);
 const groups=new Set(['SU','SO','O','U','GL','SL','Sp']);
@@ -14,7 +14,7 @@ const cjk=/[\u3400-\u9fff\uf900-\ufaff]/u;
 const combining=/[\u0300-\u036f\u20d0-\u20ff]/u;
 const elements=new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' '));
 const unitWords=['任意单位','能量','长度','时间','温度','体积','面积','电压','电流','频率','质量','单位'];
-const unitSymbols=new Set(['eV','meV','THz','GHz','MHz','kHz','GPa']);
+const unitSymbols=new Set(['eV','meV','THz','GHz','MHz','kHz','GPa','energy','length']);
 // A multi-element formula with stoichiometric numbers is unambiguous here;
 // single-letter C/S and C4v retain their mathematical/group meanings.
 function chemicalAt(source,index){
@@ -44,6 +44,7 @@ function convert(source,depth=0){
  const inner=x=>convert(x,depth+1);const scriptTex=x=>{
   const chars=Array.from(x.trim());
   if(chars.length&&chars.every(c=>supers[c])){const value=chars.map(c=>supers[c]).join('');return value.includes('\\')?value:inner(value);}
+  if(/^[A-Za-z]+(?:[ -][A-Za-z]+)+$/.test(x)&&/[A-Za-z]{4}/.test(x))return text(x);
   return scriptLabels.has(x)?'\\mathrm{'+x+'}':inner(x);
  };
  const accented=(atom,mark)=>{
@@ -143,6 +144,19 @@ export function normalizeMath(source){
 const scriptCharacters=new RegExp('['+Object.keys(subs).join('')+Object.keys(supers).join('')+']','u');
 const physicalComponents=/(?:[στ][xyz]{1,3}(?![A-Za-z_])|(?<![A-Za-z_])kB(?![a-z_])|μB(?![a-z_]))/u;
 const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏÅ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝≪≫]/u;
+const proseWords=new Set('a and the for are has see set can not one two all let its our how why per out any new from with into then than that this these those such both each only also but use via at to in on is be by as or of if we an it no so up'.split(' '));
+function englishProseToken(token){
+ const word=token.replace(/^["'“”‘’(\[]+|["'“”‘’.,;:!?\)\]]+$/g,'');
+ return (/^[A-Za-z]{4,}(?:-[A-Za-z]+)*$/.test(word)||proseWords.has(word.toLowerCase()))&&!functions.has(word)&&!operators.has(word);
+}
+function inlineWords(source){
+ const words=[];let begin=0;
+ for(let i=0;i<source.length;i++){
+  if('^_'.includes(source[i])&&'({'.includes(source[i+1]||'!')){const end=closeAt(source,i+1);if(end>=0){i=end;continue;}}
+  if(/\s/.test(source[i])){if(i>begin)words.push(source.slice(begin,i));let end=i+1;while(/\s/.test(source[end]||'')&&end<source.length)end++;words.push(source.slice(i,end));i=end-1;begin=end;}
+ }
+ if(begin<source.length)words.push(source.slice(begin));return words;
+}
 function append(rows,row){if(!row.source)return;const prev=rows.at(-1);if(prev&&prev.type===row.type&&row.type==='text')prev.source+=row.source;else rows.push(row);}
 function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source)||hasChemical(source)||findCrystalTokens(source).some(p=>p.kind))?{type:'math',source,tex}:{type:'text',source};}
 
@@ -161,7 +175,7 @@ function inlineBits(source){
    if(unit){const start=end-unit.length;push(i);if(start>i){begin=i;push(start,true);}begin=start;i=end;continue;}
    push(i);begin=i;push(end,true);i=end;continue;
   }
-  const separator=source.slice(i).match(/^(?:[，。；：、！？]+|\s{2,}|\n)/u);
+  const separator=source.slice(i).match(/^(?:[，。；：、！？!?]+|\s{2,}|\n)/u);
   if(separator){push(i);begin=i;push(i+separator[0].length,true);i=begin;continue;}
   i++;
  }
@@ -173,6 +187,7 @@ export function segmentFormula(source){
  source=String(source??'');const rows=[];let begin=0,depth=0;
  // Matrices can contain newlines; retain them as one complete expression.
  if(!cjk.test(source)&&source.includes('[[')){const row=part(source,true);return[row];}
+ if(!cjk.test(source)&&inlineWords(source).some(englishProseToken))return findInlineMath(source);
  for(let i=0;i<source.length;i++){
   const c=source[i];if(cjk.test(c)&&'_^'.includes(source[i-1]||'!')){while(cjk.test(source[i+1]||''))i++;continue;}if('([{'.includes(c))depth++;else if(')]}'.includes(c))depth=Math.max(0,depth-1);
   if(!depth&&(c==='\n'||c==='；'||c==='，'||c==='：'||c==='。'||c==='、'||cjk.test(c))){
@@ -194,11 +209,11 @@ export function findInlineMath(source){
   const bits=inlineBits(chunk);
   for(const entry of bits){const bit=entry.source;if(entry.prose||/^[，。；：、！？\s]+$/.test(bit)){append(rows,{type:'text',source:bit});continue;}
    // Do not italicize a long English sentence just because it contains a subscript.
-   const pieces=bit.split(/(\s+)/);let run='';const flush=()=>{if(!run)return;if(!run.trim()){append(rows,{type:'text',source:run});run='';return;}const leading=run.match(/^\s*/)[0],trailing=run.match(/\s*$/)[0],body=run.slice(leading.length,run.length-trailing.length||undefined);append(rows,{type:'text',source:leading});append(rows,part(body));append(rows,{type:'text',source:trailing});run='';};
-   for(const p of pieces){if(/^[A-Za-z]{4,}$/.test(p)&&!functions.has(p)&&!operators.has(p)){flush();append(rows,{type:'text',source:p});}else run+=p;}flush();
+   const pieces=inlineWords(bit);let run='';const flush=()=>{if(!run)return;if(!run.trim()){append(rows,{type:'text',source:run});run='';return;}const leading=run.match(/^\s*/)[0],trailing=run.match(/\s*$/)[0],body=run.slice(leading.length,run.length-trailing.length||undefined);append(rows,{type:'text',source:leading});append(rows,part(body));append(rows,{type:'text',source:trailing});run='';};
+   for(const p of pieces){if(englishProseToken(p)){flush();append(rows,{type:'text',source:p});}else run+=p;}flush();
   }
  }
  return rows;
 }
 
-export const mathNotationVersion='20261110-math1';
+export const mathNotationVersion='20261110-en1';

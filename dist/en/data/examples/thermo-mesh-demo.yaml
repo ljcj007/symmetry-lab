@@ -1,0 +1,29 @@
+# Synthetic teaching mesh; weights demonstrate BZ normalization, not measured or DFT data.
+synthetic: true
+description: Synthetic 1-atom teaching mesh, not a material calculation
+mesh:
+- 2
+- 2
+- 2
+natom: 1
+nqpoint: 2
+frequency_unit: THz
+phonon:
+- q-position:
+  - 0.25
+  - 0.25
+  - 0.25
+  weight: 2
+  band:
+  - frequency: 2.0
+  - frequency: 3.0
+  - frequency: 4.0
+- q-position:
+  - 0.25
+  - 0.25
+  - -0.25
+  weight: 6
+  band:
+  - frequency: 4.0
+  - frequency: 5.0
+  - frequency: 6.0

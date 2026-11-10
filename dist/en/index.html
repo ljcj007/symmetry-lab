@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A browser-based Python workbench for crystal symmetry: lessons on 32 point groups, 230 space groups, double groups, magnetic groups, color groups, spin groups and SU(2)/SU(3), with representation theory, magnetic tight-binding models and crystal-group algebra."><title>Symmetry Lab · Crystal Symmetry Workbench</title><link rel="icon" href="../icon.svg" type="image/svg+xml"><link rel="stylesheet" href="../style.css?v=20261110-en1"><link rel="stylesheet" href="../pointgroup.css?v=20261110-en1"><link rel="stylesheet" href="../symmetry-course.css?v=20261110-en1"><link rel="stylesheet" href="../classroom.css?v=20261110-en1"><link rel="stylesheet" href="../navigation.css?v=20261110-en1"><link rel="stylesheet" href="../lie-group.css?v=20261110-en1"><link rel="stylesheet" href="../observables.css?v=20261110-en1"><link rel="stylesheet" href="../structure-dynamics.css?v=20261110-en1"><link rel="stylesheet" href="../material-research.css?v=20261110-en1"><link rel="stylesheet" href="../coupled-materials.css?v=20261110-en1"><link rel="stylesheet" href="../electronic-materials.css?v=20261110-en1"><link rel="stylesheet" href="../quantum-materials.css?v=20261110-en1"><link rel="stylesheet" href="../response-materials.css?v=20261110-en1"><link rel="stylesheet" href="../spectroscopy.css?v=20261110-en1">
+<link rel="stylesheet" href="../bridges.css?v=20261110-en1"><link rel="stylesheet" href="../pathways.css?v=20261110-en1"><link rel="stylesheet" href="../formula-dictionary.css?v=20261110-en1"><link rel="stylesheet" href="../vendor/katex/katex.min.css"><link rel="stylesheet" href="../math-display.css?v=20261110-en1">
+<link rel="stylesheet" href="../construction.css?v=20261110-en1">
+  <link rel="stylesheet" href="../principles.css?v=20261110-en1">
+<link rel="stylesheet" href="../frontiers.css?v=20261110-en1">
+  <link rel="stylesheet" href="../connections.css?v=20261110-en1">
+<link rel="stylesheet" href="../learning-experience.css?v=20261110-en1"><link rel="stylesheet" href="../language-switch.css?v=20261110-en1"></head>
+<body>
+<aside class="sidebar">
+ <a class="brand" href="#home" data-view="home"><img src="../icon.svg" alt=""><span>Symmetry<span class="brand-light">Lab</span><small>CRYSTAL SYMMETRY TOOLKIT</small></span></a>
+ <div class="side-label">LEARN AND EXPLORE</div>
+ <nav aria-label="Main navigation">
+  <button class="nav-item" data-view="home" aria-label="Overview"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-desktop-label">Overview</span><span class="nav-mobile-label" aria-hidden="true">Home</span></button>
+  <button class="nav-item" data-view="classroom" aria-label="Symmetry classroom"><span class="nav-icon" aria-hidden="true">▥</span><span class="nav-desktop-label">Symmetry classroom</span><span class="nav-mobile-label" aria-hidden="true">Learn</span></button>
+  <button class="nav-item" data-view="compute" aria-label="Calculation center"><span class="nav-icon" aria-hidden="true">⌘</span><span class="nav-desktop-label">Calculation center</span><span class="nav-mobile-label" aria-hidden="true">Tools</span></button>
+  <button class="nav-item" data-view="atlas" aria-label="Groups and materials atlas"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-desktop-label">Groups and materials atlas</span><span class="nav-mobile-label" aria-hidden="true">Atlas</span></button>
+  <button class="nav-item" data-view="docs" aria-label="Methods and documentation"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-desktop-label">Methods and documentation</span><span class="nav-mobile-label" aria-hidden="true">Docs</span></button>
+ </nav>
+ <div class="sidebar-bottom"><div class="local-dot">Python runs locally</div><p>Your inputs and results stay in your browser.<br>Lessons, tools and data work together.</p><a class="nav-about" href="#docs" data-view="docs">Sources and scope ↗</a><small>Open source · GPL-3.0</small></div>
+</aside>
+<main>
+ <header class="topbar"><nav class="site-breadcrumb" aria-label="Current location" id="breadcrumb">Overview</nav><div class="top-right"><span class="status-dot"></span><span id="data-status">Preparing the page</span><button id="cancel-python" class="text-button hidden">Cancel calculation</button><button id="help-button" class="icon-button" aria-label="Open the user guide">?</button></div></header>
+ <div id="page-content">
+  <section class="page-heading"><div><div class="eyebrow">EXPLORE THE SYMMETRY OF MATTER</div><h1 id="page-title">Overview</h1><p id="page-subtitle">Explore crystal symmetry and irreducible representations, from space groups to magnetic space groups.</p></div><button class="secondary small" id="export-top">↓ Export results</button></section>
+  <div id="view-context"></div>
+  <div id="app" aria-live="polite"><div class="loading-card"><span class="spinner"></span>Opening the symmetry workbench…</div></div>
+  <footer><span>SpaceGroupIrep · MSGCorep · MagneticTB · CrystKit</span><span>BC primitive-cell convention <span class="footer-dot">·</span> Numerical / exact algebra <span class="footer-dot">·</span> <button data-view="docs">Sources and scope ↗</button></span></footer>
+ </div>
+</main>
+<div id="toast" role="status"></div>
+<script type="module" src="../language-switch.js?v=20261110-en1"></script>
+<script type="module" src="app.js?v=20261110-en1"></script>
+</body></html>

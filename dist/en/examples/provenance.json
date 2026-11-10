@@ -1,0 +1,21 @@
+{
+  "trace-msg.txt": {
+    "kpoints": 1,
+    "bands": 4,
+    "multiplets": 2,
+    "modifications": "Retained original header, operations, first k point and first band multiplets; nk changed to 1. Electron count unchanged. This is a truncated excerpt, not a complete band calculation.",
+    "group": "166.101",
+    "source": "https://github.com/goodluck1982/MSGCorep/blob/main/examples/Mn3NiN-166.101-trace.txt",
+    "license": "GPL-3.0"
+  },
+  "test-fixture/trace-sg186.txt": {
+    "kpoints": 1,
+    "bands": 4,
+    "multiplets": 2,
+    "modifications": "Retained original header, operations, first k point and first band multiplets; nk changed to 1. Electron count unchanged. This is a truncated excerpt, not a complete band calculation.",
+    "group": 186,
+    "source": "https://github.com/goodluck1982/SpaceGroupIrep/blob/main/examples/SG186-trace.txt",
+    "license": "GPL-3.0",
+    "note": "Original example is not in the source database spin frame. Used to verify parsing and rejection of incompatible matching; no automatic frame conversion is attempted."
+  }
+}

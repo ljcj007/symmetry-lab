@@ -1,0 +1,29 @@
+{
+  "release": "20261110-en1",
+  "language": "en",
+  "sourceUnits": 21447,
+  "translatedUnits": 21447,
+  "missing": [],
+  "files": 352,
+  "shared": {
+    "python": "../python/",
+    "vendor": "../vendor/",
+    "groupDatabases": "../data/"
+  },
+  "catalogs": [
+    "en-draft.json",
+    "en-manual-1.json",
+    "en-manual-2.json",
+    "en-manual-3.json",
+    "en-manual-extra.json",
+    "en-meta.json",
+    "en-editorial.json",
+    "en-science.json",
+    "en-quality.json",
+    "en-quality-physics.json",
+    "en-quality-dictionary.json",
+    "en-quality-teaching-1.json",
+    "en-quality-teaching-2.json",
+    "en-corrections.json"
+  ]
+}

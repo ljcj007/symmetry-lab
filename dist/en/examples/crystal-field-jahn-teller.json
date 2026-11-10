@@ -1,0 +1,11 @@
+{
+  "action": "crystal_field_lab",
+  "mode": "jahn_teller",
+  "coupling": 1,
+  "stiffness": 2,
+  "q2": 0.2,
+  "q3": 0.3,
+  "q_extent": 1.5,
+  "grid": 41,
+  "scan_points": 61
+}

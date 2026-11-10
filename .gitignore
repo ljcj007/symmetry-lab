@@ -13,3 +13,16 @@ UI-VALIDATION.md
 
 # Generated from the tested checkout by the Pages workflow.
 /dist/source.zip
+
+# Development translation queues; committed catalogs rebuild the English site.
+/locales/en-jobs.json
+/locales/en-manual-*-sources.json
+/locales/en-extra-index.json
+/locales/en-corrections-index.json
+/locales/en-translation-failures.json
+
+/locales/en-meta-sources.json
+/locales/en-meta-index.json
+
+/locales/en-ref-sources.json
+/locales/en-ref-index.json

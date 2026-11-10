@@ -1,0 +1,138 @@
+import {createResultLocalizer} from '../english-results.js?v=20261110-en1';
+const englishMessages=fetch(new URL('./data/python-messages.json?v=20261110-en1',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
+// Versions match the downloadable CPython modules. Inputs stay in this Worker.
+const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
+const BUILD = '20261110-en1';
+const plans = {
+  layer_symmetry_lab:['symmetry_frontiers'],chirality_polarity_lab:['symmetry_frontiers'],manybody_spt_lab:['symmetry_frontiers'],symmetry_linked:['symmetry_frontiers'],frontier_inverse:['symmetry_frontiers'],
+  statistics_lab:['symmetry_connections'],defects_lab:['symmetry_connections'],reciprocity_lab:['symmetry_connections'],symmetry_audit:['symmetry_connections'],symbolic_step_grade:['symmetry_connections'],
+  salc_lab:['salc_lab'],wavevector_lab:['wavevector_lab'],nonsymmorphic_lab:['nonsymmorphic_lab'],symmetry_grading:['symmetry_grading'],
+  order_parameter_lab: ['order_parameter_lab'], exchange_symmetry_lab: ['exchange_symmetry_lab'], conservation_lab: ['density_matrix_lab','conservation_lab'],
+  manybody_spectra_lab: ['hubbard_lab','manybody_spectra_lab'], polaron_lab: ['polaron_lab'], density_matrix_lab: ['density_matrix_lab'], symmetry_workshop: ['symmetry_workshop'],
+  band_rep_lab: ['symmetry_core', 'band_rep_lab'], dynamic_scattering_lab: ['dynamic_scattering_lab'], domain_wall_lab: ['domain_wall_lab'], hubbard_lab: ['hubbard_lab'],
+  spin_resonance_lab: ['spin_resonance_lab'], andreev_lab: ['andreev_lab'], atomic_spectra_lab: ['atomic_spectra_lab'],
+  hall_response_lab: ['hall_response_lab'], device_transport_lab: ['device_transport_lab'], local_multiplet_lab: ['local_multiplet_lab'],
+  crystal_field_lab: ['crystal_field_lab'], quantum_geometry_lab: ['quantum_geometry_lab'], electron_transport_lab: ['electron_transport_lab'],
+  pairing_lab: ['pairing_lab'], shg_lab: ['shg_lab'], unfold_lab: ['unfold_lab'],
+  distortion_lab: ['distortion_lab'], magnon_lab: ['magnon_lab'],
+  qha_lab: ['phonopy_import', 'phonon_thermo', 'qha_lab'],
+  phonon_modes: ['spglib_runtime', 'phonopy_import', 'phonon_spectra', 'phonon_modes'],
+  band_connectivity: ['band_connectivity'], phonon_thermo: ['phonopy_import', 'phonon_thermo'],
+  phase: ['phase_domains'], diffraction: ['diffraction'], phonopy: ['phonopy_import'],
+  phonons: ['phonon_spectra'], tensors: ['property_tensors'],
+  analyze: ['symmetry_core'], induce: ['symmetry_core'], product: ['symmetry_core'], match_bands: ['symmetry_core'],
+  magnetictb: ['magnetictb_browser'], crystkit: ['crystkit_browser'],
+  symbolic: ['magnetictb_browser', 'symbolic_core'],
+  crystkit_ext: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer'], carat: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer', 'carat_browser'],
+  carat_integral: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer', 'carat_browser', 'finite_conductor', 'carat_integral'],
+  integral_normalizer: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer'],
+  symbolic_interfaces: ['magnetictb_browser', 'symbolic_core', 'symbolic_interfaces'],
+  arithmetic_centralizer: ['crystkit_browser', 'crystkit_extensions', 'integral_normalizer', 'arithmetic_centralizer'],
+  symbolic_spacegroups: ['magnetictb_browser', 'symbolic_core', 'symbolic_interfaces', 'symbolic_spacegroups'],
+  standard_labels: ['magnetictb_browser', 'symbolic_core', 'standard_labels'],
+  teaching_labs: ['crystal_labs', 'group_extensions', 'lie_applications', 'lie_labs', 'teaching_labs'],
+  structure_bc: ['spglib_runtime', 'structure_bc']
+};
+let runtime;
+const modules = new Set(), packages = new Set(), catalogs = new Set();
+let databaseLoaded = false, magneticDatabaseLoaded = false, labelsLoaded = false, spglibLoaded = false;
+async function resource(path) {
+  const url = new URL(path, new URL('../', import.meta.url)); url.searchParams.set('v', BUILD);
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`resource loading failed (${response.status}): ${path}`);
+  return response;
+}
+async function prepare(id, action, payload) {
+  if (!Object.hasOwn(plans, action)) throw new Error("unknown calculation tool");
+  if (!payload || Array.isArray(payload) || typeof payload !== 'object') throw new Error("input must be a JSON object");
+  const dimension = payload.dimension ?? 3;
+  if (['carat', 'carat_integral'].includes(action) && (!Number.isInteger(dimension) || dimension < 1 || dimension > 6)) throw new Error("CARAT The dimension must be an integer of 1–6");
+  const progress = message => self.postMessage({id, status: 'loading', message});
+  if (!runtime) {
+    progress("First run: Download the Python interpreter…");
+    const {loadPyodide} = await import(INDEX_URL + 'pyodide.mjs');
+    runtime = await loadPyodide({indexURL: INDEX_URL});
+    runtime.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_magnetic_database = None\n_label_database = None\n_carat_catalogs = {}');
+  }
+  const needsLabels = action === 'standard_labels' || (action === 'analyze' && payload.group_number !== undefined);
+  const exact = needsLabels || ['statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'phase', 'tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
+  const su3CG = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_cg';
+  const exactCG = su3CG && payload.arithmetic === 'exact';
+  const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
+  const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
+  const teachingPackages = su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
+  for (const name of ['phonopy','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
+    if (packages.has(name)) continue;
+    progress(`is loading Python calculation library ${name}…`);
+    await runtime.loadPackage(name); packages.add(name);
+  }
+  if (['structure_bc','phonon_modes'].includes(action) && !spglibLoaded) {
+    progress("Loading native crystal symmetry engine spglib...");
+    const {createSpglibBridge} = await import("../vendor/spglib/bridge.mjs");
+    self.symmetryLabSpglib = await createSpglibBridge();
+    spglibLoaded = true;
+  }
+  const teachingModules = su3NineJ ? ['su3_cg', 'su3_cg_exact', 'su3_racah', 'su3_ninej'] : su3Racah ? ['su3_cg', 'su3_cg_exact', 'su3_racah'] : su3CG ? ['su3_cg', ...(exactCG ? ['su3_cg_exact'] : [])] : [];
+  for (const name of ['browser_api', ...plans[action], ...teachingModules, ...(needsLabels ? ['magnetictb_browser', 'symbolic_core', 'standard_labels'] : [])]) {
+    if (modules.has(name)) continue;
+    progress("Loading this site Python calculation code...");
+    const response = await resource(`./python/${name}.py`);
+    runtime.FS.writeFile(`/home/pyodide/${name}.py`, await response.text(), {encoding: 'utf8'});
+    runtime.runPython(`import ${name}`); // name is from the fixed allowlist above.
+    modules.add(name);
+  }
+  if ((needsLabels || ['structure_bc', 'crystkit', 'crystkit_ext', 'integral_normalizer', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action)) && !databaseLoaded) {
+    runtime.globals.set('_data_text', await (await resource('./data/space-groups.json')).text());
+    runtime.runPython('_sg_database = json.loads(_data_text)\ndel _data_text');
+    databaseLoaded = true;
+  }
+  if (needsLabels && !labelsLoaded) {
+    progress("Loading BC / Bilbao standard label with character …");
+    runtime.runPython('_label_database = {}');
+    for (const name of ['bc', 'bilbao']) {
+      const bytes = new Uint8Array(await (await resource(`./data/labels/${name}-labels.json.gz`)).arrayBuffer());
+      runtime.FS.writeFile('/home/pyodide/labels.json.gz', bytes);
+      runtime.globals.set('_label_kind', name);
+      runtime.runPython('with gzip.open("/home/pyodide/labels.json.gz", "rt", encoding="utf8") as _file:\n    _label_database[_label_kind] = json.load(_file)\ndel _label_kind, _file');
+      runtime.FS.unlink('/home/pyodide/labels.json.gz');
+    }
+    labelsLoaded = true;
+  }
+  if (action === 'symbolic_spacegroups' && !magneticDatabaseLoaded) {
+    progress("Loading exact magnetic space group data…");
+    runtime.globals.set('_data_text', await (await resource('./data/magnetic-groups.json')).text());
+    runtime.runPython('_magnetic_database = json.loads(_data_text)\ndel _data_text');
+    magneticDatabaseLoaded = true;
+  }
+  if (['carat', 'carat_integral'].includes(action) && !catalogs.has(dimension)) {
+    progress(`is loading ${dimension} Dimension CARAT Complete Q Catalog…`);
+    const bytes = new Uint8Array(await (await resource(`./data/carat/q${dimension}.json.gz`)).arrayBuffer());
+    runtime.FS.writeFile('/home/pyodide/catalog.json.gz', bytes);
+    runtime.globals.set('_catalog_dimension', dimension);
+    runtime.runPython('with gzip.open("/home/pyodide/catalog.json.gz", "rt", encoding="utf8") as _file:\n    _carat_catalogs[_catalog_dimension] = json.load(_file)\ndel _catalog_dimension, _file');
+    runtime.FS.unlink('/home/pyodide/catalog.json.gz'); catalogs.add(dimension);
+  }
+}
+self.onmessage = async ({data: {id, action, payload}}) => {
+  try {
+    await prepare(id, action, payload);
+    self.postMessage({id, status: 'running', message: "Python Computing locally..."});
+    runtime.globals.set('_request_json', JSON.stringify({action, payload}));
+    const output = runtime.runPython(`
+_request = json.loads(_request_json)
+try:
+    _result = browser_api.run(_request['action'], _request['payload'], _sg_database, _carat_catalogs.get(_request['payload'].get('dimension', 3)), _magnetic_database, _label_database)
+    _output = json.dumps({'result': _result}, ensure_ascii=False, allow_nan=False)
+except Exception as _error:
+    _output = json.dumps({'error': str(_error)}, ensure_ascii=False)
+_output
+`);
+    const localized=JSON.parse(output),messages=await englishMessages;
+    if(localized.result)localized.result=messages.result(localized.result);
+    if(localized.error)localized.error=messages.text(localized.error);
+    self.postMessage({id,status:'done',...localized});
+    runtime.runPython('del _request_json, _request, _output\n_result = None');
+  } catch (error) {
+    self.postMessage({id, status: 'error', error: "Python Environment or calculation failure:" + (error.message || String(error))});
+  }
+};

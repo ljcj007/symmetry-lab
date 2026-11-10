@@ -2,6 +2,11 @@ import assert from 'node:assert/strict';
 import katex from '../dist/vendor/katex/katex.mjs';
 import {normalizeMath,segmentFormula,findInlineMath} from '../dist/math-notation.js';
 
+for(const source of ['Si, GaAs and BaTiO₃','The C4v point group has χ_{xx}=χ_{yy}.','For SU(3), use C₂(p,q).']){
+ const parts=findInlineMath(source);assert.equal(parts.map(p=>p.source).join(''),source);
+ for(const p of parts.filter(p=>p.type==='math'))assert.doesNotMatch(p.source,/\b(?:and|the|for|has|use)\b/i);
+}
+
 const options={throwOnError:true,strict:'ignore',trust:false,output:'htmlAndMathml',maxExpand:1000,maxSize:20};
 const render=source=>{const tex=normalizeMath(source);assert.equal(typeof tex,'string',source);const html=katex.renderToString(tex,options);assert.match(html,/<math /);return{tex,html};};
 const exact=new Map([
@@ -143,3 +148,14 @@ const completeBasis='Gₐ C_{完整}=C_{完整} Dₐ\nC_{完整}†C_{完整}=I�
 const completeParts=segmentFormula(completeBasis);assert.equal(completeParts.map(p=>p.source).join(''),completeBasis);
 for(const p of completeParts){if(p.type==='text')assert.equal(p.source.trim(),'');else katex.renderToString(p.tex,options);}
 console.log('Scientific notation: upright chemical formulae/ions, angstrom powers, Chinese script labels/units and comparison discovery passed.');
+for(const source of ['Other contributions are excluded. BaTiO₃ is tetragonal.','Keep φ=30° fixed. Compare θ=0° with θ=45°.','Use a nonzero χ_zzz tensor and test a counterexample.']){
+ const rows=findInlineMath(source);assert.equal(rows.map(row=>row.source).join(''),source);
+ for(const row of rows.filter(row=>row.type==='math'))assert.doesNotMatch(row.source,/excluded|fixed|Compare|nonzero|counterexample|\band\b|\bwith\b|\ba\b/);
+ assert.ok(rows.some(row=>row.type==='math'));
+}
+for(const source of ['F = aQ² + bQ⁴; the coefficients are dimensionless.','E=±√(ξ²+|Δ|²), each sign is twofold degenerate.','H_SOC=ζ_dΣ_(d electrons)l·s is the spin–orbit term.']){
+ const rows=segmentFormula(source);assert.equal(rows.map(row=>row.source).join(''),source);
+ assert.ok(rows.some(row=>row.type==='text'));
+ for(const row of rows.filter(row=>row.type==='math')){assert.doesNotMatch(row.source,/coefficients|dimensionless|degenerate|\bthe\b|\beach\b/);katex.renderToString(row.tex,options);}
+}
+assert.match(normalizeMath('E_(lower-site double occupancy)'),/\\text\{lower-site double occupancy\}/);

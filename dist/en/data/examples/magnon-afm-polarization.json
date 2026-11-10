@@ -1,0 +1,15 @@
+{
+  "description": "原创一维反铁磁教学模型：易轴 XXZ 交换各向异性与外场下的两支相反圆偏振；field 为 meV，不是 Tesla；不是 MnF2 材料拟合。",
+  "synthetic": true,
+  "model": "afm",
+  "exchange": 1,
+  "spin": 1,
+  "anisotropy": 1.15,
+  "field": 0.3,
+  "q": 0.25,
+  "branch": 0,
+  "amplitude": 0.12,
+  "sites": 16,
+  "frames": 32,
+  "samples": 161
+}

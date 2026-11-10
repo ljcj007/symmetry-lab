@@ -1,0 +1,12 @@
+{
+  "source": "model",
+  "dimension": 3,
+  "hopping": 0.1,
+  "anisotropy": 1,
+  "zAnisotropy": 1,
+  "chemicalPotential": 0.3,
+  "temperature": 600,
+  "mesh": 24,
+  "muMin": -0.1,
+  "muMax": 1.3
+}

@@ -1,0 +1,44 @@
+# Synthetic example in Phonopy thermal_properties.yaml format; per mole of primitive cells.
+synthetic: true
+description: Synthetic thermal table derived from thermo-mesh-demo.yaml
+unit:
+  temperature: K
+  free_energy: kJ/mol
+  entropy: J/K/mol
+  heat_capacity: J/K/mol
+natom: 1
+num_modes: 24
+num_integrated_modes: 24
+cutoff_frequency: 0.0
+zero_point_energy: 2.6934610812030657
+thermal_properties:
+- temperature: 0.0
+  free_energy: 2.6934610812030657
+  entropy: 0.0
+  heat_capacity: 0.0
+  energy: 2.6934610812030657
+- temperature: 100.0
+  free_energy: 2.309657609946599
+  entropy: 11.310731650049995
+  heat_capacity: 17.05200549714703
+  energy: 3.4407307749515983
+- temperature: 200.0
+  free_energy: 0.42791453037042193
+  entropy: 25.333774953928014
+  heat_capacity: 22.535198638004836
+  energy: 5.494669521156025
+- temperature: 300.0
+  free_energy: -2.604490057470405
+  entropy: 34.76481065555396
+  heat_capacity: 23.828718867958663
+  energy: 7.824953139195783
+- temperature: 500.0
+  free_energy: -10.894691837196401
+  entropy: 47.14602258051286
+  heat_capacity: 24.53346724442648
+  energy: 12.678319453060038
+- temperature: 1000.0
+  free_energy: -39.23402671290688
+  entropy: 64.28104107631968
+  heat_capacity: 24.839971526488995
+  energy: 25.047014363412803

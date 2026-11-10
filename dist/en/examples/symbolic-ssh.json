@@ -1,0 +1,12 @@
+{
+  "action": "bloch",
+  "hoppings": [
+    {"cell": [0, 0, 0], "matrix": [[0, "v"], ["v", 0]]},
+    {"cell": [1, 0, 0], "matrix": [[0, 0], ["w", 0]]},
+    {"cell": [-1, 0, 0], "matrix": [[0, "w"], [0, 0]]}
+  ],
+  "k": ["q", 0, 0],
+  "characteristic_polynomial": true,
+  "eigenvalues": true,
+  "numeric_substitutions": {"v": "1/2", "w": 1}
+}

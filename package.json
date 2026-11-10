@@ -23,7 +23,12 @@
     "test:principles": "python scripts/test-python-order-parameter.py && python scripts/test-python-exchange-symmetry.py && python scripts/test-python-conservation.py && python scripts/test-python-principles-crosscheck.py && node scripts/test-principles-ui.mjs && node scripts/test-principles-projects.mjs && node scripts/test-principles-dictionary.mjs && python scripts/test-principles-provenance.py",
     "test:construction": "python scripts/test-python-salc.py && python scripts/test-python-wavevector.py && python scripts/test-python-nonsymmorphic.py && python scripts/test-python-symmetry-grading.py && node scripts/test-construction-ui.mjs && node scripts/test-construction-projects.mjs && node scripts/test-construction-dictionary.mjs && python scripts/test-construction-provenance.py",
     "test:connections": "python scripts/test-python-connections.py && node scripts/test-connections-ui.mjs",
-    "test:frontiers": "python scripts/test-python-frontiers.py && node scripts/test-frontiers-ui.mjs"
+    "test:frontiers": "python scripts/test-python-frontiers.py && node scripts/test-frontiers-ui.mjs",
+    "build:english": "node scripts/build-english.mjs",
+    "test:english": "node scripts/build-english.mjs --check && node scripts/test-language-switch.mjs && node scripts/test-english-results.mjs && node scripts/test-english-edition.mjs && node scripts/audit-english-results.mjs --check && node scripts/test-math-catalog.mjs --english"
   },
-  "license": "GPL-3.0-only"
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "acorn": "^8.15.0"
+  }
 }

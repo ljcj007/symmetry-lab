@@ -1,0 +1,20 @@
+{
+  "model": "uniform",
+  "sites": 12,
+  "hopping": 1,
+  "dimerRatio": 0.6,
+  "gate": 0,
+  "barrier": 1.5,
+  "barrierStart": 6,
+  "barrierWidth": 1,
+  "leadHopping": 1,
+  "leadOnsite": 0,
+  "contactLeft": 1,
+  "contactRight": 1,
+  "energy": 0.2,
+  "energyMin": -2.5,
+  "energyMax": 2.5,
+  "samples": 161,
+  "eta": 1e-7,
+  "spinDegeneracy": 2
+}

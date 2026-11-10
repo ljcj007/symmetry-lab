@@ -1,0 +1,20 @@
+{
+  "action": "common_kernel",
+  "order": 3,
+  "matrices": [
+    [
+      [
+        1,
+        "z",
+        0
+      ]
+    ],
+    [
+      [
+        0,
+        1,
+        "z"
+      ]
+    ]
+  ]
+}

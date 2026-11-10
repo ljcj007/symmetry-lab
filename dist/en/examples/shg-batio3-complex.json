@@ -1,0 +1,14 @@
+{
+  "model": "batio3",
+  "cut": "111",
+  "cOverA": 1.01,
+  "incidence": 45,
+  "azimuth": 30,
+  "samples": 181,
+  "channel": "PP",
+  "coefficients": {
+    "xxz": {"re": 1, "im": 0.2},
+    "zxx": {"re": 0.7, "im": -0.1},
+    "zzz": {"re": 1.5, "im": 0.5}
+  }
+}

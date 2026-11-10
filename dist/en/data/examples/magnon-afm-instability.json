@@ -1,0 +1,15 @@
+{
+  "description": "原创失稳教学案例：外场超过经典 spin-flop 阈值，Néel 参考态出现负能分支，动画关闭；此参考态色散不能作为真实新基态的激发谱。",
+  "synthetic": true,
+  "model": "afm",
+  "exchange": 1,
+  "spin": 1,
+  "anisotropy": 1.1,
+  "field": 1.5,
+  "q": 0.25,
+  "branch": 0,
+  "amplitude": 0.12,
+  "sites": 16,
+  "frames": 32,
+  "samples": 161
+}
