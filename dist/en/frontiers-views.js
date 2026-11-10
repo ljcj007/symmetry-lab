@@ -2,7 +2,7 @@ import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} f
 import {quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?"Yes":"No"):typeof x==='number'?num(x):x==null?"Not provided":typeof x==='object'?JSON.stringify(x):String(x);
-const labels={exchangeSides:"swap the upper and lower sides",fourfold:"Quadruple rotation reserved",inversion:"spatial inversion",chiral:"Geometry chirality",polar:"allows polar vector",Rx:"rotates around π of x",Rz:"rotates around π of z",T:"time reversal"};
+const labels={exchangeSides:"swap the upper and lower sides",fourfold:"Preserves fourfold rotation",inversion:"spatial inversion",chiral:"Geometry chirality",polar:"allows polar vector",Rx:"rotates around π of x",Rz:"rotates around π of z",T:"time reversal"};
 const anchors=new Map(),clean=r=>{const c=structuredClone(r);delete c.learningEvidence;return c;};
 export const controlsHTML=(m,v)=>baseControls({...m,fields:m.fields.map(f=>f.type==='number'&&!['sites','layers','cut'].includes(f.key)?{...f,step:'any'}:f)},v).replace(/(<label[^>]*>)([^<]*)(?=<(?:select|input))/g,'$1<span>$2</span>');
 function project(p,yaw=35,pitch=24){const a=yaw*Math.PI/180,b=pitch*Math.PI/180;return [p[0]*Math.cos(a)-p[1]*Math.sin(a),p[2]*Math.cos(b)+(p[0]*Math.sin(a)+p[1]*Math.cos(a))*Math.sin(b)];}

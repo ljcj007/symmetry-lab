@@ -113,7 +113,7 @@ export function matchTraceOperations(trace, group, {tolerance=2e-5} = {}) {
       const matches = sign => downup.every((row,a)=>row.every((z,b)=>z.every((x,c)=>near(x,sign*g.spinRotation[a][b][c],tolerance))));
       if (matches(1)) spinSign=1;
       else if(matches(-1)) spinSign=-1;
-      else throw new Error(`Operation ${sourceIndex+1} is incompatible with the BC substrate.`);
+      else throw new Error(`Operation ${sourceIndex+1} has spin matrices incompatible with the BC basis.`);
     }
     return {groupIndex:i,spinSign,translationShift:op.translation.map((x,j)=>Math.round(x-g.translation[j]))};
   });
