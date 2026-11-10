@@ -15,7 +15,8 @@
 .fd-entry h3{font-size:1.18rem;margin:0 0 6px}
 .fd-entry p{margin:8px 0}
 .fd-symbols{display:flex;flex-wrap:wrap;gap:8px}
-.fd-symbols>.fd-symbol{font:inherit;background:#eef3f2;border-radius:5px;padding:1px 8px}
+.fd-symbols>.fd-symbol{font:inherit;background:#eef3f2;border-radius:5px;padding:1px 8px;min-width:0;max-width:100%}
+.fd-notation{min-width:0;max-width:100%}
 .fd-variables{margin:12px 0;border:1px solid #dce4e5;border-radius:8px;overflow:hidden}
 .fd-variables>div{display:grid;grid-template-columns:minmax(70px,1fr) 4fr;gap:12px;padding:10px 14px}
 .fd-variables>div+div{border-top:1px solid #e3e9e8}

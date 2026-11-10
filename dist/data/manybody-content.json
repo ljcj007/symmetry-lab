@@ -21,7 +21,7 @@
       {"key":"q","label":"傅里叶探针 q a/π（局域探针时忽略）","type":"number","default":1,"min":-2,"max":2,"step":0.1},
       {"key":"spin","label":"单粒子探针的自旋","type":"select","default":"up","experiment":"single_particle","options":[["up","上自旋"],["down","下自旋"]]},
       {"key":"chemicalPotential","label":"谱能量零点 μ（eV；不改变粒子数）","type":"number","default":2,"min":-20,"max":40,"step":0.1,"experiment":"single_particle"},
-      {"key":"responseKind","label":"连通响应算符","type":"select","default":"spin","experiment":"response","options":[["spin","纵向自旋 S_z"],["charge","电荷密度 n"]]},
+      {"key":"responseKind","label":"连通响应算符","type":"select","default":"spin","experiment":"response","options":[["spin","纵向自旋（z 分量）"],["charge","电荷密度 n"]]},
       {"key":"eta","label":"Lorentz半高半宽 η（eV）","type":"number","default":0.08,"min":0.01,"max":0.8,"step":0.01},
       {"key":"points","label":"谱线采样点数","type":"number","default":601,"min":201,"max":1201,"step":1}
     ],

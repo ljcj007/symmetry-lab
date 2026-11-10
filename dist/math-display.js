@@ -1,10 +1,10 @@
 import katex from './vendor/katex/katex.mjs';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261031-entry2';
-import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261031-entry2';
-import {crystalTex} from './crystal-notation.js?v=20261031-entry2';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261110-math1';
+import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261110-math1';
+import {crystalTex} from './crystal-notation.js?v=20261110-math1';
 
 const blocks='.pg-formula,.sc-formula,.lg-formula,.obs-formula,[data-math-block]';
-const owned='.sl-math,.katex,math,[data-math-ignore],.crystal-symbol[data-crystal-ready]';
+const owned='.sl-math,.sl-inline-text,.katex,math,[data-math-ignore],.crystal-symbol[data-crystal-ready]';
 const excluded='script,style,textarea,input,select,option,pre,code,kbd,samp,svg,math,[contenteditable="true"],[data-math-ignore],.research-input,.exact-expression';
 const opts={throwOnError:true,trust:false,strict:'ignore',output:'htmlAndMathml',maxExpand:1000,maxSize:20};
 
@@ -26,6 +26,39 @@ function appendSegments(target,segments,display=false){
    catch(error){span.className='sl-math-fallback';span.textContent=s.source;span.dataset.mathError=String(error.message);target.appendChild(span);}
   }else target.appendChild(document.createTextNode(s.source));
  }
+}
+
+// Keep a wide inline expression intact, on its own scrollable line. Applying
+// overflow to every inline formula would change the baseline of short symbols.
+export function layoutMathOverflow(root){
+ if(!root?.querySelectorAll)return 0;
+ const all=selector=>[...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)];
+ for(const el of all('.sl-math-scroll'))el.classList.remove('sl-math-scroll');
+ for(const el of all('.sl-math')){
+  if(el.closest('.sl-equation')||!el.clientWidth)continue;
+  // Percent max-width on an inline parent can be indefinite. Compare against
+  // the nearest actual content box as well as the element's own scroll width.
+  let available=Infinity;
+  for(let parent=el.parentElement;parent;parent=parent.parentElement){
+   const style=getComputedStyle(parent);
+   if(style.display==='inline'||style.display==='contents'||!parent.clientWidth)continue;
+   available=parent.clientWidth-parseFloat(style.paddingLeft||0)-parseFloat(style.paddingRight||0);break;
+  }
+  if(el.scrollWidth>el.clientWidth+2||el.getBoundingClientRect().width>available+2)el.classList.add('sl-math-scroll');
+ }
+ let count=0;
+ for(const el of all('.sl-equation,.sl-math-scroll,[data-math-overflow]')){
+  const wide=el.clientWidth>0&&el.scrollWidth>el.clientWidth+2;
+  if(wide){
+   el.dataset.mathOverflow='true';
+   if(!el.hasAttribute('tabindex')){el.tabIndex=0;el.dataset.mathScrollFocus='true';}
+   count++;
+  }else{
+   delete el.dataset.mathOverflow;
+   if(el.dataset.mathScrollFocus){if(!el.hasAttribute('data-fd-trigger'))el.removeAttribute('tabindex');delete el.dataset.mathScrollFocus;}
+  }
+ }
+ return count;
 }
 
 export function typesetMath(root=document.body){
@@ -55,7 +88,8 @@ export function typesetMath(root=document.body){
  }
  layoutSvgMath(root);
  // These code-styled cells contain exact scientific values, not executable input.
- for(const el of root.querySelectorAll('.sc-result-facts code,.sc-symmetry-tests code,.lg-state-facts code,[data-math-inline]')){
+ const inlineValues='.sc-result-facts code,.sc-symmetry-tests code,.lg-state-facts code,[data-math-inline]';
+ for(const el of [...(root.matches(inlineValues)?[root]:[]),...root.querySelectorAll(inlineValues)]){
   if(el.dataset.mathReady||el.querySelector('.katex'))continue;
   const source=el.textContent,segments=findInlineMath(source);if(!segments.some(s=>s.type==='math'))continue;
   const fragment=document.createDocumentFragment();appendSegments(fragment,segments);el.replaceChildren(fragment);el.dataset.mathReady='true';el.dataset.mathSource=source;
@@ -67,8 +101,13 @@ export function typesetMath(root=document.body){
  for(const node of nodes){
   const segments=findInlineMath(node.nodeValue);
   if(!segments.some(s=>s.type==='math'))continue;
-  const fragment=document.createDocumentFragment();appendSegments(fragment,segments);node.replaceWith(fragment);
+  // A text node is one anonymous flex/grid item. Preserve that item when its
+  // contents become text + math; otherwise labels and radio answers split into
+  // several columns or rows after typesetting.
+  const wrapper=document.createElement('span');wrapper.className='sl-inline-text';
+  wrapper.dataset.mathSource=node.nodeValue;appendSegments(wrapper,segments);node.replaceWith(wrapper);
  }
+ layoutMathOverflow(root);
 }
 
 export function startMathDisplay(root=document.body){
@@ -83,6 +122,6 @@ export function startMathDisplay(root=document.body){
   if(pending.size&&!scheduled){scheduled=true;requestAnimationFrame(flush);}
  });
  typesetMath(root);observer.observe(root,{childList:true,subtree:true,characterData:true});
- const layout=()=>layoutSvgMath(root);document.fonts?.ready.then(layout);window.addEventListener('resize',layout);root.addEventListener('toggle',layout,true);
- return ()=>{observer.disconnect();window.removeEventListener('resize',layout);root.removeEventListener('toggle',layout,true);};
+ const layout=()=>{layoutSvgMath(root);layoutMathOverflow(root);};document.fonts?.ready.then(layout);document.fonts?.addEventListener('loadingdone',layout);window.addEventListener('resize',layout);root.addEventListener('toggle',layout,true);
+ return ()=>{observer.disconnect();document.fonts?.removeEventListener('loadingdone',layout);window.removeEventListener('resize',layout);root.removeEventListener('toggle',layout,true);};
 }

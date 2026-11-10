@@ -92,3 +92,54 @@ for(const source of ['R̄⁻¹','C̄₂z','R′⁻¹','χᵅ(C꜀)','R̅⁻¹'])
  for(const p of parts.filter(p=>p.type==='math'))katex.renderToString(p.tex,options);
 }
 console.log('Math accents/scripts: single-atom bars, grouped numeral labels, overline aliases, paired scripts, primes/inverses and explicit nested indices passed.');
+
+// Scientific units must survive NFD normalization. An angstrom's ring is an
+// accent on the upright A; the inverse/square belongs to the complete unit.
+assert.equal(render('Å⁻¹').tex,String.raw`\mathring{\mathrm{A}}^{-1}`);
+assert.equal(render('eV/Å²').tex,String.raw`\mathrm{eV}/\mathring{\mathrm{A}}^{2}`);
+assert.equal(render('Å³/胞').tex,String.raw`\mathring{\mathrm{A}}^{3}/\text{胞}`);
+assert.match(mathml('Å⁻¹'),/<msup><mover accent="true"><mi mathvariant="normal">A<\/mi>/);
+for(const source of ['胞内弹簧 K₁（eV/Å²）','原胞体积 Å³/胞','温度 T≪θD']){
+ const parts=findInlineMath(source);assert.equal(parts.map(p=>p.source).join(''),source);
+ assert.ok(parts.some(p=>p.type==='math'&&(p.source.includes('Å')||p.source.includes('≪'))),source);
+ for(const p of parts.filter(p=>p.type==='math'))katex.renderToString(p.tex,options);
+}
+
+const chemicalCases=new Map([
+ ['BaTiO₃',String.raw`{\mathrm{Ba}\mathrm{Ti}\mathrm{O}_{3}}`],
+ ['MnF₂',String.raw`{\mathrm{Mn}\mathrm{F}_{2}}`],
+ ['CuO₂',String.raw`{\mathrm{Cu}\mathrm{O}_{2}}`],
+ ['CoF2',String.raw`{\mathrm{Co}\mathrm{F}_{2}}`],
+ ['ABO₃',String.raw`{\mathrm{A}\mathrm{B}\mathrm{O}_{3}}`],
+ ['Ni²⁺',String.raw`{\mathrm{Ni}^{2+}}`],
+]);
+for(const [source,tex] of chemicalCases){assert.equal(render(source).tex,tex,source);assert.ok(findInlineMath(source).some(p=>p.type==='math'),source);}
+assert.match(mathml('BaTiO₃'),/<mi mathvariant="normal">B<\/mi><mi mathvariant="normal">a<\/mi>/);
+assert.equal(normalizeMath('C4v'),'C_{4v}','A point group must not become a chemical formula');
+assert.equal(normalizeMath('S⁺'),String.raw`S^{+}`,'A spin raising operator is not a charged chemical formula');
+assert.equal(normalizeMath('SU(3)'),String.raw`\operatorname{SU}(3)`);
+assert.equal(normalizeMath('C₂'),String.raw`C_{2}`);
+
+for(const source of ['H_E=H_副本⊗I₂允许非零副本间跃迁','H_{副本}⊗I₂允许','H_(副本)⊗I₂允许','若k有长度⁻¹单位则为长度²','能量⁻¹']){
+ const parts=findInlineMath(source);assert.equal(parts.map(p=>p.source).join(''),source);
+ assert.ok(parts.some(p=>p.type==='math'&&/[\u3400-\u9fff]/u.test(p.source)),source);
+ assert.ok(parts.every(p=>p.type!=='text'||!p.source.includes('_')),source);
+ for(const p of parts.filter(p=>p.type==='math'))katex.renderToString(p.tex,options);
+}
+const chineseLabel=findInlineMath('H_E=H_副本⊗I₂允许非零副本间跃迁');
+assert.equal(chineseLabel[0].tex,String.raw`H_{E}=H_{\text{副本}}\otimes I_{2}`);
+assert.equal(chineseLabel[1].source,'允许非零副本间跃迁','Following prose must not become part of a script');
+assert.equal(normalizeMath('Γ_mech'),String.raw`\Gamma _{\mathrm{mech}}`);
+assert.equal(normalizeMath('N_fix'),String.raw`N_{\mathrm{fix}}`);
+assert.equal(normalizeMath('x_BC'),String.raw`x_{\mathrm{BC}}`);
+assert.equal(render('L^†Q').tex,String.raw`L^{\dagger }Q`);
+assert.equal(render('L^{†}Q').tex,String.raw`L^{\dagger }Q`);
+assert.equal(render('L^†_i').tex,String.raw`L_{i}^{\dagger }`);
+assert.equal(render('L^²').tex,String.raw`L^{2}`);
+const explicitDagger=findInlineMath('L^†Q');
+assert.equal(explicitDagger.map(p=>p.source).join(''),'L^†Q');assert.equal(explicitDagger[0].type,'math');
+assert.match(mathml('L^†Q'),/<msup><mi>L<\/mi><mo[^>]*>†<\/mo><\/msup><mi>Q<\/mi>/);
+const completeBasis='Gₐ C_{完整}=C_{完整} Dₐ\nC_{完整}†C_{完整}=I₃₀';
+const completeParts=segmentFormula(completeBasis);assert.equal(completeParts.map(p=>p.source).join(''),completeBasis);
+for(const p of completeParts){if(p.type==='text')assert.equal(p.source.trim(),'');else katex.renderToString(p.tex,options);}
+console.log('Scientific notation: upright chemical formulae/ions, angstrom powers, Chinese script labels/units and comparison discovery passed.');

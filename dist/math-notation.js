@@ -1,4 +1,4 @@
-import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261031-entry2';
+import {crystalTokenAt,findCrystalTokens} from './crystal-notation.js?v=20261110-math1';
 /** Presentation-only conversion of the site's plain scientific notation.
  * Never use these strings as computational input. Unknown syntax stays text.
  */
@@ -6,12 +6,32 @@ const greek={'α':'alpha','β':'beta','γ':'gamma','δ':'delta','ε':'varepsilon
 const symbols={'½':'\\frac{1}{2}','¼':'\\frac{1}{4}','¾':'\\frac{3}{4}','⅓':'\\frac{1}{3}','⅔':'\\frac{2}{3}','≪':'\\ll ','≫':'\\gg ','⊃':'\\supset ','⊇':'\\supseteq ','⋊':'\\rtimes ','−':'-','–':'-','×':'\\times ','·':'\\cdot ','⋅':'\\cdot ','⊗':'\\otimes ','⊕':'\\oplus ','∝':'\\propto ','≈':'\\approx ','≃':'\\simeq ','≅':'\\cong ','≠':'\\ne ','≤':'\\le ','≥':'\\ge ','→':'\\to ','↔':'\\leftrightarrow ','⇒':'\\Rightarrow ','⇔':'\\Leftrightarrow ','∈':'\\in ','∉':'\\notin ','⊂':'\\subset ','⊆':'\\subseteq ','∩':'\\cap ','∪':'\\cup ','∞':'\\infty ','∂':'\\partial ','∇':'\\nabla ','∫':'\\int ','∮':'\\oint ','∑':'\\sum ','∏':'\\prod ','±':'\\pm ','∓':'\\mp ','↑':'\\uparrow ','↓':'\\downarrow ','⊥':'\\perp ','∥':'\\parallel ','…':'\\ldots ','⋯':'\\cdots ','⋮':'\\vdots ','⋱':'\\ddots ','⟨':'\\langle ','〈':'\\langle ','⟩':'\\rangle ','〉':'\\rangle ','∅':'\\varnothing ','≡':'\\equiv ','∼':'\\sim ','°':'^{\\circ}','∧':'\\wedge ','∨':'\\vee ','¬':'\\neg ','∀':'\\forall ','∃':'\\exists ','↦':'\\mapsto '};
 const subs={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','₊':'+','₋':'-','₌':'=','₍':'(','₎':')','ₐ':'a','ₑ':'e','ₕ':'h','ᵢ':'i','ⱼ':'j','ₖ':'k','ₗ':'l','ₘ':'m','ₙ':'n','ₒ':'o','ₚ':'p','ᵣ':'r','ₛ':'s','ₜ':'t','ᵤ':'u','ᵥ':'v','ₓ':'x','ᵦ':'β','ᵧ':'y','ᵨ':'ρ','ᵩ':'φ','ᵪ':'χ','꜀':'c'};
 const supers={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','⁼':'=','⁽':'(','⁾':')','ᵀ':'T','ᴴ':'H','ᵃ':'a','ᵇ':'b','ᶜ':'c','ᵈ':'d','ᵉ':'e','ᶠ':'f','ᵍ':'g','ʰ':'h','ⁱ':'i','ʲ':'j','ᵏ':'k','ˡ':'l','ᵐ':'m','ⁿ':'n','ᵒ':'o','ᵖ':'p','ʳ':'r','ˢ':'s','ᵗ':'t','ᵘ':'u','ᵛ':'v','ʷ':'w','ˣ':'x','ʸ':'y','ᶻ':'z','†':'\\dagger ','‡':'\\ddagger ','′':'\\prime ','″':'\\prime\\prime ','‴':'\\prime\\prime\\prime ','ᵅ':'α','ᵝ':'β','ᵞ':'γ','ᵟ':'δ','ᵋ':'ε','ᶿ':'θ','ᶥ':'ι','ᵠ':'φ','ᵡ':'χ'};
-const scriptLabels=new Set(['SOC','BdG','NS','CF','JT','ACBD','eff','static','vib','total','in','out','max','min','pair','orb','spin','device','rel','group']);
+const scriptLabels=new Set(['SOC','BdG','NS','CF','JT','ACBD','BC','input','mech','fix','eff','static','vib','total','in','out','max','min','pair','orb','spin','device','rel','group']);
 const functions=new Set(['sin','cos','tan','sinh','cosh','tanh','arcsin','arccos','arctan','exp','log','ln','lim','min','max','det','dim','ker','gcd','arg']);
 const operators=new Set(['SU','SO','O','U','GL','SL','Sp','Tr','tr','Re','Im','rank','diag','sgn','Var','Sym','span','mod','FWHM','XMCD','XLD']);
 const groups=new Set(['SU','SO','O','U','GL','SL','Sp']);
 const cjk=/[\u3400-\u9fff\uf900-\ufaff]/u;
 const combining=/[\u0300-\u036f\u20d0-\u20ff]/u;
+const elements=new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' '));
+const unitWords=['任意单位','能量','长度','时间','温度','体积','面积','电压','电流','频率','质量','单位'];
+const unitSymbols=new Set(['eV','meV','THz','GHz','MHz','kHz','GPa']);
+// A multi-element formula with stoichiometric numbers is unambiguous here;
+// single-letter C/S and C4v retain their mathematical/group meanings.
+function chemicalAt(source,index){
+ if(!/[A-Z]/.test(source[index]||''))return null;
+ if(index&&/[A-Za-z0-9_₀-₉]/u.test(source[index-1]))return null;
+ const match=source.slice(index).match(/^(?:[A-Z][a-z]?[0-9₀-₉]*)+/);if(!match)return null;
+ const raw=match[0],tokens=[...raw.matchAll(/([A-Z][a-z]?)([0-9₀-₉]*)/g)];
+ const genericPerovskite=/^ABO[3₃]$/.test(raw);
+ if((!genericPerovskite&&tokens.some(t=>!elements.has(t[1])))||/[A-Za-z0-9_₀-₉]/u.test(source[index+raw.length]||''))return null;
+ let charge='',end=index+raw.length;
+ const ionic=source.slice(end).match(/^[⁰¹²³⁴⁵⁶⁷⁸⁹]+[⁺⁻]/u);
+ if(ionic&&tokens.length===1&&tokens[0][1].length===2){charge=Array.from(ionic[0]).map(c=>supers[c]).join('');end+=ionic[0].length;}
+ if(!charge&&(tokens.length<2||!tokens.some(t=>t[2])))return null;
+ const tex=tokens.map(t=>'\\mathrm{'+t[1]+'}'+(t[2]?'_{'+Array.from(t[2]).map(c=>subs[c]||c).join('')+'}':'')).join('')+(charge?'^{'+charge+'}':'');
+ return {tex:'{'+tex+'}',end};
+}
+function hasChemical(source){for(let i=0;i<source.length;i++)if(chemicalAt(source,i))return true;return false;}
 const escapeText=s=>String(s).replace(/[\\{}%$&#_^~]/g,c=>({'\\':'\\textbackslash{}','{':'\\{','}':'\\}','%':'\\%','$':'\\$','&':'\\&','#':'\\#','_':'\\_','^':'\\textasciicircum{}','~':'\\textasciitilde{}'}[c]));
 const text=s=>'\\text{'+escapeText(s)+'}';
 function closeAt(s,start){const pairs={'(':')','[':']','{':'}'},stack=[pairs[s[start]]];if(!stack[0])return -1;for(let i=start+1;i<s.length;i++){const c=s[i];if(pairs[c])stack.push(pairs[c]);else if(')]}'.includes(c)){if(c!==stack.pop())return -1;if(!stack.length)return i;}}return -1;}
@@ -21,10 +41,15 @@ function preprocess(s){return s.normalize('NFD').replace(/Σᵅ/g,'∑_(α)').re
 function convert(source,depth=0){
  if(depth>24)throw Error('Notation nesting limit');
  const s=source;let out='',i=0,previousAtom=false,lastAtom=null;const frames=[];
- const inner=x=>convert(x,depth+1);const scriptTex=x=>scriptLabels.has(x)?'\\mathrm{'+x+'}':inner(x);
+ const inner=x=>convert(x,depth+1);const scriptTex=x=>{
+  const chars=Array.from(x.trim());
+  if(chars.length&&chars.every(c=>supers[c])){const value=chars.map(c=>supers[c]).join('');return value.includes('\\')?value:inner(value);}
+  return scriptLabels.has(x)?'\\mathrm{'+x+'}':inner(x);
+ };
  const accented=(atom,mark)=>{
   if(mark==='̄'||mark==='̅')return '\\overline{'+atom+'}';
   if(mark==='̿')return '\\overline{\\overline{'+atom+'}}';
+  if(mark==='̊')return '\\mathring{'+(atom==='A'?'\\mathrm{A}':atom)+'}';
   const command={'̂':'hat','⃗':'vec','̃':'tilde','̇':'dot','̈':'ddot','̸':'not'}[mark];
   if(!command)throw Error('Unsupported combining mark');
   return '\\'+command+'{'+atom+'}';
@@ -46,8 +71,9 @@ function convert(source,depth=0){
   if(key==='sup')lastAtom.parentheticalSup=parenthetical;
   out=out.slice(0,lastAtom.start)+atomText(lastAtom);previousAtom=true;
  };
- function script(start){let j=start;while(/\s/.test(s[j]||'')&&j<s.length)j++;if(j>=s.length)throw Error('Missing script');if('({'.includes(s[j])){const end=closeAt(s,j);if(end<0)throw Error('Unclosed script');return{tex:scriptTex(s.slice(j+1,end)),end:end+1,parenthetical:s[j]==='('};}let match=s.slice(j).match(/^(?:SOC|BdG|NS|CF|JT|ACBD|AC|BD|AB|CD|EF|C[1-6][xyz]|[A-Z]|[a-z]+|[+−-]?\d+)/);if(!match&&cjk.test(s[j]))match=s.slice(j).match(/^[\u3400-\u9fff\uf900-\ufaff]+/u);if(match){let end=j+match[0].length;while(combining.test(s[end]||''))end++;if(s[end]===','){const continuation=s.slice(end).match(/^,[a-z]+(?![A-Za-z†‡′_₀-₉])/);if(continuation)end+=continuation[0].length;}return{tex:scriptTex(s.slice(j,end)),end};}let end=j+(s.codePointAt(j)>65535?2:1);while(combining.test(s[end]||''))end++;return{tex:inner(s.slice(j,end)),end};}
+ function script(start){let j=start;while(/\s/.test(s[j]||'')&&j<s.length)j++;if(j>=s.length)throw Error('Missing script');if('({'.includes(s[j])){const end=closeAt(s,j);if(end<0)throw Error('Unclosed script');return{tex:scriptTex(s.slice(j+1,end)),end:end+1,parenthetical:s[j]==='('};}let match=s.slice(j).match(/^(?:SOC|BdG|NS|CF|JT|ACBD|BC|AC|BD|AB|CD|EF|C[1-6][xyz]|[A-Z]|[a-z]+|[+−-]?\d+)/);if(!match&&cjk.test(s[j]))match=s.slice(j).match(/^[\u3400-\u9fff\uf900-\ufaff]+/u);if(match){let end=j+match[0].length;while(combining.test(s[end]||''))end++;if(s[end]===','){const continuation=s.slice(end).match(/^,[a-z]+(?![A-Za-z†‡′_₀-₉])/);if(continuation)end+=continuation[0].length;}return{tex:scriptTex(s.slice(j,end)),end};}let end=j+(s.codePointAt(j)>65535?2:1);while(combining.test(s[end]||''))end++;return{tex:scriptTex(s.slice(j,end)),end};}
  while(i<s.length){
+  const chemical=chemicalAt(s,i);if(chemical){emit(chemical.tex);previousAtom=true;i=chemical.end;continue;}
   const crystal=crystalTokenAt(s,i);if(crystal){emit(crystal.atomBase??('{'+crystal.tex+'}'));previousAtom=true;if(crystal.atomSub)attach('_',crystal.atomSub);if(crystal.atomSup)attach('^',crystal.atomSup);i=crystal.end;continue;}
   let c=s[i];
   if(c==='\n'){out+=' \\\\ ';i++;previousAtom=false;lastAtom=null;continue;}
@@ -74,7 +100,8 @@ function convert(source,depth=0){
   let atom='',atomStart=out.length;
   if(/[A-Za-z]/.test(c)){
    const m=s.slice(i).match(/^[A-Za-z]+/)[0],isFunction=functions.has(m),isOperator=operators.has(m)&&(!groups.has(m)||s[i+m.length]==='(');
-   if((isFunction||isOperator)&&!(m.length>1&&combining.test(s[i+m.length]||''))){atom=isFunction?'\\'+m+' ':'\\operatorname{'+m+'}';}
+   if(unitSymbols.has(m)&&!combining.test(s[i+m.length]||'')){atom='\\mathrm{'+m+'}';}
+   else if((isFunction||isOperator)&&!(m.length>1&&combining.test(s[i+m.length]||''))){atom=isFunction?'\\'+m+' ':'\\operatorname{'+m+'}';}
    else {out+=m.slice(0,-1);atom=m.at(-1);atomStart=out.length;}
    i+=m.length;
   }else if(/[0-9]/.test(c)){const m=s.slice(i).match(/^\d+(?:\.\d+)?/)[0];atom=m;i+=m.length;}
@@ -115,9 +142,31 @@ export function normalizeMath(source){
 
 const scriptCharacters=new RegExp('['+Object.keys(subs).join('')+Object.keys(supers).join('')+']','u');
 const physicalComponents=/(?:[στ][xyz]{1,3}(?![A-Za-z_])|(?<![A-Za-z_])kB(?![a-z_])|μB(?![a-z_]))/u;
-const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝]/u;
+const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏÅ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝≪≫]/u;
 function append(rows,row){if(!row.source)return;const prev=rows.at(-1);if(prev&&prev.type===row.type&&row.type==='text')prev.source+=row.source;else rows.push(row);}
-function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source)||findCrystalTokens(source).some(p=>p.kind))?{type:'math',source,tex}:{type:'text',source};}
+function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source)||hasChemical(source)||findCrystalTokens(source).some(p=>p.kind))?{type:'math',source,tex}:{type:'text',source};}
+
+// Keep explicitly indexed Chinese labels inside the mathematical fragment.
+// A prose boundary must not split H_副本 into the invalid fragment H_.
+function inlineBits(source){
+ const bits=[];let begin=0;
+ const push=(end,prose=false)=>{if(end>begin)bits.push({source:source.slice(begin,end),prose});begin=end;};
+ for(let i=0;i<source.length;){
+  const c=source[i];
+  if((c==='_'||c==='^')&&'({'.includes(source[i+1]||'!')){const end=closeAt(source,i+1);if(end>=0){i=end+1;continue;}}
+  if((c==='_'||c==='^')&&cjk.test(source[i+1]||'')){i+=2;while(cjk.test(source[i]||''))i++;continue;}
+  if(cjk.test(c)){
+   let end=i+1;while(cjk.test(source[end]||''))end++;
+   const run=source.slice(i,end),unit=(supers[source[end]]||source[end]==='^')?unitWords.find(word=>run.endsWith(word)):null;
+   if(unit){const start=end-unit.length;push(i);if(start>i){begin=i;push(start,true);}begin=start;i=end;continue;}
+   push(i);begin=i;push(end,true);i=end;continue;
+  }
+  const separator=source.slice(i).match(/^(?:[，。；：、！？]+|\s{2,}|\n)/u);
+  if(separator){push(i);begin=i;push(i+separator[0].length,true);i=begin;continue;}
+  i++;
+ }
+ push(source.length);return bits;
+}
 
 /** A formula block may contain prose. Keep prose and separators readable. */
 export function segmentFormula(source){
@@ -142,8 +191,8 @@ export function findInlineMath(source){
  const chunks=source.split(/(\b[a-z][a-z0-9]+(?:_[A-Za-z0-9]{2,})+\b|https?:\/\/[^\s，。；]+|[A-Za-z0-9_./-]+\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)\b|[A-Za-z]:[\\/][^\s，。；]+)/g);
  for(const chunk of chunks){
   if(/^[a-z][a-z0-9]+(?:_[A-Za-z0-9]{2,})+$/.test(chunk)||/^(?:https?:\/\/|[A-Za-z]:[\\/])/.test(chunk)||/\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)$/.test(chunk)){append(rows,{type:'text',source:chunk});continue;}
-  const bits=chunk.split(/([\u3400-\u9fff\uf900-\ufaff，。；：、！？]+|\s{2,}|\n)/u);
-  for(const bit of bits){if(!bit)continue;if(cjk.test(bit)||/^[，。；：、！？\s]+$/.test(bit)){append(rows,{type:'text',source:bit});continue;}
+  const bits=inlineBits(chunk);
+  for(const entry of bits){const bit=entry.source;if(entry.prose||/^[，。；：、！？\s]+$/.test(bit)){append(rows,{type:'text',source:bit});continue;}
    // Do not italicize a long English sentence just because it contains a subscript.
    const pieces=bit.split(/(\s+)/);let run='';const flush=()=>{if(!run)return;if(!run.trim()){append(rows,{type:'text',source:run});run='';return;}const leading=run.match(/^\s*/)[0],trailing=run.match(/\s*$/)[0],body=run.slice(leading.length,run.length-trailing.length||undefined);append(rows,{type:'text',source:leading});append(rows,part(body));append(rows,{type:'text',source:trailing});run='';};
    for(const p of pieces){if(/^[A-Za-z]{4,}$/.test(p)&&!functions.has(p)&&!operators.has(p)){flush();append(rows,{type:'text',source:p});}else run+=p;}flush();
@@ -152,4 +201,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261031-entry2';
+export const mathNotationVersion='20261110-math1';

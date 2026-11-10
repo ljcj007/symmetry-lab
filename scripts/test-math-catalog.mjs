@@ -9,22 +9,36 @@ import {segmentFormula,findInlineMath} from '../dist/math-notation.js';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const dataRoot=path.join(root,'dist/data');
 const snapshots=new Map(),formulas=[],inline=[];
-const marker=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀᴴ†′]/u;
-const isTeaching=name=>/(?:-content|-lessons|-derivations|symmetry-materials|material-observables|material-research|structure-dynamics|coupled-materials|electronic-materials|quantum-materials|response-materials|spectroscopy-materials)\.json$/.test(name)&&!name.endsWith('provenance.json');
-const identifierField=/^(?:id|module|action|route|preset|section|lesson|exercise|sourceId|path|url|schema|release|filename|function|api|implementation)$/i;
+const marker=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀᴴ†′̄̅̿̂̇̈⃗Åα-ωΑ-Ω]/u;
+const displayFields=new Set(['title','name','summary','description','text','formula','prompt','hint','choices','explanation','answer','result','steps','assumption','phase','kind','meaning','unit','symbol','symbols','label','note','conventions','conditions','definition','question','goals','goal','prerequisite','formulaAliases','paragraphs','givens','pitfall','chapter','objectives','scope','limitations','referenceNote','modelLabel','convention','physics','setting','conclusion']);
+const isTeaching=(name,data)=>!name.endsWith('provenance.json')&&name!=='search-index.json'&&data&&typeof data==='object'&&['lessons','exercises','materials','cases','entries'].some(key=>Array.isArray(data[key]));
+const opaqueText=value=>/^(?:https?:\/\/|#(?:classroom|compute|atlas|docs|workbench)|[A-Za-z]:[\\/])/.test(value)||/^[A-Za-z0-9_./-]+\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)$/.test(value);
+const textNotation=value=>/[_^₀-₉⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ᵀᴴ†′̄̅̿̂̇̈⃗]/u.test(value
+ .replace(/https?:\/\/[^\s，。；]+|[A-Za-z0-9_./-]+\.(?:py|js|mjs|json|csv|yaml|yml|cif|md|tex|zip|html|css)\b/g,'')
+ // Prose can name a standalone dagger/prime ("共轭转置 †"). It has no
+ // mathematical base and is already the intended glyph, not a missed script.
+ .replace(/(^|\s)[†‡′″](?=\s|$)/gu,'$1'));
+// These dictionary aliases intentionally describe an unfinished script prefix,
+// or list the standalone marks themselves; neither is a complete expression.
+const literalAliases=new Map([
+ ['dist/data/formula-dictionary.json/entries/22/symbols/2','C^{'],
+ ['dist/data/formula-dictionary.json/entries/22/symbols/3','C^'],
+ ['dist/data/formula-dictionary.json/entries/63/variables/1/symbol','+/−、′/″'],
+]);
 const digest=raw=>crypto.createHash('sha256').update(raw).digest('hex');
 
 for(const name of fs.readdirSync(dataRoot).filter(x=>x.endsWith('.json')).sort()){
  const file=path.join(dataRoot,name),raw=fs.readFileSync(file);
  snapshots.set(file,digest(raw));
  const data=JSON.parse(raw.toString('utf8'));
- function walk(value,pointer='',field=''){
+ const teaching=isTeaching(name,data);
+ function walk(value,pointer='',field='',opaque=false){
   if(typeof value==='string'){
    const row={file:'dist/data/'+name,pointer,text:value};
    if(field==='formula'||field.toLowerCase().endsWith('formula'))formulas.push(row);
-   else if(isTeaching(name)&&marker.test(value)&&!identifierField.test(field))inline.push(row);
-  }else if(Array.isArray(value))value.forEach((item,i)=>walk(item,pointer+'/'+i,field));
-  else if(value&&typeof value==='object')Object.entries(value).forEach(([key,item])=>walk(item,pointer+'/'+key,key));
+   else if(teaching&&!opaque&&displayFields.has(field)&&marker.test(value)&&!opaqueText(value))inline.push(row);
+  }else if(Array.isArray(value))value.forEach((item,i)=>walk(item,pointer+'/'+i,field,opaque));
+  else if(value&&typeof value==='object')Object.entries(value).forEach(([key,item])=>walk(item,pointer+'/'+key,key,opaque||['input','parameters','defaults','sourceHashes'].includes(key)));
  }
  walk(data);
 }
@@ -50,7 +64,7 @@ function check(row,convert,kind){
     assert.match(html,/<math /,'Accessible MathML is retained');
     assert.doesNotMatch(html,/class="katex-error"/);
    }catch(error){failures.push({...row,source:segment.source,tex:segment.tex,error:String(error.message)});}
-  }else if(/[_^]/.test(segment.source)){
+  }else if(textNotation(segment.source)&&literalAliases.get(row.file+row.pointer)!==row.text){
    unhandled.push({...row,kind,unhandled:segment.source});
   }
  }
@@ -91,3 +105,35 @@ const local=path.join(root,'.openai');
 if(fs.existsSync(local))fs.writeFileSync(path.join(local,'math-catalog-unhandled.json'),JSON.stringify(report,null,2)+'\n');
 console.log('Math catalog:',JSON.stringify(report.counts));
 assert.equal(failures.length,0,'KaTeX failed for catalog fragments; inspect .openai/math-catalog-unhandled.json');
+// Parsing successfully is insufficient: a converter that silently leaves an
+// index in text would otherwise pass every test. All formula fields are strict.
+assert.deepEqual(unhandled.filter(row=>row.kind==='formula'),[],'Unformatted formula notation; inspect .openai/math-catalog-unhandled.json');
+assert.deepEqual(unhandled.filter(row=>row.kind==='inline'),[],'Unformatted classroom/dictionary notation; inspect .openai/math-catalog-unhandled.json');
+for(const name of ['bridges-materials.json','frontiers-materials.json','connections-materials.json','construction-materials.json','principles-materials.json','pathways-materials.json','formula-dictionary.json'])assert.ok(inline.some(row=>row.file==='dist/data/'+name),'Missing inline catalogue coverage: '+name);
+for(const [key,source]of literalAliases)assert.ok(inline.some(row=>row.file+row.pointer===key&&row.text===source),'Stale literal-notation exception: '+key);
+
+// These independent semantics checks pin down legacy scientific spellings that
+// previously rendered successfully with their tensor/representation labels on
+// the baseline. A browser inspection alone can miss that error in a long page.
+const read=name=>JSON.parse(fs.readFileSync(path.join(dataRoot,name),'utf8'));
+const observables=read('material-observables.json');
+assert.match(observables.lessons[4].sections[0].formula,/χ_\{ij\}.*R_\{ia\}.*R_\{jb\}.*χ_\{ab\}/);
+assert.match(observables.lessons[4].sections[1].formula,/C_\{ijkl\}=C_\{jikl\}=C_\{ijlk\}=C_\{klij\}/);
+assert.match(observables.lessons[4].sections[3].formula,/χ_\{lab\}=Qχ_\{crystal\}Qᵀ/);
+assert.match(read('andreev-content.json').lessons[0].sections[1].formula,/R_\{ee\}\+R_\{he\}/);
+assert.match(read('quantum-geometry-content.json').lessons[0].sections[0].formula,/Q_\{μν\}=⟨∂_μ u/);
+assert.match(read('lie-derivations.json').exercises[14].steps[3].formula,/C_\{完整\}†C_\{完整\}/);
+
+// Each combined classroom must carry the same edited lesson/exercise text as
+// its source module. Only module routing metadata differs; calculations and
+// preset inputs remain independently covered by the existing Python fixtures.
+for(const [combined,sources]of [
+ ['response-materials.json',['hall-response-content.json','device-transport-content.json','local-multiplet-content.json']],
+ ['quantum-materials.json',['crystal-field-content.json','quantum-geometry-content.json','electron-transport-content.json']],
+ ['spectroscopy-materials.json',['spin-resonance-content.json','andreev-content.json','atomic-spectra-content.json']],
+ ['pathways-materials.json',['bandrep-content.json','scattering-content.json','domainwall-content.json','hubbard-content.json']],
+]){
+ const target=read(combined);
+ const displayOnly=value=>Array.isArray(value)?value.map(displayOnly):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([key])=>!['references','sources'].includes(key)).map(([key,item])=>[key,displayOnly(item)])):value;
+ for(const source of sources){const data=read(source);for(const field of ['lessons','exercises'])for(const row of data[field]||[]){const other=target[field].find(x=>x.id===row.id);assert.ok(other,combined+': '+row.id);assert.deepEqual(displayOnly(other),displayOnly(row),combined+' / '+row.id+' differs from '+source);}}
+}

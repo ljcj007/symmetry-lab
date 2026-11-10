@@ -1,12 +1,12 @@
-import {svgMathText} from './math-svg.js?v=20261031-entry2';
-import {quantumCurveSVG as curve} from './quantum-plots.js?v=20261031-entry2';
-import {esc,num,table,notes,sources} from './response-views.js?v=20261031-entry2';
+import {svgMathText} from './math-svg.js?v=20261110-math1';
+import {quantumCurveSVG as curve} from './quantum-plots.js?v=20261110-math1';
+import {esc,num,table,notes,sources} from './response-views.js?v=20261110-math1';
 export {esc,num,table,notes,sources};
 const choice=(values)=>values.map(x=>[x,String(x)]);
 export const fields={
  resonance:[
  ['spin','电子有效自旋 S',.5,choice([.5,1,1.5,2,2.5])],['field','静磁场 B（T）',.34,0,3,'any'],['theta','静磁场极角 θ（°）',0,0,180,'any'],['phi','静磁场方位角 φ（°）',0,0,360,'any'],
- ['gX','主轴 gₓ',2,.2,5,'any'],['gY','主轴 gᵧ',2,.2,5,'any'],['gZ','主轴 g𝓏',2,.2,5,'any'],['zeroFieldD','零场分裂 D（GHz）',0,-30,30,'any'],['zeroFieldE','零场分裂 E（GHz）',0,-30,30,'any'],['temperature','温度（K）',4,0,500,'any'],
+ ['gX','主轴 gₓ',2,.2,5,'any'],['gY','主轴 gᵧ',2,.2,5,'any'],['gZ','主轴 g_z',2,.2,5,'any'],['zeroFieldD','零场分裂 D（GHz）',0,-30,30,'any'],['zeroFieldE','零场分裂 E（GHz）',0,-30,30,'any'],['temperature','温度（K）',4,0,500,'any'],
  ['polarization','微波磁场方向','theta',[['theta','eθ · 横向'],['phi','eφ · 横向'],['parallel','平行静磁场']]],['lineWidth','谱线半高半宽（GHz）',.05,.001,2,'any'],
  ['nuclearSpin','核自旋 I',0,choice([0,.5,1,1.5,2,2.5])],['hyperfinePerp','横向超精细 A⊥（GHz）',0,-3,3,'any'],['hyperfineParallel','纵向超精细 A∥（GHz）',0,-3,3,'any'],['nuclearGamma','核旋磁比 γₙ（GHz/T）',0,-.1,.1,'any'],
  ['frequencyMin','频率起点（GHz）',0,0,100,'any'],['frequencyMax','频率终点（GHz）',15,.001,100,'any'],['frequencyPoints','频率采样数',201,41,501,1],['fieldMax','扫场终点（T）',.7,.001,3,'any'],['fieldPoints','扫场采样数',61,11,121,1]],

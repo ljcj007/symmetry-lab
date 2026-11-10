@@ -39,7 +39,7 @@ assert.match(heatmapSVG([0],[0],[[1]],{title:'<script>'}),/&lt;script&gt;/);
 for(const orbital of ['density','xy','yz','xz','x2-y2','z2'])safe(orbitalSVG(fixtures.results.orbitals,{orbital}));
 const cf=await mount({module:'orbitals',calculationOnly:true});await submit(cf);
 assert.equal(calls.at(-1).action,'crystal_field_lab');assert.equal(calls.at(-1).input.soc,.1);
-assert.ok(cf.$('#qm-orbital').querySelector('svg'));const old=cf.$('#qm-orbital').innerHTML;
+assert.match(cf.$('#qm-result').innerHTML,/d 轨道 · yz/,'Native orbital options spell out the component rather than using a script-z glyph as a subscript');assert.doesNotMatch(cf.$('#qm-result').innerHTML,/𝓏/);assert.ok(cf.$('#qm-orbital').querySelector('svg'));const old=cf.$('#qm-orbital').innerHTML;
 cf.$('#qm-yaw').oninput({target:{value:'80',nextElementSibling:{}}});assert.notEqual(cf.$('#qm-orbital').innerHTML,old);
 await select(cf,'orbital-choice','xy');assert.ok(ui.getQuantumMaterialsResult());
 cf.$('#qm-export').onclick();assert.equal(JSON.parse(cf.downloads[0].body).module,'orbitals');

@@ -39,7 +39,7 @@ async function runUITests(){
  globalThis.document={createElement:tag=>new Element(tag)};
  globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')});
  const ui=await import('../dist/material-research-ui.js');
- const notebook=await import('../dist/material-notebook.js?v=20261031-entry2');
+ const notebook=await import('../dist/material-notebook.js?v=20261110-math1');
  const {parseClassroomRoute,buildClassroomHash,classroomPathways}=await import('../dist/classroom-ui.js');
  const {knownTool}=await import('../dist/navigation-ui.js');
  const calls=[];
@@ -142,7 +142,9 @@ async function runUITests(){
  assert.match(characters.$('#mr-result').innerHTML,/THz/);
  assert.ok(characters.$('#mr-result').querySelectorAll('tbody').some(body=>body.querySelectorAll('tr').length===8),'Uncovered mmm labels must still display all eight operation characters');
 
- const bands=await mount({calculationOnly:true,module:'bands'});await submit(bands);
+ const bands=await mount({calculationOnly:true,module:'bands'});
+ assert.match(bands.$('#mr-content').innerHTML,/C₄ᵥ · pₓ \/ pᵧ 轨道/,'A native model option displays subscripts without literal TeX or underscores');
+ await submit(bands);
  assert.equal(ui.getMaterialResearchResult().result.summary.mirrorActive,true);
  assert.match(bands.$('#mr-result').innerHTML,/C2v → Cs/);
  assert.doesNotMatch(bands.$('#mr-result').innerHTML,/<th><\/th>/);
@@ -166,7 +168,7 @@ async function runUITests(){
  assert.equal(bands.$('#mr-samples').attributes.min,'21');
  assert.equal(bands.$('#mr-samples').attributes.max,'501');
 
- const thermo=await mount({calculationOnly:true,module:'thermo'});await submit(thermo);
+ const thermo=await mount({calculationOnly:true,module:'thermo'});assert.match(thermo.$('#mr-content').innerHTML,/θ_E（K）/);assert.match(thermo.$('#mr-content').innerHTML,/θ_D（K）/);await submit(thermo);
  assert.equal(ui.getMaterialResearchResult().result.series.length,2);
  assert.equal((thermo.$('#mr-thermal-plot').innerHTML.match(/<polyline/g)||[]).length,2);
  assert.match(thermo.$('#mr-result').innerHTML,/模型原胞/);

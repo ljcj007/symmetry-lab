@@ -37,6 +37,8 @@ assert.match(curveSVG([[0,0],[360,0]],'angle','zero'),/max 0</,'Forbidden respon
 
 const calls=[],lab=await mount({calculationOnly:true,experiment:'phonons',material:'silicon'},async(action,input)=>{calls.push({action,input});return clone();});
 assert.equal(lab.container.querySelector('[data-obs-tab]'),null,'Calculator mode does not create nested course tabs');
+assert.match(lab.container.querySelector('#obs-content').innerHTML,/Si · 金刚石 · m3̄m/,'Native selects use a real overbar instead of an arithmetic minus');
+assert.match(lab.container.querySelector('#obs-content').innerHTML,/GaAs · 闪锌矿 · 4̄3m/);
 lab.container.querySelector('#obs-angle').value='45';lab.container.querySelector('#obs-frequency').value='400';
 await submit(lab.container);
 assert.equal(calls[0].action,'phonons');assert.equal(calls[0].input.preset,'silicon');assert.equal(calls[0].input.frequency_cm1,400);

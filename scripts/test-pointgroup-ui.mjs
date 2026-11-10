@@ -55,3 +55,16 @@ await nestedPending;
 assert.equal(nestedRoot.parentNode,nestedContainer);
 assert.equal(nestedRoot.innerHTML,before,'A detached classroom subtree must not render a late result');
 console.log('Point-group UI: malformed stored progress, failed-fetch recovery, nested classroom navigation isolation and verified atlas export passed.');
+
+// Verify the actual operation panel, not only its asynchronous loader.
+const {Container:DOMContainer,Element}=await import('./test-material-research-ui.mjs');
+globalThis.document={compatMode:'CSS1Compat',createElement:tag=>new Element(tag)};
+globalThis.fetch=async url=>({ok:true,json:async()=>url.includes('lessons')?{lessons:[{id:'group-basics',title:'Group',quiz:[]}],source:{}}:atlas});
+const notation=await import('../dist/pointgroup-ui.js?notation'),notationPage=new DOMContainer();
+await notation.renderPointgroupView({container:notationPage,selection:{tab:'lab'}});
+assert.match(notationPage.querySelector('#pg-content').innerHTML,/m3̄m/,'Native group selector uses the H–M overbar');
+assert.doesNotMatch(notationPage.querySelector('#pg-content').innerHTML,/>m-3m · Oh/);
+assert.match(notationPage.querySelector('#pg-lab-status').innerHTML,/<msup>/,'The operation count is a mathematical superscript');
+assert.match(notationPage.querySelector('#pg-lab-status').innerHTML,/<msub><mi>p<\/mi>/,'The starting point keeps its subscript in the same expression');
+notationPage.querySelector('#pg-apply').onclick();
+assert.match(notationPage.querySelector('#pg-lab-status').innerHTML,/<msup><mi>R<\/mi><mn>1<\/mn>/);

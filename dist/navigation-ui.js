@@ -1,6 +1,6 @@
-import {homeHTML} from './entry-home.js?v=20261031-entry2';
-import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261031-entry2';
-import {classroomPathways} from './classroom-ui.js?v=20261031-entry2';
+import {homeHTML} from './entry-home.js?v=20261110-math1';
+import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-math1';
+import {classroomPathways} from './classroom-ui.js?v=20261110-math1';
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
@@ -96,7 +96,7 @@ export function rememberRoute(route){if(['home','compute','atlas','classroom','d
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261031-entry2');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261110-math1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export async function renderNavigationHub({container,view='home',databases}){
  const favorites=favoriteRoutes();
  const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?'查找计算工具':view==='atlas'?'搜索群、材料与课程':'已经有一个问题？'}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="试试：镜面对称、声子、GaAs、225" autocomplete="off"><span id="site-search-status">输入关键词后检索课程、工具与群目录</span></div><div id="site-search-results" aria-live="polite"></div></section>`;

@@ -39,7 +39,7 @@ const commutator={lab:'lie',experiment:'commutator',group:'su3',title:'Commutato
 globalThis.localStorage={getItem:()=>'{bad',setItem:()=>{}};
 const pendingFetch=[];globalThis.fetch=url=>new Promise(resolve=>pendingFetch.push({url,resolve}));
 const race=await import('../dist/lie-group-ui.js?race');assert.equal(race.getLieGroupResult(),null);
-const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261031-entry2/);
+const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261110-math1/);
 const detachedRoot=detached.firstElementChild,loadingHTML=detachedRoot.innerHTML;detached.isConnected=false;assert.equal(detachedRoot.parentNode,detached,'Hub detaches the whole container, not its root');pendingFetch[0].resolve(response());await loading;
 assert.equal(detachedRoot.innerHTML,loadingHTML,'Detached course containers must not render a late loader result');
 
@@ -70,7 +70,7 @@ experiment(page,'commutator');$(page,'#lg-group').value='su3';$(page,'#lg-group'
 $(page,'#lg-tab-lab').onkeydown({key:'ArrowRight',preventDefault(){}});assert.equal($(page,'#lg-tab-derive').attributes['aria-selected'],'true');$(page,'#lg-tab-derive').onkeydown({key:'ArrowRight',preventDefault(){}});assert.ok($(page,'#lg-quiz-lesson'),'Keyboard tabs select each new panel in order');
 
 const delayed=await import('../dist/lie-group-ui.js?delayed'),latePage=new Container();let resolveRun;
-await delayed.renderLieGroupView({container:latePage,run:()=>new Promise(resolve=>{resolveRun=resolve;})});$(latePage,'#lg-tab-lab').onclick();const running=submit(latePage);assert.equal(typeof resolveRun,'function');$(latePage,'#lg-tab-quiz').onclick();resolveRun(su2);await running;assert.ok($(latePage,'#lg-quiz-lesson'));assert.equal(delayed.getLieGroupResult().experiment,null,'A late calculation must not enter exports after leaving the experiment');
+await delayed.renderLieGroupView({container:latePage,run:()=>new Promise(resolve=>{resolveRun=resolve;})});$(latePage,'#lg-tab-lab').onclick();assert.match($(latePage,'#lg-lab-output').innerHTML,/<msup>/,'The generator exponential is one structured superscript');assert.doesNotMatch($(latePage,'#lg-lab-output').innerHTML,/<sup>/);const running=submit(latePage);assert.equal(typeof resolveRun,'function');$(latePage,'#lg-tab-quiz').onclick();resolveRun(su2);await running;assert.ok($(latePage,'#lg-quiz-lesson'));assert.equal(delayed.getLieGroupResult().experiment,null,'A late calculation must not enter exports after leaving the experiment');
 $(latePage,'#lg-tab-lab').onclick();const detachedRun=submit(latePage);const priorRoot=latePage.firstElementChild;latePage.isConnected=false;const priorHTML=priorRoot.innerHTML;resolveRun(su2);await detachedRun;assert.equal(priorRoot.innerHTML,priorHTML,'Results must not redraw a detached hub child');assert.equal(delayed.getLieGroupResult().experiment,null);
 
 const failed=await import('../dist/lie-group-ui.js?python-failure'),failurePage=new Container();await failed.renderLieGroupView({container:failurePage,run:async()=>{throw Error('<script>unsafe</script>');}});$(failurePage,'#lg-tab-lab').onclick();await submit(failurePage);assert.match($(failurePage,'#lg-lab-output').innerHTML,/&lt;script&gt;/);assert.doesNotMatch($(failurePage,'#lg-lab-output').innerHTML,/<script>/);

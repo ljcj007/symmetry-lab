@@ -1,9 +1,22 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {mathHTML,mathSourceText} from '../dist/math-display.js';
+import {mathHTML,mathSourceText,layoutMathOverflow} from '../dist/math-display.js';
 
 assert.equal(mathSourceText({childNodes:[{nodeType:3,nodeValue:'精确 '},{dataset:{mathSource:'SU(3)'},childNodes:[{nodeType:3,nodeValue:'duplicated display'}]},{nodeType:3,nodeValue:' 换基'}]}),'精确 SU(3) 换基');
+assert.equal(mathSourceText({dataset:{mathSource:'选择 k_x 与 χ_{ij} 的约定'},childNodes:[{nodeType:3,nodeValue:'duplicated visual math'}]}),'选择 k_x 与 χ_{ij} 的约定');
+
+// A long formula inside an inline wrapper has an indefinite percentage width.
+// It must fit the nearest content box and stay reachable by keyboard, while
+// short symbols keep their original inline baseline and tab order.
+const box={clientWidth:290,parentElement:null},style=globalThis.getComputedStyle;
+globalThis.getComputedStyle=()=>({display:'block',paddingLeft:'0',paddingRight:'0'});
+function measured(natural){const classes=new Set(),attrs={};return {dataset:{},parentElement:box,classList:{add:x=>classes.add(x),remove:x=>classes.delete(x)},classes,closest:()=>null,get clientWidth(){return classes.has('sl-math-scroll')?box.clientWidth:natural;},scrollWidth:natural,getBoundingClientRect:()=>({width:natural}),hasAttribute:k=>Object.hasOwn(attrs,k),removeAttribute:k=>delete attrs[k],set tabIndex(x){attrs.tabindex=x;},get tabIndex(){return attrs.tabindex;}};}
+const long=measured(400),short=measured(30),elements=[long,short],layoutRoot={querySelectorAll:selector=>selector==='.sl-math'?elements:elements.filter(e=>e.classes.has('sl-math-scroll')||selector.includes('[data-math-overflow]')&&e.dataset.mathOverflow)};
+assert.equal(layoutMathOverflow(layoutRoot),1);assert.equal(long.tabIndex,0);assert.equal(long.dataset.mathOverflow,'true');assert.equal(short.tabIndex,undefined);assert.equal(short.classes.size,0);
+assert.equal(layoutMathOverflow(layoutRoot),1,'Repeated layout keeps one scroller');
+box.clientWidth=500;assert.equal(layoutMathOverflow(layoutRoot),0);assert.equal(long.classes.size,0);assert.equal(long.tabIndex,undefined);
+globalThis.getComputedStyle=style;
 
 const html=mathHTML('x_{i+1}^{-2}+\\frac{1}{2}');
 assert.match(html,/<msubsup>/);

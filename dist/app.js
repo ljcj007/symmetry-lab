@@ -1,15 +1,15 @@
-import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261031-entry2';
-import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261031-entry2';
-import {crystalSpan} from './crystal-notation.js?v=20261031-entry2';
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261031-entry2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261031-entry2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261031-entry2';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261031-entry2';
+import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261110-math1';
+import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261110-math1';
+import {crystalSpan} from './crystal-notation.js?v=20261110-math1';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261110-math1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261110-math1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261110-math1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261110-math1';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261031-entry2';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261110-math1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
 
-const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261031-entry2'),projects:()=>import('./response-projects.js?v=20261031-entry2'),advanced:()=>import('./advanced-ui.js?v=20261031-entry2'),research:()=>import('./research-ui.js?v=20261031-entry2'),structure:()=>import('./structure-ui.js?v=20261031-entry2')})[key]());
+const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261110-math1'),projects:()=>import('./response-projects.js?v=20261110-math1'),advanced:()=>import('./advanced-ui.js?v=20261110-math1'),research:()=>import('./research-ui.js?v=20261110-math1'),structure:()=>import('./structure-ui.js?v=20261110-math1')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -307,7 +307,7 @@ function renderResults(){const el=$('#result-content');if(!el)return;const r=res
  if(state.tab==='characters'){el.innerHTML=`<p class="mini-heading">${r.littleGroup.antiunitaryIndices.length?'幺正子群不可约表示的特征标 · 共表示请查看“磁共表示”':'小群不可约表示 · 每列对应一个操作'}</p>${tableHTML(['本地编号','BC 标签','Bilbao 标签','维数',...r.littleGroup.unitaryOperations.map((o,i)=>`<span title="操作 ${i+1}">${crystalSpan(o.name||'g'+(i+1),'operation')}</span>`)],r.irreps.map(ir=>[crystalSpan(ir.label,'irrep'),crystalSpan(labelEntry(r,ir.label)?.bc_label||'—','irrep'),crystalSpan(labelEntry(r,ir.label)?.bilbao_label||'—','irrep'),ir.dimension,...ir.characters.map(x=>esc(cf(x)))]))}<div class="note-strip"><span>χ(g) = Tr D(g) · 列序与“表示矩阵”和 JSON 导出一致。</span><span class="badge">✓ 正交性与乘法关系验证</span></div><div class="note-strip"><span>${esc(standardLabelSummary(r))}</span><span>Σ dᵢ² = ${r.irreps.reduce((s,x)=>s+x.dimension*x.dimension,0)} = |Hₖ|</span></div>`;}
  else if(state.tab==='labels'){renderStandardLabels(el,r);}
  else if(state.tab==='operations'){el.innerHTML=tableHTML(['#','操作','旋转 R','平移 t','类型'],r.littleGroup.operations.map((o,i)=>[i+1,crystalSpan(o.name||'g'+(i+1),'operation'),matrixHTML(o.rotation),'('+o.translation.map(fraction).join(', ')+')',o.antiunitary?'<span class="type-dot">反幺正 · T</span>':'幺正']),'operation-table')+'<div class="note-strip">Seitz 操作 {R | t}。表中为模平移子群的代表元；自旋双值使用因子系统，未重复显示带横线的元素。</div>';}
- else if(state.tab==='stars'){el.innerHTML=tableHTML(['星臂','kₓ','kᵧ','k𝓏','生成操作数量'],r.star.map((s,i)=>[i+1,...s.k.map(fraction),s.operationIndices?.length??'—']))+'<div class="note-strip">按倒易整数向量取模。反幺正操作的波矢作用为 −R⁻ᵀk。</div>';}
+ else if(state.tab==='stars'){el.innerHTML=tableHTML(['星臂','kₓ','kᵧ','k_z','生成操作数量'],r.star.map((s,i)=>[i+1,...s.k.map(fraction),s.operationIndices?.length??'—']))+'<div class="note-strip">按倒易整数向量取模。反幺正操作的波矢作用为 −R⁻ᵀk。</div>';}
  else if(state.tab==='matrices'){el.innerHTML=`<div class="controls-row"><label for="irrep-select">选择小群表示</label><select id="irrep-select">${r.irreps.map((ir,i)=>`<option value="${i}">${esc(labelDisplay(r,ir.label))} · ${ir.dimension} 维</option>`).join('')}</select><span class="subtle">矩阵基底由数值对角化选取</span></div><div id="matrix-list" class="matrix-grid"></div>`;const draw=()=>{const ir=r.irreps[+$('#irrep-select').value];$('#matrix-list').innerHTML=ir.matrices.map((m,i)=>`<div class="matrix-box"><div>${i+1} · ${crystalSpan(r.littleGroup.unitaryOperations[i]?.name||'g'+(i+1),'operation')}</div>${matrixHTML(m)}</div>`).join('');};$('#irrep-select').onchange=draw;draw();}
  else if(state.tab==='coreps'){renderCoreps(el,r);}
  else if(state.tab==='full'){renderFull(el,r);}

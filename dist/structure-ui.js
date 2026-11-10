@@ -1,6 +1,8 @@
-import {crystalSpan} from './crystal-notation.js?v=20261031-entry2';
+import {crystalSpan} from './crystal-notation.js?v=20261110-math1';
+import {mathHTML} from './math-display.js?v=20261110-math1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
 const sample = `NaCl conventional cell
 1.0
 5.64 0 0
@@ -66,8 +68,8 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
       <div class="controls-row"><button class="primary small" id="structure-open-group">在工作台计算表示 →</button><button class="text-button" id="structure-json">↓ 完整 JSON</button></div>
       <div class="structure-downloads"><button class="secondary small" id="structure-poscar">↓ BC POSCAR</button><button class="secondary small" id="structure-cif">↓ BC CIF</button></div>
       <p class="mini-heading">BC 原胞基矢 / Å · 每行一个基矢</p>${matrix(cell.lattice)}<p class="form-note">${cell.positions.length} 个原子 · ${esc([...new Set(cell.species)].join(' / '))}</p>
-      <p class="mini-heading">输入 → BC · x<sub>BC</sub> = M x<sub>input</sub> + q</p>${matrix(r.transform.coordinate_matrix)}<p class="form-note">q = (${r.transform.origin_shift.map(fmt).join(', ')})</p>
-      <div class="notice">k<sub>BC</sub> = (${r.k_bc.map(fmt).join(', ')})<br><small>倒易坐标使用 M⁻ᵀ；变换后的波矢可送入工作台。</small></div>
+      <p class="mini-heading">输入 → BC · ${inlineMath(String.raw`x_{\mathrm{BC}}=M x_{\mathrm{input}}+q`,'x_BC = M x_input + q')}</p>${matrix(r.transform.coordinate_matrix)}<p class="form-note">q = (${r.transform.origin_shift.map(fmt).join(', ')})</p>
+      <div class="notice">${inlineMath(String.raw`k_{\mathrm{BC}}=(${r.k_bc.map(fmt).join(', ')})`,'k_BC = ('+r.k_bc.map(fmt).join(', ')+')')}<br><small>倒易坐标使用 M⁻ᵀ；变换后的波矢可送入工作台。</small></div>
       <div class="notice structure-verification">${r.verified?'✓ BC 生成元与结构对称性核对通过':'转换检查未通过，请检查完整 JSON。'}</div>
       ${(r.warnings||[]).map(w=>`<div class="notice warning">${esc(w)}</div>`).join('')}
       <details class="structure-details"><summary>查看原子分数坐标</summary><div class="table-wrap"><table><thead><tr><th>元素</th><th>x</th><th>y</th><th>z</th></tr></thead><tbody>${cell.positions.map((p,i)=>`<tr><td>${esc(cell.species[i])}</td>${p.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>

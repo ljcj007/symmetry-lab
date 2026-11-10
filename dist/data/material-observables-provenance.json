@@ -63,12 +63,12 @@
   ],
   "files": {
     "dist/data/material-observables.json": {
-      "bytes": 38288,
-      "sha256": "f0b05baa6cb8ef0b407cf9c2f307dc2add2d563d2294a794f6f21daed0b60dc3"
+      "bytes": 38733,
+      "sha256": "29ea850855a4431ea14e13975a639f51128c104bfe6446e9775e1f1d57b6eea3"
     },
     "dist/observables-ui.js": {
-      "bytes": 25428,
-      "sha256": "8ad07c9f0a0095a4cabb36a198d162fb55560ed8ac710ed8fb75527b22f7288c"
+      "bytes": 25452,
+      "sha256": "5d268ad995f44dff3fd20589c6c69877a27921646ca05466a86265fb483ee4c6"
     },
     "dist/observables.css": {
       "bytes": 5056,
@@ -87,28 +87,28 @@
       "sha256": "2dc46b5f9046ead30e6eb7bf6ab6c5ff1b972ff6437688cb2251529236237e77"
     },
     "dist/python-worker.js": {
-      "bytes": 10365,
-      "sha256": "1a8c3532fd83a15688daa6e2fadfbdc4e0e5cf0951e46fb10988a1912da0078b"
+      "bytes": 10364,
+      "sha256": "9e85ffa9c1ecdb6d3031b79b8c6073b9327bb6b2171f409f9efd1bb25f6e3229"
     },
     "dist/classroom-ui.js": {
-      "bytes": 23157,
-      "sha256": "3d3b73571b6c720441169d3470c8bae375a0de1ed64181150b8d3eab9909b9dc"
+      "bytes": 23138,
+      "sha256": "6d33ffd2810f858e1208f017f040de50fc0728fe3030c4659c3563ad8825eb23"
     },
     "dist/navigation-ui.js": {
-      "bytes": 22408,
-      "sha256": "22cd1c21412cba554fc2c29473a083bed9c5415564c1db2d609bc5f7c1ee6999"
+      "bytes": 22404,
+      "sha256": "389eb7fb198f08e564570fa6cdbe6bf1cc38a87f696e115dcbaf2e4dd49f22b5"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 77899,
-      "sha256": "b3a4785f58d3a65e68995d1f5ffc59b6652c0865f03a1a51592dbba4583b2320"
+      "bytes": 77895,
+      "sha256": "76a7c68f23885fe4aba7c457f858fd752c119b2339307c74bc08a376e5838672"
     },
     "dist/app.js": {
-      "bytes": 91504,
-      "sha256": "c5641308b78ec0842c9d8c1a27de48fb8a8a5bcfb57bab93aa79a5929bc211e3"
+      "bytes": 91489,
+      "sha256": "f8eedacb26eacf1383b7d1a61f7f364db4c7be91849e3548dc7d1f5e56b02ec1"
     },
     "dist/index.html": {
-      "bytes": 5227,
-      "sha256": "9189ced1dfa39d00843cca1a817226cb1c0d2a1ade19549a0831b989a34be6b0"
+      "bytes": 5203,
+      "sha256": "02e90d745720e9e2869820472aad02690ade0b4f40715daf3e763a828e2be51c"
     },
     "dist/docs/material-observables.md": {
       "bytes": 4814,
@@ -127,8 +127,8 @@
       "sha256": "aa619a2d8d9d5ed7c3bbe4bdd08e52146965fa5878a3d55f6dd9faf00234d3f4"
     },
     "scripts/test-observables-ui.mjs": {
-      "bytes": 11366,
-      "sha256": "0e0aadcca7d4a16642fa99f626a7c168736b506420fc794062bc47ca20c8d15a"
+      "bytes": 11627,
+      "sha256": "3629cfab2fb16688d09b16f138e9c912cd652542acbaaac468e826518f8cf2f8"
     },
     "scripts/test-python-api.py": {
       "bytes": 33245,
