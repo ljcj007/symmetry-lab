@@ -25,6 +25,9 @@ function paths(value,name){
  return s;
 }
 function js(source,name){
+ // Git stores LF; a Windows checkout may supply CRLF. Normalize before EOF
+ // cleanup so the same committed sources reproduce identical English files.
+ source=source.replace(/\r\n?/g,'\n');
  if(sharedCode.has(name))return source.replaceAll('./vendor/','../vendor/');
  const edits=[];for(const item of jsStrings(source)){
   const translated=paths(replaceUnits(item.value,t),name);

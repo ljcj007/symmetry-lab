@@ -10,6 +10,13 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('prior', ROOT/'scripts/refresh-construction-provenance.py')
 prior = importlib.util.module_from_spec(spec); spec.loader.exec_module(prior)
 NAME = 'dist/data/english-provenance.json'
+def normalized_content(name):
+    p=ROOT/name
+    # These text files have no ordinary suffix. A Windows checkout must use
+    # the declared UTF-8/LF hash convention for them too.
+    if p.name in {'.gitignore','.gitattributes','LICENSE','NOTICE'}:
+        return p.read_text(encoding='utf8').encode('utf8')
+    return prior.content(p)
 def build():
     manifests = {p.relative_to(ROOT).as_posix(): json.loads(p.read_text(encoding='utf8')) for p in (ROOT/'dist/data').glob('*provenance.json') if p.name != 'english-provenance.json'}
     files = []
@@ -26,7 +33,7 @@ def build():
         files.append(dict(path=name,sha256='pending',bytes=0))
     report=json.loads((ROOT/'dist/en/translation-report.json').read_text(encoding='utf8'))
     manifests[NAME]=dict(release='20261110-en1',sourceHashNormalization='utf8-lf-v1',scope='Static English teaching and interface edition; shared Python computation cores, crystallographic data, calculation inputs and numeric results. See docs/english-edition.md.',counts=dict(sourceUnits=report['sourceUnits'],translatedUnits=report['translatedUnits'],missingUnits=len(report['missing']),generatedFiles=report['files']),files=sorted(files,key=lambda row:row['path']))
-    return prior.ManifestGraph(manifests).all_outputs()
+    return prior.ManifestGraph(manifests,leaf_content=normalized_content).all_outputs()
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args();changed=[]
     for name,data in build().items():

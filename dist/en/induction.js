@@ -184,4 +184,3 @@ export function decomposeStarProduct({group,k1,k2,analysis1,analysis2,irrepIndex
     doubleValued:targetDouble,magnetic:group.operations.some(op=>op.antiunitary),productDimension,decomposedDimension,outputs,validation:{dimensionConserved:true,passed:true},
     conventions:['k-star tensor product is decomposed after resolving primitive translation eigenspaces.','Output D labels are numerical labels local to each resulting little group.']};
 }
-

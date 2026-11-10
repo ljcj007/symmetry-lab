@@ -54,6 +54,7 @@ const htmlIds=s=>[...s.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);assert.deepEqua
 let modules=0,imports=0;
 for(const name of fs.readdirSync(en).filter(x=>x.endsWith('.js'))){
  const source=fs.readFileSync(path.join(en,name),'utf8'),ast=parse(source,{ecmaVersion:'latest',sourceType:'module'});modules++;
+ assert.doesNotMatch(source,/\r/,'English JavaScript must have reproducible LF line endings: '+name);
  walkAST(ast,node=>{const specifier=node.type==='ImportDeclaration'||node.type==='ExportNamedDeclaration'||node.type==='ExportAllDeclaration'?node.source?.value:node.type==='ImportExpression'&&node.source.type==='Literal'?node.source.value:null;
   if(typeof specifier==='string'&&specifier.startsWith('.')){const target=path.resolve(en,specifier.split('?')[0]);assert.ok(fs.existsSync(target),name+' missing module '+specifier);imports++;}
  });
