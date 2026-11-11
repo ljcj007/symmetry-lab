@@ -1,6 +1,6 @@
-import {homeHTML} from './entry-home.js?v=20261110-en1';
+import {homeHTML} from './entry-home.js?v=20261111-demos1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261110-en1';
+import {classroomPathways} from './classroom-ui.js?v=20261111-demos1';
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
@@ -36,6 +36,9 @@ export const toolGroups=[
   ['structure',"Structure standardization · BC cells","Import POSCAR / CIF, identify the space group and transform the primitive cell, origin and wavevector.","POSCAR CIF spglib primitive cell"],
  ]},
  {id:'representation',title:"Representations and corepresentations",summary:"Classify quantum states using symmetry operations.",tools:[
+  ['compute/group-theorems',"Group Theorems · Proofs and Applications","Rearrangement, conjugacy classes, normal subgroups, irreducibility, Schur, unitarity, orthogonality, reduction, and degeneracy.","rearrangement conjugacy normal Schur orthogonality unitarity reduction degeneracy"],
+  ['compute/symmetry-mini-demos',"Geometry, Bands, and Spin Mini-Labs","Platonic solids, degenerate vibrations, Kramers pairs, permutation symmetry, double groups, and spin–orbit coupling.","polyhedra bands degeneracy permutations spin SOC double groups"],
+  ['compute/foundations-demos',"Foundational Demos · Water and Representations","Characters, D3 projections and bases, level splitting, IR/Raman, Jahn–Teller, and macroscopic symmetry.","water H2O characters selection rules D3 projection basis functions Raman Jahn Teller"],
   ['compute/band-representation-lab',"Wyckoff sites → Band representations","Site orbits, Bloch actions and little-group decomposition for selected three-dimensional space groups.","Wyckoff site induced band representation EBR"],
   ['workbench',"Irreducible representations and magnetic corepresentations","Space groups, magnetic space groups and magnetic point groups; single- and double-valued representations, little groups and full k stars.","SOC Irreducible character Bilbao BC"],
   ['compute/advanced/symbolic_spacegroups',"Symbolic space-group representations","Construct exact little-group representations, corepresentations and induced representations along symbolic k lines.","symbol k star"],
@@ -112,6 +115,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg',"122 magnetic point groups","Magnetic point-group catalogs, time reversal and corepresentations."],
   ['atlas/materials',"Crystalline and magnetic materials","NaCl, Si, GaAs, Fe, NiO and MnF₂: structures, magnetic moments and 3D operations, linked to phonons, spectra and property tensors."],
   ['atlas/research',"Material analysis workflows","Phonon classification → frozen structures; band compatibility; thermodynamics and restorable research records."],
+  ['classroom/foundations?module=demos&experiment=water',"Water and Representation Foundations","Six interactive demos of vibrations, polarization, triangle projections, and crystal-field levels."],
   ['classroom/observables?module=shg-story',"SHG flagship experiment · Three materials","Connect structures, tensors and polarization signals, from predictions to counterexamples."],
   ['atlas/frontiers',"Layer groups, chirality and many-body topology","Explore slab boundaries, mirror images, polar vectors and AKLT chains, with linked operations and inverse identification."],
   ['atlas/connections',"Identical particles, defects and reciprocal responses","Connect full particle exchange and order-parameter manifolds to response constraints, with three-level checks and evidence reports."],

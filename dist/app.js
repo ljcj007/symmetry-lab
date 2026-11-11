@@ -1,15 +1,15 @@
-import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261110-en1';
-import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261110-en1';
-import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
-import {startMathDisplay,mathSourceText} from './math-display.js?v=20261110-en1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261110-en1';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261110-en1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261110-en1';
+import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=20261111-demos1';
+import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261111-demos1';
+import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
+import {startMathDisplay,mathSourceText} from './math-display.js?v=20261111-demos1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261111-demos1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261111-demos1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261111-demos1';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261110-en1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
 
-const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261110-en1'),projects:()=>import('./response-projects.js?v=20261110-en1'),advanced:()=>import('./advanced-ui.js?v=20261110-en1'),research:()=>import('./research-ui.js?v=20261110-en1'),structure:()=>import('./structure-ui.js?v=20261110-en1')})[key]());
+const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261111-demos1'),projects:()=>import('./response-projects.js?v=20261111-demos1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261111-demos1')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -32,7 +32,7 @@ const labels={workbench:['对称性工作台','从空间群到磁空间群，探
 labels.magnetictb=['磁性紧束缚模型','用晶体对称性约束跃迁参数，计算能带、薄膜和拓扑量。'];
 labels.advanced=['精确代数与高维群','整数类与仿射类、算术中心化子、符号表示与 Hamiltonian，全部由 Python 在浏览器计算。'];
 labels.crystkit=['晶体群工具','精确仿射运算、生成元、点轨道与空间群识别。'];
-for(const view of ['pointgroups','academy','lie','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'])labels[view]=['群论课堂','从晶体的离散对称到 SU(2)、SU(3) 的连续变换，结合课程、交互实验与练习学习。'];
+for(const view of ['group-theorems','symmetry-mini-demos','foundations-demos','pointgroups','academy','lie','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'])labels[view]=['群论课堂','从晶体的离散对称到 SU(2)、SU(3) 的连续变换，结合课程、交互实验与练习学习。'];
 labels.home=['总览','从课程、计算任务或晶体材料出发，探索对称性。'];
 labels.compute=['计算中心','按任务查找工具，复用课堂中的计算器与精确算法。'];
 labels.atlas=['群与材料图谱','统一查阅群目录、晶体结构和磁性材料实例。'];
@@ -141,7 +141,7 @@ function setView(request,options={}){
  $$('.nav-item').forEach(n=>{const selected=n.dataset.view===primary;n.classList.toggle('active',selected);if(selected)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});
  $('#export-top').classList.toggle('hidden',['home','compute','atlas','classroom','docs','dictionary','notebook','compare','projects'].includes(view));
  const context=$('#view-context');
- context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':'<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
+ context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['group-theorems','symmetry-mini-demos','foundations-demos','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':'<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+='<div class="mr-notebook-link"><a href="#atlas/notebook">记录最近计算 / 打开材料项目 →</a><a href="#compute/symmetry-audit">三层对称性诊断 →</a><a href="#atlas/compare">参数对照与预测 →</a></div>';
  rememberRoute(route);
  if(options.render!==false)return render();

@@ -1,7 +1,10 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261110-en1';
+const BUILD = '20261111-demos1';
 const plans = {
+  group_theorems: ['group_theorems'],
+  symmetry_mini_demos: ['symmetry_mini_demos'],
+  foundations_demos: ['foundations_demos'],
   layer_symmetry_lab:['symmetry_frontiers'],chirality_polarity_lab:['symmetry_frontiers'],manybody_spt_lab:['symmetry_frontiers'],symmetry_linked:['symmetry_frontiers'],frontier_inverse:['symmetry_frontiers'],
   statistics_lab:['symmetry_connections'],defects_lab:['symmetry_connections'],reciprocity_lab:['symmetry_connections'],symmetry_audit:['symmetry_connections'],symbolic_step_grade:['symmetry_connections'],
   salc_lab:['salc_lab'],wavevector_lab:['wavevector_lab'],nonsymmorphic_lab:['nonsymmorphic_lab'],symmetry_grading:['symmetry_grading'],
@@ -59,7 +62,7 @@ async function prepare(id, action, payload) {
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
   const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
   const teachingPackages = su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
-  for (const name of ['phonopy','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
+  for (const name of ['group_theorems','foundations_demos','symmetry_mini_demos'].includes(action) ? [] : ['phonopy','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
     await runtime.loadPackage(name); packages.add(name);
@@ -119,7 +122,14 @@ self.onmessage = async ({data: {id, action, payload}}) => {
     const output = runtime.runPython(`
 _request = json.loads(_request_json)
 try:
-    _result = browser_api.run(_request['action'], _request['payload'], _sg_database, _carat_catalogs.get(_request['payload'].get('dimension', 3)), _magnetic_database, _label_database)
+    if _request['action'] == 'group_theorems':
+        _result = group_theorems.run(_request['payload'])
+    elif _request['action'] == 'foundations_demos':
+        _result = foundations_demos.run(_request['payload'])
+    elif _request['action'] == 'symmetry_mini_demos':
+        _result = symmetry_mini_demos.run(_request['payload'])
+    else:
+        _result = browser_api.run(_request['action'], _request['payload'], _sg_database, _carat_catalogs.get(_request['payload'].get('dimension', 3)), _magnetic_database, _label_database)
     _output = json.dumps({'result': _result}, ensure_ascii=False, allow_nan=False)
 except Exception as _error:
     _output = json.dumps({'error': str(_error)}, ensure_ascii=False)

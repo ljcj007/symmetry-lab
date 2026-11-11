@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 21447,
-  "translatedUnits": 21447,
+  "sourceUnits": 22111,
+  "translatedUnits": 22111,
   "missing": [],
-  "files": 352,
+  "files": 358,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -30,6 +30,12 @@
     "en-quality-cases-1.json",
     "en-quality-cases-2.json",
     "en-quality-cases-3.json",
-    "en-corrections.json"
+    "en-corrections.json",
+    "en-foundations-demos.json",
+    "en-foundations-navigation.json",
+    "en-foundations-docs.json",
+    "en-mini-demos.json",
+    "en-group-theorems.json",
+    "en-theorem-docs.json"
   ]
 }

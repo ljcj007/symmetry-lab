@@ -74,7 +74,7 @@ export function parseTrace(text, {maxBytes = MAX_TRACE_BYTES} = {}) {
       const v = row.values;
       if (v.length !== 3 + 2*littleOrder) fail(`can lead the way ${3+2*littleOrder} column`, row.line);
       const index = integer(v[0], "band number", row.line, 1);
-      const degeneracy = integer(v[1], "degeneracy", row.line, 1);
+      const degeneracy = integer(v[1], "Degeneracy", row.line, 1);
       if (index !== nextBand) fail(`band numbers should be consecutive; expected ${nextBand}, get ${index}`, row.line);
       nextBand += degeneracy;
       bands.push({index,degeneracy,energy:v[2],characters:Array.from({length:littleOrder},(_,i)=>v.slice(3+2*i,5+2*i))});

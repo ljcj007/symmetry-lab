@@ -4,6 +4,8 @@
 
 The English edition covers the existing classrooms, interactive laboratories, calculation tools, materials atlas, guided exercises, projects, formula dictionary, and documentation. Both editions share the Python computation cores and crystallographic databases. Use the header language switch to retain the current page and browser learning progress. Build offline from the committed translation catalogs with `npm run build:english`; validate with `npm run test:english`.
 
+2026-11-11 新增基础教学演示集：从[水分子、特征标、D₃ 投影、晶场劈裂与 Jahn–Teller](https://ljcj007.github.io/symmetry-lab/#classroom/foundations?module=demos&experiment=water)，到[正多面体、振动简并、能带与自旋](https://ljcj007.github.io/symmetry-lab/#classroom/foundations?module=mini&experiment=polyhedra)，再到[重排、共轭、正规子群、Schur、幺正性与正交定理工坊](https://ljcj007.github.io/symmetry-lab/#classroom/foundations?module=theorems&experiment=rearrangement)。模型约定与来源见[基础演示说明](dist/docs/foundations-demos.md)和[定理工坊说明](dist/docs/group-theorems.md)。
+
 2026-11-10 公式巡检：补齐张量与表示指标、化学式和 Å 单位，修复下拉选项的群符号、标签中的公式布局与手机长公式滚动。覆盖全部教学目录和公式词典，保留数值输入与计算结果。[排版说明与验证范围](dist/docs/formula-display.md)。
 
 本轮教学体验改版：三层首页入口、群目录和课堂按需加载、手机短导航及更清晰的文字。新增 [Si / GaAs / BaTiO₃ SHG 旗舰实验](https://ljcj007.github.io/symmetry-lab/#classroom/observables?module=shg-story)，包含预测、计算、分步解释、几何零信号反例和完整报告。全部旧工具与原有字号、公式排版保留。范围与使用方式见 [说明](dist/docs/learning-experience.md)。

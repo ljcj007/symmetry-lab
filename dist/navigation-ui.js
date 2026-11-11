@@ -1,6 +1,6 @@
-import {homeHTML} from './entry-home.js?v=20261110-en1';
+import {homeHTML} from './entry-home.js?v=20261111-demos1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261110-en1';
+import {classroomPathways} from './classroom-ui.js?v=20261111-demos1';
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
@@ -36,6 +36,9 @@ export const toolGroups=[
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[
+  ['compute/group-theorems','群论定理 · 证明与应用','重排、共轭与类、正规子群、不可约性、Schur、幺正性、正交、约化与简并。','rearrangement conjugacy normal Schur orthogonality 重排 共轭 正规 正交 幺正 约化 简并'],
+  ['compute/symmetry-mini-demos','几何、能带与自旋微实验','正多面体、简并振动、Kramers、置换态、双群与自旋轨道耦合。','polyhedra 正多面体 能带 简并 置换 自旋 SOC 双群'],
+  ['compute/foundations-demos','基础教学演示 · 水分子与表示','特征标、D3 投影与基函数、能级劈裂、IR/Raman、Jahn–Teller、宏观对称性。','water H2O 水分子 特征标 选择定则 D3 投影 基函数 Raman Jahn Teller'],
   ['compute/band-representation-lab','Wyckoff 位点 → 能带表示','精选三维空间群的位点轨道、Bloch 作用和小群分解。','Wyckoff 位点 诱导 band representation EBR'],
   ['workbench','不可约表示与磁共表示','空间群、磁空间群与磁点群；单值、双值、小群和全 k 星。','SOC 不可约 特征标 Bilbao BC'],
   ['compute/advanced/symbolic_spacegroups','符号空间群表示','沿符号 k 线构造精确小表示、共表示与诱导表示。','符号 k星'],
@@ -112,6 +115,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['atlas/mpg','122 磁点群','磁点群目录、时间反演与共表示。'],
   ['atlas/materials','晶体与磁性材料','NaCl、Si、GaAs、Fe、NiO、MnF₂：结构、磁矩与三维操作；连接声子、光谱及物性张量。'],
   ['atlas/research','材料分析工作流','声子分类 → 冻结结构；能带相容关系；热力学与可恢复研究记录。'],
+  ['classroom/foundations?module=demos&experiment=water','水分子与基础表示教学','振动、偏振、三角形投影和晶场能级的六个交互演示。'],
   ['classroom/observables?module=shg-story','SHG 旗舰实验 · 三种材料','从预测到反例，连接结构、张量与偏振信号。'],
   ['atlas/frontiers','层群、手性与多体拓扑','从薄膜边界、镜像与极向量走到 AKLT 链，附操作联动和逆向鉴别。'],
   ['atlas/connections','同粒子、缺陷与互易响应','从完整粒子交换、序参量流形走到响应约束，附三层检查和证据报告。'],
