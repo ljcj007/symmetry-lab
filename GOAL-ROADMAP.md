@@ -36,3 +36,9 @@ establish that all existing scientific and teaching content has been audited.
 - U(1) uses the lesson's positive phase z(phi)=exp(+i phi); SU(2)/SU(3) retain their stated negative-exponent physics convention. Numerical membership tolerances and idealized-model boundaries are explicit.
 - Exact checks read the production problem expressions. Laboratory checks use independent analytic results and the public calculation dispatcher. Real prior project fixtures were recalculated, rather than having their source hashes overwritten; numerical differences remain at floating-point precision.
 - These checks establish implementation behavior and mathematical examples. They do not establish student learning outcomes or close the full-site scientific audit.
+
+## Classroom panel layout follow-up
+
+- Foundational demonstrations, short experiments and theorem workshops now use the actual course-panel width to decide between stacked and side-by-side controls and results. Browser checks at 390, 1280 and 1920 pixels confirmed one column on narrow panels, two columns on wide panels and no page-level horizontal overflow.
+- At the observed 1280-pixel viewport, navigation leaves a 665-pixel lesson panel. The triangle character table now occupies its full 625-pixel inner width, rather than hiding columns inside a narrow preview. Mathematical tables retain local scrolling where a phone cannot show every column at once.
+- The next five dedicated exercise designs have been checked against registered calculation presets and exact results. They are not yet part of the production exercise banks; the five coverage gaps above remain open.

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "release": "20261113-basics3",
+  "release": "20261113-basics3-layout1",
   "sourceHashNormalization": "utf8-lf-v1",
-  "scope": "Ten dedicated introductory derivations, three browser-local continuous-group experiments, normalized superposition states and truthful lesson/preset/tool continuations. Existing high-dimensional tools and exercises remain available.",
+  "scope": "Ten dedicated introductory derivations, three browser-local continuous-group experiments, normalized superposition states and truthful lesson/preset/tool continuations. Existing high-dimensional tools and exercises remain available. Foundational demonstration, micro-experiment and theorem panels adapt to their actual available course width.",
   "counts": {
     "tools": 74,
     "newTools": 7,
@@ -155,6 +155,18 @@
     "scripts/fixtures/bridges-projects.json": {
       "bytes": 868004,
       "sha256": "71aa260ed1f8ae85fc9f7f2f01ae96aa694e53f7e4c68a0e31b7d751fdecfd04"
+    },
+    "dist/foundations-demos.css": {
+      "bytes": 4314,
+      "sha256": "0deeffd30036aacf903e188de5a2361dd259db0d0cf9c3b1400cfdbe850a5056"
+    },
+    "dist/symmetry-mini-demos.css": {
+      "bytes": 3493,
+      "sha256": "3aaff8e2e1de50cf88ad20c2b0dad13b2b2ae5e67433b10c6aac5b4502b25cfa"
+    },
+    "dist/group-theorems.css": {
+      "bytes": 3561,
+      "sha256": "0e9fd88167769e298df097e853598f35eaa7066315bc575c495cae234e1ed60d"
     }
   }
 }
