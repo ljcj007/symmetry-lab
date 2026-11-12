@@ -118,12 +118,14 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>配套交互教学演示</strong><p>把这节课的符号、矩阵与物理图像放在一起操作。</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">打开本节交互演示 →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="pg-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
+      ${lesson.id==='from-point-to-space'?`<section class="pg-worked" aria-label="从点群到晶体计算"><h3>把这一课接到实际工具</h3><p>先统一晶胞和波矢坐标，再比较表示。SG 99 的 Γ 点使用 BC 原胞倒易分数坐标 k=(0,0,0)，这里先打开单值表示。</p><div class="pg-lesson-actions"><a class="secondary" href="#structure">导入 POSCAR / CIF 并转换 BC 晶胞 →</a><button class="secondary" type="button" id="pg-open-sg99">SG 99 · Γ 单值表示工作台 →</button><a class="primary" href="#classroom/crystal?track=space&amp;lesson=space-01">继续空间群第一课 →</a></div></section>`:''}
       <div class="pg-reference"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">动手操作对称变换</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
     $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
     $('#pg-lesson-lab').onclick=()=>navigate('lab');
+    if($('#pg-open-sg99')){const handoff=$('#pg-open-sg99');handoff.onclick=()=>{if(current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id==='from-point-to-space'&&$('#pg-open-sg99')===handoff)openGroup({mode:'sg',id:99,k:[0,0,0],doubleValued:false});};}
     if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
   }
   function filteredGroups() {

@@ -95,7 +95,11 @@ def build():
 
 
 if __name__ == '__main__':
+    import runpy
     result = build()
     path = ROOT / 'dist/data/symmetry-course-atlas.json'
     path.write_text(json.dumps(result, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf8', newline='\n')
     print('Built teaching atlas:', len(result['spaceGroups']), len(result['magneticGroups']), len(result['magneticPointGroups']))
+    # This atlas builder is also the reproducible entry point for the reviewed
+    # lesson continuations; lesson/exercise text remains authored JSON.
+    runpy.run_path(str(ROOT / 'scripts/build-course-continuations.py'))['build']()

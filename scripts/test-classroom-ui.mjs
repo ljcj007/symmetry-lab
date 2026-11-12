@@ -31,6 +31,8 @@ for(const route of ['classroom/foundations?tab=lab&lesson=representations&group=
  const parsed=parseClassroomRoute(route);assert.ok(parsed);assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed,'Route roundtrip preserves context');
 }
 assert.equal(parseClassroomRoute('compute/lie/su3_ninej?tab=learn').tab,'lab');
+assert.equal(parseClassroomRoute('classroom/continuous?track=ninej&lesson=su3-ninej-paired-trees').pathway,'coupling','A legacy cross-topic URL opens under the correct pathway');
+assert.equal(parseClassroomRoute('classroom/coupling?track=continuous&lesson=continuous-symmetry').pathway,'continuous');
 for(const [tool,module,pathway] of [['phonon-modes','modes','structure-dynamics'],['band-connectivity','bands','crystal'],['phonon-thermo','thermo','observables']]){
  const route=parseClassroomRoute('compute/'+tool+'?material=silicon&preset=demo&tab=learn');
  assert.equal(route.module,module);assert.equal(route.section,'material-research');assert.equal(route.pathway,pathway);assert.equal(route.tab,'lab');assert.equal(route.material,'silicon');
@@ -58,6 +60,9 @@ const link=c.firstElementChild.querySelectorAll('[data-course-route]').find(link
 render('compute/lie/su3_ninej');assert.equal(calls.at(-1).section,'lie');assert.equal(calls.at(-1).selection.calculationOnly,true);assert.equal(c.firstElementChild.querySelector('.classroom-directory'),null);
 calls.at(-1).onNavigate({experiment:'su3_cg'});assert.equal(parseClassroomRoute(navigations.at(-1).hash).experiment,'su3_cg');
 const previous=navigations.length;c.isConnected=false;calls.at(-1).onNavigate({tab:'learn'});assert.equal(navigations.length,previous,'Detached course callbacks cannot change the URL');
+c.isConnected=true;render('classroom/continuous?track=continuous');calls.at(-1).onNavigate({track:'ninej',lesson:'su3-ninej-paired-trees',tab:'learn'});
+assert.equal(parseClassroomRoute(navigations.at(-1).hash).pathway,'coupling');assert.deepEqual(navigations.at(-1).options,{render:true},'Cross-pathway moves rebuild the visible sidebar');
+render('classroom/coupling?track=ninej');calls.at(-1).onNavigate({tab:'derive',exercise:'su3-ninej-27-weighted-entry'});assert.deepEqual(navigations.at(-1).options,{render:false},'Moving between tabs inside one pathway preserves local state');
 assert.ok(locations.some(value=>value.startsWith('计算中心')));
 const index=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.doesNotMatch(index,/data-view="(?:pointgroups|academy)"/,'Legacy modules do not become duplicate main navigation items');
 console.log('Classroom IA: seven pathways, legacy routes, deep-link roundtrips, context-preserving local navigation, shared full calculation mode, workbench adapters and detached callbacks passed.');

@@ -1,6 +1,7 @@
 """Independent checks of the material structures, references and guided exercises."""
 from pathlib import Path
 import json
+import runpy
 import unittest
 import numpy as np
 import spglib
@@ -77,6 +78,22 @@ class MaterialsCourseTests(unittest.TestCase):
                 self.assertTrue(0 <= check['answer'] < len(check['choices']))
                 self.assertEqual(len(set(check['choices'])), len(check['choices']))
                 self.assertTrue(check['question'] and check['explanation'])
+
+    def test_lesson_continuations_match_reviewed_source_and_existing_exercises(self):
+        builder = runpy.run_path(str(ROOT / 'scripts/build-course-continuations.py'))
+        _, expected = builder['continuation_data']()
+        self.assertEqual(self.course, expected)
+        by_id = {item['id']: item for item in self.derivations['exercises']}
+        for lesson in self.course['lessons']:
+            self.assertIsInstance(lesson['derivationIds'], list)
+            for exercise_id in lesson['derivationIds']:
+                self.assertIn(exercise_id, by_id)
+                self.assertEqual(by_id[exercise_id]['track'], lesson['track'])
+        mapping = {item['id']: item['derivationIds'] for item in self.course['lessons']}
+        self.assertEqual(mapping['double-04'], ['double-gaas-kramers'])
+        self.assertEqual(mapping['magnetic-05'], ['magnetic-nio-square'])
+        self.assertEqual(mapping['spin-04'], ['spin-soc-lock'])
+        self.assertEqual(mapping['space-04'], [])
 
 
 if __name__ == '__main__':

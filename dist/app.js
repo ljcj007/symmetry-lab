@@ -2,10 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261111-demos1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261111-demos1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261112-paths1';
-import {startToolFinder} from './tool-finder.js?v=20261112-paths1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261112-flow2';
+import {startToolFinder} from './tool-finder.js?v=20261112-flow2';
+import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261111-demos1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261112-paths1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261112-flow2';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
@@ -18,11 +19,12 @@ const groupLoader=createGroupLoader();
 async function ensureGroups(mode){const data=await groupLoader.get(mode);databases[mode]=data;return data;}
 let renderTicket=0;
 async function openWorkbench({mode='sg',id,k=[0,0,0],doubleValued=false,bzType=''}){
- if(!['sg','msg','mpg'].includes(mode))return;const origin=renderTicket;
+ if(!['sg','msg','mpg'].includes(mode))return;const origin=renderTicket;let destination='';
  try{await ensureGroups(mode);if(origin!==renderTicket)return;const group=list(mode).find(g=>gid(g,mode)===String(id));if(!group)throw Error('未找到该群。');
- Object.assign(state,{group,mode,k:mode==='mpg'?[0,0,0]:k,doubleValued:Boolean(doubleValued),bzType,labelK:k.every(x=>x===0)?'Γ':null,result:null,tab:'characters'});
- await setView('workbench');await calculate();
- }catch(e){if(origin===renderTicket)toast(e.message);}
+ if(bzType&&(mode!=='sg'||!(group.bzTypes||[]).includes(bzType)))throw Error('该群不支持指定的 BZ 类型。');
+ destination=buildWorkbenchRoute({mode,id,k,doubleValued,bzType,labelK:k.every(x=>x===0)?'Γ':null});
+ await setView(destination);if(state.view==='workbench'&&state.route===destination)await calculate();
+ }catch(e){if(origin===renderTicket||(destination&&state.view==='workbench'&&state.route===destination))toast(e.message);}
 }
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -133,7 +135,8 @@ function setView(request,options={}){
  else if(path.startsWith('compute/advanced/')){if(!knownTool(path))return;view='advanced';primary='compute';}
  else if(Object.hasOwn(labels,path)){view=path;primary=['home','compute','atlas','classroom','docs'].includes(path)?path:'compute';}
  else{route='home';view='home';primary='home';}
- state.pendingGroup=path==='workbench'&&params.has('sg')?Object.fromEntries(params):null;
+ const requestedGroupMode=['sg','msg','mpg'].find(mode=>params.has(mode));
+ state.pendingGroup=path==='workbench'&&requestedGroupMode?{mode:requestedGroupMode,query:params.toString()}:null;
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
  state.route=route;state.view=view;state.primary=primary;state.courseRoute=course;
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
@@ -154,7 +157,7 @@ function updateBreadcrumb(detail){
  if(state.courseRoute?.calculationOnly)detail=knownTool(state.route.split('?')[0])?.title||detail;
  else if(state.primary==='atlas'&&state.courseRoute)detail=state.view==='pointgroups'?'32 晶体学点群':['dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(state.view)?'材料研究路线':'晶体与磁性材料';
  detail=String(detail||'').replace(new RegExp('^'+top+'\\s*/\\s*'),'');
- if(state.primary==='classroom')detail=detail.replace(/^学习中心\s*\/\s*/,'').replace(/^学习中心$/,'学习总览');
+ if(state.primary==='classroom'){const prefix='学习中心';detail=detail===prefix?'学习总览':detail.replace(new RegExp('^'+prefix+'\\s*/\\s*'),'');}
  $('#breadcrumb').innerHTML=state.primary==='home'?'<b>总览</b>':`<a href="#home" data-route="home">总览</a><span aria-hidden="true">/</span><a href="#${state.primary}" data-route="${state.primary}">${top}</a>${detail&&detail!==top?`<span aria-hidden="true">/</span><b>${esc(detail)}</b>`:''}`;
 }
 function syncCourseRoute(hash,options={}){
@@ -215,14 +218,15 @@ async function render(){
  const ticket=++renderTicket,current=()=>ticket===renderTicket;const view=state.view;
  dictionaryController?.destroy();dictionaryController=null;$('#app').dataset.researchView=view;
  try{
-  const mode=view==='database'?state.dbMode:['workbench','products','bands','magnetictb','crystkit'].includes(view)?(state.pendingGroup?'sg':state.mode):null;
+  const mode=view==='database'?state.dbMode:['workbench','products','bands','magnetictb','crystkit'].includes(view)?(state.pendingGroup?.mode||state.mode):null;
   const key=['magnetictb','crystkit'].includes(view)?'research':view;
   const needsModule=['compare','projects','advanced','research','structure'].includes(key);
   if(mode&&!groupLoader.peek(mode)||needsModule&&!optionalViews.peek(key))$('#app').innerHTML='<div class="loading-card" role="status">正在读取此工具需要的资源…</div>';
   const [page]=await Promise.all([needsModule?optionalViews.get(key):null,mode?ensureGroups(mode):null]);if(!current())return;
   if(mode&&view!=='database'&&(!state.group||state.pendingGroup)){
-   if(state.pendingGroup){const p=state.pendingGroup;state.pendingGroup=null;const group=list('sg').find(g=>g.number===Number(p.sg));if(!group)throw Error('未找到该空间群');
-    Object.assign(state,{group,mode:'sg',k:['kx','ky','kz'].map(k=>parseNumber(p[k]||'0')),doubleValued:p.double==='true',result:null,tab:'characters',bzType:'',labelK:null});
+   if(state.pendingGroup){const p=parseWorkbenchSelection(state.pendingGroup.query,parseNumber),group=list(p.mode).find(g=>gid(g,p.mode)===p.id);if(!group)throw Error('未找到该群。');
+    if(p.bzType&&(p.mode!=='sg'||!(group.bzTypes||[]).includes(p.bzType)))throw Error('该群不支持指定的 BZ 类型。');
+    const {id,...selection}=p;Object.assign(state,{...selection,group,result:null,tab:'characters'});state.pendingGroup=null;
    }else state.group=list(mode)[mode==='sg'?224:1];
   }
   if(['home','compute','atlas'].includes(view))await renderNavigationHub({container:$('#app'),view,databases});
@@ -244,7 +248,7 @@ async function render(){
  }catch(error){if(current()){$('#app').innerHTML='<div class="notice error" role="alert">此页面暂未载入：'+esc(error.message)+' <button id="resource-retry" class="secondary">重试此页面</button> <a href="#home">返回首页</a></div>';$('#resource-retry').onclick=()=>render();}}
 }
 
-function renderWorkbench(){const g=state.group;const current=resultMatches();const r=current?state.result:null;$('#app').innerHTML=`<div class="workspace-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 定义对称性</div><span class="subtle">PARAMETERS</span></div><div class="panel-body">${modeButtons(state.mode)}
+function renderWorkbench(){const route=buildWorkbenchRoute({...state,id:gid()});if(state.route!==route){state.route=route;history.replaceState(null,'','#'+route);}const g=state.group;const current=resultMatches();const r=current?state.result:null;$('#app').innerHTML=`<div class="workspace-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 定义对称性</div><span class="subtle">PARAMETERS</span></div><div class="panel-body">${modeButtons(state.mode)}
  <label class="field-label" for="group-search">${state.mode==='sg'?'空间群编号或符号':state.mode==='msg'?'磁空间群 · BNS / OG 编号':'磁点群编号或符号'}<span>${state.mode==='sg'?'1 — 230':state.mode==='msg'?'1,651 MAGNETIC GROUPS':'122 MAGNETIC POINT GROUPS'}</span></label>
  <div class="search-wrap"><div class="group-input"><input id="group-search" autocomplete="off" aria-label="搜索并选择群" value="${esc(gid(g))}   ${esc(gtitle(g))}"><span>⌕</span></div><div id="group-options" class="search-list hidden"></div></div>
  <div class="group-info"><strong>${crystalSpan(gtitle(g),'hm')}</strong><span class="tag">${esc(lattices[g.lattice]||g.lattice)}</span><span class="tag">${state.mode==='sg'?crystalSpan(g.pointGroup,'schoenflies'):'Type '+['','I','II','III','IV'][g.type]}</span>${g.ogId?`<span class="tag">OG ${g.ogId}</span>`:''}</div>

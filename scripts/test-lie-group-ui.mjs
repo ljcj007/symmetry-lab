@@ -273,3 +273,42 @@ const initialRoutes=[],deriveRoutePage=new Container();
 await deepUI.renderLieGroupView({container:deriveRoutePage,selection:{pathway:'coupling',tab:'derive',exercise:routeDerivations.exercises.at(-1).id},onNavigate:patch=>initialRoutes.push(patch)});
 await new Promise(resolve=>setImmediate(resolve));assert.equal(initialRoutes.length,0,'Initial asynchronous derivation restore does not push history');assert.equal($(deriveRoutePage,'#lg-derivation-select').value,String(routeDerivations.exercises.length-1));
 console.log('Lie IA: staged chapter filters, lesson–experiment–quiz context, shared full nine-j calculation mode, exact preset restoration and history-safe initial derivation deep links passed.');
+
+// Reproduce the published curriculum bugs with the actual lesson/exercise data.
+const linkProgress={'rabi-pi-pulse':{revealed:1,hint:true,answer:false,selected:0,checked:false}},linkStorage=new Map([['symmetry-lab.lie.derivations.v1',JSON.stringify(linkProgress)]]);
+globalThis.localStorage={getItem:key=>linkStorage.get(key)||null,setItem:(key,value)=>linkStorage.set(key,value)};
+const linkedUI=await import('../dist/lie-group-ui.js?learning-link-regressions'),linkedPage=new Container(),linkedRoutes=[];
+await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'continuous',track:'continuous'},onNavigate:patch=>linkedRoutes.push(patch)});
+const ninejIndex=routeCourse.lessons.findIndex(item=>item.id==='su3-ninej-paired-trees');
+const oldSidebar=linkedPage.firstElementChild.querySelectorAll('[data-lg-lesson]')[0];
+linkedPage.firstElementChild.querySelectorAll('[data-lg-lesson]').find(button=>button.dataset.lgLesson===String(ninejIndex)).onclick();
+assert.equal($(linkedPage,'#lg-track-select').value,'ninej');
+assert.equal(linkedRoutes.at(-1).lesson,'su3-ninej-paired-trees','A cross-track sidebar click opens its requested lesson instead of resetting');
+assert.equal(linkedRoutes.at(-1).track,'ninej');
+const afterSidebar=linkedRoutes.length;oldSidebar.onclick();assert.equal(linkedRoutes.length,afterSidebar,'A detached sidebar control cannot change another lesson');
+for(const [lesson,exercise]of [
+ ['su3-cg-multiplicity','su3-cg-octet-rotation'],
+ ['su3-cg-exact-radicals','su3-cg-ten-three-lowering'],
+ ['su3-racah-exact-sixj','su3-racah-three-exact-matrix'],
+ ['su3-ninej-27-input-exact','su3-ninej-27-weighted-entry'],
+ ['su3-ninej-exact-normalization','su3-ninej-weighted-normalization']
+]){
+ await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'coupling',track:'coupling',lesson},onNavigate:patch=>linkedRoutes.push(patch)});
+ await $(linkedPage,'#lg-chapter-derive').onclick();
+ assert.equal(linkedUI.getLieGroupResult().derivations.selected,exercise,lesson);
+ assert.equal(linkedRoutes.at(-1).exercise,exercise,lesson);
+ assert.equal(linkedRoutes.at(-1).lesson,lesson,lesson);
+ assert.equal(linkedRoutes.at(-1).track,'coupling','The aggregate coupling track stays intact for lessons it contains');
+}
+await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'continuous',track:'continuous',lesson:'continuous-symmetry'},onNavigate:patch=>linkedRoutes.push(patch)});
+await $(linkedPage,'#lg-chapter-derive').onclick();
+assert.equal($(linkedPage,'#lg-derivation-select').value,'','An unmatched lesson opens an unselected exercise bank');
+assert.equal(linkedUI.getLieGroupResult().derivations.selected,undefined,'The previous 27-input exercise is not retained as related');
+assert.match($(linkedPage,'#lg-content').innerHTML,/本节暂未绑定专属推导题/);
+assert.equal($(linkedPage,'.lg-derivation'),null,'No unrelated problem is silently displayed');
+assert.equal(linkedRoutes.at(-1).exercise,undefined);
+const rabiIndex=routeDerivations.exercises.findIndex(item=>item.id==='rabi-pi-pulse');
+$(linkedPage,'#lg-derivation-select').value=String(rabiIndex);await $(linkedPage,'#lg-derivation-select').onchange();
+assert.equal(linkedRoutes.at(-1).exercise,'rabi-pi-pulse','An explicit bank choice is reflected in navigation');
+assert.equal(linkStorage.get('symmetry-lab.lie.derivations.v1'),JSON.stringify(linkProgress),'Navigation preserves independent derivation progress');
+console.log('Lie course continuity: cross-track sidebar, five actual preset/lesson links, bank selection, route context, stale controls and progress preservation passed.');

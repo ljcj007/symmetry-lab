@@ -214,16 +214,16 @@
       "sha256": "7e1a819897cc79f6b38e24a17f7f758b12974a76edb796810482e601de8319bf"
     },
     "dist/data/symmetry-course-lessons.json": {
-      "bytes": 97367,
-      "sha256": "37074d1e28c8876f1ec4c9ed3a15b19a151825ed2bc061289554647a5c85de24"
+      "bytes": 98835,
+      "sha256": "e4a8a3313a63a83be4408e8f914e611660656b3aa09902e8aae2d7a8a849021b"
     },
     "dist/docs/symmetry-course.md": {
       "bytes": 15309,
       "sha256": "ddc0374d79ac10a1d69f4a7b15d1835e97673c6ffcd2399bebf93d152d3045cf"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 77887,
-      "sha256": "419c6a68fbb2685caeb7af029c2ff31d772e8f293b2fc1dad3aacc58e9286ee5"
+      "bytes": 79523,
+      "sha256": "49d8315d672fe5803bf237d8ef1f1d243870bdc770654d5e395f5fdb837d0908"
     },
     "dist/symmetry-course.css": {
       "bytes": 35342,
@@ -238,8 +238,8 @@
       "sha256": "2dc46b5f9046ead30e6eb7bf6ab6c5ff1b972ff6437688cb2251529236237e77"
     },
     "scripts/build-symmetry-course.py": {
-      "bytes": 5987,
-      "sha256": "b6ece8c67bc38642873ffb6660d6ed57f98e4a44aa039c705bb32b30f8a332c4"
+      "bytes": 6238,
+      "sha256": "215e6120f5f04ecf9b6a9e42d0130d684a1a4e280e9047687928bf5657d2f4e4"
     },
     "scripts/test-symmetry-course.py": {
       "bytes": 6266,
@@ -250,12 +250,12 @@
       "sha256": "431a4aa526d226f28976473c375ffbf52e959f2525980ddc86be52844e37e6a5"
     },
     "scripts/test-symmetry-course-ui.mjs": {
-      "bytes": 24838,
-      "sha256": "df55825bccb8ef2085ecceeb1dce42de173ffb37722e7a2b454c1c9fd786a046"
+      "bytes": 24891,
+      "sha256": "e9a078e925a95ab0475f2c017b535e597ed1a195446ad138dc57cc7713aaa31e"
     },
     "scripts/test-materials-course.py": {
-      "bytes": 4186,
-      "sha256": "d3575ca3060500db9f6235f20c71b0ab7fce4c2caba79f877eb7fd76c5db1128"
+      "bytes": 5195,
+      "sha256": "936a605810815083868f9ced8f7c7a3e4cf1259bf2b23da277fc06a0ae4c3846"
     },
     "scripts/test-python-crystal-labs.py": {
       "bytes": 11799,
@@ -298,12 +298,12 @@
       "sha256": "2355d6bf389ab71e95d0acc33db68762eb513afd608493c2a72ca07b74ab49a6"
     },
     "dist/navigation-ui.js": {
-      "bytes": 23390,
-      "sha256": "55fe5d40ec6b7aa2afb04f126e40c2355d50aa4d6e61fc3ec5df7b87198382de"
+      "bytes": 25635,
+      "sha256": "9839de7432e5bc68b18744bea1c8340168658aa85d34e529e3d2a8f5c6d20677"
     },
     "dist/navigation.css": {
-      "bytes": 5826,
-      "sha256": "9ad027b27247d98390a4bdab1c074661a5b9544fab4730ec691d11c4c09db267"
+      "bytes": 6869,
+      "sha256": "b5dc4a3cb2375bb9a0425bfaed59c62d0a3c3d571c6a0a83dad773984bcf2fe8"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2664,

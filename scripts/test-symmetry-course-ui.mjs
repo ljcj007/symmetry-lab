@@ -14,6 +14,7 @@ const materials={materials:[{id:'fixture',name:'Material fixture',formula:'NaCl'
 const derivations={exercises:[{id:'derive-fixture',track:'space',title:'Derivation fixture',materialId:'fixture',prompt:'Try the derivation',givens:['Given data'],hint:'Hidden hint content',steps:[{title:'First step',explanation:'First revealed content'},{title:'Second step',explanation:'Second revealed content'}],answer:'Hidden final conclusion',pitfall:'Fixture pitfall',check:{question:'Fixture check',choices:['Yes','No'],answer:0,explanation:'Checked derivation explanation'}}]};
 
 const dataResponse=url=>({ok:true,json:async()=>url.includes('symmetry-materials')?materials:url.includes('symmetry-derivations')?derivations:url.includes('lessons')?lessons:atlas});
+lessons.lessons[0].derivationIds=['derive-fixture'];
 const camel=value=>value.replace(/-([a-z])/g,(_,c)=>c.toUpperCase());
 class Element {
   constructor(tag='div',attributes={},parentNode=null){this.tag=tag;this.attributes=attributes;this.parentNode=parentNode;this.children=[];this.dataset={};this.classList={remove:()=>{}};for(const [name,value] of Object.entries(attributes))if(name.startsWith('data-'))this.dataset[camel(name.slice(5))]=value;this.value=attributes.value||'';this.checked=attributes.checked!==undefined;}

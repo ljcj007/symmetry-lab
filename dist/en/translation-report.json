@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 22317,
-  "translatedUnits": 22317,
+  "sourceUnits": 22342,
+  "translatedUnits": 22342,
   "missing": [],
-  "files": 361,
+  "files": 366,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -37,6 +37,7 @@
     "en-mini-demos.json",
     "en-group-theorems.json",
     "en-theorem-docs.json",
-    "en-learning-entry.json"
+    "en-learning-entry.json",
+    "en-course-navigation.json"
   ]
 }

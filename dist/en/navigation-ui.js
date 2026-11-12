@@ -1,6 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261112-paths1';
+import {classroomPathways} from './classroom-ui.js?v=20261112-flow2';
+import {searchEntries} from './tool-search.js?v=20261112-links1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-links1';
+export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const toolGroups=[
@@ -84,16 +87,12 @@ export const toolGroups=[
   ['compute/advanced/crystkit_ext',"Group extensions and generators","Vector systems, extension orbits, generators of infinite space groups and torsion-freeness.","cohomology expansion"],
  ]}
 ];
+toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>({route,title,summary,keywords,kind:"Calculate",category:group.id})));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
-export function searchEntries(entries,query,limit=30){
- const terms=String(query).toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
- if(!terms.length)return [];
- const score=item=>terms.reduce((n,term)=>n+(item.title.toLocaleLowerCase().includes(term)?4:0)+(String(item.keywords||'').toLocaleLowerCase().includes(term)?2:0),0);
- return entries.filter(item=>terms.every(term=>(item.title+' '+item.summary+' '+(item.keywords||'')).toLocaleLowerCase().includes(term))).sort((a,b)=>score(b)-score(a)).slice(0,limit);
-}
-const readSaved=key=>{try{const x=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x.filter(v=>typeof v==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(v)).slice(0,20):[];}catch{return [];}};
-const save=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{/* Session-only navigation remains usable. */}};
+const sessionSaved=new Map(),storageFallback=new Set();
+const readSaved=key=>{try{const x=storageFallback.has(key)?sessionSaved.get(key):JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x.filter(v=>typeof v==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(v)).slice(0,20):[];}catch{return sessionSaved.get(key)||[];}};
+const save=(key,value)=>{sessionSaved.set(key,[...value]);try{localStorage.setItem(key,JSON.stringify(value));storageFallback.delete(key);}catch{storageFallback.add(key);}};
 export const favoriteRoutes=()=>readSaved('symmetry-lab.favorites.v1').filter(knownTool);
 export function rememberRoute(route){if(['home','compute','atlas','classroom','docs'].includes(route))return;save('symmetry-lab.recent.v1',[route,...readSaved('symmetry-lab.recent.v1').filter(x=>x!==route)].slice(0,6));}
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
@@ -102,13 +101,13 @@ function toolCard(item,favorites){return `<article class="nav-tool-card">${link(
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261110-en1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 export async function renderNavigationHub({container,view='home',databases}){
- const favorites=favoriteRoutes();
- const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find a calculation tool":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="Try: mirror symmetry, phonons, GaAs, 225" autocomplete="off"><span id="site-search-status">Enter keywords to search lessons, tools and group catalogs.</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
+ const favorites=favoriteRoutes();let computeCategory='all',onlyFavorites=false;
+ const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find a calculation tool":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?"Try: POSCAR, Clebsch-Gordan, Raman, DMI":"Try: mirror symmetry, phonons, GaAs, 225"}" autocomplete="off"><span id="site-search-status">${view==='compute'?"Filter calculation tools here; use the quick finder above for lessons and groups.":"Enter keywords to search lessons, tools and group catalogs."}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
 
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
  const body=root.querySelector('#hub-body');
- if(view==='compute')body.innerHTML=`<p class="nav-introduction">Choose a tool by task. The classroom uses these same CG, 6j and 9j calculators. Save a tool to access it directly from the overview.</p><nav class="nav-category-links" aria-label="Calculation categories">${toolGroups.map(g=>`<button type="button" data-category="${g.id}">${g.title}</button>`).join('')}</nav>${toolGroups.map(g=>`<section class="nav-tool-section" id="tools-${g.id}"><header><h2>${g.title}</h2><p>${g.summary}</p></header><div class="nav-card-grid">${toolsIndex.filter(t=>t.category===g.id).map(t=>toolCard(t,favorites)).join('')}</div></section>`).join('')}`;
+ if(view==='compute')body.innerHTML=`<p class="nav-introduction">Choose a task, then narrow the results with keywords. Tools are organized by structure input, representations, coupling, responses, models, and exact algebra. Lessons and the calculation center use the same computation cores.</p><nav class="nav-category-links" aria-label="Calculation categories"><button type="button" data-category="all" aria-pressed="true">All tools <span>${toolsIndex.length}</span></button>${toolGroups.map(g=>`<button type="button" data-category="${g.id}" aria-pressed="false">${g.title} <span>${g.tools.length}</span></button>`).join('')}</nav><div class="nav-directory-controls"><label><input type="checkbox" id="tools-only-favorites"> Favorites only</label><button type="button" class="secondary" id="tools-clear-filters">Clear filters</button><p id="tools-filter-status" role="status" aria-live="polite"></p></div><div id="tools-filtered"></div>`;
  else if(view==='atlas')body.innerHTML=`<p class="nav-introduction">Start with group operations or material structures, then open the corresponding lesson or calculation. Every entry uses the existing catalogs and 3D models.</p><div class="nav-card-grid nav-atlas-grid">${[
   ['atlas/pointgroups',"The 32 crystallographic point groups","Rotations, mirrors, inversion and characters, linked to introductory lessons."],
   ['atlas/sg',"230 space groups","Numbers, international symbols, operations and lattices, with links to representation calculations."],
@@ -139,11 +138,30 @@ export async function renderNavigationHub({container,view='home',databases}){
   const recent=readSaved('symmetry-lab.recent.v1').map(route=>{const tool=knownTool(route.split('?')[0]);return tool?{...tool,route}:{route,title:route.startsWith('classroom')?"Resume the last lesson":route.startsWith('atlas')?"Continue exploring the atlas":"Resume the last calculation",summary:"Return to where you left off",kind:"Recent"};});
   body.innerHTML=homeHTML({link,toolCard,knownTool,favorites,recent,pathways:classroomPathways,esc});
  }
- root.querySelectorAll('[data-category]').forEach(button=>button.onclick=()=>root.querySelector('#tools-'+button.dataset.category)?.scrollIntoView({behavior:'smooth',block:'start'}));
- root.querySelectorAll('[data-favorite]').forEach(button=>button.onclick=()=>{const selected=toggleFavorite(button.dataset.favorite).includes(button.dataset.favorite);button.setAttribute('aria-pressed',String(selected));button.setAttribute('aria-label',(selected?"Remove from favorites":"Add to favorites")+knownTool(button.dataset.favorite).title);button.textContent=selected?'★':'☆';});
+ function bindFavorites(){root.querySelectorAll('[data-favorite]').forEach(button=>button.onclick=()=>{
+  if(!current())return;const route=button.dataset.favorite,selected=toggleFavorite(route).includes(route);
+  if(view==='compute'){renderCompute();const replacement=[...root.querySelectorAll('[data-favorite]')].find(b=>b.dataset.favorite===route);(replacement||root.querySelector('#tools-only-favorites'))?.focus?.({preventScroll:true});}
+  else{button.setAttribute('aria-pressed',String(selected));button.setAttribute('aria-label',(selected?"Remove from favorites":"Add to favorites")+knownTool(route).title);button.textContent=selected?'★':'☆';}
+ });}
  let entries=[...toolsIndex];
  const input=root.querySelector('#site-search'),results=root.querySelector('#site-search-results'),status=root.querySelector('#site-search-status');
- const update=()=>{const query=input.value.trim();if(!query){results.innerHTML='';return;}const found=searchEntries(entries,query);results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>`)}</li>`).join('')}</ul>`:"<p class=\"nav-empty\">No matches found. Try a group number, material name or calculation name.</p>";};
+ function renderCompute(){
+  if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,query:input.value,favorites:onlyFavorites?saved:null});
+  root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
+   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved)).join('')}</div></section>`:'';
+  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match these filters. Change the category, shorten your query, or clear the filters."}</p>`;
+  root.querySelector('#tools-filter-status').textContent=`Showing ${found.length} / ${toolsIndex.length} tools`;
+  root.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===computeCategory)));
+  bindFavorites();
+ }
+ if(view==='compute'){
+  root.querySelectorAll('[data-category]').forEach(button=>button.onclick=()=>{if(!current())return;computeCategory=button.dataset.category;renderCompute();});
+  root.querySelector('#tools-only-favorites').onchange=event=>{if(!current())return;onlyFavorites=event.target.checked;renderCompute();};
+  root.querySelector('#tools-clear-filters').onclick=()=>{if(!current())return;computeCategory='all';onlyFavorites=false;input.value='';root.querySelector('#tools-only-favorites').checked=false;renderCompute();input.focus?.();};
+  input.oninput=renderCompute;renderCompute();return;
+ }
+ bindFavorites();
+ const update=()=>{if(!current())return;const query=input.value.trim();if(!query){results.innerHTML='';return;}const found=searchEntries(entries,query);results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>`)}</li>`).join('')}</ul>`:"<p class=\"nav-empty\">No matches found. Try a group number, material name or calculation name.</p>";};
  let loading=false,ready=false;
  const loadSearch=async()=>{if(loading||ready||!current())return;loading=true;status.textContent="Loading the search index; you can search tools now…";
   try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...extra];ready=true;status.textContent="Tools · Lessons · Group catalogs · Materials";update();}

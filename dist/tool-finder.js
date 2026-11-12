@@ -1,12 +1,11 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261112-paths1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261112-flow2';
+import {normalizeSearchText} from './tool-search.js?v=20261112-links1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:'计算',courses:'课程',groups:'群目录',materials:'材料'};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
-export function normalizeFinderText(value){
- return String(value??'').normalize('NFKC').toLocaleLowerCase().replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c)).replace(/[-‐‑‒–—−·()（）{}\[\],，]/g,' ').replace(/\s+/g,' ').trim();
-}
+export const normalizeFinderText=normalizeSearchText;
 export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);

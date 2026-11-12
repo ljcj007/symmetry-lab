@@ -1,12 +1,11 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261112-paths1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261112-flow2';
+import {normalizeSearchText} from './tool-search.js?v=20261112-links1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:"Calculate",courses:"Lesson",groups:"Group directory",materials:"Material"};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
-export function normalizeFinderText(value){
- return String(value??'').normalize('NFKC').toLocaleLowerCase().replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c)).replace(/[-‐‑‒–—−·()（）{}\[\],，]/g,' ').replace(/\s+/g,' ').trim();
-}
+export const normalizeFinderText=normalizeSearchText;
 export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);
@@ -42,11 +41,11 @@ export function startToolFinder({button,onNavigate}){
   results=finderResults([...preferred(),...(extra||[])],input.value,{scope});
   selected=Math.min(selected,Math.max(0,results.length-1));
   list.innerHTML=results.length?results.map((item,index)=>`<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.summary)}</small></button>`).join(''):`<p class="tool-finder-empty">${input.value.trim()?"No matches. Try a tool abbreviation, material name, or complete group number.":"Enter keywords to search this category."}</p>`;
-  if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} tools (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
+  if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} in tools (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
   else if(loading)status.textContent="Loading the compact catalogue; no calculation is started.";
   else if(failed)status.innerHTML="The catalogue is temporarily unavailable. Tools remain searchable in the Tools scope. <button type=\"button\" data-finder-retry>Retry catalogue</button>";
   else if(!extra)status.textContent="Enter keywords to load the lesson, group, and material catalogue on demand.";
-  else status.textContent=`found ${results.length} results (up to 16 shown)`;
+  else status.textContent=`found ${results.length} total (up to 16 shown)`;
   status.querySelector('[data-finder-retry]')?.addEventListener('click',()=>{failed=false;load();});
   highlight();
  }

@@ -263,7 +263,10 @@
           0
         ],
         "doubleValued": false
-      }
+      },
+      "derivationIds": [
+        "space-nacl-count"
+      ]
     },
     {
       "id": "space-02",
@@ -334,7 +337,10 @@
           "pdfPages": "187–188"
         }
       ],
-      "lab": "seitz"
+      "lab": "seitz",
+      "derivationIds": [
+        "space-si-compose"
+      ]
     },
     {
       "id": "space-03",
@@ -415,7 +421,10 @@
           0
         ],
         "doubleValued": false
-      }
+      },
+      "derivationIds": [
+        "space-si-compose"
+      ]
     },
     {
       "id": "space-04",
@@ -493,7 +502,8 @@
           0
         ],
         "doubleValued": false
-      }
+      },
+      "derivationIds": []
     },
     {
       "id": "space-05",
@@ -578,7 +588,10 @@
           0.5
         ],
         "doubleValued": false
-      }
+      },
+      "derivationIds": [
+        "space-si-compose"
+      ]
     },
     {
       "id": "space-06",
@@ -660,7 +673,10 @@
           0
         ],
         "doubleValued": false
-      }
+      },
+      "derivationIds": [
+        "space-nio-cell"
+      ]
     },
     {
       "id": "double-01",
@@ -734,7 +750,10 @@
           "chapter": "§I，SU(2) 到 SO(3) 的二重覆盖"
         }
       ],
-      "lab": "spinor"
+      "lab": "spinor",
+      "derivationIds": [
+        "double-si-interference"
+      ]
     },
     {
       "id": "double-02",
@@ -818,7 +837,10 @@
           0
         ],
         "doubleValued": true
-      }
+      },
+      "derivationIds": [
+        "double-si-c2"
+      ]
     },
     {
       "id": "double-03",
@@ -903,7 +925,11 @@
           0
         ],
         "doubleValued": true
-      }
+      },
+      "derivationIds": [
+        "double-si-c2",
+        "double-gaas-c3"
+      ]
     },
     {
       "id": "double-04",
@@ -977,7 +1003,10 @@
           "chapter": "§II，反幺正操作及动量作用"
         }
       ],
-      "lab": "spinor"
+      "lab": "spinor",
+      "derivationIds": [
+        "double-gaas-kramers"
+      ]
     },
     {
       "id": "magnetic-01",
@@ -1051,7 +1080,11 @@
           "pdfPages": "403、415–416"
         }
       ],
-      "lab": "magnetic"
+      "lab": "magnetic",
+      "derivationIds": [
+        "magnetic-iron-axial",
+        "magnetic-iron-mirror"
+      ]
     },
     {
       "id": "magnetic-02",
@@ -1130,7 +1163,11 @@
           "pdfPages": "415–416"
         }
       ],
-      "lab": "antiferro"
+      "lab": "antiferro",
+      "derivationIds": [
+        "magnetic-nio-square",
+        "magnetic-mnf2-ligands"
+      ]
     },
     {
       "id": "magnetic-03",
@@ -1209,7 +1246,8 @@
           "pdfPages": "416–419"
         }
       ],
-      "lab": "magnetic"
+      "lab": "magnetic",
+      "derivationIds": []
     },
     {
       "id": "magnetic-04",
@@ -1283,7 +1321,10 @@
           "chapter": "磁群不可约共表示及其矩阵接口"
         }
       ],
-      "lab": "magnetic"
+      "lab": "magnetic",
+      "derivationIds": [
+        "magnetic-nio-square"
+      ]
     },
     {
       "id": "magnetic-05",
@@ -1358,7 +1399,10 @@
           "pdfPages": "415–416"
         }
       ],
-      "lab": "antiferro"
+      "lab": "antiferro",
+      "derivationIds": [
+        "magnetic-nio-square"
+      ]
     },
     {
       "id": "double-05",
@@ -1432,7 +1476,10 @@
       "lab": "double_group",
       "labPreset": "d2_point",
       "difficulty": "进阶",
-      "symmetryLevel": "point"
+      "symmetryLevel": "point",
+      "derivationIds": [
+        "double-q8-commutator"
+      ]
     },
     {
       "id": "double-06",
@@ -1507,7 +1554,10 @@
       "lab": "double_group",
       "labPreset": "screw21_space",
       "difficulty": "进阶",
-      "symmetryLevel": "space"
+      "symmetryLevel": "space",
+      "derivationIds": [
+        "double-screw-boundary"
+      ]
     },
     {
       "id": "color-01",
@@ -1581,7 +1631,10 @@
       "lab": "color_group",
       "labPreset": "c3_point",
       "difficulty": "进阶",
-      "symmetryLevel": "point"
+      "symmetryLevel": "point",
+      "derivationIds": [
+        "color-c3-kernel"
+      ]
     },
     {
       "id": "color-02",
@@ -1659,7 +1712,10 @@
       "lab": "color_group",
       "labPreset": "translation3_space",
       "difficulty": "进阶",
-      "symmetryLevel": "space"
+      "symmetryLevel": "space",
+      "derivationIds": [
+        "color-space-period"
+      ]
     },
     {
       "id": "color-03",
@@ -1742,7 +1798,8 @@
       "lab": "color_group",
       "labPreset": "c3_point",
       "difficulty": "进阶",
-      "symmetryLevel": "point-and-space"
+      "symmetryLevel": "point-and-space",
+      "derivationIds": []
     },
     {
       "id": "spin-01",
@@ -1820,7 +1877,10 @@
       "lab": "spin_group",
       "labPreset": "c2_point",
       "difficulty": "进阶",
-      "symmetryLevel": "point"
+      "symmetryLevel": "point",
+      "derivationIds": [
+        "spin-point-pair"
+      ]
     },
     {
       "id": "spin-02",
@@ -1902,7 +1962,10 @@
       "lab": "spin_group",
       "labPreset": "helix3_space",
       "difficulty": "进阶",
-      "symmetryLevel": "space"
+      "symmetryLevel": "space",
+      "derivationIds": [
+        "spin-space-helix"
+      ]
     },
     {
       "id": "spin-03",
@@ -1981,7 +2044,10 @@
       "lab": "spin_group",
       "labPreset": "triangular_point",
       "difficulty": "进阶",
-      "symmetryLevel": "point-and-space"
+      "symmetryLevel": "point-and-space",
+      "derivationIds": [
+        "spin-only-rank"
+      ]
     },
     {
       "id": "spin-04",
@@ -2059,7 +2125,10 @@
       "lab": "spin_group",
       "labPreset": "af_space",
       "difficulty": "进阶",
-      "symmetryLevel": "point-and-space"
+      "symmetryLevel": "point-and-space",
+      "derivationIds": [
+        "spin-soc-lock"
+      ]
     }
   ]
 }

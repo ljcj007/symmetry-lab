@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {Element,Container} from './test-material-research-ui.mjs';
+import {toolGroups,toolsIndex,renderNavigationHub,favoriteRoutes,toggleFavorite} from '../dist/navigation-ui.js';
+import {filterToolDirectory,orderToolGroups} from '../dist/tool-directory.js';
+import {searchEntries} from '../dist/tool-search.js';
+
+assert.equal(toolsIndex.length,67);
+assert.equal(new Set(toolsIndex.map(item=>item.route)).size,67);
+assert.equal(orderToolGroups([...toolGroups,{id:'extension',title:'extension',tools:[['compute/future','future','future','future']]}]).at(-1).tools[0][0],'compute/future','Adding a category must not silently discard its tools');
+assert.deepEqual(toolGroups.map(group=>group.id),['structure','representation','coupling','observables','models','algebra']);
+for(const [category,first]of [['structure','structure'],['representation','workbench'],['observables','compute/phonons'],['models','magnetictb']])assert.equal(toolGroups.find(group=>group.id===category).tools[0][0],first);
+assert.equal(toolsIndex.find(item=>item.route==='compute/statistics-lab').category,'representation');
+assert.equal(toolsIndex.find(item=>item.route==='compute/topological-defects-lab').category,'structure');
+assert.equal(searchEntries(toolsIndex,'Clebsch–Gordan')[0].route,'compute/lie/su3_cg');
+assert.ok(searchEntries(toolsIndex,'SU₃ 27').length);
+assert.equal(filterToolDirectory(toolsIndex,{category:'coupling',query:'Clebsch-Gordan'})[0].route,'compute/lie/su3_cg');
+assert.deepEqual(filterToolDirectory(toolsIndex,{favorites:[]}),[]);
+assert.deepEqual(filterToolDirectory(toolsIndex,{category:'missing'}),[]);
+
+const stored=new Map();globalThis.localStorage={getItem:key=>stored.get(key)||null,setItem:(key,value)=>stored.set(key,value)};
+let catalogRequests=0;globalThis.fetch=async()=>{catalogRequests++;throw Error('Directory filtering must use the local tool inventory');};
+globalThis.document={activeElement:null};Element.prototype.focus=function(){document.activeElement=this;};
+const container=new Container();await renderNavigationHub({container,view:'compute'});
+const $=selector=>container.querySelector(selector),cards=()=>container.querySelectorAll('[data-favorite]');
+assert.equal(cards().length,67);assert.equal(cards()[0].dataset.favorite,'structure');
+$('[data-category="coupling"]').onclick();assert.equal(cards().length,6);assert.equal($('[data-category="coupling"]').getAttribute('aria-pressed'),'true');
+$('#site-search').value='Clebsch–Gordan';$('#site-search').oninput();assert.equal(cards().length,1);assert.match($('#tools-filter-status').textContent,/1 \/ 67/);
+$('#tools-only-favorites').checked=true;$('#tools-only-favorites').onchange({target:$('#tools-only-favorites')});assert.equal(cards().length,0);assert.match($('#tools-filtered').innerHTML,/还没有收藏/);
+$('#tools-only-favorites').checked=false;$('#tools-only-favorites').onchange({target:$('#tools-only-favorites')});cards()[0].onclick();assert.deepEqual(favoriteRoutes(),['compute/lie/su3_cg']);
+$('#tools-only-favorites').checked=true;$('#tools-only-favorites').onchange({target:$('#tools-only-favorites')});assert.equal(cards().length,1);cards()[0].onclick();assert.equal(cards().length,0);assert.equal(document.activeElement,$('#tools-only-favorites'));
+$('#tools-clear-filters').onclick();assert.equal(cards().length,67);assert.equal($('#site-search').value,'');assert.equal($('#tools-only-favorites').checked,false);assert.equal($('[data-category="all"]').getAttribute('aria-pressed'),'true');
+$('#site-search').value='<img src=x>';$('#site-search').oninput();assert.equal(cards().length,0);assert.doesNotMatch($('#tools-filtered').innerHTML,/<img/);
+const oldClick=$('[data-category="coupling"]').onclick;container.innerHTML='<p>Different page</p>';oldClick();assert.equal(container.innerHTML,'<p>Different page</p>');
+assert.equal(catalogRequests,0,'Tool filtering does not fetch course/group catalogs or start Python');
+globalThis.localStorage={getItem(){throw Error('blocked');},setItem(){throw Error('blocked');}};
+toggleFavorite('workbench');assert.deepEqual(favoriteRoutes(),['workbench'],'Favorites retain a session fallback when browser storage is unavailable');
+console.log('Tool directory: all 67 tools retained, task ordering, composed category/query/favorite filters, normalized terms, counts, clear, focus, safe output, detached controls and storage fallback passed.');

@@ -13,9 +13,9 @@ const courseDefinitions={
 ,'pathways':{load:()=>import('./pathways-ui.js?v=20261110-en1'),render:'renderPathwaysView',result:'getPathwaysResult'}
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261110-en1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261110-en1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
-,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261111-demos1'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261110-en1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
-,'lie':{load:()=>import('./lie-group-ui.js?v=20261110-en1'),render:'renderLieGroupView',result:'getLieGroupResult'}
+,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261112-flow2'),render:'renderPointgroupView',result:'getPointgroupResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261112-flow2'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'lie':{load:()=>import('./lie-group-ui.js?v=20261112-flow2'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261110-en1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261110-en1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261110-en1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
@@ -98,6 +98,7 @@ const specialistModules={
 const specialist=id=>Object.hasOwn(specialistModules,id)?specialistModules[id]:null;
 const specialistTools=Object.fromEntries(Object.entries(specialistModules).map(([module,item])=>['compute/'+item.route,{module,...item}]));
 const defaultsFor=id=>{const p=classroomPathways.find(p=>p.id===id);return p?{section:p.section,pathway:p.id,...(p.track?{track:p.track}:{})}:null;};
+const liePathway=(track,fallback)=>track==='continuous'?'continuous':['representations','cg','racah','ninej','coupling'].includes(track)?'coupling':fallback;
 export const isClassroomView=view=>classroomSections.some(section=>section.id===view);
 export function parseClassroomRoute(route){
   if(typeof route!=='string')return null;
@@ -131,6 +132,7 @@ export function parseClassroomRoute(route){
   for(const field of queryFields){const value=params.get(field);if(value!==null&&value.length<=160)result[field]=value;}
   if(result.calculationOnly&&!tool)delete result.module;
   if(specialist(result.module)){result.section=specialist(result.module).section;result.pathway=specialist(result.module).pathway;}
+  if(result.section==='lie'&&!result.calculationOnly)result.pathway=liePathway(result.track,result.pathway);
   if(result.calculationOnly)result.tab='lab';
   if(tool)result={...result,section:tool.section,module:tool.module,pathway:tool.pathway,tab:'lab',calculationOnly:true};
   else if(['compute/phase','compute/diffraction','compute/phonopy','compute/phonons','compute/tensors'].includes(path))result.experiment=path.slice(8);
@@ -174,7 +176,15 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   root.querySelectorAll('[data-course-route]').forEach(link=>link.onclick=event=>{event?.preventDefault();move(link.dataset.courseRoute);});
   onLocation(overview?'学习中心':selection.calculationOnly?'计算中心 / 张量积与重耦合':'学习中心 / '+(pathway?.title||'课程'));
   if(overview)return;
-  const update=patch=>{if(!current())return;selection={...selection,...patch};if(specialist(patch.module)){selection.section=specialist(patch.module).section;selection.pathway=specialist(patch.module).pathway;}if(patch.tab&&patch.tab!=='derive')delete selection.exercise;if(patch.tab&&patch.tab!=='materials'&&!['frontiers','connections','construction','principles','bridges','pathways','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(section))delete selection.material;move(buildClassroomHash(selection),{render:false});};
+  const update=patch=>{
+    if(!current())return;const previousPathway=selection.pathway;selection={...selection,...patch};
+    if(specialist(patch.module)){selection.section=specialist(patch.module).section;selection.pathway=specialist(patch.module).pathway;}
+    if(selection.section==='lie'&&!selection.calculationOnly)selection.pathway=liePathway(selection.track,selection.pathway);
+    if(patch.tab&&patch.tab!=='derive')delete selection.exercise;
+    if(patch.tab&&patch.tab!=='materials'&&!['frontiers','connections','construction','principles','bridges','pathways','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(section))delete selection.material;
+    // A new learning pathway needs a new sidebar; local tabs keep their state.
+    move(buildClassroomHash(selection),{render:selection.pathway!==previousPathway});
+  };
   return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,cancelRun,toast,download,selection,onNavigate:update,onLocation,
     openGroup:spec=>openGroup?.(typeof spec==='number'?{mode:'sg',id:spec,k:[0,0,0],doubleValued:false}:spec)});
 }
