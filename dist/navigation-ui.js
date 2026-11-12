@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261112-flow2';
+import {classroomPathways} from './classroom-ui.js?v=20261112-basics3';
 import {searchEntries} from './tool-search.js?v=20261112-links1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-links1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-basics3';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -39,6 +39,12 @@ export const toolGroups=[
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[
+  ['compute/lie/su2','SU(2) · 旋量与 Bloch 球','旋转二分量态，比较矩阵、Bloch 向量、测量概率和整体相位。','SU2 Pauli Bloch 旋量 自旋 球 概率'],
+  ['compute/lie/su3','SU(3) · 三分量态与权图','比较基本态与复叠加态的概率、Cartan 平均和相干信息。','SU3 Gell Mann Cartan 权 根 叠加 相干'],
+  ['compute/lie/commutator','生成元 · 对易子','计算 Pauli 与 Gell-Mann 生成元的对易子和展开系数。','commutator Pauli Gell Mann 生成元 对易子 李代数'],
+  ['compute/lie/u1','U(1) · 离散与连续对称','比较单位圆上的 C₄ 与连续相位，以及整数与连续平移。','U1 U(1) C4 连续 离散 圆 平移'],
+  ['compute/lie/representations','同一群的不同表示 · 旋量与向量','让同一个 SU(2) 元素作用于二分量态和三维向量，比较中心元与忠实性。','SU2 SO3 表示 维数 旋量 向量 中心 双覆盖 faithful'],
+  ['compute/lie/interferometer','SU(2) · 双路径干涉与相对相位','比较单支旋转和双支相同旋转，计算合束端口概率并跟踪自旋态。','SU2 2pi 4pi 2π 4π 干涉 相位 spinor interferometer'],
   ['compute/group-theorems','群论定理 · 证明与应用','重排、共轭与类、正规子群、不可约性、Schur、幺正性、正交、约化与简并。','rearrangement conjugacy normal Schur orthogonality 重排 共轭 正规 正交 幺正 约化 简并'],
   ['compute/symmetry-mini-demos','几何、能带与自旋微实验','正多面体、简并振动、Kramers、置换态、双群与自旋轨道耦合。','polyhedra 正多面体 能带 简并 置换 自旋 SOC 双群'],
   ['compute/foundations-demos','基础教学演示 · 水分子与表示','特征标、D3 投影与基函数、能级劈裂、IR/Raman、Jahn–Teller、宏观对称性。','water H2O 水分子 特征标 选择定则 D3 投影 基函数 Raman Jahn Teller'],
@@ -56,6 +62,7 @@ export const toolGroups=[
   ['compute/lie/su3_ninej','SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
+  ['compute/lie/rabi','SU(2) · 两能级 Rabi 振荡','用驱动与失谐比较两能级演化、跃迁概率和共振条件。','SU2 Rabi 两能级 驱动 失谐 共振 动力学'],
   ['compute/salc-lab','对称适应基 · 选择定则与矩阵判分','投影回放、SALC 分块、偏振矩阵元和等价子空间。','SALC Wigner Eckart 投影算符 选择定则'],
   ['compute/nonsymmorphic-lab','螺旋与滑移 · 动量相关简并','Bloch 相位、伙伴配对、沙漏连接与受控破缺。','nonsymmorphic hourglass 螺旋 滑移 沙漏'],
   ['compute/exchange-symmetry-lab','键对称性 · 磁交换与 DMI','轴向量、端点交换约束、交换张量分解与自旋倾斜。','Moriya DMI 反对称交换'],

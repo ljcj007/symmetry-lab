@@ -3,8 +3,6 @@ from pathlib import Path
 import json
 import runpy
 import unittest
-import numpy as np
-import spglib
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -37,6 +35,8 @@ class MaterialsCourseTests(unittest.TestCase):
                 self.assertEqual(len({o['id'] for o in m['model']['operations']}), len(m['model']['operations']))
 
     def test_parent_space_groups_with_independent_spglib(self):
+        import numpy as np
+        import spglib
         # Teaching cells may be conventional or magnetic supercells. Discarding
         # the model moments must recover the stated chemical parent group.
         for m in self.materials['materials']:
@@ -53,17 +53,24 @@ class MaterialsCourseTests(unittest.TestCase):
     def test_guided_derivations_are_complete_and_have_unambiguous_checks(self):
         exercises = self.derivations['exercises']
         materials = {m['id'] for m in self.materials['materials']}
-        self.assertEqual(len(exercises), 20)
+        self.assertEqual(len(exercises), 22)
         self.assertEqual(len({e['id'] for e in exercises}), len(exercises))
         self.assertEqual({e['track'] for e in exercises}, {'space', 'double', 'magnetic', 'color', 'spin'})
         sources={s['id'] for s in self.materials['sources']}|{s['id'] for s in self.course['sources']}
         lab_presets={'double_group':{'c2_point','d2_point','screw21_space'},
                      'color_group':{'c3_point','translation3_space'},
                      'spin_group':{'c2_point','af_space','triangular_point','helix3_space'}}
+        # These conceptual examples intentionally have no corresponding lab.
+        # Keep the original exercises' strict material/preset checks intact.
+        conceptual={'space-pminus1-orbit-stabilizer','color-swap-antilinear-time-reversal'}
         for e in exercises:
             with self.subTest(exercise=e['id']):
                 if 'materialId' in e:
                     self.assertIn(e['materialId'], materials)
+                elif e['id'] in conceptual:
+                    self.assertTrue(e['modelLabel'])
+                    self.assertNotIn('lab', e)
+                    self.assertNotIn('labPreset', e)
                 else:
                     self.assertTrue(e['modelLabel'])
                     self.assertIn(e['labPreset'], lab_presets[e['lab']])
@@ -93,7 +100,10 @@ class MaterialsCourseTests(unittest.TestCase):
         self.assertEqual(mapping['double-04'], ['double-gaas-kramers'])
         self.assertEqual(mapping['magnetic-05'], ['magnetic-nio-square'])
         self.assertEqual(mapping['spin-04'], ['spin-soc-lock'])
-        self.assertEqual(mapping['space-04'], [])
+        self.assertEqual(mapping['space-04'], ['space-pminus1-orbit-stabilizer'])
+        self.assertEqual(mapping['color-03'], ['color-swap-antilinear-time-reversal'])
+        self.assertEqual(mapping['magnetic-03'], [])
+        self.assertEqual(sum(bool(ids) for ids in mapping.values()), 23)
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ const commutator={lab:'lie',experiment:'commutator',group:'su3',title:'Commutato
 globalThis.localStorage={getItem:()=>'{bad',setItem:()=>{}};
 const pendingFetch=[];globalThis.fetch=url=>new Promise(resolve=>pendingFetch.push({url,resolve}));
 const race=await import('../dist/lie-group-ui.js?race');assert.equal(race.getLieGroupResult(),null);
-const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261110-en1/);
+const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261112-foundations2/);
 const detachedRoot=detached.firstElementChild,loadingHTML=detachedRoot.innerHTML;detached.isConnected=false;assert.equal(detachedRoot.parentNode,detached,'Hub detaches the whole container, not its root');pendingFetch[0].resolve(response());await loading;
 assert.equal(detachedRoot.innerHTML,loadingHTML,'Detached course containers must not render a late loader result');
 
@@ -153,7 +153,7 @@ await cgDelayed.renderLieGroupView({container:cgDelayedPage,run:()=>new Promise(
 
 const racahModule=await import('../dist/lie-group-ui.js?racah-recoupling'),racahPage=new Container(),racahCalls=[],racahDownloads=[];let racahReply=racahData.three;
 await racahModule.renderLieGroupView({container:racahPage,run:async(api,payload)=>{racahCalls.push({api,payload});return racahReply;},download:(data,name)=>racahDownloads.push({data:JSON.parse(data),name})});
-$(racahPage,'#lg-tab-lab').onclick();assert.equal(racahPage.firstElementChild.querySelectorAll('[data-lg-experiment]').length,9,'The ninth lab preserves all eight existing experiments');experiment(racahPage,'su3_racah');await submit(racahPage);
+$(racahPage,'#lg-tab-lab').onclick();assert.equal(racahPage.firstElementChild.querySelectorAll('[data-lg-experiment]').length,12,'Three foundational labs preserve all nine existing experiments');experiment(racahPage,'su3_racah');await submit(racahPage);
 assert.deepEqual(racahCalls[0],{api:'teaching_labs',payload:{lab:'lie',experiment:'su3_racah',factors:[[1,0],[1,0],[1,0]],target:[1,1],direction:'left_to_right',state:{index:0}}});
 assert.equal($(racahPage,'#lg-racah-factor1').querySelectorAll('option').length,6);assert.equal($(racahPage,'#lg-racah-target').querySelectorAll('option').length,3,'Python supplies the three actual final irreps of 3 cubed');assert.equal($(racahPage,'#lg-racah-index').max,'1','Index bounds use the selected final representation multiplicity');
 assert.match($(racahPage,'#lg-lab-output').innerHTML,/精确符号重耦合 · 2 × 2|sqrt\(3\)\/2|归一化通道概率/);assert.ok($(racahPage,'#lg-racah-tree-panel').querySelector('svg'));$(racahPage,'#lg-racah-matrix-view').onchange();assert.match($(racahPage,'#lg-racah-matrix-panel').innerHTML,/F\[R0, L0\] = <code>1\/2/);
@@ -300,7 +300,7 @@ for(const [lesson,exercise]of [
  assert.equal(linkedRoutes.at(-1).lesson,lesson,lesson);
  assert.equal(linkedRoutes.at(-1).track,'coupling','The aggregate coupling track stays intact for lessons it contains');
 }
-await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'continuous',track:'continuous',lesson:'continuous-symmetry'},onNavigate:patch=>linkedRoutes.push(patch)});
+await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'coupling',track:'racah',lesson:'su3-racah-coupling-paths'},onNavigate:patch=>linkedRoutes.push(patch)});
 await $(linkedPage,'#lg-chapter-derive').onclick();
 assert.equal($(linkedPage,'#lg-derivation-select').value,'','An unmatched lesson opens an unselected exercise bank');
 assert.equal(linkedUI.getLieGroupResult().derivations.selected,undefined,'The previous 27-input exercise is not retained as related');

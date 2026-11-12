@@ -126,16 +126,24 @@ def _rotation(payload, group):
     if group == 'su2':
         axis = _choice(payload.get('axis', 'z'), ('x', 'y', 'z'), 'axis')
         generator = ('x', 'y', 'z').index(axis) + 1
-        initial = _choice(payload.get('state', 'up'), ('up', 'plus'), 'state')
-        state = [1, 0] if initial == 'up' else [1 / math.sqrt(2)] * 2
-        state_label = '|↑⟩ = (1,0)ᵀ' if initial == 'up' else '|+⟩ = (1,1)ᵀ/√2'
+        initial = _choice(payload.get('state', 'up'), ('up', 'plus', 'plus_i'), 'state')
+        state = {'up': [1, 0], 'plus': [1 / math.sqrt(2)] * 2,
+                 'plus_i': [1 / math.sqrt(2), 1j / math.sqrt(2)]}[initial]
+        state_label = {'up': '|↑⟩ = (1,0)ᵀ', 'plus': '|+⟩ = (1,1)ᵀ/√2',
+                       'plus_i': '|+y⟩ = (1,i)ᵀ/√2'}[initial]
         base = _PAULI[generator - 1]
         label = 'T' + str(generator) + '=σ' + axis + '/2'
     else:
         generator = _index(payload.get('generator', 1), 8, 'generator')
-        initial = _index(payload.get('state', 1), 3, 'state')
-        state = [int(i == initial - 1) for i in range(3)]
-        state_label = '|e' + str(initial) + '⟩'
+        initial = payload.get('state', 1)
+        if isinstance(initial, str):
+            initial = _choice(initial, ('plus12', 'plus_i12'), 'state')
+            state = [1 / math.sqrt(2), (1 if initial == 'plus12' else 1j) / math.sqrt(2), 0]
+            state_label = '(e₁+e₂)/√2' if initial == 'plus12' else '(e₁+i e₂)/√2'
+        else:
+            initial = _index(initial, 3, 'state')
+            state = [int(i == initial - 1) for i in range(3)]
+            state_label = '|e' + str(initial) + '⟩'
         base = _GELLMANN[generator - 1]
         label = 'T' + str(generator) + '=λ' + str(generator) + '/2'
 
@@ -196,7 +204,14 @@ def _rotation(payload, group):
                                    for i, weight in enumerate(weights)]
         result['cartanExpectation'] = [_clean(sum(p * weight[k] for p, weight in zip(probabilities, weights)))
                                        for k in range(2)]
+        result['generatorExpectations'] = [_clean(sum(complex(transformed[i]).conjugate() * t[i][j] * transformed[j]
+                                                      for i in range(3) for j in range(3)).real)
+                                           for t in _basis('su3')]
+        result['initialGeneratorExpectations'] = [_clean(sum(complex(state[i]).conjugate() * t[i][j] * state[j]
+                                                             for i in range(3) for j in range(3)).real)
+                                                  for t in _basis('su3')]
         result['notes'].append('三个权重点是基本表示中共同本征态的 (T₃,T₈) 本征值；一般叠加态的期望点不是新增权。SU(3) 参数不普遍具有空间转角的意义。')
+        result['notes'].append('Cartan 平均值和分量概率不能确定相对相位；同时比较复振幅与 T₁、T₂ 期望。')
     return result
 
 
@@ -240,6 +255,94 @@ def _commutator(payload):
     return result
 
 
+def _number(value, name, bound=8):
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or abs(value) > bound or not math.isfinite(value):
+        raise ValueError(name + ' 必须为范围内的有限数值')
+    return float(value)
+
+
+def _u1(payload):
+    angle = _angle(payload.get('angle', 0))
+    order = _index(payload.get('order', 4), 24, 'order')
+    translation = _number(payload.get('translation', 0.001), 'translation')
+    points = [[_clean(math.cos(2 * math.pi * j / order)), _clean(math.sin(2 * math.pi * j / order))] for j in range(order)]
+    z = cmath.exp(1j * angle)
+    distance = min(abs(z - complex(x, y)) for x, y in points)
+    return {
+        'lab': 'lie', 'experiment': 'u1', 'group': 'u1',
+        'title': 'U(1)、有限循环群与平移', 'angle': angle, 'order': order,
+        'realDimension': 1, 'representationDimension': 1, 'subgroupOrder': order,
+        'circlePoints': points, 'selectedPoint': [_clean(z.real), _clean(z.imag)],
+        'element': _complex(z), 'inFiniteSubgroup': distance < 1e-10,
+        'translation': translation, 'inIntegerTranslations': abs(translation - round(translation)) < 1e-12,
+        'integerTranslationSample': list(range(-3, 4)),
+        'generatorConvention': 'z(φ)=exp(+iφ)；相位角 φ 逆时针为正，圆上比较 Cₙ⊂U(1)，平移步长以晶格单位 a=1 表示。',
+        'residuals': {'unitModulus': abs(abs(z) - 1), 'subgroupClosure': max(abs(complex(*points[j]) * complex(*points[1 % order]) - complex(*points[(j+1) % order])) for j in range(order))},
+        'notes': ['有限 Cₙ 只有 n 个元素；U(1) 在任意小角度附近仍有元素，局部实维数为 1。',
+                  '整数平移群有无限多个元素，却不是连续群；实数平移允许任意足够小的平移。',
+                  '有限点集和有限坐标窗口只是显示范围，不把它们当作整个连续群。',
+                  '有限子群成员用复平面距离小于 10⁻¹⁰ 核对；精确条件是 φ=2πm/n（模 2π）。整数平移以距整数小于 10⁻¹² 核对。'],
+        'sources': [_SOURCE],
+    }
+
+
+def _decoded(matrix):
+    return [[complex(value['re'], value['im']) for value in row] for row in matrix]
+
+
+def _representations(payload):
+    rotation = _rotation({'axis': payload.get('axis', 'z'), 'angle': payload.get('angle', 0), 'state': 'up'}, 'su2')
+    u = _decoded(rotation['matrix'])
+    adjoint = _adjoint(u)
+    r = [[_trace(_mm(_PAULI[i], _mm(_mm(u, _PAULI[j]), adjoint))).real / 2 for j in range(3)] for i in range(3)]
+    r = [[_clean(value) for value in row] for row in r]
+    return {
+        'lab': 'lie', 'experiment': 'representations', 'group': 'su2',
+        'title': '同一 SU(2) 元素的旋量与向量表示', 'angle': rotation['angle'], 'axis': rotation['axis'],
+        'spinorMatrix': rotation['matrix'], 'vectorMatrix': [[_clean(value) for value in row] for row in r],
+        'spinorCharacter': _complex(_trace(u)), 'vectorCharacter': _clean(_trace(r)),
+        'spinorDimension': 2, 'vectorDimension': 3, 'groupRealDimension': 3,
+        'vectorImageOfZ': [_clean(r[i][2]) for i in range(3)],
+        'sameVectorAsIdentity': _max_abs(_subtract(r, _identity(3))) < 1e-10,
+        'spinorIsNegativeIdentity': _max_abs([[u[i][j] + int(i == j) for j in range(2)] for i in range(2)]) < 1e-10,
+        'generatorConvention': '固定同一 U∈SU(2)，由 UσⱼU†=∑ᵢRᵢⱼσᵢ 构造 j=1 向量表示；列向量主动变换。',
+        'residuals': {'spinorUnitarity': rotation['residuals']['unitarity'], 'vectorOrthogonality': _max_abs(_subtract(_mm(_adjoint(r), r), _identity(3))), 'vectorDeterminant': abs(_determinant(r)-1)},
+        'notes': ['θ=2π 时基本表示是 −I₂，三维向量表示是 I₃；这是同一群元素作用在不同空间。',
+                  '三维向量表示的核为 {I₂,−I₂}；它不是 SU(3) 基本表示，也不是忠实的 SU(2) 表示。',
+                  '群的实维数、表示空间维数、特征标是三个不同量；有限个角度的计算用于核对实例。'],
+        'sources': [_SOURCE],
+    }
+
+
+def _interferometer(payload):
+    branches = _choice(payload.get('branches', 'single'), ('single', 'both'), 'branches')
+    phase = _angle(payload.get('phase', 0))
+    rotation = _rotation({'axis': payload.get('axis', 'z'), 'angle': payload.get('angle', 0), 'state': payload.get('state', 'up')}, 'su2')
+    initial = [complex(value['re'], value['im']) for value in rotation['initialState']]
+    rotated = [complex(value['re'], value['im']) for value in rotation['state']]
+    left = rotated if branches == 'both' else initial
+    right = rotated
+    right = [cmath.exp(1j * phase) * value for value in right]
+    plus = [(a+b)/2 for a, b in zip(left, right)]
+    minus = [(a-b)/2 for a, b in zip(left, right)]
+    probabilities = [sum(abs(value)**2 for value in port) for port in (plus, minus)]
+    coherence = sum(a.conjugate()*b for a, b in zip(left, right))
+    return {
+        'lab': 'lie', 'experiment': 'interferometer', 'group': 'su2',
+        'title': '双路径干涉：整体相位与相对相位', 'angle': rotation['angle'], 'axis': rotation['axis'], 'phase': phase, 'branches': branches,
+        'matrix': rotation['matrix'], 'initialState': rotation['initialState'],
+        'pathState': [_complex(value/math.sqrt(2)) for value in left+right],
+        'portStates': [[_complex(value) for value in port] for port in (plus, minus)],
+        'portProbabilities': [_clean(value) for value in probabilities], 'pathCoherence': _complex(coherence),
+        'generatorConvention': '先均匀分束，再在第二支或双支施加 U=exp(−iθσ/2)，最后用 H=(1/√2)[[1,1],[1,−1]] 合束；路径⊗自旋共四维。',
+        'residuals': {'probability': abs(sum(probabilities)-1), 'portFormula': abs(probabilities[0]-(1+coherence.real)/2), 'unitarity': rotation['residuals']['unitarity']},
+        'notes': ['单支施加 2π 自旋旋转会产生可比较的相对负号，交换明暗端口；双支同乘 −1 仅为整体相位。',
+                  'Bloch 向量忽略整体相位，不能单凭 Bloch 球复原判断两路径干涉；这里直接保留复振幅。',
+                  '端口自旋振幅未作条件归一化，其范数平方就是对应端口总概率；零概率端口不定义条件自旋态。'],
+        'sources': [_SOURCE],
+    }
+
+
 def run(payload):
     """Validate a small flat JSON object and return JSON-safe teaching data."""
     if not isinstance(payload, dict):
@@ -261,12 +364,21 @@ def run(payload):
     if payload.get('experiment') in ('rabi', 'su2_coupling', 'su3_tensor'):
         from lie_applications import run as application_run
         return application_run(payload)
-    experiment = _choice(payload.get('experiment', 'su2'), ('su2', 'su3', 'commutator'), 'experiment')
+    experiment = _choice(payload.get('experiment', 'su2'), ('su2', 'su3', 'commutator', 'u1', 'representations', 'interferometer'), 'experiment')
     allowed = {'lab', 'experiment'} | {
         'su2': {'axis', 'angle', 'state'},
         'su3': {'generator', 'angle', 'state'},
         'commutator': {'group', 'a', 'b'},
+        'u1': {'order', 'angle', 'translation'},
+        'representations': {'axis', 'angle'},
+        'interferometer': {'axis', 'angle', 'state', 'branches', 'phase'},
     }[experiment]
     if any(key not in allowed for key in payload):
         raise ValueError('输入包含该实验不支持的字段')
+    if experiment == 'u1':
+        return _u1(payload)
+    if experiment == 'representations':
+        return _representations(payload)
+    if experiment == 'interferometer':
+        return _interferometer(payload)
     return _commutator(payload) if experiment == 'commutator' else _rotation(payload, experiment)

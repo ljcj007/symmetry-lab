@@ -7181,6 +7181,48 @@
     ]
   },
   {
+    "source": "U(1)、有限循环群与平移",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/title"
+    ]
+  },
+  {
+    "source": "z(φ)=exp(+iφ)；相位角 φ 逆时针为正，圆上比较 Cₙ⊂U(1)，平移步长以晶格单位 a=1 表示。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/generatorConvention"
+    ]
+  },
+  {
+    "source": "同一 SU(2) 元素的旋量与向量表示",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/representations/result/title"
+    ]
+  },
+  {
+    "source": "固定同一 U∈SU(2)，由 UσⱼU†=∑ᵢRᵢⱼσᵢ 构造 j=1 向量表示；列向量主动变换。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/representations/result/generatorConvention"
+    ]
+  },
+  {
+    "source": "双路径干涉：整体相位与相对相位",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/interferometer/result/title"
+    ]
+  },
+  {
+    "source": "先均匀分束，再在第二支或双支施加 U=exp(−iθσ/2)，最后用 H=(1/√2)[[1,1],[1,−1]] 合束；路径⊗自旋共四维。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/interferometer/result/generatorConvention"
+    ]
+  },
+  {
     "source": "ZXQD0DQXZ 必须为 1 到 ZXQD1DQXZ 的整数",
     "origins": [
       "python-template/lie_labs.py"
@@ -7201,31 +7243,118 @@
   {
     "source": "此单参矩阵的最小正周期为 4π；2π 时 U=−I₂，Bloch 向量已复原而旋量反号。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/su2/result/periodExplanation"
     ]
   },
   {
     "source": "T₁…T₇ 的本征值为 1/2、−1/2、0，此单参矩阵的最小正周期为 4π；2π 一般不是 SU(3) 的中心元。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/periodExplanation"
     ]
   },
   {
     "source": "Bloch 向量按所选轴右手主动旋转；2π 后 Bloch 向量相同，但 U 与 −U 是不同的 SU(2) 元素。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/su2/result/notes/3"
     ]
   },
   {
     "source": "三个权重点是基本表示中共同本征态的 (T₃,T₈) 本征值；一般叠加态的期望点不是新增权。SU(3) 参数不普遍具有空间转角的意义。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/notes/3"
+    ]
+  },
+  {
+    "source": "Cartan 平均值和分量概率不能确定相对相位；同时比较复振幅与 T₁、T₂ 期望。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/notes/4"
     ]
   },
   {
     "source": "ZXQD0DQXZ 生成元对易子",
     "origins": [
       "python-template/lie_labs.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 必须为范围内的有限数值",
+    "origins": [
+      "python-template/lie_labs.py"
+    ]
+  },
+  {
+    "source": "有限 Cₙ 只有 n 个元素；U(1) 在任意小角度附近仍有元素，局部实维数为 1。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/notes/0"
+    ]
+  },
+  {
+    "source": "整数平移群有无限多个元素，却不是连续群；实数平移允许任意足够小的平移。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/notes/1"
+    ]
+  },
+  {
+    "source": "有限点集和有限坐标窗口只是显示范围，不把它们当作整个连续群。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/notes/2"
+    ]
+  },
+  {
+    "source": "有限子群成员用复平面距离小于 10⁻¹⁰ 核对；精确条件是 φ=2πm/n（模 2π）。整数平移以距整数小于 10⁻¹² 核对。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/u1/result/notes/3"
+    ]
+  },
+  {
+    "source": "θ=2π 时基本表示是 −I₂，三维向量表示是 I₃；这是同一群元素作用在不同空间。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/representations/result/notes/0"
+    ]
+  },
+  {
+    "source": "三维向量表示的核为 {I₂,−I₂}；它不是 SU(3) 基本表示，也不是忠实的 SU(2) 表示。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/representations/result/notes/1"
+    ]
+  },
+  {
+    "source": "群的实维数、表示空间维数、特征标是三个不同量；有限个角度的计算用于核对实例。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/representations/result/notes/2"
+    ]
+  },
+  {
+    "source": "单支施加 2π 自旋旋转会产生可比较的相对负号，交换明暗端口；双支同乘 −1 仅为整体相位。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/interferometer/result/notes/0"
+    ]
+  },
+  {
+    "source": "Bloch 向量忽略整体相位，不能单凭 Bloch 球复原判断两路径干涉；这里直接保留复振幅。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/interferometer/result/notes/1"
+    ]
+  },
+  {
+    "source": "端口自旋振幅未作条件归一化，其范数平方就是对应端口总概率；零概率端口不定义条件自旋态。",
+    "origins": [
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/interferometer/result/notes/2"
     ]
   },
   {
@@ -7267,31 +7396,39 @@
   {
     "source": "SU(2) 旋量与 Bloch 向量",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/su2/result/title"
     ]
   },
   {
     "source": "SU(3) 基本表示与三态变换",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/title"
     ]
   },
   {
     "source": "使用基本表示和选定的单个生成元；不把一个滑块当作整个多参数李群。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/notes/0",
+      "python-fixture/lie-foundations-ui.json/su2/result/notes/0"
     ]
   },
   {
     "source": "列向量按 |ψ′⟩=U|ψ⟩ 变换；概率为各复振幅的模平方。整体相位不改变此基下的概率。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/notes/1",
+      "python-fixture/lie-foundations-ui.json/su2/result/notes/1"
     ]
   },
   {
     "source": "数值残差由未清零的内部复数计算；矩阵显示中小于 10⁻¹⁴ 的实部或虚部显示为 0。",
     "origins": [
-      "python/lie_labs.py"
+      "python/lie_labs.py",
+      "python-fixture/lie-foundations-ui.json/superposition/result/notes/2",
+      "python-fixture/lie-foundations-ui.json/su2/result/notes/2"
     ]
   },
   {
@@ -7320,6 +7457,12 @@
   },
   {
     "source": "本实验检查选定生成元的李代数闭合关系；并非任意有限转动交换子的数值模拟。",
+    "origins": [
+      "python/lie_labs.py"
+    ]
+  },
+  {
+    "source": " 必须为范围内的有限数值",
     "origins": [
       "python/lie_labs.py"
     ]
@@ -22312,6 +22455,18 @@
     "source": "基态投影作用于计算基矢 #195；简并度 1 时此纯态不是唯一的边界态。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-size/replay/2/text"
+    ]
+  },
+  {
+    "source": "采用标准 Gell-Mann 厄米生成元 Tₐ=λₐ/2，tr(TₐTᵦ)=δₐᵦ/2。U(θ)=exp(−iθT)；θ 为弧度；数学上 su(n) 的反厄米生成元为 −iT。",
+    "origins": [
+      "python-fixture/lie-foundations-ui.json/superposition/result/generatorConvention"
+    ]
+  },
+  {
+    "source": "采用厄米生成元 Tₐ=σₐ/2，tr(TₐTᵦ)=δₐᵦ/2。U(θ)=exp(−iθT)；θ 为弧度；数学上 su(n) 的反厄米生成元为 −iT。",
+    "origins": [
+      "python-fixture/lie-foundations-ui.json/su2/result/generatorConvention"
     ]
   }
 ]

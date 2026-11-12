@@ -12,7 +12,7 @@ LESSON_DERIVATIONS = {
     'space-01': ['space-nacl-count'],
     'space-02': ['space-si-compose'],
     'space-03': ['space-si-compose'],
-    'space-04': [],  # No orbit/stabilizer derivation is present in this bank.
+    'space-04': ['space-pminus1-orbit-stabilizer'],
     'space-05': ['space-si-compose'],  # Its final step derives the Bloch phase.
     'space-06': ['space-nio-cell'],  # An explicit primitive-basis/volume change.
     'double-01': ['double-si-interference'],
@@ -28,7 +28,7 @@ LESSON_DERIVATIONS = {
     'double-06': ['double-screw-boundary'],
     'color-01': ['color-c3-kernel'],
     'color-02': ['color-space-period'],
-    'color-03': [],  # A three-colour kernel is not a time-reversal exercise.
+    'color-03': ['color-swap-antilinear-time-reversal'],
     'spin-01': ['spin-point-pair'],
     'spin-02': ['spin-space-helix'],
     'spin-03': ['spin-only-rank'],

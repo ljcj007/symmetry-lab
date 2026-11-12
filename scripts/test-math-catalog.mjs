@@ -5,9 +5,16 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import katex from '../dist/vendor/katex/katex.mjs';
 import {segmentFormula,findInlineMath} from '../dist/math-notation.js';
+import {loadEnglishCatalog} from './english-catalog.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const english=process.argv.includes('--english');
+const englishTitles=loadEnglishCatalog();
+for(const key of ['SU(2) · 两能级 Rabi 振荡','SU(3) · 三分量态与权图','SU(2) · 双路径相位干涉','SU(2) · 双路径干涉与相对相位']){
+ const parts=segmentFormula(englishTitles[key]),math=parts.filter(part=>part.type==='math');
+ assert.equal(math.length,1,key);assert.match(math[0].source,/^SU\([23]\)$/,'English prose in a tool title must not become algebra');
+ assert.ok(parts.some(part=>part.type==='text'&&/[A-Za-z]-[A-Za-z]/.test(part.source)),'Hyphenated English words remain ordinary text');
+}
 const dataRoot=path.join(root,english?'dist/en/data':'dist/data');
 const snapshots=new Map(),formulas=[],inline=[];
 const marker=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀᴴ†′̄̅̿̂̇̈⃗Åα-ωΑ-Ω]/u;
@@ -123,7 +130,7 @@ assert.match(observables.lessons[4].sections[1].formula,/C_\{ijkl\}=C_\{jikl\}=C
 assert.match(observables.lessons[4].sections[3].formula,/χ_\{lab\}=Qχ_\{crystal\}Qᵀ/);
 assert.match(read('andreev-content.json').lessons[0].sections[1].formula,/R_\{ee\}\+R_\{he\}/);
 assert.match(read('quantum-geometry-content.json').lessons[0].sections[0].formula,/Q_\{μν\}=⟨∂_μ u/);
-assert.match(read('lie-derivations.json').exercises[14].steps[3].formula,english?/C_\{full\}†C_\{full\}/:/C_\{完整\}†C_\{完整\}/);
+assert.match(read('lie-derivations.json').exercises.find(exercise=>exercise.id==='su3-cg-exact-orthogonality').steps[3].formula,english?/C_\{full\}†C_\{full\}/:/C_\{完整\}†C_\{完整\}/);
 
 // Each combined classroom must carry the same edited lesson/exercise text as
 // its source module. Only module routing metadata differs; calculations and

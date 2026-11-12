@@ -11,7 +11,7 @@ const number=(id,label,value,min,max,step='any')=>`<label>${label}<input id="${i
 const probabilities=(items,label)=>`<div class="lg-probabilities lg-wide-probabilities">${items.map(item=>`<div><span>${esc(item.label)}</span><progress max="1" value="${esc(item.probability)}" aria-label="${esc(item.label+' '+label)}"></progress><code>${fmt(item.probability)}</code></div>`).join('')}</div>`;
 const checks=(values,labels)=>`<div class="lg-checks">${Object.entries(labels).map(([key,label])=>`<div><span>${esc(label)}</span><code>${Number.isFinite(Number(values?.[key]))?Number(values[key]).toExponential(2):'—'}</code></div>`).join('')}</div>`;
 const steps=values=>`<details class="lg-generator"><summary>Check the derivation of this calculation</summary><ol class="lg-calculation-steps">${(values||[]).map(value=>`<li>${esc(value)}</li>`).join('')}</ol></details>`;
-export const physicsNames={rabi:"SU(2) · Two-level Rabi oscillation",su2_coupling:"SU(2) · spin coupling with tensor-product decomposition",su3_tensor:"SU(3) · Representation, rights and tensor-product decomposition",su3_cg:cgName,su3_racah:racahName,su3_ninej:ninejName};
+export const physicsNames={rabi:"Two-level Rabi oscillations in SU(2)",su2_coupling:"SU(2) · spin coupling with tensor-product decomposition",su3_tensor:"SU(3) · Representation, rights and tensor-product decomposition",su3_cg:cgName,su3_racah:racahName,su3_ninej:ninejName};
 export const physicsDefaults={rabi:{omega:1,delta:0,time:Math.PI},su2_coupling:{twoJ1:1,twoJ2:1,twoM1:1,twoM2:-1,coupling:1},su3_tensor:{p1:1,q1:0,p2:0,q2:1},su3_cg:cgDefault,su3_racah:racahDefault,su3_ninej:ninejDefault};
 export function physicsControls(experiment,input){
   if(experiment==='su3_ninej')return ninejControls(input);

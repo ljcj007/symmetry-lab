@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261112-flow2';
+import {classroomPathways} from './classroom-ui.js?v=20261112-basics3';
 import {searchEntries} from './tool-search.js?v=20261112-links1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-links1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-basics3';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -39,6 +39,12 @@ export const toolGroups=[
   ['structure',"Structure standardization · BC cells","Import POSCAR / CIF, identify the space group and transform the primitive cell, origin and wavevector.","POSCAR CIF spglib primitive cell"],
  ]},
  {id:'representation',title:"Representations and corepresentations",summary:"Classify quantum states using symmetry operations.",tools:[
+  ['compute/lie/su2',"SU(2) · Spinors and the Bloch sphere","Rotate a two-component state and compare its matrix, Bloch vector, measurement probabilities, and overall phase.","SU2 Pauli Bloch spinor spin sphere probability"],
+  ['compute/lie/su3',"Three-component states and weights in SU(3)","Compare probabilities, Cartan averages, and coherences for basis states and complex superpositions.","SU3 Gell Mann Cartan weights roots superposition coherence"],
+  ['compute/lie/commutator',"Generators · Commutators","Calculate commutators of Pauli and Gell-Mann generators and their expansion coefficients.","commutator Pauli Gell Mann generators Lie algebra"],
+  ['compute/lie/u1',"U(1) · Discrete and continuous symmetry","Compare C₄ with continuous phases on the unit circle, and integer with continuous translations.","U1 U(1) C4 continuous discrete circle translations"],
+  ['compute/lie/representations',"Different representations of one group · Spinors and vectors","Apply the same SU(2) element to a two-component state and a three-dimensional vector. Compare the action of the center and the faithfulness of each representation.","SU2 SO3 representations dimension spinors vectors center double cover faithful"],
+  ['compute/lie/interferometer',"Two-path interference and relative phase in SU(2)","Compare rotation on one arm with equal rotations on both arms. Calculate output-port probabilities after recombination and track the spin state.","SU2 2pi 4pi 2π 4π interference phase spinor interferometer"],
   ['compute/group-theorems',"Group Theorems · Proofs and Applications","Rearrangement, conjugacy classes, normal subgroups, irreducibility, Schur, unitarity, orthogonality, reduction, and degeneracy.","rearrangement conjugacy normal Schur orthogonality unitarity reduction degeneracy"],
   ['compute/symmetry-mini-demos',"Geometry, Bands, and Spin Mini-Labs","Platonic solids, degenerate vibrations, Kramers pairs, permutation symmetry, double groups, and spin–orbit coupling.","polyhedra bands degeneracy permutations spin SOC double groups"],
   ['compute/foundations-demos',"Foundational Demos · Water and Representations","Characters, D3 projections and bases, level splitting, IR/Raman, Jahn–Teller, and macroscopic symmetry.","water H2O characters selection rules D3 projection basis functions Raman Jahn Teller"],
@@ -56,6 +62,7 @@ export const toolGroups=[
   ['compute/lie/su3_ninej',"SU(3) · 9j coefficients and four-body recoupling","Higher-dimensional inputs, exact coefficients, channel probabilities and inverse basis transformations.","Quadruple 8 10 15 27"],
  ]},
  {id:'models',title:"Hamiltonians and bands",summary:"Build models and apply symmetry to band analysis.",tools:[
+  ['compute/lie/rabi',"Two-level Rabi oscillations in SU(2)","Compare two-level evolution, transition probabilities, and resonance conditions as the drive and detuning change.","SU2 Rabi two-level drive detuning resonance dynamics"],
   ['compute/salc-lab',"Symmetry-adapted bases · Selection rules and matrix assessment","Projection replays, SALC blocks, polarization matrix elements and equivalent subspaces.","SALC Wigner Eckart projection operator selection rule"],
   ['compute/nonsymmorphic-lab',"Screws and glides · Momentum-dependent degeneracies","Bloch phases, partner switching, hourglass connectivity and controlled symmetry breaking.","nonsymmorphic hourglass spiral slip hourglass"],
   ['compute/exchange-symmetry-lab',"Bond symmetry · Magnetic exchange and DMI","Axial vectors, bond-end exchange constraints, exchange-tensor decomposition and spin canting.","Moriya DMI Antisymmetric exchange"],

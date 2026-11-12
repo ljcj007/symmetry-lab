@@ -11,7 +11,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const read=name=>JSON.parse(fs.readFileSync(path.join(root,'locales',name),'utf8'));
 const translations=loadEnglishCatalog();
 const localizer=createResultLocalizer({translations,templates:read('en-python-templates.json'),nativeAnnotations:true});
-const files=['electronic-materials.json','material-research.json','quantum-materials.json','response-materials.json','spectroscopy.json','structure-dynamics.json','bridges.json.gz','construction.json.gz','principles.json.gz','connections.json.gz','frontiers.json.gz'];
+const files=['electronic-materials.json','material-research.json','quantum-materials.json','response-materials.json','spectroscopy.json','structure-dynamics.json','bridges.json.gz','construction.json.gz','principles.json.gz','connections.json.gz','frontiers.json.gz','lie-foundations-ui.json'];
 const han=/[\u3400-\u9fff]/u,residuals=[];let examined=0,numbers=0;
 function identicalStructure(before,after,pointer=''){
  assert.equal(typeof after,typeof before,pointer+' type changed');

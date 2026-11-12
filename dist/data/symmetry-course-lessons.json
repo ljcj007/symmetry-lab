@@ -503,7 +503,9 @@
         ],
         "doubleValued": false
       },
-      "derivationIds": []
+      "derivationIds": [
+        "space-pminus1-orbit-stabilizer"
+      ]
     },
     {
       "id": "space-05",
@@ -1799,7 +1801,9 @@
       "labPreset": "c3_point",
       "difficulty": "进阶",
       "symmetryLevel": "point-and-space",
-      "derivationIds": []
+      "derivationIds": [
+        "color-swap-antilinear-time-reversal"
+      ]
     },
     {
       "id": "spin-01",

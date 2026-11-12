@@ -31,6 +31,11 @@ for(const route of ['classroom/foundations?tab=lab&lesson=representations&group=
  const parsed=parseClassroomRoute(route);assert.ok(parsed);assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed,'Route roundtrip preserves context');
 }
 assert.equal(parseClassroomRoute('compute/lie/su3_ninej?tab=learn').tab,'lab');
+for(const experiment of ['u1','representations','interferometer']){
+ const route=parseClassroomRoute('compute/lie/'+experiment);
+ assert.equal(route.pathway,'continuous');assert.equal(route.section,'lie');assert.equal(route.calculationOnly,true);
+ assert.deepEqual(parseClassroomRoute(buildClassroomHash(route)),route);
+}
 assert.equal(parseClassroomRoute('classroom/continuous?track=ninej&lesson=su3-ninej-paired-trees').pathway,'coupling','A legacy cross-topic URL opens under the correct pathway');
 assert.equal(parseClassroomRoute('classroom/coupling?track=continuous&lesson=continuous-symmetry').pathway,'continuous');
 for(const [tool,module,pathway] of [['phonon-modes','modes','structure-dynamics'],['band-connectivity','bands','crystal'],['phonon-thermo','thermo','observables']]){

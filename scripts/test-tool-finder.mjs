@@ -11,7 +11,10 @@ assert.equal(finderResults([...toolsIndex,...catalog],'Clebsch-Gordan')[0].route
 assert.equal(finderResults([...toolsIndex,...catalog],'SU(3) 27')[0].route,'compute/lie/su3_ninej');
 assert.ok(finderResults([...toolsIndex,...catalog],'C₄v',{scope:'all'}).length);
 assert.equal(finderResults([...toolsIndex,...catalog],'',{scope:'courses'}).length,0);
-assert.equal(finderResults([...toolsIndex,...toolsIndex],'',{scope:'tools',limit:100}).length,67);
+assert.equal(finderResults([...toolsIndex,...toolsIndex],'',{scope:'tools',limit:100}).length,74);
+assert.equal(finderResults(toolsIndex,'U1')[0].route,'compute/lie/u1');
+assert.equal(finderResults(toolsIndex,'interferometer')[0].route,'compute/lie/interferometer');
+assert.equal(finderResults(toolsIndex,'Rabi')[0].route,'compute/lie/rabi');
 assert.equal(finderResults([{route:'javascript:alert(1)',title:'bad',kind:'计算'}],'bad').length,0);
 assert.ok(finderResults([...toolsIndex,...catalog],'Young',{scope:'courses'}).every(x=>x.kind==='课程'));
 
@@ -61,4 +64,4 @@ const first=dialog.querySelector('[data-finder-close]'),last=dialog.querySelecto
 last.focus();key('Tab');assert.equal(document.activeElement,first);first.focus();key('Tab',{shiftKey:true});assert.equal(document.activeElement,last);
 key('Escape');assert.equal(dialog.hidden,true);assert.equal(document.activeElement,button);
 controller.destroy();assert.equal(body.querySelector('dialog'),null);assert.equal(documentEvents.keydown.length,0);
-console.log('Tool finder: 67 existing tools, normalized queries, exact groups, scopes, lazy/retry/cached catalogs, keyboard selection, focus restoration/trap, safe output and cleanup passed.');
+console.log('Tool finder: 74 tools including all previous tools, normalized queries, exact groups, scopes, lazy/retry/cached catalogs, keyboard selection, focus restoration/trap, safe output and cleanup passed.');

@@ -8,11 +8,12 @@ assert.equal(toolGroups.length,6);
 assert.equal(new Set(toolsIndex.map(t=>t.route)).size,toolsIndex.length);
 for(const route of ['workbench','structure','products','bands','magnetictb','crystkit','compute/phonons','compute/tensors'])assert.ok(knownTool(route),route);
 for(const name of ['carat','carat_integral','integral_normalizer','arithmetic_centralizer','symbolic','symbolic_interfaces','symbolic_spacegroups','crystkit_ext'])assert.ok(knownTool('compute/advanced/'+name),name);
-const names=fs.readFileSync(new URL('../dist/lie-physics-ui.js',import.meta.url),'utf8');
+const {lieExperimentNames:names}=await import('../dist/lie-group-ui.js');
+assert.deepEqual(new Set(toolsIndex.filter(tool=>tool.route.startsWith('compute/lie/')).map(tool=>tool.route.slice('compute/lie/'.length))),new Set(Object.keys(names)),'Every available Lie experiment has a direct calculation-center entry');
 for(const t of toolsIndex.filter(t=>t.route.startsWith('compute/lie/'))){
  const route=parseClassroomRoute(t.route);
  assert.equal(route.section,'lie');assert.equal(route.tab,'lab');assert.equal(route.calculationOnly,true);
- assert.ok(names.includes(route.experiment+':'),route.experiment);
+ assert.ok(Object.hasOwn(names,route.experiment),route.experiment);
  assert.equal(buildClassroomHash(route),'#'+t.route);
 }
 assert.equal(searchEntries(toolsIndex,'9j')[0].route,'compute/lie/su3_ninej');

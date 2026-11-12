@@ -14,8 +14,8 @@ const courseDefinitions={
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261110-en1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261110-en1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261112-flow2'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261112-flow2'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
-,'lie':{load:()=>import('./lie-group-ui.js?v=20261112-flow2'),render:'renderLieGroupView',result:'getLieGroupResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261112-basics3'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'lie':{load:()=>import('./lie-group-ui.js?v=20261112-basics3'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261110-en1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261110-en1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261110-en1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
@@ -46,7 +46,7 @@ const introductoryLinks={
  observables:[['晶体振动与光谱','lesson=mechanical-modes'],['物性张量与响应','lesson=neumann'],['Si、GaAs 与 BaTiO₃ · SHG 旗舰实验','module=shg-story']],
  'structure-dynamics':[['相变与畴','lesson=landau-stability'],['衍射相位与消光','lesson=structure-factor'],['声子数据与软模','lesson=phonopy-files']],
  spin:[['双群与旋量','track=double'],['磁群与共表示','track=magnetic'],['色群与标签置换','track=color'],['自旋点群与空间群','track=spin']],
- continuous:[['生成元与物理应用','track=continuous'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['SU(3) 与权图','tab=lab&experiment=su3']]
+ continuous:[['生成元与物理应用','track=continuous'],['离散与连续：从 C₄ 到 U(1)','tab=lab&experiment=u1'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['同一群的不同表示','tab=lab&experiment=representations'],['双路径干涉与相对相位','tab=lab&experiment=interferometer'],['SU(3) 与权图','tab=lab&experiment=su3']]
 };
 for(const pathway of classroomPathways){const first=introductoryLinks[pathway.id]||[],queries=new Set(first.map(([,query])=>query));pathway.links=[...first,...pathway.links.filter(([,query])=>!queries.has(query))];}
 const queryFields=['module','tab','lesson','experiment','preset','track','material','exercise','group','level','project'];
@@ -108,7 +108,7 @@ export function parseClassroomRoute(route){
   if(tool)result={section:tool.section,module:tool.module,pathway:tool.pathway,tab:'lab',calculationOnly:true};
   else if(['compute/phase','compute/diffraction','compute/phonopy'].includes(path))result={section:'dynamics',pathway:'structure-dynamics',tab:'lab',experiment:path.slice(8),calculationOnly:true};
   else if(['compute/phonons','compute/tensors'].includes(path))result={section:'observables',pathway:'observables',tab:'lab',experiment:path.slice(8),calculationOnly:true};
-  else if(path.startsWith('compute/lie/')){const experiment=path.slice('compute/lie/'.length);if(!/^[a-z][a-z0-9_]*$/.test(experiment))return null;result={section:'lie',pathway:'coupling',tab:'lab',experiment,calculationOnly:true};}
+  else if(path.startsWith('compute/lie/')){const experiment=path.slice('compute/lie/'.length);if(!/^[a-z][a-z0-9_]*$/.test(experiment))return null;const basic=['u1','representations','interferometer','su2','su3','commutator','rabi'].includes(experiment);result={section:'lie',pathway:basic?'continuous':'coupling',tab:'lab',experiment,calculationOnly:true};}
   else if(path==='classroom')result={section:'overview',pathway:'overview'};
   else if(path==='classroom/start')result={section:'zero-start',pathway:'start'};
   else {

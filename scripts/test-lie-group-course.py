@@ -1,4 +1,4 @@
-"""Ensure every public lesson has a usable exercise, lab and source path."""
+"""Validate course content, exercise structure and independent exact examples."""
 import json
 from collections import Counter
 from fractions import Fraction
@@ -87,9 +87,9 @@ class LieCourse(unittest.TestCase):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
         data=json.loads((ROOT/'dist/data/lie-derivations.json').read_text(encoding='utf8'))
         exercises=data['exercises'];sources={s['id'] for s in course['sources']}
-        self.assertEqual(len(exercises),32)
-        self.assertEqual(len({e['id'] for e in exercises}),32)
-        self.assertEqual({e['group'] for e in exercises},{'su2','su3'})
+        self.assertEqual(len(exercises),40)
+        self.assertEqual(len({e['id'] for e in exercises}),40)
+        self.assertEqual({e['group'] for e in exercises},{'u1','su2','su3'})
         for exercise in exercises:
             with self.subTest(exercise=exercise['id']):
                 for field in ('title','prompt','givens','hint','answer','pitfall','references'):
@@ -104,7 +104,8 @@ class LieCourse(unittest.TestCase):
                 self.assertTrue(check['question'] and check['explanation'])
                 for reference in exercise['references']:
                     self.assertIn(reference['sourceId'],sources)
-                self.assertIn(exercise['lab'],('rabi','su2_coupling','su3_tensor','su3_cg','su3_racah','su3_ninej'))
+                if exercise.get('lab'):
+                    self.assertIn(exercise['lab'],('u1','representations','interferometer','su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg','su3_racah','su3_ninej'))
 
     def test_four_octets_independent_counts(self):
         # The curriculum's high-dimensional numbers have a second combinatorial
