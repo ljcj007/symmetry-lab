@@ -1,6 +1,6 @@
 import {quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
-import {mathHTML} from './math-display.js?v=20261110-en1';
+import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261110-en1';
 
 const KEY='symmetry-lab.shg-flagship.progress.v1';

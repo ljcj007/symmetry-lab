@@ -144,7 +144,7 @@ export function normalizeMath(source){
 const scriptCharacters=new RegExp('['+Object.keys(subs).join('')+Object.keys(supers).join('')+']','u');
 const physicalComponents=/(?:[στ][xyz]{1,3}(?![A-Za-z_])|(?<![A-Za-z_])kB(?![a-z_])|μB(?![a-z_]))/u;
 const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏÅ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝≪≫]/u;
-const proseWords=new Set('a and the for are has see set can not one two all let its our how why per out any new from with into then than that this these those such both each only also but use via at to in on is be by as or of if we an it no so up'.split(' '));
+const proseWords=new Set('a and the for are has see set can not one two all let its our how why per out any new from with into then than that this these those such both each only also but use via at to in on is be by as or nor of if we an it no so up'.split(' '));
 function englishProseToken(token){
  const word=token.replace(/^["'“”‘’(\[]+|["'“”‘’.,;:!?\)\]]+$/g,'');
  return (/^[A-Za-z]{4,}(?:-[A-Za-z]+)*$/.test(word)||proseWords.has(word.toLowerCase()))&&!functions.has(word)&&!operators.has(word);

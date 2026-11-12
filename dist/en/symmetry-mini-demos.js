@@ -1,4 +1,4 @@
-import {mathHTML} from './math-display.js?v=20261110-en1';
+import {mathHTML} from './math-display.js?v=20261113-prose2';
 
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=x=>Math.abs(x)<1e-9?'0':Number(x.toFixed(4)).toString();

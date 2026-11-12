@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261112-basics3';
+import {classroomPathways} from './classroom-ui.js?v=20261113-prose2';
 import {searchEntries} from './tool-search.js?v=20261112-links1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-basics3';
 export {searchEntries};

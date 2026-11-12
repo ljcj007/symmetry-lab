@@ -1,5 +1,5 @@
 import katex from './vendor/katex/katex.mjs';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261110-en1';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261113-prose2';
 import {svgMathText,layoutSvgMath} from './math-svg.js?v=20261110-en1';
 import {crystalTex} from './crystal-notation.js?v=20261110-en1';
 

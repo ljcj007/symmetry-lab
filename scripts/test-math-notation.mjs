@@ -7,6 +7,16 @@ for(const source of ['Si, GaAs and BaTiO₃','The C4v point group has χ_{xx}=χ
  for(const p of parts.filter(p=>p.type==='math'))assert.doesNotMatch(p.source,/\b(?:and|the|for|has|use)\b/i);
 }
 
+// The conjunction in the actual spinor/vector result must not join the SU(3) atom.
+const representationNote='The three-dimensional vector representation has kernel {I₂,−I₂}. It is neither the fundamental representation of SU(3) nor a faithful representation of SU(2).';
+const representationParts=findInlineMath(representationNote);
+assert.equal(representationParts.map(p=>p.source).join(''),representationNote);
+assert.ok(representationParts.some(p=>p.type==='text'&&/\bnor\b/.test(p.source)));
+for(const p of representationParts.filter(p=>p.type==='math'))assert.doesNotMatch(p.source,/\bnor\b/);
+for(const group of ['SU(3)','SU(2)'])assert.ok(representationParts.some(p=>p.type==='math'&&p.source.includes(group)));
+assert.equal(normalizeMath('nor'),'nor','Explicit mathematical normalization keeps its original letters');
+assert.equal(normalizeMath('SU(3)nor'),String.raw`\operatorname{SU}(3)nor`,'Explicit mathematics remains independent of prose discovery');
+
 const options={throwOnError:true,strict:'ignore',trust:false,output:'htmlAndMathml',maxExpand:1000,maxSize:20};
 const render=source=>{const tex=normalizeMath(source);assert.equal(typeof tex,'string',source);const html=katex.renderToString(tex,options);assert.match(html,/<math /);return{tex,html};};
 const exact=new Map([

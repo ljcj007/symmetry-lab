@@ -1,6 +1,6 @@
 // A read-only companion to the formula renderer; never rewrites source math.
-import {mathHTML} from './math-display.js?v=20261110-en1';
-import {segmentFormula,findInlineMath} from './math-notation.js?v=20261110-en1';
+import {mathHTML} from './math-display.js?v=20261113-prose2';
+import {segmentFormula,findInlineMath} from './math-notation.js?v=20261113-prose2';
 const RELEASE='20261110-en1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const selector='span.sl-math[data-math-source],.sl-equation[data-math-source],svg text[aria-label]';

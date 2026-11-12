@@ -1,5 +1,5 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
-import {mathHTML} from './math-display.js?v=20261110-en1';
+import {mathHTML} from './math-display.js?v=20261113-prose2';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
