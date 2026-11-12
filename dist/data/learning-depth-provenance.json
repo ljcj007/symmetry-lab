@@ -123,13 +123,17 @@
       "bytes": 18465,
       "sha256": "cfdb912cf4b0ad2c6a31a1af642685ba19cb2b84ef929ade62914cf68b4d3e16"
     },
+    "scripts/build-continuous-derivations.py": {
+      "bytes": 18055,
+      "sha256": "3eb79bbaadb269ea0205cb20000bfe68369a56e723c09473c41ece20c9b81b56"
+    },
     "scripts/build-course-continuations.py": {
       "bytes": 3135,
       "sha256": "887fb075aeb57bc6173564e03c2a27dad44e9a6f4f454d9b3a8976ed55c31ffc"
     },
     "scripts/build-learning-depth-provenance.mjs": {
-      "bytes": 4970,
-      "sha256": "d406a72d795384f8ec75ee01462382876589d1565c0648d78607cb017e92b9f9"
+      "bytes": 5099,
+      "sha256": "9e261799e60996b4f2f6a0859ae50d07294960af55a7fa99cd3c8d18ea28da14"
     },
     "scripts/build-magnetic-setting-derivation.py": {
       "bytes": 7688,
@@ -139,9 +143,17 @@
       "bytes": 19657,
       "sha256": "05c87a1cc3b854c1ef0659958b4b04a12e52aabf411f5411c3f31881fdea6e47"
     },
+    "scripts/test-continuous-derivations.py": {
+      "bytes": 19477,
+      "sha256": "7fe3c5d2d7c8795e680d54eac7ead6a0afa94e19e932cb8da1fffb2147a030fa"
+    },
     "scripts/test-course-continuations.mjs": {
       "bytes": 8196,
       "sha256": "588207078a03e3727111d7c6b5600e4c3336a04dbca4b5ef6c1cfba1e430ed88"
+    },
+    "scripts/test-crystal-concept-derivations.py": {
+      "bytes": 11565,
+      "sha256": "1acf49c3329e0556a8852261407f046e27b0754e90cc0b71f7287004983ec849"
     },
     "scripts/test-crystal-concept-flows.mjs": {
       "bytes": 3616,

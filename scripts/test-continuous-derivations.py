@@ -274,8 +274,8 @@ exercises=bank['exercises'][:8]
 source_ids={x['id'] for x in course['sources']}
 required={'id','lessonIds','group','title','prompt','givens','hint','steps','answer','pitfall','check','references'}
 check('eight dedicated exercises',len(exercises)==8)
-check('production contains forty exercises',len(bank['exercises'])==40)
-check('production unique exercise IDs',len({x['id'] for x in bank['exercises']})==40)
+check('production contains forty-four exercises',len(bank['exercises'])==44)
+check('production unique exercise IDs',len({x['id'] for x in bank['exercises']})==44)
 check('production introductory order',[x['id'] for x in exercises]==expected_ids)
 check('first eight lesson associations',[x['lessonIds'][0] for x in exercises]==[x['id'] for x in course['lessons'][:8]])
 check('independent answer indices',[x['check']['answer'] for x in exercises]==[1,1,2,0,1,0,2,0])

@@ -171,8 +171,8 @@ verify('conceptual records use the original exercise field vocabulary', all(set(
 lesson_map = {lesson['id']: lesson['derivationIds'] for lesson in course['lessons']}
 verify('space lesson links to its exact orbit exercise', lesson_map['space-04'] == ['space-pminus1-orbit-stabilizer'])
 verify('color lesson links to its exact operator exercise', lesson_map['color-03'] == ['color-swap-antilinear-time-reversal'])
-verify('unrelated convention lesson remains honestly unbound', lesson_map['magnetic-03'] == [])
-verify('23 of 24 crystal/spin lessons now have reviewed continuations', len(lesson_map) == 24 and sum(bool(ids) for ids in lesson_map.values()) == 23)
+verify('magnetic convention lesson has its own conceptual exercise', lesson_map['magnetic-03'] == ['magnetic-settings-macroscopic-constraints'])
+verify('all 24 crystal/spin lessons now have reviewed continuations', len(lesson_map) == 24 and sum(bool(ids) for ids in lesson_map.values()) == 24)
 teaching = (REPO/'dist/python/teaching_labs.py').read_text(encoding='utf-8')
 mini = (REPO/'dist/python/symmetry_mini_demos.py').read_text(encoding='utf-8')
 color = next(lesson for lesson in course['lessons'] if lesson['id'] == 'color-03')
