@@ -5,23 +5,23 @@ const courseDefinitions={
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261113-prose2'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
-'frontiers':{load:()=>import('./frontiers-ui.js?v=20261110-en1'),render:'renderFrontiersView',result:'getFrontiersResult'}
-,'connections':{load:()=>import('./connections-ui.js?v=20261110-en1'),render:'renderConnectionsView',result:'getConnectionsResult'}
-,'construction':{load:()=>import('./construction-ui.js?v=20261110-en1'),render:'renderConstructionView',result:'getConstructionResult'}
-,'principles':{load:()=>import('./principles-ui.js?v=20261110-en1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
-,'bridges':{load:()=>import('./bridges-ui.js?v=20261110-en1'),render:'renderBridgesView',result:'getBridgesResult'}
-,'pathways':{load:()=>import('./pathways-ui.js?v=20261110-en1'),render:'renderPathwaysView',result:'getPathwaysResult'}
-,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261110-en1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
-,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261110-en1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
-,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261113-prose2'),render:'renderPointgroupView',result:'getPointgroupResult'}
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261113-flow1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+,'connections':{load:()=>import('./connections-ui.js?v=20261113-flow1'),render:'renderConnectionsView',result:'getConnectionsResult'}
+,'construction':{load:()=>import('./construction-ui.js?v=20261113-flow1'),render:'renderConstructionView',result:'getConstructionResult'}
+,'principles':{load:()=>import('./principles-ui.js?v=20261113-flow1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
+,'bridges':{load:()=>import('./bridges-ui.js?v=20261113-flow1'),render:'renderBridgesView',result:'getBridgesResult'}
+,'pathways':{load:()=>import('./pathways-ui.js?v=20261113-flow1'),render:'renderPathwaysView',result:'getPathwaysResult'}
+,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261113-flow1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
+,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261113-flow1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
+,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261113-flow1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261113-depth1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
-,'lie':{load:()=>import('./lie-group-ui.js?v=20261113-depth1'),render:'renderLieGroupView',result:'getLieGroupResult'}
-,'observables':{load:()=>import('./observables-ui.js?v=20261110-en1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261110-en1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
-,'material-research':{load:()=>import('./material-research-ui.js?v=20261110-en1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
-,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261110-en1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
-,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261110-en1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
-,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261110-en1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
+,'lie':{load:()=>import('./lie-group-ui.js?v=20261113-flow1'),render:'renderLieGroupView',result:'getLieGroupResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261113-flow1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261113-flow1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'material-research':{load:()=>import('./material-research-ui.js?v=20261113-flow1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261113-flow1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261113-flow1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
+,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261113-flow1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
 ,'flagship':{load:()=>import('./shg-flagship.js?v=20261113-prose2'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
@@ -99,6 +99,16 @@ const specialist=id=>Object.hasOwn(specialistModules,id)?specialistModules[id]:n
 const specialistTools=Object.fromEntries(Object.entries(specialistModules).map(([module,item])=>['compute/'+item.route,{module,...item}]));
 const defaultsFor=id=>{const p=classroomPathways.find(p=>p.id===id);return p?{section:p.section,pathway:p.id,...(p.track?{track:p.track}:{})}:null;};
 const liePathway=(track,fallback)=>track==='continuous'?'continuous':['representations','cg','racah','ninej','coupling'].includes(track)?'coupling':fallback;
+// Internal navigation context lives only in RAM and is bound to one exact target.
+// In particular, parsing a new URL must never inherit another visit's return slot.
+export function withClassroomNavigationContext(selection,context,route){
+  if(!selection)return selection;
+  const next={...selection};delete next.lieStageReturn;
+  if(next.section!=='lie'||next.calculationOnly||!context||String(context.route||'').replace(/^#/,'')!==String(route||'').replace(/^#/,''))return next;
+  const origin=context.lieStageReturn;
+  if(origin&&['all','continuous','representations','cg','racah','ninej','coupling'].includes(origin.track)&&Number.isInteger(origin.lesson)&&origin.lesson>=0&&origin.lesson<10000)next.lieStageReturn={track:origin.track,lesson:origin.lesson};
+  return next;
+}
 export const isClassroomView=view=>classroomSections.some(section=>section.id===view);
 export function parseClassroomRoute(route){
   if(typeof route!=='string')return null;
@@ -176,14 +186,19 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   root.querySelectorAll('[data-course-route]').forEach(link=>link.onclick=event=>{event?.preventDefault();move(link.dataset.courseRoute);});
   onLocation(overview?"Learning center":selection.calculationOnly?"Calculation center / Tensor products and recoupling":"Learning center / "+(pathway?.title||"Lesson"));
   if(overview)return;
-  const update=patch=>{
+  const update=(patch,context)=>{
     if(!current())return;const previousPathway=selection.pathway;selection={...selection,...patch};
     if(specialist(patch.module)){selection.section=specialist(patch.module).section;selection.pathway=specialist(patch.module).pathway;}
     if(selection.section==='lie'&&!selection.calculationOnly)selection.pathway=liePathway(selection.track,selection.pathway);
     if(patch.tab&&patch.tab!=='derive')delete selection.exercise;
     if(patch.tab&&patch.tab!=='materials'&&!['frontiers','connections','construction','principles','bridges','pathways','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(section))delete selection.material;
     // A new learning pathway needs a new sidebar; local tabs keep their state.
-    move(buildClassroomHash(selection),{render:selection.pathway!==previousPathway});
+    const hash=buildClassroomHash(selection),options={render:selection.pathway!==previousPathway};
+    if(selection.section==='lie'&&context&&Object.hasOwn(context,'lieStageReturn')){
+      options.courseContext={route:hash,lieStageReturn:context.lieStageReturn};
+      selection=withClassroomNavigationContext(selection,options.courseContext,hash);
+    }
+    move(hash,options);
   };
   return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,cancelRun,toast,download,selection,onNavigate:update,onLocation,
     openGroup:spec=>openGroup?.(typeof spec==='number'?{mode:'sg',id:spec,k:[0,0,0],doubleValued:false}:spec)});

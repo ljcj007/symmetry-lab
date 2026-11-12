@@ -2,11 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-depth1';
-import {startToolFinder} from './tool-finder.js?v=20261113-depth1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-flow1';
+import {startToolFinder} from './tool-finder.js?v=20261113-flow1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261112-basics3';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261113-depth1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261113-flow1';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
@@ -138,7 +138,7 @@ function setView(request,options={}){
  const requestedGroupMode=['sg','msg','mpg'].find(mode=>params.has(mode));
  state.pendingGroup=path==='workbench'&&requestedGroupMode?{mode:requestedGroupMode,query:params.toString()}:null;
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
- state.route=route;state.view=view;state.primary=primary;state.courseRoute=course;
+ state.route=route;state.view=view;state.primary=primary;state.courseRoute=withClassroomNavigationContext(course,options.courseContext,route);
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
  const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/frontiers','atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/connections','atlas/construction','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?"Materials Research Route":path.endsWith('materials')?"Crystalline and magnetic materials":"The 32 crystallographic point groups"):labels[view][0]);
  $('#page-title').textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];

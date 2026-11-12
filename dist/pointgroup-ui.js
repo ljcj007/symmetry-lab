@@ -1,5 +1,7 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
+import {matrixBridgeHTML,bindMatrixBridge} from './matrix-bridges.js?v=20261113-flow1';
+import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -41,7 +43,7 @@ const correctCount = entries => entries.filter(({quiz,key})=>state.answers[key]?
 
 async function load() {
   if(!dataPromise)dataPromise=Promise.all(['pointgroup-lessons.json','pointgroup-atlas.json'].map(async file=>{
-    const response=await fetch('./data/'+file);
+    const response=await fetch('./data/'+file+'?v=20261113-flow1');
     if(!response.ok)throw Error('教学数据未能载入（HTTP '+response.status+'）。');
     return response.json();
   })).then(([lessons,atlas])=>{
@@ -65,6 +67,8 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   container.innerHTML='<div class="pg-page"><div class="pg-loading" role="status"><span class="spinner"></span>正在载入点群课程与图谱…</div></div>';
   const root=container.firstElementChild;
   const current=()=>revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
+  let disposeBridges=()=>{},disposeFeedback=[];
+  const clearLearningSupport=()=>{disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
   const $=selector=>root.querySelector(selector);
   let lessons,atlas;
   try { ({lessons,atlas}=await load()); } catch(error) {
@@ -83,6 +87,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   function navigate(tab) { stop();state.tab=tab;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
   function changeGroup(id) { const g=atlas.groups.find(g=>String(g.id)===String(id))||atlas.groups[0];state.group=g.id;state.operation=g.generators?.[0]??0;state.step=0;stop(); }
   function draw() {
+    clearLearningSupport();
     if(!current()){stop();return;}
     const progress=correctCount(allQuestions);
     root.innerHTML=`<section class="pg-intro"><div><span class="pg-kicker">从几何变换到物理选择定则</span><h2>看见对称性，读懂表示。</h2><p>${esc(lessons.subtitle||'以 32 个晶体点群为线索，连接群论、特征标与晶体物理。')}</p></div><div class="pg-intro-stats" aria-label="课程概要"><div><strong>32</strong><span>晶体点群</span></div><div><strong>${lessons.lessons.length}</strong><span>学习单元</span></div><div><strong>${progress}<small> / ${allQuestions.length}</small></strong><span>自测已掌握</span></div></div></section>
@@ -107,6 +112,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     if(state.tab==='quiz')drawQuiz();
   }
   function drawLearn() {
+    clearLearningSupport();
     state.lesson=safeIndex(state.lesson,lessons.lessons.length);
     const lesson=lessons.lessons[state.lesson];
     $('.pg-content').innerHTML=`<div class="classroom-chapter-picker"><label>基础与表示 · 选择单元<select id="pg-chapter-select">${lessons.lessons.map((item,i)=>`<option value="${i}" ${state.lesson===i?'selected':''}>${esc(item.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="pg-chapter-lab">进入演示 →</button></div><div class="pg-learn-layout"><aside class="pg-lesson-nav" aria-label="课程目录"><p class="pg-label">循序渐进 · 学习路线</p>${lessons.lessons.map((item,i)=>{
@@ -114,6 +120,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
       ${(lesson.objectives||[]).length?`<div class="pg-objectives"><h3>学完这一节，你能</h3><ul>${lesson.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${matrixBridgeHTML(lesson.id)}
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>配套交互教学演示</strong><p>把这节课的符号、矩阵与物理图像放在一起操作。</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">打开本节交互演示 →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
@@ -121,6 +128,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       ${lesson.id==='from-point-to-space'?`<section class="pg-worked" aria-label="从点群到晶体计算"><h3>把这一课接到实际工具</h3><p>先统一晶胞和波矢坐标，再比较表示。SG 99 的 Γ 点使用 BC 原胞倒易分数坐标 k=(0,0,0)，这里先打开单值表示。</p><div class="pg-lesson-actions"><a class="secondary" href="#structure">导入 POSCAR / CIF 并转换 BC 晶胞 →</a><button class="secondary" type="button" id="pg-open-sg99">SG 99 · Γ 单值表示工作台 →</button><a class="primary" href="#classroom/crystal?track=space&amp;lesson=space-01">继续空间群第一课 →</a></div></section>`:''}
       <div class="pg-reference"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">动手操作对称变换</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
+    disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
     $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
@@ -208,16 +216,18 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     $('#pg-lab-status').innerHTML=`<div class="pg-coordinate-line"><span>初始 ${inlineMath('p_0','p₀')}</span><code>${esc(vector(state.point))}</code></div><div class="pg-coordinate-line"><span>${inlineMath('R^{'+state.step+'}p_0','R^'+state.step+' p₀')}</span><code>${esc(vector(p))}</code></div><div class="pg-cycle-stats"><span>已施加 <b>${state.step}</b> 次</span><span>此点周期 <b>${pointPeriod}</b></span><span>完整点轨道 <b>${fullOrbit.length}</b> / |G| = ${g.order}</span></div><p>${state.step>0&&state.step%pointPeriod===0?'✓ 当前点回到了初始位置。':`继续施加操作，观察第 ${pointPeriod} 次是否回到初始位置。`}${pointPeriod<op.order?' 此点处于特殊位置；点的周期小于操作的阶。':''}</p>`;
   }
   function drawQuiz() {
+    clearLearningSupport();
     const entries=state.quizLesson==='all'?allQuestions:allQuestions.filter(x=>String(x.li)===state.quizLesson);
     const score=correctCount(allQuestions);
     $('.pg-content').innerHTML=`<div class="pg-quiz-heading"><div><h2>把“看懂了”变成“会判断”</h2><p>先选答案，再检查推理。进度保存在此浏览器中，可以反复练习。</p></div><div class="pg-progress"><strong>${score} <span>/ ${allQuestions.length}</span></strong><label for="pg-progress-bar">已答对的题目</label><progress id="pg-progress-bar" value="${score}" max="${Math.max(1,allQuestions.length)}"></progress></div></div><div class="pg-quiz-filter"><label>练习范围<select id="pg-quiz-lesson"><option value="all">全部单元</option>${lessons.lessons.map((lesson,i)=>`<option value="${i}" ${state.quizLesson===String(i)?'selected':''}>${i+1}. ${esc(shortLessonTitle(lesson))}</option>`).join('')}</select></label><button type="button" class="pg-text-button" id="pg-clear-progress">重置练习记录</button></div><div class="pg-quizzes">${entries.map(({lesson,li,quiz,qi,key},index)=>{
       const answer=state.answers[key],checked=answer?.checked===true,right=checked&&answer.selected===quiz.answer;
-      return `<article class="pg-question ${checked?right?'is-correct':'is-incorrect':''}" id="pg-q-${li}-${qi}"><span class="pg-kicker">${esc(lesson.title)} · 第 ${qi+1} 题</span><fieldset><legend>${esc(quiz.question)}</legend>${quiz.choices.map((choice,ci)=>`<label class="pg-answer ${checked&&ci===quiz.answer?'correct-choice':''}"><input type="radio" name="pg-answer-${li}-${qi}" value="${ci}" data-question="${esc(key)}" ${answer?.selected===ci?'checked':''}><span class="pg-choice-letter">${String.fromCharCode(65+ci)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary pg-check-answer" data-check="${esc(key)}" ${Number.isInteger(answer?.selected)?'':'disabled'}>${checked?'再次检查':'检查答案'}</button><div class="pg-answer-feedback" aria-live="polite">${checked?`<strong>${right?'✓ 回答正确':'再想一想'} · 正确选项 ${String.fromCharCode(65+quiz.answer)}</strong><p>${esc(quiz.explanation)}</p><button type="button" class="pg-text-button" data-review="${li}">返回这一节复习 →</button>`:''}</div></article>`;
+      return `<article class="pg-question ${checked?right?'is-correct':'is-incorrect':''}" id="pg-q-${li}-${qi}"><span class="pg-kicker">${esc(lesson.title)} · 第 ${qi+1} 题</span><fieldset><legend>${esc(quiz.question)}</legend>${quiz.choices.map((choice,ci)=>`<label class="pg-answer ${checked&&ci===quiz.answer?'correct-choice':''}"><input type="radio" name="pg-answer-${li}-${qi}" value="${ci}" data-question="${esc(key)}" ${answer?.selected===ci?'checked':''}><span class="pg-choice-letter">${String.fromCharCode(65+ci)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary pg-check-answer" data-check="${esc(key)}" ${Number.isInteger(answer?.selected)?'':'disabled'}>${checked?'再次检查':'检查答案'}</button><div class="pg-answer-feedback" aria-live="polite">${checked?`<strong>${right?'✓ 回答正确':'再想一想'} · 正确选项 ${String.fromCharCode(65+quiz.answer)}</strong>${renderChoiceFeedback(quiz,answer.selected,{prefix:`pg-${li}-${qi}`})||`<p>${esc(quiz.explanation)}</p>`}<button type="button" class="pg-text-button" data-review="${li}">返回这一节复习 →</button>`:''}</div></article>`;
     }).join('')}</div>`;
     $('#pg-quiz-lesson').onchange=e=>{state.quizLesson=e.target.value;drawQuiz();};
     $('#pg-clear-progress').onclick=()=>{state.answers={};persist();draw();toast('练习记录已重置');};
     root.querySelectorAll('[data-question]').forEach(input=>input.onchange=e=>{const key=e.target.dataset.question;state.answers[key]={selected:Number(e.target.value),checked:false};persist();const article=e.target.closest('.pg-question');article.classList.remove('is-correct','is-incorrect');article.querySelectorAll('.correct-choice').forEach(el=>el.classList.remove('correct-choice'));article.querySelector('.pg-check-answer').disabled=false;article.querySelector('.pg-check-answer').textContent='检查答案';article.querySelector('.pg-answer-feedback').innerHTML='';});
     root.querySelectorAll('[data-check]').forEach(button=>button.onclick=()=>{const key=button.dataset.check,entry=allQuestions.find(q=>q.key===key);if(!entry||!Number.isInteger(state.answers[key]?.selected))return;state.answers[key].checked=true;persist();const id=`pg-q-${entry.li}-${entry.qi}`;draw();$('#'+id+' .pg-check-answer')?.focus({preventScroll:true});});
+    for(const {li,qi,quiz,key} of entries){const answer=state.answers[key];if(answer?.checked){const article=$('#pg-q-'+li+'-'+qi);disposeFeedback.push(bindChoiceFeedback(article,quiz,answer.selected,{prefix:`pg-${li}-${qi}`,isCurrent:()=>current()&&state.tab==='quiz'}));}}
     root.querySelectorAll('[data-review]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.review);navigate('learn');});
   }
   draw();

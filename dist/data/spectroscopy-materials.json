@@ -858,6 +858,7 @@
       "module": "resonance",
       "lesson": "resonance-selection",
       "title": "判断谱峰强度与数值可信度",
+      "labPreset": "resonance-isotropic",
       "prompt": "固定一个纯 Zeeman 双重态，比较温度、偏振、线宽与网格。",
       "steps": [
         {

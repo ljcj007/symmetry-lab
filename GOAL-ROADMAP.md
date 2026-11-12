@@ -50,3 +50,11 @@ establish that all existing scientific and teaching content has been audited.
 - The 74-tool directory discloses inputs, outputs, arithmetic method, scope and conditions. Its exact/numeric/mixed/reference filter composes with task categories, normalized search and favorites; disclosures retain state and have tool-specific accessible names.
 - Exact checks include fresh production Racah/9j results and independent path/operator calculations. Magnetic setting questions distinguish identifier lookup, an actual basis/origin transform, classical uniform moments and a one-dimensional antitranslation toy subgroup.
 - This release expands educational and tool-discovery behavior. It does not complete all scientific workflows or demonstrate measured learning gains.
+
+## Lesson continuity and diagnostic support release
+
+- All 133 exercises in 14 topic families now offer an explicit same-lesson return and documented lesson-experiment initialization. Production handlers cover 93 non-first lessons; 79 course-return links keep their exact lesson context, while 14 material-route links retain their material browsing purpose. Ordinary tabs preserve custom and incomplete input; the explicit preset action is separate and does not run computation.
+- Ten existing questions/steps have choice-specific feedback and 20 independent changed-condition repair checks. Original answers and scientific cores are unchanged. Repair responses cannot count as correct answers to the original task.
+- Three foundation lessons contain four optional local matrix bridges: transpose/inverse, signed area, active vector versus function inverse substitution, and dual reciprocal-coordinate changes at nonzero wavevector. The examples and 104 unimodular checks are mathematical teaching references, not general crystal converters.
+- Lie stage navigation now agrees between the sidebar, picker and next lesson; other stages remain explicitly accessible with prerequisites and a one-slot return. The enlarged type and mathematical display are retained.
+- Remaining needs include broader first-use prerequisite support, targeted repair beyond these ten questions, project parameter explanations, and representative real-data scientific workflows. The full site objective remains open.

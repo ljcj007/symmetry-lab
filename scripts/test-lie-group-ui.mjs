@@ -281,9 +281,9 @@ const linkedUI=await import('../dist/lie-group-ui.js?learning-link-regressions')
 await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'continuous',track:'continuous'},onNavigate:patch=>linkedRoutes.push(patch)});
 const ninejIndex=routeCourse.lessons.findIndex(item=>item.id==='su3-ninej-paired-trees');
 const oldSidebar=linkedPage.firstElementChild.querySelectorAll('[data-lg-lesson]')[0];
-linkedPage.firstElementChild.querySelectorAll('[data-lg-lesson]').find(button=>button.dataset.lgLesson===String(ninejIndex)).onclick();
+linkedPage.firstElementChild.querySelectorAll('[data-lg-other-lesson]').find(button=>button.dataset.lgOtherLesson===String(ninejIndex)).onclick();
 assert.equal($(linkedPage,'#lg-track-select').value,'ninej');
-assert.equal(linkedRoutes.at(-1).lesson,'su3-ninej-paired-trees','A cross-track sidebar click opens its requested lesson instead of resetting');
+assert.equal(linkedRoutes.at(-1).lesson,'su3-ninej-paired-trees','The explicit other-stage catalog opens its requested lesson instead of resetting');
 assert.equal(linkedRoutes.at(-1).track,'ninej');
 const afterSidebar=linkedRoutes.length;oldSidebar.onclick();assert.equal(linkedRoutes.length,afterSidebar,'A detached sidebar control cannot change another lesson');
 for(const [lesson,exercise]of [
@@ -316,4 +316,4 @@ const rabiIndex=routeDerivations.exercises.findIndex(item=>item.id==='rabi-pi-pu
 $(linkedPage,'#lg-derivation-select').value=String(rabiIndex);await $(linkedPage,'#lg-derivation-select').onchange();
 assert.equal(linkedRoutes.at(-1).exercise,'rabi-pi-pulse','An explicit bank choice is reflected in navigation');
 assert.equal(linkStorage.get('symmetry-lab.lie.derivations.v1'),JSON.stringify(linkProgress),'Navigation preserves independent derivation progress');
-console.log('Lie course continuity: cross-track sidebar, nine actual preset/lesson links, synthetic unmatched-lesson bank fallback, bank selection, route context, stale controls and progress preservation passed.');
+console.log('Lie course continuity: explicit other-stage catalog, nine actual preset/lesson links, synthetic unmatched-lesson bank fallback, bank selection, route context, stale controls and progress preservation passed.');

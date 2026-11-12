@@ -31,6 +31,37 @@ class ResonanceTests(unittest.TestCase):
             self.assertAlmostEqual(r["selection"]["totalWeight"], expected_weight)
             self.assertTrue(np.allclose(r["selection"]["energies"], [-frequency / 2, frequency / 2]))
 
+    def test_classroom_intensity_exercise_uses_a_pure_zeeman_doublet(self):
+        root = Path(__file__).resolve().parents[1]
+        data = json.loads((root / "dist/data/spectroscopy-materials.json").read_text(encoding="utf8"))
+        source = json.loads((root / "dist/data/spin-resonance-content.json").read_text(encoding="utf8"))
+        exercise = next(e for e in data["exercises"] if e["id"] == "resonance-intensity-steps")
+        self.assertEqual(exercise, next(e for e in source["exercises"] if e["id"] == exercise["id"]))
+        module = next(m for m in data["modules"] if m["id"] == "resonance")
+        presets = {p["id"]: p["input"] for p in module["presets"]}
+        self.assertEqual(exercise["labPreset"], "resonance-isotropic")
+        inputs = presets[exercise["labPreset"]].copy()
+        self.assertEqual(inputs["spin"], .5)
+        self.assertEqual(inputs["nuclearSpin"], 0)
+        self.assertEqual([inputs[k] for k in ("gX", "gY", "gZ")], [2, 2, 2])
+        self.assertEqual([inputs[k] for k in ("zeroFieldD", "zeroFieldE", "hyperfinePerp", "hyperfineParallel", "nuclearGamma")], [0] * 5)
+        lesson = next(l for l in data["lessons"] if l["id"] == exercise["lesson"])
+        self.assertEqual(lesson["preset"], "resonance-spin1")
+        self.assertEqual(presets[lesson["preset"]]["spin"], 1)
+        self.assertEqual(presets[lesson["preset"]]["zeroFieldD"], 2.87)
+        cold = run(inputs)
+        hot = run({**inputs, "temperature": 300})
+        splitting = 2 * MU_B_OVER_H * inputs["field"]
+        self.assertEqual(cold["dimension"], 2)
+        self.assertTrue(np.allclose(cold["selection"]["energies"], [-splitting / 2, splitting / 2]))
+        self.assertTrue(np.allclose(cold["selection"]["energies"], hot["selection"]["energies"]))
+        self.assertAlmostEqual(cold["selection"]["dominantFrequency"], splitting)
+        self.assertAlmostEqual(hot["selection"]["dominantFrequency"], splitting)
+        self.assertLess(hot["selection"]["totalWeight"], cold["selection"]["totalWeight"])
+        for result, temperature in ((cold, inputs["temperature"]), (hot, 300)):
+            expected = math.tanh(splitting / (2 * K_B_OVER_H * temperature))
+            self.assertAlmostEqual(result["selection"]["totalWeight"], expected)
+
     def test_anisotropic_direction_and_dipole_strength(self):
         g = np.array([1.8, 2.1, 2.6])
         for theta, phi in [(0, 0), (90, 0), (90, 90), (37, 51)]:

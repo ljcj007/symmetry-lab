@@ -32,6 +32,22 @@ v=await mount({module:'andreev',calculationOnly:true});change(v,'sites',2);asser
 let finish;v=await mount({module:'resonance',calculationOnly:true},()=>new Promise(resolve=>finish=resolve));v.$('#spx-form').onsubmit({preventDefault(){}});v.$('#spx-cancel').onclick();finish(fixtures.results['resonance-spin1']);await flush();assert.equal(ui.getSpectroscopyResult(),null);assert.match(v.$('#spx-result').innerHTML,/取消/);
 v=await mount({module:'resonance',calculationOnly:true},()=>new Promise(resolve=>finish=resolve));v.$('#spx-form').onsubmit({preventDefault(){}});change(v,'field',.1);finish(fixtures.results['resonance-spin1']);await flush();assert.equal(ui.getSpectroscopyResult(),null);assert.ok(v.cancelled.length);
 for(const e of data.exercises){v=await mount({module:e.module,exercise:e.id,tab:'derive'});for(const [i,s]of e.steps.entries()){const el=v.$('#spx-steps').querySelectorAll('.obs-exercise-step')[i];assert.ok(el);el.querySelectorAll('[data-spx-answer]').find(b=>Number(b.dataset.spxAnswer)!==s.answer).onclick();assert.equal(v.$('#spx-steps').querySelectorAll('.obs-exercise-step').length,i+1);el.querySelectorAll('[data-spx-answer]').find(b=>Number(b.dataset.spxAnswer)===s.answer).onclick();}assert.match(v.$('#spx-progress').textContent,/完成/);}
+// This exercise fixes a pure Zeeman doublet; the parent lesson additionally
+// discusses degenerate subspaces using its separate spin-one example.
+let conditionRuns=0;
+const conditions=await mount({module:'resonance',lesson:'resonance-selection',exercise:'resonance-intensity-steps',tab:'derive'},()=>{conditionRuns++;throw Error('Preset navigation must not calculate');});
+assert.equal(conditions.$('#spx-flow-lab').textContent,'用本题条件检验');
+await conditions.$('#spx-flow-lab').onclick();
+assert.equal(conditions.$('#spx-preset').value,'resonance-isotropic');
+for(const [key,value]of Object.entries({spin:.5,nuclearSpin:0,gX:2,gY:2,gZ:2,zeroFieldD:0,zeroFieldE:0,hyperfinePerp:0,hyperfineParallel:0,nuclearGamma:0}))assert.equal(Number(conditions.$('#spx-'+key).value),value,key);
+change(conditions,'temperature',300);
+conditions.$('[data-spx-tab="derive"]').onclick();conditions.$('[data-spx-tab="lab"]').onclick();
+assert.equal(Number(conditions.$('#spx-temperature').value),300,'Ordinary tabs retain the current temperature');
+assert.equal(Number(conditions.$('#spx-spin').value),.5,'Ordinary tabs do not replace exercise inputs with the lesson example');
+conditions.$('[data-spx-tab="learn"]').onclick();await conditions.$('#spx-to-lab').onclick();
+assert.equal(conditions.$('#spx-preset').value,'resonance-spin1','The ordinary lesson entry retains its original spin-one example');
+assert.equal(Number(conditions.$('#spx-spin').value),1);assert.equal(Number(conditions.$('#spx-zeroFieldD').value),2.87);assert.equal(Number(conditions.$('#spx-zeroFieldE').value),.15);
+assert.equal(conditionRuns,0,'Neither exercise nor lesson navigation calculates automatically');
 const mapping={'spin-resonance':{ion:'old-ion',isotropic:'resonance-spin1-isotropic',split:'resonance-spin1'},'normal-andreev':{normal:'old-device',delta0:'andreev-project-normal',paired:'andreev-project-paired'},'multiplet-xas':{kanamori:'old-ion',linearx:'spectra-project-x',linearz:'spectra-project-z'}};
 const ordinary=notebook.makeProject({title:'Existing material record'});await notebook.saveProject(ordinary);
 for(const template of templates){let project=notebook.makeProject({title:template.title});project.assignment={id:template.id,steps:{},conclusion:'参数和模型边界均须说明。'};

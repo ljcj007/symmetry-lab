@@ -8,6 +8,7 @@ catalogFiles.push('en-learning-entry.json');
 catalogFiles.push('en-course-navigation.json');
 catalogFiles.push('en-basic-classroom-20261112.json');
 catalogFiles.push('en-depth-capabilities-a.json','en-depth-capabilities-b.json','en-depth-lessons.json','en-depth-navigation.json');
+catalogFiles.push('en-flow-feedback.json','en-flow-bridges.json','en-flow-navigation.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

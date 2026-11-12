@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 23315,
-  "translatedUnits": 23315,
+  "sourceUnits": 23540,
+  "translatedUnits": 23540,
   "missing": [],
-  "files": 370,
+  "files": 374,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -43,6 +43,9 @@
     "en-depth-capabilities-a.json",
     "en-depth-capabilities-b.json",
     "en-depth-lessons.json",
-    "en-depth-navigation.json"
+    "en-depth-navigation.json",
+    "en-flow-feedback.json",
+    "en-flow-bridges.json",
+    "en-flow-navigation.json"
   ]
 }

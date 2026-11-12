@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "release": "20261113-flow1",
+  "sourceHashNormalization": "utf8-lf-v1",
+  "scope": "Context-preserving topic lessons, explicit lesson-preset checks, editable experiment drafts, choice-specific remediation, optional first-use matrix bridges, and consistent Lie stage navigation.",
+  "counts": {
+    "topicFamilies": 14,
+    "topicModules": 40,
+    "topicLessons": 133,
+    "topicExercises": 133,
+    "nonFirstLessonFlows": 93,
+    "foundationBridgeLessons": 3,
+    "optionalConceptBridges": 4,
+    "questionsWithChoiceFeedback": 10,
+    "independentRemediationQuestions": 20
+  },
+  "verification": [
+    "Production UI event handlers test all 93 non-first lessons across 14 families: same-lesson return, explicit preset initialization, intermediate derivation state and editable drafts without automatic computation.",
+    "The 79 explicit course-return links retain lesson context. The 14 material browsing links keep their distinct material-route meaning.",
+    "Choice-specific repair and changed-condition questions do not increment the original question progress; changing a checked original answer revokes its checked state.",
+    "Four optional matrix bridges use local exact rational examples, noncommuting function actions and 104 unimodular coordinate transformations.",
+    "Seven Lie stage filters agree across the sidebar, chapter picker and next action; other lessons remain in a labelled native disclosure and cross-stage navigation offers a bounded return."
+  ],
+  "limitations": [
+    "These are interface and mathematical-reference checks, not student learning-outcome measurements or a complete semantic audit of all lessons.",
+    "The optional geometric examples use two-dimensional teaching models; the generic rational rotation is not claimed to be a periodic-crystal operation.",
+    "Explicit lesson-preset actions intentionally initialize the documented experiment. Ordinary tab changes preserve custom input instead.",
+    "The Kanamori common-energy shift assumes fixed particle number, fixed J and crystal-field terms, and U-prime linked to U minus 2J; it is not a statement about arbitrary many-body models."
+  ],
+  "files": {
+    "GOAL-ROADMAP.md": {
+      "bytes": 8625,
+      "sha256": "b651b642dcb4234519cefe03dfdd693bf0527a1246fbe7539049f4568d0a3d48"
+    },
+    "dist/app.js": {
+      "bytes": 92894,
+      "sha256": "6c79a7368fd8ed67dd07cd9c61c3b2de04d73ae84bb5b90ea0c8bc55c4f31a5c"
+    },
+    "dist/bridges-ui.js": {
+      "bytes": 15330,
+      "sha256": "67dd26b45030947958051c2e6beba800d65e6aefbf5ba5ba5f4da78552ac15a0"
+    },
+    "dist/classroom-ui.js": {
+      "bytes": 30323,
+      "sha256": "be47a757ae2faeaf369b5dd7ef49b6b4e3e6feafb3d499c5744fd285732bdb7a"
+    },
+    "dist/classroom.css": {
+      "bytes": 6584,
+      "sha256": "6a0f5c4be4c254b44780159c7c43511294b48575ad4a16fa07110f7aef254dca"
+    },
+    "dist/connections-ui.js": {
+      "bytes": 17174,
+      "sha256": "24e1532d7ea4e8b71f0fc8c09ad8cb39b26f0b3862c0e78efafb256b511d5cd3"
+    },
+    "dist/construction-ui.js": {
+      "bytes": 16864,
+      "sha256": "08a5c29581f7dbb147795f6b7711a1ee9d8bcbcf414c0e5629d32688e007985f"
+    },
+    "dist/coupled-materials-ui.js": {
+      "bytes": 36098,
+      "sha256": "c03eb6e0f42626dc57abacbac413d2ba69aa375bd1e5bb1121fdf69800840d83"
+    },
+    "dist/course-flow.js": {
+      "bytes": 6495,
+      "sha256": "c03640c8c44d824b02729ccf3bf92151f773ad66514d843c775c09e840d095c3"
+    },
+    "dist/data/local-multiplet-content.json": {
+      "bytes": 21109,
+      "sha256": "7ed61c83a21dbfdcd74a06302f9e8a4cafb4ab7b0681c7a47ce45faa88e64f8c"
+    },
+    "dist/data/material-observables.json": {
+      "bytes": 42170,
+      "sha256": "2a9342d5551803e28e85c365368068133e8a881114db04e7227a966381993e00"
+    },
+    "dist/data/pointgroup-lessons.json": {
+      "bytes": 35682,
+      "sha256": "9ce858936683b5b9f2f77a4767eb9dd4998fa7d56d339be3dbc98ba80c5fdc11"
+    },
+    "dist/data/response-materials.json": {
+      "bytes": 58560,
+      "sha256": "2b04cfb09219c8a5824a4248405d9d69e9f2749585b385e0b5ed5ddc5273d421"
+    },
+    "dist/data/spectroscopy-materials.json": {
+      "bytes": 56759,
+      "sha256": "0d5ab49d3486b8063ffd5d816ce6cc7c8c7d43e94d72c67fbf07e685fb02db06"
+    },
+    "dist/data/spin-resonance-content.json": {
+      "bytes": 19844,
+      "sha256": "ed8c2f4b9210a62cae4d9f10e3e6c4302c45aa820f422da6a776f23501e7b0de"
+    },
+    "dist/electronic-materials-ui.js": {
+      "bytes": 32276,
+      "sha256": "3b9bd57a256f8bab58b66b3ddc2945cf59c49b7a489fdfdb8d69a8f7fd3ce104"
+    },
+    "dist/frontiers-ui.js": {
+      "bytes": 16828,
+      "sha256": "4cb8f3680a95d1bfe33212c0192445d9a9f215972f53ee8d5a97224267a150f3"
+    },
+    "dist/index.html": {
+      "bytes": 6035,
+      "sha256": "73d48cde73073abde04d8bb127d21c1ec4a4d40b54dbf4626eacf2fab6fd6724"
+    },
+    "dist/learning-feedback.js": {
+      "bytes": 4472,
+      "sha256": "6338e84f3dd7db9b459563159bb334aa137b7786a0fcc87b4a0d50d4173bc77e"
+    },
+    "dist/lie-group-ui.js": {
+      "bytes": 53045,
+      "sha256": "155a78c9c0ba0046a5a78b89d7254235fc6e4356f9e1b574798379fd7a6cf9f0"
+    },
+    "dist/lie-group.css": {
+      "bytes": 27977,
+      "sha256": "c0ab99dddb17479695c7a927973ab92a4f9f150fd73e5cf93efd659db6fa9016"
+    },
+    "dist/material-research-ui.js": {
+      "bytes": 35307,
+      "sha256": "f4467917128b797df4d7a884d65cd7d4e25145fe4c06503e520a26c19610fbf4"
+    },
+    "dist/matrix-bridges.css": {
+      "bytes": 2928,
+      "sha256": "34613c77f2f2e980803605bd35a5682f891a3eb02f624afdd6f09a4771c9ee44"
+    },
+    "dist/matrix-bridges.js": {
+      "bytes": 23685,
+      "sha256": "9b33a9a8d353767bf10e239087ebe820b5431533d588fdab3d9a581c0679003d"
+    },
+    "dist/navigation.css": {
+      "bytes": 8184,
+      "sha256": "cc021152b7004eb4a4716899021d40681cca891a69be017ae106956cfc705e33"
+    },
+    "dist/observables-ui.js": {
+      "bytes": 26106,
+      "sha256": "05e7bfc0024fe19f6baa3384aaf07bc01fa0899db51512cd7e2559defc0c1f7a"
+    },
+    "dist/pathways-ui.js": {
+      "bytes": 12552,
+      "sha256": "88f64100be441ca285a3eca8684c481d2abbf777966bdb52991032eacee813e6"
+    },
+    "dist/pointgroup-ui.js": {
+      "bytes": 36070,
+      "sha256": "dad5f516ece33e70534a74322b12d1c5cbc35651847476b7bd3c8dd25f12171f"
+    },
+    "dist/principles-ui.js": {
+      "bytes": 15785,
+      "sha256": "750b31756f731ddee0a6ffad88945dd93b23768523f52d724d9033005a622072"
+    },
+    "dist/quantum-materials-ui.js": {
+      "bytes": 30912,
+      "sha256": "c440c31a1b33920ac23f07f3840f3e28ad79482d82e7336f1466ac29a7365467"
+    },
+    "dist/response-materials-ui.js": {
+      "bytes": 12836,
+      "sha256": "75192101b9b5a11fbe316a1fd75e16f5bb12ed7d0b2d1fbf013745daf15fa70a"
+    },
+    "dist/spectroscopy-ui.js": {
+      "bytes": 12990,
+      "sha256": "ee513d29bcf56a1243afd7e7743874aea0a7037347cf9b8d4938a99337c5f381"
+    },
+    "dist/structure-dynamics-ui.js": {
+      "bytes": 38190,
+      "sha256": "fe389f66038d49ca5409a1d33f7eb00d6771043b9e05446b981d92ef057fc1eb"
+    },
+    "locales/en-flow-bridges.json": {
+      "bytes": 15903,
+      "sha256": "4e99c9106537b9873bf7f71fd1f2ac5a20e199b3e5014b83a066eada9bf488e3"
+    },
+    "locales/en-flow-feedback.json": {
+      "bytes": 21804,
+      "sha256": "0d7cee57706964e802df74ce50c712cb201b7dc5070c28af2333402489a727f1"
+    },
+    "locales/en-flow-navigation.json": {
+      "bytes": 735,
+      "sha256": "614cca565ad1ce9a78026b3207505384d77777bce38d31530148ab3fc4e6aaff"
+    },
+    "package.json": {
+      "bytes": 12978,
+      "sha256": "2da5c18593f48126a7d8dbcd81acc98f72fe67aa6c58cf3038f4d7c968437b7a"
+    },
+    "scripts/build-learning-flow-provenance.mjs": {
+      "bytes": 5193,
+      "sha256": "7cc7daabba0c415aec05781231d43bcfaf767a80efb5963a391a5fe458f5c977"
+    },
+    "scripts/english-catalog.mjs": {
+      "bytes": 1497,
+      "sha256": "fe8680ababc5276c8b839605fdc4928639f6cda1d50a223dfe3f12f61fe5c576"
+    },
+    "scripts/test-course-flow.mjs": {
+      "bytes": 17467,
+      "sha256": "e96215b6a445239a7f87bee3602a559d9e1d16c967a89104fc77cb67f23fe1ab"
+    },
+    "scripts/test-learning-feedback.mjs": {
+      "bytes": 9342,
+      "sha256": "07966b0bd4f9df6f825f6d5e0af7c63796baa6ac9e12e05fe9a407f042ae1804"
+    },
+    "scripts/test-lie-group-ui.mjs": {
+      "bytes": 81128,
+      "sha256": "6e99304de76890f9bfd291f9696ae9c0b142153f4a9c7290bc810bc830f58793"
+    },
+    "scripts/test-lie-stage-navigation.mjs": {
+      "bytes": 17079,
+      "sha256": "fe4ff523f2779e01fdd0391b57cc05b21921af067116ff1e1e20cfbb32dbcb11"
+    },
+    "scripts/test-matrix-bridges.mjs": {
+      "bytes": 12620,
+      "sha256": "8a09ae835089ac518358a96a79a09f25c328ccb6457e40ed7b783762d584ba19"
+    },
+    "scripts/test-pointgroup-learning-support.mjs": {
+      "bytes": 4924,
+      "sha256": "564ee369cf271d00ae5dd72a883029ae7f269596fe292b26d3dbdc355c76232d"
+    },
+    "scripts/test-python-spin-resonance.py": {
+      "bytes": 11897,
+      "sha256": "0e0a086eeff7bfc555d504b12733e7945e83a9363d032cfd8761d20b094a3a3b"
+    },
+    "scripts/test-spectroscopy-ui.mjs": {
+      "bytes": 9789,
+      "sha256": "00ed16e8c2f455be52c0c61906895a7e033d1a5fb3ffa604e5454e056419a391"
+    },
+    "scripts/test-structure-dynamics-ui.mjs": {
+      "bytes": 16393,
+      "sha256": "aa25f7b6783307af161444233f319760f070dbe2b1014ae7f1e397250a519ba9"
+    }
+  }
+}

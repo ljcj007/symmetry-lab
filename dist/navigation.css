@@ -10,3 +10,5 @@
 
 .nav-directory-controls .nav-type-help{flex-basis:100%;margin:0}
 .nav-tool-scope ul{margin:0;padding-left:1.25em}.nav-tool-scope li+li{margin-top:5px}
+
+.nav-card-grid:has(>.nav-tool-card:only-child){grid-template-columns:minmax(0,1fr)}

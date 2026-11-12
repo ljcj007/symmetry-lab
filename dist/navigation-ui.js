@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261113-depth1';
+import {classroomPathways} from './classroom-ui.js?v=20261113-flow1';
 import {searchEntries} from './tool-search.js?v=20261113-depth1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261113-depth1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261113-depth1';
