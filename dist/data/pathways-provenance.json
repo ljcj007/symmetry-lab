@@ -287,13 +287,13 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "c1d1c07769329fa6e2b971ba3728a5eadb747cbdc5caeebdf0e26ba8309b7ea2",
-      "bytes": 91620
+      "sha256": "179849e67c2b2dd4e10135041d5c3155c024ae60ecace6afa466986982071a1f",
+      "bytes": 92001
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "0f9fdde23b6d987a467dc9da547aa37124bdd288f5776873673385acb1964e74",
-      "bytes": 25987
+      "sha256": "dc89202148783fffed689e2faddc19aa163a92d2abd6c234a45c908835ceb945",
+      "bytes": 28306
     },
     {
       "path": "dist/classroom.css",
@@ -422,8 +422,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "cb64902e508259925838c2c3ae6ff2cf0ba587540215f4560881d1918ae95f39",
-      "bytes": 5579
+      "sha256": "7bb0c14d208466d612f89510abf68026a262287f62dc74838bb408dc5d470b67",
+      "bytes": 5940
     },
     {
       "path": "dist/induction.js",
@@ -482,8 +482,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "56ec24512dcb2f37e3c94b564fc6b3ccc55770d380627e923dbcad4049183ec1",
-      "bytes": 23317
+      "sha256": "55fe5d40ec6b7aa2afb04f126e40c2355d50aa4d6e61fc3ec5df7b87198382de",
+      "bytes": 23390
     },
     {
       "path": "dist/navigation.css",
@@ -687,8 +687,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "84b5f25905618162189d1be01a780543588a22b524c8c38c29664da34e31ca0b",
-      "bytes": 11691
+      "sha256": "e1e9e0b028357fbc7666074dd152e4d79853c4704f60dde050f0adefe4b68942",
+      "bytes": 11801
     },
     {
       "path": "scripts/build-domainwall-catalog.py",

@@ -1,7 +1,7 @@
 export function homeHTML({link,toolCard,knownTool,favorites,recent,pathways,esc}){
  return `<section class="nav-home-hero"><span class="nav-card-kicker">SYMMETRY LAB · 从理解到验证</span><h1>理解对称性，<br>再把它用于物理。</h1><p>选择适合你的起点，在同一条路线中阅读、预测、计算和解释。</p></section>
  <section class="nav-path-section" aria-label="三个学习入口"><div class="entry-levels">${[
- ['01','基础入门','第一次学习群论','认识对称操作，学会表示与特征标，再进入晶体对称。','向量与矩阵基础','classroom/foundations?lesson=group-basics','开始第一课'],
+ ['01','基础入门','从零开始，不熟悉矩阵也可以','从图形操作学起，用六个短实验补齐坐标、矩阵与特征标。','不需要预先学习群论','classroom/start','开始零基础导学'],
  ['02','物理应用','把群论用于物理问题','从声子、选择定则和材料响应，理解对称性怎样限制可观测量。','基础群论与物理概念','classroom/observables','选择物理主题'],
  ['03','进阶研究','已有明确计算任务','直接进入磁共表示、精确代数、表示耦合与多体模型。','表示论与相关物理基础','compute','进入计算中心']
  ].map(([n,title,who,goal,prior,route,action])=>`<article class="entry-level"><span class="entry-number">${n}</span><p class="entry-audience">${who}</p><h3>${title}</h3><p>${goal}</p><p class="entry-prior">建议基础：${prior}</p>${link(route,action+' →','entry-action')}</article>`).join('')}</div></section>

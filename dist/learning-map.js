@@ -1,0 +1,10 @@
+const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const studyStages=[
+ {id:'start',title:'先把操作看明白',prior:'没有先修要求',goal:'能区分物体不变、点的位置不变与操作本身。',links:[['零基础六步导学','classroom/start']]},
+ {id:'foundations',title:'建立表示的语言',prior:'会读坐标与一个简单矩阵；可在导学中补齐',goal:'从基函数写矩阵、求特征标，再用投影和约化找子空间。',links:[['操作、点群与特征标','classroom/foundations?lesson=group-basics'],['D₃ 投影与基函数','classroom/foundations?module=demos&experiment=projection'],['定理证明与反例','classroom/foundations?module=theorems&experiment=rearrangement']]},
+ {id:'branches',title:'按问题选择一个分支',prior:'点群与表示；各分支再补充对应物理概念',goal:'晶体分支学习平移，自旋分支学习时间反演，连续群分支学习生成元。',links:[['晶体与空间群','classroom/crystal'],['自旋、双群与磁群','classroom/spin'],['SU(2)、SU(3) 与生成元','classroom/continuous']]},
+ {id:'applications',title:'把限制变成可检验的预测',prior:'表示、选择定则与相应的振动或响应概念',goal:'先作预测，再计算和解释，并改变一个条件寻找反例。',links:[['水分子与 IR / Raman','classroom/foundations?module=demos&experiment=water'],['物性与 SHG 旗舰实验','classroom/observables?module=shg-story'],['相变、衍射与真实数据','classroom/structure-dynamics']]},
+ {id:'deeper',title:'深入证明、耦合与模型',prior:'复矩阵、量子态，以及所选主题的前置表示知识',goal:'追踪约定、外重数、简并保护条件和数值验证。',links:[['张量积、CG、6j 与 9j','classroom/coupling'],['对称性推导工坊','classroom/crystal?module=workshop'],['对称适应基与矩阵作业','classroom/foundations?module=salc']]},
+ {id:'research',title:'围绕材料组织研究记录',prior:'能够解释输入、模型假设和验证误差',goal:'将课程、工具、参数对照和材料案例连接成可复现的记录。',links:[['全部计算工具','compute'],['群与材料图谱','atlas'],['项目与分步作业','atlas/projects'],['材料研究记录','atlas/notebook']]}
+];
+export function studyMapHTML(){return `<details class="classroom-study-map" open><summary>先修与进阶地图 · 按你已经会的内容选择起点</summary><p>路线提供学习顺序，所有课程与工具都可直接进入；完成导学检查不代表掌握后续研究主题。</p><ol>${studyStages.map((stage,i)=>`<li><span class="study-stage-number">${String(i).padStart(2,'0')}</span><div><h3>${esc(stage.title)}</h3><p class="study-stage-prior">建议先了解：${esc(stage.prior)}</p><p>${esc(stage.goal)}</p><nav aria-label="${esc(stage.title)}">${stage.links.map(([title,route])=>`<a href="#${esc(route)}" data-course-route="#${esc(route)}">${esc(title)} →</a>`).join('')}</nav></div></li>`).join('')}</ol></details>`;}

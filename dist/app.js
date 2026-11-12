@@ -2,9 +2,10 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261111-demos1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261111-demos1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261111-demos1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261112-paths1';
+import {startToolFinder} from './tool-finder.js?v=20261112-paths1';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261111-demos1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261111-demos1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261112-paths1';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
@@ -37,6 +38,7 @@ labels.home=['总览','从课程、计算任务或晶体材料出发，探索对
 labels.compute=['计算中心','按任务查找工具，复用课堂中的计算器与精确算法。'];
 labels.atlas=['群与材料图谱','统一查阅群目录、晶体结构和磁性材料实例。'];
 labels.classroom=['群论课堂','从基础概念到晶体、自旋、连续对称与表示耦合。'];
+labels['zero-start']=['零基础导学','从一次旋转开始，逐步认识坐标、矩阵与特征标；不需要预先学习群论。'];
 labels.projects=['跨模块项目作业','把研究问题、计算证据、数值检查和推导笔记连成一份可复现报告。'];
 labels.dictionary=['公式与符号词典','查阅定义、单位、坐标约定与适用条件，并返回相关课程和计算。'];
 labels.compare=['参数对照实验','固定一组结果，改变参数，再比较输入、曲线与解释。'];
@@ -143,6 +145,7 @@ function setView(request,options={}){
  const context=$('#view-context');
  context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['group-theorems','symmetry-mini-demos','foundations-demos','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':'<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+='<div class="mr-notebook-link"><a href="#atlas/notebook">记录最近计算 / 打开材料项目 →</a><a href="#compute/symmetry-audit">三层对称性诊断 →</a><a href="#atlas/compare">参数对照与预测 →</a></div>';
+ if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  rememberRoute(route);
  if(options.render!==false)return render();
 }
@@ -402,6 +405,7 @@ $('#cancel-python').onclick=cancelPython;
 onPythonStatus(({status,message})=>{$('#data-status').textContent=message;$('#cancel-python').classList.toggle('hidden',!['loading','running'].includes(status));});
 window.addEventListener('hashchange',()=>setView(location.hash.slice(1),{history:false}));
 $('#data-status').textContent='页面就绪 · 计算按需启动';
+startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route)});
 setView(location.hash.slice(1)||'home',{history:false});
 
 startMathDisplay(document.body);

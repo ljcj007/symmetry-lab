@@ -1,5 +1,7 @@
 import {createResourceLoader} from './resource-loader.js?v=20261110-en1';
+import {studyMapHTML} from './learning-map.js?v=20261112-paths1';
 const courseDefinitions={
+'zero-start':{load:()=>import('./zero-start.js?v=20261112-paths1'),render:'renderZeroStart',result:'getZeroStartResult'},
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261111-demos1'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261111-demos1'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261111-demos1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
@@ -27,6 +29,7 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
 export const classroomSections=[{id:'group-theorems',slug:'foundations',title:'群论定理证明与应用'},{id:'symmetry-mini-demos',slug:'foundations',title:'几何、能带与自旋演示'},{id:'foundations-demos',slug:'foundations',title:'基础教学演示'},{id:'flagship',slug:'shg-flagship',title:'SHG 旗舰实验'},{id:'frontiers',slug:'frontiers',title:'层群、手性与多体拓扑'},{id:'connections',slug:'connections',title:'同粒子、缺陷与互易响应'},{id:'construction',slug:'construction',title:'表示构造、超胞与能带连接'},{id:'principles',slug:'principles',title:'对称性、破缺与守恒'},{id:'bridges',slug:'bridges',title:'多体谱、极化子与量子态'},{id:'pathways',slug:'pathways',title:'位点、散射、畴壁与关联'},{id:'spectroscopy',slug:'spectroscopy',title:'磁共振、超导结与多重态光谱'},{id:'response-materials',slug:'response',title:'横向响应、器件与多电子态'},{id:'quantum-materials',slug:'quantum',title:'轨道、量子几何与电子输运'},{id:'electronic-materials',slug:'electronic',title:'电子配对、非线性光学与能带展开'},{id:'coupled-materials',slug:'mechanisms',title:'畸变、磁激发与热膨胀'},{id:'material-research',slug:'research',title:'材料分析专题'},{id:'pointgroups',slug:'pointgroups',title:'基础与点群'},{id:'academy',slug:'crystal',title:'晶体对称与内部自由度'},{id:'lie',slug:'lie',title:'连续群与表示'},{id:'observables',slug:'observables',title:'材料物性与光谱'},{id:'dynamics',slug:'structure-dynamics',title:'结构、相变与实验'}];
+classroomSections.unshift({id:'zero-start',slug:'start',title:'零基础导学'});
 export const classroomPathways=[
   {id:'foundations',section:'pointgroups',title:'基础与表示',summary:'从对称操作、群与特征标开始，建立读懂表示的语言。',level:'入门',prerequisite:'向量与矩阵基础',links:[['九个定理：证明与应用工坊','module=theorems&experiment=rearrangement'],['水分子、特征标与光谱演示','module=demos&experiment=water'],['矩阵与特征标','module=demos&experiment=characters'],['D₃ 三角形投影与基函数','module=demos&experiment=projection'],['SO(3) → O → D₄ 能级劈裂','module=demos&experiment=splitting'],['Jahn–Teller 效应','module=demos&experiment=jt'],['晶体宏观对称性','module=demos&experiment=macro'],['正多面体点群','module=mini&experiment=polyhedra'],['简并振动与示意谱','module=mini&experiment=vibrations'],['布里渊区与能带简并','module=mini&experiment=bands'],['置换与两自旋多体态','module=mini&experiment=manybody'],['时间反演与自旋','module=mini&experiment=time-reversal'],['双群与自旋–轨道耦合','module=mini&experiment=double-soc'],['三层对称性诊断','module=audit'],['置换群与同粒子统计','module=statistics'],['对称适应基与统一选择定则','module=salc'],['32 点群与特征标',''],['对称操作演示','tab=lab'],['概念练习','tab=quiz']]},
   {id:'crystal',section:'academy',track:'space',title:'晶体对称',summary:'把点群推广到三维周期结构，理解平移、螺旋轴和滑移面。',level:'基础 → 进阶',prerequisite:'点群与表示',links:[['层群、表面与界面对称性','module=layers'],['螺旋、滑移与动量简并','module=nonsymmorphic'],['对称性推导工坊','module=workshop'],['从 Wyckoff 位点到能带表示','module=bandrep'],['器件量子输运','module=device'],['量子几何与拓扑诊断','module=geometry'],['超胞与能带展开','module=unfold'],['能带相容关系与连接','module=bands'],['空间群与 Bloch 相位','track=space'],['Seitz 操作实验','tab=lab&experiment=seitz'],['典型材料与三维结构','tab=materials']]},
@@ -36,6 +39,16 @@ export const classroomPathways=[
   {id:'continuous',section:'lie',track:'continuous',title:'连续群与物理',summary:'认识 SU(2)、SU(3) 的生成元、权图以及量子态的连续变换。',level:'基础 → 进阶',prerequisite:'复数、矩阵与量子态',links:[['连续对称性与守恒量','module=conservation'],['生成元与物理应用','track=continuous'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['SU(3) 与权图','tab=lab&experiment=su3']]},
   {id:'coupling',section:'lie',track:'coupling',title:'张量积与重耦合',summary:'从表示分解走到 CG 换基、Racah（6j）与四体 9j 系数。',level:'进阶 → 专题',prerequisite:'表示、张量积与 SU(2)/SU(3)',links:[['表示与直积分解','track=representations'],['CG 系数与换基','track=cg'],['Racah（6j）','track=racah'],['四体重耦合（9j）','track=ninej']]}
 ];
+// Order topics by prerequisites instead of the date on which they were added.
+const introductoryLinks={
+ foundations:[['群、操作与复合','lesson=group-basics'],['对称操作实验','tab=lab'],['矩阵与特征标','module=demos&experiment=characters'],['32 点群与特征标',''],['水分子、特征标与光谱演示','module=demos&experiment=water'],['D₃ 三角形投影与基函数','module=demos&experiment=projection']],
+ crystal:[['空间群与 Bloch 相位','track=space'],['Seitz 操作实验','tab=lab&experiment=seitz'],['典型材料与三维结构','tab=materials']],
+ observables:[['晶体振动与光谱','lesson=mechanical-modes'],['物性张量与响应','lesson=neumann'],['Si、GaAs 与 BaTiO₃ · SHG 旗舰实验','module=shg-story']],
+ 'structure-dynamics':[['相变与畴','lesson=landau-stability'],['衍射相位与消光','lesson=structure-factor'],['声子数据与软模','lesson=phonopy-files']],
+ spin:[['双群与旋量','track=double'],['磁群与共表示','track=magnetic'],['色群与标签置换','track=color'],['自旋点群与空间群','track=spin']],
+ continuous:[['生成元与物理应用','track=continuous'],['SU(2) 与 Bloch 球','tab=lab&experiment=su2'],['SU(3) 与权图','tab=lab&experiment=su3']]
+};
+for(const pathway of classroomPathways){const first=introductoryLinks[pathway.id]||[],queries=new Set(first.map(([,query])=>query));pathway.links=[...first,...pathway.links.filter(([,query])=>!queries.has(query))];}
 const queryFields=['module','tab','lesson','experiment','preset','track','material','exercise','group','level','project'];
 const specialistModules={
  theorems:{section:'group-theorems',pathway:'foundations',route:'group-theorems'},
@@ -96,6 +109,7 @@ export function parseClassroomRoute(route){
   else if(['compute/phonons','compute/tensors'].includes(path))result={section:'observables',pathway:'observables',tab:'lab',experiment:path.slice(8),calculationOnly:true};
   else if(path.startsWith('compute/lie/')){const experiment=path.slice('compute/lie/'.length);if(!/^[a-z][a-z0-9_]*$/.test(experiment))return null;result={section:'lie',pathway:'coupling',tab:'lab',experiment,calculationOnly:true};}
   else if(path==='classroom')result={section:'overview',pathway:'overview'};
+  else if(path==='classroom/start')result={section:'zero-start',pathway:'start'};
   else {
     const slug=path.startsWith('classroom/')?path.slice(10):path;
     const legacy={'shg-flagship':'observables',frontiers:'crystal',connections:'foundations',construction:'foundations',principles:'structure-dynamics',pointgroups:'foundations',academy:'crystal',lie:'continuous',research:'structure-dynamics',mechanisms:'structure-dynamics',electronic:'spin',quantum:'spin',response:'observables',spectroscopy:'spin',pathways:'crystal',bridges:'observables'};
@@ -147,12 +161,15 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   let selection=typeof route==='string'?parseClassroomRoute(route):route;
   selection=selection||parseClassroomRoute(classroomHash(section));
   section=selection.section;
-  const overview=section==='overview',pathway=classroomPathways.find(p=>p.id===selection.pathway),embedded=selection.calculationOnly||selection.embeddedOnly||selection.atlasOnly;
+  const overview=section==='overview',pathway=selection.pathway==='start'?{id:'start',title:'零基础导学',level:'零基础',prerequisite:'不需要先学矩阵'}:classroomPathways.find(p=>p.id===selection.pathway),embedded=selection.calculationOnly||selection.embeddedOnly||selection.atlasOnly;
   const pathLink=(id,query='')=>'#classroom/'+id+(query?'?'+query:'');
   const directory=`<nav class="classroom-directory" aria-label="学习路线与主题"><a href="#classroom" data-course-route="#classroom" class="classroom-all ${overview?'active':''}">学习总览</a>${classroomPathways.map((item,index)=>`<section><a href="${pathLink(item.id)}" data-course-route="${pathLink(item.id)}" class="classroom-path ${selection.pathway===item.id?'active':''}" ${selection.pathway===item.id?'aria-current="page"':''}><small>0${index+1}</small><strong>${item.title}</strong></a>${selection.pathway===item.id?`<div class="classroom-topics">${item.links.map(([title,query])=>`<a href="${esc(pathLink(item.id,query))}" data-course-route="${esc(pathLink(item.id,query))}">${esc(title)}</a>`).join('')}</div>`:''}</section>`).join('')}</nav>`;
   const cards=classroomPathways.map((item,index)=>`<a class="classroom-path-card" href="${pathLink(item.id)}" data-course-route="${pathLink(item.id)}"><span class="classroom-card-number">0${index+1}<small>${item.level}</small></span><h2>${item.title}</h2><p>${item.summary}</p><div>建议基础：${item.prerequisite}</div><strong>进入路线 →</strong></a>`).join('');
   container.innerHTML=`<div class="classroom-page ${embedded?'classroom-embedded':'classroom-shell'}">${embedded?'':directory}<div class="classroom-main">${overview?`<header class="classroom-overview"><span>按知识路径学习</span><h2>从第一种对称操作，走到多体重耦合。</h2><p>先选择路线，再在同一单元中阅读、操作和练习。点群与空间群是空间层级，双值表示、磁性与内部自由度在各自主题中说明。</p></header><aside class="classroom-next"><h3>看见对称性：基础教学演示</h3><p>水分子振动 · 特征标 · D₃ 投影 · 能级劈裂 · Jahn–Teller · 晶体宏观对称性</p><a href="#classroom/foundations?module=demos&experiment=water">进入水分子与表示演示 →</a><p><a href="#classroom/foundations?module=mini&experiment=polyhedra">正多面体、简并能带、置换与自旋演示 →</a></p></aside><aside class="classroom-next"><h3>从一个完整实验开始</h3><a href="#classroom/observables?module=shg-story">为什么 Si、GaAs 与 BaTiO₃ 的 SHG 不同？预测 → 计算 → 解释 → 反例</a></aside><div class="classroom-path-grid">${cards}</div><aside class="classroom-next"><h3>已经有具体计算问题？</h3><p>计算中心提供完整参数；课程中的实验使用相同计算核心，并附教学预设。</p><a href="#compute">打开计算中心 →</a></aside>`:`${embedded?'':`<div class="classroom-course-heading"><span>${esc(pathway?.level||'课程')} · 建议基础：${esc(pathway?.prerequisite||'线性代数')}</span><a href="#classroom" data-course-route="#classroom">全部路线</a></div>`}${!embedded&&selection.pathway==='foundations'?'<nav class="classroom-next" aria-label="基础教学入口"><strong>基础演示与证明工坊</strong><p><a href="#classroom/foundations?module=demos&experiment=water">表示与分子 · 6 个演示</a> · <a href="#classroom/foundations?module=mini&experiment=polyhedra">几何、能带与自旋 · 6 个演示</a> · <a href="#classroom/foundations?module=theorems&experiment=rearrangement">群论定理 · 9 个证明与应用</a></p></nav>':''}<section id="classroom-course" aria-label="${esc(pathway?.title||'计算工具')}"></section>`}</div></div>`;
   const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
+  const directoryElement=root.querySelector('.classroom-directory');
+  if(directoryElement)directoryElement.insertAdjacentHTML('afterbegin','<a class="classroom-zero-entry" href="#classroom/start" data-course-route="#classroom/start">00 · 零基础导学</a>');
+  if(overview)root.querySelector('.classroom-overview')?.insertAdjacentHTML('afterend',studyMapHTML());
   const move=(hash,options)=>{if(!current())return;if(onNavigate)onNavigate(hash,options);else {const next=parseClassroomRoute(hash);if(next&&next.section!=='overview')onSection(next.section);}};
   root.querySelectorAll('[data-course-route]').forEach(link=>link.onclick=event=>{event?.preventDefault();move(link.dataset.courseRoute);});
   onLocation(overview?'学习中心':selection.calculationOnly?'计算中心 / 张量积与重耦合':'学习中心 / '+(pathway?.title||'课程'));

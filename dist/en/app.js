@@ -2,9 +2,10 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261111-demos1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261111-demos1';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261111-demos1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261112-paths1';
+import {startToolFinder} from './tool-finder.js?v=20261112-paths1';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261111-demos1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261111-demos1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261112-paths1';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
@@ -37,6 +38,7 @@ labels.home=["Overview","Explore symmetries from lessons, computational tasks, o
 labels.compute=["Calculation center","Find tools by task and reuse calculators and precise algorithms from the classroom."];
 labels.atlas=["Groups and materials atlas","Unified access to group catalogues, crystal structures and examples of magnetic materials."];
 labels.classroom=["Symmetry classroom","From fundamental concepts to crystals, spin, continuous symmetry and representation coupling."];
+labels['zero-start']=["Start from Zero","Begin with a rotation, then explore coordinates, matrices, and characters. No prior group theory is required."];
 labels.projects=["Cross-module projects","Connect research questions, computational evidence, numerical checks, and derivation notes into one reproducible report."];
 labels.dictionary=["Dictionary of Formulas and Symbols","View definitions, units, coordinate conventions and applicable conditions, and return to related courses and calculations."];
 labels.compare=["parameter control experiment","Fix a set of results, change parameters, and compare inputs, curves, and interpretations."];
@@ -143,6 +145,7 @@ function setView(request,options={}){
  const context=$('#view-context');
  context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← All calculation tools</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">Return to the previous course →</a>`:course?.calculationOnly?(['group-theorems','symmetry-mini-demos','foundations-demos','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">Learn this topic →</a>`:course.section==='dynamics'?"<a href=\"#classroom/structure-dynamics\" data-route=\"classroom/structure-dynamics\">Learning phase changes and experiments →</a>":course.section==='observables'?"<a href=\"#classroom/observables\" data-route=\"classroom/observables\">Learn material properties →</a>":"<a href=\"#classroom/coupling\" data-route=\"classroom/coupling\">Learning to represent coupling →</a>"):''}</div>`:primary==='atlas'&&view!=='atlas'?"<div class=\"nav-tool-context\"><a href=\"#atlas\" data-route=\"atlas\">← Group and Material Map</a></div>":'';
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+="<div class=\"mr-notebook-link\"><a href=\"#atlas/notebook\">Record recent calculations / Open material project →</a><a href=\"#compute/symmetry-audit\">Three-layer symmetry diagnosis →</a><a href=\"#atlas/compare\">parameter comparison and prediction →</a></div>";
+ if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  rememberRoute(route);
  if(options.render!==false)return render();
 }
@@ -402,6 +405,7 @@ $('#cancel-python').onclick=cancelPython;
 onPythonStatus(({status,message})=>{$('#data-status').textContent=message;$('#cancel-python').classList.toggle('hidden',!['loading','running'].includes(status));});
 window.addEventListener('hashchange',()=>setView(location.hash.slice(1),{history:false}));
 $('#data-status').textContent="Ready · compute on demand";
+startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route)});
 setView(location.hash.slice(1)||'home',{history:false});
 
 startMathDisplay(document.body);

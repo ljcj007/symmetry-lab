@@ -12,6 +12,7 @@ class Element{
     for(const select of this.querySelectorAll('select')){const options=select.querySelectorAll('option');select.value=(options.find(item=>Object.hasOwn(item.attributes,'selected'))||options[0])?.value||'';}
   }
   get innerHTML(){return this.html||'';}
+  insertAdjacentHTML(position,value){const fragment=new Element();fragment.innerHTML=value;const parent=position==='afterend'?this.parentNode:this;for(const child of fragment.children)child.parentNode=parent;if(position==='afterbegin')parent.children.unshift(...fragment.children);else if(position==='afterend')parent.children.splice(parent.children.indexOf(this)+1,0,...fragment.children);else throw Error('Unsupported test insertion position');}
   matches(selector){if(selector.startsWith('#'))return this.attributes.id===selector.slice(1);if(selector.startsWith('.'))return String(this.attributes.class||'').split(/\s+/).includes(selector.slice(1));if(/^[a-z][\w-]*$/.test(selector))return this.tag===selector;const match=selector.match(/^(\w+)?\[([\w-]+)(?:="([^"]*)")?\]$/);return !!match&&(!match[1]||match[1]===this.tag)&&Object.hasOwn(this.attributes,match[2])&&(match[3]===undefined||this.attributes[match[2]]===match[3]);}
   querySelectorAll(selector){return this.children.flatMap(child=>[...(child.matches(selector)?[child]:[]),...child.querySelectorAll(selector)]);}
   querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
@@ -44,6 +45,10 @@ const c=new Container(),calls=[],opened=[],navigations=[],locations=[];
 const courseRenderers=Object.fromEntries(classroomSections.map(s=>[s.id,options=>calls.push({section:s.id,...options})]));
 const render=route=>renderClassroomView({container:c,route:parseClassroomRoute(route),onNavigate:(hash,options)=>navigations.push({hash,options}),onLocation:value=>locations.push(value),courseRenderers,openGroup:s=>opened.push(s)});
 render('classroom');assert.equal(calls.length,0,'Overview loads no calculation or lesson module');assert.equal(c.firstElementChild.querySelectorAll('.classroom-path-card').length,7);
+assert.ok(c.firstElementChild.querySelector('.classroom-study-map'),'Overview exposes the prerequisite map');
+assert.ok(c.firstElementChild.querySelectorAll('[data-course-route]').some(link=>link.dataset.courseRoute==='#classroom/start'),'Zero-start entry is visible without removing the existing routes');
+assert.equal(parseClassroomRoute('classroom/start?lesson=matrix').section,'zero-start');
+assert.deepEqual(parseClassroomRoute(buildClassroomHash(parseClassroomRoute('classroom/start?lesson=matrix'))),parseClassroomRoute('classroom/start?lesson=matrix'));
 render('classroom/spin?track=spin&tab=lab&lesson=spin-definition&experiment=spin_group&preset=af_space');
 assert.equal(calls.at(-1).section,'academy');assert.equal(calls.at(-1).selection.preset,'af_space');assert.equal(calls.at(-1).selection.lesson,'spin-definition');
 calls.at(-1).openGroup(99);assert.deepEqual(opened[0],{mode:'sg',id:99,k:[0,0,0],doubleValued:false});
