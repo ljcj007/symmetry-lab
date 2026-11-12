@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261113-prose2';
-import {normalizeSearchText} from './tool-search.js?v=20261112-links1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261113-depth1';
+import {normalizeSearchText} from './tool-search.js?v=20261113-depth1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];

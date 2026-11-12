@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 22640,
-  "translatedUnits": 22640,
+  "sourceUnits": 23315,
+  "translatedUnits": 23315,
   "missing": [],
-  "files": 368,
+  "files": 370,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -39,6 +39,10 @@
     "en-theorem-docs.json",
     "en-learning-entry.json",
     "en-course-navigation.json",
-    "en-basic-classroom-20261112.json"
+    "en-basic-classroom-20261112.json",
+    "en-depth-capabilities-a.json",
+    "en-depth-capabilities-b.json",
+    "en-depth-lessons.json",
+    "en-depth-navigation.json"
   ]
 }

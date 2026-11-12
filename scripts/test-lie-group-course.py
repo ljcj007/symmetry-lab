@@ -87,8 +87,8 @@ class LieCourse(unittest.TestCase):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))
         data=json.loads((ROOT/'dist/data/lie-derivations.json').read_text(encoding='utf8'))
         exercises=data['exercises'];sources={s['id'] for s in course['sources']}
-        self.assertEqual(len(exercises),40)
-        self.assertEqual(len({e['id'] for e in exercises}),40)
+        self.assertEqual(len(exercises),44)
+        self.assertEqual(len({e['id'] for e in exercises}),44)
         self.assertEqual({e['group'] for e in exercises},{'u1','su2','su3'})
         for exercise in exercises:
             with self.subTest(exercise=exercise['id']):
@@ -240,7 +240,11 @@ class LieCourse(unittest.TestCase):
         exercises=json.loads((ROOT/'dist/data/lie-derivations.json').read_text('utf8'))['exercises']
         self.assertEqual({x['labPreset'] for x in lessons[-3:]},
                          {'su3-ninej-decuplet-four','su3-ninej-fifteen-four','su3-ninej-27-four'})
-        self.assertEqual({x['labPreset'] for x in exercises[-4:]},
+        high_ids={'su3-ninej-decuplet-s3','su3-ninej-fifteen-five-paths',
+                  'su3-ninej-27-weighted-entry','su3-ninej-high-complex-casimir'}
+        high_exercises=[x for x in exercises if x['id'] in high_ids]
+        self.assertEqual(len(high_exercises),4)
+        self.assertEqual({x['labPreset'] for x in high_exercises},
                          {'su3-ninej-decuplet-standard','su3-ninej-fifteen-four',
                           'su3-ninej-27-four','su3-ninej-high-complex'})
 

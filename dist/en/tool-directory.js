@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261112-links1';
+import {searchEntries} from './tool-search.js?v=20261113-depth1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={
@@ -22,7 +22,7 @@ export function orderToolGroups(groups){
   return {...group,tools:tagged.filter(item=>item.category===id).map(item=>item.tool).sort((a,b)=>rank(a[0])-rank(b[0]))};
  });
 }
-export function filterToolDirectory(entries,{category='all',query='',favorites=null}={}){
- const selected=entries.filter(item=>(category==='all'||item.category===category)&&(!favorites||favorites.includes(item.route)));
+export function filterToolDirectory(entries,{category='all',arithmetic='all',query='',favorites=null}={}){
+ const selected=entries.filter(item=>(category==='all'||item.category===category)&&(arithmetic==='all'||item.capability?.arithmetic===arithmetic)&&(!favorites||favorites.includes(item.route)));
  return String(query).trim()?searchEntries(selected,query,selected.length):selected;
 }

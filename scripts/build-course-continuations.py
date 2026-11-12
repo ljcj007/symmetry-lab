@@ -21,7 +21,7 @@ LESSON_DERIVATIONS = {
     'double-04': ['double-gaas-kramers'],
     'magnetic-01': ['magnetic-iron-axial', 'magnetic-iron-mirror'],
     'magnetic-02': ['magnetic-nio-square', 'magnetic-mnf2-ligands'],
-    'magnetic-03': [],  # BNS/OG convention comparison has no dedicated exercise.
+    'magnetic-03': ['magnetic-settings-macroscopic-constraints'],
     'magnetic-04': ['magnetic-nio-square'],
     'magnetic-05': ['magnetic-nio-square'],
     'double-05': ['double-q8-commutator'],

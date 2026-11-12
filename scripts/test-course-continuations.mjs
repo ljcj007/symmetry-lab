@@ -29,7 +29,7 @@ for(const lesson of lessons.lessons){assert.ok(Array.isArray(lesson.derivationId
 const ids=(lesson,exercises=derivations.exercises)=>sc.relatedSymmetryExercises(lesson,exercises).map(item=>item.id);
 assert.deepEqual(ids({id:'future',lab:'seitz'}),[],'A lab or track alone cannot select an unrelated exercise');
 assert.deepEqual(ids({id:'future',derivationIds:[],lab:'color_group',labPreset:'c3_point'}),[],'A reviewed empty binding overrides a superficially matching preset');
-for(const [lessonId,target]of [['space-04','space-pminus1-orbit-stabilizer'],['color-03','color-swap-antilinear-time-reversal'],['space-05','space-si-compose'],['double-04','double-gaas-kramers'],['magnetic-05','magnetic-nio-square'],['spin-04','spin-soc-lock']]){
+for(const [lessonId,target]of [['space-04','space-pminus1-orbit-stabilizer'],['color-03','color-swap-antilinear-time-reversal'],['magnetic-03','magnetic-settings-macroscopic-constraints'],['space-05','space-si-compose'],['double-04','double-gaas-kramers'],['magnetic-05','magnetic-nio-square'],['spin-04','spin-soc-lock']]){
  const lesson=lessons.lessons.find(item=>item.id===lessonId);assert.equal(ids(lesson)[0],target);
  const container=new Container(),moves=[];
  await sc.renderSymmetryCourseView({container,selection:{pathway:lesson.track==='space'?'crystal':'spin',track:lesson.track,lesson:lessonId,tab:'learn'},onNavigate:patch=>moves.push(patch)});
@@ -38,12 +38,13 @@ for(const [lessonId,target]of [['space-04','space-pminus1-orbit-stabilizer'],['c
  assert.equal(moves.at(-1).exercise,target,lessonId);
  assert.equal(moves.at(-1).lesson,lessonId,'The related exercise keeps its originating lesson');
  assert.equal(moves.at(-1).track,lesson.track);
- if(['space-04','color-03'].includes(lessonId)){
+ if(['space-04','color-03','magnetic-03'].includes(lessonId)){
   assert.equal(container.querySelector('#sc-derive-lab'),null,'Conceptual exercises do not advertise an unrelated lab');
   assert.equal(container.querySelector('#sc-derive-material'),null,'Conceptual exercises do not advertise an unrelated material');
  }
 }
-const empty=lessons.lessons.find(item=>item.id==='magnetic-03'),bank=new Container(),bankMoves=[];
+const empty={...lessons.lessons.find(item=>item.id==='magnetic-03'),id:'future-convention-lesson',derivationIds:[]};lessons.lessons.push(empty);
+const bank=new Container(),bankMoves=[];
 await sc.renderSymmetryCourseView({container:bank,selection:{pathway:'spin',track:'magnetic',lesson:empty.id,tab:'learn'},onNavigate:patch=>bankMoves.push(patch)});
 assert.equal(bank.querySelector('#sc-chapter-derive').textContent,'浏览分步推导题库 →');
 await bank.querySelector('#sc-chapter-derive').onclick();
@@ -53,7 +54,7 @@ assert.equal(bankMoves.at(-1).exercise,null);
 const picked=bank.querySelectorAll('[data-sc-exercise]').find(button=>button.dataset.scExercise==='space-si-gaas-inversion');picked.onclick();
 assert.equal(bank.querySelector('#sc-derive-select').value,'space-si-gaas-inversion');
 assert.equal(bankMoves.at(-1).exercise,'space-si-gaas-inversion');
-assert.equal(bankMoves.at(-1).lesson,'magnetic-03');
+assert.equal(bankMoves.at(-1).lesson,empty.id);
 assert.deepEqual(ids(lessons.lessons.find(item=>item.id==='double-03')),['double-si-c2','double-gaas-c3'],'A lesson may have multiple reviewed related exercises');
 
 const pg=await import('../dist/pointgroup-ui.js?course-continuations'),page=new Container(),opened=[];

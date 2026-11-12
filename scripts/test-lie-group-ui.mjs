@@ -39,7 +39,7 @@ const commutator={lab:'lie',experiment:'commutator',group:'su3',title:'Commutato
 globalThis.localStorage={getItem:()=>'{bad',setItem:()=>{}};
 const pendingFetch=[];globalThis.fetch=url=>new Promise(resolve=>pendingFetch.push({url,resolve}));
 const race=await import('../dist/lie-group-ui.js?race');assert.equal(race.getLieGroupResult(),null);
-const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261112-foundations2/);
+const detached=new Container(),loading=race.renderLieGroupView({container:detached});assert.equal(pendingFetch.length,1);assert.match(pendingFetch[0].url,/lie-group-lessons.json\?v=20261113-depth1/);
 const detachedRoot=detached.firstElementChild,loadingHTML=detachedRoot.innerHTML;detached.isConnected=false;assert.equal(detachedRoot.parentNode,detached,'Hub detaches the whole container, not its root');pendingFetch[0].resolve(response());await loading;
 assert.equal(detachedRoot.innerHTML,loadingHTML,'Detached course containers must not render a late loader result');
 
@@ -291,7 +291,11 @@ for(const [lesson,exercise]of [
  ['su3-cg-exact-radicals','su3-cg-ten-three-lowering'],
  ['su3-racah-exact-sixj','su3-racah-three-exact-matrix'],
  ['su3-ninej-27-input-exact','su3-ninej-27-weighted-entry'],
- ['su3-ninej-exact-normalization','su3-ninej-weighted-normalization']
+ ['su3-ninej-exact-normalization','su3-ninej-weighted-normalization'],
+ ['su3-racah-coupling-paths','su3-racah-three-bar-path-space'],
+ ['su3-ninej-color-complex','su3-ninej-color-octet-phase-paths'],
+ ['su3-ninej-adjoint-observables','su3-ninej-adjoint-32-casimir-spectrum'],
+ ['su3-ninej-high-input-labels','su3-ninej-decuplet-fifteen-label-copies']
 ]){
  await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'coupling',track:'coupling',lesson},onNavigate:patch=>linkedRoutes.push(patch)});
  await $(linkedPage,'#lg-chapter-derive').onclick();
@@ -300,7 +304,8 @@ for(const [lesson,exercise]of [
  assert.equal(linkedRoutes.at(-1).lesson,lesson,lesson);
  assert.equal(linkedRoutes.at(-1).track,'coupling','The aggregate coupling track stays intact for lessons it contains');
 }
-await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'coupling',track:'racah',lesson:'su3-racah-coupling-paths'},onNavigate:patch=>linkedRoutes.push(patch)});
+const futureLesson={...routeCourse.lessons.find(item=>item.id==='su3-racah-coupling-paths'),id:'future-unmatched-racah',labPreset:'unregistered-preset'};routeCourse.lessons.push(futureLesson);
+await linkedUI.renderLieGroupView({container:linkedPage,selection:{pathway:'coupling',track:'racah',lesson:futureLesson.id},onNavigate:patch=>linkedRoutes.push(patch)});
 await $(linkedPage,'#lg-chapter-derive').onclick();
 assert.equal($(linkedPage,'#lg-derivation-select').value,'','An unmatched lesson opens an unselected exercise bank');
 assert.equal(linkedUI.getLieGroupResult().derivations.selected,undefined,'The previous 27-input exercise is not retained as related');
@@ -311,4 +316,4 @@ const rabiIndex=routeDerivations.exercises.findIndex(item=>item.id==='rabi-pi-pu
 $(linkedPage,'#lg-derivation-select').value=String(rabiIndex);await $(linkedPage,'#lg-derivation-select').onchange();
 assert.equal(linkedRoutes.at(-1).exercise,'rabi-pi-pulse','An explicit bank choice is reflected in navigation');
 assert.equal(linkStorage.get('symmetry-lab.lie.derivations.v1'),JSON.stringify(linkProgress),'Navigation preserves independent derivation progress');
-console.log('Lie course continuity: cross-track sidebar, five actual preset/lesson links, bank selection, route context, stale controls and progress preservation passed.');
+console.log('Lie course continuity: cross-track sidebar, nine actual preset/lesson links, synthetic unmatched-lesson bank fallback, bank selection, route context, stale controls and progress preservation passed.');

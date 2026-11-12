@@ -55,7 +55,7 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "c27adcde657a74d42a2d6d5d203f8fc52c9dd220cccfc067eccb885b0e5769c4",
+      "sha256": "9ddfdd983e3da59aed393542928d5828f28c01b09b37aa6a8a525c3500ea8a00",
       "bytes": 92806
     },
     {
@@ -80,8 +80,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "cdff1d8a965ed4ae1237873d11420c37aa0e485bb1233c6869289232fe457f84",
-      "bytes": 29214
+      "sha256": "a7ab28d9d0a18c01cf2b405b4f5dda29dddbf59682335cd26a631396ebc252c7",
+      "bytes": 29213
     },
     {
       "path": "dist/classroom.css",
@@ -220,8 +220,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "715a30cb122fbc08f88bf109c902fdd419f39e52610acf3e725f8f0b5c4689a5",
-      "bytes": 5973
+      "sha256": "be25d4932ca518d7fa9e1058ed28828ad6413bf4b550cab96e7bac4eedde0cfe",
+      "bytes": 5974
     },
     {
       "path": "dist/induction.js",
@@ -230,8 +230,8 @@
     },
     {
       "path": "dist/lie-group-ui.js",
-      "sha256": "f2cfffa666d4a0193c497cba19c042ad716ee3175db96e87effcf1d968196d26",
-      "bytes": 48442
+      "sha256": "1afea16de0961ffce91ab79097c2d2527187b0ef8e96e671f23acdfb52d54fd9",
+      "bytes": 48424
     },
     {
       "path": "dist/lie-group.css",
@@ -280,13 +280,13 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "51b929ce3d24e55dde87b8d34eb553e6594595884a118840ae1d518ede67f6b0",
-      "bytes": 26998
+      "sha256": "281e4401ff5464c339d3489df4e04af718a12694a4e913fb75397bc57ae15623",
+      "bytes": 29374
     },
     {
       "path": "dist/navigation.css",
-      "sha256": "b5dc4a3cb2375bb9a0425bfaed59c62d0a3c3d571c6a0a83dad773984bcf2fe8",
-      "bytes": 6869
+      "sha256": "b0c948f91657f223d23d38c4f876528e7ffe2fe5bd5ebf243b2e1ebe6ad717ce",
+      "bytes": 8099
     },
     {
       "path": "dist/observables-ui.js",
@@ -465,8 +465,8 @@
     },
     {
       "path": "dist/symmetry-course-ui.js",
-      "sha256": "dc7c6da0f5ed89dbd401fcbe3ea4d2db0a25e72505a68db8d9035a62c470a908",
-      "bytes": 79954
+      "sha256": "c0ac4339b11c6dc46e9aa66598927504aaa24a616c2787170df92b57dacba621",
+      "bytes": 79952
     },
     {
       "path": "dist/symmetry-course.css",
@@ -500,7 +500,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "1ca2e1b8724fcdb5162756e27461d8e84018772d30663ea436433c38a43f082a",
+      "sha256": "97bc0721e3aa8c616458a396ce423fbfeba34b11bb3e8d53c70fdaff1c6e03f3",
       "bytes": 56440
     },
     {
@@ -510,7 +510,7 @@
     },
     {
       "path": "dist/data/connections-provenance.json",
-      "sha256": "8d4feab6b1bd7c8e32555e03ea5083b9be7c5f2c4d89539aa7db6dbf6ff0ade0",
+      "sha256": "4c742f84af963c1a647b96fbf9d08e615f74dc9fb759421df3081e7b5868f276",
       "bytes": 110294
     },
     {
@@ -525,7 +525,7 @@
     },
     {
       "path": "dist/data/construction-provenance.json",
-      "sha256": "65a3aa8c6f32ee1e038294442c75a8d8468b7bf4f0731ac078ffbfdf472eaa60",
+      "sha256": "ef5007bc34d8bc02228fe1a0a6641f8a5ff2e586760634a6cf849f7be23802a6",
       "bytes": 64061
     },
     {
@@ -595,7 +595,7 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "0d4c33cf1e25ac4df895b043ee7060ed51219924c85f9be7f2288565d52f52ef",
+      "sha256": "ff09d6d23041ae313faa30a17d2eb0372676f810c8a9404e93e7978fc6b5cf56",
       "bytes": 16854
     },
     {
@@ -620,17 +620,17 @@
     },
     {
       "path": "dist/data/lie-derivations.json",
-      "sha256": "b345cab6da8d419efd74aba1891a11e21c9ab7b04e1af89d35d46fc1d7e8c934",
-      "bytes": 118184
+      "sha256": "cbe1e998e105e9ad53b10fb97afe46639b99b18cd3431447621714d089e16a70",
+      "bytes": 138720
     },
     {
       "path": "dist/data/lie-group-lessons.json",
-      "sha256": "65f8ad1cef3198f5eeac52bdf8fe5ab02995a780a8ed146eada9640451eefbc4",
+      "sha256": "fb44bf2c1a8e643f8a8dbc8ce2af89ba5add1b3ab317a53e747fb99fab21edd2",
       "bytes": 163220
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "4e9ca7d870e21cbeb7967145f720653117864eb7807b64668be9105bad6e710f",
+      "sha256": "782bcd53851fb2751ac0112789b6920293da59ebbdbd1c1c0289105b90756531",
       "bytes": 16897
     },
     {
@@ -650,7 +650,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "80029684d09bd6e653fbdc2077efaccb6bfba5ae990a77cba259766c50d756d2",
+      "sha256": "8171a5f9ecbef8a08a13d1889823f235f31901f0a5d8cbf3ffbe43f750922cc8",
       "bytes": 5970
     },
     {
@@ -685,7 +685,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "b89d0aba68ff78eb30f9732698b1ab54478e3c7557c2f4a17b2927d87c2a0b97",
+      "sha256": "aecd902e0757637a5a4125fec566d150ea25ef3e8fb2e90fadf12d3169d0f002",
       "bytes": 27429
     },
     {
@@ -720,7 +720,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "d0b82b25e1d1e318b4a254523bce27585d85b4372a92b6b32fa336863ee56a40",
+      "sha256": "b2a3ed6fd2ed4693ef556c462f3137d8a2306baef147c95611bf66c1bb7ca77c",
       "bytes": 58565
     },
     {
@@ -755,7 +755,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "25019ddb184833a52dc58ae4863b7b99b18452e2c302c06f460181056867b476",
+      "sha256": "a54818b3088f8c8d10be1646cf7fd4c572cb94d83eb36b286ebb980890ea9306",
       "bytes": 10435
     },
     {
@@ -785,7 +785,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "40ce8009b00a417f69b64927b1925cf88e1b464956b3c0420b04cd7e2a4198c8",
+      "sha256": "9aae838e869a5568eac189f3338d6ab17391460ef06812902c42da7114b48c5e",
       "bytes": 13329
     },
     {
@@ -815,18 +815,18 @@
     },
     {
       "path": "dist/data/symmetry-course-lessons.json",
-      "sha256": "8d11aee5c9834be40500e179012f85cf0c75bb8c729a98e7fa518240d7915c08",
-      "bytes": 98936
+      "sha256": "f95cb8ea6bb66dd1a57f1bef9d1d18592e9683ab2ad4d2468fb291be00d98b93",
+      "bytes": 98995
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "78e1931c1a90729a107f109ecad50edee915d6f849d0470bd6de41fe911d3b7b",
+      "sha256": "9f4410f7531ef2dc77abc05ba4b58b2df9e2d461003cf4f774da82027a838ff0",
       "bytes": 15857
     },
     {
       "path": "dist/data/symmetry-derivations.json",
-      "sha256": "5d44b99bcfa532ab8641485ac23be14a98b84800b26703542d96561218ea212d",
-      "bytes": 53909
+      "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e",
+      "bytes": 60362
     },
     {
       "path": "dist/data/symmetry-materials.json",
@@ -2655,13 +2655,13 @@
     },
     {
       "path": "scripts/test-lie-group-course.py",
-      "sha256": "bee3cba01ee966590f713497da46156ab417802e49f24f0053e84eee6a2d8c6d",
-      "bytes": 14343
+      "sha256": "f80bedd15aaa5ec994ee2381c6c8f78f61dfb0117c9e0a0f77515e2ebb7e7b41",
+      "bytes": 14616
     },
     {
       "path": "scripts/test-lie-group-ui.mjs",
-      "sha256": "13ce445bb5639a2d4982d44bbcfacff609d4d8b0ae65b8393b44d10d2d1afee8",
-      "bytes": 80603
+      "sha256": "acdeef7c7cfa5dc74655e38802633961ad1e84c373421495752f4761b25e121c",
+      "bytes": 81103
     },
     {
       "path": "scripts/test-magnetic-induction.mjs",
@@ -2690,8 +2690,8 @@
     },
     {
       "path": "scripts/test-materials-course.py",
-      "sha256": "c2c9e98153a86a219de409b0cd9935ba120bac4ac3799ad32e5fb340251e25ea",
-      "bytes": 5899
+      "sha256": "52a80fcc921170997d40d7b5fbf0324d573d9823125f82f8eb43353290eaf161",
+      "bytes": 5986
     },
     {
       "path": "scripts/test-math-catalog.mjs",
@@ -3355,8 +3355,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "406bf25faa1f14df0abff8b293753f7f1407baa921fcb2056faf27b76a5e8f4b",
-      "bytes": 12377
+      "sha256": "e8b985050de7a49179d235ae99470a3e08db6891152cc228823dc32de0752d6d",
+      "bytes": 12700
     }
   ]
 }

@@ -2,11 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-prose2';
-import {startToolFinder} from './tool-finder.js?v=20261113-prose2';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-depth1';
+import {startToolFinder} from './tool-finder.js?v=20261113-depth1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261112-basics3';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261113-prose2';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute} from './classroom-ui.js?v=20261113-depth1';
 
 import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}

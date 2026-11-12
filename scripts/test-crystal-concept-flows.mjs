@@ -9,12 +9,19 @@ globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(n
 const exercises=JSON.parse(fs.readFileSync(new URL('../dist/data/symmetry-derivations.json',import.meta.url),'utf8')).exercises;
 const {renderSymmetryCourseView}=await import('../dist/symmetry-course-ui.js?concept-flows');
 const page=new Container(),$=selector=>page.querySelector(selector),progress=id=>JSON.parse(saved.get('symmetry-lab.academy.derivations.v1')||'{}')[id];
-for(const [lesson,track,id] of [['space-04','space','space-pminus1-orbit-stabilizer'],['color-03','color','color-swap-antilinear-time-reversal']]){
- await renderSymmetryCourseView({container:page,selection:{pathway:'crystal',lesson,track,tab:'learn'},onNavigate:patch=>moves.push(patch)});
+let calculationCalls=0;
+for(const [lesson,track,id] of [
+ ['space-04','space','space-pminus1-orbit-stabilizer'],
+ ['color-03','color','color-swap-antilinear-time-reversal'],
+ ['magnetic-03','magnetic','magnetic-settings-macroscopic-constraints']
+]){
+ await renderSymmetryCourseView({container:page,selection:{pathway:'crystal',lesson,track,tab:'learn'},onNavigate:patch=>moves.push(patch),run:async()=>{calculationCalls++;throw new Error('Concept-only exercises must not launch a calculation');}});
  await $('#sc-chapter-derive').onclick();
  assert.equal($('#sc-derive-select').value,id);assert.equal(moves.at(-1).lesson,lesson);assert.equal(moves.at(-1).exercise,id);
  assert.equal($('#sc-derive-lab'),null);assert.equal($('#sc-derive-material'),null,'Concept-only exercises do not claim an unrelated experiment');
  const exercise=exercises.find(item=>item.id===id);
+ assert.ok(exercise,`The ${lesson} lesson must open its actual exercise`);
+ for(const field of ['lab','labPreset','materialId'])assert.equal(exercise[field],undefined,`${id} must not claim an unsupported ${field} binding`);
  assert.equal($('#sc-derive-answer').disabled,true);
  const oldNext=$('#sc-derive-next');oldNext.onclick();assert.equal(progress(id).revealed,1);
  oldNext.onclick();assert.equal(progress(id).revealed,1,'A detached earlier step cannot advance progress twice');
@@ -29,4 +36,5 @@ for(const [lesson,track,id] of [['space-04','space','space-pminus1-orbit-stabili
  const staleSelect=$('#sc-derive-select');page.innerHTML='<p>Left the lesson</p>';
  staleSelect.onchange({target:{value:exercises[0].id}});assert.equal(page.innerHTML,'<p>Left the lesson</p>');
 }
-console.log('Crystal concept flows: both originating lessons, correct exercises, six/seven sequential steps, gated conclusions, check revocation, no false lab links, and detached controls passed.');
+assert.equal(calculationCalls,0,'Concept-only lesson and derivation flows do not call the calculation engine');
+console.log('Crystal concept flows: all three originating lessons, correct exercises, six/seven sequential steps, gated conclusions, check revocation, no false lab links or calculation calls, and detached controls passed.');

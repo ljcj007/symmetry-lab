@@ -43,7 +43,7 @@ export function relatedSymmetryExercises(lesson,exercises=[]){
 const selectedGroup=()=>{if(!loaded)return null;const list=state.mode==='sg'?loaded.atlas.spaceGroups:state.mode==='msg'?loaded.atlas.magneticGroups:loaded.atlas.magneticPointGroups;return list.find(g=>String(g.number??g.id)===String(state.selection[state.mode]))||list[0];};
 
 async function load(){
-  if(!dataPromise)dataPromise=Promise.all(['symmetry-course-lessons.json','symmetry-course-atlas.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261112-basics3');if(!response.ok)throw Error(`Teaching data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([lessons,atlas])=>{
+  if(!dataPromise)dataPromise=Promise.all(['symmetry-course-lessons.json','symmetry-course-atlas.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261113-depth1');if(!response.ok)throw Error(`Teaching data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([lessons,atlas])=>{
     if(!Array.isArray(lessons.lessons)||!lessons.lessons.length||!Array.isArray(atlas.spaceGroups)||atlas.spaceGroups.length!==230||!Array.isArray(atlas.magneticGroups)||!Array.isArray(atlas.magneticPointGroups))throw Error("The teaching data format is incomplete, please refresh and try again.");
     const validAnswers={};
     for(const {quiz,key} of quizEntries(lessons.lessons)){const answer=state.answers[key];if(answer&&Number.isInteger(answer.selected)&&answer.selected>=0&&answer.selected<quiz.choices.length&&typeof answer.checked==='boolean')validAnswers[key]={selected:answer.selected,checked:answer.checked};}
@@ -53,7 +53,7 @@ async function load(){
 }
 
 async function loadExtensions(){
-  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261112-basics3');if(!response.ok)throw Error(`Materials and derivation data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
+  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261113-depth1');if(!response.ok)throw Error(`Materials and derivation data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
     if(!Array.isArray(materials.materials)||!materials.materials.length||!Array.isArray(derivations.exercises)||!derivations.exercises.length)throw Error("The material and derivation data format is incomplete, please reload.");
     const valid={};for(const exercise of derivations.exercises){const saved=extensionState.progress[exercise.id];if(!saved||typeof saved!=='object'||Array.isArray(saved))continue;const entry={revealed:Number.isInteger(saved.revealed)&&saved.revealed>=0&&saved.revealed<=exercise.steps.length?saved.revealed:0,hint:saved.hint===true,showAnswer:saved.showAnswer===true&&saved.revealed===exercise.steps.length};if(Number.isInteger(saved.selected)&&saved.selected>=0&&saved.selected<exercise.check.choices.length){entry.selected=saved.selected;entry.checked=saved.checked===true;}valid[exercise.id]=entry;}
     extensionState.progress=valid;extensions={materials,derivations};return extensions;

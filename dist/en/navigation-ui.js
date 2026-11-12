@@ -1,8 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261113-prose2';
-import {searchEntries} from './tool-search.js?v=20261112-links1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-basics3';
+import {classroomPathways} from './classroom-ui.js?v=20261113-depth1';
+import {searchEntries} from './tool-search.js?v=20261113-depth1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261113-depth1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261113-depth1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -51,7 +52,7 @@ export const toolGroups=[
   ['compute/band-representation-lab',"Wyckoff sites → Band representations","Site orbits, Bloch actions and little-group decomposition for selected three-dimensional space groups.","Wyckoff site induced band representation EBR"],
   ['workbench',"Irreducible representations and magnetic corepresentations","Space groups, magnetic space groups and magnetic point groups; single- and double-valued representations, little groups and full k stars.","SOC Irreducible character Bilbao BC"],
   ['compute/advanced/symbolic_spacegroups',"Symbolic space-group representations","Construct exact little-group representations, corepresentations and induced representations along symbolic k lines.","symbol k star"],
-  ['compute/advanced/symbolic_interfaces',"Representation matrices and projections","Common kernels, intertwiners, projections and semilinear representation checks.","interleaved projection common core"],
+  ['compute/advanced/symbolic_interfaces',"Representation matrices and projections","Common kernels, intertwiners, projectors and semilinear representation checks.","interleaved projection common core"],
  ]},
  {id:'coupling',title:"Tensor products and recoupling",summary:"Decompose composite systems and transform between coupling bases.",tools:[
   ['products',"Crystal groups · Full-k-star tensor-product decomposition","Choose two wavevectors and representations, then find the resulting wavevectors and irreducible components.","space group magnetic group tensor"],
@@ -95,7 +96,10 @@ export const toolGroups=[
  ]}
 ];
 toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
-export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>({route,title,summary,keywords,kind:"Calculate",category:group.id})));
+export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
+ const capability=getToolCapability(route);
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]:'',kind:"Calculate",category:group.id,capability};
+}));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
 const readSaved=key=>{try{const x=storageFallback.has(key)?sessionSaved.get(key):JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x.filter(v=>typeof v==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(v)).slice(0,20):[];}catch{return sessionSaved.get(key)||[];}};
@@ -104,17 +108,25 @@ export const favoriteRoutes=()=>readSaved('symmetry-lab.favorites.v1').filter(kn
 export function rememberRoute(route){if(['home','compute','atlas','classroom','docs'].includes(route))return;save('symmetry-lab.recent.v1',[route,...readSaved('symmetry-lab.recent.v1').filter(x=>x!==route)].slice(0,6));}
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
-function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">Open tool →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
+function toolCard(item,favorites,{showScope=false,scopeOpen=false}={}){
+ const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
+ const rows=capability?[
+  ["input",capability.input],["output",capability.output],
+  ["Scope",[capability.scope]],["Conditions of use",capability.conditions]
+ ].filter(([,value])=>value.length):[];
+ const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc("Inputs and supported scope")}">Inputs and supported scope</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">Open tool →</span>`)}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+}
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261110-en1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 export async function renderNavigationHub({container,view='home',databases}){
- const favorites=favoriteRoutes();let computeCategory='all',onlyFavorites=false;
+ const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
  const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find a calculation tool":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?"Try: POSCAR, Clebsch-Gordan, Raman, DMI":"Try: mirror symmetry, phonons, GaAs, 225"}" autocomplete="off"><span id="site-search-status">${view==='compute'?"Filter calculation tools here; use the quick finder above for lessons and groups.":"Enter keywords to search lessons, tools and group catalogs."}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
 
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
  const body=root.querySelector('#hub-body');
- if(view==='compute')body.innerHTML=`<p class="nav-introduction">Choose a task, then narrow the results with keywords. Tools are organized by structure input, representations, coupling, responses, models, and exact algebra. Lessons and the calculation center use the same computation cores.</p><nav class="nav-category-links" aria-label="Calculation categories"><button type="button" data-category="all" aria-pressed="true">All tools <span>${toolsIndex.length}</span></button>${toolGroups.map(g=>`<button type="button" data-category="${g.id}" aria-pressed="false">${g.title} <span>${g.tools.length}</span></button>`).join('')}</nav><div class="nav-directory-controls"><label><input type="checkbox" id="tools-only-favorites"> Favorites only</label><button type="button" class="secondary" id="tools-clear-filters">Clear filters</button><p id="tools-filter-status" role="status" aria-live="polite"></p></div><div id="tools-filtered"></div>`;
+ if(view==='compute')body.innerHTML=`<p class="nav-introduction">Choose a task, then narrow the tools by keywords and calculation type. Expand “Inputs and supported scope” to inspect output types and model conditions. The classroom and calculation center use the same calculation cores.</p><nav class="nav-category-links" aria-label="Calculation categories"><button type="button" data-category="all" aria-pressed="true">All tools <span>${toolsIndex.length}</span></button>${toolGroups.map(g=>`<button type="button" data-category="${g.id}" aria-pressed="false">${g.title} <span>${g.tools.length}</span></button>`).join('')}</nav><div class="nav-directory-controls"><label class="nav-type-filter" for="tools-arithmetic">Calculation type<select id="tools-arithmetic" aria-describedby="tools-arithmetic-help"><option value="all">All calculation types</option>${Object.entries(arithmeticLabels).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('')}</select></label><label><input type="checkbox" id="tools-only-favorites"> Favorites only</label><button type="button" class="secondary" id="tools-clear-filters">Clear filters</button><p id="tools-filter-status" role="status" aria-live="polite"></p><p id="tools-arithmetic-help" class="nav-type-help"></p></div><div id="tools-filtered"></div>`;
  else if(view==='atlas')body.innerHTML=`<p class="nav-introduction">Start with group operations or material structures, then open the corresponding lesson or calculation. Every entry uses the existing catalogs and 3D models.</p><div class="nav-card-grid nav-atlas-grid">${[
   ['atlas/pointgroups',"The 32 crystallographic point groups","Rotations, mirrors, inversion and characters, linked to introductory lessons."],
   ['atlas/sg',"230 space groups","Numbers, international symbols, operations and lattices, with links to representation calculations."],
@@ -153,18 +165,24 @@ export async function renderNavigationHub({container,view='home',databases}){
  let entries=[...toolsIndex];
  const input=root.querySelector('#site-search'),results=root.querySelector('#site-search-results'),status=root.querySelector('#site-search-status');
  function renderCompute(){
-  if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,query:input.value,favorites:onlyFavorites?saved:null});
+  if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,arithmetic:computeArithmetic,query:input.value,favorites:onlyFavorites?saved:null});
   root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
-   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved)).join('')}</div></section>`:'';
-  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match these filters. Change the category, shorten your query, or clear the filters."}</p>`;
+   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route)})).join('')}</div></section>`:'';
+  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match the current conditions. Change the category or calculation type, shorten the keywords, or clear the filters."}</p>`;
   root.querySelector('#tools-filter-status').textContent=`Showing ${found.length} / ${toolsIndex.length} tools`;
+  root.querySelector('#tools-arithmetic-help').textContent=arithmeticDescriptions[computeArithmetic]||"Calculation types describe the methods available at each entry. See each tool for its inputs and conditions.";
   root.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===computeCategory)));
+  root.querySelectorAll('[data-tool-scope]').forEach(details=>details.ontoggle=()=>{
+   if(!current()||![...root.querySelectorAll('[data-tool-scope]')].includes(details))return;
+   if(details.open)expandedScopes.add(details.dataset.toolScope);else expandedScopes.delete(details.dataset.toolScope);
+  });
   bindFavorites();
  }
  if(view==='compute'){
   root.querySelectorAll('[data-category]').forEach(button=>button.onclick=()=>{if(!current())return;computeCategory=button.dataset.category;renderCompute();});
+  root.querySelector('#tools-arithmetic').onchange=event=>{if(!current())return;computeArithmetic=event.target.value;renderCompute();};
   root.querySelector('#tools-only-favorites').onchange=event=>{if(!current())return;onlyFavorites=event.target.checked;renderCompute();};
-  root.querySelector('#tools-clear-filters').onclick=()=>{if(!current())return;computeCategory='all';onlyFavorites=false;input.value='';root.querySelector('#tools-only-favorites').checked=false;renderCompute();input.focus?.();};
+  root.querySelector('#tools-clear-filters').onclick=()=>{if(!current())return;computeCategory='all';computeArithmetic='all';onlyFavorites=false;input.value='';root.querySelector('#tools-arithmetic').value='all';root.querySelector('#tools-only-favorites').checked=false;renderCompute();input.focus?.();};
   input.oninput=renderCompute;renderCompute();return;
  }
  bindFavorites();

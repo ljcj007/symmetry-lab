@@ -30,11 +30,19 @@ for(const [lesson,id] of introductoryBindings){
  const found=selected(lessons.find(item=>item.id===lesson));
  assert.equal(found.id,id);assert.equal(found.matchedBy,'lesson');
 }
-const originalExercises=exercises.filter(item=>!introductoryBindings.some(([,id])=>id===item.id));
+const advancedBindings=[
+ ['su3-racah-coupling-paths','su3-racah-three-bar-path-space'],
+ ['su3-ninej-color-complex','su3-ninej-color-octet-phase-paths'],
+ ['su3-ninej-adjoint-observables','su3-ninej-adjoint-32-casimir-spectrum'],
+ ['su3-ninej-high-input-labels','su3-ninej-decuplet-fifteen-label-copies']
+];
+const addedBindings=[...introductoryBindings,...advancedBindings];
+const originalExercises=exercises.filter(item=>!addedBindings.some(([,id])=>id===item.id));
 assert.equal(originalExercises.length,32,'All existing application and recoupling tasks remain');
 for(const lesson of lessons.slice(8)){
- const original=resolveLieDerivation(lesson,originalExercises);
- assert.equal(selected(lesson).id,originalExercises[original.index]?.id,'New foundations must not redirect '+lesson.id);
+ const original=resolveLieDerivation(lesson,originalExercises),newBinding=advancedBindings.find(([id])=>id===lesson.id);
+ if(newBinding){assert.equal(original.index,-1,'This lesson previously lacked a matched task');assert.equal(selected(lesson).id,newBinding[1]);assert.equal(selected(lesson).matchedBy,'lesson');}
+ else assert.equal(selected(lesson).id,originalExercises[original.index]?.id,'New tasks must not redirect '+lesson.id);
 }
 const presetInputs=[
  ['u1-circle-quarter','u1',{order:4,degrees:45,translation:.001}],
@@ -51,8 +59,8 @@ for(const [index,[preset,lab,input]] of presetInputs.entries()){
  assert.equal(exercise.lab,lab);assert.equal(exercise.labPreset,preset);
  assert.deepEqual(foundationPresets[preset],{experiment:lab,input},'Linked experiment must start with the actual problem values');
 }
-assert.equal(lessons.filter(lesson=>selected(lesson).index>=0).length,28,'Eight introductory bindings augment the existing twenty');
-assert.deepEqual(lessons.filter(lesson=>selected(lesson).index<0).map(lesson=>lesson.id),['su3-racah-coupling-paths','su3-ninej-color-complex','su3-ninej-adjoint-observables','su3-ninej-high-input-labels'],'Advanced lessons without a direct task still expose the unselected bank');
+assert.equal(lessons.filter(lesson=>selected(lesson).index>=0).length,32,'Every reviewed Lie lesson has a direct or reviewed related task');
+assert.deepEqual(lessons.filter(lesson=>selected(lesson).index<0).map(lesson=>lesson.id),[],'All 32 reviewed lessons are matched; unknown future lessons still use the bank');
 assert.equal(selected({id:'unknown',lab:'su3_cg',labPreset:'unknown-preset'}).index,-1,'A missing exact preset cannot select an unrelated CG example');
 assert.equal(selected({id:'unknown',lab:'su3_tensor'}).index,-1,'Several same-lab problems are not a justified lesson association');
 assert.equal(selected({id:'unknown',lab:'rabi'}).id,'rabi-pi-pulse','A unique same-lab task is an unambiguous fallback');

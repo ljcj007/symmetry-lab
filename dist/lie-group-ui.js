@@ -3,7 +3,7 @@
 import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {resolveLieDerivation} from './lie-learning-links.js?v=20261112-course-links1';
-import {foundationNames,foundationDefaults,foundationPresets,foundationInputIds,foundationControls,readFoundationPayload,foundationOutput,lieGroupLabel} from './lie-foundations-ui.js?v=20261112-foundations2';
+import {foundationNames,foundationDefaults,foundationPresets,foundationInputIds,foundationControls,readFoundationPayload,foundationOutput,lieGroupLabel} from './lie-foundations-ui.js?v=20261113-depth1';
 const labPresets={...physicsPresets,...foundationPresets};
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
@@ -45,7 +45,7 @@ const persistDerivations=()=>{try{localStorage.setItem(derivationStorageKey,JSON
 const mastered=questions=>questions.filter(({quiz,key})=>state.answers[key]?.checked===true&&state.answers[key]?.selected===quiz.answer).length;
 async function load(){
   if(!promise)promise=(async()=>{
-    const response=await fetch('./data/lie-group-lessons.json?v=20261112-foundations2');
+    const response=await fetch('./data/lie-group-lessons.json?v=20261113-depth1');
     if(!response.ok)throw Error(`李群课程未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.lessons)||!data.lessons.length||data.lessons.some(lesson=>!lesson.id||!Array.isArray(lesson.quiz)||lesson.quiz.some(q=>!Array.isArray(q.choices)||!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.choices.length)))throw Error('李群课程数据不完整，请重新载入。');
@@ -55,7 +55,7 @@ async function load(){
 }
 async function loadDerivations(){
   if(!derivationPromise)derivationPromise=(async()=>{
-    const response=await fetch('./data/lie-derivations.json?v=20261112-foundations2');
+    const response=await fetch('./data/lie-derivations.json?v=20261113-depth1');
     if(!response.ok)throw Error(`分步推导未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.exercises)||!data.exercises.length||data.exercises.some(exercise=>!exercise.id||!Array.isArray(exercise.steps)||!exercise.steps.length||exercise.steps.some(step=>typeof step.title!=='string'||typeof step.explanation!=='string')||!Array.isArray(exercise.check?.choices)||!Number.isInteger(exercise.check.answer)||exercise.check.answer<0||exercise.check.answer>=exercise.check.choices.length))throw Error('分步推导数据不完整，请重新载入。');

@@ -102,16 +102,16 @@
   ],
   "files": {
     "dist/classroom-ui.js": {
-      "bytes": 29214,
-      "sha256": "cdff1d8a965ed4ae1237873d11420c37aa0e485bb1233c6869289232fe457f84"
+      "bytes": 29213,
+      "sha256": "a7ab28d9d0a18c01cf2b405b4f5dda29dddbf59682335cd26a631396ebc252c7"
     },
     "dist/classroom.css": {
       "bytes": 5781,
       "sha256": "5b3dfc44ec21cf71e6b5dba031bc61589379b5da9ff3487ef3721c3676895875"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 48442,
-      "sha256": "f2cfffa666d4a0193c497cba19c042ad716ee3175db96e87effcf1d968196d26"
+      "bytes": 48424,
+      "sha256": "1afea16de0961ffce91ab79097c2d2527187b0ef8e96e671f23acdfb52d54fd9"
     },
     "dist/lie-group.css": {
       "bytes": 26609,
@@ -123,7 +123,7 @@
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
-      "sha256": "65f8ad1cef3198f5eeac52bdf8fe5ab02995a780a8ed146eada9640451eefbc4"
+      "sha256": "fb44bf2c1a8e643f8a8dbc8ce2af89ba5add1b3ab317a53e747fb99fab21edd2"
     },
     "dist/docs/lie-groups.md": {
       "bytes": 45925,
@@ -134,16 +134,16 @@
       "sha256": "0c681b3f7164c717919bc3dfaad9406ebccc22433ac1feede0ac8c30e743b81b"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 80603,
-      "sha256": "13ce445bb5639a2d4982d44bbcfacff609d4d8b0ae65b8393b44d10d2d1afee8"
+      "bytes": 81103,
+      "sha256": "acdeef7c7cfa5dc74655e38802633961ad1e84c373421495752f4761b25e121c"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 14343,
-      "sha256": "bee3cba01ee966590f713497da46156ab417802e49f24f0053e84eee6a2d8c6d"
+      "bytes": 14616,
+      "sha256": "f80bedd15aaa5ec994ee2381c6c8f78f61dfb0117c9e0a0f77515e2ebb7e7b41"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 18514,
@@ -154,8 +154,8 @@
       "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
     },
     "dist/data/lie-derivations.json": {
-      "bytes": 118184,
-      "sha256": "b345cab6da8d419efd74aba1891a11e21c9ab7b04e1af89d35d46fc1d7e8c934"
+      "bytes": 138720,
+      "sha256": "cbe1e998e105e9ad53b10fb97afe46639b99b18cd3431447621714d089e16a70"
     },
     "scripts/test-python-lie-applications.py": {
       "bytes": 15426,

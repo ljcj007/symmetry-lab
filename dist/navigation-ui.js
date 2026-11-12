@@ -1,8 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261113-prose2';
-import {searchEntries} from './tool-search.js?v=20261112-links1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261112-basics3';
+import {classroomPathways} from './classroom-ui.js?v=20261113-depth1';
+import {searchEntries} from './tool-search.js?v=20261113-depth1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261113-depth1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261113-depth1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -51,7 +52,7 @@ export const toolGroups=[
   ['compute/band-representation-lab','Wyckoff 位点 → 能带表示','精选三维空间群的位点轨道、Bloch 作用和小群分解。','Wyckoff 位点 诱导 band representation EBR'],
   ['workbench','不可约表示与磁共表示','空间群、磁空间群与磁点群；单值、双值、小群和全 k 星。','SOC 不可约 特征标 Bilbao BC'],
   ['compute/advanced/symbolic_spacegroups','符号空间群表示','沿符号 k 线构造精确小表示、共表示与诱导表示。','符号 k星'],
-  ['compute/advanced/symbolic_interfaces','表示矩阵与投影','共核、交织算符、投影和半线性表示验证。','交织 投影 共核'],
+  ['compute/advanced/symbolic_interfaces','表示矩阵与投影','共同核、交织算符、投影和半线性表示验证。','交织 投影 共核'],
  ]},
  {id:'coupling',title:'张量积与重耦合',summary:'分解复合体系，在不同耦合基底间换基。',tools:[
   ['products','晶体群 · 全 k 星直积分解','选定两个波矢与表示，求输出波矢和不可约分量。','空间群 磁群 tensor'],
@@ -95,7 +96,10 @@ export const toolGroups=[
  ]}
 ];
 toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
-export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>({route,title,summary,keywords,kind:'计算',category:group.id})));
+export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
+ const capability=getToolCapability(route);
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]:'',kind:'计算',category:group.id,capability};
+}));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
 const readSaved=key=>{try{const x=storageFallback.has(key)?sessionSaved.get(key):JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x.filter(v=>typeof v==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(v)).slice(0,20):[];}catch{return sessionSaved.get(key)||[];}};
@@ -104,17 +108,25 @@ export const favoriteRoutes=()=>readSaved('symmetry-lab.favorites.v1').filter(kn
 export function rememberRoute(route){if(['home','compute','atlas','classroom','docs'].includes(route))return;save('symmetry-lab.recent.v1',[route,...readSaved('symmetry-lab.recent.v1').filter(x=>x!==route)].slice(0,6));}
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
-function toolCard(item,favorites){return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;}
+function toolCard(item,favorites,{showScope=false,scopeOpen=false}={}){
+ const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
+ const rows=capability?[
+  ['输入',capability.input],['输出',capability.output],
+  ['适用范围',[capability.scope]],['使用条件',capability.conditions]
+ ].filter(([,value])=>value.length):[];
+ const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc('输入与适用范围')}">输入与适用范围</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">打开工具 →</span>`)}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+}
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261110-en1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 export async function renderNavigationHub({container,view='home',databases}){
- const favorites=favoriteRoutes();let computeCategory='all',onlyFavorites=false;
+ const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
  const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?'查找计算工具':view==='atlas'?'搜索群、材料与课程':'已经有一个问题？'}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?'试试：POSCAR、Clebsch-Gordan、Raman、DMI':'试试：镜面对称、声子、GaAs、225'}" autocomplete="off"><span id="site-search-status">${view==='compute'?'仅筛选计算工具；查找课程与群可用顶部快捷查找。':'输入关键词后检索课程、工具与群目录'}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
 
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
  const body=root.querySelector('#hub-body');
- if(view==='compute')body.innerHTML=`<p class="nav-introduction">先选择任务，再用关键词缩小范围。工具按结构输入、表示、耦合、响应、模型与精确代数组织，课堂和计算中心使用相同的计算核心。</p><nav class="nav-category-links" aria-label="计算任务分类"><button type="button" data-category="all" aria-pressed="true">全部工具 <span>${toolsIndex.length}</span></button>${toolGroups.map(g=>`<button type="button" data-category="${g.id}" aria-pressed="false">${g.title} <span>${g.tools.length}</span></button>`).join('')}</nav><div class="nav-directory-controls"><label><input type="checkbox" id="tools-only-favorites"> 只看收藏</label><button type="button" class="secondary" id="tools-clear-filters">清空筛选</button><p id="tools-filter-status" role="status" aria-live="polite"></p></div><div id="tools-filtered"></div>`;
+ if(view==='compute')body.innerHTML=`<p class="nav-introduction">先选择任务，再用关键词和计算类型缩小范围。展开“输入与适用范围”，查看输出类型和模型条件；课堂和计算中心使用相同的计算核心。</p><nav class="nav-category-links" aria-label="计算任务分类"><button type="button" data-category="all" aria-pressed="true">全部工具 <span>${toolsIndex.length}</span></button>${toolGroups.map(g=>`<button type="button" data-category="${g.id}" aria-pressed="false">${g.title} <span>${g.tools.length}</span></button>`).join('')}</nav><div class="nav-directory-controls"><label class="nav-type-filter" for="tools-arithmetic">计算类型<select id="tools-arithmetic" aria-describedby="tools-arithmetic-help"><option value="all">全部计算类型</option>${Object.entries(arithmeticLabels).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('')}</select></label><label><input type="checkbox" id="tools-only-favorites"> 只看收藏</label><button type="button" class="secondary" id="tools-clear-filters">清空筛选</button><p id="tools-filter-status" role="status" aria-live="polite"></p><p id="tools-arithmetic-help" class="nav-type-help"></p></div><div id="tools-filtered"></div>`;
  else if(view==='atlas')body.innerHTML=`<p class="nav-introduction">从群的操作和材料结构查起，再进入对应课程或计算。每个入口复用现有目录和三维模型。</p><div class="nav-card-grid nav-atlas-grid">${[
   ['atlas/pointgroups','32 晶体学点群','旋转、镜面、反演与特征标，连接基础课程。'],
   ['atlas/sg','230 空间群','编号、国际符号、操作与晶格；打开表示计算。'],
@@ -153,18 +165,24 @@ export async function renderNavigationHub({container,view='home',databases}){
  let entries=[...toolsIndex];
  const input=root.querySelector('#site-search'),results=root.querySelector('#site-search-results'),status=root.querySelector('#site-search-status');
  function renderCompute(){
-  if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,query:input.value,favorites:onlyFavorites?saved:null});
+  if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,arithmetic:computeArithmetic,query:input.value,favorites:onlyFavorites?saved:null});
   root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
-   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved)).join('')}</div></section>`:'';
-  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?'还没有收藏工具。关闭“只看收藏”，点击工具卡片上的星号即可收藏。':'当前条件没有匹配工具。可以更换分类、缩短关键词，或清空筛选。'}</p>`;
+   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route)})).join('')}</div></section>`:'';
+  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?'还没有收藏工具。关闭“只看收藏”，点击工具卡片上的星号即可收藏。':'当前条件没有匹配工具。可以更换分类或计算类型、缩短关键词，或清空筛选。'}</p>`;
   root.querySelector('#tools-filter-status').textContent=`当前显示 ${found.length} / ${toolsIndex.length} 项工具`;
+  root.querySelector('#tools-arithmetic-help').textContent=arithmeticDescriptions[computeArithmetic]||'计算类型按当前入口的计算方式归类，具体输入和条件见各工具。';
   root.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===computeCategory)));
+  root.querySelectorAll('[data-tool-scope]').forEach(details=>details.ontoggle=()=>{
+   if(!current()||![...root.querySelectorAll('[data-tool-scope]')].includes(details))return;
+   if(details.open)expandedScopes.add(details.dataset.toolScope);else expandedScopes.delete(details.dataset.toolScope);
+  });
   bindFavorites();
  }
  if(view==='compute'){
   root.querySelectorAll('[data-category]').forEach(button=>button.onclick=()=>{if(!current())return;computeCategory=button.dataset.category;renderCompute();});
+  root.querySelector('#tools-arithmetic').onchange=event=>{if(!current())return;computeArithmetic=event.target.value;renderCompute();};
   root.querySelector('#tools-only-favorites').onchange=event=>{if(!current())return;onlyFavorites=event.target.checked;renderCompute();};
-  root.querySelector('#tools-clear-filters').onclick=()=>{if(!current())return;computeCategory='all';onlyFavorites=false;input.value='';root.querySelector('#tools-only-favorites').checked=false;renderCompute();input.focus?.();};
+  root.querySelector('#tools-clear-filters').onclick=()=>{if(!current())return;computeCategory='all';computeArithmetic='all';onlyFavorites=false;input.value='';root.querySelector('#tools-arithmetic').value='all';root.querySelector('#tools-only-favorites').checked=false;renderCompute();input.focus?.();};
   input.oninput=renderCompute;renderCompute();return;
  }
  bindFavorites();

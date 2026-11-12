@@ -1249,7 +1249,9 @@
         }
       ],
       "lab": "magnetic",
-      "derivationIds": []
+      "derivationIds": [
+        "magnetic-settings-macroscopic-constraints"
+      ]
     },
     {
       "id": "magnetic-04",
