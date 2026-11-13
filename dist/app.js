@@ -2,16 +2,19 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-flow1';
-import {startToolFinder} from './tool-finder.js?v=20261113-flow1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261113-support1';
+import {startToolFinder} from './tool-finder.js?v=20261113-support1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261112-basics3';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261113-flow1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261113-support1';
+import {projectInputFor} from './project-input.js?v=20261113-support1';
+import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261113-support1';
+import {projectWorkbenchSelection,canRestoreProjectWorkbench} from './project-workbench.js?v=20261113-support1';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261111-demos1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261113-support1';
 async function runPythonTask(action,input){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
 
-const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261111-demos1'),projects:()=>import('./response-projects.js?v=20261111-demos1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261113-prose2')})[key]());
+const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261113-support1'),projects:()=>import('./response-projects.js?v=20261113-support1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261113-prose2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -29,6 +32,18 @@ async function openWorkbench({mode='sg',id,k=[0,0,0],doubleValued=false,bzType='
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const state={view:'home',route:'home',primary:'home',courseRoute:null,returnCourse:null,mode:'sg',group:null,k:[0,0,0],doubleValued:false,bzType:'',labelK:null,tab:'characters',result:null,resultGroup:null,busy:false,calculationTicket:0,calculationRequest:null,calculationPromise:null,dbMode:'sg',dbQuery:'',dbPage:0,dbType:'all',angle:.48,tilt:.42,bandText:'',bandRevision:0,bandTicket:0,bandBusy:false};
+const projectNavigation=createProjectNavigator();
+const canOpenProjectInput=(action,input)=>projectInputFor({projectInput:{action,input}},action,{}).status==='loaded'&&(action!=='analyze'||!!databases.sg&&canRestoreProjectWorkbench(input,databases.sg.groups));
+async function openProjectLab(request){
+ const origin=renderTicket;let restoredRoute;
+ if(request.mode==='current'&&request.record?.action==='analyze'){
+  const catalog=await ensureGroups('sg');if(origin!==renderTicket)return;
+  restoredRoute=buildWorkbenchRoute(projectWorkbenchSelection(request.record.input,catalog.groups));
+ }
+ const navigation=prepareProjectNavigation(request,{route:restoredRoute});
+ if(origin!==renderTicket)return;
+ return setView(navigation.route,{projectContext:navigation.context});
+}
 let databases={},toastTimer;
 const primaryTitles={home:'总览',classroom:'群论课堂',compute:'计算中心',atlas:'群与材料图谱',docs:'方法与文档'};
 const labels={workbench:['对称性工作台','从空间群到磁空间群，探索晶体的对称性与不可约表示。'],database:['群数据库','检索空间群、磁空间群与磁点群，查看原始对称操作。'],products:['直积分解','解析两个 k 星的表示张量积，追踪输出波矢与不可约分量。'],bands:['能带特征标匹配','读取本地 trace 文件，或输入已按当前操作排序的能带特征标。'],docs:['方法与文档','坐标约定、数值验证、数据来源与当前版本的功能范围。']};
@@ -138,7 +153,8 @@ function setView(request,options={}){
  const requestedGroupMode=['sg','msg','mpg'].find(mode=>params.has(mode));
  state.pendingGroup=path==='workbench'&&requestedGroupMode?{mode:requestedGroupMode,query:params.toString()}:null;
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
- state.route=route;state.view=view;state.primary=primary;state.courseRoute=withClassroomNavigationContext(course,options.courseContext,route);
+ projectNavigation.enter(route,options.projectContext);
+ state.route=route;state.view=view;state.primary=primary;state.courseRoute=projectNavigation.selection(withClassroomNavigationContext(course,options.courseContext,route));
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
  const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/frontiers','atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/connections','atlas/construction','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
  $('#page-title').textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];
@@ -149,6 +165,7 @@ function setView(request,options={}){
  context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← 全部计算工具</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">返回刚才课程 →</a>`:course?.calculationOnly?(['group-theorems','symmetry-mini-demos','foundations-demos','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">学习本主题 →</a>`:course.section==='dynamics'?'<a href="#classroom/structure-dynamics" data-route="classroom/structure-dynamics">学习相变与实验 →</a>':course.section==='observables'?'<a href="#classroom/observables" data-route="classroom/observables">学习材料物性 →</a>':course.section==='lie'&&course.pathway==='continuous'?'<a href="#classroom/continuous" data-route="classroom/continuous">学习连续群基础 →</a>': '<a href="#classroom/coupling" data-route="classroom/coupling">学习表示耦合 →</a>'):''}</div>`:primary==='atlas'&&view!=='atlas'?'<div class="nav-tool-context"><a href="#atlas" data-route="atlas">← 群与材料图谱</a></div>':'';
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+='<div class="mr-notebook-link"><a href="#atlas/notebook">记录最近计算 / 打开材料项目 →</a><a href="#compute/symmetry-audit">三层对称性诊断 →</a><a href="#atlas/compare">参数对照与预测 →</a></div>';
  if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
+ context.innerHTML+=projectNavigation.html();projectNavigation.bind(context,route=>setView(route));
  rememberRoute(route);
  if(options.render!==false)return render();
 }
@@ -161,6 +178,7 @@ function updateBreadcrumb(detail){
  $('#breadcrumb').innerHTML=state.primary==='home'?'<b>总览</b>':`<a href="#home" data-route="home">总览</a><span aria-hidden="true">/</span><a href="#${state.primary}" data-route="${state.primary}">${top}</a>${detail&&detail!==top?`<span aria-hidden="true">/</span><b>${esc(detail)}</b>`:''}`;
 }
 function syncCourseRoute(hash,options={}){
+ options={...projectNavigation.optionsFor(hash),...options};
  if(state.primary==='atlas'&&options.render===false){
    if(state.view==='connections'){
      const parsed=parseClassroomRoute(hash),params=new URLSearchParams();for(const key of ['module','material','preset'])if(parsed?.[key])params.set(key,parsed[key]);return setView('atlas/connections'+(params.size?'?'+params:''),options);
@@ -234,10 +252,10 @@ async function render(){
   else if(view==='database')renderDatabase();
   else if(view==='docs')renderDocs();
   else if(view==='dictionary')dictionaryController=renderFormulaDictionary({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||''))});
-  else if(view==='projects')await page.renderResponseProjects({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||'')),download});
+  else if(view==='projects')await page.renderResponseProjects({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||'')),download,onOpenLab:openProjectLab,canOpenCurrent:canOpenProjectInput});
   else if(view==='compare')await page.renderComparisonLab({container:$('#app'),download});
-  else if(view==='notebook')await renderMaterialNotebook({container:$('#app'),run:executePythonTask,cancelRun:cancelPython,toast,download});
-  else if(view==='classroom'||isClassroomView(view))await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench});
+  else if(view==='notebook')await renderMaterialNotebook({container:$('#app'),run:runPythonTask,cancelRun:cancelPython,toast,download});
+  else if(view==='classroom'||isClassroomView(view))await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput});
   else if(view==='products')renderProducts();
   else if(view==='bands')renderBands();
   else if(view==='structure')await page.renderStructureView({container:$('#app'),run:runPythonTask,toast,download,openGroup:(id,k,bzType)=>openWorkbench({id,k,bzType})});
@@ -245,6 +263,7 @@ async function render(){
    if(state.route.startsWith('compute/advanced/'))page.selectAdvancedTool(state.route.split('/')[2].split('?')[0]);
    await page.renderAdvancedView({container:$('#app'),onToolChange:tool=>{const next='compute/advanced/'+tool;if(state.route!==next)setView(next,{render:false});},run:runPythonTask,toast,download,sendToBands:async payload=>{const research=await optionalViews.get('research');if(!current())return;research.setResearchInput('magnetictb',payload);setView('magnetictb');toast('已载入精确模型的数值代入。');}});
   }else if(['magnetictb','crystkit'].includes(view))await page.renderResearchView(view,{container:$('#app'),run:runPythonTask,toast,download,context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued}});
+  if(current()){projectNavigation.consumeInput();if(state.courseRoute)delete state.courseRoute.projectInput;}
  }catch(error){if(current()){$('#app').innerHTML='<div class="notice error" role="alert">此页面暂未载入：'+esc(error.message)+' <button id="resource-retry" class="secondary">重试此页面</button> <a href="#home">返回首页</a></div>';$('#resource-retry').onclick=()=>render();}}
 }
 

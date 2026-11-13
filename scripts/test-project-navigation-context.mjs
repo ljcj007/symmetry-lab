@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import {Container} from './test-material-research-ui.mjs';
+import {createProjectNavigator,prepareProjectNavigation,projectActionForRoute,projectReturnRoute} from '../dist/project-navigation.js';
+
+const record={action:'device_transport_lab',input:{model:'uniform',sites:12,hopping:1,energy:.2,spinDegeneracy:2}};
+const sourceRecord=structuredClone(record);
+const request={templateId:'normal-andreev',projectId:'copy-two',stepId:'normal',templateTitle:'比较两个自旋通道',stepTitle:'正常态',mode:'current',route:'#compute/device-transport-lab?preset=device-perfect',record};
+const prepared=prepareProjectNavigation(request),nav=createProjectNavigator();
+assert.equal(prepared.route,'compute/device-transport-lab');
+assert.equal(projectActionForRoute(prepared.route),'device_transport_lab');
+assert.ok(!prepared.route.includes('spinDegeneracy'),'Inputs stay outside the address');
+nav.enter(prepared.route,prepared.context);
+const first=nav.selection({section:'response-materials',module:'device',calculationOnly:true});
+assert.equal(first.project,'normal-andreev');assert.equal(first.projectInstance,'copy-two');assert.equal(first.projectStep,'normal');
+assert.equal(first.projectInput.input.spinDegeneracy,2);first.projectInput.input.spinDegeneracy=1;
+assert.deepEqual(record,sourceRecord,'Editing the receiving copy does not edit the source record');
+assert.equal(nav.selection({}).projectInput.input.spinDegeneracy,2,'Copies are isolated from the active visit too');
+nav.consumeInput();assert.equal(nav.snapshot().hasInput,false);assert.equal(nav.selection({}).projectInput,undefined);
+const internal=nav.optionsFor('#compute/device-transport-lab?material=chain');
+assert.ok(internal.projectContext);assert.equal(internal.projectContext.projectInput,undefined,'Ordinary internal updates cannot replay consumed original inputs');
+nav.enter('compute/device-transport-lab?material=chain',internal.projectContext);
+assert.equal(nav.snapshot().source.projectId,'copy-two');
+assert.deepEqual(nav.optionsFor('compute/hall-response-lab'),{},'A different calculator cannot inherit the origin');
+
+const host=new Container(),moves=[];
+host.innerHTML=nav.html();nav.bind(host,route=>moves.push(route));
+const link=host.querySelector('[data-project-return]'),staleClick=link.onclick;
+let prevented=0;link.onclick({ctrlKey:true,preventDefault(){prevented++;}});
+assert.equal(prevented,0);assert.equal(moves.length,0,'Modified links retain normal navigation');
+link.onclick({preventDefault(){prevented++;}});
+assert.equal(moves.length,1);assert.equal(nav.snapshot(),null);assert.match(moves[0],/projectInstance=copy-two/);assert.match(moves[0],/projectStep=normal/);
+staleClick({preventDefault(){prevented++;}});assert.equal(moves.length,1,'Returning consumes the one visit');
+
+nav.enter(prepared.route,prepared.context);host.innerHTML=nav.html();nav.bind(host,route=>moves.push(route));
+const beforeExternal=host.querySelector('[data-project-return]').onclick;
+nav.enter(prepared.route);assert.equal(nav.snapshot(),null);assert.equal(nav.selection({}).projectInput,undefined,'A fresh same-URL external navigation clears old input and origin');
+beforeExternal({preventDefault(){prevented++;}});assert.equal(moves.length,1);
+nav.enter('compute/hall-response-lab',prepared.context);assert.equal(nav.snapshot(),null,'Context cannot be replayed against a different target');
+nav.enter(prepared.route,{...prepared.context,projectInput:{action:'hall_response_lab',input:{}}});assert.equal(nav.snapshot(),null,'A mismatched payload is rejected');
+nav.enter(prepared.route,{...prepared.context,source:{...prepared.context.source,projectId:'<script>'}});assert.equal(nav.snapshot(),null);
+assert.throws(()=>prepareProjectNavigation({...request,record:{...record,action:'hall_response_lab'}}));
+assert.throws(()=>prepareProjectNavigation({...request,route:'#compute/unknown'}));
+assert.throws(()=>prepareProjectNavigation({...request,mode:'automatic'}));
+assert.throws(()=>prepareProjectNavigation({...request,projectId:''}));
+assert.throws(()=>prepareProjectNavigation(request,{route:'compute/hall-response-lab'}));
+assert.equal(projectActionForRoute('https://example.org/compute/device-transport-lab'),null);
+
+const preset=prepareProjectNavigation({...request,mode:'preset',record:undefined});
+assert.equal(preset.route,'compute/device-transport-lab?preset=device-perfect');assert.equal(preset.context.projectInput,undefined);
+nav.enter(preset.route,preset.context);assert.match(nav.html(),/预设条件/);assert.equal(nav.selection({}).projectInput,undefined);
+assert.equal(projectReturnRoute(preset.context.source),'atlas/projects?project=normal-andreev&projectInstance=copy-two&projectStep=normal');
+assert.deepEqual(record,sourceRecord);
+console.log('Project navigation context: exact project/step, deep-copy isolation, one-shot input consumption, internal-only continuation, external/deep-link isolation, native modified links, stale returns, strict targets and no computation/storage side effects passed.');

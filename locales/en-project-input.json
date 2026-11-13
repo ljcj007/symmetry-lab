@@ -1,0 +1,12 @@
+{
+  "原记录的输入结构过大或过深。": "The saved input is too large or too deeply nested.",
+  "原记录含有非有限数值。": "The saved input contains a nonfinite number.",
+  "原记录的输入不是可恢复的 JSON 数据。": "The saved input is not restorable JSON data.",
+  "原记录含有不支持的输入字段。": "The saved input contains an unsupported field.",
+  "原记录缺少可恢复的输入对象。": "The saved record has no restorable input object.",
+  "原记录输入超过此页面可编辑的 4 MB 范围。": "The saved input exceeds this page's editable 4 MB limit.",
+  "原记录属于另一个计算工具，未替换当前输入。": "The saved record belongs to another calculation tool. The current input has not been replaced.",
+  "原记录包含当前页面未支持的参数或实验选项，未替换当前输入。": "The saved record contains parameters or experiment options that this page does not yet support. The current input has not been replaced.",
+  "已从项目记录建立本次输入副本。修改参数不会改写既有记录；请检查后手动运行计算。": "An editable input copy has been created from the project record. Parameter changes do not rewrite the saved record. Review the input, then run the calculation explicitly.",
+  "项目输入未载入：": "Project input was not loaded: "
+}

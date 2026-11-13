@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-route.js';
 import {languageURL} from '../dist/language-switch.js';
+import {createProjectNavigator} from '../dist/project-navigation.js';
 
 const appSource=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');
 const openSource=appSource.slice(appSource.indexOf('async function openWorkbench('),appSource.indexOf('\nconst $='));
@@ -36,6 +37,7 @@ const host={dataset:{},innerHTML:''},retry={},loads=[],notices=[],replaced=[];
 const state={view:'workbench',route:'workbench',mode:'sg',group:catalogs.sg[224],k:[0,0,0],doubleValued:false,bzType:'',labelK:null,result:null,tab:'characters',returnCourse:'classroom/foundations?lesson=from-point-to-space'};
 let draws=0,calculations=0;
 const context={state,renderTicket:0,dictionaryController:null,URLSearchParams,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber:parseCoordinate,
+ projectNavigation:createProjectNavigator(),
  $:selector=>selector==='#app'?host:retry,groupLoader:{peek:()=>true},optionalViews:{peek:()=>true},
  ensureGroups:async mode=>{loads.push(mode);return catalogs[mode];},list:mode=>catalogs[mode],
  gid:(group=state.group,mode=state.mode)=>mode==='sg'?String(group.number):group.id,

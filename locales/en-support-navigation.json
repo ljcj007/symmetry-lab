@@ -1,0 +1,23 @@
+{
+  "当前核对使用本页的零温输运实现约定，熵核取为零。不要把一个阈值点的半占据约定当成非零横向热电响应。": "This check uses the page's zero-temperature transport convention, in which the entropy kernel is set to zero. Half occupation at one threshold point does not imply a nonzero transverse thermoelectric response.",
+  "项目返回位置不完整，请从保存的作业重新打开实验。": "The project return location is incomplete. Reopen the experiment from the saved assignment.",
+  "项目导航方式无效。": "This project navigation mode is invalid.",
+  "本阶段的工具入口暂不可恢复，请从计算中心打开。": "This stage's tool entry cannot be restored here. Open it from the calculation center.",
+  "当前记录来自其他工具，未替换实验输入。": "The current record belongs to another tool, so the experiment input was not replaced.",
+  "当前记录的输入不能由本工具完整恢复。": "This tool cannot fully restore the input in the current record.",
+  "实验与项目阶段不匹配，未载入原记录。": "The experiment does not match the project stage, so the original record was not loaded.",
+  "当前项目与阶段": "Current project and stage",
+  "本次打开原记录的输入副本；修改不会改写已保存的证据。": "This opens a copy of the original input. Edits do not overwrite saved evidence.",
+  "本次载入该阶段的预设条件；已有证据和笔记保留。": "This loads the stage's preset conditions. Existing evidence and notes are retained.",
+  "项目实验来源": "Project experiment context",
+  "请检查条件并手动运行计算。": "Review the conditions, then run the calculation explicitly.",
+  "返回这份项目与目标阶段 →": "Return to this project and stage →",
+  "本阶段先记录单自旋基准 G₁=(e²/h)T，再乘2与包含两个物理自旋的 NS 电导比较。": "This stage first records the single-spin baseline G₁=(e²/h)T, then multiplies it by 2 for comparison with the NS conductance including both physical spins.",
+  "这里固定独立自旋通道数，使接触、透射与电导的比较使用同一计数约定。": "The number of independent spin channels is fixed here so that contact, transmission, and conductance comparisons use the same counting convention.",
+  "两个相同独立通道只复制散射结果并将电导乘2，不会自动加入 SOC、Zeeman 项或自旋散射。": "Two identical independent channels copy the scattering result and multiply the conductance by 2; they do not automatically introduce SOC, Zeeman terms, or spin scattering.",
+  "生成元、权图与物理应用": "Generators, weight diagrams, and physical applications",
+  "02 · 为什么用酉矩阵？": "02 · Why use unitary matrices?",
+  "项目作业": "Project assignments",
+  "跨模块项目作业": "Cross-module projects",
+  "计算完成 · 可导出或收录到项目作业": "Calculation complete · Export or add to a project"
+}

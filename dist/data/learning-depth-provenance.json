@@ -40,12 +40,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 8625,
-      "sha256": "b651b642dcb4234519cefe03dfdd693bf0527a1246fbe7539049f4568d0a3d48"
+      "bytes": 10438,
+      "sha256": "b92a6e94ddd0ca727adccab94be1752dcddf83217a4e53fb5c30baba03e2b6d1"
     },
     "dist/app.js": {
-      "bytes": 92894,
-      "sha256": "6c79a7368fd8ed67dd07cd9c61c3b2de04d73ae84bb5b90ea0c8bc55c4f31a5c"
+      "bytes": 94441,
+      "sha256": "09319c5bda6ec3627e943e48dfd77012989a14904d2f1c8df320ff4237a55619"
     },
     "dist/data/lie-derivations.json": {
       "bytes": 138720,
@@ -64,16 +64,16 @@
       "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
     },
     "dist/index.html": {
-      "bytes": 6035,
-      "sha256": "73d48cde73073abde04d8bb127d21c1ec4a4d40b54dbf4626eacf2fab6fd6724"
+      "bytes": 6181,
+      "sha256": "d31d75c64c0043851ce12b5bb1fcc89ab47c293e2b26ed3cbfa088d3621e6a8b"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 53045,
-      "sha256": "155a78c9c0ba0046a5a78b89d7254235fc6e4356f9e1b574798379fd7a6cf9f0"
+      "bytes": 53586,
+      "sha256": "6b92ccc74a34c0a3bd6df74883f53468f0f9bfab979e260b60b86e72996a149f"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29373,
-      "sha256": "ff0847f755b150d39df5dc586724095644f66a11a8c62ad143fad40c27e99720"
+      "bytes": 29376,
+      "sha256": "ba44c8cfe313fea0d0a4952dbb25dd24445c4b133ec0f7f3750cd96ed132580f"
     },
     "dist/navigation.css": {
       "bytes": 8184,
@@ -92,8 +92,8 @@
       "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
     },
     "dist/tool-finder.js": {
-      "bytes": 8443,
-      "sha256": "546cee125507fa3668d2d9baf70384e266ee9b6281011a4c0744e3355925b0a3"
+      "bytes": 8446,
+      "sha256": "02f2ac2408b319d5583f92b6b73ea123a2a621fba0783525dd2ba32b9abe4b02"
     },
     "dist/tool-search.js": {
       "bytes": 1140,
@@ -116,8 +116,8 @@
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
     },
     "package.json": {
-      "bytes": 12978,
-      "sha256": "2da5c18593f48126a7d8dbcd81acc98f72fe67aa6c58cf3038f4d7c968437b7a"
+      "bytes": 13348,
+      "sha256": "8360e1b47a81fcc14c742a3a5afb2ce58f12e46a1de42a7d40433f824dc86d50"
     },
     "scripts/build-advanced-derivations.py": {
       "bytes": 18465,

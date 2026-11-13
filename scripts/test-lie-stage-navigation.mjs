@@ -67,6 +67,7 @@ console.log('Lie stage navigation: seven consistent filters/sidebar/next sets, 3
 // Exercise the production app -> canonical classroom -> Lie remount chain.
 // A captured onNavigate patch alone cannot expose the remount that lost origin.
 const classroom=await import('../dist/classroom-ui.js');
+const {createProjectNavigator}=await import('../dist/project-navigation.js');
 Object.defineProperty(Element.prototype,'firstElementChild',{get(){return this.children[0]||null;}});
 Element.prototype.insertAdjacentHTML=function(position,value){const fragment=new Element();fragment.innerHTML=value;const parent=position==='afterend'?this.parentNode:this;for(const child of fragment.children)child.parentNode=parent;if(position==='afterbegin')parent.children.unshift(...fragment.children);else if(position==='afterend')parent.children.splice(parent.children.indexOf(this)+1,0,...fragment.children);else throw Error('Unsupported test insertion position');};
 Object.defineProperty(Element.prototype,'classList',{get(){const element=this;return {toggle(name,force){const names=new Set((element.attributes.class||'').split(/\s+/).filter(Boolean)),add=force??!names.has(name);if(add)names.add(name);else names.delete(name);element.attributes.class=[...names].join(' ');return add;},add(name){this.toggle(name,true);},remove(name){this.toggle(name,false);}};}});
@@ -80,6 +81,7 @@ nodes.set('app',host);
 const appState={view:'home',route:'home',primary:'home',courseRoute:null,returnCourse:null},location={hash:''},historyWrites=[],renderJobs=[];
 let mounts=0;
 const appContext={
+ projectNavigation:createProjectNavigator(),openProjectLab:()=>assert.fail('Stage navigation must not open a project calculator'),canOpenProjectInput:()=>false,
  state:appState,location,history:{pushState(_state,_title,hash){location.hash=hash;historyWrites.push(hash);},replaceState(_state,_title,hash){location.hash=hash;historyWrites.push(hash);}},
  URLSearchParams,structuredClone,Object,Promise,console,
  $:selector=>nodes.get(selector.slice(1))||host.querySelector(selector),$$:()=>[],

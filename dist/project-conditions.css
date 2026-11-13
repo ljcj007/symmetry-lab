@@ -1,0 +1,14 @@
+.project-condition-feedback{min-width:0;margin:18px 0;padding:18px;border:1px solid #c9d9ce;border-radius:9px;background:#f4f8f4;font-size:18px;line-height:1.75;color:#294537}
+.project-condition-feedback h4{font-size:20px;margin:0 0 12px}.project-condition-feedback p{margin:10px 0}.project-condition-feedback .obs-table{width:100%;max-width:100%;overflow-x:auto}
+.project-condition-feedback .obs-table table{min-width:520px;font-size:18px}.project-condition-feedback .obs-table th,.project-condition-feedback .obs-table td{white-space:normal;overflow-wrap:anywhere;text-align:left;vertical-align:top;min-width:110px}
+.project-condition-feedback code{font-size:1em;overflow-wrap:anywhere}.response-projects .rp-project-step[aria-current=step]{border-left:4px solid #428166;padding-left:18px}.response-projects .rp-project-step:focus{outline:3px solid #b67a28;outline-offset:4px}
+.project-condition-feedback{container-type:inline-size}.project-condition-cell-label{display:none}
+@container (max-width:540px){
+ .project-condition-feedback .obs-table table{display:block;min-width:0;width:100%}
+ .project-condition-feedback .obs-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .project-condition-feedback .obs-table tbody{display:block;width:100%}
+ .project-condition-feedback .obs-table tbody tr{display:block;margin:0 0 12px;padding:12px;border:1px solid #b9ccc0;border-radius:6px;background:#fff}
+ .project-condition-feedback .obs-table tbody th,.project-condition-feedback .obs-table tbody td{display:block;min-width:0;width:100%;box-sizing:border-box;padding:6px 0;border:0;overflow-wrap:anywhere}
+ .project-condition-feedback .obs-table tbody th{font-weight:700}
+ .project-condition-feedback .project-condition-cell-label{display:block;font-size:18px;font-weight:600;color:#3b5548}
+}
