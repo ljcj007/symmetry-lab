@@ -39,7 +39,7 @@ export function mountCoverage(host) {
       const more=content.querySelector('[data-coverage-more]');let limit=30;
       const draw=()=>{
         const matches=filterCoverage(rows,query.value,project.value,status.value,kind.value), visible=matches.slice(0,limit);
-        content.querySelector('[data-coverage-count]').textContent=`${matches.length} items match, display ${visible.length} item`;
+        content.querySelector('[data-coverage-count]').textContent=`${matches.length} items match, display ${visible.length} Term`;
         content.querySelector('[data-coverage-rows]').innerHTML=visible.length?`<table><thead><tr><th>upstream symbol</th><th>migration status / Python interface</th><th>Implemented scope and limitations</th></tr></thead><tbody>${visible.map(row=>`<tr><td><strong>${escape(row.symbol)}</strong><small>${escape(row.project)} · ${escape(kindNames[row.kind]||row.kind||'')}</small></td><td>${escape(statusNames[row.status]||row.status)}${row.tool?`<code>${escape(row.tool)}${row.action?' / '+escape(row.action):''}</code>`:''}</td><td>${escape(row.scope)}</td></tr>`).join('')}</tbody></table>`:"<p class=\"empty-state\">No matching public symbol.</p>";
         more.hidden=visible.length>=matches.length;
       };

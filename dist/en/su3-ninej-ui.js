@@ -16,7 +16,7 @@ const pathLabel=(path,index)=>path?.label||`path ${index}`;
 const parity=value=>value===1?"+ Symmetry":value===-1?"− Antisymmetric":'—';
 const targetItems=targets=>targets.map(item=>[`${item.p},${item.q}`,`${repLabel(item)} · (${item.p}, ${item.q}) · multiplicity ${item.multiplicity}`]);
 const selectedMultiplicity=$=>$('#lg-ninej-target')?._ninejTargets?.find(item=>`${item.p},${item.q}`===$('#lg-ninej-target').value)?.multiplicity;
-const vectorHint=m=>`Fill in${m?` ${m} item`:"The multiplicity item selected for the final representation (calculated first in single path state, multiplicity can be read)"}. Each item is a real number, a radical string, or {"re":"sqrt(2)/2","im":"1/3"}. The overall norm remains unchanged; Python checks expression and vector dimensions.`;
+const vectorHint=m=>`Fill in${m?` ${m} Term`:"The multiplicity item selected for the final representation (calculated first in single path state, multiplicity can be read)"}. Each item is a real number, a radical string, or {"re":"sqrt(2)/2","im":"1/3"}. The overall norm remains unchanged; Python checks expression and vector dimensions.`;
 export const ninejName="SU(3) · 9j coefficient and quadruple recoupling";
 export const ninejDefault={factors:[[1,0],[1,0],[1,0],[1,0]],target:[2,1],direction:'left_to_right',state:{index:0}};
 const octetInput=target=>({factors:[[1,1],[1,1],[1,1],[1,1]],target,direction:'left_to_right',state:{index:0}});

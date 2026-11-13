@@ -8,7 +8,7 @@ const fake={hubbardBridgeHTML:id=>'<details data-host-test><summary>'+id+'</summ
 const mount=(family='hubbard',lessonId='manybody-lehmann')=>{const root=new Container();root.innerHTML=learningBridgeHTML(family,lessonId);return root;};
 assert.equal(learningBridgeHTML('unknown','manybody-lehmann'),'');
 assert.equal(learningBridgeHTML('hubbard','future'),'');
-assert.deepEqual(Object.values(LEARNING_BRIDGE_HOOKS).map(x=>x.length),[2,5]);
+assert.deepEqual(Object.values(LEARNING_BRIDGE_HOOKS).map(x=>x.length),[2,5,1,3]);
 const never=bindLearningBridge({root:mount('hubbard','future'),family:'hubbard',lessonId:'future',loadModule:()=>{throw Error('Unknown hooks stay unloaded');}});await never.ready;never();
 let release;const wait=new Promise(resolve=>{release=resolve;});
 const first=mount(),retired=bindLearningBridge({root:first,family:'hubbard',lessonId:'manybody-lehmann',stateStore:store,loadModule:()=>{loads++;return wait;}});
@@ -24,4 +24,18 @@ retryButton.onclick();const waiting=retry.ready;retryButton.onclick();assert.equ
 const fourth=mount();let resolveDetached;const detachedWait=new Promise(resolve=>{resolveDetached=resolve;});
 const detached=bindLearningBridge({root:fourth,family:'hubbard',lessonId:'manybody-lehmann',stateStore:store,loadModule:()=>detachedWait});
 fourth.isConnected=false;resolveDetached(fake);await detached.ready;assert.equal(bindings,2,'Detached views cannot bind late modules');detached();
+for(const [family,lessonId,htmlName,bindName]of [
+ ['thermal','thermal-oscillator','thermalBridgeHTML','bindThermalLearningBridge'],
+ ['onsager','reciprocity-onsager','onsagerBridgeHTML','bindOnsagerLearningBridge']
+]){
+ let requested=null,bound=false;
+ const root=mount(family,lessonId),module={
+  [htmlName]:id=>'<details data-host-test><summary>'+id+'</summary></details>',
+  [bindName]:options=>{bound=true;assert.equal(options.lessonId,lessonId);assert.equal(options.stateStore,store);return()=>{};}
+ };
+ const cleanup=bindLearningBridge({root,family,lessonId,stateStore:store,loadModule:async key=>{requested=key;return module;}});
+ await cleanup.ready;assert.equal(requested,family);assert.ok(bound);cleanup();
+}
+assert.equal(learningBridgeHTML('thermal','reciprocity-onsager'),'');
+assert.equal(learningBridgeHTML('onsager','thermal-oscillator'),'');
 console.log('Learning bridge host: scoped lazy hooks, deduplicated retries, async tab/detach isolation, state disposal order and zero automatic calculation passed.');

@@ -2,11 +2,15 @@ import {createResourceLoader} from './resource-loader.js?v=20261110-en1';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const LEARNING_BRIDGE_HOOKS=Object.freeze({
  hubbard:Object.freeze(['hubbard-basis','manybody-lehmann']),
- quantum:Object.freeze(['density-pure-mixed','density-exchange','spt-schmidt','spt-aklt-parent','su2-coupling-representations'])
+ quantum:Object.freeze(['density-pure-mixed','density-exchange','spt-schmidt','spt-aklt-parent','su2-coupling-representations']),
+ thermal:Object.freeze(['thermal-oscillator']),
+ onsager:Object.freeze(['reciprocity-onsager','reciprocity-spatial-response','reciprocity-dissipation'])
 });
 const definitions={
  hubbard:{load:()=>import('./hubbard-learning-bridge.js?v=20261113-operations1'),html:'hubbardBridgeHTML',bind:'bindHubbardLearningBridge'},
- quantum:{load:()=>import('./quantum-state-bridge.js?v=20261113-operations1'),html:'quantumStateBridgeHTML',bind:'bindQuantumStateBridge'}
+ quantum:{load:()=>import('./quantum-state-bridge.js?v=20261113-operations1'),html:'quantumStateBridgeHTML',bind:'bindQuantumStateBridge'},
+ thermal:{load:()=>import('./thermal-learning-bridge.js?v=20261113-thermal1'),html:'thermalBridgeHTML',bind:'bindThermalLearningBridge'},
+ onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());
 export function learningBridgeHTML(family,lessonId){

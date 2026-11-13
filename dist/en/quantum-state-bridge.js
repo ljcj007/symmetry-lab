@@ -122,7 +122,7 @@ function restored(id,saved){
  return s;
 }
 const select=(id,label,rows,value)=>`<label for="${id}">${label}<select id="${id}">${rows.map(([v,t])=>`<option value="${v}" ${value===v?'selected':''}>${t}</option>`).join('')}</select></label>`;
-const answerSelect=(prefix,key,label,value)=>select(prefix+'-'+key,label,[['',"Choose your prediction first"],...choices[key==='choice'?prefix.includes('partial-trace')?'partial-trace':prefix.includes('schmidt-pure')?'schmidt-pure':'triplet-virtual':prefix.includes('partial-trace')?'partial-meaning':prefix.includes('schmidt-pure')?'schmidt-unit':'triplet-finite']],value).replace('</label>',`<span class="qsb-choice-reading" id="${prefix}-${key}-reading" aria-hidden="true"></span></label>`);
+const answerSelect=(prefix,key,label,value)=>select(prefix+'-'+key,label,[['',"Choose a prediction first"],...choices[key==='choice'?prefix.includes('partial-trace')?'partial-trace':prefix.includes('schmidt-pure')?'schmidt-pure':'triplet-virtual':prefix.includes('partial-trace')?'partial-meaning':prefix.includes('schmidt-pure')?'schmidt-unit':'triplet-finite']],value).replace('</label>',`<span class="qsb-choice-reading" id="${prefix}-${key}-reading" aria-hidden="true"></span></label>`);
 const range=(id,label,value,min,max,step)=>`<label for="${id}">${label}<input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${value}"><output id="${id}-value"></output></label>`;
 const button=(id,text)=>`<button type="button" id="${id}">${text}</button>`;
 function panelHTML(id,s){

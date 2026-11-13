@@ -1,6 +1,6 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261113-route1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261113-thermal1';
 import {curveSVG} from './observables-ui.js?v=20261113-flow1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -13,7 +13,7 @@ const catalog=()=>catalogPromise??=fetch('data/structure-dynamics.json?v=2026111
 export const getStructureDynamicsResult=()=>lastResult;
 export function phonopyUnitSummary(r){
  const structure=r.structure||{},source={unspecified:"Not declared", 'user.frequency_unit':"Explicit user confirmation",frequency_unit:"File frequency metadata",'frequency-unit':"File frequency metadata",'physical_unit.frequency':"File physical-unit frequency metadata",length_unit:"File length metadata",'physical_unit.length':"File physical-unit length metadata",'companion.length_unit':"Companion-file length metadata",'companion.physical_unit.length':"Companion-file physical-unit length metadata"};
- return `<h3>Units and sources</h3>${table(["quantity","unit","Basis"],[["Frequency",r.frequencyUnit,source[r.frequencyUnitSource]||"Source not recorded in this result"],["Lattice and displayed displacement",structure.lengthUnit||"Input lattice units",source[structure.lengthUnitSource]||"Source not recorded in this result"],["File path distance",structure.reciprocalLengthUnit||"Input reciprocal-length unit","Uses the declared input length unit; reciprocal basis excludes 2π"]])}<p class="obs-small">Input values are retained; confirming units does not convert frequencies, lattice vectors, or DOS. The display amplitude A uses the input lattice length unit, and q uses fractional reciprocal coordinates.</p>`;
+ return `<h3>Units and sources</h3>${table(["Quantity","unit","Basis"],[["Frequency",r.frequencyUnit,source[r.frequencyUnitSource]||"Source not recorded in this result"],["Lattice and displayed displacement",structure.lengthUnit||"Input lattice units",source[structure.lengthUnitSource]||"Source not recorded in this result"],["File path distance",structure.reciprocalLengthUnit||"Input reciprocal-length unit","Uses the declared input length unit; reciprocal basis excludes 2π"]])}<p class="obs-small">Input values are retained; confirming units does not convert frequencies, lattice vectors, or DOS. The display amplitude A uses the input lattice length unit, and q uses fractional reciprocal coordinates.</p>`;
 }
 export function phonopySourceHTML(r){
  const identity=r.sourceIdentity,reference=identity?.reference;if(!reference)return '';

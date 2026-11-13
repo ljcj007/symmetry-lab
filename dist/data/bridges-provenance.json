@@ -389,8 +389,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "7897fc050c6f5adf1d62e6d2cd212de97f0efe155d49448b4b72962d11c8bca9",
-      "bytes": 94443
+      "sha256": "452f107a94364fd0ebd50d050c5c5e7c313d035c93ad72e2a1dec7e1cbdbc5b6",
+      "bytes": 94434
     },
     {
       "path": "dist/bridges-projects.js",
@@ -399,8 +399,8 @@
     },
     {
       "path": "dist/bridges-ui.js",
-      "sha256": "1008447054aec0254d7566d52d78e16b0f42e0ed8620d0d84a47aea449e9e52f",
-      "bytes": 16856
+      "sha256": "74450eb2bbc357d0b5646fcf19a3afc9d8efb4230832f82e304192572f9bc21d",
+      "bytes": 16853
     },
     {
       "path": "dist/bridges-views.js",
@@ -414,8 +414,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "0ad32b1ae983840ceac6d33e9176cd4b1b963e1ee33658664aba2f17fb53a0b5",
-      "bytes": 31790
+      "sha256": "493e99b5f0e76d1c1a9939fb8c68839dd30cf30faad779ec75bb6e5ad049610a",
+      "bytes": 31783
     },
     {
       "path": "dist/classroom.css",
@@ -434,8 +434,8 @@
     },
     {
       "path": "dist/coupled-materials-ui.js",
-      "sha256": "3ad144b50d6e69c2e0ad7b550d1bcb405610ad99cc74c555dd3bd360253549a0",
-      "bytes": 36102
+      "sha256": "e3f0b5cb4f13e2efca374c50ddb1319594eb617590f019bfefb4132f16ffdd70",
+      "bytes": 36104
     },
     {
       "path": "dist/coupled-materials.css",
@@ -469,7 +469,7 @@
     },
     {
       "path": "dist/data/coupled-materials-provenance.json",
-      "sha256": "654ab07f173a23692473c3df6eaa75e0b721526e231d4171ceb0508a885236fb",
+      "sha256": "a473eda6ac817c12ee5a9049d403a08072fefbd7e01427e041ff02a70084bb6e",
       "bytes": 2964
     },
     {
@@ -479,7 +479,7 @@
     },
     {
       "path": "dist/data/electronic-materials-provenance.json",
-      "sha256": "c5bb3002ee6967bc6d6407f0b47f5d6a0b48e27b5685b4cb32ff4c542636b4c7",
+      "sha256": "96b214eedf55503becf770e0a485134055d83626f22211b68f4f9c20e4ff610f",
       "bytes": 4482
     },
     {
@@ -489,12 +489,12 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "46ab9a5291af777662750b20ff2e6ffb4745c50ee2f2bf82afc160932e3fd388",
+      "sha256": "5b159e48c11ebb033fee9d6ef40ed728261d9a45ef86b9490624ed7338d91fb5",
       "bytes": 16854
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "17b6c615857475b79bba74b2e85a52103d5c63456c0bdc6c772d98735c9b3620",
+      "sha256": "8b78525ef419dc16a1087b9ee2e973ab7cadf5c27e1ae564fd37a05de0610c92",
       "bytes": 16897
     },
     {
@@ -504,7 +504,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "5e238d9a7c901a223c2b1d957671ee7d14d49f6c503105bffb7e057710ec6481",
+      "sha256": "b721e7fb7a6a73a601ff5246f81b11be4f5ce744287a77d2de962f84a8ff8ebd",
       "bytes": 5970
     },
     {
@@ -514,7 +514,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "ccea8c6c6a204912ad4efa0255657fa53f3d630601fe59e7a8d5a9b7eb73e5b4",
+      "sha256": "f8d97a83ec61d186cdaeb0a6b4a3fa55281beea9bd6e7f49d85204c5cec2ee38",
       "bytes": 27429
     },
     {
@@ -544,12 +544,12 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "9df4bc1b9744d0f187d6cfaf7d16de68bd8074942d45d38a820cb8d84f323b4c",
+      "sha256": "4380e21cf3a515d71ad8d2c7f0025e83fb31ef3d0e93027b6c3fa2f69cb83292",
       "bytes": 10435
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "b50f64a9864ee4633b191a9aaacb7acdabfe9d50ed84eaa356cc2bf3bd808660",
+      "sha256": "2958e657c171f08721ba342106e4f354597bd25c2d6849a26e74737f73041551",
       "bytes": 13329
     },
     {
@@ -559,7 +559,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "86924817e917be2222d9b30ddd3fe719d876437baead5a4c8a554340ee936372",
+      "sha256": "7cfbd4750253caf2e8aebaa62327224f62fea9f4513fe2508a8167857c5aedf1",
       "bytes": 15857
     },
     {
@@ -599,8 +599,8 @@
     },
     {
       "path": "dist/electronic-materials-ui.js",
-      "sha256": "d83300b50d3741cd590bb3ca58f930d1a72bda60da535767e7c7aa51dae7effc",
-      "bytes": 32581
+      "sha256": "083fea962b037e642ec175e10415d474a5edb08e1ffa6c4e915fa47fc8723a96",
+      "bytes": 32583
     },
     {
       "path": "dist/electronic-materials.css",
@@ -624,8 +624,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "84e36920cf6288c1c012cd708abe75485b16a586bfdac42dc1ac26ec35f7d935",
-      "bytes": 6341
+      "sha256": "1c4355b5c0a89dddea6fc35d70f5df2f595afbc479c08dd45e09edf8a1889869",
+      "bytes": 6494
     },
     {
       "path": "dist/induction.js",
@@ -634,8 +634,8 @@
     },
     {
       "path": "dist/lie-group-ui.js",
-      "sha256": "82c7add03a34af61ff89c1253c3ecd0e0b945137c8625e32a44cb1c067fe0a04",
-      "bytes": 54019
+      "sha256": "4b1c331cf623d2ae72d2de63eff11e8b279923a040dbf783c150c86c4a38ce72",
+      "bytes": 54016
     },
     {
       "path": "dist/lie-group.css",
@@ -654,8 +654,8 @@
     },
     {
       "path": "dist/material-research-ui.js",
-      "sha256": "c6d5a79b80ba03a8863de9982951628351a7ba41a83f9d54baca4ab3dddb0a7c",
-      "bytes": 35601
+      "sha256": "fdc299140e6596063a69f72ed0b105300aa30520b47c753f1f7b7b090766409c",
+      "bytes": 36351
     },
     {
       "path": "dist/material-research.css",
@@ -684,8 +684,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "784170343b971e4bc26ea84171f8feb63e8950ac58f1c3970e3a75cd8f0eb817",
-      "bytes": 29379
+      "sha256": "d1a9ecfad19931f5019d870f5de579a7f580c524fe71ab4e3a17b559ff5dd7da",
+      "bytes": 29376
     },
     {
       "path": "dist/navigation.css",
@@ -709,8 +709,8 @@
     },
     {
       "path": "dist/pathways-ui.js",
-      "sha256": "228ffc65e042e2e6e4ca7ad6649a6a2b0fb134238e92b44739a91aea9ee5a1ce",
-      "bytes": 13438
+      "sha256": "12825099259452cdc68e90cc0b175f79be020105f904a567783b62c33fa00d22",
+      "bytes": 13435
     },
     {
       "path": "dist/pathways-views.js",
@@ -839,8 +839,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "ed6306da1456cd53dd133a6fa14860a58b96e1558923101fff6d5de97573e3ec",
-      "bytes": 43925
+      "sha256": "061efda6cdb36cb0c7ae1e588fcc05fc7cdf8245309714d2266cbad2ca576e6b",
+      "bytes": 43927
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -889,8 +889,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "a08faea1e2352776e38d50dad191084fc7e93260d398418abee23de01b6dd5bc",
-      "bytes": 13828
+      "sha256": "ad12f0b35d2d0cce5552f38e60fa0545bd06bffa97dbf1641d5a024f7b3b56ec",
+      "bytes": 14097
     },
     {
       "path": "scripts/build-bilbao-labels.py",

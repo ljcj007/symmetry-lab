@@ -87,7 +87,7 @@ function resultView(tool,s){
  if(r.matrix&&!r.hamiltonian)out+=`<h3>Result matrix</h3><div data-formula="result" class="exact-formula">${matrix(r.matrix)}</div>`;
  if(r.representatives)out+=`<details><summary>Extension representatives ·  ${r.representatives.length} items</summary>${table(["serial number","Cohomology coordinates","Generator translations"],r.representatives.map(e=>[e.index,e.coordinates,e.generatorTranslations]))}</details>`;
  if(r.orbits)out+=`<h3>Affine classes and chirality</h3>${table(["Representative","Extension index","Enantiomorphic pairing"],r.orbits.map(e=>[e.representative,e.extensionIndices,e.enantiomorphicPair?"Yes":"No"]))}`;
- if(r.diagnostics)out+=`<details><summary>Exact-verification details</summary>${table(["Exact verification","results"],Object.entries(r.diagnostics).map(([k,v])=>[k,v]))}</details>`;
+ if(r.diagnostics)out+=`<details><summary>Exact-verification details</summary>${table(["Exact verification","Result"],Object.entries(r.diagnostics).map(([k,v])=>[k,v]))}</details>`;
  out+=`<details class="exact-full"><summary>Complete results, exact matrices, and certificates</summary><pre class="json-output">${esc(pretty(r))}</pre></details>`;
  return out;
 }

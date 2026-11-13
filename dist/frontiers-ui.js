@@ -1,4 +1,4 @@
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261113-operations1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261113-thermal1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261113-route1';

@@ -37,7 +37,7 @@ function readReps($){
 export function readCGPayload($,read){
   const input=readReps($),direction=$('#lg-cg-direction')?.value,mode=$('#lg-cg-mode')?.value,dimension=size(input),arithmetic=$('#lg-cg-arithmetic')?.value||'numeric';
   if(!['numeric','exact'].includes(arithmetic))throw Error("Please select numerical or precise calculation mode.");
-  if(dimension>limit(arithmetic))throw Error(`This product space ${dimension} dimension, more than${arithmetic==='exact'?"accurate":"value"}mode ${limit(arithmetic)} dimension upper limit; please reduce the representation${arithmetic==='exact'?"or switch to numerical mode":''}。`);
+  if(dimension>limit(arithmetic))throw Error(`This product space ${dimension} dimension, more than${arithmetic==='exact'?"accurate":"Value"}mode ${limit(arithmetic)} dimension upper limit; please reduce the representation${arithmetic==='exact'?"or switch to numerical mode":''}。`);
   if(!['product_to_coupled','coupled_to_product'].includes(direction))throw Error("Please select a valid change of basis direction.");
   if(!['basis','vector'].includes(mode))throw Error("Please select a ground state or custom complex amplitude vector.");
   let state;
