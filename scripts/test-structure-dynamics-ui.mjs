@@ -159,4 +159,231 @@ resolveDemo(officialText);await officialLoad;
 assert.equal(slowOfficial.container.querySelector('#dyn-file-text').value,'new local input');
 assert.equal(slowOfficial.container.querySelector('#dyn-unit').value,'meV','Late example cannot overwrite a user unit choice');
 globalThis.fetch=normalFetch;
-console.log('Structure dynamics UI: real Python schemas, six-domain and origin interaction, reflection selection, band segmentation, mode selection, 3D projection, stale calculation/file/demo guards, snapshot handoff with automatic units and material deep links, routes and persisted stepwise exercises passed.');
+// Actual deferred HTTP and body reads reproduce the public loading/Run race.
+// We bypass native disabled controls through submit() as Enter or a retained
+// handler could otherwise reach the form; the controller must guard itself.
+const deferred=()=>{let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no});return {promise,resolve,reject};};
+const demoText=fs.readFileSync(new URL('../dist/data/examples/phonopy-demo.yaml',import.meta.url),'utf8');
+const responseFor=body=>({ok:true,text:()=>body.promise});
+let pendingFetch=deferred(),pendingBody=deferred(),loadingFetches=0,loadingRuns=0,loadingSignal;
+globalThis.fetch=(url,options)=>{loadingFetches++;loadingSignal=options?.signal;return pendingFetch.promise;};
+const loading=await mount({calculationOnly:true,experiment:'phonopy'},async()=>{loadingRuns++;throw Error('manual run captured after loading');});
+const loadingRequest=loading.container.querySelector('#dyn-official-al').onclick();
+assert.equal(loading.container.querySelector('#dyn-run').disabled,true,'Run is disabled before the HTTP response arrives');
+assert.equal(loading.container.querySelector('#dyn-fields').disabled,false,'File loading leaves editing and replacement controls usable');
+assert.equal(loading.container.querySelector('#dyn-official-al').disabled,true);
+assert.equal(loading.container.querySelector('#dyn-demo').disabled,false,'Another sample can supersede the current request');
+assert.equal(loading.container.querySelector('#dyn-input-status').hidden,false);
+assert.match(loading.container.querySelector('#dyn-input-status').textContent,/手动点击/);
+assert.equal(loading.container.querySelector('#dyn-cancel').hidden,false);
+await submit(loading);await submit(loading);
+await loading.container.querySelector('#dyn-official-al').onclick();
+assert.equal(loadingRuns,0,'Immediate and repeated submit events cannot compute an empty form or cancel the incoming sample');
+assert.equal(loadingFetches,1,'Repeated current-example clicks do not launch duplicate requests');
+assert.equal(loadingSignal?.aborted,false,'Blocked Run does not cancel the incoming request');
+assert.match(loading.container.querySelector('#dyn-output').innerHTML,/正在载入官方/);
+pendingFetch.resolve(responseFor(pendingBody));await Promise.resolve();
+await submit(loading);
+assert.equal(loading.container.querySelector('#dyn-run').disabled,true,'Run stays disabled while the response body is pending');
+assert.equal(loadingRuns,0);
+pendingBody.resolve(officialText);await loadingRequest;
+assert.equal(loading.container.querySelector('#dyn-file-text').value,officialText);
+assert.equal(loading.container.querySelector('#dyn-run').disabled,false);
+assert.equal(loading.container.querySelector('#dyn-input-status').hidden,true);
+assert.equal(loading.container.querySelector('#dyn-cancel').hidden,true);
+assert.equal(loading.container.querySelector('#dyn-output').attributes['aria-busy'],'false');
+assert.equal(loadingRuns,0,'Completing a file read still waits for manual calculation');
+await submit(loading);assert.equal(loadingRuns,1);
+
+// HTTP, network and body-read failures release only their own pending state
+// and expose an explicit retry without losing earlier editable input.
+for(const failure of ['http','network','body']){
+ let attempts=0;
+ globalThis.fetch=async()=>{attempts++;if(attempts>1)return {ok:true,text:async()=>officialText};if(failure==='network')throw Error('<network failed>');return {ok:failure!=='http',text:async()=>{throw Error('<body failed>');}};};
+ const failed=await mount({calculationOnly:true,experiment:'phonopy'});
+ failed.container.querySelector('#dyn-file-text').value='earlier local input';
+ failed.container.querySelector('#dyn-form').oninput({target:failed.container.querySelector('#dyn-file-text')});
+ await failed.container.querySelector('#dyn-official-al').onclick();
+ assert.equal(failed.container.querySelector('#dyn-run').disabled,false);
+ assert.equal(failed.container.querySelector('#dyn-official-al').disabled,false);
+ assert.equal(failed.container.querySelector('#dyn-file-text').value,'earlier local input');
+ assert.equal(failed.container.querySelector('#dyn-input-status').hidden,true);
+ assert.match(failed.container.querySelector('#dyn-output').innerHTML,/载入失败/);
+ assert.doesNotMatch(failed.container.querySelector('#dyn-output').innerHTML,/<network failed>|<body failed>/);
+ const retry=failed.container.querySelector('#dyn-retry-input');assert.ok(retry);
+ await retry.onclick();
+ assert.equal(attempts,2);assert.equal(failed.container.querySelector('#dyn-file-text').value,officialText);
+ assert.equal(failed.container.querySelector('#dyn-run').disabled,false);
+}
+
+// Editing cancels a pending source. A superseded success or error cannot
+// restore its old content, report an error, or change the new control state.
+for(const staleFails of [false,true]){
+ const read=deferred();let signal;
+ globalThis.fetch=(url,options)=>{signal=options?.signal;return read.promise;};
+ const edited=await mount({calculationOnly:true,experiment:'phonopy'});
+ const request=edited.container.querySelector('#dyn-official-al').onclick();
+ edited.container.querySelector('#dyn-file-text').value='replacement local input';
+ edited.container.querySelector('#dyn-unit').value='meV';
+ edited.container.querySelector('#dyn-form').oninput({target:edited.container.querySelector('#dyn-file-text')});
+ assert.equal(signal?.aborted,true);
+ assert.equal(edited.container.querySelector('#dyn-run').disabled,false);
+ assert.equal(edited.container.querySelector('#dyn-input-status').hidden,true);
+ const message=edited.container.querySelector('#dyn-output').innerHTML;
+ if(staleFails)read.reject(Error('obsolete sample failure'));else read.resolve({ok:true,text:async()=>officialText});
+ await request;
+ assert.equal(edited.container.querySelector('#dyn-file-text').value,'replacement local input');
+ assert.equal(edited.container.querySelector('#dyn-unit').value,'meV');
+ assert.equal(edited.container.querySelector('#dyn-output').innerHTML,message);
+ assert.equal(edited.container.querySelector('#dyn-run').disabled,false);
+}
+
+// Changing to a local file keeps Run blocked until that newer read, rather
+// than an older example, succeeds. Other Phonopy inputs use the same gate.
+for(const target of ['dyn-file','dyn-structure-file','dyn-dos-file']){
+ const remote=deferred(),local=deferred();
+ globalThis.fetch=()=>remote.promise;
+ const swapped=await mount({calculationOnly:true,experiment:'phonopy'});
+ const example=swapped.container.querySelector('#dyn-official-al').onclick();
+ const localRead=swapped.container.querySelector('#'+target).onchange({target:{files:[{name:'new-local.yaml',size:25,text:()=>local.promise}]}});
+ assert.equal(swapped.container.querySelector('#dyn-run').disabled,true);
+ remote.resolve({ok:true,text:async()=>officialText});await example;
+ assert.equal(swapped.container.querySelector('#dyn-run').disabled,true,'An older example cannot release a newer local-file read');
+ local.resolve('new local file content');await localRead;
+ assert.equal(swapped.container.querySelector('#dyn-run').disabled,false);
+ assert.equal(swapped.container.querySelector(target==='dyn-file'?'#dyn-file-text':target==='dyn-structure-file'?'#dyn-structure-text':'#dyn-dos').value,'new local file content');
+ assert.equal(swapped.container.querySelector('#dyn-unit').value,'unknown','The abandoned example cannot impose THz on another file');
+}
+
+// Switching samples invalidates the first request. Even an error from the old
+// sample cannot unlock the active sample or overwrite its final placeholder.
+let firstSample=deferred(),secondSample=deferred(),sampleFetches=0;
+globalThis.fetch=()=>++sampleFetches===1?firstSample.promise:secondSample.promise;
+const switched=await mount({calculationOnly:true,experiment:'phonopy'});
+const firstSampleRequest=switched.container.querySelector('#dyn-official-al').onclick();
+const secondSampleRequest=switched.container.querySelector('#dyn-demo').onclick();
+assert.equal(sampleFetches,2);assert.equal(switched.container.querySelector('#dyn-run').disabled,true);
+assert.equal(switched.container.querySelector('#dyn-demo').disabled,true);
+assert.equal(switched.container.querySelector('#dyn-official-al').disabled,false);
+firstSample.reject(Error('old official error'));await firstSampleRequest;
+assert.equal(switched.container.querySelector('#dyn-run').disabled,true);
+secondSample.resolve({ok:true,text:async()=>demoText});await secondSampleRequest;
+assert.equal(switched.container.querySelector('#dyn-file-text').value,demoText);
+assert.equal(switched.container.querySelector('#dyn-run').disabled,false);
+assert.doesNotMatch(switched.container.querySelector('#dyn-output').innerHTML,/old official error/);
+
+// A new visit to the same lab gets fresh controls. The first visit's request
+// cannot unlock a newer pending request after the user returns to the lab.
+let visitOne=deferred(),visitTwo=deferred(),visitFetches=0;
+globalThis.fetch=()=>++visitFetches===1?visitOne.promise:visitTwo.promise;
+const visits=await mount({tab:'lab',experiment:'phonopy'});
+const oldVisit=visits.container.querySelector('#dyn-official-al').onclick();
+visits.container.querySelector('[data-dyn-tab="learn"]').onclick();
+visits.container.querySelector('[data-dyn-tab="lab"]').onclick();
+assert.equal(visits.container.querySelector('#dyn-run').disabled,false);
+const newVisit=visits.container.querySelector('#dyn-official-al').onclick();
+visitOne.resolve({ok:true,text:async()=>officialText});await oldVisit;
+assert.equal(visits.container.querySelector('#dyn-run').disabled,true);
+assert.equal(visits.container.querySelector('#dyn-file-text').value,'');
+visitTwo.resolve({ok:true,text:async()=>officialText});await newVisit;
+assert.equal(visits.container.querySelector('#dyn-run').disabled,false);
+
+// Replacing the owning view and retaining an old button handler must not
+// start a read or write into the newly mounted calculator.
+const detachedRead=deferred();let detachedFetches=0;
+globalThis.fetch=()=>{detachedFetches++;return detachedRead.promise;};
+const detached=await mount({calculationOnly:true,experiment:'phonopy'});
+const detachedButton=detached.container.querySelector('#dyn-official-al');
+const detachedRequest=detachedButton.onclick();
+await renderStructureDynamicsView({container:detached.container,selection:{calculationOnly:true,experiment:'phase'},run:calculate,download:()=>{}});
+await detachedButton.onclick();assert.equal(detachedFetches,1);
+detachedRead.resolve({ok:true,text:async()=>officialText});await detachedRequest;
+assert.ok(detached.container.querySelector('#dyn-q'));
+assert.equal(detached.container.querySelector('#dyn-run').disabled,false);
+assert.equal(detached.container.querySelector('#dyn-file-text'),null);
+
+// Explicit cancel releases the pending gate and preserves the previous form.
+const canceledRead=deferred();let cancelSignal;
+globalThis.fetch=(url,options)=>{cancelSignal=options?.signal;return canceledRead.promise;};
+const canceled=await mount({calculationOnly:true,experiment:'phonopy'});
+canceled.container.querySelector('#dyn-file-text').value='retained input';
+canceled.container.querySelector('#dyn-form').oninput({target:canceled.container.querySelector('#dyn-file-text')});
+const canceledRequest=canceled.container.querySelector('#dyn-official-al').onclick();
+canceled.container.querySelector('#dyn-cancel').onclick();
+assert.equal(cancelSignal?.aborted,true);
+assert.equal(canceled.container.querySelector('#dyn-run').disabled,false);
+assert.equal(canceled.container.querySelector('#dyn-file-text').value,'retained input');
+canceledRead.resolve({ok:true,text:async()=>officialText});await canceledRequest;
+assert.equal(canceled.container.querySelector('#dyn-file-text').value,'retained input');
+
+// An explicit successful sample action replaces a saved raw form draft;
+// ordinary tab navigation still retains that draft until the action succeeds.
+globalThis.fetch=async()=>({ok:true,text:async()=>officialText});
+const drafted=await mount({tab:'lab',experiment:'phonopy'});
+drafted.container.querySelector('#dyn-file-text').value='draft from the previous visit';
+drafted.container.querySelector('#dyn-form').oninput({target:drafted.container.querySelector('#dyn-file-text')});
+drafted.container.querySelector('[data-dyn-tab="learn"]').onclick();
+drafted.container.querySelector('[data-dyn-tab="lab"]').onclick();
+assert.equal(drafted.container.querySelector('#dyn-file-text').value,'draft from the previous visit');
+await drafted.container.querySelector('#dyn-official-al').onclick();
+assert.equal(drafted.container.querySelector('#dyn-file-text').value,officialText);
+let localAttempts=0;
+const retryFile={name:'retry-file.yaml',size:50,text:async()=>{if(++localAttempts===1)throw Error('temporary local read failure');return 'recovered local input';}};
+await drafted.container.querySelector('#dyn-file').onchange({target:{files:[retryFile]}});
+assert.equal(drafted.container.querySelector('#dyn-run').disabled,false);
+assert.equal(drafted.container.querySelector('#dyn-input-status').hidden,true);
+await drafted.container.querySelector('#dyn-retry-input').onclick();
+assert.equal(localAttempts,2);
+assert.equal(drafted.container.querySelector('#dyn-file-text').value,'recovered local input');
+assert.equal(drafted.container.querySelector('#dyn-run').disabled,false);
+
+// A canceled read cannot clear the busy state of a subsequent Python job.
+const obsoleteRead=deferred(),newPython=deferred();let busyFetches=0,busyRuns=0,localReads=0;
+globalThis.fetch=()=>{busyFetches++;return obsoleteRead.promise;};
+const busyAfterEdit=await mount({calculationOnly:true,experiment:'phonopy'},()=>{busyRuns++;return newPython.promise;});
+const obsoleteRequest=busyAfterEdit.container.querySelector('#dyn-official-al').onclick();
+busyAfterEdit.container.querySelector('#dyn-file-text').value='manual input';
+busyAfterEdit.container.querySelector('#dyn-form').oninput({target:busyAfterEdit.container.querySelector('#dyn-file-text')});
+const newJob=submit(busyAfterEdit);await submit(busyAfterEdit);
+await busyAfterEdit.container.querySelector('#dyn-demo').onclick();
+await busyAfterEdit.container.querySelector('#dyn-file').onchange({target:{files:[{name:'ignored.yaml',size:1,text:async()=>{localReads++;return 'ignored';}}]}});
+assert.equal(busyRuns,1);assert.equal(busyFetches,1);assert.equal(localReads,0);
+obsoleteRead.resolve({ok:true,text:async()=>officialText});await obsoleteRequest;
+assert.equal(busyAfterEdit.container.querySelector('#dyn-run').disabled,true);
+assert.equal(busyAfterEdit.container.querySelector('#dyn-fields').disabled,true);
+assert.equal(busyAfterEdit.container.querySelector('#dyn-output').attributes['aria-busy'],'true');
+newPython.reject(Error('new Python job failed'));await newJob;
+assert.equal(busyAfterEdit.container.querySelector('#dyn-run').disabled,false);
+
+// Conversely, an obsolete Python finally cannot release a newer file read.
+const oldPython=deferred(),laterRead=deferred();
+globalThis.fetch=()=>laterRead.promise;
+const readAfterCancel=await mount({calculationOnly:true,experiment:'phonopy'},()=>oldPython.promise);
+readAfterCancel.container.querySelector('#dyn-file-text').value='manual source';
+const oldJob=submit(readAfterCancel);
+readAfterCancel.container.querySelector('#dyn-cancel').onclick();
+const laterRequest=readAfterCancel.container.querySelector('#dyn-official-al').onclick();
+oldPython.reject(Error('obsolete canceled Python job'));await oldJob;
+assert.equal(readAfterCancel.container.querySelector('#dyn-run').disabled,true);
+assert.equal(readAfterCancel.container.querySelector('#dyn-input-status').hidden,false);
+assert.equal(readAfterCancel.container.querySelector('#dyn-cancel').hidden,false);
+assert.equal(readAfterCancel.container.querySelector('#dyn-output').attributes['aria-busy'],'true');
+assert.doesNotMatch(readAfterCancel.container.querySelector('#dyn-output').innerHTML,/obsolete canceled Python job/);
+laterRead.resolve({ok:true,text:async()=>officialText});await laterRequest;
+assert.equal(readAfterCancel.container.querySelector('#dyn-run').disabled,false);
+
+// The same job identity also keeps a canceled calculation's finally from
+// enabling Run while a later calculation is still running.
+const oldRun=deferred(),currentRun=deferred();let identityRuns=0;
+const jobs=await mount({calculationOnly:true,experiment:'phonopy'},()=>++identityRuns===1?oldRun.promise:currentRun.promise);
+jobs.container.querySelector('#dyn-file-text').value='manual source';
+const oldRunRequest=submit(jobs);jobs.container.querySelector('#dyn-cancel').onclick();
+const currentRunRequest=submit(jobs);
+oldRun.reject(Error('old run error'));await oldRunRequest;
+assert.equal(identityRuns,2);assert.equal(jobs.container.querySelector('#dyn-run').disabled,true);
+assert.equal(jobs.container.querySelector('#dyn-output').attributes['aria-busy'],'true');
+currentRun.reject(Error('current run error'));await currentRunRequest;
+assert.equal(jobs.container.querySelector('#dyn-run').disabled,false);
+assert.match(jobs.container.querySelector('#dyn-output').innerHTML,/current run error/);
+globalThis.fetch=normalFetch;
+console.log('Structure dynamics UI: real Python schemas, six-domain and origin interaction, reflection selection, band segmentation, mode selection, 3D projection, snapshot handoff, pending sample/file Run gates, HTTP/body/local-file retry, editable replacement, canceled/detached reads, obsolete Python completion isolation, routes and persisted stepwise exercises passed.');

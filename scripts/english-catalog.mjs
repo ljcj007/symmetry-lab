@@ -11,6 +11,7 @@ catalogFiles.push('en-depth-capabilities-a.json','en-depth-capabilities-b.json',
 catalogFiles.push('en-flow-feedback.json','en-flow-bridges.json','en-flow-navigation.json');
 catalogFiles.push('en-hall-bridges.json','en-project-conditions.json','en-project-input.json','en-support-navigation.json');
 catalogFiles.push('en-lesson-progression.json','en-entropy-conventions.json','en-phonopy-units.json');
+catalogFiles.push('en-hubbard-learning-bridge.json','en-quantum-state-bridge.json','en-operational-navigation.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

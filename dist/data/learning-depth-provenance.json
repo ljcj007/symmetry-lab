@@ -40,12 +40,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 12631,
-      "sha256": "ab9b2b0b8ce8169620b2ad83651cdcf31f7e7e78f27e7a46607223d473950108"
+      "bytes": 15111,
+      "sha256": "d7b82c1658052e4134f3696ec387ebfabb8839230b2d10671dbf368e3d829604"
     },
     "dist/app.js": {
-      "bytes": 94428,
-      "sha256": "3be34748328a22785ff72343c88004b6d45b0b5dbfc79b889ace2e46d09d1e36"
+      "bytes": 94443,
+      "sha256": "7897fc050c6f5adf1d62e6d2cd212de97f0efe155d49448b4b72962d11c8bca9"
     },
     "dist/data/lie-derivations.json": {
       "bytes": 138720,
@@ -64,16 +64,16 @@
       "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
     },
     "dist/index.html": {
-      "bytes": 6177,
-      "sha256": "a4c6ea59d83438d4c5e90fbd1c7b0214c03201df0293b8c07cd578f0f626b554"
+      "bytes": 6341,
+      "sha256": "84e36920cf6288c1c012cd708abe75485b16a586bfdac42dc1ac26ec35f7d935"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 53586,
-      "sha256": "6b92ccc74a34c0a3bd6df74883f53468f0f9bfab979e260b60b86e72996a149f"
+      "bytes": 54019,
+      "sha256": "82c7add03a34af61ff89c1253c3ecd0e0b945137c8625e32a44cb1c067fe0a04"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29374,
-      "sha256": "3fc75e0c896a01cb225f17078919d24e7b93a580be8cc0c16315ecafd47f79cc"
+      "bytes": 29379,
+      "sha256": "784170343b971e4bc26ea84171f8feb63e8950ac58f1c3970e3a75cd8f0eb817"
     },
     "dist/navigation.css": {
       "bytes": 8184,
@@ -92,8 +92,8 @@
       "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
     },
     "dist/tool-finder.js": {
-      "bytes": 8444,
-      "sha256": "cbab26f80203501565ce0bb4f79145b47acdcbadee0051164913c22eea6196a6"
+      "bytes": 8449,
+      "sha256": "b38615744c5479c1dc39f62fcac051515f663583709311df94a1539236811c86"
     },
     "dist/tool-search.js": {
       "bytes": 1140,
@@ -116,8 +116,8 @@
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
     },
     "package.json": {
-      "bytes": 13512,
-      "sha256": "37abe6547685c5a2a28ab24ff2c3930d4e6ebe606b818eef398e16e31d75c25c"
+      "bytes": 13828,
+      "sha256": "a08faea1e2352776e38d50dad191084fc7e93260d398418abee23de01b6dd5bc"
     },
     "scripts/build-advanced-derivations.py": {
       "bytes": 18465,

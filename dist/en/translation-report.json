@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 23868,
-  "translatedUnits": 23868,
+  "sourceUnits": 24072,
+  "translatedUnits": 24072,
   "missing": [],
-  "files": 388,
+  "files": 392,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -53,6 +53,9 @@
     "en-support-navigation.json",
     "en-lesson-progression.json",
     "en-entropy-conventions.json",
-    "en-phonopy-units.json"
+    "en-phonopy-units.json",
+    "en-hubbard-learning-bridge.json",
+    "en-quantum-state-bridge.json",
+    "en-operational-navigation.json"
   ]
 }
