@@ -10,7 +10,7 @@ The single-spin basis is |↑⟩, |↓⟩; the two-spin basis is |↑↑⟩, |�
 - Ω (drive),Δ (detuning), J (exchange),δ (gradient): Hamiltonian/ℏ coefficients in rad/ns, not ordinary cycles/ns; divide by 2π for ordinary frequencies.
 - γ₁ (gamma1) and γ_φ (gammaPhi): ns⁻¹.
 - thermalScale: k_B T/ℏ in rad/ns. It determines only the initial Gibbs distribution, not the environment temperature.
-- Entropy uses log₂ in bits; purity, Bloch components, and negativity are dimensionless.
+- Entropy uses log₂ and is reported in bits; purity, Bloch components, and negativity are dimensionless. The result's `entropyConvention` specifies the logarithm base and unit. The SPT experiment uses the natural logarithm and nats. For the same distribution, S_nat = S_bit × ln(2); for example, an equally weighted two-outcome distribution gives 1 bit = ln(2) nat. Changing the logarithm base changes the reported number, not the density matrix or the criterion for mixed-state entanglement.
 
 For one spin, H/ℏ=(Ωσ_x+Δσ_z)/2. For two spins, the same Ω and Δ act on both, with δ(σ_Az−σ_Bz)/4 + J σ_A·σ_B/4 added. δ is the difference between local spin detunings; positive J is antiferromagnetic exchange. J and δ are unused for a single spin, with a note shown for nonzero inputs.
 

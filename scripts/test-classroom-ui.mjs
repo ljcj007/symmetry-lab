@@ -71,3 +71,28 @@ render('classroom/coupling?track=ninej');calls.at(-1).onNavigate({tab:'derive',e
 assert.ok(locations.some(value=>value.startsWith('计算中心')));
 const index=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.doesNotMatch(index,/data-view="(?:pointgroups|academy)"/,'Legacy modules do not become duplicate main navigation items');
 console.log('Classroom IA: seven pathways, legacy routes, deep-link roundtrips, context-preserving local navigation, shared full calculation mode, workbench adapters and detached callbacks passed.');
+
+// Real progression data is lazy, selected-lesson scoped, and independent of the calculator.
+const progression=await import('../dist/lesson-progression.js');
+const flowContainer=new Container(),flowCalls=[],flowMoves=[];
+let loads=0,releaseProgression;
+const deferred=new Promise(resolve=>{releaseProgression=resolve;});
+const flowRender=route=>renderClassroomView({container:flowContainer,route:parseClassroomRoute(route),
+ onNavigate:(hash,options)=>flowMoves.push({hash,options}),courseRenderers:Object.fromEntries(classroomSections.map(s=>[s.id,o=>flowCalls.push(o)])),
+ loadProgression:()=>{loads++;return deferred;}});
+flowRender('classroom');assert.equal(loads,0,'Overview keeps the lesson graph unloaded');
+flowRender('compute/phonopy');assert.equal(loads,0,'Expert calculation access keeps the lesson graph unloaded');
+flowRender('classroom/foundations?lesson=representations&tab=learn');assert.equal(loads,1);
+const flowHost=flowContainer.firstElementChild.querySelector('#classroom-progression');
+flowCalls.at(-1).onNavigate({tab:'lab'});assert.equal(flowHost.hidden,true);
+releaseProgression(progression);await new Promise(resolve=>setImmediate(resolve));
+assert.equal(flowHost.innerHTML,'','An obsolete load cannot expose navigation in a calculation tab');
+flowCalls.at(-1).onNavigate({tab:'learn'});await new Promise(resolve=>setImmediate(resolve));
+assert.equal(flowHost.hidden,false);assert.match(flowHost.innerHTML,/pointgroup-lessons::representations/);
+assert.match(flowHost.innerHTML,/character-reduction/);assert.doesNotMatch(flowHost.innerHTML,/lie-group-lessons::representations/);
+flowCalls.at(-1).onNavigate({lesson:'projection'});await new Promise(resolve=>setImmediate(resolve));
+assert.match(flowHost.innerHTML,/pointgroup-lessons::projection/,'Local chapter changes refresh the graph without remounting the lesson');
+assert.equal(flowMoves.at(-1).options.render,false);
+flowContainer.isConnected=false;flowCalls.at(-1).onNavigate({lesson:'group-basics'});
+await new Promise(resolve=>setImmediate(resolve));assert.match(flowHost.innerHTML,/pointgroup-lessons::projection/);
+console.log('Classroom progression: unloaded overview/tools, race-safe tabs, exact lesson changes, duplicate-ID isolation, native links and detached callbacks passed.');

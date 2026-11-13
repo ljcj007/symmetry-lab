@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import {lessonProgressionEdges,lessonProgressionCatalogs,lessonProgressionInventory} from '../dist/lesson-progression.js';
+const root=new URL('../',import.meta.url);
+const example=JSON.parse(fs.readFileSync(new URL('dist/data/examples/phonopy-al-abacus-source.json',root),'utf8'));
+const raw=fs.readFileSync(new URL('dist/data/examples/'+example.localFile,root));
+assert.equal(crypto.createHash('sha256').update(raw).digest('hex'),example.sha256);
+assert.equal(raw.length,example.byteCount);
+const reviewed=new Set(lessonProgressionEdges.flatMap(x=>[x.from,x.to]));
+const files=['dist/app.js','dist/index.html','dist/classroom-ui.js','dist/classroom.css','dist/lesson-progression.js','dist/lesson-progression-index.js','dist/material-notebook.js','dist/python-client.js','dist/python-worker.js',
+ 'dist/python/phonopy_import.py','dist/python/phonon_modes.py','dist/python/density_matrix_lab.py','dist/python/symmetry_frontiers.py','dist/structure-dynamics-ui.js','dist/frontiers-views.js','dist/docs/phonopy-import.md','dist/docs/frontiers.md','dist/docs/density-matrix.md','dist/data/frontiers-materials.json','dist/data/formula-dictionary.json',
+ 'scripts/test-classroom-ui.mjs','scripts/test-lesson-progression.mjs','scripts/build-lesson-progression-index.mjs','scripts/build-learning-routes-provenance.mjs','scripts/test-python-phonopy-import.py','scripts/test-python-phonon-modes.py','scripts/test-python-frontiers.py','scripts/test-python-density-matrix.py','scripts/test-structure-dynamics-ui.mjs','scripts/test-frontiers-ui.mjs',
+ 'locales/en-lesson-progression.json','locales/en-entropy-conventions.json','locales/en-phonopy-units.json','scripts/english-catalog.mjs','package.json','GOAL-ROADMAP.md','NOTICE.txt',...fs.readdirSync(new URL('dist/data/examples/',root)).filter(x=>x.startsWith('phonopy-al-abacus-')).map(x=>'dist/data/examples/'+x)];
+const data={schemaVersion:1,release:'20261113-route1',sourceHashNormalization:'utf8-lf-v1',
+ scope:'Optional reviewed cross-lesson routes, explicit entropy conventions, and a pinned official Phonopy example with source and unit continuity.',
+ counts:{catalogues:lessonProgressionCatalogs.length,indexedLessons:lessonProgressionInventory.length,reviewedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length,officialExampleQOccurrences:example.counts.qpointOccurrences,officialExampleBands:example.counts.bandsPerQ},
+ verification:['All indexed routes and identities resolve; explicit prerequisite/next edges are acyclic, reasoned and optional. Same-name point-group and Lie lessons remain distinct.','The graph loads only for learning views. Local chapter changes update it without changing course-render behavior; stale async callbacks cannot expose a lab graph.','The original official band and companion structure files retain their exact SHA-256 and full BSD license. Real frequencies, q-point order, path segmentation, eigenvectors and selected mode flow through public calculation entries.','Length and frequency declarations preserve provenance, distinguish explicit user confirmation, and reject inconsistent units. Frozen-mode export converts declared au lattice lengths into Angstroms.','SPT entropy retains the original natural-log numeric field and adds nat/bit metadata and conversion. Density-matrix entropy retains its original log2/bit numeric field.'],
+ limitations:['197 routes are a factual inventory, not a semantic review of all lessons. Only the 42 lessons connected by the 44 reviewed edges have those recommendations; other indexed lessons retain a directory fallback.','These software and reference-calculation checks do not measure student learning or complete the broad site audit.','The official Al data are an existing monatomic calculated example with real and complex supplied eigenvectors, including relative complex phases. They are not experiment, newly computed data, optical-branch validation, or a general unequal-mass multi-atom import audit.','The band file has no frequency-unit declaration. The example entry explicitly selects THz; the selected convention is not relabeled as file metadata.','SPT pure-state subsystem entropy and mixed-state von Neumann entropy are not interchangeable entanglement measures.'],
+ officialExample:{source:example.url,commit:example.commit,sha256:example.sha256,license:example.license},
+ files:Object.fromEntries([...new Set(files)].sort().map(name=>{const bytes=Buffer.from(fs.readFileSync(new URL(name,root),'utf8').replace(/\r\n/g,'\n'));return[name,{bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')}];}))};
+assert.deepEqual(Object.values(data.counts),[17,197,42,44,84,3]);
+const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
+if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);
+console.log('Learning routes:',JSON.stringify(data.counts));

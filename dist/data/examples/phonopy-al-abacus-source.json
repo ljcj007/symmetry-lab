@@ -1,0 +1,70 @@
+{
+  "id": "official-phonopy-al-abacus-pw",
+  "title": "Official Phonopy Al / ABACUS plane-wave example",
+  "repository": "https://github.com/phonopy/phonopy",
+  "commit": "18cad919af8fe8aad349e04f101887fa19b051a0",
+  "path": "example/Al-ABACUS/abacus-pw/band.yaml",
+  "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml",
+  "localFile": "phonopy-al-abacus-band.yaml",
+  "sha256": "08da0d622d6f423f4bc5d3900a30c9bb5dfb86933bc849f59aad60fe67ec330b",
+  "gitBlobSha1": "b7cb4a1ed20e9a2fd76a4de4a53971069427bc76",
+  "byteCount": 63428,
+  "companion": {
+    "path": "example/Al-ABACUS/abacus-pw/phonopy.yaml",
+    "localFile": "phonopy-al-abacus-structure.yaml",
+    "sha256": "a5d34dc7f9ddf73066e07a9b64a53e7d9b89735d9af353de0af1a21a5512b87f",
+    "byteCount": 8206,
+    "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/phonopy.yaml"
+  },
+  "license": "BSD-3-Clause",
+  "licenseFile": "phonopy-al-abacus-LICENSE.txt",
+  "classification": "official calculated example, not experiment or a new calculation",
+  "frequencyUnitInBandFile": null,
+  "exampleEntryFrequencyUnitChoice": "THz",
+  "frequencyUnitChoiceBasis": "Explicit example-entry choice; matching phonopy.yaml factor 21.490680 and official ABACUS convention convert to THz. The band file itself has no frequency-unit field.",
+  "lengthUnitInBandFile": "au",
+  "counts": {
+    "atoms": 1,
+    "qpointOccurrences": 84,
+    "bandsPerQ": 3,
+    "segments": 4,
+    "eigenvectors": 252
+  },
+  "scope": "One Al atom; the supplied data include relative complex phases between Cartesian components, so single-atom complex-input animation can be checked. Multi-atom optical branches, unequal-mass relative motion, arbitrary complex input, force constants, convergence, DOS, and spectral intensities are not validated by this example.",
+  "complexInput": {
+    "threshold": 1e-12,
+    "totalEigenvectors": 252,
+    "vectorsWithSignificantImaginaryComponents": 12,
+    "qpointEntriesWithSignificantImaginaryComponents": 7,
+    "significantImaginaryComponents": 18,
+    "vectorsNotMadeRealByOneGlobalPhase": 6,
+    "relativeComplexSelectionsZeroBased": [
+      [
+        66,
+        1
+      ],
+      [
+        66,
+        2
+      ],
+      [
+        78,
+        1
+      ],
+      [
+        78,
+        2
+      ],
+      [
+        81,
+        1
+      ],
+      [
+        81,
+        2
+      ]
+    ],
+    "globalPhaseInvariant": "max_ij |Im(v_i conjugate(v_j))|",
+    "degenerateSubspaceCaution": "A single-vector global phase is distinct from a basis change within a degenerate subspace; complex components alone do not establish chirality or topology."
+  }
+}

@@ -6,6 +6,7 @@ of one input eigenvector, not a thermal trajectory or motion of an unstable
 mode.  The only non-standard-library dependency is PyYAML (safe loading).
 """
 import cmath
+import hashlib
 import itertools
 import json
 import math
@@ -27,6 +28,8 @@ SOURCES = [
     {'title': 'Phonopy: phonopy-yaml structure format',
      'url': 'https://phonopy.github.io/phonopy/phonopy-yaml.html'},
 ]
+AL_EXAMPLE_SHA256 = '08da0d622d6f423f4bc5d3900a30c9bb5dfb86933bc849f59aad60fe67ec330b'
+AL_EXAMPLE_COMMIT = '18cad919af8fe8aad349e04f101887fa19b051a0'
 
 
 def _number(value, name, low=-1e12, high=1e12):
@@ -150,6 +153,91 @@ def _det(a):
             + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]))
 
 
+def _canonical_length(unit):
+    key = unit.strip().lower().replace(' ', '')
+    return {'au': 'bohr', 'a.u.': 'bohr', 'bohr': 'bohr', 'a0': 'bohr',
+            'angstrom': 'angstrom', 'angstroem': 'angstrom', 'å': 'angstrom',
+            'ångström': 'angstrom'}.get(key, key)
+
+
+def _length_metadata(data):
+    """Read both Phonopy length declarations; never convert their values."""
+    declarations = []
+    physical = data.get('physical_unit')
+    if isinstance(physical, dict) and 'length' in physical:
+        declarations.append({'field': 'physical_unit.length', 'value': physical['length']})
+    if 'length_unit' in data:
+        declarations.append({'field': 'length_unit', 'value': data['length_unit']})
+    for item in declarations:
+        value = _text(item['value'], item['field'], 50)
+        if not value.strip():
+            raise ValueError(f"{item['field']} 长度单位不能是空文本")
+    if len({_canonical_length(item['value']) for item in declarations}) > 1:
+        raise ValueError('physical_unit.length 与 length_unit 声明冲突；请核实原始晶格单位，程序不自动换算')
+    chosen = declarations[0] if declarations else {'field': 'unspecified', 'value': '输入晶格单位'}
+    return {'lengthUnit': chosen['value'], 'lengthUnitSource': chosen['field'],
+            'lengthUnitDeclarations': declarations,
+            'reciprocalLengthUnit': ('1 / ' + chosen['value']) if declarations else '输入倒易长度单位'}
+
+
+def _frequency_metadata(data, payload, warnings):
+    declarations = []
+    for field in ('frequency_unit', 'frequency-unit'):
+        if field in data:
+            declarations.append({'field': field, 'value': data[field]})
+    physical = data.get('physical_unit')
+    if isinstance(physical, dict) and 'frequency' in physical:
+        declarations.append({'field': 'physical_unit.frequency', 'value': physical['frequency']})
+    for item in declarations:
+        _text(item['value'], item['field'], 50)
+    explicit = payload.get('frequency_unit')
+    if explicit not in (None, '', 'unknown'):
+        unit = _text(explicit, 'frequency_unit', 50)
+        source = 'user.frequency_unit'
+        if any(item['value'].strip() != unit.strip() for item in declarations):
+            warnings.append('用户确认的频率单位与文件声明不同：此操作只标记原始数值，不换算频率或 DOS；请核实原计算设置。')
+    elif declarations:
+        if len({item['value'].strip() for item in declarations}) > 1:
+            raise ValueError('文件中的频率单位声明冲突；请核实并明确确认频率单位，不进行数值换算')
+        unit, source = declarations[0]['value'], declarations[0]['field']
+    else:
+        unit, source = '未声明单位', 'unspecified'
+    if not unit.strip():
+        unit, source = '未声明单位', 'unspecified'
+    if source == 'unspecified':
+        warnings.append('频率单位未声明。Phonopy 通常输出 THz，但可修改转换因子；请根据原计算设置指定单位。')
+    return unit, source, declarations
+
+
+def _source_identity(payload):
+    """Hash exact UTF-8 source text or a stated JSON representation of object input."""
+    if 'data' in payload:
+        content = json.dumps(payload['data'], ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':'))
+        representation = 'canonical-json-object-not-original-file'
+    elif isinstance(payload.get('content'), str):
+        content = payload['content']
+        representation = 'utf8-source-text'
+    else:
+        content = payload.get('dos_content', '')
+        representation = 'utf8-dos-text'
+    if not isinstance(content, str):
+        raise ValueError('输入文件内容必须是文本')
+    encoded = content.encode('utf-8')
+    if len(encoded) > MAX_BYTES:
+        raise ValueError('输入文件超过 8 MiB，请缩小数据范围')
+    identity = {'sha256': hashlib.sha256(encoded).hexdigest(), 'byteCount': len(encoded),
+                'representation': representation}
+    if representation == 'utf8-source-text' and identity['sha256'] == AL_EXAMPLE_SHA256:
+        identity['reference'] = {'id': 'official-phonopy-al-abacus-pw',
+            'title': 'Phonopy 官方 Al / ABACUS 平面波计算示例',
+            'commit': AL_EXAMPLE_COMMIT,
+            'path': 'example/Al-ABACUS/abacus-pw/band.yaml', 'license': 'BSD-3-Clause',
+            'url': 'https://github.com/phonopy/phonopy/blob/' + AL_EXAMPLE_COMMIT + '/example/Al-ABACUS/abacus-pw/band.yaml',
+            'kind': 'official-calculated-example-not-experiment',
+            'frequencyUnitDeclaredInBandFile': False}
+    return identity
+
+
 def _structure(data, warnings):
     cell = data
     cell_kind = 'root'
@@ -187,13 +275,11 @@ def _structure(data, warnings):
         _integer(natom, 'natom', 1, MAX_ATOMS)
         if atoms and len(atoms) != natom:
             raise ValueError('natom 与 points 原子数不一致；不能混用原胞与常规晶胞')
-    units = data.get('physical_unit', {})
-    length_unit = units.get('length', '输入晶格单位') if isinstance(units, dict) else '输入晶格单位'
-    _text(length_unit, 'length unit', 50)
+    units = _length_metadata(data)
     if cell_kind == 'supercell':
         warnings.append('文件只有 supercell：仅展示此超胞结构，不能据此匹配原胞声子本征矢。')
     return {'natom': natom, 'lattice': lattice, 'atoms': atoms,
-            'cellKind': cell_kind, 'lengthUnit': length_unit}
+            'cellKind': cell_kind, **units}
 
 
 def _eigenvector(value, natom, name):
@@ -208,6 +294,18 @@ def _supplement_structure(data, structure, payload, warnings):
     companion = _parse({'data': payload['structure_data']} if _provided(payload, 'structure_data')
                        else {'content': payload['structure_content']})
     extra = _structure(companion, warnings)
+    if (structure['lengthUnitSource'] != 'unspecified' and extra['lengthUnitSource'] != 'unspecified'
+            and _canonical_length(structure['lengthUnit']) != _canonical_length(extra['lengthUnit'])):
+        raise ValueError('补充结构与声子文件的长度单位声明不一致；程序不自动换算晶格或位移')
+    if structure['lengthUnitSource'] != 'unspecified':
+        # A unitless companion must never erase an already declared primary unit.
+        for key in ('lengthUnit', 'lengthUnitSource', 'lengthUnitDeclarations', 'reciprocalLengthUnit'):
+            extra[key] = structure[key]
+    elif extra['lengthUnitSource'] != 'unspecified':
+        extra['lengthUnitSource'] = 'companion.' + extra['lengthUnitSource']
+        extra['lengthUnitDeclarations'] = [
+            {'field': 'companion.' + item['field'], 'value': item['value']}
+            for item in extra['lengthUnitDeclarations']]
     if extra['cellKind'] == 'supercell' or not extra['atoms'] or not extra['lattice']:
         raise ValueError('补充结构必须包含原胞 lattice 与 points；仅有 supercell 不可用于匹配声子本征矢')
     if structure['natom'] is not None and structure['natom'] != extra['natom']:
@@ -237,7 +335,8 @@ def _supplement_structure(data, structure, payload, warnings):
                 if atom[key] is None:
                     atom[key] = candidate[key]
         structure['lattice'] = structure['lattice'] or extra['lattice']
-        structure['lengthUnit'] = extra['lengthUnit']
+        for key in ('lengthUnit', 'lengthUnitSource', 'lengthUnitDeclarations', 'reciprocalLengthUnit'):
+            structure[key] = extra[key]
     else:
         structure = extra
     structure['supplemented'] = True
@@ -418,18 +517,13 @@ def run(payload=None):
     data = {} if dos_only else _parse(payload)
     structure = _structure(data, warnings)
     structure = _supplement_structure(data, structure, payload, warnings)
-    unit = payload.get('frequency_unit', data.get('frequency_unit', data.get('frequency-unit')))
-    if unit == 'unknown':
-        unit = data.get('frequency_unit', data.get('frequency-unit'))
-    if unit is None and isinstance(data.get('physical_unit'), dict):
-        unit = data['physical_unit'].get('frequency')
-    unit = _text(unit or '未声明单位', 'frequency_unit', 50)
-    if unit == '未声明单位':
-        warnings.append('频率单位未声明。Phonopy 通常输出 THz，但可修改转换因子；请根据原计算设置指定单位。')
+    unit, unit_source, unit_declarations = _frequency_metadata(data, payload, warnings)
     result = {'kind': 'dos' if dos_only else 'structure-only', 'source': filename,
               'description': _text(data.get('description', ''), 'description', 1000),
               'synthetic': data.get('synthetic') is True,
               'structure': structure, 'qpoints': [], 'segments': [], 'frequencyUnit': unit,
+              'frequencyUnitSource': unit_source, 'frequencyUnitDeclarations': unit_declarations,
+              'sourceIdentity': _source_identity(payload),
               'summary': {'qpointCount': 0, 'bandCount': 0, 'imaginaryCount': 0, 'negativeCount': 0,
                           'nearZeroCount': 0, 'minFrequency': None, 'maxFrequency': None},
               'selection': None, 'dos': None, 'warnings': warnings, 'sources': SOURCES,

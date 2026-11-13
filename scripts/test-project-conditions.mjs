@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {Container,Element,flush} from './test-material-research-ui.mjs';
 import {assignmentTemplates,assignmentAcceptance,collectAssignmentRecord,renderResponseProjects} from '../dist/response-projects.js';
 import {projectConditionDescriptor,projectConditionValue,renderProjectConditionFeedback} from '../dist/project-conditions.js?v=20261113-support1';
-import * as notebook from '../dist/material-notebook.js?v=20261113-support1';
+import * as notebook from '../dist/material-notebook.js?v=20261113-route1';
 
 const originals=structuredClone(assignmentTemplates),stored=new Map(),moves=[];
 globalThis.localStorage={getItem:key=>stored.get(key)||null,setItem:(key,value)=>stored.set(key,value)};

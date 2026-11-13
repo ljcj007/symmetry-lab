@@ -6,7 +6,7 @@ const storage=new Map(),KEY='symmetry-lab.comparison.v1',LIMIT=3*1024*1024;
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};
 globalThis.location={hash:''};
-const notebook=await import('../dist/material-notebook.js?v=20261113-support1');
+const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
 const lab=await import('../dist/comparison-lab.js?v=20261110-en1');
 const projects=await import('../dist/response-projects.js?v=20261110-en1');
 const {bridgesAssignments}=await import('../dist/bridges-projects.js?v=20261110-en1');

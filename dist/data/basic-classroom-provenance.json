@@ -37,24 +37,24 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 94441,
-      "sha256": "09319c5bda6ec3627e943e48dfd77012989a14904d2f1c8df320ff4237a55619"
+      "bytes": 94428,
+      "sha256": "3be34748328a22785ff72343c88004b6d45b0b5dbfc79b889ace2e46d09d1e36"
     },
     "dist/classroom-ui.js": {
-      "bytes": 30473,
-      "sha256": "6d6be6e6d5a04b8b82c3164894d84b9337cf75ad9fad3e7210ed63fbd87606b5"
+      "bytes": 31767,
+      "sha256": "53b973498b7b9e7e216e65e5c9b753fd784b19833553dc19320fe679f528905f"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29376,
-      "sha256": "ba44c8cfe313fea0d0a4952dbb25dd24445c4b133ec0f7f3750cd96ed132580f"
+      "bytes": 29374,
+      "sha256": "3fc75e0c896a01cb225f17078919d24e7b93a580be8cc0c16315ecafd47f79cc"
     },
     "dist/tool-directory.js": {
       "bytes": 3023,
       "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
     },
     "dist/tool-finder.js": {
-      "bytes": 8446,
-      "sha256": "02f2ac2408b319d5583f92b6b73ea123a2a621fba0783525dd2ba32b9abe4b02"
+      "bytes": 8444,
+      "sha256": "cbab26f80203501565ce0bb4f79145b47acdcbadee0051164913c22eea6196a6"
     },
     "dist/lie-foundations-ui.js": {
       "bytes": 9320,
@@ -69,12 +69,12 @@
       "sha256": "c0ac4339b11c6dc46e9aa66598927504aaa24a616c2787170df92b57dacba621"
     },
     "dist/python-client.js": {
-      "bytes": 2578,
-      "sha256": "97570447793f8d2021bca3f88f30910730bb01b4076137595263135e8410c45a"
+      "bytes": 2577,
+      "sha256": "e108dd483cd1e06afe453697a6fc4a01cc3e267268c627fa609195e706d87da2"
     },
     "dist/python-worker.js": {
-      "bytes": 10930,
-      "sha256": "791749fda88a9011569b4b67f854516f68d2da2d1caab2358c76f9b05f2c8a3f"
+      "bytes": 10929,
+      "sha256": "96455e684d40e40afeb8f57c23f720565b6f74f87dc7e5e24398b76e65d59723"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -150,11 +150,11 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "bytes": 1736189,
-      "sha256": "4c647c4680c20bbb54ef6b372601c9fb8db827b519943ac675d9c0b9a725d3cf"
+      "sha256": "2aa78b09b50abc806bd695f337375feb3d4572a5210b0572a1654df77d747402"
     },
     "scripts/fixtures/bridges-projects.json": {
-      "bytes": 868004,
-      "sha256": "71aa260ed1f8ae85fc9f7f2f01ae96aa694e53f7e4c68a0e31b7d751fdecfd04"
+      "bytes": 869150,
+      "sha256": "19b831ffa6fea9a66a329995b3213aa94fd98129cd8a98d729d14dbaa21735aa"
     },
     "dist/foundations-demos.css": {
       "bytes": 4314,

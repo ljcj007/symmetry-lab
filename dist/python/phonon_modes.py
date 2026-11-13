@@ -383,7 +383,11 @@ def run(payload=None):
                  '标签表目前覆盖 O_h、T_d、C_1、C_i 的非磁性原胞 Γ 模式；其他点群保留计算特征标。']
     return {'kind': 'phonon-modes', 'source': result['source'], 'synthetic': result['synthetic'],
             'description': result['description'], 'structure': structure, 'qpoints': result['qpoints'],
-            'frequencyUnit': result['frequencyUnit'], 'selection': selection, 'modeGroups': groups,
+            'frequencyUnit': result['frequencyUnit'],
+            'frequencyUnitSource': result['frequencyUnitSource'],
+            'frequencyUnitDeclarations': result['frequencyUnitDeclarations'],
+            'sourceIdentity': importer._source_identity(payload) if imported else result['sourceIdentity'],
+            'selection': selection, 'modeGroups': groups,
             'symmetry': symmetry, 'frequencyTolerance': tolerance, 'frozen': frozen, 'exports': exports,
             'warnings': warnings, 'sources': SOURCES,
             'scope': 'Gamma invariant frequency subspaces + commensurate diagonal supercell frozen modes',

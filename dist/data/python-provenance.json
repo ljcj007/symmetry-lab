@@ -764,8 +764,8 @@
     },
     {
       "path": "dist/python/phonon_modes.py",
-      "sha256": "44327838b4d5ef9ee276951e84918c141e1c081fc820da0509014f9fc150ee64",
-      "bytes": 24255,
+      "sha256": "61645f39143554a0382b1b3b1d730913959cf903c30abf6b6ea0054107a39a29",
+      "bytes": 24519,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -776,8 +776,8 @@
     },
     {
       "path": "dist/python/phonopy_import.py",
-      "sha256": "71d511cdf16041d50381832e5ee95766ddbf0fbdaf2fc580cf3d71d8a1f57ac7",
-      "bytes": 28560,
+      "sha256": "78613ddd022e3d9e81dee41232dbc2b58fb585ffe909c570983754f20bbd806a",
+      "bytes": 33894,
       "registrationNote": "File hash registration only; existing repository source and upstream license notices remain authoritative."
     },
     {
@@ -820,8 +820,8 @@
     },
     {
       "path": "dist/python/density_matrix_lab.py",
-      "sha256": "f85d445a48e298c288c9723d06c33d6d635535065a491e9506ab207ad3cda908",
-      "bytes": 14785,
+      "sha256": "58ff21a58d139d0de02f2f12eb000c40a2fcea1ac461ffd3f1edbd0a78d057a9",
+      "bytes": 15248,
       "upstream": [],
       "license": "GPL-3.0-only",
       "implementation": "Original NumPy teaching implementation",
@@ -978,8 +978,8 @@
     },
     {
       "path": "dist/python/symmetry_frontiers.py",
-      "sha256": "ed0468cf3bff688a98c7e22962e289d2cac812c068620dcb38579c69ac9d01da",
-      "bytes": 24759,
+      "sha256": "c12fd845f510e177e6ea326e14d2f8e860aad6af16c259dc8b764dae4f84478a",
+      "bytes": 25552,
       "upstream": [],
       "license": "GPL-3.0-only",
       "implementation": "Original NumPy finite symmetry teaching models",

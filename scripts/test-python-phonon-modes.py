@@ -1,5 +1,6 @@
 """Independent Gamma characters, physical displacement, and export checks."""
 import copy
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -26,6 +27,41 @@ class PhononModesTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.results = {preset: run({'preset': preset}) for preset in ('silicon', 'gaas', 'nacl')}
+
+    def test_official_al_provenance_and_atomic_unit_export_through_public_api(self):
+        import yaml
+        from browser_api import run as run_api
+        path=Path(__file__).resolve().parents[1]/'dist/data/examples/phonopy-al-abacus-band.yaml'
+        raw=path.read_bytes(); text=raw.decode('utf8'); original=yaml.safe_load(text)
+        result=run_api('phonon_modes',{'content':text,'frequency_unit':'THz',
+                        'selected_q':0,'selected_band':0,'amplitude':0.1,'supercell':[1,1,1]})
+        self.assertFalse(result['synthetic'])
+        self.assertEqual(result['sourceIdentity']['sha256'],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(result['sourceIdentity']['reference']['commit'],'18cad919af8fe8aad349e04f101887fa19b051a0')
+        self.assertEqual(result['sourceIdentity']['representation'],'utf8-source-text')
+        self.assertEqual(result['frequencyUnit'],'THz')
+        self.assertEqual(result['frequencyUnitSource'],'user.frequency_unit')
+        self.assertEqual(result['frequencyUnitDeclarations'],[])
+        self.assertEqual(result['structure']['lengthUnit'],'au')
+        self.assertEqual(result['structure']['lengthUnitSource'],'length_unit')
+        np.testing.assert_allclose(result['frozen']['lattice'],original['lattice'],atol=1e-13)
+        self.assertTrue(result['exports']['poscar'])
+        export_lines=result['exports']['poscar'].splitlines()
+        lattice=np.array([[float(x) for x in line.split()] for line in export_lines[2:5]])
+        np.testing.assert_allclose(lattice,np.array(original['lattice'])*0.529177210903,atol=1e-10)
+        self.assertEqual(result['exports']['lengthUnit'],'angstrom')
+        self.assertAlmostEqual(result['frozen']['maxDisplacement'],0.1,places=12)
+
+    def test_object_identity_precedence_and_frequency_metadata_survive_mode_handoff(self):
+        data=preset_data('silicon')
+        result=run({'data':data,'content':'unused source text','frequency_unit':'unknown'})
+        self.assertEqual(result['sourceIdentity']['representation'],'canonical-json-object-not-original-file')
+        self.assertNotIn('reference',result['sourceIdentity'])
+        encoded=json.dumps(data,ensure_ascii=False,allow_nan=False,sort_keys=True,separators=(',',':')).encode()
+        self.assertEqual(result['sourceIdentity']['sha256'],hashlib.sha256(encoded).hexdigest())
+        self.assertEqual(result['frequencyUnit'],'THz')
+        self.assertEqual(result['frequencyUnitSource'],'frequency_unit')
+        self.assertEqual(result['frequencyUnitDeclarations'],[{'field':'frequency_unit','value':'THz'}])
 
     def test_known_gamma_labels(self):
         for preset, expected in {'silicon': ['T1u', 'T2g'], 'gaas': ['T2', 'T2'], 'nacl': ['T1u', 'T1u']}.items():

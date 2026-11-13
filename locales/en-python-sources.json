@@ -2697,6 +2697,12 @@
     ]
   },
   {
+    "source": "本实验的整体熵和约化熵均使用 log₂，单位 bit；SPT 实验使用自然对数，单位 nat。同一概率分布 (1/2,1/2) 对应 1 bit = ln(2) nat。局部熵只有在整体纯态时才是该二分划分的纠缠熵。",
+    "origins": [
+      "python/density_matrix_lab.py"
+    ]
+  },
+  {
     "source": "最大迹误差",
     "origins": [
       "python/density_matrix_lab.py"
@@ -11856,14 +11862,6 @@
     ]
   },
   {
-    "source": "输入晶格单位",
-    "origins": [
-      "python/phonopy_import.py",
-      "python/phonopy_import.py",
-      "python-fixture/material-research.json/results/modesUnknownUnit/structure/lengthUnit"
-    ]
-  },
-  {
     "source": "已使用伴随原胞结构。原子顺序必须与生成声子文件的计算完全一致；原文件未列原子时，程序只能核对原子数和已有倒易晶格。",
     "origins": [
       "python/phonopy_import.py"
@@ -11924,13 +11922,6 @@
     ]
   },
   {
-    "source": "未声明单位",
-    "origins": [
-      "python/phonopy_import.py",
-      "python/phonopy_import.py"
-    ]
-  },
-  {
     "source": "ZXQD0DQXZ 必须为 ZXQD1DQXZ 至 ZXQD2DQXZ 的整数",
     "origins": [
       "python-template/phonopy_import.py"
@@ -11961,6 +11952,57 @@
     ]
   },
   {
+    "source": "physical_unit.length 与 length_unit 声明冲突；请核实原始晶格单位，程序不自动换算",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "输入晶格单位",
+    "origins": [
+      "python/phonopy_import.py",
+      "python-fixture/material-research.json/results/modesUnknownUnit/structure/lengthUnit"
+    ]
+  },
+  {
+    "source": "输入倒易长度单位",
+    "origins": [
+      "python/phonopy_import.py",
+      "python-fixture/material-research.json/results/modesUnknownUnit/structure/reciprocalLengthUnit"
+    ]
+  },
+  {
+    "source": "未声明单位",
+    "origins": [
+      "python/phonopy_import.py",
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "频率单位未声明。Phonopy 通常输出 THz，但可修改转换因子；请根据原计算设置指定单位。",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "输入文件内容必须是文本",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "输入文件超过 8 MiB，请缩小数据范围",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "Phonopy 官方 Al / ABACUS 平面波计算示例",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
     "source": "原胞原子数不能超过 ZXQD0DQXZ",
     "origins": [
       "python-template/phonopy_import.py"
@@ -11968,6 +12010,12 @@
   },
   {
     "source": "文件只有 supercell：仅展示此超胞结构，不能据此匹配原胞声子本征矢。",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "补充结构与声子文件的长度单位声明不一致；程序不自动换算晶格或位移",
     "origins": [
       "python/phonopy_import.py"
     ]
@@ -12095,12 +12143,6 @@
     ]
   },
   {
-    "source": "频率单位未声明。Phonopy 通常输出 THz，但可修改转换因子；请根据原计算设置指定单位。",
-    "origins": [
-      "python/phonopy_import.py"
-    ]
-  },
-  {
     "source": "虚频计数按输入频率 < −容差统计；极小负值可能来自数值误差，单凭本文件不能判定相变或热力学稳定性。",
     "origins": [
       "python/phonopy_import.py",
@@ -12165,6 +12207,18 @@
   },
   {
     "source": "请提供 band.yaml、qpoints.yaml 或同结构 JSON 文件内容",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 长度单位不能是空文本",
+    "origins": [
+      "python-template/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "用户确认的频率单位与文件声明不同：此操作只标记原始数值，不换算频率或 DOS；请核实原计算设置。",
     "origins": [
       "python/phonopy_import.py"
     ]
@@ -12322,6 +12376,18 @@
   },
   {
     "source": "data 必须是可序列化的 JSON 数据",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": " 长度单位不能是空文本",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
+    "source": "文件中的频率单位声明冲突；请核实并明确确认频率单位，不进行数值换算",
     "origins": [
       "python/phonopy_import.py"
     ]
@@ -18138,6 +18204,18 @@
     ]
   },
   {
+    "source": "基态投影作用于计算基矢 #ZXQD0DQXZ；基态在整体相位之外唯一。",
+    "origins": [
+      "python-template/symmetry_frontiers.py"
+    ]
+  },
+  {
+    "source": "基态投影作用于计算基矢 #ZXQD0DQXZ；从 ZXQD1DQXZ 维简并基态子空间中选定此纯态，纠缠结果需连同态选择报告。",
+    "origins": [
+      "python-template/symmetry_frontiers.py"
+    ]
+  },
+  {
     "source": "联动输入须为有限正交矩阵与三维向量",
     "origins": [
       "python/symmetry_frontiers.py"
@@ -18248,9 +18326,88 @@
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #ZXQD0DQXZ；简并度 ZXQD1DQXZ 时此纯态不是唯一的边界态。",
+    "source": "基态投影作用于计算基矢 #",
     "origins": [
-      "python-template/symmetry_frontiers.py"
+      "python/symmetry_frontiers.py",
+      "python/symmetry_frontiers.py"
+    ]
+  },
+  {
+    "source": "；基态在整体相位之外唯一。",
+    "origins": [
+      "python/symmetry_frontiers.py"
+    ]
+  },
+  {
+    "source": "；从 ",
+    "origins": [
+      "python/symmetry_frontiers.py"
+    ]
+  },
+  {
+    "source": " 维简并基态子空间中选定此纯态，纠缠结果需连同态选择报告。",
+    "origins": [
+      "python/symmetry_frontiers.py"
+    ]
+  },
+  {
+    "source": "自旋 1 位点数",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/0/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/0/label",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/0/label",
+      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/0/label"
+    ]
+  },
+  {
+    "source": "基态子空间维数",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/2/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/2/label",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/2/label",
+      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/2/label"
+    ]
+  },
+  {
+    "source": "最低两能级间距",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/3/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/3/label",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/3/label",
+      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/3/label"
+    ]
+  },
+  {
+    "source": "基态子空间上方能隙",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/4/label",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/plots/1/series/1/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/4/label"
+    ]
+  },
+  {
+    "source": "代表纯态纠缠熵",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/5/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/5/label",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/5/label"
+    ]
+  },
+  {
+    "source": "串关联（本页符号约定）",
+    "origins": [
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/6/label",
+      "python-fixture/frontiers.json.gz/results/spt-edge/summary/6/label",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/6/label",
+      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/6/label"
     ]
   },
   {
@@ -18432,21 +18589,13 @@
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #",
+    "source": "本页对选定整体纯态的 Schmidt 概率使用自然对数，单位 nat；密度矩阵实验使用 log₂，单位 bit。同一概率分布 (1/2,1/2) 给出 ln(2) nat = 1 bit。换单位不改变概率、纠缠谱或所选量子态。",
     "origins": [
-      "python/symmetry_frontiers.py"
-    ]
-  },
-  {
-    "source": "；简并度 ",
-    "origins": [
-      "python/symmetry_frontiers.py"
-    ]
-  },
-  {
-    "source": " 时此纯态不是唯一的边界态。",
-    "origins": [
-      "python/symmetry_frontiers.py"
+      "python/symmetry_frontiers.py",
+      "python-fixture/frontiers.json.gz/results/spt-aklt/entropyConvention/explanation",
+      "python-fixture/frontiers.json.gz/results/spt-edge/entropyConvention/explanation",
+      "python-fixture/frontiers.json.gz/results/spt-large-d/entropyConvention/explanation",
+      "python-fixture/frontiers.json.gz/results/spt-uniform/entropyConvention/explanation"
     ]
   },
   {
@@ -18817,66 +18966,6 @@
       "python-fixture/frontiers.json.gz/results/chiral-polar/replay/3/text",
       "python-fixture/frontiers.json.gz/results/chiral-centro/replay/3/text",
       "python-fixture/frontiers.json.gz/results/chiral-tetra/replay/3/text"
-    ]
-  },
-  {
-    "source": "自旋 1 位点数",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/0/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/0/label",
-      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/0/label",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/0/label"
-    ]
-  },
-  {
-    "source": "基态子空间维数",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/2/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/2/label",
-      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/2/label",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/2/label"
-    ]
-  },
-  {
-    "source": "最低两能级间距",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/3/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/3/label",
-      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/3/label",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/3/label"
-    ]
-  },
-  {
-    "source": "基态子空间上方能隙",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/4/label",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/plots/1/series/1/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/4/label"
-    ]
-  },
-  {
-    "source": "代表纯态纠缠熵",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/5/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/5/label",
-      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/5/label",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/5/label"
-    ]
-  },
-  {
-    "source": "串关联（本页符号约定）",
-    "origins": [
-      "python/symmetry_frontiers.py",
-      "python-fixture/frontiers.json.gz/results/spt-aklt/summary/6/label",
-      "python-fixture/frontiers.json.gz/results/spt-edge/summary/6/label",
-      "python-fixture/frontiers.json.gz/results/spt-large-d/summary/6/label",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/summary/6/label"
     ]
   },
   {
@@ -22406,53 +22495,63 @@
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #20；简并度 1 时此纯态不是唯一的边界态。",
+    "source": "基态投影作用于计算基矢 #60；基态在整体相位之外唯一。",
     "origins": [
-      "python-fixture/frontiers.json.gz/results/spt-aklt/spectrum/stateSelection",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/spectrum/stateSelection",
-      "python-fixture/frontiers.json.gz/results/spt-gradient/spectrum/stateSelection"
+      "python-fixture/frontiers.json.gz/results/spt-aklt/spectrum/stateSelection"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #20；简并度 1 时此纯态不是唯一的边界态。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
+    "source": "基态投影作用于计算基矢 #60；基态在整体相位之外唯一。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
     "origins": [
-      "python-fixture/frontiers.json.gz/results/spt-aklt/replay/2/text",
-      "python-fixture/frontiers.json.gz/results/spt-uniform/replay/2/text",
-      "python-fixture/frontiers.json.gz/results/spt-gradient/replay/2/text"
+      "python-fixture/frontiers.json.gz/results/spt-aklt/replay/2/text"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #20；简并度 4 时此纯态不是唯一的边界态。",
+    "source": "基态投影作用于计算基矢 #20；从 4 维简并基态子空间中选定此纯态，纠缠结果需连同态选择报告。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-edge/spectrum/stateSelection"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #20；简并度 4 时此纯态不是唯一的边界态。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
+    "source": "基态投影作用于计算基矢 #20；从 4 维简并基态子空间中选定此纯态，纠缠结果需连同态选择报告。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-edge/replay/2/text"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #40；简并度 1 时此纯态不是唯一的边界态。",
+    "source": "基态投影作用于计算基矢 #40；基态在整体相位之外唯一。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-large-d/spectrum/stateSelection"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #40；简并度 1 时此纯态不是唯一的边界态。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
+    "source": "基态投影作用于计算基矢 #40；基态在整体相位之外唯一。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-large-d/replay/2/text"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #195；简并度 1 时此纯态不是唯一的边界态。",
+    "source": "基态投影作用于计算基矢 #20；基态在整体相位之外唯一。",
+    "origins": [
+      "python-fixture/frontiers.json.gz/results/spt-uniform/spectrum/stateSelection",
+      "python-fixture/frontiers.json.gz/results/spt-gradient/spectrum/stateSelection"
+    ]
+  },
+  {
+    "source": "基态投影作用于计算基矢 #20；基态在整体相位之外唯一。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
+    "origins": [
+      "python-fixture/frontiers.json.gz/results/spt-uniform/replay/2/text",
+      "python-fixture/frontiers.json.gz/results/spt-gradient/replay/2/text"
+    ]
+  },
+  {
+    "source": "基态投影作用于计算基矢 #195；基态在整体相位之外唯一。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-size/spectrum/stateSelection"
     ]
   },
   {
-    "source": "基态投影作用于计算基矢 #195；简并度 1 时此纯态不是唯一的边界态。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
+    "source": "基态投影作用于计算基矢 #195；基态在整体相位之外唯一。 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。",
     "origins": [
       "python-fixture/frontiers.json.gz/results/spt-size/replay/2/text"
     ]

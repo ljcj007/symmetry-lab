@@ -6,7 +6,7 @@ import {principlesAssignments,principlesEvidence} from './principles-projects.js
 import {bridgesAssignments,bridgesEvidence} from './bridges-projects.js?v=20261110-en1';
 import {pathwaysAssignments,pathwaysEvidence} from './pathways-projects.js?v=20261110-en1';
 import {spectroscopyAssignments,spectroscopyEvidence} from './spectroscopy-projects.js?v=20261110-en1';
-import {makeProject,validateProject,addRecord,saveProject,listProjects,latestCalculation,importProject,MAX_PROJECT_BYTES,RELEASE} from './material-notebook.js?v=20261113-support1';
+import {makeProject,validateProject,addRecord,saveProject,listProjects,latestCalculation,importProject,MAX_PROJECT_BYTES,RELEASE} from './material-notebook.js?v=20261113-route1';
 import {esc,num,table,notes} from './response-views.js?v=20261110-en1';
 export const assignmentTemplates=[
  {id:'geometry-hall',module:'hall',title:"From wave function geometry to transverse response",question:"For the same QWZ model, what questions do the Chern number, Hall conductance and transverse thermoelectric coefficients answer respectively?",rubric:["Write Berry conventions for contact, charge and current direction, and explain the symbol of the Hall platform.","compares insulation and metal occupancy without directly replacing partial occupancy integrals with Chern numbers.","reports grid comparison; distinguishes αxy from open Nernst signals."],steps:[

@@ -10,7 +10,7 @@
 - Ω（drive）、Δ（detuning）、J（exchange）、δ（gradient）：Hamiltonian/ℏ 的系数，rad/ns。它们不是以周期/ns表示的普通频率；普通频率需要除以 2π。
 - γ₁（gamma1）与 γ_φ（gammaPhi）：ns⁻¹。
 - thermalScale：k_B T/ℏ，以 rad/ns 表示。它只决定初态 Gibbs 分布，不是环境温度。
-- 熵使用 log₂，单位 bit；纯度、Bloch 分量及负性均无量纲。
+- 熵使用 log₂，单位 bit；纯度、Bloch 分量及负性均无量纲。结果的 `entropyConvention` 明确对数底及单位。SPT 实验使用自然对数与 nat；同一分布的换算为 S_nat = S_bit × ln(2)，例如等权二项分布的 1 bit = ln(2) nat。换底只改变报告数值，不改变密度矩阵或混合态纠缠判据。
 
 单自旋 H/ℏ=(Ωσ_x+Δσ_z)/2。双自旋在两个自旋上施加相同 Ω 与 Δ，并加入 δ(σ_Az−σ_Bz)/4 + J σ_A·σ_B/4。δ 是两个自旋局域 detuning 的差；正 J 是反铁磁交换。单自旋不使用 J 和 δ，非零输入会显示说明。
 

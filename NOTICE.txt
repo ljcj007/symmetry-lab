@@ -224,3 +224,14 @@ invariants from exact Cartesian generators. The original Chinese lessons,
 exercises and demonstrations cite Bilbao/IUCr and primary materials references.
 No textbook pages or third-party diagrams are redistributed. These additions
 are not claimed to reproduce complete phonon frequencies or material constants.
+
+2026-11-13 official Phonopy example:
+dist/data/examples/phonopy-al-abacus-band.yaml is an unchanged copy of
+example/Al-ABACUS/abacus-pw/band.yaml from phonopy/phonopy commit
+18cad919af8fe8aad349e04f101887fa19b051a0. Its SHA-256 and provenance are
+recorded in phonopy-al-abacus-source.json beside the data. The full upstream
+BSD three-clause license, including its copyright notice and disclaimer, is
+retained as phonopy-al-abacus-LICENSE.txt. This is a published calculated Al
+example, not measured data or a new calculation performed by Symmetry Lab.
+The matching phonopy.yaml is retained unchanged as
+dist/data/examples/phonopy-al-abacus-structure.yaml under the same terms.

@@ -6,7 +6,7 @@ import {principlesAssignments,principlesEvidence} from './principles-projects.js
 import {bridgesAssignments,bridgesEvidence} from './bridges-projects.js?v=20261110-en1';
 import {pathwaysAssignments,pathwaysEvidence} from './pathways-projects.js?v=20261110-en1';
 import {spectroscopyAssignments,spectroscopyEvidence} from './spectroscopy-projects.js?v=20261110-en1';
-import {makeProject,validateProject,addRecord,saveProject,listProjects,latestCalculation,importProject,MAX_PROJECT_BYTES,RELEASE} from './material-notebook.js?v=20261113-support1';
+import {makeProject,validateProject,addRecord,saveProject,listProjects,latestCalculation,importProject,MAX_PROJECT_BYTES,RELEASE} from './material-notebook.js?v=20261113-route1';
 import {esc,num,table,notes} from './response-views.js?v=20261110-en1';
 export const assignmentTemplates=[
  {id:'geometry-hall',module:'hall',title:'从波函数几何到横向响应',question:'同一个 QWZ 模型，Chern 数、霍尔电导和横向热电系数分别回答什么问题？',rubric:['写出 Berry 联络、电荷和电流方向的约定，解释霍尔平台的符号。','比较绝缘与金属占据，不用 Chern 数直接替代部分占据积分。','报告网格比较；区分 αxy 与开路 Nernst 信号。'],steps:[

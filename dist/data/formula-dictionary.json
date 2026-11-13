@@ -5688,12 +5688,12 @@
       "title": "Schmidt 概率与纠缠熵",
       "symbols": [
         "ρ_A = Tr_B |ψ⟩⟨ψ|",
-        "S = −Σ λ_i log(λ_i)"
+        "S = −Σ λ_i ln(λ_i)"
       ],
       "aliases": [
         "Schmidt 概率与纠缠熵"
       ],
-      "definition": "纯态二分后的奇异值平方给出 Schmidt 概率；以自然对数计算纠缠熵。",
+      "definition": "纯态二分后的奇异值平方给出 Schmidt 概率；以自然对数 ln 计算，单位 nat。密度矩阵实验采用 log₂ 和 bit；S_bit = S_nat / ln(2)，同一概率 (1/2,1/2) 对应 ln(2) nat = 1 bit。",
       "variables": [
         {
           "symbol": "λ_i",
@@ -5702,7 +5702,7 @@
         },
         {
           "symbol": "S",
-          "meaning": "纠缠熵",
+          "meaning": "纠缠熵，使用自然对数",
           "unit": "nat"
         },
         {
@@ -5732,7 +5732,7 @@
       ],
       "formulaAliases": [
         "ρ_A = Tr_B |ψ⟩⟨ψ|",
-        "S = −Σ λ_i log(λ_i)"
+        "S = −Σ λ_i ln(λ_i)"
       ]
     },
     {

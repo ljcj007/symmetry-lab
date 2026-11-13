@@ -266,7 +266,11 @@ def spin_point(n,boundary,d,field,pattern,state=True):
         entropy=float(-sum(w*np.log(w) for w in schmidt if w>1e-14))
         op=sites[0][2]@sites[-1][2]
         for i in range(1,n-1):op=op@(np.eye(3**n)-2*sites[i][2]@sites[i][2])
-        r.update(schmidt=schmidt.tolist(),entropy=entropy,stringOrder=float(-np.vdot(psi,op@psi).real),magnetization=[float(np.vdot(psi,s[2]@psi).real) for s in sites],stateResidual=float(np.linalg.norm(h@psi-energies[0]*psi)),stateSelection=f'基态投影作用于计算基矢 #{seed}；简并度 {deg} 时此纯态不是唯一的边界态。')
+        if deg==1:
+            state_selection=f'基态投影作用于计算基矢 #{seed}；基态在整体相位之外唯一。'
+        else:
+            state_selection=f'基态投影作用于计算基矢 #{seed}；从 {deg} 维简并基态子空间中选定此纯态，纠缠结果需连同态选择报告。'
+        r.update(schmidt=schmidt.tolist(),entropy=entropy,entropyUnit='nat',entropyLogBase='e',entropyBits=entropy/math.log(2),stringOrder=float(-np.vdot(psi,op@psi).real),magnetization=[float(np.vdot(psi,s[2]@psi).real) for s in sites],stateResidual=float(np.linalg.norm(h@psi-energies[0]*psi)),stateSelection=state_selection)
     return r
 
 
@@ -278,12 +282,15 @@ def spt_lab(p):
     r=spin_point(n,boundary,d,field,pattern);xs=np.linspace(0,end,7)
     path=[spin_point(n,boundary,float(x) if axis=='anisotropy' else d,float(x) if axis=='field' else field,pattern,False)|{'parameter':float(x)} for x in xs]
     aklt=bool(d==0 and field==0)
-    return dict(summary=rows([('自旋 1 位点数',n),('Hilbert 空间维数',3**n),('基态子空间维数',r['groundMultiplicity']),('最低两能级间距',r['firstSpacing']),('基态子空间上方能隙',r['gapAboveGroundSpace']),('代表纯态纠缠熵',r['entropy']),('串关联（本页符号约定）',r['stringOrder'])]),spectrum=r,
+    summary=rows([('自旋 1 位点数',n),('Hilbert 空间维数',3**n),('基态子空间维数',r['groundMultiplicity']),('最低两能级间距',r['firstSpacing']),('基态子空间上方能隙',r['gapAboveGroundSpace']),('代表纯态纠缠熵',r['entropy']),('串关联（本页符号约定）',r['stringOrder'])])
+    next(item for item in summary if item['label']=='代表纯态纠缠熵')['unit']='nat'
+    return dict(summary=summary,spectrum=r,
+        entropyConvention=dict(unit='nat',logBase='e',definition='S = −Σ λ_i ln(λ_i)',bitsConversion='S_bit = S_nat / ln(2)',explanation='本页对选定整体纯态的 Schmidt 概率使用自然对数，单位 nat；密度矩阵实验使用 log₂，单位 bit。同一概率分布 (1/2,1/2) 给出 ln(2) nat = 1 bit。换单位不改变概率、纠缠谱或所选量子态。'),
         geometry=dict(points=[[i-(n-1)/2,0,0] for i in range(n)],labels=['S=1']*n),operations=[op_record(np.eye(3),name='恒等'),op_record(np.diag([1,-1,-1]),name='绕 x 的 π 旋转'),op_record(np.diag([-1,-1,1]),name='绕 z 的 π 旋转')],
         virtual=dict(available=aklt,commutatorPhase=-1 if aklt else None,Ux=[[0,1],[1,0]],Uz=[[1,0],[0,-1]],explanation='仅在 AKLT 点展示解析虚拟自旋 1/2：Ux Uz = −Uz Ux。扰动后的有限能谱不自动给出该射影不变量。'),
         plots=[curve('纠缠谱权重（Schmidt 概率）',range(len(r['schmidt'])),[('概率',r['schmidt'])],'Schmidt 序号','概率'),curve('有限链扰动路径',xs,[('最低两级间距',[a['firstSpacing'] for a in path]),('基态子空间上方能隙',[a['gapAboveGroundSpace'] for a in path])],('D' if axis=='anisotropy' else 'h')+' / J','能量 / J'),curve('代表态局域磁化',range(1,n+1),[('Sz',r['magnetization'])],'位点','期望值')],path=path,
         replay=[dict(title='建立 AKLT 母 Hamiltonian',text='每条键使用 S·S+(S·S)²/3+2/3=2P(S总=2)，逐项构造 3^N 维矩阵。J=1；周期边界额外连接末端与首端。'),dict(title='先检查保护操作',text='分别计算 Rx、Rz、时间反演和键中心反演的 Hamiltonian 协变残差。均匀磁场可破坏自旋与时间反演而保留空间反演，不能只看一个开关宣布全部保护消失。'),dict(title='分解真实有限链基态',text=r['stateSelection']+' 对选定纯态做 Schmidt 分解；开边界简并态的纠缠谱需连同态选择报告。'),dict(title='连接解析射影表示与有限尺寸结果',text='AKLT 虚拟自旋矩阵的反对易是解析证据。小链能隙或某一纠缠简并既不能单独证明热力学极限中的相变，也不能普遍替代 SPT 分类。')],
-        formulas=['H = Σ [S_i·S_j + (S_i·S_j)²/3 + 2/3] + D Σ (S_i^z)² + H_h','U_x U_z = −U_z U_x','S = −Σ λ_i log(λ_i)'],
+        formulas=['H = Σ [S_i·S_j + (S_i·S_j)²/3 + 2/3] + D Σ (S_i^z)² + H_h','U_x U_z = −U_z U_x','S = −Σ λ_i ln(λ_i)'],
         assumptions=['N=3–5 的精确对角化教学模型；全部能量以 J 为单位。梯度场为 h Σ ((i+1)/N)(Sx_i+0.37 Sz_i)，均匀场去掉位点系数。','简并时从基态投影选择确定的纯态；这不是对简并子空间的混合态求 Schmidt 分解。有限链边缘劈裂、纠缠权重及边界条件一起显示。','AKLT 点的射影表示单独给出；对一般扰动不自动输出体相拓扑标签。路径只有 7 个采样点，不声称定位所有闭隙或热力学临界点。'],inverseDomain='spt')
 
 

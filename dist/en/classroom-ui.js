@@ -5,26 +5,27 @@ const courseDefinitions={
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261113-prose2'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
-'frontiers':{load:()=>import('./frontiers-ui.js?v=20261113-support1'),render:'renderFrontiersView',result:'getFrontiersResult'}
-,'connections':{load:()=>import('./connections-ui.js?v=20261113-support1'),render:'renderConnectionsView',result:'getConnectionsResult'}
-,'construction':{load:()=>import('./construction-ui.js?v=20261113-support1'),render:'renderConstructionView',result:'getConstructionResult'}
-,'principles':{load:()=>import('./principles-ui.js?v=20261113-support1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
-,'bridges':{load:()=>import('./bridges-ui.js?v=20261113-support1'),render:'renderBridgesView',result:'getBridgesResult'}
-,'pathways':{load:()=>import('./pathways-ui.js?v=20261113-support1'),render:'renderPathwaysView',result:'getPathwaysResult'}
-,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261113-support1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
-,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261113-support1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261113-route1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+,'connections':{load:()=>import('./connections-ui.js?v=20261113-route1'),render:'renderConnectionsView',result:'getConnectionsResult'}
+,'construction':{load:()=>import('./construction-ui.js?v=20261113-route1'),render:'renderConstructionView',result:'getConstructionResult'}
+,'principles':{load:()=>import('./principles-ui.js?v=20261113-route1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
+,'bridges':{load:()=>import('./bridges-ui.js?v=20261113-route1'),render:'renderBridgesView',result:'getBridgesResult'}
+,'pathways':{load:()=>import('./pathways-ui.js?v=20261113-route1'),render:'renderPathwaysView',result:'getPathwaysResult'}
+,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261113-route1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
+,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261113-route1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261113-flow1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261113-depth1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261113-support1'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261113-flow1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261113-support1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
-,'material-research':{load:()=>import('./material-research-ui.js?v=20261113-support1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
-,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261113-support1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
-,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261113-support1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
-,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261113-support1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
-,'flagship':{load:()=>import('./shg-flagship.js?v=20261113-support1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261113-route1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'material-research':{load:()=>import('./material-research-ui.js?v=20261113-route1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261113-route1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261113-route1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
+,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261113-route1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
+,'flagship':{load:()=>import('./shg-flagship.js?v=20261113-route1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
+const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261113-route1'));
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
@@ -169,7 +170,7 @@ const renderers=Object.fromEntries(Object.keys(courseDefinitions).map(section=>[
 }]));
 export function getClassroomResult(section){const course=courseModules.peek(section)?.[courseDefinitions[section]?.result]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
 
-export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,courseRenderers=renderers}){
+export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,courseRenderers=renderers,loadProgression=()=>progressionModules.get('lessons')}){
   let selection=typeof route==='string'?parseClassroomRoute(route):route;
   selection=selection||parseClassroomRoute(classroomHash(section));
   section=selection.section;
@@ -179,6 +180,26 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   const cards=classroomPathways.map((item,index)=>`<a class="classroom-path-card" href="${pathLink(item.id)}" data-course-route="${pathLink(item.id)}"><span class="classroom-card-number">0${index+1}<small>${item.level}</small></span><h2>${item.title}</h2><p>${item.summary}</p><div>Prerequisites: ${item.prerequisite}</div><strong>Explore this path →</strong></a>`).join('');
   container.innerHTML=`<div class="classroom-page ${embedded?'classroom-embedded':'classroom-shell'}">${embedded?'':directory}<div class="classroom-main">${overview?`<header class="classroom-overview"><span>FOLLOW A LEARNING PATH</span><h2>From your first symmetry operation to many-body recoupling.</h2><p>Choose a path, then read, experiment and practice within each unit. Point groups and space groups organize spatial symmetry; individual topics explain double-valued representations, magnetism and internal degrees of freedom.</p></header><aside class="classroom-next"><h3>See Symmetry: Foundational Demos</h3><p>Water Vibrations · Characters · D₃ Projection · Level Splitting · Jahn–Teller · Crystal Symmetry</p><a href="#classroom/foundations?module=demos&experiment=water">Open Water and Representation Demos →</a><p><a href="#classroom/foundations?module=mini&experiment=polyhedra">Platonic Solids, Degenerate Bands, Permutations, and Spin →</a></p></aside><aside class="classroom-next"><h3>Start with a complete experiment</h3><a href="#classroom/observables?module=shg-story">Why is SHG different in Si, GaAs and BaTiO₃? Predict → Calculate → Explain → Test a counterexample</a></aside><div class="classroom-path-grid">${cards}</div><aside class="classroom-next"><h3>Already have a calculation in mind?</h3><p>The calculation center exposes the full parameter set. Classroom experiments use the same engines with teaching presets.</p><a href="#compute">Open the calculation center →</a></aside>`:`${embedded?'':`<div class="classroom-course-heading"><span>${esc(pathway?.level||"Lesson")} · Prerequisites: ${esc(pathway?.prerequisite||"Linear algebra")}</span><a href="#classroom" data-course-route="#classroom">All learning paths</a></div>`}${!embedded&&selection.pathway==='foundations'?"<nav class=\"classroom-next\" aria-label=\"Foundational Teaching Entries\"><strong>Foundational Demos and Proof Workshop</strong><p><a href=\"#classroom/foundations?module=demos&experiment=water\">Representations and Molecules · 6 Demos</a> · <a href=\"#classroom/foundations?module=mini&experiment=polyhedra\">Geometry, Bands, and Spin · 6 Demos</a> · <a href=\"#classroom/foundations?module=theorems&experiment=rearrangement\">Group Theorems · 9 Proofs and Applications</a></p></nav>":''}<section id="classroom-course" aria-label="${esc(pathway?.title||"Calculation tool")}"></section>`}</div></div>`;
   const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
+  const courseHost=root.querySelector('#classroom-course');
+  if(!embedded&&courseHost)courseHost.insertAdjacentHTML('afterend','<div id="classroom-progression" hidden></div>');
+  let progressionTicket=0;
+  const drawProgression=async()=>{
+    const ticket=++progressionTicket,host=root.querySelector('#classroom-progression');
+    if(!host)return;
+    const visible=!embedded&&!overview&&(!selection.tab||selection.tab==='learn');
+    host.hidden=!visible;if(!visible)return;
+    try{
+      const module=await loadProgression();
+      if(!current()||ticket!==progressionTicket)return;
+      const progress=module.progressionForSelection(selection);
+      host.innerHTML=progress.current?module.lessonProgressionHTML(progress.current):'';
+      host.hidden=!progress.current;
+    }catch(error){
+      if(!current()||ticket!==progressionTicket)return;
+      host.innerHTML="<p class=\"lesson-progression-error\">Learning connections could not be loaded.<button type=\"button\" class=\"secondary\" data-progression-retry>Retry learning connections</button></p>";
+      host.querySelector('[data-progression-retry]').onclick=drawProgression;
+    }
+  };
   const directoryElement=root.querySelector('.classroom-directory');
   if(directoryElement)directoryElement.insertAdjacentHTML('afterbegin',"<a class=\"classroom-zero-entry\" href=\"#classroom/start\" data-course-route=\"#classroom/start\">00 · Start from Zero</a>");
   if(overview)root.querySelector('.classroom-overview')?.insertAdjacentHTML('afterend',studyMapHTML());
@@ -199,7 +220,10 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
       selection=withClassroomNavigationContext(selection,options.courseContext,hash);
     }
     move(hash,options);
+    drawProgression();
   };
-  return courseRenderers[section]({container:root.querySelector('#classroom-course'),run,cancelRun,toast,download,selection,onNavigate:update,onLocation,onOpenProjectLab,canOpenProjectInput,
+  const rendered=courseRenderers[section]({container:courseHost,run,cancelRun,toast,download,selection,onNavigate:update,onLocation,onOpenProjectLab,canOpenProjectInput,
     openGroup:spec=>openGroup?.(typeof spec==='number'?{mode:'sg',id:spec,k:[0,0,0],doubleValued:false}:spec)});
+  drawProgression();
+  return rendered;
 }

@@ -1,6 +1,7 @@
 """Independent checks of Phonopy file semantics and displacement conventions."""
 from copy import deepcopy
 import cmath
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -53,9 +54,198 @@ class PhonopyImportTests(unittest.TestCase):
     def test_json_and_yaml_same_semantics(self):
         import yaml
         data = fixture()
-        a = run({'content': json.dumps(data)})
-        b = run({'content': yaml.safe_dump(data)})
+        json_text, yaml_text = json.dumps(data), yaml.safe_dump(data)
+        a = run({'content': json_text})
+        b = run({'content': yaml_text})
+        for result, text in ((a,json_text),(b,yaml_text)):
+            self.assertEqual(result['sourceIdentity']['sha256'], hashlib.sha256(text.encode()).hexdigest())
+            self.assertEqual(result['sourceIdentity']['byteCount'], len(text.encode()))
+            self.assertEqual(result['sourceIdentity']['representation'], 'utf8-source-text')
+            result.pop('sourceIdentity')
         self.assertEqual(a, b)
+
+    def test_length_metadata_aliases_precedence_and_conflict(self):
+        data = fixture(); data['length_unit']='au'
+        result=run({'data':data})
+        self.assertEqual(result['structure']['lengthUnit'],'au')
+        self.assertEqual(result['structure']['lengthUnitSource'],'length_unit')
+        self.assertEqual(result['structure']['reciprocalLengthUnit'],'1 / au')
+        self.assertEqual(result['animation']['lengthUnit'],'au')
+        self.assertEqual(result['structure']['lattice'],data['lattice'])
+        data['physical_unit']={'length':'bohr'}
+        result=run({'data':data})
+        self.assertEqual(result['structure']['lengthUnit'],'bohr')
+        self.assertEqual(result['structure']['lengthUnitSource'],'physical_unit.length')
+        self.assertEqual(result['structure']['lengthUnitDeclarations'],[
+            {'field':'physical_unit.length','value':'bohr'},{'field':'length_unit','value':'au'}])
+        data['physical_unit']['length']='angstrom'
+        with self.assertRaisesRegex(ValueError,'声明冲突'):
+            run({'data':data})
+        for invalid in (None,12,True,''):
+            data['length_unit']=invalid; data.pop('physical_unit',None)
+            with self.subTest(invalid=invalid),self.assertRaises(ValueError):
+                run({'data':data})
+
+    def test_companion_length_units_never_erase_or_silently_conflict(self):
+        data=fixture(); data['length_unit']='au'
+        companion={'primitive_cell':{'lattice':deepcopy(data['lattice']),'points':deepcopy(data['points'])}}
+        result=run({'data':data,'structure_data':companion})
+        self.assertEqual(result['structure']['lengthUnit'],'au')
+        self.assertEqual(result['structure']['lengthUnitSource'],'length_unit')
+        companion['physical_unit']={'length':'angstrom'}
+        with self.assertRaisesRegex(ValueError,'长度单位声明不一致'):
+            run({'data':data,'structure_data':companion})
+        data.pop('length_unit')
+        result=run({'data':data,'structure_data':companion})
+        self.assertEqual(result['structure']['lengthUnit'],'angstrom')
+        self.assertEqual(result['structure']['lengthUnitSource'],'companion.physical_unit.length')
+        self.assertEqual(result['animation']['atoms'][0]['equilibrium'],[0,0,0])
+
+    def test_frequency_unit_source_conflict_and_explicit_label_not_conversion(self):
+        data=fixture(); data['frequency_unit']='THz'
+        inferred=run({'data':data,'frequency_unit':'unknown'})
+        self.assertEqual(inferred['frequencyUnitSource'],'frequency_unit')
+        explicit=run({'data':data,'frequency_unit':'meV'})
+        self.assertEqual(explicit['frequencyUnit'],'meV')
+        self.assertEqual(explicit['frequencyUnitSource'],'user.frequency_unit')
+        self.assertEqual(explicit['frequencyUnitDeclarations'],[{'field':'frequency_unit','value':'THz'}])
+        self.assertEqual(explicit['qpoints'],inferred['qpoints'])
+        self.assertTrue(any('文件声明不同' in warning for warning in explicit['warnings']))
+        data['physical_unit']={'frequency':'cm^-1'}
+        with self.assertRaisesRegex(ValueError,'频率单位声明冲突'):
+            run({'data':data})
+        self.assertEqual(run({'data':data,'frequency_unit':'THz'})['frequencyUnit'],'THz')
+
+    def test_official_al_file_identity_units_and_all_source_values(self):
+        import yaml
+        filename=ROOT/'dist/data/examples/phonopy-al-abacus-band.yaml'
+        raw=filename.read_bytes(); text=raw.decode('utf8'); original=yaml.safe_load(text)
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),'08da0d622d6f423f4bc5d3900a30c9bb5dfb86933bc849f59aad60fe67ec330b')
+        self.assertEqual(len(raw),63428)
+        unknown=run({'content':text})
+        self.assertEqual(unknown['frequencyUnit'],'未声明单位')
+        self.assertEqual(unknown['frequencyUnitSource'],'unspecified')
+        result=run({'content':text,'frequency_unit':'THz','selected_q':22,'selected_band':1})
+        self.assertFalse(result['synthetic'])
+        self.assertEqual(result['sourceIdentity']['reference']['commit'],'18cad919af8fe8aad349e04f101887fa19b051a0')
+        self.assertEqual(result['sourceIdentity']['reference']['kind'],'official-calculated-example-not-experiment')
+        self.assertEqual(result['frequencyUnitSource'],'user.frequency_unit')
+        self.assertEqual(result['frequencyUnitDeclarations'],[])
+        self.assertEqual(result['structure']['lengthUnit'],'au')
+        self.assertEqual(result['structure']['lengthUnitSource'],'length_unit')
+        self.assertEqual(result['summary']['qpointCount'],84)
+        self.assertEqual(result['summary']['bandCount'],3)
+        self.assertEqual(result['summary']['eigenvectorCount'],252)
+        self.assertEqual([segment['indices'] for segment in result['segments']],
+                         [list(range(i,i+21)) for i in (0,21,42,63)])
+        for actual, expected in zip(result['qpoints'],original['phonon']):
+            self.assertEqual(actual['q'],expected['q-position'])
+            self.assertEqual(actual['distance'],expected['distance'])
+            self.assertEqual(actual['frequencies'],[band['frequency'] for band in expected['band']])
+        self.assertEqual(result['selection']['eigenvector'],original['phonon'][22]['band'][1]['eigenvector'])
+        self.assertFalse(result['animation']['physicalTrajectory'])
+        self.assertEqual(result['structure']['lattice'],original['lattice'])
+        self.assertEqual(filename.read_bytes(),raw)
+        manifest=json.loads((ROOT/'dist/data/examples/phonopy-al-abacus-source.json').read_text(encoding='utf8'))
+        self.assertEqual(manifest['sha256'],hashlib.sha256(raw).hexdigest())
+        self.assertEqual(manifest['gitBlobSha1'],hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest())
+        companion=manifest['companion']
+        companion_raw=(ROOT/'dist/data/examples'/companion['localFile']).read_bytes()
+        self.assertEqual(len(companion_raw),companion['byteCount'])
+        self.assertEqual(hashlib.sha256(companion_raw).hexdigest(),companion['sha256'])
+        supplied=run({'content':text,'structure_content':companion_raw.decode('utf8'),'frequency_unit':'THz',
+                      'selected_q':22,'selected_band':1})
+        self.assertEqual(supplied['qpoints'],result['qpoints'])
+        self.assertEqual(supplied['structure']['lengthUnit'],'au')
+        self.assertEqual(supplied['structure']['lengthUnitSource'],'length_unit')
+        self.assertTrue(supplied['structure']['supplemented'])
+        self.assertEqual(supplied['frequencyUnitSource'],'user.frequency_unit')
+        license_text=(ROOT/'dist/data/examples'/manifest['licenseFile']).read_text(encoding='utf8')
+        self.assertIn('Copyright (c) 2014-2024, Phonopy.',license_text)
+        self.assertIn('THIS SOFTWARE IS PROVIDED',license_text)
+
+    def test_file_identity_follows_the_actual_object_input_precedence(self):
+        text=(ROOT/'dist/data/examples/phonopy-al-abacus-band.yaml').read_text(encoding='utf8')
+        data=fixture()
+        result=run({'data':data,'content':text})
+        self.assertEqual(result['summary']['qpointCount'],1)
+        identity=result['sourceIdentity']
+        self.assertNotIn('reference',identity)
+        self.assertEqual(identity['representation'],'canonical-json-object-not-original-file')
+        expected=json.dumps(data,ensure_ascii=False,allow_nan=False,sort_keys=True,separators=(',',':')).encode()
+        self.assertEqual(identity['sha256'],hashlib.sha256(expected).hexdigest())
+
+    def test_official_al_complex_components_and_global_phase_invariants(self):
+        import yaml
+        original=yaml.safe_load((ROOT/'dist/data/examples/phonopy-al-abacus-band.yaml').read_text(encoding='utf8'))
+        complex_rows=[]; relative_rows=[]; component_count=0
+        for qi,point in enumerate(original['phonon']):
+            for bi,band in enumerate(point['band']):
+                vector=[complex(*c) for atom in band['eigenvector'] for c in atom]
+                count=sum(abs(z.imag)>1e-12 for z in vector)
+                component_count+=count
+                if count: complex_rows.append((qi,bi))
+                invariant=max(abs((a*b.conjugate()).imag) for a in vector for b in vector)
+                if invariant>1e-12: relative_rows.append((qi,bi))
+        self.assertEqual(len(complex_rows),12)
+        self.assertEqual(len({q for q,b in complex_rows}),7)
+        self.assertEqual(component_count,18)
+        self.assertEqual(relative_rows,[(66,1),(66,2),(78,1),(78,2),(81,1),(81,2)])
+        metadata=json.loads((ROOT/'dist/data/examples/phonopy-al-abacus-source.json').read_text(encoding='utf8'))['complexInput']
+        self.assertEqual(metadata['vectorsWithSignificantImaginaryComponents'],len(complex_rows))
+        self.assertEqual(metadata['significantImaginaryComponents'],component_count)
+        self.assertEqual(metadata['relativeComplexSelectionsZeroBased'],[list(row) for row in relative_rows])
+        # q20 has a removable overall phase; q66,b1 has relative Cartesian phase.
+        for qi,bi,should_be_real in [(20,0,True),(66,1,False)]:
+            vector=[complex(*c) for c in original['phonon'][qi]['band'][bi]['eigenvector'][0]]
+            pivot=max(vector,key=abs)
+            residual=max(abs((z*cmath.exp(-1j*cmath.phase(pivot))).imag) for z in vector)
+            self.assertEqual(residual<1e-12,should_be_real)
+        for qi in (66,78,81):
+            pair=original['phonon'][qi]['band'][1:3]
+            self.assertEqual(pair[0]['frequency'],pair[1]['frequency'])
+            vectors=[[complex(*c) for c in band['eigenvector'][0]] for band in pair]
+            self.assertLess(max(abs(sum(v[i]*v[j].conjugate() for v in vectors).imag)
+                                for i in range(3) for j in range(3)),1e-12)
+
+    def test_official_relative_complex_mode_motion_through_public_api(self):
+        import yaml
+        from browser_api import run as run_api
+        text=(ROOT/'dist/data/examples/phonopy-al-abacus-band.yaml').read_text(encoding='utf8')
+        original=yaml.safe_load(text); point=original['phonon'][66]
+        source=point['band'][1]['eigenvector']
+        vector=[complex(*c) for c in source[0]]
+        invariant=max(abs((a*b.conjugate()).imag) for a in vector for b in vector)
+        self.assertAlmostEqual(invariant,0.007918578160761238,places=14)
+        shifted=[z*cmath.exp(.73j) for z in vector]
+        self.assertAlmostEqual(max(abs((a*b.conjugate()).imag) for a in shifted for b in shifted),invariant,places=14)
+        result=run_api('phonopy',{'content':text,'frequency_unit':'THz','selected_q':66,
+                                  'selected_band':1,'amplitude':.2,'phase':.37,'supercell':[2,2,1]})
+        self.assertEqual(result['selection']['eigenvector'],source)
+        self.assertFalse(result['animation']['physicalTrajectory'])
+        self.assertFalse(result['animation']['commensurate'])
+        # One atom's common mass factor cancels in the display normalization.
+        # This tests source relative Cartesian phases, not unequal-mass physics.
+        norm=math.sqrt(sum(abs(z)**2 for z in vector))
+        for atom in result['animation']['atoms']:
+            spatial=cmath.exp(2j*math.pi*sum(q*c for q,c in zip(point['q-position'],atom['cell'])))
+            expected=[(.2*z*spatial*cmath.exp(-.37j)/norm).real for z in vector]
+            for actual,target in zip(atom['displacement'],expected):
+                self.assertAlmostEqual(actual,target,places=13)
+        for frame in result['animation']['frames']:
+            for atom,position in zip(result['animation']['atoms'],frame['positions']):
+                spatial=cmath.exp(2j*math.pi*sum(q*c for q,c in zip(point['q-position'],atom['cell'])))
+                displacement=[(.2*z*spatial*cmath.exp(-1j*frame['phase'])/norm).real for z in vector]
+                for actual,base,delta in zip(position,atom['equilibrium'],displacement):
+                    self.assertAlmostEqual(actual,base+delta,places=13)
+        # At the origin, phases 0 and pi/2 expose independent real/imaginary
+        # Cartesian directions. Discarding imaginary input would fail this check.
+        real_direction=result['animation']['frames'][0]['positions'][0]
+        imag_direction=result['animation']['frames'][4]['positions'][0]
+        cross=[real_direction[(i+1)%3]*imag_direction[(i+2)%3]
+               -real_direction[(i+2)%3]*imag_direction[(i+1)%3] for i in range(3)]
+        self.assertGreater(math.sqrt(sum(x*x for x in cross)),1e-4)
+        self.assertGreater(max(abs(x) for x in imag_direction),1e-3)
 
     def test_mass_unweighting_keeps_relative_amplitudes(self):
         data = fixture(2)
@@ -209,7 +399,7 @@ class PhonopyImportTests(unittest.TestCase):
             run({'data': fixture(2), 'dos_content': '0 1 2 3 4 5 6', 'dos_kind': 'projected'})
 
     def test_invalid_dos_inputs(self):
-        for content in ['0 1\n1 2 3', '0 -1\n1 2', '1 1\n0 2', '0 nan', '# no data', '0 1 2']:
+        for content in ['0 1\n1 2 3', '0 -1\n1 2', '1 1\n0 2', '0 nan', '# no data', '0 1 2', 12, True, [], None]:
             with self.subTest(content=content), self.assertRaises(ValueError):
                 run({'dos_content': content})
 

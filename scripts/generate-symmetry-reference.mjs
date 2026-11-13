@@ -6,7 +6,8 @@ import crypto from 'node:crypto';
 import {analyzeGroup,decomposeCorepresentationCharacters} from '../dist/engine.js';
 import {induceRepresentation,decomposeStarProduct} from '../dist/induction.js';
 import {parseTrace,matchTraceOperations,charactersForAnalysis} from '../dist/trace-parser.js';
-const read=p=>fs.readFileSync(new URL(p,import.meta.url),'utf8');
+// Match the UTF-8/LF hashing used by the Python fixture consumers on every platform.
+const read=p=>fs.readFileSync(new URL(p,import.meta.url),'utf8').replace(/\r\n?/g,'\n');
 const sg=JSON.parse(read('../dist/data/space-groups.json')).groups;
 const msg=JSON.parse(read('../dist/data/magnetic-groups.json')).groups;
 const cases=[];

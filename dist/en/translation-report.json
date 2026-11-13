@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 23742,
-  "translatedUnits": 23742,
+  "sourceUnits": 23868,
+  "translatedUnits": 23868,
   "missing": [],
-  "files": 381,
+  "files": 388,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -50,6 +50,9 @@
     "en-hall-bridges.json",
     "en-project-conditions.json",
     "en-project-input.json",
-    "en-support-navigation.json"
+    "en-support-navigation.json",
+    "en-lesson-progression.json",
+    "en-entropy-conventions.json",
+    "en-phonopy-units.json"
   ]
 }

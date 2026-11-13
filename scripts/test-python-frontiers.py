@@ -54,11 +54,32 @@ class Frontiers(unittest.TestCase):
    self.assertAlmostEqual(r['energies'][0],0);self.assertLess(r['stateResidual'],1e-11)
    self.assertTrue(all(v<1e-12 for v in r['symmetry'].values()))
    self.assertAlmostEqual(sum(r['schmidt']),1);self.assertGreaterEqual(min(r['schmidt']),0)
+   self.assertNotIn('边界态',r['stateSelection'])
+   if mult==1:
+    self.assertIn('整体相位之外唯一',r['stateSelection'])
+    self.assertNotIn('简并基态子空间',r['stateSelection'])
+   else:
+    self.assertIn('从 4 维简并基态子空间中选定此纯态',r['stateSelection'])
+    self.assertIn('需连同态选择报告',r['stateSelection'])
  def test_protection_is_not_a_single_switch(self):
   u=f.spin_point(4,'periodic',0,.3,'uniform');g=f.spin_point(4,'periodic',0,.3,'gradient')
   self.assertGreater(u['symmetry']['T'],.01);self.assertLess(u['symmetry']['inversion'],1e-12)
   self.assertGreater(g['symmetry']['inversion'],.01)
   d=f.spin_point(4,'periodic',2,0,'gradient');self.assertTrue(all(v<1e-12 for v in d['symmetry'].values()))
+ def test_spt_entropy_units_and_independent_spin_singlet(self):
+  # The unique periodic three-spin-1 singlet has reduced state I/3 at a one-site cut.
+  # Its entropy is ln(3) nat, independently of the SVD used by production.
+  r=run('manybody_spt_lab',{'sites':3,'boundary':'periodic','pathEnd':0})
+  s=r['spectrum'];self.assertEqual(s['groundMultiplicity'],1)
+  np.testing.assert_allclose(s['schmidt'],[1/3]*3,atol=1e-12)
+  self.assertAlmostEqual(s['entropy'],np.log(3),places=12)
+  self.assertAlmostEqual(s['entropyBits'],np.log2(3),places=12)
+  self.assertEqual(s['entropyUnit'],'nat');self.assertEqual(s['entropyLogBase'],'e')
+  self.assertEqual(r['entropyConvention']['unit'],'nat')
+  self.assertEqual(r['entropyConvention']['logBase'],'e')
+  row=next(a for a in r['summary'] if a['label']=='代表纯态纠缠熵')
+  self.assertEqual(row['unit'],'nat');self.assertEqual(row['value'],s['entropy'])
+  self.assertIn('ln(λ_i)',r['formulas'][-1])
  def test_virtual_fixed_point_evidence(self):
   r=f.spt_lab({});x=np.array(r['virtual']['Ux']);z=np.array(r['virtual']['Uz'])
   np.testing.assert_array_equal(x@z,-z@x);self.assertEqual(r['virtual']['commutatorPhase'],-1)

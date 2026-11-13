@@ -16,6 +16,16 @@ def complex_matrix(record):
 
 
 class DensityMatrixTests(unittest.TestCase):
+    def test_entropy_base_metadata_preserves_bit_values(self):
+        r=d.calculate({'experiment':'pair','initialState':'singlet','drive':0,'duration':0,'points':2})
+        self.assertEqual(r['entropyConvention']['unit'],'bit')
+        self.assertEqual(r['entropyConvention']['logBase'],2)
+        self.assertIn('S_nat = S_bit',r['entropyConvention']['natsConversion'])
+        self.assertAlmostEqual(r['stateSnapshots'][0]['entropyA'],1,places=12)
+        self.assertAlmostEqual(r['stateSnapshots'][0]['totalEntropy'],0,places=12)
+        self.assertAlmostEqual(d.entropy(np.diag([.5,.5])),1,places=12)
+        self.assertAlmostEqual(d.entropy(np.diag([1.,0.])),0,places=12)
+
     def test_resonant_rabi_probability_and_bloch_orientation(self):
         r = d.calculate({'drive':1.7,'duration':4,'points':41})
         for s in r['stateSnapshots']:

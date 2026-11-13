@@ -36,6 +36,15 @@ for(const m of data.modules){
  for(const p of m.presets){
   const v=await mount({module:m.id,calculationOnly:true,preset:p.id});await submit(v);assert.equal(ui.getFrontiersResult().module,m.id);
   assert.ok(v.$('#ft-geometry').querySelector('svg'));assert.doesNotMatch(v.$('#pw-result').innerHTML,/\b(?:NaN|Infinity|undefined)\b/);
+  if(m.id==='spt'){
+   const result=ui.getFrontiersResult().result;
+   assert.equal(result.entropyConvention.unit,'nat');
+   assert.equal(result.entropyConvention.logBase,'e');
+   assert.ok(Math.abs(result.spectrum.entropyBits-result.spectrum.entropy/Math.log(2))<1e-12);
+   assert.match(v.$('#pw-result').innerHTML,/纠缠熵的单位与约定/);
+   assert.match(v.$('#pw-result').innerHTML,/密度矩阵实验使用 log₂/);
+   assert.match(v.$('#pw-result').innerHTML,/换算为二进制熵/);
+  }
   for(let i=0;i<fixture.results[p.id].replay.length;i++){v.$('#ft-frame').value=String(i);v.$('#ft-frame').oninput();assert.ok(v.$('#ft-frame-result').innerHTML.includes(fixture.results[p.id].replay[i].title));}
   v.$('#ft-path').value=String(fixture.results[p.id].path.length-1);v.$('#ft-path').oninput();assert.equal(ui.getFrontiersResult().result.learningEvidence.path.index,fixture.results[p.id].path.length-1);
   await v.$('#ft-link').onclick();assert.ok(ui.getFrontiersResult().result.learningEvidence.linked);assert.ok(v.$('#ft-linked-result').querySelector('svg'));
@@ -57,7 +66,7 @@ const v=await mount({module:'layers',calculationOnly:true,preset:'layer-square'}
 // Disconnected and superseded asynchronous results must not capture new evidence.
 let release;const pending=new Promise(r=>release=r);const w=await mount({module:'layers',calculationOnly:true,preset:'layer-square'},async(a,p)=>a==='symmetry_linked'?pending:run(a,p));await submit(w);const clicking=w.$('#ft-link').onclick();w.$('#ft-position-0').value='.8';w.$('#ft-position-0').oninput();release(fixture.linked[0].result);await clicking;assert.equal(ui.getFrontiersResult().result.learningEvidence.linked,undefined);
 const projects=await import('../dist/response-projects.js?v=20261110-en1');
-const notebook=await import('../dist/material-notebook.js?v=20261113-support1');
+const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
 assert.equal(projects.assignmentTemplates.length,26);
 for(const t of frontiersAssignments){assert.ok(new Set(t.steps.map(s=>s.action)).size>=2);let p=notebook.makeProject({title:t.title});p.assignment={id:t.id,steps:{},conclusion:''};notebook.validateProject(p);for(const step of t.steps){assert.ok(parseClassroomRoute(step.route));const f=fixture.projects[t.id+'/'+step.id];notebook.captureCalculation(f.action,f.input,f.result,{route:step.route.slice(1),title:step.title});const record=notebook.latestCalculation();assert.ok(projects.assignmentAcceptance(step,record).ok);const wrong={...record,input:{...record.input,...(step.requires.sites?{sites:3}:{_unexpected:1})}};if(step.requires.sites)assert.equal(projects.assignmentAcceptance(step,wrong).ok,false);p=projects.collectAssignmentRecord(p,t,step.id,record);}assert.equal(p.records.length,3);notebook.validateProject(notebook.importProject(JSON.stringify(p)));assert.match(projects.assignmentReport(p,t),/输入参数/);}
 console.log('Frontiers: 18 genuine Python presets, 9 lessons/36 steps, linked vectors, inverse experiments, path evidence, A/B records and 26 projects passed.');
