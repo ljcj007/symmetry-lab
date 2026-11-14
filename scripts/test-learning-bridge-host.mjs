@@ -8,7 +8,7 @@ const fake={hubbardBridgeHTML:id=>'<details data-host-test><summary>'+id+'</summ
 const mount=(family='hubbard',lessonId='manybody-lehmann')=>{const root=new Container();root.innerHTML=learningBridgeHTML(family,lessonId);return root;};
 assert.equal(learningBridgeHTML('unknown','manybody-lehmann'),'');
 assert.equal(learningBridgeHTML('hubbard','future'),'');
-assert.deepEqual(Object.values(LEARNING_BRIDGE_HOOKS).map(x=>x.length),[2,5,1,3]);
+assert.deepEqual(Object.values(LEARNING_BRIDGE_HOOKS).map(x=>x.length),[2,5,1,3,3]);
 const never=bindLearningBridge({root:mount('hubbard','future'),family:'hubbard',lessonId:'future',loadModule:()=>{throw Error('Unknown hooks stay unloaded');}});await never.ready;never();
 let release;const wait=new Promise(resolve=>{release=resolve;});
 const first=mount(),retired=bindLearningBridge({root:first,family:'hubbard',lessonId:'manybody-lehmann',stateStore:store,loadModule:()=>{loads++;return wait;}});
@@ -26,7 +26,8 @@ const detached=bindLearningBridge({root:fourth,family:'hubbard',lessonId:'manybo
 fourth.isConnected=false;resolveDetached(fake);await detached.ready;assert.equal(bindings,2,'Detached views cannot bind late modules');detached();
 for(const [family,lessonId,htmlName,bindName]of [
  ['thermal','thermal-oscillator','thermalBridgeHTML','bindThermalLearningBridge'],
- ['onsager','reciprocity-onsager','onsagerBridgeHTML','bindOnsagerLearningBridge']
+ ['onsager','reciprocity-onsager','onsagerBridgeHTML','bindOnsagerLearningBridge'],
+ ['oscillator','scattering-temperature','oscillatorSpectraBridgeHTML','bindOscillatorSpectraBridge']
 ]){
  let requested=null,bound=false;
  const root=mount(family,lessonId),module={

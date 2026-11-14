@@ -1,4 +1,4 @@
-import {latestCalculation,makeProject,addRecord,validateJSON,saveProject,RELEASE,safeRecordRoute} from './material-notebook.js?v=20261113-route1';
+import {latestCalculation,makeProject,addRecord,validateJSON,saveProject,RELEASE,safeRecordRoute} from './material-notebook.js?v=20261114-evidence1';
 import {esc,num,table} from './response-views.js?v=20261110-en1';
 import {quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 const KEY='symmetry-lab.comparison.v1',MAX_BYTES=3*1024*1024;

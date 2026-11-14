@@ -1,6 +1,6 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261113-thermal1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261114-evidence1';
 import {curveSVG} from './observables-ui.js?v=20261113-flow1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';

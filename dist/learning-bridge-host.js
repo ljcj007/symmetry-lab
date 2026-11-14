@@ -4,13 +4,15 @@ export const LEARNING_BRIDGE_HOOKS=Object.freeze({
  hubbard:Object.freeze(['hubbard-basis','manybody-lehmann']),
  quantum:Object.freeze(['density-pure-mixed','density-exchange','spt-schmidt','spt-aklt-parent','su2-coupling-representations']),
  thermal:Object.freeze(['thermal-oscillator']),
- onsager:Object.freeze(['reciprocity-onsager','reciprocity-spatial-response','reciprocity-dissipation'])
+ onsager:Object.freeze(['reciprocity-onsager','reciprocity-spatial-response','reciprocity-dissipation']),
+ oscillator:Object.freeze(['scattering-temperature','polaron-hamiltonian','polaron-truncation'])
 });
 const definitions={
  hubbard:{load:()=>import('./hubbard-learning-bridge.js?v=20261113-operations1'),html:'hubbardBridgeHTML',bind:'bindHubbardLearningBridge'},
  quantum:{load:()=>import('./quantum-state-bridge.js?v=20261113-operations1'),html:'quantumStateBridgeHTML',bind:'bindQuantumStateBridge'},
  thermal:{load:()=>import('./thermal-learning-bridge.js?v=20261113-thermal1'),html:'thermalBridgeHTML',bind:'bindThermalLearningBridge'},
- onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'}
+ onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'},
+ oscillator:{load:()=>import('./oscillator-spectra-bridge.js?v=20261114-evidence1'),html:'oscillatorSpectraBridgeHTML',bind:'bindOscillatorSpectraBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());
 export function learningBridgeHTML(family,lessonId){

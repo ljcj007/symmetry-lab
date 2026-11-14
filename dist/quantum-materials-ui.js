@@ -1,7 +1,7 @@
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {heatmapSVG,orbitalSVG,quantumCurveSVG as multiCurveSVG} from './quantum-plots.js?v=20261110-en1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261113-route1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261114-evidence1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?(x!==0&&(Math.abs(x)>=1e5||Math.abs(x)<1e-3)?x.toExponential(4):Number(x.toPrecision(5))):'—';
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 24357,
-  "translatedUnits": 24357,
+  "sourceUnits": 24611,
+  "translatedUnits": 24611,
   "missing": [],
-  "files": 395,
+  "files": 404,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -58,6 +58,9 @@
     "en-quantum-state-bridge.json",
     "en-operational-navigation.json",
     "en-thermal-learning-bridge.json",
-    "en-onsager-learning-bridge.json"
+    "en-onsager-learning-bridge.json",
+    "en-oscillator-spectra-bridge.json",
+    "en-cu-thermal-example.json",
+    "en-structure-handoff.json"
   ]
 }

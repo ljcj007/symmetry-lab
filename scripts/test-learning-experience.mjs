@@ -19,7 +19,7 @@ const search=home.querySelector('#site-search');search.value='GaAs';search.oninp
 const {parseClassroomRoute,buildClassroomHash}=await import('../dist/classroom-ui.js');for(const route of ['compute/shg-flagship','classroom/observables?module=shg-story']){const parsed=parseClassroomRoute(route);assert.equal(parsed.section,'flagship');assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed);}assert.ok(nav.knownTool('compute/shg-flagship'));
 
 const fixture=JSON.parse(read('./fixtures/shg-flagship.json'));assert.equal(createHash('sha256').update(read('../dist/python/shg_lab.py').replace(/\r\n?/g,'\n')).digest('hex'),fixture.sourceSHA256);
-const ui=await import('../dist/shg-flagship.js');const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
+const ui=await import('../dist/shg-flagship.js');const notebook=await import('../dist/material-notebook.js?v=20261114-evidence1');
 const canonical=o=>JSON.stringify(Object.keys(o).sort().map(k=>[k,o[k]]));
 const calculations=[];const run=async(action,input)=>{assert.equal(action,'shg_lab');calculations.push(structuredClone(input));const found=fixture.cases.find(x=>canonical(x.input)===canonical(input));assert.ok(found,'A real Python fixture must match the complete input');return structuredClone(found.result);};
 const mount=(calculate=run)=>{const container=new Container(),downloads=[],cancels=[];ui.renderSHGFlagship({container,run:calculate,cancelRun:()=>cancels.push(1),download:(body,name)=>downloads.push({body,name})});return {container,$:s=>container.querySelector(s),downloads,cancels};};

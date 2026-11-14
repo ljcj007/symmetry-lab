@@ -13,6 +13,7 @@ catalogFiles.push('en-hall-bridges.json','en-project-conditions.json','en-projec
 catalogFiles.push('en-lesson-progression.json','en-entropy-conventions.json','en-phonopy-units.json');
 catalogFiles.push('en-hubbard-learning-bridge.json','en-quantum-state-bridge.json','en-operational-navigation.json');
 catalogFiles.push('en-thermal-learning-bridge.json','en-onsager-learning-bridge.json');
+catalogFiles.push('en-oscillator-spectra-bridge.json','en-cu-thermal-example.json','en-structure-handoff.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

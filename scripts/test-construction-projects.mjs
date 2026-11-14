@@ -96,7 +96,7 @@ const storage=new Map();
 globalThis.localStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
 globalThis.document={createElement:tag=>new Element(tag)};globalThis.location={hash:''};
 const projects=await import('../dist/response-projects.js?v=20261110-en1');
-const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
+const notebook=await import('../dist/material-notebook.js?v=20261114-evidence1');
 const clone=x=>JSON.parse(JSON.stringify(x));
 assert.equal(projects.assignmentTemplates.length,26);
 assert.equal(projects.assignmentTemplates.filter(t=>!constructionAssignments.some(p=>p.id===t.id)).length,23);

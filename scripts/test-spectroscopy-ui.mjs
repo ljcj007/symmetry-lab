@@ -10,7 +10,7 @@ globalThis.fetch=async()=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/spectroscopy-ui.js');
 const views=await import('../dist/spectroscopy-views.js?v=20261110-en1');
 const projects=await import('../dist/response-projects.js?v=20261110-en1');
-const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
+const notebook=await import('../dist/material-notebook.js?v=20261114-evidence1');
 const templates=(await import('../dist/spectroscopy-projects.js?v=20261110-en1')).spectroscopyAssignments;
 let chosen=data.modules[0].presets[0].id;const calls=[];
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[chosen]);};

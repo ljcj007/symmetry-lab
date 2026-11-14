@@ -10,7 +10,7 @@ globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data)});
 const ui=await import('../dist/response-materials-ui.js');
 const views=await import('../dist/response-views.js?v=20261110-en1');
 const projectUI=await import('../dist/response-projects.js?v=20261110-en1');
-const notebook=await import('../dist/material-notebook.js?v=20261113-route1');
+const notebook=await import('../dist/material-notebook.js?v=20261114-evidence1');
 const safe=html=>assert.doesNotMatch(html,/NaN|Infinity|undefined/);
 const calls=[];let selectedFixture='hall-qwz-plateau';
 const run=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixtures.results[selectedFixture]);};

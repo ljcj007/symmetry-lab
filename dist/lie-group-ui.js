@@ -1,4 +1,4 @@
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261113-thermal1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261114-evidence1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.

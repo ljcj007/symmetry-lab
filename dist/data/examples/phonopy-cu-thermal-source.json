@@ -1,0 +1,64 @@
+{
+  "id": "official-phonopy-cu-thermal-index05",
+  "title": "Official Phonopy Cu thermal-properties calculation, volume index 05",
+  "repository": "https://github.com/phonopy/phonopy",
+  "commit": "18cad919af8fe8aad349e04f101887fa19b051a0",
+  "path": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz",
+  "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz",
+  "rawUrl": "https://raw.githubusercontent.com/phonopy/phonopy/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz",
+  "localFile": "phonopy-cu-thermal-index05.yaml",
+  "sha256": "1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1",
+  "byteCount": 41975,
+  "representation": "losslessly decompressed upstream UTF-8 bytes; no YAML edits",
+  "archive": {
+    "localFile": "phonopy-cu-thermal-index05.yaml.xz",
+    "sha256": "36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f",
+    "byteCount": 4900,
+    "gitBlobSha1": "3518fc3ad5bdc29d75338a0496723979fb37bc32"
+  },
+  "license": "BSD-3-Clause",
+  "licenseFile": "phonopy-cu-LICENSE.txt",
+  "licenseSha256": "2ce26839c8b70d28765d73e934cc1a979d896d8d228d30694fdd9a92e94d43a9",
+  "classification": "official calculated thermal output, not experiment or a new calculation",
+  "normalization": "per input calculation cell; natom=4; not relabeled as a one-atom primitive cell",
+  "natom": 4,
+  "volumeInSource": 47.5680287744,
+  "numModes": 96000,
+  "numIntegratedModes": 96000,
+  "rowCount": 251,
+  "firstRow": {
+    "temperature": 0.0,
+    "free_energy": 11.3271895,
+    "entropy": 0.0,
+    "heat_capacity": 0.0,
+    "energy": 11.3271895
+  },
+  "lastRow": {
+    "temperature": 2500.0,
+    "free_energy": -609.4644426,
+    "entropy": 343.6332685,
+    "heat_capacity": 99.6998754,
+    "energy": 249.6187286
+  },
+  "units": {
+    "temperature": "K",
+    "freeEnergy": "kJ/mol input cells",
+    "internalEnergy": "kJ/mol input cells (derived as F+TS/1000)",
+    "entropy": "J/(mol input cells K)",
+    "heatCapacity": "J/(mol input cells K)"
+  },
+  "validation": {
+    "path": "test\\cui\\phonopy_qha\\Cu-QHA\\thermal_properties.yaml-05",
+    "sha256": "1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1",
+    "rows": 251,
+    "natom": 4,
+    "basis": "per-input-cell",
+    "zeroPointEnergy": 11.3271895,
+    "numModes": 96000,
+    "numIntegratedModes": 96000,
+    "maximumInputFieldOrIdentityError": 1.1368683772161603e-13,
+    "maximumDifferenceFromRoundedOriginalEnergy": 1.679999854786729e-07,
+    "warning": "Thermal data alone contain neither mode eigenvectors nor the complete inputs for QHA; no complex-motion claim follows."
+  },
+  "scope": "Thermal curves alone do not provide eigenvectors, unequal-mass motion, static E(V), QHA equilibrium volume, convergence evidence, Cp or thermal conductivity."
+}
