@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "release": "20261114-evidence1",
+  "release": "20261114-evidence2",
   "scope": "Three bounded number-state learning panels, structure-source handoff into explicit representation calculations, and an official Cu thermal-file workflow.",
   "counts": {
     "oscillatorLessons": 3,
@@ -40,7 +40,7 @@
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 97272,
-      "sha256": "43c38865d6799f9b12d7b07dc37b6e2fdc686c2d1f2be6918bb89742698d2e53"
+      "sha256": "e6c4a0e64575c511fa4bc05bab86abbcb141c5e33eb0b66e7395a614e4661caf"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -75,7 +75,7 @@
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
       "bytes": 6649,
-      "sha256": "34e4661ad40f45bb430a18f121eaa8bc8f4ef39ef9004d6c8cfed39398d2d87c"
+      "sha256": "95c242121078074afff54ce8d839c4140882e1d7f7659cb656336f9ba847004a"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -114,8 +114,8 @@
     },
     "dist/structure-handoff.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7879,
-      "sha256": "475306a4f627bb81d2342aa63af7512a0f8e32cea4e92cc235da3c5ceac1d516"
+      "bytes": 7913,
+      "sha256": "caf8040d79af465be1f6e7fc29d40612beb48e2683609ff070c7abc097f9df34"
     },
     "dist/structure-provenance.js": {
       "normalization": "utf8-lf-v1",
@@ -125,7 +125,7 @@
     "dist/structure-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 16659,
-      "sha256": "70341ee8a7b048179389e80f54746ac1ba52e0fe97dfeadc54c4b6aefc3ee315"
+      "sha256": "6e1cd991e7d8c8179c0bceca420417625a97e6ab5e2be89079d50d9f0180e369"
     },
     "locales/en-cu-thermal-example.json": {
       "normalization": "utf8-lf-v1",
@@ -150,7 +150,7 @@
     "scripts/build-evidence-workflows-provenance.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 4947,
-      "sha256": "04e3cbe79de4d97f21c9ef7a8c33f713a31ca380b3422e5e227068cd537f38c4"
+      "sha256": "1f70c4cbee1d8ecb120a62357fdeb7a83601581b42af13bbd08dec86b1168b31"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
@@ -199,8 +199,8 @@
     },
     "scripts/test-structure-handoff.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4769,
-      "sha256": "3f7c5b63954f3ac476d46c238187ef667c215122f4015e696a7a4698a65596da"
+      "bytes": 5290,
+      "sha256": "11700dc054f7d653bde9fd5cf734a39966a76abbef9ed6074eb7edcd57370bcd"
     },
     "scripts/test-structure-ui.mjs": {
       "normalization": "utf8-lf-v1",
