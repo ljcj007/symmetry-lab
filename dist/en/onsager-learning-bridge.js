@@ -236,8 +236,8 @@ export function bindOnsagerLearningBridge({root,lessonId,isCurrent=()=>true,stat
   bind('reset','onclick',()=>{ticket++;const wasOpen=state.open;Object.assign(state,initial(id),{open:wasOpen});draw();$('q0')?.focus?.({preventScroll:true});});
   const copy=$('copy');if(copy)copy.onclick=async()=>{
    if(!current()||$('copy')!==copy||busy)return;capture();const job=++ticket,payload=clone(request());busy=true;copy.disabled=true;state.copyOutcome='';$('copy-status').textContent='';
-   try{const accepted=await onOpenLab(payload);if(current()&&job===ticket){if(accepted===false)throw Error('The existing experiment did not accept this reference.');state.copyOutcome='success';$('copy-status').textContent="Inputs copied. Check the parameters in the existing experiment and run it manually.";save();}}
-   catch(error){if(current()&&job===ticket){state.copyOutcome='error';$('copy-status').textContent="The input copy did not complete. You can try again.";save();}}
+   try{const accepted=await onOpenLab(payload);if(current()&&job===ticket){if(accepted===false)throw Error('The existing experiment did not accept this reference.');state.copyOutcome='success';$('copy-status').textContent="Input copied. Review the parameters in the existing experiment and run it manually.";save();}}
+   catch(error){if(current()&&job===ticket){state.copyOutcome='error';$('copy-status').textContent="The input was not copied. You can try again.";save();}}
    finally{busy=false;if(current())$('copy').disabled=false;}
   };
   update();

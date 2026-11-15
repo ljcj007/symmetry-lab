@@ -1,4 +1,4 @@
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261114-evidence1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261115-actions1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';

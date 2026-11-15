@@ -1,5 +1,5 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261115-precision1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261115-actions1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-precision1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';

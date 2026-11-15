@@ -216,7 +216,7 @@ function polaronHTML(prefix,state,kind){
 }
 function bodyHTML(prefix,state,kind,canOpenLab){
  return (kind==='ladder-weights'?mainHTML(prefix,state,canOpenLab):polaronHTML(prefix,state,kind))+
- `<label class="osb-note-label" for="${prefix}-note">${"Write one sentence in your own words (kept only in this page's memory)"}<textarea id="${prefix}-note" rows="3" maxlength="2000">${esc(state.note)}</textarea></label>${button(prefix+'-reset',"Reset this activity card")}`;
+ `<label class="osb-note-label" for="${prefix}-note">${"Write your own explanation (kept only in this page's memory)"}<textarea id="${prefix}-note" rows="3" maxlength="2000">${esc(state.note)}</textarea></label>${button(prefix+'-reset',"Reset this action card")}`;
 }
 
 export function oscillatorSpectraBridgeHTML(lessonId){

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 24723,
-  "translatedUnits": 24723,
+  "sourceUnits": 25001,
+  "translatedUnits": 25001,
   "missing": [],
-  "files": 406,
+  "files": 413,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -65,6 +65,9 @@
     "en-precision-controls.json",
     "en-spin-course-connections.json",
     "en-rabi-state-bridge.json",
-    "en-geometry-diagnostic-display.json"
+    "en-geometry-diagnostic-display.json",
+    "en-geometry-actions-bridge.json",
+    "en-order-actions-bridge.json",
+    "en-layer-actions-bridge.json"
   ]
 }

@@ -1,0 +1,13 @@
+.gab-prerequisite{font-size:18px;line-height:1.75;color:var(--text,#172d38);margin:1.2rem 0;max-width:100%;min-width:0}
+.gab-bridge{border:2px solid #69848b;border-radius:12px;background:var(--panel,#fff);min-width:0}
+.gab-bridge>summary{padding:1rem;cursor:pointer;font-weight:750;font-size:20px;color:inherit}
+.gab-body{padding:0 1rem 1rem;min-width:0}.gab-body h3{font-size:21px;line-height:1.5}.gab-body h4{font-size:19px}
+.gab-stage{padding:1rem 0;border-top:1px solid #b8c9cd;min-width:0}.gab-scope{padding:.7rem .9rem;background:var(--surface,#edf5f4);border-left:4px solid #366866}
+.gab-controls{display:flex;gap:1rem;flex-wrap:wrap}.gab-controls label,.gab-question label,.gab-note{display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.gab-body select,.gab-body textarea,.gab-body button{font:inherit;color:inherit;border:1px solid #617b85;border-radius:6px;background:var(--panel,#fff);padding:.5rem .7rem;max-width:100%}
+.gab-body button{margin:.45rem .5rem .45rem 0;cursor:pointer;min-height:44px}.gab-body button:disabled{opacity:.65;cursor:default}
+.gab-body :focus-visible{outline:3px solid #155d93;outline-offset:3px}.gab-body textarea{box-sizing:border-box;width:100%}
+.gab-formula{font-size:22px;line-height:1.8;margin:.75rem 0;overflow-wrap:anywhere;overflow-x:auto;min-width:0;box-sizing:border-box;max-width:100%}.gab-formula .math-display{font-size:inherit}
+.gab-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;margin:.8rem 0}.gab-table-wrap table{border-collapse:collapse;min-width:450px;width:100%;font-size:18px}.gab-table-wrap caption{font-weight:700;text-align:left;white-space:normal;margin-bottom:.5rem}.gab-table-wrap th,.gab-table-wrap td{border:1px solid #9eb3b9;padding:.5rem .65rem;text-align:left;vertical-align:top}
+.gab-question{margin:1rem 0;padding:.8rem;background:var(--surface,#f1f6f6);border-radius:8px}.gab-feedback{min-height:1.5em;overflow-wrap:anywhere}.gab-correct{color:var(--success,#116b42);font-weight:650}.gab-reference{font-size:18px;overflow-wrap:anywhere}.gab-reference summary{cursor:pointer}.gab-note{margin-top:1rem}
+@media(max-width:600px){.gab-body{padding:0 .65rem .8rem}.gab-controls{display:block}.gab-controls label{margin:.7rem 0}.gab-body h3{font-size:20px}.gab-body button{width:100%;margin:.4rem 0}.gab-bridge>summary{padding:.8rem}.gab-question{padding:.65rem}.gab-formula{font-size:22px}}

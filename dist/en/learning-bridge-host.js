@@ -5,14 +5,20 @@ export const LEARNING_BRIDGE_HOOKS=Object.freeze({
  quantum:Object.freeze(['density-pure-mixed','density-exchange','spt-schmidt','spt-aklt-parent','su2-coupling-representations']),
  thermal:Object.freeze(['thermal-oscillator']),
  onsager:Object.freeze(['reciprocity-onsager','reciprocity-spatial-response','reciprocity-dissipation']),
- oscillator:Object.freeze(['scattering-temperature','polaron-hamiltonian','polaron-truncation'])
+ oscillator:Object.freeze(['scattering-temperature','polaron-hamiltonian','polaron-truncation']),
+ geometryActions:Object.freeze(['geometry-rays']),
+ orderActions:Object.freeze(['order-isotropy','order-invariants','order-field-convention']),
+ layerActions:Object.freeze(['layer-periodicity'])
 });
 const definitions={
  hubbard:{load:()=>import('./hubbard-learning-bridge.js?v=20261113-operations1'),html:'hubbardBridgeHTML',bind:'bindHubbardLearningBridge'},
  quantum:{load:()=>import('./quantum-state-bridge.js?v=20261113-operations1'),html:'quantumStateBridgeHTML',bind:'bindQuantumStateBridge'},
  thermal:{load:()=>import('./thermal-learning-bridge.js?v=20261113-thermal1'),html:'thermalBridgeHTML',bind:'bindThermalLearningBridge'},
  onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'},
- oscillator:{load:()=>import('./oscillator-spectra-bridge.js?v=20261114-evidence1'),html:'oscillatorSpectraBridgeHTML',bind:'bindOscillatorSpectraBridge'}
+ oscillator:{load:()=>import('./oscillator-spectra-bridge.js?v=20261114-evidence1'),html:'oscillatorSpectraBridgeHTML',bind:'bindOscillatorSpectraBridge'},
+ geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261115-actions1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
+ orderActions:{load:()=>import('./order-actions-bridge.js?v=20261115-actions1'),html:'orderActionsBridgeHTML',bind:'bindOrderActionsBridge'},
+ layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261115-actions1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());
 export function learningBridgeHTML(family,lessonId){
