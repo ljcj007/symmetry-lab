@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 25606,
-  "translatedUnits": 25606,
+  "sourceUnits": 26029,
+  "translatedUnits": 26029,
   "missing": [],
-  "files": 431,
+  "files": 434,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -76,6 +76,9 @@
     "en-zno-phonopy-example.json",
     "en-zno-navigation.json",
     "en-tensor-replay.json",
-    "en-tensor-replay-docs.json"
+    "en-tensor-replay-docs.json",
+    "en-spin-actions.json",
+    "en-spin-actions-python.json",
+    "en-spin-actions-docs.json"
   ]
 }

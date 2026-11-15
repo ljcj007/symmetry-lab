@@ -14,13 +14,17 @@ for(const[id,dimension,order]of [['c2-dielectric',4,2],['c4-dielectric',2,4],['c
  const r=find(id);assert.equal(r.independent_count,dimension);assert.equal(r.replay.finiteGroup.order,order);assert.ok(Object.values(r.replay.checks).every(Boolean));
 }
 const reviewed=new Set(lessonProgressionEdges.flatMap(x=>[x.from,x.to]));
-assert.deepEqual([lessonProgressionInventory.length,reviewed.size,lessonProgressionEdges.length],[197,112,130]);
+assert.equal(lessonProgressionInventory.length,197);
+assert.ok(reviewed.size>=112&&lessonProgressionEdges.length>=130);
+assert.equal(hash(Buffer.from(JSON.stringify(lessonProgressionEdges.slice(0,130)))),'cb75b4d8a2ed525110a0de080b53c5c41de8372477c12968d1c06451a07e387f');
 const files=['.github/workflows/pages.yml','GOAL-ROADMAP.md','package.json','dist/index.html','dist/app.js','dist/classroom-ui.js','dist/lesson-progression.js','dist/observables-ui.js','dist/observables.css','dist/tensor-replay-ui.js','dist/tensor-replay.css','dist/python-client.js','dist/python-worker.js','dist/material-notebook.js','dist/python/property_tensors.py','dist/python/browser_api.py','dist/data/material-observables.json','dist/docs/material-observables.md','locales/en-lesson-progression.json','locales/en-tensor-replay.json','locales/en-tensor-replay-docs.json','scripts/english-catalog.mjs','scripts/test-lesson-progression.mjs','scripts/test-tensor-replay-ui.mjs','scripts/test-observables-ui.mjs','scripts/test-python-property-tensors.py','scripts/test-python-tensor-replay.py','scripts/build-tensor-replay-reference.py','scripts/fixtures/tensor-replay.json','scripts/fixtures/tensor-source-baseline.py.gz','scripts/fixtures/pathways-projects.json','scripts/fixtures/bridges-projects.json','scripts/build-learning-routes-provenance.mjs','scripts/build-zno-workflow-provenance.mjs','scripts/build-tensor-teaching-provenance.mjs','scripts/package-source.py','scripts/test-source-package.py'];
 files.push('dist/english-results.js','scripts/test-english-results.mjs','scripts/audit-english-results.mjs','scripts/collect-fixture-messages.mjs','scripts/extract-python-messages.py','locales/en-python-sources.json','locales/en-python-templates.json');
 files.push('scripts/build-english.mjs','scripts/test-english-edition.mjs');
 const manifest={schemaVersion:1,release:'20261115-tensor1',sourceHashNormalization:'utf8-lf-v1; gzip files retain raw bytes',
  scope:'Reviewed optional course relationships and a manually requested exact rank-two tensor constraint replay in the existing classroom, calculator and materials routes.',
  counts:{indexedLessons:197,reviewedConnectedLessons:112,optionalEdges:130,newOptionalEdges:48,newlyConnectedLessons:47,realAPIReferences:12,availableFiniteReplays:9,lessonPlacements:2,fixedCopyReferences:7},
+ countsScope:'Original tensor-release snapshot; subsequent reviewed links are recorded separately in currentGraph.',
+ currentGraph:{indexedLessons:lessonProgressionInventory.length,reviewedConnectedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length},
  coreContract:{action:'tensors',optIn:'replay: true',default:'No replay result key is added when omitted or false. Existing numerical and descriptive fields remain unchanged.',
  supported:['static symmetric dielectric rank-two tensor, six intrinsic coordinates','static general magnetoelectric rank-two tensor, nine intrinsic coordinates'],
  solver:'Exact generator-invariance nullspace; explicit action/constraint matrices and RREF describe the same subspace. A separately closed finite group supplies a Reynolds average.',

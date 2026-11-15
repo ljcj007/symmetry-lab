@@ -1733,7 +1733,8 @@
   {
     "source": " 须为 ",
     "origins": [
-      "python/conservation_lab.py"
+      "python/conservation_lab.py",
+      "python/spin_actions_lab.py"
     ]
   },
   {
@@ -5749,31 +5750,51 @@
   {
     "source": "选定生成元及所声明平移生成的子群；不枚举整个结构的对称群",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/group/scope",
+      "python-fixture/spin-actions.json/legacyCases/1/result/group/scope",
+      "python-fixture/spin-actions.json/legacyCases/2/result/group/scope",
+      "python-fixture/spin-actions.json/legacyCases/3/result/group/scope"
     ]
   },
   {
     "source": "主动操作，右边先作用；坐标和箭头均使用正交笛卡尔坐标。精确数保留为有理数或 sqrt(3) 根式。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/convention",
+      "python-fixture/spin-actions.json/legacyCases/1/result/convention",
+      "python-fixture/spin-actions.json/legacyCases/2/result/convention",
+      "python-fixture/spin-actions.json/legacyCases/3/result/convention"
     ]
   },
   {
     "source": "空间与内部变换同时作用",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/symmetryTests/0/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/symmetryTests/0/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/symmetryTests/0/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/symmetryTests/0/label"
     ]
   },
   {
     "source": "仅空间操作",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/symmetryTests/1/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/symmetryTests/1/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/symmetryTests/1/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/symmetryTests/1/label"
     ]
   },
   {
     "source": "仅内部变换",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/symmetryTests/2/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/symmetryTests/2/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/symmetryTests/2/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/symmetryTests/2/label"
     ]
   },
   {
@@ -5820,7 +5841,9 @@
   {
     "source": "图中是三维周期结构的一个晶胞及其像；沿 x、y、z 均可作任意整数平移。完整空间群无限，表格仅表示模整数平移后的有限商群。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/0",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/0"
     ]
   },
   {
@@ -5935,7 +5958,8 @@
   {
     "source": "三色点群：空间 C₃ 与颜色循环",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/title"
     ]
   },
   {
@@ -5947,103 +5971,156 @@
   {
     "source": "自旋点群：独立的两个旋转轴",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/title"
     ]
   },
   {
     "source": "自旋空间群：反铁磁半平移",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/2/result/title"
     ]
   },
   {
     "source": "自旋点群：120° 共面三角结构",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/3/result/title"
     ]
   },
   {
     "source": "自旋空间群：三层共面螺旋结构",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/4/result/title"
     ]
   },
   {
     "source": "组合生成元保持每个格点的颜色或磁矩",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/checks/0/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/checks/0/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/checks/0/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/checks/0/label"
     ]
   },
   {
     "source": "负对照：仅空间操作不保持图样",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/checks/1/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/checks/1/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/checks/1/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/checks/1/label"
     ]
   },
   {
     "source": "负对照：仅内部变换不保持图样",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/checks/2/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/checks/2/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/checks/2/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/checks/2/label"
     ]
   },
   {
     "source": "空间与自旋旋转矩阵正交且行列式为 +1",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/checks/3/label",
+      "python-fixture/spin-actions.json/legacyCases/1/result/checks/3/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/checks/3/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/checks/3/label"
     ]
   },
   {
     "source": "分开记录两种作用",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/0/title",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/0/title",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/0/title",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/0/title"
     ]
   },
   {
     "source": "空间部分决定去哪个位置，内部部分决定到达时的颜色或自旋。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/0/explanation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/0/explanation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/0/explanation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/0/explanation"
     ]
   },
   {
     "source": "按同一顺序复合",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/1/title",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/1/title",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/1/title",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/1/title"
     ]
   },
   {
     "source": "右边操作先作用。颜色排列或自旋旋转必须随空间操作一起累计。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/1/explanation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/1/explanation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/1/explanation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/1/explanation"
     ]
   },
   {
     "source": "逐点检查图样",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/2/title",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/2/title",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/2/title",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/2/title"
     ]
   },
   {
     "source": "对所有显示格点作精确匹配；三维空间例还要模整数晶格平移。两个单独操作均不通过，但组合通过。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/2/explanation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/2/explanation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/2/explanation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/2/explanation"
     ]
   },
   {
     "source": "区分子群与商群",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/3/title",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/3/title",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/3/title",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/3/title"
     ]
   },
   {
     "source": "保持每一种颜色的核",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/colorKernel/label"
     ]
   },
   {
     "source": "同一个空间操作配上 SOC 锁定的轴向变换 det(R)R；本例 det(R)=+1",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/socLockedTest/label",
+      "python-fixture/spin-actions.json/legacyCases/2/result/socLockedTest/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/socLockedTest/label",
+      "python-fixture/spin-actions.json/legacyCases/4/result/socLockedTest/label"
     ]
   },
   {
@@ -6126,19 +6203,24 @@
   {
     "source": "这是选定生成操作产生的有限子群，不声称列出该图样的全部对称性。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/derivation/3/explanation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/3/explanation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/3/explanation"
     ]
   },
   {
     "source": "颜色编号为抽象离散标签，允许的置换必须与空间操作成群；本实验选用 3 循环，未枚举任意 n 色群。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/notes/0"
     ]
   },
   {
     "source": "黑白交换本身是二元置换。只有赋予时间反演的物理作用后才是磁群操作；量子时间反演需要复共轭，不等同于交换颜色。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/notes/1"
     ]
   },
   {
@@ -6150,49 +6232,78 @@
   {
     "source": "本例 C3 生成子群内仅 E 保持所有颜色",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/0/result/colorKernel/description"
     ]
   },
   {
     "source": "忘去平移后，联合自旋平移仍投影为非平凡 [U∥I]；核是自旋也恒等的纯平移，不能把所有 [U∥I|t] 都商去。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/6",
+      "python-fixture/spin-actions.json/legacyCases/2/result/spinPointProjection/explanation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/6",
+      "python-fixture/spin-actions.json/legacyCases/4/result/spinPointProjection/explanation"
     ]
   },
   {
     "source": "这里 U 是经典磁矩的适当旋转，全部 det(U)=+1，表示幺正自旋旋转。一般自旋群可含 det(U)=−1 的自旋操作；其量子实现通常需要时间反演，并非本有限例的普通 SU(2) 矩阵。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/notes/0",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/1",
+      "python-fixture/spin-actions.json/legacyCases/3/result/notes/0",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/1"
     ]
   },
   {
     "source": "在弱 SOC 或忽略 SOC 的近似中，自旋与晶格旋转可独立。启用 SOC 时普通幺正空间对称的磁矩变换锁定为 det(R)R；磁操作还可附加时间反演。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/notes/1",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/2",
+      "python-fixture/spin-actions.json/legacyCases/3/result/notes/1",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/2"
     ]
   },
   {
     "source": "SOC 锁定测试只检查该空间操作配合指定的普通幺正自旋变换。未通过不排除另一个反幺正磁操作保持同一共线磁结构；例如反铁磁例中的时间反演加半格平移。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/notes/2",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/3",
+      "python-fixture/spin-actions.json/legacyCases/3/result/notes/2",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/3"
     ]
   },
   {
     "source": "自旋群 [U∥R|t] 与 Spin(3)=SU(2) 的双覆盖不是同一概念。对本例 SO(3) 自旋因子再作旋量提升时，2π 旋转才会出现额外中心负号。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/notes/3",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/4",
+      "python-fixture/spin-actions.json/legacyCases/3/result/notes/3",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/4"
     ]
   },
   {
     "source": "有限表格仅涵盖选定生成元。共线结构还具有保持自旋方向的 SO(2) 连续自旋独立子群，不能称整个自旋群为有限 C2。",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/notes/4",
+      "python-fixture/spin-actions.json/legacyCases/2/result/notes/5",
+      "python-fixture/spin-actions.json/legacyCases/3/result/notes/4",
+      "python-fixture/spin-actions.json/legacyCases/4/result/notes/5"
     ]
   },
   {
     "source": "检查 SOC 锁定条件",
     "origins": [
-      "python/group_extensions.py"
+      "python/group_extensions.py",
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/4/title",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/4/title",
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/4/title",
+      "python-fixture/spin-actions.json/legacyCases/4/result/derivation/4/title"
     ]
   },
   {
@@ -15784,6 +15895,1129 @@
     ]
   },
   {
+    "source": "Θ统一采用本站的−iσyK约定；改成+iσyK只改变整体相位，不改变Θ²。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/notes/0",
+      "python-fixture/spin-actions.json/cases/1/result/notes/0",
+      "python-fixture/spin-actions.json/cases/2/result/notes/0",
+      "python-fixture/spin-actions.json/cases/3/result/notes/0"
+    ]
+  },
+  {
+    "source": "形式颜色振幅不自动成为电子自旋；数值相同或标签互换不能代替算符定义。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/notes/1",
+      "python-fixture/spin-actions.json/cases/1/result/notes/1",
+      "python-fixture/spin-actions.json/cases/2/result/notes/1",
+      "python-fixture/spin-actions.json/cases/3/result/notes/1"
+    ]
+  },
+  {
+    "source": "反幺正配对还要求Hamiltonian具有该对称；若讨论同一晶体动量，还须−k≡k。此实验没有计算能带。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/notes/2",
+      "python-fixture/spin-actions.json/cases/1/result/notes/2",
+      "python-fixture/spin-actions.json/cases/2/result/notes/2",
+      "python-fixture/spin-actions.json/cases/3/result/notes/2"
+    ]
+  },
+  {
+    "source": "所有精确字符串由有界有理输入的矩阵计算生成；浮点副本仅用于显示。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/notes/3",
+      "python-fixture/spin-actions.json/cases/1/result/notes/3",
+      "python-fixture/spin-actions.json/cases/2/result/notes/3",
+      "python-fixture/spin-actions.json/cases/3/result/notes/3"
+    ]
+  },
+  {
+    "source": "Θ=−iσyK；D(V)=wI−i(xσx+yσy+zσz)。选择一个明确SU(2)提升；另一提升差整体−1。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/spinOnly/quantum/convention",
+      "python-fixture/spin-actions.json/cases/9/result/spinOnly/quantum/convention",
+      "python-fixture/spin-actions.json/cases/10/result/spinOnly/quantum/convention",
+      "python-fixture/spin-actions.json/cases/11/result/spinOnly/quantum/convention"
+    ]
+  },
+  {
+    "source": "这里只计算自旋因子；没有空间轨道表示、Bloch平移相位或实际材料Hamiltonian。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/spinOnly/quantum/scope",
+      "python-fixture/spin-actions.json/cases/9/result/spinOnly/quantum/scope",
+      "python-fixture/spin-actions.json/cases/10/result/spinOnly/quantum/scope",
+      "python-fixture/spin-actions.json/cases/11/result/spinOnly/quantum/scope"
+    ]
+  },
+  {
+    "source": "纯自旋操作：每个位置固定",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/9/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/10/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/11/result/viewer/frames/1/operation"
+    ]
+  },
+  {
+    "source": "原始磁矩",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/9/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/10/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/11/result/viewer/frames/0/operation"
+    ]
+  },
+  {
+    "source": "固定位置的纯自旋稳定子检验",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/9/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/10/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/11/result/viewer/title"
+    ]
+  },
+  {
+    "source": "磁矩是时间奇经典向量；W属于O(3)。旋量作用属于幺正/反幺正算符，两个作用空间不能混同。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/notes/0",
+      "python-fixture/spin-actions.json/cases/9/result/notes/0",
+      "python-fixture/spin-actions.json/cases/10/result/notes/0",
+      "python-fixture/spin-actions.json/cases/11/result/notes/0"
+    ]
+  },
+  {
+    "source": "只有逐点固定的正旋转才属于这里的幺正spin-only部分；等能磁畴旋转或方向置换不替代逐点稳定。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/notes/1",
+      "python-fixture/spin-actions.json/cases/9/result/notes/1",
+      "python-fixture/spin-actions.json/cases/10/result/notes/1",
+      "python-fixture/spin-actions.json/cases/11/result/notes/1"
+    ]
+  },
+  {
+    "source": "零、共线、共面和非共面由精确输入的秩区分；这里不对真实测量噪声作容差分类。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/notes/2",
+      "python-fixture/spin-actions.json/cases/9/result/notes/2",
+      "python-fixture/spin-actions.json/cases/10/result/notes/2",
+      "python-fixture/spin-actions.json/cases/11/result/notes/2"
+    ]
+  },
+  {
+    "source": "本实验的场景是有限教学图案，不搜索完整自旋空间群，也不验证某个材料Hamiltonian。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/notes/3",
+      "python-fixture/spin-actions.json/cases/9/result/notes/3",
+      "python-fixture/spin-actions.json/cases/10/result/notes/3",
+      "python-fixture/spin-actions.json/cases/11/result/notes/3"
+    ]
+  },
+  {
+    "source": "原始磁图案",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/29/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/30/result/viewer/frames/0/operation",
+      "python-fixture/spin-actions.json/cases/31/result/viewer/frames/0/operation"
+    ]
+  },
+  {
+    "source": "给定的独立自旋/空间组合",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/29/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/30/result/viewer/frames/1/operation",
+      "python-fixture/spin-actions.json/cases/31/result/viewer/frames/1/operation"
+    ]
+  },
+  {
+    "source": "独立自旋操作与两种SOC锁定候选",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/29/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/30/result/viewer/title",
+      "python-fixture/spin-actions.json/cases/31/result/viewer/title"
+    ]
+  },
+  {
+    "source": "R使用正交笛卡尔坐标；不能直接把一般分数基底矩阵乘到笛卡尔磁矩上。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/notes/0",
+      "python-fixture/spin-actions.json/cases/29/result/notes/0",
+      "python-fixture/spin-actions.json/cases/30/result/notes/0",
+      "python-fixture/spin-actions.json/cases/31/result/notes/0"
+    ]
+  },
+  {
+    "source": "原U不等于任一锁定候选，不代表相同空间R,t配另一个U后也一定失败。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/notes/1",
+      "python-fixture/spin-actions.json/cases/29/result/notes/1",
+      "python-fixture/spin-actions.json/cases/30/result/notes/1",
+      "python-fixture/spin-actions.json/cases/31/result/notes/1"
+    ]
+  },
+  {
+    "source": "固定预设复用现有group_extensions的精确站点与联合生成元；不会改变旧实验的结果。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/notes/2",
+      "python-fixture/spin-actions.json/cases/29/result/notes/2",
+      "python-fixture/spin-actions.json/cases/30/result/notes/2",
+      "python-fixture/spin-actions.json/cases/31/result/notes/2"
+    ]
+  },
+  {
+    "source": "空间模型包含任意整数平移；画面有限，不能把跨胞折回解释成完整空间操作恒等。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/notes/3",
+      "python-fixture/spin-actions.json/cases/29/result/notes/3",
+      "python-fixture/spin-actions.json/cases/30/result/notes/3",
+      "python-fixture/spin-actions.json/cases/31/result/notes/3"
+    ]
+  },
+  {
+    "source": "量子实现只显示自旋因子；没有轨道表示、Bloch相位和Hamiltonian，不能据此作同一k的简并结论。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/notes/4",
+      "python-fixture/spin-actions.json/cases/29/result/notes/4",
+      "python-fixture/spin-actions.json/cases/30/result/notes/4",
+      "python-fixture/spin-actions.json/cases/31/result/notes/4"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须为有限整数、十进制数或有理数，不接受符号表达式。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须为有限数。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 只接受有限十进制或 p/q，不接受函数、变量或任意表达式。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 超出精确教学输入的幅度或分母限制。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须含 ZXQD1DQXZ 个数。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须为 3×3 实矩阵。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 必须精确正交且行列式为 +1 或 −1。请用精确有理数而非舍入旋转矩阵。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须为 ZXQD1DQXZ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "未知输入字段：ZXQD0DQXZ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "复态不能是零向量。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "operatorPhase 不能为零；非零输入会规范化为单位模相位。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "先固定两个空间与有序基",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "P是形式标签空间的线性延拓；Θ作用于另一个明确指定的自旋1/2空间。相同二元坐标不使两个物理空间相同。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "先共轭，再乘A",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "逐项显示ψ、ψ*和Aψ*，与只交换两个系数的Pψ比较。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "改变复系数检验线性",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "同时计算P(cψ)、cPψ、Θ(cψ)、c*Θψ及cΘψ。输入为实数时这一步可能无法区分两种法则。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "第二次作用仍要共轭",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "逐次作用与算符复合独立核对。本约定A恰为实矩阵，但一般反幺正平方必须算AA*。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/3/explanation"
+    ]
+  },
+  {
+    "source": "算符整体相位与二次作用",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/4/title"
+    ]
+  },
+  {
+    "source": "将Θ乘以单位模相位不会改变平方；反线性使第二个相位被共轭，不能误算成相位平方。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/4/explanation"
+    ]
+  },
+  {
+    "source": "相同分量与相同物理射线分开",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/5/title"
+    ]
+  },
+  {
+    "source": "ψc上Pψc与Θψc可能完全相同；ψ+上则正交。整体负号不改变孤立态概率，输出内积和Bloch向量帮助识别真正不同的射线。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/5/explanation"
+    ]
+  },
+  {
+    "source": "|⟨Pψ|Θψ⟩|²=1 ⇔ 同一归一化射线",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/1/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/2/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/3/result/steps/5/formula"
+    ]
+  },
+  {
+    "source": "保持换色不强制简并",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/1/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/2/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/3/result/steps/6/title"
+    ]
+  },
+  {
+    "source": "精确H=σx保持P，却有两个不简并能级±1；它不保持Θ，因此不违反Kramers定理。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/1/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/2/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/3/result/steps/6/explanation"
+    ]
+  },
+  {
+    "source": "初态已规范化",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "P保持复系数",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "Θ共轭复系数",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "两次P回到ψ",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "两次Θ得到−ψ",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "给Θ加整体相位不改变平方",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/5/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/5/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/5/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/5/label"
+    ]
+  },
+  {
+    "source": "ψ与Θψ正交",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/6/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/6/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/6/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/6/label"
+    ]
+  },
+  {
+    "source": "Θ反转全部Bloch分量",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/7/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/7/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/7/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/7/label"
+    ]
+  },
+  {
+    "source": "换色反例不具有Θ对称",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/0/result/checks/8/label",
+      "python-fixture/spin-actions.json/cases/1/result/checks/8/label",
+      "python-fixture/spin-actions.json/cases/2/result/checks/8/label",
+      "python-fixture/spin-actions.json/cases/3/result/checks/8/label"
+    ]
+  },
+  {
+    "source": "sites 须含1至12个站点。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "只有SO(3)正旋转可作本实验的SU(2)提升。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "angle仅适用于operationPreset=rotation_z。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "提供operation矩阵时须选operationPreset=custom。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "先固定所有站点",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "本实验空间部分严格为恒等，不能把磁矩换到另一个站点后再宣布spin-only成立。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "Wm_i=m_i 对每个i；空间R=I,t=0",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/0/formula",
+      "python-fixture/spin-actions.json/cases/9/result/steps/0/formula",
+      "python-fixture/spin-actions.json/cases/10/result/steps/0/formula",
+      "python-fixture/spin-actions.json/cases/11/result/steps/0/formula"
+    ]
+  },
+  {
+    "source": "从真实磁矩求秩和张成空间",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "用精确RREF找独立磁矩，显示正交归一的张成基与正交补。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "只允许正交补内自由变化",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "W逐点固定张成空间，在其正交补上可取任意正交变换。这给出完整族，不是用有限几个采样证明连续性。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "逐个磁矩乘矩阵并比较",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "并排显示W、m_i、Wm_i和Wm_i−m_i。共面三角的C₃可置换三个方向，却不能在固定站点下逐点保持它们。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/3/explanation"
+    ]
+  },
+  {
+    "source": "把经典不正变换解释为反幺正",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/4/title"
+    ]
+  },
+  {
+    "source": "detW=−1时先写V=−W∈SO(3)，再给出D(V)Θ；绝不把不正3×3矩阵直接称为旋量幺正旋转。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/4/explanation"
+    ]
+  },
+  {
+    "source": "经典平方与旋量平方分开计算",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/9/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/10/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/11/result/steps/5/title"
+    ]
+  },
+  {
+    "source": "并列显示W²与自旋因子的平方。反幺正部分必须算BB*，而不是B²；完整空间算符及动量条件还未计算。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/9/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/10/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/11/result/steps/5/explanation"
+    ]
+  },
+  {
+    "source": "(BK)²=BB*；D(V)²另保留双覆盖中心负号",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/9/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/10/result/steps/5/formula",
+      "python-fixture/spin-actions.json/cases/11/result/steps/5/formula"
+    ]
+  },
+  {
+    "source": "所选W精确正交",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/9/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/10/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/11/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "张成基与补空间正交完整",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/9/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/10/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/11/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "张成空间投影保持全部磁矩",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/9/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/10/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/11/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "逐点检验与矩阵残差一致",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/9/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/10/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/11/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "旋量作用保持范数",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/8/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/9/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/10/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/11/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "SOC锁定候选：ε=ZXQD0DQXZ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "固定同一个空间操作与磁畴",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/0/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "先列出笛卡尔R、t和原独立自旋矩阵U，保留原操作的身份。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/0/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "逐点找同种目标站点",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/1/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "只有空间位置和化学标签先匹配，才比较变换后的磁矩；周期例按整格平移匹配，未折回位置仍保留。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/1/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "从极向量转到时间奇轴矢量",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/2/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "逐站点显示Rm、det(R)Rm以及最后的时间反演符号，而非只给最终通过/失败。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/2/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "检查原来的U是否满足锁定",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/3/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "分别比较原U与两候选矩阵，区分原操作失去锁定和另一个候选仍保持图案。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/3/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/3/explanation"
+    ]
+  },
+  {
+    "source": "重新检验两种候选的图案匹配",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/4/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/4/title"
+    ]
+  },
+  {
+    "source": "即便候选不等于原U，它也可能是另一个实际保磁图案的操作；共线半平移可由Θ补偿。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/4/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/4/explanation"
+    ]
+  },
+  {
+    "source": "保留幺正与反幺正的区别",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/5/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/5/title"
+    ]
+  },
+  {
+    "source": "ε=1候选对应自旋旋转加Θ，给出自旋因子的精确实现与平方；这还不是完整轨道/平移算符。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/5/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/5/explanation"
+    ]
+  },
+  {
+    "source": "结构匹配不替代Hamiltonian对称",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/29/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/30/result/steps/6/title",
+      "python-fixture/spin-actions.json/cases/31/result/steps/6/title"
+    ]
+  },
+  {
+    "source": "本计算不输入或检验实际SOC Hamiltonian，也不由净磁矩为零宣布能带简并或Kramers配对。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/29/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/30/result/steps/6/explanation",
+      "python-fixture/spin-actions.json/cases/31/result/steps/6/explanation"
+    ]
+  },
+  {
+    "source": "图案匹配 + 锁定 + 具体Hamiltonian检验，层次不同",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/steps/6/formula",
+      "python-fixture/spin-actions.json/cases/29/result/steps/6/formula",
+      "python-fixture/spin-actions.json/cases/30/result/steps/6/formula",
+      "python-fixture/spin-actions.json/cases/31/result/steps/6/formula"
+    ]
+  },
+  {
+    "source": "空间矩阵精确正交",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/29/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/30/result/checks/0/label",
+      "python-fixture/spin-actions.json/cases/31/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "输入自旋矩阵精确正交",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/29/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/30/result/checks/1/label",
+      "python-fixture/spin-actions.json/cases/31/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "两候选的det分别为+1和−1",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/29/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/30/result/checks/2/label",
+      "python-fixture/spin-actions.json/cases/31/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "两个时间分支是不同矩阵",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/29/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/30/result/checks/3/label",
+      "python-fixture/spin-actions.json/cases/31/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "每个候选由所有站点逐项检验",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python-fixture/spin-actions.json/cases/28/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/29/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/30/result/checks/4/label",
+      "python-fixture/spin-actions.json/cases/31/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "操作回放输入须为JSON对象。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "lab须为spin_actions。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 须为有限整数、十进制数或有理数，不接受符号表达式。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 须为有限数。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 只接受有限十进制或 p/q，不接受函数、变量或任意表达式。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 不是有效有理数。",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 超出精确教学输入的幅度或分母限制。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须含 ZXQD1DQXZ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 个数。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 须为 3×3 实矩阵。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 必须精确正交且行列式为 +1 或 −1。请用精确有理数而非舍入旋转矩阵。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须为 ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "未知输入字段：",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "自定义 state 须为 [[Re a,Im a],[Re b,Im b]]。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "提供 state 时须明确选择 statePreset=custom。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "sites每项仅含id、species、position和moment。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "站点id须非空、唯一且不超过32字符。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "species须为非空标签且不超过32字符。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "站点位置须互不相同；周期模型按整格平移检查重复。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "提供moments或positions时须选momentPreset=custom。",
+    "origins": [
+      "python/spin_actions_lab.py",
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "periodic须为true或false。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "本自定义周期模型使用单位正交晶格；rotation必须同时为整数矩阵以保持整格平移。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "提供站点或操作矩阵时须选modelPreset=custom。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "SOC锁定候选：ε=",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 不是有效有理数。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 须含 ",
+    "origins": [
+      "python-template/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "moments须含1至12条三维磁矩。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "positions须与moments等长。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "positions须互不相同。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": "angle须取0、30、45、60、90、120或180度。",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
+    "source": " 须含 ",
+    "origins": [
+      "python/spin_actions_lab.py"
+    ]
+  },
+  {
     "source": "EasySpin：有效自旋哈密顿量、Zeeman、零场与超精细相互作用",
     "origins": [
       "python/spin_resonance_lab.py",
@@ -22823,6 +24057,124 @@
     "source": "构建 (D(g)−I)t=0；约束矩阵秩为 18，零空间维数为 3。",
     "origins": [
       "python-fixture/tensor-replay.json/cases/10/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "SOC锁定候选：ε=0",
+    "origins": [
+      "python-fixture/spin-actions.json/cases/28/result/viewer/frames/2/operation",
+      "python-fixture/spin-actions.json/cases/29/result/viewer/frames/2/operation",
+      "python-fixture/spin-actions.json/cases/30/result/viewer/frames/2/operation",
+      "python-fixture/spin-actions.json/cases/31/result/viewer/frames/2/operation",
+      "python-fixture/spin-actions.json/cases/32/result/viewer/frames/2/operation"
+    ]
+  },
+  {
+    "source": "SOC锁定候选：ε=1",
+    "origins": [
+      "python-fixture/spin-actions.json/cases/28/result/viewer/frames/3/operation",
+      "python-fixture/spin-actions.json/cases/29/result/viewer/frames/3/operation",
+      "python-fixture/spin-actions.json/cases/30/result/viewer/frames/3/operation",
+      "python-fixture/spin-actions.json/cases/31/result/viewer/frames/3/operation",
+      "python-fixture/spin-actions.json/cases/32/result/viewer/frames/3/operation"
+    ]
+  },
+  {
+    "source": "空间与内部变换同时作用；第 0 次",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/0/result/frames/0/operation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/frames/0/operation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/frames/0/operation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/frames/0/operation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/frames/0/operation"
+    ]
+  },
+  {
+    "source": "空间与内部变换同时作用；第 1 次",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/0/result/frames/1/operation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/frames/1/operation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/frames/1/operation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/frames/1/operation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/frames/1/operation"
+    ]
+  },
+  {
+    "source": "空间与内部变换同时作用；第 2 次",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/0/result/frames/2/operation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/frames/2/operation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/frames/2/operation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/frames/2/operation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/frames/2/operation"
+    ]
+  },
+  {
+    "source": "空间与内部变换同时作用；第 3 次",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/0/result/frames/3/operation",
+      "python-fixture/spin-actions.json/legacyCases/1/result/frames/3/operation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/frames/3/operation",
+      "python-fixture/spin-actions.json/legacyCases/3/result/frames/3/operation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/frames/3/operation"
+    ]
+  },
+  {
+    "source": "选定生成操作形成的 C3 子群",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/0/result/group/label",
+      "python-fixture/spin-actions.json/legacyCases/3/result/group/label"
+    ]
+  },
+  {
+    "source": "空间与内部变换同时作用；第 4 次",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/1/result/frames/4/operation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/frames/4/operation"
+    ]
+  },
+  {
+    "source": "将内部旋转换成由空间操作锁定的轴向变换后，本例保持图样：否。这只检验该操作，不计算材料真实的 SOC 强度。",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/1/result/derivation/4/explanation",
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/4/explanation",
+      "python-fixture/spin-actions.json/legacyCases/4/result/derivation/4/explanation"
+    ]
+  },
+  {
+    "source": "选定生成操作形成的 C2 子群",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/1/result/group/label"
+    ]
+  },
+  {
+    "source": "g 的完整阶数无限，模整数平移后阶数为 2。",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/2/result/derivation/3/explanation"
+    ]
+  },
+  {
+    "source": "模整数平移的 C2 商群",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/2/result/group/label"
+    ]
+  },
+  {
+    "source": "将内部旋转换成由空间操作锁定的轴向变换后，本例保持图样：是。这只检验该操作，不计算材料真实的 SOC 强度。",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/3/result/derivation/4/explanation"
+    ]
+  },
+  {
+    "source": "g 的完整阶数无限，模整数平移后阶数为 3。",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/4/result/derivation/3/explanation"
+    ]
+  },
+  {
+    "source": "模整数平移的 C3 商群",
+    "origins": [
+      "python-fixture/spin-actions.json/legacyCases/4/result/group/label"
     ]
   }
 ]

@@ -56,18 +56,18 @@
     "The two-cell FHS trace is an operational teaching view of the declared two-band periodic-orbital model, not a general Bloch-sewing or real-material Chern classifier.",
     "Finite spin references do not replace the existing full tensor/commutator tools, treat a single initial trajectory as an operator proof, or infer SU(2) from total S squared.",
     "Mirror-fit minimizers and SVD bases need not be unique. Allowed polar directions do not provide material response magnitudes or establish ferroelectric switching.",
-    "The 197-lesson depth review, targeted diagnosis and authentic scientific-workflow coverage remain incomplete. The production prerequisite graph is 112 reviewed connected lessons and 130 optional edges. No student learning gains are inferred."
+    "The 197-lesson depth review, targeted diagnosis and authentic scientific-workflow coverage remain incomplete. The production prerequisite graph is 148 reviewed connected lessons and 172 optional edges. No student learning gains are inferred."
   ],
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 34409,
-      "sha256": "d5ab49c1632fdb2611fe482244ee845bce2fd3361a0374869c8d254637fc5ae6"
+      "bytes": 37153,
+      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97261,
-      "sha256": "2dcadf525f6795e86c9eab11f5961fe2ddf39dbac18811d490b282ec36b06f58"
+      "bytes": 97247,
+      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
     },
     "dist/chirality-actions-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -116,8 +116,8 @@
     },
     "dist/frontiers-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21100,
-      "sha256": "7a87a33c4396fe5600b62ce1e35c0e508310b1014cd72d2d7cacb4aa9907b76a"
+      "bytes": 21096,
+      "sha256": "77e677774229d7d401278b92f933611ff0a38fa3bd9403b59edc8f9e3727a8b5"
     },
     "dist/geometry-actions-reference.js": {
       "normalization": "utf8-lf-v1",
@@ -126,8 +126,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7259,
-      "sha256": "92fa476fcd9c132b4dfbc6d4237d75f239d8711b7be39583a2231649384db02c"
+      "bytes": 7321,
+      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -136,23 +136,23 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24769,
-      "sha256": "0c6bdf0ddabeddbbdd7271e45f5f70ece328bba0b2099ae371c1803f884646b9"
+      "bytes": 24767,
+      "sha256": "82a0d7a41503aa3ec231f0e023f9bf5eb6f1401c126a961e5b4a99d5228103e6"
     },
     "dist/principles-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19835,
-      "sha256": "6e87dd22cac826d95525ca29f3f48b93acfb9c55ac34121f6e4c2073bb27f769"
+      "bytes": 19831,
+      "sha256": "413684bb3e7072726eaca4594a4eb0c4c6aacaeedf27c5a3e233257f15150252"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2578,
-      "sha256": "80a8b3d1e98f478da79fcdec093460f6905d0689a5427b4edf722cea84893de5"
+      "bytes": 2576,
+      "sha256": "62a56fb7856d58c68adf6a0900f43af248d10a5438bde5fbe54df3d6de0d89e7"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10930,
-      "sha256": "c136ed98e264c19a0d99b490dc4e72e9f2214bdedb6195709fe746e7c80935c3"
+      "bytes": 11075,
+      "sha256": "e006192a879f6a68ba311230fb51cbb036b2485be348504f5f3ed73f5cc0c4c5"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -181,8 +181,8 @@
     },
     "dist/quantum-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 37650,
-      "sha256": "bf25cc990067a836d224ae7d65304d58866a6c377a649a0da9981fd63587e7bc"
+      "bytes": 37648,
+      "sha256": "ce1c3136a51c8ed5833140a5ff257bde373daf8fbb508cfcb4345064ca625f18"
     },
     "dist/symmetry-operator-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -216,8 +216,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16460,
-      "sha256": "bf3f0f0a88fbdc6a82127bce4a42b7405c6169d172e715249c28a4ef1234985f"
+      "bytes": 16708,
+      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -232,7 +232,7 @@
     "scripts/build-derivation-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 7231,
-      "sha256": "8696a761b97500d90aa2c0ac900794be5ca23bf861c43c2c7b94692bb7c03baa"
+      "sha256": "47355ac3a4618a650fd1efb098bf195eba5fd290bb564ade5d72f62a8a031321"
     },
     "scripts/build-pathways-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -266,13 +266,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2636,
-      "sha256": "11eb3cdee3ccf4208eb4c33bc84f9392313fac098dd12cfccddaad7835a36b05"
+      "bytes": 2737,
+      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869150,
-      "sha256": "bfb5bd00c6d1eecb1c55e79384bd9c8f70ba31d3fcfb340e331dd60e7b4410ff"
+      "bytes": 869239,
+      "sha256": "d8026e05631e97eaba21bd388c4f1dae87f99a76fb1e606636be83399dc09365"
     },
     "scripts/fixtures/fhs-baseline-source.py.gz": {
       "normalization": "raw-bytes",
@@ -281,8 +281,8 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736206,
-      "sha256": "b21c721494ff7f93437e419c7fcf201d712e697f16adb49d2938e2582d4609f4"
+      "bytes": 1736295,
+      "sha256": "e338e4289f886d46986204c56322b0936da0dc70c20e8ab67ab407eed44e2125"
     },
     "scripts/fixtures/quantum-materials.json": {
       "normalization": "utf8-lf-v1",

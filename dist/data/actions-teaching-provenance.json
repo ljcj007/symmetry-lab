@@ -41,13 +41,13 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 34409,
-      "sha256": "d5ab49c1632fdb2611fe482244ee845bce2fd3361a0374869c8d254637fc5ae6"
+      "bytes": 37153,
+      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97261,
-      "sha256": "2dcadf525f6795e86c9eab11f5961fe2ddf39dbac18811d490b282ec36b06f58"
+      "bytes": 97247,
+      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
     },
     "dist/data/frontiers-materials.json": {
       "normalization": "utf8-lf-v1",
@@ -66,8 +66,8 @@
     },
     "dist/frontiers-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21100,
-      "sha256": "7a87a33c4396fe5600b62ce1e35c0e508310b1014cd72d2d7cacb4aa9907b76a"
+      "bytes": 21096,
+      "sha256": "77e677774229d7d401278b92f933611ff0a38fa3bd9403b59edc8f9e3727a8b5"
     },
     "dist/geometry-actions-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -86,8 +86,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7259,
-      "sha256": "92fa476fcd9c132b4dfbc6d4237d75f239d8711b7be39583a2231649384db02c"
+      "bytes": 7321,
+      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
     },
     "dist/layer-actions-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -126,8 +126,8 @@
     },
     "dist/principles-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19835,
-      "sha256": "6e87dd22cac826d95525ca29f3f48b93acfb9c55ac34121f6e4c2073bb27f769"
+      "bytes": 19831,
+      "sha256": "413684bb3e7072726eaca4594a4eb0c4c6aacaeedf27c5a3e233257f15150252"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -151,8 +151,8 @@
     },
     "dist/quantum-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 37650,
-      "sha256": "bf25cc990067a836d224ae7d65304d58866a6c377a649a0da9981fd63587e7bc"
+      "bytes": 37648,
+      "sha256": "ce1c3136a51c8ed5833140a5ff257bde373daf8fbb508cfcb4345064ca625f18"
     },
     "locales/en-geometry-actions-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -171,8 +171,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16460,
-      "sha256": "bf3f0f0a88fbdc6a82127bce4a42b7405c6169d172e715249c28a4ef1234985f"
+      "bytes": 16708,
+      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
     },
     "scripts/build-actions-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -196,8 +196,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2636,
-      "sha256": "11eb3cdee3ccf4208eb4c33bc84f9392313fac098dd12cfccddaad7835a36b05"
+      "bytes": 2737,
+      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
     },
     "scripts/test-geometry-actions-bridge.mjs": {
       "normalization": "utf8-lf-v1",

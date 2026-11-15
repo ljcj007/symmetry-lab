@@ -9,9 +9,22 @@ const protectedKeys=new Set(('id ids kind model module action route url uri href
 const exactMathKeys=new Set(['formula','formulas','equation','equations','tex','latex','expression','expressions','intrinsicpermutation','particleholeoperator','distortedsymbol']);
 const explanatorySuffix=/(?:conventions?|explanations?|descriptions?|summar(?:y|ies)|messages?|warnings?|reasons?|meanings?|labels?|titles?)$/i;
 
+function resultDisplayMode(node,mode,nativeAnnotations){
+ // Only the named, freshly calculated SOC result declares this annotation.
+ // A matching object inside an input or imported/raw tree stays opaque.
+ return nativeAnnotations&&(mode==='walk'||mode==='display')&&node?.schema==='symmetry-lab-spin-actions-1'&&node.lab==='spin_actions'&&node.experiment==='soc_locking'?'spin-result':mode;
+}
+
 function childDisplayMode(key,mode,nativeAnnotations=false){
  const normalized=normalizeKey(key);
  if(mode==='raw')return 'raw';
+ // `original` normally means user/source data. Here it is the calculated
+ // independent operation. Expose only its registered convention and scope;
+ // matrices and every other original field retain their protected status.
+ if(mode==='spin-result'){if(key==='locking')return 'spin-locking';mode='walk';}
+ if(mode==='spin-locking'){if(key==='original')return 'spin-original';mode='walk';}
+ if(mode==='spin-original')return key==='quantum'?'spin-quantum':'raw';
+ if(mode==='spin-quantum')return key==='convention'||key==='scope'?'display':'raw';
  if(normalized==='curveinput')return 'display';
  // A caller may identify a fresh, application-generated Python result. Its
  // registered explanatory notes and generator names are presentation labels.
@@ -34,6 +47,7 @@ export function collectResultDisplayMessages(value,{nativeAnnotations=false}={})
  function walk(node,mode='walk',path=[]){
   if(typeof node==='string'){if((mode==='display'||mode==='math')&&/[\u3400-\u9fff]/u.test(node))rows.push({source:node,path,mode});return;}
   if(!node||typeof node!=='object'||mode==='raw')return;
+  mode=resultDisplayMode(node,mode,nativeAnnotations);
   const modes=seen.get(node)||new Set();if(modes.has(mode))return;modes.add(mode);seen.set(node,modes);
   if(Array.isArray(node))node.forEach((item,index)=>walk(item,mode,[...path,index]));
   else for(const [key,item]of Object.entries(node))walk(item,childDisplayMode(key,mode,nativeAnnotations),[...path,key]);
@@ -89,6 +103,7 @@ export function createResultLocalizer({translations={},templates=[],nativeAnnota
   function clone(node,mode='walk'){
    if(typeof node==='string')return mode==='display'?text(node):mode==='math'?exactText(node):node;
    if(!node||typeof node!=='object')return node;
+   mode=resultDisplayMode(node,mode,nativeAnnotations);
    // Python results are JSON trees. Preserve aliases defensively when called
    // with an ordinary JavaScript object, without mutating the supplied value.
    const modes=copies.get(node)||new Map();

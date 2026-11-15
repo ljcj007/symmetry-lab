@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "release": "20261115-spin1",
+  "sourceHashNormalization": "utf8-lf-v1; gzip retains raw bytes",
+  "scope": "Three optional, manually calculated operation workshops in the existing color and spin-group lessons, plus 42 reviewed optional course links.",
+  "counts": {
+    "indexedLessons": 197,
+    "reviewedConnectedLessons": 148,
+    "optionalEdges": 172,
+    "newOptionalEdges": 42,
+    "newlyConnectedLessons": 36,
+    "workshops": 3,
+    "realNewAPIReferences": 34,
+    "realLegacyCopyReferences": 5
+  },
+  "placements": {
+    "color-03": "color_theta",
+    "spin-03": "spin_stabilizer",
+    "spin-04": "soc_locking"
+  },
+  "contract": {
+    "action": "teaching_labs",
+    "lab": "spin_actions",
+    "schema": "symmetry-lab-spin-actions-1",
+    "loading": "The panel loads on explicit expansion. The optional exact Python module and SymPy load only for a manually requested spin_actions calculation; existing finite teaching experiments keep their dependency plan.",
+    "arithmetic": "Bounded rational/decimal inputs; exact normalization, RREF, orthogonal complements, matrix products and pointwise matching. Exact strings and display-only numeric mirrors have separate roles.",
+    "color": "The formal linear extension of a two-label exchange is compared with a separately declared spin-half antiunitary Theta=-i sigma_y K. Complex scalar action, repeated conjugation, operator phase, state rays and a nondegenerate swap-symmetric Hamiltonian are displayed.",
+    "stabilizer": "Fixed-position moment span of exact rank r has classical pointwise stabilizer O(3-r); the proper unitary part is separate. Improper W is implemented through a proper V=-W and D(V)Theta. Classical W squared does not determine the spinor square.",
+    "locking": "The original independent spin operation is compared separately with plus/minus det(R)R. Equality to the supplied operation and preservation of the labelled moment pattern are distinct tests. Periodic matching retains unwrapped coordinates.",
+    "copies": "Complete supported original geometric inputs are initialized explicitly and wait for manual Run. The three-color comparison is identified as another model. Custom states and matrices are not silently transferred to unsupported original fields."
+  },
+  "compatibility": {
+    "baselineCommit": "89a445adec9634f3020db44c76abdc125e5f9364",
+    "baselineSourceSHA256": "87749a79da15aeb4b831745b8571c47a7bcf268d31c5280a2510c9cae92442f2",
+    "oldAPIInputs": 126,
+    "sameHostNumericLeavesBitwiseUnchanged": 31759,
+    "sameHostOtherLeavesExactlyUnchanged": 30668,
+    "originalProjectRequestsGenuinelyRecomputed": 24,
+    "projectNumericLeavesExactlyUnchanged": 148575,
+    "projectOtherLeavesExactlyUnchanged": 3447,
+    "archivedReferenceRule": "Exact strings, structure, source hashes and original inputs are strict. Display numeric mirrors permit rtol=atol=1e-13 for cross-platform reference replay; same-host historical compatibility remains bitwise strict."
+  },
+  "verification": [
+    "Independent Pauli actions, conjugated products, span/projector identities, moment matching and negative controls verify the returned teaching results.",
+    "Actual panel and classroom handlers exercise all genuine references, explicit copy/Run, incomplete result rejection and recovery, raw drafts, notes, disclosures, cancellation, stale owners and non-Array NodeList behavior.",
+    "The previous 130 course edges retain their exact content and order. All native lesson destinations, new reasoning and expert-entry isolation are tested.",
+    "The source archive replays thirteen Node provenance builders and the English provenance check after extraction, without Git or checkout-local dependencies."
+  ],
+  "boundaries": [
+    "The two formal color amplitudes are not automatically electron spin states. State-vector equality or an overall sign alone does not establish Kramers energy degeneracy.",
+    "Spin-factor squares omit spatial-orbital and Bloch actions. Spin-only classification uses exact supplied moments, not experimental tolerances or a complete spin-space-group search.",
+    "SOC pattern matching does not verify a material Hamiltonian, actual coupling strength or band degeneracy. Custom periodic structures use the declared unit orthogonal lattice.",
+    "148 connected lessons do not establish full instructional depth or targeted diagnosis. Remaining curriculum review and authentic scientific workflows across all tool families stay active; no measured learning gains are inferred."
+  ],
+  "files": {
+    ".github/workflows/pages.yml": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1882,
+      "sha256": "6f7db8d1ab7b15607b19324fd10c24c8c7f1d4f816779cff2702576f4426ca21"
+    },
+    "GOAL-ROADMAP.md": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 37153,
+      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
+    },
+    "dist/app.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 97247,
+      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
+    },
+    "dist/classroom-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 31751,
+      "sha256": "0717c5dd6f73ca0533fd650c343dc00ffd279127cc64a07e18229c1c20f2fea3"
+    },
+    "dist/data/symmetry-course-lessons.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 108619,
+      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
+    },
+    "dist/data/symmetry-derivations.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 60362,
+      "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
+    },
+    "dist/docs/spin-actions.md": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4148,
+      "sha256": "57cb04f59e43dd11befe1d4010372cab4e9119e026b152987f45d99e18a5d717"
+    },
+    "dist/english-results.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 8939,
+      "sha256": "ab4a3bcf9a345aace4ced824d5bff790bd04ca44be1b705f315fabc59d8582cb"
+    },
+    "dist/index.html": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7321,
+      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
+    },
+    "dist/lesson-progression.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 47945,
+      "sha256": "d761220baa263636845b9951012c7ef7ef6e3979899b805f3e68642b24957dbd"
+    },
+    "dist/material-notebook.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 24767,
+      "sha256": "82a0d7a41503aa3ec231f0e023f9bf5eb6f1401c126a961e5b4a99d5228103e6"
+    },
+    "dist/python-client.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2576,
+      "sha256": "62a56fb7856d58c68adf6a0900f43af248d10a5438bde5fbe54df3d6de0d89e7"
+    },
+    "dist/python-worker.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 11075,
+      "sha256": "e006192a879f6a68ba311230fb51cbb036b2485be348504f5f3ed73f5cc0c4c5"
+    },
+    "dist/python/browser_api.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7870,
+      "sha256": "2dc46b5f9046ead30e6eb7bf6ab6c5ff1b972ff6437688cb2251529236237e77"
+    },
+    "dist/python/group_extensions.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 24875,
+      "sha256": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
+    },
+    "dist/python/spin_actions_lab.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 33213,
+      "sha256": "17fe89469cdd2caf639c04e45570ec3cfa18c44036e7035d18713daa48bdf433"
+    },
+    "dist/python/teaching_labs.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 14443,
+      "sha256": "8c8aee438e95f7d260a462efffbfdd98c9f1617b156368cf61e3a74cfa2d3e59"
+    },
+    "dist/spin-actions-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 36670,
+      "sha256": "eaae1291abf69ff61c339d5aad57081fd1e70220a1daf819a215e07b0128504c"
+    },
+    "dist/spin-actions.css": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3373,
+      "sha256": "df14c174fb6bfd7a7decc0bb9e9956667999d1755008dbbfa506cb980e826a0e"
+    },
+    "dist/spincolor-viewer.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 9049,
+      "sha256": "dfa98c19f8d095366012578c6766c0527745b3b644fd2c776885195ce6cc611b"
+    },
+    "dist/symmetry-course-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 92042,
+      "sha256": "04840fb96e94875adfae2a1daa21d4c79a79f84b1dc196debd0c79992efd54b2"
+    },
+    "locales/en-lesson-progression.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 63637,
+      "sha256": "76e76c8f9cebb150622aa8dedacd42998345278ab2ab2ca9042bb91441e6407e"
+    },
+    "locales/en-spin-actions-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 9366,
+      "sha256": "c2edb8ba4bb4c81f624b7c4487896841e43fcd76fa6bb5a82b729816376ec941"
+    },
+    "locales/en-spin-actions-python.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 21383,
+      "sha256": "ebef4e74cffb6374b1fac71739b0dd5150f9b6f8b9f29bb7b384c237b7930f03"
+    },
+    "locales/en-spin-actions.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 21609,
+      "sha256": "e558dd8a2ff0734456adc18ce0e74bc758e714ea2cdae3d3be8970ba62fd957a"
+    },
+    "package.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 16708,
+      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
+    },
+    "scripts/audit-english-results.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3183,
+      "sha256": "1b23c4402c49105001b2007d341a0294e3f1739fb21cc5c9679df101e610b54e"
+    },
+    "scripts/build-derivation-teaching-provenance.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7231,
+      "sha256": "47355ac3a4618a650fd1efb098bf195eba5fd290bb564ade5d72f62a8a031321"
+    },
+    "scripts/build-english.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 10202,
+      "sha256": "38bb3aed819b1fe3f3a3e65be2fc637cffa768237c1d5e631e03c28bb29d4564"
+    },
+    "scripts/build-learning-routes-provenance.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 9506,
+      "sha256": "40e3484eabe9355d4183ad417ee3aea7c723a3d393099c4b11844843d952067c"
+    },
+    "scripts/build-spin-actions-provenance.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 8333,
+      "sha256": "8e57e3e5dfe56457eabb75885e1128ce6659e1091ac3599ba40eeba92caa4133"
+    },
+    "scripts/build-spin-actions-reference.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6774,
+      "sha256": "76cdb0fd2d1fd6bc50ee0711b2dcdd116bfb95c7c693cbc3a68a08eafa32bbaa"
+    },
+    "scripts/build-tensor-teaching-provenance.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7530,
+      "sha256": "681742a4a8b7252793012c0e37dc373bdefe071cfffe8513c977a77e588f700d"
+    },
+    "scripts/collect-fixture-messages.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1207,
+      "sha256": "5cb7e2571674ed2b99acaf3b0d23378f8a229fc808cefa7a56ff7228ec740765"
+    },
+    "scripts/english-catalog.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2737,
+      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
+    },
+    "scripts/extract-python-messages.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2751,
+      "sha256": "377f5dbe8ba97d27a8d890358c2ee0726d888fa21ab534c9a64d34be3a5f061e"
+    },
+    "scripts/fixtures/bridges-projects.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 869239,
+      "sha256": "d8026e05631e97eaba21bd388c4f1dae87f99a76fb1e606636be83399dc09365"
+    },
+    "scripts/fixtures/pathways-projects.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1736295,
+      "sha256": "e338e4289f886d46986204c56322b0936da0dc70c20e8ab67ab407eed44e2125"
+    },
+    "scripts/fixtures/spin-actions.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1224460,
+      "sha256": "060b6a2313decdb18b0a3b12d9412c33d4af8bf71bf2c8c84e90b8693f27f18a"
+    },
+    "scripts/fixtures/spin-source-baseline.py.gz": {
+      "normalization": "raw-bytes",
+      "bytes": 5750,
+      "sha256": "9a596ae021c521aa9d0bfed405dc7b17ed8bf558e325a376dcf2d7ec50bbfac8"
+    },
+    "scripts/package-source.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2442,
+      "sha256": "51b9564234ea957a54c6619c5b92dbe0a55ec2beff56a37693e13d55d57d9fbc"
+    },
+    "scripts/test-english-edition.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7944,
+      "sha256": "ffaf083f5118dea9453ceb191022c0638798824dbe7f6415967d4723023b0009"
+    },
+    "scripts/test-english-results.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 13853,
+      "sha256": "3fa84df6499b8c4d524bab1e1b3fbd3cc12d57067b04c8d7d47095666e8185fc"
+    },
+    "scripts/test-lesson-progression.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 38310,
+      "sha256": "b9376d7bd73e0b9d0f6642895e16235703dafb63904772c9caba220a317c1ed8"
+    },
+    "scripts/test-python-spin-actions.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 20184,
+      "sha256": "eb290a12f704944599ce7e297344096cadb2ea1ee511af5318bf1691d6095f3c"
+    },
+    "scripts/test-source-package.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3926,
+      "sha256": "0abab4cef18741b7b01d21b32cfaf4952e9c795029a0d0dd91d41a8d5960945b"
+    },
+    "scripts/test-spin-actions-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 18401,
+      "sha256": "3366c502f36d03c2915797b5c3dab8080a8182b336403be477e9a5f52d09bee8"
+    },
+    "scripts/test-spin-actions-worker.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2566,
+      "sha256": "c3dba5f54b920955f5f2d3b30e1da7aeacf7a215bb9cae3bd16b47590a8280dd"
+    },
+    "scripts/test-spin-course-connections.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15923,
+      "sha256": "b4f258142b757f5d1207942d9101885907d381274a5005669afe1a2880e2f3bc"
+    },
+    "scripts/test-symmetry-course-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 24891,
+      "sha256": "e9a078e925a95ab0475f2c017b535e597ed1a195446ad138dc57cc7713aaa31e"
+    }
+  }
+}

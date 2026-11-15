@@ -13,12 +13,15 @@ assert.equal(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n'),progressionIndex
 const inventory=new Map(lessonProgressionInventory.map(item=>[item.key,item]));
 assert.equal(inventory.size,197);
 assert.equal(lessonProgressionCatalogs.length,17);
-assert.equal(lessonProgressionEdges.length,130);
+assert.equal(lessonProgressionEdges.length,172);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.equal(reviewed.size,112,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(reviewed.size,148,'The remaining indexed lessons are not automatically assigned dependencies');
 assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(0,82))).digest('hex'),
  '998a4da95dc3a201e64ed830c2a4f5f58306477fec8aa66cbd6f27d6ee5dfff8',
  'The preceding 82 optional connections, their reasons and their order remain unchanged');
+assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(0,130))).digest('hex'),
+ 'cb75b4d8a2ed525110a0de080b53c5c41de8372477c12968d1c06451a07e387f',
+ 'All preceding 130 connections retain their exact content and order');
 
 for(const definition of lessonProgressionCatalogs){
  const actual=JSON.parse(fs.readFileSync(new URL('../dist/data/'+definition.catalog+'.json',import.meta.url),'utf8'));
@@ -72,9 +75,9 @@ const additionalKeys=Object.entries(newReadGroups).flatMap(([catalog,ids])=>ids.
 assert.equal(additionalKeys.length,21);
 for(const key of additionalKeys)assert.ok(reviewed.has(key),'A newly read lesson has an explicit reviewed connection: '+key);
 
-// This release was reviewed as four bounded scientific workflows, rather than
+// The preceding tensor1 release reviewed four bounded scientific workflows, rather than
 // inferring dependencies from catalogue order. Keep the 48 reviewed pairs and
-// the 47 newly connected identities explicit while testing the real live routes.
+// its 47 newly connected identities explicit while testing the real live routes.
 const newlyConnectedReadGroups={
  "construction-materials": [
   "nonsymmorphic-bloch",
@@ -147,11 +150,13 @@ const newlyConnectedReadGroups={
 const newlyConnectedKeys=Object.entries(newlyConnectedReadGroups).flatMap(([catalog,ids])=>ids.map(id=>catalog+'::'+id));
 assert.equal(newlyConnectedKeys.length,47);
 const originalReviewed=new Set(lessonProgressionEdges.slice(0,82).flatMap(edge=>[edge.from,edge.to]));
+const tensorReviewed=new Set(lessonProgressionEdges.slice(0,130).flatMap(edge=>[edge.from,edge.to]));
+assert.equal(tensorReviewed.size,112);
 for(const key of newlyConnectedKeys){
  assert.ok(!originalReviewed.has(key),'This lesson was index-only before the current review: '+key);
  assert.ok(reviewed.has(key),'A reviewed operational transfer is installed: '+key);
 }
-assert.deepEqual(new Set([...reviewed].filter(key=>!originalReviewed.has(key))),new Set(newlyConnectedKeys));
+assert.deepEqual(new Set([...tensorReviewed].filter(key=>!originalReviewed.has(key))),new Set(newlyConnectedKeys));
 const reviewedAdditionPairs=[
  [
   "material-observables::mechanical-modes",
@@ -346,8 +351,238 @@ const reviewedAdditionPairs=[
   "lie-group-lessons::su3-ninej-high-input-labels"
  ]
 ];
-assert.deepEqual(lessonProgressionEdges.slice(82).map(({from,to})=>[from,to]),reviewedAdditionPairs,
+assert.deepEqual(lessonProgressionEdges.slice(82,130).map(({from,to})=>[from,to]),reviewedAdditionPairs,
  'Every reviewed pair is installed once; no unreviewed inferred links are substituted');
+
+// The spin1 review names 42 actual transfers and 36 formerly index-only lessons.
+// Keep these identities explicit: a count alone would accept unrelated substitutions.
+const spinStructureReadGroups={
+  "coupled-materials": [
+    "distortion-projection",
+    "distortion-reference",
+    "landau-coupling",
+    "magnon-antiferromagnet",
+    "magnon-ferromagnet",
+    "magnon-stability",
+    "qha-audit",
+    "qha-response"
+  ],
+  "pathways-materials": [
+    "wall-energy",
+    "wall-gradient",
+    "wall-localized"
+  ],
+  "pointgroup-lessons": [
+    "from-point-to-space"
+  ],
+  "structure-dynamics": [
+    "centering-basis",
+    "imaginary-modes",
+    "landau-stability",
+    "polar-domains",
+    "screw-glide",
+    "structure-factor"
+  ],
+  "symmetry-course-lessons": [
+    "color-01",
+    "color-02",
+    "color-03",
+    "double-01",
+    "double-02",
+    "double-03",
+    "double-04",
+    "double-05",
+    "double-06",
+    "magnetic-02",
+    "magnetic-03",
+    "magnetic-04",
+    "magnetic-05",
+    "space-06",
+    "spin-01",
+    "spin-02",
+    "spin-03",
+    "spin-04"
+  ]
+};
+const spinStructureKeys=Object.entries(spinStructureReadGroups).flatMap(([catalog,ids])=>ids.map(id=>catalog+'::'+id));
+assert.equal(spinStructureKeys.length,36);
+for(const key of spinStructureKeys){
+ assert.ok(!tensorReviewed.has(key),'This lesson was index-only at tensor1: '+key);
+ assert.ok(reviewed.has(key),'The reviewed spin/structure lesson has a live transfer: '+key);
+}
+assert.deepEqual(new Set([...reviewed].filter(key=>!tensorReviewed.has(key))),new Set(spinStructureKeys));
+const spinStructurePairs=[
+  [
+    "pointgroup-lessons::representations",
+    "pointgroup-lessons::from-point-to-space"
+  ],
+  [
+    "pointgroup-lessons::from-point-to-space",
+    "symmetry-course-lessons::space-06"
+  ],
+  [
+    "pointgroup-lessons::from-point-to-space",
+    "symmetry-course-lessons::double-01"
+  ],
+  [
+    "symmetry-course-lessons::double-01",
+    "symmetry-course-lessons::double-02"
+  ],
+  [
+    "symmetry-course-lessons::double-02",
+    "symmetry-course-lessons::double-03"
+  ],
+  [
+    "pointgroup-lessons::character-reduction",
+    "symmetry-course-lessons::double-03"
+  ],
+  [
+    "symmetry-course-lessons::double-02",
+    "symmetry-course-lessons::double-05"
+  ],
+  [
+    "symmetry-course-lessons::double-02",
+    "symmetry-course-lessons::double-06"
+  ],
+  [
+    "symmetry-course-lessons::space-05",
+    "symmetry-course-lessons::double-06"
+  ],
+  [
+    "pointgroup-lessons::representations",
+    "symmetry-course-lessons::magnetic-04"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-04",
+    "symmetry-course-lessons::double-04"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-01",
+    "symmetry-course-lessons::magnetic-02"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-02",
+    "symmetry-course-lessons::magnetic-03"
+  ],
+  [
+    "symmetry-course-lessons::space-06",
+    "symmetry-course-lessons::magnetic-03"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-02",
+    "symmetry-course-lessons::magnetic-04"
+  ],
+  [
+    "symmetry-course-lessons::double-04",
+    "symmetry-course-lessons::magnetic-05"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-02",
+    "symmetry-course-lessons::magnetic-05"
+  ],
+  [
+    "symmetry-course-lessons::space-05",
+    "symmetry-course-lessons::magnetic-05"
+  ],
+  [
+    "symmetry-course-lessons::color-01",
+    "symmetry-course-lessons::color-02"
+  ],
+  [
+    "symmetry-course-lessons::color-01",
+    "symmetry-course-lessons::color-03"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-01",
+    "symmetry-course-lessons::spin-01"
+  ],
+  [
+    "symmetry-course-lessons::spin-01",
+    "symmetry-course-lessons::spin-02"
+  ],
+  [
+    "symmetry-course-lessons::spin-01",
+    "symmetry-course-lessons::spin-03"
+  ],
+  [
+    "symmetry-course-lessons::spin-01",
+    "symmetry-course-lessons::spin-04"
+  ],
+  [
+    "symmetry-course-lessons::magnetic-01",
+    "symmetry-course-lessons::spin-04"
+  ],
+  [
+    "structure-dynamics::soft-modes",
+    "structure-dynamics::imaginary-modes"
+  ],
+  [
+    "structure-dynamics::landau-stability",
+    "structure-dynamics::imaginary-modes"
+  ],
+  [
+    "structure-dynamics::structure-factor",
+    "structure-dynamics::centering-basis"
+  ],
+  [
+    "structure-dynamics::structure-factor",
+    "structure-dynamics::screw-glide"
+  ],
+  [
+    "coupled-materials::distortion-reference",
+    "coupled-materials::distortion-projection"
+  ],
+  [
+    "coupled-materials::distortion-projection",
+    "coupled-materials::landau-coupling"
+  ],
+  [
+    "structure-dynamics::landau-stability",
+    "coupled-materials::landau-coupling"
+  ],
+  [
+    "coupled-materials::qha-free-energy",
+    "coupled-materials::qha-response"
+  ],
+  [
+    "coupled-materials::qha-response",
+    "coupled-materials::qha-audit"
+  ],
+  [
+    "structure-dynamics::imaginary-modes",
+    "coupled-materials::qha-audit"
+  ],
+  [
+    "structure-dynamics::landau-stability",
+    "pathways-materials::wall-gradient"
+  ],
+  [
+    "structure-dynamics::polar-domains",
+    "pathways-materials::wall-gradient"
+  ],
+  [
+    "pathways-materials::wall-gradient",
+    "pathways-materials::wall-energy"
+  ],
+  [
+    "pathways-materials::wall-gradient",
+    "pathways-materials::wall-localized"
+  ],
+  [
+    "principles-materials::conservation-generators",
+    "coupled-materials::magnon-ferromagnet"
+  ],
+  [
+    "coupled-materials::magnon-ferromagnet",
+    "coupled-materials::magnon-antiferromagnet"
+  ],
+  [
+    "coupled-materials::magnon-antiferromagnet",
+    "coupled-materials::magnon-stability"
+  ]
+];
+assert.deepEqual(lessonProgressionEdges.slice(130).map(({from,to})=>[from,to]),spinStructurePairs,
+ 'All 42 reviewed transfers are installed in order, with no replacement pairs');
 
 // Inspect rendered native anchors, including links inside the optional overflow
 // disclosure. Availability never depends on completing the recommended lesson.
@@ -398,6 +633,27 @@ assert.match(reasonFor('pathways-materials::bandrep-bloch-phase','construction-m
 assert.match(reasonFor('lie-group-lessons::su3-cg-higher-representations','lie-group-lessons::su3-cg-exact-radicals'),/Exact CG.*81.*numerical CG.*256/);
 assert.match(reasonFor('lie-group-lessons::su3-racah-coupling-paths','lie-group-lessons::su3-racah-exact-sixj'),/weighted orthogonality.*conversion still uses F/);
 assert.match(reasonFor('lie-group-lessons::su3-ninej-paired-trees','lie-group-lessons::su3-ninej-exact-normalization'),/products of two leaf-branch dimensions.*cannot replace R/);
+
+// Check the visible preparation instructions at the newly joined physical
+// boundaries, rather than accepting any long sentence for a matching pair.
+assert.match(reasonFor('pointgroup-lessons::from-point-to-space','symmetry-course-lessons::space-06'),/input k unchanged.*ordinary structure conversion for magnetic structures/);
+assert.match(reasonFor('pointgroup-lessons::character-reduction','symmetry-course-lessons::double-03'),/complete four-element C4.*three copies.*not a protected threefold/);
+assert.match(reasonFor('symmetry-course-lessons::double-02','symmetry-course-lessons::double-06'),/proper rotations only.*inversion and mirrors/i);
+assert.match(reasonFor('symmetry-course-lessons::space-05','symmetry-course-lessons::double-06'),/fractional k_z.*does not prove energy degeneracy/);
+assert.match(reasonFor('symmetry-course-lessons::magnetic-04','symmetry-course-lessons::double-04'),/U U conjugate.*Hamiltonian symmetry.*same momentum/);
+assert.match(reasonFor('symmetry-course-lessons::double-04','symmetry-course-lessons::magnetic-05'),/one-dimensional axial.*magnetic reciprocal fractions.*transverse three-dimensional.*momentum condition/);
+assert.match(reasonFor('symmetry-course-lessons::color-01','symmetry-course-lessons::color-03'),/change to a parent group.*C3 generator cannot.*complex conjugation/);
+assert.match(reasonFor('symmetry-course-lessons::spin-01','symmetry-course-lessons::spin-03'),/hold every site fixed.*SO\(3\).*antiunitary.*O\(3\)/);
+assert.match(reasonFor('symmetry-course-lessons::magnetic-01','symmetry-course-lessons::spin-04'),/orthonormal Cartesian.*time-reversal branch.*Hamiltonian/);
+assert.match(reasonFor('structure-dynamics::structure-factor','structure-dynamics::screw-glide'),/positive-exponent.*R transpose h=h.*00l.*0kl.*not apply to all hkl/);
+assert.match(reasonFor('coupled-materials::distortion-reference','coupled-materials::distortion-projection'),/Euclidean normalization.*angstrom.*not mass-weighted/);
+assert.match(reasonFor('coupled-materials::distortion-projection','coupled-materials::landau-coupling'),/angstrom.*independently dimensionless.*neither fits energy coefficients/);
+assert.match(reasonFor('coupled-materials::qha-free-energy','coupled-materials::qha-response'),/per input cell.*fixed hydrostatic pressure.*minimized G.*Cv cannot.*Cp/);
+assert.match(reasonFor('structure-dynamics::imaginary-modes','coupled-materials::qha-audit'),/no mode-resolved information.*cannot establish.*dynamical stability/);
+assert.match(reasonFor('pathways-materials::wall-gradient','pathways-materials::wall-localized'),/separate open spinless SSH.*eV.*bond spacings.*do not copy.*subspace projectors/i);
+assert.match(reasonFor('principles-materials::conservation-generators','coupled-materials::magnon-ferromagnet'),/H\/hbar.*meV.*not tesla.*U\(1\).*does not itself guarantee a zero mode/);
+assert.match(reasonFor('coupled-materials::magnon-ferromagnet','coupled-materials::magnon-antiferromagnet'),/q=qa\/pi.*FM cell a and AFM cell 2a.*different zone intervals.*non-Hermitian/);
+assert.match(reasonFor('coupled-materials::magnon-antiferromagnet','coupled-materials::magnon-stability'),/Real frequencies do not establish energetic stability.*old Neel reference.*not the excitation spectrum/);
 
 
 const pg=lessonProgression({catalog:'pointgroups',lessonId:'representations'});
@@ -516,15 +772,21 @@ const renderShell=route=>renderClassroomView({container:shellContainer,route:par
  onNavigate:(hash,options)=>shellMoves.push({hash,options}),courseRenderers:shellRenderers,
  run:()=>{calculations++;},loadProgression:()=>{graphLoads++;return Promise.resolve(progressionModule);}});
 const settle=()=>new Promise(resolve=>setImmediate(resolve));
-for(const [catalog,lessonId]of[
+let shellLessonCases=0;
+for(const [catalog,lessonId,context='']of[
  ['principles-materials','order-field-convention'],['principles-materials','exchange-conventions'],
  ['principles-materials','conservation-protection'],['frontiers-materials','layer-registry'],
  ['frontiers-materials','chiral-tolerance'],['quantum-materials','geometry-diagnostics'],
  ['response-materials','hall-diagnostics'],
- ...newlyConnectedKeys.map(key=>key.split('::'))
+ ...newlyConnectedKeys.map(key=>key.split('::')),
+ ...spinStructureKeys.map(key=>key.split('::')),
+ ['symmetry-course-lessons','double-06','experiment=double_group&preset=screw21_space&level=space&material=silicon&group=4'],
+ ['coupled-materials','qha-audit','exercise=qha-boundary&material=silicon'],
+ ['pathways-materials','wall-localized','exercise=wall-localized-ex']
 ]){
- const entry=inventory.get(catalog+'::'+lessonId),initialContext=parseClassroomRoute(entry.route);
- renderShell(entry.route);await settle();
+ shellLessonCases++;
+ const entry=inventory.get(catalog+'::'+lessonId),route=entry.route+(context?'&'+context:''),initialContext=parseClassroomRoute(route);
+ renderShell(route);await settle();
  const host=shellContainer.querySelector('#classroom-progression');assert.ok(host);assert.equal(host.hidden,false);
  assert.match(host.innerHTML,new RegExp(catalog+'::'+lessonId));
  for(const anchor of host.querySelectorAll('[data-lesson-progression-link]'))assert.equal(anchor.onclick,undefined,'Custom navigation does not turn optional anchors into gated callbacks');
@@ -532,25 +794,34 @@ for(const [catalog,lessonId]of[
  active.onNavigate({tab:'lab'});await settle();assert.equal(host.hidden,true);assert.equal(shellCalls.length,renders);
  const labContext=parseClassroomRoute(shellMoves.at(-1).hash);
  assert.equal(labContext.tab,'lab');assert.deepEqual(shellMoves.at(-1).options,{render:false});
- for(const key of ['section','pathway','module','lesson','track','material','preset','exercise','group','level']){
-  assert.equal(labContext[key],initialContext[key],entry.key+' preserves local '+key);
+ for(const key of ['section','pathway','module','lesson','track','material','preset','exercise','group','level','experiment']){
+  // An exercise selects a derive view; academy material selects its materials
+  // view. Leaving those tabs intentionally removes their scoped URL selectors,
+  // while the existing renderer and its input state remain mounted.
+  const scopedSelector=key==='exercise'||key==='material'&&['academy','pointgroups','lie'].includes(initialContext.section);
+  assert.equal(labContext[key],scopedSelector?undefined:initialContext[key],entry.key+' preserves the tab-appropriate local '+key);
  }
 
  active.onNavigate({tab:'learn'});await settle();assert.equal(host.hidden,false);assert.equal(shellCalls.length,renders);
 }
+assert.equal(shellLessonCases,93,'All 36 new identities and three explicit context-rich routes use the real classroom shell');
+let expertCases=0;
 for(const tool of [
  'order-parameter-lab','exchange-symmetry-lab','conservation-lab','layer-symmetry-lab',
  'chirality-polarity-lab','quantum-geometry-lab','hall-response-lab',
  'phonopy','phonon-modes','phonon-thermo','phonons','tensors',
+ 'phase','diffraction','distortion-modes','magnon-lab','qha-lab','domain-wall-lab',
  'electron-transport-lab','device-transport-lab','pairing-lab','andreev-lab',
  'band-representation-lab','band-connectivity','nonsymmorphic-lab','wavevector-lab',
  'lie/su3','lie/su3_tensor','lie/su3_cg','lie/su3_racah','lie/su3_ninej'
 ]){
+ expertCases++;
  const loads=graphLoads,route='compute/'+tool;assert.equal(parseClassroomRoute(route)?.calculationOnly,true,route);
  renderShell(route);await settle();assert.equal(graphLoads,loads,'Direct expert entry does not load prerequisites: '+tool);
  assert.equal(shellContainer.querySelector('#classroom-progression'),null);assert.equal(shellCalls.at(-1).selection.calculationOnly,true);
  shellCalls.at(-1).onNavigate({tab:'lab'});await settle();assert.ok(shellMoves.at(-1).hash.startsWith('#compute/'));
  assert.deepEqual(shellMoves.at(-1).options,{render:false});assert.equal(graphLoads,loads);
 }
+assert.equal(expertCases,31,'All existing and new structural expert entries remain independent of the learning graph');
 assert.equal(calculations,0);assert.equal(storageReads,0);assert.equal(storageWrites,0);
-console.log('Lesson progression: 197 qualified routes in 17 catalogues, 130 optional edges over 112 connected read lessons, original 82 preserved, all native targets, complete English reasons, unit/action-space/model boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');
+console.log('Lesson progression: 197 qualified routes in 17 catalogues, 172 optional edges over 148 connected read lessons, all preceding 130 preserved and 42/36 spin-structure additions explicit, all native targets, complete English reasons, unit/action-space/model boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');

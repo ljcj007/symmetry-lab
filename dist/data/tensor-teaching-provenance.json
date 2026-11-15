@@ -14,6 +14,12 @@
     "lessonPlacements": 2,
     "fixedCopyReferences": 7
   },
+  "countsScope": "Original tensor-release snapshot; subsequent reviewed links are recorded separately in currentGraph.",
+  "currentGraph": {
+    "indexedLessons": 197,
+    "reviewedConnectedLessons": 148,
+    "optionalEdges": 172
+  },
   "coreContract": {
     "action": "tensors",
     "optIn": "replay: true",
@@ -57,18 +63,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 34409,
-      "sha256": "d5ab49c1632fdb2611fe482244ee845bce2fd3361a0374869c8d254637fc5ae6"
+      "bytes": 37153,
+      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97261,
-      "sha256": "2dcadf525f6795e86c9eab11f5961fe2ddf39dbac18811d490b282ec36b06f58"
+      "bytes": 97247,
+      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31786,
-      "sha256": "b18f611389536523d3b8282962239c14ca1b51fe3e3baf238e8b3562db7a17fc"
+      "bytes": 31751,
+      "sha256": "0717c5dd6f73ca0533fd650c343dc00ffd279127cc64a07e18229c1c20f2fea3"
     },
     "dist/data/material-observables.json": {
       "normalization": "utf8-lf-v1",
@@ -82,23 +88,23 @@
     },
     "dist/english-results.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7886,
-      "sha256": "deada8beebf6726e8bc0c04655c746276b7ff2fd1b6fae216a511b503d9782c6"
+      "bytes": 8939,
+      "sha256": "ab4a3bcf9a345aace4ced824d5bff790bd04ca44be1b705f315fabc59d8582cb"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7259,
-      "sha256": "92fa476fcd9c132b4dfbc6d4237d75f239d8711b7be39583a2231649384db02c"
+      "bytes": 7321,
+      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 35284,
-      "sha256": "acd1dfa604d033958f857b5845f96ee51c38cb62d539d7389c86a27aade3d8e2"
+      "bytes": 47945,
+      "sha256": "d761220baa263636845b9951012c7ef7ef6e3979899b805f3e68642b24957dbd"
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24769,
-      "sha256": "0c6bdf0ddabeddbbdd7271e45f5f70ece328bba0b2099ae371c1803f884646b9"
+      "bytes": 24767,
+      "sha256": "82a0d7a41503aa3ec231f0e023f9bf5eb6f1401c126a961e5b4a99d5228103e6"
     },
     "dist/observables-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -112,13 +118,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2578,
-      "sha256": "80a8b3d1e98f478da79fcdec093460f6905d0689a5427b4edf722cea84893de5"
+      "bytes": 2576,
+      "sha256": "62a56fb7856d58c68adf6a0900f43af248d10a5438bde5fbe54df3d6de0d89e7"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10930,
-      "sha256": "c136ed98e264c19a0d99b490dc4e72e9f2214bdedb6195709fe746e7c80935c3"
+      "bytes": 11075,
+      "sha256": "e006192a879f6a68ba311230fb51cbb036b2485be348504f5f3ed73f5cc0c4c5"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -142,18 +148,18 @@
     },
     "locales/en-lesson-progression.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 42524,
-      "sha256": "085102ead844cec7b9b0ba5fab14d2a999c47383de8eb00a150dc101b754bea2"
+      "bytes": 63637,
+      "sha256": "76e76c8f9cebb150622aa8dedacd42998345278ab2ab2ca9042bb91441e6407e"
     },
     "locales/en-python-sources.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 816373,
-      "sha256": "abf6777718447c96541269863d55038f8baa4b3c23ffb3f29e73620ab675a02f"
+      "bytes": 873624,
+      "sha256": "bcc35188a4383b5119c4b28b09bd419e64e660eff9bed2d2252cdde865292223"
     },
     "locales/en-python-templates.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18610,
-      "sha256": "4d9c5ba14920dafe060ac732f609b26de01d4daa24b4549153325ca6d8fc6ff2"
+      "bytes": 19313,
+      "sha256": "d103280d8c5088fb0acce312f48e5be9c5b3c4edd8e5abd028535872fe813a8d"
     },
     "locales/en-tensor-replay-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -162,18 +168,18 @@
     },
     "locales/en-tensor-replay.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14422,
-      "sha256": "7aaec6c8c6b425115c03cc0bc85a964bcd1759f6a35b617d81f5b3d09cdb67eb"
+      "bytes": 14424,
+      "sha256": "035aeaf0a010d2faa8f751fd13ad93f3af6ee437c43ba0959d2b47d60f7788ba"
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16460,
-      "sha256": "bf3f0f0a88fbdc6a82127bce4a42b7405c6169d172e715249c28a4ef1234985f"
+      "bytes": 16708,
+      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3163,
-      "sha256": "0437549b8027ec8ea196c13f60cc1715b1b05924504a992765d3a7d50e73e36b"
+      "bytes": 3183,
+      "sha256": "1b23c4402c49105001b2007d341a0294e3f1739fb21cc5c9679df101e610b54e"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -182,8 +188,8 @@
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7611,
-      "sha256": "f16c73ad0c37779b41643c6a8c208b90d290cf3251d76929a12c3073026b1e64"
+      "bytes": 9506,
+      "sha256": "40e3484eabe9355d4183ad417ee3aea7c723a3d393099c4b11844843d952067c"
     },
     "scripts/build-tensor-replay-reference.py": {
       "normalization": "utf8-lf-v1",
@@ -192,8 +198,8 @@
     },
     "scripts/build-tensor-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7104,
-      "sha256": "2dcbf1b91d6c11fef5bf3b76b2b72f21d26440c8d81fa3178dc925c47de04303"
+      "bytes": 7530,
+      "sha256": "681742a4a8b7252793012c0e37dc373bdefe071cfffe8513c977a77e588f700d"
     },
     "scripts/build-zno-workflow-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -202,13 +208,13 @@
     },
     "scripts/collect-fixture-messages.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1187,
-      "sha256": "abb3fd776b137da820dec86ec454a3853730906df6ef5baba6519e9207b8b5bd"
+      "bytes": 1207,
+      "sha256": "5cb7e2571674ed2b99acaf3b0d23378f8a229fc808cefa7a56ff7228ec740765"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2636,
-      "sha256": "11eb3cdee3ccf4208eb4c33bc84f9392313fac098dd12cfccddaad7835a36b05"
+      "bytes": 2737,
+      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -217,13 +223,13 @@
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869150,
-      "sha256": "bfb5bd00c6d1eecb1c55e79384bd9c8f70ba31d3fcfb340e331dd60e7b4410ff"
+      "bytes": 869239,
+      "sha256": "d8026e05631e97eaba21bd388c4f1dae87f99a76fb1e606636be83399dc09365"
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736206,
-      "sha256": "b21c721494ff7f93437e419c7fcf201d712e697f16adb49d2938e2582d4609f4"
+      "bytes": 1736295,
+      "sha256": "e338e4289f886d46986204c56322b0936da0dc70c20e8ab67ab407eed44e2125"
     },
     "scripts/fixtures/tensor-replay.json": {
       "normalization": "utf8-lf-v1",
@@ -247,13 +253,13 @@
     },
     "scripts/test-english-results.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10155,
-      "sha256": "0beab52f75cc5db4ada1e58d8889d944576d76bcd50ece13887cfbcc0a329b49"
+      "bytes": 13853,
+      "sha256": "3fa84df6499b8c4d524bab1e1b3fbd3cc12d57067b04c8d7d47095666e8185fc"
     },
     "scripts/test-lesson-progression.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27704,
-      "sha256": "cff4c0e67f1b6779c0ff867c135378879bca680a106f2d1083d80ebb2076a704"
+      "bytes": 38310,
+      "sha256": "b9376d7bd73e0b9d0f6642895e16235703dafb63904772c9caba220a317c1ed8"
     },
     "scripts/test-observables-ui.mjs": {
       "normalization": "utf8-lf-v1",
@@ -272,8 +278,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3889,
-      "sha256": "a870a1865ed60f926ccc8c4349d491c149fe5215fdb688981001d4d2dbf65376"
+      "bytes": 3926,
+      "sha256": "0abab4cef18741b7b01d21b32cfaf4952e9c795029a0d0dd91d41a8d5960945b"
     },
     "scripts/test-tensor-replay-ui.mjs": {
       "normalization": "utf8-lf-v1",

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import {createResultLocalizer,collectResultDisplayMessages} from '../dist/english-results.js';
+import {loadEnglishCatalog} from './english-catalog.mjs';
 
 const translations={
  '标题':'Title','说明':'Description','稳定':'Stable','filename.cif':'SHOULD NEVER REPLACE A CAPTURE',
@@ -46,3 +48,42 @@ const messages=collectResultDisplayMessages(original);assert.ok(messages.some(x=
 console.log('English Python display: exact and dynamic messages, verbatim filenames, strict display-field cloning, protected calculation/user data, mathematical annotations, immutable numeric results and inert object keys passed.');
 const annotations=createResultLocalizer({translations:{'说明':'Description','稳定':'Stable'},nativeAnnotations:true}).result({notes:['说明'],operations:[{name:'说明',matrix:[[1]]}],workshop:{generators:['说明']},summary:[{label:'说明',value:'稳定'}],kind:'稳定',userNotes:'说明',learningEvidence:{notes:'说明'},input:{notes:'说明',operations:[{name:'说明'}]}});
 assert.deepEqual(annotations.notes,['Description']);assert.equal(annotations.operations[0].name,'Description');assert.deepEqual(annotations.operations[0].matrix,[[1]]);assert.deepEqual(annotations.workshop.generators,['Description']);assert.equal(annotations.summary[0].value,'Stable');assert.equal(annotations.kind,'稳定','Computational enum values stay unchanged');assert.equal(annotations.userNotes,'说明');assert.deepEqual(annotations.learningEvidence,{notes:'说明'});assert.deepEqual(annotations.input,{notes:'说明',operations:[{name:'说明'}]});
+
+// Exercise the visible annotation directly, independently of the extraction
+// allowlist: the SOC renderer displays locking.original.quantum.convention.
+const spinFixture=JSON.parse(fs.readFileSync(new URL('./fixtures/spin-actions.json',import.meta.url),'utf8'));
+const spinCatalog=loadEnglishCatalog();
+const spinLocalizer=createResultLocalizer({translations:spinCatalog,nativeAnnotations:true});
+const socCases=spinFixture.cases.filter(row=>row.input.experiment==='soc_locking');
+assert.equal(socCases.length,6);
+for(const row of socCases){
+ const before=structuredClone(row.result),after=spinLocalizer.result(row.result);
+ for(const key of ['convention','scope']){
+  const message=before.locking.original.quantum[key];
+  assert.equal(after.locking.original.quantum[key],spinCatalog[message]??message,row.id+' visible original-operation '+key);
+  assert.doesNotMatch(after.locking.original.quantum[key],/[\u3400-\u9fff]/u);
+  for(let i=0;i<2;i++)assert.equal(after.locking.candidates[i].quantum[key],spinCatalog[before.locking.candidates[i].quantum[key]]??before.locking.candidates[i].quantum[key]);
+  after.locking.original.quantum[key]=message;
+ }
+ assert.deepEqual(after.locking.original,before.locking.original,row.id+' all other independent-operation data stay exact');
+ assert.deepEqual(row.result,before,row.id+' original Python result is not mutated');
+}
+const soc=structuredClone(socCases[0].result);
+soc.original={quantum:{convention:'说明'}};
+soc.locking.original.label='说明';soc.locking.original.quantum.label='说明';
+const guarded={result:soc,input:soc,raw:soc,data:soc,exports:soc,original:soc,userNotes:{result:soc},learningEvidence:soc};
+const guardedEnglish=spinLocalizer.result(guarded);
+for(const key of ['input','raw','data','exports','original','userNotes','learningEvidence'])assert.deepEqual(guardedEnglish[key],guarded[key],key+' remains opaque even with a matching result schema');
+assert.deepEqual(guardedEnglish.result.original,soc.original,'Root original/source tree is not the calculated locking operation');
+assert.equal(guardedEnglish.result.locking.original.label,'说明');assert.equal(guardedEnglish.result.locking.original.quantum.label,'说明');
+assert.deepEqual(localize.result(soc).locking.original,soc.locking.original,'Annotation opt-in is required');
+assert.deepEqual(spinLocalizer.result({...soc,schema:'another-schema'}).locking.original,soc.locking.original,'An unrelated schema cannot expose original data');
+const scopedMessages=collectResultDisplayMessages(guarded,{nativeAnnotations:true});
+assert.ok(scopedMessages.some(row=>row.path.join('.')==='result.locking.original.quantum.convention'),'Extraction must reach the actual visible path through a fixture wrapper');
+assert.ok(scopedMessages.every(row=>!['input','raw','data','exports','original','userNotes','learningEvidence'].includes(row.path[0])),'Extraction preserves raw/source boundaries');
+const quantumAlias=socCases[0].result.locking.original.quantum;
+const aliasResult=structuredClone(socCases[0].result);aliasResult.locking.original.quantum=quantumAlias;aliasResult.input={quantum:quantumAlias};
+const aliasEnglish=spinLocalizer.result(aliasResult);
+assert.deepEqual(aliasEnglish.input.quantum,quantumAlias,'The same quantum object in protected input retains original text');
+assert.doesNotMatch(aliasEnglish.locking.original.quantum.convention,/[\u3400-\u9fff]/u,'The displayed alias still translates');
+console.log('Actual SOC original-operation conventions: six fresh results translated; input, raw, source, export, user-note, unrelated-schema and non-opt-in trees remain unchanged.');
