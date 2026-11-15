@@ -1,6 +1,7 @@
 // Reproducible static English edition. Original Python/data inputs stay shared.
 import fs from 'node:fs';
 import path from 'node:path';
+import {createHash} from 'node:crypto';
 import {parse} from 'acorn';
 import {ROOT,HAN,jsStrings,replaceUnits,jsonTexts,sharedCode} from './english-source.mjs';
 import {loadEnglishCatalog,catalogFiles} from './english-catalog.mjs';
@@ -18,6 +19,13 @@ function t(source){
  const translated=mathLabels(value);
  return exact?translated:source.match(/^\s*/)[0]+translated+source.match(/\s*$/)[0];
 }
+// The worker URL alone cannot invalidate its separately cached dependencies.
+// Version the exact served contents, independently of the edition's release label.
+const contentVersion=body=>'sha256-'+createHash('sha256').update(body).digest('hex').slice(0,20);
+const resultLocalizerVersion=contentVersion(fs.readFileSync(path.join(dist,'english-results.js'),'utf8').replace(/\r\n?/g,'\n'));
+const pythonSources=readJSON('en-python-sources.json'),templates=readJSON('en-python-templates.json');
+const messages={translations:Object.fromEntries(pythonSources.map(row=>[row.source,t(row.source)])),templates};
+const messageBody=JSON.stringify(messages)+'\n',messageVersion=contentVersion(messageBody);
 const template=s=>s.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${');
 function paths(value,name){
  let s=value.replaceAll('./vendor/','../vendor/').replaceAll('href="python/','href="../python/').replaceAll('href="source.zip','href="../source.zip').replaceAll('href="licenses/','href="../licenses/').replaceAll('href="data/carat/','href="../data/carat/').replace(/href="data\/([^"/]*provenance\.json)/g,'href="../data/$1');
@@ -49,7 +57,7 @@ function js(source,name){
  }
  if(name==='python-worker.js'){
   result=result.replace('new URL(path, import.meta.url)',"new URL(path, new URL('../', import.meta.url))");
-  result="import {createResultLocalizer} from '../english-results.js?v=20261110-en1';\nconst englishMessages=fetch(new URL('./data/python-messages.json?v=20261110-en1',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));\n"+result;
+  result=`import {createResultLocalizer} from '../english-results.js?v=${resultLocalizerVersion}';\nconst englishMessages=fetch(new URL('./data/python-messages.json?v=${messageVersion}',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));\n`+result;
   const original='self.postMessage({id, status: \'done\', ...JSON.parse(output)});';
   if(!result.includes(original))throw Error('Worker result boundary changed; review localization integration');
   result=result.replace(original,"const localized=JSON.parse(output),messages=await englishMessages;\n    if(localized.result)localized.result=messages.result(localized.result);\n    if(localized.error)localized.error=messages.text(localized.error);\n    self.postMessage({id,status:'done',...localized});");
@@ -91,9 +99,7 @@ for(const [relative,body]of outputs){
  });
  outputs.set(relative,Buffer.from(value));
 }
-const pythonSources=readJSON('en-python-sources.json'),templates=readJSON('en-python-templates.json');
-const messages={translations:Object.fromEntries(pythonSources.map(row=>[row.source,t(row.source)])),templates};
-write('data/python-messages.json',JSON.stringify(messages)+'\n');
+write('data/python-messages.json',messageBody);
 const report={release:'20261110-en1',language:'en',sourceUnits:used.size,translatedUnits:[...used].filter(x=>translations[x]).length,missing:[...missing],files:outputs.size+1,shared:{python:'../python/',vendor:'../vendor/',groupDatabases:'../data/'},catalogs:catalogFiles};
 write('translation-report.json',JSON.stringify(report,null,2)+'\n');
 if(missing.size&&!process.argv.includes('--allow-missing'))throw Error(missing.size+' English units are missing; run the development translation/review workflow. No output was written.');

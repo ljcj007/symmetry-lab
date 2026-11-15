@@ -6,12 +6,13 @@ const normalizeKey=key=>String(key).replace(/[-_\s]/g,'').toLowerCase();
 const displayKeys=new Set(('label labels title titles name names summary summaries description descriptions detail details message messages scope scopes warning warnings error errors reason reasons explanation explanations interpretation interpretations assumption assumptions convention conventions condition conditions limitation limitations meaning meanings hint hints prompt prompts question questions text caption captions statusMessage modelName instructions goal goals method definition qualification criterion hamiltonianSymmetry initialState finalState stateSelection branch_tracking free_ion_limit pair_weight_definition residual_norm operation channel feedback 数值方法 T₂约定').split(' ').map(normalizeKey));
 const displayContainers=new Set(['steps','sources','derivation','derivations','tables','table','columns','rows','headers','choices']);
 const protectedKeys=new Set(('id ids kind model module action route url uri href path filename fileName file files filePath source sourceId sourceIds references input inputs parameter parameters params defaults default value values payload data raw rawData content contents fileContent original originalText rawText exports export downloads download poscar cif csv trace code python sourceCode matrix matrices hamiltonian eigenvalues eigenvectors eigenstates coordinates positions momenta rotations operations generators weights probabilities amplitudes coefficients symbol symbols version release schema schemaVersion format notes note userNotes project projects progress learningEvidence').split(' ').map(normalizeKey));
-const exactMathKeys=new Set(['formula','formulas','tex','latex','expression','expressions','intrinsicpermutation','particleholeoperator','distortedsymbol']);
+const exactMathKeys=new Set(['formula','formulas','equation','equations','tex','latex','expression','expressions','intrinsicpermutation','particleholeoperator','distortedsymbol']);
 const explanatorySuffix=/(?:conventions?|explanations?|descriptions?|summar(?:y|ies)|messages?|warnings?|reasons?|meanings?|labels?|titles?)$/i;
 
 function childDisplayMode(key,mode,nativeAnnotations=false){
  const normalized=normalizeKey(key);
  if(mode==='raw')return 'raw';
+ if(normalized==='curveinput')return 'display';
  // A caller may identify a fresh, application-generated Python result. Its
  // registered explanatory notes and generator names are presentation labels.
  // Notebook/user-note trees remain opaque, even in that explicit mode.

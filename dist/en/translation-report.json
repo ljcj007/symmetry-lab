@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 25421,
-  "translatedUnits": 25421,
+  "sourceUnits": 25606,
+  "translatedUnits": 25606,
   "missing": [],
-  "files": 429,
+  "files": 431,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -74,6 +74,8 @@
     "en-chirality-actions-bridge.json",
     "en-mode-frequency-confirmation.json",
     "en-zno-phonopy-example.json",
-    "en-zno-navigation.json"
+    "en-zno-navigation.json",
+    "en-tensor-replay.json",
+    "en-tensor-replay-docs.json"
   ]
 }

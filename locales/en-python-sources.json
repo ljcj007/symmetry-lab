@@ -2699,7 +2699,11 @@
   {
     "source": "本实验的整体熵和约化熵均使用 log₂，单位 bit；SPT 实验使用自然对数，单位 nat。同一概率分布 (1/2,1/2) 对应 1 bit = ln(2) nat。局部熵只有在整体纯态时才是该二分划分的纠缠熵。",
     "origins": [
-      "python/density_matrix_lab.py"
+      "python/density_matrix_lab.py",
+      "python-fixture/bridges.json.gz/results/rabi-unitary/entropyConvention/explanation",
+      "python-fixture/bridges.json.gz/results/rabi-damped/entropyConvention/explanation",
+      "python-fixture/bridges.json.gz/results/dephasing-plusx/entropyConvention/explanation",
+      "python-fixture/bridges.json.gz/results/singlet/entropyConvention/explanation"
     ]
   },
   {
@@ -12224,6 +12228,12 @@
     ]
   },
   {
+    "source": "ZnO · 官方力数据的 Phonopy 衍生计算",
+    "origins": [
+      "python/phonopy_import.py"
+    ]
+  },
+  {
     "source": "lattice 晶格矩阵奇异，不能定义三维晶胞",
     "origins": [
       "python/phonopy_import.py"
@@ -13098,13 +13108,16 @@
   {
     "source": "立方 m−3m（非磁性）",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/8/result/group/label",
+      "python-fixture/tensor-replay.json/cases/10/result/group/label"
     ]
   },
   {
     "source": "闪锌矿 −43m / T_d（非磁性）",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/9/result/group/label"
     ]
   },
   {
@@ -13128,31 +13141,44 @@
   {
     "source": "静态介电极化率",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/tensor/label",
+      "python-fixture/tensor-replay.json/cases/1/result/tensor/label",
+      "python-fixture/tensor-replay.json/cases/2/result/tensor/label",
+      "python-fixture/tensor-replay.json/cases/6/result/tensor/label"
     ]
   },
   {
     "source": "P_i = χ_ij E_j（演示吸收单位因子）",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/tensor/equation",
+      "python-fixture/tensor-replay.json/cases/1/result/tensor/equation",
+      "python-fixture/tensor-replay.json/cases/2/result/tensor/equation",
+      "python-fixture/tensor-replay.json/cases/6/result/tensor/equation"
     ]
   },
   {
     "source": "弹性刚度",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/10/result/tensor/label"
     ]
   },
   {
     "source": "压电应力张量",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/9/result/tensor/label"
     ]
   },
   {
     "source": "线性平衡磁电张量",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/3/result/tensor/label",
+      "python-fixture/tensor-replay.json/cases/4/result/tensor/label",
+      "python-fixture/tensor-replay.json/cases/5/result/tensor/label"
     ]
   },
   {
@@ -13162,33 +13188,85 @@
     ]
   },
   {
-    "source": "使用笛卡尔正交基底；精确解生成元不变性即得到其生成群的不变量，不自动识别群名或判断它是否为有限晶体学点群。",
+    "source": "精确回放首批支持静态对称介电张量和一般静态线性磁电张量；原有张量计算结果保留。",
+    "origins": [
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/9/result/replay/reason",
+      "python-fixture/tensor-replay.json/cases/10/result/replay/reason"
+    ]
+  },
+  {
+    "source": "有界闭包尝试需要超过96个带时间标记的操作，未认证有限群；这不是无限群的证明，原生成元约束计算仍有效。",
+    "origins": [
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/11/result/replay/reason",
+      "python-fixture/tensor-replay.json/cases/11/result/replay/finiteGroup/reason"
+    ]
+  },
+  {
+    "source": "精确生成元约束与已闭合有限群平均相互核验；数值副本用于展示，不替代精确矩阵。",
+    "origins": [
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/replay/reason",
+      "python-fixture/tensor-replay.json/cases/1/result/replay/reason",
+      "python-fixture/tensor-replay.json/cases/2/result/replay/reason",
+      "python-fixture/tensor-replay.json/cases/3/result/replay/reason"
+    ]
+  },
+  {
+    "source": "精确回放内部恒等式核验未通过；原有张量计算结果保留。",
     "origins": [
       "python/property_tensors.py"
+    ]
+  },
+  {
+    "source": "使用笛卡尔正交基底；精确解生成元不变性即得到其生成群的不变量，不自动识别群名或判断它是否为有限晶体学点群。",
+    "origins": [
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/assumptions/0",
+      "python-fixture/tensor-replay.json/cases/1/result/assumptions/0",
+      "python-fixture/tensor-replay.json/cases/2/result/assumptions/0",
+      "python-fixture/tensor-replay.json/cases/3/result/assumptions/0"
     ]
   },
   {
     "source": "仅计算均匀、静态、局域平衡响应；平移部分不增加这些 q=0 张量约束。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/assumptions/1",
+      "python-fixture/tensor-replay.json/cases/1/result/assumptions/1",
+      "python-fixture/tensor-replay.json/cases/2/result/assumptions/1",
+      "python-fixture/tensor-replay.json/cases/3/result/assumptions/1"
     ]
   },
   {
     "source": "对称性允许某分量并不保证其非零；数值响应来自输入参数，不能据此预测材料常数。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/assumptions/2",
+      "python-fixture/tensor-replay.json/cases/1/result/assumptions/2",
+      "python-fixture/tensor-replay.json/cases/2/result/assumptions/2",
+      "python-fixture/tensor-replay.json/cases/3/result/assumptions/2"
     ]
   },
   {
     "source": "弹性正定性、介电稳定性与具体实验单位不由对称性保证；演示不拟合实验数据。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/assumptions/3",
+      "python-fixture/tensor-replay.json/cases/1/result/assumptions/3",
+      "python-fixture/tensor-replay.json/cases/2/result/assumptions/3",
+      "python-fixture/tensor-replay.json/cases/3/result/assumptions/3"
     ]
   },
   {
     "source": "此处不处理耗散输运或频率相关光学张量，不能用本规则替代 Onsager 互易关系。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/assumptions/4",
+      "python-fixture/tensor-replay.json/cases/1/result/assumptions/4",
+      "python-fixture/tensor-replay.json/cases/2/result/assumptions/4",
+      "python-fixture/tensor-replay.json/cases/3/result/assumptions/4"
     ]
   },
   {
@@ -13260,6 +13338,12 @@
     ]
   },
   {
+    "source": "replay 必须为 true 或 false",
+    "origins": [
+      "python/property_tensors.py"
+    ]
+  },
+  {
     "source": "未知物性张量 preset",
     "origins": [
       "python/property_tensors.py"
@@ -13292,7 +13376,11 @@
   {
     "source": "任意一致单位；参数是教学输入，非材料测量常数",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/response/units",
+      "python-fixture/tensor-replay.json/cases/1/result/response/units",
+      "python-fixture/tensor-replay.json/cases/2/result/response/units",
+      "python-fixture/tensor-replay.json/cases/3/result/response/units"
     ]
   },
   {
@@ -13304,13 +13392,20 @@
   {
     "source": "自定义生成元所生成的对称群",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/group/label",
+      "python-fixture/tensor-replay.json/cases/1/result/group/label",
+      "python-fixture/tensor-replay.json/cases/2/result/group/label",
+      "python-fixture/tensor-replay.json/cases/3/result/group/label"
     ]
   },
   {
     "source": "本非磁性预设含独立时间反演 1′；线性磁电张量必须为零。自定义输入仅施加明确给出的生成元。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/8/result/assumptions/5",
+      "python-fixture/tensor-replay.json/cases/9/result/assumptions/5",
+      "python-fixture/tensor-replay.json/cases/10/result/assumptions/5"
     ]
   },
   {
@@ -13328,7 +13423,11 @@
   {
     "source": "写出响应和内禀对称性",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/0/title",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/0/title",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/0/title",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/0/title"
     ]
   },
   {
@@ -13340,7 +13439,11 @@
   {
     "source": "将每个对称生成元作用于全部指标",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/1/title",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/1/title",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/1/title",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/1/title"
     ]
   },
   {
@@ -13352,7 +13455,11 @@
   {
     "source": "求精确不变子空间",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/2/title",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/2/title",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/2/title",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/2/title"
     ]
   },
   {
@@ -13364,19 +13471,31 @@
   {
     "source": "读出允许形式",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/3/title",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/3/title",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/3/title",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/3/title"
     ]
   },
   {
     "source": "令 t=Σ aₙ bₙ。零元是禁止项；重复表达式给出相等关系。aₙ 为独立实参数。",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/3/detail",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/3/detail",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/3/detail",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/3/detail"
     ]
   },
   {
     "source": "给定参数后检验物理响应",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/4/title",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/4/title",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/4/title",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/4/title"
     ]
   },
   {
@@ -13388,13 +13507,19 @@
   {
     "source": "单位单轴应变 ε=n⊗n",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/9/result/curve_input",
+      "python-fixture/tensor-replay.json/cases/10/result/curve_input"
     ]
   },
   {
     "source": "单位场 n",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/0/result/curve_input",
+      "python-fixture/tensor-replay.json/cases/1/result/curve_input",
+      "python-fixture/tensor-replay.json/cases/2/result/curve_input",
+      "python-fixture/tensor-replay.json/cases/3/result/curve_input"
     ]
   },
   {
@@ -13460,13 +13585,16 @@
   {
     "source": "工程应变 (εxx, εyy, εzz, 2εyz, 2εxz, 2εxy)",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/9/result/response/input_label",
+      "python-fixture/tensor-replay.json/cases/10/result/response/input_label"
     ]
   },
   {
     "source": "应力 (σxx, σyy, σzz, σyz, σxz, σxy)",
     "origins": [
-      "python/property_tensors.py"
+      "python/property_tensors.py",
+      "python-fixture/tensor-replay.json/cases/10/result/response/output_label"
     ]
   },
   {
@@ -22566,6 +22694,135 @@
     "source": "采用厄米生成元 Tₐ=σₐ/2，tr(TₐTᵦ)=δₐᵦ/2。U(θ)=exp(−iθT)；θ 为弧度；数学上 su(n) 的反厄米生成元为 −iT。",
     "origins": [
       "python-fixture/lie-foundations-ui.json/su2/result/generatorConvention"
+    ]
+  },
+  {
+    "source": "P_i = χ_ij E_j（演示吸收单位因子）；χ_ij = χ_ji。初始独立分量 6 个。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/6/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/7/result/derivation/0/detail"
+    ]
+  },
+  {
+    "source": "T = R⊗2 · T；时间反演偶。本组有 1 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/6/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/7/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/11/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 2，零空间维数为 4。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/2/detail",
+      "python-fixture/tensor-replay.json/cases/7/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "绕实验室 z 轴旋转晶体张量，对输入场或工程应变做收缩；方位曲线沿 xy 平面扫描单位方向。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/0/result/derivation/4/detail",
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/4/detail",
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/4/detail",
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/4/detail",
+      "python-fixture/tensor-replay.json/cases/4/result/derivation/4/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 4，零空间维数为 2。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/1/result/derivation/2/detail",
+      "python-fixture/tensor-replay.json/cases/6/result/derivation/2/detail",
+      "python-fixture/tensor-replay.json/cases/11/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "T = R⊗2 · T；时间反演偶。本组有 2 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 5，零空间维数为 1。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/2/result/derivation/2/detail",
+      "python-fixture/tensor-replay.json/cases/8/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "P_i = α_ij H_j；不预设 α_ij = α_ji。初始独立分量 9 个。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/4/result/derivation/0/detail",
+      "python-fixture/tensor-replay.json/cases/5/result/derivation/0/detail"
+    ]
+  },
+  {
+    "source": "T = τ det(R) R ⊗ R · T，τ = −1（带时间反演）或 +1。本组有 1 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/4/result/derivation/1/detail",
+      "python-fixture/tensor-replay.json/cases/5/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 9，零空间维数为 0。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/3/result/derivation/2/detail",
+      "python-fixture/tensor-replay.json/cases/4/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 0，零空间维数为 9。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/5/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "T = R⊗2 · T；时间反演偶。本组有 4 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/8/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "P_i = e_ijk ε_jk；e_ijk = e_ikj。初始独立分量 18 个。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/9/result/derivation/0/detail"
+    ]
+  },
+  {
+    "source": "T = R⊗3 · T；时间反演偶。本组有 4 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/9/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 17，零空间维数为 1。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/9/result/derivation/2/detail"
+    ]
+  },
+  {
+    "source": "σ_ij = C_ijkl ε_kl；C_ijkl = C_jikl = C_ijlk = C_klij。初始独立分量 21 个。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/10/result/derivation/0/detail"
+    ]
+  },
+  {
+    "source": "T = R⊗4 · T；时间反演偶。本组有 4 个输入生成元。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/10/result/derivation/1/detail"
+    ]
+  },
+  {
+    "source": "构建 (D(g)−I)t=0；约束矩阵秩为 18，零空间维数为 3。",
+    "origins": [
+      "python-fixture/tensor-replay.json/cases/10/result/derivation/2/detail"
     ]
   }
 ]

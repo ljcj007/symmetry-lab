@@ -186,6 +186,154 @@ def _matrix_form(kind, values):
     return [[values[tuple(sorted((i, j)))] for j in range(6)] for i in range(6)]
 
 
+def _replay_matrix(matrix):
+    return [[str(value) for value in row] for row in matrix.tolist()]
+
+
+def _replay_numeric(matrix):
+    return [[float(value) for value in row] for row in matrix.tolist()]
+
+
+def _replay_zero(matrix):
+    return all(sp.simplify(value) == 0 for value in matrix)
+
+
+def _replay_parity(kind, rotation, primed):
+    parity = -1 if primed and _KINDS[kind]["time_odd"] else 1
+    return sp.simplify(parity * rotation.det()) if _KINDS[kind]["axial"] else sp.Integer(parity)
+
+
+def _replay_action(kind, rotation, primed, representatives, tensor_basis):
+    parity = _replay_parity(kind, rotation, primed)
+    columns = []
+    for tensor in tensor_basis:
+        transformed = parity * rotation * tensor * rotation.T
+        columns.append(sp.Matrix([sp.simplify(transformed[i, j]) for i, j in representatives]))
+    return sp.ImmutableMatrix(sp.Matrix.hstack(*columns))
+
+
+def _replay_closure(generators, limit=96):
+    """Bounded exact right-generator closure, including time-reversal labels.
+
+    Reaching an unrepresented 97th element does not prove an infinite group.
+    A group of exactly 96 elements is certified only after its queue is exhausted.
+    """
+    identity = (tuple(sp.eye(3)), False)
+    known, queue = {identity}, [identity]
+    cursor, multiplications = 0, 0
+    while cursor < len(queue):
+        flat, primed = queue[cursor]
+        rotation = sp.Matrix(3, 3, flat)
+        cursor += 1
+        for other_flat, other_primed in generators:
+            product = rotation * sp.Matrix(3, 3, other_flat)
+            product = tuple(sp.simplify(value) for value in product)
+            candidate = (product, primed != other_primed)
+            multiplications += 1
+            if candidate not in known:
+                if len(queue) >= limit:
+                    return None, len(queue), multiplications
+                known.add(candidate)
+                queue.append(candidate)
+    return tuple(queue), len(queue), multiplications
+
+
+def _tensor_replay(kind, generators):
+    """Expose the actual small rank-two constraints and an exact finite average.
+
+    This optional explanation does not replace the original generator solver.
+    The raw symmetric coordinates are not an orthonormal tensor basis: the
+    Frobenius metric explicitly counts each off-diagonal entry twice.
+    """
+    replay = {"schema": "symmetry-lab-tensor-replay-1", "available": False, "reason": ""}
+    if kind not in ("dielectric", "magnetoelectric"):
+        replay["reason"] = "精确回放首批支持静态对称介电张量和一般静态线性磁电张量；原有张量计算结果保留。"
+        return replay
+    keys, representatives, basis, _, original_rank = _solve(kind, generators)
+    dimension = len(keys)
+    tensor_basis = []
+    for column in range(dimension):
+        values = {key: sp.Integer(index == column) for index, key in enumerate(keys)}
+        tensor_basis.append(sp.ImmutableMatrix(_matrix_form(kind, values)))
+    metric = sp.ImmutableMatrix(dimension, dimension,
+        lambda i, j: sp.trace(tensor_basis[i].T * tensor_basis[j]))
+    replay["coordinates"] = {
+        "order": ["xyz"[i] + "xyz"[j] for i, j in representatives],
+        "dimension": dimension,
+        "basis": [{"label": "xyz"[i] + "xyz"[j], "matrix": _replay_matrix(tensor),
+                   "matrixNumeric": _replay_numeric(tensor)}
+                  for (i, j), tensor in zip(representatives, tensor_basis)],
+        "metric": _replay_matrix(metric), "metricNumeric": _replay_numeric(metric)}
+    action_cache = {}
+
+    def operation(flat, primed, index):
+        rotation = sp.ImmutableMatrix(3, 3, flat)
+        parity = _replay_parity(kind, rotation, primed)
+        cache_key = (flat, parity)
+        if cache_key not in action_cache:
+            action_cache[cache_key] = _replay_action(kind, rotation, primed, representatives, tensor_basis)
+        action = action_cache[cache_key]
+        return {"index": index, "rotation": _replay_matrix(rotation),
+                "rotationNumeric": _replay_numeric(rotation), "timeReversal": primed,
+                "determinant": str(sp.simplify(rotation.det())), "parity": str(parity),
+                "action": _replay_matrix(action), "actionNumeric": _replay_numeric(action)}, action
+
+    displayed, actions, blocks = [], [], []
+    for index, (flat, primed) in enumerate(generators):
+        item, action = operation(flat, primed, index)
+        constraint = action - sp.eye(dimension)
+        item["constraint"] = _replay_matrix(constraint)
+        item["constraintNumeric"] = _replay_numeric(constraint)
+        displayed.append(item)
+        actions.append(action)
+        blocks.append(constraint)
+    stacked = sp.Matrix.vstack(*blocks)
+    rref, pivots = stacked.rref(simplify=True)
+    invariant_basis = sp.Matrix.hstack(*basis) if basis else sp.zeros(dimension, 0)
+    replay["generators"] = displayed
+    replay["constraints"] = {
+        "matrix": _replay_matrix(stacked), "matrixNumeric": _replay_numeric(stacked),
+        "shape": [stacked.rows, stacked.cols], "rank": len(pivots),
+        "rref": _replay_matrix(rref), "pivots": list(pivots),
+        "nullity": len(basis), "nullspace": [[str(value) for value in vector] for vector in basis]}
+    closure, visited, multiplications = _replay_closure(generators)
+    replay["finiteGroup"] = {
+        "certified": closure is not None, "order": len(closure) if closure is not None else None,
+        "limit": 96, "discoveredOperationCount": visited, "multiplications": multiplications,
+        "operations": [], "reason": ""}
+    replay["projector"] = None
+    replay["projectorNumeric"] = None
+    replay["checks"] = {}
+    if closure is None:
+        replay["reason"] = "有界闭包尝试需要超过96个带时间标记的操作，未认证有限群；这不是无限群的证明，原生成元约束计算仍有效。"
+        replay["finiteGroup"]["reason"] = replay["reason"]
+        return replay
+    total = sp.zeros(dimension)
+    for index, (flat, primed) in enumerate(closure):
+        item, action = operation(flat, primed, index)
+        replay["finiteGroup"]["operations"].append(item)
+        total += action
+    projector = (total / len(closure)).applyfunc(sp.simplify)
+    basis_projector = (invariant_basis * (invariant_basis.T * metric * invariant_basis).inv()
+                       * invariant_basis.T * metric) if basis else sp.zeros(dimension)
+    checks = {
+        "idempotent": _replay_zero(projector * projector - projector),
+        "metricSelfAdjoint": _replay_zero(projector.T * metric - metric * projector),
+        "constraintsAnnihilateProjector": _replay_zero(stacked * projector),
+        "basisColumnSpaceMatches": _replay_zero(projector - basis_projector),
+        "generatorMetricIsometries": all(_replay_zero(action.T * metric * action - metric) for action in actions),
+        "basisInvariant": _replay_zero(stacked * invariant_basis),
+        "rankMatchesOriginal": len(pivots) == original_rank,
+        "nullityMatchesDimension": dimension - len(pivots) == len(basis)}
+    replay["projector"] = _replay_matrix(projector)
+    replay["projectorNumeric"] = _replay_numeric(projector)
+    replay["checks"] = checks
+    replay["available"] = all(checks.values())
+    replay["reason"] = ("精确生成元约束与已闭合有限群平均相互核验；数值副本用于展示，不替代精确矩阵。"
+                        if replay["available"] else "精确回放内部恒等式核验未通过；原有张量计算结果保留。")
+    return replay
+
+
 def _finite(value, name):
     if type(value) not in (int, float) or not math.isfinite(value) or abs(value) > 1000000:
         raise ValueError(name + " 必须为绝对值不超过 1000000 的有限实数")
@@ -257,6 +405,8 @@ def run_tensors(payload):
     """JSON-only API. Exact symbolic basis + chosen numerical response in Python."""
     if not isinstance(payload, dict):
         raise ValueError("输入必须为对象")
+    if "replay" in payload and type(payload["replay"]) is not bool:
+        raise ValueError("replay 必须为 true 或 false")
     preset = payload.get("preset", "cubic_m3m")
     if not isinstance(preset, str) or preset not in (*_PRESETS, "custom"):
         raise ValueError("未知物性张量 preset")
@@ -344,7 +494,7 @@ def run_tensors(payload):
         {"title": "读出允许形式", "detail": "令 t=Σ aₙ bₙ。零元是禁止项；重复表达式给出相等关系。aₙ 为独立实参数。"},
         {"title": "给定参数后检验物理响应", "detail": "绕实验室 z 轴旋转晶体张量，对输入场或工程应变做收缩；方位曲线沿 " + plane + " 平面扫描单位方向。"},
     ]
-    return {"lab": "property_tensors", "preset": preset, "group": group, "tensor": metadata,
+    result = {"lab": "property_tensors", "preset": preset, "group": group, "tensor": metadata,
             "independent_count": len(basis), "intrinsic_count": len(keys), "constraint_rank": constraint_rank,
             "constraint_rows": row_count, "symbols": [str(symbol) for symbol in symbols],
             "parameters": {str(symbol): coefficients[n] for n, symbol in enumerate(symbols)},
@@ -356,3 +506,6 @@ def run_tensors(payload):
             "curve_input": "单位单轴应变 ε=n⊗n" if is_strain else "单位场 n",
             "derivation": steps, "assumptions": assumptions, "sources": sources,
             "exact": True, "engine": "Python / SymPy"}
+    if payload.get("replay") is True:
+        result["replay"] = _tensor_replay(kind, generators)
+    return result

@@ -97,7 +97,63 @@ const edgeDefinitions=[
  [quantum('geometry-diagnostics'),response('hall-occupation'),'先核对 QWZ 下带的曲率取向、全局能隙与积分收敛，再为响应模型明确以 eV 计的能标，不直接沿用无单位数值，然后加入两带费米占据与电子电荷符号。'],
  [response('hall-occupation'),response('hall-entropy'),'保持能带曲率和电流约定不变，把占据权重换成费米熵权重，比较霍尔与横向热电的抵消条件。'],
  [response('hall-entropy'),response('hall-diagnostics'),'先分清占据加权片电导与熵加权输运系数，再判断开路信号所需张量及每个扫描点的数值检查。'],
- [quantum('geometry-diagnostics'),response('hall-diagnostics'),'把离散 FHS 整数与普通曲率求积的不同误差检查带入响应积分；分别比较 N→2N−1 与 N→2N 网格。']
+ [quantum('geometry-diagnostics'),response('hall-diagnostics'),'把离散 FHS 整数与普通曲率求积的不同误差检查带入响应积分；分别比较 N→2N−1 与 N→2N 网格。'],
+ // Phonon input, mode spaces and equilibrium response tensors.
+ // Optional transfers; a link does not certify a complete derivation or material calculation.
+ [ref("material-observables","mechanical-modes"),ref("structure-dynamics","soft-modes"),"先固定原子顺序与 3N 维置换—位移作用，再加入质量和力常数，区分对称适配基与质量加权动力学本征矢。"],
+ [ref("structure-dynamics","soft-modes"),ref("structure-dynamics","phonopy-files"),"先用 e_j/√m_j 和有限 q 的复相位还原位移，再核对文件是否提供原胞、质量和 3N 分支；频率单位确认不会自动换算原数字。"],
+ [ref("structure-dynamics","phonopy-files"),ref("material-research","mode-audit"),"先核对文件的原胞、单位和本征矢字段，再检查原子顺序、配套结构与声学平移；同一化学式或文件摘要不能独自证明模式与结构对应。"],
+ [ref("material-research","mode-audit"),ref("material-research","mode-subspaces"),"先确认有序结构、质量与本征矢一致，再对完整频率簇检验子空间封闭；有限 q 或未覆盖点群不能直接套用 Γ 点标签。"],
+ [ref("pointgroup-lessons","character-reduction"),ref("material-research","mode-subspaces"),"沿用同一操作和类权重下的字符内积，约化已经封闭的模式子空间，分清频率簇维数、不可约维数与重数。"],
+ [ref("material-research","mode-subspaces"),ref("material-research","mode-freezing"),"先分清整个子空间的标签与所选基矢，再固定复模式、相位和长度幅度，检查 n_i q_i 为整数；冻结快照不是弛豫后的稳定结构。"],
+ [ref("material-research","thermal-oscillator"),ref("material-research","thermal-data"),"先按 hν（ν 为普通频率）计算单模统计量，再用完整网格权重或规范化总 DOS 累加，并保留每原胞或输入计算胞的计量口径。"],
+ [ref("material-research","thermal-oscillator"),ref("material-research","thermal-limits"),"先数清整个原胞的 3n 个模式，再比较 Einstein 的指数抑制、三维 Debye 的 T³ 和共同的 3nR 高温极限；不把 Cv 当作 Cp 或热导率。"],
+ [ref("material-observables","ir-raman"),ref("material-observables","polarization"),"先用极向量和对称二次函数判定允许通道，再收缩具体 Raman 张量与两端偏振；对称允许不保证某一几何有强度，示意峰位也不是材料预测。"],
+ [ref("material-observables","neumann"),ref("material-observables","piezoelectricity"),"先逐 Cartesian 指标求公共张量约束，再对 P_i=e_ijk ε_jk 加入 j、k 交换对称；完整指标求和与工程剪切 γ=2ε 的因子二须一致，e 不能直接换成 d。"],
+ [ref("symmetry-course-lessons","magnetic-01"),ref("material-observables","magnetoelectricity"),"先分别变换时间偶的极向量与时间奇的轴向量，再对 P=αH 推导 τdet(R) 的约束；i、1′ 各自禁止静态 α，而仅有 i′ 不限制其九个分量。"],
+ [ref("material-observables","neumann"),ref("material-observables","magnetoelectricity"),"沿用逐生成元求公共不变子空间的方法，但先明确响应两端的极性、轴性与时间奇偶；一般磁电 α 有九个未知量，不能照搬介电张量的指标对称性。"],
+ // Bulk transport, open devices, pairing and electron–hole charge ledgers.
+ // Optional transfers; a link does not certify a complete derivation or material calculation.
+ [ref("quantum-materials","transport-window"),ref("quantum-materials","transport-seebeck"),"先以完整 BZ 的速度平方和费米导数确定 L₀，再加 E−μ 权重构造 L₁、L₂；导入能量用 eV、速度用 m/s，带内 Boltzmann 矩不是器件透射。"],
+ [ref("connections-materials","reciprocity-onsager"),ref("quantum-materials","transport-seebeck"),"先声明熵共轭流与力、电子电荷和热流约定，再施加开路条件理解 κ 的回流扣除；无量纲 Onsager 演示系数不能直接作为 SI 输运能量矩。"],
+ [ref("quantum-materials","transport-seebeck"),ref("quantum-materials","transport-validation"),"先判断 τ 在哪些比值中抵消，再核对自旋计数、费米窗口网格及二维片系数 S、W/K；三维体系数另用 S/m、W/(m K)，未定义值不能填零。"],
+ [ref("response-materials","device-open"),ref("response-materials","device-scattering"),"先固定推迟引线格林函数、接触自能和带内通道，再用同一链的势垒或弱接触核验透射；能量用 eV，人工吸收 η 不是 Boltzmann 的弛豫时间 τ。"],
+ [ref("response-materials","device-scattering"),ref("response-materials","device-ssh"),"先用断开接触时仍有 LDOS 而 T=0 的反例区分局域谱与传输，再固定 SSH 终止和接触，逐键核对注入通量及 η 损失。"],
+ [ref("lie-group-lessons","singlet-triplet-exchange"),ref("electronic-materials","pairing-exchange"),"把两自旋的反对称单态落实为 iσy，再连同 k→−k 检验 Δ(k)=−Δᵀ(−k)；单轨道单态要求偶动量函数，但二聚体交换能不提供配对吸引或 Tc。"],
+ [ref("electronic-materials","pairing-exchange"),ref("electronic-materials","pairing-nodes"),"先固定 D₄h 基函数和四维 Nambu 空间，再联立 Δ(k)=0 与 ξ(k)=0 判断节点；本模型共用任意能量单位，配对标签不单独决定全能隙。"],
+ [ref("electronic-materials","pairing-exchange"),ref("electronic-materials","pairing-kitaev"),"先掌握完整费米交换条件，再从单态偶动量配对转到单个无自旋轨道的奇动量键配对；区分 2×2 体 BdG 矩阵与 2N 维开放链，不额外复制自旋。"],
+ [ref("response-materials","device-open"),ref("spectroscopy-materials","andreev-charge"),"先掌握正常引线的推迟自能和入射通道，再扩展到电子—空穴块，分账正常反射、Andreev 反射和准粒子透射；亚隙透射为零不等于电荷电导为零。"],
+ [ref("electronic-materials","pairing-exchange"),ref("spectroscopy-materials","andreev-charge"),"先分清单态 BdG 的 Nambu 冗余，再转到 NS 的 (e↑,h↓) 块与电荷通量；须明确把任意能标定为 eV，并重新核对粒子—空穴矩阵，不能重复计入自旋。"],
+ [ref("spectroscopy-materials","andreev-charge"),ref("spectroscopy-materials","andreev-barriers"),"先建立 1−Ree+Rhe 的电荷账本，再仅令同一器件 Δ=0 得到正常参考；固定接触和 η 后检验加倍条件，有限能量谱不等于自洽有限偏压 I(V)。"],
+ [ref("spectroscopy-materials","andreev-barriers"),ref("spectroscopy-materials","andreev-checks"),"先固定单变量正常参考，再配对 E 与 −E 的电子/空穴入射并计入 η 吸收，核对准粒子通量；阈值空点不能填零，η 与能量步长须分别收敛。"],
+ // Site-to-Bloch representations, finite-q patterns and nonsymmorphic bands.
+ // Optional transfers; a link does not certify a complete derivation or material calculation.
+ [ref("symmetry-course-lessons","space-04"),ref("pathways-materials","bandrep-real-space"),"先按同一原胞平移求实空间位点轨道与稳定子，再附加局域轨道构造 Bloch 纤维；位点数乘局域维数不是机械表示的 3N 计数，也不自动构成 EBR。"],
+ [ref("pathways-materials","bandrep-real-space"),ref("pathways-materials","bandrep-bloch-phase"),"保留同一组有序位点和局域基，把折回原胞的整格余量放入同一周期规范的 Bloch 矩阵；若旋转后的 k 不等价原 k，就不是同一纤维内的对称标签。"],
+ [ref("pathways-materials","bandrep-bloch-phase"),ref("pathways-materials","bandrep-decomposition"),"先保存 Seitz 代表元相乘的整格缺陷和 k 相位，再用同一因子系统的小表示字符约化；边界射影二维性不必来自自旋或时间反演。"],
+ [ref("pathways-materials","bandrep-decomposition"),ref("material-research","band-restriction"),"先会分解固定 k 的小群表示，再把端点表示限制到线上共同操作；保持设置、规范和因子系统一致，不把三维轨道数值原样复制到二维 C4v 模型。"],
+ [ref("material-research","band-restriction"),ref("material-research","band-crossing"),"先确定线上实际保留的镜面和分支本征值，再检验禁止混合与破缺开隙；不同标签允许交叉但不强迫能量相遇，母相标签不能沿用到破缺后的混合态。"],
+ [ref("material-research","band-spin"),ref("construction-materials","nonsymmorphic-partner"),"先分清双值镜面平方、时间反演平方和 TRIM，再加入半平移的端点配对；一般 k 的伙伴在 −k，单值端点配对不能直接称为自旋 Kramers 简并。"],
+ [ref("pathways-materials","bandrep-bloch-phase"),ref("construction-materials","nonsymmorphic-bloch"),"先用位点置换和整格余量构造无自旋 Bloch 矩阵，再加入自旋提升；群4沿 z 用分数 k_z，线模型沿 x 用弧度 k_x=2πf_x，两种相位不能混用。"],
+ [ref("construction-materials","nonsymmorphic-bloch"),ref("construction-materials","nonsymmorphic-partner"),"先核实半平移、自旋平方及动量不变条件，再在简并能量子空间内求操作标签和端点伙伴；操作本征值曲线不是能量色散。"],
+ [ref("construction-materials","nonsymmorphic-partner"),ref("construction-materials","nonsymmorphic-breaking"),"先列出伙伴交换的空间与反幺正条件，再一次删除一个约束检查全线能隙和端点；保留 Kramers 端点不保证中间两带连接，全线直接隙也不是三维绝缘隙。"],
+ [ref("symmetry-course-lessons","space-05"),ref("construction-materials","wavevector-star"),"先把保持单个 q 的小群同改变星臂的操作分开，再用 ±q 共轭配对构造实模式；本实验是有限方格上的标量场，不是一般三维原子位移表示。"],
+ [ref("construction-materials","wavevector-star"),ref("construction-materials","wavevector-cell"),"先声明完整星及真正非零的 Fourier 分量，再求当前图案的稳定子与平移子群；相容矩形超胞不必是最小斜胞，面积不等于平移指数。"],
+ [ref("construction-materials","wavevector-star"),ref("construction-materials","wavevector-satellites"),"先按同一 ±q 和 Fourier 约定把余弦幅度转成复系数，再比较相位和强度；A²/4 不适用于重复计算的自共轭臂，标量强度也不是实验衍射强度。"],
+ // SU(3) weights, CG copies and triple/four-factor recoupling.
+ // Optional transfers; a link does not certify a complete derivation or material calculation.
+ [ref("lie-group-lessons","generators-commutators"),ref("lie-group-lessons","su3-generators"),"先固定厄米生成元、矩阵指数和对易子中的 i，再用 T_a=λ_a/2 构造三能级 SU(3)；界面角度先由度转弧度，八个生成元不等于八个态振幅。"],
+ [ref("lie-group-lessons","su3-generators"),ref("lie-group-lessons","su3-weights"),"先明确三分量态和 T3、T8 的对角矩阵，再画共同本征值与升算符连接的权差；叠加态的权平均可以不动，但相对相位仍会改变。"],
+ [ref("lie-group-lessons","su3-weights"),ref("lie-group-lessons","su3-dynkin-representations"),"先分清权、根与权平均，再用最高权 (p,q) 标记不可约类型并保留坐标重数；GT 的整数 H1、H2 须换成 T3、T8，零权重数不同于外重数。"],
+ [ref("lie-group-lessons","su3-dynkin-representations"),ref("lie-group-lessons","su3-cg-change-basis"),"先数清类型、维数、权与外重数，再把 (R,α,μ) 落实为 CG 矩阵的列；列是耦合态的乘积展开，乘积→耦合用 C†，不是概率表相乘。"],
+ [ref("lie-group-lessons","su3-cg-change-basis"),ref("lie-group-lessons","su3-cg-fundamental"),"先固定列展开、复共轭和 GT 约定，再从交换对称与迹不变构造 3⊗3、3⊗3̄；反基本基底 (s̄,−d̄,ū) 的相位须连同生成元一起转换。"],
+ [ref("lie-group-lessons","su3-cg-fundamental"),ref("lie-group-lessons","su3-cg-multiplicity"),"先在 3⊗3 用交换算符区分对称与反对称通道，再处理 8⊗8 的两份等价八重态；旋转副本基底要同步变换态与交换算符，不能混同内部零权态。"],
+ [ref("lie-group-lessons","su3-cg-higher-representations"),ref("lie-group-lessons","su3-cg-exact-radicals"),"先用 Dynkin 加框分清 10⊗3 的 15′ 与 15，再在同权块用降算符和正交性构造根式；精确 CG 限 N≤81，数值限 N≤256，不从小数猜根式。"],
+ [ref("lie-group-lessons","su3-cg-multiplicity"),ref("lie-group-lessons","su3-racah-coupling-paths"),"先掌握二元 CG 的副本标签，再分别保留两个顶点的外重数来构造三体路径；Racah 大小由最终表示重数决定，三重接口仅允许 p+q≤2 的外部因子。"],
+ [ref("lie-group-lessons","su3-racah-coupling-paths"),ref("lie-group-lessons","su3-racah-exact-sixj"),"先从同一最终内部态的嵌入求 F=V_R†V_L，再手算三个 3 的精确重叠；维数缩约 S=F/√(dE dF) 满足加权正交，用来换态的仍是 F。"],
+ [ref("lie-group-lessons","su3-racah-coupling-paths"),ref("lie-group-lessons","su3-ninej-paired-trees"),"先按二元顶点枚举三体路径，再扩展到四体的三个顶点副本，并把右树 ACBD 重排为 ABCD 后求重叠；这一步不自动附加费米交换负号。"],
+ [ref("lie-group-lessons","su3-ninej-paired-trees"),ref("lie-group-lessons","su3-ninej-exact-normalization"),"先统一因子次序和所有副本标签，再手算四个 3 的 3×3 R；9j 缩约权重是两叶支维数的乘积，S 满足带权正交，不能代替 R 乘态。"],
+ [ref("lie-group-lessons","su3-dynkin-representations"),ref("lie-group-lessons","su3-ninej-high-input-labels"),"先按 (p,q)、共轭和 Casimir 分清 15 与 15′，再分别记四个输入、最终根与各顶点副本；四体总 N≤4096，不等于允许任意四个高维因子。"]
 ];
 
 export const lessonProgressionEdges=Object.freeze(edgeDefinitions.map(([from,to,reason])=>Object.freeze({from,to,reason})));

@@ -13,7 +13,9 @@ assert.equal(example.generator.settings.is_nac,false);
 assert.equal(example.generator.versions.phonopy,'4.10.0');
 assert.deepEqual([example.counts.atoms,example.counts.qpointOccurrences,example.counts.bandsPerQ,example.counts.eigenvectors,example.defaultSelection.frozenAtoms],[4,4,12,48,64]);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.deepEqual([lessonProgressionInventory.length,reviewed.size,lessonProgressionEdges.length],[197,65,82]);
+assert.equal(lessonProgressionInventory.length,197);
+assert.ok(reviewed.size>=65&&lessonProgressionEdges.length>=82);
+assert.equal(hash(Buffer.from(JSON.stringify(lessonProgressionEdges.slice(0,82)))),'998a4da95dc3a201e64ed830c2a4f5f58306477fec8aa66cbd6f27d6ee5dfff8');
 const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.txt','GOAL-ROADMAP.md','package.json','scripts/english-catalog.mjs',
  'dist/index.html','dist/app.js','dist/classroom-ui.js','dist/lesson-progression.js','dist/material-notebook.js','dist/material-research-ui.js','dist/structure-dynamics-ui.js','dist/tool-capabilities.js','dist/python-client.js','dist/python-worker.js',
  'dist/python/phonopy_import.py','dist/python/phonon_modes.py','dist/docs/phonopy-import.md','dist/docs/material-research.md',
@@ -24,6 +26,8 @@ const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.
 const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf8-lf-v1 for registered text dependencies; original-byte dataset identities are recorded separately',
  scope:'Reviewed cross-course links and one authentic unequal-mass phonon input-to-frozen-export workflow. Browser calculations read supplied eigenvectors; Phonopy force-data postprocessing is reproducible offline.',
  counts:{indexedLessons:197,reviewedLessons:65,optionalEdges:82,newlyConnectedReadLessons:21,newOptionalEdges:34,primitiveAtoms:4,qpoints:4,bandsPerQ:12,eigenvectors:48,commensurateFrozenAtoms:64},
+ countsScope:'Original ZnO-release snapshot. Later reviewed connections are recorded separately in currentGraph.',
+ currentGraph:{indexedLessons:lessonProgressionInventory.length,reviewedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length},
  sourceByteIdentities:{qpoints:{file:example.localFile,sha256:example.sha256,bytes:example.byteCount,newline:example.newline},companion:example.companion,upstreamInputs:example.inputs,license:{file:example.licenseFile,sha256:example.licenseSha256,bytes:example.licenseByteCount}},
  generation:{classification:example.classification,commit:example.commit,generator:example.generator},
  verification:['All 48 supplied modes have independently checked orthogonality, Hermitian dynamical matrices and eigenpair/frequency residuals. The selected nondegenerate complex mode has independently checked mass unweighting, spatial phases and all exported 64-atom coordinates.',

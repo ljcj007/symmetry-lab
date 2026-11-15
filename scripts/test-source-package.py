@@ -23,6 +23,7 @@ builders = [
     'build-evidence-workflows-provenance', 'build-precision-teaching-provenance',
     'build-actions-teaching-provenance', 'build-derivation-teaching-provenance',
     'build-zno-workflow-provenance',
+    'build-tensor-teaching-provenance',
 ]
 temp_root = Path(tempfile.gettempdir()).resolve()
 with tempfile.TemporaryDirectory(prefix='symmetry-source-check-', dir=temp_root) as temp:

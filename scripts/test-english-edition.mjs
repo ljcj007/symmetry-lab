@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {parse} from 'acorn';
 import {fileURLToPath} from 'node:url';
 import {loadEnglishCatalog} from './english-catalog.mjs';
@@ -65,6 +66,12 @@ for(const name of fs.readdirSync(en).filter(x=>x.endsWith('.js'))){
  }
 }
 assert.match(fs.readFileSync(path.join(en,'python-worker.js'),'utf8'),/new URL\('\.\.\/', import\.meta\.url\)/,'Worker resources must use the shared Python tree');
+const englishWorker=fs.readFileSync(path.join(en,'python-worker.js'),'utf8');
+for(const [relative,dependency] of [['../english-results.js','english-results.js'],['./data/python-messages.json','en/data/python-messages.json']]){
+ const body=fs.readFileSync(path.join(dist,dependency),'utf8').replace(/\r\n?/g,'\n');
+ const version='sha256-'+createHash('sha256').update(body).digest('hex').slice(0,20);
+ assert.ok(englishWorker.includes(relative+'?v='+version),'The English worker must invalidate changed '+dependency+' content');
+}
 for(const name of ['style.css','language-switch.css','language-switch.js','english-results.js','icon.svg','vendor/katex/katex.min.css','vendor/katex/katex.mjs','python/browser_api.py','data/space-groups.json','data/magnetic-groups.json','data/points.json'])assert.ok(fs.existsSync(path.join(dist,name)),name);
 assert.equal(fs.readdirSync(path.join(en,'docs')).filter(x=>x.endsWith('.md')).length,fs.readdirSync(path.join(dist,'docs')).filter(x=>x.endsWith('.md')).length,'All documentation must be available in English');
 // These are scientific distinctions that a fluent but incorrect translation

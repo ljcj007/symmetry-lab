@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {createHash} from 'node:crypto';
 import {lessonProgression,lessonProgressionHTML,lessonProgressionEdges,lessonProgressionInventory,lessonProgressionCatalogs,progressionForSelection} from '../dist/lesson-progression.js';
 import {parseClassroomRoute} from '../dist/classroom-ui.js';
 import {progressionIndexSource} from './build-lesson-progression-index.mjs';
@@ -12,9 +13,12 @@ assert.equal(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n'),progressionIndex
 const inventory=new Map(lessonProgressionInventory.map(item=>[item.key,item]));
 assert.equal(inventory.size,197);
 assert.equal(lessonProgressionCatalogs.length,17);
-assert.equal(lessonProgressionEdges.length,82);
+assert.equal(lessonProgressionEdges.length,130);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.equal(reviewed.size,65,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(reviewed.size,112,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(0,82))).digest('hex'),
+ '998a4da95dc3a201e64ed830c2a4f5f58306477fec8aa66cbd6f27d6ee5dfff8',
+ 'The preceding 82 optional connections, their reasons and their order remain unchanged');
 
 for(const definition of lessonProgressionCatalogs){
  const actual=JSON.parse(fs.readFileSync(new URL('../dist/data/'+definition.catalog+'.json',import.meta.url),'utf8'));
@@ -68,6 +72,283 @@ const additionalKeys=Object.entries(newReadGroups).flatMap(([catalog,ids])=>ids.
 assert.equal(additionalKeys.length,21);
 for(const key of additionalKeys)assert.ok(reviewed.has(key),'A newly read lesson has an explicit reviewed connection: '+key);
 
+// This release was reviewed as four bounded scientific workflows, rather than
+// inferring dependencies from catalogue order. Keep the 48 reviewed pairs and
+// the 47 newly connected identities explicit while testing the real live routes.
+const newlyConnectedReadGroups={
+ "construction-materials": [
+  "nonsymmorphic-bloch",
+  "nonsymmorphic-breaking",
+  "nonsymmorphic-partner",
+  "wavevector-cell",
+  "wavevector-satellites",
+  "wavevector-star"
+ ],
+ "electronic-materials": [
+  "pairing-exchange",
+  "pairing-kitaev",
+  "pairing-nodes"
+ ],
+ "lie-group-lessons": [
+  "su3-cg-change-basis",
+  "su3-cg-exact-radicals",
+  "su3-cg-fundamental",
+  "su3-cg-higher-representations",
+  "su3-cg-multiplicity",
+  "su3-dynkin-representations",
+  "su3-generators",
+  "su3-ninej-exact-normalization",
+  "su3-ninej-high-input-labels",
+  "su3-ninej-paired-trees",
+  "su3-racah-coupling-paths",
+  "su3-racah-exact-sixj",
+  "su3-weights"
+ ],
+ "material-observables": [
+  "magnetoelectricity",
+  "piezoelectricity",
+  "polarization"
+ ],
+ "material-research": [
+  "band-crossing",
+  "band-restriction",
+  "band-spin",
+  "mode-audit",
+  "mode-freezing",
+  "mode-subspaces",
+  "thermal-data",
+  "thermal-limits"
+ ],
+ "pathways-materials": [
+  "bandrep-bloch-phase",
+  "bandrep-decomposition",
+  "bandrep-real-space"
+ ],
+ "quantum-materials": [
+  "transport-seebeck",
+  "transport-validation",
+  "transport-window"
+ ],
+ "response-materials": [
+  "device-open",
+  "device-scattering",
+  "device-ssh"
+ ],
+ "spectroscopy-materials": [
+  "andreev-barriers",
+  "andreev-charge",
+  "andreev-checks"
+ ],
+ "structure-dynamics": [
+  "phonopy-files",
+  "soft-modes"
+ ]
+};
+const newlyConnectedKeys=Object.entries(newlyConnectedReadGroups).flatMap(([catalog,ids])=>ids.map(id=>catalog+'::'+id));
+assert.equal(newlyConnectedKeys.length,47);
+const originalReviewed=new Set(lessonProgressionEdges.slice(0,82).flatMap(edge=>[edge.from,edge.to]));
+for(const key of newlyConnectedKeys){
+ assert.ok(!originalReviewed.has(key),'This lesson was index-only before the current review: '+key);
+ assert.ok(reviewed.has(key),'A reviewed operational transfer is installed: '+key);
+}
+assert.deepEqual(new Set([...reviewed].filter(key=>!originalReviewed.has(key))),new Set(newlyConnectedKeys));
+const reviewedAdditionPairs=[
+ [
+  "material-observables::mechanical-modes",
+  "structure-dynamics::soft-modes"
+ ],
+ [
+  "structure-dynamics::soft-modes",
+  "structure-dynamics::phonopy-files"
+ ],
+ [
+  "structure-dynamics::phonopy-files",
+  "material-research::mode-audit"
+ ],
+ [
+  "material-research::mode-audit",
+  "material-research::mode-subspaces"
+ ],
+ [
+  "pointgroup-lessons::character-reduction",
+  "material-research::mode-subspaces"
+ ],
+ [
+  "material-research::mode-subspaces",
+  "material-research::mode-freezing"
+ ],
+ [
+  "material-research::thermal-oscillator",
+  "material-research::thermal-data"
+ ],
+ [
+  "material-research::thermal-oscillator",
+  "material-research::thermal-limits"
+ ],
+ [
+  "material-observables::ir-raman",
+  "material-observables::polarization"
+ ],
+ [
+  "material-observables::neumann",
+  "material-observables::piezoelectricity"
+ ],
+ [
+  "symmetry-course-lessons::magnetic-01",
+  "material-observables::magnetoelectricity"
+ ],
+ [
+  "material-observables::neumann",
+  "material-observables::magnetoelectricity"
+ ],
+ [
+  "quantum-materials::transport-window",
+  "quantum-materials::transport-seebeck"
+ ],
+ [
+  "connections-materials::reciprocity-onsager",
+  "quantum-materials::transport-seebeck"
+ ],
+ [
+  "quantum-materials::transport-seebeck",
+  "quantum-materials::transport-validation"
+ ],
+ [
+  "response-materials::device-open",
+  "response-materials::device-scattering"
+ ],
+ [
+  "response-materials::device-scattering",
+  "response-materials::device-ssh"
+ ],
+ [
+  "lie-group-lessons::singlet-triplet-exchange",
+  "electronic-materials::pairing-exchange"
+ ],
+ [
+  "electronic-materials::pairing-exchange",
+  "electronic-materials::pairing-nodes"
+ ],
+ [
+  "electronic-materials::pairing-exchange",
+  "electronic-materials::pairing-kitaev"
+ ],
+ [
+  "response-materials::device-open",
+  "spectroscopy-materials::andreev-charge"
+ ],
+ [
+  "electronic-materials::pairing-exchange",
+  "spectroscopy-materials::andreev-charge"
+ ],
+ [
+  "spectroscopy-materials::andreev-charge",
+  "spectroscopy-materials::andreev-barriers"
+ ],
+ [
+  "spectroscopy-materials::andreev-barriers",
+  "spectroscopy-materials::andreev-checks"
+ ],
+ [
+  "symmetry-course-lessons::space-04",
+  "pathways-materials::bandrep-real-space"
+ ],
+ [
+  "pathways-materials::bandrep-real-space",
+  "pathways-materials::bandrep-bloch-phase"
+ ],
+ [
+  "pathways-materials::bandrep-bloch-phase",
+  "pathways-materials::bandrep-decomposition"
+ ],
+ [
+  "pathways-materials::bandrep-decomposition",
+  "material-research::band-restriction"
+ ],
+ [
+  "material-research::band-restriction",
+  "material-research::band-crossing"
+ ],
+ [
+  "material-research::band-spin",
+  "construction-materials::nonsymmorphic-partner"
+ ],
+ [
+  "pathways-materials::bandrep-bloch-phase",
+  "construction-materials::nonsymmorphic-bloch"
+ ],
+ [
+  "construction-materials::nonsymmorphic-bloch",
+  "construction-materials::nonsymmorphic-partner"
+ ],
+ [
+  "construction-materials::nonsymmorphic-partner",
+  "construction-materials::nonsymmorphic-breaking"
+ ],
+ [
+  "symmetry-course-lessons::space-05",
+  "construction-materials::wavevector-star"
+ ],
+ [
+  "construction-materials::wavevector-star",
+  "construction-materials::wavevector-cell"
+ ],
+ [
+  "construction-materials::wavevector-star",
+  "construction-materials::wavevector-satellites"
+ ],
+ [
+  "lie-group-lessons::generators-commutators",
+  "lie-group-lessons::su3-generators"
+ ],
+ [
+  "lie-group-lessons::su3-generators",
+  "lie-group-lessons::su3-weights"
+ ],
+ [
+  "lie-group-lessons::su3-weights",
+  "lie-group-lessons::su3-dynkin-representations"
+ ],
+ [
+  "lie-group-lessons::su3-dynkin-representations",
+  "lie-group-lessons::su3-cg-change-basis"
+ ],
+ [
+  "lie-group-lessons::su3-cg-change-basis",
+  "lie-group-lessons::su3-cg-fundamental"
+ ],
+ [
+  "lie-group-lessons::su3-cg-fundamental",
+  "lie-group-lessons::su3-cg-multiplicity"
+ ],
+ [
+  "lie-group-lessons::su3-cg-higher-representations",
+  "lie-group-lessons::su3-cg-exact-radicals"
+ ],
+ [
+  "lie-group-lessons::su3-cg-multiplicity",
+  "lie-group-lessons::su3-racah-coupling-paths"
+ ],
+ [
+  "lie-group-lessons::su3-racah-coupling-paths",
+  "lie-group-lessons::su3-racah-exact-sixj"
+ ],
+ [
+  "lie-group-lessons::su3-racah-coupling-paths",
+  "lie-group-lessons::su3-ninej-paired-trees"
+ ],
+ [
+  "lie-group-lessons::su3-ninej-paired-trees",
+  "lie-group-lessons::su3-ninej-exact-normalization"
+ ],
+ [
+  "lie-group-lessons::su3-dynkin-representations",
+  "lie-group-lessons::su3-ninej-high-input-labels"
+ ]
+];
+assert.deepEqual(lessonProgressionEdges.slice(82).map(({from,to})=>[from,to]),reviewedAdditionPairs,
+ 'Every reviewed pair is installed once; no unreviewed inferred links are substituted');
+
 // Inspect rendered native anchors, including links inside the optional overflow
 // disclosure. Availability never depends on completing the recommended lesson.
 const unescapeHref=value=>value.replace(/&amp;/g,'&');
@@ -105,6 +386,19 @@ const axial=edgeFor('symmetry-course-lessons::magnetic-01','principles-materials
 assert.match(english[axial.reason],/axial.*endpoints/);
 const grids=edgeFor('quantum-materials::geometry-diagnostics','response-materials::hall-diagnostics');
 assert.match(english[grids.reason],/2N−1.*2N/);
+
+// Inspect the explanations students actually receive at cross-model boundaries.
+const reasonFor=(from,to)=>english[edgeFor(from,to).reason];
+assert.match(reasonFor('material-research::thermal-oscillator','material-research::thermal-data'),/hν.*ordinary frequency.*primitive cell.*input calculation cell/);
+assert.match(reasonFor('material-observables::neumann','material-observables::piezoelectricity'),/engineering shear γ=2ε.*coefficient d/);
+assert.match(reasonFor('quantum-materials::transport-window','quantum-materials::transport-seebeck'),/eV.*m\/s.*Boltzmann.*not device transmission/);
+assert.match(reasonFor('connections-materials::reciprocity-onsager','quantum-materials::transport-seebeck'),/Dimensionless.*cannot.*SI/);
+assert.match(reasonFor('electronic-materials::pairing-exchange','spectroscopy-materials::andreev-charge'),/energy scale in eV.*particle–hole.*spin twice/);
+assert.match(reasonFor('pathways-materials::bandrep-bloch-phase','construction-materials::nonsymmorphic-bloch'),/fractional k_z.*radian k_x=2πf_x/);
+assert.match(reasonFor('lie-group-lessons::su3-cg-higher-representations','lie-group-lessons::su3-cg-exact-radicals'),/Exact CG.*81.*numerical CG.*256/);
+assert.match(reasonFor('lie-group-lessons::su3-racah-coupling-paths','lie-group-lessons::su3-racah-exact-sixj'),/weighted orthogonality.*conversion still uses F/);
+assert.match(reasonFor('lie-group-lessons::su3-ninej-paired-trees','lie-group-lessons::su3-ninej-exact-normalization'),/products of two leaf-branch dimensions.*cannot replace R/);
+
 
 const pg=lessonProgression({catalog:'pointgroups',lessonId:'representations'});
 const lie=lessonProgression({catalog:'lie',lessonId:'representations'});
@@ -226,18 +520,32 @@ for(const [catalog,lessonId]of[
  ['principles-materials','order-field-convention'],['principles-materials','exchange-conventions'],
  ['principles-materials','conservation-protection'],['frontiers-materials','layer-registry'],
  ['frontiers-materials','chiral-tolerance'],['quantum-materials','geometry-diagnostics'],
- ['response-materials','hall-diagnostics']
+ ['response-materials','hall-diagnostics'],
+ ...newlyConnectedKeys.map(key=>key.split('::'))
 ]){
- const entry=inventory.get(catalog+'::'+lessonId);renderShell(entry.route);await settle();
+ const entry=inventory.get(catalog+'::'+lessonId),initialContext=parseClassroomRoute(entry.route);
+ renderShell(entry.route);await settle();
  const host=shellContainer.querySelector('#classroom-progression');assert.ok(host);assert.equal(host.hidden,false);
  assert.match(host.innerHTML,new RegExp(catalog+'::'+lessonId));
  for(const anchor of host.querySelectorAll('[data-lesson-progression-link]'))assert.equal(anchor.onclick,undefined,'Custom navigation does not turn optional anchors into gated callbacks');
  const renders=shellCalls.length,active=shellCalls.at(-1);
  active.onNavigate({tab:'lab'});await settle();assert.equal(host.hidden,true);assert.equal(shellCalls.length,renders);
- assert.equal(parseClassroomRoute(shellMoves.at(-1).hash).tab,'lab');assert.deepEqual(shellMoves.at(-1).options,{render:false});
+ const labContext=parseClassroomRoute(shellMoves.at(-1).hash);
+ assert.equal(labContext.tab,'lab');assert.deepEqual(shellMoves.at(-1).options,{render:false});
+ for(const key of ['section','pathway','module','lesson','track','material','preset','exercise','group','level']){
+  assert.equal(labContext[key],initialContext[key],entry.key+' preserves local '+key);
+ }
+
  active.onNavigate({tab:'learn'});await settle();assert.equal(host.hidden,false);assert.equal(shellCalls.length,renders);
 }
-for(const tool of ['order-parameter-lab','exchange-symmetry-lab','conservation-lab','layer-symmetry-lab','chirality-polarity-lab','quantum-geometry-lab','hall-response-lab']){
+for(const tool of [
+ 'order-parameter-lab','exchange-symmetry-lab','conservation-lab','layer-symmetry-lab',
+ 'chirality-polarity-lab','quantum-geometry-lab','hall-response-lab',
+ 'phonopy','phonon-modes','phonon-thermo','phonons','tensors',
+ 'electron-transport-lab','device-transport-lab','pairing-lab','andreev-lab',
+ 'band-representation-lab','band-connectivity','nonsymmorphic-lab','wavevector-lab',
+ 'lie/su3','lie/su3_tensor','lie/su3_cg','lie/su3_racah','lie/su3_ninej'
+]){
  const loads=graphLoads,route='compute/'+tool;assert.equal(parseClassroomRoute(route)?.calculationOnly,true,route);
  renderShell(route);await settle();assert.equal(graphLoads,loads,'Direct expert entry does not load prerequisites: '+tool);
  assert.equal(shellContainer.querySelector('#classroom-progression'),null);assert.equal(shellCalls.at(-1).selection.calculationOnly,true);
@@ -245,4 +553,4 @@ for(const tool of ['order-parameter-lab','exchange-symmetry-lab','conservation-l
  assert.deepEqual(shellMoves.at(-1).options,{render:false});assert.equal(graphLoads,loads);
 }
 assert.equal(calculations,0);assert.equal(storageReads,0);assert.equal(storageWrites,0);
-console.log('Lesson progression: 197 qualified routes in 17 catalogues, 82 reasoned optional edges over 65 read lessons, exact native targets, complete English reasons, explicit unit/action-space boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');
+console.log('Lesson progression: 197 qualified routes in 17 catalogues, 130 optional edges over 112 connected read lessons, original 82 preserved, all native targets, complete English reasons, unit/action-space/model boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');
