@@ -1,10 +1,10 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261110-en1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261115-precision1';
 import {heatmapSVG,quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?"Yes":"No"):typeof x==='number'?num(x):x==null?"undefined":String(x);
 const clean=r=>{const c=structuredClone(r);delete c.learningEvidence;return c;};
 const anchors=new Map();
-export function controlsHTML(m,v){const keys={statistics:[],defects:['separation','loopX','loopY','radius'],reciprocity:['field','magnetization','cross']}[m.id];return baseControls({...m,fields:m.fields.map(f=>f.type==='number'?{...f,step:'any'}:f)},v)+(keys.length?`<details><summary>Continuous adjustment parameters</summary>${m.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${f.key}" min="${f.min}" max="${f.max}" step="${f.step}" value="${v[f.key]}"></label>`).join('')}<p>Click Calculate after modification; click or drag the loop center in the defect map.</p></details>`:'');}
+export function controlsHTML(m,v){const keys={statistics:[],defects:['separation','loopX','loopY','radius'],reciprocity:['field','magnetization','cross']}[m.id];return baseControls({...m,fields:m.fields.map(f=>f.type==='number'?{...f,step:'any'}:f)},v)+(keys.length?`<details><summary>Continuous adjustment parameters</summary>${m.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${f.key}" min="${f.min}" max="${f.max}" step="any" value="${v[f.key]}"></label>`).join('')}<p>Click Calculate after modification; click or drag the loop center in the defect map.</p></details>`:'');}
 const matrix=m=>heatmapSVG(m[0].map((_,i)=>i),m.map((_,i)=>i),m,{title:"matrix or vector (real part)",signed:true,xLabel:"column",yLabel:"OK"});
 export function plotHTML(p){
  if(p.kind==='response')return `<div class="cn-pair-grid"><div><h4>original configuration L</h4>${matrix(p.matrix)}</div><div><h4>reverse configuration L</h4>${matrix(p.reversed)}</div></div>${table(["Quantity","component 1","component 2"],[["Conjugate force",...p.force.map(num)],["response stream",...p.flux.map(num)]])}${table(["decomposition","line 1","line 2"],[["Symmetric dissipation part",...p.symmetric.map(x=>x.map(num).join(', '))],["antisymmetric part",...p.antisymmetric.map(x=>x.map(num).join(', '))]])}`;

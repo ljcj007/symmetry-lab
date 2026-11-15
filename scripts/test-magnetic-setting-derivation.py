@@ -40,10 +40,16 @@ def canonical_hash(value):
 verify('exactly one new task follows the unchanged original 22',
        len(items) == 23 and items[-1]['id'] == ID and
        canonical_hash(items[:-1]) == 'eb2bc33fe15258e9833931eb4f27d874e785d29337de281ebb379439aa87ab83')
-verify('the lesson text is unchanged apart from explicit continuation metadata',
+spin_connection_ids = {'double-01', 'double-02', 'double-03', 'double-04',
+                       'magnetic-04', 'magnetic-05'}
+verify('the other 18 lesson texts retain their pre-spin-connection content',
        canonical_hash([{k: v for k, v in row.items() if k != 'derivationIds'}
-                       for row in lessons['lessons']]) ==
-       'e7a64d76b1976eda473aedacc5b9ac19ef869c32832a960f1597ad1268024434')
+                       for row in lessons['lessons'] if row['id'] not in spin_connection_ids]) ==
+       '7e1674f7e1a052581ca6d57daa99e74a7fd311958274e22b8b764c4791a6a1ef')
+verify('the six spin lesson texts match the independently checked connection revision',
+       canonical_hash([{k: v for k, v in row.items() if k != 'derivationIds'}
+                       for row in lessons['lessons'] if row['id'] in spin_connection_ids]) ==
+       '3dd5acce03a9a1da438e296ad84110a5a0cab9e0a7f7b1d00ffab6b355e63a85')
 verify('only the intended lesson declares this exercise',
        [row['id'] for row in lessons['lessons'] if ID in row.get('derivationIds', [])] == ['magnetic-03'])
 verify('no misleading experiment or material handoff is attached',

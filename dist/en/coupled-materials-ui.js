@@ -1,6 +1,6 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261114-evidence1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261114-evidence1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261115-precision1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-precision1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
@@ -47,7 +47,7 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  const sync=()=>onNavigate({module:module.id,tab,lesson:lesson.id,exercise:exercise.id,material:materialContext()||undefined,preset:forms[module.id].preset||selection.preset});
  const stopAnimation=()=>{playing=false;animationTicket++;if($('#cm-play'))$('#cm-play').textContent="Play precession";};
  const invalidate=()=>{stopAnimation();ticket++;fileTicket++;result=null;lastResult=null;if($('#cm-result'))$('#cm-result').innerHTML="<p role=\"status\">parameters have been changed. Update results and export files after running calculations.</p>";};
- const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" step="any" value="${esc(value)}" ${extra}></label>`;
+ const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
  const materialContext=()=>module.id==='distortion'&&['batio3','srtio3'].includes(forms.distortion.preset)?forms.distortion.preset:selection.material||'';
  const contextQuery=(withModule=true)=>{const params=new URLSearchParams();if(withModule)params.set('module',module.id);if(materialContext())params.set('material',materialContext());const preset=forms[module.id].preset||selection.preset;if(preset)params.set('preset',preset);return params.toString();};
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(coupledCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">Return to this lesson →</a><a href="#atlas/mechanisms?${esc(contextQuery())}">distortion and excitation route →</a><a href="#atlas/notebook">Materials Research Record →</a></div>`;

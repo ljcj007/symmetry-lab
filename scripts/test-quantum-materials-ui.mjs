@@ -21,6 +21,24 @@ const submit=async v=>{v.$('#qm-form').onsubmit({preventDefault(){}});await flus
 const change=(v,id,value)=>{const e=v.$('#qm-'+id);assert.ok(e,id);e.value=String(value);v.$('#qm-form').oninput({target:e});};
 const select=async(v,id,value)=>{const e=v.$('#qm-'+id);assert.ok(e,id);e.value=String(value);await e.onchange?.({target:e});await flush();};
 const safe=s=>assert.doesNotMatch(s,/NaN|Infinity|undefined/);
+// Inspect real rendered cells using the existing actual Python captures. FHS
+// integer accuracy and the ordinary curvature Riemann-sum error are distinct.
+const displayNumber=x=>Number.isFinite(x)?(x!==0&&(Math.abs(x)>=1e5||Math.abs(x)<1e-3)?x.toExponential(4):String(Number(x.toPrecision(5)))):'—';
+const assertGeometryErrorTable=(view,key)=>{
+ const result=fixtures.results[key],zak=result.topology.kind==='zak';
+ const discreteHeader=zak?'Zak 误差（对解析值，rad）':'FHS 误差（对解析值，无量纲）';
+ const curvatureHeader='曲率积分误差（对解析值，无量纲）';
+ const rendered=view.$('#qm-result').querySelectorAll('table').find(t=>t.querySelectorAll('th').some(h=>h.textContent===curvatureHeader));
+ assert.ok(rendered,'The actual convergence table exposes its independently calculated curvature error');
+ assert.deepEqual(rendered.querySelectorAll('th').map(x=>x.textContent),['网格 N','拓扑积分','曲率积分',discreteHeader,curvatureHeader,'有效']);
+ const rows=rendered.querySelectorAll('tr').filter(row=>row.querySelector('td'));
+ assert.equal(rows.length,result.convergence.length);
+ rows.forEach((row,index)=>{const source=result.convergence[index],cells=row.querySelectorAll('td').map(x=>x.textContent);
+  assert.deepEqual(cells,[String(source.mesh),displayNumber(source.value),displayNumber(source.curvatureIntegral),displayNumber(source.errorToAnalytic),displayNumber(source.curvatureIntegralError),source.valid?'是':'否']);
+  if(source.curvatureIntegralError!==null&&source.curvatureIntegralError>1e-8)assert.notEqual(cells[3],cells[4],'A tiny FHS error must not replace the nonzero curvature-integral error');
+  if(zak||!result.topology.defined){assert.equal(cells[2],'—');assert.equal(cells[4],'—','An undefined 2D curvature integral/error remains undefined, not zero');}
+ });
+};
 const broken=quantumCurveSVG([{label:'gap',points:[[0,0],[1,1],[2,null],[3,1],[4,0]]}]);
 assert.equal((broken.match(/<polyline /g)||[]).length,2,'Undefined response must break the line');
 safe(broken);assert.match(quantumCurveSVG([{label:'huge',points:[[0,1e18],[1,2e18]]}]),/e\+18/);
@@ -46,9 +64,12 @@ cf.$('#qm-export').onclick();assert.equal(JSON.parse(cf.downloads[0].body).modul
 await select(cf,'mode','jahn_teller');assert.equal(ui.getQuantumMaterialsResult(),null);await submit(cf);assert.ok(cf.$('#qm-jt-map').querySelector('svg'));safe(cf.$('#qm-jt-map').innerHTML);
 await select(cf,'surface','upper');safe(cf.$('#qm-jt-map').innerHTML);
 const geo=await mount({module:'geometry',calculationOnly:true});await submit(geo);assert.equal(calls.at(-1).input.mesh,31);assert.ok(geo.$('#qm-geometry-map').querySelector('svg'));
+assertGeometryErrorTable(geo,'qwz');
 await select(geo,'field','berryCurvature');safe(geo.$('#qm-geometry-map').innerHTML);
 change(geo,'mass',-2);await submit(geo);assert.match(geo.$('#qm-result').innerHTML,/不定义/);assert.equal(ui.getQuantumMaterialsResult().result.topology.value,null);
+assertGeometryErrorTable(geo,'qwzCritical');
 await select(geo,'model','ssh');await submit(geo);assert.match(geo.$('#qm-result').innerHTML,/Zak/);safe(geo.$('#qm-result').innerHTML);
+assertGeometryErrorTable(geo,'ssh');
 const tr=await mount({module:'transport',calculationOnly:true});await submit(tr);assert.equal(calls.at(-1).input.hopping,.25);assert.equal(calls.at(-1).input.chemicalPotential,.3);safe(tr.$('#qm-transport-curves').innerHTML);
 await select(tr,'axis','1');assert.match(tr.$('#qm-transport-curves').innerHTML,/y 方向/);
 await select(tr,'dimension','3');assert.equal(tr.$('#qm-mesh').value,'24');await submit(tr);await select(tr,'axis','2');safe(tr.$('#qm-result').innerHTML);

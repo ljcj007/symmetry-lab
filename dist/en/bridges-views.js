@@ -1,5 +1,5 @@
 const englishCheckLabels={"最大迹误差":"Maximum trace error","最大厄米误差":"Maximum Hermiticity error","全轨迹最小本征值":"Minimum eigenvalue over the trajectory","Hamiltonian 厄米误差":"Hamiltonian Hermiticity error","时间步长（ns）":"Time step (ns)","正定性容差":"Positivity tolerance","数值方法":"Numerical method","T₂ 约定":"T₂ convention"};
-import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261110-en1';
+import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261115-precision1';
 import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261110-en1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
 export {esc,num,table,notes,sources,controlsHTML,readControls};

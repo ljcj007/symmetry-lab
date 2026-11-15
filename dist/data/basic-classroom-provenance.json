@@ -37,44 +37,44 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 97272,
-      "sha256": "e6c4a0e64575c511fa4bc05bab86abbcb141c5e33eb0b66e7395a614e4661caf"
+      "bytes": 97282,
+      "sha256": "05573f644acf146e35c23ae25d4e83c27b8c3241c74bf9f67b5156ad3b548cb5"
     },
     "dist/classroom-ui.js": {
-      "bytes": 31810,
-      "sha256": "17040355ea701e714fbdbf0da583f4cceebd55895eec3a30f1f8b275f4c8e61d"
+      "bytes": 31834,
+      "sha256": "2363cb2f76d1f0f11afeb02abc7e1647a1289c1d8103986e1cc3a20bc507cc3b"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29377,
-      "sha256": "925ed44853675d5cc8cde201fa93ff1450be3a8d848f4018d02bf8815c2641cc"
+      "bytes": 29378,
+      "sha256": "8a4343f5b2237e38fd810ae663f9edc457d1d739e267c1a6056a912630b1573d"
     },
     "dist/tool-directory.js": {
       "bytes": 3023,
       "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
     },
     "dist/tool-finder.js": {
-      "bytes": 8447,
-      "sha256": "f877f7ba45bda487c0e21ad5b503a852ad347f7576f718253cacb32c013322e0"
+      "bytes": 8448,
+      "sha256": "ce1811ce6c365dbfd05e2965dec041d2f6c4c83b545e06cb6bf566603869e4df"
     },
     "dist/lie-foundations-ui.js": {
       "bytes": 9320,
       "sha256": "b185e02755301d3a1be51a88cc2014771d991bb25d3e8facc174c787c97c73c0"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 54017,
-      "sha256": "78e11707e49395094ebd084d3eabbd6e49bf7bfa6c139fb17de81d484e7ddcf6"
+      "bytes": 54024,
+      "sha256": "2a614be51ce6feab34011cacce071d10de3ef5a37f7e8c84d3bdc4316b558aab"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 79952,
-      "sha256": "c0ac4339b11c6dc46e9aa66598927504aaa24a616c2787170df92b57dacba621"
+      "bytes": 87878,
+      "sha256": "22e1e22892f0d8a7922beee6e8d5bcc84da68220ddac59b48cd082b3c15f9f71"
     },
     "dist/python-client.js": {
-      "bytes": 2577,
-      "sha256": "e108dd483cd1e06afe453697a6fc4a01cc3e267268c627fa609195e706d87da2"
+      "bytes": 2581,
+      "sha256": "87da97d803a684f6f3be286a38656c878313dd08060b3d144e9a9680eb967bfe"
     },
     "dist/python-worker.js": {
-      "bytes": 10929,
-      "sha256": "96455e684d40e40afeb8f57c23f720565b6f74f87dc7e5e24398b76e65d59723"
+      "bytes": 10933,
+      "sha256": "ba134f9ccdaf81a18bf8c38ce032cdfff05c9bb053e9520a2a3ffe30d777d4aa"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -85,8 +85,8 @@
       "sha256": "cbe1e998e105e9ad53b10fb97afe46639b99b18cd3431447621714d089e16a70"
     },
     "dist/data/symmetry-course-lessons.json": {
-      "bytes": 98995,
-      "sha256": "f95cb8ea6bb66dd1a57f1bef9d1d18592e9683ab2ad4d2468fb291be00d98b93"
+      "bytes": 108619,
+      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
     },
     "dist/data/symmetry-derivations.json": {
       "bytes": 60362,
@@ -150,11 +150,11 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "bytes": 1736189,
-      "sha256": "2aa78b09b50abc806bd695f337375feb3d4572a5210b0572a1654df77d747402"
+      "sha256": "be918247702d152c52346cac49aa2e03d95d7e7c726459ac4476e52a6f9bb209"
     },
     "scripts/fixtures/bridges-projects.json": {
       "bytes": 869150,
-      "sha256": "19b831ffa6fea9a66a329995b3213aa94fd98129cd8a98d729d14dbaa21735aa"
+      "sha256": "b551cf0e2a8ac27bce0d74f45262de67e5b5069137306771a400723771837d70"
     },
     "dist/foundations-demos.css": {
       "bytes": 4314,

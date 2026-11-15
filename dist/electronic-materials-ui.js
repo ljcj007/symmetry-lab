@@ -1,7 +1,7 @@
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG} from './material-research-ui.js?v=20261114-evidence1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261114-evidence1';
+import {multiCurveSVG} from './material-research-ui.js?v=20261115-precision1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-precision1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(5)):'—';
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
@@ -36,7 +36,7 @@ export function gapMapSVG(map,field='real',fs=[]){
  const points=Array.isArray(fs)?fs:fs.points||fs.branches?.flatMap(b=>b.kx.map((x,i)=>[x,b.ky[i]]))||[];
  return `<svg class="em-gap" viewBox="0 0 600 565" role="img" aria-label="二维配对函数与正常态费米面"><title>颜色表示${esc(field)}；深色线标记正常态费米面</title>${ys.map((_,j)=>xs.map((_,i)=>`<rect x="${75+i*w}" y="${30+(ny-1-j)*h}" width="${w+.3}" height="${h+.3}" fill="${field==='phase'?(map.magnitude[j]?.[i]<1e-12?'#f2f4ef':`hsl(${180+180*(a[j]?.[i]||0)/Math.PI} 55% 48%)`):fill(a[j]?.[i]||0)}"/>`).join('')).join('')}${points.filter(p=>Array.isArray(p)&&p.length>=2&&p.slice(0,2).every(Number.isFinite)).map(p=>`<circle cx="${75+460*(p[0]+Math.PI)/(2*Math.PI)}" cy="${490-460*(p[1]+Math.PI)/(2*Math.PI)}" r="1.4" fill="#14291f"/>`).join('')}<rect x="75" y="30" width="460" height="460" fill="none" stroke="#9eb3a5"/><text x="75" y="519">−π</text><text x="530" y="519" text-anchor="end">π</text><text x="300" y="542">kₓ</text><text x="35" y="270">kᵧ</text><text x="300" y="559" text-anchor="middle">${positive?'0':'−'+num(max)} → ${num(max)}${field==='phase'?' rad':' eV'}</text></svg>`;
 }
-const numeric=(label,key,value,extra='')=>`<label>${esc(label)}<input id="em-${key}" type="number" step="any" value="${esc(value)}" ${extra}></label>`;
+const numeric=(label,key,value,extra='')=>`<label>${esc(label)}<input id="em-${key}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
 const select=(label,key,rows,value)=>`<label>${esc(label)}<select id="em-${key}">${options(rows,value)}</select></label>`;
 const range=(label,key,value,min,max,step)=>`<label>${esc(label)}<input id="em-${key}" type="range" min="${min}" max="${max}" step="${step}" value="${esc(value)}"><output>${num(value)}</output></label>`;
 const defaults={pairing:{model:'square_singlet',pairing:'d_x2_y2',hopping:1,chemical_potential:-1,gap:.4,grid:41,path_samples:61,sites:40},shg:{model:'gaas',cut:'001',incidence:45,azimuth:30,samples:181,channel:'PP',cOverA:1,coefficients:{xyz:1}},unfold:{mode:'model',model:'impurity',size:4,hopping:1,onsite:0,defectStrength:1.5,defectSite:0,dimerization:.3,alternatingPotential:.5,samples:81,q:.25,band:0,content:''}};

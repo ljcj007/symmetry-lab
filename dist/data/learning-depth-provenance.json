@@ -40,12 +40,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 19015,
-      "sha256": "88338d583254ec51702a2f72bd2d796967284889e3b57ee082205ca00d0a37d3"
+      "bytes": 21426,
+      "sha256": "1c03d6efc775b176e7b7662a0aab235dc94bb67c0db663baf05c7dcaee4fb199"
     },
     "dist/app.js": {
-      "bytes": 97272,
-      "sha256": "e6c4a0e64575c511fa4bc05bab86abbcb141c5e33eb0b66e7395a614e4661caf"
+      "bytes": 97282,
+      "sha256": "05573f644acf146e35c23ae25d4e83c27b8c3241c74bf9f67b5156ad3b548cb5"
     },
     "dist/data/lie-derivations.json": {
       "bytes": 138720,
@@ -56,32 +56,32 @@
       "sha256": "fb44bf2c1a8e643f8a8dbc8ce2af89ba5add1b3ab317a53e747fb99fab21edd2"
     },
     "dist/data/symmetry-course-lessons.json": {
-      "bytes": 98995,
-      "sha256": "f95cb8ea6bb66dd1a57f1bef9d1d18592e9683ab2ad4d2468fb291be00d98b93"
+      "bytes": 108619,
+      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
     },
     "dist/data/symmetry-derivations.json": {
       "bytes": 60362,
       "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
     },
     "dist/index.html": {
-      "bytes": 6649,
-      "sha256": "95c242121078074afff54ce8d839c4140882e1d7f7659cb656336f9ba847004a"
+      "bytes": 6724,
+      "sha256": "83062153da72d290cd4df642d64a8f3a6330ffd7ec72ab2170e4dc92d63578aa"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 54017,
-      "sha256": "78e11707e49395094ebd084d3eabbd6e49bf7bfa6c139fb17de81d484e7ddcf6"
+      "bytes": 54024,
+      "sha256": "2a614be51ce6feab34011cacce071d10de3ef5a37f7e8c84d3bdc4316b558aab"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29377,
-      "sha256": "925ed44853675d5cc8cde201fa93ff1450be3a8d848f4018d02bf8815c2641cc"
+      "bytes": 29378,
+      "sha256": "8a4343f5b2237e38fd810ae663f9edc457d1d739e267c1a6056a912630b1573d"
     },
     "dist/navigation.css": {
       "bytes": 8184,
       "sha256": "cc021152b7004eb4a4716899021d40681cca891a69be017ae106956cfc705e33"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 79952,
-      "sha256": "c0ac4339b11c6dc46e9aa66598927504aaa24a616c2787170df92b57dacba621"
+      "bytes": 87878,
+      "sha256": "22e1e22892f0d8a7922beee6e8d5bcc84da68220ddac59b48cd082b3c15f9f71"
     },
     "dist/tool-capabilities.js": {
       "bytes": 38763,
@@ -92,8 +92,8 @@
       "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
     },
     "dist/tool-finder.js": {
-      "bytes": 8447,
-      "sha256": "f877f7ba45bda487c0e21ad5b503a852ad347f7576f718253cacb32c013322e0"
+      "bytes": 8448,
+      "sha256": "ce1811ce6c365dbfd05e2965dec041d2f6c4c83b545e06cb6bf566603869e4df"
     },
     "dist/tool-search.js": {
       "bytes": 1140,
@@ -116,8 +116,8 @@
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
     },
     "package.json": {
-      "bytes": 14510,
-      "sha256": "de623cfae0e957db0469c133935ae69aabfc0fcb6655a2cc4c7027c260f643ea"
+      "bytes": 14861,
+      "sha256": "cb80e36df2b41346c0a738d8970ad19afbec931c9659a82ac61b395a6e387cc9"
     },
     "scripts/build-advanced-derivations.py": {
       "bytes": 18465,
@@ -164,16 +164,16 @@
       "sha256": "f80bedd15aaa5ec994ee2381c6c8f78f61dfb0117c9e0a0f77515e2ebb7e7b41"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 81128,
-      "sha256": "6e99304de76890f9bfd291f9696ae9c0b142153f4a9c7290bc810bc830f58793"
+      "bytes": 81283,
+      "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
     },
     "scripts/test-lie-learning-links.mjs": {
       "bytes": 5352,
       "sha256": "260ba8df921e3cbcc5c8c2cd5922df5fe1b21d53428030a56c438aae1cbf71e1"
     },
     "scripts/test-magnetic-setting-derivation.py": {
-      "bytes": 14896,
-      "sha256": "8b177ebbaef274af612a051bb43606cdc82f31ce9149c7b33848f6425bff55cd"
+      "bytes": 15395,
+      "sha256": "6708d2c79f3200056f3f6a0ec6eec488c5c188615969accb1735e21c7600653c"
     },
     "scripts/test-materials-course.py": {
       "bytes": 5986,

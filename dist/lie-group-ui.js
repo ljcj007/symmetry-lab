@@ -2,7 +2,7 @@ import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.
-import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261110-en1';
+import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261115-precision1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {resolveLieDerivation} from './lie-learning-links.js?v=20261112-course-links1';
 import {foundationNames,foundationDefaults,foundationPresets,foundationInputIds,foundationControls,readFoundationPayload,foundationOutput,lieGroupLabel} from './lie-foundations-ui.js?v=20261113-depth1';

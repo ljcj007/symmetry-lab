@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "release": "20261115-precision1",
+  "scope": "Continuous input precision, a result-linked complex-state Rabi ledger, six spin/double/magnetic classroom connections, and distinct geometry convergence errors.",
+  "counts": {
+    "catalogueContexts": 153,
+    "fixedViewContexts": 98,
+    "auxiliaryRanges": 194,
+    "spinLessons": 6,
+    "rabiIndependentCases": 12
+  },
+  "reviewedLessons": [
+    "double-01",
+    "double-02",
+    "double-03",
+    "double-04",
+    "magnetic-04",
+    "magnetic-05"
+  ],
+  "geometryDisplay": "QWZ FHS dimensionless and SSH Zak/radian errors are labeled separately; the existing curvature-integral error is a separate column, and missing values remain undefined.",
+  "draftCapture": "Explicit NodeList conversion retains unfinished inputs, selections and checkboxes; the regression uses the production classroom shell with iterable non-Array collections.",
+  "verification": [
+    "Actual rendered controls preserve continuous model values and discrete integer/half-integer domains. Native browser validity remains a separate release check.",
+    "A genuinely regenerated catalogue fixture preserves all 175250 existing numerical leaves. The Rabi historical capture preserves 19585 numerical leaves while independent spectral calculations check complex states, propagators and density matrices.",
+    "The Rabi panel follows the selected Python time sample, derives four outer-product entries, and separately compares overall and relative phases. Controlled loader failures, retries, stale views and preserved draft/disclosure state exercise actual handlers.",
+    "Six spin lessons have explicit experiment initializations and independently checked time-reversal, antiunitary basis-change and antitranslation examples. Ordinary tabs preserve unfinished drafts."
+  ],
+  "boundaries": [
+    "Rendered context counts describe these twelve catalogue families and fixed views, not a full native-browser audit of every tool.",
+    "The Rabi model starts in spin up, evolves coherently, and displays numerical Python results. A separate finite phase comparison is not new dynamics, a mixed-state solver or a dephasing calculation. Old records without intermediate complex states show an explicit missing-data message.",
+    "Finite iK examples illustrate S^-1 U S*; the one-dimensional antitranslation calculator is distinguished from three-dimensional transverse wavevectors. These do not provide a general magnetic-cell transform.",
+    "These six lesson improvements do not enlarge the 42-read-lesson prerequisite graph or complete the full curriculum, diagnostic and authentic-workflow audit. No student learning gains are inferred."
+  ],
+  "files": {
+    ".github/workflows/pages.yml": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1758,
+      "sha256": "b79ba2460a4bb36fd5b808b47e44696bd654d6cbae7be15a2b143726a3783590"
+    },
+    "GOAL-ROADMAP.md": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 21426,
+      "sha256": "1c03d6efc775b176e7b7662a0aab235dc94bb67c0db663baf05c7dcaee4fb199"
+    },
+    "dist/app.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 97282,
+      "sha256": "05573f644acf146e35c23ae25d4e83c27b8c3241c74bf9f67b5156ad3b548cb5"
+    },
+    "dist/connections-views.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 11593,
+      "sha256": "60d617d45ace5e8122aefa5fc6666df4f29d1c7f7d5783d0927b9274218fcff3"
+    },
+    "dist/construction-views.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15336,
+      "sha256": "e9a310cbdf582202d65a5adf7ca109fda5b51f706a382bf1cca768a7d065c681"
+    },
+    "dist/coupled-materials-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 36143,
+      "sha256": "d4357d383379332df88fa03fae8d9f265d2604e0d79d3f4fccd085dc5d165813"
+    },
+    "dist/data/bridges-materials.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 90485,
+      "sha256": "245027f56da2cf097da3a072ebe6e632a8a9ab4a5430db880d9b3772a4583f37"
+    },
+    "dist/data/symmetry-course-lessons.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 108619,
+      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
+    },
+    "dist/electronic-materials-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 32622,
+      "sha256": "7632ead5126d7deff2d3c14e3aba24893289e3df6bf10b2b818723bce50683b8"
+    },
+    "dist/index.html": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6724,
+      "sha256": "83062153da72d290cd4df642d64a8f3a6330ffd7ec72ab2170e4dc92d63578aa"
+    },
+    "dist/lie-group-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 54024,
+      "sha256": "2a614be51ce6feab34011cacce071d10de3ef5a37f7e8c84d3bdc4316b558aab"
+    },
+    "dist/lie-physics-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 20543,
+      "sha256": "8a898e0b3a59dc5651f9e24b392b538cd426f343e6c4c573e9e47d0ec651b87c"
+    },
+    "dist/material-notebook.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 23579,
+      "sha256": "5858df10769c1436329faa3b561d6ddc46a37e725c637ac1dbc0e9c34a6b0562"
+    },
+    "dist/material-research-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 45391,
+      "sha256": "e9f42606574ba06618c22216ea1a9dbf8cff2724ec870640e67119e30ee0a1ff"
+    },
+    "dist/observables-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 27221,
+      "sha256": "80cd029f55a56bba9613727f254603a3837285f4f1e3fef9c094f2455bd2b8d1"
+    },
+    "dist/principles-views.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 8483,
+      "sha256": "98261b1a6005e655c03e26876d37d6f960c2b604de3e373374a9112c8d59fb30"
+    },
+    "dist/python-client.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2581,
+      "sha256": "87da97d803a684f6f3be286a38656c878313dd08060b3d144e9a9680eb967bfe"
+    },
+    "dist/python-worker.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 10933,
+      "sha256": "ba134f9ccdaf81a18bf8c38ce032cdfff05c9bb053e9520a2a3ffe30d777d4aa"
+    },
+    "dist/python/lie_applications.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 20835,
+      "sha256": "c3eac91d011f62dc63fb7848ee08e2c6b1259f8ee02fdedaac52f8212e3f4232"
+    },
+    "dist/quantum-materials-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 31410,
+      "sha256": "6a7214532ee088e47f21e300d91579e223c8ba23a464aac7f507600493169a30"
+    },
+    "dist/rabi-state-bridge.css": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1579,
+      "sha256": "a527567ccba2a5c00894de72c23928250fabeb1427559e5f14f74ed1e8480b48"
+    },
+    "dist/rabi-state-bridge.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 13321,
+      "sha256": "0f033dec2d78ddd8bd3a9ec02d08737bd63a4b892b329593209378cd8ed570a0"
+    },
+    "dist/response-views.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 11699,
+      "sha256": "6ebeccf3e52e38a69e7e9398b476e533b86ccccf5933db132b252e96afcb5f3d"
+    },
+    "dist/symmetry-course-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 87878,
+      "sha256": "22e1e22892f0d8a7922beee6e8d5bcc84da68220ddac59b48cd082b3c15f9f71"
+    },
+    "locales/en-geometry-diagnostic-display.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 316,
+      "sha256": "d6b6dfe3e95faa49fd49dce3540e0eda56a2be3758ede05c57a624b6b25647bc"
+    },
+    "locales/en-precision-controls.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1030,
+      "sha256": "beb6cc67fd47118c8d900e772929b3580394bd85cada6b5cd0101ae4bbc0339a"
+    },
+    "locales/en-rabi-state-bridge.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6548,
+      "sha256": "173eb705e5118d677c4985e174a22f7747d58b9566e8c90f4022bb3c753ba00b"
+    },
+    "locales/en-spin-course-connections.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 13854,
+      "sha256": "114e203bb4fbfb033aa75aee080e2e5f61c8a490664c736c82a6956d4edbd37f"
+    },
+    "package.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 14861,
+      "sha256": "cb80e36df2b41346c0a738d8970ad19afbec931c9659a82ac61b395a6e387cc9"
+    },
+    "scripts/build-bridges-project-fixtures.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1054,
+      "sha256": "7471d418a4db80b46442563687aec0b1a4c73ba8ebf2115b4c4c85912208b60e"
+    },
+    "scripts/build-pathways-project-fixtures.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1265,
+      "sha256": "c13467bf4ffa5d465e7600e489d269eb152adfa386892774324ba65ca433571c"
+    },
+    "scripts/build-precision-teaching-provenance.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5669,
+      "sha256": "1bd1f6853b592d0afe0b7a9008508e639099573c6beb2269e3310db184d74b48"
+    },
+    "scripts/english-catalog.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2213,
+      "sha256": "a6088a5a37c6dca3583fcdab8ff53f93888a475319df879cbccc0d07964ced96"
+    },
+    "scripts/fixtures/bridges-projects.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 869150,
+      "sha256": "b551cf0e2a8ac27bce0d74f45262de67e5b5069137306771a400723771837d70"
+    },
+    "scripts/fixtures/bridges.json.gz": {
+      "normalization": "raw-bytes",
+      "bytes": 448018,
+      "sha256": "7fb5d698c948cb7c2d5222132139c25503b9a1ba53ec678d6c75e1363cc54810"
+    },
+    "scripts/fixtures/pathways-projects.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1736189,
+      "sha256": "be918247702d152c52346cac49aa2e03d95d7e7c726459ac4476e52a6f9bb209"
+    },
+    "scripts/fixtures/rabi-state-bridge-baseline.json.gz": {
+      "normalization": "raw-bytes",
+      "bytes": 126237,
+      "sha256": "b0610d01158f3c8cde08e01fa5d619d8a07aac2aab26e5a8462c650cfb1aac31"
+    },
+    "scripts/spin-course-science-check.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4097,
+      "sha256": "a6a88eaa4d72e84cefa3a6d5d7ff6f98af8ec5f3a99cc1108a0c4a002fe5209b"
+    },
+    "scripts/test-hardcoded-input-contracts.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5233,
+      "sha256": "7fe303dd155c0393ee286ecdb16647eee45abbc06002280b78ae57747ebb11db"
+    },
+    "scripts/test-lie-group-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 81283,
+      "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
+    },
+    "scripts/test-magnetic-setting-derivation.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15395,
+      "sha256": "6708d2c79f3200056f3f6a0ec6eec488c5c188615969accb1735e21c7600653c"
+    },
+    "scripts/test-observables-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 14079,
+      "sha256": "dfafd11ba1c4d6f5e186e30951bfc54ed0c9fa95d7503f393c94c262a3371b36"
+    },
+    "scripts/test-precision-controls.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4225,
+      "sha256": "e676241bf886fc816ae12f541e250db0475bcb7e7383c3f54706a7fe97838be8"
+    },
+    "scripts/test-python-phonon-spectra.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 9434,
+      "sha256": "70ab8591fee54c366b6f245a5cb96a05f872ae6c6eda4dec2b922ea319501ea8"
+    },
+    "scripts/test-python-rabi-state-bridge.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 12098,
+      "sha256": "614064ca57e78b25365196bf721cbed7dceac3a75efc747158b082dd0b1d9264"
+    },
+    "scripts/test-quantum-materials-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 11843,
+      "sha256": "45438983c730d798af72426b992d99d282f3a396a304c99d7a1379cb5ddf0c29"
+    },
+    "scripts/test-rabi-bridge-integration.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15417,
+      "sha256": "7d08d0ac78b049057bc6770a63a3205f4d298ef92a5ebdee15fcc49fe47068e2"
+    },
+    "scripts/test-rabi-state-bridge.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15273,
+      "sha256": "31ac5764334fe43b923b13ccb3c239a09d59b0c23eacfc5ca765733334741356"
+    },
+    "scripts/test-spin-course-connections.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 15923,
+      "sha256": "b4f258142b757f5d1207942d9101885907d381274a5005669afe1a2880e2f3bc"
+    }
+  }
+}

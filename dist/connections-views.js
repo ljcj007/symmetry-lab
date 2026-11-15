@@ -1,10 +1,10 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261110-en1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261115-precision1';
 import {heatmapSVG,quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?'是':'否'):typeof x==='number'?num(x):x==null?'未定义':String(x);
 const clean=r=>{const c=structuredClone(r);delete c.learningEvidence;return c;};
 const anchors=new Map();
-export function controlsHTML(m,v){const keys={statistics:[],defects:['separation','loopX','loopY','radius'],reciprocity:['field','magnetization','cross']}[m.id];return baseControls({...m,fields:m.fields.map(f=>f.type==='number'?{...f,step:'any'}:f)},v)+(keys.length?`<details><summary>连续调节参数</summary>${m.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${f.key}" min="${f.min}" max="${f.max}" step="${f.step}" value="${v[f.key]}"></label>`).join('')}<p>修改后点击计算；缺陷图中可点击或拖动环路中心。</p></details>`:'');}
+export function controlsHTML(m,v){const keys={statistics:[],defects:['separation','loopX','loopY','radius'],reciprocity:['field','magnetization','cross']}[m.id];return baseControls({...m,fields:m.fields.map(f=>f.type==='number'?{...f,step:'any'}:f)},v)+(keys.length?`<details><summary>连续调节参数</summary>${m.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${f.key}" min="${f.min}" max="${f.max}" step="any" value="${v[f.key]}"></label>`).join('')}<p>修改后点击计算；缺陷图中可点击或拖动环路中心。</p></details>`:'');}
 const matrix=m=>heatmapSVG(m[0].map((_,i)=>i),m.map((_,i)=>i),m,{title:'矩阵或向量（实部）',signed:true,xLabel:'列',yLabel:'行'});
 export function plotHTML(p){
  if(p.kind==='response')return `<div class="cn-pair-grid"><div><h4>原配置 L</h4>${matrix(p.matrix)}</div><div><h4>反转配置 L</h4>${matrix(p.reversed)}</div></div>${table(['量','分量 1','分量 2'],[['共轭力',...p.force.map(num)],['响应流',...p.flux.map(num)]])}${table(['分解','第 1 行','第 2 行'],[['对称耗散部分',...p.symmetric.map(x=>x.map(num).join(', '))],['反对称部分',...p.antisymmetric.map(x=>x.map(num).join(', '))]])}`;

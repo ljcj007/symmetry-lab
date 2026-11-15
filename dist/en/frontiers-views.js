@@ -1,4 +1,4 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261110-en1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls} from './pathways-views.js?v=20261115-precision1';
 import {quantumCurveSVG} from './quantum-plots.js?v=20261110-en1';
 export {esc,num,table,notes,sources,readControls};
 const val=x=>typeof x==='boolean'?(x?"Yes":"No"):typeof x==='number'?num(x):x==null?"Not provided":typeof x==='object'?JSON.stringify(x):String(x);

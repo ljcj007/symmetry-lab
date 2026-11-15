@@ -1,13 +1,13 @@
 import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261114-evidence1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261114-evidence1';
-import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './bridges-views.js?v=20261110-en1';
-import {renderResponseProjects} from './response-projects.js?v=20261114-evidence1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-precision1';
+import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './bridges-views.js?v=20261115-precision1';
+import {renderResponseProjects} from './response-projects.js?v=20261115-precision1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=fetch('data/bridges-materials.json?v=20261113-operations1').then(r=>{if(!r.ok)throw Error("many-body spectrum, polaron and density matrix courses have not been loaded yet");return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/bridges-materials.json?v=20261115-precision1').then(r=>{if(!r.ok)throw Error("many-body spectrum, polaron and density matrix courses have not been loaded yet");return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getBridgesResult=()=>lastResult;
 export const bridgesCourseRoute=(id,query='')=>'#classroom/'+({manybody:'observables',polaron:'structure-dynamics',density:'spin',workshop:'crystal'}[id]||'crystal')+'?module='+id+(query?'&'+query:'');
 const select=(label,key,rows,value)=>`<label>${esc(label)}<select id="pw-${key}">${options(rows,value)}</select></label>`;

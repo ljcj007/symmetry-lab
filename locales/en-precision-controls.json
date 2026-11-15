@@ -1,0 +1,8 @@
+{
+  "精确偏振方位角 θ（°）": "Precise polarization azimuth θ (°)",
+  "偏振方位角 θ（°）<input id=\"obs-angle\" type=\"range\" min=\"0\" max=\"360\" step=\"any\" value=\"": "Polarization azimuth θ (°)<input id=\"obs-angle\" type=\"range\" min=\"0\" max=\"360\" step=\"any\" value=\"",
+  "精确偏振方位角 θ（°）<input id=\"obs-angle-number\" type=\"number\" min=\"0\" max=\"360\" step=\"any\" value=\"": "Precise polarization azimuth θ (°)<input id=\"obs-angle-number\" type=\"number\" min=\"0\" max=\"360\" step=\"any\" value=\"",
+  "设为 22.5° 自检角": "Set the 22.5° check angle",
+  "滑块与数值输入同步；先预测平行与交叉通道，再手动计算核对。": "The slider and numeric input stay synchronized. Predict the parallel and crossed channels, then run the calculation manually to check them.",
+  "偏振方位角须为 0 到 360 度的有限数值，不能留空。": "The polarization azimuth must be a finite value from 0 to 360 degrees and cannot be blank."
+}

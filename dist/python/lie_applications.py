@@ -81,8 +81,11 @@ def _rabi(payload):
     trajectory = []
     for sample in range(sample_count):
         t = time * sample / max(1, sample_count - 1)
-        vector, _ = evolution(t)
-        trajectory.append({'time': t, 'probability': abs(vector[1]) ** 2, 'blochVector': bloch(vector)})
+        vector, propagator = evolution(t)
+        trajectory.append({'time': t, 'probability': abs(vector[1]) ** 2, 'blochVector': bloch(vector),
+                           'state': [_z(z) for z in vector],
+                           'matrix': [[_z(z) for z in row] for row in propagator],
+                           'densityMatrix': [[_z(a * b.conjugate()) for b in vector] for a in vector]})
     period = 2 * math.pi / effective if omega > 0 and effective else None
     if period is not None and not math.isfinite(period):
         period = None
@@ -91,6 +94,7 @@ def _rabi(payload):
         'omega': omega, 'delta': delta, 'time': time, 'omegaEffective': effective,
         'transitionProbability': probability, 'maxTransitionProbability': maximum,
         'state': [_z(z) for z in state], 'matrix': [[_z(z) for z in row] for row in matrix],
+        'densityMatrix': [[_z(a * b.conjugate()) for b in state] for a in state],
         'blochVector': bloch(state), 'trajectory': trajectory, 'sampleCount': len(trajectory),
         'periodProbability': period,
         'checks': {

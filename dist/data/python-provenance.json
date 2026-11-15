@@ -404,7 +404,7 @@
         "SU(2) input angular momenta at most j=3; no anisotropic or many-body Hamiltonian solver",
         "This module computes integer SU(3) weight decompositions for p+q<=4; numerical and exact CG bases are provided separately by su3_cg.py and su3_cg_exact.py"
       ],
-      "sha256": "d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9"
+      "sha256": "c3eac91d011f62dc63fb7848ee08e2c6b1259f8ee02fdedaac52f8212e3f4232"
     },
     {
       "path": "dist/python/su3_cg.py",

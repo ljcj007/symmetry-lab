@@ -98,7 +98,7 @@ class PhononSpectraTests(unittest.TestCase):
                     self.assertEqual(transformed, expected)
 
     def test_parallel_crossed_angular_selection(self):
-        for angle in (0, 13, 45, 91, 180, 319):
+        for angle in (0, 13, 22.5, 45, 91, 180, 319):
             parallel = run_phonons({'angle': angle, 'mode': 'z', 'polarization': 'parallel'})['polarization']
             crossed = run_phonons({'angle': angle, 'mode': 'z', 'polarization': 'crossed'})['polarization']
             self.assertAlmostEqual(parallel['intensity'], math.sin(2 * math.radians(angle)) ** 2)
@@ -107,6 +107,9 @@ class PhononSpectraTests(unittest.TestCase):
             summed = run_phonons({'angle': angle, 'mode': 'sum'})['polarization']['intensity']
             individual = sum(run_phonons({'angle': angle, 'mode': mode})['polarization']['intensity'] for mode in ('x','y','z'))
             self.assertAlmostEqual(summed, individual)
+            if angle == 22.5:
+                self.assertAlmostEqual(parallel['intensity'], .5)
+                self.assertAlmostEqual(crossed['intensity'], .5)
 
     def test_infrared_channel_and_forbidden_raman(self):
         for angle in (0, 17, 45, 90):

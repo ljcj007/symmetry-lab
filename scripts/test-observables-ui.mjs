@@ -98,4 +98,16 @@ assert.equal(JSON.parse(storage.get('symmetry-lab.observables.progress.v1'))[exe
 assert.match(practice.container.querySelector('#obs-progress').textContent,/全部步骤完成/);
 const restored=await mount({tab:'derive',exercise:exercise.id});
 assert.match(restored.container.querySelector('#obs-content').innerHTML,/✓ /,'Exercise completion survives remounting');
-console.log('Observables UI: exact result schema, two curves, safe formatting, 3D viewport, input/export invalidation, stale material and detached responses, changing tabs while running, and stepwise persisted exercises passed.');
+const precisionCalls=[],precision=await mount({calculationOnly:true,experiment:'phonons',material:'silicon'},async(action,input)=>{precisionCalls.push({action,input});return clone();});
+const range=precision.container.querySelector('#obs-angle'),numeric=precision.container.querySelector('#obs-angle-number'),checkAngle=precision.container.querySelector('#obs-angle-exact');
+assert.equal(range.attributes.step,'any');assert.equal(numeric.attributes.step,'any');assert.equal(numeric.attributes.min,'0');assert.equal(numeric.attributes.max,'360');assert.ok(Object.hasOwn(numeric.attributes,'required'));
+checkAngle.onclick();assert.equal(range.value,'22.5');assert.equal(numeric.value,'22.5');assert.equal(range.nextElementSibling.textContent,'22.5°');assert.equal(precisionCalls.length,0,'Exact-angle action must wait for manual Run');
+await submit(precision.container);assert.equal(precisionCalls[0].input.angle,22.5);assert.equal(precisionCalls[0].input.polarization,'parallel');
+const polarization=precision.container.querySelector('#obs-polarization');polarization.value='crossed';precision.container.querySelector('#obs-form').oninput({target:polarization});await submit(precision.container);assert.equal(precisionCalls[1].input.angle,22.5);assert.equal(precisionCalls[1].input.polarization,'crossed');
+numeric.value='17.3';precision.container.querySelector('#obs-form').oninput({target:numeric});assert.equal(range.value,'17.3');assert.equal(getObservablesResult(),null);
+range.value='112.5';precision.container.querySelector('#obs-form').oninput({target:range});assert.equal(numeric.value,'112.5');
+numeric.value='';precision.container.querySelector('#obs-form').oninput({target:numeric});await submit(precision.container);assert.equal(precisionCalls.length,2,'A blank exact angle is rejected instead of becoming zero');assert.match(precision.container.querySelector('#obs-output').innerHTML,/不能留空/);
+numeric.value='361';precision.container.querySelector('#obs-form').oninput({target:numeric});await submit(precision.container);assert.equal(precisionCalls.length,2,'An out-of-range number cannot silently use the old slider value');
+checkAngle.onclick();await submit(precision.container);assert.equal(precisionCalls[2].input.angle,22.5,'Explicit check angle repairs the invalid draft without quantizing it');
+const retired=checkAngle.onclick;precision.container.innerHTML='<p>Retired</p>';retired();assert.equal(precisionCalls.length,3);
+console.log('Observables UI: exact result schema, curves and viewport, stale responses, persisted exercises, bidirectional continuous Raman angle, exact 22.5-degree manual runs, invalid drafts and retired check buttons passed.');

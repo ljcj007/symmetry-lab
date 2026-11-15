@@ -32,14 +32,14 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Verify both language editions
         run: npm run test:english
-      - name: Run computation tests
-        run: npm test
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.14'
       - name: Install numerical libraries
         run: python -m pip install -r dist/python/requirements.txt
+      - name: Run computation tests
+        run: npm test
       - name: Verify source provenance
         run: python scripts/refresh-english-provenance.py --check
       - name: Test Python computation cores
