@@ -55,13 +55,18 @@ for(const source of [original,index]){assert.match(source,/language-switch\.js/)
 const htmlIds=s=>[...s.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);assert.deepEqual(htmlIds(index),htmlIds(original),'HTML control IDs changed');
 let modules=0,imports=0;
 for(const name of fs.readdirSync(en).filter(x=>x.endsWith('.js'))){
- const source=fs.readFileSync(path.join(en,name),'utf8'),ast=parse(source,{ecmaVersion:'latest',sourceType:'module'});modules++;
+ const source=fs.readFileSync(path.join(en,name),'utf8'),ast=parse(source,{ecmaVersion:'latest',sourceType:'module'}),markup=[];modules++;
  assert.doesNotMatch(source,/\r/,'English JavaScript must have reproducible LF line endings: '+name);
  walkAST(ast,node=>{const specifier=node.type==='ImportDeclaration'||node.type==='ExportNamedDeclaration'||node.type==='ExportAllDeclaration'?node.source?.value:node.type==='ImportExpression'&&node.source.type==='Literal'?node.source.value:null;
   if(typeof specifier==='string'&&specifier.startsWith('.')){const target=path.resolve(en,specifier.split('?')[0]);assert.ok(fs.existsSync(target),name+' missing module '+specifier);imports++;}
+  if(node.type==='Literal'&&typeof node.value==='string')markup.push(node.value);
+  if(node.type==='TemplateElement')markup.push(node.value.cooked??node.value.raw);
  });
  assert.doesNotMatch(source,/translate\.google|translate_a\/single/,'Runtime translation service is forbidden');
- for(const match of source.matchAll(/href="([^"$#]+)"/g)){
+ // A complete attribute in one parsed HTML fragment is static. Never join
+ // fragments across executable JavaScript and invent a path such as
+ // '+esc(s.url)+'. Dynamic source URLs are checked by their owning renderer.
+ for(const fragment of markup)for(const match of fragment.matchAll(/href="([^"$#]+)"/g)){
   const href=match[1].split(/[?#]/)[0];if(/^(?:https?:|mailto:|blob:|data:)/.test(href)||href==='../source.zip')continue;
   if(!href.includes('\\')&&!href.includes('{'))assert.ok(fs.existsSync(path.resolve(en,href)),name+' broken local link '+href);
  }

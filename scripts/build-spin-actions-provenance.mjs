@@ -21,7 +21,9 @@ for(const row of refs.cases){
 assert.deepEqual(kinds,{color_theta:8,spin_stabilizer:20,soc_locking:6});
 assert.equal(hash(gunzipSync(read('scripts/fixtures/spin-source-baseline.py.gz'))),'87749a79da15aeb4b831745b8571c47a7bcf268d31c5280a2510c9cae92442f2');
 const reviewed=new Set(lessonProgressionEdges.flatMap(e=>[e.from,e.to]));
-assert.deepEqual([lessonProgressionInventory.length,reviewed.size,lessonProgressionEdges.length],[197,148,172]);
+assert.equal(lessonProgressionInventory.length,197);
+assert.ok(reviewed.size>=148&&lessonProgressionEdges.length>=172);
+assert.equal(hash(Buffer.from(JSON.stringify(lessonProgressionEdges.slice(0,172)))),'80a0d817d5688490afb96d0767eb5f871c2f8bc362ea102cc307e073fad95e34');
 assert.equal(hash(Buffer.from(JSON.stringify(lessonProgressionEdges.slice(0,130)))),'cb75b4d8a2ed525110a0de080b53c5c41de8372477c12968d1c06451a07e387f');
 const files=['.github/workflows/pages.yml','GOAL-ROADMAP.md','package.json',
  'dist/index.html','dist/app.js','dist/classroom-ui.js','dist/symmetry-course-ui.js','dist/spin-actions-ui.js','dist/spin-actions.css','dist/spincolor-viewer.js','dist/lesson-progression.js','dist/python-worker.js','dist/python-client.js','dist/material-notebook.js','dist/english-results.js',
@@ -34,6 +36,8 @@ const files=['.github/workflows/pages.yml','GOAL-ROADMAP.md','package.json',
 const data={schemaVersion:1,release:'20261115-spin1',sourceHashNormalization:'utf8-lf-v1; gzip retains raw bytes',
  scope:'Three optional, manually calculated operation workshops in the existing color and spin-group lessons, plus 42 reviewed optional course links.',
  counts:{indexedLessons:197,reviewedConnectedLessons:148,optionalEdges:172,newOptionalEdges:42,newlyConnectedLessons:36,workshops:3,realNewAPIReferences:34,realLegacyCopyReferences:5},
+ countsScope:'The original spin1 teaching release; later additions do not rewrite its historical inventory.',
+ currentGraph:{indexedLessons:lessonProgressionInventory.length,reviewedConnectedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length},
  placements:{'color-03':'color_theta','spin-03':'spin_stabilizer','spin-04':'soc_locking'},
  contract:{action:'teaching_labs',lab:'spin_actions',schema:'symmetry-lab-spin-actions-1',
   loading:'The panel loads on explicit expansion. The optional exact Python module and SymPy load only for a manually requested spin_actions calculation; existing finite teaching experiments keep their dependency plan.',

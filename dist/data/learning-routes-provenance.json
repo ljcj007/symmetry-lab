@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "release": "20261115-spin1",
+  "release": "20261115-momentum1",
   "sourceHashNormalization": "utf8-lf-v1",
-  "scope": "Optional reviewed cross-lesson routes through representations, order parameters, exchange, conservation, layers, chirality, quantum geometry, phonon import and thermodynamics, equilibrium tensors, bulk and device transport, pairing and NS scattering, band representations, finite-wavevector ordering, SU(3) recoupling, spinor double covers, magnetic and color operations, spin-group locking, structural distortions, diffraction, domains and walls, magnons and quasiharmonic response; schema-valid classroom drafts, explicit conventions, and the retained pinned official Phonopy example.",
+  "scope": "Optional reviewed cross-lesson routes through representations, order parameters, exchange, conservation, layers, chirality, quantum geometry, phonon import and thermodynamics, equilibrium tensors, bulk and device transport, pairing and NS scattering, band representations, finite-wavevector ordering, SU(3) recoupling, spinor double covers, magnetic and color operations, spin-group locking, structural distortions, diffraction, domains and walls, magnons and quasiharmonic response, all indexed SU(3) lesson connections, nonlinear optics, band unfolding, orbital and many-electron spectra, SALCs, fermion statistics and order-parameter defects; schema-valid classroom drafts, explicit conventions, and the retained pinned official Phonopy example.",
   "counts": {
     "catalogues": 17,
     "indexedLessons": 197,
-    "reviewedLessons": 148,
-    "optionalEdges": 172,
+    "reviewedLessons": 197,
+    "optionalEdges": 259,
     "officialExampleQOccurrences": 84,
     "officialExampleBands": 3
   },
@@ -22,16 +22,18 @@
     "Forty-eight further optional connections preserve the preceding 82 and connect 47 previously index-only lessons. Every one of the 197 registered lesson panels renders its exact native prerequisite and next hrefs, including overflow links. That intermediate 130-edge graph is retained in full, all visible reasons have English translations, and every newly connected lesson is exercised through the actual classroom shell without calculation or mastery-state access.",
     "Visible reasons distinguish ordinary frequency and input-cell thermal normalization, tensor intrinsic symmetry and engineering shear, SI Boltzmann moments and device absorption, arbitrary pairing scales and NS eV, fractional and radian Bloch momentum, and GT copy gauges versus dimension-reduced 6j/9j tables. These are preparation recommendations, not automatic transfer of numeric results between different models.",
     "Forty-two further optional transfers preserve all preceding 130 edges and connect 36 previously index-only lessons. The 172-edge graph over 148 connected lessons is acyclic; all 197 native lesson routes and every prerequisite/next href are checked, with complete English reasons and the actual classroom shell exercised for all 36 new identities.",
-    "Visible reasons retain proper-rotation lift limits, complete double-group versus representative counts, antiunitary conjugation and same-momentum conditions, ordinary versus magnetic settings, and SO(3) versus generalized O(3). Structural reasons distinguish angstrom geometric amplitudes from dimensionless Landau coordinates, positive diffraction phases, per-input-cell quasiharmonic energies and Cp, reduced scalar walls versus independent eV SSH chains, and meV spin-wave energies with different magnetic-cell momentum intervals."
+    "Visible reasons retain proper-rotation lift limits, complete double-group versus representative counts, antiunitary conjugation and same-momentum conditions, ordinary versus magnetic settings, and SO(3) versus generalized O(3). Structural reasons distinguish angstrom geometric amplitudes from dimensionless Landau coordinates, positive diffraction phases, per-input-cell quasiharmonic energies and Cp, reduced scalar walls versus independent eV SSH chains, and meV spin-wave energies with different magnetic-cell momentum intervals.",
+    "Eighty-seven further read optional relationships preserve all preceding 172 edges and connect the remaining 49 named inventory lessons. All 197 lessons now have recommendations through 259 acyclic edges. Tests lock every new pair and identity, all native lesson links, complete English reasons, 142 real classroom-shell contexts and 46 independent expert entries without calculation or mastery-state access.",
+    "New visible boundaries retain equal-input-frequency SHG j/k symmetry without full Kleinman permutation, χ versus piezoelectric e and d=χ/2, reciprocal fractions versus radian wavevectors, exact complex amplitudes versus fixed-irrep path spaces, single-particle versus Slater determinant models, electric versus magnetic probes and their separate units/thermal weights, same-k antiunitary tests, complete fermionic exchange, and declared order-parameter manifolds."
   ],
   "limitations": [
-    "197 routes are a factual inventory, not a semantic review of all lessons. Only the 148 lessons connected by the 172 reviewed edges have those recommendations; other indexed lessons retain a directory fallback.",
+    "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
     "A reviewed learning connection identifies a concrete concept to carry between lessons. It does not certify a complete operation-level derivation, diagnostic remediation, or authentic-material workflow in either lesson.",
     "These software and reference-calculation checks do not measure student learning or complete the broad site audit.",
     "The official Al data are an existing monatomic calculated example with real and complex supplied eigenvectors, including relative complex phases. They are not experiment, newly computed data, optical-branch validation, or a general unequal-mass multi-atom import audit.",
     "The band file has no frequency-unit declaration. The example entry explicitly selects THz; the selected convention is not relabeled as file metadata.",
     "SPT pure-state subsystem entropy and mixed-state von Neumann entropy are not interchangeable entanglement measures.",
-    "New optional links do not implement the separately identified two-color/Theta, generalized O(3) stabilizer, SOC-locking branch, or transverse three-dimensional antitranslation panels. Existing finite presets, one-dimensional experiments and model boundaries remain as declared."
+    "Course connections do not themselves implement or certify the separately documented operation workshops. Exact color/spin/SOC and antitranslation panels have their own source, model and verification scopes; existing preset and solver boundaries remain separate."
   ],
   "officialExample": {
     "source": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml",
@@ -41,28 +43,40 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 37153,
-      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
+      "bytes": 40090,
+      "sha256": "5c3fb856aad03a2cc118fbe37393dd7dfb7bb525b939a59de1ef3c4d19ead23e"
     },
     "NOTICE.txt": {
       "bytes": 15904,
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/app.js": {
-      "bytes": 97247,
-      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
+      "bytes": 97275,
+      "sha256": "001b8ec0dab46d94e83e0457c51675034fedf96b06774c977dbd4c32f2a56c27"
+    },
+    "dist/bridges-ui.js": {
+      "bytes": 17155,
+      "sha256": "56665d95eb9870eefa26947147b1965899182ba96e6d24dda38e88ce693c9c44"
     },
     "dist/classroom-ui.js": {
-      "bytes": 31751,
-      "sha256": "0717c5dd6f73ca0533fd650c343dc00ffd279127cc64a07e18229c1c20f2fea3"
+      "bytes": 32192,
+      "sha256": "947a3c8d88ce529f09589f80827263af3e7caa01bbc32eefa89d2609e9700bd8"
     },
     "dist/classroom.css": {
-      "bytes": 8452,
-      "sha256": "0a5e1fa8a59481a05cda04a243857bf112f95d7f39e5e25943d6dbfb41ae42ac"
+      "bytes": 8608,
+      "sha256": "7130de46e1fe607f421aaf2cf2570ec6da379638df57a58dca2851dd90be5ae2"
+    },
+    "dist/connections-ui.js": {
+      "bytes": 18462,
+      "sha256": "ea013f39c04b6b2ecac8b7d019ce7abe6e7fde8f77db0a31ce633ad4a97f2c2e"
+    },
+    "dist/construction-ui.js": {
+      "bytes": 17359,
+      "sha256": "0db54b560c64ee2d5450b0d3cbb3f766ba52d6d7ee3ee671196df56c2cd1d3d5"
     },
     "dist/coupled-materials-ui.js": {
-      "bytes": 36133,
-      "sha256": "32953672528ed09eec8a03b6c96a7c60141940ec3fe3af7fe4658378bf898a24"
+      "bytes": 36141,
+      "sha256": "76e20b37e764d092b9052ab4fdd9efa8c4b7c14017f5fb7b0414b0a3d4b34b59"
     },
     "dist/data/bridges-materials.json": {
       "bytes": 90485,
@@ -164,45 +178,65 @@
       "bytes": 17182,
       "sha256": "24c252ef44749a77c28747875ae6ce7ed934aa50164ee4421cc62a5c810a4c41"
     },
+    "dist/electronic-materials-ui.js": {
+      "bytes": 32620,
+      "sha256": "bbfeb791d6eba142a832f22c6dc284ef0b5c4da4c1fd69cb9bc01f777e5f6527"
+    },
     "dist/frontiers-views.js": {
       "bytes": 16994,
       "sha256": "cacf724c0da68a55060287755bd67f43de4e5843d8c38869b36bf20a58107413"
     },
     "dist/index.html": {
-      "bytes": 7321,
-      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
+      "bytes": 7335,
+      "sha256": "4950bb513a09b4f16ab3a28c1bcc48bf5515bb2ae7765ed5cc6dee2da108e0f4"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
       "sha256": "7effa7aeb165f6ba16be7f7088da8127ce43afda45afeea01b85e60fcf72151c"
     },
     "dist/lesson-progression.js": {
-      "bytes": 47945,
-      "sha256": "d761220baa263636845b9951012c7ef7ef6e3979899b805f3e68642b24957dbd"
+      "bytes": 70944,
+      "sha256": "14b26daadbd8f11b0638d5a4d7cf8770bd89bac0a30610148a7d1eb519bfe4d7"
+    },
+    "dist/lie-physics-ui.js": {
+      "bytes": 20543,
+      "sha256": "8a898e0b3a59dc5651f9e24b392b538cd426f343e6c4c573e9e47d0ec651b87c"
     },
     "dist/material-notebook.js": {
-      "bytes": 24767,
-      "sha256": "82a0d7a41503aa3ec231f0e023f9bf5eb6f1401c126a961e5b4a99d5228103e6"
+      "bytes": 24771,
+      "sha256": "494abd9b241dcc63ac5816c1b70b5c68c49ed3fca9121e20961c42dceef352fe"
+    },
+    "dist/observables-ui.js": {
+      "bytes": 30019,
+      "sha256": "7c8c8fde7467647ba0472a40ccae5bb96593b17a8b761cacb7d7d39e7fc345c5"
     },
     "dist/pathways-ui.js": {
-      "bytes": 14128,
-      "sha256": "1a39482ce4a902517d259ceca607f0b9d933dd992476e50e9a60804da4f46c16"
+      "bytes": 14136,
+      "sha256": "f4f4b00547112d5b172f80d0c818d426382080378cc3d6797452a2df56f14f8c"
     },
     "dist/pointgroup-ui.js": {
       "bytes": 36070,
       "sha256": "dad5f516ece33e70534a74322b12d1c5cbc35651847476b7bd3c8dd25f12171f"
     },
     "dist/python-client.js": {
-      "bytes": 2576,
-      "sha256": "62a56fb7856d58c68adf6a0900f43af248d10a5438bde5fbe54df3d6de0d89e7"
+      "bytes": 2580,
+      "sha256": "1100e2e238ca3c822b414201648693bb7577bfe0d3c679498cc18f287a0837a1"
     },
     "dist/python-worker.js": {
-      "bytes": 11075,
-      "sha256": "e006192a879f6a68ba311230fb51cbb036b2485be348504f5f3ed73f5cc0c4c5"
+      "bytes": 11233,
+      "sha256": "c42a4fa1b7f002b1425c70efcc410fff516745ec86dd9821a895554f47ae4414"
+    },
+    "dist/python/atomic_spectra_lab.py": {
+      "bytes": 19187,
+      "sha256": "80e36eedfd59e06e4daea87fac85bca70681972c844a961b80ddf8b4ee9f8e0c"
     },
     "dist/python/conservation_lab.py": {
       "bytes": 16717,
       "sha256": "86fdb9943fead53363bcc50c4bbc469398f85516643cb6dc92b3870be14dfe84"
+    },
+    "dist/python/crystal_field_lab.py": {
+      "bytes": 21528,
+      "sha256": "7fd92a7f1b207b7cd23f3217463a6793a0b59118f764196c062f0bfd763b6348"
     },
     "dist/python/density_matrix_lab.py": {
       "bytes": 15248,
@@ -224,9 +258,29 @@
       "bytes": 24875,
       "sha256": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
     },
+    "dist/python/hubbard_lab.py": {
+      "bytes": 17459,
+      "sha256": "3421a91e928bbc9f9b56694486694335c84d2a5d785fdbe2061c070caf5a2238"
+    },
+    "dist/python/lie_applications.py": {
+      "bytes": 20835,
+      "sha256": "c3eac91d011f62dc63fb7848ee08e2c6b1259f8ee02fdedaac52f8212e3f4232"
+    },
+    "dist/python/lie_labs.py": {
+      "bytes": 20554,
+      "sha256": "c0df476c63d78d660a0037ae9a825ad240bd6e917b8377cd1d96b1963665c9a0"
+    },
+    "dist/python/local_multiplet_lab.py": {
+      "bytes": 13897,
+      "sha256": "9166cb06b0fd09a22de23ad57a35ca471ae3a25b5dc76f3ed7064455749c6fc4"
+    },
     "dist/python/magnon_lab.py": {
       "bytes": 17449,
       "sha256": "ad543f40ac328ae0fb012cad7353b1ffe17cfe91349ce2f7c63ee6b325fd9dd6"
+    },
+    "dist/python/manybody_spectra_lab.py": {
+      "bytes": 22437,
+      "sha256": "c5498cd6d82b3a5c873ebde2a75432e679209449d78945a366e13d2d61cc4763"
     },
     "dist/python/phase_domains.py": {
       "bytes": 11704,
@@ -240,9 +294,25 @@
       "bytes": 36795,
       "sha256": "e71f96331d4e5b71dff9041494e90f0fddf0ce8a763124176ce8869db25b6b07"
     },
+    "dist/python/polaron_lab.py": {
+      "bytes": 15984,
+      "sha256": "0d349f82791a15fce6687636a25e48313b292f8621df8eecaf5bd9b9f3df0f45"
+    },
     "dist/python/qha_lab.py": {
       "bytes": 23271,
       "sha256": "4505784a1b62e5f4442b3995407f449575bd39f8d497b0baf947ef202232d44f"
+    },
+    "dist/python/salc_lab.py": {
+      "bytes": 19473,
+      "sha256": "ab58759178e9da1798ac8399976e39c533d4e67b83ec298e839a7af33da9f7f0"
+    },
+    "dist/python/shg_lab.py": {
+      "bytes": 15563,
+      "sha256": "f74d0ed08914be082012cdbc59f3571b4654760bcb72fe5488c781b20511940f"
+    },
+    "dist/python/spin_resonance_lab.py": {
+      "bytes": 14508,
+      "sha256": "f6ebc5af3aaf505716af9e43ab4e24aa6b08d2aefbdceef43442d9f49985a53b"
     },
     "dist/python/standard_labels.py": {
       "bytes": 17202,
@@ -252,6 +322,26 @@
       "bytes": 122394,
       "sha256": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c"
     },
+    "dist/python/su3_cg.py": {
+      "bytes": 21975,
+      "sha256": "201e06fe4ee0f168813e23fcf7819f087b70b3912ae16ac94a12b4b14791b794"
+    },
+    "dist/python/su3_cg_exact.py": {
+      "bytes": 14031,
+      "sha256": "7742e5b74e053023955865f6f18e94461b284ab06fa04c353bb19c02cabeb7f2"
+    },
+    "dist/python/su3_ninej.py": {
+      "bytes": 26822,
+      "sha256": "cfa29978006452ecfe9a8e98e8a91eda5c14914053989e886df17f30914c9f57"
+    },
+    "dist/python/su3_racah.py": {
+      "bytes": 19021,
+      "sha256": "f2233ea01cce38a054638bfbfc43e655c4ba1a9a222f6f81629f8fb0f4605f7d"
+    },
+    "dist/python/symmetry_connections.py": {
+      "bytes": 19867,
+      "sha256": "8addbb207355c38fcede6ad90983edae1d37f02606f8c765d5646e03b6b12b49"
+    },
     "dist/python/symmetry_core.py": {
       "bytes": 46450,
       "sha256": "e25102c7c0312833818ef7d15c3a700edf47cd8c1416183ae2a093a4aa12edf0"
@@ -260,57 +350,89 @@
       "bytes": 25552,
       "sha256": "c12fd845f510e177e6ea326e14d2f8e860aad6af16c259dc8b764dae4f84478a"
     },
+    "dist/python/symmetry_workshop.py": {
+      "bytes": 7090,
+      "sha256": "fc7d504badd66f54bcf8d784b4153b5d9459441467cfea357bd2921357137d19"
+    },
     "dist/python/teaching_labs.py": {
-      "bytes": 14443,
-      "sha256": "8c8aee438e95f7d260a462efffbfdd98c9f1617b156368cf61e3a74cfa2d3e59"
+      "bytes": 14602,
+      "sha256": "faa1d533e56775cd9b4266ea1d0f305e246acfb473666c9c3e7fd82dc1cdff1b"
+    },
+    "dist/python/unfold_lab.py": {
+      "bytes": 17091,
+      "sha256": "1f80fb03bd5d446d270d4a70ce80ca01b630a78ad3fc9ac1c82bb97fa55b6d77"
+    },
+    "dist/quantum-materials-ui.js": {
+      "bytes": 37652,
+      "sha256": "eb08364248fef3d9a473a776bbd7a868e726353a631fb7720dac9f44f5870649"
+    },
+    "dist/response-materials-ui.js": {
+      "bytes": 13655,
+      "sha256": "31c97a90caae6df0d9546b8bff704da831aeb69eef9b52f117050d988bb70c33"
+    },
+    "dist/spectroscopy-ui.js": {
+      "bytes": 13485,
+      "sha256": "cb2fe106db2bf924baf2c78774aea9446318b8f38b8b4a990c779edac0237358"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 51335,
-      "sha256": "0544880b6479b6c460b92477a62b099a404b3d33db55beeb6e315938cd456642"
+      "bytes": 51339,
+      "sha256": "1217957927c1ec658c347fcb6bb37518747a8e395477c60f7880c3fe189cb20b"
+    },
+    "dist/su3-cg-ui.js": {
+      "bytes": 22382,
+      "sha256": "56ab642ec1bcee8cfa47f332252eaefbdb1928227c1da1c34adb1475a53cbfe9"
+    },
+    "dist/su3-ninej-ui.js": {
+      "bytes": 30331,
+      "sha256": "67d575399d8cd0f68979c50e3f31529a6516c2228cf7a6b8b63b0eed9b08f1de"
+    },
+    "dist/su3-racah-ui.js": {
+      "bytes": 21923,
+      "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 92042,
-      "sha256": "04840fb96e94875adfae2a1daa21d4c79a79f84b1dc196debd0c79992efd54b2"
+      "bytes": 92738,
+      "sha256": "d9c746fec25d41addcd50f1119d37fa2f79d484994e53abc01253840e3824bfb"
     },
     "locales/en-entropy-conventions.json": {
       "bytes": 10355,
       "sha256": "12082dd274c3ada7f43052bf64dc2ff12df391ac5cbf064e41e81357c3eee967"
     },
     "locales/en-lesson-progression.json": {
-      "bytes": 63637,
-      "sha256": "76e76c8f9cebb150622aa8dedacd42998345278ab2ab2ca9042bb91441e6407e"
+      "bytes": 98001,
+      "sha256": "bf07a8f0ba93bbca70126ad68df8a1085edc1123fed21896b94ac832baa8108c"
     },
     "locales/en-phonopy-units.json": {
       "bytes": 18040,
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
     },
     "package.json": {
-      "bytes": 16708,
-      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
+      "bytes": 17018,
+      "sha256": "127092e428c46af59f8e258e547ef01380090c6abbbab24d84faf6b6f74523f8"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 9506,
-      "sha256": "40e3484eabe9355d4183ad417ee3aea7c723a3d393099c4b11844843d952067c"
+      "bytes": 11803,
+      "sha256": "24b371712519c632e2f664af10dec096a6c309591041d1bb962b96ab01f22ed1"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 2737,
-      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
+      "bytes": 2911,
+      "sha256": "1347666cfbb7e3aa0e4c56977ef531069b4710ac219ba8b820b86a1d65816896"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
       "sha256": "e1c9206aa6a0fe017bd54b9820875081cf074d442c829514ef04d3a9dcb0de6d"
     },
     "scripts/test-frontiers-ui.mjs": {
-      "bytes": 8677,
-      "sha256": "02ec520a9ae5037b730b1cf578bb0c982529e361fff49e92aac0dcf24258dc5f"
+      "bytes": 8681,
+      "sha256": "4f628714f78e0229ee0bb0434750d00574aaa829b7d2c5f89fdc14a42416faab"
     },
     "scripts/test-lesson-progression.mjs": {
-      "bytes": 38310,
-      "sha256": "b9376d7bd73e0b9d0f6642895e16235703dafb63904772c9caba220a317c1ed8"
+      "bytes": 52336,
+      "sha256": "cf2e96196ae3cb2ac21acc704dcd5e39bb0a57630530bd4640fdb62681f87b06"
     },
     "scripts/test-lie-group-ui.mjs": {
       "bytes": 81283,
@@ -321,8 +443,8 @@
       "sha256": "f523224519fd2cbf5cbee3a4a6a030cacdd991efdbc394a3e919d0f7aa0dfbab"
     },
     "scripts/test-material-research-ui.mjs": {
-      "bytes": 23367,
-      "sha256": "9b1eefbb1ef792cdf9d13b4b3b500ea4b1c4d3bb246c0bb87deb370ba5a8892a"
+      "bytes": 23371,
+      "sha256": "21b4ce5af5f0cf31fee75700ac4e269f1255889d172a65aba61417644b528fb9"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2890,
@@ -352,5 +474,24 @@
       "bytes": 36890,
       "sha256": "b905b2a3acf444a1fbf73e9ce9c634b40e7dea81ddc8f180934aa34d38ff6c1d"
     }
-  }
+  },
+  "reviewHistory": [
+    {
+      "release": "20261115-tensor1",
+      "reviewedLessons": 112,
+      "optionalEdges": 130
+    },
+    {
+      "release": "20261115-spin1",
+      "reviewedLessons": 148,
+      "optionalEdges": 172
+    },
+    {
+      "release": "20261115-momentum1",
+      "reviewedLessons": 197,
+      "optionalEdges": 259,
+      "newConnections": 87,
+      "newlyConnectedLessons": 49
+    }
+  ]
 }

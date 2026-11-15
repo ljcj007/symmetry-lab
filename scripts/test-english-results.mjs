@@ -87,3 +87,14 @@ const aliasEnglish=spinLocalizer.result(aliasResult);
 assert.deepEqual(aliasEnglish.input.quantum,quantumAlias,'The same quantum object in protected input retains original text');
 assert.doesNotMatch(aliasEnglish.locking.original.quantum.convention,/[\u3400-\u9fff]/u,'The displayed alias still translates');
 console.log('Actual SOC original-operation conventions: six fresh results translated; input, raw, source, export, user-note, unrelated-schema and non-opt-in trees remain unchanged.');
+const antiFixture=JSON.parse(fs.readFileSync(new URL('./fixtures/antitranslation.json',import.meta.url),'utf8'));
+assert.equal(antiFixture.cases.length,10);
+for(const row of antiFixture.cases){
+ const before=structuredClone(row.result),after=spinLocalizer.result(row.result);
+ // These bounded inputs contain only rational k, a boolean and a fixed enum.
+ // Visit the whole genuine result independently of the display allowlist, so
+ // an unrecognized but visibly rendered explanation cannot hide from the audit.
+ assert.doesNotMatch(JSON.stringify(after),/[\u3400-\u9fff]/u,row.id+' complete fresh Bloch result retains untranslated display text');
+ assert.deepEqual(after.input,before.input);assert.deepEqual(row.result,before);
+}
+console.log('Actual Bloch-fiber results: every human-readable field in ten complete fresh replies translated; original inputs and source replies unchanged.');

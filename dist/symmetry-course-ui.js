@@ -2,7 +2,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
-import {createSpinColorViewer} from './spincolor-viewer.js?v=20261110-en1';
+import {createSpinColorViewer} from './spincolor-viewer.js?v=20261115-momentum1';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = value => { const n=Number(value);return Number.isFinite(n)?(Math.abs(n)<1e-9?'0':Number(n.toFixed(5)).toString()):String(value??'—'); };
 const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'—';
@@ -15,9 +15,9 @@ const latticeNames={TricPrim:'三斜 · 原始',MonoPrim:'单斜 · 原始',Mono
 const storageKey='symmetry-lab.academy.progress.v1';
 const derivationStorageKey='symmetry-lab.academy.derivations.v1';
 const initialInputs={seitz:{preset:'screw21',point:[.2,.3,.1],steps:4,k:[0,0,.5]},spinor:{axis:'z',initialState:'plus'},magnetic:{operation:'mirror_z',timeReversal:false,moment:[.4,.3,.8],position:[.25,.35,.45]},antiferro:{k:0,spinful:true},double_group:{preset:'d2_point',steps:8,kz:'0'},color_group:{preset:'c3_point',steps:3,variant:'combined'},spin_group:{preset:'af_space',steps:4,variant:'combined'}};
-const spinActionsHooks=Object.freeze({'color-03':'颜色交换与时间反演','spin-03':'纯自旋稳定子','spin-04':'SOC 锁定对照'});
-const spinActionsStates=new Map();let disposeSpinActions=()=>{},spinActionsModulePromise;
-const loadSpinActions=()=>spinActionsModulePromise||(spinActionsModulePromise=import('./spin-actions-ui.js?v=20261115-spin1').catch(error=>{spinActionsModulePromise=null;throw error;}));
+const spinActionsHooks=Object.freeze({'color-03':'颜色交换与时间反演','spin-02':'半平移、Bloch 纤维与同波矢配对','spin-03':'纯自旋稳定子','spin-04':'SOC 锁定对照'});
+const spinActionsStates=new Map();let disposeSpinActions=()=>{},spinActionsModulePromise,antitranslationModulePromise;
+const loadSpinActions=id=>id==='spin-02'?(antitranslationModulePromise||(antitranslationModulePromise=import('./antitranslation-ui.js?v=20261115-momentum1').catch(error=>{antitranslationModulePromise=null;throw error;}))):(spinActionsModulePromise||(spinActionsModulePromise=import('./spin-actions-ui.js?v=20261115-momentum1').catch(error=>{spinActionsModulePromise=null;throw error;})));
 export function spinActionsLessonOriginalInput(id){
  const presets={'color-03':['color_group','c3_point',3],'spin-03':['spin_group','triangular_point',3],'spin-04':['spin_group','c2_point',4]},p=presets[id];
  return p?{lab:p[0],preset:p[1],steps:p[2],variant:'combined'}:null;
@@ -139,14 +139,22 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     bindSpinActionsHost(lesson);
   }
   function openSpinActionsCopy(input){
-    if(!current()||!input||!['color_group','spin_group'].includes(input.lab)||!groupPresets[input.lab].some(([id])=>id===input.preset)||!Number.isInteger(input.steps)||input.steps<1||input.steps>12||input.variant!=='combined')return false;
-    captureLabDraft();changeLab(input.lab);state.inputs[input.lab]={...structuredClone(initialInputs[input.lab]),preset:input.preset,steps:input.steps,variant:'combined'};delete state.labDrafts[input.lab];state.labResult=null;state.labPayload=null;state.labError='';state.labLesson=null;state.frame=0;groupCamera={};state.tab='lab';draw();sync();return true;
+    if(!current()||!input)return false;
+    let complete;
+    if(input.lab==='antiferro'){
+      if(typeof input.k!=='number'||!Number.isFinite(input.k)||input.k< -1||input.k>1||Math.abs(input.k/.05-Math.round(input.k/.05))>1e-9||typeof input.spinful!=='boolean')return false;
+      complete={...structuredClone(initialInputs.antiferro),k:input.k,spinful:input.spinful};
+    }else{
+      if(!['color_group','spin_group'].includes(input.lab)||!groupPresets[input.lab].some(([id])=>id===input.preset)||!Number.isInteger(input.steps)||input.steps<1||input.steps>12||input.variant!=='combined')return false;
+      complete={...structuredClone(initialInputs[input.lab]),preset:input.preset,steps:input.steps,variant:'combined'};
+    }
+    captureLabDraft();changeLab(input.lab);state.inputs[input.lab]=complete;delete state.labDrafts[input.lab];state.labResult=null;state.labPayload=null;state.labError='';state.labLesson=null;state.frame=0;groupCamera={};state.tab='lab';draw();sync();return true;
   }
   function bindSpinActionsHost(lesson){
     const host=$('[data-sax-lesson]'),detail=host?.querySelector('[data-sax-details]'),body=host?.querySelector('[data-sax-body]');if(!detail||!body||host.dataset.saxLesson!==lesson.id)return;
     const key='host:'+lesson.id,saved=spinActionsStates.get(key)||{open:false};let alive=true,inner=()=>{},pending=null,ready=false;
     const active=()=>alive&&current()&&state.tab==='learn'&&lessons.lessons[state.lesson]===lesson&&$('[data-sax-lesson]')===host;
-    const start=()=>{if(!active()||ready)return Promise.resolve();if(pending)return pending;body.innerHTML='<p role="status">正在载入可选操作推导…</p>';pending=(async()=>{try{const module=await loadSpinActionsModule();if(!active())return;inner=module.bindSpinActionsLesson({root:host,lessonId:lesson.id,isCurrent:active,stateStore:spinActionsStates,run,cancelRun,onCopy:openSpinActionsCopy,download});ready=true;}catch{if(!active())return;body.innerHTML='<p role="alert">操作推导暂未载入，请重试。</p><button type="button" class="secondary" data-sax-retry>重试操作推导</button>';const retry=body.querySelector('[data-sax-retry]');retry.onclick=()=>{if(active()&&body.querySelector('[data-sax-retry]')===retry)return start();};}finally{pending=null;}})();return pending;};
+    const start=()=>{if(!active()||ready)return Promise.resolve();if(pending)return pending;body.innerHTML='<p role="status">正在载入可选操作推导…</p>';pending=(async()=>{try{const module=await loadSpinActionsModule(lesson.id);if(!active())return;inner=module.bindSpinActionsLesson({root:host,lessonId:lesson.id,isCurrent:active,stateStore:spinActionsStates,run,cancelRun,onCopy:openSpinActionsCopy,download});ready=true;}catch{if(!active())return;body.innerHTML='<p role="alert">操作推导暂未载入，请重试。</p><button type="button" class="secondary" data-sax-retry>重试操作推导</button>';const retry=body.querySelector('[data-sax-retry]');retry.onclick=()=>{if(active()&&body.querySelector('[data-sax-retry]')===retry)return start();};}finally{pending=null;}})();return pending;};
     detail.open=saved.open===true;detail.ontoggle=()=>{if(!active())return;saved.open=typeof detail.open==='boolean'?detail.open:detail.getAttribute('open')!==null;spinActionsStates.set(key,{open:saved.open});if(saved.open)return start();};
     if(saved.open)start();
     disposeSpinActions=()=>{if(!alive)return;inner();alive=false;detail.ontoggle=null;const retry=body.querySelector('[data-sax-retry]');if(retry)retry.onclick=null;};

@@ -5,27 +5,27 @@ const courseDefinitions={
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261113-prose2'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
-'frontiers':{load:()=>import('./frontiers-ui.js?v=20261115-spin1'),render:'renderFrontiersView',result:'getFrontiersResult'}
-,'connections':{load:()=>import('./connections-ui.js?v=20261115-spin1'),render:'renderConnectionsView',result:'getConnectionsResult'}
-,'construction':{load:()=>import('./construction-ui.js?v=20261115-spin1'),render:'renderConstructionView',result:'getConstructionResult'}
-,'principles':{load:()=>import('./principles-ui.js?v=20261115-spin1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
-,'bridges':{load:()=>import('./bridges-ui.js?v=20261115-spin1'),render:'renderBridgesView',result:'getBridgesResult'}
-,'pathways':{load:()=>import('./pathways-ui.js?v=20261115-spin1'),render:'renderPathwaysView',result:'getPathwaysResult'}
-,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261115-spin1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
-,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261115-spin1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261115-momentum1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+,'connections':{load:()=>import('./connections-ui.js?v=20261115-momentum1'),render:'renderConnectionsView',result:'getConnectionsResult'}
+,'construction':{load:()=>import('./construction-ui.js?v=20261115-momentum1'),render:'renderConstructionView',result:'getConstructionResult'}
+,'principles':{load:()=>import('./principles-ui.js?v=20261115-momentum1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
+,'bridges':{load:()=>import('./bridges-ui.js?v=20261115-momentum1'),render:'renderBridgesView',result:'getBridgesResult'}
+,'pathways':{load:()=>import('./pathways-ui.js?v=20261115-momentum1'),render:'renderPathwaysView',result:'getPathwaysResult'}
+,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261115-momentum1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
+,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261115-momentum1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261113-flow1'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261115-spin1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261115-momentum1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261115-route2'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261115-tensor1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261115-spin1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
-,'material-research':{load:()=>import('./material-research-ui.js?v=20261115-spin1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
-,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261115-spin1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
-,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261115-spin1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
-,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261115-spin1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
-,'flagship':{load:()=>import('./shg-flagship.js?v=20261115-spin1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261115-momentum1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'material-research':{load:()=>import('./material-research-ui.js?v=20261115-momentum1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261115-momentum1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261115-momentum1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
+,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261115-momentum1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
+,'flagship':{load:()=>import('./shg-flagship.js?v=20261115-momentum1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
-const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261115-spin1'));
+const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261115-momentum1'));
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
@@ -182,7 +182,7 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
   const courseHost=root.querySelector('#classroom-course');
   if(!embedded&&courseHost)courseHost.insertAdjacentHTML('afterend','<div id="classroom-progression" hidden></div>');
-  let progressionTicket=0;
+  let progressionTicket=0,progressionMarkup=null;
   const drawProgression=async()=>{
     const ticket=++progressionTicket,host=root.querySelector('#classroom-progression');
     if(!host)return;
@@ -192,10 +192,15 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
       const module=await loadProgression();
       if(!current()||ticket!==progressionTicket)return;
       const progress=module.progressionForSelection(selection);
-      host.innerHTML=progress.current?module.lessonProgressionHTML(progress.current):'';
+      const markup=progress.current?module.lessonProgressionHTML(progress.current):'';
+      // Course hydration and local input/tab updates can report the same lesson
+      // again. Keep its native links and open disclosures mounted while the
+      // displayed recommendations are unchanged, including during pointer input.
+      if(markup!==progressionMarkup){host.innerHTML=markup;progressionMarkup=markup;}
       host.hidden=!progress.current;
     }catch(error){
       if(!current()||ticket!==progressionTicket)return;
+      progressionMarkup=null;
       host.innerHTML='<p class="lesson-progression-error">学习衔接暂未载入。<button type="button" class="secondary" data-progression-retry>重试学习衔接</button></p>';
       host.querySelector('[data-progression-retry]').onclick=drawProgression;
     }

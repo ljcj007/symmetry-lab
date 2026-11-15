@@ -294,6 +294,555 @@
     ]
   },
   {
+    "source": "三维格中的交错磁矩与半平移",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/title",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/title",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/title",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/title"
+    ]
+  },
+  {
+    "source": "箭头只检验给定图案；不显示复振幅或 Bloch 相位。无自旋分支的箭头表示抽象时间奇序参量。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/scope",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/scope",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/scope",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/scope"
+    ]
+  },
+  {
+    "source": "G 保持 k；它是幺正操作，平方为 −I 本身不能推出 Kramers 简并。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/unitaryContrast/description",
+      "python-fixture/antitranslation.json/cases/1/result/unitaryContrast/description",
+      "python-fixture/antitranslation.json/cases/2/result/unitaryContrast/description",
+      "python-fixture/antitranslation.json/cases/3/result/unitaryContrast/description"
+    ]
+  },
+  {
+    "source": "此对照指定自旋 1/2 的幺正二重旋转；无自旋分支不把它当作已有算符。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/7/result/unitaryContrast/reason",
+      "python-fixture/antitranslation.json/cases/8/result/unitaryContrast/reason",
+      "python-fixture/antitranslation.json/cases/9/result/unitaryContrast/reason"
+    ]
+  },
+  {
+    "source": "A 把态送到另一个 k 空间；即使平方为 −I，也不能据此保证同一 k 的 Kramers 简并。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/2/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/3/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/4/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/9/result/decision/reason"
+    ]
+  },
+  {
+    "source": "原一维实验只接收纵向数值 k，范围 −1 到 1、步长 0.05；复制后仍需手动运行。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/legacyCopy/description",
+      "python-fixture/antitranslation.json/cases/1/result/legacyCopy/description",
+      "python-fixture/antitranslation.json/cases/2/result/legacyCopy/description",
+      "python-fixture/antitranslation.json/cases/3/result/legacyCopy/description"
+    ]
+  },
+  {
+    "source": "k 仅接受有限整数、十进制或 p/q，不接受符号表达式。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "k 的每个分量必须有限。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "k 仅接受有限十进制或简单有理数，不执行函数或表达式。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "k 超出精确教学范围：绝对值不超过 8，分母不超过 1000000。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "Γ 点：幺正平方为 −I 仍可没有简并",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/0/title",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/0/title",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/0/title",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/0/title"
+    ]
+  },
+  {
+    "source": "这个固定点四维 Hamiltonian 与 G 对易，四个能级各不相同；它没有 A 对称性。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/0/description",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/0/description",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/0/description",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/0/description"
+    ]
+  },
+  {
+    "source": "固定 Γ 点的有限矩阵反例，不是对交错磁序材料 Hamiltonian 的拟合。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/0/scope",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/0/scope",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/0/scope",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/0/scope"
+    ]
+  },
+  {
+    "source": "Z 点：反幺正平方为 +I 也可没有简并",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/1/title",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/1/title",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/1/title",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/1/title"
+    ]
+  },
+  {
+    "source": "这里 B=J 直积 J，A=BK。给出的 H 保持 A，但四个能级各不相同。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/1/description",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/1/description",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/1/description",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/1/description"
+    ]
+  },
+  {
+    "source": "固定 Z 点的有限矩阵反例；A²=+I 不禁止其他对称性或偶然简并。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/counterexamples/1/scope",
+      "python-fixture/antitranslation.json/cases/1/result/counterexamples/1/scope",
+      "python-fixture/antitranslation.json/cases/2/result/counterexamples/1/scope",
+      "python-fixture/antitranslation.json/cases/3/result/counterexamples/1/scope"
+    ]
+  },
+  {
+    "source": "反平移工坊输入必须为 JSON 对象。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "反平移工坊含未知输入字段。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "lab 必须为 antitranslation。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "k 必须包含三个倒格矢分数。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "spinful 必须为 true 或 false。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "statePreset 必须为 basis 或 complex。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "同一 k 条件与 A²=−I 同时满足；还须由 Hamiltonian 的 A 对称性才能推出配对。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/5/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/8/result/decision/reason"
+    ]
+  },
+  {
+    "source": "A 回到同一 k，但平方不是 −I；此反幺正操作本身不保证 Kramers 配对。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/1/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/6/result/decision/reason",
+      "python-fixture/antitranslation.json/cases/7/result/decision/reason"
+    ]
+  },
+  {
+    "source": "存在横向 k 分量；不能静默丢弃它们后复制到一维实验。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/3/result/legacyCopy/reason",
+      "python-fixture/antitranslation.json/cases/5/result/legacyCopy/reason",
+      "python-fixture/antitranslation.json/cases/6/result/legacyCopy/reason"
+    ]
+  },
+  {
+    "source": "此精确 k 不在原一维表单的合法步长或范围内；可继续查看本工坊精确结果。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/4/result/legacyCopy/reason"
+    ]
+  },
+  {
+    "source": "周期轨道 Bloch 基取 Σ_R exp(+2πik·R)|R,α,s〉；T_n 的本征值为 exp(−2πik·n)。磁性原胞三条边长均为 1，α=A、B 位于 z=0、1/2。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/basis/convention",
+      "python-fixture/antitranslation.json/cases/1/result/basis/convention",
+      "python-fixture/antitranslation.json/cases/2/result/basis/convention",
+      "python-fixture/antitranslation.json/cases/3/result/basis/convention"
+    ]
+  },
+  {
+    "source": "三个分量均满足 2k∈整数，才有 −k+G=k。此周期轨道规范下 G 为整数时基底识别矩阵是单位阵。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/momentum/description",
+      "python-fixture/antitranslation.json/cases/1/result/momentum/description",
+      "python-fixture/antitranslation.json/cases/2/result/momentum/description",
+      "python-fixture/antitranslation.json/cases/3/result/momentum/description"
+    ]
+  },
+  {
+    "source": "半平移沿 +z。第二个站点跨入下一原胞，因此矩阵第 A 行、第 B 列带整胞相位；不能先折回位置再丢掉该相位。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/translation/convention",
+      "python-fixture/antitranslation.json/cases/1/result/translation/convention",
+      "python-fixture/antitranslation.json/cases/2/result/translation/convention",
+      "python-fixture/antitranslation.json/cases/3/result/translation/convention"
+    ]
+  },
+  {
+    "source": "A=T_(c/2)Θ 从 H_k 到 H_−k；B_A(k)=S(−k)⊗J。第二次作用须使用 B_A(−k) 并共轭第一次的全部系数。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/antiunitary/convention",
+      "python-fixture/antitranslation.json/cases/1/result/antiunitary/convention",
+      "python-fixture/antitranslation.json/cases/2/result/antiunitary/convention",
+      "python-fixture/antitranslation.json/cases/3/result/antiunitary/convention"
+    ]
+  },
+  {
+    "source": "本工坊只计算给定两子格表示及其精确操作。没有从原子结构搜索磁空间群，也没有计算材料能带或拓扑不变量。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/notes/0",
+      "python-fixture/antitranslation.json/cases/1/result/notes/0",
+      "python-fixture/antitranslation.json/cases/2/result/notes/0",
+      "python-fixture/antitranslation.json/cases/3/result/notes/0"
+    ]
+  },
+  {
+    "source": "在一般 k，A 连接两个不同波矢空间；将 B_A(k) 当作同一空间矩阵直接平方或重复使用，会丢失返回空间与复共轭。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/notes/1",
+      "python-fixture/antitranslation.json/cases/1/result/notes/1",
+      "python-fixture/antitranslation.json/cases/2/result/notes/1",
+      "python-fixture/antitranslation.json/cases/3/result/notes/1"
+    ]
+  },
+  {
+    "source": "自旋 1/2 的 J=−iσ_y 且 Θ²=−1；无自旋分支 J=1、Θ²=+1，其交错箭头只表示抽象时间奇序参量。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/notes/2",
+      "python-fixture/antitranslation.json/cases/1/result/notes/2",
+      "python-fixture/antitranslation.json/cases/2/result/notes/2",
+      "python-fixture/antitranslation.json/cases/3/result/notes/2"
+    ]
+  },
+  {
+    "source": "单位整胞平移在 k 的相位不受整数倒格矢平移影响；原胞内位置未放入指数的周期轨道规范，使 −k+G 的识别明确。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/notes/3",
+      "python-fixture/antitranslation.json/cases/1/result/notes/3",
+      "python-fixture/antitranslation.json/cases/2/result/notes/3",
+      "python-fixture/antitranslation.json/cases/3/result/notes/3"
+    ]
+  },
+  {
+    "source": "文献也可选负向半平移或嵌入位置的 Bloch 规范，矩阵和相位写法随之改变；比较时先统一平移方向、k 单位与基底。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/notes/4",
+      "python-fixture/antitranslation.json/cases/1/result/notes/4",
+      "python-fixture/antitranslation.json/cases/2/result/notes/4",
+      "python-fixture/antitranslation.json/cases/3/result/notes/4"
+    ]
+  },
+  {
+    "source": "k 不是有效有理数。",
+    "origins": [
+      "python/antitranslation_lab.py"
+    ]
+  },
+  {
+    "source": "初始磁矩图案",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/frames/0/label",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/frames/0/label",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/frames/0/label",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/frames/0/label"
+    ]
+  },
+  {
+    "source": "仅半平移",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/frames/1/label",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/frames/1/label",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/frames/1/label",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/frames/1/label"
+    ]
+  },
+  {
+    "source": "仅时间反演",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/frames/2/label",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/frames/2/label",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/frames/2/label",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/frames/2/label"
+    ]
+  },
+  {
+    "source": "半平移与时间反演 A",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/frames/3/label",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/frames/3/label",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/frames/3/label",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/frames/3/label"
+    ]
+  },
+  {
+    "source": "半平移与幺正自旋二重旋转 G",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/pattern/frames/4/label",
+      "python-fixture/antitranslation.json/cases/1/result/pattern/frames/4/label",
+      "python-fixture/antitranslation.json/cases/2/result/pattern/frames/4/label",
+      "python-fixture/antitranslation.json/cases/3/result/pattern/frames/4/label"
+    ]
+  },
+  {
+    "source": "① 保留跨胞位移，建立半平移矩阵",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/0/title",
+      "python-fixture/antitranslation.json/cases/1/result/steps/0/title",
+      "python-fixture/antitranslation.json/cases/2/result/steps/0/title",
+      "python-fixture/antitranslation.json/cases/3/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "先跟踪 A 到 B、B 到下一原胞的 A，再把整胞 Bloch 相位放入对应矩阵列。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/0/explanation",
+      "python-fixture/antitranslation.json/cases/1/result/steps/0/explanation",
+      "python-fixture/antitranslation.json/cases/2/result/steps/0/explanation",
+      "python-fixture/antitranslation.json/cases/3/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "② 第二次作用属于返回的波矢空间",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/1/title",
+      "python-fixture/antitranslation.json/cases/1/result/steps/1/title",
+      "python-fixture/antitranslation.json/cases/2/result/steps/1/title",
+      "python-fixture/antitranslation.json/cases/3/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "第一次先共轭初态，再由 B_A(k) 送到 −k；第二次共轭整条中间态，再乘 B_A(−k)。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/1/explanation",
+      "python-fixture/antitranslation.json/cases/1/result/steps/1/explanation",
+      "python-fixture/antitranslation.json/cases/2/result/steps/1/explanation",
+      "python-fixture/antitranslation.json/cases/3/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "③ 逐个分量检验同一 k，而不只看 k_z",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/2/title",
+      "python-fixture/antitranslation.json/cases/1/result/steps/2/title",
+      "python-fixture/antitranslation.json/cases/2/result/steps/2/title",
+      "python-fixture/antitranslation.json/cases/3/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "平方相位只含 k_z，但 A 反转三个动量分量。横向一般动量仍会去往另一个空间。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/2/explanation",
+      "python-fixture/antitranslation.json/cases/1/result/steps/2/explanation",
+      "python-fixture/antitranslation.json/cases/2/result/steps/2/explanation",
+      "python-fixture/antitranslation.json/cases/3/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "④ 用两个非简并 Hamiltonian 反例检验推论",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/3/title",
+      "python-fixture/antitranslation.json/cases/1/result/steps/3/title",
+      "python-fixture/antitranslation.json/cases/2/result/steps/3/title",
+      "python-fixture/antitranslation.json/cases/3/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "先区分幺正与反幺正，再检查同一 k、平方及 Hamiltonian 对称性；有限图案的箭头重合不能替代这些条件。",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/steps/3/explanation",
+      "python-fixture/antitranslation.json/cases/1/result/steps/3/explanation",
+      "python-fixture/antitranslation.json/cases/2/result/steps/3/explanation",
+      "python-fixture/antitranslation.json/cases/3/result/steps/3/explanation"
+    ]
+  },
+  {
+    "source": "半平移矩阵保持范数",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/0/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/0/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/0/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "两次半平移留下整胞相位",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/1/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/1/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/1/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "反幺正矩阵部分保持范数",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/2/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/2/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/2/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "跨两个波矢空间的正确平方",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/3/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/3/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/3/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "所选初态已规范化",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/4/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/4/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/4/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "两次作用等于平方相位乘初态",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/5/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/5/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/5/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/5/label"
+    ]
+  },
+  {
+    "source": "同一 k 且平方为 −I 时所选态与其像正交",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/6/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/6/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/6/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/6/label"
+    ]
+  },
+  {
+    "source": "同一 k 判据逐个分量成立",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/7/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/7/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/7/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/7/label"
+    ]
+  },
+  {
+    "source": "Γ 点幺正反例对称且无简并",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/8/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/8/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/8/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/8/label"
+    ]
+  },
+  {
+    "source": "Z 点反幺正反例对称且无简并",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/9/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/9/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/9/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/9/label"
+    ]
+  },
+  {
+    "source": "幺正对照具有相同平方相位但不同定理条件",
+    "origins": [
+      "python/antitranslation_lab.py",
+      "python-fixture/antitranslation.json/cases/0/result/checks/10/label",
+      "python-fixture/antitranslation.json/cases/1/result/checks/10/label",
+      "python-fixture/antitranslation.json/cases/2/result/checks/10/label",
+      "python-fixture/antitranslation.json/cases/3/result/checks/10/label"
+    ]
+  },
+  {
     "source": "Quanty：原子近似的偏振 XAS 与有限温度",
     "origins": [
       "python/atomic_spectra_lab.py",

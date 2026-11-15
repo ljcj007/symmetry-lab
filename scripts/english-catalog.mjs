@@ -21,6 +21,7 @@ catalogFiles.push('en-fhs-plaquette-bridge.json','en-symmetry-operator-bridge.js
 catalogFiles.push('en-mode-frequency-confirmation.json','en-zno-phonopy-example.json','en-zno-navigation.json');
 catalogFiles.push('en-tensor-replay.json','en-tensor-replay-docs.json');
 catalogFiles.push('en-spin-actions.json','en-spin-actions-python.json','en-spin-actions-docs.json');
+catalogFiles.push('en-momentum-navigation.json','en-spincolor-responsive.json','en-antitranslation-python.json','en-antitranslation-docs.json','en-antitranslation-ui.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

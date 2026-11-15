@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {createSpinColorViewer} from './spincolor-viewer.js?v=20261110-en1';
+import {createSpinColorViewer} from './spincolor-viewer.js?v=20261115-momentum1';
 
 // This panel displays actual spin_actions Python replies. JavaScript does not
 // construct rotations, apply antiunitary operators, or classify stabilizers.

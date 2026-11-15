@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 26029,
-  "translatedUnits": 26029,
+  "sourceUnits": 26308,
+  "translatedUnits": 26308,
   "missing": [],
-  "files": 434,
+  "files": 437,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -79,6 +79,11 @@
     "en-tensor-replay-docs.json",
     "en-spin-actions.json",
     "en-spin-actions-python.json",
-    "en-spin-actions-docs.json"
+    "en-spin-actions-docs.json",
+    "en-momentum-navigation.json",
+    "en-spincolor-responsive.json",
+    "en-antitranslation-python.json",
+    "en-antitranslation-docs.json",
+    "en-antitranslation-ui.json"
   ]
 }

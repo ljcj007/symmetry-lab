@@ -13,9 +13,14 @@ assert.equal(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n'),progressionIndex
 const inventory=new Map(lessonProgressionInventory.map(item=>[item.key,item]));
 assert.equal(inventory.size,197);
 assert.equal(lessonProgressionCatalogs.length,17);
-assert.equal(lessonProgressionEdges.length,172);
+assert.equal(lessonProgressionEdges.length,259);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.equal(reviewed.size,148,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(reviewed.size,197,'Every indexed lesson has a substantively reviewed optional connection');
+const spinReviewed=new Set(lessonProgressionEdges.slice(0,172).flatMap(edge=>[edge.from,edge.to]));
+assert.equal(spinReviewed.size,148);
+assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(0,172))).digest('hex'),
+ '80a0d817d5688490afb96d0767eb5f871c2f8bc362ea102cc307e073fad95e34',
+ 'All preceding 172 edges, reasons and their order remain unchanged');
 assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(0,82))).digest('hex'),
  '998a4da95dc3a201e64ed830c2a4f5f58306477fec8aa66cbd6f27d6ee5dfff8',
  'The preceding 82 optional connections, their reasons and their order remain unchanged');
@@ -410,7 +415,7 @@ for(const key of spinStructureKeys){
  assert.ok(!tensorReviewed.has(key),'This lesson was index-only at tensor1: '+key);
  assert.ok(reviewed.has(key),'The reviewed spin/structure lesson has a live transfer: '+key);
 }
-assert.deepEqual(new Set([...reviewed].filter(key=>!tensorReviewed.has(key))),new Set(spinStructureKeys));
+assert.deepEqual(new Set([...spinReviewed].filter(key=>!tensorReviewed.has(key))),new Set(spinStructureKeys));
 const spinStructurePairs=[
   [
     "pointgroup-lessons::representations",
@@ -581,8 +586,185 @@ const spinStructurePairs=[
     "coupled-materials::magnon-stability"
   ]
 ];
-assert.deepEqual(lessonProgressionEdges.slice(130).map(({from,to})=>[from,to]),spinStructurePairs,
+assert.deepEqual(lessonProgressionEdges.slice(130,172).map(({from,to})=>[from,to]),spinStructurePairs,
  'All 42 reviewed transfers are installed in order, with no replacement pairs');
+
+
+// Momentum1 connects named lessons from read sections and actual models.
+// Lock identities and pairs independently of counts or catalogue order.
+const momentumReadGroups={
+  "bridges-materials": [
+    "density-assumptions",
+    "density-lindblad",
+    "polaron-conditional-cloud",
+    "polaron-truncation",
+    "workshop-breaking",
+    "workshop-identity",
+    "workshop-spin"
+  ],
+  "connections-materials": [
+    "defects-director",
+    "defects-manifold",
+    "defects-winding",
+    "statistics-complete-exchange",
+    "statistics-pauli-projector",
+    "statistics-young-sectors"
+  ],
+  "construction-materials": [
+    "salc-build",
+    "salc-multiplicity",
+    "salc-selection"
+  ],
+  "electronic-materials": [
+    "shg-geometry",
+    "shg-inference",
+    "shg-tensor",
+    "unfold-defects",
+    "unfold-folding",
+    "unfold-projection"
+  ],
+  "lie-group-lessons": [
+    "rabi-qubit-control",
+    "su3-cg-exact-complex-states",
+    "su3-flavor-color",
+    "su3-ninej-27-input-exact",
+    "su3-ninej-adjoint-invariants",
+    "su3-ninej-adjoint-observables",
+    "su3-ninej-color-complex",
+    "su3-ninej-fifteen-input-paths",
+    "su3-ninej-four-octets-channels",
+    "su3-octet-selection",
+    "su3-racah-complex-observables"
+  ],
+  "material-observables": [
+    "materials-workflow"
+  ],
+  "pathways-materials": [
+    "bandrep-cubic-sites",
+    "hubbard-gaps",
+    "hubbard-ionic"
+  ],
+  "quantum-materials": [
+    "orbital-crystal-field",
+    "orbital-jahn-teller",
+    "orbital-soc"
+  ],
+  "response-materials": [
+    "multiplet-competition",
+    "multiplet-fock",
+    "multiplet-hund"
+  ],
+  "spectroscopy-materials": [
+    "resonance-interactions",
+    "resonance-selection",
+    "resonance-zeeman",
+    "spectra-audit",
+    "spectra-polarization",
+    "spectra-slater"
+  ]
+};
+const momentumKeys=Object.entries(momentumReadGroups).flatMap(([catalog,ids])=>ids.map(id=>catalog+'::'+id));
+assert.equal(momentumKeys.length,49);
+for(const key of momentumKeys){
+ assert.ok(!spinReviewed.has(key),'This lesson was index-only at spin1: '+key);
+ assert.ok(reviewed.has(key),'A read transfer now connects this specific lesson: '+key);
+}
+assert.deepEqual(new Set([...reviewed].filter(key=>!spinReviewed.has(key))),new Set(momentumKeys));
+const momentumPairs=[
+
+ ["lie-group-lessons::su2-spinor", "lie-group-lessons::rabi-qubit-control"],
+ ["lie-group-lessons::su3-dynkin-representations", "lie-group-lessons::su3-flavor-color"],
+ ["lie-group-lessons::su3-flavor-color", "lie-group-lessons::su3-octet-selection"],
+ ["lie-group-lessons::su3-octet-selection", "lie-group-lessons::su3-cg-multiplicity"],
+ ["lie-group-lessons::su3-cg-exact-radicals", "lie-group-lessons::su3-cg-exact-complex-states"],
+ ["lie-group-lessons::unitary-matrices", "lie-group-lessons::su3-cg-exact-complex-states"],
+ ["lie-group-lessons::su3-racah-exact-sixj", "lie-group-lessons::su3-racah-complex-observables"],
+ ["lie-group-lessons::su3-cg-exact-complex-states", "lie-group-lessons::su3-racah-complex-observables"],
+ ["lie-group-lessons::su3-ninej-exact-normalization", "lie-group-lessons::su3-ninej-color-complex"],
+ ["lie-group-lessons::su3-flavor-color", "lie-group-lessons::su3-ninej-color-complex"],
+ ["lie-group-lessons::su3-ninej-paired-trees", "lie-group-lessons::su3-ninej-four-octets-channels"],
+ ["lie-group-lessons::su3-ninej-exact-normalization", "lie-group-lessons::su3-ninej-four-octets-channels"],
+ ["lie-group-lessons::su3-ninej-four-octets-channels", "lie-group-lessons::su3-ninej-adjoint-invariants"],
+ ["lie-group-lessons::su3-ninej-adjoint-invariants", "lie-group-lessons::su3-ninej-adjoint-observables"],
+ ["lie-group-lessons::su3-cg-exact-complex-states", "lie-group-lessons::su3-ninej-adjoint-observables"],
+ ["lie-group-lessons::su3-ninej-high-input-labels", "lie-group-lessons::su3-ninej-fifteen-input-paths"],
+ ["lie-group-lessons::su3-ninej-fifteen-input-paths", "lie-group-lessons::su3-ninej-27-input-exact"],
+ ["lie-group-lessons::su3-ninej-exact-normalization", "lie-group-lessons::su3-ninej-27-input-exact"],
+ ["material-observables::ir-raman", "material-observables::materials-workflow"],
+ ["material-observables::piezoelectricity", "material-observables::materials-workflow"],
+ ["material-observables::neumann", "electronic-materials::shg-tensor"],
+ ["material-observables::piezoelectricity", "electronic-materials::shg-tensor"],
+ ["electronic-materials::shg-tensor", "electronic-materials::shg-geometry"],
+ ["material-observables::polarization", "electronic-materials::shg-geometry"],
+ ["electronic-materials::shg-geometry", "electronic-materials::shg-inference"],
+ ["symmetry-course-lessons::space-05", "electronic-materials::unfold-folding"],
+ ["electronic-materials::unfold-folding", "electronic-materials::unfold-projection"],
+ ["electronic-materials::unfold-projection", "electronic-materials::unfold-defects"],
+ ["pointgroup-lessons::representations", "quantum-materials::orbital-crystal-field"],
+ ["quantum-materials::orbital-crystal-field", "quantum-materials::orbital-soc"],
+ ["lie-group-lessons::su2-coupling-representations", "quantum-materials::orbital-soc"],
+ ["principles-materials::conservation-protection", "quantum-materials::orbital-soc"],
+ ["quantum-materials::orbital-crystal-field", "quantum-materials::orbital-jahn-teller"],
+ ["pathways-materials::hubbard-basis", "response-materials::multiplet-fock"],
+ ["quantum-materials::orbital-crystal-field", "response-materials::multiplet-fock"],
+ ["response-materials::multiplet-fock", "response-materials::multiplet-hund"],
+ ["lie-group-lessons::su2-coupling-representations", "response-materials::multiplet-hund"],
+ ["response-materials::multiplet-hund", "response-materials::multiplet-competition"],
+ ["lie-group-lessons::su2-spinor", "spectroscopy-materials::resonance-zeeman"],
+ ["material-observables::neumann", "spectroscopy-materials::resonance-zeeman"],
+ ["spectroscopy-materials::resonance-zeeman", "spectroscopy-materials::resonance-interactions"],
+ ["lie-group-lessons::su2-coupling-representations", "spectroscopy-materials::resonance-interactions"],
+ ["response-materials::multiplet-competition", "spectroscopy-materials::resonance-interactions"],
+ ["spectroscopy-materials::resonance-interactions", "spectroscopy-materials::resonance-selection"],
+ ["pointgroup-lessons::selection-rules", "spectroscopy-materials::resonance-selection"],
+ ["response-materials::multiplet-fock", "spectroscopy-materials::spectra-slater"],
+ ["response-materials::multiplet-hund", "spectroscopy-materials::spectra-slater"],
+ ["quantum-materials::orbital-soc", "spectroscopy-materials::spectra-slater"],
+ ["spectroscopy-materials::spectra-slater", "spectroscopy-materials::spectra-polarization"],
+ ["pointgroup-lessons::selection-rules", "spectroscopy-materials::spectra-polarization"],
+ ["spectroscopy-materials::resonance-selection", "spectroscopy-materials::spectra-polarization"],
+ ["spectroscopy-materials::spectra-polarization", "spectroscopy-materials::spectra-audit"],
+ ["pathways-materials::bandrep-decomposition", "pathways-materials::bandrep-cubic-sites"],
+ ["pathways-materials::bandrep-cubic-sites", "material-research::band-restriction"],
+ ["pathways-materials::hubbard-basis", "pathways-materials::hubbard-gaps"],
+ ["pathways-materials::hubbard-superexchange", "pathways-materials::hubbard-gaps"],
+ ["pathways-materials::hubbard-basis", "pathways-materials::hubbard-ionic"],
+ ["bridges-materials::density-pure-mixed", "pathways-materials::hubbard-ionic"],
+ ["pathways-materials::hubbard-gaps", "bridges-materials::manybody-lehmann"],
+ ["bridges-materials::polaron-hamiltonian", "bridges-materials::polaron-conditional-cloud"],
+ ["bridges-materials::density-pure-mixed", "bridges-materials::polaron-conditional-cloud"],
+ ["bridges-materials::polaron-conditional-cloud", "bridges-materials::polaron-truncation"],
+ ["bridges-materials::density-pure-mixed", "bridges-materials::density-lindblad"],
+ ["bridges-materials::density-lindblad", "bridges-materials::density-assumptions"],
+ ["bridges-materials::density-assumptions", "principles-materials::conservation-open"],
+ ["pointgroup-lessons::character-reduction", "construction-materials::salc-build"],
+ ["pointgroup-lessons::projection", "construction-materials::salc-build"],
+ ["construction-materials::salc-build", "construction-materials::salc-selection"],
+ ["pointgroup-lessons::selection-rules", "construction-materials::salc-selection"],
+ ["construction-materials::salc-build", "construction-materials::salc-multiplicity"],
+ ["construction-materials::salc-selection", "construction-materials::salc-multiplicity"],
+ ["pointgroup-lessons::representations", "bridges-materials::workshop-identity"],
+ ["symmetry-course-lessons::magnetic-01", "bridges-materials::workshop-identity"],
+ ["bridges-materials::workshop-identity", "bridges-materials::workshop-spin"],
+ ["symmetry-course-lessons::double-04", "bridges-materials::workshop-spin"],
+ ["bridges-materials::workshop-identity", "bridges-materials::workshop-breaking"],
+ ["bridges-materials::workshop-spin", "bridges-materials::workshop-breaking"],
+ ["lie-group-lessons::singlet-triplet-exchange", "connections-materials::statistics-complete-exchange"],
+ ["connections-materials::statistics-complete-exchange", "connections-materials::statistics-pauli-projector"],
+ ["connections-materials::statistics-pauli-projector", "connections-materials::statistics-young-sectors"],
+ ["pointgroup-lessons::character-reduction", "connections-materials::statistics-young-sectors"],
+ ["principles-materials::order-isotropy", "connections-materials::defects-manifold"],
+ ["pathways-materials::wall-gradient", "connections-materials::defects-manifold"],
+ ["connections-materials::defects-manifold", "connections-materials::defects-winding"],
+ ["connections-materials::defects-winding", "connections-materials::defects-director"],
+ ["connections-materials::statistics-complete-exchange", "pathways-materials::hubbard-basis"],
+ ["lie-group-lessons::rabi-qubit-control", "bridges-materials::density-lindblad"]
+];
+assert.equal(momentumPairs.length,87);
+assert.equal(createHash('sha256').update(JSON.stringify(lessonProgressionEdges.slice(172))).digest('hex'),
+ '92e6f642924a938a528d42871d27077c0cb93788655ddf4013c71de5987c361f','All 87 read reasons retain their exact approved content and order');
+assert.deepEqual(lessonProgressionEdges.slice(172).map(({from,to})=>[from,to]),momentumPairs,
+ 'All 87 read proposals are installed in their reviewed order without inferred replacements');
 
 // Inspect rendered native anchors, including links inside the optional overflow
 // disclosure. Availability never depends on completing the recommended lesson.
@@ -656,6 +838,23 @@ assert.match(reasonFor('coupled-materials::magnon-ferromagnet','coupled-material
 assert.match(reasonFor('coupled-materials::magnon-antiferromagnet','coupled-materials::magnon-stability'),/Real frequencies do not establish energetic stability.*old Neel reference.*not the excitation spectrum/);
 
 
+// Inspect the newly visible transfer boundaries, not only destination names.
+assert.match(reasonFor('material-observables::neumann','electronic-materials::shg-tensor'),/χ\(2ω;ω,ω\).*j↔k.*Kleinman/);
+assert.match(reasonFor('material-observables::piezoelectricity','electronic-materials::shg-tensor'),/χ is neither piezoelectric e nor d=χ\/2.*xxz and zxx.*independent/);
+assert.match(reasonFor('material-observables::polarization','electronic-materials::shg-geometry'),/amplitudes before.*three-index.*input polarization first.*Do not copy/);
+assert.match(reasonFor('symmetry-course-lessons::space-05','electronic-materials::unfold-folding'),/reciprocal fractions.*2π.*radians\/a.*k\/π.*convert/);
+assert.match(reasonFor('electronic-materials::unfold-projection','electronic-materials::unfold-defects'),/M\/N.*removes an orbital.*complex eigenbasis.*missing weight/);
+assert.match(reasonFor('lie-group-lessons::su3-cg-exact-complex-states','lie-group-lessons::su3-ninej-adjoint-observables'),/eight singlet paths.*thirty-two final-octet paths.*different lengths/);
+assert.match(reasonFor('quantum-materials::orbital-crystal-field','quantum-materials::orbital-jahn-teller'),/not an automatic truncation.*dimensionless.*neither a bond length nor a mass-weighted displacement/);
+assert.match(reasonFor('response-materials::multiplet-hund','spectroscopy-materials::spectra-slater'),/Slater.*Do not automatically relabel.*U.*J/);
+assert.match(reasonFor('spectroscopy-materials::resonance-selection','spectroscopy-materials::spectra-polarization'),/pi−pf.*weights pi.*GHz to eV.*cannot reuse the same operator/);
+assert.match(reasonFor('spectroscopy-materials::spectra-polarization','spectroscopy-materials::spectra-audit'),/0.4\(10−n\).*not an absolute absorption edge.*full-axis.*positive-frequency/);
+assert.match(reasonFor('bridges-materials::density-assumptions','principles-materials::conservation-open'),/complete adjoint generator.*one initial state.*every initial state/);
+assert.match(reasonFor('connections-materials::statistics-pauli-projector','connections-materials::statistics-young-sectors'),/central S3.*idempotence and non-Hermiticity.*Y\/3/);
+assert.match(reasonFor('bridges-materials::workshop-identity','bridges-materials::workshop-spin'),/time reversal.*odd.*same-parity inversion.*even.*d\(k\)=0/);
+assert.match(reasonFor('connections-materials::defects-winding','connections-materials::defects-director'),/exp\(iθ\).*exp\(2iθ\).*n≡−n.*half-turn/);
+
+
 const pg=lessonProgression({catalog:'pointgroups',lessonId:'representations'});
 const lie=lessonProgression({catalog:'lie',lessonId:'representations'});
 assert.notEqual(pg.current.route,lie.current.route);
@@ -676,10 +875,14 @@ for(const[catalog,lessonId,priorCatalog,priorId]of[
  ['pathways','scattering-temperature','pathways-materials','scattering-phase']
 ])assert.ok(lessonProgression({catalog,lessonId}).prerequisites.some(item=>item.catalog===priorCatalog&&item.lessonId===priorId));
 
-const unspecified=lessonProgression({catalog:'lie',lessonId:'su3-ninej-27-input-exact'});
-assert.equal(unspecified.status,'index-only');
-assert.deepEqual(unspecified.prerequisites,[]);assert.deepEqual(unspecified.next,[]);
+const formerlyUnspecified=lessonProgression({catalog:'lie',lessonId:'su3-ninej-27-input-exact'});
+assert.equal(formerlyUnspecified.status,'reviewed');
+assert.deepEqual(formerlyUnspecified.prerequisites.map(item=>item.lessonId),['su3-ninej-fifteen-input-paths','su3-ninej-exact-normalization']);
 assert.match(lessonProgressionHTML({catalog:'lie',lessonId:'su3-ninej-27-input-exact'}),/本主题目录/);
+const unspecified=lessonProgression({catalog:'lie'});
+assert.equal(unspecified.status,'unknown');assert.equal(unspecified.current,null);
+assert.deepEqual(unspecified.prerequisites,[]);assert.deepEqual(unspecified.next,[]);
+assert.equal(parseClassroomRoute(unspecified.index.route)?.section,'lie');
 assert.equal(lessonProgressionHTML({catalog:'lie',lessonId:'future-not-in-catalogue'}),'');
 assert.equal(lessonProgression({catalog:'__proto__',lessonId:'representations'}).status,'unknown');
 
@@ -780,6 +983,7 @@ for(const [catalog,lessonId,context='']of[
  ['response-materials','hall-diagnostics'],
  ...newlyConnectedKeys.map(key=>key.split('::')),
  ...spinStructureKeys.map(key=>key.split('::')),
+ ...momentumKeys.map(key=>key.split('::')),
  ['symmetry-course-lessons','double-06','experiment=double_group&preset=screw21_space&level=space&material=silicon&group=4'],
  ['coupled-materials','qha-audit','exercise=qha-boundary&material=silicon'],
  ['pathways-materials','wall-localized','exercise=wall-localized-ex']
@@ -804,7 +1008,7 @@ for(const [catalog,lessonId,context='']of[
 
  active.onNavigate({tab:'learn'});await settle();assert.equal(host.hidden,false);assert.equal(shellCalls.length,renders);
 }
-assert.equal(shellLessonCases,93,'All 36 new identities and three explicit context-rich routes use the real classroom shell');
+assert.equal(shellLessonCases,142,'All 49 momentum1 identities and earlier context-rich routes use the actual classroom shell');
 let expertCases=0;
 for(const tool of [
  'order-parameter-lab','exchange-symmetry-lab','conservation-lab','layer-symmetry-lab',
@@ -813,7 +1017,10 @@ for(const tool of [
  'phase','diffraction','distortion-modes','magnon-lab','qha-lab','domain-wall-lab',
  'electron-transport-lab','device-transport-lab','pairing-lab','andreev-lab',
  'band-representation-lab','band-connectivity','nonsymmorphic-lab','wavevector-lab',
- 'lie/su3','lie/su3_tensor','lie/su3_cg','lie/su3_racah','lie/su3_ninej'
+ 'lie/su3','lie/su3_tensor','lie/su3_cg','lie/su3_racah','lie/su3_ninej',
+ 'lie/rabi','shg-lab','unfold-lab','crystal-field-lab','local-multiplet-lab',
+ 'spin-resonance-lab','atomic-spectra-lab','hubbard-cluster-lab','manybody-spectra-lab',
+ 'polaron-lab','density-matrix-lab','salc-lab','symmetry-workshop','statistics-lab','topological-defects-lab'
 ]){
  expertCases++;
  const loads=graphLoads,route='compute/'+tool;assert.equal(parseClassroomRoute(route)?.calculationOnly,true,route);
@@ -822,6 +1029,6 @@ for(const tool of [
  shellCalls.at(-1).onNavigate({tab:'lab'});await settle();assert.ok(shellMoves.at(-1).hash.startsWith('#compute/'));
  assert.deepEqual(shellMoves.at(-1).options,{render:false});assert.equal(graphLoads,loads);
 }
-assert.equal(expertCases,31,'All existing and new structural expert entries remain independent of the learning graph');
+assert.equal(expertCases,46,'Every reviewed model family keeps its direct expert entry independent of the learning graph');
 assert.equal(calculations,0);assert.equal(storageReads,0);assert.equal(storageWrites,0);
-console.log('Lesson progression: 197 qualified routes in 17 catalogues, 172 optional edges over 148 connected read lessons, all preceding 130 preserved and 42/36 spin-structure additions explicit, all native targets, complete English reasons, unit/action-space/model boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');
+console.log('Lesson progression: 197 qualified routes in 17 catalogues, 259 optional edges over all 197 read lessons, all preceding 172 preserved and 87/49 momentum additions explicit, all native targets, complete English reasons, unit/action-space/model boundaries, acyclic recommendations, honest unknown-scope fallback, caller-owned local navigation and direct expert access passed.');

@@ -273,6 +273,9 @@ def run(payload):
     if payload.get('lab') == 'spin_actions':
         from spin_actions_lab import run as spin_actions_run
         return spin_actions_run(payload)
+    if payload.get('lab') == 'antitranslation':
+        from antitranslation_lab import run as antitranslation_run
+        return antitranslation_run(payload)
     if payload.get('lab') == 'lie':
         from lie_labs import run as lie_run
         return lie_run(payload)

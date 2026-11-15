@@ -24,12 +24,19 @@ assert.deepEqual(spin.packages,['sympy']);
 assert.ok(spin.fetched.includes('/python/spin_actions_lab.py'));
 assert.ok(spin.files.some(x=>x.path==='/home/pyodide/spin_actions_lab.py'&&x.body.includes('def color_theta')));
 assert.ok(spin.versions.every(v=>v&&v===spin.versions[0]),'Every fetched module uses the current worker build');
+const momentum=await loading({lab:'antitranslation',k:['1/4','0','0'],spinful:true});
+assert.deepEqual(momentum.packages,['sympy']);
+assert.ok(momentum.fetched.includes('/python/antitranslation_lab.py'));
+assert.ok(momentum.files.some(x=>x.path==='/home/pyodide/antitranslation_lab.py'&&x.body.includes('symmetry-lab-antitranslation-1')));
+assert.ok(!momentum.fetched.includes('/python/spin_actions_lab.py'),'The two optional exact modules load independently');
+assert.ok(!spin.fetched.includes('/python/antitranslation_lab.py'));
 for(const payload of [{lab:'spinor',initialState:'plus',axis:'z'},
  {lab:'color_group',preset:'c3_point',steps:3,variant:'combined'},
  {lab:'spin_group',preset:'af_space',steps:4,variant:'combined'}]){
  const old=await loading(payload);
  assert.deepEqual(old.packages,[],'Existing finite teaching models keep their dependency plan');
  assert.ok(!old.fetched.includes('/python/spin_actions_lab.py'),'An unrelated experiment must not fetch the new optional core');
+ assert.ok(!old.fetched.includes('/python/antitranslation_lab.py'));
 }
 const exact=await loading({lab:'lie',experiment:'su3_ninej'});
 assert.deepEqual(exact.packages,['numpy','sympy']);

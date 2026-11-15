@@ -18,8 +18,8 @@
   "countsScope": "Original ZnO-release snapshot. Later reviewed connections are recorded separately in currentGraph.",
   "currentGraph": {
     "indexedLessons": 197,
-    "reviewedLessons": 148,
-    "optionalEdges": 172
+    "reviewedLessons": 197,
+    "optionalEdges": 259
   },
   "sourceByteIdentities": {
     "qpoints": {
@@ -148,8 +148,8 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 37153,
-      "sha256": "9d5a773eae70576e7a9c26bcf96e7a59254bbf92d3d55a28af2faa8f3ed848f5"
+      "bytes": 40090,
+      "sha256": "5c3fb856aad03a2cc118fbe37393dd7dfb7bb525b939a59de1ef3c4d19ead23e"
     },
     "NOTICE.txt": {
       "normalization": "utf8-lf-v1",
@@ -163,13 +163,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97247,
-      "sha256": "780b6306496d99986495466152e54d6e7316ca15f5b219f00ce68a3e2019098a"
+      "bytes": 97275,
+      "sha256": "001b8ec0dab46d94e83e0457c51675034fedf96b06774c977dbd4c32f2a56c27"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31751,
-      "sha256": "0717c5dd6f73ca0533fd650c343dc00ffd279127cc64a07e18229c1c20f2fea3"
+      "bytes": 32192,
+      "sha256": "947a3c8d88ce529f09589f80827263af3e7caa01bbc32eefa89d2609e9700bd8"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "raw-bytes",
@@ -223,33 +223,33 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7321,
-      "sha256": "cbecae6eee1ce45ab6bec126da1b0703636ff0624a89de6ad4963a1aff710d44"
+      "bytes": 7335,
+      "sha256": "4950bb513a09b4f16ab3a28c1bcc48bf5515bb2ae7765ed5cc6dee2da108e0f4"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 47945,
-      "sha256": "d761220baa263636845b9951012c7ef7ef6e3979899b805f3e68642b24957dbd"
+      "bytes": 70944,
+      "sha256": "14b26daadbd8f11b0638d5a4d7cf8770bd89bac0a30610148a7d1eb519bfe4d7"
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24767,
-      "sha256": "82a0d7a41503aa3ec231f0e023f9bf5eb6f1401c126a961e5b4a99d5228103e6"
+      "bytes": 24771,
+      "sha256": "494abd9b241dcc63ac5816c1b70b5c68c49ed3fca9121e20961c42dceef352fe"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50727,
-      "sha256": "0c2dbf3f3be190d6cdcb4800e7fe12d49ad9b7e337fbd910d9b77a42a25daa48"
+      "bytes": 50731,
+      "sha256": "4db827ca12b28870385598fbfaf0cb6f3f7de6e4c01782df511a4de0e212f98c"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2576,
-      "sha256": "62a56fb7856d58c68adf6a0900f43af248d10a5438bde5fbe54df3d6de0d89e7"
+      "bytes": 2580,
+      "sha256": "1100e2e238ca3c822b414201648693bb7577bfe0d3c679498cc18f287a0837a1"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11075,
-      "sha256": "e006192a879f6a68ba311230fb51cbb036b2485be348504f5f3ed73f5cc0c4c5"
+      "bytes": 11233,
+      "sha256": "c42a4fa1b7f002b1425c70efcc410fff516745ec86dd9821a895554f47ae4414"
     },
     "dist/python/phonon_modes.py": {
       "normalization": "utf8-lf-v1",
@@ -263,8 +263,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 51335,
-      "sha256": "0544880b6479b6c460b92477a62b099a404b3d33db55beeb6e315938cd456642"
+      "bytes": 51339,
+      "sha256": "1217957927c1ec658c347fcb6bb37518747a8e395477c60f7880c3fe189cb20b"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -273,8 +273,8 @@
     },
     "locales/en-lesson-progression.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 63637,
-      "sha256": "76e76c8f9cebb150622aa8dedacd42998345278ab2ab2ca9042bb91441e6407e"
+      "bytes": 98001,
+      "sha256": "bf07a8f0ba93bbca70126ad68df8a1085edc1123fed21896b94ac832baa8108c"
     },
     "locales/en-mode-frequency-confirmation.json": {
       "normalization": "utf8-lf-v1",
@@ -293,13 +293,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16708,
-      "sha256": "85aab8899b96994f899da0486d0209998cbde41fac4687c696f142264608d966"
+      "bytes": 17018,
+      "sha256": "127092e428c46af59f8e258e547ef01380090c6abbbab24d84faf6b6f74523f8"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 9506,
-      "sha256": "40e3484eabe9355d4183ad417ee3aea7c723a3d393099c4b11844843d952067c"
+      "bytes": 11803,
+      "sha256": "24b371712519c632e2f664af10dec096a6c309591041d1bb962b96ab01f22ed1"
     },
     "scripts/build-zno-workflow-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -308,8 +308,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2737,
-      "sha256": "eedf7c5372c996f898388c92a05c9737b68b822e9ca186006e58699b0b62ffab"
+      "bytes": 2911,
+      "sha256": "1347666cfbb7e3aa0e4c56977ef531069b4710ac219ba8b820b86a1d65816896"
     },
     "scripts/fixtures/phonopy-source-baseline.py.gz": {
       "normalization": "raw-bytes",
@@ -328,8 +328,8 @@
     },
     "scripts/test-lesson-progression.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 38310,
-      "sha256": "b9376d7bd73e0b9d0f6642895e16235703dafb63904772c9caba220a317c1ed8"
+      "bytes": 52336,
+      "sha256": "cf2e96196ae3cb2ac21acc704dcd5e39bb0a57630530bd4640fdb62681f87b06"
     },
     "scripts/test-material-notebook.mjs": {
       "normalization": "utf8-lf-v1",
@@ -348,8 +348,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3926,
-      "sha256": "0abab4cef18741b7b01d21b32cfaf4952e9c795029a0d0dd91d41a8d5960945b"
+      "bytes": 3968,
+      "sha256": "bc512fa75e13eb8d40b10412067a3fa0e89a71156a02b3c5e6d1dcb7bd54b2e5"
     },
     "scripts/test-tool-directory.mjs": {
       "normalization": "utf8-lf-v1",

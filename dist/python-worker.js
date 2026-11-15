@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261115-spin1';
+const BUILD = '20261115-momentum1';
 const plans = {
   group_theorems: ['group_theorems'],
   symmetry_mini_demos: ['symmetry_mini_demos'],
@@ -62,7 +62,8 @@ async function prepare(id, action, payload) {
   const su3Racah = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_racah';
   const su3NineJ = action === 'teaching_labs' && payload.lab === 'lie' && payload.experiment === 'su3_ninej';
   const spinActions = action === 'teaching_labs' && payload.lab === 'spin_actions';
-  const teachingPackages = spinActions ? ['sympy'] : su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
+  const antitranslation = action === 'teaching_labs' && payload.lab === 'antitranslation';
+  const teachingPackages = spinActions || antitranslation ? ['sympy'] : su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
   for (const name of ['group_theorems','foundations_demos','symmetry_mini_demos'].includes(action) ? [] : ['phonopy','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
@@ -74,7 +75,7 @@ async function prepare(id, action, payload) {
     self.symmetryLabSpglib = await createSpglibBridge();
     spglibLoaded = true;
   }
-  const teachingModules = spinActions ? ['spin_actions_lab'] : su3NineJ ? ['su3_cg', 'su3_cg_exact', 'su3_racah', 'su3_ninej'] : su3Racah ? ['su3_cg', 'su3_cg_exact', 'su3_racah'] : su3CG ? ['su3_cg', ...(exactCG ? ['su3_cg_exact'] : [])] : [];
+  const teachingModules = spinActions ? ['spin_actions_lab'] : antitranslation ? ['antitranslation_lab'] : su3NineJ ? ['su3_cg', 'su3_cg_exact', 'su3_racah', 'su3_ninej'] : su3Racah ? ['su3_cg', 'su3_cg_exact', 'su3_racah'] : su3CG ? ['su3_cg', ...(exactCG ? ['su3_cg_exact'] : [])] : [];
   for (const name of ['browser_api', ...plans[action], ...teachingModules, ...(needsLabels ? ['magnetictb_browser', 'symbolic_core', 'standard_labels'] : [])]) {
     if (modules.has(name)) continue;
     progress('正在加载本站 Python 计算代码…');
