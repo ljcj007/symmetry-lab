@@ -9,9 +9,9 @@ assert.equal(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n'),progressionIndex
 const inventory=new Map(lessonProgressionInventory.map(item=>[item.key,item]));
 assert.equal(inventory.size,197);
 assert.equal(lessonProgressionCatalogs.length,17);
-assert.equal(lessonProgressionEdges.length,44);
+assert.equal(lessonProgressionEdges.length,48);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.equal(reviewed.size,42,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(reviewed.size,44,'The remaining indexed lessons are not automatically assigned dependencies');
 
 for(const definition of lessonProgressionCatalogs){
  const actual=JSON.parse(fs.readFileSync(new URL('../dist/data/'+definition.catalog+'.json',import.meta.url),'utf8'));
@@ -68,7 +68,11 @@ for(const[catalog,lessonId,priorCatalog,priorId]of[
  ['frontiers','spt-schmidt','bridges-materials','density-pure-mixed'],
  ['frontiers','spt-aklt-parent','lie-group-lessons','su2-coupling-representations'],
  ['material-research','thermal-oscillator','material-observables','acoustic-optical'],
- ['connections','reciprocity-onsager','material-observables','neumann']
+ ['connections','reciprocity-onsager','material-observables','neumann'],
+ ['pathways','scattering-chain','material-observables','mechanical-modes'],
+ ['pathways','scattering-chain','material-observables','acoustic-optical'],
+ ['pathways','scattering-phase','pathways-materials','scattering-chain'],
+ ['pathways','scattering-temperature','pathways-materials','scattering-phase']
 ])assert.ok(lessonProgression({catalog,lessonId}).prerequisites.some(item=>item.catalog===priorCatalog&&item.lessonId===priorId));
 
 const unspecified=lessonProgression({catalog:'lie',lessonId:'su3-ninej-27-input-exact'});
@@ -146,4 +150,4 @@ assert.equal(progressionForSelection({section:'observables',lesson:'neumann',exe
 const changed=progressionForSelection({section:'frontiers',module:'spt',tab:'learn'});
 changed.current.exerciseIds.push('mutated');
 assert.ok(!progressionForSelection({section:'frontiers',module:'spt',tab:'learn'}).current.exerciseIds.includes('mutated'));
-console.log('Lesson progression: 197 qualified routes in 17 catalogues, 44 reasoned optional edges over 42 lessons, exact targets, duplicate-ID isolation, acyclic recommendations, honest index fallback, native links, scoped initial module/stage/material/exercise choices and fresh API results passed.');
+console.log('Lesson progression: 197 qualified routes in 17 catalogues, 48 reasoned optional edges over 44 lessons, exact targets, duplicate-ID isolation, acyclic recommendations, honest index fallback, native links, scoped initial module/stage/material/exercise choices and fresh API results passed.');

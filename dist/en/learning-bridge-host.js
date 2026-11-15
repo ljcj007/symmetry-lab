@@ -22,7 +22,7 @@ const definitions={
  geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261115-derivations1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
  orderActions:{load:()=>import('./order-actions-bridge.js?v=20261115-actions1'),html:'orderActionsBridgeHTML',bind:'bindOrderActionsBridge'},
  layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261115-actions1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'},
- fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261115-derivations1'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
+ fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261115-route2'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
  symmetryOperators:{load:()=>import('./symmetry-operator-bridge.js?v=20261115-derivations1'),html:'symmetryOperatorBridgeHTML',bind:'bindSymmetryOperatorBridge'},
  chiralityActions:{load:()=>import('./chirality-actions-bridge.js?v=20261115-derivations1'),html:'chiralityActionsBridgeHTML',bind:'bindChiralityActionsBridge'}
 };

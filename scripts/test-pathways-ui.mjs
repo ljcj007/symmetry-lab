@@ -22,6 +22,23 @@ for(const m of data.modules){
  for(const p of m.presets){chosen=p.id;const v=await mount({module:m.id,calculationOnly:true,preset:p.id});await submit(v);assert.equal(calls.at(-1).action,m.action);for(const [k,value]of Object.entries(p.input))assert.deepEqual(calls.at(-1).input[k],value,p.id+':'+k);assert.doesNotMatch(v.$('#pw-result').innerHTML,/\b(?:NaN|Infinity|undefined)\b/);assert.ok(v.$('#pw-result').querySelector('svg'),p.id);v.$('#pw-export').onclick();assert.equal(JSON.parse(v.downloads[0].body).module,m.id);}
  const v=await mount({module:m.id});v.container.querySelector('[data-pw-tab="lab"]').onclick();assert.ok(v.$('#pw-form'));v.container.querySelector('[data-pw-tab="cases"]').onclick();assert.equal(v.$('#pw-content').querySelectorAll('article').length,data.cases.filter(c=>c.module===m.id).length);
 }
+// Real course-tab handlers must validate against the module schema. Keeping the
+// raw DOM draft alone would conceal the wrong-argument error on every return.
+for(const m of data.modules){
+ const v=await mount({module:m.id,tab:'lab'}),f=m.fields.find(field=>field.type!=='select');
+ const before=calls.length,fieldId='#pw-'+f.key;
+ const preserved=String(v.$(fieldId).value);
+ v.$('[data-pw-tab="learn"]').onclick();v.$('[data-pw-tab="lab"]').onclick();
+ assert.equal(v.$(fieldId).value,preserved,m.id+': valid draft survives');
+ assert.equal(v.$('#pw-form').querySelectorAll('[role="alert"]').length,0,m.id+': valid draft has no error');
+ v.$(fieldId).value='';
+ v.$('[data-pw-tab="learn"]').onclick();v.$('[data-pw-tab="lab"]').onclick();
+ assert.equal(v.$(fieldId).value,'',m.id+': incomplete draft is retained');
+ const alerts=v.$('#pw-form').querySelectorAll('[role="alert"]');
+ assert.equal(alerts.length,1);assert.ok(alerts[0].textContent.includes(f.label));
+ assert.match(alerts[0].textContent,/不能留空/);assert.doesNotMatch(alerts[0].textContent,/module\.fields|not iterable/);
+ assert.equal(calls.length,before,m.id+': switching tabs never computes');
+}
 chosen='screw-boundary';let v=await mount({module:'bandrep',calculationOnly:true,preset:chosen});await submit(v);v.$('#pw-yaw').value='100';v.$('#pw-yaw').oninput();assert.match(v.$('#pw-orbit').innerHTML,/位点/);
 chosen='scattering-diatomic';v=await mount({module:'scattering',calculationOnly:true,preset:chosen});await submit(v);v.$('#pw-heat-scale').value='linear';v.$('#pw-heat-scale').onchange();assert.match(v.$('#pw-heatmap').innerHTML,/svg/);
 const before=calls.length;change(v,'temperature','');await submit(v);assert.equal(calls.length,before);assert.match(v.$('#pw-result').textContent,/不能留空/);

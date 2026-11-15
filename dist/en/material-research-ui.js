@@ -1,8 +1,8 @@
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261115-derivations1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261115-route2';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-derivations1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261115-route2';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
