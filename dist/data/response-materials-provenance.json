@@ -92,11 +92,11 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "b4033871231b82814277d56ea7e604b7848d5b2e4780a427ff829988161c3f4e"
+      "sha256": "1c95dfd59cf9a6422462aabe2dd0f5d7dcc12ce15620e8a2d5ab327d4d65a85b"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "dd0aef4443ef265c6c6a3ec254980a617f8fa4dc4fadf435c373fdf8a9999532"
+      "sha256": "375127d4dacf8147dca0a6822e3f4954e3072c17fedc3e44ff26700ed3d83666"
     },
     {
       "path": "dist/data/device-transport-content.json",
@@ -196,23 +196,23 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "f0aaf626657ee0d7c1d19fc2e7911dc6165eeb60055482eed568717274713ff2"
+      "sha256": "97b903741a202a7599a9eb75faa0973682eeaddfe232729566375e4673a48c10"
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "5858df10769c1436329faa3b561d6ddc46a37e725c637ac1dbc0e9c34a6b0562"
+      "sha256": "5af46bf5b95fa38e089add4a63a8c77e0d1a4b35848383254870a140626971ec"
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "f9815f621fe6670a0f2b18112ff1090e6481868605181e952f9f68a31bce8442"
+      "sha256": "5bd07967aef5ce0f0ea9e52958244d4356c22956b8903ebd368ec7a6acb45228"
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "87da97d803a684f6f3be286a38656c878313dd08060b3d144e9a9680eb967bfe"
+      "sha256": "37cc4cd83bff0de5c1576447ff674842953280e0e712d90fa293c23b285a27b2"
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "ba134f9ccdaf81a18bf8c38ce032cdfff05c9bb053e9520a2a3ffe30d777d4aa"
+      "sha256": "d6378da4b7afb3971741b8f331689d2fa1be2f08998cbee71365ffe00e832a31"
     },
     {
       "path": "dist/python/browser_api.py",
@@ -232,7 +232,7 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "55eaa6746f80831b8971cd87afba239cc7a918c93b2f3758d8ad0132d9d86161"
+      "sha256": "031ef72cfd5a3704cf270422ab59d311df7c5536bc5d9b21066036a019cb5e71"
     },
     {
       "path": "dist/response-materials.css",
@@ -240,7 +240,7 @@
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "1e2425edd978f4cbee885a6e2a2c6a5930b902fffc8c28989b224307c289b825"
+      "sha256": "cca1e92ba6b22351af99f1b9a39a893b6655dc750ed3f42d925a0ccf2c43c555"
     },
     {
       "path": "dist/response-views.js",
@@ -248,7 +248,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "11cfcb0a39f4f2e7583851c4eb2a190f0b5b1631afac83992f324f6162571112"
+      "sha256": "4bef880a8a96e7a60450362245ed5c7a7870d8e4adf80ec625ef06e2af3bb5f4"
     },
     {
       "path": "scripts/build-response-catalog.py",
@@ -260,7 +260,7 @@
     },
     {
       "path": "scripts/fixtures/response-materials.json",
-      "sha256": "5ec2ec5b7ccda1bf4e6067354318c1d3739d2a7c28fe3d5ef78d2966a050a28a"
+      "sha256": "a0898d5e1c4b99dfe5f7025c19d3d2677b62f3d324b34d148783b7205c144ef0"
     },
     {
       "path": "scripts/test-python-device-transport.py",
@@ -280,7 +280,7 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "fb14cac0f2bc4395956fbdd02f7b07cadebf0a400772e8ae70d3cb5a392ff298"
+      "sha256": "9a76f817f398f22c9e086205b2afee6327c9badcf787c82e925f13986d868009"
     }
   ],
   "provenanceMaintenance": {

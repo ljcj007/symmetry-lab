@@ -75,16 +75,34 @@ def _angle_difference(a, b):
     return float(abs(np.angle(np.exp(1j*(a-b)))))
 
 
-def _fhs(vectors):
+def _complex_pair(z):
+    return [float(z.real), float(z.imag)]
+
+
+def _fhs(vectors, replay=None):
     """vectors[ky,kx,orbital]; oriented plaquette kx -> ky."""
     ux = np.sum(vectors.conj()*np.roll(vectors, -1, axis=1), axis=-1)
     uy = np.sum(vectors.conj()*np.roll(vectors, -1, axis=0), axis=-1)
     minimum = float(min(np.min(abs(ux)), np.min(abs(uy))))
+    if replay is not None:
+        size_y, size_x = ux.shape
+        replay["linksValid"] = bool(minimum > 1e-10)
+        replay["cells"] = []
+        for j, i in ((size_y//2, size_x//2), (size_y-1, size_x-1)):
+            # The third and fourth stored forward links are conjugated in L.
+            raw = [ux[j, i], uy[j, (i+1) % size_x],
+                   ux[(j+1) % size_y, i], uy[j, i]]
+            replay["cells"].append({"rawForwardOverlaps": [_complex_pair(z) for z in raw],
+                                    "loop": None, "fluxRad": None})
     if minimum <= 1e-10:
         return {"value": None, "minOverlap": minimum, "maxPlaquettePhase": None, "valid": False}
     ux, uy = ux/abs(ux), uy/abs(uy)
     loop = ux*np.roll(uy, -1, axis=1)*np.roll(ux, -1, axis=0).conj()*uy.conj()
     flux = -np.angle(loop)
+    if replay is not None:
+        for item, (j, i) in zip(replay["cells"], ((size_y//2, size_x//2), (size_y-1, size_x-1))):
+            item["loop"] = _complex_pair(loop[j, i])
+            item["fluxRad"] = float(flux[j, i])
     return {"value": float(np.sum(flux)/(2*math.pi)), "minOverlap": minimum,
             "maxPlaquettePhase": float(np.max(abs(flux))), "valid": True}
 
@@ -123,7 +141,7 @@ def _gap(p):
     return gap, tolerance, analytic, closing, formula
 
 
-def _sample(p, mesh, gapped, analytic, tolerance, include_grid=False):
+def _sample(p, mesh, gapped, analytic, tolerance, include_grid=False, replay=None):
     k = np.linspace(-math.pi, math.pi, mesh, endpoint=False)
     if p["model"] == "qwz":
         x, y = np.meshgrid(k, k, indexing="xy")
@@ -141,7 +159,34 @@ def _sample(p, mesh, gapped, analytic, tolerance, include_grid=False):
     valid_local = fields["valid"]
     projector_residual = float(np.max(abs(projector-changed_projector))) if np.any(valid_local) else None
     algorithm = _fhs if p["model"] == "qwz" else _zak
-    first, second = algorithm(u), algorithm(transformed)
+    if replay is not None and p["model"] == "qwz":
+        before, after = {}, {}
+        first, second = algorithm(u, before), algorithm(transformed, after)
+        replay.update({"schemaVersion": 1, "mesh": mesh, "convergenceIndex": 0,
+                       "complexEncoding": "[real,imag]", "linkThreshold": 1e-10,
+                       "sewing": "identity", "orientation": "kx then ky",
+                       "bandIsolated": bool(gapped),
+                       "beforeLinksValid": before["linksValid"], "afterLinksValid": after["linksValid"],
+                       "cells": []})
+        step = 2*math.pi/mesh
+        for number, (name, j, i) in enumerate((("interior", mesh//2, mesh//2),
+                                               ("boundary-xy", mesh-1, mesh-1))):
+            indices = [(j, i), (j, (i+1) % mesh), ((j+1) % mesh, (i+1) % mesh), ((j+1) % mesh, i)]
+            corners = [{"index": [a, b], "k": [float(k[b]), float(k[a])],
+                        "unwrappedK": [float(k[i]+(step if index in (1, 2) else 0.)),
+                                       float(k[j]+(step if index in (2, 3) else 0.))]}
+                       for index, (a, b) in enumerate(indices)]
+            item = {"id": name, "anchor": [j, i], "corners": corners,
+                    "gaugePhases": [float(phase[a, b]) for a, b in indices],
+                    "before": before["cells"][number], "after": after["cells"][number]}
+            if not gapped:
+                # Raw finite-grid contractions are diagnostics at a closed gap;
+                # do not publish a band flux when no global isolated band exists.
+                for stage in (item["before"], item["after"]):
+                    stage["loop"], stage["fluxRad"] = None, None
+            replay["cells"].append(item)
+    else:
+        first, second = algorithm(u), algorithm(transformed)
     first["valid"] = bool(first["valid"] and gapped)
     second["valid"] = bool(second["valid"] and gapped)
     difference = None
@@ -237,7 +282,9 @@ def run(payload=None):
     gap, tolerance, analytic, closing, gap_formula = _gap(p)
     gapped = gap > tolerance
     rows = []
-    base, gauge, heatmap, fields = _sample(p, p["mesh"], gapped, analytic, tolerance, include_grid=model == "qwz")
+    fhs_replay = {} if model == "qwz" else None
+    base, gauge, heatmap, fields = _sample(p, p["mesh"], gapped, analytic, tolerance,
+                                         include_grid=model == "qwz", replay=fhs_replay)
     rows.append(base)
     fine, _, _, _ = _sample(p, 2*p["mesh"]-1, gapped, analytic, tolerance)
     rows.append(fine)
@@ -293,7 +340,7 @@ def run(payload=None):
                          "gapFormula": gap_formula, "closingMomenta": closing, "reason": reason,
                          "unit": "dimensionless integer" if model == "qwz" else "radian modulo 2π",
                          "gridAgreement": resolved},
-            "convergence": rows, "gauge": gauge,
+            "convergence": rows, "gauge": gauge, "fhsReplay": fhs_replay,
             "checks": {"twoBandMetricIdentityResidual": metric_check, "minimumMetricDeterminant": determinant_min,
                        "minimumTraceMinusAbsCurvature": trace_bound, "sampledDirectGap": base["sampledDirectGap"],
                        "analyticDirectGap": gap, "globalGapResolved": bool(gapped),

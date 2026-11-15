@@ -477,7 +477,7 @@ const descriptors = {
       "options": [
         [
           "c1",
-          "Identity operation"
+          "Identity"
         ],
         [
           "c4",
@@ -1409,7 +1409,7 @@ const descriptors = {
       "source": "dist/data/principles-materials.json#exchange.fields"
     },
     "mirrorXY": {
-      "label": "xy mirror containing the bond",
+      "label": "The xy mirror containing the bond",
       "options": [
         [
           0,
@@ -2326,7 +2326,7 @@ export function projectConditionValue(value,descriptor={}){
  if(value===undefined)return "Not provided";
  if(value===null)return "Null value";
  if(typeof value==='number')return Number.isFinite(value)?Object.is(value,-0)?'−0':String(value):"Nonfinite number";
- if(typeof value==='boolean')return value?"Yes":"No";
+ if(typeof value==='boolean')return value?"yes":"no";
  if(typeof value==='string')return "text “"+value+'”';
  return Array.isArray(value)?"Array (check the input type)":"Object (check the input type)";
 }

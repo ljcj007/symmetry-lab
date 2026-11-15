@@ -8,7 +8,10 @@ export const LEARNING_BRIDGE_HOOKS=Object.freeze({
  oscillator:Object.freeze(['scattering-temperature','polaron-hamiltonian','polaron-truncation']),
  geometryActions:Object.freeze(['geometry-rays']),
  orderActions:Object.freeze(['order-isotropy','order-invariants','order-field-convention']),
- layerActions:Object.freeze(['layer-periodicity'])
+ layerActions:Object.freeze(['layer-periodicity']),
+ fhs:Object.freeze(['geometry-topology']),
+ symmetryOperators:Object.freeze(['exchange-bond-constraints','conservation-generators']),
+ chiralityActions:Object.freeze(['chiral-mirror','chiral-polarity'])
 });
 const definitions={
  hubbard:{load:()=>import('./hubbard-learning-bridge.js?v=20261113-operations1'),html:'hubbardBridgeHTML',bind:'bindHubbardLearningBridge'},
@@ -16,9 +19,12 @@ const definitions={
  thermal:{load:()=>import('./thermal-learning-bridge.js?v=20261113-thermal1'),html:'thermalBridgeHTML',bind:'bindThermalLearningBridge'},
  onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'},
  oscillator:{load:()=>import('./oscillator-spectra-bridge.js?v=20261114-evidence1'),html:'oscillatorSpectraBridgeHTML',bind:'bindOscillatorSpectraBridge'},
- geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261115-actions1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
+ geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261115-derivations1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
  orderActions:{load:()=>import('./order-actions-bridge.js?v=20261115-actions1'),html:'orderActionsBridgeHTML',bind:'bindOrderActionsBridge'},
- layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261115-actions1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'}
+ layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261115-actions1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'},
+ fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261115-derivations1'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
+ symmetryOperators:{load:()=>import('./symmetry-operator-bridge.js?v=20261115-derivations1'),html:'symmetryOperatorBridgeHTML',bind:'bindSymmetryOperatorBridge'},
+ chiralityActions:{load:()=>import('./chirality-actions-bridge.js?v=20261115-derivations1'),html:'chiralityActionsBridgeHTML',bind:'bindChiralityActionsBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());
 export function learningBridgeHTML(family,lessonId){

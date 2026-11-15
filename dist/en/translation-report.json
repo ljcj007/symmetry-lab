@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 25001,
-  "translatedUnits": 25001,
+  "sourceUnits": 25318,
+  "translatedUnits": 25318,
   "missing": [],
-  "files": 413,
+  "files": 420,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -68,6 +68,9 @@
     "en-geometry-diagnostic-display.json",
     "en-geometry-actions-bridge.json",
     "en-order-actions-bridge.json",
-    "en-layer-actions-bridge.json"
+    "en-layer-actions-bridge.json",
+    "en-fhs-plaquette-bridge.json",
+    "en-symmetry-operator-bridge.json",
+    "en-chirality-actions-bridge.json"
   ]
 }

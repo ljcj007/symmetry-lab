@@ -17,6 +17,7 @@ catalogFiles.push('en-oscillator-spectra-bridge.json','en-cu-thermal-example.jso
 catalogFiles.push('en-precision-controls.json','en-spin-course-connections.json','en-rabi-state-bridge.json');
 catalogFiles.push('en-geometry-diagnostic-display.json');
 catalogFiles.push('en-geometry-actions-bridge.json','en-order-actions-bridge.json','en-layer-actions-bridge.json');
+catalogFiles.push('en-fhs-plaquette-bridge.json','en-symmetry-operator-bridge.json','en-chirality-actions-bridge.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

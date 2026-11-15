@@ -78,7 +78,7 @@ near(ui.getQuantumMaterialsResult().result.selection.gxx,.25);assert.match(v.$('
 assert.ok(!Object.hasOwn(calls[0].input,'delta'));assert.ok(!Object.hasOwn(calls[0].input,'phase'));
 await tab(v,'learn');assert.equal(card(v,'note').value,'Unsubmitted: conjugate the phase in the bra.');
 const lateCopy=card(v,'copy').onclick,lateStep=card(v,'step').onclick;
-await lesson(v,'geometry-topology');assert.equal(v.$('[data-learning-bridge]'),null);const topologyContent=v.$('#qm-content');await lateCopy();lateStep();assert.equal(v.$('#qm-content'),topologyContent);
+await lesson(v,'geometry-topology');assert.equal(v.$('[data-learning-bridge="geometryActions"]'),null);assert.ok(v.$('[data-learning-bridge="fhs"]'));const topologyContent=v.$('#qm-content');await lateCopy();lateStep();assert.equal(v.$('#qm-content'),topologyContent);
 await lesson(v,'geometry-rays');assert.equal(card(v,'q0').value,'same');assert.equal(card(v,'strength').value,'4');
 const replacedCopy=card(v,'copy').onclick,replacedSubmit=copiedForm.onsubmit;
 const newer=await mount({module:'orbitals'},v.container),newerContent=newer.$('#qm-content');await replacedCopy();replacedSubmit({preventDefault(){}});assert.equal(newer.$('#qm-content'),newerContent);assert.equal(newer.$('[data-learning-bridge="geometryActions"]'),null);assert.equal(calls.length,1);

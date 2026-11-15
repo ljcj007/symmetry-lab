@@ -369,8 +369,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "b4033871231b82814277d56ea7e604b7848d5b2e4780a427ff829988161c3f4e",
-      "bytes": 97276
+      "sha256": "1c95dfd59cf9a6422462aabe2dd0f5d7dcc12ce15620e8a2d5ab327d4d65a85b",
+      "bytes": 97296
     },
     {
       "path": "dist/bridges-projects.js",
@@ -379,8 +379,8 @@
     },
     {
       "path": "dist/bridges-ui.js",
-      "sha256": "08fa0f5f6c4ebeeb5bf56d0e24a1a09d2f603e9a846b2b7ee053746c5e8c804e",
-      "bytes": 17159
+      "sha256": "fc58aea8660f73966fa456989807bf4bdeb245147a5eee6aeeb5a14edd61ff34",
+      "bytes": 17167
     },
     {
       "path": "dist/bridges-views.js",
@@ -394,8 +394,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "dd0aef4443ef265c6c6a3ec254980a617f8fa4dc4fadf435c373fdf8a9999532",
-      "bytes": 31812
+      "sha256": "375127d4dacf8147dca0a6822e3f4954e3072c17fedc3e44ff26700ed3d83666",
+      "bytes": 31864
     },
     {
       "path": "dist/classroom.css",
@@ -404,8 +404,8 @@
     },
     {
       "path": "dist/comparison-lab.js",
-      "sha256": "17663435ab7905da0d4e1330ae733d9ba626680147a1162fa19b7360d6adaa4e",
-      "bytes": 9643
+      "sha256": "51a5930b3efa4738638959f3f291eca1f20a1b4a8c3d251ea92a418bafa48038",
+      "bytes": 9645
     },
     {
       "path": "dist/compute-worker.js",
@@ -414,8 +414,8 @@
     },
     {
       "path": "dist/coupled-materials-ui.js",
-      "sha256": "573136a841c406d4bf44b7a5a828e15a9240662ad4a3b6348db63f985fc8addd",
-      "bytes": 36141
+      "sha256": "d8eae77b8ccc6adef4f6c6004d2b754f91174b699227a7b3f5f35e619991482c",
+      "bytes": 36147
     },
     {
       "path": "dist/coupled-materials.css",
@@ -444,7 +444,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "b8a672bb0b3f9619ddb35ce70f02357279596223a9c478077ba167b1f6fc469d",
+      "sha256": "288322c0b5b8cec47459b4246e5a3ed24be778af0f76a82d985bd4ac67043831",
       "bytes": 56443
     },
     {
@@ -454,12 +454,12 @@
     },
     {
       "path": "dist/data/coupled-materials-provenance.json",
-      "sha256": "4b05fde8b2dd2c7a6f52b4201831f1574651d8357ee1474a772c8ed83712038e",
+      "sha256": "1cebaf305b57adca6f6f6b7f2a12357b25ec41efee0df82bdeb674596151245a",
       "bytes": 2964
     },
     {
       "path": "dist/data/electronic-materials-provenance.json",
-      "sha256": "aecd705a61e044f725336236b1383b3cf0b94344141e5b3f957085b13031306c",
+      "sha256": "a420da4476e648c07511070ddbab1fbfa2ccf1cb4362bb7f1d18b9d65d999b40",
       "bytes": 4482
     },
     {
@@ -474,17 +474,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "9bcdd3d849560b6a3dd7ea616bfa2b0775e37e086db598b46d291e2f6cf857b5",
+      "sha256": "51d7b35533005f067a896328c2742f05ccf32435f430e9c4dd3f94de5cf9f1d8",
       "bytes": 16854
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "e6f684ecabd4654bd851368bb9dfd8c7a5acd31864c2d3db982e7bed34f5be6b",
+      "sha256": "63d4a02285c76b1e264b1aaa4f7a5068ef508ecc5eade881318d662472358ed3",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "01ce28a39cbade13e80758b5615cb3763541f6c70c4d028ba9f3b272ca008dac",
+      "sha256": "cfc86d49428c5d93135ac9342a16060bb934e8747a8bd2b46b13fc8cfe2c1b36",
       "bytes": 5970
     },
     {
@@ -499,7 +499,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "5bd94c03af705855097e444856fe8abef8c3fe048b3f6a35e68820698ce7fae8",
+      "sha256": "f7c5531d3d561fdd6bb5c4908bd5377e77ef74af85ce4be241375b6c8a085f38",
       "bytes": 27429
     },
     {
@@ -519,22 +519,22 @@
     },
     {
       "path": "dist/data/python-provenance.json",
-      "sha256": "d07c233aa2bea4f4c1dac40fb2a80919cdc55f67aaeca0cd938f0ffdad3b1fd7",
+      "sha256": "902c408d7ab65efc38299f4f9825434552ab3e229b06ed35b668cad773cdb997",
       "bytes": 56687
     },
     {
       "path": "dist/data/quantum-materials-provenance.json",
-      "sha256": "7c80c8627f86399e3eb80610960f19f06028c4641c2ed4bbf08183b0ed42bc65",
+      "sha256": "36fd4113c7875a8a5b8a6130f7414399b81878149d94278ca457f2b47338336d",
       "bytes": 5720
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "3d247c5b59b74ee824550fedeafc00b94408b466f5d4916968708d0ded7eb458",
+      "sha256": "afa6915445daaf53bceace908ef6a730bf8229ebece517b9fc50307efc7892f1",
       "bytes": 10435
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "54820f045b71550ef6c39464ef33301aa1ca4699feebb9caecc78216a13de45c",
+      "sha256": "c56174ae6c89b08b6db72f8ffd95cd92d84850875ba781d6f2cf7a5437a44832",
       "bytes": 13329
     },
     {
@@ -544,7 +544,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "87ba16c67d599d46349eb55b0d9c06c8ddb3d03e85e65edf865084e2fc11ef34",
+      "sha256": "bb46703ce7fe0b13dabc9ee6506178c30adab88c7454865a13386df49aee2c62",
       "bytes": 15858
     },
     {
@@ -574,8 +574,8 @@
     },
     {
       "path": "dist/electronic-materials-ui.js",
-      "sha256": "739ca2d78d1f3fb7c4e268d52a24b89c143fbc5eb6ecf3b26a555e1d882acb8e",
-      "bytes": 32620
+      "sha256": "b0f4ba3e02d1c4e50c7f945d18ecf4f6f02fc9db0896277c6c0079116491cac7",
+      "bytes": 32626
     },
     {
       "path": "dist/electronic-materials.css",
@@ -599,8 +599,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "f0aaf626657ee0d7c1d19fc2e7911dc6165eeb60055482eed568717274713ff2",
-      "bytes": 6950
+      "sha256": "97b903741a202a7599a9eb75faa0973682eeaddfe232729566375e4673a48c10",
+      "bytes": 7199
     },
     {
       "path": "dist/induction.js",
@@ -609,8 +609,8 @@
     },
     {
       "path": "dist/lie-group-ui.js",
-      "sha256": "88f27ad3718eae2cf080926d394742d518aeecccebaf93be5dbafcb81229bcd4",
-      "bytes": 54023
+      "sha256": "0371fadc65538f6a5bd1fda2e4d5a84947b3f3b805c6518a36f6e5934142611b",
+      "bytes": 54027
     },
     {
       "path": "dist/lie-group.css",
@@ -624,13 +624,13 @@
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "5858df10769c1436329faa3b561d6ddc46a37e725c637ac1dbc0e9c34a6b0562",
-      "bytes": 23579
+      "sha256": "5af46bf5b95fa38e089add4a63a8c77e0d1a4b35848383254870a140626971ec",
+      "bytes": 23581
     },
     {
       "path": "dist/material-research-ui.js",
-      "sha256": "3712e0e355ea18cc230a27ea77cf8ad14eb45def50b40a1b54532c1bb5e1994c",
-      "bytes": 45390
+      "sha256": "c5e2e0b9a75f92a471de71aef30a3917c9882edb8bd0a1f5c161e4e01fd41cdf",
+      "bytes": 45396
     },
     {
       "path": "dist/material-research.css",
@@ -659,8 +659,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "f9815f621fe6670a0f2b18112ff1090e6481868605181e952f9f68a31bce8442",
-      "bytes": 29376
+      "sha256": "5bd07967aef5ce0f0ea9e52958244d4356c22956b8903ebd368ec7a6acb45228",
+      "bytes": 29380
     },
     {
       "path": "dist/navigation.css",
@@ -684,8 +684,8 @@
     },
     {
       "path": "dist/pathways-ui.js",
-      "sha256": "081a987cab3e3b3b50071c0ffe5913f13440a3df74b489443dc313a784b00bf0",
-      "bytes": 14143
+      "sha256": "5459ef84debaf596a06fdd16165f02bcc89432c3dd43cd019bbbce06b5e4e680",
+      "bytes": 14151
     },
     {
       "path": "dist/pathways-views.js",
@@ -714,8 +714,8 @@
     },
     {
       "path": "dist/principles-ui.js",
-      "sha256": "3d2afe0d0e71bf04298068e15319bc406f0c174ce5d0e3e8caedbab2caf2718e",
-      "bytes": 17919
+      "sha256": "73c03110b81c12033b11c0255b1e9f15395c2a34046a5d2df368810d636b8e06",
+      "bytes": 19851
     },
     {
       "path": "dist/principles-views.js",
@@ -729,13 +729,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "87da97d803a684f6f3be286a38656c878313dd08060b3d144e9a9680eb967bfe",
-      "bytes": 2581
+      "sha256": "37cc4cd83bff0de5c1576447ff674842953280e0e712d90fa293c23b285a27b2",
+      "bytes": 2583
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "ba134f9ccdaf81a18bf8c38ce032cdfff05c9bb053e9520a2a3ffe30d777d4aa",
-      "bytes": 10933
+      "sha256": "d6378da4b7afb3971741b8f331689d2fa1be2f08998cbee71365ffe00e832a31",
+      "bytes": 10935
     },
     {
       "path": "dist/python/browser_api.py",
@@ -764,8 +764,8 @@
     },
     {
       "path": "dist/quantum-materials-ui.js",
-      "sha256": "fcf51ad2e4ac3581c3a91c2bf04d21f8d61b719bd7d6dfd45a3bbf03f1a8d9cf",
-      "bytes": 33490
+      "sha256": "39c7c68ecf3617128405eab4008fc8a93dd64d2294ddbc2f33c37abaf16207fa",
+      "bytes": 37667
     },
     {
       "path": "dist/quantum-materials.css",
@@ -784,8 +784,8 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "55eaa6746f80831b8971cd87afba239cc7a918c93b2f3758d8ad0132d9d86161",
-      "bytes": 13657
+      "sha256": "031ef72cfd5a3704cf270422ab59d311df7c5536bc5d9b21066036a019cb5e71",
+      "bytes": 13661
     },
     {
       "path": "dist/response-materials.css",
@@ -794,8 +794,8 @@
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "1e2425edd978f4cbee885a6e2a2c6a5930b902fffc8c28989b224307c289b825",
-      "bytes": 20372
+      "sha256": "cca1e92ba6b22351af99f1b9a39a893b6655dc750ed3f42d925a0ccf2c43c555",
+      "bytes": 20374
     },
     {
       "path": "dist/response-views.js",
@@ -809,8 +809,8 @@
     },
     {
       "path": "dist/spectroscopy-ui.js",
-      "sha256": "fbc57a26a1217fc381d3208e3588f1f3ab1218078a7f22835bafb18d4f00ad59",
-      "bytes": 13487
+      "sha256": "49212e357cf8a1be7cd913179686c809c29599678966901e14001a45d82a2b0f",
+      "bytes": 13491
     },
     {
       "path": "dist/spectroscopy-views.js",
@@ -829,8 +829,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "b44e80872f0b1b3ad623b73fda2fbf4e8aa379a2e5effbbb486ed407e9d37572",
-      "bytes": 43932
+      "sha256": "ec7519639ef6f4401c480758df22fa452414da811ec61762996fab070b18b202",
+      "bytes": 43936
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -879,8 +879,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "11cfcb0a39f4f2e7583851c4eb2a190f0b5b1631afac83992f324f6162571112",
-      "bytes": 15390
+      "sha256": "4bef880a8a96e7a60450362245ed5c7a7870d8e4adf80ec625ef06e2af3bb5f4",
+      "bytes": 16042
     },
     {
       "path": "scripts/build-bilbao-labels.py",
@@ -1119,13 +1119,13 @@
     },
     {
       "path": "scripts/test-comparison-lab.mjs",
-      "sha256": "1a3f91ee88fd956c5882c6ad654a15202e933ccb83048b4f587a1ce6c586ed5b",
-      "bytes": 16305
+      "sha256": "e6689a24c1d23b73485d6e12a66a82df5b9392035b49d54d6c2eb2b754f0ff0c",
+      "bytes": 16307
     },
     {
       "path": "scripts/test-coupled-materials-ui.mjs",
-      "sha256": "29f6fec48c1e9295bbcda0036d2a8302dc597e01a1d52b6994f7ca98248d5881",
-      "bytes": 22236
+      "sha256": "20ba73fb437e7783e7b22a187e0b354d7af9d925b22c23e395fc4aff13a96ea0",
+      "bytes": 22238
     },
     {
       "path": "scripts/test-crystal-inline.mjs",
@@ -1189,8 +1189,8 @@
     },
     {
       "path": "scripts/test-material-research-ui.mjs",
-      "sha256": "5f281249d8b1a13dcd6af333b57dcb579adae1f5a249411d844aa91c2d815444",
-      "bytes": 23372
+      "sha256": "bd017a6bb1660c1149583c7e76104588654315621cca6d62ba16a249572ac91f",
+      "bytes": 23374
     },
     {
       "path": "scripts/test-materials-course.py",
@@ -1229,8 +1229,8 @@
     },
     {
       "path": "scripts/test-pathways-project-ui.mjs",
-      "sha256": "3df0753dcafcefb96a43d9117b687deabecbe1cb3d651277f1c08d757846e7b3",
-      "bytes": 12819
+      "sha256": "2328be7318c8bfe00490967864cc9d4337af09a06dadac0ba894b606fadbe5fb",
+      "bytes": 12821
     },
     {
       "path": "scripts/test-pathways-projects.mjs",
@@ -1259,8 +1259,8 @@
     },
     {
       "path": "scripts/test-principles-projects.mjs",
-      "sha256": "dcae1ae524fa82f8d07bc7d7c8cd6e130f2e8077b92c5bcd37cf2eba484e7c48",
-      "bytes": 18939
+      "sha256": "d5e0e7ba8234bf1e488ddd0c8113647563cd819db26e912b6bd39a394b9c20fb",
+      "bytes": 18941
     },
     {
       "path": "scripts/test-principles-provenance.py",
@@ -1609,13 +1609,13 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "fb14cac0f2bc4395956fbdd02f7b07cadebf0a400772e8ae70d3cb5a392ff298",
-      "bytes": 17067
+      "sha256": "9a76f817f398f22c9e086205b2afee6327c9badcf787c82e925f13986d868009",
+      "bytes": 17069
     },
     {
       "path": "scripts/test-spectroscopy-ui.mjs",
-      "sha256": "9eb8dd1281a3ace6cc7172115a1e402b4b615a1b6c5be8f14c1a75ab137dbb48",
-      "bytes": 9796
+      "sha256": "357b48abb22fa0a26e03253f91d4b781ed35713ae5b25f49c7ab00028b2b022f",
+      "bytes": 9798
     },
     {
       "path": "scripts/test-spglib-pyodide.mjs",

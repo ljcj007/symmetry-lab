@@ -7,7 +7,7 @@ export const LAYER_ACTIONS_BRIDGE_HOOKS=Object.freeze({'layer-periodicity':Objec
 export {LAYER_ACTIONS_REFERENCE};
 const OPS=Object.freeze({
  mirror:{label:"Normal-reversing mirror: z → −z",matrix:[[1,0,0],[0,1,0],[0,0,-1]]},
- identity:{label:"Identity operation",matrix:[[1,0,0],[0,1,0],[0,0,1]]},
+ identity:{label:"Identity",matrix:[[1,0,0],[0,1,0],[0,0,1]]},
  quarter:{label:"90° rotation about the normal",matrix:[[0,-1,0],[1,0,0],[0,0,1]]},
  inversion:{label:"Inversion: r → −r",matrix:[[-1,0,0],[0,-1,0],[0,0,-1]]}
 });
