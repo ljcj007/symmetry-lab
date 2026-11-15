@@ -6,12 +6,12 @@ import {fileURLToPath} from 'node:url';
 import {gunzipSync} from 'node:zlib';
 import assert from 'node:assert/strict';
 import {createResultLocalizer,collectResultDisplayMessages} from '../dist/english-results.js';
-import {loadEnglishCatalog} from './english-catalog.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const read=name=>JSON.parse(fs.readFileSync(path.join(root,'locales',name),'utf8'));
-const translations=loadEnglishCatalog();
-const localizer=createResultLocalizer({translations,templates:read('en-python-templates.json'),nativeAnnotations:true});
-const files=['electronic-materials.json','material-research.json','quantum-materials.json','response-materials.json','spectroscopy.json','structure-dynamics.json','bridges.json.gz','construction.json.gz','principles.json.gz','connections.json.gz','frontiers.json.gz','lie-foundations-ui.json','tensor-replay.json','spin-actions.json','antitranslation.json','composition.json'];
+const runtimeMessages=JSON.parse(fs.readFileSync(path.join(root,'dist/en/data/python-messages.json'),'utf8'));
+const translations=runtimeMessages.translations;
+const localizer=createResultLocalizer({...runtimeMessages,nativeAnnotations:true});
+const files=['electronic-materials.json','material-research.json','quantum-materials.json','response-materials.json','spectroscopy.json','structure-dynamics.json','bridges.json.gz','construction.json.gz','principles.json.gz','connections.json.gz','frontiers.json.gz','lie-foundations-ui.json','tensor-replay.json','spin-actions.json','antitranslation.json','composition.json','su3-basis.json'];
 const han=/[\u3400-\u9fff]/u,residuals=[];let examined=0,numbers=0;
 function identicalStructure(before,after,pointer=''){
  assert.equal(typeof after,typeof before,pointer+' type changed');
@@ -29,7 +29,7 @@ for(const file of files){
  }
 }
 const unique=[...new Map(residuals.map(row=>[row.source,row])).values()];
-const report={files:files.length,examinedDisplayStrings:examined,checkedNumbers:numbers,untranslatedOccurrences:residuals.length,untranslatedUnique:unique.length,residuals:unique};
+const report={catalogSource:'dist/en/data/python-messages.json',files:files.length,examinedDisplayStrings:examined,checkedNumbers:numbers,untranslatedOccurrences:residuals.length,untranslatedUnique:unique.length,residuals:unique};
 fs.mkdirSync(path.join(root,'.openai'),{recursive:true});fs.writeFileSync(path.join(root,'.openai/english-result-translation-audit.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify({...report,residuals:unique.slice(0,12)},null,2));
 if(process.argv.includes('--check')&&unique.length)process.exitCode=1;

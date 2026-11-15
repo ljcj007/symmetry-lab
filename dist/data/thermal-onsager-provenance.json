@@ -54,12 +54,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 42525,
-      "sha256": "7615f84979e3db76c7bfe22c79cfde64f04ba1f0d1d8b7a2a8392ec838de07e2"
+      "bytes": 44691,
+      "sha256": "ad81ca1052c1ff630e574f71da40955999bbb2b553f8c11e0bf8518a894ecb2a"
     },
     "dist/connections-ui.js": {
-      "bytes": 18471,
-      "sha256": "badecb73ad7929ac898e4a3b6fb0a847156541df1db94d1cb25cc0c3850f277e"
+      "bytes": 18444,
+      "sha256": "af4147c725a68f45176320349f3a9dd580da4216d10061278bdde9ae1eece3f9"
     },
     "dist/data/connections-materials.json": {
       "bytes": 45193,
@@ -70,16 +70,16 @@
       "sha256": "849a2069d5108fd3d567571a5ee719515abc646866446d6d5b12daebc7acfd9c"
     },
     "dist/index.html": {
-      "bytes": 7409,
-      "sha256": "9bf58bffaed6d7a68ac7aca48e325c9bffd2684aebae9790e460f85b7df905ad"
+      "bytes": 7460,
+      "sha256": "cc79fffff468e902445d4ff829be7288d49e8bbbc1b65ce3781473e7878c8131"
     },
     "dist/learning-bridge-host.js": {
       "bytes": 4616,
       "sha256": "b549c0f3268b4ccf3b2e801bf6a5cb91d2be1a666903fb0e03b70f26467b70e8"
     },
     "dist/material-research-ui.js": {
-      "bytes": 50734,
-      "sha256": "31cea57cb184de855682664f9245732e9418582b5ef987275a2cceeb971c4d2a"
+      "bytes": 50725,
+      "sha256": "402ed972f51a9407551734888fc766ffc7a04d9d1f81734b549ccf09d1250828"
     },
     "dist/onsager-learning-bridge.css": {
       "bytes": 3922,
@@ -118,16 +118,16 @@
       "sha256": "8a3c52eafaeac0648f0d6bf71f3e4794adc783c05d586699df7f558376ebf9bb"
     },
     "package.json": {
-      "bytes": 17355,
-      "sha256": "fc9849f17e751f1410a87f16930e36aba98282953f376edad8b52d97f6c78f5f"
+      "bytes": 17804,
+      "sha256": "999d2b355a4803791009f7912113cb5050e4b8f1744ec6bebe68c7e6809df8b7"
     },
     "scripts/build-thermal-onsager-provenance.mjs": {
       "bytes": 5135,
       "sha256": "4f42354ac793ba59e18d0fabc06de25740eb742c423e4ef683a785922bd88d66"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 3061,
-      "sha256": "89a6d6bfc9d0672a8e29123cbcac9bff631a3beeb09c9e79d0d0ed2459c98b4c"
+      "bytes": 3181,
+      "sha256": "932bf1f2a4df473a3b547c4e207bd2c1bfeeac49ebe22028ad7c288c92dbe86b"
     },
     "scripts/test-learning-bridge-host.mjs": {
       "bytes": 4915,

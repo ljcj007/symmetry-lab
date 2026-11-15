@@ -279,6 +279,9 @@ def run(payload):
     if payload.get('lab') == 'composition':
         from composition_lab import run as composition_run
         return composition_run(payload)
+    if payload.get('lab') == 'su3_basis':
+        from su3_basis_lab import run as su3_basis_run
+        return su3_basis_run(payload)
     if payload.get('lab') == 'lie':
         from lie_labs import run as lie_run
         return lie_run(payload)

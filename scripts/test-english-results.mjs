@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createResultLocalizer,collectResultDisplayMessages} from '../dist/english-results.js';
-import {loadEnglishCatalog} from './english-catalog.mjs';
 
 const translations={
  '标题':'Title','说明':'Description','稳定':'Stable','filename.cif':'SHOULD NEVER REPLACE A CAPTURE',
@@ -52,8 +51,9 @@ assert.deepEqual(annotations.notes,['Description']);assert.equal(annotations.ope
 // Exercise the visible annotation directly, independently of the extraction
 // allowlist: the SOC renderer displays locking.original.quantum.convention.
 const spinFixture=JSON.parse(fs.readFileSync(new URL('./fixtures/spin-actions.json',import.meta.url),'utf8'));
-const spinCatalog=loadEnglishCatalog();
-const spinLocalizer=createResultLocalizer({translations:spinCatalog,nativeAnnotations:true});
+const spinMessages=JSON.parse(fs.readFileSync(new URL('../dist/en/data/python-messages.json',import.meta.url),'utf8'));
+const spinCatalog=spinMessages.translations;
+const spinLocalizer=createResultLocalizer({...spinMessages,nativeAnnotations:true});
 const socCases=spinFixture.cases.filter(row=>row.input.experiment==='soc_locking');
 assert.equal(socCases.length,6);
 for(const row of socCases){
@@ -106,3 +106,29 @@ for(const row of compositionFixture.cases){
  assert.equal(JSON.stringify(row.result),original,row.id+': source response remains immutable');
 }
 console.log('Actual composition replies: eight complete exact results translated with original inputs and source responses unchanged.');
+const basisFixture=JSON.parse(fs.readFileSync(new URL('./fixtures/su3-basis.json',import.meta.url),'utf8'));
+assert.equal(basisFixture.cases.length,15);
+for(const row of basisFixture.cases){
+ const before=structuredClone(row.result),after=spinLocalizer.result(row.result);
+ assert.doesNotMatch(JSON.stringify(after),/[\u3400-\u9fff]/u,row.id+': complete fresh SU(3) basis reply retains untranslated prose');
+ assert.deepEqual(after.input,before.input);assert.deepEqual(after.operators,before.operators);
+ assert.deepEqual(row.result,before,row.id+': source reply remains immutable');
+}
+const freshBasis=basisFixture.cases.find(row=>row.input.p===1&&row.input.q===1).result;
+const coordinateDescription=freshBasis.conventions.coordinates;
+assert.match(coordinateDescription,/[\u3400-\u9fff]/u);
+const withProtectedCopies={result:freshBasis,input:freshBasis,raw:freshBasis,data:freshBasis,
+ exports:freshBasis,userNotes:{coordinates:coordinateDescription},
+ coordinates:[coordinateDescription],unrelated:{conventions:{coordinates:coordinateDescription}}};
+const guardedBasis=spinLocalizer.result(withProtectedCopies);
+assert.doesNotMatch(guardedBasis.result.conventions.coordinates,/[\u3400-\u9fff]/u);
+for(const key of ['input','raw','data','exports','userNotes','coordinates','unrelated'])assert.deepEqual(guardedBasis[key],withProtectedCopies[key],key+': registered display exception cannot expose opaque coordinates');
+const noAnnotationLocalizer=createResultLocalizer({...spinMessages});
+assert.equal(noAnnotationLocalizer.result(freshBasis).conventions.coordinates,coordinateDescription,'Fresh-result annotation opt-in remains required');
+assert.equal(spinLocalizer.result({...freshBasis,schema:'unrelated-schema'}).conventions.coordinates,coordinateDescription,'Only the named SU(3) schema exposes this description');
+const coordinateArray=structuredClone(freshBasis);coordinateArray.conventions.coordinates=[coordinateDescription,{label:coordinateDescription}];
+assert.deepEqual(spinLocalizer.result(coordinateArray).conventions.coordinates,coordinateArray.conventions.coordinates,'Even named results never translate an actual coordinate array');
+const basisMessages=collectResultDisplayMessages(withProtectedCopies,{nativeAnnotations:true});
+assert.ok(basisMessages.some(row=>row.path.join('.')==='result.conventions.coordinates'));
+assert.ok(basisMessages.every(row=>!['input','raw','data','exports','userNotes','coordinates','unrelated'].includes(row.path[0])));
+console.log('Actual SU(3) basis replies: all15 complete fresh results translated, numeric operators and inputs preserved; the named string-only axis explanation cannot expose coordinate arrays or protected copies.');

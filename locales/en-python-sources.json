@@ -18169,6 +18169,340 @@
     ]
   },
   {
+    "source": "固定八维伴随表示：同一表示中的两个零权基态可有不同的升算符作用。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/fixedOctet/description",
+      "python-fixture/su3-basis.json/cases/1/result/fixedOctet/description",
+      "python-fixture/su3-basis.json/cases/2/result/fixedOctet/description",
+      "python-fixture/su3-basis.json/cases/3/result/fixedOctet/description"
+    ]
+  },
+  {
+    "source": "本比较独立于上方输入。它比较一个八维表示内部的基态，不是张量积中的 8s 与 8a 外重数副本。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/fixedOctet/scope",
+      "python-fixture/su3-basis.json/cases/1/result/fixedOctet/scope",
+      "python-fixture/su3-basis.json/cases/2/result/fixedOctet/scope",
+      "python-fixture/su3-basis.json/cases/3/result/fixedOctet/scope"
+    ]
+  },
+  {
+    "source": "交错图样数等于表示维数",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/0/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/0/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/0/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "全部基态满足六条交错约束",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/1/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/1/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/1/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "内容非负且总数固定",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/2/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/2/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/2/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "内容差与两个 Cartan 对角元一致",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/3/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/3/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/3/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "升降算符互为转置",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/4/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/4/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/4/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "Cartan 与根算符满足基本对易关系",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/5/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/5/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/5/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/5/label"
+    ]
+  },
+  {
+    "source": "每个非零矩阵元连接规定的权差",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/6/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/6/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/6/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/6/label"
+    ]
+  },
+  {
+    "source": "二阶 Casimir 等于表示的标量值",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/checks/7/label",
+      "python-fixture/su3-basis.json/cases/1/result/checks/7/label",
+      "python-fixture/su3-basis.json/cases/2/result/checks/7/label",
+      "python-fixture/su3-basis.json/cases/3/result/checks/7/label"
+    ]
+  },
+  {
+    "source": "输入必须是 JSON 对象。",
+    "origins": [
+      "python/su3_basis_lab.py"
+    ]
+  },
+  {
+    "source": "只接受 lab、p、q；基态和算符选择使用已经返回的数据。",
+    "origins": [
+      "python/su3_basis_lab.py"
+    ]
+  },
+  {
+    "source": "lab 必须为 su3_basis。",
+    "origins": [
+      "python/su3_basis_lab.py"
+    ]
+  },
+  {
+    "source": "p 和 q 必须为非负整数且 p+q≤4；不接受布尔值、小数或字符串。",
+    "origins": [
+      "python/su3_basis_lab.py"
+    ]
+  },
+  {
+    "source": "采用现有 CG 核心的正交归一 GT 基底；顶行固定为 (p+q,q,0)。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/basis",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/basis",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/basis",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/basis"
+    ]
+  },
+  {
+    "source": "按 (H1+H2,H1,a,b,c) 降序排列，所有矩阵、列向量与权图共用此顺序。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/order",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/order",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/order",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/order"
+    ]
+  },
+  {
+    "source": "E12 与 E23 的非零升算符系数取非负实数；共轭三维基底为 (s̄,−d̄,ū)。基底重定相会改变矩阵元的符号。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/phase",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/phase",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/phase",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/phase"
+    ]
+  },
+  {
+    "source": "算符左乘列向量，第 j 列是第 j 个归一基态的像；Eij 不是有限的幺正群操作。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/columns",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/columns",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/columns",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/columns"
+    ]
+  },
+  {
+    "source": "T3、T8 是 Cartan 本征值坐标；权图不是实空间、动量空间或能级图。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/coordinates",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/coordinates",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/coordinates",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/coordinates"
+    ]
+  },
+  {
+    "source": "原始列向量不重新归一化，范数平方不是跃迁概率；零输出向量不等于零权基态。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/normalization",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/normalization",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/normalization",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/normalization"
+    ]
+  },
+  {
+    "source": "u、d、s、I、Y 在此是表示标签；未指定物理模型时不赋予粒子味、晶体轨道或空间方向含义。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/interpretation",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/interpretation",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/interpretation",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/interpretation"
+    ]
+  },
+  {
+    "source": "只构造 p+q≤4 的十五个 SU(3) 不可约表示，不构造任意 SU(N) 或新的 CG 换基矩阵。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/conventions/scope",
+      "python-fixture/su3-basis.json/cases/1/result/conventions/scope",
+      "python-fixture/su3-basis.json/cases/2/result/conventions/scope",
+      "python-fixture/su3-basis.json/cases/3/result/conventions/scope"
+    ]
+  },
+  {
+    "source": "改变表示后需要重新运行；基态和算符选择只浏览本次计算的完整结果。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/notes/0",
+      "python-fixture/su3-basis.json/cases/1/result/notes/0",
+      "python-fixture/su3-basis.json/cases/2/result/notes/0",
+      "python-fixture/su3-basis.json/cases/3/result/notes/0"
+    ]
+  },
+  {
+    "source": "相同权点的全部成员都保留；图上重合不能代替基态相等或能量简并的判断。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/notes/1",
+      "python-fixture/su3-basis.json/cases/1/result/notes/1",
+      "python-fixture/su3-basis.json/cases/2/result/notes/1",
+      "python-fixture/su3-basis.json/cases/3/result/notes/1"
+    ]
+  },
+  {
+    "source": "所有精确式、数值和 LaTeX 均由同一 SymPy 对象生成；数值只用于显示与绘图。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/notes/2",
+      "python-fixture/su3-basis.json/cases/1/result/notes/2",
+      "python-fixture/su3-basis.json/cases/2/result/notes/2",
+      "python-fixture/su3-basis.json/cases/3/result/notes/2"
+    ]
+  },
+  {
+    "source": "① 先检查图样是否合法",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/0/title",
+      "python-fixture/su3-basis.json/cases/1/result/steps/0/title",
+      "python-fixture/su3-basis.json/cases/2/result/steps/0/title",
+      "python-fixture/su3-basis.json/cases/3/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "顶行确定表示，六条交错不等式筛选允许的 GT 基态。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/0/explanation",
+      "python-fixture/su3-basis.json/cases/1/result/steps/0/explanation",
+      "python-fixture/su3-basis.json/cases/2/result/steps/0/explanation",
+      "python-fixture/su3-basis.json/cases/3/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "② 从行和读出三个内容数",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/1/title",
+      "python-fixture/su3-basis.json/cases/1/result/steps/1/title",
+      "python-fixture/su3-basis.json/cases/2/result/steps/1/title",
+      "python-fixture/su3-basis.json/cases/3/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "逐层行和之差给出内容数，总数固定为 p+2q。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/1/explanation",
+      "python-fixture/su3-basis.json/cases/1/result/steps/1/explanation",
+      "python-fixture/su3-basis.json/cases/2/result/steps/1/explanation",
+      "python-fixture/su3-basis.json/cases/3/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "③ 内容差给出权与 Cartan 坐标",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/2/title",
+      "python-fixture/su3-basis.json/cases/1/result/steps/2/title",
+      "python-fixture/su3-basis.json/cases/2/result/steps/2/title",
+      "python-fixture/su3-basis.json/cases/3/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "先求两个整数权，再换成 T3、T8 及 I、I3、Y。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/2/explanation",
+      "python-fixture/su3-basis.json/cases/1/result/steps/2/explanation",
+      "python-fixture/su3-basis.json/cases/2/result/steps/2/explanation",
+      "python-fixture/su3-basis.json/cases/3/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "④ 用矩阵的一列读取算符作用",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/3/title",
+      "python-fixture/su3-basis.json/cases/1/result/steps/3/title",
+      "python-fixture/su3-basis.json/cases/2/result/steps/3/title",
+      "python-fixture/su3-basis.json/cases/3/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "完整列向量保留全部目标基态及精确系数；权相同的基态仍保留各自索引。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/3/explanation",
+      "python-fixture/su3-basis.json/cases/1/result/steps/3/explanation",
+      "python-fixture/su3-basis.json/cases/2/result/steps/3/explanation",
+      "python-fixture/su3-basis.json/cases/3/result/steps/3/explanation"
+    ]
+  },
+  {
+    "source": "⑤ 比较同权但不同的基态",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/4/title",
+      "python-fixture/su3-basis.json/cases/1/result/steps/4/title",
+      "python-fixture/su3-basis.json/cases/2/result/steps/4/title",
+      "python-fixture/su3-basis.json/cases/3/result/steps/4/title"
+    ]
+  },
+  {
+    "source": "固定八维例子用 E12 和 E23 区分两个零权基态；一个升算符给出零并不表示输入是零向量。",
+    "origins": [
+      "python/su3_basis_lab.py",
+      "python-fixture/su3-basis.json/cases/0/result/steps/4/explanation",
+      "python-fixture/su3-basis.json/cases/1/result/steps/4/explanation",
+      "python-fixture/su3-basis.json/cases/2/result/steps/4/explanation",
+      "python-fixture/su3-basis.json/cases/3/result/steps/4/explanation"
+    ]
+  },
+  {
     "source": "SU(3) Clebsch–Gordan 系数与换基",
     "origins": [
       "python/su3_cg.py"

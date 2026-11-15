@@ -10,14 +10,19 @@ const exactMathKeys=new Set(['formula','formulas','equation','equations','tex','
 const explanatorySuffix=/(?:conventions?|explanations?|descriptions?|summar(?:y|ies)|messages?|warnings?|reasons?|meanings?|labels?|titles?)$/i;
 
 function resultDisplayMode(node,mode,nativeAnnotations){
+ if(nativeAnnotations&&(mode==='walk'||mode==='display')&&node?.schema==='symmetry-lab-su3-basis-1'&&node.lab==='su3_basis')return 'su3-basis-result';
  // Only the named, freshly calculated SOC result declares this annotation.
  // A matching object inside an input or imported/raw tree stays opaque.
  return nativeAnnotations&&(mode==='walk'||mode==='display')&&node?.schema==='symmetry-lab-spin-actions-1'&&node.lab==='spin_actions'&&node.experiment==='soc_locking'?'spin-result':mode;
 }
 
-function childDisplayMode(key,mode,nativeAnnotations=false){
+function childDisplayMode(key,mode,nativeAnnotations=false,item=undefined){
  const normalized=normalizeKey(key);
  if(mode==='raw')return 'raw';
+ // This named fresh result uses one string to explain what the weight axes
+ // mean. Coordinate arrays and opaque input/raw copies remain computational.
+ if(mode==='su3-basis-result'){if(key==='conventions')return 'su3-basis-conventions';mode='walk';}
+ if(mode==='su3-basis-conventions'){if(key==='coordinates')return typeof item==='string'?'display':'raw';mode='display';}
  // `original` normally means user/source data. Here it is the calculated
  // independent operation. Expose only its registered convention and scope;
  // matrices and every other original field retain their protected status.
@@ -50,7 +55,7 @@ export function collectResultDisplayMessages(value,{nativeAnnotations=false}={})
   mode=resultDisplayMode(node,mode,nativeAnnotations);
   const modes=seen.get(node)||new Set();if(modes.has(mode))return;modes.add(mode);seen.set(node,modes);
   if(Array.isArray(node))node.forEach((item,index)=>walk(item,mode,[...path,index]));
-  else for(const [key,item]of Object.entries(node))walk(item,childDisplayMode(key,mode,nativeAnnotations),[...path,key]);
+  else for(const [key,item]of Object.entries(node))walk(item,childDisplayMode(key,mode,nativeAnnotations,item),[...path,key]);
  }
  walk(value);return rows;
 }
@@ -113,7 +118,7 @@ export function createResultLocalizer({translations={},templates=[],nativeAnnota
    const output={};modes.set(mode,output);
    for(const [key,item]of Object.entries(node)){
     // Defining a property also keeps a literal __proto__ key inert.
-    Object.defineProperty(output,key,{value:clone(item,childDisplayMode(key,mode,nativeAnnotations)),writable:true,enumerable:true,configurable:true});
+    Object.defineProperty(output,key,{value:clone(item,childDisplayMode(key,mode,nativeAnnotations,item)),writable:true,enumerable:true,configurable:true});
    }
    return output;
   }

@@ -63,18 +63,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 42525,
-      "sha256": "7615f84979e3db76c7bfe22c79cfde64f04ba1f0d1d8b7a2a8392ec838de07e2"
+      "bytes": 44691,
+      "sha256": "ad81ca1052c1ff630e574f71da40955999bbb2b553f8c11e0bf8518a894ecb2a"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97887,
-      "sha256": "b8af832a30dea608453a074cd6e245b7100ec51f2fe73a418c2bfdcd2a70d762"
+      "bytes": 97824,
+      "sha256": "eaa92a81e16993d93e14e376f8b6962c697e8009d597ac6b40aef8d362ed6ce9"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32241,
-      "sha256": "4d014dbe0167d12ebe77ec1a0a22f091478d59ed502c10e84428eebb3dc28611"
+      "bytes": 32112,
+      "sha256": "966fcd9db6f54ae3e211f6648b680dfaa8e8b7ad53223b51bcb49ac4c9bbef93"
     },
     "dist/composition-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -93,8 +93,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7409,
-      "sha256": "9bf58bffaed6d7a68ac7aca48e325c9bffd2684aebae9790e460f85b7df905ad"
+      "bytes": 7460,
+      "sha256": "cc79fffff468e902445d4ff829be7288d49e8bbbc1b65ce3781473e7878c8131"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -103,8 +103,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30005,
-      "sha256": "a4a85df7e7c9e97ac5378414c2e862773d6368302c56492266d98d8cd5019e3e"
+      "bytes": 29996,
+      "sha256": "f7fce79fcfb77c5db24dde45f4c269fef03b489acd343ba0bf8441aaf5bf0f1a"
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -113,13 +113,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3143,
-      "sha256": "d710ee063f6aa768cb17af56ce624843257e3366a62d86647301fd12cfcb8403"
+      "bytes": 3134,
+      "sha256": "073c53a7725ce5934bf315c89a53e39ea0167fa42d9d92b08b0182ff0ec3932d"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11355,
-      "sha256": "a542538371b5c5cd9d0e33db89ac96e794781430a05d6e407812d6d890c54e96"
+      "bytes": 11493,
+      "sha256": "4cb49773d4e66381a373c0392799def0bad4470725a0b3d297c0a0ec8da4eaa5"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -133,8 +133,8 @@
     },
     "dist/python/teaching_labs.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14745,
-      "sha256": "92a3d73837935418f6f50c25be815bc020d41dae8565abe45736e3a36becb6ab"
+      "bytes": 14880,
+      "sha256": "117ddc55730c3a7cc8d90f0f6f07ed8f3e6612ce6868be0f51f5abecb6b46021"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -143,8 +143,8 @@
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8662,
-      "sha256": "66325961b82b6f563361f9b2126450d0ff2723d49075cfc91848e81d63d450a1"
+      "bytes": 8653,
+      "sha256": "1c1905dac112591ba836a867703ad44028beb029f22371f18b9713d45ec5cc8e"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
@@ -183,13 +183,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17355,
-      "sha256": "fc9849f17e751f1410a87f16930e36aba98282953f376edad8b52d97f6c78f5f"
+      "bytes": 17804,
+      "sha256": "999d2b355a4803791009f7912113cb5050e4b8f1744ec6bebe68c7e6809df8b7"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3225,
-      "sha256": "f58089dfc8cc470b1d6d7e45db8dbe062a15a3a0e05a2f7b344a610a5170b2d9"
+      "bytes": 3316,
+      "sha256": "a2f2bf8e77b530d6f602bbae9e9ff9f990fdbadc9d8ba872157039a79d003117"
     },
     "scripts/build-composition-reference.py": {
       "normalization": "utf8-lf-v1",
@@ -208,13 +208,13 @@
     },
     "scripts/collect-fixture-messages.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1249,
-      "sha256": "245abdf14fc254b1006490d35d172038f831ba1e43ecdb8fd9d5f24fb33624ab"
+      "bytes": 1266,
+      "sha256": "9492e96f4dbaa441f0fa5a1445fff2bfed30bed5b3862195d62b993e22bfe09c"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3061,
-      "sha256": "89a6d6bfc9d0672a8e29123cbcac9bff631a3beeb09c9e79d0d0ed2459c98b4c"
+      "bytes": 3181,
+      "sha256": "932bf1f2a4df473a3b547c4e207bd2c1bfeeac49ebe22028ad7c288c92dbe86b"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -224,27 +224,27 @@
     "scripts/fixtures/antitranslation.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 601691,
-      "sha256": "d091a1a324589a1df7f5b0cbe4992754b20c109531eee545e268c2ba214590fd"
+      "sha256": "a33f812f629e922cd78838da5236ed8ce0f9f216d9520b263c0a4fe4827d7378"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869419,
-      "sha256": "3f55a380804be16c4a10017f95ff96cd03ed983226701f361038a372dddb4027"
+      "bytes": 869505,
+      "sha256": "75a995bc5377c6ee68ca1aaacd8a38ae9814dc25386d2b6a29cf37fe0633a4b6"
     },
     "scripts/fixtures/composition.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 511745,
-      "sha256": "74c8a4843eaf1bfd8436e2cf7f62bf04a02d2a1c0f07bb367315f4a37168e2e1"
+      "sha256": "8dfd8fb039ed420fac5980baea09c327907b4c10dfb35beee744929f1b24df88"
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736475,
-      "sha256": "949b28e1e9c93e9cfb6be658f9a56bccd8457c22b3e304af63bed8526bfdc73e"
+      "bytes": 1736561,
+      "sha256": "6bdbba156a48d34361687eb669ae0ac60039c3ac048e5179e6a6f40812dffe23"
     },
     "scripts/fixtures/spin-actions.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1224460,
-      "sha256": "71d73b87d01cfdbd082b7afcc96cc860594e79304f8025a607b602a9802d8921"
+      "sha256": "9eca0ecc229c34b889e533d773ae62a875f422ecca3f31fd01df6aaa40b8202b"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",
@@ -268,8 +268,8 @@
     },
     "scripts/test-english-results.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 15463,
-      "sha256": "48733521509ac6bc2835e21b9be4f68ac709afedf523aaebb8c7eddb53087574"
+      "bytes": 18210,
+      "sha256": "8bf63e66937f7d6e239e4353f11ae93c26185d35d4d82178854d795d26f2adcf"
     },
     "scripts/test-file-search.mjs": {
       "normalization": "utf8-lf-v1",
@@ -303,18 +303,18 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4013,
-      "sha256": "249a182fcecd5a7792239a579893bf6648a5a5d0ffd58ae5dbd1223a95f349c9"
+      "bytes": 4047,
+      "sha256": "40e4173f7ea5a01f85a3775234cc20a5c4449eb1fc8c6752fb6f7fc137a47c5f"
     },
     "scripts/test-spin-actions-worker.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3973,
-      "sha256": "bb3cdffc81313b2d19bd1b2546c67742efd9d4cfdc2ed135ffde6bce3c5ddeea"
+      "bytes": 6039,
+      "sha256": "d2f2dc4e73ac3b8d068c9423b1932e2d06407d5e7627122937b87a00275375f0"
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11006,
-      "sha256": "0097e2cea4ae54b0e96325e697989e1773ab45a224610f057638519d7fa278a3"
+      "bytes": 10997,
+      "sha256": "b5db1399d66f5b0e4bfa4b54b97b9a2819763b32b6f4397ba88b81819833f163"
     },
     "scripts/test-workbench-routes.mjs": {
       "normalization": "utf8-lf-v1",

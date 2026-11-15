@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 26506,
-  "translatedUnits": 26506,
+  "sourceUnits": 26656,
+  "translatedUnits": 26656,
   "missing": [],
-  "files": 440,
+  "files": 443,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -89,6 +89,10 @@
     "en-composition-host.json",
     "en-composition-python.json",
     "en-composition-docs.json",
-    "en-file-search.json"
+    "en-file-search.json",
+    "en-su3-basis-ui.json",
+    "en-su3-basis-host.json",
+    "en-su3-basis-python.json",
+    "en-su3-basis-docs.json"
   ]
 }
