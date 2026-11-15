@@ -94,7 +94,9 @@ for(const [relative,body]of outputs){
   if(/^(?:[a-z]+:|#|\/)/i.test(href))return all;
   const at=href.search(/[?#]/),target=at<0?href:href.slice(0,at),suffix=at<0?'':href.slice(at),englishTarget=path.resolve(out,'docs',target),originalTarget=path.resolve(dist,'docs',target);
   if(outputs.has(path.relative(out,englishTarget).replaceAll('\\','/')))return all;
-  if(originalTarget.startsWith(dist+path.sep)&&fs.existsSync(originalTarget))return left+path.relative(path.join(out,'docs'),originalTarget).replaceAll('\\','/')+suffix+right;
+  // The source archive is a shared root artifact generated after the English
+  // check in CI. Its documented location must not depend on build order.
+  if(originalTarget.startsWith(dist+path.sep)&&(originalTarget===path.join(dist,'source.zip')||fs.existsSync(originalTarget)))return left+path.relative(path.join(out,'docs'),originalTarget).replaceAll('\\','/')+suffix+right;
   return all;
  });
  outputs.set(relative,Buffer.from(value));

@@ -631,7 +631,7 @@
     },
     {
       "path": "dist/en/data/spin-actions-provenance.json",
-      "sha256": "c5e553cbf06440a6ee09c30ace27e56585d796594cc4eda770bc80e0efc8b16e",
+      "sha256": "3a031a0c4ad2a4f3258ba68d24b42757ed13c011d82d6bc91e10eac162d148fd",
       "bytes": 11964
     },
     {
@@ -681,7 +681,7 @@
     },
     {
       "path": "dist/en/data/tensor-teaching-provenance.json",
-      "sha256": "162b4660d42d300e804350fb3bf81ad90397b4486001764ddb33881d5a11180a",
+      "sha256": "48ffd06b0848bc931b66e9af81caa4263a98628d579d1f599bde12bbfa2601d8",
       "bytes": 10679
     },
     {
@@ -2586,8 +2586,8 @@
     },
     {
       "path": "scripts/build-english.mjs",
-      "sha256": "38bb3aed819b1fe3f3a3e65be2fc637cffa768237c1d5e631e03c28bb29d4564",
-      "bytes": 10202
+      "sha256": "7a258aea10e706c2ff4b2fafb117e538297410ee60caab5e9ebd72930646d497",
+      "bytes": 10403
     },
     {
       "path": "scripts/collect-english.mjs",
@@ -2631,8 +2631,8 @@
     },
     {
       "path": "scripts/test-english-edition.mjs",
-      "sha256": "ffaf083f5118dea9453ceb191022c0638798824dbe7f6415967d4723023b0009",
-      "bytes": 7944
+      "sha256": "a921fb206ef3f41ece0e144adfac82d5231d86a6992d79da2d6ea000309132c7",
+      "bytes": 8977
     },
     {
       "path": "scripts/test-english-results.mjs",

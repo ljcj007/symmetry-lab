@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {parse} from 'acorn';
 import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
 import {loadEnglishCatalog} from './english-catalog.mjs';
 import {collectEnglishSources,walkAST} from './english-source.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),dist=path.join(root,'dist'),en=path.join(dist,'en');
@@ -74,6 +75,18 @@ for(const [relative,dependency] of [['../english-results.js','english-results.js
 }
 for(const name of ['style.css','language-switch.css','language-switch.js','english-results.js','icon.svg','vendor/katex/katex.min.css','vendor/katex/katex.mjs','python/browser_api.py','data/space-groups.json','data/magnetic-groups.json','data/points.json'])assert.ok(fs.existsSync(path.join(dist,name)),name);
 assert.equal(fs.readdirSync(path.join(en,'docs')).filter(x=>x.endsWith('.md')).length,fs.readdirSync(path.join(dist,'docs')).filter(x=>x.endsWith('.md')).length,'All documentation must be available in English');
+// Run the actual builder with only the late archive's existence overridden.
+// No file is moved or created. Both CI-before-packaging and local-after-packaging
+// must reproduce the same committed English files and download destinations.
+for(const present of [false,true]){
+ const replay=`import fs from 'node:fs'; import path from 'node:path';
+const exists=fs.existsSync;const archive=path.resolve('dist/source.zip');
+fs.existsSync=value=>path.resolve(String(value))===archive?${present}:exists(value);
+process.argv.push('--check');await import('./scripts/build-english.mjs');`;
+ const check=spawnSync(process.execPath,['--input-type=module','-e',replay],{cwd:root,encoding:'utf8'});
+ assert.equal(check.status,0,'English output depends on source archive presence='+present+'\n'+check.stdout+'\n'+check.stderr);
+}
+assert.match(fs.readFileSync(path.join(en,'docs/spin-actions.md'),'utf8'),/\]\(\.\.\/\.\.\/source\.zip\)/,'Nested English documentation links to the shared root archive');
 // These are scientific distinctions that a fluent but incorrect translation
 // previously reversed. Pin their meanings independently of numeric fixtures.
 assert.match(translations['为什么 w 的第二项必须与第一项异号？'],/opposite sign/i);
