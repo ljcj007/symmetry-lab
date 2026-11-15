@@ -20,5 +20,5 @@ const manifest={schemaVersion:1,release:'20261113-depth1',sourceHashNormalizatio
  files:Object.fromEntries(files.sort().map(name=>{const data=Buffer.from(fs.readFileSync(new URL(name,root),'utf8').replace(/\r\n/g,'\n'));return[name,{bytes:data.length,sha256:crypto.createHash('sha256').update(data).digest('hex')}];}))};
 assert.deepEqual([manifest.counts.tools,manifest.counts.lieDerivations,manifest.counts.crystalDerivations,manifest.counts.lieLessonsWithRelatedExercises,manifest.counts.crystalLessonsWithRelatedExercises],[74,44,23,32,24]);
 const output=JSON.stringify(manifest,null,2)+'\n',target=new URL('dist/data/learning-depth-provenance.json',root);
-if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8'),output,'Learning depth provenance is stale');else fs.writeFileSync(target,output);
+if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),output,'Learning depth provenance is stale');else fs.writeFileSync(target,output);
 console.log('Learning depth:',JSON.stringify(manifest.counts));

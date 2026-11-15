@@ -19,6 +19,7 @@
   ],
   "geometryDisplay": "QWZ FHS dimensionless and SSH Zak/radian errors are labeled separately; the existing curvature-integral error is a separate column, and missing values remain undefined.",
   "draftCapture": "Explicit NodeList conversion retains unfinished inputs, selections and checkboxes; the regression uses the production classroom shell with iterable non-Array collections.",
+  "baselineExecution": "The hash-verified e8978ee source executes on the same host as the current core for strict old-field equality. The original Windows output capture remains an immutable legacy-record compatibility reference, not a cross-platform bitwise numerical standard.",
   "verification": [
     "Actual rendered controls preserve continuous model values and discrete integer/half-integer domains. Native browser validity remains a separate release check.",
     "A genuinely regenerated catalogue fixture preserves all 175250 existing numerical leaves. The Rabi historical capture preserves 19585 numerical leaves while independent spectral calculations check complex states, propagators and density matrices.",
@@ -39,8 +40,8 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21426,
-      "sha256": "1c03d6efc775b176e7b7662a0aab235dc94bb67c0db663baf05c7dcaee4fb199"
+      "bytes": 21794,
+      "sha256": "aae48b801c5c534118d8ea4c85498e0cc0c0fa096d52b4148bcb992a07c8e7dc"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
@@ -189,8 +190,8 @@
     },
     "scripts/build-precision-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5669,
-      "sha256": "1bd1f6853b592d0afe0b7a9008508e639099573c6beb2269e3310db184d74b48"
+      "bytes": 6041,
+      "sha256": "f97e9b5f2d2cf1d4815b53e40010f12e06de757dda73a71690efc269911c25a8"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
@@ -211,6 +212,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 1736189,
       "sha256": "be918247702d152c52346cac49aa2e03d95d7e7c726459ac4476e52a6f9bb209"
+    },
+    "scripts/fixtures/rabi-state-bridge-baseline-source.py.gz": {
+      "normalization": "raw-bytes",
+      "bytes": 7926,
+      "sha256": "f2572e558effe86515b0d0ceac4c71f969d22f5487c2e2b3d1cddae433af1eb1"
     },
     "scripts/fixtures/rabi-state-bridge-baseline.json.gz": {
       "normalization": "raw-bytes",
@@ -254,8 +260,8 @@
     },
     "scripts/test-python-rabi-state-bridge.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12098,
-      "sha256": "614064ca57e78b25365196bf721cbed7dceac3a75efc747158b082dd0b1d9264"
+      "bytes": 14304,
+      "sha256": "ccf6eb57cc73c24157f5eb04d6acdb7931b6a46f11dfb27c9a5d92900d0e08bd"
     },
     "scripts/test-quantum-materials-ui.mjs": {
       "normalization": "utf8-lf-v1",
@@ -264,13 +270,13 @@
     },
     "scripts/test-rabi-bridge-integration.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 15417,
-      "sha256": "7d08d0ac78b049057bc6770a63a3205f4d298ef92a5ebdee15fcc49fe47068e2"
+      "bytes": 15496,
+      "sha256": "916b828dd281478b29c0f3d155a244968e9ff771a9ef75ed547215e1a1c2b36c"
     },
     "scripts/test-rabi-state-bridge.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 15273,
-      "sha256": "31ac5764334fe43b923b13ccb3c239a09d59b0c23eacfc5ca765733334741356"
+      "bytes": 15573,
+      "sha256": "939696c2de1fa49528a030496d02427ca571331f64ff540bf00c9ac026b8ce45"
     },
     "scripts/test-spin-course-connections.mjs": {
       "normalization": "utf8-lf-v1",

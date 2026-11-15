@@ -15,5 +15,5 @@ const manifest={schemaVersion:1,release:'20261114-evidence2',scope:'Three bounde
  files:Object.fromEntries(files.sort().map(name=>{const raw=fs.readFileSync(new URL(name,root)),binary=name.endsWith('.xz'),data=binary?raw:Buffer.from(raw.toString('utf8').replace(/\r\n/g,'\n'));return[name,{normalization:binary?'raw-bytes':'utf8-lf-v1',bytes:data.length,sha256:crypto.createHash('sha256').update(data).digest('hex')}];}))};
 assert.deepEqual(Object.values(manifest.counts),[3,3,4,251]);
 const target=new URL('dist/data/evidence-workflows-provenance.json',root),body=JSON.stringify(manifest,null,2)+'\n';
-if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8'),body,'Evidence workflows provenance is stale');else fs.writeFileSync(target,body);
+if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Evidence workflows provenance is stale');else fs.writeFileSync(target,body);
 console.log('Evidence workflows:',JSON.stringify(manifest.counts));

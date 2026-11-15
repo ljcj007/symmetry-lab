@@ -16,5 +16,5 @@ const data={schemaVersion:1,release:'20261113-operations1',sourceHashNormalizati
  files:Object.fromEntries(files.sort().map(name=>{const bytes=Buffer.from(fs.readFileSync(new URL(name,root),'utf8').replace(/\r\n/g,'\n'));return[name,{bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')}];}))};
 assert.deepEqual(Object.values(data.counts),[7,10,4,128,8]);
 const target=new URL('dist/data/operational-bridges-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
-if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8'),body,'Operational bridge provenance is stale');else fs.writeFileSync(target,body);
+if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Operational bridge provenance is stale');else fs.writeFileSync(target,body);
 console.log('Operational bridges:',JSON.stringify(data.counts));

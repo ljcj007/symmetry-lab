@@ -1,7 +1,9 @@
-"""Independent spectral checks and exact old-output preservation for Rabi states.
+"""Independent spectral checks and exact same-host Rabi output preservation.
 
 --emit-json runs the same tests, then supplies real Python results to the Node
 bridge test. No hand-written trajectory is used as a physics fixture.
+The immutable historical source is executed on this host for strict comparison;
+the Windows result capture is legacy test data, not a cross-platform bit oracle.
 """
 import cmath
 import gzip
@@ -15,10 +17,13 @@ import subprocess
 import sys
 import types
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = 'e8978ee80a41a7303adf54230cfc24bac3177390'
 BASELINE_CORE_SHA256 = 'd48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9'
+BASELINE_SOURCE_FIXTURE_SHA256 = 'f2572e558effe86515b0d0ceac4c71f969d22f5487c2e2b3d1cddae433af1eb1'
+BASELINE_SOURCE_FIXTURE = ROOT / 'scripts/fixtures/rabi-state-bridge-baseline-source.py.gz'
 BASELINE_FIXTURE_SHA256 = 'b0610d01158f3c8cde08e01fa5d619d8a07aac2aab26e5a8462c650cfb1aac31'
 BASELINE_FIXTURE = ROOT / 'scripts/fixtures/rabi-state-bridge-baseline.json.gz'
 spec = importlib.util.spec_from_file_location('rabi_current', ROOT / 'dist/python/lie_applications.py')
@@ -73,19 +78,31 @@ def expectation(state, operator):
                for i in range(2) for j in range(2))
 
 
-def baseline_source():
+def baseline_source(*, from_git=False):
+    """Default: verified source fixture, independent of Git/shallow checkout.
+
+    Git history is read only for an explicitly requested historical recapture.
+    """
+    if not from_git:
+        raw = BASELINE_SOURCE_FIXTURE.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != BASELINE_SOURCE_FIXTURE_SHA256:
+            raise AssertionError('Immutable old Rabi source fixture hash does not match.')
+        source = gzip.decompress(raw)
+        if hashlib.sha256(source).hexdigest() != BASELINE_CORE_SHA256:
+            raise AssertionError('Immutable old core source hash does not match.')
+        return source
     git = shutil.which('git')
     if not git:
         bundled = Path.home() / '.cache/codex-runtimes/codex-primary-runtime/dependencies/native/git/cmd/git.exe'
         if bundled.exists():
             git = str(bundled)
     if not git:
-        raise RuntimeError('Git is required to compare the immutable e8978ee core.')
+        raise RuntimeError('Git history is required only for explicit --capture-baseline.')
     return subprocess.check_output([git, 'show', BASELINE + ':dist/python/lie_applications.py'], cwd=ROOT)
 
 
-def old_core():
-    source = baseline_source()
+def old_core(*, from_git=False):
+    source = baseline_source(from_git=from_git)
     if hashlib.sha256(source).hexdigest() != BASELINE_CORE_SHA256:
         raise AssertionError('Immutable old core source hash does not match.')
     module = types.ModuleType('rabi_immutable_baseline')
@@ -94,7 +111,11 @@ def old_core():
 
 
 def load_baseline_capture():
-    """Actual old dispatcher capture also works in shallow CI checkouts."""
+    """Hash-verified Windows legacy record, not a portable bitwise oracle.
+
+    Retained for old-record compatibility and request/provenance metadata.
+    Platform math libraries can differ in the final bits of its numeric leaves.
+    """
     raw = BASELINE_FIXTURE.read_bytes()
     if hashlib.sha256(raw).hexdigest() != BASELINE_FIXTURE_SHA256:
         raise AssertionError('Immutable old Rabi fixture hash does not match.')
@@ -135,20 +156,27 @@ class RabiStateBridgeTests(unittest.TestCase):
     def close(self, actual, expected, tolerance=2e-12):
         self.assertLessEqual(abs(actual - expected), tolerance)
 
+    def test_same_host_baseline_does_not_require_git_history(self):
+        with mock.patch.object(subprocess, 'check_output', side_effect=AssertionError('No Git history available')):
+            baseline = old_core()
+            result = baseline.run({'lab': 'lie', 'experiment': 'rabi', **CASES['negative-detuning']})
+        counts = compare_old_leaves(result, RESULTS['negative-detuning'])
+        self.assertGreater(counts['numeric'], 1200)
+
     def test_old_all_numeric_and_text_leaves_unchanged(self):
-        baseline = load_baseline_capture()
-        self.assertEqual(set(baseline['cases']), set(CASES))
+        legacy = load_baseline_capture()
+        self.assertEqual(set(legacy['cases']), set(CASES))
+        baseline = old_core()  # execute the old and current algorithms on this host
         totals = {'numeric': 0, 'other': 0}
         for key, options in CASES.items():
             with self.subTest(case=key):
-                record = baseline['cases'][key]
-                self.assertEqual(record['request'], {'lab': 'lie', 'experiment': 'rabi', **options})
-                old = record['result']
+                request = {'lab': 'lie', 'experiment': 'rabi', **options}
+                self.assertEqual(legacy['cases'][key]['request'], request)
+                old = baseline.run(request)
                 count = compare_old_leaves(old, RESULTS[key])
                 for name in totals:
                     totals[name] += count[name]
-        self.assertGreater(totals['numeric'], 15000)
-        self.assertGreater(totals['other'], 100)
+        self.assertEqual(totals, {'numeric': 19585, 'other': 184})
         BASELINE_COUNTS.update(totals)
 
     def test_every_sample_spectral_unitary_state_density_and_pauli_expectations(self):
@@ -222,7 +250,7 @@ if __name__ == '__main__':
     if '--capture-baseline' in sys.argv:
         # Explicit reproducibility path: execute the actual historical source;
         # do not derive the baseline by deleting fields from the new output.
-        baseline = old_core()
+        baseline = old_core(from_git=True)
         capture = {'baseline': BASELINE, 'coreSHA256': BASELINE_CORE_SHA256,
                    'capture': 'Actual e8978ee Python run outputs; no physics values synthesized or rounded.',
                    'cases': {key: {'request': {'lab': 'lie', 'experiment': 'rabi', **options},
@@ -231,7 +259,9 @@ if __name__ == '__main__':
         raw = gzip.compress(json.dumps(capture, ensure_ascii=False, allow_nan=False,
                                        separators=(',', ':')).encode('utf-8'), mtime=0)
         if hashlib.sha256(raw).hexdigest() != BASELINE_FIXTURE_SHA256:
-            raise AssertionError('Recomputed historical fixture differs; no file was overwritten.')
+            raise AssertionError('Historical recapture differs from the retained Windows capture '
+                                 '(platform math/compression may differ); no file was overwritten. '
+                                 'Normal tests instead strictly compare both cores on the same host.')
         BASELINE_FIXTURE.write_bytes(raw)
         print('Actual e8978ee capture reproduced with the expected SHA256.')
         raise SystemExit(0)
@@ -243,6 +273,9 @@ if __name__ == '__main__':
             raise SystemExit(1)
         print(json.dumps({'source': 'actual dist/python/lie_applications.py dispatcher',
                           'baseline': BASELINE,
+                          'baselineExecution': 'same-host immutable historical source',
+                          'baselineSourceSHA256': BASELINE_CORE_SHA256,
+                          'legacyCaptureRole': 'Windows compatibility record and request/provenance metadata only',
                           'unchangedBaselineLeaves': BASELINE_COUNTS,
                           'results': {name: RESULTS[name] for name in
                                       ('zero', 'time-zero', 'half-pi', 'pi', 'two-pi', 'detuned', 'negative-detuning')}},

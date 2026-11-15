@@ -5,8 +5,9 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {rabiStateLedger,rabiPhaseComparison,bindRabiStateBridge} from '../dist/rabi-state-bridge.js';
 
-// One real Python invocation validates spectral identities and the immutable
-// baseline, then returns its actual serialized states. No JS dynamics fixture.
+// One real Python invocation validates spectral identities and executes the
+// immutable old source on the same host for strict preservation. The retained
+// Windows output capture is legacy data, not a cross-platform bitwise oracle.
 const ROOT=fileURLToPath(new URL('../',import.meta.url));
 const bundled=path.resolve(path.dirname(process.execPath),'../../python/python.exe');
 const python=process.env.PYTHON||process.env.PYTHON_EXE||(existsSync(bundled)?bundled:process.platform==='win32'?'python':'python3');
@@ -16,7 +17,9 @@ assert.equal(execution.status,0,execution.stderr);
 const captured=JSON.parse(execution.stdout),results=captured.results;
 assert.match(captured.source,/actual .*lie_applications/);
 assert.equal(captured.baseline,'e8978ee80a41a7303adf54230cfc24bac3177390');
-assert.ok(captured.unchangedBaselineLeaves.numeric>15000);
+assert.equal(captured.baselineExecution,'same-host immutable historical source');
+assert.equal(captured.baselineSourceSHA256,'d48fb45d1ea3e7fdde6720feddd3440a024f26d52bcc449c34e2adda81d5b3b9');
+assert.deepEqual(captured.unchangedBaselineLeaves,{numeric:19585,other:184});
 const copy=x=>structuredClone(x);
 const freeze=x=>{if(x&&typeof x==='object'){Object.values(x).forEach(freeze);Object.freeze(x);}return x;};
 const near=(a,b,tol=2e-12)=>assert.ok(Math.abs(a-b)<=tol,`${a} ≠ ${b}`);
@@ -160,4 +163,4 @@ crossing.binding.snapshot();oldToggle();
 crossing.$('#rsb-step').onclick();assert.equal(newer.snapshot().step,2);
 newer();const third=bindRabiStateBridge({root:crossing.root,result:crossingResult});assert.equal(third.snapshot().step,2,'Retired snapshots cannot overwrite the newer memory');third();
 assert.equal(JSON.stringify(live.result),JSON.stringify(half),'The DOM binder never mutates scientific result data');
-console.log(`Rabi state bridge: ${ledgerCount} actual Python ledgers; ${captured.unchangedBaselineLeaves.numeric} old numeric leaves unchanged; spectral checks, phase observables, honest legacy null, real binder steps, prediction feedback, native-detail state, notes, stable controls, retirement and ownership guards passed. Native browser QA is separate.`);
+console.log(`Rabi state bridge: ${ledgerCount} actual Python ledgers; ${captured.unchangedBaselineLeaves.numeric} same-host old numeric leaves unchanged; spectral checks, phase observables, honest legacy null, real binder steps, prediction feedback, native-detail state, notes, stable controls, retirement and ownership guards passed. Native browser QA is separate.`);

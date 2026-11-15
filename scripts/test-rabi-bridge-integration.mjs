@@ -7,8 +7,9 @@ import {spawnSync} from 'node:child_process';
 const ROOT=fileURLToPath(new URL('../',import.meta.url));
 const bundled=path.resolve(path.dirname(process.execPath),'../../python/python.exe');
 const python=process.env.PYTHON||process.env.PYTHON_EXE||(existsSync(bundled)?bundled:process.platform==='win32'?'python':'python3');
-// Actual current Python results and an actual historical Python capture;
-// no state, probability, propagator or Bloch trajectory is synthesized in JS.
+// Actual current Python results and the hash-verified historical Windows
+// capture, retained only for legacy-record display/compatibility. It is not a
+// cross-platform bitwise oracle. No dynamics trajectory is synthesized in JS.
 const program=`import json,runpy,sys
 m=runpy.run_path(sys.argv[1])
 run=m['current'].run
