@@ -10,6 +10,12 @@ const storageKey = 'symmetry-lab.pointgroups.progress.v1';
 const tabs = [['learn',"Learning path"],['atlas',"32 point-group atlas"],['lab',"Symmetry operations"],['quiz',"Exercises and self-checks"]];
 const state = {tab:'learn',lesson:0,group:null,search:'',system:'',operation:0,point:[.63,.37,.81],step:0,showOrbit:false,answers:{},quizLesson:'all',revision:0,timer:null};
 let dataPromise, loaded;
+const compositionState=new Map();
+let compositionModulePromise,previousCompositionCleanup=()=>{};
+const defaultCompositionLoader=()=>compositionModulePromise||(compositionModulePromise=import('./composition-ui.js?v=20261116-composition1').catch(error=>{compositionModulePromise=null;throw error;}));
+export function compositionEntryHTML(lessonId,opened=false){
+  return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>Does the order of rotation and reflection matter?</summary><p>Apply two different operations in sequence, then interpret matrix multiplication, closure, and inverses.</p><div data-composition-body></div></details>`:'';
+}
 try { const saved=JSON.parse(localStorage.getItem(storageKey)||'{}'); if(saved&&typeof saved==='object'&&!Array.isArray(saved))state.answers=saved; } catch { /* Private browsing can disable storage. */ }
 const persist = () => { try { localStorage.setItem(storageKey,JSON.stringify(state.answers)); } catch { /* Progress remains in memory. */ } };
 const fmt = x => { const n=Number(x); return Number.isFinite(n)?(Math.abs(n)<1e-9?'0':Number(n.toFixed(5)).toString()):String(x??'—'); };
@@ -61,21 +67,38 @@ export function getPointgroupResult() {
   return {kind:'point-group-teaching',pointGroup:g,experiment:{coordinateConvention:'orthonormal Cartesian column vectors; r′ = R r',operation:op,initialPoint:state.point.slice(),applications:state.step,result:transformed(op,state.point,state.step),fullGroupOrbit:orbit(g,state.point)},source:loaded.lessons.source};
 }
 
-export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{}}) {
+export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},run,cancelRun,loadComposition=defaultCompositionLoader}) {
+  previousCompositionCleanup();
   stop();
   const revision=++state.revision;
   container.innerHTML="<div class=\"pg-page\"><div class=\"pg-loading\" role=\"status\"><span class=\"spinner\"></span>Loading point-group lessons and atlas…</div></div>";
   const root=container.firstElementChild;
-  const current=()=>revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
-  let disposeBridges=()=>{},disposeFeedback=[];
-  const clearLearningSupport=()=>{disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
+  let disposed=false,retryCleanup=null;
+  const current=()=>!disposed&&revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
+  let disposeBridges=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,detachObserver;
+  const clearComposition=()=>{compositionTicket++;disposeComposition();disposeComposition=()=>{};};
+  const cleanupCompositionView=()=>{clearComposition();detachObserver?.disconnect();};
+  previousCompositionCleanup=cleanupCompositionView;
+  if(typeof MutationObserver==='function'){detachObserver=new MutationObserver(()=>{if(!current())cleanupCompositionView();});detachObserver.observe(container,{childList:true});}
+  const clearLearningSupport=()=>{clearComposition();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
+  function disposeView(){
+    if(disposed)return;disposed=true;
+    const child=retryCleanup;retryCleanup=null;if(typeof child==='function')child();
+    cleanupCompositionView();clearLearningSupport();
+    if(revision===state.revision)stop();
+  }
   const $=selector=>root.querySelector(selector);
   let lessons,atlas;
   try { ({lessons,atlas}=await load()); } catch(error) {
-    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">reload</button>`;$('.pg-retry').onclick=()=>{if(current())return renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation});};}
-    return;
+    if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">reload</button>`;$('.pg-retry').onclick=async()=>{
+      if(!current())return;
+      const child=await renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation,run,cancelRun,loadComposition});
+      if(typeof child!=='function')return;
+      if(disposed)child();else{if(typeof retryCleanup==='function')retryCleanup();retryCleanup=child;}
+    };}
+    return disposeView;
   }
-  if(!current())return;
+  if(!current())return disposeView;
   if(selection.pathway||selection.tab){state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.lesson=Math.max(0,lessons.lessons.findIndex(item=>item.id===selection.lesson));if(selection.group)changeGroup(selection.group);if(state.tab==='quiz'&&selection.lesson)state.quizLesson=String(state.lesson);}
   const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,group:String(state.group)});onLocation("Learning Center / Basics and Representation / "+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
   const allQuestions=quizEntries(lessons.lessons);
@@ -121,6 +144,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">unit ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
       ${(lesson.objectives||[]).length?`<div class="pg-objectives"><h3>After studying this section, can you</h3><ul>${lesson.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
       ${matrixBridgeHTML(lesson.id)}
+      ${compositionEntryHTML(lesson.id,compositionState.get('host:group-basics')?.open===true)}
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>Related Interactive Demo</strong><p>Explore this lesson's symbols, matrices, and physical pictures together.</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">Open This Lesson's Demo →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
@@ -129,12 +153,28 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       <div class="pg-reference"><strong>References</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?" · Book page "+esc(ref.printedPages):''}${ref.pdfPages?" · PDF page "+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">Self-test in this section →</button><button type="button" class="secondary" id="pg-lesson-lab">Hands-on Symmetry Transformation</button>${state.lesson+1<lessons.lessons.length?"<button type=\"button\" class=\"primary\" id=\"pg-next-lesson\">Next unit →</button>":''}</div></article></div>`;
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
+    mountComposition(lesson.id);
     $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
     $('#pg-lesson-lab').onclick=()=>navigate('lab');
     if($('#pg-open-sg99')){const handoff=$('#pg-open-sg99');handoff.onclick=()=>{if(current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id==='from-point-to-space'&&$('#pg-open-sg99')===handoff)openGroup({mode:'sg',id:99,k:[0,0,0],doubleValued:false});};}
     if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
+  }
+  function mountComposition(lessonId){
+    const detail=$('[data-composition-entry]');if(!detail||lessonId!=='group-basics')return;
+    const body=detail.querySelector('[data-composition-body]');
+    detail.open=compositionState.get('host:group-basics')?.open===true;
+    const here=()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lessonId&&$('[data-composition-entry]')===detail&&detail.isConnected!==false;
+    const opened=()=>typeof detail.open==='boolean'?detail.open:detail.getAttribute('open')!==null;
+    async function loadOpen(){
+      if(!here()||!opened())return;const ticket=++compositionTicket;
+      disposeComposition();disposeComposition=()=>{};body.innerHTML="<p role=\"status\">Loading the operation workshop…</p>";
+      try{const module=await loadComposition();if(!here()||!opened()||ticket!==compositionTicket)return;if(typeof module?.bindCompositionLesson!=='function')throw Error("The operation workshop is temporarily unavailable. Please retry.");disposeComposition=module.bindCompositionLesson({root:detail,lessonId,isCurrent:()=>here()&&opened(),stateStore:compositionState,run,cancelRun,download});}
+      catch(error){if(!here()||!opened()||ticket!==compositionTicket)return;body.innerHTML=`<p class="notice error" role="alert">${esc(error?.message||"The operation workshop is temporarily unavailable. Please retry.")}</p><button class="secondary" type="button" data-composition-retry>Retry the operation workshop</button>`;const retry=body.querySelector('[data-composition-retry]');retry.onclick=()=>{if(here()&&opened()&&body.querySelector('[data-composition-retry]')===retry)return loadOpen();};}
+    }
+    detail.ontoggle=()=>{if(!here())return;compositionState.set('host:group-basics',{open:opened()});if(opened())return loadOpen();clearComposition();body.innerHTML='';};
+    if(opened())loadOpen();
   }
   function filteredGroups() {
     const search=state.search.trim().toLowerCase().replace(/[\s_{}]/g,'');
@@ -231,4 +271,5 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     root.querySelectorAll('[data-review]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.review);navigate('learn');});
   }
   draw();
+  return disposeView;
 }

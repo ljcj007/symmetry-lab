@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261115-momentum1';
-import {searchEntries} from './tool-search.js?v=20261113-depth1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261113-depth1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261115-zno1';
+import {classroomPathways} from './classroom-ui.js?v=20261116-composition1';
+import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261116-composition1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261116-composition1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -98,7 +98,8 @@ export const toolGroups=[
 toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
- return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]:'',kind:"Calculate",category:group.id,capability};
+ const formatKeywords=capability?.inputFormats.length?" file import "+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
@@ -108,14 +109,16 @@ export const favoriteRoutes=()=>readSaved('symmetry-lab.favorites.v1').filter(kn
 export function rememberRoute(route){if(['home','compute','atlas','classroom','docs'].includes(route))return;save('symmetry-lab.recent.v1',[route,...readSaved('symmetry-lab.recent.v1').filter(x=>x!==route)].slice(0,6));}
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
-function toolCard(item,favorites,{showScope=false,scopeOpen=false}={}){
+const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>File use:</strong> ${esc(text)}</${tag}>`:'';};
+function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
  const rows=capability?[
   ["input",capability.input],["output",capability.output],
-  ["Scope",[capability.scope]],["Conditions of use",capability.conditions]
+  ["Scope",[capability.scope]],["Conditions of use",capability.conditions],
+  ["Existing files and their uses",capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc("Inputs and supported scope")}">Inputs and supported scope</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><span class="nav-card-go">Open tool →</span>`)}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261110-en1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
@@ -167,7 +170,7 @@ export async function renderNavigationHub({container,view='home',databases}){
  function renderCompute(){
   if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,arithmetic:computeArithmetic,query:input.value,favorites:onlyFavorites?saved:null});
   root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
-   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route)})).join('')}</div></section>`:'';
+   const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route),query:input.value})).join('')}</div></section>`:'';
   }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match the current conditions. Change the category or calculation type, shorten the keywords, or clear the filters."}</p>`;
   root.querySelector('#tools-filter-status').textContent=`Showing ${found.length} / ${toolsIndex.length} tools`;
   root.querySelector('#tools-arithmetic-help').textContent=arithmeticDescriptions[computeArithmetic]||"Calculation types describe the methods available at each entry. See each tool for its inputs and conditions.";
@@ -186,7 +189,7 @@ export async function renderNavigationHub({container,view='home',databases}){
   input.oninput=renderCompute;renderCompute();return;
  }
  bindFavorites();
- const update=()=>{if(!current())return;const query=input.value.trim();if(!query){results.innerHTML='';return;}const found=searchEntries(entries,query);results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>`)}</li>`).join('')}</ul>`:"<p class=\"nav-empty\">No matches found. Try a group number, material name or calculation name.</p>";};
+ const update=()=>{if(!current())return;const query=input.value.trim();if(!query){results.innerHTML='';return;}const found=searchEntries(entries,query);results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>${formatPurpose(t,query,'small')}`)}</li>`).join('')}</ul>`:"<p class=\"nav-empty\">No matches found. Try a group number, material name or calculation name.</p>";};
  let loading=false,ready=false;
  const loadSearch=async()=>{if(loading||ready||!current())return;loading=true;status.textContent="Loading the search index; you can search tools now…";
   try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...extra];ready=true;status.textContent="Tools · Lessons · Group catalogs · Materials";update();}

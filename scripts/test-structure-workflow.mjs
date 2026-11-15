@@ -6,7 +6,7 @@ import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-rou
 import {createProjectNavigator} from '../dist/project-navigation.js';
 import {validateStructureHandoff,createStructureHandoff,structureHandoffForCalculation} from '../dist/structure-provenance.js';
 import * as sourceView from '../dist/structure-handoff.js';
-import * as notebook from '../dist/material-notebook.js?v=20261115-momentum1';
+import * as notebook from '../dist/material-notebook.js?v=20261116-composition1';
 
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/structure-handoff.json',import.meta.url),'utf8'));
 const groups=JSON.parse(fs.readFileSync(new URL('../dist/data/space-groups.json',import.meta.url),'utf8')).groups;
@@ -50,13 +50,13 @@ const context={state,renderTicket:0,dictionaryController:null,document,URLSearch
  executePythonTask:async(action,input)=>{calls.push({action,input:clone(input)});assert.equal(action,'analyze');const item=Object.values(fixture.cases).find(x=>x.conversion.group_number===input.group_number&&x.conversion.k_bc.every((v,i)=>v===input.k[i]));assert.ok(item);const result=clone(item.analyses[input.doubleValued?'double':'single'].result);if(hold){hold=false;return new Promise(resolve=>{held=()=>resolve(result);});}return result;}
 };
 const functions=[
- section('async function runPythonTask(','\nconst optionalViews='),section('async function openWorkbench(','\nconst $='),
+ section('function runPythonTask(','\nconst optionalViews='),section('async function openWorkbench(','\nconst $='),
  section('function parseNumber(','\nfunction toast('),section('function setView(','\nfunction updateBreadcrumb('),
- section('function workbenchSource(){','\nlet dictionaryController='),section('async function render(){','\nfunction renderWorkbench(){'),
+ section('function workbenchSource(){','\nlet dictionaryController='),section('function clearRenderedView(){','async function render(){'),section('async function render(){','\nfunction renderWorkbench(){'),
  section('function renderWorkbench(){','\nfunction showSearch('),section('function readCoords(){','\nfunction matrixHTML('),
  section('function exportJSON(){','\nfunction exportCSV(')
 ].join('\n');
-vm.createContext(context);vm.runInContext(functions,context);
+vm.createContext(context);vm.runInContext('let renderedViewCleanup=null;\n'+functions,context);
 const item=fixture.cases['screw-line-plus-reciprocal'];const source=await createStructureHandoff({input:item.request,result:item.conversion,source:{kind:'teaching-example',filename:'screw.cif'},doubleValued:true});
 await context.openWorkbench({id:source.structure.groupNumber,k:source.coordinates.bcK,bzType:source.structure.bzType,structureHandoff:source});
 assert.equal(calls.length,0,'Source handoff opens settings without automatic single-valued calculation');assert.equal(state.doubleValued,true,notices.join('; '));assert.deepEqual([...state.k],source.coordinates.bcK);assert.ok(host.querySelector('[data-structure-handoff]'),host.innerHTML.slice(0,700));assert.match(host.querySelector('#workbench-structure-source').innerHTML,/尚未关联表示计算/);

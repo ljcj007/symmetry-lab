@@ -98,3 +98,11 @@ for(const row of antiFixture.cases){
  assert.deepEqual(after.input,before.input);assert.deepEqual(row.result,before);
 }
 console.log('Actual Bloch-fiber results: every human-readable field in ten complete fresh replies translated; original inputs and source replies unchanged.');
+const compositionFixture=JSON.parse(fs.readFileSync(new URL('./fixtures/composition.json',import.meta.url),'utf8'));
+for(const row of compositionFixture.cases){
+ const original=JSON.stringify(row.result),translated=spinLocalizer.result(row.result);
+ assert.ok(!/[\u3400-\u9fff]/.test(JSON.stringify(translated)),row.id+': complete composition response has untranslated prose');
+ assert.deepEqual(translated.input,row.result.input,row.id+': original composition input is protected');
+ assert.equal(JSON.stringify(row.result),original,row.id+': source response remains immutable');
+}
+console.log('Actual composition replies: eight complete exact results translated with original inputs and source responses unchanged.');

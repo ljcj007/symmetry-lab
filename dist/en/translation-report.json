@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 26308,
-  "translatedUnits": 26308,
+  "sourceUnits": 26506,
+  "translatedUnits": 26506,
   "missing": [],
-  "files": 437,
+  "files": 440,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -84,6 +84,11 @@
     "en-spincolor-responsive.json",
     "en-antitranslation-python.json",
     "en-antitranslation-docs.json",
-    "en-antitranslation-ui.json"
+    "en-antitranslation-ui.json",
+    "en-composition-ui.json",
+    "en-composition-host.json",
+    "en-composition-python.json",
+    "en-composition-docs.json",
+    "en-file-search.json"
   ]
 }

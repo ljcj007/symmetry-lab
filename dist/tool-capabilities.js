@@ -9,9 +9,31 @@ export const arithmeticDescriptions=Object.freeze({
  mixed:'同一工具结合精确构造与数值响应，或允许切换计算模式；具体区分见适用范围。',
  reference:'检索已收录的分类数据，并对选定输入进行相应校验；目录计数与完整代表列表分别读取。'
 });
-const record=(arithmetic,input,output,scope,conditions,searchTerms,sources)=>Object.freeze({
+// Conventional filenames are discovery hints. Their content is still validated
+// by the destination parser; neither a name nor a suffix certifies a result.
+const fileInput=(files,purpose,conditions,priority=1)=>Object.freeze({files:Object.freeze(files),purpose,conditions,priority});
+export const toolInputFormats=Object.freeze({
+ 'compute/phonopy':Object.freeze([
+  fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'查看已有色散、离散 q 点及所附本征矢。','仅有分段信息才连接为路径；此入口读取已有频率，不求解力常数。',3),
+  fileInput(['phonopy.yaml','phonopy_disp.yaml'],'检查结构，或为已给定的本征矢补充原胞结构。','没有频率记录时只显示结构；位移与力文件本身不会生成声子谱。',3),
+  fileInput(['total_dos.dat'],'查看已有总声子态密度。','此处显示输入的总 DOS；热力学积分另需完整态数和归一化。',3),
+  fileInput(['projected_dos.dat','partial_dos.dat'],'查看逐原子或已声明分量的投影声子态密度。','须选择投影 DOS 类型并匹配原胞原子；投影列不能冒充完整总 DOS。',3)
+ ]),
+ 'compute/phonon-modes':Object.freeze([
+  fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'分类 Γ 点不变频率子空间，或将指定本征模冻结为结构。','冻结需要匹配的结构、质量、本征矢和相容超胞；只有频率的文件不够。',2)
+ ]),
+ 'compute/phonon-thermo':Object.freeze([
+  fileInput(['mesh.yaml'],'用带权布里渊区网格计算谐性自由能、熵和热容。','需要三维网格、完整 3N 模式、整数权重及频率单位；高对称路径和任意 q 点不能代替体积分网格。',2),
+  fileInput(['thermal_properties.yaml'],'导入已经计算的温度、自由能、熵和热容表。','按文件声明的晶胞和单位读取；导入不验证产生该表的网格收敛或声子稳定性。',3),
+  fileInput(['total_dos.dat'],'对完整总声子态密度作谐性热力学积分。','需要明确总 DOS 完整性、原子数、频率单位和归一化；投影或部分 DOS 不能替代完整总 DOS。',2)
+ ]),
+ 'compute/qha-lab':Object.freeze([
+  fileInput(['thermal_properties.yaml'],'将多个体积对应的热性质表与静态能配对，开展准谐计算。','每个体积都要一份完整热性质表，顺序须匹配体积和静态能；单独一份文件不是完整 QHA 输入。',1)
+ ])
+});
+const record=(arithmetic,input,output,scope,conditions,searchTerms,sources,inputFormats=[])=>Object.freeze({
  arithmetic,input:Object.freeze(input),output:Object.freeze(output),scope,
- conditions:Object.freeze(conditions),searchTerms,sources:Object.freeze(sources)
+ conditions:Object.freeze(conditions),searchTerms,sources:Object.freeze(sources),inputFormats:Object.freeze(inputFormats)
 });
 export const toolCapabilities=Object.freeze({
  'structure':record('mixed',['POSCAR／CIF 或晶格、位置、元素 JSON','几何容差；可选输入波矢'],['空间群与 BC 晶胞','基矢、原点、波矢变换及结构导出'],'三维有序普通晶体的几何识别与坐标标准化。',['识别取决于容差；理想化前后的结构分别记录。','CIF 的部分占位、调制结构与磁结构须使用相应专门处理。'],'POSCAR CIF BC 结构输入 坐标变换 容差 structure import',['dist/structure-ui.js','dist/python/structure_bc.py']),
@@ -53,10 +75,10 @@ export const toolCapabilities=Object.freeze({
  'compute/dynamic-scattering-lab':record('numeric',['双原子纵向链的质量与弹簧','Q、温度、散射权重和展宽'],['声学／光学支及一声子相干强度','动态结构因子 S(Q,E) 与通道图'],'谐性双原子链的一声子散射和 Bose 权重演示。',['本征矢、结构因子和热权重按同一归一化组合；展宽为输入参数。'],'dynamic structure factor inelastic neutron phonon 非弹性散射 动态结构因子',['dist/pathways-ui.js','dist/python/dynamic_scattering_lab.py']),
  'compute/spin-resonance-lab':record('numeric',['有效自旋、g 张量与零场劈裂','磁场、微波偏振、温度和展宽'],['有效自旋能级与磁偶极跃迁','频率／磁场扫描谱和热权重'],'有限有效自旋 Hamiltonian 的磁共振与选择定则。',['g 张量和零场参数是输入；谱线位置与权重依赖指定有效模型。'],'EPR ESR spin resonance effective spin g tensor 磁共振 有效自旋',['dist/spectroscopy-ui.js','dist/python/spin_resonance_lab.py']),
  'compute/atomic-spectra-lab':record('numeric',['2p–3d 构型、Slater 与 SOC 参数','晶场、偏振、温度和展宽'],['构型间跃迁能与偶极权重','偏振 XAS 和边参考诊断'],'指定 p6 d8／d9 初态到 p5 d9／d10 末态的原子多重态光谱。',['构型空间与相互作用按模型选定；边能量参考和展宽分别给定。'],'atomic multiplet XAS Slater polarization 原子 多重态 XAS 偏振 光谱',['dist/spectroscopy-ui.js','dist/python/atomic_spectra_lab.py']),
- 'compute/phonon-modes':record('numeric',['含结构、频率和本征矢的 Phonopy 数据','频率聚类、容差及冻结模式选择'],['Γ 点子空间特征标与支持的标签','冻结位移及 POSCAR／CIF 导出'],'Γ 点不变频率子空间分类，以及输入本征矢的冻结位移。',['标签表覆盖 Oh／Td／C1／Ci；其他群保留计算特征标。','冻结导出使用相容的对角超胞，最多512原子。','频率和本征矢来自输入；此入口不求解力常数。'],'Phonopy eigenvector Gamma Oh Td C1 Ci diagonal supercell ZnO zinc oxide wurtzite 氧化锌 本征矢 冻结声子 对角超胞',['dist/material-research-ui.js','dist/python/phonon_modes.py']),
- 'compute/phonopy':record('numeric',['Phonopy YAML／JSON 数据','q 点、模式、相位和显示尺度'],['色散、DOS 与复本征矢记录','质量换算后的模式动画和单位信息'],'读取已有 Phonopy 数据，保留输入来源和本征矢约定。',['动画使用输入的频率与本征矢；质量归一化和原始单位随结果保留。'],'Phonopy YAML JSON mesh band DOS data import ZnO zinc oxide wurtzite 氧化锌 声子 数据导入 本征矢',['dist/structure-dynamics-ui.js','dist/python/phonopy_import.py']),
- 'compute/phonon-thermo':record('numeric',['加权网格、总 DOS 或热性质文件','温度、频率单位与归一化选择'],['谐性振动自由能、熵和 Cv','态数、晶胞单位和负频诊断'],'对已给定声子数据作谐性热力学求和或积分。',['结果按输入晶胞和态数归一化；负频处理与数据覆盖范围须一并读取。'],'phonon thermal DOS free energy entropy heat capacity 声子 热力学 自由能 热容',['dist/material-research-ui.js','dist/python/phonon_thermo.py']),
- 'compute/qha-lab':record('numeric',['多体积静态能与振动自由能','温度、体积范围及拟合选项'],['平衡体积、体模量与热膨胀','可用时的 Cp 及拟合诊断'],'体积采样区间内的局域准谐自由能拟合。',['平衡点须位于可用体积区间内；导数量依赖拟合分支和温度采样。'],'QHA quasiharmonic thermal expansion volume 准谐 热膨胀 体积 拟合',['dist/coupled-materials-ui.js','dist/python/qha_lab.py']),
+ 'compute/phonon-modes':record('numeric',['含结构、频率和本征矢的 Phonopy 数据','频率聚类、容差及冻结模式选择'],['Γ 点子空间特征标与支持的标签','冻结位移及 POSCAR／CIF 导出'],'Γ 点不变频率子空间分类，以及输入本征矢的冻结位移。',['标签表覆盖 Oh／Td／C1／Ci；其他群保留计算特征标。','冻结导出使用相容的对角超胞，最多512原子。','频率和本征矢来自输入；此入口不求解力常数。'],'Phonopy eigenvector Gamma Oh Td C1 Ci diagonal supercell ZnO zinc oxide wurtzite 氧化锌 本征矢 冻结声子 对角超胞',['dist/material-research-ui.js','dist/python/phonon_modes.py'],toolInputFormats['compute/phonon-modes']),
+ 'compute/phonopy':record('numeric',['Phonopy YAML／JSON 数据','q 点、模式、相位和显示尺度'],['色散、DOS 与复本征矢记录','质量换算后的模式动画和单位信息'],'读取已有 Phonopy 数据，保留输入来源和本征矢约定。',['动画使用输入的频率与本征矢；质量归一化和原始单位随结果保留。'],'Phonopy YAML JSON mesh band DOS data import ZnO zinc oxide wurtzite 氧化锌 声子 数据导入 本征矢',['dist/structure-dynamics-ui.js','dist/python/phonopy_import.py'],toolInputFormats['compute/phonopy']),
+ 'compute/phonon-thermo':record('numeric',['加权网格、总 DOS 或热性质文件','温度、频率单位与归一化选择'],['谐性振动自由能、熵和 Cv','态数、晶胞单位和负频诊断'],'对已给定声子数据作谐性热力学求和或积分。',['结果按输入晶胞和态数归一化；负频处理与数据覆盖范围须一并读取。'],'phonon thermal DOS free energy entropy heat capacity 声子 热力学 自由能 热容',['dist/material-research-ui.js','dist/python/phonon_thermo.py'],toolInputFormats['compute/phonon-thermo']),
+ 'compute/qha-lab':record('numeric',['多体积静态能与振动自由能','温度、体积范围及拟合选项'],['平衡体积、体模量与热膨胀','可用时的 Cp 及拟合诊断'],'体积采样区间内的局域准谐自由能拟合。',['平衡点须位于可用体积区间内；导数量依赖拟合分支和温度采样。'],'QHA quasiharmonic thermal expansion volume 准谐 热膨胀 体积 拟合',['dist/coupled-materials-ui.js','dist/python/qha_lab.py'],toolInputFormats['compute/qha-lab']),
  'compute/electron-transport-lab':record('numeric',['能带模型、化学势与温度','完整 Brillouin 区网格和弛豫时间约定'],['带内电导／τ、Seebeck 系数','电子热导／τ、载流子与网格诊断'],'常数弛豫时间近似下的带内电子输运。',['弛豫时间与输入晶胞决定单位；输运积分结合完整网格及收敛检查。'],'Boltzmann Seebeck conductivity thermoelectric 电子输运 热电 电导 弛豫时间',['dist/quantum-materials-ui.js','dist/python/electron_transport_lab.py']),
  'compute/hall-response-lab':record('numeric',['二维 QWZ 参数、化学势和温度','Berry 积分网格与扫描范围'],['本征 σxy、αxy 与参数扫描','直接能隙和网格诊断'],'二维两能带模型的 Berry 横向电荷与热电响应。',['片层响应按二维单位报告；三维电导须另定厚度，积分以网格收敛核对。'],'anomalous Hall Nernst Berry QWZ 反常霍尔 横向热电 能斯特',['dist/response-materials-ui.js','dist/python/hall_response_lab.py']),
  'compute/manybody-spectra-lab':record('numeric',['有限多体模型、粒子数和探针','温度、频率区间与展宽'],['Lehmann 加粒子／去粒子或响应谱','跃迁权重、态标签和求和规则残差'],'有限 Hilbert 空间中的多体谱函数与响应。',['谱峰来自所选有限模型；展宽和热占据是单独的输入条件。'],'Lehmann spectral function manybody sum rule 多体 谱函数 求和规则',['dist/bridges-ui.js','dist/python/manybody_spectra_lab.py']),

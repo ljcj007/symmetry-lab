@@ -30,6 +30,13 @@ assert.ok(momentum.fetched.includes('/python/antitranslation_lab.py'));
 assert.ok(momentum.files.some(x=>x.path==='/home/pyodide/antitranslation_lab.py'&&x.body.includes('symmetry-lab-antitranslation-1')));
 assert.ok(!momentum.fetched.includes('/python/spin_actions_lab.py'),'The two optional exact modules load independently');
 assert.ok(!spin.fetched.includes('/python/antitranslation_lab.py'));
+const composition=await loading({lab:'composition',first:'R',second:'M',point:[1,2],candidateSet:['E','R']});
+assert.deepEqual(composition.packages,[],'The bounded integer composition core needs no numerical package');
+assert.ok(composition.fetched.includes('/python/composition_lab.py'));
+assert.ok(composition.files.some(x=>x.path==='/home/pyodide/composition_lab.py'&&x.body.includes('symmetry-lab-composition-1')));
+for(const original of [spin,momentum])assert.ok(!original.fetched.includes('/python/composition_lab.py'));
+assert.ok(!composition.fetched.includes('/python/spin_actions_lab.py'));
+assert.ok(!composition.fetched.includes('/python/antitranslation_lab.py'));
 for(const payload of [{lab:'spinor',initialState:'plus',axis:'z'},
  {lab:'color_group',preset:'c3_point',steps:3,variant:'combined'},
  {lab:'spin_group',preset:'af_space',steps:4,variant:'combined'}]){
@@ -37,9 +44,11 @@ for(const payload of [{lab:'spinor',initialState:'plus',axis:'z'},
  assert.deepEqual(old.packages,[],'Existing finite teaching models keep their dependency plan');
  assert.ok(!old.fetched.includes('/python/spin_actions_lab.py'),'An unrelated experiment must not fetch the new optional core');
  assert.ok(!old.fetched.includes('/python/antitranslation_lab.py'));
+ assert.ok(!old.fetched.includes('/python/composition_lab.py'));
 }
 const exact=await loading({lab:'lie',experiment:'su3_ninej'});
 assert.deepEqual(exact.packages,['numpy','sympy']);
 assert.ok(exact.fetched.includes('/python/su3_ninej.py'));
 assert.ok(!exact.fetched.includes('/python/spin_actions_lab.py'));
+assert.ok(!exact.fetched.includes('/python/composition_lab.py'));
 console.log('Spin actions Worker: actual conditional package/resource loader, current module versions and unchanged finite/9j dependency plans passed.');

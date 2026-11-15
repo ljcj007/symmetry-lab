@@ -75,6 +75,7 @@ const appSource=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8'
 const setViewSource=appSource.slice(appSource.indexOf('function setView('),appSource.indexOf('\nfunction updateBreadcrumb('));
 const syncSource=appSource.slice(appSource.indexOf('function syncCourseRoute('),appSource.indexOf('\nfunction resultMatches('));
 const renderSource=appSource.slice(appSource.indexOf('async function render(){'),appSource.indexOf('\nfunction renderWorkbench(){'));
+const lifecycleSource=appSource.slice(appSource.indexOf('function clearRenderedView(){'),appSource.indexOf('async function render(){'));
 const host=new Container(),nodes=new Map(['page-title','page-subtitle','export-top','view-context'].map(id=>[id,new Element('div',{id})]));
 host.dataset={};
 nodes.set('app',host);
@@ -91,7 +92,7 @@ const appContext={
  runPythonTask:async()=>{throw Error('Navigation must not start Python');},cancelPython:()=>{},toast:()=>{},download:()=>{},openWorkbench:()=>{}
 };
 vm.createContext(appContext);
-vm.runInContext('let renderTicket=0,dictionaryController=null;\n'+setViewSource+'\n'+syncSource+'\n'+renderSource,appContext);
+vm.runInContext('let renderTicket=0,dictionaryController=null,renderedViewCleanup=null;\n'+lifecycleSource+'\n'+setViewSource+'\n'+syncSource+'\n'+renderSource,appContext);
 const settle=async()=>{for(let i=0;i<4;i++){await flush();await Promise.all(renderJobs.splice(0));}assert.equal(host.querySelector('#resource-retry'),null,'Production app render must succeed');};
 const $app=selector=>host.querySelector(selector),chosenApp=()=>Number($app('#lg-chapter-select').value);
 const openOther=index=>{const button=host.querySelectorAll('[data-lg-other-lesson]').find(item=>Number(item.dataset.lgOtherLesson)===index);assert.ok(button,'Other-stage lesson '+index);button.onclick();return settle();};

@@ -2,20 +2,25 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261115-momentum1';
-import {startToolFinder} from './tool-finder.js?v=20261115-momentum1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261116-composition1';
+import {startToolFinder} from './tool-finder.js?v=20261116-composition1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261115-momentum1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261115-momentum1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261116-composition1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261116-composition1';
 import {projectInputFor} from './project-input.js?v=20261113-support1';
 import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261113-support1';
 import {projectWorkbenchSelection,canRestoreProjectWorkbench} from './project-workbench.js?v=20261113-support1';
 
-import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261115-momentum1';
+import {captureCalculation,renderMaterialNotebook} from './material-notebook.js?v=20261116-composition1';
 import {validateStructureHandoff,structureHandoffForCalculation} from './structure-provenance.js?v=20261114-evidence1';
-async function runPythonTask(action,input,recordContext={}){const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';if(recordContext.structureHandoff){const source=structureHandoffForCalculation(recordContext.structureHandoff,{action,input:snapshot});if(!source)throw Error("The structure source does not match this calculation request.");context.structureHandoff=source;}const result=await executePythonTask(action,input);if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;}
+function runPythonTask(action,input,recordContext={}){
+ let request;
+ const pending=(async()=>{const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';if(recordContext.structureHandoff){const source=structureHandoffForCalculation(recordContext.structureHandoff,{action,input:snapshot});if(!source)throw Error("The structure source does not match this calculation request.");context.structureHandoff=source;}request=executePythonTask(action,input);const result=await request;if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;})();
+ Object.defineProperty(pending,'cancel',{value:()=>typeof request?.cancel==='function'?request.cancel():false});
+ return pending;
+}
 
-const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261115-momentum1'),projects:()=>import('./response-projects.js?v=20261115-momentum1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261114-evidence2'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({compare:()=>import('./comparison-lab.js?v=20261116-composition1'),projects:()=>import('./response-projects.js?v=20261116-composition1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261114-evidence2'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -241,8 +246,12 @@ function resultMatches(){return state.result&&gid()===gid(state.resultGroup,stat
 function modeButtons(mode,attr='mode'){return `<div class="segment">${[['sg',"space group SG"],['msg',"magnetic space group MSG"],['mpg',"magnetic point group MPG"]].map(([m,t])=>`<button data-${attr}="${m}" class="${m===mode?'active':''}">${t}</button>`).join('')}</div>`;}
 function selectGroup(g,mode=state.mode){state.group=g;state.mode=mode;state.bzType='';state.labelK=null;state.k=[0,0,0];state.result=null;state.tab='characters';render();}
 let dictionaryController=null;
+let renderedViewCleanup=null;
+function clearRenderedView(){const cleanup=renderedViewCleanup;renderedViewCleanup=null;if(typeof cleanup==='function')cleanup();}
+function retainRenderedViewCleanup(cleanup,ticket){if(typeof cleanup!=='function')return;if(ticket!==renderTicket){cleanup();return;}renderedViewCleanup=cleanup;}
 async function render(){
  const ticket=++renderTicket,current=()=>ticket===renderTicket;const view=state.view;
+ clearRenderedView();
  dictionaryController?.destroy();dictionaryController=null;state.disposeStructureSource?.();state.disposeStructureSource=null;$('#app').dataset.researchView=view;
  try{
   const mode=view==='database'?state.dbMode:['workbench','products','bands','magnetictb','crystkit'].includes(view)?(state.pendingGroup?.mode||state.mode):null;
@@ -264,7 +273,7 @@ async function render(){
   else if(view==='projects')await page.renderResponseProjects({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||'')),download,onOpenLab:openProjectLab,canOpenCurrent:canOpenProjectInput});
   else if(view==='compare')await page.renderComparisonLab({container:$('#app'),download});
   else if(view==='notebook')await renderMaterialNotebook({container:$('#app'),run:runPythonTask,cancelRun:cancelPython,toast,download});
-  else if(view==='classroom'||isClassroomView(view))await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput});
+  else if(view==='classroom'||isClassroomView(view)){const cleanup=await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput});retainRenderedViewCleanup(cleanup,ticket);}
   else if(view==='products')renderProducts();
   else if(view==='bands')renderBands();
   else if(view==='structure')await page.renderStructureView({container:$('#app'),run:runPythonTask,toast,download,openGroup:(id,k,bzType,structureHandoff)=>openWorkbench({id,k,bzType,structureHandoff})});

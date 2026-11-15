@@ -40,12 +40,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 40090,
-      "sha256": "5c3fb856aad03a2cc118fbe37393dd7dfb7bb525b939a59de1ef3c4d19ead23e"
+      "bytes": 42525,
+      "sha256": "7615f84979e3db76c7bfe22c79cfde64f04ba1f0d1d8b7a2a8392ec838de07e2"
     },
     "dist/app.js": {
-      "bytes": 97275,
-      "sha256": "001b8ec0dab46d94e83e0457c51675034fedf96b06774c977dbd4c32f2a56c27"
+      "bytes": 97887,
+      "sha256": "b8af832a30dea608453a074cd6e245b7100ec51f2fe73a418c2bfdcd2a70d762"
     },
     "dist/data/lie-derivations.json": {
       "bytes": 138720,
@@ -64,16 +64,16 @@
       "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
     },
     "dist/index.html": {
-      "bytes": 7335,
-      "sha256": "4950bb513a09b4f16ab3a28c1bcc48bf5515bb2ae7765ed5cc6dee2da108e0f4"
+      "bytes": 7409,
+      "sha256": "9bf58bffaed6d7a68ac7aca48e325c9bffd2684aebae9790e460f85b7df905ad"
     },
     "dist/lie-group-ui.js": {
       "bytes": 54021,
       "sha256": "afa0698e46d8d0334f8e0b2ddc710b48f0291515e7442d6bd603b236b8873a95"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29375,
-      "sha256": "e41d34272c6fa8f9c3e74532e79e2a704dcd9e1472c69cd93b31eeaa934ae08b"
+      "bytes": 30005,
+      "sha256": "a4a85df7e7c9e97ac5378414c2e862773d6368302c56492266d98d8cd5019e3e"
     },
     "dist/navigation.css": {
       "bytes": 8184,
@@ -84,20 +84,20 @@
       "sha256": "d9c746fec25d41addcd50f1119d37fa2f79d484994e53abc01253840e3824bfb"
     },
     "dist/tool-capabilities.js": {
-      "bytes": 38831,
-      "sha256": "947d7dcf7d235bdfc2ce413e65f8c307579a6ed510e8f3be44b87cf6e1465c4f"
+      "bytes": 41470,
+      "sha256": "bb11e617c8c4ee1b0c974ea045fc2346f80ae03bf7a5da96393f797ecd8a49d7"
     },
     "dist/tool-directory.js": {
-      "bytes": 3023,
-      "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
+      "bytes": 3029,
+      "sha256": "91c37bee31f2d3e3b72139a0748b98214fd2455ed0c2caa2fc3bd0263f84d376"
     },
     "dist/tool-finder.js": {
-      "bytes": 8447,
-      "sha256": "304f8faedf835e017ffe2e352bd3e7f1c56cffb38dc4a2bd82e958a175d3f797"
+      "bytes": 8662,
+      "sha256": "66325961b82b6f563361f9b2126450d0ff2723d49075cfc91848e81d63d450a1"
     },
     "dist/tool-search.js": {
-      "bytes": 1140,
-      "sha256": "3166efc1dc4c54c3f94ef5b93a50412af15a6e9f3553a247a78cb7864dc8855d"
+      "bytes": 2083,
+      "sha256": "522c1f088210c7afebbea9aa639390006b0efa80b15d16ca6e91ff2b7a787ae5"
     },
     "locales/en-depth-capabilities-a.json": {
       "bytes": 35991,
@@ -116,8 +116,8 @@
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
     },
     "package.json": {
-      "bytes": 17018,
-      "sha256": "127092e428c46af59f8e258e547ef01380090c6abbbab24d84faf6b6f74523f8"
+      "bytes": 17355,
+      "sha256": "fc9849f17e751f1410a87f16930e36aba98282953f376edad8b52d97f6c78f5f"
     },
     "scripts/build-advanced-derivations.py": {
       "bytes": 18465,

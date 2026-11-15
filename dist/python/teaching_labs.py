@@ -276,6 +276,9 @@ def run(payload):
     if payload.get('lab') == 'antitranslation':
         from antitranslation_lab import run as antitranslation_run
         return antitranslation_run(payload)
+    if payload.get('lab') == 'composition':
+        from composition_lab import run as composition_run
+        return composition_run(payload)
     if payload.get('lab') == 'lie':
         from lie_labs import run as lie_run
         return lie_run(payload)

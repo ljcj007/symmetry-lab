@@ -1842,6 +1842,381 @@
     ]
   },
   {
+    "source": "生成闭包先加入单位操作，再反复计算当前集合的全部有序乘积；最后一轮没有新增元素才停止。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/group/closure/convention",
+      "python-fixture/composition.json/cases/0/result/group/rotationOnlyClosure/convention",
+      "python-fixture/composition.json/cases/0/result/group/rotationMirrorClosure/convention",
+      "python-fixture/composition.json/cases/1/result/group/closure/convention"
+    ]
+  },
+  {
+    "source": "这两个操作在整个平面上可交换；两条路径对每个基矢和每个点都给出相同结果。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/2/result/comparison/explanation",
+      "python-fixture/composition.json/cases/4/result/comparison/explanation",
+      "python-fixture/composition.json/cases/5/result/comparison/explanation",
+      "python-fixture/composition.json/cases/6/result/comparison/explanation"
+    ]
+  },
+  {
+    "source": "固定反例比较 M 与 E：它们都保持 e_x，但对 e_y 的作用不同。它独立于上方选择的操作和点。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/fixedProbeCounterexample/explanation",
+      "python-fixture/composition.json/cases/1/result/fixedProbeCounterexample/explanation",
+      "python-fixture/composition.json/cases/2/result/fixedProbeCounterexample/explanation",
+      "python-fixture/composition.json/cases/3/result/fixedProbeCounterexample/explanation"
+    ]
+  },
+  {
+    "source": "输入必须是对象。",
+    "origins": [
+      "python/composition_lab.py"
+    ]
+  },
+  {
+    "source": "lab 必须为 composition。",
+    "origins": [
+      "python/composition_lab.py"
+    ]
+  },
+  {
+    "source": "first 和 second 必须是八操作模型中的合法标识。",
+    "origins": [
+      "python/composition_lab.py"
+    ]
+  },
+  {
+    "source": "point 必须包含两个 −2 到 2 的整数，不接受布尔值、小数或字符串。",
+    "origins": [
+      "python/composition_lab.py"
+    ]
+  },
+  {
+    "source": "candidateSet 必须含一到八个互不重复的合法操作标识。",
+    "origins": [
+      "python/composition_lab.py"
+    ]
+  },
+  {
+    "source": "所选点的两条路径碰巧相同，但两个矩阵不同；检查两支独立的单位箭头才能比较整个线性操作。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/3/result/comparison/explanation"
+    ]
+  },
+  {
+    "source": "两条路径给出不同的点像，且两个矩阵不同；这对操作不可交换。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/comparison/explanation",
+      "python-fixture/composition.json/cases/1/result/comparison/explanation"
+    ]
+  },
+  {
+    "source": "模型包含八个不同的精确矩阵",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/0/label",
+      "python-fixture/composition.json/cases/1/result/checks/0/label",
+      "python-fixture/composition.json/cases/2/result/checks/0/label",
+      "python-fixture/composition.json/cases/3/result/checks/0/label"
+    ]
+  },
+  {
+    "source": "八操作的全部乘积都在模型内",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/1/label",
+      "python-fixture/composition.json/cases/1/result/checks/1/label",
+      "python-fixture/composition.json/cases/2/result/checks/1/label",
+      "python-fixture/composition.json/cases/3/result/checks/1/label"
+    ]
+  },
+  {
+    "source": "全部三操作组合满足结合律",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/2/label",
+      "python-fixture/composition.json/cases/1/result/checks/2/label",
+      "python-fixture/composition.json/cases/2/result/checks/2/label",
+      "python-fixture/composition.json/cases/3/result/checks/2/label"
+    ]
+  },
+  {
+    "source": "每个逆操作的左右乘积都是单位操作",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/3/label",
+      "python-fixture/composition.json/cases/1/result/checks/3/label",
+      "python-fixture/composition.json/cases/2/result/checks/3/label",
+      "python-fixture/composition.json/cases/3/result/checks/3/label"
+    ]
+  },
+  {
+    "source": "矩阵两列等于两个单位基矢的像",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/4/label",
+      "python-fixture/composition.json/cases/1/result/checks/4/label",
+      "python-fixture/composition.json/cases/2/result/checks/4/label",
+      "python-fixture/composition.json/cases/3/result/checks/4/label"
+    ]
+  },
+  {
+    "source": "两条逐步路径与对应复合矩阵一致",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/5/label",
+      "python-fixture/composition.json/cases/1/result/checks/5/label",
+      "python-fixture/composition.json/cases/2/result/checks/5/label",
+      "python-fixture/composition.json/cases/3/result/checks/5/label"
+    ]
+  },
+  {
+    "source": "比较完整基底得到的判断与矩阵相等判断一致",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/6/label",
+      "python-fixture/composition.json/cases/1/result/checks/6/label",
+      "python-fixture/composition.json/cases/2/result/checks/6/label",
+      "python-fixture/composition.json/cases/3/result/checks/6/label"
+    ]
+  },
+  {
+    "source": "生成闭包以完整的无新增轮次结束",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/7/label",
+      "python-fixture/composition.json/cases/1/result/checks/7/label",
+      "python-fixture/composition.json/cases/2/result/checks/7/label",
+      "python-fixture/composition.json/cases/3/result/checks/7/label"
+    ]
+  },
+  {
+    "source": "固定单探针反例由第二个独立基矢区分",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/8/label",
+      "python-fixture/composition.json/cases/1/result/checks/8/label",
+      "python-fixture/composition.json/cases/2/result/checks/8/label",
+      "python-fixture/composition.json/cases/3/result/checks/8/label"
+    ]
+  },
+  {
+    "source": "固定 z 镜像与三维正旋转的行列式不同",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/checks/9/label",
+      "python-fixture/composition.json/cases/1/result/checks/9/label",
+      "python-fixture/composition.json/cases/2/result/checks/9/label",
+      "python-fixture/composition.json/cases/3/result/checks/9/label"
+    ]
+  },
+  {
+    "source": "主动操作作用于平面实列向量，坐标轴不动；矩阵的第 j 列是第 j 个单位基矢的像。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/basis/convention",
+      "python-fixture/composition.json/cases/1/result/basis/convention",
+      "python-fixture/composition.json/cases/2/result/basis/convention",
+      "python-fixture/composition.json/cases/3/result/basis/convention"
+    ]
+  },
+  {
+    "source": "正方形的八元素平面二面体群；本页记为 D₄。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/group/name",
+      "python-fixture/composition.json/cases/1/result/group/name",
+      "python-fixture/composition.json/cases/2/result/group/name",
+      "python-fixture/composition.json/cases/3/result/group/name"
+    ]
+  },
+  {
+    "source": "本页先研究二维平面作用。若三维嵌入保持 z 不变，得到 C₄ᵥ；三维正旋转点群 D₄ 的对应操作还会反转 z，是绕 x 的二重旋转。两者抽象同构，但三维作用不同。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/embedding/description",
+      "python-fixture/composition.json/cases/1/result/embedding/description",
+      "python-fixture/composition.json/cases/2/result/embedding/description",
+      "python-fixture/composition.json/cases/3/result/embedding/description"
+    ]
+  },
+  {
+    "source": "本页只计算固定八操作模型，不做任意矩阵群闭包或点群鉴别。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/0",
+      "python-fixture/composition.json/cases/1/result/notes/0",
+      "python-fixture/composition.json/cases/2/result/notes/0",
+      "python-fixture/composition.json/cases/3/result/notes/0"
+    ]
+  },
+  {
+    "source": "坐标、矩阵、两条路径、乘法表和闭包判断都由 Python 精确整数计算；网页只选择并绘制返回值。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/1",
+      "python-fixture/composition.json/cases/1/result/notes/1",
+      "python-fixture/composition.json/cases/2/result/notes/1",
+      "python-fixture/composition.json/cases/3/result/notes/1"
+    ]
+  },
+  {
+    "source": "MR 与 RM 在本页平面模型中只在原点给出相同点像；不能虚构非零平面重合点。固定的 M/E 反例用于说明非零单探针也可能不足。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/2",
+      "python-fixture/composition.json/cases/1/result/notes/2",
+      "python-fixture/composition.json/cases/2/result/notes/2",
+      "python-fixture/composition.json/cases/3/result/notes/2"
+    ]
+  },
+  {
+    "source": "结合律允许改变括号，不允许任意交换操作的先后。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/3",
+      "python-fixture/composition.json/cases/1/result/notes/3",
+      "python-fixture/composition.json/cases/2/result/notes/3",
+      "python-fixture/composition.json/cases/3/result/notes/3"
+    ]
+  },
+  {
+    "source": "方形轮廓和两支单位箭头是操作探针，不把颜色或箭头当作改变物体对称性的化学标记。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/4",
+      "python-fixture/composition.json/cases/1/result/notes/4",
+      "python-fixture/composition.json/cases/2/result/notes/4",
+      "python-fixture/composition.json/cases/3/result/notes/4"
+    ]
+  },
+  {
+    "source": "三维嵌入说明不涉及空间平移、自旋、Bloch 相位或磁群分类。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/notes/5",
+      "python-fixture/composition.json/cases/1/result/notes/5",
+      "python-fixture/composition.json/cases/2/result/notes/5",
+      "python-fixture/composition.json/cases/3/result/notes/5"
+    ]
+  },
+  {
+    "source": "左因子 A",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/group/multiplication/rowConvention",
+      "python-fixture/composition.json/cases/1/result/group/multiplication/rowConvention",
+      "python-fixture/composition.json/cases/2/result/group/multiplication/rowConvention",
+      "python-fixture/composition.json/cases/3/result/group/multiplication/rowConvention"
+    ]
+  },
+  {
+    "source": "右因子 B",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/group/multiplication/columnConvention",
+      "python-fixture/composition.json/cases/1/result/group/multiplication/columnConvention",
+      "python-fixture/composition.json/cases/2/result/group/multiplication/columnConvention",
+      "python-fixture/composition.json/cases/3/result/group/multiplication/columnConvention"
+    ]
+  },
+  {
+    "source": "表项 AB 先作用 B，再作用 A。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/group/multiplication/entryConvention",
+      "python-fixture/composition.json/cases/1/result/group/multiplication/entryConvention",
+      "python-fixture/composition.json/cases/2/result/group/multiplication/entryConvention",
+      "python-fixture/composition.json/cases/3/result/group/multiplication/entryConvention"
+    ]
+  },
+  {
+    "source": "① 先说清动作先后",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/0/title",
+      "python-fixture/composition.json/cases/1/result/steps/0/title",
+      "python-fixture/composition.json/cases/2/result/steps/0/title",
+      "python-fixture/composition.json/cases/3/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "先作用 first，再作用 second，因此列向量左边写 second·first。比较交换先后的第二条路径。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/0/explanation",
+      "python-fixture/composition.json/cases/1/result/steps/0/explanation",
+      "python-fixture/composition.json/cases/2/result/steps/0/explanation",
+      "python-fixture/composition.json/cases/3/result/steps/0/explanation"
+    ]
+  },
+  {
+    "source": "② 用两支单位箭头比较整个操作",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/1/title",
+      "python-fixture/composition.json/cases/1/result/steps/1/title",
+      "python-fixture/composition.json/cases/2/result/steps/1/title",
+      "python-fixture/composition.json/cases/3/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "一个点相同还不够。依次跟踪 e_x 和 e_y，并保留每一步的坐标。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/1/explanation",
+      "python-fixture/composition.json/cases/1/result/steps/1/explanation",
+      "python-fixture/composition.json/cases/2/result/steps/1/explanation",
+      "python-fixture/composition.json/cases/3/result/steps/1/explanation"
+    ]
+  },
+  {
+    "source": "③ 把基矢的像读成矩阵列",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/2/title",
+      "python-fixture/composition.json/cases/1/result/steps/2/title",
+      "python-fixture/composition.json/cases/2/result/steps/2/title",
+      "python-fixture/composition.json/cases/3/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "第一列记录 e_x 的像，第二列记录 e_y 的像。两列都相同，才是同一个平面线性操作。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/2/explanation",
+      "python-fixture/composition.json/cases/1/result/steps/2/explanation",
+      "python-fixture/composition.json/cases/2/result/steps/2/explanation",
+      "python-fixture/composition.json/cases/3/result/steps/2/explanation"
+    ]
+  },
+  {
+    "source": "④ 检查封闭性与撤销操作",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/3/title",
+      "python-fixture/composition.json/cases/1/result/steps/3/title",
+      "python-fixture/composition.json/cases/2/result/steps/3/title",
+      "python-fixture/composition.json/cases/3/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "生成元列表不一定是完整群。寻找缺失乘积，补全生成闭包，并用左右单位乘积检查逆操作。",
+    "origins": [
+      "python/composition_lab.py",
+      "python-fixture/composition.json/cases/0/result/steps/3/explanation",
+      "python-fixture/composition.json/cases/1/result/steps/3/explanation",
+      "python-fixture/composition.json/cases/2/result/steps/3/explanation",
+      "python-fixture/composition.json/cases/3/result/steps/3/explanation"
+    ]
+  },
+  {
     "source": "单自旋的物理时间反演满足 T²=−I 且与 H 对易，Kramers 定理强制二重配对。",
     "origins": [
       "python/conservation_lab.py",

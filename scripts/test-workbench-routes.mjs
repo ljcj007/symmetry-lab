@@ -8,6 +8,7 @@ import {createProjectNavigator} from '../dist/project-navigation.js';
 const appSource=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');
 const openSource=appSource.slice(appSource.indexOf('async function openWorkbench('),appSource.indexOf('\nconst $='));
 const renderSource=appSource.slice(appSource.indexOf('async function render(){'),appSource.indexOf('\nfunction renderWorkbench(){'));
+const lifecycleSource=appSource.slice(appSource.indexOf('function clearRenderedView(){'),appSource.indexOf('async function render(){'));
 const workbenchSource=appSource.slice(appSource.indexOf('function renderWorkbench(){'),appSource.indexOf('\nfunction bindWorkbench(){'));
 const coordinateSource=appSource.slice(appSource.indexOf('function parseNumber('),appSource.indexOf('\nfunction toast('));
 const plain=value=>JSON.parse(JSON.stringify(value));
@@ -48,6 +49,7 @@ const context={state,renderTicket:0,dictionaryController:null,URLSearchParams,bu
  resultMatches:()=>false,fraction:String,bindWorkbench:()=>{},renderResults:()=>{},renderViz:()=>{}
 };
 vm.createContext(context);
+vm.runInContext('let renderedViewCleanup=null;\n'+lifecycleSource,context);
 const render=vm.runInContext('('+renderSource+')',context);
 function pending(query){const params=new URLSearchParams(query);return {mode:['sg','msg','mpg'].find(mode=>params.has(mode)),query:params.toString()};}
 for(const [query,mode,id,k,spin,bz,label]of [

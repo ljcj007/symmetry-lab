@@ -28,36 +28,36 @@
       "sha256": "424c1a0240f8c0db15d1c60a87613a53a86f29b7f9844f04424edd34e8bae647"
     },
     "scripts/test-workbench-routes.mjs": {
-      "bytes": 8069,
-      "sha256": "e8dfccc8635c2e94284c23909047813546e327bfc67672ef8915f6a7a2f8b4ba"
+      "bytes": 8282,
+      "sha256": "8859e59f01eef42650238d3cddbdc96f39a47bac9774e19942f6ca546ec5f3fc"
     },
     "dist/app.js": {
-      "bytes": 97275,
-      "sha256": "001b8ec0dab46d94e83e0457c51675034fedf96b06774c977dbd4c32f2a56c27"
+      "bytes": 97887,
+      "sha256": "b8af832a30dea608453a074cd6e245b7100ec51f2fe73a418c2bfdcd2a70d762"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32192,
-      "sha256": "947a3c8d88ce529f09589f80827263af3e7caa01bbc32eefa89d2609e9700bd8"
+      "bytes": 32241,
+      "sha256": "4d014dbe0167d12ebe77ec1a0a22f091478d59ed502c10e84428eebb3dc28611"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29375,
-      "sha256": "e41d34272c6fa8f9c3e74532e79e2a704dcd9e1472c69cd93b31eeaa934ae08b"
+      "bytes": 30005,
+      "sha256": "a4a85df7e7c9e97ac5378414c2e862773d6368302c56492266d98d8cd5019e3e"
     },
     "dist/navigation.css": {
       "bytes": 8184,
       "sha256": "cc021152b7004eb4a4716899021d40681cca891a69be017ae106956cfc705e33"
     },
     "dist/tool-search.js": {
-      "bytes": 1140,
-      "sha256": "3166efc1dc4c54c3f94ef5b93a50412af15a6e9f3553a247a78cb7864dc8855d"
+      "bytes": 2083,
+      "sha256": "522c1f088210c7afebbea9aa639390006b0efa80b15d16ca6e91ff2b7a787ae5"
     },
     "dist/tool-directory.js": {
-      "bytes": 3023,
-      "sha256": "4680e11ac8f4da37d6296a72d54e215bccdf6b356b451eff141e789857f28505"
+      "bytes": 3029,
+      "sha256": "91c37bee31f2d3e3b72139a0748b98214fd2455ed0c2caa2fc3bd0263f84d376"
     },
     "dist/tool-finder.js": {
-      "bytes": 8447,
-      "sha256": "304f8faedf835e017ffe2e352bd3e7f1c56cffb38dc4a2bd82e958a175d3f797"
+      "bytes": 8662,
+      "sha256": "66325961b82b6f563361f9b2126450d0ff2723d49075cfc91848e81d63d450a1"
     },
     "dist/lie-group-ui.js": {
       "bytes": 54021,
@@ -72,8 +72,8 @@
       "sha256": "d9c746fec25d41addcd50f1119d37fa2f79d484994e53abc01253840e3824bfb"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 36070,
-      "sha256": "dad5f516ece33e70534a74322b12d1c5cbc35651847476b7bd3c8dd25f12171f"
+      "bytes": 39808,
+      "sha256": "68089f90ed88e74173e5ebdf4607ab9b5fb4e9931a91fb8e60a53e2a67260d9c"
     },
     "dist/data/symmetry-course-lessons.json": {
       "bytes": 108619,

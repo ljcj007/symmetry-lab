@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261115-momentum1';
-import {normalizeSearchText} from './tool-search.js?v=20261113-depth1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261116-composition1';
+import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
@@ -21,7 +21,7 @@ export function startToolFinder({button,onNavigate}){
  if(!button||typeof onNavigate!=='function')throw Error("The finder requires a navigation button and an open action.");
  const dialog=document.createElement('dialog');dialog.className='tool-finder';dialog.hidden=true;dialog.setAttribute('aria-labelledby','tool-finder-title');
  dialog.innerHTML=`<header class="tool-finder-header"><div><h2 id="tool-finder-title">Quick finder</h2><p>Open a tool directly, or find lessons, groups, and materials.</p></div><button type="button" data-finder-close aria-label="Close quick finder">×</button></header>
- <label for="tool-finder-query">Enter a tool name, question, or group number</label><input id="tool-finder-query" type="search" autocomplete="off" placeholder="For example: CG, Clebsch-Gordan, DMI, 225" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="tool-finder-results">
+ <label for="tool-finder-query">Enter a tool name, filename, question, or group number</label><input id="tool-finder-query" type="search" autocomplete="off" placeholder="For example: band.yaml, CG, DMI, 225" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="tool-finder-results">
  <div class="tool-finder-scopes" role="group" aria-label="Search scope">${[['tools',"Tools"],['all',"All"],['courses',"Lesson"],['groups',"Group directory"],['materials',"Material"]].map(([id,title])=>`<button type="button" data-finder-scope="${id}" aria-pressed="${id==='tools'}">${title}</button>`).join('')}</div>
  <p id="tool-finder-status" role="status"></p><div id="tool-finder-results" role="listbox" aria-label="Search results"></div><footer>↑ ↓ Select · Enter Open · Esc Return · Ctrl / ⌘ K Search from any page</footer>`;
  document.body.appendChild(dialog);
@@ -40,7 +40,7 @@ export function startToolFinder({button,onNavigate}){
   if(!opened||destroyed)return;
   results=finderResults([...preferred(),...(extra||[])],input.value,{scope});
   selected=Math.min(selected,Math.max(0,results.length-1));
-  list.innerHTML=results.length?results.map((item,index)=>`<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.summary)}</small></button>`).join(''):`<p class="tool-finder-empty">${input.value.trim()?"No matches. Try a tool abbreviation, material name, or complete group number.":"Enter keywords to search this category."}</p>`;
+  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>File use:</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):`<p class="tool-finder-empty">${input.value.trim()?"No matches. Try a tool abbreviation, material name, or complete group number.":"Enter keywords to search this category."}</p>`;
   if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} in tools (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
   else if(loading)status.textContent="Loading the compact catalogue; no calculation is started.";
   else if(failed)status.innerHTML="The catalogue is temporarily unavailable. Tools remain searchable in the Tools scope. <button type=\"button\" data-finder-retry>Retry catalogue</button>";

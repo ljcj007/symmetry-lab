@@ -77,13 +77,14 @@ const appContext={
 };
 const section=(start,end)=>{const i=source.indexOf(start),j=source.indexOf(end,i);assert.ok(i>=0&&j>i,start);return source.slice(i,j);};
 const functions=[
- section('async function runPythonTask(','\nconst optionalViews='),
+ section('function runPythonTask(','\nconst optionalViews='),
  section('const canOpenProjectInput=','\nlet databases='),
  section('function setView(','\nfunction updateBreadcrumb('),
  section('function syncCourseRoute(','\nfunction resultMatches('),
+ section('function clearRenderedView(){','async function render(){'),
  section('async function render(){','\nfunction renderWorkbench(){')
 ].join('\n');
-vm.createContext(appContext);vm.runInContext('let renderTicket=0,dictionaryController=null;\n'+functions,appContext);
+vm.createContext(appContext);vm.runInContext('let renderTicket=0,dictionaryController=null,renderedViewCleanup=null;\n'+functions,appContext);
 const productionOpenProjectLab=appContext.openProjectLab,expectedNotesAtOpen=new Map(),openEvents=[];
 // Observe the local save at callback entry, then delegate the unmodified
 // production function. Checking only after navigation would miss late saves.

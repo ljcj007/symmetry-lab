@@ -1,4 +1,4 @@
-import {captureCalculation} from './material-notebook.js?v=20261115-momentum1';
+import {captureCalculation} from './material-notebook.js?v=20261116-composition1';
 import {esc,num,table} from './response-views.js?v=20261115-precision1';
 let latest=null;
 export const getAuditResult=()=>latest;
