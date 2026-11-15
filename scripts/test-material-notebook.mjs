@@ -21,6 +21,22 @@ assert.ok(record.id);input.mixing=.8;result.summary.perturbationGap=999;
 assert.equal(latestCalculation().input.mixing,.2);
 assert.equal(latestCalculation().result.summary.perturbationGap,.4);
 const returned=latestCalculation();returned.result.summary.perturbationGap=42;assert.equal(latestCalculation().result.summary.perturbationGap,.4);
+// Real imported data must not inherit an unrelated background material. The
+// exact source identity is returned by the production Python importer.
+const zno=JSON.parse(fs.readFileSync(new URL('./fixtures/phonopy-zno.json',import.meta.url),'utf8'));
+const importedInput={preset:'custom',content:fs.readFileSync(new URL('../dist/data/examples/phonopy-zno-qpoints.yaml',import.meta.url),'utf8'),structure_content:fs.readFileSync(new URL('../dist/data/examples/phonopy-zno-structure.yaml',import.meta.url),'utf8')};
+for(const [action,result]of [['phonopy',zno.result],['phonon_modes',zno.modes]]){
+ const captured=captureCalculation(action,importedInput,result,{material:'silicon',route:'compute/phonon-modes'});
+ assert.equal(captured.material,'zno');assert.equal(JSON.stringify(captured.result),JSON.stringify(result),'Record uses the existing JSON serialization convention');
+ const changed=clone(result);changed.sourceIdentity.sha256='0'.repeat(64);
+ assert.equal(captureCalculation(action,importedInput,changed,{material:'silicon'}).material,'');
+ const unpaired=clone(result);unpaired.sourceIdentity.reference.companion.matchesPinnedSource=false;
+ assert.equal(captureCalculation(action,importedInput,unpaired,{material:'zno'}).material,'');
+}
+assert.equal(captureCalculation('phonon_modes',{preset:'silicon'},fixtures.results.modes,{material:'silicon'})?.material,'silicon');
+assert.equal(captureCalculation('phonopy',{content:'official Al input'}, {sourceIdentity:{sha256:'08da0d622d6f423f4bc5d3900a30c9bb5dfb86933bc849f59aad60fe67ec330b',reference:{id:'official-phonopy-al-abacus-pw'}}},{material:'silicon'}).material,'al');
+assert.equal(record.material,'教学模型','Existing captured records are not rewritten');
+captureCalculation('band_connectivity',record.input,record.result,{material:record.material,route:record.route});
 storage.set(key1,JSON.stringify({'mode-trace':true}));storage.set('unrelated.preference','private');
 let project=makeProject({title:'<img src=x onerror=alert(1)>',material:'Si / 教学模型',notes:'研究问题'});
 const emptyId=project.id;
@@ -122,6 +138,26 @@ importedUI.$('#nb-notes').value='导入前尚未按保存的笔记';
 await importedUI.$('#nb-import').onchange({target:{files:[{name:'backup.json',size:1000,text:async()=>JSON.stringify(project)}]}});
 const all=await listProjects();assert.equal(all.find(p=>p.id===currentId).notes,'导入前尚未按保存的笔记');
 assert.equal(all.length,after.length+1);assert.match(importedUI.$('#nb-title').value,/导入副本/);
+
+// Editing imported data for a new calculation retires the old file-derived
+// identity while retaining the original record and the user's project label.
+let sourceProject=makeProject({title:'来源核对',material:'用户的 ZnO 比较项目'});
+sourceProject=addRecord(sourceProject,captureCalculation('phonon_modes',importedInput,zno.modes,{material:'silicon',route:'compute/phonon-modes'}));
+await saveProject(sourceProject);
+const changedSource=clone(zno.modes);delete changedSource.sourceIdentity.reference;changedSource.sourceIdentity.sha256='0'.repeat(64);
+const sourceUI=await mount(notebook,async(_action,input)=>input.preset==='gaas'?clone(fixtures.results.modesGaAs):changedSource);
+if(sourceUI.$('#nb-project').value!==sourceProject.id){sourceUI.$('#nb-project').value=sourceProject.id;await sourceUI.$('#nb-project').onchange({target:sourceUI.$('#nb-project')});}
+sourceUI.$('#nb-rerun-input').value=JSON.stringify({preset:'custom',content:'different input'});
+await sourceUI.$('#nb-rerun').onclick();
+const rerunSource=(await listProjects()).find(p=>p.id===sourceProject.id);
+assert.equal(rerunSource.material,'用户的 ZnO 比较项目');
+assert.equal(rerunSource.records.length,2);assert.equal(rerunSource.records[0].material,'zno');
+assert.equal(rerunSource.records[1].material,'');assert.equal(JSON.stringify(rerunSource.records[0].result),JSON.stringify(zno.modes));
+sourceUI.$('#nb-rerun-input').value=JSON.stringify({preset:'gaas'});
+await sourceUI.$('#nb-rerun').onclick();
+const presetRerun=(await listProjects()).find(p=>p.id===sourceProject.id);
+assert.equal(presetRerun.records[2].material,'gaas');assert.equal(presetRerun.records[0].material,'zno');
+assert.equal(presetRerun.material,'用户的 ZnO 比较项目');
 
 // IndexedDB quota failures cannot prevent exporting a recovery copy.
 const databaseRows=new Map([[project.id,clone(project)]]);let failWrites=false;

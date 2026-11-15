@@ -235,3 +235,20 @@ retained as phonopy-al-abacus-LICENSE.txt. This is a published calculated Al
 example, not measured data or a new calculation performed by Symmetry Lab.
 The matching phonopy.yaml is retained unchanged as
 dist/data/examples/phonopy-al-abacus-structure.yaml under the same terms.
+
+2026-11-15 ZnO force-data derivative:
+dist/data/examples/phonopy-zno-structure.yaml, phonopy-zno-FORCE_SETS,
+phonopy-zno-BORN and phonopy-zno-upstream-README.md retain unchanged bytes
+from example/ZnO in phonopy/phonopy commit
+0937453a793eb504f674b7d4fd98421d508008e6. The complete upstream BSD
+three-clause license is retained as phonopy-zno-LICENSE.txt. The qpoints
+file is a new offline Phonopy 4.10.0 calculation from those published
+force data, with traditional force constants, symmetrize_fc=True,
+is_compact_fc=True and NAC explicitly disabled. It is not an unchanged
+upstream output, experimental data or a new first-principles calculation.
+Its native Windows CRLF bytes, hashes, companion identity and generation
+conditions are recorded in phonopy-zno-source.json. The retained BORN
+file was not used. Original pedagogical activities, independent eigenpair
+and displacement checks, and a reproducible offline script accompany the
+data. They do not establish convergence of the original force calculation,
+phonon intensities, a relaxed distortion or a general C6v label classifier.

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 25322,
-  "translatedUnits": 25322,
+  "sourceUnits": 25421,
+  "translatedUnits": 25421,
   "missing": [],
-  "files": 420,
+  "files": 429,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -71,6 +71,9 @@
     "en-layer-actions-bridge.json",
     "en-fhs-plaquette-bridge.json",
     "en-symmetry-operator-bridge.json",
-    "en-chirality-actions-bridge.json"
+    "en-chirality-actions-bridge.json",
+    "en-mode-frequency-confirmation.json",
+    "en-zno-phonopy-example.json",
+    "en-zno-navigation.json"
   ]
 }

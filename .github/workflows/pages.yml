@@ -46,6 +46,8 @@ jobs:
         run: npm run test:python
       - name: Package complete source
         run: python3 scripts/package-source.py
+      - name: Verify extracted source package
+        run: python3 scripts/test-source-package.py --archive dist/source.zip
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website

@@ -5,27 +5,27 @@ const courseDefinitions={
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261113-prose2'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
-'frontiers':{load:()=>import('./frontiers-ui.js?v=20261115-route2'),render:'renderFrontiersView',result:'getFrontiersResult'}
-,'connections':{load:()=>import('./connections-ui.js?v=20261115-route2'),render:'renderConnectionsView',result:'getConnectionsResult'}
-,'construction':{load:()=>import('./construction-ui.js?v=20261115-route2'),render:'renderConstructionView',result:'getConstructionResult'}
-,'principles':{load:()=>import('./principles-ui.js?v=20261115-route2'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
-,'bridges':{load:()=>import('./bridges-ui.js?v=20261115-route2'),render:'renderBridgesView',result:'getBridgesResult'}
-,'pathways':{load:()=>import('./pathways-ui.js?v=20261115-route2'),render:'renderPathwaysView',result:'getPathwaysResult'}
-,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261115-route2'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
-,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261115-route2'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261115-zno1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+,'connections':{load:()=>import('./connections-ui.js?v=20261115-zno1'),render:'renderConnectionsView',result:'getConnectionsResult'}
+,'construction':{load:()=>import('./construction-ui.js?v=20261115-zno1'),render:'renderConstructionView',result:'getConstructionResult'}
+,'principles':{load:()=>import('./principles-ui.js?v=20261115-zno1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}
+,'bridges':{load:()=>import('./bridges-ui.js?v=20261115-zno1'),render:'renderBridgesView',result:'getBridgesResult'}
+,'pathways':{load:()=>import('./pathways-ui.js?v=20261115-zno1'),render:'renderPathwaysView',result:'getPathwaysResult'}
+,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261115-zno1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
+,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261115-zno1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261113-flow1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261115-precision1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261115-route2'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261115-precision1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261115-route2'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
-,'material-research':{load:()=>import('./material-research-ui.js?v=20261115-route2'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
-,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261115-route2'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
-,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261115-route2'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
-,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261115-route2'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
-,'flagship':{load:()=>import('./shg-flagship.js?v=20261115-route2'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261115-zno1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'material-research':{load:()=>import('./material-research-ui.js?v=20261115-zno1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261115-zno1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261115-zno1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
+,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261115-zno1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
+,'flagship':{load:()=>import('./shg-flagship.js?v=20261115-zno1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
-const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261115-route2'));
+const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261115-zno1'));
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.

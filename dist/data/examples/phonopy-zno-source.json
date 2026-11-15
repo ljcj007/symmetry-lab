@@ -1,0 +1,181 @@
+{
+  "id": "phonopy-zno-derived-qpoints",
+  "title": "ZnO phonon example derived from pinned official Phonopy force data",
+  "repository": "https://github.com/phonopy/phonopy",
+  "commit": "0937453a793eb504f674b7d4fd98421d508008e6",
+  "classification": "offline Phonopy postprocessing from official calculated force data; not an existing upstream output, experimental data, or a new DFT calculation",
+  "localFile": "phonopy-zno-qpoints.yaml",
+  "sha256": "37b738912bec7bd696a90a16c674fa6e745fc0a2df355e380818760893c1e0b5",
+  "byteCount": 55277,
+  "newline": "CRLF retained from the Windows Phonopy 4.10.0 YAML writer; no text normalization",
+  "frequencyUnitInQpoints": null,
+  "exampleEntryFrequencyUnitChoice": "THz",
+  "frequencyUnitChoiceBasis": "Explicit choice. Original companion uses VASP force constants in eV/angstrom^2, AMU masses and 15.633302 conversion; generating Phonopy 4.10.0 uses unitConversionFactor 15.633302300230191 for THz. Confirmation never rescales stored numbers.",
+  "lengthUnit": "angstrom",
+  "license": "BSD-3-Clause",
+  "licenseFile": "phonopy-zno-LICENSE.txt",
+  "licenseSha256": "2ce26839c8b70d28765d73e934cc1a979d896d8d228d30694fdd9a92e94d43a9",
+  "licenseByteCount": 1470,
+  "licenseUrl": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/LICENSE",
+  "generator": {
+    "script": "phonopy-zno-reproduce.py",
+    "versions": {
+      "phonopy": "4.10.0",
+      "numpy": "2.5.4",
+      "spglib": "2.8.0",
+      "symfc": "1.8.0",
+      "phonors": "0.8.0"
+    },
+    "settings": {
+      "is_nac": false,
+      "fc_calculator": "traditional",
+      "symmetrize_fc": true,
+      "is_compact_fc": true,
+      "qpoints": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0.25,
+          0,
+          0
+        ],
+        [
+          0.25,
+          0,
+          0.25
+        ],
+        [
+          0.5,
+          0,
+          0
+        ]
+      ],
+      "unitConversionFactor": 15.633302300230191
+    },
+    "resultByteIdentityPlatform": "Pinned distributed CRLF output; regenerate numerically equivalent vectors/frequencies without requiring arbitrary eigenvector phases or cross-platform bits to match."
+  },
+  "inputs": [
+    {
+      "path": "example/ZnO/BORN",
+      "url": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/BORN",
+      "bytes": 112,
+      "sha256": "902118e6b31c9046c0b22eadac279e079563d2386e675a88409443923ee5063e",
+      "localFile": "phonopy-zno-BORN",
+      "usedForGeneration": false
+    },
+    {
+      "path": "example/ZnO/FORCE_SETS",
+      "url": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/FORCE_SETS",
+      "bytes": 9620,
+      "sha256": "403e821f0017ca396874edcdb7da58366c6dce3cbe1f8ca03cd1346f1bd02dc5",
+      "localFile": "phonopy-zno-FORCE_SETS",
+      "usedForGeneration": true
+    },
+    {
+      "path": "example/ZnO/phonopy_disp.yaml",
+      "url": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/phonopy_disp.yaml",
+      "bytes": 7641,
+      "sha256": "93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c",
+      "localFile": "phonopy-zno-structure.yaml",
+      "usedForGeneration": true
+    },
+    {
+      "path": "example/ZnO/README.md",
+      "url": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/README.md",
+      "bytes": 224,
+      "sha256": "ab3fc552ab8f60269014ca61a6aed2c716376966e3f0a4cdeb3ce06bd0f36c1d",
+      "localFile": "phonopy-zno-upstream-README.md",
+      "usedForGeneration": false
+    }
+  ],
+  "companion": {
+    "path": "example/ZnO/phonopy_disp.yaml",
+    "url": "https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/phonopy_disp.yaml",
+    "bytes": 7641,
+    "sha256": "93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c",
+    "localFile": "phonopy-zno-structure.yaml",
+    "usedForGeneration": true
+  },
+  "counts": {
+    "atoms": 4,
+    "qpointOccurrences": 4,
+    "bandsPerQ": 12,
+    "eigenvectors": 48,
+    "pathSegments": 0
+  },
+  "defaultSelection": {
+    "selected_q": 2,
+    "selected_band": 10,
+    "q": [
+      0.25,
+      0,
+      0.25
+    ],
+    "amplitude": 0.2,
+    "phase": 0,
+    "supercell": [
+      4,
+      1,
+      4
+    ],
+    "frozenAtoms": 64
+  },
+  "selectedReference": {
+    "q": 2,
+    "band": 10,
+    "relativePhaseInvariant": 0.2126498074227134,
+    "eigenpairResidual": 9.686003542414799e-11,
+    "frequency": 13.5565890715
+  },
+  "validation": {
+    "qpoints": 4,
+    "branches": 12,
+    "animationAtoms": 64,
+    "maxIndependentDisplacementError": 2.7755575615628914e-17,
+    "frozenAtoms": 64,
+    "poscarSpecies": "Zn O",
+    "poscarCounts": "32 32",
+    "all48EigenvectorsOrthogonalComplete": true,
+    "all48EigenpairAndFrequencyResidualsBelow1e-8": true,
+    "maxEigenpairResidual": 1.6233920504950263e-10,
+    "originalCompanionPrimitiveOrderAndMassMatch": true,
+    "allExportedPOSCARCoordinatesChecked": true,
+    "frequencyUnitSource": "user.frequency_unit",
+    "lengthUnitSource": "companion.physical_unit.length",
+    "sourceIdentityPreserved": true,
+    "unknownUnitLeavesNumbersUnchanged": true,
+    "incommensurateExportRejection": "q 与所选超胞不相容：每个 q_i × supercell_i 必须为整数，不能将非周期窗口导出为周期晶胞",
+    "spaceGroup": {
+      "pointGroup": "6mm",
+      "spaceGroup": 186,
+      "symbol": "P6_3mc",
+      "operationCount": 12,
+      "method": "spglib structure operations + Cartesian atom permutation",
+      "primitiveCell": true,
+      "symprec": 1e-05,
+      "massSensitive": true
+    },
+    "gammaGroupStatuses": [
+      "characters-only",
+      "characters-only",
+      "characters-only",
+      "characters-only",
+      "characters-only",
+      "characters-only",
+      "characters-only"
+    ],
+    "eigenpairResidualDefinition": "Existing maxEigenpairResidual uses the Rayleigh value from serialized D; serializedFrequencyEigenpairResidualMax uses signed (frequency/factor)^2.",
+    "serializedFrequencyEigenpairResidualMax": 1.7146625709839066e-10
+  },
+  "scope": [
+    "NAC deliberately disabled; not a directional LO-TO prediction",
+    "No new VASP calculation, convergence audit, DOS, intensities or finite-temperature amplitudes",
+    "The current label table does not cover C6v; show validated characters without invented irrep labels",
+    "Complex components of one eigenvector alone do not establish chirality or topology",
+    "Frozen exports are P1 snapshots; no structural relaxation or child-group claim",
+    "Must preserve full BSD-3-Clause license with original bytes and distinguish derivatives"
+  ]
+}

@@ -33,6 +33,10 @@ The Si teaching primitive cell gives acoustic T1u and optical T2g; the two three
 
 Inputs can be `band.yaml`, `qpoints.yaml`, or equivalent JSON containing frequencies and eigenvectors. Lattice, atom order, fractional positions, and masses must refer to the same primitive cell; a matching supplementary structure may be supplied if absent. Material names/formulas do not establish correspondence. At most 64 primitive-cell atoms are currently supported.
 
+The custom-mode form displays frequency-unit confirmation explicitly. Without confirmation, it uses the primary file's declaration; when none is present, it displays an undeclared unit. Selecting THz, cm⁻¹, or meV labels the original numbers without converting frequencies. This choice is separate from the file's length unit and the length conversion used for frozen-structure export.
+
+Confirmation values and the companion primitive cell transferred from the phonon importer are visible in the form. Ordinary tab, phase, and q-point changes retain them. Successfully loading different primary-file content or editing the primary text resets frequency confirmation and the length override and clears the previous companion cell; pair the new files and run manually. Selecting identical primary-file content retains confirmation. Replacing the companion cell refreshes length metadata while retaining the primary file's frequency confirmation.
+
 ## 2.  frozen phonon , finite q, and structure export
 
 Use Phonopy’s atomic-position-dependent phase convention:

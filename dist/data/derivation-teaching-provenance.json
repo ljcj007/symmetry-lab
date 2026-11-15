@@ -56,18 +56,18 @@
     "The two-cell FHS trace is an operational teaching view of the declared two-band periodic-orbital model, not a general Bloch-sewing or real-material Chern classifier.",
     "Finite spin references do not replace the existing full tensor/commutator tools, treat a single initial trajectory as an operator proof, or infer SU(2) from total S squared.",
     "Mirror-fit minimizers and SVD bases need not be unique. Allowed polar directions do not provide material response magnitudes or establish ferroelectric switching.",
-    "The 197-lesson depth review, targeted diagnosis and authentic scientific-workflow coverage remain incomplete. The production prerequisite graph is 44 reviewed lessons and 48 edges. No student learning gains are inferred."
+    "The 197-lesson depth review, targeted diagnosis and authentic scientific-workflow coverage remain incomplete. The production prerequisite graph is 65 reviewed lessons and 82 edges. No student learning gains are inferred."
   ],
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28722,
-      "sha256": "1b9137c1bd3858be0cdca4d25ed9c196e4487913956e2f94d6365b4c6d01d9f5"
+      "bytes": 31483,
+      "sha256": "b74244e5134f074ac9ed113e1308004b5e7ed4cfdeda3281d05fee08944d1e7d"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97254,
-      "sha256": "0412bde4931b46d89a44002a63604f2d54b7f3f91ebcfe408c57f12dce065c63"
+      "bytes": 97240,
+      "sha256": "448933ce8c77409fc848649b8cb3257dee11694cd3c6116911a3cfa421e8f721"
     },
     "dist/chirality-actions-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -116,8 +116,8 @@
     },
     "dist/frontiers-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21098,
-      "sha256": "bab36b32e8ffad09c98e59db14dda706efb5fb52b78a2881ed4a34037ec8d03f"
+      "bytes": 21094,
+      "sha256": "3c4972d7f2095afbe66e8b3c1c6203a432f92369c9476121c4ffb87b228041f6"
     },
     "dist/geometry-actions-reference.js": {
       "normalization": "utf8-lf-v1",
@@ -126,8 +126,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7193,
-      "sha256": "31ceee46914814847c216696e99be1a4320bc5f55d8989cd771f9efb62b09ba7"
+      "bytes": 7191,
+      "sha256": "7ff71fbca26c0a682940184ae88355a8bd3b1e540259fbf2b6c518f5ac07b8d6"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -136,23 +136,23 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23575,
-      "sha256": "5daafe02c6753c7b4bfc8085ccb54e6ef8eb63e2ba526ad990ef6c41f0ed2569"
+      "bytes": 24766,
+      "sha256": "5ef2db44051ff1c65d17c0d14a13b42e114acbaae435202b7d242de678bf178c"
     },
     "dist/principles-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19833,
-      "sha256": "b1669235cc9c12bee16850407cce4e4e2411efddd00604a10e6ce0a111fa3df9"
+      "bytes": 19829,
+      "sha256": "b0a83c1cdc430aca7e818dbb1a92025bf7424329d66222e98a45cfd82b840a5f"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2577,
-      "sha256": "bfad31791fd2cc80640bf28aaed19a600ac56e0d45166633d29bc1155fde4f40"
+      "bytes": 2575,
+      "sha256": "22811dcb3a70eb36fc873d4d028f16e238f57f790ba8c332885a2301fa16d0a8"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10929,
-      "sha256": "9d3119eaaa853ca502707a8b0ae5ebf03962f570b53e7b01fdd52023f18c2e3b"
+      "bytes": 10927,
+      "sha256": "f30e2655d7e85d55fc24e092ce116c148f556e376c5ce73877f6758e0dfa356f"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -181,8 +181,8 @@
     },
     "dist/quantum-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 37649,
-      "sha256": "5677974151789ef216503a0298377c7f5ccdb6ab5d13ccb1efbdd3419b0713a0"
+      "bytes": 37647,
+      "sha256": "47fe99913df12c7e4250a208e8117ab60ad56d3da4fc121a023b74753c532376"
     },
     "dist/symmetry-operator-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -216,8 +216,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16042,
-      "sha256": "4bef880a8a96e7a60450362245ed5c7a7870d8e4adf80ec625ef06e2af3bb5f4"
+      "bytes": 16251,
+      "sha256": "01798c75ba7e96a1325248bd4b1c685c607d558e910d6f977c3e04bf82dce940"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -232,7 +232,7 @@
     "scripts/build-derivation-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 7210,
-      "sha256": "65f76178b9497199c566639f33e3feb5f428f5b36a2f90441ad0c097c95701ff"
+      "sha256": "5a43d305a94ab407474455da251903365c7607b03373f6739fa7f88f0fcf8afc"
     },
     "scripts/build-pathways-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -266,13 +266,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2450,
-      "sha256": "8953b0be4d9639570570cfda7e4933146ad706203102a2243ffa8b029be2f774"
+      "bytes": 2563,
+      "sha256": "35da259c491c3a94108ddfc614bc484ed19696cea58aa05d8e8308c2bf788c7e"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869151,
-      "sha256": "90425501d4a68b0af9f742fc9f221b8a34fc097a82f42e5da67f04b5c49385ff"
+      "bytes": 869150,
+      "sha256": "209dd0baff05616d53de70025ceb540d03d9ed46f31f0e96362cc8db95cdada6"
     },
     "scripts/fixtures/fhs-baseline-source.py.gz": {
       "normalization": "raw-bytes",
@@ -281,8 +281,8 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736207,
-      "sha256": "16925a04f01c4dedbb7c2d80556cc1d477f92c496a5f4ab087d94256f4ce13b9"
+      "bytes": 1736206,
+      "sha256": "c92c4f1a742a3930ff7f539ac9260f3d5c2c07b105e498cd002142c6f3537653"
     },
     "scripts/fixtures/quantum-materials.json": {
       "normalization": "utf8-lf-v1",

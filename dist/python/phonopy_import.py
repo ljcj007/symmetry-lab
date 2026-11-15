@@ -30,6 +30,9 @@ SOURCES = [
 ]
 AL_EXAMPLE_SHA256 = '08da0d622d6f423f4bc5d3900a30c9bb5dfb86933bc849f59aad60fe67ec330b'
 AL_EXAMPLE_COMMIT = '18cad919af8fe8aad349e04f101887fa19b051a0'
+ZNO_EXAMPLE_SHA256 = '37b738912bec7bd696a90a16c674fa6e745fc0a2df355e380818760893c1e0b5'
+ZNO_EXAMPLE_COMMIT = '0937453a793eb504f674b7d4fd98421d508008e6'
+ZNO_COMPANION_SHA256 = '93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c'
 
 
 def _number(value, name, low=-1e12, high=1e12):
@@ -235,6 +238,41 @@ def _source_identity(payload):
             'url': 'https://github.com/phonopy/phonopy/blob/' + AL_EXAMPLE_COMMIT + '/example/Al-ABACUS/abacus-pw/band.yaml',
             'kind': 'official-calculated-example-not-experiment',
             'frequencyUnitDeclaredInBandFile': False}
+    elif representation == 'utf8-source-text' and identity['sha256'] == ZNO_EXAMPLE_SHA256:
+        companion_text, companion_representation = '', 'not-provided'
+        if _provided(payload, 'structure_data'):
+            companion_text = json.dumps(payload['structure_data'], ensure_ascii=False, allow_nan=False,
+                                        sort_keys=True, separators=(',', ':'))
+            companion_representation = 'canonical-json-object-not-original-file'
+        elif _provided(payload, 'structure_content'):
+            companion_text = payload['structure_content']
+            companion_representation = 'utf8-source-text'
+        companion_bytes = companion_text.encode('utf-8')
+        companion_sha = hashlib.sha256(companion_bytes).hexdigest() if companion_bytes else None
+        identity['reference'] = {
+            'id': 'phonopy-zno-derived-qpoints',
+            'title': 'ZnO · 官方力数据的 Phonopy 衍生计算',
+            'kind': 'derived-phonopy-output-from-official-force-data',
+            'commit': ZNO_EXAMPLE_COMMIT, 'license': 'BSD-3-Clause',
+            'url': 'https://github.com/phonopy/phonopy/tree/' + ZNO_EXAMPLE_COMMIT + '/example/ZnO',
+            'generator': {'phonopy': '4.10.0', 'isNAC': False, 'fcCalculator': 'traditional',
+                          'symmetrizeFC': True, 'compactFC': True,
+                          'unitConversionFactor': 15.633302300230191,
+                          'qpoints': [[0, 0, 0], [.25, 0, 0], [.25, 0, .25], [.5, 0, 0]],
+                          'newline': 'CRLF'},
+            'inputs': [
+                {'path': 'example/ZnO/FORCE_SETS', 'byteCount': 9620,
+                 'sha256': '403e821f0017ca396874edcdb7da58366c6dce3cbe1f8ca03cd1346f1bd02dc5'},
+                {'path': 'example/ZnO/phonopy_disp.yaml', 'byteCount': 7641,
+                 'sha256': ZNO_COMPANION_SHA256}],
+            'companion': {'expectedSha256': ZNO_COMPANION_SHA256,
+                          'actualSha256': companion_sha, 'byteCount': len(companion_bytes),
+                          'representation': companion_representation,
+                          'matchesPinnedSource': (companion_representation == 'utf8-source-text'
+                                                  and companion_sha == ZNO_COMPANION_SHA256)},
+            'frequencyUnitDeclaredInQpoints': False,
+            'atomOrderBasis': 'Paired original primitive-cell order from the documented generation; qpoints alone does not identify atoms.',
+            'scope': 'Offline force-data postprocessing without NAC; no new DFT calculation, experimental spectrum, convergence audit, or inferred child structure.'}
     return identity
 
 

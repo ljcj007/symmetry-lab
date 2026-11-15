@@ -3,3 +3,5 @@ upstream/** -text
 *.zip -text
 *.png -text
 *.cmd text eol=crlf
+dist/data/examples/phonopy-zno-qpoints.yaml -text
+dist/en/data/examples/phonopy-zno-qpoints.yaml -text

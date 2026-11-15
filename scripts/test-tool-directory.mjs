@@ -14,6 +14,11 @@ for(const [category,first]of [['structure','structure'],['representation','workb
 assert.equal(toolsIndex.find(item=>item.route==='compute/statistics-lab').category,'representation');
 assert.equal(toolsIndex.find(item=>item.route==='compute/topological-defects-lab').category,'structure');
 assert.equal(searchEntries(toolsIndex,'Clebsch–Gordan')[0].route,'compute/lie/su3_cg');
+for(const query of ['ZnO','zinc oxide','氧化锌']){
+ const routes=searchEntries(toolsIndex,query).map(item=>item.route);
+ assert.ok(routes.includes('compute/phonopy'),query+': find data import');
+ assert.ok(routes.includes('compute/phonon-modes'),query+': find frozen-mode workflow');
+}
 assert.ok(searchEntries(toolsIndex,'SU₃ 27').length);
 assert.equal(filterToolDirectory(toolsIndex,{category:'coupling',query:'Clebsch-Gordan'})[0].route,'compute/lie/su3_cg');
 assert.deepEqual(filterToolDirectory(toolsIndex,{favorites:[]}),[]);

@@ -3,15 +3,18 @@ import fs from 'node:fs';
 import {lessonProgression,lessonProgressionHTML,lessonProgressionEdges,lessonProgressionInventory,lessonProgressionCatalogs,progressionForSelection} from '../dist/lesson-progression.js';
 import {parseClassroomRoute} from '../dist/classroom-ui.js';
 import {progressionIndexSource} from './build-lesson-progression-index.mjs';
+import {loadEnglishCatalog} from './english-catalog.mjs';
+import {Container,Element} from './test-material-research-ui.mjs';
+import {renderClassroomView,classroomSections} from '../dist/classroom-ui.js';
 
 const path=new URL('../dist/lesson-progression-index.js',import.meta.url);
 assert.equal(fs.readFileSync(path,'utf8').replace(/\r\n/g,'\n'),progressionIndexSource(),'The factual route index is rebuilt from current production catalogues');
 const inventory=new Map(lessonProgressionInventory.map(item=>[item.key,item]));
 assert.equal(inventory.size,197);
 assert.equal(lessonProgressionCatalogs.length,17);
-assert.equal(lessonProgressionEdges.length,48);
+assert.equal(lessonProgressionEdges.length,82);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
-assert.equal(reviewed.size,44,'The remaining indexed lessons are not automatically assigned dependencies');
+assert.equal(reviewed.size,65,'The remaining indexed lessons are not automatically assigned dependencies');
 
 for(const definition of lessonProgressionCatalogs){
  const actual=JSON.parse(fs.readFileSync(new URL('../dist/data/'+definition.catalog+'.json',import.meta.url),'utf8'));
@@ -54,6 +57,54 @@ for(const edge of lessonProgressionEdges){
  assert.ok(lessonProgression(prior).next.some(item=>item.catalog===current.catalog&&item.lessonId===current.lessonId&&item.reason===edge.reason));
  visit(edge.from);
 }
+
+const newReadGroups={
+ 'principles-materials':['order-isotropy','order-invariants','order-field-convention','exchange-bond-constraints','exchange-classical-quantum','exchange-conventions','conservation-generators','conservation-open','conservation-protection'],
+ 'frontiers-materials':['layer-periodicity','layer-termination','layer-registry','chiral-mirror','chiral-polarity','chiral-tolerance'],
+ 'quantum-materials':['geometry-rays','geometry-topology','geometry-diagnostics'],
+ 'response-materials':['hall-occupation','hall-entropy','hall-diagnostics']
+};
+const additionalKeys=Object.entries(newReadGroups).flatMap(([catalog,ids])=>ids.map(id=>catalog+'::'+id));
+assert.equal(additionalKeys.length,21);
+for(const key of additionalKeys)assert.ok(reviewed.has(key),'A newly read lesson has an explicit reviewed connection: '+key);
+
+// Inspect rendered native anchors, including links inside the optional overflow
+// disclosure. Availability never depends on completing the recommended lesson.
+const unescapeHref=value=>value.replace(/&amp;/g,'&');
+for(const entry of lessonProgressionInventory){
+ const panel=new Element();panel.innerHTML=lessonProgressionHTML(entry);
+ const anchors=panel.querySelectorAll('[data-lesson-progression-link]');
+ const result=lessonProgression(entry);
+ for(const [kind,targets]of [['prerequisite',result.prerequisites],['next',result.next]]){
+  const links=anchors.filter(a=>a.dataset.progressionKind===kind);
+  assert.equal(links.length,targets.length,entry.key+'/'+kind);
+  for(const target of targets){
+   const anchor=links.find(a=>unescapeHref(a.getAttribute('href'))===target.route);
+   assert.ok(anchor,entry.key+' links to exact '+target.catalog+'::'+target.lessonId);
+   assert.equal(anchor.tag,'a');assert.equal(anchor.onclick,undefined);
+   assert.equal(anchor.getAttribute('disabled'),null);assert.equal(anchor.getAttribute('data-course-route'),null);
+   const parsed=parseClassroomRoute(unescapeHref(anchor.getAttribute('href')));
+   assert.equal(parsed.lesson,target.lessonId);assert.equal(parsed.tab,'learn');
+  }
+ }
+ assert.ok(anchors.some(a=>a.dataset.progressionKind==='index'));
+ assert.ok(anchors.some(a=>a.dataset.progressionKind==='start'));
+}
+
+const english=loadEnglishCatalog();
+for(const edge of lessonProgressionEdges){
+ assert.equal(typeof english[edge.reason],'string','Every displayed reason has an English translation');
+ assert.ok(english[edge.reason].trim().length>20);assert.doesNotMatch(english[edge.reason],/[\u3400-\u9fff]/u);
+}
+const edgeFor=(from,to)=>lessonProgressionEdges.find(x=>x.from===from&&x.to===to);
+const spinUnits=edgeFor('principles-materials::exchange-classical-quantum','principles-materials::conservation-generators');
+assert.match(spinUnits.reason,/meV.*rad\/ns/);assert.match(english[spinUnits.reason],/meV.*rad\/ns/);
+const energyScale=edgeFor('quantum-materials::geometry-diagnostics','response-materials::hall-occupation');
+assert.match(energyScale.reason,/eV.*无单位/);assert.match(english[energyScale.reason],/eV.*dimensionless/);
+const axial=edgeFor('symmetry-course-lessons::magnetic-01','principles-materials::exchange-bond-constraints');
+assert.match(english[axial.reason],/axial.*endpoints/);
+const grids=edgeFor('quantum-materials::geometry-diagnostics','response-materials::hall-diagnostics');
+assert.match(english[grids.reason],/2N−1.*2N/);
 
 const pg=lessonProgression({catalog:'pointgroups',lessonId:'representations'});
 const lie=lessonProgression({catalog:'lie',lessonId:'representations'});
@@ -150,4 +201,48 @@ assert.equal(progressionForSelection({section:'observables',lesson:'neumann',exe
 const changed=progressionForSelection({section:'frontiers',module:'spt',tab:'learn'});
 changed.current.exerciseIds.push('mutated');
 assert.ok(!progressionForSelection({section:'frontiers',module:'spt',tab:'learn'}).current.exerciseIds.includes('mutated'));
-console.log('Lesson progression: 197 qualified routes in 17 catalogues, 48 reasoned optional edges over 44 lessons, exact targets, duplicate-ID isolation, acyclic recommendations, honest index fallback, native links, scoped initial module/stage/material/exercise choices and fresh API results passed.');
+// Exercise the real classroom shell with a caller-owned navigator. Graph links
+// remain native; ordinary local tabs keep the current renderer and expert tool
+// routes neither request the graph nor acquire a prerequisite/completion gate.
+Element.prototype.insertAdjacentHTML=function(position,value){
+ const fragment=new Element();fragment.innerHTML=value;
+ const parent=position==='afterend'?this.parentNode:this;
+ for(const child of fragment.children)child.parentNode=parent;
+ if(position==='afterbegin')parent.children.unshift(...fragment.children);
+ else if(position==='afterend')parent.children.splice(parent.children.indexOf(this)+1,0,...fragment.children);
+ else throw Error('Unsupported test insertion position');
+};
+let storageReads=0,storageWrites=0,calculations=0,graphLoads=0;
+globalThis.localStorage={getItem:()=>{storageReads++;return null;},setItem:()=>{storageWrites++;}};
+globalThis.document={compatMode:'CSS1Compat',createElement:tag=>new Element(tag)};
+const progressionModule={progressionForSelection,lessonProgressionHTML};
+const shellContainer=new Container(),shellCalls=[],shellMoves=[];
+const shellRenderers=Object.fromEntries(classroomSections.map(s=>[s.id,options=>shellCalls.push({section:s.id,...options})]));
+const renderShell=route=>renderClassroomView({container:shellContainer,route:parseClassroomRoute(route),
+ onNavigate:(hash,options)=>shellMoves.push({hash,options}),courseRenderers:shellRenderers,
+ run:()=>{calculations++;},loadProgression:()=>{graphLoads++;return Promise.resolve(progressionModule);}});
+const settle=()=>new Promise(resolve=>setImmediate(resolve));
+for(const [catalog,lessonId]of[
+ ['principles-materials','order-field-convention'],['principles-materials','exchange-conventions'],
+ ['principles-materials','conservation-protection'],['frontiers-materials','layer-registry'],
+ ['frontiers-materials','chiral-tolerance'],['quantum-materials','geometry-diagnostics'],
+ ['response-materials','hall-diagnostics']
+]){
+ const entry=inventory.get(catalog+'::'+lessonId);renderShell(entry.route);await settle();
+ const host=shellContainer.querySelector('#classroom-progression');assert.ok(host);assert.equal(host.hidden,false);
+ assert.match(host.innerHTML,new RegExp(catalog+'::'+lessonId));
+ for(const anchor of host.querySelectorAll('[data-lesson-progression-link]'))assert.equal(anchor.onclick,undefined,'Custom navigation does not turn optional anchors into gated callbacks');
+ const renders=shellCalls.length,active=shellCalls.at(-1);
+ active.onNavigate({tab:'lab'});await settle();assert.equal(host.hidden,true);assert.equal(shellCalls.length,renders);
+ assert.equal(parseClassroomRoute(shellMoves.at(-1).hash).tab,'lab');assert.deepEqual(shellMoves.at(-1).options,{render:false});
+ active.onNavigate({tab:'learn'});await settle();assert.equal(host.hidden,false);assert.equal(shellCalls.length,renders);
+}
+for(const tool of ['order-parameter-lab','exchange-symmetry-lab','conservation-lab','layer-symmetry-lab','chirality-polarity-lab','quantum-geometry-lab','hall-response-lab']){
+ const loads=graphLoads,route='compute/'+tool;assert.equal(parseClassroomRoute(route)?.calculationOnly,true,route);
+ renderShell(route);await settle();assert.equal(graphLoads,loads,'Direct expert entry does not load prerequisites: '+tool);
+ assert.equal(shellContainer.querySelector('#classroom-progression'),null);assert.equal(shellCalls.at(-1).selection.calculationOnly,true);
+ shellCalls.at(-1).onNavigate({tab:'lab'});await settle();assert.ok(shellMoves.at(-1).hash.startsWith('#compute/'));
+ assert.deepEqual(shellMoves.at(-1).options,{render:false});assert.equal(graphLoads,loads);
+}
+assert.equal(calculations,0);assert.equal(storageReads,0);assert.equal(storageWrites,0);
+console.log('Lesson progression: 197 qualified routes in 17 catalogues, 82 reasoned optional edges over 65 read lessons, exact native targets, complete English reasons, explicit unit/action-space boundaries, acyclic recommendations, honest index fallback, caller-owned local navigation and direct expert access passed.');

@@ -551,3 +551,9 @@ python scripts/test-spglib-wasm.py
 - 图谱入口：`#atlas/frontiers`；计算入口：`#compute/layer-symmetry-lab`、`#compute/chirality-polarity-lab`、`#compute/manybody-spt-lab`。
 - 层模型只报告立方母体继承操作；手性模型限有限点集；SPT 使用 N=3–5 的精确对角化，只有 AKLT 点输出解析虚拟射影证据。未把有限模型或有限采样伪装成任意晶体分类或无限链相图。
 - 专项验证：`npm run test:frontiers`。
+
+## 下载源码的来源检查
+
+`python scripts/package-source.py` 生成网页下载的 `dist/source.zip`，包含课程路线记录和来源校验所需的仓库文件，保留上游许可并排除托管身份。打包时检查所有已登记的来源文件是否齐全。
+
+`python scripts/test-source-package.py --archive dist/source.zip` 将实际压缩包解压到独立临时目录，重放课程与来源检查；不依赖原工作目录、Git 或本地开发依赖。运行完整计算测试仍需按 `package.json` 和 `dist/python/requirements.txt` 安装相应依赖。

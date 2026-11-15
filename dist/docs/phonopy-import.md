@@ -68,12 +68,39 @@ e^{i2\pi q\cdot(R+r_j)-i\phi}\right].
 
 来源：[固定版本原文件](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml)、[匹配的伴随设置](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/phonopy.yaml)、[ABACUS 输出转换文档](https://phonopy.github.io/phonopy/abacus.html)、[固定版本物理单位定义](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/phonopy/physical_units.py)。
 
-## Python 接口
+<a id="zno-derived-example"></a>
+## ZnO：真实力数据、复本征矢与周期冻结结构
+
+“载入 ZnO 真实力数据衍生示例”同时载入 `phonopy-zno-qpoints.yaml` 和原始配套 `phonopy-zno-structure.yaml`。原始结构、`FORCE_SETS`、`BORN` 与说明来自 Phonopy 官方仓库提交 `0937453a793eb504f674b7d4fd98421d508008e6` 的 `example/ZnO/`；完整 BSD 三条款许可证保存为 `phonopy-zno-LICENSE.txt`。官方说明记录了 VASP 的 500 eV 截断及原胞 6×6×4 k 网格，这些是原示例的设置，不是本站做过的收敛性证明。
+
+频率文件是从这些已公开的力数据离线生成的衍生输出，不是官方仓库原有的 `qpoints.yaml`、实验数据或一次新的 VASP 计算。生成环境为 Phonopy 4.10.0、NumPy 2.5.4、spglib 2.8.0、symfc 1.8.0、phonors 0.8.0；明确指定 `fc_calculator='traditional'`、`symmetrize_fc=True`、`is_compact_fc=True` 和 `is_nac=False`。原始 `BORN` 保留用于查阅，没有参与本次生成；因此不能从此例推断方向相关的 LO–TO 劈裂。独立复现脚本为 `phonopy-zno-reproduce.py`，只在用户指定的新输出目录写文件，不运行电子结构程序。
+
+分发的衍生文件为 55277 字节，保留 Windows 写出器的 983 组 CRLF，SHA-256 为 `37b738912bec7bd696a90a16c674fa6e745fc0a2df355e380818760893c1e0b5`。原始伴随结构为 7641 字节，SHA-256 为 `93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c`。完整上游输入摘要、许可证摘要、版本和生成设置见 `phonopy-zno-source.json`。跨平台重新生成时，本征矢的任意整体相位、简并子空间换基和浮点末位可能不同；应核对本征对和子空间，而不是把分量字节差异解释为物理变化。
+
+原胞含两个 Zn 和两个 O，质量为 65.38 和 15.9994 AMU，结构为 P6₃mc（186）。频率文件只给出四个离散 q 点 `(0,0,0)`、`(1/4,0,0)`、`(1/4,0,1/4)`、`(1/2,0,0)`，每点 12 条支，没有路径分段声明，因此展示散点，不连成假设的色散路径。文件没有频率单位字段；示例入口明确确认 THz，依据原始 VASP 单位设置和生成器的转换因子 15.633302300230191。伴随文件声明长度为 angstrom。单位确认不改变任何频率数值。
+
+可按以下步骤完成教学与独立核对：
+
+1. **预测维度。** 先由四个原胞原子得到 `3N=12`，再读取数据核对。这里的四个 q 点是四个输入条目，不是完整布里渊区网格，不能据此积分 DOS、热容或散射强度。
+2. **选定模式。** 初始选择为 q 索引 2、支索引 10（均从 0 计数），频率为 13.5565890715 THz，q 为 `(1/4,0,1/4)`。最近另一支相隔约 0.1496572253 THz。先查看复本征矢，再比较动画相位 0 与 π/2。
+3. **恢复真实相对位移。** 对每个原子计算 `w_j=e_j/√m_j`，使用同一个全局尺度 `A/max_k||w_k||`，最后取 `Re[w_j exp(i2π q·(R+r_j)−iφ)]`。不要分别把 Zn 与 O 的位移都归一为 A，也不要在开平方根质量之前丢掉虚部。φ=0 和 π/2 分别读出包含空间相位的实部和虚部。相位不变量 `max_ab |Im(e_a conjugate(e_b))|≈0.2126498074` 非零，说明所选输入向量不能通过一个整体相位变为实向量；这本身不构成手性或拓扑诊断。
+4. **预测周期性。** 初始超胞 `[4,1,4]` 满足每个 `q_i n_i` 为整数，共 `4×4×1×4=64` 个原子。把第一个数改成 3 时，动画仍可展示无限 Bloch 模的有限窗口；冻结模工具会拒绝将它导出为周期晶胞。
+5. **手动传递与导出。** 点击“将当前文件送入模式识别与冻结模”，检查两份原文、单位、q、支和超胞，然后手动运行。POSCAR 应含 32 个 Zn 和 32 个 O，CIF 使用 P1 并保留全部位移。它们是指定幅度的快照，不是能量极小结构、自动空间群判定或热运动轨迹。
+6. **检查 Γ 子空间。** 改选 q 索引 0，使用完整频率簇核对结构操作下的封闭性和特征标。当前标签表不覆盖 C6v，输出保留已计算特征标，不套用立方群标签；接近零的三个声学频率也不应被单独解释为结构相变。
+7. **反例验证。** 把频率单位改回未确认，频率数组应逐项相同，标签变为未声明单位。主文件添加一个空格后仍可作为自有文件导入，但不再具有精确匹配的 ZnO 来源标识；仅改变伴随文件的空白时，实际伴随摘要会改变，结果必须说明未逐字节匹配，不能只凭主文件摘要认证原子顺序。
+
+本例的参考核验覆盖全部 48 个本征对、各 q 点的正交完整基、质量反加权、复空间与时间相位以及 64 原子的全部 POSCAR 坐标。原生 YAML 中动力学矩阵只保留有限小数，重新代入的本征对残差最大约 1.72×10⁻¹⁰；这属于序列化精度。核验不替代原 VASP 计算的收敛分析，也不补造 DOS、IR/Raman 强度、有限温度量子振幅或相变终态。
+
+来源：[固定版本 ZnO 输入与官方说明](https://github.com/phonopy/phonopy/tree/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO)、[固定版本完整许可证](https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/LICENSE)、[Phonopy 4.10.0 发布版本](https://pypi.org/project/phonopy/4.10.0/)、[动力学矩阵与位移约定](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix)、[qpoints 输出约定](https://phonopy.github.io/phonopy/output-files.html#qpoints-yaml)。
+
+## Python 接口与来源身份
 
 `phonopy_import.run(payload)` 接受 `content`（YAML/JSON 文本）或 `data`（同结构对象），以及 `filename`、`selected_q`、`selected_band`（均从 0 计数）、`amplitude`、`phase`、`supercell`、`frequency_unit`、`imaginary_tolerance`。可选 `structure_content` / `structure_data` 补充原胞，`dos_content` 和 `dos_kind` 导入 DOS。空的可选文本视为未提供。
 
 输出包含 `structure`、`qpoints`、`segments`、`summary`、`selection`、`animation`、`dos`、`warnings` 和 `sources`。`animation.frames[].positions` 是全部展示原子的笛卡尔坐标；`animation.atoms[].complexDisplacement` 为已包含空间相位和统一显示尺度、尚未乘时间相位的复位移，可用于连续相位插值。
 
 `sourceIdentity` 保存输入 UTF-8 文本的 SHA-256 与字节数，随输入/结果导出和研究记录保留；对象输入则明确标为排序键的 JSON 表示，不能冒称原文件字节身份。官方 Al 数据只有在原始文本摘要完全匹配时才附加固定版本来源标识。修改一个字符后仍可导入，但不再自动声称与该官方原文件完全一致。
+
+ZnO 的 `sourceIdentity.reference` 也只在分发的衍生 qpoints 原文摘要完全匹配时出现，其 `kind` 明确标为官方力数据的衍生计算。`reference.companion` 分别保存实际和预期 SHA-256、字节数、输入表示和 `matchesPinnedSource`；仅 UTF-8 原文的精确摘要匹配才认证这份固定配套文件。对象输入优先于同名文本时，保存的是对象的规范 JSON 摘要，不把没有使用的原文当作证据。原始输入摘要、Phonopy 版本、NAC 和力常数设置随结果保留；文件传递、JSON 导出和研究记录可据此核对。
 
 参考：[Phonopy 输出文件](https://phonopy.github.io/phonopy/output-files.html)、[动力学矩阵与相位约定](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix)、[phonopy-yaml 文件](https://phonopy.github.io/phonopy/phonopy-yaml.html)。

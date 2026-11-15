@@ -9,6 +9,7 @@ const ref=(catalog,lessonId)=>key(catalog,lessonId);
 const pg=id=>ref('pointgroup-lessons',id),sc=id=>ref('symmetry-course-lessons',id),lie=id=>ref('lie-group-lessons',id);
 const obs=id=>ref('material-observables',id),research=id=>ref('material-research',id),pathways=id=>ref('pathways-materials',id);
 const bridges=id=>ref('bridges-materials',id),frontiers=id=>ref('frontiers-materials',id),connections=id=>ref('connections-materials',id);
+const principles=id=>ref('principles-materials',id),quantum=id=>ref('quantum-materials',id),response=id=>ref('response-materials',id);
 
 // Each edge names the operation carried into the destination. These optional
 // recommendations are not a dependency inferred from catalogue/array order.
@@ -60,7 +61,43 @@ const edgeDefinitions=[
  [sc('magnetic-01'),connections('reciprocity-onsager'),"Establish time-reversal parity, then check the parities of the thermodynamic state variables defining the conjugate flux-force pairs and reverse the magnetic field and magnetization together."],
  [obs('neumann'),connections('reciprocity-spatial-response'),"Use spatial tensor constraints to compare allowed components within one magnetic domain."],
  [connections('reciprocity-onsager'),connections('reciprocity-spatial-response'),"Distinguish the reversed magnetic states compared by reciprocity from spatial point-group constraints before combining the two conditions."],
- [connections('reciprocity-spatial-response'),connections('reciprocity-dissipation'),"Once spatial and reciprocity conditions are specified, examine the symmetric dissipative part and the antisymmetric transverse response."]
+ [connections('reciprocity-spatial-response'),connections('reciprocity-dissipation'),"Once spatial and reciprocity conditions are specified, examine the symmetric dissipative part and the antisymmetric transverse response."],
+ // Reviewed transfers between action spaces; these are optional preparation,
+ // not evidence that every destination has a complete operational derivation.
+ [pg('representations'),principles('order-isotropy'),"Specify the linear space on which the group acts, then test D(g)η=η operation by operation to find the stabilizer of the chosen order parameter."],
+ [pg('projection'),principles('order-invariants'),"Apply the group average for the totally symmetric projection to homogeneous polynomials, distinguishing zero averages, repeated orbit sums, and normalization coefficients."],
+ [principles('order-isotropy'),principles('order-field-convention'),"Distinguish a state's stabilizer from its parent-group orbit, then add a fixed external field and compare the field-preserving group with its intersection with the state stabilizer."],
+ [principles('order-invariants'),principles('order-field-convention'),"Establish the invariants and anisotropy of F₀, then distinguish physical splitting caused by a linear external field from a consistent passive coordinate change of all objects."],
+ [sc('magnetic-01'),principles('exchange-bond-constraints'),"Transform the axial magnetic moment using det(R)R, then separately track whether the same spatial operation exchanges the two endpoints of the oriented bond."],
+ [obs('neumann'),principles('exchange-bond-constraints'),"Reuse the method of imposing common linear tensor constraints generator by generator. For the exchange tensor, use axial spins and include a transpose when the endpoints are exchanged."],
+ [principles('exchange-bond-constraints'),principles('exchange-classical-quantum'),"Obtain one exchange matrix satisfying the common constraints, then apply it separately to unit classical vectors and quantum operators S=σ/2 to compare energies with their respective normalizations."],
+ [lie('singlet-triplet-exchange'),principles('exchange-classical-quantum'),"Use 2⊗2=3⊕1 and the reference energies −3J/4 and J/4 to examine a general allowed exchange matrix and determine which conclusions change under anisotropy or DMI."],
+ [principles('exchange-bond-constraints'),principles('exchange-conventions'),"Specify the oriented bond and axial-spin constraints before distinguishing an endpoint-convention change J→Jᵀ, D→−D from a change in physical constraints."],
+ [principles('exchange-classical-quantum'),principles('exchange-conventions'),"Use the defined quantum levels and classical minimum energy to check passive axis rotations and endpoint relabeling, rather than judging a change in interaction from the appearance of matrix components."],
+ [lie('generators-commutators'),principles('conservation-generators'),"Carry the infinitesimal generator of U(θ)=exp(−iθQ) into time evolution and calculate the full commutator [H/ℏ,Q], rather than checking just one finite-angle rotation."],
+ [principles('exchange-classical-quantum'),principles('conservation-generators'),"Construct matrices for a two-spin Hamiltonian without DMI and for total spin, then test conservation under continuous rotations. Divide energy parameters by ℏ first; numerical values in meV cannot be used directly as rad/ns."],
+ [principles('conservation-generators'),principles('conservation-open'),"Extend the full closed-system commutator criterion to the sum of the Hamiltonian and all bath-channel adjoint actions, then test conservation for every initial state."],
+ [bridges('density-pure-mixed'),principles('conservation-open'),"Understand density matrices and the maximally mixed state before explaining why a flat trajectory for I/d cannot replace the operator conservation criterion for all initial states."],
+ [principles('conservation-generators'),principles('conservation-protection'),"Use the three rotation generators to identify SU(2) multiplets, then separately check the square of the physical antiunitary T and its relation to H to identify Kramers protection."],
+ [lie('singlet-triplet-exchange'),principles('conservation-protection'),"Use the two-spin singlet and triplet as a comparison: collective SU(2) can explain the triplet, while the total T²=+I alone does not enforce Kramers pairing."],
+ [sc('space-01'),frontiers('layer-periodicity'),"Distinguish lattice translations from the atomic motif, then replace three periodic directions with two while retaining finite boundaries along the layer normal."],
+ [sc('space-02'),frontiers('layer-periodicity'),"Apply Seitz composition to layer operations, identifying translation equivalence only along the two in-plane lattice directions."],
+ [frontiers('layer-periodicity'),frontiers('layer-termination'),"Check atom bijections using in-plane periodicity and a finite normal direction, then use species and surface labels to test operations that exchange the two sides."],
+ [frontiers('layer-termination'),frontiers('layer-registry'),"Fix the chemical labels on both sides and the finite boundaries, then change the relative stacking registry and check common interface operations atom by atom."],
+ [pg('operations-notation'),frontiers('chiral-mirror'),"Use the determinant to distinguish orientation-preserving and orientation-reversing spatial operations, then restrict mirror-image registration to proper rigid rotations."],
+ [sc('space-01'),frontiers('chiral-mirror'),"Distinguish chiral structures, Sohncke types, and enantiomorphic group types before placing a finite point-set mirror test in its proper crystallographic context."],
+ [obs('neumann'),frontiers('chiral-polarity'),"Apply the common property constraints from all spatial operations to a rank-one polar vector, solving (R−I)P=0 jointly to find allowed directions."],
+ [frontiers('chiral-mirror'),frontiers('chiral-polarity'),"First test whether a mirror image can be superposed by proper rotations, then ask whether the same operation set preserves a nonzero polar vector to distinguish chirality from polarity."],
+ [frontiers('chiral-mirror'),frontiers('chiral-tolerance'),"Specify the source point set, allowed registration, and same-label correspondences before displacing the configuration and testing approximate operations through actual residuals."],
+ [pg('group-basics'),frontiers('chiral-tolerance'),"Check closure of the candidate set that passes a distance tolerance, rather than treating separate approximate matches as an exact group."],
+ [lie('unitary-matrices'),quantum('geometry-rays'),"Calculate conjugate transposes, normalization, and inner products of complex amplitudes, then use projection to distinguish an overall phase from a distinguishable change of state."],
+ [lie('su2-spinor'),quantum('geometry-rays'),"Carry Pauli matrices, normalized two-component states, and the Bloch representation that omits overall phase into a two-band orbital model, without adding a physical spin degeneracy."],
+ [quantum('geometry-rays'),quantum('geometry-topology'),"Use the modulus of neighboring-state overlaps to characterize distance, then join their phases into an oriented closed loop that includes boundary links."],
+ [quantum('geometry-topology'),quantum('geometry-diagnostics'),"After understanding the closed-loop phase sum over the full zone, check band isolation, link overlaps, phase branches, and grid refinement separately, rather than checking only an integer."],
+ [quantum('geometry-diagnostics'),response('hall-occupation'),"Check the QWZ lower-band curvature orientation, global gap, and integral convergence, then specify an energy scale in eV for the response model instead of reusing dimensionless numbers directly. Include both bands' Fermi occupations and the electron-charge sign."],
+ [response('hall-occupation'),response('hall-entropy'),"Keep the band curvature and current convention fixed, replace occupation weights with Fermi-entropy weights, and compare cancellation conditions for Hall and transverse thermoelectric responses."],
+ [response('hall-entropy'),response('hall-diagnostics'),"Distinguish the occupation-weighted sheet conductance from the entropy-weighted transport coefficient, then identify the tensors needed for an open-circuit signal and the numerical checks needed at each scan point."],
+ [quantum('geometry-diagnostics'),response('hall-diagnostics'),"Carry the separate error checks for the discrete FHS integer and ordinary curvature quadrature into response integration, distinguishing refinement from N to 2N−1 from refinement from N to 2N."]
 ];
 
 export const lessonProgressionEdges=Object.freeze(edgeDefinitions.map(([from,to,reason])=>Object.freeze({from,to,reason})));
