@@ -92,15 +92,15 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "eaa92a81e16993d93e14e376f8b6962c697e8009d597ac6b40aef8d362ed6ce9"
+      "sha256": "6a74694cf593cd71540c1c0bfcec6cc52f331cccd0d4d3f190748b524176d7e6"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "966fcd9db6f54ae3e211f6648b680dfaa8e8b7ad53223b51bcb49ac4c9bbef93"
+      "sha256": "a002ad6b988893ed1b64024a731e8eaa4ff5acfa2e6c577a3386030a9c8723bf"
     },
     {
       "path": "dist/coupled-materials-ui.js",
-      "sha256": "9e4b99524e012597a0e72b6059a6edc4d3d1c6f1b4275c249323138cc5a7c464"
+      "sha256": "08f77894ed577a0bcd0b1186f30983a54e9d58bdc2afd009c3c0f074f31f1b35"
     },
     {
       "path": "dist/coverage-ui.js",
@@ -140,7 +140,7 @@
     },
     {
       "path": "dist/electronic-materials-ui.js",
-      "sha256": "74c45a57dd5a70583fc753c600a5941ec25b6c8d4f287193f734fab4bcab25b1"
+      "sha256": "fe216c9d21b4f00ea542419efda65a7e5600b32363ee4b7252a0b2168520b0fa"
     },
     {
       "path": "dist/examples/andreev-barrier.json",
@@ -216,7 +216,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "cc79fffff468e902445d4ff829be7288d49e8bbbc1b65ce3781473e7878c8131"
+      "sha256": "8d3476b94f96b1f88ddbf9858f83df7550a1fda56e71350c5f6b66c2e18dbdf6"
     },
     {
       "path": "dist/lie-group-ui.js",
@@ -228,15 +228,15 @@
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "6f2aa00927ae19bec85486460a3bb7b7d0a59e5feb403c14f0623d8054cdae16"
+      "sha256": "a0791e311d888dce1c5c17b7379adc90aa3bfe70cd0361dba6230447cd3adf8c"
     },
     {
       "path": "dist/material-research-ui.js",
-      "sha256": "402ed972f51a9407551734888fc766ffc7a04d9d1f81734b549ccf09d1250828"
+      "sha256": "3f0f8dc6a997d63f96dad6ef23906d09fcddea972d1e79fa40fdf2f8b5c96c0c"
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "f7fce79fcfb77c5db24dde45f4c269fef03b489acd343ba0bf8441aaf5bf0f1a"
+      "sha256": "06b9016d7023fcc2fbfb90735f972eee3b02a2b8bb05e41332b87a53d677f947"
     },
     {
       "path": "dist/observables-ui.js",
@@ -244,11 +244,11 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "073c53a7725ce5934bf315c89a53e39ea0167fa42d9d92b08b0182ff0ec3932d"
+      "sha256": "dd24f254eecb16c1e24d2cfc745c566ef795e144184a5bfb2d9b15f094d71c14"
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "4cb49773d4e66381a373c0392799def0bad4470725a0b3d297c0a0ec8da4eaa5"
+      "sha256": "ad35262e079cfea91f902d602a3c6f032590a9ac1da3cbae2413158d77d3ef91"
     },
     {
       "path": "dist/python/andreev_lab.py",
@@ -268,15 +268,15 @@
     },
     {
       "path": "dist/quantum-materials-ui.js",
-      "sha256": "c7c8116e73ea2e728f287a67ca33052611fe87e9813a0ab635187f443cc4eef0"
+      "sha256": "23ef08b0efe8c0c26c8412629780253d014c8ad4af5ebbf649214523d6fb5e34"
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "9b0d057e0076b2aa822f3ba2b8bb20a9103f210ea6253234b7924b3b16d66b95"
+      "sha256": "7ee608195cdc9548c7cf7e5a19b282df9bf3fbe7df63024d278f3d1eb308a462"
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "106a20a601fe2822dbaea1e0efda28060a94ecb3a955b19933672973315fbec5"
+      "sha256": "afcf55567885a7adf98f2dadbc2ab2c87dfefee11d11cade17bb9f84b19c1749"
     },
     {
       "path": "dist/response-views.js",
@@ -288,7 +288,7 @@
     },
     {
       "path": "dist/spectroscopy-ui.js",
-      "sha256": "4581c6b04cb5c61ad2e11e911c025d0dfcc984e1d3ec1da5103461965b4317fb"
+      "sha256": "eff73e56da7122ebc6a95da49c97c3845bc2c7f5deeef2e2f7e877bd26967563"
     },
     {
       "path": "dist/spectroscopy-views.js",
@@ -300,7 +300,7 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "8f8dc59de166a89897888b7eac7e02be6b25ef7c81fd60b65278f46a5af5f4f6"
+      "sha256": "4cd472dc699e7b28f37c7d07954fdbcf0c0d2f5af1df3fb804f0944ce5c98d92"
     },
     {
       "path": "dist/symmetry-course-ui.js",
@@ -308,7 +308,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "999d2b355a4803791009f7912113cb5050e4b8f1744ec6bebe68c7e6809df8b7"
+      "sha256": "abe7e344344dbe42fd282f82c776a201783d9bbc2b21ac7908e723a915cd5581"
     },
     {
       "path": "scripts/build-spectroscopy-catalog.py",
@@ -328,7 +328,7 @@
     },
     {
       "path": "scripts/test-coupled-materials-ui.mjs",
-      "sha256": "ec3f7c9d0cf3bbf7c7da470a425fd40d309e85cb2b9c3f2ccd4c1614315a0b88"
+      "sha256": "94e5955012c23baecf0f01cab67a40639a747e24c6e93d97bb4f7cb3b5484d0f"
     },
     {
       "path": "scripts/test-lie-group-ui.mjs",
@@ -336,7 +336,7 @@
     },
     {
       "path": "scripts/test-material-research-ui.mjs",
-      "sha256": "b22402d1b2b8af16077fcb92a9d99e5f1bb04a326b8f88eb8f010402d15b4fe7"
+      "sha256": "cf978ed6dfdd4d8cdd667209f6a3237197ead91acecd9ed6ef404a5a0a38e9fc"
     },
     {
       "path": "scripts/test-python-andreev.py",
@@ -356,11 +356,11 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "7bed287e022e279eccd0b9e51e22be5cb925c40abe8e4452a7c9c607d98af54c"
+      "sha256": "c89050291998de60f2692c8cfb529434b7ad464c2f56584a12a1200bfa9c2fb4"
     },
     {
       "path": "scripts/test-spectroscopy-ui.mjs",
-      "sha256": "d9ff4a05d1e2e6dd7cfcdeb48b299060a606586be4716611ef169ea7668e7798"
+      "sha256": "1883b81486601c8f6a77fe1dd3ed3ba0fb787085345ca02465d10062456bf2e2"
     },
     {
       "path": "scripts/test-structure-dynamics-ui.mjs",

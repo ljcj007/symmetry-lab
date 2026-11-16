@@ -2,7 +2,7 @@ import {createResultLocalizer} from '../english-results.js?v=sha256-c9ce33f2712b
 const englishMessages=fetch(new URL('./data/python-messages.json?v=sha256-e20480579ecce8f397da',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261116-gt1';
+const BUILD = '20261116-prose3';
 const plans = {
   group_theorems: ['group_theorems'],
   symmetry_mini_demos: ['symmetry_mini_demos'],

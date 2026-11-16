@@ -37,24 +37,24 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 97824,
-      "sha256": "eaa92a81e16993d93e14e376f8b6962c697e8009d597ac6b40aef8d362ed6ce9"
+      "bytes": 97845,
+      "sha256": "6a74694cf593cd71540c1c0bfcec6cc52f331cccd0d4d3f190748b524176d7e6"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32112,
-      "sha256": "966fcd9db6f54ae3e211f6648b680dfaa8e8b7ad53223b51bcb49ac4c9bbef93"
+      "bytes": 32154,
+      "sha256": "a002ad6b988893ed1b64024a731e8eaa4ff5acfa2e6c577a3386030a9c8723bf"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29996,
-      "sha256": "f7fce79fcfb77c5db24dde45f4c269fef03b489acd343ba0bf8441aaf5bf0f1a"
+      "bytes": 29999,
+      "sha256": "06b9016d7023fcc2fbfb90735f972eee3b02a2b8bb05e41332b87a53d677f947"
     },
     "dist/tool-directory.js": {
       "bytes": 3029,
       "sha256": "91c37bee31f2d3e3b72139a0748b98214fd2455ed0c2caa2fc3bd0263f84d376"
     },
     "dist/tool-finder.js": {
-      "bytes": 8653,
-      "sha256": "1c1905dac112591ba836a867703ad44028beb029f22371f18b9713d45ec5cc8e"
+      "bytes": 8656,
+      "sha256": "f3a2a17943ce98fd7af9e995fb760b09e85e7bca5b5bb96e17be5794e24656df"
     },
     "dist/lie-foundations-ui.js": {
       "bytes": 9320,
@@ -69,12 +69,12 @@
       "sha256": "d9c746fec25d41addcd50f1119d37fa2f79d484994e53abc01253840e3824bfb"
     },
     "dist/python-client.js": {
-      "bytes": 3134,
-      "sha256": "073c53a7725ce5934bf315c89a53e39ea0167fa42d9d92b08b0182ff0ec3932d"
+      "bytes": 3137,
+      "sha256": "dd24f254eecb16c1e24d2cfc745c566ef795e144184a5bfb2d9b15f094d71c14"
     },
     "dist/python-worker.js": {
-      "bytes": 11493,
-      "sha256": "4cb49773d4e66381a373c0392799def0bad4470725a0b3d297c0a0ec8da4eaa5"
+      "bytes": 11496,
+      "sha256": "ad35262e079cfea91f902d602a3c6f032590a9ac1da3cbae2413158d77d3ef91"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -169,8 +169,8 @@
       "sha256": "0e9fd88167769e298df097e853598f35eaa7066315bc575c495cae234e1ed60d"
     },
     "dist/math-notation.js": {
-      "bytes": 21602,
-      "sha256": "667a3d32eccd027ac0195e5058b48c7dd59f78625c50e61944e6d83295034ccc"
+      "bytes": 24484,
+      "sha256": "d36699071c1949dac2b9bf8f691efa93cee373ed5b0d40ab870ab0eb17ad1b10"
     },
     "scripts/test-math-notation.mjs": {
       "bytes": 14210,

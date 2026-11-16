@@ -43,40 +43,40 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 44691,
-      "sha256": "ad81ca1052c1ff630e574f71da40955999bbb2b553f8c11e0bf8518a894ecb2a"
+      "bytes": 45840,
+      "sha256": "3fd388065de8b19b3434f2f4a1fe08920743dc6351706225ebaf91cc175a7e94"
     },
     "NOTICE.txt": {
       "bytes": 15904,
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/app.js": {
-      "bytes": 97824,
-      "sha256": "eaa92a81e16993d93e14e376f8b6962c697e8009d597ac6b40aef8d362ed6ce9"
+      "bytes": 97845,
+      "sha256": "6a74694cf593cd71540c1c0bfcec6cc52f331cccd0d4d3f190748b524176d7e6"
     },
     "dist/bridges-ui.js": {
-      "bytes": 17143,
-      "sha256": "ab62e4088853f8820f4a835bc5c95b3888da6f0d74e34098887f491bfd5310db"
+      "bytes": 17149,
+      "sha256": "25d3784a214328e2d014e0de1f082eaa40a2665697cd5e17c37ba1645318d1b4"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32112,
-      "sha256": "966fcd9db6f54ae3e211f6648b680dfaa8e8b7ad53223b51bcb49ac4c9bbef93"
+      "bytes": 32154,
+      "sha256": "a002ad6b988893ed1b64024a731e8eaa4ff5acfa2e6c577a3386030a9c8723bf"
     },
     "dist/classroom.css": {
       "bytes": 8608,
       "sha256": "7130de46e1fe607f421aaf2cf2570ec6da379638df57a58dca2851dd90be5ae2"
     },
     "dist/connections-ui.js": {
-      "bytes": 18444,
-      "sha256": "af4147c725a68f45176320349f3a9dd580da4216d10061278bdde9ae1eece3f9"
+      "bytes": 18453,
+      "sha256": "cd88e62a7367abc8a5f8cf81902dbca3c87edcf7e8984b31a8a513a94db762e3"
     },
     "dist/construction-ui.js": {
-      "bytes": 17347,
-      "sha256": "9dbe83fe79b361eca89c3cccfec4b7992e216ba8420bc3f791d27c45337ecea7"
+      "bytes": 17353,
+      "sha256": "72d68958b66f3225b271818fb48b0d3ddf045edcb8fa336750dea099eafdb64b"
     },
     "dist/coupled-materials-ui.js": {
-      "bytes": 36129,
-      "sha256": "9e4b99524e012597a0e72b6059a6edc4d3d1c6f1b4275c249323138cc5a7c464"
+      "bytes": 36135,
+      "sha256": "08f77894ed577a0bcd0b1186f30983a54e9d58bdc2afd009c3c0f074f31f1b35"
     },
     "dist/data/bridges-materials.json": {
       "bytes": 90485,
@@ -179,16 +179,16 @@
       "sha256": "24c252ef44749a77c28747875ae6ce7ed934aa50164ee4421cc62a5c810a4c41"
     },
     "dist/electronic-materials-ui.js": {
-      "bytes": 32608,
-      "sha256": "74c45a57dd5a70583fc753c600a5941ec25b6c8d4f287193f734fab4bcab25b1"
+      "bytes": 32614,
+      "sha256": "fe216c9d21b4f00ea542419efda65a7e5600b32363ee4b7252a0b2168520b0fa"
     },
     "dist/frontiers-views.js": {
       "bytes": 16994,
       "sha256": "cacf724c0da68a55060287755bd67f43de4e5843d8c38869b36bf20a58107413"
     },
     "dist/index.html": {
-      "bytes": 7460,
-      "sha256": "cc79fffff468e902445d4ff829be7288d49e8bbbc1b65ce3781473e7878c8131"
+      "bytes": 7463,
+      "sha256": "8d3476b94f96b1f88ddbf9858f83df7550a1fda56e71350c5f6b66c2e18dbdf6"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -203,28 +203,28 @@
       "sha256": "8a898e0b3a59dc5651f9e24b392b538cd426f343e6c4c573e9e47d0ec651b87c"
     },
     "dist/material-notebook.js": {
-      "bytes": 24765,
-      "sha256": "6f2aa00927ae19bec85486460a3bb7b7d0a59e5feb403c14f0623d8054cdae16"
+      "bytes": 24768,
+      "sha256": "a0791e311d888dce1c5c17b7379adc90aa3bfe70cd0361dba6230447cd3adf8c"
     },
     "dist/observables-ui.js": {
       "bytes": 30019,
       "sha256": "7c8c8fde7467647ba0472a40ccae5bb96593b17a8b761cacb7d7d39e7fc345c5"
     },
     "dist/pathways-ui.js": {
-      "bytes": 14124,
-      "sha256": "373fbac8d11a75f42b8b1af82d0f233af48bf9fd80127c19b7e013fd21ce083e"
+      "bytes": 14130,
+      "sha256": "b8265ab6f764921e7d81680378fae480cac92e3b64d418d9543d574f1383c50a"
     },
     "dist/pointgroup-ui.js": {
       "bytes": 39808,
       "sha256": "68089f90ed88e74173e5ebdf4607ab9b5fb4e9931a91fb8e60a53e2a67260d9c"
     },
     "dist/python-client.js": {
-      "bytes": 3134,
-      "sha256": "073c53a7725ce5934bf315c89a53e39ea0167fa42d9d92b08b0182ff0ec3932d"
+      "bytes": 3137,
+      "sha256": "dd24f254eecb16c1e24d2cfc745c566ef795e144184a5bfb2d9b15f094d71c14"
     },
     "dist/python-worker.js": {
-      "bytes": 11493,
-      "sha256": "4cb49773d4e66381a373c0392799def0bad4470725a0b3d297c0a0ec8da4eaa5"
+      "bytes": 11496,
+      "sha256": "ad35262e079cfea91f902d602a3c6f032590a9ac1da3cbae2413158d77d3ef91"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -363,20 +363,20 @@
       "sha256": "1f80fb03bd5d446d270d4a70ce80ca01b630a78ad3fc9ac1c82bb97fa55b6d77"
     },
     "dist/quantum-materials-ui.js": {
-      "bytes": 37646,
-      "sha256": "c7c8116e73ea2e728f287a67ca33052611fe87e9813a0ab635187f443cc4eef0"
+      "bytes": 37649,
+      "sha256": "23ef08b0efe8c0c26c8412629780253d014c8ad4af5ebbf649214523d6fb5e34"
     },
     "dist/response-materials-ui.js": {
-      "bytes": 13643,
-      "sha256": "9b0d057e0076b2aa822f3ba2b8bb20a9103f210ea6253234b7924b3b16d66b95"
+      "bytes": 13649,
+      "sha256": "7ee608195cdc9548c7cf7e5a19b282df9bf3fbe7df63024d278f3d1eb308a462"
     },
     "dist/spectroscopy-ui.js": {
-      "bytes": 13473,
-      "sha256": "4581c6b04cb5c61ad2e11e911c025d0dfcc984e1d3ec1da5103461965b4317fb"
+      "bytes": 13479,
+      "sha256": "eff73e56da7122ebc6a95da49c97c3845bc2c7f5deeef2e2f7e877bd26967563"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 51333,
-      "sha256": "8f8dc59de166a89897888b7eac7e02be6b25ef7c81fd60b65278f46a5af5f4f6"
+      "bytes": 51336,
+      "sha256": "4cd472dc699e7b28f37c7d07954fdbcf0c0d2f5af1df3fb804f0944ce5c98d92"
     },
     "dist/su3-cg-ui.js": {
       "bytes": 22382,
@@ -407,8 +407,8 @@
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
     },
     "package.json": {
-      "bytes": 17804,
-      "sha256": "999d2b355a4803791009f7912113cb5050e4b8f1744ec6bebe68c7e6809df8b7"
+      "bytes": 17947,
+      "sha256": "abe7e344344dbe42fd282f82c776a201783d9bbc2b21ac7908e723a915cd5581"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "bytes": 11803,
@@ -419,16 +419,16 @@
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 3181,
-      "sha256": "932bf1f2a4df473a3b547c4e207bd2c1bfeeac49ebe22028ad7c288c92dbe86b"
+      "bytes": 3235,
+      "sha256": "80f4c56def4d06dadcc01636bfa392951ac1bccef03dff63191478c528997a50"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
       "sha256": "e1c9206aa6a0fe017bd54b9820875081cf074d442c829514ef04d3a9dcb0de6d"
     },
     "scripts/test-frontiers-ui.mjs": {
-      "bytes": 8675,
-      "sha256": "d64749921d3d51f4c9cf96ac2c2aaeccc378eca6d58d4b6d8e7f634f39b94e30"
+      "bytes": 8678,
+      "sha256": "ed9c514dbfce8b478b7d53ccfeb44c00a0249954d5a95f2e35163e60886a3393"
     },
     "scripts/test-lesson-progression.mjs": {
       "bytes": 52336,
@@ -443,8 +443,8 @@
       "sha256": "f523224519fd2cbf5cbee3a4a6a030cacdd991efdbc394a3e919d0f7aa0dfbab"
     },
     "scripts/test-material-research-ui.mjs": {
-      "bytes": 23365,
-      "sha256": "b22402d1b2b8af16077fcb92a9d99e5f1bb04a326b8f88eb8f010402d15b4fe7"
+      "bytes": 23368,
+      "sha256": "cf978ed6dfdd4d8cdd667209f6a3237197ead91acecd9ed6ef404a5a0a38e9fc"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2890,

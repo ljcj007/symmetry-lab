@@ -4,7 +4,7 @@
   "sourceUnits": 26656,
   "translatedUnits": 26656,
   "missing": [],
-  "files": 443,
+  "files": 444,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -93,6 +93,7 @@
     "en-su3-basis-ui.json",
     "en-su3-basis-host.json",
     "en-su3-basis-python.json",
-    "en-su3-basis-docs.json"
+    "en-su3-basis-docs.json",
+    "en-prose-coordinate-labels.json"
   ]
 }

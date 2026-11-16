@@ -144,18 +144,52 @@ export function normalizeMath(source){
 const scriptCharacters=new RegExp('['+Object.keys(subs).join('')+Object.keys(supers).join('')+']','u');
 const physicalComponents=/(?:[στ][xyz]{1,3}(?![A-Za-z_])|(?<![A-Za-z_])kB(?![a-z_])|μB(?![a-z_]))/u;
 const explicitMath=/[_^₀-₉₊₋₌₍₎ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓᵦᵧᵨᵩᵪ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ᵀ†′̄̅̿̂̇̈⃗⊗⊕∑Σ∫∂√⟨⟩〈〉ℏÅ]|(?:SU|SO|U)\(\d+\)|\b(?:[CD][1-6][vhdi]?|[OTI][hd])\b|[=<>≈≠≤≥⇒∝≪≫]/u;
-const proseWords=new Set('a and the for are has see set can not one two all let its our how why per out any new from with into then than that this these those such both each only also but use via at to in on is be by as or nor of if we an it no so up'.split(' '));
+const proseWords=new Set('a and the for are has see set can not one two all let its our how why per out any new from with into then than that this these those such both each only also but use via at to in on is be by as or nor of if we an it no so up do did get low six odd end add yet raw ten put sum'.split(' '));
 function englishProseToken(token){
- const word=token.replace(/^["'“”‘’(\[]+|["'“”‘’.,;:!?\)\]]+$/g,'');
- return (/^[A-Za-z]{4,}(?:-[A-Za-z]+)*$/.test(word)||proseWords.has(word.toLowerCase()))&&!functions.has(word)&&!operators.has(word);
+ const typed=crystalTokenAt(token,0);if(typed&&typed.end===token.length)return false;
+ const word=token.replace(/^["'“”‘’(\[{（〔【]+|["'“”‘’.,;:!?\)\]}）〕】]+$/g,'');
+ const unwrapped=crystalTokenAt(word,0);if(unwrapped&&unwrapped.end===word.length)return false;
+ if(functions.has(word)||operators.has(word))return false;
+ if(proseWords.has(word.toLowerCase())||/^[A-Za-z]{4,}$/.test(word))return true;
+ // A short first component does not turn two-state, low-spin, can't or
+ // and/or into mathematical products. Single-letter x-y and H/h remain
+ // eligible mathematics, and sin/cos remains a pair of known functions.
+ if(/^(?:[A-Za-z]{2,}|I)(?:['’](?:t|s|re|ve|ll|d|m))$/i.test(word))return true;
+ const compounds=word.split(/[-‐‑–/]/);
+ return compounds.length>1&&compounds.every(p=>/^[A-Za-z]{2,}$/.test(p))&&compounds.some(p=>!functions.has(p)&&!operators.has(p)&&(/^[A-Za-z]{4,}$/.test(p)||proseWords.has(p.toLowerCase())));
 }
-function inlineWords(source){
+function inlineWords(source,discoverWords=true){
  const words=[];let begin=0;
+ const push=end=>{if(end>begin)words.push(source.slice(begin,end));begin=end;};
  for(let i=0;i<source.length;i++){
-  if('^_'.includes(source[i])&&'({'.includes(source[i+1]||'!')){const end=closeAt(source,i+1);if(end>=0){i=end;continue;}}
-  if(/\s/.test(source[i])){if(i>begin)words.push(source.slice(begin,i));let end=i+1;while(/\s/.test(source[end]||'')&&end<source.length)end++;words.push(source.slice(i,end));i=end-1;begin=end;}
+  // Keep complete explicit labels and indices together even when they use
+  // ordinary English words, as in J_{out}, W_add or E_(lower-site ...).
+  if('^_'.includes(source[i])){
+   let j=i+1;while(j<source.length&&/\s/.test(source[j]))j++;
+   if('({'.includes(source[j]||'!')){const end=closeAt(source,j);if(end>=0){i=end;continue;}}
+   const label=source.slice(j).match(/^(?:[A-Za-z]+|[+−-]?\d+|[α-ωΑ-Ω]+)/u);
+   if(label){let end=j+label[0].length;while(combining.test(source[end]||''))end++;const more=source.slice(end).match(/^,[a-z]+(?![A-Za-z†‡′_₀-₉])/);if(more)end+=more[0].length;i=end-1;continue;}
+  }
+  if(source[i]==='['&&i&&/[\p{L}\p{N}\])]/u.test(source[i-1])){const end=closeAt(source,i);if(end>=0){i=end;continue;}}
+  const chemical=chemicalAt(source,i);if(chemical){i=chemical.end-1;continue;}
+  const crystal=crystalTokenAt(source,i);if(crystal){i=crystal.end-1;continue;}
+  // Scientific atoms may touch prose in translated labels: Supply≤8MiB or
+  // SU(3)Clebsch–Gordan. Discover the word boundary without reparsing explicit
+  // scripts, Greek-adjacent indices or sum(...) function notation.
+  if(discoverWords&&/[A-Za-z]/.test(source[i])&&(!i||!/[\p{L}\p{N}_^†‡′″‴]/u.test(source[i-1]))){
+   const word=source.slice(i).match(/^[A-Za-z]+(?:(?:['’]|[-‐‑–/])[A-Za-z]+)*/)[0],end=i+word.length,next=source[end]||'';
+   const callEnd=next==='('?closeAt(source,end):-1,args=callEnd>=0?source.slice(end+1,callEnd):'';
+   const call=next==='('&&(functions.has(word)||operators.has(word)||word==='sum'||callEnd>=0&&(/^[A-Za-zα-ωΑ-Ω]$/u.test(args)||!/[\s]/.test(args)&&/[\d,\p{Script=Greek}_^₀-₉⁰-⁹]/u.test(args)));
+   if(call&&callEnd>=0){i=callEnd;continue;}
+   const assignment=/^\s*=/.test(source.slice(end)),tensorLabel=/^[⊗⊕]/.test(next)||/[⟩〉]/u.test(source[i-1]||'');
+   // Do not separate the mathematical a in (a,b), det(A) or |a b c⟩.
+   // Standalone articles are still recognized by the ordinary token pass.
+   if(word.length>1&&!assignment&&!tensorLabel&&!scriptCharacters.test(next)&&!combining.test(next)&&!/^[_^]$/.test(next)&&englishProseToken(word)){push(i);push(end);i=end-1;continue;}
+   i=end-1;continue;
+  }
+  if(/\s/.test(source[i])){push(i);let end=i+1;while(/\s/.test(source[end]||'')&&end<source.length)end++;push(end);i=end-1;}
  }
- if(begin<source.length)words.push(source.slice(begin));return words;
+ push(source.length);return words;
 }
 function append(rows,row){if(!row.source)return;const prev=rows.at(-1);if(prev&&prev.type===row.type&&row.type==='text')prev.source+=row.source;else rows.push(row);}
 function part(source,force=false){const tex=normalizeMath(source);return tex&&(force||explicitMath.test(source)||scriptCharacters.test(source)||physicalComponents.test(source)||hasChemical(source)||findCrystalTokens(source).some(p=>p.kind))?{type:'math',source,tex}:{type:'text',source};}
@@ -187,7 +221,7 @@ export function segmentFormula(source){
  source=String(source??'');const rows=[];let begin=0,depth=0;
  // Matrices can contain newlines; retain them as one complete expression.
  if(!cjk.test(source)&&source.includes('[[')){const row=part(source,true);return[row];}
- if(!cjk.test(source)&&inlineWords(source).some(englishProseToken))return findInlineMath(source);
+ if(!cjk.test(source)&&inlineWords(source,false).some(englishProseToken))return findInlineMath(source);
  for(let i=0;i<source.length;i++){
   const c=source[i];if(cjk.test(c)&&'_^'.includes(source[i-1]||'!')){while(cjk.test(source[i+1]||''))i++;continue;}if('([{'.includes(c))depth++;else if(')]}'.includes(c))depth=Math.max(0,depth-1);
   if(!depth&&(c==='\n'||c==='；'||c==='，'||c==='：'||c==='。'||c==='、'||cjk.test(c))){
@@ -216,4 +250,4 @@ export function findInlineMath(source){
  return rows;
 }
 
-export const mathNotationVersion='20261110-en1';
+export const mathNotationVersion='20261116-prose3';
