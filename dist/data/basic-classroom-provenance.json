@@ -37,44 +37,44 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 97845,
-      "sha256": "6a74694cf593cd71540c1c0bfcec6cc52f331cccd0d4d3f190748b524176d7e6"
+      "bytes": 97838,
+      "sha256": "103327b0bb5535a71fc8f6e88c65430df54b8e1b52f8e475745b70884b219e48"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32154,
-      "sha256": "a002ad6b988893ed1b64024a731e8eaa4ff5acfa2e6c577a3386030a9c8723bf"
+      "bytes": 32142,
+      "sha256": "2f14d50265e9ba15b8cdd93a121b145acb99a085130312c168cb4d80a8a543af"
     },
     "dist/navigation-ui.js": {
-      "bytes": 29999,
-      "sha256": "06b9016d7023fcc2fbfb90735f972eee3b02a2b8bb05e41332b87a53d677f947"
+      "bytes": 29998,
+      "sha256": "86038d1fdcc3230001ce439c28d2c21e41aa7c57adaf595929cb52c8514edd26"
     },
     "dist/tool-directory.js": {
       "bytes": 3029,
       "sha256": "91c37bee31f2d3e3b72139a0748b98214fd2455ed0c2caa2fc3bd0263f84d376"
     },
     "dist/tool-finder.js": {
-      "bytes": 8656,
-      "sha256": "f3a2a17943ce98fd7af9e995fb760b09e85e7bca5b5bb96e17be5794e24656df"
+      "bytes": 8655,
+      "sha256": "cddf5c1133638bafbb616007d79f5e7a86f9869880cf452a62031ecaf81f8cc1"
     },
     "dist/lie-foundations-ui.js": {
       "bytes": 9320,
       "sha256": "b185e02755301d3a1be51a88cc2014771d991bb25d3e8facc174c787c97c73c0"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 57342,
-      "sha256": "3f6cd14efc67d79ccdde32b7e043cf8c8fcb9b09c4f97b17718b9d2eade601ad"
+      "bytes": 59789,
+      "sha256": "b6ba2aa23a9df33d8862152d84640c6ecf9ae448bc554abda793b88e0dc8c6b9"
     },
     "dist/symmetry-course-ui.js": {
       "bytes": 92738,
       "sha256": "d9c746fec25d41addcd50f1119d37fa2f79d484994e53abc01253840e3824bfb"
     },
     "dist/python-client.js": {
-      "bytes": 3137,
-      "sha256": "dd24f254eecb16c1e24d2cfc745c566ef795e144184a5bfb2d9b15f094d71c14"
+      "bytes": 3136,
+      "sha256": "9a840dcde5a5172f6592436412efc33e2ad73b4599509da285a69f9c42b56e41"
     },
     "dist/python-worker.js": {
-      "bytes": 11496,
-      "sha256": "ad35262e079cfea91f902d602a3c6f032590a9ac1da3cbae2413158d77d3ef91"
+      "bytes": 11637,
+      "sha256": "d2372a4655d54d96ebb14869f3638ff6abb1397406b702b38f62f93da9b968d7"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -141,20 +141,20 @@
       "sha256": "a31b73869414d43d45fe9b673da6cb5a87b42aa4435611d5ec59d970c91a14da"
     },
     "scripts/collect-fixture-messages.mjs": {
-      "bytes": 1266,
-      "sha256": "9492e96f4dbaa441f0fa5a1445fff2bfed30bed5b3862195d62b993e22bfe09c"
+      "bytes": 1282,
+      "sha256": "cb758eaa0902919943447fc416c1cd2630d44bf4272b8915bed2fb8e39a90884"
     },
     "scripts/audit-english-results.mjs": {
       "bytes": 3316,
       "sha256": "a2f2bf8e77b530d6f602bbae9e9ff9f990fdbadc9d8ba872157039a79d003117"
     },
     "scripts/fixtures/pathways-projects.json": {
-      "bytes": 1736561,
-      "sha256": "6bdbba156a48d34361687eb669ae0ac60039c3ac048e5179e6a6f40812dffe23"
+      "bytes": 1736646,
+      "sha256": "221026b5320b88b16cb21590cfccfa701475442bf6339e9cf09d784b389ab37f"
     },
     "scripts/fixtures/bridges-projects.json": {
-      "bytes": 869505,
-      "sha256": "75a995bc5377c6ee68ca1aaacd8a38ae9814dc25386d2b6a29cf37fe0633a4b6"
+      "bytes": 869590,
+      "sha256": "8224c8f5a5489dcb97097d75d70b2d37f6867be904ad7874ab862b45babfd207"
     },
     "dist/foundations-demos.css": {
       "bytes": 4314,

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 26656,
-  "translatedUnits": 26656,
+  "sourceUnits": 26875,
+  "translatedUnits": 26875,
   "missing": [],
-  "files": 444,
+  "files": 447,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -94,6 +94,10 @@
     "en-su3-basis-host.json",
     "en-su3-basis-python.json",
     "en-su3-basis-docs.json",
-    "en-prose-coordinate-labels.json"
+    "en-prose-coordinate-labels.json",
+    "en-su3-copy-ui.json",
+    "en-su3-copy-host.json",
+    "en-su3-copy-python.json",
+    "en-su3-copy-docs.json"
   ]
 }

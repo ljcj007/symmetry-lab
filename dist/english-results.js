@@ -10,6 +10,7 @@ const exactMathKeys=new Set(['formula','formulas','equation','equations','tex','
 const explanatorySuffix=/(?:conventions?|explanations?|descriptions?|summar(?:y|ies)|messages?|warnings?|reasons?|meanings?|labels?|titles?)$/i;
 
 function resultDisplayMode(node,mode,nativeAnnotations){
+ if(nativeAnnotations&&(mode==='walk'||mode==='display')&&node?.schema==='symmetry-lab-su3-copy-1'&&node.lab==='su3_copy')return 'su3-copy-result';
  if(nativeAnnotations&&(mode==='walk'||mode==='display')&&node?.schema==='symmetry-lab-su3-basis-1'&&node.lab==='su3_basis')return 'su3-basis-result';
  // Only the named, freshly calculated SOC result declares this annotation.
  // A matching object inside an input or imported/raw tree stays opaque.
@@ -19,6 +20,9 @@ function resultDisplayMode(node,mode,nativeAnnotations){
 function childDisplayMode(key,mode,nativeAnnotations=false,item=undefined){
  const normalized=normalizeKey(key);
  if(mode==='raw')return 'raw';
+ // The fresh copy workshop retains a hash-identified, complete original CG reply.
+ // Its canonical subtree must remain byte-for-byte JSON content, including prose.
+ if(mode==='su3-copy-result'){if(key==='canonical')return 'raw';mode='walk';}
  // This named fresh result uses one string to explain what the weight axes
  // mean. Coordinate arrays and opaque input/raw copies remain computational.
  if(mode==='su3-basis-result'){if(key==='conventions')return 'su3-basis-conventions';mode='walk';}

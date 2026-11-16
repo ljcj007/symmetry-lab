@@ -18780,6 +18780,334 @@
     ]
   },
   {
+    "source": "SU(3) 八重态副本：真实 CG 嵌入与一致换基",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/title",
+      "python-fixture/su3-copy.json/cases/1/result/title",
+      "python-fixture/su3-copy.json/cases/2/result/title",
+      "python-fixture/su3-copy.json/cases/3/result/title"
+    ]
+  },
+  {
+    "source": "规范回包必须包含交换宇称相反的两份八重态",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "两份八重态的完整 GT 标签无法逐项配对",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "八重态内部标签必须完整覆盖八个态",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "规范来源矩阵与教学嵌入来源不一致",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "单列改号反例没有产生预期的 E₁₂ 残差",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "只把 μ=3 的对称八重态列改号，仍得到合法的正交基和相同的八重态等型子空间。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/counterexample/notes/0",
+      "python-fixture/su3-copy.json/cases/1/result/counterexample/notes/0",
+      "python-fixture/su3-copy.json/cases/2/result/counterexample/notes/0",
+      "python-fixture/su3-copy.json/cases/3/result/counterexample/notes/0"
+    ]
+  },
+  {
+    "source": "继续使用旧标准 GT 生成元时，E₁₂ 的最大逐项交织残差为 ZXQD0DQXZ；错误在于基底与生成元约定不一致。",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "同时使用 D′=Q†DQ 后，全部八个生成元的交织残差精确为零。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/counterexample/notes/2",
+      "python-fixture/su3-copy.json/cases/1/result/counterexample/notes/2",
+      "python-fixture/su3-copy.json/cases/2/result/counterexample/notes/2",
+      "python-fixture/su3-copy.json/cases/3/result/counterexample/notes/2"
+    ]
+  },
+  {
+    "source": "固定全部八个原 |8s,μ⟩ 物理态；每列对应一个 μ，换基不改变态。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/fixed/description",
+      "python-fixture/su3-copy.json/cases/1/result/fixed/description",
+      "python-fixture/su3-copy.json/cases/2/result/fixed/description",
+      "python-fixture/su3-copy.json/cases/3/result/fixed/description"
+    ]
+  },
+  {
+    "source": "固定 8⊗8；八重态内部维数为 8，外重数为 2，等型子空间维数为 16。内部同权重数与外重数分别计数。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/0",
+      "python-fixture/su3-copy.json/cases/1/result/notes/0",
+      "python-fixture/su3-copy.json/cases/2/result/notes/0",
+      "python-fixture/su3-copy.json/cases/3/result/notes/0"
+    ]
+  },
+  {
+    "source": "规范 CG 回包及原请求完整保存在 canonical；派生列保存在 rotation，不改变旧规范、列序、相位或缓存。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/1",
+      "python-fixture/su3-copy.json/cases/1/result/notes/1",
+      "python-fixture/su3-copy.json/cases/2/result/notes/1",
+      "python-fixture/su3-copy.json/cases/3/result/notes/1"
+    ]
+  },
+  {
+    "source": "新副本 α′ 通常不再是交换宇称本征基；新的坐标分量概率不能直接解释为物理 s/a 概率。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/2",
+      "python-fixture/su3-copy.json/cases/1/result/notes/2",
+      "python-fixture/su3-copy.json/cases/2/result/notes/2",
+      "python-fixture/su3-copy.json/cases/3/result/notes/2"
+    ]
+  },
+  {
+    "source": "这是固定态的被动换基，不是时间演化或跃迁；交换期望必须用同时变换后的 P′ 计算。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/3",
+      "python-fixture/su3-copy.json/cases/1/result/notes/3",
+      "python-fixture/su3-copy.json/cases/2/result/notes/3",
+      "python-fixture/su3-copy.json/cases/3/result/notes/3"
+    ]
+  },
+  {
+    "source": "只支持列明的三个角和四个相位；选择 μ 只浏览已完整返回的数据，不接受任意符号表达式。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/4",
+      "python-fixture/su3-copy.json/cases/1/result/notes/4",
+      "python-fixture/su3-copy.json/cases/2/result/notes/4",
+      "python-fixture/su3-copy.json/cases/3/result/notes/4"
+    ]
+  },
+  {
+    "source": "两个因子有标号；CG 系数不直接给出能谱、速率、约化矩阵元或真实同粒子的全部统计约束。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/notes/5",
+      "python-fixture/su3-copy.json/cases/1/result/notes/5",
+      "python-fixture/su3-copy.json/cases/2/result/notes/5",
+      "python-fixture/su3-copy.json/cases/3/result/notes/5"
+    ]
+  },
+  {
+    "source": "八重态副本工坊只接受 lab、angle、phase 字段",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "此接口要求 lab=su3_copy",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "angle 必须是整数 0、45 或 90",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "phase 必须是 1、i、-1 或 -i 字符串",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "一致变换目标生成元后交织关系未恢复",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "继续使用旧标准 GT 生成元时，E₁₂ 的最大逐项交织残差为 ",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "；错误在于基底与生成元约定不一致。",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "精确教学检验未通过：ZXQD0DQXZ",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "完整标签先于权坐标",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/0/title",
+      "python-fixture/su3-copy.json/cases/1/result/steps/0/title",
+      "python-fixture/su3-copy.json/cases/2/result/steps/0/title",
+      "python-fixture/su3-copy.json/cases/3/result/steps/0/title"
+    ]
+  },
+  {
+    "source": "两个零权内部态为 ZXQD0DQXZ；每个内部态都有 s/a 两份嵌入，共四条不同列。",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "把真实列放回乘积空间",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/1/title",
+      "python-fixture/su3-copy.json/cases/1/result/steps/1/title",
+      "python-fixture/su3-copy.json/cases/2/result/steps/1/title",
+      "python-fixture/su3-copy.json/cases/3/result/steps/1/title"
+    ]
+  },
+  {
+    "source": "全部八个 μ 的两条 64 维嵌入已按完整 GT 标签配对；8×8 幅度矩阵满足 A_sᵀ=A_s、A_aᵀ=−A_a，跨副本内积矩阵精确为零。",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/1/text",
+      "python-fixture/su3-copy.json/cases/1/result/steps/1/text",
+      "python-fixture/su3-copy.json/cases/2/result/steps/1/text",
+      "python-fixture/su3-copy.json/cases/3/result/steps/1/text"
+    ]
+  },
+  {
+    "source": "对八个内部态统一换副本基底",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/2/title",
+      "python-fixture/su3-copy.json/cases/1/result/steps/2/title",
+      "python-fixture/su3-copy.json/cases/2/result/steps/2/title",
+      "python-fixture/su3-copy.json/cases/3/result/steps/2/title"
+    ]
+  },
+  {
+    "source": "本次 θ=ZXQD0DQXZ°、ζ=ZXQD1DQXZ，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "固定物理态，同时变换坐标与交换矩阵",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/3/title",
+      "python-fixture/su3-copy.json/cases/1/result/steps/3/title",
+      "python-fixture/su3-copy.json/cases/2/result/steps/3/title",
+      "python-fixture/su3-copy.json/cases/3/result/steps/3/title"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (ZXQD0DQXZ, ZXQD1DQXZ)，新坐标概率为 (ZXQD2DQXZ, ZXQD3DQXZ)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "只改一列，再修复生成元约定",
+    "origins": [
+      "python/su3_copy_lab.py",
+      "python-fixture/su3-copy.json/cases/0/result/steps/4/title",
+      "python-fixture/su3-copy.json/cases/1/result/steps/4/title",
+      "python-fixture/su3-copy.json/cases/2/result/steps/4/title",
+      "python-fixture/su3-copy.json/cases/3/result/steps/4/title"
+    ]
+  },
+  {
+    "source": "只改 μ=3 的对称列符号后，正交性仍成立；旧 E₁₂ 的最大逐项残差为 ZXQD0DQXZ。使用 D′=Q†DQ 后，全部八个交织残差恢复为零。",
+    "origins": [
+      "python-template/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "精确教学检验未通过：",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "两个零权内部态为 ",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "；每个内部态都有 s/a 两份嵌入，共四条不同列。",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "本次 θ=",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": ")，新坐标概率为 (",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": ")；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "只改 μ=3 的对称列符号后，正交性仍成立；旧 E₁₂ 的最大逐项残差为 ",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
+    "source": "。使用 D′=Q†DQ 后，全部八个交织残差恢复为零。",
+    "origins": [
+      "python/su3_copy_lab.py"
+    ]
+  },
+  {
     "source": "SU(3) 9j 与四重张量积重耦合",
     "origins": [
       "python/su3_ninej.py"
@@ -25433,6 +25761,165 @@
     "source": "模整数平移的 C3 商群",
     "origins": [
       "python-fixture/spin-actions.json/legacyCases/4/result/group/label"
+    ]
+  },
+  {
+    "source": "继续使用旧标准 GT 生成元时，E₁₂ 的最大逐项交织残差为 2*sqrt(15)/5；错误在于基底与生成元约定不一致。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/0/result/counterexample/notes/1",
+      "python-fixture/su3-copy.json/cases/1/result/counterexample/notes/1",
+      "python-fixture/su3-copy.json/cases/2/result/counterexample/notes/1",
+      "python-fixture/su3-copy.json/cases/3/result/counterexample/notes/1",
+      "python-fixture/su3-copy.json/cases/4/result/counterexample/notes/1"
+    ]
+  },
+  {
+    "source": "两个零权内部态为 μ=3、GT[2,0;1]、I=1；μ=4、GT[1,1;1]、I=0；每个内部态都有 s/a 两份嵌入，共四条不同列。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/0/result/steps/0/text",
+      "python-fixture/su3-copy.json/cases/1/result/steps/0/text",
+      "python-fixture/su3-copy.json/cases/2/result/steps/0/text",
+      "python-fixture/su3-copy.json/cases/3/result/steps/0/text",
+      "python-fixture/su3-copy.json/cases/4/result/steps/0/text"
+    ]
+  },
+  {
+    "source": "本次 θ=0°、ζ=1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/0/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (1, 0)，新坐标概率为 (1, 0)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/0/result/steps/3/text",
+      "python-fixture/su3-copy.json/cases/1/result/steps/3/text",
+      "python-fixture/su3-copy.json/cases/2/result/steps/3/text",
+      "python-fixture/su3-copy.json/cases/3/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "只改 μ=3 的对称列符号后，正交性仍成立；旧 E₁₂ 的最大逐项残差为 2*sqrt(15)/5。使用 D′=Q†DQ 后，全部八个交织残差恢复为零。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/0/result/steps/4/text",
+      "python-fixture/su3-copy.json/cases/1/result/steps/4/text",
+      "python-fixture/su3-copy.json/cases/2/result/steps/4/text",
+      "python-fixture/su3-copy.json/cases/3/result/steps/4/text",
+      "python-fixture/su3-copy.json/cases/4/result/steps/4/text"
+    ]
+  },
+  {
+    "source": "本次 θ=0°、ζ=i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/1/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "本次 θ=0°、ζ=-1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/2/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "本次 θ=0°、ζ=-i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/3/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "本次 θ=45°、ζ=1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/4/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (sqrt(2)/2, -sqrt(2)/2)，新坐标概率为 (1/2, 1/2)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/4/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=45°、ζ=i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/5/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (sqrt(2)/2, sqrt(2)*I/2)，新坐标概率为 (1/2, 1/2)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/5/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=45°、ζ=-1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/6/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (sqrt(2)/2, sqrt(2)/2)，新坐标概率为 (1/2, 1/2)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/6/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=45°、ζ=-i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/7/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (sqrt(2)/2, -sqrt(2)*I/2)，新坐标概率为 (1/2, 1/2)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/7/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=90°、ζ=1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/8/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (0, -1)，新坐标概率为 (0, 1)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/8/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=90°、ζ=i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/9/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (0, I)，新坐标概率为 (0, 1)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/9/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=90°、ζ=-1，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/10/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (0, 1)，新坐标概率为 (0, 1)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/10/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "本次 θ=90°、ζ=-i，先取 R=Rθ diag(1,ζ)，再取完整 U=R⊗I8。全部 16 条派生列同时变换，八个标准生成元保持不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/11/result/steps/2/text"
+    ]
+  },
+  {
+    "source": "原 |8s,μ⟩ 的新副本坐标为 (0, -I)，新坐标概率为 (0, 1)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
+    "origins": [
+      "python-fixture/su3-copy.json/cases/11/result/steps/3/text"
     ]
   }
 ]

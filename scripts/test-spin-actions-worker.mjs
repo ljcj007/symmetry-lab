@@ -76,4 +76,11 @@ for(const [payload,packages,optional]of [
  assert.deepEqual(old.fetched,modulePaths([...baseModules,...optional]));
  assert.ok(!old.fetched.includes('/python/su3_basis_lab.py'));
 }
-console.log('Spin actions Worker: actual conditional loader, exact SU(3) basis numpy+sympy/three-core plan, current module versions and unchanged finite/CG/Racah/9j plans passed.');
+const copy=await loading({lab:'su3_copy',angle:45,phase:'i'});
+assert.deepEqual(copy.packages,['numpy','sympy']);
+assert.deepEqual(copy.fetched,modulePaths([...baseModules,'su3_cg','su3_cg_exact','su3_copy_lab']));
+assert.ok(copy.files.some(x=>x.path==='/home/pyodide/su3_copy_lab.py'&&x.body.includes('symmetry-lab-su3-copy-1')));
+assert.ok(copy.versions.every(v=>v&&v===copy.versions[0]));
+for(const old of [spin,momentum,composition,basis,exact])assert.ok(!old.fetched.includes('/python/su3_copy_lab.py'));
+assert.ok(!copy.fetched.includes('/python/su3_basis_lab.py'));
+console.log('Actual Worker loader: optional exact SU(3) GT/copy plans, current versions and unchanged finite/CG/Racah/9j dependencies passed.');

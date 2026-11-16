@@ -25,13 +25,13 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 45840,
-      "sha256": "3fd388065de8b19b3434f2f4a1fe08920743dc6351706225ebaf91cc175a7e94"
+      "bytes": 48255,
+      "sha256": "8aedc3066e7942ae1485bb4dda594b158a9ea04a71649b11f5bb42ac255aa76f"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97845,
-      "sha256": "6a74694cf593cd71540c1c0bfcec6cc52f331cccd0d4d3f190748b524176d7e6"
+      "bytes": 97838,
+      "sha256": "103327b0bb5535a71fc8f6e88c65430df54b8e1b52f8e475745b70884b219e48"
     },
     "dist/crystal-notation.js": {
       "normalization": "utf8-lf-v1",
@@ -60,8 +60,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7463,
-      "sha256": "8d3476b94f96b1f88ddbf9858f83df7550a1fda56e71350c5f6b66c2e18dbdf6"
+      "bytes": 7523,
+      "sha256": "b1634dbf41d397b50759ad69dd3c627f6c29e166603af4313548f28cea79569b"
     },
     "dist/math-display.css": {
       "normalization": "utf8-lf-v1",
@@ -95,8 +95,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17947,
-      "sha256": "abe7e344344dbe42fd282f82c776a201783d9bbc2b21ac7908e723a915cd5581"
+      "bytes": 18465,
+      "sha256": "a2d7db7ccc89aa62a2c5de8fd22be3f866afb5a32cfd00ef1c6678cc2880268d"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -110,8 +110,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3235,
-      "sha256": "80f4c56def4d06dadcc01636bfa392951ac1bccef03dff63191478c528997a50"
+      "bytes": 3351,
+      "sha256": "a5a28c3ac51c619ed976c94f43744cbf68cc13d842f2d8e826422fe24fea5e37"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -170,8 +170,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4082,
-      "sha256": "0291c7c79c3d5777caf9fb9c16a7689853088ba15c4cffc2f42bbb79e7f86143"
+      "bytes": 4115,
+      "sha256": "f6393fd131cbdaae57fa0e1332a8bb5aa75531c3eda256f9ce34e995d3dbd339"
     }
   }
 }
