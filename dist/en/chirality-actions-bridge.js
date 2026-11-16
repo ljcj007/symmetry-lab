@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {CHIRALITY_ACTIONS_REFERENCE} from './chirality-actions-reference.js?v=20261115-derivations1';
+import {CHIRALITY_ACTIONS_REFERENCE} from './chirality-actions-reference.js?v=20261116-water1';
 
 export const CHIRALITY_ACTIONS_BRIDGE_HOOKS=Object.freeze({
  'chiral-mirror':Object.freeze(['mirror-trace']),

@@ -40,13 +40,13 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 48255,
-      "sha256": "8aedc3066e7942ae1485bb4dda594b158a9ea04a71649b11f5bb42ac255aa76f"
+      "bytes": 50360,
+      "sha256": "f610750dd50ca99c600b226e02c362eeafb38b4fd5459bfd744be6a2687b1d43"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97838,
-      "sha256": "103327b0bb5535a71fc8f6e88c65430df54b8e1b52f8e475745b70884b219e48"
+      "bytes": 97845,
+      "sha256": "9799434a2505c13d9ab56e678b31dc26fc781255f3c9138bab5d6c23244cb0db"
     },
     "dist/connections-views.js": {
       "normalization": "utf8-lf-v1",
@@ -60,8 +60,8 @@
     },
     "dist/coupled-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 36133,
-      "sha256": "dc514d53949618d0e82ff17e2becebe3dc36118cfa082719a575b20f91e7f68f"
+      "bytes": 36135,
+      "sha256": "b8231a6206b0703504d7ccc4cb94200c7298aed0e380a9ec8fb9212b07db68ee"
     },
     "dist/data/bridges-materials.json": {
       "normalization": "utf8-lf-v1",
@@ -75,18 +75,18 @@
     },
     "dist/electronic-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32612,
-      "sha256": "c6a0c18fe812a522f77520536e0cc0989945a35d4b8a6edb73d6f46634606202"
+      "bytes": 32614,
+      "sha256": "3d823943b1fb7d155a198efe54add63d857d362de8eeda5067857c673868417f"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7523,
-      "sha256": "b1634dbf41d397b50759ad69dd3c627f6c29e166603af4313548f28cea79569b"
+      "bytes": 7591,
+      "sha256": "5f187b13884fe72e1372d64043a33d172a75f3d489c5a8557674dafa923d7eb8"
     },
     "dist/lie-group-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 59789,
-      "sha256": "b6ba2aa23a9df33d8862152d84640c6ecf9ae448bc554abda793b88e0dc8c6b9"
+      "sha256": "c036b566d8b8f5821629b91d1a1dfe1729d2acd8a3ebeff1f49ec8e21ced755c"
     },
     "dist/lie-physics-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -95,13 +95,13 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24767,
-      "sha256": "bd45d27b675a8b3752bbdfd4cf0818e93e2bc8dff61ffcaa893fb6114affafdd"
+      "bytes": 24768,
+      "sha256": "5235a0176a7da2cbc7e90eae7993860059fe72eabc24100f1ec089f20b6e90e2"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50727,
-      "sha256": "f40897d4883d9332808b9291425ed3c071af06721b4ced0a6db10bf21672fdef"
+      "bytes": 50728,
+      "sha256": "8a69c18127c95342460fb25e17bcc062d6a9b428584b29a3b68efda5110a56f6"
     },
     "dist/observables-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -115,13 +115,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3136,
-      "sha256": "9a840dcde5a5172f6592436412efc33e2ad73b4599509da285a69f9c42b56e41"
+      "bytes": 3137,
+      "sha256": "029db58cb2c6e5cad112f3c79e113e65b591ea074a40f3b5ba7dcfb8030b9b21"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11637,
-      "sha256": "d2372a4655d54d96ebb14869f3638ff6abb1397406b702b38f62f93da9b968d7"
+      "bytes": 11690,
+      "sha256": "98ae5f84c29d8bae49c860c90759d653e6ccab8cd4940b66d31296454898b2f2"
     },
     "dist/python/lie_applications.py": {
       "normalization": "utf8-lf-v1",
@@ -130,8 +130,8 @@
     },
     "dist/quantum-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 37648,
-      "sha256": "108c7412ae35baead81a753fa66cd6a7fee70e3bb363ef1ee1adb9e2593ea7a2"
+      "bytes": 37649,
+      "sha256": "8fafbf2ecf098d4c5dbd7e9c6fd812d125b48f0300a21083f8ce956c802b3377"
     },
     "dist/rabi-state-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -175,8 +175,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18465,
-      "sha256": "a2d7db7ccc89aa62a2c5de8fd22be3f866afb5a32cfd00ef1c6678cc2880268d"
+      "bytes": 19085,
+      "sha256": "2e92ecced049226d6d94adb2fc3d2ccae4d284c7159bd266309dfbfa492fe356"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -195,13 +195,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3351,
-      "sha256": "a5a28c3ac51c619ed976c94f43744cbf68cc13d842f2d8e826422fe24fea5e37"
+      "bytes": 3456,
+      "sha256": "1d1f20f1a7e0d5a3c9cf9ccc9ccb37f3fb8fa82a43bbf81ba6889728888790db"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869590,
-      "sha256": "8224c8f5a5489dcb97097d75d70b2d37f6867be904ad7874ab862b45babfd207"
+      "bytes": 869676,
+      "sha256": "88dc0a4d97597f34dd29d84fa937a6a1cec00be4e71eeed8c131a3d588ed6acb"
     },
     "scripts/fixtures/bridges.json.gz": {
       "normalization": "raw-bytes",
@@ -210,8 +210,8 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736646,
-      "sha256": "221026b5320b88b16cb21590cfccfa701475442bf6339e9cf09d784b389ab37f"
+      "bytes": 1736732,
+      "sha256": "08862a77488ed333e42dfa4305b6ec80685d4619a4acf5b878f40ac1f7e2e5f5"
     },
     "scripts/fixtures/rabi-state-bridge-baseline-source.py.gz": {
       "normalization": "raw-bytes",

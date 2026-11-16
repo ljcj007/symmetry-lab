@@ -1,0 +1,3619 @@
+{
+  "schema": "symmetry-lab-water-actions-fixture-1",
+  "method": "Actual browser_api.run water_actions with empty input; exact integer action/character ledger, not manufactured UI traces.",
+  "sourceHashEncoding": "utf8-lf-v1",
+  "sourceHashes": {
+    "dist/python/water_actions.py": "79f8d2c6278b227e5ac65f8f7475bb3b1b2894ac93a0281ddfae2d1179acd415",
+    "dist/python/browser_api.py": "fb0e2d1d6d0dffd856a87c0785f09e50ee9505a709e7727e1bae3bb054861c38"
+  },
+  "cases": [
+    {
+      "id": "water-xz-all-four-actions",
+      "action": "water_actions",
+      "input": {},
+      "result": {
+        "schema": "symmetry-lab-water-actions-1",
+        "action": "water_actions",
+        "input": {},
+        "title": "Water displacements: from a matrix column to vibrational selection rules",
+        "conventions": {
+          "plane": "xz",
+          "group": "C2v",
+          "mainAxis": "z",
+          "operationOrder": [
+            "E",
+            "C2",
+            "sigma-xz",
+            "sigma-yz"
+          ],
+          "basisOrder": [
+            "Ox",
+            "Oy",
+            "Oz",
+            "H1x",
+            "H1y",
+            "H1z",
+            "H2x",
+            "H2y",
+            "H2z"
+          ],
+          "active": true,
+          "columns": "Column j is the image of the original displacement basis vector j.",
+          "composition": "AB applies B first.",
+          "scope": "A fixed bent nonlinear molecule. Displacements and translations are polar; rotations are axial. Character subtraction identifies symmetry types, not force-constant eigenvectors."
+        },
+        "basis": [
+          {
+            "index": 0,
+            "atomIndex": 0,
+            "atomId": "O",
+            "axis": "x",
+            "label": "Ox",
+            "unitVector": [
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "index": 1,
+            "atomIndex": 0,
+            "atomId": "O",
+            "axis": "y",
+            "label": "Oy",
+            "unitVector": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "index": 2,
+            "atomIndex": 0,
+            "atomId": "O",
+            "axis": "z",
+            "label": "Oz",
+            "unitVector": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "atomIndex": 1,
+            "atomId": "H1",
+            "axis": "x",
+            "label": "H1x",
+            "unitVector": [
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "index": 4,
+            "atomIndex": 1,
+            "atomId": "H1",
+            "axis": "y",
+            "label": "H1y",
+            "unitVector": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "index": 5,
+            "atomIndex": 1,
+            "atomId": "H1",
+            "axis": "z",
+            "label": "H1z",
+            "unitVector": [
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "index": 6,
+            "atomIndex": 2,
+            "atomId": "H2",
+            "axis": "x",
+            "label": "H2x",
+            "unitVector": [
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "index": 7,
+            "atomIndex": 2,
+            "atomId": "H2",
+            "axis": "y",
+            "label": "H2y",
+            "unitVector": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "index": 8,
+            "atomIndex": 2,
+            "atomId": "H2",
+            "axis": "z",
+            "label": "H2z",
+            "unitVector": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "atoms": [
+          {
+            "index": 0,
+            "id": "O",
+            "element": "O",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "index": 1,
+            "id": "H1",
+            "element": "H",
+            "position": [
+              0.790689573744,
+              0.0,
+              0.612217280034
+            ]
+          },
+          {
+            "index": 2,
+            "id": "H2",
+            "element": "H",
+            "position": [
+              -0.790689573744,
+              0.0,
+              0.612217280034
+            ]
+          }
+        ],
+        "drawing": {
+          "plane": "xz",
+          "angleDegrees": 104.5,
+          "coordinateDecimalPlaces": 12,
+          "scope": "Illustrative equilibrium coordinates rounded to 12 decimal places for display only; all action matrices and characters are exact integers independent of the drawing angle."
+        },
+        "operationOrder": [
+          "E",
+          "C2",
+          "sigma-xz",
+          "sigma-yz"
+        ],
+        "operations": [
+          {
+            "index": 0,
+            "id": "E",
+            "label": "E",
+            "polar": {
+              "matrix": [
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                1,
+                1,
+                1
+              ],
+              "trace": 3
+            },
+            "axial": {
+              "matrix": [
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                1,
+                1,
+                1
+              ],
+              "trace": 3
+            },
+            "determinant": 1,
+            "atomPermutation": [
+              0,
+              1,
+              2
+            ],
+            "atomMaps": [
+              {
+                "sourceAtomIndex": 0,
+                "targetAtomIndex": 0,
+                "sourceAtomId": "O",
+                "targetAtomId": "O",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 1,
+                "targetAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "targetAtomId": "H1",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 2,
+                "targetAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "targetAtomId": "H2",
+                "fixed": true
+              }
+            ],
+            "fixedAtomIndices": [
+              0,
+              1,
+              2
+            ],
+            "fixedAtomCount": 3,
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ]
+            ],
+            "latex": "\\begin{pmatrix}1&0&0&0&0&0&0&0&0\\\\0&1&0&0&0&0&0&0&0\\\\0&0&1&0&0&0&0&0&0\\\\0&0&0&1&0&0&0&0&0\\\\0&0&0&0&1&0&0&0&0\\\\0&0&0&0&0&1&0&0&0\\\\0&0&0&0&0&0&1&0&0\\\\0&0&0&0&0&0&0&1&0\\\\0&0&0&0&0&0&0&0&1\\end{pmatrix}",
+            "diagonal": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "trace": 9,
+            "traceTerms": [
+              {
+                "basisIndex": 0,
+                "basisLabel": "Ox",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 1,
+                "basisLabel": "Oy",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 2,
+                "basisLabel": "Oz",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 3,
+                "basisLabel": "H1x",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 4,
+                "basisLabel": "H1y",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 5,
+                "basisLabel": "H1z",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 6,
+                "basisLabel": "H2x",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 7,
+                "basisLabel": "H2y",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 8,
+                "basisLabel": "H2z",
+                "coefficient": 1
+              }
+            ],
+            "columns": [
+              {
+                "index": 0,
+                "sourceBasisIndex": 0,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "x",
+                "sourceLabel": "Ox",
+                "targetBasisIndex": 0,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "x",
+                "targetLabel": "Ox",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 1,
+                "sourceBasisIndex": 1,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "y",
+                "sourceLabel": "Oy",
+                "targetBasisIndex": 1,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "y",
+                "targetLabel": "Oy",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 2,
+                "sourceBasisIndex": 2,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "z",
+                "sourceLabel": "Oz",
+                "targetBasisIndex": 2,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "z",
+                "targetLabel": "Oz",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 3,
+                "sourceBasisIndex": 3,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "x",
+                "sourceLabel": "H1x",
+                "targetBasisIndex": 3,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "x",
+                "targetLabel": "H1x",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 4,
+                "sourceBasisIndex": 4,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "y",
+                "sourceLabel": "H1y",
+                "targetBasisIndex": 4,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "y",
+                "targetLabel": "H1y",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 5,
+                "sourceBasisIndex": 5,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "z",
+                "sourceLabel": "H1z",
+                "targetBasisIndex": 5,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "z",
+                "targetLabel": "H1z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 6,
+                "sourceBasisIndex": 6,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "x",
+                "sourceLabel": "H2x",
+                "targetBasisIndex": 6,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "x",
+                "targetLabel": "H2x",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 7,
+                "sourceBasisIndex": 7,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "y",
+                "sourceLabel": "H2y",
+                "targetBasisIndex": 7,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "y",
+                "targetLabel": "H2y",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 8,
+                "sourceBasisIndex": 8,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "z",
+                "sourceLabel": "H2z",
+                "targetBasisIndex": 8,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "z",
+                "targetLabel": "H2z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\end{pmatrix}",
+                "diagonalContribution": 1
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "id": "C2",
+            "label": "C2(z)",
+            "polar": {
+              "matrix": [
+                [
+                  -1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}-1&0&0\\\\0&-1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                -1,
+                -1,
+                1
+              ],
+              "trace": -1
+            },
+            "axial": {
+              "matrix": [
+                [
+                  -1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}-1&0&0\\\\0&-1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                -1,
+                -1,
+                1
+              ],
+              "trace": -1
+            },
+            "determinant": 1,
+            "atomPermutation": [
+              0,
+              2,
+              1
+            ],
+            "atomMaps": [
+              {
+                "sourceAtomIndex": 0,
+                "targetAtomIndex": 0,
+                "sourceAtomId": "O",
+                "targetAtomId": "O",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 1,
+                "targetAtomIndex": 2,
+                "sourceAtomId": "H1",
+                "targetAtomId": "H2",
+                "fixed": false
+              },
+              {
+                "sourceAtomIndex": 2,
+                "targetAtomIndex": 1,
+                "sourceAtomId": "H2",
+                "targetAtomId": "H1",
+                "fixed": false
+              }
+            ],
+            "fixedAtomIndices": [
+              0
+            ],
+            "fixedAtomCount": 1,
+            "matrix": [
+              [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ]
+            ],
+            "latex": "\\begin{pmatrix}-1&0&0&0&0&0&0&0&0\\\\0&-1&0&0&0&0&0&0&0\\\\0&0&1&0&0&0&0&0&0\\\\0&0&0&0&0&0&-1&0&0\\\\0&0&0&0&0&0&0&-1&0\\\\0&0&0&0&0&0&0&0&1\\\\0&0&0&-1&0&0&0&0&0\\\\0&0&0&0&-1&0&0&0&0\\\\0&0&0&0&0&1&0&0&0\\end{pmatrix}",
+            "diagonal": [
+              -1,
+              -1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "trace": -1,
+            "traceTerms": [
+              {
+                "basisIndex": 0,
+                "basisLabel": "Ox",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 1,
+                "basisLabel": "Oy",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 2,
+                "basisLabel": "Oz",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 3,
+                "basisLabel": "H1x",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 4,
+                "basisLabel": "H1y",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 5,
+                "basisLabel": "H1z",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 6,
+                "basisLabel": "H2x",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 7,
+                "basisLabel": "H2y",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 8,
+                "basisLabel": "H2z",
+                "coefficient": 0
+              }
+            ],
+            "columns": [
+              {
+                "index": 0,
+                "sourceBasisIndex": 0,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "x",
+                "sourceLabel": "Ox",
+                "targetBasisIndex": 0,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "x",
+                "targetLabel": "Ox",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}-1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 1,
+                "sourceBasisIndex": 1,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "y",
+                "sourceLabel": "Oy",
+                "targetBasisIndex": 1,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "y",
+                "targetLabel": "Oy",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\-1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 2,
+                "sourceBasisIndex": 2,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "z",
+                "sourceLabel": "Oz",
+                "targetBasisIndex": 2,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "z",
+                "targetLabel": "Oz",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 3,
+                "sourceBasisIndex": 3,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "x",
+                "sourceLabel": "H1x",
+                "targetBasisIndex": 6,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "x",
+                "targetLabel": "H2x",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\-1\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 4,
+                "sourceBasisIndex": 4,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "y",
+                "sourceLabel": "H1y",
+                "targetBasisIndex": 7,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "y",
+                "targetLabel": "H2y",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\-1\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 5,
+                "sourceBasisIndex": 5,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "z",
+                "sourceLabel": "H1z",
+                "targetBasisIndex": 8,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "z",
+                "targetLabel": "H2z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 6,
+                "sourceBasisIndex": 6,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "x",
+                "sourceLabel": "H2x",
+                "targetBasisIndex": 3,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "x",
+                "targetLabel": "H1x",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\-1\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 7,
+                "sourceBasisIndex": 7,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "y",
+                "sourceLabel": "H2y",
+                "targetBasisIndex": 4,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "y",
+                "targetLabel": "H1y",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\-1\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 8,
+                "sourceBasisIndex": 8,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "z",
+                "sourceLabel": "H2z",
+                "targetBasisIndex": 5,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "z",
+                "targetLabel": "H1z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "id": "sigma-xz",
+            "label": "sigma(xz)",
+            "polar": {
+              "matrix": [
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}1&0&0\\\\0&-1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                1,
+                -1,
+                1
+              ],
+              "trace": 1
+            },
+            "axial": {
+              "matrix": [
+                [
+                  -1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  -1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}-1&0&0\\\\0&1&0\\\\0&0&-1\\end{pmatrix}",
+              "diagonal": [
+                -1,
+                1,
+                -1
+              ],
+              "trace": -1
+            },
+            "determinant": -1,
+            "atomPermutation": [
+              0,
+              1,
+              2
+            ],
+            "atomMaps": [
+              {
+                "sourceAtomIndex": 0,
+                "targetAtomIndex": 0,
+                "sourceAtomId": "O",
+                "targetAtomId": "O",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 1,
+                "targetAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "targetAtomId": "H1",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 2,
+                "targetAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "targetAtomId": "H2",
+                "fixed": true
+              }
+            ],
+            "fixedAtomIndices": [
+              0,
+              1,
+              2
+            ],
+            "fixedAtomCount": 3,
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ]
+            ],
+            "latex": "\\begin{pmatrix}1&0&0&0&0&0&0&0&0\\\\0&-1&0&0&0&0&0&0&0\\\\0&0&1&0&0&0&0&0&0\\\\0&0&0&1&0&0&0&0&0\\\\0&0&0&0&-1&0&0&0&0\\\\0&0&0&0&0&1&0&0&0\\\\0&0&0&0&0&0&1&0&0\\\\0&0&0&0&0&0&0&-1&0\\\\0&0&0&0&0&0&0&0&1\\end{pmatrix}",
+            "diagonal": [
+              1,
+              -1,
+              1,
+              1,
+              -1,
+              1,
+              1,
+              -1,
+              1
+            ],
+            "trace": 3,
+            "traceTerms": [
+              {
+                "basisIndex": 0,
+                "basisLabel": "Ox",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 1,
+                "basisLabel": "Oy",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 2,
+                "basisLabel": "Oz",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 3,
+                "basisLabel": "H1x",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 4,
+                "basisLabel": "H1y",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 5,
+                "basisLabel": "H1z",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 6,
+                "basisLabel": "H2x",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 7,
+                "basisLabel": "H2y",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 8,
+                "basisLabel": "H2z",
+                "coefficient": 1
+              }
+            ],
+            "columns": [
+              {
+                "index": 0,
+                "sourceBasisIndex": 0,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "x",
+                "sourceLabel": "Ox",
+                "targetBasisIndex": 0,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "x",
+                "targetLabel": "Ox",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 1,
+                "sourceBasisIndex": 1,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "y",
+                "sourceLabel": "Oy",
+                "targetBasisIndex": 1,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "y",
+                "targetLabel": "Oy",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\-1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 2,
+                "sourceBasisIndex": 2,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "z",
+                "sourceLabel": "Oz",
+                "targetBasisIndex": 2,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "z",
+                "targetLabel": "Oz",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 3,
+                "sourceBasisIndex": 3,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "x",
+                "sourceLabel": "H1x",
+                "targetBasisIndex": 3,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "x",
+                "targetLabel": "H1x",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 4,
+                "sourceBasisIndex": 4,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "y",
+                "sourceLabel": "H1y",
+                "targetBasisIndex": 4,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "y",
+                "targetLabel": "H1y",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\-1\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 5,
+                "sourceBasisIndex": 5,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "z",
+                "sourceLabel": "H1z",
+                "targetBasisIndex": 5,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "z",
+                "targetLabel": "H1z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 6,
+                "sourceBasisIndex": 6,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "x",
+                "sourceLabel": "H2x",
+                "targetBasisIndex": 6,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "x",
+                "targetLabel": "H2x",
+                "coefficient": 1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 7,
+                "sourceBasisIndex": 7,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "y",
+                "sourceLabel": "H2y",
+                "targetBasisIndex": 7,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "y",
+                "targetLabel": "H2y",
+                "coefficient": -1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  -1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\-1\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 8,
+                "sourceBasisIndex": 8,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "z",
+                "sourceLabel": "H2z",
+                "targetBasisIndex": 8,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "z",
+                "targetLabel": "H2z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\end{pmatrix}",
+                "diagonalContribution": 1
+              }
+            ]
+          },
+          {
+            "index": 3,
+            "id": "sigma-yz",
+            "label": "sigma(yz)",
+            "polar": {
+              "matrix": [
+                [
+                  -1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}-1&0&0\\\\0&1&0\\\\0&0&1\\end{pmatrix}",
+              "diagonal": [
+                -1,
+                1,
+                1
+              ],
+              "trace": 1
+            },
+            "axial": {
+              "matrix": [
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  -1
+                ]
+              ],
+              "latex": "\\begin{pmatrix}1&0&0\\\\0&-1&0\\\\0&0&-1\\end{pmatrix}",
+              "diagonal": [
+                1,
+                -1,
+                -1
+              ],
+              "trace": -1
+            },
+            "determinant": -1,
+            "atomPermutation": [
+              0,
+              2,
+              1
+            ],
+            "atomMaps": [
+              {
+                "sourceAtomIndex": 0,
+                "targetAtomIndex": 0,
+                "sourceAtomId": "O",
+                "targetAtomId": "O",
+                "fixed": true
+              },
+              {
+                "sourceAtomIndex": 1,
+                "targetAtomIndex": 2,
+                "sourceAtomId": "H1",
+                "targetAtomId": "H2",
+                "fixed": false
+              },
+              {
+                "sourceAtomIndex": 2,
+                "targetAtomIndex": 1,
+                "sourceAtomId": "H2",
+                "targetAtomId": "H1",
+                "fixed": false
+              }
+            ],
+            "fixedAtomIndices": [
+              0
+            ],
+            "fixedAtomCount": 1,
+            "matrix": [
+              [
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                -1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+              ]
+            ],
+            "latex": "\\begin{pmatrix}-1&0&0&0&0&0&0&0&0\\\\0&1&0&0&0&0&0&0&0\\\\0&0&1&0&0&0&0&0&0\\\\0&0&0&0&0&0&-1&0&0\\\\0&0&0&0&0&0&0&1&0\\\\0&0&0&0&0&0&0&0&1\\\\0&0&0&-1&0&0&0&0&0\\\\0&0&0&0&1&0&0&0&0\\\\0&0&0&0&0&1&0&0&0\\end{pmatrix}",
+            "diagonal": [
+              -1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "trace": 1,
+            "traceTerms": [
+              {
+                "basisIndex": 0,
+                "basisLabel": "Ox",
+                "coefficient": -1
+              },
+              {
+                "basisIndex": 1,
+                "basisLabel": "Oy",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 2,
+                "basisLabel": "Oz",
+                "coefficient": 1
+              },
+              {
+                "basisIndex": 3,
+                "basisLabel": "H1x",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 4,
+                "basisLabel": "H1y",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 5,
+                "basisLabel": "H1z",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 6,
+                "basisLabel": "H2x",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 7,
+                "basisLabel": "H2y",
+                "coefficient": 0
+              },
+              {
+                "basisIndex": 8,
+                "basisLabel": "H2z",
+                "coefficient": 0
+              }
+            ],
+            "columns": [
+              {
+                "index": 0,
+                "sourceBasisIndex": 0,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "x",
+                "sourceLabel": "Ox",
+                "targetBasisIndex": 0,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "x",
+                "targetLabel": "Ox",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}-1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": -1
+              },
+              {
+                "index": 1,
+                "sourceBasisIndex": 1,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "y",
+                "sourceLabel": "Oy",
+                "targetBasisIndex": 1,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "y",
+                "targetLabel": "Oy",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 2,
+                "sourceBasisIndex": 2,
+                "sourceAtomIndex": 0,
+                "sourceAtomId": "O",
+                "sourceAxis": "z",
+                "sourceLabel": "Oz",
+                "targetBasisIndex": 2,
+                "targetAtomIndex": 0,
+                "targetAtomId": "O",
+                "targetAxis": "z",
+                "targetLabel": "Oz",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 1
+              },
+              {
+                "index": 3,
+                "sourceBasisIndex": 3,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "x",
+                "sourceLabel": "H1x",
+                "targetBasisIndex": 6,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "x",
+                "targetLabel": "H2x",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\-1\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 4,
+                "sourceBasisIndex": 4,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "y",
+                "sourceLabel": "H1y",
+                "targetBasisIndex": 7,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "y",
+                "targetLabel": "H2y",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 5,
+                "sourceBasisIndex": 5,
+                "sourceAtomIndex": 1,
+                "sourceAtomId": "H1",
+                "sourceAxis": "z",
+                "sourceLabel": "H1z",
+                "targetBasisIndex": 8,
+                "targetAtomIndex": 2,
+                "targetAtomId": "H2",
+                "targetAxis": "z",
+                "targetLabel": "H2z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\0\\\\1\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 6,
+                "sourceBasisIndex": 6,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "x",
+                "sourceLabel": "H2x",
+                "targetBasisIndex": 3,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "x",
+                "targetLabel": "H1x",
+                "coefficient": -1,
+                "inputArrow": [
+                  1,
+                  0,
+                  0
+                ],
+                "outputArrow": [
+                  -1,
+                  0,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\-1\\\\0\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 7,
+                "sourceBasisIndex": 7,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "y",
+                "sourceLabel": "H2y",
+                "targetBasisIndex": 4,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "y",
+                "targetLabel": "H1y",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "outputArrow": [
+                  0,
+                  1,
+                  0
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              },
+              {
+                "index": 8,
+                "sourceBasisIndex": 8,
+                "sourceAtomIndex": 2,
+                "sourceAtomId": "H2",
+                "sourceAxis": "z",
+                "sourceLabel": "H2z",
+                "targetBasisIndex": 5,
+                "targetAtomIndex": 1,
+                "targetAtomId": "H1",
+                "targetAxis": "z",
+                "targetLabel": "H1z",
+                "coefficient": 1,
+                "inputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "outputArrow": [
+                  0,
+                  0,
+                  1
+                ],
+                "vector": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "latex": "\\begin{pmatrix}0\\\\0\\\\0\\\\0\\\\0\\\\1\\\\0\\\\0\\\\0\\end{pmatrix}",
+                "diagonalContribution": 0
+              }
+            ]
+          }
+        ],
+        "characters": {
+          "fixedAtoms": [
+            3,
+            1,
+            3,
+            1
+          ],
+          "polar": [
+            3,
+            -1,
+            1,
+            1
+          ],
+          "axial": [
+            3,
+            -1,
+            -1,
+            -1
+          ],
+          "displacement": [
+            9,
+            -1,
+            3,
+            1
+          ],
+          "translation": [
+            3,
+            -1,
+            1,
+            1
+          ],
+          "rotation": [
+            3,
+            -1,
+            -1,
+            -1
+          ],
+          "vibration": [
+            3,
+            1,
+            3,
+            1
+          ]
+        },
+        "characterTable": {
+          "operationOrder": [
+            "E",
+            "C2",
+            "sigma-xz",
+            "sigma-yz"
+          ],
+          "classSizes": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "groupOrder": 4,
+          "rows": [
+            {
+              "irrep": "A1",
+              "dimension": 1,
+              "characters": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "polarBasis": [
+                "z"
+              ],
+              "axialBasis": [],
+              "ramanBasis": [
+                "xx",
+                "yy",
+                "zz"
+              ]
+            },
+            {
+              "irrep": "A2",
+              "dimension": 1,
+              "characters": [
+                1,
+                1,
+                -1,
+                -1
+              ],
+              "polarBasis": [],
+              "axialBasis": [
+                "Rz"
+              ],
+              "ramanBasis": [
+                "xy"
+              ]
+            },
+            {
+              "irrep": "B1",
+              "dimension": 1,
+              "characters": [
+                1,
+                -1,
+                1,
+                -1
+              ],
+              "polarBasis": [
+                "x"
+              ],
+              "axialBasis": [
+                "Ry"
+              ],
+              "ramanBasis": [
+                "xz",
+                "zx"
+              ]
+            },
+            {
+              "irrep": "B2",
+              "dimension": 1,
+              "characters": [
+                1,
+                -1,
+                -1,
+                1
+              ],
+              "polarBasis": [
+                "y"
+              ],
+              "axialBasis": [
+                "Rx"
+              ],
+              "ramanBasis": [
+                "yz",
+                "zy"
+              ]
+            }
+          ]
+        },
+        "reductions": {
+          "displacement": {
+            "characters": [
+              9,
+              -1,
+              3,
+              1
+            ],
+            "groupOrder": 4,
+            "components": [
+              {
+                "irrep": "A1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "weightedProducts": [
+                  9,
+                  -1,
+                  3,
+                  1
+                ],
+                "sum": 12,
+                "multiplicity": 3,
+                "dimensionContribution": 3
+              },
+              {
+                "irrep": "A2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  -1,
+                  -1
+                ],
+                "weightedProducts": [
+                  9,
+                  -1,
+                  -3,
+                  -1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "B1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "weightedProducts": [
+                  9,
+                  1,
+                  3,
+                  -1
+                ],
+                "sum": 12,
+                "multiplicity": 3,
+                "dimensionContribution": 3
+              },
+              {
+                "irrep": "B2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  -1,
+                  1
+                ],
+                "weightedProducts": [
+                  9,
+                  1,
+                  -3,
+                  1
+                ],
+                "sum": 8,
+                "multiplicity": 2,
+                "dimensionContribution": 2
+              }
+            ],
+            "decomposition": [
+              {
+                "irrep": "A1",
+                "multiplicity": 3,
+                "dimension": 1
+              },
+              {
+                "irrep": "A2",
+                "multiplicity": 1,
+                "dimension": 1
+              },
+              {
+                "irrep": "B1",
+                "multiplicity": 3,
+                "dimension": 1
+              },
+              {
+                "irrep": "B2",
+                "multiplicity": 2,
+                "dimension": 1
+              }
+            ],
+            "dimension": 9,
+            "dimensionSum": 9,
+            "latex": "3A_1+A_2+3B_1+2B_2"
+          },
+          "translation": {
+            "characters": [
+              3,
+              -1,
+              1,
+              1
+            ],
+            "groupOrder": 4,
+            "components": [
+              {
+                "irrep": "A1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "A2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  -1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  -1,
+                  -1
+                ],
+                "sum": 0,
+                "multiplicity": 0,
+                "dimensionContribution": 0
+              },
+              {
+                "irrep": "B1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  1,
+                  -1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "B2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  -1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  -1,
+                  1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              }
+            ],
+            "decomposition": [
+              {
+                "irrep": "A1",
+                "multiplicity": 1,
+                "dimension": 1
+              },
+              {
+                "irrep": "B1",
+                "multiplicity": 1,
+                "dimension": 1
+              },
+              {
+                "irrep": "B2",
+                "multiplicity": 1,
+                "dimension": 1
+              }
+            ],
+            "dimension": 3,
+            "dimensionSum": 3,
+            "latex": "A_1+B_1+B_2"
+          },
+          "rotation": {
+            "characters": [
+              3,
+              -1,
+              -1,
+              -1
+            ],
+            "groupOrder": 4,
+            "components": [
+              {
+                "irrep": "A1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  -1,
+                  -1
+                ],
+                "sum": 0,
+                "multiplicity": 0,
+                "dimensionContribution": 0
+              },
+              {
+                "irrep": "A2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  -1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "B1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  -1,
+                  1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "B2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  -1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  1,
+                  -1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              }
+            ],
+            "decomposition": [
+              {
+                "irrep": "A2",
+                "multiplicity": 1,
+                "dimension": 1
+              },
+              {
+                "irrep": "B1",
+                "multiplicity": 1,
+                "dimension": 1
+              },
+              {
+                "irrep": "B2",
+                "multiplicity": 1,
+                "dimension": 1
+              }
+            ],
+            "dimension": 3,
+            "dimensionSum": 3,
+            "latex": "A_2+B_1+B_2"
+          },
+          "vibration": {
+            "characters": [
+              3,
+              1,
+              3,
+              1
+            ],
+            "groupOrder": 4,
+            "components": [
+              {
+                "irrep": "A1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  3,
+                  1
+                ],
+                "sum": 8,
+                "multiplicity": 2,
+                "dimensionContribution": 2
+              },
+              {
+                "irrep": "A2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  1,
+                  -1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  1,
+                  -3,
+                  -1
+                ],
+                "sum": 0,
+                "multiplicity": 0,
+                "dimensionContribution": 0
+              },
+              {
+                "irrep": "B1",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  3,
+                  -1
+                ],
+                "sum": 4,
+                "multiplicity": 1,
+                "dimensionContribution": 1
+              },
+              {
+                "irrep": "B2",
+                "irrepDimension": 1,
+                "irrepCharacters": [
+                  1,
+                  -1,
+                  -1,
+                  1
+                ],
+                "weightedProducts": [
+                  3,
+                  -1,
+                  -3,
+                  1
+                ],
+                "sum": 0,
+                "multiplicity": 0,
+                "dimensionContribution": 0
+              }
+            ],
+            "decomposition": [
+              {
+                "irrep": "A1",
+                "multiplicity": 2,
+                "dimension": 1
+              },
+              {
+                "irrep": "B1",
+                "multiplicity": 1,
+                "dimension": 1
+              }
+            ],
+            "dimension": 3,
+            "dimensionSum": 3,
+            "latex": "2A_1+B_1"
+          }
+        },
+        "vibrations": {
+          "dimension": 3,
+          "latex": "2A_1+B_1",
+          "modeTypes": [
+            {
+              "id": "symmetric",
+              "label": "Symmetric stretching type",
+              "irrep": "A1"
+            },
+            {
+              "id": "bend",
+              "label": "Bending type",
+              "irrep": "A1"
+            },
+            {
+              "id": "antisymmetric",
+              "label": "Antisymmetric stretching type",
+              "irrep": "B1"
+            }
+          ],
+          "scope": "Three symmetry types only. The two A1 coordinates may mix in a force field; no normal-mode eigenvectors, force constants, frequencies or intensities are supplied."
+        },
+        "selectionChannels": [
+          {
+            "id": "ir-z",
+            "process": "ir",
+            "operator": "z",
+            "operatorIrrep": "A1",
+            "operatorCharacters": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "initialIrrep": "A1",
+            "modeRows": [
+              {
+                "modeId": "symmetric",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              },
+              {
+                "modeId": "bend",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              },
+              {
+                "modeId": "antisymmetric",
+                "finalIrrep": "B1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              }
+            ],
+            "scope": "Symmetry permission from a totally symmetric vibrational ground state; no intensity or frequency is inferred."
+          },
+          {
+            "id": "ir-x",
+            "process": "ir",
+            "operator": "x",
+            "operatorIrrep": "B1",
+            "operatorCharacters": [
+              1,
+              -1,
+              1,
+              -1
+            ],
+            "initialIrrep": "A1",
+            "modeRows": [
+              {
+                "modeId": "symmetric",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              },
+              {
+                "modeId": "bend",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              },
+              {
+                "modeId": "antisymmetric",
+                "finalIrrep": "B1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              }
+            ],
+            "scope": "Symmetry permission from a totally symmetric vibrational ground state; no intensity or frequency is inferred."
+          },
+          {
+            "id": "raman-xx",
+            "process": "raman",
+            "operator": "xx",
+            "operatorIrrep": "A1",
+            "operatorCharacters": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "initialIrrep": "A1",
+            "modeRows": [
+              {
+                "modeId": "symmetric",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              },
+              {
+                "modeId": "bend",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              },
+              {
+                "modeId": "antisymmetric",
+                "finalIrrep": "B1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              }
+            ],
+            "scope": "Symmetry permission from a totally symmetric vibrational ground state; no intensity or frequency is inferred."
+          },
+          {
+            "id": "raman-xz",
+            "process": "raman",
+            "operator": "xz",
+            "operatorIrrep": "B1",
+            "operatorCharacters": [
+              1,
+              -1,
+              1,
+              -1
+            ],
+            "initialIrrep": "A1",
+            "modeRows": [
+              {
+                "modeId": "symmetric",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              },
+              {
+                "modeId": "bend",
+                "finalIrrep": "A1",
+                "weightedProducts": [
+                  1,
+                  -1,
+                  1,
+                  -1
+                ],
+                "sum": 0,
+                "groupOrder": 4,
+                "multiplicity": 0,
+                "allowed": false
+              },
+              {
+                "modeId": "antisymmetric",
+                "finalIrrep": "B1",
+                "weightedProducts": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "sum": 4,
+                "groupOrder": 4,
+                "multiplicity": 1,
+                "allowed": true
+              }
+            ],
+            "scope": "Symmetry permission from a totally symmetric vibrational ground state; no intensity or frequency is inferred."
+          }
+        ],
+        "counterexample": {
+          "id": "fixed-atom-is-not-fixed-displacement",
+          "operationId": "C2",
+          "fixedAtomIndices": [
+            0
+          ],
+          "incorrectScalarGuess": 1,
+          "actualDisplacementCharacter": -1,
+          "oxygenDiagonal": [
+            -1,
+            -1,
+            1
+          ],
+          "hydrogenDiagonal": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "diagonal": [
+            -1,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "exampleColumn": 3,
+          "sourceLabel": "H1x",
+          "targetLabel": "H2x",
+          "coefficient": -1
+        },
+        "multiplicationTable": [
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            1,
+            0,
+            3,
+            2
+          ],
+          [
+            2,
+            3,
+            0,
+            1
+          ],
+          [
+            3,
+            2,
+            1,
+            0
+          ]
+        ],
+        "checks": [
+          {
+            "id": "orthogonality.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "trace.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "diagonalSum.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.E.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.E.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.E.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.E.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "orthogonality.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "trace.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "diagonalSum.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.C2.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.C2.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.C2.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.C2.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "orthogonality.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "trace.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "diagonalSum.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-xz.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-xz.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-xz.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-xz.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "orthogonality.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "trace.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "diagonalSum.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-yz.E",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-yz.C2",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-yz.sigma-xz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "multiplication.sigma-yz.sigma-yz",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "dimension.displacement",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "dimension.translation",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "dimension.rotation",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "dimension.vibration",
+            "passed": true,
+            "residual": 0
+          },
+          {
+            "id": "nonlinearVibrationalDimension",
+            "passed": true,
+            "residual": 0
+          }
+        ],
+        "sources": [
+          {
+            "id": "mit-symm4ml-displacements",
+            "title": "MIT Symm4ML: APS March Meeting 2026 tutorial",
+            "url": "https://symm4ml.mit.edu/symm4ml_s26/tutorials/aps-tutorial-2026",
+            "scope": "The molecular displacement action combines an atom permutation with a Cartesian vector action."
+          },
+          {
+            "id": "mit-503-vibrations",
+            "title": "MIT 5.03: Molecular vibrations and IR selection rules",
+            "url": "https://web.mit.edu/5.03/www/readings/molecular_vibrations/main.pdf",
+            "scope": "Fixed-atom vector traces, removal of translations and rotations for nonlinear molecules, and dipole selection rules. Axis labels are specified separately here."
+          }
+        ]
+      }
+    }
+  ]
+}

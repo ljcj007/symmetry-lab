@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {LAYER_ACTIONS_REFERENCE} from './layer-actions-reference.js?v=20261115-actions1';
+import {LAYER_ACTIONS_REFERENCE} from './layer-actions-reference.js?v=20261116-water1';
 
 // Finite coordinate arithmetic for two real 001 slab references. Enumeration,
 // arbitrary structures and classification remain the existing Python tools.

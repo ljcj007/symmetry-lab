@@ -26,6 +26,7 @@ catalogFiles.push('en-composition-ui.json','en-composition-host.json','en-compos
 catalogFiles.push('en-su3-basis-ui.json','en-su3-basis-host.json','en-su3-basis-python.json','en-su3-basis-docs.json');
 catalogFiles.push('en-prose-coordinate-labels.json');
 catalogFiles.push('en-su3-copy-ui.json','en-su3-copy-host.json','en-su3-copy-python.json','en-su3-copy-docs.json');
+catalogFiles.push('en-water-actions-ui.json','en-water-actions-host.json','en-water-actions-docs.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

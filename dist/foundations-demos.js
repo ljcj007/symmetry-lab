@@ -13,6 +13,9 @@ const text=(x,y,value,color='#17354c',size=18)=>`<text x="${x}" y="${y}" fill="$
 const THEMES=[['water','水分子 · 红外与拉曼'],['characters','矩阵、特征标与基函数'],['projection','D₃ 三角形 · 投影算符'],['splitting','SO(3) → O → D₄ 能级'],['jt','Jahn–Teller 效应'],['macro','晶体宏观对称性']];
 const DEFAULTS={water:{mode:'symmetric',phase:30,amplitude:.2,channel:'ir-z'},characters:{operation:'C4',basis:'xyz'},projection:{operation:1,seedSite:0,irrep:'E',row:0},splitting:{delta:1,ds:.12,dt:.03},jt:{qtheta:.65,qepsilon:.25,g:1,k:1,occupancy:1},macro:{n:4,translation:.35}};
 let latest=null;
+const waterActionsStates=new Map();
+const defaultWaterActionsLoader=()=>import('./water-actions-ui.js?v=20261116-water1');
+let previousFoundationsCleanup=()=>{};
 export const getFoundationsDemosResult=()=>latest;
 export const foundationsDemoThemes=THEMES.map(([id,title])=>({id,title}));
 
@@ -73,15 +76,88 @@ function jtScene(s){const r=jtPreview(s),emin=Math.min(-s.g*s.g/(2*s.k),r.lower)
 function macroScene(s){const allowed=[1,2,3,4,6].includes(Number(s.n)),angle=2*Math.PI/s.n,trace=2*Math.cos(angle),t=Number(s.translation);let body='';for(let i=-2;i<=2;i++)for(let j=-2;j<=2;j++){const triangular=[3,6].includes(Number(s.n)),x=180+(i+(triangular?j*.5:0))*42,y=175+j*(triangular?36.4:42);body+=`<circle cx="${x}" cy="${y}" r="4" fill="#9bb0bf"/>`;}body+=line(180,175,260,175,'#2478a4',4)+line(180,175,180+80*Math.cos(angle),175-80*Math.sin(angle),'#a35038',4)+text(180,315,'旋转作用在平移格上')+text(465,95,'{R | t} → R')+text(465,145,'空间群 / 平移子群')+text(465,190,'= 宏观点群')+text(465,255,'不是任一点的位点对称群');return {plot:svg('从空间群去除平移得到宏观点群',body),data:{n:Number(s.n),allowed,planeTrace:trace,translation:t},html:`<h3>${s.n} 重轴：${allowed?'与三维周期晶格的晶体学限制相容':'不属于三维周期晶格允许的晶体学旋转阶数'}</h3><p>在周期平移格的基底中，旋转必须由整数矩阵表示。旋转轴垂直平面的迹 ${math('2\\cos(2\\pi/n)')} = ${fmt(trace)}；${allowed?'它满足相应整数条件。':'n=5 时该数不是整数，不能保持三维周期平移格。'}</p><p>同一个旋转 R 配上不同平移 tₓ=${fmt(t)}，属于不同 Seitz 操作；去掉平移后都映射到相同 R。宏观点群用 ${math('G/T')} 表示，T 是全部晶格平移组成的正规子群。</p><p>这解释了为什么宏观均匀物性张量由点群约束，而螺旋/滑移的分数平移仍会影响衍射消光和 Bloch 相位。宏观点群也不等于任意原子的位点对称群。</p>`,exercise:exercise('宏观物性中去掉了平移，是否意味着平移对所有实验都无关？',['宏观均匀张量不分辨同种局域结构的晶格平移，对称约束可用 G/T。','衍射振幅包含位置相位；螺旋轴、滑移面能引出消光。','Bloch 态也含平移相位。因此宏观点群、位点对称群、完整空间群各有不同用途。'])};}
 function scene(theme,s){return ({water:waterScene,characters:charactersScene,projection:projectionScene,splitting:splittingScene,jt:jtScene,macro:macroScene})[theme](s);}
 
-export async function renderFoundationsDemosView({container,selection={},run,onNavigate=()=>{}}){
+export async function renderFoundationsDemosView({container,selection={},run,cancelRun,download=()=>{},onNavigate=()=>{},loadWaterActions=defaultWaterActionsLoader}){
+ previousFoundationsCleanup();
  let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water',s={...DEFAULTS[theme]},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0;
  container.innerHTML='<article class="fd-course"></article>';const root=container.firstElementChild;
- const current=()=>container.isConnected!==false&&container.firstElementChild===root;
+ let disposed=false,waterTicket=0,disposeWater=()=>{},waterDetail=null,waterOpening=null,waterBound=false,legacyRequest=null,detachObserver;
+ const current=()=>!disposed&&container.isConnected!==false&&root.isConnected!==false&&container.firstElementChild===root;
+ const opened=detail=>!!detail&&(typeof detail.open==='boolean'?detail.open:detail.getAttribute('open')!==null);
+ function stopAnimation(){if(timer){clearInterval(timer);timer=null;}}
+ function clearWater(){
+  if(waterDetail)waterActionsStates.set('host:water-actions',{open:opened(waterDetail)});
+  waterTicket++;waterOpening=null;waterBound=false;disposeWater();disposeWater=()=>{};waterDetail=null;
+ }
+ function stopLegacy(){
+  const owned=legacyRequest;legacyRequest=null;if(!owned)return;owned.live=false;
+  // Automatic teardown cannot prove ownership of a global fallback. The
+  // shared application supplies request.cancel; an unscoped legacy promise
+  // is invalidated here and its eventual reply is ignored.
+  if(owned.pending&&typeof owned.promise?.cancel==='function')owned.promise.cancel();
+  busy=false;
+ }
+ function disposeView(){if(disposed)return;disposed=true;revision++;stopAnimation();clearWater();stopLegacy();detachObserver?.disconnect();}
+ previousFoundationsCleanup=disposeView;
+ if(typeof MutationObserver==='function'){
+  detachObserver=new MutationObserver(()=>{if(!current())disposeView();});
+  detachObserver.observe(container.ownerDocument?.documentElement||container,{childList:true,subtree:true});
+ }
+ function waterEntry(){return theme==='water'?`<details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>水的特征标 −1 是怎样算出的？</summary><p>逐列跟踪三个原子的九个位移，区分交换原子与转动箭头，再约化并扣除刚性运动。</p><div data-water-actions-body></div></details>`:'';}
+ function mountWater(){
+  const detail=root.querySelector('[data-water-actions-entry]'),body=detail?.querySelector('[data-water-actions-body]');if(!detail||!body)return;
+  waterDetail=detail;
+  const here=()=>current()&&theme==='water'&&root.querySelector('[data-water-actions-entry]')===detail;
+  function loadOpen(){
+   if(!here()||!opened(detail)||waterBound)return;
+   if(waterOpening)return waterOpening;
+   const ticket=++waterTicket;body.innerHTML='<p role="status">正在载入水位移工坊…</p>';
+   const loading=Promise.resolve().then(async()=>{
+    try{
+     const module=await loadWaterActions();if(!here()||!opened(detail)||ticket!==waterTicket)return;
+     if(typeof module?.bindWaterActionsLesson!=='function')throw Error('水位移工坊暂不可用，请重试。');
+     const cleanup=module.bindWaterActionsLesson({root:body,isCurrent:()=>here()&&opened(detail),stateStore:waterActionsStates,run,cancelRun,download});
+     if(!here()||!opened(detail)||ticket!==waterTicket){if(typeof cleanup==='function')cleanup();return;}
+     disposeWater=typeof cleanup==='function'?cleanup:()=>{};waterBound=true;
+    }catch(error){
+     if(!here()||!opened(detail)||ticket!==waterTicket)return;
+     body.innerHTML=`<p class="notice error" role="alert">${esc(error?.message||'水位移工坊暂不可用，请重试。')}</p><button type="button" class="secondary" data-water-actions-retry>重试水位移工坊</button>`;
+     const retry=body.querySelector('[data-water-actions-retry]');retry.onclick=()=>{if(here()&&opened(detail)&&body.querySelector('[data-water-actions-retry]')===retry)return loadOpen();};
+    }finally{if(waterOpening===loading)waterOpening=null;}
+   });
+   waterOpening=loading;return loading;
+  }
+  detail.ontoggle=()=>{
+   if(!here())return;waterActionsStates.set('host:water-actions',{open:opened(detail)});
+   if(opened(detail))return loadOpen();
+   clearWater();waterDetail=detail;body.innerHTML='';
+  };
+  if(opened(detail))loadOpen();
+ }
  const payload=()=>({experiment:theme,theme:theme==='projection'?'d3':theme,...s});
  function update(){const out=scene(theme,s);root.querySelector('.fd-preview').innerHTML=out.plot+out.html;root.querySelector('.fd-questions').innerHTML=out.exercise;latest={tool:'foundations_demos_preview',input:payload(),result:{...out.data,computation:'JavaScript interactive teaching preview'}};root.querySelectorAll('[data-output]').forEach(el=>el.textContent=s[el.dataset.output]);}
- function draw(){root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">基础概念演示 · 从操作到物理结果</span><h2>把抽象对称性变成可以操作的课堂</h2><p>选择主题，改变参数，先预测再核对。每个演示都保留基底、坐标与模型约定。</p></header><nav class="fd-tabs" aria-label="教学演示主题">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav><div class="fd-workspace"><aside class="fd-controls"><h3>调节与预测</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?'Python 正在核对…':'用浏览器内 Python 核对'}</button><p class="fd-status" role="status">${esc(pythonStatus||'图像随参数即时变化；Python 按钮用于独立核对计算。')}</p></aside><section class="fd-preview" aria-live="polite"></section></div><div class="fd-questions"></div><details class="fd-python"><summary>查看 Python 核对数据</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):'尚未核对。请点击上方 Python 按钮。'}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">原有水分子选择定则讲义</a> · <a href="#classroom/foundations?module=salc">对称适应基计算</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学模型、约定与来源</a></footer>`;update();}
- root.addEventListener('input',e=>{const id=e.target.dataset.param;if(!id||e.target.tagName==='SELECT')return;s[id]=Number(e.target.value);revision++;pythonStatus='参数已改变；下次 Python 核对将使用当前输入。';pythonResult=null;update();root.querySelector('.fd-status').textContent=pythonStatus;});
- root.addEventListener('change',e=>{const id=e.target.dataset.param;if(!id)return;s[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;revision++;pythonResult=null;pythonStatus='参数已改变；可重新用 Python 核对。';update();root.querySelector('.fd-status').textContent=pythonStatus;});
- root.addEventListener('click',async e=>{const tab=e.target.closest('[data-theme]');if(tab){if(timer){clearInterval(timer);timer=null;}theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme});draw();return;}const action=e.target.closest('[data-action]')?.dataset.action;if(action==='animate'){if(timer){clearInterval(timer);timer=null;}else timer=setInterval(()=>{if(!current()){clearInterval(timer);return;}s.phase=(s.phase+5)%360;const input=root.querySelector('[data-param="phase"]');if(input)input.value=s.phase;update();},65);}if(action==='python'&&run&&!busy){if(timer){clearInterval(timer);timer=null;}const stamp=revision;busy=true;pythonStatus='正在启动浏览器内 Python 并核对当前模型…';draw();try{const input=payload(),result=await run('foundations_demos',input);if(!current()||stamp!==revision)return;pythonResult=result;pythonStatus=result?.checks?.passed===false?'Python 返回检查未通过，请查看数据与输入。':'Python 核对完成：请比较矩阵、特征标与分解。';draw();latest={tool:'foundations_demos',input,result};}catch(error){if(current()){pythonStatus='Python 核对未完成：'+error.message;draw();}}finally{busy=false;if(current()){const b=root.querySelector('[data-action="python"]');if(b){b.disabled=false;b.textContent='用浏览器内 Python 核对';}}}}});
- draw();
+ function draw(){if(!current())return;clearWater();root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">基础概念演示 · 从操作到物理结果</span><h2>把抽象对称性变成可以操作的课堂</h2><p>选择主题，改变参数，先预测再核对。每个演示都保留基底、坐标与模型约定。</p></header><nav class="fd-tabs" aria-label="教学演示主题">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav>${waterEntry()}<div class="fd-workspace"><aside class="fd-controls"><h3>调节与预测</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?'Python 正在核对…':'用浏览器内 Python 核对'}</button><p class="fd-status" role="status">${esc(pythonStatus||'图像随参数即时变化；Python 按钮用于独立核对计算。')}</p></aside><section class="fd-preview" aria-live="polite"></section></div><div class="fd-questions"></div><details class="fd-python"><summary>查看 Python 核对数据</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):'尚未核对。请点击上方 Python 按钮。'}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">原有水分子选择定则讲义</a> · <a href="#classroom/foundations?module=salc">对称适应基计算</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学模型、约定与来源</a></footer>`;update();mountWater();}
+ function syncLegacyPython(){
+  if(!current())return;
+  const button=root.querySelector('[data-action="python"]');if(button){button.disabled=busy||!run;button.textContent=busy?'Python 正在核对…':'用浏览器内 Python 核对';}
+  const status=root.querySelector('.fd-status');if(status)status.textContent=pythonStatus||'图像随参数即时变化；Python 按钮用于独立核对计算。';
+  const raw=root.querySelector('.fd-python')?.querySelector('pre');if(raw)raw.textContent=pythonResult?JSON.stringify(pythonResult,null,2):'尚未核对。请点击上方 Python 按钮。';
+ }
+ root.addEventListener('input',e=>{if(!current())return;const id=e.target.dataset.param;if(!id||e.target.tagName==='SELECT')return;s[id]=Number(e.target.value);revision++;pythonStatus='参数已改变；下次 Python 核对将使用当前输入。';pythonResult=null;update();root.querySelector('.fd-status').textContent=pythonStatus;});
+ root.addEventListener('change',e=>{if(!current())return;const id=e.target.dataset.param;if(!id)return;s[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;revision++;pythonResult=null;pythonStatus='参数已改变；可重新用 Python 核对。';update();root.querySelector('.fd-status').textContent=pythonStatus;});
+ root.addEventListener('click',async e=>{
+  if(!current())return;
+  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme});draw();return;}
+  const action=e.target.closest('[data-action]')?.dataset.action;
+  if(action==='animate'){if(timer)stopAnimation();else timer=setInterval(()=>{if(!current()){stopAnimation();return;}s.phase=(s.phase+5)%360;const input=root.querySelector('[data-param="phase"]');if(input)input.value=s.phase;update();},65);}
+  if(action==='python'&&run&&!busy){
+   stopAnimation();const stamp=revision,owned={pending:true,promise:null,live:true};legacyRequest=owned;busy=true;pythonStatus='正在启动浏览器内 Python 并核对当前模型…';syncLegacyPython();
+   try{
+    const input=payload();owned.promise=run('foundations_demos',input);const result=await owned.promise;owned.pending=false;
+    if(!current()||!owned.live||legacyRequest!==owned||stamp!==revision)return;
+    pythonResult=result;pythonStatus=result?.checks?.passed===false?'Python 返回检查未通过，请查看数据与输入。':'Python 核对完成：请比较矩阵、特征标与分解。';syncLegacyPython();latest={tool:'foundations_demos',input,result};
+   }catch(error){owned.pending=false;if(current()&&owned.live&&legacyRequest===owned&&stamp===revision){pythonStatus='Python 核对未完成：'+error.message;syncLegacyPython();}}
+   finally{owned.pending=false;if(legacyRequest===owned){legacyRequest=null;busy=false;syncLegacyPython();}}
+  }
+ });
+ draw();return disposeView;
 }

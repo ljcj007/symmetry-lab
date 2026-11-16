@@ -5,7 +5,7 @@ const read=name=>JSON.parse(fs.readFileSync(new URL(name+'.json',root),'utf8'));
 const entries=learningEntries(catalogs.map(read));
 entries.push({route:'classroom/start',title:'零基础导学 · 从操作到矩阵和特征标',summary:'六个短实验：整体对称、重复操作、坐标、矩阵列、迹与后续路线。',keywords:'初学者 零基础 坐标 向量 矩阵 迹 入门 beginner',kind:'课程'});
 for(const [experiment,title,keywords] of [
- ['water','水分子振动、红外与拉曼','H2O C2v 选择定则 偏振 光谱'],
+ ['water','水分子振动、红外与拉曼','H2O C2v 选择定则 偏振 光谱 九维 位移矩阵 特征标 逐列 固定原子 displacement'],
  ['characters','矩阵、基函数与特征标','trace 迹 C4 表示矩阵'],
  ['projection','D₃ 三角形投影与基函数','D3 投影算符 SALC 不可约表示'],
  ['splitting','SO(3) → O → D₄ 能级劈裂','SO3 O D4 晶场 d轨道 简并'],

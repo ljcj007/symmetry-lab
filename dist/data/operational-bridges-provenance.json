@@ -53,28 +53,28 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 48255,
-      "sha256": "8aedc3066e7942ae1485bb4dda594b158a9ea04a71649b11f5bb42ac255aa76f"
+      "bytes": 50360,
+      "sha256": "f610750dd50ca99c600b226e02c362eeafb38b4fd5459bfd744be6a2687b1d43"
     },
     "dist/app.js": {
-      "bytes": 97838,
-      "sha256": "103327b0bb5535a71fc8f6e88c65430df54b8e1b52f8e475745b70884b219e48"
+      "bytes": 97845,
+      "sha256": "9799434a2505c13d9ab56e678b31dc26fc781255f3c9138bab5d6c23244cb0db"
     },
     "dist/bridges-ui.js": {
-      "bytes": 17147,
-      "sha256": "a8773e4520a3b28a21ff5a48be842bab2619fc464a8ac47a3f43aca743cd72a4"
+      "bytes": 17149,
+      "sha256": "b1c424c9e4af59e8060e36c0eb3ec138d8752774b68039932ddca364726a48ac"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32142,
-      "sha256": "2f14d50265e9ba15b8cdd93a121b145acb99a085130312c168cb4d80a8a543af"
+      "bytes": 32157,
+      "sha256": "5b0ebcc9c9e9bc561cefdc48b437d2b4ed3684c97959f34c8b07333d0ffc76a8"
     },
     "dist/data/bridges-materials.json": {
       "bytes": 90485,
       "sha256": "245027f56da2cf097da3a072ebe6e632a8a9ab4a5430db880d9b3772a4583f37"
     },
     "dist/frontiers-ui.js": {
-      "bytes": 21096,
-      "sha256": "dd93c574ffd294186ddbddf7c579e681dd4db787b5bc9942847d12aa512e423c"
+      "bytes": 21098,
+      "sha256": "90d5158fff774e344df238bb8b96ee318af94355ede727fc8bd4e23b5b99fc68"
     },
     "dist/hubbard-learning-bridge.css": {
       "bytes": 4231,
@@ -85,20 +85,20 @@
       "sha256": "0809613c138da0156008072ab882f617f4474422b57f7ceae6dd3d27e633706b"
     },
     "dist/index.html": {
-      "bytes": 7523,
-      "sha256": "b1634dbf41d397b50759ad69dd3c627f6c29e166603af4313548f28cea79569b"
+      "bytes": 7591,
+      "sha256": "5f187b13884fe72e1372d64043a33d172a75f3d489c5a8557674dafa923d7eb8"
     },
     "dist/learning-bridge-host.js": {
-      "bytes": 4616,
-      "sha256": "b549c0f3268b4ccf3b2e801bf6a5cb91d2be1a666903fb0e03b70f26467b70e8"
+      "bytes": 4602,
+      "sha256": "a42addc7d2d2af7074cb2a8d19a515381a68258eedfe1241b1d3eba332f0c0ba"
     },
     "dist/lie-group-ui.js": {
       "bytes": 59789,
-      "sha256": "b6ba2aa23a9df33d8862152d84640c6ecf9ae448bc554abda793b88e0dc8c6b9"
+      "sha256": "c036b566d8b8f5821629b91d1a1dfe1729d2acd8a3ebeff1f49ec8e21ced755c"
     },
     "dist/pathways-ui.js": {
-      "bytes": 14128,
-      "sha256": "bb3ad7cab1f3e287c0159adacc7f2489162ae84cdacc9796e6fb635c18609615"
+      "bytes": 14130,
+      "sha256": "76e07f293f75ed7af86126b6722eb443fa029902657f0b6cdb56eb106f324132"
     },
     "dist/python/density_matrix_lab.py": {
       "bytes": 15248,
@@ -125,8 +125,8 @@
       "sha256": "77f7b6bd7c8c408eea0f6fb594fe399c2759b73c4715bcb9606dc6b5ea486c5e"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 51335,
-      "sha256": "8cc8b8dfae71ab897a9c08bbdec6855f01b7167371defaaeb151113898ddcd6a"
+      "bytes": 51336,
+      "sha256": "b005c4eb4b6c6decf5abf0741c7a424ebc5602f990adadae2c263f8d4ad17cd4"
     },
     "locales/en-hubbard-learning-bridge.json": {
       "bytes": 15603,
@@ -145,16 +145,16 @@
       "sha256": "59267b8cac09f7e69e948845f7e2b432f7a6814ff8202b5989af8568300b7468"
     },
     "package.json": {
-      "bytes": 18465,
-      "sha256": "a2d7db7ccc89aa62a2c5de8fd22be3f866afb5a32cfd00ef1c6678cc2880268d"
+      "bytes": 19085,
+      "sha256": "2e92ecced049226d6d94adb2fc3d2ccae4d284c7159bd266309dfbfa492fe356"
     },
     "scripts/build-operational-bridges-provenance.mjs": {
       "bytes": 4580,
       "sha256": "f4741cdec59f133d24b325eb3bb96a304c13553594fb2daf1a37c0060a3b04c6"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 3351,
-      "sha256": "a5a28c3ac51c619ed976c94f43744cbf68cc13d842f2d8e826422fe24fea5e37"
+      "bytes": 3456,
+      "sha256": "1d1f20f1a7e0d5a3c9cf9ccc9ccb37f3fb8fa82a43bbf81ba6889728888790db"
     },
     "scripts/test-hubbard-learning-bridge.mjs": {
       "bytes": 15965,
