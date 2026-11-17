@@ -5,7 +5,7 @@ import argparse, hashlib, json, shutil, zipfile
 ROOT=Path(__file__).resolve().parents[1]
 
 def source_files():
-    for name in ['README.md','run.py','run.cmd','RIGHTS.md']:
+    for name in ['README.md','run.py','run.cmd','RIGHTS.md','LICENSE']:
         yield ROOT/name
     for folder in ['src','examples','schema','docs','tools','tests']:
         for p in sorted((ROOT/folder).rglob('*')):

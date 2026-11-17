@@ -18,8 +18,13 @@
     },
     {
       "path": "RIGHTS.md",
-      "bytes": 767,
-      "sha256": "f611e5388560ccc547bd7f490b38a3e26719caf4e3a5551f3324d0c2a7c32698"
+      "bytes": 950,
+      "sha256": "7281cd0c5ed282a9209b158fbe552bb8781d155f368de9a0984188a8737fd3c5"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
     },
     {
       "path": "src/verify.py",
@@ -83,8 +88,8 @@
     },
     {
       "path": "tools/build_site.py",
-      "bytes": 2586,
-      "sha256": "721b0d00acea27fd30555a25c130e7fcfaac0dcb49e2e0d8935cc79ebe4704d8"
+      "bytes": 2637,
+      "sha256": "b395d3b5db5d8a88f874ee4b7b55c4c21373f2b171887e60c4c6ec646c5d12c9"
     },
     {
       "path": "tests/test_verify.py",
