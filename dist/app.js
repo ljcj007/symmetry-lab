@@ -2,26 +2,26 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261117-phonopy1';
-import {startToolFinder} from './tool-finder.js?v=20261117-phonopy1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261117-derive1';
+import {startToolFinder} from './tool-finder.js?v=20261117-derive1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-phonopy1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261117-phonopy1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261117-derive1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
-import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-phonopy1';
+import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261117-phonopy1';
 import {projectWorkbenchSelection,canRestoreProjectWorkbench} from './project-workbench.js?v=20261113-support1';
 
-import {captureCalculation,latestCalculationStatus,renderMaterialNotebook} from './material-notebook.js?v=20261117-phonopy1';
+import {captureCalculation,latestCalculationStatus,renderMaterialNotebook} from './material-notebook.js?v=20261117-derive1';
 import {validateStructureHandoff,structureHandoffForCalculation} from './structure-provenance.js?v=20261114-evidence1';
 function runPythonTask(action,input,recordContext={}){
  let request;
- const pending=(async()=>{const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';if(recordContext.structureHandoff){const source=structureHandoffForCalculation(recordContext.structureHandoff,{action,input:snapshot});if(!source)throw Error('结构来源与本次计算请求不一致。');context.structureHandoff=source;}request=executePythonTask(action,input);const result=await request;if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse'].includes(action))captureCalculation(action,snapshot,result,context);return result;})();
+ const pending=(async()=>{const context={route:state.route,title:mathSourceText(document.querySelector('#page-title'))||action,material:state.courseRoute?.material||''},snapshot=structuredClone(input),origin=renderTicket,flagship=state.view==='flagship';if(recordContext.structureHandoff){const source=structureHandoffForCalculation(recordContext.structureHandoff,{action,input:snapshot});if(!source)throw Error('结构来源与本次计算请求不一致。');context.structureHandoff=source;}request=executePythonTask(action,input);const result=await request;if(origin===renderTicket&&!flagship&&!['symmetry_grading','symmetry_linked','frontier_inverse','phonopy_derivation'].includes(action))captureCalculation(action,snapshot,result,context);return result;})();
  Object.defineProperty(pending,'cancel',{value:()=>typeof request?.cancel==='function'?request.cancel():false});
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-phonopy1'),compare:()=>import('./comparison-lab.js?v=20261117-phonopy1'),projects:()=>import('./response-projects.js?v=20261117-phonopy1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261114-evidence2'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261114-evidence2'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -164,7 +164,7 @@ function setView(request,options={}){
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
  projectNavigation.enter(route,options.projectContext);
  state.structureHandoff=options.structureHandoff?validateStructureHandoff(options.structureHandoff):null;state.route=route;state.view=view;state.primary=primary;state.courseRoute=projectNavigation.selection(withClassroomNavigationContext(course,options.courseContext,route));
- const importedScatteringDraft=phonopyScatteringVisit(route);if(importedScatteringDraft&&state.courseRoute&&!state.courseRoute.projectInput)state.courseRoute.importerInput=importedScatteringDraft;
+ const importedScatteringDraft=phonopyScatteringVisit(route);if(importedScatteringDraft&&state.courseRoute&&!state.courseRoute.projectInput){if(importedScatteringDraft.sourceKind==='teaching-reference')state.courseRoute.teachingInput=importedScatteringDraft;else state.courseRoute.importerInput=importedScatteringDraft;}
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
  const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/frontiers','atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/connections','atlas/construction','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
  $('#page-title').textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];

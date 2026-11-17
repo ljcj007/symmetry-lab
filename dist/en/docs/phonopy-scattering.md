@@ -59,3 +59,7 @@ The neutron lengths used for ZnO have a separate NIST source. The displayed sign
 - [NIST neutron scattering-length table](https://www.ncnr.nist.gov/resources/n-lengths/list.html): real bound coherent lengths for natural Zn and O in fm.
 
 Instructional numerical checks verify the relation between inputs and calculation. They do not replace experimental convergence analysis or measure student learning outcomes.
+
+## Practise and test the derivation at two points
+
+With complete three-dimensional results, use the [two-point derivation and correction activity](phonopy-derivation.md) to submit Q, mass weighting, atomic complex terms and line weights yourself. The second point tests finite incorrect candidates. A complete teaching copy still returns here for manual Run, with practice feedback and scientific records retained separately.

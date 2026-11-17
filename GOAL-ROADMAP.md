@@ -4,10 +4,11 @@ Active objective: welcome zero-foundation learners, provide deeper study for
 prepared learners, make tools quick to find for experts, maintain a coherent
 ordered structure, and continue expanding useful verified functionality.
 
-Current delivery boundary: finish and publish the supplied-Phonopy-mode
-three-dimensional neutron-scattering release, verify the public source and
-website, then pause at the user's request. This is a release milestone, not
-completion of every curriculum and scientific-domain audit below.
+The user resumed the active objective after the verified Phonopy scattering
+release. Current work deepens the existing scattering classroom through
+source-bound numerical derivation, two-point counterexamples and targeted
+feedback, while preserving the general expert tool and its physical input
+contract. The full curriculum and scientific-workflow audits below remain open.
 
 The new lazy calculation entry uses complete supplied complex modes, an ordered
 primitive cell, explicit units and sourced real neutron lengths. Eight genuine
@@ -22,7 +23,7 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 | --- | --- | --- |
 | Zero-foundation entry | A learner can reach a self-contained introduction from the first home action, manipulate examples, receive explained checks, and continue without knowing matrices beforehand. | Six-step zero-start bridge shipped in f62a134 with state and desktop/mobile browser checks; no learner study has been inferred. |
 | Intermediate depth | Prerequisites and next topics are explicit; examples connect operations, representations, applications, proofs, and project work. | The first eight continuous-group lessons now have dedicated derivations and genuine presets; the introductory representation lesson remains reachable in sequence. Two crystal conceptual derivations distinguish actual site-fixing operations and antiunitary actions. Related exercises now cover 24/24 crystal and 32/32 Lie lessons; unknown or ambiguous future lessons still open an unselected bank. Broader progression audits remain incomplete. |
-| Expert speed | A tool can be found from any page with keyboard and visible controls, including conventional spellings and exact group numbers. | Global finder with scoped search, keyboard navigation, lazy catalogs and error recovery. The 74-tool directory composes task categories, normalized terms and favorites. All 12 Lie experiments have direct calculation-center entries; laboratory selection is grouped by foundations, dynamics and recoupling. |
+| Expert speed | A tool can be found from any page with keyboard and visible controls, including conventional spellings and exact group numbers. | Global finder with scoped search, keyboard navigation, lazy catalogs and error recovery. The 75-tool directory composes task categories, normalized terms and favorites. All 12 Lie experiments have direct calculation-center entries; laboratory selection is grouped by foundations, dynamics and recoupling. |
 | Coherent ordering | Primary navigation and course routes preserve existing URLs; basics precede advanced additions in visible lists. | Keep seven pathways, add a separate starting bridge, order the first topics by prerequisites. |
 | Broad functionality | Existing scientific cores, examples, exports, material records and bilingual editions continue to work; added functions have meaningful checks. | Existing computation suite plus new learning/navigation checks; a green narrow test is not evidence for all scientific domains. |
 | Accessible presentation | Enlarged type, mathematical notation, mobile layout and keyboard interaction remain usable. | Desktop/mobile browser inspection and existing math checks required. |
@@ -33,7 +34,7 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 - Audit every major course's prerequisites, terminology, worked examples, and next-step links.
 - Continue the per-lesson audit beyond a route-to-exercise association; verify prerequisite depth and worked-example quality.
 - Develop diagnostic entry questions and targeted remediation beyond the introductory bridge.
-- Verify representative real workflows against the new 74-tool input/output/model-boundary inventory; metadata is not a complete computation audit.
+- Verify representative real workflows against the current 75-tool input/output/model-boundary inventory; metadata is not a complete computation audit.
 - Extend cross-module material projects where the physical connection and inputs are explicit.
 - Verify representative real-file import/export and scientific workflows for each major tool family.
 
@@ -252,3 +253,15 @@ establish that all existing scientific and teaching content has been audited.
 - Eight genuine shared-API replies include seven teaching cases and one numerical-grouping regression. Independent checks verify the atomic factors, coherent identity and continuous unitary subspace invariance. Twelve prior inputs under absent, false and true flags preserve the complete old result in 36 same-host comparisons against hash-verified original source. Both historical project builders genuinely recompute all24 existing stages, retaining every old result while updating the changed source identity.
 - Optional state, predictions, notes, disclosures and normalized-parameter/ledger exports remain separate from the original full-request/result export. Explicit true and false project inputs survive actual form roundtrips. Ordinary scattering-tab returns preserve completed results; automatic retirement cancels only the request owned by that view, including through the real shared client and application wrapper.
 - This is still the existing relative one-dimensional harmonic-chain model, not an imported Phonopy material cross section. It introduces no Debye-Waller, magnetic, multiphonon or elastic calculation and infers no measured learning gain. The full objective stays active: broader operational depth, targeted diagnosis and authentic scientific workflows across the remaining curriculum and tool families require further work.
+
+## Source-bound two-point scattering practice
+
+- The existing coherent-phase lesson now contains an optional manual derivation workshop. The mode/import and ZnO material routes point to this same lesson; 75 expert entries and 34 project adapters retain their roles. Three obsolete whole-site no-Phonopy statements are corrected while the one-dimensional model and original exercise answers remain unchanged.
+- Two actual supplied-mode calculations bind the original raw files, conditions, branch and atom to 19 numerical tasks. Each grade request recomputes its own target and checks the source fingerprint. The fixed-gauge complex components retain their amplitudes; projector equivalence does not replace them.
+- The same ZnO q/branch happens to hide omitted conjugation and phase at G110 but distinguishes them at G100. The interface reports finite candidate compatibility and inconclusive cases; changing G also changes projection. Hints, reference access and attempted answers stay separate from scientific records and course mastery.
+- Fourteen independent Python tests and 22 genuine derivation/grade/rejection references accompany real UI and host lifecycle checks. The 328 original API calls are genuinely recomputed, preserving 761111 float64 bit patterns and 550038 other leaves and JSON structure while their dispatcher source identities change. The original numerical cores, raw ZnO files and official Phonopy reference remain unchanged.
+- This is a classroom-depth milestone. Broader diagnostics, the 32-point-group identification gap and authentic workflows across other tool families remain open; the full objective stays active.
+
+## Requested publication boundary (2026-11-17)
+
+- The user requested a pause after this batch is uploaded. Finish verification and publication of the source-bound two-point workshop, then pause the existing goal. The wider objective remains unfinished; no next curriculum milestone should start before the user resumes.

@@ -4,7 +4,7 @@ export const SCATTERING_REPLAY_LESSONS=Object.freeze(['scattering-chain','scatte
 const labels=Object.freeze({default:"Default diatomic chain", 'unequal-gamma':"Unequal masses: translation at Gamma", 'folded-even':"The same reduced q: an even reciprocal zone", 'folded-odd':"The same reduced q: an odd reciprocal zone", 'zero-projection':"Scattering vector perpendicular to the chain", 'signed-weights':"Signed scattering weights", 'degenerate-edge':"The complete degenerate subspace at the zone edge"});
 let uiPromise=null,referencePromise=null;
 const loadUI=()=>uiPromise??=import('./scattering-replay-ui.js?v=20261117-scattering1').catch(error=>{uiPromise=null;throw error;});
-const loadReference=()=>referencePromise??=import('./scattering-replay-reference.js?v=20261117-phonopy1').catch(error=>{referencePromise=null;throw error;});
+const loadReference=()=>referencePromise??=import('./scattering-replay-reference.js?v=20261117-derive1').catch(error=>{referencePromise=null;throw error;});
 const readOpen=node=>typeof node?.open==='boolean'?node.open:node?.getAttribute?.('open')!==null;
 
 function entry(kind){return `<section class="sar-host" data-sar-host="${kind}"><details data-sar-disclosure><summary>${kind==='lesson'?"How do the atomic complex amplitudes add?":"Replay the atomic amplitudes from this calculation"}</summary><div data-sar-content></div></details></section>`;}

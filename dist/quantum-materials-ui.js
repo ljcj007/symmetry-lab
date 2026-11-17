@@ -1,8 +1,8 @@
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {heatmapSVG,orbitalSVG,quantumCurveSVG as multiCurveSVG} from './quantum-plots.js?v=20261110-en1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-phonopy1';
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-phonopy1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-derive1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?(x!==0&&(Math.abs(x)>=1e5||Math.abs(x)<1e-3)?x.toExponential(4):Number(x.toPrecision(5))):'—';
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
@@ -23,7 +23,7 @@ const defaults={
  geometry:{model:'qwz',mass:-1,energyScale:1,t1:.6,t2:1,mesh:31,pathSamples:121,gaugeStrength:1,kx:.6,ky:.4},
  transport:{source:'model',dimension:2,temperature:300,chemicalPotential:.3,hopping:.25,anisotropy:.5,zAnisotropy:1,latticeConstant:4,mesh:48,spinDegeneracy:2,tauFs:null,muMin:-.05,muMax:1.55,muSamples:41,content:''}
 };
-let fhsModulePromise;const loadFhsReplayModule=()=>fhsModulePromise??=import('./fhs-plaquette-bridge.js?v=20261117-phonopy1').catch(error=>{fhsModulePromise=null;throw error;});
+let fhsModulePromise;const loadFhsReplayModule=()=>fhsModulePromise??=import('./fhs-plaquette-bridge.js?v=20261117-derive1').catch(error=>{fhsModulePromise=null;throw error;});
 const fhsResultBindings=new WeakMap();
 export function fhsResultSlotHTML(result,open=false){
  if(result?.model==='ssh')return '<p class="mr-scope">当前 SSH 使用一维 Zak 闭合链；二维 FHS 单元回放仅适用于 QWZ。</p>';

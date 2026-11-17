@@ -12909,9 +12909,440 @@
     ]
   },
   {
+    "source": "固定原文件的 Phonopy atom-phase 复本征矢；复数答案保留该显示规范与幅度。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/conditions/gauge",
+      "python-fixture/phonopy-derivation.json/cases/1/result/conditions/gauge",
+      "python-fixture/phonopy-derivation.json/cases/2/result/conditions/gauge",
+      "python-fixture/phonopy-derivation.json/cases/3/result/conditions/gauge"
+    ]
+  },
+  {
+    "source": "漏掉创建通道的复共轭",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/0/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/contrasts/0/title",
+      "python-fixture/phonopy-derivation.json/cases/2/result/contrasts/0/title",
+      "python-fixture/phonopy-derivation.json/cases/3/result/contrasts/0/title"
+    ]
+  },
+  {
+    "source": "漏掉原子结构相位",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/1/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/contrasts/1/title",
+      "python-fixture/phonopy-derivation.json/cases/2/result/contrasts/1/title",
+      "python-fixture/phonopy-derivation.json/cases/3/result/contrasts/1/title"
+    ]
+  },
+  {
+    "source": "先取各原子模平方再相加",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/2/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/contrasts/2/title",
+      "python-fixture/phonopy-derivation.json/cases/2/result/contrasts/2/title",
+      "python-fixture/phonopy-derivation.json/cases/3/result/contrasts/2/title"
+    ]
+  },
+  {
+    "source": "漏掉质量平方根因子",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/3/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/contrasts/3/title",
+      "python-fixture/phonopy-derivation.json/cases/2/result/contrasts/3/title",
+      "python-fixture/phonopy-derivation.json/cases/3/result/contrasts/3/title"
+    ]
+  },
+  {
+    "source": "逐元素复差的模 ≤ absolute + relative × 目标分量的模；保留幅度。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/0/criterion",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/1/criterion",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/2/criterion",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/3/criterion"
+    ]
+  },
+  {
+    "source": "e/sqrt(m)是相对位移形状，质量数值以amu计；不是已校准的Å位移。动画若归一化须对所有原子使用同一尺度。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/conditions/displacementScope",
+      "python-fixture/phonopy-derivation.json/cases/1/result/conditions/displacementScope",
+      "python-fixture/phonopy-derivation.json/cases/2/result/conditions/displacementScope",
+      "python-fixture/phonopy-derivation.json/cases/3/result/conditions/displacementScope"
+    ]
+  },
+  {
+    "source": "候选只说明所提交数字与这四种有限错误代数的兼容性，不唯一推断思维过程；正确值可偶然与错误公式重合。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/diagnosis/scope",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/diagnosis/scope",
+      "python-fixture/phonopy-derivation.json/cases/7/result/grading/diagnosis/scope",
+      "python-fixture/phonopy-derivation.json/cases/8/result/grading/diagnosis/scope"
+    ]
+  },
+  {
+    "source": "数值练习核对，不评自由文本证明，不认证材料来源或课程掌握；查看参考答案的状态由教学界面独立记录。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/scope",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/scope",
+      "python-fixture/phonopy-derivation.json/cases/7/result/grading/scope",
+      "python-fixture/phonopy-derivation.json/cases/8/result/grading/scope"
+    ]
+  },
+  {
+    "source": "原始G",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ必须是规定范围内的 JSON 整数",
+    "origins": [
+      "python-template/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ需要三个整数分量",
+    "origins": [
+      "python-template/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "来源只接受有限的标准 JSON 数据",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "完整推导来源超过20 MiB身份检查上限",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "目标超出有限矩阵判分器的1e8分量上限；仍保留实际科学结果，不判本题。",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "只变换同一提供模式的坐标与相位，不混合一维模型的参数，不改变q或重新求解本征模。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/derived/conventionBridge/scope",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/derived/conventionBridge/scope",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/derived/conventionBridge/scope",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/derived/conventionBridge/scope"
+    ]
+  },
+  {
+    "source": "完整Q的Cartesian三分量",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/0/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/10/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/0/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/10/title"
+    ]
+  },
+  {
+    "source": "所选原子的 Q dot conjugate(e)",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/2/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/11/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/2/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/11/title"
+    ]
+  },
+  {
+    "source": "所选原子的完整复振幅",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/3/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/12/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/3/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/12/title"
+    ]
+  },
+  {
+    "source": "全部原子的相干复总和",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/4/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/13/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/4/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/13/title"
+    ]
+  },
+  {
+    "source": "逐原子模平方的和",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/5/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/14/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/5/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/14/title"
+    ]
+  },
+  {
+    "source": "全部干涉交叉项",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/6/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/15/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/6/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/15/title"
+    ]
+  },
+  {
+    "source": "相干总和的模平方",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/7/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/16/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/7/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/16/title"
+    ]
+  },
+  {
+    "source": "未乘Bose热因子的线面积",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/8/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/17/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/8/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/17/title"
+    ]
+  },
+  {
+    "source": "乘n+1后的积分线面积",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/9/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/18/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/9/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/18/title"
+    ]
+  },
+  {
+    "source": "answers必须只包含本次返回的有界task ID，不接受客户端reference",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/rejections/9/error"
+    ]
+  },
+  {
+    "source": "尚未提交这一题。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/checks/0/feedback",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/checks/1/feedback",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/checks/2/feedback",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/checks/3/feedback"
+    ]
+  },
+  {
+    "source": "推导输入含不支持字段",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/rejections/0/error"
+    ]
+  },
+  {
+    "source": "mode只支持derive或grade",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "input需要完整原始三维散射请求",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "本工坊仅支持明确的creation请求，请显式建立新输入",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/rejections/1/error"
+    ]
+  },
+  {
+    "source": "本工坊要求整数G和primitive-reciprocal坐标，不接受显式Q",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/rejections/2/error",
+      "python-fixture/phonopy-derivation.json/rejections/3/error"
+    ]
+  },
+  {
+    "source": "所选原子的e/sqrt(m)",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/tasks/1/title",
+      "python-fixture/phonopy-derivation.json/cases/1/result/tasks/1/title",
+      "python-fixture/phonopy-derivation.json/cases/2/result/tasks/1/title",
+      "python-fixture/phonopy-derivation.json/cases/3/result/tasks/1/title"
+    ]
+  },
+  {
+    "source": "数值分组不是严格数学简并认证；逐支ledger固定原始基底，简并可观测比较须用整个子空间。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/conditions/groupScope",
+      "python-fixture/phonopy-derivation.json/cases/1/result/conditions/groupScope",
+      "python-fixture/phonopy-derivation.json/cases/2/result/conditions/groupScope",
+      "python-fixture/phonopy-derivation.json/cases/3/result/conditions/groupScope"
+    ]
+  },
+  {
+    "source": "改变G一般同时改变Cartesian投影与原子相位；两点只检验列出的有限候选，不认证一般公式或实验。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/conditions/comparisonScope",
+      "python-fixture/phonopy-derivation.json/cases/1/result/conditions/comparisonScope",
+      "python-fixture/phonopy-derivation.json/cases/2/result/conditions/comparisonScope",
+      "python-fixture/phonopy-derivation.json/cases/3/result/conditions/comparisonScope"
+    ]
+  },
+  {
+    "source": "必须是规定范围内的 JSON 整数",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "需要三个整数分量",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "来源 JSON 嵌套过深",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "来源不能编码为有限 UTF-8 JSON",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "两个实际Q的coherentStrength",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "同一提供模式上的故意错误代数，不是新的合法本征模或材料光谱；未穷尽所有错误。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/0/scope",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/1/scope",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/2/scope",
+      "python-fixture/phonopy-derivation.json/cases/0/result/contrasts/3/scope"
+    ]
+  },
+  {
+    "source": "作答指纹与本次完整来源及条件不符；请重新推导，不沿用旧判分",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/rejections/7/error",
+      "python-fixture/phonopy-derivation.json/rejections/8/error"
+    ]
+  },
+  {
+    "source": "作答与指纹只用于grade，不能作为derive的科学输入",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "所选branchIndex或atomIndex不存在于本次原胞与q点",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "作答矩阵",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "本次目标矩阵",
+    "origins": [
+      "python/phonopy_derivation.py"
+    ]
+  },
+  {
+    "source": "作答需要有界的二维数值数组",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/10/result/grading/checks/0/feedback"
+    ]
+  },
+  {
+    "source": "作答分量必须是有限实数；布尔值、字符串和代码不是数字答案",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/10/result/grading/checks/1/feedback"
+    ]
+  },
+  {
+    "source": "答案矩阵形状与本题不符",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/10/result/grading/checks/9/feedback",
+      "python-fixture/phonopy-derivation-messages.json/cases/4/feedback"
+    ]
+  },
+  {
+    "source": "本题要求实数答案，虚部必须为零",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation-messages.json/cases/3/feedback"
+    ]
+  },
+  {
+    "source": "数值通过；这是固定输入与显示规范下的检查。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/checks/0/feedback",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/checks/1/feedback",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/checks/2/feedback",
+      "python-fixture/phonopy-derivation.json/cases/5/result/grading/checks/3/feedback"
+    ]
+  },
+  {
+    "source": "与本次目标不符；请检查分量、单位、共轭、质量与求和顺序。",
+    "origins": [
+      "python/phonopy_derivation.py",
+      "python-fixture/phonopy-derivation.json/cases/6/result/grading/checks/16/feedback",
+      "python-fixture/phonopy-derivation.json/cases/7/result/grading/checks/7/feedback",
+      "python-fixture/phonopy-derivation.json/cases/7/result/grading/checks/16/feedback"
+    ]
+  },
+  {
     "source": "已使用伴随原胞结构。原子顺序必须与生成声子文件的计算完全一致；原文件未列原子时，程序只能核对原子数和已有倒易晶格。",
     "origins": [
-      "python/phonopy_import.py"
+      "python/phonopy_import.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/0",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/0",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/0",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/0"
     ]
   },
   {
@@ -13273,7 +13704,11 @@
   {
     "source": "ZnO · 官方力数据的 Phonopy 衍生计算",
     "origins": [
-      "python/phonopy_import.py"
+      "python/phonopy_import.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/sourceBundle/primary/reference/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/sourceIdentity/reference/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/sourceBundle/primary/reference/title",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/sourceIdentity/reference/title"
     ]
   },
   {
@@ -13618,25 +14053,41 @@
   {
     "source": "只读取已提供 q 点的三维 Phonopy 模；未生成力常数、未插值 q 点、未推断负 q 模或 Debye–Waller 网格。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/1",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/1",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/1",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/1"
     ]
   },
   {
     "source": "原胞与原子顺序由用户明确确认；散射长度是本次请求提供的实相干中子长度，不包括吸收、非相干、多声子或 X 射线形状因子。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/2",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/2",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/2",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/2"
     ]
   },
   {
     "source": "线权重按每原胞且 k′/k=1 归一为 fm²，能谱为单位面积 Gaussian 展宽后的 fm²/meV；不是仪器标定的实验计数。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/3",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/3",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/3",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/3"
     ]
   },
   {
     "source": "频率簇只是显示和求和：实际谱使用每条原始支各自的能量；接近的频率不等于数学精确简并。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/4",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/4",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/4",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/4"
     ]
   },
   {
@@ -13708,7 +14159,8 @@
   {
     "source": "请明确确认配套原胞与本征矢的原子顺序",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/rejections/6/error"
     ]
   },
   {
@@ -13810,7 +14262,11 @@
   {
     "source": "已明确省略 Debye–Waller 衰减；即使 T=0 也不意味着真实热位移或零点运动为零。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/5",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/5",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/5",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/5"
     ]
   },
   {
@@ -13822,19 +14278,27 @@
   {
     "source": "部分所选 q 点没有动力学矩阵：已核对完整向量基，但不能据此认证原始力常数或频率数据正确性。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/4/result/points/0/result/warnings/6",
+      "python-fixture/phonopy-derivation.json/cases/4/result/points/1/result/warnings/6"
     ]
   },
   {
     "source": "序列化动力学矩阵校验使用 Rayleigh 本征残差；未把未知矩阵单位与频率转换因子自动等同。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/0/result/warnings/6",
+      "python-fixture/phonopy-derivation.json/cases/0/result/points/1/result/warnings/6",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/0/result/warnings/6",
+      "python-fixture/phonopy-derivation.json/cases/1/result/points/1/result/warnings/6"
     ]
   },
   {
     "source": "明确标记的合成教学数据，不是真实材料计算或实验谱。",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/4/result/points/0/result/warnings/0",
+      "python-fixture/phonopy-derivation.json/cases/4/result/points/1/result/warnings/0"
     ]
   },
   {
@@ -14004,13 +14468,21 @@
   {
     "source": "输入为非正或虚频，不计算一声子谱权重",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/0/result/channels/0/branches/0/reason",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/0/result/channels/0/branches/1/reason",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/1/result/channels/0/branches/0/reason",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/1/result/channels/0/branches/1/reason"
     ]
   },
   {
     "source": "低于能量截断，不计算一声子谱权重",
     "origins": [
-      "python/phonopy_scattering.py"
+      "python/phonopy_scattering.py",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/0/result/channels/0/branches/2/reason",
+      "python-fixture/phonopy-derivation.json/cases/2/result/points/1/result/channels/0/branches/2/reason",
+      "python-fixture/phonopy-derivation.json/cases/3/result/points/0/result/channels/0/branches/2/reason",
+      "python-fixture/phonopy-derivation.json/cases/3/result/points/1/result/channels/0/branches/2/reason"
     ]
   },
   {
@@ -26363,6 +26835,48 @@
     "source": "原 |8s,μ⟩ 的新副本坐标为 (0, -I)，新坐标概率为 (0, 1)；物理交换概率仍为 (+1:1, −1:0)。重建、范数、交换期望和 Π8 均精确不变。",
     "origins": [
       "python-fixture/su3-copy.json/cases/11/result/steps/3/text"
+    ]
+  },
+  {
+    "source": "comparisonG必须是规定范围内的 JSON 整数",
+    "origins": [
+      "python-fixture/phonopy-derivation.json/rejections/4/error"
+    ]
+  },
+  {
+    "source": "branchIndex必须是规定范围内的 JSON 整数",
+    "origins": [
+      "python-fixture/phonopy-derivation.json/rejections/5/error"
+    ]
+  },
+  {
+    "source": "作答矩阵需要 re 和 im 两个二维数组",
+    "origins": [
+      "python-fixture/phonopy-derivation-messages.json/cases/0/feedback"
+    ]
+  },
+  {
+    "source": "作答矩阵实部与虚部形状不同",
+    "origins": [
+      "python-fixture/phonopy-derivation-messages.json/cases/1/feedback"
+    ]
+  },
+  {
+    "source": "作答矩阵含非有限值或过大的分量",
+    "origins": [
+      "python-fixture/phonopy-derivation-messages.json/cases/2/feedback"
+    ]
+  },
+  {
+    "source": "原始G需要三个整数分量",
+    "origins": [
+      "python-fixture/phonopy-derivation-messages.json/requestErrors/0/message"
+    ]
+  },
+  {
+    "source": "原始G必须是规定范围内的 JSON 整数",
+    "origins": [
+      "python-fixture/phonopy-derivation-messages.json/requestErrors/1/message"
     ]
   }
 ]

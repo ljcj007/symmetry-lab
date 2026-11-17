@@ -1,4 +1,4 @@
-import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-phonopy1';
+import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-derive1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.

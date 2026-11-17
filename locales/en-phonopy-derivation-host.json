@@ -1,0 +1,20 @@
+{
+  "从同一份 ZnO 文件推导两测点散射：计算、解释与改错": "Derive scattering at two points from the same ZnO files: calculate, explain and diagnose",
+  "两测点推导的约定、来源与参考答案使用 ↗": "Two-point derivation: conventions, sources and use of reference answers ↗",
+  "把一维链的思路迁到真实三维原胞：先预测，再逐项构造复振幅，最后用第二测点检验公式。教学参考、自己的作答和专家计算分别保存。": "Carry the chain model into a real three-dimensional primitive cell: predict, construct each complex amplitude, then test the formula at a second point. Teaching references, your answers and expert calculations remain separate.",
+  "继续：同一份 ZnO 模式，两个测点怎样检验振幅？": "Continue: how can two measurement points test amplitudes from the same ZnO modes?",
+  "先核对原胞、质量反加权和相位，再到散射课逐项推导三维投影与原子复振幅。两测点帮助识别一个数值偶然相同仍未暴露的错误。": "First check the primitive cell, mass unweighting and phase. Then derive the three-dimensional projection and complex atomic amplitudes in the scattering lesson. Two points can expose an error hidden by accidental agreement at one point.",
+  "进入原散射课的 ZnO 两测点推导工坊 →": "Open the ZnO two-point derivation workshop in the scattering lesson →",
+  "三维推导界面未提供可安全关闭的课堂视图。": "The three-dimensional derivation interface did not provide a classroom view that can be closed safely.",
+  "正在准备 ZnO 两测点推导工坊…": "Preparing the ZnO two-point derivation workshop…",
+  "三维推导界面尚未就绪。": "The three-dimensional derivation interface is not ready.",
+  "两测点推导暂未载入。": "The two-point derivation could not be loaded.",
+  "重试两测点推导": "Retry the two-point derivation",
+  "教学副本需要完整的参考身份与测点。": "The teaching copy requires a complete reference identity and measurement point.",
+  "教学副本必须保留完整、已声明条件的三维创建通道输入。": "The teaching copy must retain the complete three-dimensional creation-channel input with explicitly declared conditions.",
+  "双原子链预设是理想教学模型；真实Phonopy原文可在独立三维中子散射工具中使用。须提供配套原胞、完整3N复模式、明确单位与散射条件，不能从频率、DOS或单模动画补造全模本征矢，也不能把一维教学热图当作导入材料的结果。": "The diatomic-chain presets are ideal teaching models. Original Phonopy files can be used in the separate three-dimensional neutron-scattering tool, with a matching primitive cell, all 3N complex modes and declared units and scattering conditions. Frequencies, DOS or a single-mode animation cannot supply missing eigenvectors, and a one-dimensional teaching heatmap is not a result for an imported material.",
+  "ZnO两测点推导与改错": "ZnO two-point derivation and diagnosis",
+  "完整Phonopy三维中子散射": "Three-dimensional neutron scattering from complete Phonopy modes",
+  "无限一维模型的长波涨落和本页省略的Debye–Waller不能忽略。本页一维链不接受Phonopy文件；已有完整原始文件可进入独立的三维中子散射工具。后者需要配套原胞、Å单位、质量、所选q点全模复本征矢、Q/q匹配、来源明确的实相干散射长度和显式Debye–Waller处理，不能由单模动画补全。低能截断与有限Q网格必须随结果报告。": "Long-wavelength fluctuations in an infinite one-dimensional model and the Debye–Waller factor omitted here require care. This one-dimensional chain does not accept Phonopy files. Complete original files can be used in the separate three-dimensional neutron-scattering tool, which requires a matching primitive cell, angstrom units, masses, all complex modes at the selected q point, Q/q matching, sourced real coherent scattering lengths and explicit Debye–Waller treatment. A single-mode animation cannot supply missing data. Report the low-energy cutoff and finite Q grid with the result.",
+  "相干散射必须把两个原子的复振幅先相加。b 是有符号相对散射振幅，e 是质量归一化本征矢。本题规范的创建振幅使用 e 的复共轭。漏掉相位或共轭可能改变振幅、强度和消光；个别测点仍可能碰巧强度相同，需检验中间复数与其它测点。": "Coherent scattering adds the complex amplitudes of the two atoms before taking the squared modulus. Here b is a signed relative scattering amplitude and e is a mass-normalized eigenvector. The creation amplitude uses the complex conjugate of e in the convention of this exercise. Omitting the phase or conjugation can change amplitudes, intensities and extinctions. At an individual point the intensities may still agree accidentally, so check the intermediate complex values and other measurement points."
+}

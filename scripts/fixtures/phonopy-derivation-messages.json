@@ -1,0 +1,149 @@
+{
+  "schema": "symmetry-lab-phonopy-derivation-messages-1",
+  "method": "Seven actual browser_api.run(phonopy_derivation) requests: five grade requests using the complete pinned zno-two-G scientific input and its verified fingerprint, plus two genuinely rejected derive requests with invalid original G. Grade feedback and source-request errors are separate; no fabricated messages or NumPy ragged-array strings.",
+  "sourceEvidence": {
+    "module": "dist/python/phonopy_derivation.py",
+    "normalization": "utf8-lf-v1",
+    "moduleSHA256": "06b3073919f86ea400487a6aa8fdad0cb470669421e97a15536aff0dcc52b455",
+    "referenceFixture": "scripts/fixtures/phonopy-derivation.json",
+    "referenceCaseId": "zno-two-G",
+    "referenceFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247"
+  },
+  "cases": [
+    {
+      "caseId": "wrong-complex-keys",
+      "answer": {
+        "re": [
+          [
+            1.0,
+            2.0,
+            3.0
+          ]
+        ],
+        "imag": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "forFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247",
+      "feedback": "作答矩阵需要 re 和 im 两个二维数组",
+      "status": "malformed",
+      "taskId": "A.QCartesian"
+    },
+    {
+      "caseId": "complex-shape-mismatch",
+      "answer": {
+        "re": [
+          [
+            1.0,
+            2.0,
+            3.0
+          ]
+        ],
+        "im": [
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "forFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247",
+      "feedback": "作答矩阵实部与虚部形状不同",
+      "status": "malformed",
+      "taskId": "A.QCartesian"
+    },
+    {
+      "caseId": "finite-component-over-limit",
+      "answer": {
+        "re": [
+          [
+            1000000000.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "im": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "forFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247",
+      "feedback": "作答矩阵含非有限值或过大的分量",
+      "status": "malformed",
+      "taskId": "A.QCartesian"
+    },
+    {
+      "caseId": "nonzero-imaginary-real-task",
+      "answer": {
+        "re": [
+          [
+            1.0,
+            2.0,
+            3.0
+          ]
+        ],
+        "im": [
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "forFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247",
+      "feedback": "本题要求实数答案，虚部必须为零",
+      "status": "malformed",
+      "taskId": "A.QCartesian"
+    },
+    {
+      "caseId": "wrong-task-shape",
+      "answer": {
+        "re": [
+          [
+            0.0
+          ]
+        ],
+        "im": [
+          [
+            0.0
+          ]
+        ]
+      },
+      "forFingerprint": "2ca9a3e3bbdbda4bcd4d05be07b7c593dffb5836883549e4fa1a2318db751247",
+      "feedback": "答案矩阵形状与本题不符",
+      "status": "malformed",
+      "taskId": "A.QCartesian"
+    }
+  ],
+  "requestErrors": [
+    {
+      "caseId": "source-G-wrong-length",
+      "scientificInputPatch": {
+        "G": [
+          1,
+          0
+        ]
+      },
+      "message": "原始G需要三个整数分量",
+      "status": "rejected"
+    },
+    {
+      "caseId": "source-G-noninteger",
+      "scientificInputPatch": {
+        "G": [
+          1,
+          1.25,
+          0
+        ]
+      },
+      "message": "原始G必须是规定范围内的 JSON 整数",
+      "status": "rejected"
+    }
+  ]
+}

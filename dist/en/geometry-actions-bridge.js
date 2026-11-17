@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {GEOMETRY_ACTIONS_REFERENCE as REFERENCE} from './geometry-actions-reference.js?v=20261117-phonopy1';
+import {GEOMETRY_ACTIONS_REFERENCE as REFERENCE} from './geometry-actions-reference.js?v=20261117-derive1';
 
 // Bounded algebra for one declared SSH reference. This is not a new solver.
 export const GEOMETRY_ACTIONS_BRIDGE_HOOKS=Object.freeze({'geometry-rays':Object.freeze(['ket-projector-distance'])});

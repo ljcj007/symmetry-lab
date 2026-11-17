@@ -3315,7 +3315,7 @@ export const CHIRALITY_ACTIONS_REFERENCE = Object.freeze({
   "sourceHashNormalization": "utf8-lf-v1",
   "sourceHashes": {
     "dist/data/frontiers-materials.json": "465dba4269a9337c054763dbd0c3dfe37c4a647ddc7f0d3a42b41417a5596a1c",
-    "dist/python/browser_api.py": "3d8448e9c158fb14356087de42ebcf41b0f44cfe856fd86bdbd0d66176267bee",
+    "dist/python/browser_api.py": "9aded557a32e85c3160edfca36b687b319983cafa98e2a224134848dbbe8f1b6",
     "dist/python/symmetry_frontiers.py": "c12fd845f510e177e6ea326e14d2f8e860aad6af16c259dc8b764dae4f84478a"
   }
 });

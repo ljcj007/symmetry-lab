@@ -7,7 +7,7 @@ import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-rou
 import {createProjectNavigator} from '../dist/project-navigation.js';
 import {validateStructureHandoff,createStructureHandoff,structureHandoffForCalculation} from '../dist/structure-provenance.js';
 import * as sourceView from '../dist/structure-handoff.js';
-import * as notebook from '../dist/material-notebook.js?v=20261117-phonopy1';
+import * as notebook from '../dist/material-notebook.js?v=20261117-derive1';
 
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/structure-handoff.json',import.meta.url),'utf8'));
 const groups=JSON.parse(fs.readFileSync(new URL('../dist/data/space-groups.json',import.meta.url),'utf8')).groups;

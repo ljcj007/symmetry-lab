@@ -35,52 +35,52 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 55803,
-      "sha256": "bd487ae3f9c814d3576b6df0e011973f43bac3b57c08d4af162b651e39d2d9f2"
+      "bytes": 57862,
+      "sha256": "030c22a1d9859b6c5f85a867c9edf7e37e5183a3cd0c1bd2f84b17fe888d376c"
     },
     "dist/app.js": {
-      "bytes": 99424,
-      "sha256": "2a593753bba11f2ceb769c3aa0ab3f391bb40eb311bd9dec6ba53433681b5901"
+      "bytes": 99560,
+      "sha256": "3fb39adeab3667208fa9b957a1ea93e8743d9e8ee1c1fc912fb1132301de5087"
     },
     "dist/bridges-ui.js": {
-      "bytes": 17155,
-      "sha256": "5f2b1bf82d5cb61063581566f29d4c23dc256fb56a4c981beb4f9c49095a1de2"
+      "bytes": 17152,
+      "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32179,
-      "sha256": "5d8697326e2b60789a1eb446923b6660466c3a93c7f301c8a7d96d5d5bda7756"
+      "bytes": 32164,
+      "sha256": "7becdbcba8073a07efefc09e4aebbb38bad822792fc7ea33c9d98cd34b594638"
     },
     "dist/classroom.css": {
       "bytes": 8608,
       "sha256": "7130de46e1fe607f421aaf2cf2570ec6da379638df57a58dca2851dd90be5ae2"
     },
     "dist/comparison-lab.js": {
-      "bytes": 9641,
-      "sha256": "01c38d4ca2e76c554f6f158254ddd9a139b408dc66b3cd08652ae17837c2fe62"
+      "bytes": 9640,
+      "sha256": "14ec8de854a2a674a6c45b11347f041f3f33dc0a54357e47a9f23e307f8bbe1d"
     },
     "dist/connections-ui.js": {
-      "bytes": 18461,
-      "sha256": "4ef11fd2ae9bacbaf4ee735e83fe48a9c704a20da0c707c2cf1365fafb83aa61"
+      "bytes": 18457,
+      "sha256": "7679b39c371d3d39a7b6455d8ab2c6e2fb8faae82cfa61ff7673bd31e8818f8a"
     },
     "dist/construction-ui.js": {
-      "bytes": 17357,
-      "sha256": "891fd538eab112c909e000ac87702227e7edb9493ad5f60e599feae2a1085e68"
+      "bytes": 17355,
+      "sha256": "43465408609d4a089014f8eb46493eddee0383905ba53182088793b57026179f"
     },
     "dist/coupled-materials-ui.js": {
-      "bytes": 36139,
-      "sha256": "9fd1ac5c9d55207f07d66241eacbe8f259d981749df16826dac57038022d31c3"
+      "bytes": 36137,
+      "sha256": "06a58197e46735692f065c792d16d5924d519d69120e28e67e76900e26f5414a"
     },
     "dist/docs/hall-response-lab.md": {
       "bytes": 4794,
       "sha256": "c4d7ebd586873f5f67f672ce68d720ed1749b87bc5af70b585506a0c7308ac03"
     },
     "dist/electronic-materials-ui.js": {
-      "bytes": 32618,
-      "sha256": "57b611e9ed79c289b767ff1e03b7fb353436f87ef51d86db0fbae2af8515ae29"
+      "bytes": 32616,
+      "sha256": "b78b94571c5e8c8ed4c6c4e803296dd437dfc3972b3aefdfeffec155ba8d5da2"
     },
     "dist/frontiers-ui.js": {
-      "bytes": 21104,
-      "sha256": "144d1218ed84ef206450319231c3bd904b4a461beeebe2d8954d5d7fa48416ba"
+      "bytes": 21101,
+      "sha256": "07a5e2e1272525c1d64a43aa0b0dbbd9c7a17192afb5244aa4f393b1487fb759"
     },
     "dist/hall-bridges.css": {
       "bytes": 3358,
@@ -91,28 +91,28 @@
       "sha256": "f5df267450581ec62b3a87865c0ae0ccfc8d0b52e00615dcc5e91addb391cd5e"
     },
     "dist/index.html": {
-      "bytes": 7817,
-      "sha256": "7984ff38e33862171de2d695c05ebb99cebe157fe3d11692b80e83699995a6ac"
+      "bytes": 7889,
+      "sha256": "0401ed609023cd0867c6c32ebc462d7afd2584699857fc6ee9c13cb45136ccb4"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 59791,
-      "sha256": "e9b6e1076d99901800875ee121dbe094cd2d8bd179ad43e54218025b2740f383"
+      "bytes": 59790,
+      "sha256": "09ee1b2cb9755b2d7c3ffb42c0a8365cdf3613c4a743a6cc8915f17948ad0a5e"
     },
     "dist/material-notebook.js": {
-      "bytes": 24917,
-      "sha256": "9b954eae417206a396a77843e6d83971d86022b511859adc5e345c613d3a1c19"
+      "bytes": 24916,
+      "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 50732,
-      "sha256": "887197a2a266a14cc57987f298c185f0edd5a8e7abfc9b99c3c95f0bb9bc87e5"
+      "bytes": 50890,
+      "sha256": "337b48815dddf915c1d1d7a272e30de3a9123b0bf45fdac5caac661839a44112"
     },
     "dist/pathways-ui.js": {
-      "bytes": 17632,
-      "sha256": "b00648cf04588b966d1998be5aa7e214fd5582d9bca7e53440f64b2d24c185ac"
+      "bytes": 18106,
+      "sha256": "b8526ffad354a38b38a116c138157e1fe439aa9921749f50b63c832f304503cf"
     },
     "dist/principles-ui.js": {
-      "bytes": 19839,
-      "sha256": "c59b60faf9e0c90b009d9b50741cdaea95e8101bca7e4e30a85b00cd6b13b6ff"
+      "bytes": 19836,
+      "sha256": "19b2fd31e9af8446d6738bdbf540267615b389d3a57d0cc4384ce333df572af1"
     },
     "dist/project-conditions.css": {
       "bytes": 1848,
@@ -147,28 +147,28 @@
       "sha256": "34dfa83b0f6bd94d6879a945c6bfa42c5fae33c7ac2e2ee207f30a0dd00e12d5"
     },
     "dist/quantum-materials-ui.js": {
-      "bytes": 37655,
-      "sha256": "dc34142eaddf475cefe7b5d667b5ed4ec5c44fca4731d33b6bd848a8cdcd15f6"
+      "bytes": 37652,
+      "sha256": "71a252847707d528b88dd03ba0ebddae2cc4838bf9602fc3f77cb53f8d2e9861"
     },
     "dist/response-materials-ui.js": {
-      "bytes": 13653,
-      "sha256": "dd8aebf28d5373b83e92fa3a47eef785e0e409333a1e956d328ca2512a84fa69"
+      "bytes": 13651,
+      "sha256": "bd7e9d6741044064bfd2e7c0b391bdb84b5e7a76a73ff3c94374bffc23147f27"
     },
     "dist/response-projects.js": {
-      "bytes": 20370,
-      "sha256": "661dbff76a67297f20d2e259fe72d5f91fa4a88da0a4692be0c2593d4a3333fa"
+      "bytes": 20369,
+      "sha256": "a4eef5b75c3eec215145d10583446011554e4d32745473df3a88eaaa19442908"
     },
     "dist/shg-flagship.js": {
-      "bytes": 19744,
-      "sha256": "ddece3a1ce4f49e55748457b55e0d8ef8a16e574273a091ad94001d4a72f1476"
+      "bytes": 19743,
+      "sha256": "8c9cb694bd9521274fb97b0f17480b7aa77f08eaf10cb6ecd7ae41157c8d0245"
     },
     "dist/spectroscopy-ui.js": {
-      "bytes": 13483,
-      "sha256": "89a54170b122f211ae44744c326843bfd71e31c223fbbefb550cf85037dde02c"
+      "bytes": 13481,
+      "sha256": "4a21d69b2fadbdf16eedf4f091a7d09dc9739374448f3954a38a1009bf29cd8c"
     },
     "dist/symmetry-audit-ui.js": {
-      "bytes": 3848,
-      "sha256": "da13268684fa78ef5dc9b2e4253e413ff07474b24c96499aa4d5873eec496768"
+      "bytes": 3847,
+      "sha256": "87c34b66e21656c6bb7a1c2a6e39bfb34179ca56862fffa7c823dd7963b10bd9"
     },
     "locales/en-hall-bridges.json": {
       "bytes": 19441,
@@ -187,16 +187,16 @@
       "sha256": "b1143d0449ad784ac5b8eaf21b047802182a851a0727dce371fcce3aa1e1f4c3"
     },
     "package.json": {
-      "bytes": 21203,
-      "sha256": "68d17a21c793b47a9ae4801a8adb5ea5bd657964093d070f60bbcaa8159e47a4"
+      "bytes": 22014,
+      "sha256": "b4e51c854c7aa6c0ddf6146ea83dea512e2846382ecb414b9f35ace4d965601e"
     },
     "scripts/build-learning-support-provenance.mjs": {
       "bytes": 5915,
       "sha256": "bca3c6c72d0d2c1c56e4249ec79c0417ddf8079ed8694cee0c51e13f3c3c02b2"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 3861,
-      "sha256": "89ea9f7b571995b6e3962eb644ef9d812af7b1ac6dc20401aacf156b34ec90ee"
+      "bytes": 4017,
+      "sha256": "6bcb5c8a9ccec5294c2b56d55fdd0a2ca8d8d19d5df911d271ed2b230b49b37e"
     },
     "scripts/test-hall-bridges.mjs": {
       "bytes": 14598,
@@ -211,12 +211,12 @@
       "sha256": "8d0a03abe167c14cbf380ff93c533488adec743155e8353ebe53b9e9a06d1c59"
     },
     "scripts/test-phonopy-scattering-ui.mjs": {
-      "bytes": 13406,
-      "sha256": "e7fd42dcb99c73d375b19729b08698080710d6f39ded7dbf112a3e8c93f50367"
+      "bytes": 14286,
+      "sha256": "a0d57231d89ab63eb7734e602ce565203030b8ee6c5f06ceee0884f0c56f8c14"
     },
     "scripts/test-project-conditions.mjs": {
-      "bytes": 15178,
-      "sha256": "6cc9e02ee7c44aafdebac0b16f4271f18c370333b74edf270fe08e0619b6d6ff"
+      "bytes": 15177,
+      "sha256": "7c5e696cd080f2da29e432d999c4acd0011d5941e93e6af036c748d0837bfee0"
     },
     "scripts/test-project-input.mjs": {
       "bytes": 12169,

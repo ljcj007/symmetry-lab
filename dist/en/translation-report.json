@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 27741,
-  "translatedUnits": 27741,
+  "sourceUnits": 27974,
+  "translatedUnits": 27974,
   "missing": [],
-  "files": 463,
+  "files": 467,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -111,6 +111,10 @@
     "en-phonopy-scattering-ui.json",
     "en-phonopy-scattering-host.json",
     "en-phonopy-scattering-python.json",
-    "en-phonopy-scattering-docs.json"
+    "en-phonopy-scattering-docs.json",
+    "en-phonopy-derivation-ui.json",
+    "en-phonopy-derivation-host.json",
+    "en-phonopy-derivation-python.json",
+    "en-phonopy-derivation-docs.json"
   ]
 }

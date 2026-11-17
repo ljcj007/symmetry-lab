@@ -47,3 +47,7 @@ The diatomic chain, atomic interference decomposition and reference examples are
 ## Apply coherent sums to supplied Phonopy modes
 
 After learning atomic coherent addition here, use the [Phonopy three-dimensional neutron-scattering tool](phonopy-scattering.md) with complete supplied modes. Three-dimensional projections, primitive phases and physical probe lengths are declared separately there; this diatomic-chain input and replay do not automatically become material data.
+
+## From replay to quantitative correction
+
+To test whether you can construct amplitudes yourself, continue to the [source-bound two-point workshop](phonopy-derivation.md). It uses two three-dimensional Q values for the same mode in supplied ZnO files and explicitly restores the Phonopy atom-phase convention; the one-dimensional cell-periodic vectors and parameters on this page cannot be mixed directly with it.

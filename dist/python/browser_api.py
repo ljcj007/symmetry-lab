@@ -1,6 +1,6 @@
 """Shared, allowlisted JSON API for CPython and the browser Worker."""
 TOOLS = ('layer_symmetry_lab', 'chirality_polarity_lab', 'manybody_spt_lab', 'symmetry_linked', 'frontier_inverse', 'statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'salc_lab', 'wavevector_lab', 'nonsymmorphic_lab', 'symmetry_grading', 'order_parameter_lab', 'exchange_symmetry_lab', 'conservation_lab', 'manybody_spectra_lab', 'polaron_lab', 'density_matrix_lab', 'symmetry_workshop', 'band_rep_lab', 'dynamic_scattering_lab', 'domain_wall_lab', 'hubbard_lab', 'analyze', 'induce', 'product', 'match_bands', 'magnetictb',
-         'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'phonopy_scattering',
+         'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'phonopy_scattering', 'phonopy_derivation',
          'carat_integral', 'integral_normalizer', 'symbolic_interfaces',
          'arithmetic_centralizer', 'symbolic_spacegroups',
          'structure_bc', 'standard_labels', 'teaching_labs', 'phonons', 'tensors', 'phase', 'diffraction', 'phonopy', 'phonon_modes', 'band_connectivity', 'phonon_thermo',
@@ -15,6 +15,9 @@ def run(tool, payload, database=None, catalog=None, magnetic_database=None,
         raise ValueError('Calculation input must be a JSON object')
     if tool == 'representation_actions':
         from representation_actions import run as calculate
+        return calculate(payload)
+    if tool == 'phonopy_derivation':
+        from phonopy_derivation import run as calculate
         return calculate(payload)
     if tool == 'phonopy_scattering':
         from phonopy_scattering import run as calculate

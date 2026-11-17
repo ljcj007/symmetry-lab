@@ -102,7 +102,7 @@ Results include `summary`, `plots`, `tables`, `warnings`, `checks`, `heatmap`, a
 
 ## Connecting with Phonopy imports
 
-This version does not accept Phonopy scattering inputs. The importer retains all q frequencies but full complex vectors only for one selected mode, insufficient for full Q spectra. Inspect real files there first, but do not infer other vectors from one-mode animations/frequency curves.
+The one-dimensional chain calculator on this page does not directly accept Phonopy files. The separate three-dimensional Phonopy scattering tool rereads all complex eigenvectors at each required q from the original input. The old importer’s selected-mode animation alone remains insufficient to construct a complete spectrum or infer other eigenvectors.
 
 Real-data calculations next require at least the primitive lattice with explicit Å units, masses, fractional coordinates, complete normalized q-point eigenvectors, frequency units, matching of Q−q to reciprocal vectors, scattering amplitudes or form factors, and appropriate Debye–Waller treatment. Conventional-cell and primitive-cell data must not be mixed.
 

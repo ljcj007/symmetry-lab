@@ -1,3 +1,5 @@
+import {supportsProjectInput} from './project-input.js?v=20261117-derive1';
+
 // Target-bound RAM drafts contain the original input, never a selected animation.
 // An unfinished importer handoff is distinct from a restorable complete record.
 let pending=null;
@@ -10,7 +12,14 @@ export function phonopyScatteringDraft(input){
  draft.G=[0,0,0];draft.channel='creation';draft.primitiveOrderConfirmed=false;
  return {action:'phonopy_scattering',input:draft};
 }
-export function setPhonopyScatteringInput(input){pending={identity:{},draft:phonopyScatteringDraft(input)};return true;}
+export function setPhonopyScatteringInput(input){pending={identity:{},kind:'importer',draft:phonopyScatteringDraft(input)};return true;}
+export function phonopyScatteringTeachingInput(payload){
+ if(!plain(payload)||payload.action!=='phonopy_scattering'||payload.sourceKind!=='teaching-reference'||!['A','B'].includes(payload.point)||typeof payload.referenceId!=='string'||!payload.referenceId.trim()||payload.referenceId.length>200||!/^[a-f0-9]{64}$/i.test(payload.fingerprint||''))throw Error("The teaching copy requires a complete reference identity and measurement point.");
+ const input=payload.input;
+ if(!supportsProjectInput('phonopy_scattering',input)||input.primitiveOrderConfirmed!==true||input.channel!=='creation'||!Array.isArray(input.G)||input.G.length!==3||input.G.some(x=>!Number.isInteger(x))||Object.hasOwn(input,'Q')||(input.QCoordinates??'primitive-reciprocal')!=='primitive-reciprocal')throw Error("The teaching copy must retain the complete three-dimensional creation-channel input with explicitly declared conditions.");
+ return {action:'phonopy_scattering',input:clone(input),referenceId:payload.referenceId,fingerprint:payload.fingerprint,point:payload.point,sourceKind:'teaching-reference'};
+}
+export function setPhonopyScatteringTeachingInput(payload){pending={identity:{},kind:'teaching',draft:phonopyScatteringTeachingInput(payload)};return true;}
 export function phonopyScatteringVisit(route){
  const active=pending;
  // Every navigation consumes a pending intent, including an unrelated route.
