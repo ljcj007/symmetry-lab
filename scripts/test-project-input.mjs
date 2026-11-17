@@ -15,7 +15,7 @@ globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(n
 const {assignmentTemplates}=await import('../dist/response-projects.js');
 const clone=x=>structuredClone(x),allSteps=assignmentTemplates.flatMap(t=>t.steps),actions=new Set(allSteps.map(s=>s.action));
 assert.equal(assignmentTemplates.length,26);assert.equal(allSteps.length,78);assert.equal(actions.size,33);
-assert.deepEqual(new Set(Object.keys(PROJECT_INPUT_TARGETS)),actions);
+assert.deepEqual(new Set(Object.keys(PROJECT_INPUT_TARGETS)),new Set([...actions,'phonopy_scattering']),'The original 78 stages retain their 33 actions; the new data tool has a separately verified adapter');
 assert.equal(supportsProjectInput('future_engine'),false);
 assert.equal(supportsProjectInput('teaching_labs',{lab:'spinor',experiment:'su2_coupling'}),false);
 assert.equal(supportsProjectInput('teaching_labs',{lab:'lie',experiment:'su3_cg'}),false,'Unverified subtypes are not advertised as restored');
@@ -42,7 +42,7 @@ assert.equal(original.data.eigenvectors[0][0][0],1);
 assert.equal(projectInputStatusHTML({status:'none'}),'');
 assert.doesNotMatch(projectInputStatusHTML({status:'rejected',message:'<img onerror="x">'}),/<img/);
 
-const prefixes={'material-research':'mr','electronic-materials':'em','quantum-materials':'qm','response-materials':'rp',spectroscopy:'spx',pathways:'pw',bridges:'pw',principles:'pw',construction:'pw',connections:'pw',frontiers:'pw',lie:'lg'};
+const prefixes={'material-research':'mr','electronic-materials':'em','quantum-materials':'qm','response-materials':'rp',spectroscopy:'spx',pathways:'pw',bridges:'pw',principles:'pw',construction:'pw',connections:'pw',frontiers:'pw',lie:'lg','phonopy-scattering':'ps'};
 const namespaces=new Map();
 async function mount(step,projectInput,mutate){
  const target=getProjectInputTarget(step.action,projectInput?.input);
@@ -120,5 +120,10 @@ const complexLoaded=await mount(shgStep,complexInput);
 assert.deepEqual(JSON.parse(complexLoaded.form.querySelector('#em-coefficients').value),complexOriginal.input.coefficients);
 assert.deepEqual(complexLoaded.calls[0],complexOriginal,'Complex SHG coefficient objects pass through the actual editable JSON control');
 assert.deepEqual(complexInput,complexOriginal);
+const phonopyScatteringFixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/phonopy-scattering.json',import.meta.url),'utf8'));
+for(const c of phonopyScatteringFixtures.cases){
+ const request={action:'phonopy_scattering',input:clone(c.input)},before=clone(request),restored=await mount({action:'phonopy_scattering',route:'#compute/phonopy-scattering'},request);
+ assert.deepEqual(restored.calls,[request],c.id+': actual new form submits every original input field');assert.deepEqual(request,before);
+}
 assert.equal(writes,0,'Opening and editing a copy cannot overwrite evidence or mastery');
-console.log('Project input:33 registered actions;77 actual stage-form roundtrips across32 actions, '+changedInputs+' edited snapshots overriding presets, five real imported-file/nested-mesh/complex-coefficient form checks, original-record isolation, safe/explicit rejection and zero automatic calculations/storage writes passed. Core analyze is covered by app routing tests.');
+console.log('Project input:34 registered actions (33 original stage actions + Phonopy scattering);77 actual stage-form roundtrips across32 actions, '+changedInputs+' edited snapshots overriding presets, five real imported-file/nested-mesh/complex-coefficient form checks, original-record isolation, safe/explicit rejection and zero automatic calculations/storage writes passed. Core analyze is covered by app routing tests.');

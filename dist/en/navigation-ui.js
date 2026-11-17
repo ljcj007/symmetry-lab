@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261117-scattering1';
+import {classroomPathways} from './classroom-ui.js?v=20261117-phonopy1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261116-composition1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261116-composition1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261117-phonopy1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261117-phonopy1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -17,6 +17,7 @@ export const toolGroups=[
   ['compute/reciprocity-lab',"Reciprocity relations and response constraints","Spatial covariance, Onsager–Casimir relations, magnetic-domain reversal and dissipation.","Onsager Casimir Hall Reciprocity Dissipation"],
   ['compute/manybody-spectra-lab',"Many-body spectral functions · Addition, removal and response","Actual transition matrix elements and spectral-weight sum rules in finite Hubbard clusters, with links between spectral peaks and states.","Lehmann many-body spectral function spin response"],
   ['compute/dynamic-scattering-lab',"Inelastic scattering · Dynamic structure factor","Diatomic chains, polarization projections, thermal populations, Stokes/anti-Stokes processes and S(Q,E) maps.","inelastic scattering DSF dynamic structure factor phonon"],
+  ['compute/phonopy-scattering',"Three-dimensional Phonopy inelastic scattering","Calculate one-phonon neutron spectra from a matching primitive cell and complete complex eigenvectors. Units, atom order and coherent scattering lengths must be declared.","Phonopy neutron DSF qpoints.yaml mesh.yaml band.yaml three-dimensional dynamic structure factor ZnO zinc oxide"],
   ['compute/spin-resonance-lab',"Magnetic resonance · Effective spins and EPR","Anisotropic g tensors, zero-field splitting, hyperfine interactions, field direction and magnetic-dipole transition spectra.","EPR ESR resonance magnetic resonance effective spin ultrafine"],
   ['compute/atomic-spectra-lab',"Multiplet spectra · Polarization-resolved XAS","Polarization-resolved 2p→3d absorption with full Slater interactions and SOC in the d⁸/d⁹ atomic approximation.","XAS XMCD XLD multiplet Polarization selection rule Slater"],
   ['compute/phonons',"Γ-point phonons · IR / Raman spectra","Mechanical representations, acoustic/optical decomposition, 3D displacements and polarization selection rules for Si, GaAs and NaCl.","phonon vibration infrared Raman Raman phonon spectrum"],

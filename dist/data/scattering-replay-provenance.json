@@ -49,18 +49,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 55039,
-      "sha256": "af0f237b5e7d5c54182286288696e03bbbedef83992b83bac85a41ed458d0cf9"
+      "bytes": 55803,
+      "sha256": "bd487ae3f9c814d3576b6df0e011973f43bac3b57c08d4af162b651e39d2d9f2"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97886,
-      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
+      "bytes": 99424,
+      "sha256": "2a593753bba11f2ceb769c3aa0ab3f391bb40eb311bd9dec6ba53433681b5901"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32224,
-      "sha256": "c39fefe85097f52b6b665e1fb8403191333cdaabf4027d74adcf3098f4e16bed"
+      "bytes": 32179,
+      "sha256": "5d8697326e2b60789a1eb446923b6660466c3a93c7f301c8a7d96d5d5bda7756"
     },
     "dist/course-flow.js": {
       "normalization": "utf8-lf-v1",
@@ -79,13 +79,13 @@
     },
     "dist/docs/dynamic-scattering.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8620,
-      "sha256": "b7103d401b5a44df0662c93e272c70ef5c7442959283aed374d9ba3eb6d1c3a1"
+      "bytes": 8922,
+      "sha256": "94e86f1e68f5c024c26813ca7ca64c05719dd54a6524df7902fa865f594a4854"
     },
     "dist/docs/scattering-amplitudes.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4909,
-      "sha256": "65662c8ed7d5cba930f002a9d8ab99756e0e5dc34ad7ad646403122ffdeb54f1"
+      "bytes": 5234,
+      "sha256": "588b4a30eebc5c525c3b498401130d676ab211606dda63df692e0462f2dad826"
     },
     "dist/english-results.js": {
       "normalization": "utf8-lf-v1",
@@ -94,8 +94,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7746,
-      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
+      "bytes": 7817,
+      "sha256": "7984ff38e33862171de2d695c05ebb99cebe157fe3d11692b80e83699995a6ac"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -119,8 +119,8 @@
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17322,
-      "sha256": "19e2c6e3c51fcc829dd670cc86db969c369e58db7b0b6e5a14c85770022f4f8b"
+      "bytes": 17632,
+      "sha256": "b00648cf04588b966d1998be5aa7e214fd5582d9bca7e53440f64b2d24c185ac"
     },
     "dist/pathways-views.js": {
       "normalization": "utf8-lf-v1",
@@ -134,28 +134,28 @@
     },
     "dist/project-input-fields.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10875,
-      "sha256": "85d1e56974db89a3b81366c7921408350b9bd69272e3a0a9d86587676cc5b812"
+      "bytes": 11922,
+      "sha256": "d14bbc116210180ec327414aaf717ce4cc0cfd2fca80291ddd1372c0ed6473d5"
     },
     "dist/project-input.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6656,
-      "sha256": "9c09885a815e7072d698092dc96317e97b7b9ecd84ce58483606fef896bd59c3"
+      "bytes": 8637,
+      "sha256": "5f13b566e1f17deb73ec68dee9d154d299350c7cca5b6fe3de2c3a945c7dd190"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3142,
-      "sha256": "d91e5a18eb5a3bedc6bbbccbd7cfba84a4ac1a141f0dae25080792ee590bfd33"
+      "bytes": 3139,
+      "sha256": "684658049559151f9e2cce2a3e8b85aea1b5c1a843bf77e2baef66143795bc5d"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11774,
-      "sha256": "875e51355549345297ac5658466546642a8d931c35b948959f77a8c3b8a39462"
+      "bytes": 11856,
+      "sha256": "b0c545ca52f2164ff219f27f0122d5d96d19d1530fb86114e3f16d317ad478b0"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8165,
-      "sha256": "4e02a91e55afffb0778c1a208005e993cadb36e08b2a8c3320cd7d17eeb3d5ad"
+      "bytes": 8314,
+      "sha256": "3d8448e9c158fb14356087de42ebcf41b0f44cfe856fd86bdbd0d66176267bee"
     },
     "dist/python/dynamic_scattering_lab.py": {
       "normalization": "utf8-lf-v1",
@@ -164,13 +164,13 @@
     },
     "dist/scattering-replay-host.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6769,
-      "sha256": "3adb5824b15cfeefcda441265ae671e5c5bed875214d4d90e94b5cfc1e672d41"
+      "bytes": 6766,
+      "sha256": "b854ffadc9dc34b9805b70fdbffe846479205afb57f5201c2f0dfec55e15b2d4"
     },
     "dist/scattering-replay-reference.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 75894,
-      "sha256": "0ef42aa2128ab0ef888ed540154e35db8d3a4d7af04b6b090987524d36c3c7f4"
+      "sha256": "5b9d645683e3e0803a7de1dbf93456dd7748af67b61ec6978b2e92dc6b26d947"
     },
     "dist/scattering-replay-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -416,6 +416,26 @@
       "normalization": "utf8-lf-v1",
       "bytes": 21935,
       "sha256": "f37fd161d922e589134c4dfea20d3b5fee197222b4a664ae0b3ea1f358432b0a"
+    },
+    "locales/en-phonopy-scattering-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 16962,
+      "sha256": "7dd1be521458340a0a38939de6f996a10cd650a8d1e85f02158d27cb58bf0525"
+    },
+    "locales/en-phonopy-scattering-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5306,
+      "sha256": "71f49474cd0e04ad677aa8caedcbf6e269642f4ef85835655d9ae441aa0de9f6"
+    },
+    "locales/en-phonopy-scattering-python.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 9142,
+      "sha256": "8a6160dfd3281693f7fe9174c24f02a4c407bc94ea850d1adf2692134a56e4e9"
+    },
+    "locales/en-phonopy-scattering-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 24990,
+      "sha256": "34b03badc2626b1aa81572fb40ea99c6996e0e079030299a10dc37a6cd52d6c4"
     },
     "locales/en-phonopy-units.json": {
       "normalization": "utf8-lf-v1",
@@ -674,8 +694,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20518,
-      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
+      "bytes": 21203,
+      "sha256": "614cfc4909d1f28f2322bbbe3e7f4587090bdc3749ae014f1324cbc489541726"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -724,8 +744,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3705,
-      "sha256": "d9b02a1197e50e33b327090fa7df1aecf1ea1cb6dae74037eacefc7d7c31807d"
+      "bytes": 3861,
+      "sha256": "89ea9f7b571995b6e3962eb644ef9d812af7b1ac6dc20401aacf156b34ec90ee"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -739,13 +759,13 @@
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869771,
-      "sha256": "7d39ea24893048e7d78c04395d5ff827a8be2ee25776eb4fbf1f50568f745325"
+      "bytes": 869862,
+      "sha256": "1e75c6dea7462c57cfe5c5a5f3b6b768c15d4134183bbcc06300266e6f015133"
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736827,
-      "sha256": "6057d377c0d907a3a0346bec7923dca4cf5716d2b08c8728bee0c500d1256f72"
+      "bytes": 1736918,
+      "sha256": "57fc6de8490c7250b841d3510584a852adf17dcce78a8331ee53051d291a1b3b"
     },
     "scripts/fixtures/pathways.json.gz": {
       "normalization": "binary",
@@ -755,7 +775,7 @@
     "scripts/fixtures/scattering-replay.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 2288174,
-      "sha256": "d13c812b16d11a7dece41abc62313dca54b74c69860d6e2895247cc0d890776a"
+      "sha256": "bac5c5d9dbfb1ba34a69fab75f14c179820904952dabbce44033cc043deeacca"
     },
     "scripts/fixtures/scattering-source-baseline.py.gz": {
       "normalization": "binary",
@@ -789,8 +809,8 @@
     },
     "scripts/test-project-input.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11452,
-      "sha256": "27e6a43eed1c742a198671109e5e5f757281f17a5f4a82dc4cdecdb40e6e9a73"
+      "bytes": 12169,
+      "sha256": "bfc16f344292c5114b643545f0edcbd2f3945e3ba4f28e9ee579ed0fe58025b3"
     },
     "scripts/test-python-dynamic-scattering.py": {
       "normalization": "utf8-lf-v1",
@@ -819,8 +839,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4242,
-      "sha256": "edeb7154bbf1e8a538b4b4a29db340e262a52d1a555b0df625e73eb0e51969fd"
+      "bytes": 4285,
+      "sha256": "fd2d1f8ab00f6fffc41b13414df3c73442cffe279cf3a16158d8c2d452645bc7"
     }
   }
 }

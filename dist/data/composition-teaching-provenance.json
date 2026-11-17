@@ -12,7 +12,7 @@
     "realNewAPIReferences": 8,
     "independentPythonTestGroups": 9,
     "supportedFilenameAliases": 9,
-    "inputPurposeToolFamilies": 4,
+    "inputPurposeToolFamilies": 5,
     "extractedSourceChecks": 16
   },
   "contract": {
@@ -63,18 +63,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 55039,
-      "sha256": "af0f237b5e7d5c54182286288696e03bbbedef83992b83bac85a41ed458d0cf9"
+      "bytes": 55803,
+      "sha256": "bd487ae3f9c814d3576b6df0e011973f43bac3b57c08d4af162b651e39d2d9f2"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97886,
-      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
+      "bytes": 99424,
+      "sha256": "2a593753bba11f2ceb769c3aa0ab3f391bb40eb311bd9dec6ba53433681b5901"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32224,
-      "sha256": "c39fefe85097f52b6b665e1fb8403191333cdaabf4027d74adcf3098f4e16bed"
+      "bytes": 32179,
+      "sha256": "5d8697326e2b60789a1eb446923b6660466c3a93c7f301c8a7d96d5d5bda7756"
     },
     "dist/composition-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -93,8 +93,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7746,
-      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
+      "bytes": 7817,
+      "sha256": "7984ff38e33862171de2d695c05ebb99cebe157fe3d11692b80e83699995a6ac"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -103,8 +103,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30004,
-      "sha256": "63e79023b1b9912a0aeef655f902d77a15826af83f8ccc3db528d24c1dd661ea"
+      "bytes": 30292,
+      "sha256": "42036a6e2dd3f656247577ba8e5fc0187efe09382b60bf04cd7e6f626642164f"
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -113,18 +113,18 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3142,
-      "sha256": "d91e5a18eb5a3bedc6bbbccbd7cfba84a4ac1a141f0dae25080792ee590bfd33"
+      "bytes": 3139,
+      "sha256": "684658049559151f9e2cce2a3e8b85aea1b5c1a843bf77e2baef66143795bc5d"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11774,
-      "sha256": "875e51355549345297ac5658466546642a8d931c35b948959f77a8c3b8a39462"
+      "bytes": 11856,
+      "sha256": "b0c545ca52f2164ff219f27f0122d5d96d19d1530fb86114e3f16d317ad478b0"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8165,
-      "sha256": "4e02a91e55afffb0778c1a208005e993cadb36e08b2a8c3320cd7d17eeb3d5ad"
+      "bytes": 8314,
+      "sha256": "3d8448e9c158fb14356087de42ebcf41b0f44cfe856fd86bdbd0d66176267bee"
     },
     "dist/python/composition_lab.py": {
       "normalization": "utf8-lf-v1",
@@ -138,13 +138,13 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 41470,
-      "sha256": "bb11e617c8c4ee1b0c974ea045fc2346f80ae03bf7a5da96393f797ecd8a49d7"
+      "bytes": 43174,
+      "sha256": "af524f62113bfac2abb8c47ff91504c2a12bb0693bca903e31cfcdd8dc9baeae"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8661,
-      "sha256": "1a7414360d4fa4e71561ae55218968fdc45b94c319addc0fc63d5a3ed6442b50"
+      "bytes": 8658,
+      "sha256": "4e5a4ba1a37ad9b3011d82d0265ccbb51835be82d6b6f275135ad615e83f5d80"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
@@ -183,8 +183,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20518,
-      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
+      "bytes": 21203,
+      "sha256": "614cfc4909d1f28f2322bbbe3e7f4587090bdc3749ae014f1324cbc489541726"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -199,7 +199,7 @@
     "scripts/build-composition-teaching-provenance.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 8413,
-      "sha256": "8eddf123e210303354ea0e053335f4bdaa0e7ee1a5218405d764e47e8423e658"
+      "sha256": "eb14695b3f921a32c73963badacc4de5b0601aaf4730636b8f59b0ae9f210245"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -213,8 +213,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3705,
-      "sha256": "d9b02a1197e50e33b327090fa7df1aecf1ea1cb6dae74037eacefc7d7c31807d"
+      "bytes": 3861,
+      "sha256": "89ea9f7b571995b6e3962eb644ef9d812af7b1ac6dc20401aacf156b34ec90ee"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -224,27 +224,27 @@
     "scripts/fixtures/antitranslation.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 601691,
-      "sha256": "715020207729156650cba57b7022c2cb5b4e728c40b90027047b6e21db9e8473"
+      "sha256": "85e9ae87a778d2e59f6f41782c2499dbf84b8b02efa77d667bbd9a425458cf5b"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 869771,
-      "sha256": "7d39ea24893048e7d78c04395d5ff827a8be2ee25776eb4fbf1f50568f745325"
+      "bytes": 869862,
+      "sha256": "1e75c6dea7462c57cfe5c5a5f3b6b768c15d4134183bbcc06300266e6f015133"
     },
     "scripts/fixtures/composition.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 511745,
-      "sha256": "16c9077bc9ef1f2382f366c53ed3a6abaa9722c14032b0deba327c4e94329b49"
+      "sha256": "68780e2142bcfb1762c9597e9ed1edf714823da82c0bf66485337723fbf56371"
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1736827,
-      "sha256": "6057d377c0d907a3a0346bec7923dca4cf5716d2b08c8728bee0c500d1256f72"
+      "bytes": 1736918,
+      "sha256": "57fc6de8490c7250b841d3510584a852adf17dcce78a8331ee53051d291a1b3b"
     },
     "scripts/fixtures/spin-actions.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1224460,
-      "sha256": "bf7e163b0a768eae3b6b0fbe3926de0ee29abc9576c793d733f5589cb59b0f0f"
+      "sha256": "247210aaea1ee06a046855804f46d92ce5081604d374bbc1c7c381a9b3e92328"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",
@@ -273,18 +273,18 @@
     },
     "scripts/test-file-search.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 9901,
-      "sha256": "0bf3830208f0fe2b253d9a933ac398614251400c3674a84bf2f7b5086b7d081a"
+      "bytes": 10464,
+      "sha256": "0d39ce722c644a8f4ea4c6c168c15737200abb103b578db0a20c6a9d4b2b63ae"
     },
     "scripts/test-lie-stage-navigation.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17501,
-      "sha256": "ea0a9ecd45318588992409b61f58337a4083f446b937d823eba90e9603ec52a5"
+      "bytes": 17602,
+      "sha256": "8e86a82a2435d4e07a46ba57f9c04cdb18c211d322b11ab69eaa859711f7831b"
     },
     "scripts/test-project-navigation.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21698,
-      "sha256": "82a70e78df0993508d7e32e83b997fe8c5c5ae6ae7dcfee4feb10eea2924adfd"
+      "bytes": 21799,
+      "sha256": "1c3ad9edfe58f4d4afe0ccec633c43505b11d8dfe395bbb2bd1534d84ac6fbe8"
     },
     "scripts/test-python-client.mjs": {
       "normalization": "utf8-lf-v1",
@@ -303,8 +303,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4242,
-      "sha256": "edeb7154bbf1e8a538b4b4a29db340e262a52d1a555b0df625e73eb0e51969fd"
+      "bytes": 4285,
+      "sha256": "fd2d1f8ab00f6fffc41b13414df3c73442cffe279cf3a16158d8c2d452645bc7"
     },
     "scripts/test-spin-actions-worker.mjs": {
       "normalization": "utf8-lf-v1",
@@ -313,8 +313,8 @@
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11005,
-      "sha256": "d3e2e8005f47cd3cf8d4a9a8a590d2ff80ffa531b31fb7c464c00d48253d7e01"
+      "bytes": 11103,
+      "sha256": "c49af6bc9995566ab08a6304b0096fd3531ec1da76965f94be1f7e71b7c54281"
     },
     "scripts/test-workbench-routes.mjs": {
       "normalization": "utf8-lf-v1",

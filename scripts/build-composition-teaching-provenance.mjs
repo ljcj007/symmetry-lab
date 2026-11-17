@@ -18,7 +18,7 @@ for(const row of refs.cases){
  assert.ok(row.result.checks.length&&row.result.checks.every(check=>check.passed===true));
 }
 const formatNames=new Set(Object.values(toolInputFormats).flatMap(rows=>rows.flatMap(row=>row.files)));
-assert.equal(Object.keys(toolInputFormats).length,4);
+assert.equal(Object.keys(toolInputFormats).length,5);
 assert.deepEqual([...formatNames].sort(),['band.yaml','mesh.yaml','partial_dos.dat','phonopy.yaml','phonopy_disp.yaml','projected_dos.dat','qpoints.yaml','thermal_properties.yaml','total_dos.dat'].sort());
 assert.equal(lessonProgressionInventory.length,197);assert.equal(lessonProgressionEdges.length,259);
 assert.equal(new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to])).size,197);
@@ -42,7 +42,7 @@ const document={schemaVersion:1,release:'20261116-composition1',sourceHashNormal
  scope:'A first-lesson exact operation-order workshop and scientific-filename discovery across existing tools.',
  counts:{indexedLessons:197,reviewedConnectedLessons:197,optionalEdges:259,newOptionalEdges:0,
   newWorkshopPlacements:1,realNewAPIReferences:8,independentPythonTestGroups:9,
-  supportedFilenameAliases:9,inputPurposeToolFamilies:4,extractedSourceChecks:16},
+  supportedFilenameAliases:9,inputPurposeToolFamilies:5,extractedSourceChecks:16},
  contract:{action:'teaching_labs',lab:'composition',schema:'symmetry-lab-composition-1',lesson:'group-basics',
   space:'Active Cartesian column vectors in a fixed two-dimensional plane. The rightmost written factor acts first.',
   mathematics:'Python exact bounded integers supply all eight operations, both chronological paths, point/basis/corner frames, equality tests, inverses,64 products, missing closure witnesses and finite closure rounds.',

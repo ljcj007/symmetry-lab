@@ -5,11 +5,11 @@ import {Element,Container} from './test-material-research-ui.mjs';
 
 const sourceOnly=process.argv.includes('--source-only');
 const expectations={
- 'band.yaml':['compute/phonopy','compute/phonon-modes'],
- 'qpoints.yaml':['compute/phonopy','compute/phonon-modes'],
- 'mesh.yaml':['compute/phonopy','compute/phonon-modes','compute/phonon-thermo'],
+ 'band.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
+ 'qpoints.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
+ 'mesh.yaml':['compute/phonopy','compute/phonon-modes','compute/phonon-thermo','compute/phonopy-scattering'],
  'thermal_properties.yaml':['compute/phonon-thermo','compute/qha-lab'],
- 'phonopy.yaml':['compute/phonopy'], 'phonopy_disp.yaml':['compute/phonopy'],
+ 'phonopy.yaml':['compute/phonopy','compute/phonopy-scattering'], 'phonopy_disp.yaml':['compute/phonopy','compute/phonopy-scattering'],
  'total_dos.dat':['compute/phonopy','compute/phonon-thermo'],
  'projected_dos.dat':['compute/phonopy'], 'partial_dos.dat':['compute/phonopy']
 };
@@ -61,8 +61,8 @@ for(const prefix of sourceOnly?['']:['','en/']){
  const {filterToolDirectory}=await import(new URL('../dist/'+prefix+'tool-directory.js',import.meta.url));
  const {matchingInputFormats,inputFormatSummary}=await import(new URL('../dist/'+prefix+'tool-search.js',import.meta.url));
  const {toolInputFormats}=await import(new URL('../dist/'+prefix+'tool-capabilities.js',import.meta.url));
- assert.equal(toolsIndex.length,74);
- assert.equal(Object.keys(toolInputFormats).length,4);
+ assert.equal(toolsIndex.length,75);
+ assert.equal(Object.keys(toolInputFormats).length,5);
  for(const [query,expected] of Object.entries(expectations)){
   for(const variant of [query,query.toUpperCase(),'import '+query,'/tmp/phonons/'+query,'C:\\runs\\'+query,'"C:\\my results\\'+query+'"']){
    const finder=finderResults(toolsIndex,variant).map(x=>x.route);
@@ -88,11 +88,15 @@ for(const prefix of sourceOnly?['']:['','en/']){
  const byRoute=route=>toolsIndex.find(x=>x.route===route);
  const scopeText=(route,file)=>inputFormatSummary(byRoute(route),file);
  if(prefix){
+  assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/complete three-dimensional.*complex eigenvectors/);
+  assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/matching negative q/);
   assert.match(scopeText('compute/phonon-thermo','mesh.yaml'),/weights.*units[\s\S]*cannot replace a bulk integration mesh/);
   assert.match(scopeText('compute/phonopy','phonopy.yaml'),/only the structure[\s\S]*do not generate a phonon spectrum/);
   assert.match(scopeText('compute/phonopy','projected_dos.dat'),/cannot substitute for a complete total DOS/);
   assert.match(scopeText('compute/qha-lab','thermal_properties.yaml'),/Each volume[\s\S]*static energies[\s\S]*single file is not/);
  }else{
+  assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/完整三维复本征矢.*原胞/);
+  assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/湮灭通道.*负 q/);
   assert.match(scopeText('compute/phonon-thermo','mesh.yaml'),/整数权重.*频率单位.*路径.*不能代替体积分网格/);
   assert.match(scopeText('compute/phonopy','phonopy.yaml'),/没有频率.*只显示结构.*不会生成声子谱/);
   assert.match(scopeText('compute/phonopy','projected_dos.dat'),/不能冒充完整总 DOS/);
@@ -107,11 +111,11 @@ for(const prefix of sourceOnly?['']:['','en/']){
  const input=container.querySelector('#site-search');
  input.value='mesh.yaml';input.oninput();
  const matched=container.querySelectorAll('.nav-file-purpose');
- assert.equal(matched.length,3,'The actual directory displays distinct purposes without opening each card');
+ assert.equal(matched.length,4,'The actual directory displays distinct purposes without opening each card');
  assert.ok(matched.every(row=>row.innerHTML.includes('mesh.yaml')));
- assert.equal(container.querySelectorAll('[data-favorite]').length,3);
+ assert.equal(container.querySelectorAll('[data-favorite]').length,4);
  input.value='band.yaml';input.oninput();
- assert.equal(container.querySelectorAll('.nav-file-purpose').length,2);
+ assert.equal(container.querySelectorAll('.nav-file-purpose').length,3);
  assert.doesNotMatch(container.querySelector('#tools-filtered').innerHTML,/data-route="compute\/phonon-thermo"/);
 
  const button=body.appendChild(new Element('button')),opened=[];
@@ -127,4 +131,4 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.equal(network,0,'Tools-only filename filtering does not fetch catalogs or read files');
  controller.destroy();assert.equal(body.querySelector('dialog'),null);
 }
-console.log('Scientific file search: '+JSON.stringify({editions:sourceOnly?1:2,queries:observations.length,routes:74,observations})+'; actual finder/directory handlers, purpose and scientific-input boundaries, path/case/import queries, unsupported files, filters, manual navigation and lazy catalog behavior passed.');
+console.log('Scientific file search: '+JSON.stringify({editions:sourceOnly?1:2,queries:observations.length,routes:75,observations})+'; actual finder/directory handlers, purpose and scientific-input boundaries, path/case/import queries, unsupported files, filters, manual navigation and lazy catalog behavior passed.');

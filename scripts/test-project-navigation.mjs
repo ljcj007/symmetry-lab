@@ -1,3 +1,4 @@
+import {phonopyScatteringVisit} from '../dist/phonopy-scattering-handoff.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -61,7 +62,7 @@ const executePythonTask=async(action,input)=>{
  throw Error('Unexpected engine action '+action);
 };
 const navigator=createProjectNavigator(),renderJobs=[];
-const appContext={
+const appContext={phonopyScatteringVisit,
  state:appState,location,history:{pushState(value,_title,hash){historyWrites.push({value,hash});location.hash=hash;},replaceState(value,_title,hash){historyWrites.push({value,hash});location.hash=hash;}},
  URLSearchParams,structuredClone,Object,Promise,console,document:globalThis.document,projectNavigation:navigator,prepareProjectNavigation,supportsProjectInput,projectInputFor,projectWorkbenchSelection,canRestoreProjectWorkbench,
  $:selector=>nodes.get(selector.slice(1))||host.querySelector(selector),$$:()=>[],

@@ -34,18 +34,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 55039,
-      "sha256": "af0f237b5e7d5c54182286288696e03bbbedef83992b83bac85a41ed458d0cf9"
+      "bytes": 55803,
+      "sha256": "bd487ae3f9c814d3576b6df0e011973f43bac3b57c08d4af162b651e39d2d9f2"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97886,
-      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
+      "bytes": 99424,
+      "sha256": "2a593753bba11f2ceb769c3aa0ab3f391bb40eb311bd9dec6ba53433681b5901"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17160,
-      "sha256": "c522e46d32bdd89d14e0bfb1e2e4e8424236655767f055a9c1aa9c868e35c206"
+      "bytes": 17155,
+      "sha256": "5f2b1bf82d5cb61063581566f29d4c23dc256fb56a4c981beb4f9c49095a1de2"
     },
     "dist/data/examples/phonopy-cu-LICENSE.txt": {
       "normalization": "utf8-lf-v1",
@@ -74,23 +74,23 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7746,
-      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
+      "bytes": 7817,
+      "sha256": "7984ff38e33862171de2d695c05ebb99cebe157fe3d11692b80e83699995a6ac"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4594,
-      "sha256": "9c0739d5941409a6fc5304e9636ca2c2b1439fb73621059d3f1beff9ec962591"
+      "bytes": 4610,
+      "sha256": "00f1e6716dd459f206f33ea66117a94c90162f5d070d2ed7193eb04732756009"
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24773,
-      "sha256": "9a2ed2ef025604359c516bd0529c666b55dedf44412fe76206816d2027b96afd"
+      "bytes": 24917,
+      "sha256": "9b954eae417206a396a77843e6d83971d86022b511859adc5e345c613d3a1c19"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50734,
-      "sha256": "b5c063403f80603917dc21d095e1924326876309eb556bfe96d3f8ae2f1dc876"
+      "bytes": 50732,
+      "sha256": "887197a2a266a14cc57987f298c185f0edd5a8e7abfc9b99c3c95f0bb9bc87e5"
     },
     "dist/oscillator-spectra-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -104,8 +104,8 @@
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17322,
-      "sha256": "19e2c6e3c51fcc829dd670cc86db969c369e58db7b0b6e5a14c85770022f4f8b"
+      "bytes": 17632,
+      "sha256": "b00648cf04588b966d1998be5aa7e214fd5582d9bca7e53440f64b2d24c185ac"
     },
     "dist/structure-handoff.css": {
       "normalization": "utf8-lf-v1",
@@ -144,8 +144,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20518,
-      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
+      "bytes": 21203,
+      "sha256": "614cfc4909d1f28f2322bbbe3e7f4587090bdc3749ae014f1324cbc489541726"
     },
     "scripts/build-evidence-workflows-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -154,8 +154,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3705,
-      "sha256": "d9b02a1197e50e33b327090fa7df1aecf1ea1cb6dae74037eacefc7d7c31807d"
+      "bytes": 3861,
+      "sha256": "89ea9f7b571995b6e3962eb644ef9d812af7b1ac6dc20401aacf156b34ec90ee"
     },
     "scripts/fixtures/structure-handoff.json": {
       "normalization": "utf8-lf-v1",
@@ -179,8 +179,8 @@
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23373,
-      "sha256": "ce8e2adb764a8b5f38bb6032fd5efcd2d2a491e3f0c8a0e76f0c7f52d2298689"
+      "bytes": 23370,
+      "sha256": "4e9d5fe30d81aeb74e4941b8f54e9d21e18220686166f98a55fce9f30c8b8761"
     },
     "scripts/test-oscillator-bridge-integration.mjs": {
       "normalization": "utf8-lf-v1",
@@ -209,8 +209,8 @@
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11005,
-      "sha256": "d3e2e8005f47cd3cf8d4a9a8a590d2ff80ffa531b31fb7c464c00d48253d7e01"
+      "bytes": 11103,
+      "sha256": "c49af6bc9995566ab08a6304b0096fd3531ec1da76965f94be1f7e71b7c54281"
     }
   }
 }

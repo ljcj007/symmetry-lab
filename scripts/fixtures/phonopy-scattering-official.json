@@ -1,0 +1,1588 @@
+{
+  "officialVersion": "4.10.0",
+  "versions": {
+    "phonopy": "4.10.0",
+    "numpy": "2.5.4",
+    "spglib": "2.8.0",
+    "symfc": "1.8.0",
+    "phonors": "0.8.0"
+  },
+  "officialSourceURL": "https://github.com/phonopy/phonopy/blob/v4.10.0/phonopy/spectrum/dynamic_structure_factor.py",
+  "executedMethod": "DynamicStructureFactor._phonon_structure_factor",
+  "productionCoreSHA256": "11b50d45723f46315bab2e2b0b30465a76687353472cec8cecabd21c59ba61e5",
+  "officialSourceSHA256": "c52fd3513eb18d12e1e6d590613a9143f6a7d17899f2c779d7bb5e9d2083b33b",
+  "sameProvidedModeBranchComparisons": 84,
+  "freshZnOSubspaceComparisons": 60,
+  "actualOfficialMethodCalls": 150,
+  "maxProvidedAmplitudeRelativeResidual": 3.331391796911832e-16,
+  "maxConvertedWeightRelativeResidual": 4.440892098500626e-16,
+  "maxFreshZnOSubspaceRelativeResidual": 4.7628567756419216e-14,
+  "freshModelConditions": {
+    "forceSetsSHA256": "403e821f0017ca396874edcdb7da58366c6dce3cbe1f8ca03cd1346f1bd02dc5",
+    "structureSHA256": "93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c",
+    "isNAC": false,
+    "fcCalculator": "traditional",
+    "symmetrizeFC": true,
+    "compactFC": true,
+    "qpoints": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0.25,
+        0,
+        0
+      ],
+      [
+        0.25,
+        0,
+        0.25
+      ],
+      [
+        0.5,
+        0,
+        0
+      ]
+    ]
+  },
+  "comparisonUnits": "Official private F receives the same b numeric values in fm and returns raw F; compare with supplied A/sqrt(2 frequencyTHz). Physical line weights use independently stated SI quantum factor/E and the same thermal multiplier.",
+  "debyeWallerConditions": "ZnO explicitly omits DW, so official private method receives factors1. Synthetic provided thermal case receives the independently contracted same declared tensors. No real ZnO thermal tensors are generated.",
+  "notExecuted": "Default DynamicStructureFactor constructor and its complete mesh-DW integration were not run; this does not compare against or claim that different default DW conditions agree.",
+  "allPassed": true,
+  "providedComparisons": [
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 0,
+      "officialFRealImag": [
+        -1.477526454211441,
+        -0.20224140153882153
+      ],
+      "amplitudeRelativeResidual": 1.4889297249111626e-16,
+      "convertedWeightRelativeResidual": 1.3014994809671575e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 1,
+      "officialFRealImag": [
+        1.0673707397176673,
+        0.05498022771874884
+      ],
+      "amplitudeRelativeResidual": 2.0815944567978197e-16,
+      "convertedWeightRelativeResidual": 3.8868260849068787e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 2,
+      "officialFRealImag": [
+        0.07339450194676757,
+        0.012689109528313737
+      ],
+      "amplitudeRelativeResidual": 1.6258348159242626e-16,
+      "convertedWeightRelativeResidual": 1.6479873021779667e-17
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.09708739821891665,
+        0.0917806746968079
+      ],
+      "amplitudeRelativeResidual": 1.6711069443220838e-16,
+      "convertedWeightRelativeResidual": 3.469446951953614e-17
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 4,
+      "officialFRealImag": [
+        -1.420768284303739,
+        0.7116398669255121
+      ],
+      "amplitudeRelativeResidual": 1.3973601244758708e-16,
+      "convertedWeightRelativeResidual": 3.225128910160431e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.082499460383212,
+        0.12819487901126045
+      ],
+      "amplitudeRelativeResidual": 3.1031676915590914e-17,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 6,
+      "officialFRealImag": [
+        -0.5520926111747264,
+        0.01733640416475464
+      ],
+      "amplitudeRelativeResidual": 3.331391796911832e-16,
+      "convertedWeightRelativeResidual": 4.440892098500626e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 7,
+      "officialFRealImag": [
+        0.4523149121417202,
+        0.1596559025537945
+      ],
+      "amplitudeRelativeResidual": 1.3877787807814457e-16,
+      "convertedWeightRelativeResidual": 1.1102230246251565e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 8,
+      "officialFRealImag": [
+        0.004101265468833793,
+        -0.263036461950312
+      ],
+      "amplitudeRelativeResidual": 1.575545347612331e-16,
+      "convertedWeightRelativeResidual": 4.163336342344337e-17
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 9,
+      "officialFRealImag": [
+        -0.3318485152000471,
+        -0.1511805804257004
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 10,
+      "officialFRealImag": [
+        0.4188305716415262,
+        -1.0542002655675822
+      ],
+      "amplitudeRelativeResidual": 4.893638932073508e-17,
+      "convertedWeightRelativeResidual": 1.7046961527216957e-16
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branch": 11,
+      "officialFRealImag": [
+        -0.029860421206801768,
+        0.13502886508714854
+      ],
+      "amplitudeRelativeResidual": 4.443059973708341e-17,
+      "convertedWeightRelativeResidual": 1.0408340855860843e-17
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 0,
+      "officialFRealImag": [
+        -1.477526454211441,
+        -0.20224140153882153
+      ],
+      "amplitudeRelativeResidual": 1.4889297249111626e-16,
+      "convertedWeightRelativeResidual": 1.3014994809671575e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 1,
+      "officialFRealImag": [
+        1.0673707397176673,
+        0.05498022771874884
+      ],
+      "amplitudeRelativeResidual": 2.0815944567978197e-16,
+      "convertedWeightRelativeResidual": 3.8868260849068787e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 2,
+      "officialFRealImag": [
+        0.07339450194676757,
+        0.012689109528313737
+      ],
+      "amplitudeRelativeResidual": 1.6258348159242626e-16,
+      "convertedWeightRelativeResidual": 1.6479873021779667e-17
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.09708739821891665,
+        0.0917806746968079
+      ],
+      "amplitudeRelativeResidual": 1.6711069443220838e-16,
+      "convertedWeightRelativeResidual": 3.469446951953614e-17
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 4,
+      "officialFRealImag": [
+        -1.420768284303739,
+        0.7116398669255121
+      ],
+      "amplitudeRelativeResidual": 1.3973601244758708e-16,
+      "convertedWeightRelativeResidual": 3.225128910160431e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.082499460383212,
+        0.12819487901126045
+      ],
+      "amplitudeRelativeResidual": 3.1031676915590914e-17,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 6,
+      "officialFRealImag": [
+        -0.5520926111747264,
+        0.01733640416475464
+      ],
+      "amplitudeRelativeResidual": 3.331391796911832e-16,
+      "convertedWeightRelativeResidual": 4.440892098500626e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 7,
+      "officialFRealImag": [
+        0.4523149121417202,
+        0.1596559025537945
+      ],
+      "amplitudeRelativeResidual": 1.3877787807814457e-16,
+      "convertedWeightRelativeResidual": 1.1102230246251565e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 8,
+      "officialFRealImag": [
+        0.004101265468833793,
+        -0.263036461950312
+      ],
+      "amplitudeRelativeResidual": 1.575545347612331e-16,
+      "convertedWeightRelativeResidual": 4.163336342344337e-17
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 9,
+      "officialFRealImag": [
+        -0.3318485152000471,
+        -0.1511805804257004
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 10,
+      "officialFRealImag": [
+        0.4188305716415262,
+        -1.0542002655675822
+      ],
+      "amplitudeRelativeResidual": 4.893638932073508e-17,
+      "convertedWeightRelativeResidual": 1.7046961527216957e-16
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branch": 11,
+      "officialFRealImag": [
+        -0.029860421206801768,
+        0.13502886508714854
+      ],
+      "amplitudeRelativeResidual": 4.443059973708341e-17,
+      "convertedWeightRelativeResidual": 1.0408340855860843e-17
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 4,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.2520946168671224,
+        0.04904096778829552
+      ],
+      "amplitudeRelativeResidual": 5.551115123125783e-17,
+      "convertedWeightRelativeResidual": 2.7755575615628914e-17
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 6,
+      "officialFRealImag": [
+        -1.0239152673380127e-15,
+        -1.0921762851605468e-15
+      ],
+      "amplitudeRelativeResidual": 1.9076977308310555e-17,
+      "convertedWeightRelativeResidual": 4.0243210963335653e-35
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 7,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 8,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 9,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 10,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branch": 11,
+      "officialFRealImag": [
+        0.33974732560897586,
+        -0.30103938050337536
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 2.7755575615628914e-17
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 4,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.2520946168671224,
+        0.04904096778829552
+      ],
+      "amplitudeRelativeResidual": 5.551115123125783e-17,
+      "convertedWeightRelativeResidual": 8.673617379884035e-19
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 6,
+      "officialFRealImag": [
+        -1.0239152673380127e-15,
+        -1.0921762851605468e-15
+      ],
+      "amplitudeRelativeResidual": 1.9076977308310555e-17,
+      "convertedWeightRelativeResidual": 2.5076629704316965e-37
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 7,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 8,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 9,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 10,
+      "officialFRealImag": [
+        0.0,
+        0.0
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branch": 11,
+      "officialFRealImag": [
+        0.33974732560897586,
+        -0.30103938050337536
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 2.710505431213761e-20
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 0,
+      "officialFRealImag": [
+        -1.874267014818788e-15,
+        4.780527905192522e-15
+      ],
+      "amplitudeRelativeResidual": 5.741311955091286e-17,
+      "convertedWeightRelativeResidual": 8.30387840959734e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 1,
+      "officialFRealImag": [
+        0.02421678109383843,
+        -0.04194469525031799
+      ],
+      "amplitudeRelativeResidual": 1.734723475976807e-17,
+      "convertedWeightRelativeResidual": 8.673617379884035e-19
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 2,
+      "officialFRealImag": [
+        -1.3361968078363921e-14,
+        1.2370873551217519e-14
+      ],
+      "amplitudeRelativeResidual": 1.494621952611528e-17,
+      "convertedWeightRelativeResidual": 2.375718719962812e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 3,
+      "officialFRealImag": [
+        -6.251173555323766e-15,
+        -5.347236035103833e-16
+      ],
+      "amplitudeRelativeResidual": 3.291559778466841e-17,
+      "convertedWeightRelativeResidual": 4.42064819295066e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 4,
+      "officialFRealImag": [
+        0.5952686124271955,
+        -1.0310354808749498
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 5,
+      "officialFRealImag": [
+        -1.0185537949544172e-14,
+        -1.5144827092316183e-14
+      ],
+      "amplitudeRelativeResidual": 1.0591138763738077e-16,
+      "convertedWeightRelativeResidual": 4.465417719588195e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 6,
+      "officialFRealImag": [
+        -5.119168823982665e-15,
+        1.0773528089790946e-14
+      ],
+      "amplitudeRelativeResidual": 1.498182718578815e-17,
+      "convertedWeightRelativeResidual": 3.4420843160311844e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 7,
+      "officialFRealImag": [
+        -0.11642906517115474,
+        0.20166105635419532
+      ],
+      "amplitudeRelativeResidual": 2.7755575615628914e-17,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 8,
+      "officialFRealImag": [
+        -1.6567866300228682e-15,
+        4.1097474772726445e-16
+      ],
+      "amplitudeRelativeResidual": 2.6260863426344116e-17,
+      "convertedWeightRelativeResidual": 6.561071510902921e-34
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 9,
+      "officialFRealImag": [
+        -3.2231135398602543e-15,
+        4.5991279280501605e-15
+      ],
+      "amplitudeRelativeResidual": 1.416191708827006e-19,
+      "convertedWeightRelativeResidual": 1.3491325473725597e-33
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 10,
+      "officialFRealImag": [
+        -0.5511735966490469,
+        0.9546606731866468
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 3.6129997054129193e-16
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branch": 11,
+      "officialFRealImag": [
+        2.3496259695875307e-14,
+        2.0722002526964728e-14
+      ],
+      "amplitudeRelativeResidual": 1.395751767020207e-16,
+      "convertedWeightRelativeResidual": 4.891337127543308e-30
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 0,
+      "officialFRealImag": [
+        -1.8742670148196697e-15,
+        -4.78052790519206e-15
+      ],
+      "amplitudeRelativeResidual": 5.741311955091364e-17,
+      "convertedWeightRelativeResidual": 2.393736600860517e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 1,
+      "officialFRealImag": [
+        0.024216781093838503,
+        0.04194469525031798
+      ],
+      "amplitudeRelativeResidual": 6.582812753581314e-17,
+      "convertedWeightRelativeResidual": 1.4094628242311558e-18
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 2,
+      "officialFRealImag": [
+        -1.336196807836369e-14,
+        -1.2370873551217328e-14
+      ],
+      "amplitudeRelativeResidual": 1.4946219526115968e-17,
+      "convertedWeightRelativeResidual": 3.7448065727318176e-32
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 3,
+      "officialFRealImag": [
+        7.766223765269853e-16,
+        -3.4884349371867864e-15
+      ],
+      "amplitudeRelativeResidual": 3.3378171880693766e-17,
+      "convertedWeightRelativeResidual": 2.262893120661647e-32
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 4,
+      "officialFRealImag": [
+        0.5952686124271965,
+        1.0310354808749491
+      ],
+      "amplitudeRelativeResidual": 0.0,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 5,
+      "officialFRealImag": [
+        2.7327428682169167e-14,
+        -6.489173371080561e-15
+      ],
+      "amplitudeRelativeResidual": 1.6260070774660548e-16,
+      "convertedWeightRelativeResidual": 2.1620874093891006e-31
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 6,
+      "officialFRealImag": [
+        -5.11916882398251e-15,
+        -1.0773528089791091e-14
+      ],
+      "amplitudeRelativeResidual": 1.4981827185787608e-17,
+      "convertedWeightRelativeResidual": 9.847917375709279e-34
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 7,
+      "officialFRealImag": [
+        -0.11642906517115491,
+        -0.2016610563541952
+      ],
+      "amplitudeRelativeResidual": 2.7755575615628914e-17,
+      "convertedWeightRelativeResidual": 5.421010862427522e-20
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 8,
+      "officialFRealImag": [
+        -1.656786630022882e-15,
+        -4.109747477271826e-16
+      ],
+      "amplitudeRelativeResidual": 2.626086342634657e-17,
+      "convertedWeightRelativeResidual": 1.0307143280558184e-36
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 9,
+      "officialFRealImag": [
+        1.515664021632725e-15,
+        -7.32322677774141e-15
+      ],
+      "amplitudeRelativeResidual": 5.628148747580361e-18,
+      "convertedWeightRelativeResidual": 6.698745096985865e-35
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 10,
+      "officialFRealImag": [
+        -0.551173596649048,
+        -0.9546606731866462
+      ],
+      "amplitudeRelativeResidual": 1.0071446014240574e-16,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branch": 11,
+      "officialFRealImag": [
+        -3.051682885801636e-14,
+        1.0304383770239292e-14
+      ],
+      "amplitudeRelativeResidual": 4.5899151697169486e-17,
+      "convertedWeightRelativeResidual": 1.820758533397399e-33
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 0,
+      "officialFRealImag": [
+        0.05701338318411676,
+        -0.30203708592535095
+      ],
+      "amplitudeRelativeResidual": 4.163336342344337e-17,
+      "convertedWeightRelativeResidual": 5.551115123125783e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 1,
+      "officialFRealImag": [
+        0.1396960124754386,
+        0.00052764435384849
+      ],
+      "amplitudeRelativeResidual": 2.7809732887839817e-17,
+      "convertedWeightRelativeResidual": 1.734723475976807e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 2,
+      "officialFRealImag": [
+        0.06923829155070013,
+        0.29501803381904607
+      ],
+      "amplitudeRelativeResidual": 7.850462293418876e-17,
+      "convertedWeightRelativeResidual": 2.7755575615628914e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.12291458929919052,
+        -0.25173736922660594
+      ],
+      "amplitudeRelativeResidual": 8.886119947416683e-17,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 4,
+      "officialFRealImag": [
+        0.16195723617817465,
+        -0.003866971916177801
+      ],
+      "amplitudeRelativeResidual": 2.7769124835677133e-17,
+      "convertedWeightRelativeResidual": 3.469446951953614e-18
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.18945014319577855,
+        0.2700520029393491
+      ],
+      "amplitudeRelativeResidual": 2.7755575615628914e-17,
+      "convertedWeightRelativeResidual": 4.163336342344337e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 6,
+      "officialFRealImag": [
+        -0.017937380064789107,
+        -0.2207443373593921
+      ],
+      "amplitudeRelativeResidual": 3.469446951953614e-17,
+      "convertedWeightRelativeResidual": 2.0816681711721685e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 7,
+      "officialFRealImag": [
+        0.0844193000198524,
+        -0.0362010702826782
+      ],
+      "amplitudeRelativeResidual": 3.1031676915590914e-17,
+      "convertedWeightRelativeResidual": 5.204170427930421e-18
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "creation",
+      "branch": 8,
+      "officialFRealImag": [
+        0.10041948841832392,
+        0.13504221773943792
+      ],
+      "amplitudeRelativeResidual": 2.7755575615628914e-17,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 0,
+      "officialFRealImag": [
+        0.055861478924344364,
+        -0.2959346975657074
+      ],
+      "amplitudeRelativeResidual": 3.469446951953614e-17,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 1,
+      "officialFRealImag": [
+        0.09803572927936809,
+        0.28677374786437015
+      ],
+      "amplitudeRelativeResidual": 1.3092278833360675e-16,
+      "convertedWeightRelativeResidual": 3.469446951953614e-17
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 2,
+      "officialFRealImag": [
+        0.13323104695718915,
+        0.029079614290462484
+      ],
+      "amplitudeRelativeResidual": 5.815852873680767e-17,
+      "convertedWeightRelativeResidual": 3.469446951953614e-18
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 3,
+      "officialFRealImag": [
+        0.208534907848812,
+        -0.18359286230192406
+      ],
+      "amplitudeRelativeResidual": 5.551115123125783e-17,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 4,
+      "officialFRealImag": [
+        -0.20797307069657264,
+        0.2862937179445161
+      ],
+      "amplitudeRelativeResidual": 2.7755575615628914e-17,
+      "convertedWeightRelativeResidual": 6.938893903907228e-18
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 5,
+      "officialFRealImag": [
+        0.006657877568324701,
+        0.1489523952313362
+      ],
+      "amplitudeRelativeResidual": 2.6020852139652106e-17,
+      "convertedWeightRelativeResidual": 4.336808689942018e-19
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 6,
+      "officialFRealImag": [
+        0.16219587147229383,
+        0.14911956005634372
+      ],
+      "amplitudeRelativeResidual": 6.206335383118183e-17,
+      "convertedWeightRelativeResidual": 0.0
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 7,
+      "officialFRealImag": [
+        -0.18758078933320704,
+        -0.07247180259925667
+      ],
+      "amplitudeRelativeResidual": 3.1031676915590914e-17,
+      "convertedWeightRelativeResidual": 6.505213034913027e-19
+    },
+    {
+      "case": "synthetic-provided-thermal",
+      "channel": "annihilation",
+      "branch": 8,
+      "officialFRealImag": [
+        -0.06029802822576131,
+        0.0465868989853835
+      ],
+      "amplitudeRelativeResidual": 2.1942709178604383e-17,
+      "convertedWeightRelativeResidual": 5.421010862427522e-20
+    }
+  ],
+  "freshComparisons": [
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        0
+      ],
+      "officialFreshSubspaceStrength": 9.965806728371556,
+      "suppliedSubspaceStrength": 9.965806728371605,
+      "relativeResidual": 4.990864549039284e-15
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        1
+      ],
+      "officialFreshSubspaceStrength": 5.33119520031728,
+      "suppliedSubspaceStrength": 5.331195200317364,
+      "relativeResidual": 1.5660422909827373e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        2
+      ],
+      "officialFreshSubspaceStrength": 0.035964589476570094,
+      "suppliedSubspaceStrength": 0.035964589476563086,
+      "relativeResidual": 7.008282842946301e-15
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        3
+      ],
+      "officialFreshSubspaceStrength": 0.16270684286144632,
+      "suppliedSubspaceStrength": 0.16270684286142445,
+      "relativeResidual": 2.1871393585115584e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        4
+      ],
+      "officialFreshSubspaceStrength": 27.503187568520136,
+      "suppliedSubspaceStrength": 27.50318756852002,
+      "relativeResidual": 4.262762311035093e-15
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 0.3166464311633159,
+      "suppliedSubspaceStrength": 0.31664643116326935,
+      "relativeResidual": 4.657385588302532e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 7.235845960526081,
+      "suppliedSubspaceStrength": 7.2358459605262375,
+      "relativeResidual": 2.1603472865507695e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        7
+      ],
+      "officialFreshSubspaceStrength": 5.634925960450953,
+      "suppliedSubspaceStrength": 5.634925960451112,
+      "relativeResidual": 2.8214024149058157e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        8
+      ],
+      "officialFreshSubspaceStrength": 1.7478241660986429,
+      "suppliedSubspaceStrength": 1.7478241660986487,
+      "relativeResidual": 3.303055215752734e-15
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        9
+      ],
+      "officialFreshSubspaceStrength": 3.5656809123672337,
+      "suppliedSubspaceStrength": 3.5656809123673026,
+      "relativeResidual": 1.930453936245799e-14
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        10
+      ],
+      "officialFreshSubspaceStrength": 34.88807848271952,
+      "suppliedSubspaceStrength": 34.888078482719315,
+      "relativeResidual": 5.9062408229932106e-15
+    },
+    {
+      "case": "zno-quarter-creation",
+      "channel": "creation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 0.5771268851334633,
+      "suppliedSubspaceStrength": 0.577126885133511,
+      "relativeResidual": 4.7628567756419216e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        0
+      ],
+      "officialFreshSubspaceStrength": 9.965806728371556,
+      "suppliedSubspaceStrength": 9.965806728371605,
+      "relativeResidual": 4.990864549039284e-15
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        1
+      ],
+      "officialFreshSubspaceStrength": 5.33119520031728,
+      "suppliedSubspaceStrength": 5.331195200317364,
+      "relativeResidual": 1.5660422909827373e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        2
+      ],
+      "officialFreshSubspaceStrength": 0.035964589476570094,
+      "suppliedSubspaceStrength": 0.035964589476563086,
+      "relativeResidual": 7.008282842946301e-15
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        3
+      ],
+      "officialFreshSubspaceStrength": 0.16270684286144632,
+      "suppliedSubspaceStrength": 0.16270684286142445,
+      "relativeResidual": 2.1871393585115584e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        4
+      ],
+      "officialFreshSubspaceStrength": 27.503187568520136,
+      "suppliedSubspaceStrength": 27.50318756852002,
+      "relativeResidual": 4.262762311035093e-15
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 0.3166464311633159,
+      "suppliedSubspaceStrength": 0.31664643116326935,
+      "relativeResidual": 4.657385588302532e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 7.235845960526081,
+      "suppliedSubspaceStrength": 7.2358459605262375,
+      "relativeResidual": 2.1603472865507695e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        7
+      ],
+      "officialFreshSubspaceStrength": 5.634925960450953,
+      "suppliedSubspaceStrength": 5.634925960451112,
+      "relativeResidual": 2.8214024149058157e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        8
+      ],
+      "officialFreshSubspaceStrength": 1.7478241660986429,
+      "suppliedSubspaceStrength": 1.7478241660986487,
+      "relativeResidual": 3.303055215752734e-15
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        9
+      ],
+      "officialFreshSubspaceStrength": 3.5656809123672337,
+      "suppliedSubspaceStrength": 3.5656809123673026,
+      "relativeResidual": 1.930453936245799e-14
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        10
+      ],
+      "officialFreshSubspaceStrength": 34.88807848271952,
+      "suppliedSubspaceStrength": 34.888078482719315,
+      "relativeResidual": 5.9062408229932106e-15
+    },
+    {
+      "case": "zno-cartesian-Q",
+      "channel": "creation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 0.5771268851334633,
+      "suppliedSubspaceStrength": 0.577126885133511,
+      "relativeResidual": 4.7628567756419216e-14
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        3,
+        4
+      ],
+      "officialFreshSubspaceStrength": 3.5968083012733864e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 3.5968083012733864e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 0.9744668385858808,
+      "suppliedSubspaceStrength": 0.9744668385858766,
+      "relativeResidual": 4.218847493575595e-15
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 4.442272972525822e-29,
+      "suppliedSubspaceStrength": 4.743109925454932e-29,
+      "relativeResidual": 3.0083695292910965e-30
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        7,
+        8
+      ],
+      "officialFreshSubspaceStrength": 1.191277830746257e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 1.191277830746257e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        9,
+        10
+      ],
+      "officialFreshSubspaceStrength": 4.359222238557694e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 4.359222238557694e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "creation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 6.316131325688333,
+      "suppliedSubspaceStrength": 6.3161313256883,
+      "relativeResidual": 5.202963623515739e-15
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        3,
+        4
+      ],
+      "officialFreshSubspaceStrength": 3.5968083012733864e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 3.5968083012733864e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 0.9744668385858808,
+      "suppliedSubspaceStrength": 0.9744668385858766,
+      "relativeResidual": 4.218847493575595e-15
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 4.442272972525822e-29,
+      "suppliedSubspaceStrength": 4.743109925454932e-29,
+      "relativeResidual": 3.0083695292910965e-30
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        7,
+        8
+      ],
+      "officialFreshSubspaceStrength": 1.191277830746257e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 1.191277830746257e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        9,
+        10
+      ],
+      "officialFreshSubspaceStrength": 4.359222238557694e-31,
+      "suppliedSubspaceStrength": 0.0,
+      "relativeResidual": 4.359222238557694e-31
+    },
+    {
+      "case": "zno-gamma-both",
+      "channel": "annihilation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 6.316131325688333,
+      "suppliedSubspaceStrength": 6.3161313256883,
+      "relativeResidual": 5.202963623515739e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        0
+      ],
+      "officialFreshSubspaceStrength": 2.245004089818948e-32,
+      "suppliedSubspaceStrength": 1.3364142618713924e-28,
+      "relativeResidual": 1.3361897614624105e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        1
+      ],
+      "officialFreshSubspaceStrength": 0.01671099386886722,
+      "suppliedSubspaceStrength": 0.01671099386886505,
+      "relativeResidual": 2.1718737919229625e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        2
+      ],
+      "officialFreshSubspaceStrength": 2.5024601370827917e-30,
+      "suppliedSubspaceStrength": 2.5544285041287658e-27,
+      "relativeResidual": 2.551926043991683e-27
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        3
+      ],
+      "officialFreshSubspaceStrength": 1.7668789458599601e-28,
+      "suppliedSubspaceStrength": 3.7042951364355217e-28,
+      "relativeResidual": 1.9374161905755616e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        4
+      ],
+      "officialFreshSubspaceStrength": 19.047923238755114,
+      "suppliedSubspaceStrength": 19.04792323875513,
+      "relativeResidual": 7.460579579766697e-16
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 7.0161939874678e-27,
+      "suppliedSubspaceStrength": 4.862008796454615e-27,
+      "relativeResidual": 2.154185191013184e-27
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 2.758335108944464e-27,
+      "suppliedSubspaceStrength": 3.464104348896171e-27,
+      "relativeResidual": 7.057692399517068e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        7
+      ],
+      "officialFreshSubspaceStrength": 1.3353771428138097,
+      "suppliedSubspaceStrength": 1.3353771428138137,
+      "relativeResidual": 2.993014303231804e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        8
+      ],
+      "officialFreshSubspaceStrength": 3.501756650009222e-29,
+      "suppliedSubspaceStrength": 7.837815468985074e-29,
+      "relativeResidual": 4.3360588189758516e-29
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        9
+      ],
+      "officialFreshSubspaceStrength": 3.8191826354080553e-28,
+      "suppliedSubspaceStrength": 8.759973425871278e-28,
+      "relativeResidual": 4.940790790463223e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        10
+      ],
+      "officialFreshSubspaceStrength": 36.556312957981966,
+      "suppliedSubspaceStrength": 36.55631295798181,
+      "relativeResidual": 4.276126042768494e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "creation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 2.996340237062285e-26,
+      "suppliedSubspaceStrength": 3.0340548883929594e-26,
+      "relativeResidual": 3.7714651330674395e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        0
+      ],
+      "officialFreshSubspaceStrength": 2.24500408981861e-32,
+      "suppliedSubspaceStrength": 1.3364142618713343e-28,
+      "relativeResidual": 1.3361897614623524e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        1
+      ],
+      "officialFreshSubspaceStrength": 0.01671099386886722,
+      "suppliedSubspaceStrength": 0.016710993868865036,
+      "relativeResidual": 2.185751579730777e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        2
+      ],
+      "officialFreshSubspaceStrength": 2.5024601370830008e-30,
+      "suppliedSubspaceStrength": 2.554428504128682e-27,
+      "relativeResidual": 2.551926043991599e-27
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        3
+      ],
+      "officialFreshSubspaceStrength": 1.3967306179882883e-28,
+      "suppliedSubspaceStrength": 1.2327569425231597e-28,
+      "relativeResidual": 1.639736754651286e-29
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        4
+      ],
+      "officialFreshSubspaceStrength": 19.04792323875511,
+      "suppliedSubspaceStrength": 19.04792323875512,
+      "relativeResidual": 5.595434684825025e-16
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        5
+      ],
+      "officialFreshSubspaceStrength": 6.961626710649973e-27,
+      "suppliedSubspaceStrength": 1.1428277237743374e-26,
+      "relativeResidual": 4.4666505270934014e-27
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        6
+      ],
+      "officialFreshSubspaceStrength": 2.7583351089444667e-27,
+      "suppliedSubspaceStrength": 3.4641043488962094e-27,
+      "relativeResidual": 7.057692399517426e-28
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        7
+      ],
+      "officialFreshSubspaceStrength": 1.3353771428138095,
+      "suppliedSubspaceStrength": 1.335377142813813,
+      "relativeResidual": 2.6604571584282715e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        8
+      ],
+      "officialFreshSubspaceStrength": 3.501756650009151e-29,
+      "suppliedSubspaceStrength": 7.837815468984993e-29,
+      "relativeResidual": 4.336058818975842e-29
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        9
+      ],
+      "officialFreshSubspaceStrength": 3.9544698250927793e-28,
+      "suppliedSubspaceStrength": 1.5548090700418973e-27,
+      "relativeResidual": 1.1593620875326193e-27
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        10
+      ],
+      "officialFreshSubspaceStrength": 36.556312957981966,
+      "suppliedSubspaceStrength": 36.556312957981795,
+      "relativeResidual": 4.664864773929266e-15
+    },
+    {
+      "case": "zno-half-both",
+      "channel": "annihilation",
+      "branches": [
+        11
+      ],
+      "officialFreshSubspaceStrength": 3.068668921309737e-26,
+      "suppliedSubspaceStrength": 3.1824911673651684e-26,
+      "relativeResidual": 1.1382224605543129e-27
+    }
+  ]
+}

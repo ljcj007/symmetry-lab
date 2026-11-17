@@ -1,4 +1,4 @@
-import {PROJECT_INPUT_TARGETS,getProjectInputTarget,projectInputFor} from './project-input.js?v=20261117-scattering1';
+import {PROJECT_INPUT_TARGETS,getProjectInputTarget,projectInputFor} from './project-input.js?v=20261117-phonopy1';
 
 const routeText=value=>String(value||'').replace(/^#/,'');
 const routePath=value=>routeText(value).split('?')[0];

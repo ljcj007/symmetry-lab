@@ -43,3 +43,7 @@ This remains an ideal one-dimensional longitudinal harmonic chain, with signed r
 - [Phonopy dynamical matrix](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix): mass normalization and phase conventions.
 
 The diatomic chain, atomic interference decomposition and reference examples are derived independently for this site. Align eigenvector phases, momentum units and spectral-weight definitions before comparing external programs. General formulas in documentation do not replace numerical verification or establish measured learning outcomes.
+
+## Apply coherent sums to supplied Phonopy modes
+
+After learning atomic coherent addition here, use the [Phonopy three-dimensional neutron-scattering tool](phonopy-scattering.md) with complete supplied modes. Three-dimensional projections, primitive phases and physical probe lengths are declared separately there; this diatomic-chain input and replay do not automatically become material data.

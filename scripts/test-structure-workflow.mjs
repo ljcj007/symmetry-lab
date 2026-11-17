@@ -1,3 +1,4 @@
+import {phonopyScatteringVisit} from '../dist/phonopy-scattering-handoff.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -6,7 +7,7 @@ import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-rou
 import {createProjectNavigator} from '../dist/project-navigation.js';
 import {validateStructureHandoff,createStructureHandoff,structureHandoffForCalculation} from '../dist/structure-provenance.js';
 import * as sourceView from '../dist/structure-handoff.js';
-import * as notebook from '../dist/material-notebook.js?v=20261117-scattering1';
+import * as notebook from '../dist/material-notebook.js?v=20261117-phonopy1';
 
 const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/structure-handoff.json',import.meta.url),'utf8'));
 const groups=JSON.parse(fs.readFileSync(new URL('../dist/data/space-groups.json',import.meta.url),'utf8')).groups;
@@ -31,7 +32,7 @@ const state={view:'home',route:'home',mode:'sg',group:groups[224],primary:'home'
 const calls=[],downloads=[],historyWrites=[],loaded=[],notices=[];const location={hash:''};
 let held,hold=false;
 const moduleMap=new Map([['structureHandoff',sourceView]]);
-const context={state,renderTicket:0,dictionaryController:null,document,URLSearchParams,structuredClone,console,Promise,Math,Object,
+const context={phonopyScatteringVisit,state,renderTicket:0,dictionaryController:null,document,URLSearchParams,structuredClone,console,Promise,Math,Object,
  validateStructureHandoff,structureHandoffForCalculation,buildWorkbenchRoute,parseWorkbenchSelection,projectNavigation:createProjectNavigator(),
  optionalViews:{get:async key=>{loaded.push(key);return moduleMap.get(key);},peek:key=>moduleMap.get(key)},
  ensureGroups:async()=>({groups}),groupLoader:{peek:()=>({groups})},databases:{sg:{groups}},list:()=>groups,

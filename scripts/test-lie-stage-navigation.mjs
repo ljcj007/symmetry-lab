@@ -1,3 +1,4 @@
+import {phonopyScatteringVisit} from '../dist/phonopy-scattering-handoff.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -81,7 +82,7 @@ host.dataset={};
 nodes.set('app',host);
 const appState={view:'home',route:'home',primary:'home',courseRoute:null,returnCourse:null},location={hash:''},historyWrites=[],renderJobs=[];
 let mounts=0;
-const appContext={
+const appContext={phonopyScatteringVisit,
  projectNavigation:createProjectNavigator(),openProjectLab:()=>assert.fail('Stage navigation must not open a project calculator'),canOpenProjectInput:()=>false,
  state:appState,location,history:{pushState(_state,_title,hash){location.hash=hash;historyWrites.push(hash);},replaceState(_state,_title,hash){location.hash=hash;historyWrites.push(hash);}},
  URLSearchParams,structuredClone,Object,Promise,console,

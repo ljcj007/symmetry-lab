@@ -428,6 +428,35 @@ export const PROJECT_INPUT_FIELDS=freeze({
   "twoM1",
   "twoM2",
   "coupling"
+ ],
+ "phonopy_scattering": [
+  "content",
+  "data",
+  "filename",
+  "structure_content",
+  "structure_data",
+  "frequency_unit",
+  "length_unit",
+  "mass_unit",
+  "eigenvectorConvention",
+  "primitiveOrderConfirmed",
+  "qIndex",
+  "G",
+  "Q",
+  "QCoordinates",
+  "channel",
+  "negativeQIndex",
+  "coherentLengths",
+  "scatteringLengthUnit",
+  "scatteringLengthSource",
+  "temperature",
+  "debyeWaller",
+  "energyCutoff",
+  "groupTolerance",
+  "sigma",
+  "energyMin",
+  "energyMax",
+  "energyPoints"
  ]
 });
 export const PROJECT_INPUT_ENUMS=freeze({
@@ -868,6 +897,46 @@ export const PROJECT_INPUT_ENUMS=freeze({
   "cut": [
    "001",
    "111"
+  ]
+ },
+ "phonopy_scattering": {
+  "frequency_unit": [
+   "THz",
+   "meV",
+   "cm^-1",
+   "cm-1",
+   "cm⁻¹"
+  ],
+  "length_unit": [
+   "angstrom",
+   "Å",
+   "ångström",
+   "angstroem"
+  ],
+  "mass_unit": [
+   "amu",
+   "u",
+   "Da",
+   "dalton"
+  ],
+  "eigenvectorConvention": [
+   "phonopy-atom-phase"
+  ],
+  "primitiveOrderConfirmed": [
+   false,
+   true
+  ],
+  "QCoordinates": [
+   "primitive-reciprocal",
+   "cartesian-angstrom^-1"
+  ],
+  "channel": [
+   "creation",
+   "annihilation",
+   "both"
+  ],
+  "scatteringLengthUnit": [
+   "fm"
   ]
  }
 });

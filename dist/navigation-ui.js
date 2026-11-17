@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261117-scattering1';
+import {classroomPathways} from './classroom-ui.js?v=20261117-phonopy1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261116-composition1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261116-composition1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261117-phonopy1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261117-phonopy1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -17,6 +17,7 @@ export const toolGroups=[
   ['compute/reciprocity-lab','互易关系与响应约束','空间协变、Onsager–Casimir、磁畴反转与耗散。','Onsager Casimir Hall 互易 耗散'],
   ['compute/manybody-spectra-lab','多体谱函数 · 添加、移除与响应','有限Hubbard团簇的真实跃迁矩阵元、谱权重和规则与峰态联动。','Lehmann 多体 谱函数 自旋 响应'],
   ['compute/dynamic-scattering-lab','非弹性散射 · 动态结构因子','双原子链、偏振投影、热占据、Stokes/anti-Stokes 与 S(Q,E) 热图。','非弹性 散射 DSF 动态结构因子 phonon'],
+  ['compute/phonopy-scattering','Phonopy 三维非弹性散射','从配套原胞与完整复本征矢计算中子一声子谱；须声明单位、原子顺序和相干散射长度。','Phonopy neutron DSF qpoints.yaml mesh.yaml band.yaml 三维 中子 动态结构因子 ZnO zinc oxide 氧化锌'],
   ['compute/spin-resonance-lab','磁共振 · 有效自旋与 EPR','各向异性 g、零场分裂、超精细作用、磁场方向与磁偶极跃迁谱。','EPR ESR resonance 磁共振 有效自旋 超精细'],
   ['compute/atomic-spectra-lab','多重态光谱 · 偏振 XAS','完整 Slater、SOC 与 d⁸/d⁹ 原子近似的 2p→3d 偏振吸收。','XAS XMCD XLD 多重态 偏振 选择定则 Slater'],
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],

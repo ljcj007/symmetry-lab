@@ -7,7 +7,7 @@ import {toolCapabilities,arithmeticLabels,arithmeticDescriptions,getToolCapabili
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const routes=toolsIndex.map(tool=>tool.route);
-assert.equal(routes.length,74);
+assert.equal(routes.length,75);
 assert.deepEqual(Object.keys(toolCapabilities).sort(),[...routes].sort(),'Every real directory route has one capability record');
 const modes=Object.keys(arithmeticLabels);
 assert.deepEqual(modes.sort(),['exact','mixed','numeric','reference']);
@@ -61,4 +61,4 @@ assert.match(toolCapabilities['compute/advanced/carat_integral'].conditions.join
 assert.match(toolCapabilities['compute/advanced/integral_normalizer'].conditions.join(' '),/已知子群.*完整正规化子.*分别/);
 
 const distribution=Object.fromEntries(modes.map(mode=>[mode,Object.values(toolCapabilities).filter(row=>row.arithmetic===mode).length]));
-console.log('Tool capabilities: 74 canonical routes, immutable complete records, source locations, arithmetic distinctions and input-scope boundaries passed. '+JSON.stringify(distribution));
+console.log('Tool capabilities: 75 canonical routes, immutable complete records, source locations, arithmetic distinctions and input-scope boundaries passed. '+JSON.stringify(distribution));

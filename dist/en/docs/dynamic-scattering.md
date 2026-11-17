@@ -115,3 +115,7 @@ Phases and the one-phonon formula follow [Phonopy dynamic structure factors](htt
 ## Replay the atomic-amplitude derivation
 
 Include the amplitude derivation and calculate manually to inspect mass factors, complex phases, coherent sums and interference in the same result, then follow the energy cutoff and thermal weights. See [Atomic-amplitude replay](scattering-amplitudes.md) for classroom references, common phases and degenerate subspaces.
+
+## A separate entry for supplied three-dimensional Phonopy modes
+
+This page continues to calculate the ideal one-dimensional chain. For complete supplied Phonopy modes, use the separate [three-dimensional neutron-scattering workflow](phonopy-scattering.md), which declares the primitive cell, full Q, complex vectors, fm scattering lengths and Debye–Waller treatment. The two inputs and results remain separate.

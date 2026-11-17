@@ -19,6 +19,10 @@ export const toolInputFormats=Object.freeze({
   fileInput(['total_dos.dat'],'查看已有总声子态密度。','此处显示输入的总 DOS；热力学积分另需完整态数和归一化。',3),
   fileInput(['projected_dos.dat','partial_dos.dat'],'查看逐原子或已声明分量的投影声子态密度。','须选择投影 DOS 类型并匹配原胞原子；投影列不能冒充完整总 DOS。',3)
  ]),
+ 'compute/phonopy-scattering':Object.freeze([
+  fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'从已提供的完整三维复本征矢与原胞计算指定 Q 的中子相干一声子谱。','须有配套原胞、原子顺序与质量，声明频率和长度单位、相位约定、逐原子散射长度及 Debye–Waller 条件；湮灭通道需要实际匹配的负 q 数据。',1),
+  fileInput(['phonopy.yaml','phonopy_disp.yaml'],'为已有完整复本征矢提供配套原胞、原子与质量。','这是配套结构入口；单独的结构或位移文件不能产生散射谱，原胞与模式文件的原子顺序必须一致。',1)
+ ]),
  'compute/phonon-modes':Object.freeze([
   fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'分类 Γ 点不变频率子空间，或将指定本征模冻结为结构。','冻结需要匹配的结构、质量、本征矢和相容超胞；只有频率的文件不够。',2)
  ]),
@@ -77,6 +81,7 @@ export const toolCapabilities=Object.freeze({
  'compute/atomic-spectra-lab':record('numeric',['2p–3d 构型、Slater 与 SOC 参数','晶场、偏振、温度和展宽'],['构型间跃迁能与偶极权重','偏振 XAS 和边参考诊断'],'指定 p6 d8／d9 初态到 p5 d9／d10 末态的原子多重态光谱。',['构型空间与相互作用按模型选定；边能量参考和展宽分别给定。'],'atomic multiplet XAS Slater polarization 原子 多重态 XAS 偏振 光谱',['dist/spectroscopy-ui.js','dist/python/atomic_spectra_lab.py']),
  'compute/phonon-modes':record('numeric',['含结构、频率和本征矢的 Phonopy 数据','频率聚类、容差及冻结模式选择'],['Γ 点子空间特征标与支持的标签','冻结位移及 POSCAR／CIF 导出'],'Γ 点不变频率子空间分类，以及输入本征矢的冻结位移。',['标签表覆盖 Oh／Td／C1／Ci；其他群保留计算特征标。','冻结导出使用相容的对角超胞，最多512原子。','频率和本征矢来自输入；此入口不求解力常数。'],'Phonopy eigenvector Gamma Oh Td C1 Ci diagonal supercell ZnO zinc oxide wurtzite 氧化锌 本征矢 冻结声子 对角超胞',['dist/material-research-ui.js','dist/python/phonon_modes.py'],toolInputFormats['compute/phonon-modes']),
  'compute/phonopy':record('numeric',['Phonopy YAML／JSON 数据','q 点、模式、相位和显示尺度'],['色散、DOS 与复本征矢记录','质量换算后的模式动画和单位信息'],'读取已有 Phonopy 数据，保留输入来源和本征矢约定。',['动画使用输入的频率与本征矢；质量归一化和原始单位随结果保留。'],'Phonopy YAML JSON mesh band DOS data import ZnO zinc oxide wurtzite 氧化锌 声子 数据导入 本征矢',['dist/structure-dynamics-ui.js','dist/python/phonopy_import.py'],toolInputFormats['compute/phonopy']),
+ 'compute/phonopy-scattering':record('numeric',['Phonopy YAML／JSON 的完整 3N 复本征矢与配套原胞','Q 或整数 G、频率／长度／质量单位、逐原子相干中子散射长度','原胞顺序与原子相位确认、温度和 Debye–Waller 条件'],['三维动量匹配、逐原子投影与相干振幅','创建／湮灭通道、中子一声子谱和分组权重'],'读取给定三维声子模式的相干中子一声子散射；兼容非正交原胞。',['最多 64 个原子；全 3N 模式及匹配原胞来自输入，不从单模动画或力常数补造。','湮灭通道使用实际提供的匹配负 q 数据，不自动假定时间反演。','逐原子实散射长度单位为 fm；须选择省略或提供同温度 Debye–Waller 张量，绝对尺度按页面约定。'],'Phonopy neutron DSF dynamic structure factor band.yaml qpoints.yaml mesh.yaml ZnO zinc oxide 氧化锌 三维 中子 非弹性 散射',['dist/phonopy-scattering-ui.js','dist/python/phonopy_scattering.py'],toolInputFormats['compute/phonopy-scattering']),
  'compute/phonon-thermo':record('numeric',['加权网格、总 DOS 或热性质文件','温度、频率单位与归一化选择'],['谐性振动自由能、熵和 Cv','态数、晶胞单位和负频诊断'],'对已给定声子数据作谐性热力学求和或积分。',['结果按输入晶胞和态数归一化；负频处理与数据覆盖范围须一并读取。'],'phonon thermal DOS free energy entropy heat capacity 声子 热力学 自由能 热容',['dist/material-research-ui.js','dist/python/phonon_thermo.py'],toolInputFormats['compute/phonon-thermo']),
  'compute/qha-lab':record('numeric',['多体积静态能与振动自由能','温度、体积范围及拟合选项'],['平衡体积、体模量与热膨胀','可用时的 Cp 及拟合诊断'],'体积采样区间内的局域准谐自由能拟合。',['平衡点须位于可用体积区间内；导数量依赖拟合分支和温度采样。'],'QHA quasiharmonic thermal expansion volume 准谐 热膨胀 体积 拟合',['dist/coupled-materials-ui.js','dist/python/qha_lab.py'],toolInputFormats['compute/qha-lab']),
  'compute/electron-transport-lab':record('numeric',['能带模型、化学势与温度','完整 Brillouin 区网格和弛豫时间约定'],['带内电导／τ、Seebeck 系数','电子热导／τ、载流子与网格诊断'],'常数弛豫时间近似下的带内电子输运。',['弛豫时间与输入晶胞决定单位；输运积分结合完整网格及收敛检查。'],'Boltzmann Seebeck conductivity thermoelectric 电子输运 热电 电导 弛豫时间',['dist/quantum-materials-ui.js','dist/python/electron_transport_lab.py']),

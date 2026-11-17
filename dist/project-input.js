@@ -1,6 +1,6 @@
 // A project opens a fresh, editable copy. Scientific records and results are
 // never rewritten here; only the owning calculation view reads this RAM input.
-import {PROJECT_INPUT_FIELDS,PROJECT_INPUT_ENUMS} from './project-input-fields.js?v=20261117-scattering1';
+import {PROJECT_INPUT_FIELDS,PROJECT_INPUT_ENUMS} from './project-input-fields.js?v=20261117-phonopy1';
 const rows=[
  ['quantum_geometry_lab','quantum-materials','geometry','quantum-geometry-lab'],
  ['crystal_field_lab','quantum-materials','orbitals','crystal-field-lab'],
@@ -15,6 +15,7 @@ const rows=[
  ['shg_lab','electronic-materials','shg','shg-lab'],
  ['band_rep_lab','pathways','bandrep','band-representation-lab'],
  ['dynamic_scattering_lab','pathways','scattering','dynamic-scattering-lab'],
+ ['phonopy_scattering','phonopy-scattering','phonopy-scattering','phonopy-scattering'],
  ['domain_wall_lab','pathways','domainwall','domain-wall-lab'],
  ['hubbard_lab','pathways','hubbard','hubbard-cluster-lab'],
  ['manybody_spectra_lab','bridges','manybody','manybody-spectra-lab'],
@@ -54,7 +55,20 @@ export function supportsProjectInput(action,input){
  if(!plain(input))return false;
  const fields=PROJECT_INPUT_FIELDS[action];
  if(fields&&Object.keys(input).some(key=>!fields.includes(key)))return false;
- if(Object.entries(PROJECT_INPUT_ENUMS[action]||{}).some(([key,values])=>Object.hasOwn(input,key)&&!values.some(value=>value===input[key])))return false;
+ if(action==='phonopy_scattering'){
+  const required=['frequency_unit','length_unit','mass_unit','eigenvectorConvention','primitiveOrderConfirmed','qIndex','coherentLengths','scatteringLengthUnit','temperature','debyeWaller'];
+  if(required.some(key=>!Object.hasOwn(input,key))||!Object.hasOwn(input,'Q')&&!Object.hasOwn(input,'G'))return false;
+  if(!(typeof input.content==='string'&&input.content.trim()||plain(input.data)))return false;
+  if(!Number.isInteger(input.qIndex)||input.qIndex<0)return false;
+  if(['content','filename','structure_content','scatteringLengthSource'].some(key=>Object.hasOwn(input,key)&&typeof input[key]!=='string'))return false;
+  if(['G','Q'].some(key=>Object.hasOwn(input,key)&&(!Array.isArray(input[key])||input[key].length!==3||!input[key].every(value=>typeof value==='number'&&Number.isFinite(value)&&(key!=='G'||Number.isInteger(value))))))return false;
+  const dw=input.debyeWaller;
+  if(!plain(dw)||!['omit','provided'].includes(dw.mode))return false;
+  if(Object.keys(dw).some(key=>!(dw.mode==='omit'?['mode']:['mode','temperature','unit','tensors']).includes(key)))return false;
+  if(dw.mode==='provided'&&(!['temperature','unit','tensors'].every(key=>Object.hasOwn(dw,key))||!['angstrom^2','angstrom²','å^2','å²'].includes(String(dw.unit).trim().toLowerCase())))return false;
+ }
+ const caseInsensitive=action==='phonopy_scattering'?new Set(['frequency_unit','length_unit','mass_unit','scatteringLengthUnit']):new Set();
+ if(Object.entries(PROJECT_INPUT_ENUMS[action]||{}).some(([key,values])=>Object.hasOwn(input,key)&&!values.some(value=>value===input[key]||caseInsensitive.has(key)&&typeof value==='string'&&typeof input[key]==='string'&&value.toLowerCase()===input[key].trim().toLowerCase())))return false;
  return action!=='teaching_labs'||input.lab==='lie'&&lieExperiments.has(input.experiment);
 }
 export function getProjectInputTarget(action,input){
@@ -62,10 +76,11 @@ export function getProjectInputTarget(action,input){
  const target=PROJECT_INPUT_TARGETS[action];
  return action==='teaching_labs'&&input?{...target,route:'#compute/lie/'+input.experiment,experiment:input.experiment}:{...target};
 }
-function checkedCopy(input){
+function checkedCopy(input,action){
+ const importedScattering=action==='phonopy_scattering',nodeLimit=importedScattering?850000:250000,byteLimit=importedScattering?24*1024*1024:4_000_000;
  let nodes=0;
  const check=(value,depth)=>{
-  if(++nodes>250000||depth>20)throw Error('原记录的输入结构过大或过深。');
+  if(++nodes>nodeLimit||depth>20)throw Error('原记录的输入结构过大或过深。');
   if(value===null||typeof value==='boolean'||typeof value==='string')return;
   if(typeof value==='number'){if(!Number.isFinite(value))throw Error('原记录含有非有限数值。');return;}
   if(!Array.isArray(value)&&!plain(value))throw Error('原记录的输入不是可恢复的 JSON 数据。');
@@ -76,7 +91,7 @@ function checkedCopy(input){
  };
  if(!plain(input))throw Error('原记录缺少可恢复的输入对象。');
  check(input,0);
- if(new TextEncoder().encode(JSON.stringify(input)).length>4_000_000)throw Error('原记录输入超过此页面可编辑的 4 MB 范围。');
+ if(new TextEncoder().encode(JSON.stringify(input)).length>byteLimit)throw Error(importedScattering?'三维散射记录的输入超过此页面可编辑的 24 MiB 范围。':'原记录输入超过此页面可编辑的 4 MB 范围。');
  return structuredClone(input);
 }
 export function projectInputFor(selection,action,defaults={}){
@@ -85,10 +100,10 @@ export function projectInputFor(selection,action,defaults={}){
  try{
   if(!plain(handoff)||handoff.action!==action)throw Error('原记录属于另一个计算工具，未替换当前输入。');
   if(!supportsProjectInput(action,handoff.input))throw Error('原记录包含当前页面未支持的参数或实验选项，未替换当前输入。');
-  const record=checkedCopy(handoff.input),input={...structuredClone(defaults),...record};
+  const record=checkedCopy(handoff.input,action),input={...structuredClone(defaults),...record};
   // Existing file-enabled views read editable JSON from content before sending
   // the same parsed data to Python. Retain data too for lossless source copying.
-  if(Object.hasOwn(record,'data'))input.content=JSON.stringify(record.data,null,2);
+  if(action!=='phonopy_scattering'&&Object.hasOwn(record,'data'))input.content=JSON.stringify(record.data,null,2);
   if(record.source==='dos'&&typeof record.dos_content==='string')input.content=record.dos_content;
   return {status:'loaded',input,message:'已从项目记录建立本次输入副本。修改参数不会改写既有记录；请检查后手动运行计算。'};
  }catch(error){return {status:'rejected',message:'项目输入未载入：'+error.message};}

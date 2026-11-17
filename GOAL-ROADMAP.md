@@ -4,6 +4,18 @@ Active objective: welcome zero-foundation learners, provide deeper study for
 prepared learners, make tools quick to find for experts, maintain a coherent
 ordered structure, and continue expanding useful verified functionality.
 
+Current delivery boundary: finish and publish the supplied-Phonopy-mode
+three-dimensional neutron-scattering release, verify the public source and
+website, then pause at the user's request. This is a release milestone, not
+completion of every curriculum and scientific-domain audit below.
+
+The new lazy calculation entry uses complete supplied complex modes, an ordered
+primitive cell, explicit units and sourced real neutron lengths. Eight genuine
+API cases, invalid-input cases and independently executed official Phonopy
+comparisons accompany five explanation stages. The existing 33 project actions
+and 78 stages retain their input contracts; the 34th registered action has a
+separate bounded complete-source restoration path. The directory now has 75 tools.
+
 ## Evidence needed before overall completion
 
 | Requirement | Acceptance evidence | Current work |

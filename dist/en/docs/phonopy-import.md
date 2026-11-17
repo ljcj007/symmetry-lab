@@ -104,3 +104,7 @@ Output `structure`, `qpoints`, `segments`, `summary`, `selection`, `animation`, 
 The ZnO `sourceIdentity.reference` also appears only when the distributed derivative qpoints text hash matches exactly; its `kind` explicitly identifies a derivative of official force data. The `reference.companion` records actual and expected SHA-256 values, byte count, input representation and `matchesPinnedSource`. Only an exact UTF-8 text hash certifies this pinned companion file. When an object input takes precedence over accompanying text, the recorded hash describes canonical JSON for that object; unused original text is not treated as evidence. Original input hashes, the Phonopy version, NAC and force-constant settings remain with the result for checking during transfer, JSON export and research recording.
 
 References: [Phonopy output files](https://phonopy.github.io/phonopy/output-files.html), [dynamical matrices and phase conventions](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix), [phonopy-yaml files](https://phonopy.github.io/phonopy/phonopy-yaml.html).
+
+## From complete modes to three-dimensional neutron scattering
+
+Copy the two current source inputs into the independent Phonopy modes → Neutron scattering tool, complete the unit, primitive-order, probe-length and thermal conditions, and calculate manually. That tool rereads all 3N complex vectors at each required supplied q; the selected-mode animation here retains its original purpose. See [Three-dimensional Phonopy neutron scattering](phonopy-scattering.md).

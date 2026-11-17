@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "zno-phonopy-neutron",
+  "release": "20261117-phonopy1",
+  "title": "ZnO supplied phonon modes with natural-isotope coherent neutron lengths",
+  "datasetProvenance": "phonopy-zno-source.json",
+  "primary": {
+    "file": "phonopy-zno-qpoints.yaml",
+    "bytes": 55277,
+    "sha256": "37b738912bec7bd696a90a16c674fa6e745fc0a2df355e380818760893c1e0b5",
+    "frequencyUnit": "THz"
+  },
+  "structure": {
+    "file": "phonopy-zno-structure.yaml",
+    "bytes": 7641,
+    "sha256": "93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c",
+    "lengthUnit": "angstrom",
+    "massUnit": "amu",
+    "primitiveAtomOrder": ["Zn", "Zn", "O", "O"]
+  },
+  "probe": {
+    "kind": "coherent-nuclear-neutron",
+    "unit": "fm",
+    "isotopeConvention": "natural isotopic composition, real bound coherent scattering lengths",
+    "valuesFm": {"Zn": 5.68, "O": 5.803},
+    "source": {
+      "title": "NIST Center for Neutron Research: Neutron Scattering Lengths and Cross Sections",
+      "url": "https://www.ncnr.nist.gov/resources/n-lengths/list.html",
+      "accessed": "2026-11-17",
+      "upstreamCitation": "Neutron News 3(3), 29-37 (1992)",
+      "columnsUsed": "Element rows Zn and O, bound coherent scattering length (fm)"
+    }
+  },
+  "phononGeneration": {"phonopyVersion": "4.10.0", "isNAC": false},
+  "conditionsToDeclare": [
+    "These are computed phonon modes and literature scattering lengths, not a measured ZnO spectrum.",
+    "The supplied four q points are not a complete thermal integration mesh.",
+    "Debye-Waller omission must remain an explicit approximation; zero temperature does not eliminate zero-point displacement.",
+    "A thermal displacement tensor must be supplied with its actual structure, atom order, units and temperature before it is used.",
+    "No X-ray form factors, isotope disorder, incoherent background, magnetic scattering or sample absorption correction is supplied."
+  ]
+}

@@ -104,3 +104,7 @@ e^{i2\pi q\cdot(R+r_j)-i\phi}\right].
 ZnO 的 `sourceIdentity.reference` 也只在分发的衍生 qpoints 原文摘要完全匹配时出现，其 `kind` 明确标为官方力数据的衍生计算。`reference.companion` 分别保存实际和预期 SHA-256、字节数、输入表示和 `matchesPinnedSource`；仅 UTF-8 原文的精确摘要匹配才认证这份固定配套文件。对象输入优先于同名文本时，保存的是对象的规范 JSON 摘要，不把没有使用的原文当作证据。原始输入摘要、Phonopy 版本、NAC 和力常数设置随结果保留；文件传递、JSON 导出和研究记录可据此核对。
 
 参考：[Phonopy 输出文件](https://phonopy.github.io/phonopy/output-files.html)、[动力学矩阵与相位约定](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix)、[phonopy-yaml 文件](https://phonopy.github.io/phonopy/phonopy-yaml.html)。
+
+## 从完整模式进入三维中子散射
+
+把当前两份原始输入复制到独立的“Phonopy 模 → 中子散射”工具，可在补齐单位、原胞顺序、探针长度与热运动条件后手动计算。该工具重新读取所需 q 点的全部 3N 个复向量；本页选中一个模式的动画结果仍保留原来的用途。流程见[三维 Phonopy 中子散射](phonopy-scattering.md)。

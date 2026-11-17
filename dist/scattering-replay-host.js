@@ -4,7 +4,7 @@ export const SCATTERING_REPLAY_LESSONS=Object.freeze(['scattering-chain','scatte
 const labels=Object.freeze({default:'默认双原子链', 'unequal-gamma':'不同质量：Γ 点平移', 'folded-even':'相同约化 q：偶数倒格区', 'folded-odd':'相同约化 q：奇数倒格区', 'zero-projection':'散射向量垂直链轴', 'signed-weights':'有符号的散射权重', 'degenerate-edge':'区边界的完整简并子空间'});
 let uiPromise=null,referencePromise=null;
 const loadUI=()=>uiPromise??=import('./scattering-replay-ui.js?v=20261117-scattering1').catch(error=>{uiPromise=null;throw error;});
-const loadReference=()=>referencePromise??=import('./scattering-replay-reference.js?v=20261117-scattering1').catch(error=>{referencePromise=null;throw error;});
+const loadReference=()=>referencePromise??=import('./scattering-replay-reference.js?v=20261117-phonopy1').catch(error=>{referencePromise=null;throw error;});
 const readOpen=node=>typeof node?.open==='boolean'?node.open:node?.getAttribute?.('open')!==null;
 
 function entry(kind){return `<section class="sar-host" data-sar-host="${kind}"><details data-sar-disclosure><summary>${kind==='lesson'?'原子的复振幅怎样相加？':'回放本次计算的逐原子振幅'}</summary><div data-sar-content></div></details></section>`;}

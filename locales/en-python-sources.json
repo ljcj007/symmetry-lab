@@ -13591,6 +13591,441 @@
     ]
   },
   {
+    "source": "热张量温度",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热位移张量",
+    "origins": [
+      "python/phonopy_scattering.py",
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "完整声子支",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "提供的 q 点",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "只读取已提供 q 点的三维 Phonopy 模；未生成力常数、未插值 q 点、未推断负 q 模或 Debye–Waller 网格。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "原胞与原子顺序由用户明确确认；散射长度是本次请求提供的实相干中子长度，不包括吸收、非相干、多声子或 X 射线形状因子。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "线权重按每原胞且 k′/k=1 归一为 fm²，能谱为单位面积 Gaussian 展宽后的 fm²/meV；不是仪器标定的实验计数。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "频率簇只是显示和求和：实际谱使用每条原始支各自的能量；接近的频率不等于数学精确简并。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 单位必须明确声明",
+    "origins": [
+      "python-template/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "ZXQD0DQXZ 单位不受支持，请核对原始数值单位",
+    "origins": [
+      "python-template/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "physical_unit 必须是对象",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "必须明确选择省略或提供 Debye–Waller 热位移张量",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "提供热张量须包含 mode、temperature、unit、tensors",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热张量温度与谱计算温度必须一致",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "逐原子相干散射长度",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "相干中子散射长度 fm",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "所选 q 点完整本征矢不是归一正交基，不能可靠计算子空间强度",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "散射输入必须为 JSON 对象",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "不支持的散射字段：ZXQD0DQXZ",
+    "origins": [
+      "python-template/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "请明确确认配套原胞与本征矢的原子顺序",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "本工具只接受明确的 phonopy-atom-phase 本征矢规范",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "需要不超过64原子的完整配套原胞结构；不能用超胞替代原胞",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "原胞每个原子必须有明确质量和分数坐标",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "提供的 q 点或模点数量超过有界计算范围",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "nqpoint 与实际提供 q 点数不一致",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "完整3N声子支",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "通道须为 creation、annihilation 或 both",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "完整 Q 坐标须明确为原胞倒易分数或 Cartesian Å⁻¹",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "温度 K",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "能量截断 meV",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "分组容差 meV",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "能量窗口起点 meV",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "能量窗口终点 meV",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "能量点数",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "散射长度来源",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "能量窗口终点必须大于起点",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "已明确省略 Debye–Waller 衰减；即使 T=0 也不意味着真实热位移或零点运动为零。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "当前能量步长大于 sigma/2，峰形可能欠采样；解析窗口权重与数值积分分别报告。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "部分所选 q 点没有动力学矩阵：已核对完整向量基，但不能据此认证原始力常数或频率数据正确性。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "序列化动力学矩阵校验使用 Rayleigh 本征残差；未把未知矩阵单位与频率转换因子自动等同。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "明确标记的合成教学数据，不是真实材料计算或实验谱。",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": " 单位必须明确声明",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": " 单位不受支持，请核对原始数值单位",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "频率单位声明冲突；不能仅改标签后计算谱权重",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "原始文件与确认的单位声明冲突：ZXQD0DQXZ",
+    "origins": [
+      "python-template/phonopy_scattering.py",
+      "python-template/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "省略 Debye–Waller 时不能同时附加未使用的热张量",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热位移张量必须在 Cartesian 坐标中对称",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热位移张量必须半正定，不能具有负方差",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热位移投影产生负方差",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "物种散射长度须完整且只包含当前原胞物种",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "计算散射需要所选 q 点全部 3N 条频率与完整复本征矢",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "输入频率",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "复本征矢",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "序列化动力学矩阵与给定本征矢不一致",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "不支持的散射字段：",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "q 点必须为对象",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "G整数分量",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "完整 Q",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "完整 Q 与所选原始 q 和整数 G 不匹配；不采用最近邻或自动折叠",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "必须提供整数 G 或明确坐标的完整 Q",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "negativeQIndex 只用于双通道，不能附加未使用参数",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "原始文件与确认的单位声明冲突：",
+    "origins": [
+      "python/phonopy_scattering.py",
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "只输入 G 时坐标约定须为原胞倒易分数",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "指定湮灭 q 点与 Q+q 整数条件不匹配",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "双通道需要唯一的实际负 Q 对应模；请提供或明确选择 negativeQIndex，不推断时间反演",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热张量分量",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "动力学矩阵分量",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "动力学矩阵",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "输入为非正或虚频，不计算一声子谱权重",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "低于能量截断，不计算一声子谱权重",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "热张量行",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
+    "source": "动力学矩阵行",
+    "origins": [
+      "python/phonopy_scattering.py"
+    ]
+  },
+  {
     "source": "仅比较相邻截断；通过阈值是局部收敛诊断，不能证明任意参数的严格误差界。",
     "origins": [
       "python/polaron_lab.py",
