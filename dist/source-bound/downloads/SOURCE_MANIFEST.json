@@ -1,0 +1,170 @@
+{
+  "scope": "Original affine receiver, controls, interface and primary-source comparison; no material raw data or binary runtime.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3369,
+      "sha256": "dcc2ca54a7ac2f3a5c11ec29d160bd98cadc73523fe99f92797c4f59796eaf91"
+    },
+    {
+      "path": "run.py",
+      "bytes": 4865,
+      "sha256": "16b08b014feaba860a09e06fbb73eb79d30196565ce2dcb7da56edead02c76e0"
+    },
+    {
+      "path": "run.cmd",
+      "bytes": 114,
+      "sha256": "011b117d576c6c7fa7961e02192f7430c35498a0674f9c8be7c0542cceb509a6"
+    },
+    {
+      "path": "RIGHTS.md",
+      "bytes": 767,
+      "sha256": "f611e5388560ccc547bd7f490b38a3e26719caf4e3a5551f3324d0c2a7c32698"
+    },
+    {
+      "path": "src/verify.py",
+      "bytes": 12861,
+      "sha256": "07f6d17b1912454a20d42d77f05e15ff8ef0dd1f3e3dbb7b1115debb091690d3"
+    },
+    {
+      "path": "examples/malformed-source.json",
+      "bytes": 1335,
+      "sha256": "75fbcf7ca10d34c550e11e5b3a4aa71aa521076f3bc30b57b7054021af16cdae"
+    },
+    {
+      "path": "examples/overlap.json",
+      "bytes": 1400,
+      "sha256": "285f26daad7e716419e9a630fcac08c76a20cb467a6f06ed6e50663acb5af29d"
+    },
+    {
+      "path": "examples/periodic-gap.json",
+      "bytes": 1880,
+      "sha256": "7b4026531a2de653b1dde89f48e485d4619f0986a4b77d70159f14aa94d8d18c"
+    },
+    {
+      "path": "examples/positive-gap.json",
+      "bytes": 1852,
+      "sha256": "1082c4313a62e538a36bf84bdb8a71a7c297f0b10b14cc8ac982f9170f6aa3d0"
+    },
+    {
+      "path": "examples/wrong-symmetry.json",
+      "bytes": 1857,
+      "sha256": "dcb59bdbd818a8b4140ff4f6bb8ad576475cad88e2ae84540d41d56bdc7c4e13"
+    },
+    {
+      "path": "examples/wrong-window.json",
+      "bytes": 1399,
+      "sha256": "260b17977d6837f3e02b7ca281f16121c339c977a6cb8fb91e7bf916f7ddc37c"
+    },
+    {
+      "path": "schema/source.schema.json",
+      "bytes": 3730,
+      "sha256": "d367d638c99823f0d2dec78b5ab85ccc690a1cdce0b33e3ab1dc237ba937027f"
+    },
+    {
+      "path": "docs/INTERFACE.md",
+      "bytes": 9336,
+      "sha256": "ea4119be1edacba16a2416ac027d5323d436d043784aa2198a3a429a49ad025c"
+    },
+    {
+      "path": "docs/PRIOR_ART_COMPARISON.md",
+      "bytes": 9642,
+      "sha256": "45df5fc243af79b502ad48a2878a1444bb575d7832ed0d4fc9077c71796b136a"
+    },
+    {
+      "path": "docs/unified_contributions.tex",
+      "bytes": 2396,
+      "sha256": "525030e19d40d2fdb828023b015fdb4e34a9af89eb28b9ab43c297765fd589f8"
+    },
+    {
+      "path": "docs/verified_literature.json",
+      "bytes": 11076,
+      "sha256": "7b97ada93535ca6a620dbca9b319485a9b77b1f0d632323386deb4320751a2e3"
+    },
+    {
+      "path": "tools/build_site.py",
+      "bytes": 2586,
+      "sha256": "721b0d00acea27fd30555a25c130e7fcfaac0dcb49e2e0d8935cc79ebe4704d8"
+    },
+    {
+      "path": "tests/test_verify.py",
+      "bytes": 6134,
+      "sha256": "a4abc92276db2ba05a7aad2c44e044ff0aeef49f71d1beddc1b8fc59e7f02c59"
+    },
+    {
+      "path": "site/index.html",
+      "bytes": 8123,
+      "sha256": "031b01a453997ee1ea9b57df22a267150c97c3fef4cd0c1c4c4a410d5898bc70"
+    },
+    {
+      "path": "site/style.css",
+      "bytes": 14602,
+      "sha256": "c7893d18daa4e286361fa1373db09802c6323a096173ac1880eaa4d1399a6ed4"
+    },
+    {
+      "path": "site/app.js",
+      "bytes": 12032,
+      "sha256": "c761a1eb467398e5e7b480048a7b75b03eab3fcbb5efa5cda362e19b65531b71"
+    },
+    {
+      "path": "site/worker.js",
+      "bytes": 197,
+      "sha256": "58487ebdfc570eb92b31a0057281c1f65ec4e29ae42070d84e099005fcca53cb"
+    },
+    {
+      "path": "site/engine.js",
+      "bytes": 14316,
+      "sha256": "102a01c5ffc0e67ef61d8357273482037a7ded239220cf9078a4e59f01f8ae3e"
+    },
+    {
+      "path": "site/package.json",
+      "bytes": 98,
+      "sha256": "70a527b358161ae1ef52259a3177ac774a0175ea1c5dfbfc27ee3a6f9498aec3"
+    },
+    {
+      "path": "site/test-engine.mjs",
+      "bytes": 4447,
+      "sha256": "6382c84ae605c7e17c51372df1bfee4acafe78ed4c040fc7042f7db49d3e8d13"
+    },
+    {
+      "path": "site/test-python-parity.py",
+      "bytes": 718,
+      "sha256": "4121f534e8f9e2e85a3d5e6e96ab78b322c248ae27da7d12b4457b9be49a6940"
+    },
+    {
+      "path": "site/test-structure.mjs",
+      "bytes": 1646,
+      "sha256": "24946252ac94848e57645acac4085a69bddbe82f97b039b03426483f1ab9c4cd"
+    },
+    {
+      "path": "site/examples/malformed-source.json",
+      "bytes": 1335,
+      "sha256": "75fbcf7ca10d34c550e11e5b3a4aa71aa521076f3bc30b57b7054021af16cdae"
+    },
+    {
+      "path": "site/examples/overlap.json",
+      "bytes": 1400,
+      "sha256": "285f26daad7e716419e9a630fcac08c76a20cb467a6f06ed6e50663acb5af29d"
+    },
+    {
+      "path": "site/examples/periodic-gap.json",
+      "bytes": 1880,
+      "sha256": "7b4026531a2de653b1dde89f48e485d4619f0986a4b77d70159f14aa94d8d18c"
+    },
+    {
+      "path": "site/examples/positive-gap.json",
+      "bytes": 1852,
+      "sha256": "1082c4313a62e538a36bf84bdb8a71a7c297f0b10b14cc8ac982f9170f6aa3d0"
+    },
+    {
+      "path": "site/examples/wrong-symmetry.json",
+      "bytes": 1857,
+      "sha256": "dcb59bdbd818a8b4140ff4f6bb8ad576475cad88e2ae84540d41d56bdc7c4e13"
+    },
+    {
+      "path": "site/examples/wrong-window.json",
+      "bytes": 1399,
+      "sha256": "260b17977d6837f3e02b7ca281f16121c339c977a6cb8fb91e7bf916f7ddc37c"
+    }
+  ]
+}

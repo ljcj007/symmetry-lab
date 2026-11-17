@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="在浏览器中，以精确有理数检查有限算符的完整谱计数、态身份和适用范围。">
+  <title>Source-bound · 电子结构认证工作台</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="./" aria-label="Source-bound 首页"><span class="brand-mark">Σ</span><span>Source-bound<span class="brand-sub">电子结构认证工作台</span></span></a><nav aria-label="主导航"><a href="#workspace" class="active">工作台</a><a href="#method">方法与范围</a><a id="source-link" href="https://github.com/ljcj007/symmetry-lab/tree/main/source-bound-workbench" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav><span class="local-badge"><i></i> 浏览器本地运算</span></header>
+<main>
+<section class="hero"><div><p class="eyebrow">SOURCE → COMPLETE COUNTS → SCOPED CONCLUSION</p><h1>让计算结论，<br class="mobile-break">对应正确的电子态。</h1><p class="hero-description">从一个明确的有限算符出发，精确检查完整有序谱计数及可选对称性连接。选择算例，一键运行，得到可核查的证明义务与结果报告。</p></div><div class="hero-note"><span class="exact-symbol">ℚ</span><p><strong>精确有理数</strong><span>所有矩阵与符号检验均使用整数分数；不用浮点近似代替证明。</span></p></div></section>
+<section class="workspace" id="workspace" aria-labelledby="workspace-heading">
+<aside class="input-panel">
+<div class="section-heading"><span class="step-number">01</span><h2 id="workspace-heading">选择输入</h2><span class="subtle">有限仿射源</span></div>
+<label class="field-label" for="case-select">内置算例</label><div class="select-wrap"><select id="case-select"><option value="">正在载入算例…</option></select></div>
+<p id="case-description" class="case-description">每个算例包含源算符、共同谱切口和完整试探框架。</p>
+<div class="input-summary" id="input-summary"><div><span>矩阵维数</span><strong id="summary-n">—</strong></div><div><span>参数维数</span><strong id="summary-d">—</strong></div><div><span>目标秩</span><strong id="summary-r">—</strong></div></div>
+<button class="primary-button" id="run-button" disabled><span aria-hidden="true">▷</span><span>一键认证</span><kbd>Run</kbd></button>
+<p class="run-note">重新计算证明条件，生成本次报告。</p>
+<div class="divider"><span>或导入自己的描述</span></div>
+<label class="drop-zone" id="drop-zone" for="file-input"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 16v4h16v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>选择或拖入 JSON 文件</strong><span>实对称仿射源 · n ≤ 12，d ≤ 3 · ≤ 1 MB</span><input id="file-input" type="file" accept=".json,application/json"></label>
+<p class="privacy-note"><span aria-hidden="true">◈</span> 输入仅在你的浏览器中处理，不上传至服务器。</p>
+<details class="source-details"><summary>查看 / 编辑输入 JSON <span>＋</span></summary><textarea id="source-editor" spellcheck="false" aria-label="算符描述 JSON" rows="13"></textarea><button class="text-button" id="apply-editor">应用编辑</button><span class="editor-message" id="editor-message" role="status"></span></details>
+<div class="input-error" id="input-error" role="alert" hidden></div>
+</aside>
+<section class="result-panel" aria-labelledby="result-heading">
+<div class="result-top"><div class="section-heading"><span class="step-number">02</span><h2 id="result-heading">检查结果</h2></div><span class="status-chip idle" id="status-chip">等待运行</span></div>
+<div id="result-empty" class="result-empty"><div class="empty-orbit" aria-hidden="true"><div></div><span>H(k)</span><i></i><b></b></div><h3>从源身份到完整计数</h3><p>选择一个算例并点击“一键认证”。<br>报告将逐项展示哪些条件成立，结论适用于什么对象。</p><div class="empty-steps"><span><b>1</b> 输入与完整载体</span><span><b>2</b> 全域符号检验</span><span><b>3</b> 有范围的结论</span></div></div>
+<div id="result-content" hidden>
+<div class="conclusion-box" id="conclusion-box"><div class="conclusion-icon" id="conclusion-icon" aria-hidden="true">✓</div><div><p class="conclusion-label" id="conclusion-label">CERTIFIED</p><h3 id="conclusion-title"></h3><p id="conclusion-description"></p></div></div>
+<div class="result-metrics"><div><span>完整维数</span><strong id="result-n">—</strong></div><div><span>已检查顶点</span><strong id="result-vertices">—</strong></div><div><span>共同区间宽度</span><strong id="result-gap">—</strong></div><div><span>浏览器耗时</span><strong id="result-time">—</strong></div></div>
+<div class="obligations-heading"><h3>本次证明义务</h3><span id="obligation-count"></span></div><ol class="obligation-list" id="obligation-list"></ol>
+<section class="scope-box"><h3>结论对象与范围</h3><dl><dt>声明的源</dt><dd id="result-source"></dd><dt>参数域</dt><dd id="result-domain"></dd><dt>算术</dt><dd>精确有理数 · BigInt 整数分数</dd></dl><p>认证对象是输入描述的有限实对称仿射算符。源 ID 与哈希绑定提交内容，不认证物理来源；本入口不据此赋予材料拓扑指标，也不认证连续或自洽 DFT 母问题。</p></section>
+<div class="result-actions"><button class="secondary-button" id="download-button"><span aria-hidden="true">↓</span> 下载完整报告</button><button class="text-button" id="copy-command">复制本地运行命令</button><span id="action-message" role="status"></span></div>
+<details class="receipt-details"><summary>查看机器可读报告</summary><pre id="receipt-json"></pre></details>
+</div>
+</section></section>
+<section id="method" class="method-section"><div class="method-intro"><p class="eyebrow">ONE INTERFACE, DIFFERENT CONCLUSIONS</p><h2>共享接口，保留不同结论的前提。</h2><p>完整计数、对称性连接和拓扑赋值有各自的证据条件。工作台报告实际完成的检查；未获证并不表示物理无隙。</p></div><div class="method-cards"><article><span class="method-icon">01</span><h3>算符与完整载体</h3><p>声明参数域、完整矩阵与试探框架，防止被省略的态改变有序计数。</p></article><article><span class="method-icon">02</span><h3>闭域谱隔离</h3><p>对仿射矩阵检查所有立方体顶点的严格符号。凸性将结论覆盖到整个闭域。</p></article><article><span class="method-icon">03</span><h3>按需连接对称性</h3><p>核对源协变与试探框架连接；结合谱计数绑定表示，拓扑结论需另有证明。</p></article></div><div class="method-links"><a href="./downloads/source-bound-workbench.zip" download>下载本地一键入口 ↓</a><a href="../">返回 Symmetry Lab ↗</a><a id="interface-link" href="https://github.com/ljcj007/symmetry-lab/blob/main/source-bound-workbench/docs/INTERFACE.md" target="_blank" rel="noreferrer">共享接口说明 ↗</a><a id="literature-link" href="https://github.com/ljcj007/symmetry-lab/blob/main/source-bound-workbench/docs/PRIOR_ART_COMPARISON.md" target="_blank" rel="noreferrer">方法与文献对照 ↗</a><a id="replay-link" href="https://github.com/ljcj007/symmetry-lab/tree/main/source-bound-workbench#%E5%AE%8C%E6%95%B4%E7%A7%91%E5%AD%A6%E9%87%8D%E6%94%BE" target="_blank" rel="noreferrer">完整科学重放说明 ↗</a></div></section>
+</main>
+<footer><span class="footer-brand">Σ <strong>Source-bound</strong></span><p>明确对象，完整计数，可核查结论。</p><span>Browser verifier · finite affine profile v1</span></footer>
+<script type="module" src="./app.js"></script>
+</body></html>

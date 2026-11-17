@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),app=fs.readFileSync(path.join(root,'app.js'),'utf8');
+const ids=Array.from(html.matchAll(/\bid="([^"]+)"/g),x=>x[1]);assert.equal(new Set(ids).size,ids.length,'HTML identifiers are unique');
+for(const [,id] of app.matchAll(/\$\('([^']+)'\)/g))assert.ok(ids.includes(id),'App element exists: '+id);
+for(const [,file] of html.matchAll(/(?:src|href)="\.\/([^"]+)"/g))assert.ok(fs.existsSync(path.join(root,file)),'Relative asset exists: '+file);
+for(const file of ['positive-gap.json','periodic-gap.json','wrong-window.json','overlap.json','wrong-symmetry.json','malformed-source.json'])assert.ok(fs.existsSync(path.join(root,'examples',file)));
+assert.match(html,/<html lang="zh-CN">/);assert.match(html,/name="viewport"/);assert.match(html,/aria-live|role="status"/);assert.ok(!/source-bound-certification/.test(html),'No placeholder repository links remain');
+assert.match(fs.readFileSync(path.join(root,'style.css'),'utf8'),/@media\(max-width:740px\)/);
+assert.match(app,/new Worker/);assert.match(app,/15000/);assert.match(app,/BROWSER_WALL_BUDGET/);assert.ok(!/eval\(|new Function|\.innerHTML\s*=/.test(app),'Imported text is not executed or assigned as HTML');
+console.log(JSON.stringify({status:'PASS',scope:'Static structure, app element bindings, packaged resources, responsive and accessibility declarations; not a browser rendering test.',html_identifiers:ids.length},null,2));
