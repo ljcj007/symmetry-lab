@@ -111,3 +111,7 @@ q=0 声学模是刚体平移，不能直接代入含 `1/εν` 的非弹性公式
 `python scripts/test-python-dynamic-scattering.py`检查解析色散、声学平移和质量归一化、单原子折叠极限、相邻区消光、相位规范转换、简并酉变换、振幅闭合和式、详细平衡、零温、横向投影、零频排除、Gaussian面积、热图方向和严格JSON输出。
 
 相位与一声子公式参考 [Phonopy 动态结构因子文档](https://phonopy.github.io/phonopy/dynamic-structure-factor.html)和[动力学矩阵约定](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix)。声子计算方法背景参考 [Togo、Chaput、Tadano、Tanaka 的公开论文](https://arxiv.org/abs/2301.05784)。本页的双原子链推导、代码和教学数据为独立实现，不使用论文中的实验或材料计算数据。
+
+## 逐原子振幅推导回放
+
+选择附带振幅推导并手动计算，可从同一次结果查看质量因子、复相位、相干和与干涉项，再追踪能量截断和温度权重。课程参考、整体相位和简并子空间的解释见[逐原子振幅回放](scattering-amplitudes.md)。

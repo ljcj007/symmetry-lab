@@ -5434,6 +5434,12 @@
     ]
   },
   {
+    "source": "includeAmplitudeReplay 必须为布尔值",
+    "origins": [
+      "python/dynamic_scattering_lab.py"
+    ]
+  },
+  {
     "source": "channel 仅支持 both、stokes、antiStokes",
     "origins": [
       "python/dynamic_scattering_lab.py"
@@ -5648,6 +5654,20 @@
     ]
   },
   {
+    "source": "声学",
+    "origins": [
+      "python/dynamic_scattering_lab.py",
+      "python/dynamic_scattering_lab.py"
+    ]
+  },
+  {
+    "source": "光学",
+    "origins": [
+      "python/dynamic_scattering_lab.py",
+      "python/dynamic_scattering_lab.py"
+    ]
+  },
+  {
     "source": "分支 / 子空间",
     "origins": [
       "python/dynamic_scattering_lab.py"
@@ -5707,18 +5727,6 @@
   },
   {
     "source": "B 虚部",
-    "origins": [
-      "python/dynamic_scattering_lab.py"
-    ]
-  },
-  {
-    "source": "声学",
-    "origins": [
-      "python/dynamic_scattering_lab.py"
-    ]
-  },
-  {
-    "source": "光学",
     "origins": [
       "python/dynamic_scattering_lab.py"
     ]

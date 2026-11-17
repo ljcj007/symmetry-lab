@@ -1,6 +1,6 @@
 // A project opens a fresh, editable copy. Scientific records and results are
 // never rewritten here; only the owning calculation view reads this RAM input.
-import {PROJECT_INPUT_FIELDS,PROJECT_INPUT_ENUMS} from './project-input-fields.js?v=20261113-support1';
+import {PROJECT_INPUT_FIELDS,PROJECT_INPUT_ENUMS} from './project-input-fields.js?v=20261117-scattering1';
 const rows=[
  ['quantum_geometry_lab','quantum-materials','geometry','quantum-geometry-lab'],
  ['crystal_field_lab','quantum-materials','orbitals','crystal-field-lab'],

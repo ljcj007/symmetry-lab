@@ -1,8 +1,8 @@
 import {createResultLocalizer} from '../english-results.js?v=sha256-642040f6de5426902a38';
-const englishMessages=fetch(new URL('./data/python-messages.json?v=sha256-e92ec4c250fc165b57d2',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
+const englishMessages=fetch(new URL('./data/python-messages.json?v=sha256-5d8ddedf70d2b3c5c226',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261117-rep1';
+const BUILD = '20261117-scattering1';
 const plans = {
   group_theorems: ['group_theorems'],
   symmetry_mini_demos: ['symmetry_mini_demos'],

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 27236,
-  "translatedUnits": 27236,
+  "sourceUnits": 27410,
+  "translatedUnits": 27410,
   "missing": [],
-  "files": 453,
+  "files": 458,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -104,6 +104,9 @@
     "en-water-actions-docs.json",
     "en-representation-actions-ui.json",
     "en-representation-actions-host.json",
-    "en-representation-actions-docs.json"
+    "en-representation-actions-docs.json",
+    "en-scattering-replay-ui.json",
+    "en-scattering-replay-host.json",
+    "en-scattering-replay-docs.json"
   ]
 }

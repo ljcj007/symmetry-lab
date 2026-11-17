@@ -34,6 +34,8 @@ def _number(payload, key, default, low, high, integer=False):
 def parameters(payload):
     if not isinstance(payload, dict):
         raise ValueError('输入必须为 JSON 对象')
+    if 'includeAmplitudeReplay' in payload and type(payload['includeAmplitudeReplay']) is not bool:
+        raise ValueError('includeAmplitudeReplay 必须为布尔值')
     p = {}
     for key, default, low, high in [
         ('lattice', 4, 1, 10), ('massA', 23, 1, 250), ('massB', 35.45, 1, 250),
@@ -49,7 +51,7 @@ def parameters(payload):
     p['channel'] = payload.get('channel', 'both')
     if p['channel'] not in ('both', 'stokes', 'antiStokes'):
         raise ValueError('channel 仅支持 both、stokes、antiStokes')
-    unknown = set(payload) - set(p)
+    unknown = set(payload) - set(p) - {'includeAmplitudeReplay'}
     if unknown:
         raise ValueError('不支持的输入字段：' + ', '.join(sorted(unknown)))
     if p['qMax'] <= p['qMin'] or p['energyMax'] <= p['energyMin']:
@@ -153,7 +155,7 @@ def _selected_channel(stokes, anti, channel):
     return stokes + anti if channel == 'both' else (stokes if channel == 'stokes' else anti)
 
 
-def _point(p, Q, energy_grid):
+def _point(p, Q, energy_grid, replay_sink=None):
     cosine = math.cos(math.radians(p['angle']))
     if abs(cosine) < 1e-14:
         cosine = 0.
@@ -172,19 +174,176 @@ def _point(p, Q, energy_grid):
         thermal = KB_MEV_K * p['temperature']
         ratio = math.exp(-group['energy'] / thermal) if thermal > 0 and group['energy'] < 700 * thermal else 0.
         balance = max(balance, abs(group['antiStokesWeight'] / group['stokesWeight'] - ratio))
-    return {'Q': Q, 'QParallel': parallel, 'reducedQ': q, 'reducedRLU': q * p['lattice'] / (2 * math.pi),
+    point = {'Q': Q, 'QParallel': parallel, 'reducedQ': q, 'reducedRLU': q * p['lattice'] / (2 * math.pi),
             'reciprocalOrder': int(round((parallel - q) * p['lattice'] / (2 * math.pi))),
             'energies': energies.tolist(), 'eigenvectors': [[[float(z.real), float(z.imag)] for z in vectors[:, i]] for i in range(2)],
             'groups': groups, 'stokes': stokes, 'antiStokes': anti, 'exactWindow': exact,
             'checks': {'eigenResidual': residual, 'orthogonalityResidual': ortho, 'amplitudeClosureResidual': sum_rule,
                        'detailedBalanceResidual': balance}}
+    if replay_sink is not None:
+        replay_sink.update(amplitude_replay(p, point, vectors, matrix))
+    return point
+
+
+def _complex_json(z):
+    return [float(np.real(z)), float(np.imag(z))]
+
+
+def _vector_json(vector):
+    return [_complex_json(z) for z in vector]
+
+
+def _amplitude_ledger(vector, coefficients, normalized_coefficients, masses, parallel):
+    """Serialize one actual vector action, including the coherent addition path."""
+    displacement = vector / np.sqrt(masses)
+    terms = vector.conj() * coefficients
+    total = np.sum(terms)
+    individual = abs(terms)**2
+    interference = 2 * float(np.real(terms[0] * terms[1].conjugate()))
+    # Remove Q before squaring, instead of dividing by a potentially underflowed
+    # Q^2. At exactly Q_parallel=0 this normalization is deliberately undefined.
+    normalized = float(abs(np.sum(vector.conj() * normalized_coefficients))**2) if parallel != 0 else None
+    return {'eigenvector': _vector_json(vector),
+            'physicalDisplacement': _vector_json(displacement),
+            'conjugatedDisplacement': _vector_json(displacement.conj()),
+            'terms': _vector_json(terms),
+            'partialSums': [[0., 0.], _complex_json(terms[0]), _complex_json(total)],
+            'sum': _complex_json(total), 'individualStrengths': individual.tolist(),
+            'incoherentStrength': float(np.sum(individual)), 'interference': interference,
+            'strength': float(abs(total)**2), 'normalizedStrength': normalized}
+
+
+def amplitude_replay(p, point, vectors, matrix):
+    """Explain the selected eigensolve; never solve another eigenproblem here.
+
+    The existing cell-periodic convention differs from Phonopy's atom-phase
+    eigenvectors. Sources establish the physical factors, not identical gauges.
+    Displacements below omit the common quantum/energy/occupation scale.
+    """
+    parallel = point['QParallel']
+    masses = np.array([p['massA'], p['massB']])
+    basis = np.array([0., p['basisFraction'] * p['lattice']])
+    scatter = np.array([p['scatterA'], p['scatterB']])
+    phases = np.exp(1j * parallel * basis)
+    # This is the same coefficient expression and evaluation order as the
+    # original mode_weights; normalized coefficients serve only the Q ledger.
+    coefficients = parallel * scatter * phases / np.sqrt(masses)
+    normalized_coefficients = scatter * phases / np.sqrt(masses)
+    original_amplitudes = vectors.conj().T @ coefficients
+    energies = np.array(point['energies'])
+    values = (energies / ENERGY_FACTOR)**2
+    mixing_tolerance = float(64 * np.finfo(float).eps * max(1., float(np.max(abs(energies)))))
+    atoms = [{'index': i, 'id': ('A', 'B')[i], 'mass': float(masses[i]),
+              'sqrtMass': float(math.sqrt(masses[i])), 'inverseSqrtMass': float(1 / math.sqrt(masses[i])),
+              'basisPosition': float(basis[i]), 'scatterWeight': float(scatter[i]),
+              'structurePhaseArgument': float(parallel * basis[i]),
+              'structurePhase': _complex_json(phases[i]), 'coefficient': _complex_json(coefficients[i])}
+             for i in range(2)]
+    branches = []
+    for i in range(2):
+        vector = vectors[:, i]
+        item = {'index': i, 'label': ('声学', '光学')[i], 'energy': point['energies'][i],
+                'groupIndex': next(j for j, group in enumerate(point['groups']) if i in group['branches']),
+                **_amplitude_ledger(vector, coefficients, normalized_coefficients, masses, parallel)}
+        item['amplitudeResidual'] = float(abs(complex(*item['sum']) - original_amplitudes[i]))
+        phased = _amplitude_ledger(1j * vector, coefficients, normalized_coefficients, masses, parallel)
+        expected = -1j * complex(*item['sum'])
+        item['gauge'] = {'phase': [0., 1.], 'conjugatePhase': [0., -1.],
+                         **phased, 'changedEigenvector': phased['eigenvector'],
+                         'changedPhysicalDisplacement': phased['physicalDisplacement'],
+                         'expectedSum': _complex_json(expected),
+                         'amplitudeResidual': float(abs(complex(*phased['sum']) - expected)),
+                         'strengthResidual': abs(phased['strength'] - item['strength']),
+                         'eigenResidual': float(np.max(abs(matrix @ (1j * vector) - values[i] * (1j * vector))))}
+        changed = vector * np.array([1., 1j])
+        relative = _amplitude_ledger(changed, coefficients, normalized_coefficients, masses, parallel)
+        item['relativePhase'] = {'phase': [0., 1.], **relative,
+                                 'changedEigenvector': relative['eigenvector'],
+                                 'changedPhysicalDisplacement': relative['physicalDisplacement'],
+                                 'overlapMagnitudeSquared': float(abs(np.vdot(vector, changed))**2),
+                                 'commonPhaseEquivalent': bool(abs(1. - abs(np.vdot(vector, changed))**2) <= 1e-12),
+                                 'eigenResidual': float(np.max(abs(matrix @ changed - values[i] * changed)))}
+        branches.append(item)
+    groups = []
+    for group in point['groups']:
+        members = [branches[i] for i in group['branches']]
+        summed = sum(b['strength'] for b in members)
+        groups.append({**group, 'branches': list(group['branches']),
+                       'energySpread': max(point['energies'][i] for i in group['branches']) - min(point['energies'][i] for i in group['branches']),
+                       'branchStrengths': [b['strength'] for b in members],
+                       'incoherentStrength': sum(b['incoherentStrength'] for b in members),
+                       'interference': sum(b['interference'] for b in members),
+                       'reconstructedStrength': summed,
+                       'strengthResidual': abs(summed - group['amplitudeStrength']),
+                       'normalizedStrength': sum(b['normalizedStrength'] for b in members) if parallel != 0 else None,
+                       'energyDenominator': None if group['excluded'] else 1. / group['energy'],
+                       'recoilFactor': RECOIL_FACTOR,
+                       'stokesMultiplier': None if group['excluded'] else group['occupation'] + 1.,
+                       'antiStokesMultiplier': None if group['excluded'] else group['occupation'],
+                       'stokesCenter': group['energy'], 'antiStokesCenter': -group['energy']})
+    mixing = None
+    if len(point['groups']) == 1 and point['groups'][0]['degeneracy'] == 2 and groups[0]['energySpread'] <= mixing_tolerance:
+        unitary = np.array([[1., -1.], [1., 1.]], complex) / math.sqrt(2)
+        changed = vectors @ unitary
+        changed_branches = [{'index': i, **_amplitude_ledger(changed[:, i], coefficients, normalized_coefficients, masses, parallel)} for i in range(2)]
+        old_sum = point['groups'][0]['amplitudeStrength']
+        new_sum = sum(b['strength'] for b in changed_branches)
+        mixing = {'unitary': [_vector_json(row) for row in unitary],
+                  'energySpread': groups[0]['energySpread'], 'energyTolerance': mixing_tolerance,
+                  'originalEigenvectors': [_vector_json(vectors[:, i]) for i in range(2)],
+                  'changedEigenvectors': [_vector_json(changed[:, i]) for i in range(2)],
+                  'originalStrengths': [b['strength'] for b in branches],
+                  'changedBranches': changed_branches,
+                  'changedStrengths': [b['strength'] for b in changed_branches],
+                  'originalGroupStrength': old_sum, 'changedGroupStrength': new_sum,
+                  'strengthResidual': abs(old_sum - new_sum),
+                  'eigenResidual': float(np.max(abs(matrix @ changed - changed * values))),
+                  'unitarityResidual': float(np.max(abs(unitary.conj().T @ unitary - np.eye(2))))}
+    reciprocal = 2 * math.pi / p['lattice']
+    reconstructed = point['reducedQ'] + point['reciprocalOrder'] * reciprocal
+    residuals = {
+        'momentumReconstruction': abs(parallel - reconstructed),
+        'atomicSum': max(b['amplitudeResidual'] for b in branches),
+        'coherentIdentity': max(abs(b['strength'] - b['incoherentStrength'] - b['interference']) for b in branches),
+        'groupStrength': max(g['strengthResidual'] for g in groups),
+        'commonPhaseAmplitude': max(b['gauge']['amplitudeResidual'] for b in branches),
+        'commonPhaseStrength': max(b['gauge']['strengthResidual'] for b in branches),
+        'groupClosure': abs(sum(b['strength'] for b in branches) - float(parallel**2 * np.sum(scatter**2 / masses))),
+        'degenerateMixing': mixing['strengthResidual'] if mixing is not None else 0.,
+    }
+    scale = max(1., sum(g['amplitudeStrength'] for g in groups))
+    return {'schema': 'symmetry-lab-scattering-amplitude-replay-1', 'parameters': dict(p),
+            'energyGroupingTolerance': 1e-8, 'mixingEnergyTolerance': mixing_tolerance,
+            'momentum': {'Q': point['Q'], 'angleDegrees': p['angle'],
+                         'cosine': (0. if abs(math.cos(math.radians(p['angle']))) < 1e-14 else math.cos(math.radians(p['angle']))),
+                         'QParallel': parallel, 'reciprocalG': reciprocal,
+                         'reducedQ': point['reducedQ'], 'reducedRLU': point['reducedRLU'],
+                         'reciprocalOrder': point['reciprocalOrder'],
+                         'reconstructedQParallel': reconstructed, 'reconstructionResidual': abs(parallel - reconstructed)},
+            'atoms': atoms, 'branches': branches, 'groups': groups, 'degenerateMixing': mixing,
+            'checks': {**residuals, 'tolerance': 1e-10 * scale,
+                       'passed': bool(all(math.isfinite(v) and v <= 1e-10 * scale for v in residuals.values()))},
+            'sources': [dict(row) for row in SOURCES],
+            'conventions': {
+                'model': 'one-dimensional longitudinal diatomic harmonic chain; no imported Phonopy structure factor',
+                'eigenvector': 'cell-periodic: u_lk proportional to e_k(q) exp(i q l a)/sqrt(m_k)',
+                'displacementScale': 'e/sqrt(m) gives relative displacement shape, not a calibrated displacement in Angstrom',
+                'atomicAmplitude': 'Q_parallel b_k exp(i Q_parallel tau_k) conjugate(e_k)/sqrt(m_k)',
+                'relativeWeight': 'signed dimensionless b; no Debye-Waller or kinematic prefactor',
+                'normalization': 'normalizedStrength removes Q_parallel squared; null at zero projection; computed before multiplying Q to avoid underflow',
+                'gauge': 'e -> i e changes A -> -i A and preserves strength',
+                'relativePhase': 'multiplying B alone by i changes relative displacement when both components are nonzero; a one-atom vector can instead be unchanged or differ only by a common phase (overlap test tolerance 1e-12). eigenResidual separately tests whether it remains an eigenmode; this is not a recalculated spectrum',
+                'degeneracy': 'the original spectrum groups energies within 1e-8 meV; mixing is shown only when their spread is at most 64 machine eps times max(1, energy). The eigenResidual is reported; numerical grouping alone does not establish exact degeneracy. Complete subspace strength is invariant under unitary changes of basis',
+                'excluded': 'excluded low-energy groups retain amplitudes but have null inverse-energy/Bose factors and original zero inelastic weights',
+            }}
 
 
 def calculate(payload=None):
     p = parameters({} if payload is None else payload)
+    replay = {} if isinstance(payload, dict) and payload.get('includeAmplitudeReplay', False) else None
     energies = np.linspace(p['energyMin'], p['energyMax'], p['energyPoints'])
     qs = np.linspace(p['qMin'], p['qMax'], p['qPoints'])
-    selected = _point(p, p['selectedQ'], energies)
+    selected = _point(p, p['selectedQ'], energies, replay)
     scan = [_point(p, float(q), energies) for q in qs]
     grid = np.array([_selected_channel(row['stokes'], row['antiStokes'], p['channel']) for row in scan]).T
     signal = _selected_channel(selected['stokes'], selected['antiStokes'], p['channel'])
@@ -225,7 +384,7 @@ def calculate(payload=None):
         return {'label': label, 'points': [[float(x), float(y)] for x, y in zip(xs, ys)]}
     selection_json = {k: v for k, v in selected.items() if k not in ('stokes', 'antiStokes')}
     selection_json.update({'spectrum': {'energies': energies.tolist(), 'stokes': selected['stokes'].tolist(), 'antiStokes': selected['antiStokes'].tolist(), 'selected': signal.tolist()}})
-    return {
+    result = {
         'parameters': p,
         'summary': [{'label': '选定完整 Q', 'value': p['selectedQ'], 'unit': 'Å⁻¹'},
                     {'label': '链轴动量 Q∥', 'value': selected['QParallel'], 'unit': 'Å⁻¹'},
@@ -257,3 +416,6 @@ def calculate(payload=None):
                                  'gaussian': 'unit-area in energy; sigma in meV', 'heatmap': 'rows=energy, columns=full Q'}},
         'checks': checks, 'warnings': warnings, 'sources': SOURCES,
     }
+    if replay is not None:
+        result['data']['amplitudeReplay'] = replay
+    return result

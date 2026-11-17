@@ -92,11 +92,11 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "9d8b08109b4891e6f9e4e9dbcfda64755ba2680013c1ad10199ea7fbf3172f4b"
+      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "758007c37699808c3c57ed8e9b25aa40f1adc1ea20457e01826603dcbde13315"
+      "sha256": "c39fefe85097f52b6b665e1fb8403191333cdaabf4027d74adcf3098f4e16bed"
     },
     {
       "path": "dist/data/device-transport-content.json",
@@ -196,23 +196,23 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "66b16feab588b70a85b796016c2d2275c84a588d5603b98474d99843b031db2d"
+      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
     },
     {
       "path": "dist/material-notebook.js",
-      "sha256": "0ab181ff63c07715ab844ba1a8e998be24ef97ac33d7f695da0e62f82db85641"
+      "sha256": "9a2ed2ef025604359c516bd0529c666b55dedf44412fe76206816d2027b96afd"
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "46d5308a955f2c968fd826f8b53da85781eba6f0f4ea497c82383197dce7414c"
+      "sha256": "63e79023b1b9912a0aeef655f902d77a15826af83f8ccc3db528d24c1dd661ea"
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "e61aec3fee47581d02800182809b7768011ecffa94112eaf2f3c40ff79ab65db"
+      "sha256": "d91e5a18eb5a3bedc6bbbccbd7cfba84a4ac1a141f0dae25080792ee590bfd33"
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "3221e9516cd203e7c3c2b4ffac37296df03ad05cba7bd25dd9967ecd78c1ad76"
+      "sha256": "875e51355549345297ac5658466546642a8d931c35b948959f77a8c3b8a39462"
     },
     {
       "path": "dist/python/browser_api.py",
@@ -232,7 +232,7 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "954d37a8b47d09fa9d6931771eff6f9bfab26fddaca92fe0dab078f7f8e5a4dc"
+      "sha256": "40c6c5662d1c944ccbb18139794c0c89622dc2a611c6a81c79148e9a7559d79a"
     },
     {
       "path": "dist/response-materials.css",
@@ -240,7 +240,7 @@
     },
     {
       "path": "dist/response-projects.js",
-      "sha256": "77469c0f459c0860fd604b7072dd8a84425eacc699dddab47d4bf6e870d9732b"
+      "sha256": "4aa874c534cc2bd9de7b61fc24ef1a351586f889d81d6d52297b87e6dcce1ba0"
     },
     {
       "path": "dist/response-views.js",
@@ -248,7 +248,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "cd0e38615af5e226f06ecb4d6bea7f6d9d3d3462f6031acf763cee901d21e5bc"
+      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
     },
     {
       "path": "scripts/build-response-catalog.py",
@@ -280,7 +280,7 @@
     },
     {
       "path": "scripts/test-response-materials-ui.mjs",
-      "sha256": "5feb902cb090c5544310349d891247b64ba74b0b336166de6dca797e87024b19"
+      "sha256": "db6407b37d54980cab79355359f099429251b7476be50f1a1781be64091a10c6"
     }
   ],
   "provenanceMaintenance": {

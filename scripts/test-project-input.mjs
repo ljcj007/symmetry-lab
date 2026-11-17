@@ -23,6 +23,7 @@ assert.equal(supportsProjectInput('hall_response_lab',{mass:-1,unexposedPhysical
 assert.equal(supportsProjectInput('quantum_geometry_lab',{model:'unexposed-model'}),false,'A missing select option cannot silently reset to the first model');
 assert.equal(supportsProjectInput('shg_lab',{model:'gaas',cut:'110'}),false,'A core-only cut cannot silently become the first exposed sample cut');
 assert.equal(supportsProjectInput('phonon_thermo',{source:'mesh',frequency_unit:'unsupported-unit'}),false,'An unsupported frequency unit cannot silently become THz');
+assert.equal(supportsProjectInput('dynamic_scattering_lab',{includeAmplitudeReplay:'true'}),false,'A replay flag copied from a record must be a real boolean');
 assert.ok(Object.isFrozen(PROJECT_INPUT_FIELDS.hall_response_lab));assert.ok(Object.isFrozen(PROJECT_INPUT_ENUMS.shg_lab.cut));
 assert.equal(getProjectInputTarget('teaching_labs',{lab:'lie',experiment:'su2_coupling'}).route,'#compute/lie/su2_coupling');
 assert.equal(projectInputFor({},'device_transport_lab',{}).status,'none');
@@ -87,6 +88,16 @@ for(const step of allSteps){
  checkedSteps++;if(changed)changedInputs++;checkedActions.add(step.action);
 }
 assert.equal(checkedSteps,77);assert.equal(checkedActions.size,32);assert.ok(changedInputs>=70,'Most snapshots differ from their registered preset');
+// An optional derivation stays attached to the exact recorded input. Explicit
+// false is also retained rather than silently changing that record identity.
+const scatteringStep=allSteps.find(step=>step.action==='dynamic_scattering_lab');
+const scatteringBaseline=await mount(scatteringStep);
+for(const includeAmplitudeReplay of [false,true]){
+ const request=clone(scatteringBaseline.calls[0]);request.input.includeAmplitudeReplay=includeAmplitudeReplay;
+ const before=clone(request),loaded=await mount(scatteringStep,request);
+ assert.deepEqual(loaded.calls,[request],'The actual scattering form faithfully restores optional derivation '+includeAmplitudeReplay);
+ assert.deepEqual(request,before,'Optional derivation restoration leaves the source record untouched');
+}
 // Imported Phonopy/thermal/DOS inputs use the real file text controls. Preserve
 // the literal supplied data, not just the selected numerical model parameters.
 const thermoFixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/material-research.json',import.meta.url),'utf8'));

@@ -34,18 +34,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 52207,
-      "sha256": "04bab62e216ba0ca9f93196aa3fcc9c061ccd2948fccad74bd96e0da5d6f01f0"
+      "bytes": 55039,
+      "sha256": "af0f237b5e7d5c54182286288696e03bbbedef83992b83bac85a41ed458d0cf9"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97831,
-      "sha256": "9d8b08109b4891e6f9e4e9dbcfda64755ba2680013c1ad10199ea7fbf3172f4b"
+      "bytes": 97886,
+      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17143,
-      "sha256": "11ac531c49971cb2568de6175efa82065ffbf5fef1add748d6cfdada03fbeef2"
+      "bytes": 17160,
+      "sha256": "c522e46d32bdd89d14e0bfb1e2e4e8424236655767f055a9c1aa9c868e35c206"
     },
     "dist/data/examples/phonopy-cu-LICENSE.txt": {
       "normalization": "utf8-lf-v1",
@@ -74,8 +74,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7663,
-      "sha256": "66b16feab588b70a85b796016c2d2275c84a588d5603b98474d99843b031db2d"
+      "bytes": 7746,
+      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -84,13 +84,13 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24766,
-      "sha256": "0ab181ff63c07715ab844ba1a8e998be24ef97ac33d7f695da0e62f82db85641"
+      "bytes": 24773,
+      "sha256": "9a2ed2ef025604359c516bd0529c666b55dedf44412fe76206816d2027b96afd"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50724,
-      "sha256": "7239ddf48ab64ab613eb8f79d64ae63c285d8035449eb56e891fdd88c7578e67"
+      "bytes": 50734,
+      "sha256": "b5c063403f80603917dc21d095e1924326876309eb556bfe96d3f8ae2f1dc876"
     },
     "dist/oscillator-spectra-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -104,8 +104,8 @@
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14124,
-      "sha256": "6f1c2672bb60a7a33f9cfe5d5145da3e7603a5a1d55793e4cd1458d76adf5e06"
+      "bytes": 17322,
+      "sha256": "19e2c6e3c51fcc829dd670cc86db969c369e58db7b0b6e5a14c85770022f4f8b"
     },
     "dist/structure-handoff.css": {
       "normalization": "utf8-lf-v1",
@@ -144,8 +144,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19822,
-      "sha256": "cd0e38615af5e226f06ecb4d6bea7f6d9d3d3462f6031acf763cee901d21e5bc"
+      "bytes": 20518,
+      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
     },
     "scripts/build-evidence-workflows-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -154,8 +154,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3588,
-      "sha256": "eb39b947adc4d8ef687653bd570c7314b2f294fcee351f3e59d1fb755e64794e"
+      "bytes": 3705,
+      "sha256": "d9b02a1197e50e33b327090fa7df1aecf1ea1cb6dae74037eacefc7d7c31807d"
     },
     "scripts/fixtures/structure-handoff.json": {
       "normalization": "utf8-lf-v1",
@@ -179,8 +179,8 @@
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23366,
-      "sha256": "19fdeaf6c536b38a5ffac49fe3f937c73b74e5077670fa6a0e44e6da03b7d712"
+      "bytes": 23373,
+      "sha256": "ce8e2adb764a8b5f38bb6032fd5efcd2d2a491e3f0c8a0e76f0c7f52d2298689"
     },
     "scripts/test-oscillator-bridge-integration.mjs": {
       "normalization": "utf8-lf-v1",
@@ -209,8 +209,8 @@
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10998,
-      "sha256": "53d19d772061e710e0385a4acd73f16de57ee5432d0d3a8a3be352ba44649deb"
+      "bytes": 11005,
+      "sha256": "d3e2e8005f47cd3cf8d4a9a8a590d2ff80ffa531b31fb7c464c00d48253d7e01"
     }
   }
 }

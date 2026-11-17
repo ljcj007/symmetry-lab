@@ -33,7 +33,7 @@ export function runPythonTask(action, payload) {
   let requestId = null;
   const pending = new Promise((resolve, reject) => {
     if (!worker) {
-      worker = new Worker(new URL('./python-worker.js?v=20261117-rep1', import.meta.url), {type: 'module'});
+      worker = new Worker(new URL('./python-worker.js?v=20261117-scattering1', import.meta.url), {type: 'module'});
       const createdWorker = worker;
       worker.onerror = event => {if(worker===createdWorker)stop(event.message || "Python Module loading failed, please try again.");};
       worker.onmessage = ({data}) => {

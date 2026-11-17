@@ -32,6 +32,7 @@ builders = [
     'build-su3-copy-provenance',
     'build-water-actions-provenance',
     'build-representation-actions-provenance',
+    'build-scattering-replay-provenance',
 ]
 temp_root = Path(tempfile.gettempdir()).resolve()
 with tempfile.TemporaryDirectory(prefix='symmetry-source-check-', dir=temp_root) as temp:

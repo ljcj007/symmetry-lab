@@ -111,3 +111,7 @@ Real-data calculations next require at least the primitive lattice with explicit
 `python scripts/test-python-dynamic-scattering.py` checks analytic dispersion, acoustic translation/mass normalization, folded monatomic limits, adjacent-zone extinction, gauges, degenerate unitary changes, amplitude closure, detailed balance, zero T, transverse projections, zero-frequency exclusion, Gaussian area, heatmap orientation, and strict JSON.
 
 Phases and the one-phonon formula follow [Phonopy dynamic structure factors](https://phonopy.github.io/phonopy/dynamic-structure-factor.html) and [dynamical-matrix conventions](https://phonopy.github.io/phonopy/formulation.html#dynamical-matrix). Phonon-method background follows [the open paper by Togo, Chaput, Tadano and Tanaka](https://arxiv.org/abs/2301.05784). This page’s diatomic-chain derivations, code and teaching data are independent implementations and do not use experimental or material-calculation data from the paper.
+
+## Replay the atomic-amplitude derivation
+
+Include the amplitude derivation and calculate manually to inspect mass factors, complex phases, coherent sums and interference in the same result, then follow the energy cutoff and thermal weights. See [Atomic-amplitude replay](scattering-amplitudes.md) for classroom references, common phases and degenerate subspaces.

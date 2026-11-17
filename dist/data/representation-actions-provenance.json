@@ -51,18 +51,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 52207,
-      "sha256": "04bab62e216ba0ca9f93196aa3fcc9c061ccd2948fccad74bd96e0da5d6f01f0"
+      "bytes": 55039,
+      "sha256": "af0f237b5e7d5c54182286288696e03bbbedef83992b83bac85a41ed458d0cf9"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 97831,
-      "sha256": "9d8b08109b4891e6f9e4e9dbcfda64755ba2680013c1ad10199ea7fbf3172f4b"
+      "bytes": 97886,
+      "sha256": "ed77d76e38cf1c477c35e07ea35a08d87278add78ce7d2d9d06503cbc8fc6c3a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32119,
-      "sha256": "758007c37699808c3c57ed8e9b25aa40f1adc1ea20457e01826603dcbde13315"
+      "bytes": 32224,
+      "sha256": "c39fefe85097f52b6b665e1fb8403191333cdaabf4027d74adcf3098f4e16bed"
     },
     "dist/composition-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -76,8 +76,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 394779,
-      "sha256": "7d6fef4008be9f8c1a772abf18a90e789d851c12b4ff291b6434ceb05aff17e6"
+      "bytes": 394993,
+      "sha256": "5c4fcf820d53727eb72491c0d1104efc67ea67c83abb8e29eacc956835417558"
     },
     "dist/docs/representation-actions.md": {
       "normalization": "utf8-lf-v1",
@@ -91,8 +91,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7663,
-      "sha256": "66b16feab588b70a85b796016c2d2275c84a588d5603b98474d99843b031db2d"
+      "bytes": 7746,
+      "sha256": "64ddff52f39abefa5a39a80c6d98020a10dc65cd14eed467677d646a62451f81"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -126,13 +126,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3135,
-      "sha256": "e61aec3fee47581d02800182809b7768011ecffa94112eaf2f3c40ff79ab65db"
+      "bytes": 3142,
+      "sha256": "d91e5a18eb5a3bedc6bbbccbd7cfba84a4ac1a141f0dae25080792ee590bfd33"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11767,
-      "sha256": "3221e9516cd203e7c3c2b4ffac37296df03ad05cba7bd25dd9967ecd78c1ad76"
+      "bytes": 11774,
+      "sha256": "875e51355549345297ac5658466546642a8d931c35b948959f77a8c3b8a39462"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -514,6 +514,21 @@
       "bytes": 20614,
       "sha256": "01f2fcaf0a677a90e9a60880e73c0f8febaeecfffaa5f74a63802efa80091eec"
     },
+    "locales/en-scattering-replay-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 12639,
+      "sha256": "79b47859ac3e39529e03ede0a0e6b163c31e573196ae619ddd528e470cf0f608"
+    },
+    "locales/en-scattering-replay-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3458,
+      "sha256": "554c64fa3369762ee5cacf8fd23e5a69c661bba0c8710286062ed1acfdee9c08"
+    },
+    "locales/en-scattering-replay-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 16813,
+      "sha256": "85c2cbafc87519e94d55e6733ac8501fcec1a34ddf457cff2b35591810fdaba6"
+    },
     "locales/en-science.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 74756,
@@ -651,8 +666,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19822,
-      "sha256": "cd0e38615af5e226f06ecb4d6bea7f6d9d3d3462f6031acf763cee901d21e5bc"
+      "bytes": 20518,
+      "sha256": "c06a495126a390a98b151f657764b5a6a11244423708d256a47aa5320588652b"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -681,13 +696,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3588,
-      "sha256": "eb39b947adc4d8ef687653bd570c7314b2f294fcee351f3e59d1fb755e64794e"
+      "bytes": 3705,
+      "sha256": "d9b02a1197e50e33b327090fa7df1aecf1ea1cb6dae74037eacefc7d7c31807d"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5452,
-      "sha256": "8a2f8a46074ee396f4fa962c483d52c9862c3521630fd1ea5446a3123fef39dd"
+      "bytes": 5485,
+      "sha256": "d783cc8681496cc1bdfa269f0a82214947063ac35f915b5336a2f58aba8a31ea"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -702,7 +717,7 @@
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 869771,
-      "sha256": "259666e267626704789b98a6e8fac63d9e00ab37d06071a6db983b9858ff395c"
+      "sha256": "7d39ea24893048e7d78c04395d5ff827a8be2ee25776eb4fbf1f50568f745325"
     },
     "scripts/fixtures/composition.json": {
       "normalization": "utf8-lf-v1",
@@ -712,7 +727,7 @@
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1736827,
-      "sha256": "debf44c679e7cc7859c55c59d44ee8f0a22f9bccd9aa5adcd1c75ef1fe51736d"
+      "sha256": "6057d377c0d907a3a0346bec7923dca4cf5716d2b08c8728bee0c500d1256f72"
     },
     "scripts/fixtures/representation-actions.json": {
       "normalization": "utf8-lf-v1",
@@ -751,8 +766,8 @@
     },
     "scripts/search-catalog-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8343,
-      "sha256": "5c98d9eada19ef655e440feb1831874b2508ce31a4712853ebe7c625ac7cdcab"
+      "bytes": 8513,
+      "sha256": "d4bc4dbb48f77278ead4bab39d5a2ec8b706be3191046910810ea74c81b9d73c"
     },
     "scripts/test-classroom-disposal.mjs": {
       "normalization": "utf8-lf-v1",
@@ -766,8 +781,8 @@
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23366,
-      "sha256": "19fdeaf6c536b38a5ffac49fe3f937c73b74e5077670fa6a0e44e6da03b7d712"
+      "bytes": 23373,
+      "sha256": "ce8e2adb764a8b5f38bb6032fd5efcd2d2a491e3f0c8a0e76f0c7f52d2298689"
     },
     "scripts/test-pointgroup-ui.mjs": {
       "normalization": "utf8-lf-v1",
@@ -806,8 +821,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4200,
-      "sha256": "a15d4ae2480609bed50e2b71f4e75969afb256cab7f3137022640ceba29a8cdb"
+      "bytes": 4242,
+      "sha256": "edeb7154bbf1e8a538b4b4a29db340e262a52d1a555b0df625e73eb0e51969fd"
     }
   }
 }

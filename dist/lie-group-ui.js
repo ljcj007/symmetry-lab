@@ -1,5 +1,5 @@
 import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-rep1';
-import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
+import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-scattering1';
 // Python supplies every Lie-group calculation. SVG below only projects returned
 // Bloch coordinates and Cartan weights; degrees are converted at the API boundary.
 import {physicsNames,physicsDefaults,physicsControls,readPhysicsPayload,physicsPresets,physicsInputIds,physicsOutput,bindPhysicsOutput,bindPhysicsControls} from './lie-physics-ui.js?v=20261115-precision1';

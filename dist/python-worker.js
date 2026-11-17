@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261117-rep1';
+const BUILD = '20261117-scattering1';
 const plans = {
   group_theorems: ['group_theorems'],
   symmetry_mini_demos: ['symmetry_mini_demos'],

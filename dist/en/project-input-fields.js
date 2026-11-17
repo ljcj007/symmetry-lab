@@ -178,6 +178,7 @@ export const PROJECT_INPUT_FIELDS=freeze({
   "kz"
  ],
  "dynamic_scattering_lab": [
+  "includeAmplitudeReplay",
   "lattice",
   "massA",
   "massB",
@@ -513,6 +514,10 @@ export const PROJECT_INPUT_ENUMS=freeze({
   ]
  },
  "dynamic_scattering_lab": {
+  "includeAmplitudeReplay": [
+   false,
+   true
+  ],
   "channel": [
    "both",
    "stokes",
