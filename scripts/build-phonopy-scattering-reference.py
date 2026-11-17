@@ -32,21 +32,14 @@ def zno_input():
 
 
 def synthetic_input():
-    """A full orthonormal nine-dimensional regression, never a material dataset."""
-    from phonopy_scattering import _zs
-    n=9
-    columns=np.array([[np.exp(2j*math.pi*i*j/n)/math.sqrt(n) for j in range(n)] for i in range(n)])
-    other=columns@np.diag(np.exp(1j*np.arange(n)*.31))
-    qs=[[.2,.1,.15],[-.2,-.1,-.15]]
-    points=[]
-    for qi,vectors in enumerate((columns,other)):
-        points.append({'q-position':qs[qi],'band':[{'frequency':float(6+3*i+qi*.25),
-            'eigenvector':[_zs(vectors[3*j:3*j+3,i]) for j in range(3)]} for i in range(n)]})
-    data={'synthetic':True,'description':'Synthetic complex three-atom full-basis regression; supplied plus/minus q energies differ; not real material or time-reversal inference',
-        'frequency_unit':'meV','physical_unit':{'length':'angstrom','atomic_mass':'AMU'},'natom':3,'nqpoint':2,
-        'lattice':[[3.,0.,0.],[1.,2.7,0.],[.2,.4,4.]],
-        'points':[{'symbol':symbol,'mass':mass,'coordinates':position} for symbol,mass,position in
-            [('C',12.,[0.,0.,0.]),('Mg',24.,[.31,.17,.43]),('Ca',40.,[.63,.52,.21])]],'phonon':points}
+    """Read a fixed synthetic source rather than regenerate its libm bits.
+
+    These exact input values were already published in the original reference
+    case. Freezing the input preserves its canonical-JSON identity on every
+    platform; numerical tolerance remains a separate result comparison.
+    """
+    data=json.loads((ROOT/'scripts/fixtures/phonopy-scattering-synthetic.json').read_text(encoding='utf8'))
+    assert data.get('synthetic') is True
     p=base_parameters()
     p.update(data=data,filename='synthetic-three-atom-complex.json',frequency_unit='meV',qIndex=0,G=[1,0,0],channel='both',negativeQIndex=1,
              coherentLengths=[1.2,-2.1,3.3],scatteringLengthSource='Explicit synthetic signed relative neutron lengths in fm for a mathematical regression; not material constants')

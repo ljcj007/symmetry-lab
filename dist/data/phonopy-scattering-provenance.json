@@ -755,7 +755,7 @@
     "package.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 21203,
-      "sha256": "614cfc4909d1f28f2322bbbe3e7f4587090bdc3749ae014f1324cbc489541726"
+      "sha256": "68d17a21c793b47a9ae4801a8adb5ea5bd657964093d070f60bbcaa8159e47a4"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -769,8 +769,8 @@
     },
     "scripts/build-phonopy-scattering-reference.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8116,
-      "sha256": "92952f794817e92434414d0900ea6d1ff3db4467a2db1f92ee64f5b186875166"
+      "bytes": 7461,
+      "sha256": "ef5d78be4f85fffe675d7fb5b3a136a33bec8997d535a8c8a38bc66e4aec98c8"
     },
     "scripts/check-phonopy-scattering-official.py": {
       "normalization": "utf8-lf-v1",
@@ -801,6 +801,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 44325,
       "sha256": "79b0a6881ee91bc26ceba5423611a3e4d1ff28d36d27dd8af7e29191704fa27f"
+    },
+    "scripts/fixtures/phonopy-scattering-synthetic.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 20979,
+      "sha256": "0ffc787c1677b12cad2ca624f16fe2a97322937120bf4ecb13a16a850681644a"
     },
     "scripts/fixtures/phonopy-scattering.json": {
       "normalization": "utf8-lf-v1",
@@ -849,8 +854,8 @@
     },
     "scripts/test-python-phonopy-scattering.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16534,
-      "sha256": "4a65ed369fa985522be9d3804a91445456d0e2d1f0451602cd37e609f57377b3"
+      "bytes": 18027,
+      "sha256": "7d5d41b667451b1959dc6694539915bb8148b440a048ddde540b1dedc8a3dc54"
     },
     "scripts/test-python-zno-phonopy-example.py": {
       "normalization": "utf8-lf-v1",

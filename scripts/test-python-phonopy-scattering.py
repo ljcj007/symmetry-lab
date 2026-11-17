@@ -5,8 +5,10 @@ import cmath
 import importlib.util
 import json
 import math
+import struct
 import sys
 import unittest
+from unittest.mock import patch
 import numpy as np
 import yaml
 
@@ -246,6 +248,30 @@ class PhonopyScattering(unittest.TestCase):
             channel=next(c for c in self.results[row['case']]['channels'] if c['id']==row['channel'])
             group=next(g for g in channel['groups'] if g['branches']==row['branches'])
             self.close(group['amplitudeStrength'],row['officialFreshSubspaceStrength'],relative=2e-8)
+
+    def test_12_synthetic_source_identity_does_not_depend_on_platform_exponentials(self):
+        # Constructing an input must read the same fixed source, rather than
+        # manufacture slightly different raw vectors before hashing them.
+        with patch.object(ref.np,'exp',side_effect=AssertionError('Input source must not depend on platform exp')):
+            payload=ref.synthetic_input()
+        fixture=json.loads((ROOT/'scripts/fixtures/phonopy-scattering.json').read_text(encoding='utf8'))
+        archived=next(c for c in fixture['cases'] if c['id']=='synthetic-three-atom-both')
+        def exact_input(a,b):
+            self.assertIs(type(a),type(b))
+            if isinstance(a,dict):
+                self.assertEqual(list(a),list(b))
+                for key in a:exact_input(a[key],b[key])
+            elif isinstance(a,list):
+                self.assertEqual(len(a),len(b))
+                for x,y in zip(a,b):exact_input(x,y)
+            elif type(a) is float:self.assertEqual(struct.pack('!d',a),struct.pack('!d',b))
+            else:self.assertEqual(a,b)
+        exact_input(payload,archived['input'])
+        source=(ROOT/'scripts/fixtures/phonopy-scattering-synthetic.json').read_bytes()
+        self.assertNotIn(b'\r',source)
+        self.assertIs(payload['data']['synthetic'],True)
+        actual=run('phonopy_scattering',payload)
+        self.assertEqual(actual['sourceIdentity'],archived['result']['sourceIdentity'])
 
 
 if __name__=='__main__':unittest.main(verbosity=2)
