@@ -1,5 +1,8 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+**源绑定电子结构认证：** [一键工作台](https://ljcj007.github.io/symmetry-lab/source-bound/) · [共享接口与代码](source-bound-workbench/README.md) · [方法与文献对照](source-bound-workbench/docs/PRIOR_ART_COMPARISON.md)。原中英文网站入口继续保留。
+
+
 [English website](https://ljcj007.github.io/symmetry-lab/en/) · [Chinese website](https://ljcj007.github.io/symmetry-lab/) · [English edition and reproducible build](dist/docs/english-edition.md)
 
 The English edition covers the existing classrooms, interactive laboratories, calculation tools, materials atlas, guided exercises, projects, formula dictionary, and documentation. Both editions share the Python computation cores and crystallographic databases. Use the header language switch to retain the current page and browser learning progress. Build offline from the committed translation catalogs with `npm run build:english`; validate with `npm run test:english`.

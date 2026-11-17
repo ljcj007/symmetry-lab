@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "engine": "independent browser BigInt versus Python Fraction",
+  "comparisons": [
+    {
+      "name": "positive-gap.json",
+      "status": "CERTIFIED"
+    },
+    {
+      "name": "periodic-gap.json",
+      "status": "CERTIFIED"
+    },
+    {
+      "name": "wrong-window.json",
+      "status": "UNRESOLVED"
+    },
+    {
+      "name": "overlap.json",
+      "status": "UNRESOLVED"
+    },
+    {
+      "name": "wrong-symmetry.json",
+      "status": "REJECTED"
+    },
+    {
+      "name": "malformed-source.json",
+      "status": "REJECTED"
+    },
+    {
+      "name": "three-dimensional closed cube",
+      "status": "CERTIFIED"
+    },
+    {
+      "name": "nonorthonormal sufficient trial frames",
+      "status": "CERTIFIED"
+    },
+    {
+      "name": "strict zero pivot is unresolved",
+      "status": "UNRESOLVED"
+    },
+    {
+      "name": "nonconstant affine period rejected",
+      "status": "REJECTED"
+    },
+    {
+      "name": "caller cannot inject stored status",
+      "status": "REJECTED"
+    },
+    {
+      "name": "off-diagonal coupling retained",
+      "status": "CERTIFIED"
+    }
+  ],
+  "additional_parser_and_rational_controls": 9
+}

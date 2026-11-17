@@ -1,0 +1,1238 @@
+{
+  "positive-gap.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "CERTIFIED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "PASS",
+        "profile": "One real orthogonal action commuting coefficientwise; exact isometric lower-frame intertwiner. No group/topological inference.",
+        "lower_embedding_orthonormal": true,
+        "ambient_orthogonal": true,
+        "source_covariance": true,
+        "embedding_intertwiner": true,
+        "restricted_orthogonal": true
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "3c9d86bed3a636de7717755288d98bc1ef9bb18a1cf2f10fddcd83ca6a3cdcd2",
+    "source": {
+      "id": "controlled-affine-gap",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "f69bc6db0f79107b531850383b70fcb5dd6d9e8d2fc167b6e2277c5f5dba4501"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "Complete ordered counts and all requested optional identities passed exact reception.",
+    "conclusion": {
+      "rank": 2,
+      "dimension": 4,
+      "common_interval": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      },
+      "gap_lower_bound": "1",
+      "inequality": "lambda_r(t) < lower < upper < lambda_(r+1)(t) on the full unit cube; indirect separation >= gap_lower_bound.",
+      "domain": {
+        "kind": "closed-unit-cube",
+        "dimension": 1
+      },
+      "symmetry_action_bound": true,
+      "identity_periodic_axes": [],
+      "topology_certified": false
+    }
+  },
+  "periodic-gap.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "CERTIFIED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "PASS",
+        "profile": "One real orthogonal action commuting coefficientwise; exact isometric lower-frame intertwiner. No group/topological inference.",
+        "lower_embedding_orthonormal": true,
+        "ambient_orthogonal": true,
+        "source_covariance": true,
+        "embedding_intertwiner": true,
+        "restricted_orthogonal": true
+      },
+      "periodicity": {
+        "status": "PASS",
+        "axes": [
+          0
+        ],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "6deb0071195f6a185023f630fb0b0dbb1813b8cfef8107e432c4df11b260e55c",
+    "source": {
+      "id": "constant-periodic-source",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "f8d7db87af10917a373de5b0213cb6e98d8bdd0c5028e686f512c08fe95638ef"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "Complete ordered counts and all requested optional identities passed exact reception.",
+    "conclusion": {
+      "rank": 2,
+      "dimension": 4,
+      "common_interval": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      },
+      "gap_lower_bound": "1",
+      "inequality": "lambda_r(t) < lower < upper < lambda_(r+1)(t) on the full unit cube; indirect separation >= gap_lower_bound.",
+      "domain": {
+        "kind": "closed-unit-cube",
+        "dimension": 1
+      },
+      "symmetry_action_bound": true,
+      "identity_periodic_axes": [
+        0
+      ],
+      "topology_certified": false
+    }
+  },
+  "wrong-window.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "UNRESOLVED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "FAIL",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "-3/2"
+              ]
+            },
+            "positive_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "-5/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "-5/4"
+              ]
+            },
+            "positive_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "-9/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "NOT_REQUESTED",
+        "claim": "No symmetry representation is assigned."
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [
+      "SIGNED_FORMS_UNRESOLVED"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "d9e2c0e40eaba9bc292556ee803c68f0a7e1c37ebb865355aec4ab973824e7d1",
+    "source": {
+      "id": "wrong-energy-window",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "56330cfc101fbe625050729d2ddcc1bfbfce4eaaee4fca9973eacb7f286d4fee"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "The submitted sufficient signed-form witness did not certify the requested common interval; no physical gap closure follows."
+  },
+  "overlap.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "UNRESOLVED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "FAIL",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "-3/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "7/2",
+                "9/2"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "NOT_REQUESTED",
+        "claim": "No symmetry representation is assigned."
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [
+      "SIGNED_FORMS_UNRESOLVED"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "3343418fbbce96d837ad1b83c1d75151263eaed60c7e91c0d0fc2cbd45590bf3",
+    "source": {
+      "id": "direct-gaps-but-energy-overlap",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "0ef5223319b91918ae29c2b1333ce614d43fe8b4906660cb7134b99c04c08582"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "The submitted sufficient signed-form witness did not certify the requested common interval; no physical gap closure follows."
+  },
+  "wrong-symmetry.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "REJECTED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "FAIL",
+        "profile": "One real orthogonal action commuting coefficientwise; exact isometric lower-frame intertwiner. No group/topological inference.",
+        "lower_embedding_orthonormal": true,
+        "ambient_orthogonal": true,
+        "source_covariance": true,
+        "embedding_intertwiner": false,
+        "restricted_orthogonal": true
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [
+      "SYMMETRY_BINDING_INVALID"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "866f7786a4046c48ba9041883991d972421233c596bb2454c9a8f1c27270381f",
+    "source": {
+      "id": "incorrect-symmetry-binding",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "a7d08c71c9e164e1a65cc0de84b98a428a568cb2521526d5c0703aa91c1aef46"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "A submitted symmetry or periodic identity is violated."
+  },
+  "malformed-source.json": {
+    "schema": "source-bound-receipt-v1",
+    "status": "REJECTED",
+    "checks": {},
+    "reason_codes": [
+      "DIMENSION_MISMATCH"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "message": "source.H0: expected 4 explicit rows"
+  },
+  "three-dimensional closed cube": {
+    "schema": "source-bound-receipt-v1",
+    "status": "CERTIFIED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 4
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 8,
+        "vertices": [
+          {
+            "vertex": [
+              0,
+              0,
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              0,
+              0,
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "11/8",
+                "3/8"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/8",
+                "11/8"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              0,
+              1,
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "11/8",
+                "3/8"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/8",
+                "11/8"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              0,
+              1,
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1,
+              0,
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "11/8",
+                "3/8"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/8",
+                "11/8"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1,
+              0,
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1,
+              1,
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1,
+              1,
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "9/8",
+                "1/8"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/8",
+                "9/8"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "PASS",
+        "profile": "One real orthogonal action commuting coefficientwise; exact isometric lower-frame intertwiner. No group/topological inference.",
+        "lower_embedding_orthonormal": true,
+        "ambient_orthogonal": true,
+        "source_covariance": true,
+        "embedding_intertwiner": true,
+        "restricted_orthogonal": true
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "6d0119ba9518784a64da371acb12666a1f113144bd11b24fc19cca1e279aac7c",
+    "source": {
+      "id": "controlled-affine-gap",
+      "dimension": 4,
+      "parameters": [
+        "x",
+        "y",
+        "z"
+      ],
+      "canonical_sha256": "7b8507faceaee523695334a4a5ecc9d5d13994279f13ace8594a200090ba12bf"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "Complete ordered counts and all requested optional identities passed exact reception.",
+    "conclusion": {
+      "rank": 2,
+      "dimension": 4,
+      "common_interval": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      },
+      "gap_lower_bound": "1",
+      "inequality": "lambda_r(t) < lower < upper < lambda_(r+1)(t) on the full unit cube; indirect separation >= gap_lower_bound.",
+      "domain": {
+        "kind": "closed-unit-cube",
+        "dimension": 3
+      },
+      "symmetry_action_bound": true,
+      "identity_periodic_axes": [],
+      "topology_certified": false
+    }
+  },
+  "nonorthonormal sufficient trial frames": {
+    "schema": "source-bound-receipt-v1",
+    "status": "CERTIFIED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "4",
+          "4",
+          "9",
+          "9"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "6",
+                "2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "9/2",
+                "27/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5",
+                "1"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "9/4",
+                "45/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "NOT_REQUESTED",
+        "claim": "No symmetry representation is assigned."
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "894976840ddcc03fae4fa12915444d6ca7fc1c04e5572340602b8d978598d564",
+    "source": {
+      "id": "controlled-affine-gap",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "f69bc6db0f79107b531850383b70fcb5dd6d9e8d2fc167b6e2277c5f5dba4501"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "Complete ordered counts and all requested optional identities passed exact reception.",
+    "conclusion": {
+      "rank": 2,
+      "dimension": 4,
+      "common_interval": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      },
+      "gap_lower_bound": "1",
+      "inequality": "lambda_r(t) < lower < upper < lambda_(r+1)(t) on the full unit cube; indirect separation >= gap_lower_bound.",
+      "domain": {
+        "kind": "closed-unit-cube",
+        "dimension": 1
+      },
+      "symmetry_action_bound": false,
+      "identity_periodic_axes": [],
+      "topology_certified": false
+    }
+  },
+  "strict zero pivot is unresolved": {
+    "schema": "source-bound-receipt-v1",
+    "status": "UNRESOLVED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "FAIL",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "3/2",
+                "0"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "FAIL",
+              "ldl_pivots": [
+                "5/4",
+                "-1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "NOT_REQUESTED",
+        "claim": "No symmetry representation is assigned."
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [
+      "SIGNED_FORMS_UNRESOLVED"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "33bba2f78713fa10f99afc4c6598f3044154df096165050fdd2598d00add9163",
+    "source": {
+      "id": "controlled-affine-gap",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "2db4c05bf8b0ed6a6b685f27f29da66314afbeb3a5b2bbc1f44a69696e803106"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "The submitted sufficient signed-form witness did not certify the requested common interval; no physical gap closure follows."
+  },
+  "nonconstant affine period rejected": {
+    "schema": "source-bound-receipt-v1",
+    "status": "REJECTED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 2
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 4,
+        "negative_directions": 2,
+        "positive_directions": 2,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1",
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 2,
+        "vertices": [
+          {
+            "vertex": [
+              0
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "3/2",
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2",
+                "3/2"
+              ]
+            }
+          },
+          {
+            "vertex": [
+              1
+            ],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "5/4",
+                "1/4"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/4",
+                "5/4"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "PASS",
+        "profile": "One real orthogonal action commuting coefficientwise; exact isometric lower-frame intertwiner. No group/topological inference.",
+        "lower_embedding_orthonormal": true,
+        "ambient_orthogonal": true,
+        "source_covariance": true,
+        "embedding_intertwiner": true,
+        "restricted_orthogonal": true
+      },
+      "periodicity": {
+        "status": "FAIL",
+        "axes": [
+          0
+        ],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [
+      "PERIODICITY_IDENTITY_FAILED"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "82badfe543ac923cca70d59af76fee97a39f05c253f336b40f26e9e0d55012b2",
+    "source": {
+      "id": "controlled-affine-gap",
+      "dimension": 4,
+      "parameters": [
+        "t1"
+      ],
+      "canonical_sha256": "f69bc6db0f79107b531850383b70fcb5dd6d9e8d2fc167b6e2277c5f5dba4501"
+    },
+    "request": {
+      "rank": 2,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "A submitted symmetry or periodic identity is violated."
+  },
+  "caller cannot inject stored status": {
+    "schema": "source-bound-receipt-v1",
+    "status": "REJECTED",
+    "checks": {},
+    "reason_codes": [
+      "UNSUPPORTED_FIELD"
+    ],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "message": "packet contains unsupported fields"
+  },
+  "off-diagonal coupling retained": {
+    "schema": "source-bound-receipt-v1",
+    "status": "CERTIFIED",
+    "checks": {
+      "source_dimensions_and_symmetry": {
+        "status": "PASS",
+        "coefficients_checked": 1
+      },
+      "complete_carrier": {
+        "status": "PASS",
+        "dimension": 2,
+        "negative_directions": 1,
+        "positive_directions": 1,
+        "omitted_directions": 0
+      },
+      "trial_full_rank": {
+        "status": "PASS",
+        "gram_pivots": [
+          "1",
+          "1"
+        ]
+      },
+      "spectral_counts": {
+        "status": "PASS",
+        "vertices_checked": 1,
+        "vertices": [
+          {
+            "vertex": [],
+            "negative_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2"
+              ]
+            },
+            "positive_form": {
+              "status": "PASS",
+              "ldl_pivots": [
+                "1/2"
+              ]
+            }
+          }
+        ],
+        "method": "Exact signed-form LDL at every vertex; affine convexity covers the full closed cube."
+      },
+      "symmetry": {
+        "status": "NOT_REQUESTED",
+        "claim": "No symmetry representation is assigned."
+      },
+      "periodicity": {
+        "status": "NOT_REQUESTED",
+        "axes": [],
+        "profile": "Identity periodic maps; each requested direction must have a zero affine coefficient. No nonconstant affine period is accepted."
+      }
+    },
+    "reason_codes": [],
+    "scope": "Exact rational sufficient certification for the submitted real symmetric affine finite family on the full unit cube. A source identifier is a label; the canonical SHA256 binds the submitted source descriptor. This adapter does not authenticate physical provenance, run DFT, certify topology, or recompute the archived QE/Fe/Bi matrix proofs.",
+    "input_sha256": "4abce679dcf44a42a9a61a07295a79baf543b9fcef3b9d879106f97d9cae527b",
+    "source": {
+      "id": "coupled-two-state-source",
+      "dimension": 2,
+      "parameters": [],
+      "canonical_sha256": "4cc8f659409ea98cf7a0dfbd73b8ecd83ed4ea102cddcbf47dbdb097a7063fc6"
+    },
+    "request": {
+      "rank": 1,
+      "cuts": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      }
+    },
+    "message": "Complete ordered counts and all requested optional identities passed exact reception.",
+    "conclusion": {
+      "rank": 1,
+      "dimension": 2,
+      "common_interval": {
+        "lower": "-1/2",
+        "upper": "1/2"
+      },
+      "gap_lower_bound": "1",
+      "inequality": "lambda_r(t) < lower < upper < lambda_(r+1)(t) on the full unit cube; indirect separation >= gap_lower_bound.",
+      "domain": {
+        "kind": "closed-unit-cube",
+        "dimension": 0
+      },
+      "symmetry_action_bound": false,
+      "identity_periodic_axes": [],
+      "topology_certified": false
+    }
+  }
+}

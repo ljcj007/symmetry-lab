@@ -1,0 +1,257 @@
+{
+  "schema": "source-bound-workbench.prior-art-verification.v1",
+  "date": "2026-11-17",
+  "workflow": [
+    "targeted primary-source search",
+    "citation verification"
+  ],
+  "status": "SEVEN_PRIMARY_WORKS_CHECKED_FOR_STATED_SCOPE",
+  "method": "The listed academic-search MCP namespace was unavailable. Used direct publisher, arXiv and author/institutional primary web pages. This is a bounded comparison, not an exhaustive priority review; metadata and technical-read scopes are stated per work.",
+  "copyright": "Original paraphrases and links only; no third-party paper or source-code bytes copied.",
+  "works": [
+    {
+      "id": "herbstNonscf",
+      "title": "A posteriori error estimation for the non-self-consistent Kohn–Sham equations",
+      "authors": [
+        "Michael F. Herbst",
+        "Antoine Levitt",
+        "Eric Cancès"
+      ],
+      "year": 2020,
+      "venue": "Faraday Discussions",
+      "volume": "224",
+      "pages": "227–246",
+      "doi": "10.1039/D0FD00048E",
+      "primary_urls": [
+        "https://pubs.rsc.org/en/content/articlelanding/2020/fd/d0fd00048e",
+        "https://arxiv.org/abs/2004.13549",
+        "https://michael-herbst.com/publications/2020.04.28_error_nonscf_kohn_sham.pdf"
+      ],
+      "verified_scope": "Publisher abstract and author preprint introduction: basis, iterative and floating-point errors for non-self-consistent pseudopotential plane-wave equations; silicon band-error-bar demonstration.",
+      "do_not_claim": "This manuscript is not the first rigorous electronic-structure eigenvalue/error-bound method.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "practicalPWBounds",
+      "title": "Practical Error Bounds for Properties in Plane-Wave Electronic Structure Calculations",
+      "authors": [
+        "Eric Cancès",
+        "Geneviève Dusson",
+        "Gaspard Kemlin",
+        "Antoine Levitt"
+      ],
+      "year": 2022,
+      "venue": "SIAM Journal on Scientific Computing",
+      "volume": "44",
+      "issue": "5",
+      "pages": "B1312–B1340",
+      "doi": "10.1137/21M1456224",
+      "published_online": "2022-10-17",
+      "primary_urls": [
+        "https://epubs.siam.org/doi/10.1137/21M1456224",
+        "https://arxiv.org/abs/2111.01470",
+        "https://arxiv.org/html/2111.01470v2"
+      ],
+      "verified_scope": "Publisher metadata, abstract and preprint Schur/residual discussion. Covers computable estimates for density matrices, energy and forces; distinguishes rigorous and asymptotic/approximated estimators.",
+      "do_not_claim": "Schur complement error corrections are new here, or every practical estimator in the prior paper is guaranteed.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "sirkovicSubspace",
+      "title": "Subspace Acceleration for Large-Scale Parameter-Dependent Hermitian Eigenproblems",
+      "authors": [
+        "Petar Sirković",
+        "Daniel Kressner"
+      ],
+      "year": 2016,
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "volume": "37",
+      "issue": "2",
+      "pages": "695–718",
+      "doi": "10.1137/15M1017181",
+      "published_online": "2016-05-25",
+      "primary_urls": [
+        "https://epubs.siam.org/doi/10.1137/15M1017181",
+        "https://arxiv.org/abs/1504.06096"
+      ],
+      "verified_scope": "Publisher metadata and author preprint abstract. Uses sampled eigenvectors and subspaces to construct rigorous bounds for parameter-dependent smallest eigenvalues.",
+      "do_not_claim": "Subspace-accelerated parametric spectral certification is new here.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "certifiedMOR",
+      "title": "Certified model order reduction for parametric Hermitian eigenproblems",
+      "authors": [
+        "Mattia Manucci",
+        "Benjamin Stamm",
+        "Zhuoyao Zeng"
+      ],
+      "year": 2026,
+      "venue": "Mathematics of Computation",
+      "doi": "10.1090/mcom/4204",
+      "published_online": "2026-05-29",
+      "primary_urls": [
+        "https://doi.org/10.1090/mcom/4204",
+        "https://arxiv.org/abs/2504.02672",
+        "https://arxiv.org/html/2504.02672v4"
+      ],
+      "verified_scope": "AMS publisher-indexed page confirms electronic publication date and DOI. arXiv v4 full text introduces fixed-N analytic Hermitian matrix families, certified eigenspace approximation and sufficient multiplicity recovery conditions.",
+      "access_note": "Direct AMS DOI opening redirected to an inaccessible page; publisher text returned by web search and author-hosted arXiv full text were checked. No volume/page numbers inferred.",
+      "do_not_claim": "Correct eigenspace dimension/multiplicity certification is unique to the present work.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "hoangPhotonic",
+      "title": "A computer-assisted proof for photonic band gaps",
+      "authors": [
+        "Vu Hoang",
+        "Michael Plum",
+        "Christian Wieners"
+      ],
+      "year": 2008,
+      "venue": "Universität Karlsruhe institutional preprint",
+      "report_number": "08/05",
+      "date": "2008-03-13",
+      "primary_urls": [
+        "https://publikationen.bibliothek.kit.edu/1000007941/246229"
+      ],
+      "verified_scope": "Institutional full-text PDF, abstract and introduction. Two-dimensional polarized photonic problem, variational eigenvalue enclosures on a finite k grid and perturbation control between grid points to prove whole-zone gaps.",
+      "access_note": "The supplied journal DOI 10.1007/s00033-008-8021-2 could not be opened. The public comparison cites the verified institutional version rather than asserting an unchecked journal record.",
+      "do_not_claim": "Whole-Brillouin-zone strict band-gap proof is new here.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "rumpDecompositions",
+      "title": "Verified Error Bounds for Matrix Decompositions",
+      "authors": [
+        "Siegfried M. Rump",
+        "Takeshi Ogita"
+      ],
+      "year": 2024,
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "volume": "45",
+      "issue": "4",
+      "pages": "2155–2183",
+      "doi": "10.1137/24M165096X",
+      "primary_urls": [
+        "https://epubs.siam.org/doi/10.1137/24M165096X",
+        "https://www.tuhh.de/ti3/publications.shtml?author=rump"
+      ],
+      "verified_scope": "Publisher abstract and author publication list. Verification of existence and entrywise error bounds for common matrix decompositions, using tools including error-free-transformation dot products.",
+      "do_not_claim": "Verified factorizations, LDL/Cholesky or accurate products themselves are original to this work.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "affineArithmetic",
+      "title": "Affine Arithmetic: Concepts and Applications",
+      "authors": [
+        "Luiz Henrique de Figueiredo",
+        "Jorge Stolfi"
+      ],
+      "year": 2004,
+      "venue": "Numerical Algorithms",
+      "volume": "37",
+      "pages": "147–158",
+      "doi": "10.1023/B:NUMA.0000049462.70970.b6",
+      "primary_urls": [
+        "https://doi.org/10.1023/B:NUMA.0000049462.70970.b6",
+        "https://lhf.impa.br/publications.html"
+      ],
+      "verified_scope": "Publisher abstract and author publication list. Affine arithmetic retains first-order correlations to address standard interval dependency.",
+      "do_not_claim": "Tracking shared input dependence is new here; the present carbon test evaluates a specific signed-channel bordered-form factor construction.",
+      "checked_date": "2026-11-17",
+      "source_class": "primary",
+      "verbatim_quote_words": 0
+    }
+  ],
+  "manuscript_evidence": [
+    {
+      "manuscript_section": "sections/native_si_results.tex",
+      "bytes": 5142,
+      "sha256": "15958556120dc207dc5ed977df01a9b899062a0a654f1b42b1a1b6ecb073f1d8"
+    },
+    {
+      "manuscript_section": "sections/native_si_methods.tex",
+      "bytes": 5840,
+      "sha256": "d3ddd70806e5ca7d37fd5aa06607933e0f3ff0f75df1fb3c61d39cacbc908eb1"
+    },
+    {
+      "manuscript_section": "sections/signed_carbon_results.tex",
+      "bytes": 2924,
+      "sha256": "3ec24b54ef8fdc15c6fc166640ce3a5766d17e579fed1fb697486c548805cee3"
+    },
+    {
+      "manuscript_section": "sections/signed_carbon_methods.tex",
+      "bytes": 2364,
+      "sha256": "3ed4811f783108a32c8ebae6bb7ae1a96ea7865beefe3a605380a3ac93c4052e"
+    },
+    {
+      "manuscript_section": "sections/validation_results.tex",
+      "bytes": 4007,
+      "sha256": "1231a0094559c0a50fbc3e1211050294892658e542db4fb0e19a6c8760b9d2ef"
+    }
+  ],
+  "matched_comparisons": {
+    "silicon_box_000": {
+      "held_fixed": [
+        "source",
+        "centre certificate",
+        "positive trial frame",
+        "original full-box remainder budgets"
+      ],
+      "norm_auxiliary_floor_Ry_approx": "2.119",
+      "quadratic_form_floor_Ry_approx": "2.759",
+      "norm_Schur_correction_Ry_approx": "6.935e-3",
+      "quadratic_form_Schur_correction_Ry_approx": "4.971e-3",
+      "norm_result": "one positive-side child unresolved",
+      "quadratic_form_result": "all64root coefficient matrices strictly positive",
+      "conclusion": "stronger sufficient proof at fixed inputs; no universal speed claim"
+    },
+    "carbon_octant_000": {
+      "held_fixed": [
+        "source",
+        "octant",
+        "complete union",
+        "common core",
+        "cuts",
+        "trial matrix objects"
+      ],
+      "componentwise_strict_lower_bound_display": [
+        "-7.934",
+        "-1.220"
+      ],
+      "correlated_factor_strict_lower_bound_display": [
+        "0.091",
+        "0.537"
+      ],
+      "display_rounding": "downward to3decimalplaces",
+      "componentwise_result": "UNRESOLVED",
+      "correlated_result": "CERTIFIED",
+      "units": "preconditioned form coordinates, not energy",
+      "conclusion": "preserving factor dependence resolves the paired tests for these fixed inputs; negative sufficient estimates do not prove a physical closure"
+    }
+  },
+  "open_questions": [
+    "Cross-implementation benchmarks against optimized nearest methods on identical tasks",
+    "Broader new-source adapter evaluation",
+    "Separate discretization, infinite-basis and self-consistency error bridges"
+  ],
+  "not_novelty_evidence": [
+    "number of certificates",
+    "archive byte counts",
+    "hash matches",
+    "cross-platform documentary reception"
+  ]
+}
