@@ -1,8 +1,8 @@
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261113-support1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261116-water1';
+import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-rep1';
 import {esc,num,table,notes,sources,defaultInputs,controlsHTML,readControls,resultHTML,bindResult} from './spectroscopy-views.js?v=20261115-precision1';
-import {renderResponseProjects} from './response-projects.js?v=20261116-water1';
+import {renderResponseProjects} from './response-projects.js?v=20261117-rep1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;

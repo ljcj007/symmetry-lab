@@ -30,7 +30,7 @@ export const learningEntries=([pg,sg,lie,materials,observables,dynamics,research
   ...dynamics.lessons.map(l=>({route:'classroom/structure-dynamics?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'相变 衍射 Phonopy '+l.id,kind:'课程'})),
   ...dynamics.cases.map(c=>({route:'atlas/dynamics?material='+encodeURIComponent(c.id),title:c.formula+' · 材料研究路线',summary:c.summary,keywords:c.id+' 相变 衍射 声子',kind:'材料'})),
   ...observables.lessons.map(l=>({route:'classroom/observables?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'物性 声子 光谱 张量 '+l.id,kind:'课程'})),
-  ...pg.lessons.map(l=>({route:'classroom/foundations?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'点群 基础 '+l.id,kind:'课程'})),
+  ...pg.lessons.map(l=>({route:'classroom/foundations?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'点群 基础 '+l.id+(['representations','character-reduction'].includes(l.id)?' 表示乘法 同态 共同换基 同时对角化 非忠实 representation homomorphism common basis diagonalization':''),kind:'课程'})),
   ...sg.lessons.map(l=>({route:'classroom/'+(['double','magnetic','color','spin'].includes(l.track)?'spin':'crystal')+'?lesson='+encodeURIComponent(l.id)+'&track='+encodeURIComponent(l.track),title:l.title,summary:l.summary,keywords:l.track+' '+l.id,kind:'课程'})),
   ...lie.lessons.map(l=>({route:'classroom/'+(/cg|racah|ninej|tensor|coupling/.test(l.lab||'')?'coupling':'continuous')+'?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'SU2 SU3 李群 '+l.id,kind:'课程'})),
   ...materials.materials.map(m=>({route:'atlas/materials?material='+encodeURIComponent(m.id),title:m.formula+' · '+m.name,summary:m.summary,keywords:m.category+' '+m.id,kind:'材料'}))

@@ -19,12 +19,12 @@ const definitions={
  thermal:{load:()=>import('./thermal-learning-bridge.js?v=20261113-thermal1'),html:'thermalBridgeHTML',bind:'bindThermalLearningBridge'},
  onsager:{load:()=>import('./onsager-learning-bridge.js?v=20261113-thermal1'),html:'onsagerBridgeHTML',bind:'bindOnsagerLearningBridge'},
  oscillator:{load:()=>import('./oscillator-spectra-bridge.js?v=20261114-evidence1'),html:'oscillatorSpectraBridgeHTML',bind:'bindOscillatorSpectraBridge'},
- geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261116-water1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
+ geometryActions:{load:()=>import('./geometry-actions-bridge.js?v=20261117-rep1'),html:'geometryActionsBridgeHTML',bind:'bindGeometryActionsBridge'},
  orderActions:{load:()=>import('./order-actions-bridge.js?v=20261115-actions1'),html:'orderActionsBridgeHTML',bind:'bindOrderActionsBridge'},
- layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261116-water1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'},
- fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261116-water1'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
+ layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261117-rep1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'},
+ fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261117-rep1'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
  symmetryOperators:{load:()=>import('./symmetry-operator-bridge.js?v=20261115-derivations1'),html:'symmetryOperatorBridgeHTML',bind:'bindSymmetryOperatorBridge'},
- chiralityActions:{load:()=>import('./chirality-actions-bridge.js?v=20261116-water1'),html:'chiralityActionsBridgeHTML',bind:'bindChiralityActionsBridge'}
+ chiralityActions:{load:()=>import('./chirality-actions-bridge.js?v=20261117-rep1'),html:'chiralityActionsBridgeHTML',bind:'bindChiralityActionsBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());
 export function learningBridgeHTML(family,lessonId){

@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {FHS_PLAQUETTE_REFERENCE} from './fhs-plaquette-reference.js?v=20261116-water1';
+import {FHS_PLAQUETTE_REFERENCE} from './fhs-plaquette-reference.js?v=20261117-rep1';
 
 export const FHS_PLAQUETTE_BRIDGE_HOOKS=Object.freeze({'geometry-topology':Object.freeze(['oriented-plaquette'])});
 const owners=new WeakMap(),clone=value=>JSON.parse(JSON.stringify(value));let svgSerial=0;

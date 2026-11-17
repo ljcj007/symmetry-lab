@@ -11,10 +11,15 @@ const tabs = [['learn','学习路线'],['atlas','32 点群图谱'],['lab','对�
 const state = {tab:'learn',lesson:0,group:null,search:'',system:'',operation:0,point:[.63,.37,.81],step:0,showOrbit:false,answers:{},quizLesson:'all',revision:0,timer:null};
 let dataPromise, loaded;
 const compositionState=new Map();
+const representationActionsState=new Map();
 let compositionModulePromise,previousCompositionCleanup=()=>{};
 const defaultCompositionLoader=()=>compositionModulePromise||(compositionModulePromise=import('./composition-ui.js?v=20261116-composition1').catch(error=>{compositionModulePromise=null;throw error;}));
+const defaultRepresentationActionsLoader=()=>import('./representation-actions-ui.js?v=20261117-rep1');
 export function compositionEntryHTML(lessonId,opened=false){
   return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>先旋转再照镜子，会一样吗？</summary><p>先把两种动作按顺序做出来，再读矩阵乘法、封闭性与撤销。</p><div data-composition-body></div></details>`:'';
+}
+export function representationActionsEntryHTML(lessonId,opened=false){
+  return ['representations','character-reduction'].includes(lessonId)?`<details class="rpa-entry" data-representation-actions-entry${opened?' open':''}><summary>这些矩阵真的构成表示吗？</summary><p>先跟踪基矢，再检验全部操作的乘法；比较统一换基与只改一项矩阵，解释为什么相同特征标还不够。</p><div data-representation-actions-body></div></details>`:'';
 }
 try { const saved=JSON.parse(localStorage.getItem(storageKey)||'{}'); if(saved&&typeof saved==='object'&&!Array.isArray(saved))state.answers=saved; } catch { /* Private browsing can disable storage. */ }
 const persist = () => { try { localStorage.setItem(storageKey,JSON.stringify(state.answers)); } catch { /* Progress remains in memory. */ } };
@@ -67,7 +72,7 @@ export function getPointgroupResult() {
   return {kind:'point-group-teaching',pointGroup:g,experiment:{coordinateConvention:'orthonormal Cartesian column vectors; r′ = R r',operation:op,initialPoint:state.point.slice(),applications:state.step,result:transformed(op,state.point,state.step),fullGroupOrbit:orbit(g,state.point)},source:loaded.lessons.source};
 }
 
-export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},run,cancelRun,loadComposition=defaultCompositionLoader}) {
+export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},run,cancelRun,loadComposition=defaultCompositionLoader,loadRepresentationActions=defaultRepresentationActionsLoader}) {
   previousCompositionCleanup();
   stop();
   const revision=++state.revision;
@@ -75,12 +80,16 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const root=container.firstElementChild;
   let disposed=false,retryCleanup=null;
   const current=()=>!disposed&&revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
-  let disposeBridges=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,detachObserver;
+  let disposeBridges=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,disposeRepresentation=()=>{},representationTicket=0,representationDetail=null,representationLesson=null,representationOpening=null,representationBound=false,detachObserver;
   const clearComposition=()=>{compositionTicket++;disposeComposition();disposeComposition=()=>{};};
-  const cleanupCompositionView=()=>{clearComposition();detachObserver?.disconnect();};
+  const clearRepresentation=()=>{
+    if(representationDetail&&representationLesson)representationActionsState.set('host:'+representationLesson,{open:typeof representationDetail.open==='boolean'?representationDetail.open:representationDetail.getAttribute('open')!==null});
+    representationTicket++;representationOpening=null;representationBound=false;disposeRepresentation();disposeRepresentation=()=>{};representationDetail=null;representationLesson=null;
+  };
+  const cleanupCompositionView=()=>{clearComposition();clearRepresentation();detachObserver?.disconnect();};
   previousCompositionCleanup=cleanupCompositionView;
-  if(typeof MutationObserver==='function'){detachObserver=new MutationObserver(()=>{if(!current())cleanupCompositionView();});detachObserver.observe(container,{childList:true});}
-  const clearLearningSupport=()=>{clearComposition();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
+  if(typeof MutationObserver==='function'){detachObserver=new MutationObserver(()=>{if(!current())cleanupCompositionView();});detachObserver.observe(container.ownerDocument?.documentElement||container,{childList:true,subtree:true});}
+  const clearLearningSupport=()=>{clearComposition();clearRepresentation();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
   function disposeView(){
     if(disposed)return;disposed=true;
     const child=retryCleanup;retryCleanup=null;if(typeof child==='function')child();
@@ -92,7 +101,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   try { ({lessons,atlas}=await load()); } catch(error) {
     if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=async()=>{
       if(!current())return;
-      const child=await renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation,run,cancelRun,loadComposition});
+      const child=await renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation,run,cancelRun,loadComposition,loadRepresentationActions});
       if(typeof child!=='function')return;
       if(disposed)child();else{if(typeof retryCleanup==='function')retryCleanup();retryCleanup=child;}
     };}
@@ -107,11 +116,11 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const sourceDOI=String(source.doi||'').replace(/^https?:\/\/doi\.org\//,'');
   const sourceLink=/^10\.\d{4,9}\/[\w./();:+-]+$/i.test(sourceDOI)?` <a href="https://doi.org/${esc(sourceDOI)}" target="_blank" rel="noreferrer">出版信息 ↗</a>`:'';
   const sourceHTML=()=>`<details class="pg-source"><summary>参考书与使用约定</summary><p>${esc(sourceText)}${sourceLink}</p><p>${esc(source.referenceNote||'教学内容以自己的语言组织，章节页码用于定位参考书；图谱和交互实验由本项目生成。')}</p><p>图谱讲解三维晶体的 32 个普通点群与单值表示，不含磁点群和自旋双群。点群操作没有平移部分；进入工作台时使用代表空间群的 Γ 点。</p></details>`;
-  function navigate(tab) { stop();state.tab=tab;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
+  function navigate(tab) { if(!current())return;stop();state.tab=tab;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
   function changeGroup(id) { const g=atlas.groups.find(g=>String(g.id)===String(id))||atlas.groups[0];state.group=g.id;state.operation=g.generators?.[0]??0;state.step=0;stop(); }
   function draw() {
+    if(!current())return;
     clearLearningSupport();
-    if(!current()){stop();return;}
     const progress=correctCount(allQuestions);
     root.innerHTML=`<section class="pg-intro"><div><span class="pg-kicker">从几何变换到物理选择定则</span><h2>看见对称性，读懂表示。</h2><p>${esc(lessons.subtitle||'以 32 个晶体点群为线索，连接群论、特征标与晶体物理。')}</p></div><div class="pg-intro-stats" aria-label="课程概要"><div><strong>32</strong><span>晶体点群</span></div><div><strong>${lessons.lessons.length}</strong><span>学习单元</span></div><div><strong>${progress}<small> / ${allQuestions.length}</small></strong><span>自测已掌握</span></div></div></section>
       ${selection.embeddedOnly||selection.atlasOnly?'':`<div class="pg-tabs" role="tablist" aria-label="点群教学栏目">${tabs.map(([id,title])=>`<button id="pg-tab-${id}" type="button" role="tab" aria-controls="pg-content" aria-selected="${state.tab===id}" tabindex="${state.tab===id?'0':'-1'}" data-pg-tab="${id}">${title}</button>`).join('')}</div>`}
@@ -135,6 +144,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     if(state.tab==='quiz')drawQuiz();
   }
   function drawLearn() {
+    if(!current())return;
     clearLearningSupport();
     state.lesson=safeIndex(state.lesson,lessons.lessons.length);
     const lesson=lessons.lessons[state.lesson];
@@ -143,6 +153,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
       ${(lesson.objectives||[]).length?`<div class="pg-objectives"><h3>学完这一节，你能</h3><ul>${lesson.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${representationActionsEntryHTML(lesson.id,representationActionsState.get('host:'+lesson.id)?.open===true)}
       ${matrixBridgeHTML(lesson.id)}
       ${compositionEntryHTML(lesson.id,compositionState.get('host:group-basics')?.open===true)}
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
@@ -154,12 +165,44 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">动手操作对称变换</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
     mountComposition(lesson.id);
+    mountRepresentation(lesson.id);
     $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
     $('#pg-lesson-lab').onclick=()=>navigate('lab');
     if($('#pg-open-sg99')){const handoff=$('#pg-open-sg99');handoff.onclick=()=>{if(current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id==='from-point-to-space'&&$('#pg-open-sg99')===handoff)openGroup({mode:'sg',id:99,k:[0,0,0],doubleValued:false});};}
     if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
+  }
+  function mountRepresentation(lessonId){
+    const detail=$('[data-representation-actions-entry]'),body=detail?.querySelector('[data-representation-actions-body]');if(!detail||!body)return;
+    representationDetail=detail;representationLesson=lessonId;
+    const here=()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lessonId&&$('[data-representation-actions-entry]')===detail&&detail.isConnected!==false;
+    const opened=()=>typeof detail.open==='boolean'?detail.open:detail.getAttribute('open')!==null;
+    function loadOpen(){
+      if(!here()||!opened()||representationBound)return;
+      if(representationOpening)return representationOpening;
+      const ticket=++representationTicket;body.innerHTML='<p role="status">正在载入表示乘法工坊…</p>';
+      const loading=Promise.resolve().then(async()=>{
+        try{
+          const module=await loadRepresentationActions();if(!here()||!opened()||ticket!==representationTicket)return;
+          if(typeof module?.bindRepresentationActionsLesson!=='function')throw Error('表示乘法工坊暂不可用，请重试。');
+          const cleanup=module.bindRepresentationActionsLesson({root:body,lessonId,isCurrent:()=>here()&&opened(),stateStore:representationActionsState,run,cancelRun,download});
+          if(!here()||!opened()||ticket!==representationTicket){if(typeof cleanup==='function')cleanup();return;}
+          disposeRepresentation=typeof cleanup==='function'?cleanup:()=>{};representationBound=true;
+        }catch(error){
+          if(!here()||!opened()||ticket!==representationTicket)return;
+          body.innerHTML=`<p class="notice error" role="alert">${esc(error?.message||'表示乘法工坊暂不可用，请重试。')}</p><button class="secondary" type="button" data-representation-actions-retry>重试表示乘法工坊</button>`;
+          const retry=body.querySelector('[data-representation-actions-retry]');retry.onclick=()=>{if(here()&&opened()&&body.querySelector('[data-representation-actions-retry]')===retry)return loadOpen();};
+        }finally{if(representationOpening===loading)representationOpening=null;}
+      });
+      representationOpening=loading;return loading;
+    }
+    detail.ontoggle=()=>{
+      if(!here())return;representationActionsState.set('host:'+lessonId,{open:opened()});
+      if(opened())return loadOpen();
+      clearRepresentation();representationDetail=detail;representationLesson=lessonId;body.innerHTML='';
+    };
+    if(opened())loadOpen();
   }
   function mountComposition(lessonId){
     const detail=$('[data-composition-entry]');if(!detail||lessonId!=='group-basics')return;
