@@ -309,3 +309,21 @@ const deriveRoutes=[],derivePage=new Container();
 await materialRouteUI.renderSymmetryCourseView({container:derivePage,selection:{pathway:'spin',tab:'derive',exercise:realData['symmetry-derivations'].exercises.at(-1).id},onNavigate:patch=>deriveRoutes.push(patch)});
 await settle();assert.equal(deriveRoutes.length,0,'Opening an explicit derivation creates no normalization history entry');
 console.log('Course deep links: initial asynchronous views do not push history; switching material IDs invalidates results and exports.');
+
+const siRoutes=await import('../dist/symmetry-course-ui.js?si-practice'),siPage=new Container();
+const noRun=()=>assert.fail('A classroom link must not start structure conversion');
+for(const selection of [
+  {pathway:'crystal',tab:'learn',track:'space',lesson:'space-06'},
+  {pathway:'crystal',tab:'materials',material:'silicon'}
+]){
+  await siRoutes.renderSymmetryCourseView({container:siPage,selection,run:noRun});
+  await settle();
+  const entries=siPage.firstElementChild.querySelectorAll('[data-si-structure-practice]');
+  assert.equal(entries.length,1,'Both the fixed lesson and silicon case have one structure entry');
+  assert.equal(entries[0].querySelectorAll('a[href="#structure"]').length,1);
+  assert.ok(entries[0].querySelector('a[href="docs/si-structure-example.md"]'));
+}
+await siRoutes.renderSymmetryCourseView({container:siPage,selection:{pathway:'crystal',tab:'materials',material:'gaas'},run:noRun});
+await settle();
+assert.equal(siPage.firstElementChild.querySelector('[data-si-structure-practice]'),null,'The silicon file applies to its own material case');
+console.log('Silicon structure practice appears once in the standard-cell lesson and the silicon material case.');

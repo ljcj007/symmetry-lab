@@ -2,11 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261119-cu-qha1';
-import {startToolFinder} from './tool-finder.js?v=20261119-cu-qha1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261119-si1';
+import {startToolFinder} from './tool-finder.js?v=20261119-si1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261119-cu-qha1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261119-si1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261117-phonopy1';
@@ -21,7 +21,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261114-evidence2'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261119-si1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);

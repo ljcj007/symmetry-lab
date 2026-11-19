@@ -13,6 +13,9 @@ export const arithmeticDescriptions=Object.freeze({
 // by the destination parser; neither a name nor a suffix certifies a result.
 const fileInput=(files,purpose,conditions,priority=1)=>Object.freeze({files:Object.freeze(files),purpose,conditions,priority});
 export const toolInputFormats=Object.freeze({
+ 'structure':Object.freeze([
+  fileInput(['POSCAR','POSCAR-0'],'识别三维晶体空间群、转换到 BC 晶胞及重算波矢坐标。','POSCAR-0 是课堂所用 Phonopy 硅常规胞原文件。',3)
+ ]),
  'compute/phonopy':Object.freeze([
   fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'查看已有色散、离散 q 点及所附本征矢。','仅有分段信息才连接为路径；此入口读取已有频率，不求解力常数。',3),
   fileInput(['phonopy.yaml','phonopy_disp.yaml'],'检查结构，或为已给定的本征矢补充原胞结构。','没有频率记录时只显示结构；位移与力文件本身不会生成声子谱。',3),
@@ -40,7 +43,7 @@ const record=(arithmetic,input,output,scope,conditions,searchTerms,sources,input
  conditions:Object.freeze(conditions),searchTerms,sources:Object.freeze(sources),inputFormats:Object.freeze(inputFormats)
 });
 export const toolCapabilities=Object.freeze({
- 'structure':record('mixed',['POSCAR／CIF 或晶格、位置、元素 JSON','几何容差；可选输入波矢'],['空间群与 BC 晶胞','基矢、原点、波矢变换及结构导出'],'三维有序普通晶体的几何识别与坐标标准化。',['识别取决于容差；理想化前后的结构分别记录。','CIF 的部分占位、调制结构与磁结构须使用相应专门处理。'],'POSCAR CIF BC 结构输入 坐标变换 容差 structure import',['dist/structure-ui.js','dist/python/structure_bc.py']),
+ 'structure':record('mixed',['POSCAR／CIF 或晶格、位置、元素 JSON','几何容差；可选输入波矢'],['空间群与 BC 晶胞','基矢、原点、波矢变换及结构导出'],'三维有序普通晶体的几何识别与坐标标准化。',['识别取决于容差；理想化前后的结构分别记录。','CIF 的部分占位、调制结构与磁结构须使用相应专门处理。'],'POSCAR CIF BC 结构输入 坐标变换 容差 structure import',['dist/structure-ui.js','dist/python/structure_bc.py'],toolInputFormats.structure),
  'compute/diffraction':record('numeric',['预设或自定义晶胞与原子','hkl、波长和固定散射权重'],['复结构因子、消光检验','有限范围粉末峰棒图'],'运动学散射近似下的结构因子与衍射消光。',['散射权重在模型中给定；峰位与强度按所用晶胞及枚举范围解读。'],'diffraction extinction hkl 结构因子 消光 粉末',['dist/structure-dynamics-ui.js','dist/python/diffraction.py']),
  'compute/layer-symmetry-lab':record('numeric',['立方母体的 001／110／111 切面','层数、终止、元素标签和界面错位'],['继承的薄层仿射操作','操作闭合、表面交换与错位路径'],'立方原型在面内周期、法向有限条件下保留的层与界面对称操作。',['操作取自所选立方母体；此入口按原型研究继承对称。','一般输入薄层的 80 层群定名属于另一项分类任务。'],'layer surface interface 立方原型 001 110 111 层群 表面 界面',['dist/frontiers-ui.js','dist/python/symmetry_frontiers.py']),
  'compute/phase':record('numeric',['标量 Landau 系数','序参量方向与位移尺度'],['驻点、稳定性和势能曲线','理想极性结构与六种畴'],'给定低阶 Landau 势与极性畸变原型的相变演示。',['系数和结构尺度是输入的教学参数；能量与畴按该模型解释。'],'Landau phase transition domain 序参量 相变 畴',['dist/structure-dynamics-ui.js','dist/python/phase_domains.py']),

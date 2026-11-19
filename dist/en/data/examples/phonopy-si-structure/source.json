@@ -1,0 +1,52 @@
+{
+  "format": "symmetry-lab-phonopy-si-structure-source-1",
+  "id": "phonopy-si-structure",
+  "title": "Official Phonopy Si-QHA conventional-cell structure input",
+  "repository": "https://github.com/phonopy/phonopy",
+  "commit": "18cad919af8fe8aad349e04f101887fa19b051a0",
+  "license": "BSD-3-Clause",
+  "upstreamReadme": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Si-QHA/README",
+  "scope": "The original conventional-cell geometry supplied to the Phonopy Si-QHA example. The classroom reference uses the structure and a declared teaching wavevector to check coordinate conversion and symmetry representations.",
+  "structureFile": {
+    "path": "POSCAR-0",
+    "sourcePath": "example/Si-QHA/POSCAR-0",
+    "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Si-QHA/POSCAR-0",
+    "gitBlobSha1": "f377319ec8d5e6e36793e7630f2932d663f19295",
+    "bytes": 1109,
+    "sha256": "6e2316a7d3085fd9fe5fc837aa849d2ad1d104ea1b23919fc6b3c1514b72e7a7"
+  },
+  "licenseFile": {
+    "path": "LICENSE.txt",
+    "sourcePath": "LICENSE",
+    "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/LICENSE",
+    "gitBlobSha1": "ad98c46d8bef0cac32974e405865147cc80679ff",
+    "bytes": 1470,
+    "sha256": "2ce26839c8b70d28765d73e934cc1a979d896d8d228d30694fdd9a92e94d43a9"
+  },
+  "representation": "Original UTF-8 POSCAR bytes including the trailing zero data. The coordinates in the position list are Direct fractional coordinates.",
+  "input": {
+    "format": "poscar",
+    "lengthUnit": "angstrom",
+    "coordinateMode": "direct",
+    "cellType": "conventional",
+    "natom": 8,
+    "species": "Si",
+    "latticeConstantAngstrom": 5.466163915731997,
+    "symprec": 0.00001,
+    "angleTolerance": -1,
+    "conventionalK": [0.5, 0, 0],
+    "suggestedRepresentation": "single-valued"
+  },
+  "reference": {
+    "spaceGroupNumber": 227,
+    "international": "Fd-3m",
+    "hallNumber": 525,
+    "bravais": "CubiFace",
+    "bcAtomCount": 2,
+    "primitiveVolumeRatio": 0.25,
+    "bcRepresentativeCount": 48,
+    "bcK": [0, 0.25, 0.25],
+    "starArmCount": 6,
+    "littleGroupOrder": 8
+  }
+}

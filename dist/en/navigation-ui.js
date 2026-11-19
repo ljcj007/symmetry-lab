@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
 import {classroomPathways} from './classroom-ui.js?v=20261117-derive1';
-import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261117-phonopy1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261117-phonopy1';
+import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261119-si1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261119-si1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261119-si1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

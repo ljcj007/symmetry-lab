@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261119-cu-qha1';
-import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261116-composition1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261119-si1';
+import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261119-si1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
@@ -11,10 +11,9 @@ export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);
  const normalized=normalizeFinderText(query);
  if(!normalized)return scope==='tools'?selected.slice(0,limit):[];
- const searchable=selected.map(x=>({...x,title:normalizeFinderText(x.title),summary:normalizeFinderText(x.summary),keywords:normalizeFinderText(x.keywords),original:x}));
- const found=searchEntries(searchable,normalized,selected.length);
- const numeric=/^\d+$/.test(normalized),exactGroup=x=>numeric&&x.original.route==='atlas/sg?q='+encodeURIComponent(normalized);
- return found.sort((a,b)=>Number(exactGroup(b))-Number(exactGroup(a))).slice(0,limit).map(x=>x.original);
+ const found=searchEntries(selected,query,selected.length);
+ const numeric=/^\d+$/.test(normalized),exactGroup=x=>numeric&&x.route==='atlas/sg?q='+encodeURIComponent(normalized);
+ return found.sort((a,b)=>Number(exactGroup(b))-Number(exactGroup(a))).slice(0,limit);
 }
 
 export function startToolFinder({button,onNavigate}){

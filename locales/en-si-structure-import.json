@@ -1,0 +1,15 @@
+{
+  "需要 HTTPS 或本机地址核对 Si 示例的文件指纹。": "Open the site over HTTPS or at a local address to verify the Si example's file hash.",
+  "官方 Si 示例暂未载入，请重试。": "The official Si example could not load. Please try again.",
+  "官方 Si 示例的字节数或 SHA-256 不匹配。": "The official Si example's byte count or SHA-256 does not match.",
+  "官方 Si 示例无法按原样保留为 UTF-8 文本。": "The official Si example could not be preserved byte for byte as UTF-8 text.",
+  "核对并载入官方 Si 结构与练习设置": "Verify and load the official Si structure and exercise settings",
+  "将输入晶胞的波矢设为": "Set the wave vector in input-cell coordinates to",
+  "，对称性容差设为": ", with symmetry tolerance",
+  "正在读取并核对官方 Si 原文件…": "Reading and verifying the original official Si file…",
+  "已核对官方 Si 原文件。确认波矢和容差后，手动识别空间群。": "The original official Si file is verified. Check the wave vector and tolerance, then identify the space group.",
+  "先预测。换到 BC 原胞后，描述同一个波矢还要用原来的三个数字吗？": "Make a prediction. In the BC primitive cell, will the same wave vector have the same three coordinates?",
+  "在工作台试着填回原来的三个数字，再比较两次计算的星臂数和小群阶。": "In the workbench, try entering the original three numbers. Compare the star-arm counts and little-group orders from both calculations.",
+  "Si 原文件、转换和波矢对照说明 →": "Original Si file, conversion, and wave vector comparison →",
+  "官方 Si 示例读取超时，请重试。": "The official Si example took too long to load. Please try again."
+}

@@ -29,20 +29,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 61512,
-      "sha256": "829d0435980ece33ceefde5adc4e633769a02a176852a20900cbd727cebe930e"
+      "bytes": 62831,
+      "sha256": "1f27d38e556cdfe8c9f9d7a4c0e4be94a94651ff1d881417531d2ea4bde4f83d"
     },
     "dist/app.js": {
-      "bytes": 99588,
-      "sha256": "881e54c1938d7244da9a99995769230ba991ed90fcd782b90081ece569cacb7f"
+      "bytes": 99570,
+      "sha256": "ad17df76c248b32514035b45be162e68e5a14a310d56c36ec0eefb04d3345224"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32231,
-      "sha256": "83241dcdce76f3c8d04e87a7d3821bd72064283375a4ef4653a6cf4fc4b65f2a"
+      "bytes": 32219,
+      "sha256": "0f304e678d5c7f9736010b614da20d07c00d16c151000760bdab7508902a67ad"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -97,8 +97,8 @@
       "sha256": "07a5e2e1272525c1d64a43aa0b0dbbd9c7a17192afb5244aa4f393b1487fb759"
     },
     "dist/index.html": {
-      "bytes": 8104,
-      "sha256": "9dc8f54d0a2c9587dac57181e6ed121962c0f2f89bcb3b418b7c71827f141572"
+      "bytes": 8100,
+      "sha256": "d54d543d2172ee6a1430fe734b9258366c210e14fc7cb6636f68d9371d4fe342"
     },
     "dist/learning-feedback.js": {
       "bytes": 4472,
@@ -137,8 +137,8 @@
       "sha256": "b8526ffad354a38b38a116c138157e1fe439aa9921749f50b63c832f304503cf"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 47233,
-      "sha256": "367fdab0dc13bd7b4447ddffa7866233e0eec0c781f05154c35d2ed7a40afcbb"
+      "bytes": 47446,
+      "sha256": "46182a660770fae690a2d83b7ef8d61bdaa835291136cebbb2b1d7d594bfdd64"
     },
     "dist/principles-ui.js": {
       "bytes": 19836,
@@ -173,16 +173,16 @@
       "sha256": "614cca565ad1ce9a78026b3207505384d77777bce38d31530148ab3fc4e6aaff"
     },
     "package.json": {
-      "bytes": 23051,
-      "sha256": "ea576ad366276f9d6e8b2128a8eb44e493370b650d5fbb7909def44a74e5b6b1"
+      "bytes": 23322,
+      "sha256": "ddc9658cc553cfe32b1324a3acced4ca2bbfef8c1ef8ef40cfe66080bdbb3a36"
     },
     "scripts/build-learning-flow-provenance.mjs": {
       "bytes": 5216,
       "sha256": "20d87a77010fd2966af24b2e871828b6fdd5e1b297a02a1afc3ba556c5a0d4cc"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 4339,
-      "sha256": "f45181dfa6410069f553077facde30ad27c7fcee876c25c4421d0455db219d6c"
+      "bytes": 4446,
+      "sha256": "b7ed8fee531b6e710f55bad04ad33ed8e9d4a4a9954eed0ab9dc6d1f53f2cf8a"
     },
     "scripts/test-course-flow.mjs": {
       "bytes": 17467,
@@ -205,8 +205,8 @@
       "sha256": "8a09ae835089ac518358a96a79a09f25c328ccb6457e40ed7b783762d584ba19"
     },
     "scripts/test-pointgroup-learning-support.mjs": {
-      "bytes": 4924,
-      "sha256": "564ee369cf271d00ae5dd72a883029ae7f269596fe292b26d3dbdc355c76232d"
+      "bytes": 5408,
+      "sha256": "fa963608b6582c7040373391d77355739a72d9d46c68ddbfdbd1595bc8fb388b"
     },
     "scripts/test-python-spin-resonance.py": {
       "bytes": 11897,

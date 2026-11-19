@@ -38,6 +38,28 @@ _atom_site_fract_z
 Cs1 Cs 0 0 0
 Cl1 Cl .5 .5 .5
 `;
+const siExample=Object.freeze({
+  filename:'POSCAR-0',
+  url:new URL('./data/examples/phonopy-si-structure/POSCAR-0?v=20261119-si1',import.meta.url),
+  byteCount:1109,
+  sha256:'6e2316a7d3085fd9fe5fc837aa849d2ad1d104ea1b23919fc6b3c1514b72e7a7'
+});
+
+async function readOfficialSiExample(signal){
+  if(!globalThis.crypto?.subtle)throw Error("Open the site over HTTPS or at a local address to verify the Si example's file hash.");
+  const response=await fetch(siExample.url,{signal});
+  if(!response.ok)throw Error("The official Si example could not load. Please try again.");
+  const bytes=new Uint8Array(await response.arrayBuffer());
+  if(bytes.length!==siExample.byteCount)throw Error("The official Si example's byte count or SHA-256 does not match.");
+  const digest=await globalThis.crypto.subtle.digest('SHA-256',bytes);
+  const hash=Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,'0')).join('');
+  if(hash!==siExample.sha256)throw Error("The official Si example's byte count or SHA-256 does not match.");
+  const text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);
+  const encoded=new TextEncoder().encode(text);
+  if(encoded.length!==bytes.length||!encoded.every((byte,index)=>byte===bytes[index]))throw Error("The official Si example could not be preserved byte for byte as UTF-8 text.");
+  return text;
+}
+
 const state = {text:sample, format:'poscar', symprec:'0.00001', species:'', cifBlock:'', angle:'-1', k:['0','0','0'], result:null, error:'', busy:false, fileLoading:false, fileTicket:0, inputVersion:0, revision:0,source:{kind:'teaching-example',filename:'NaCl_example.POSCAR'},sourceBytes:null,doubleValued:false,handoff:null,handoffPending:false,handoffError:'',handoffTicket:0};
 const number = value => {const pieces=String(value).trim().split('/');if(pieces.length>2||pieces.some(x=>!x.trim()))throw Error("Please enter a finite value or fraction.");const n=pieces.length===2?Number(pieces[0])/Number(pieces[1]):Number(pieces[0]);if(!Number.isFinite(n))throw Error("Please enter a finite value or fraction.");return n;};
 const fmt = value => typeof value === 'number' ? (Math.abs(value)<1e-10?'0':Number(value.toPrecision(9)).toString()) : esc(value);
@@ -48,10 +70,11 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
   const $=selector=>container.querySelector(selector);
   const revision=++state.revision;
   const current=()=>revision===state.revision&&container.dataset.researchView==='structure';
-  let disposeHandoff=()=>{};
+  let disposeHandoff=()=>{},siLoad=null,siLoadError='';
   const invalid=()=>{state.inputVersion++;state.handoffTicket++;state.result=null;state.handoff=null;state.handoffPending=false;state.handoffError='';state.error='';drawResult();};
   container.innerHTML=`<div class="workspace-grid structure-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> Import crystal structure</div><span class="subtle">POSCAR / CIF</span></div><div class="panel-body">
     <div class="controls-row"><label class="secondary small" for="structure-file">↑ Open structure file</label><input type="file" class="sr-only" id="structure-file" accept=".cif,.vasp,.poscar,.txt,POSCAR,CONTCAR"><button type="button" class="secondary small" id="structure-file-cancel" hidden>Cancel file read</button><button class="text-button" id="structure-poscar-example">NaCl example</button><button class="text-button" id="structure-cif-example">CIF Example</button></div>
+    <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">Verify and load the official Si structure and exercise settings</button><p class="form-note">${esc("Set the wave vector in input-cell coordinates to")} ${inlineMath(String.raw`(\frac{1}{2},0,0)`)}${esc(", with symmetry tolerance")} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p><div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
     <label class="field-label" for="structure-format">input format</label><select class="form-select" id="structure-format"><option value="poscar" ${state.format==='poscar'?'selected':''}>POSCAR / CONTCAR</option><option value="cif" ${state.format==='cif'?'selected':''}>CIF</option></select>
     <label class="field-label" for="structure-text">file content<span>can only be read in this browser</span></label><textarea id="structure-text" class="band-input structure-input" spellcheck="false" aria-label="POSCAR or CIF file content">${esc(state.text)}</textarea>
     <div class="structure-options"><div><label class="field-label" for="structure-symprec">Symmetry tolerance / Å</label><input id="structure-symprec" class="form-select" value="${esc(state.symprec)}" inputmode="decimal"></div><div><label class="field-label" for="structure-species">VASP 4 element order</label><input id="structure-species" class="form-select" value="${esc(state.species)}" placeholder="Such as Na Cl; fill in if there is no element row"></div></div>
@@ -88,21 +111,74 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
     $('#structure-unidealized').onclick=()=>{if(!current()||state.result!==r)return;download(r.exports.unidealized_poscar,'POSCAR_BC_unidealized','text/plain;charset=utf-8');};
     $('#structure-standard').onclick=()=>{if(!current()||state.result!==r)return;download(r.exports.standard_poscar,'POSCAR_ITA_conventional','text/plain;charset=utf-8');};
   }
-  const setDisabled=()=>{$('#structure-run').disabled=state.busy||state.fileLoading;container.querySelectorAll('input,textarea,select,#structure-poscar-example,#structure-cif-example').forEach(el=>el.disabled=state.busy||state.fileLoading);$('#structure-file').disabled=state.busy;$('#structure-poscar-example').disabled=state.busy;$('#structure-cif-example').disabled=state.busy;$('#structure-file-cancel').hidden=!state.fileLoading;$('#structure-file-cancel').disabled=state.busy;};
+  const siButton=$('#structure-si-example');
+  const siStatus=$('#structure-si-source');
+  const hasSiSource=()=>state.format==='poscar'&&state.source.kind==='teaching-example'&&state.source.filename===siExample.filename;
+  const hasSiProbe=()=>{
+    try{return !state.species.trim()&&!state.cifBlock.trim()&&number(state.symprec)===1e-5&&number(state.angle)===-1&&state.k.every((value,index)=>number(value)===[.5,0,0][index]);}
+    catch{return false;}
+  };
+  function drawSiStatus(){
+    if(!current()||$('#structure-si-example')!==siButton)return;
+    siButton.disabled=state.busy||state.fileLoading||!!siLoad;
+    if(siLoad){siStatus.textContent="Reading and verifying the original official Si file…";siStatus.hidden=false;return;}
+    if(siLoadError){siStatus.innerHTML=`<p class="notice error" role="alert">${esc(siLoadError)}</p>`;siStatus.hidden=false;return;}
+    siStatus.hidden=!hasSiSource();
+    siStatus.innerHTML=hasSiSource()?`<p class="notice">${esc("The original official Si file is verified. Check the wave vector and tolerance, then identify the space group.")}</p>${hasSiProbe()?`<p class="form-note">${state.result?.verified?esc("In the workbench, try entering the original three numbers. Compare the star-arm counts and little-group orders from both calculations."):esc("Make a prediction. In the BC primitive cell, will the same wave vector have the same three coordinates?")}</p>`:''}<p><a href="docs/si-structure-example.md">Original Si file, conversion, and wave vector comparison →</a></p>`:'';
+  }
+  function releaseSiLoad(request){
+    request.observer?.disconnect();
+    clearTimeout(request.timer);
+    if(siLoad===request)siLoad=null;
+  }
+  function interruptSiLoad(){
+    if(siLoad){const request=siLoad;releaseSiLoad(request);request.controller.abort();}
+    siLoadError='';
+    drawSiStatus();
+  }
+  siButton.onclick=async()=>{
+    if(!current()||$('#structure-si-example')!==siButton||state.busy||state.fileLoading||siLoad)return;
+    const request={controller:new AbortController(),observer:null,timer:null};
+    siLoad=request;siLoadError='';
+    const owns=()=>current()&&container.isConnected!==false&&$('#structure-si-example')===siButton&&siLoad===request;
+    if(typeof MutationObserver==='function'){
+      request.observer=new MutationObserver(()=>{if(!owns()){releaseSiLoad(request);request.controller.abort();}});
+      request.observer.observe(container.ownerDocument?.documentElement||container,{childList:true,subtree:true});
+    }
+    request.timer=setTimeout(()=>request.controller.abort(),15000);
+    drawSiStatus();
+    try{
+      const text=await readOfficialSiExample(request.controller.signal);
+      if(!owns()||request.controller.signal.aborted)return;
+      releaseSiLoad(request);
+      state.fileTicket++;
+      Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:['1/2','0','0'],source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
+      invalid();
+      renderStructureView({container,run,toast,download,openGroup});
+      $('#structure-si-source')?.focus({preventScroll:true});
+    }catch(error){
+      if(owns())siLoadError=request.controller.signal.aborted?"The official Si example took too long to load. Please try again.":error.message;
+    }finally{
+      const active=owns();
+      releaseSiLoad(request);
+      if(active)drawSiStatus();
+    }
+  };
+  const setDisabled=()=>{$('#structure-run').disabled=state.busy||state.fileLoading;container.querySelectorAll('input,textarea,select,#structure-poscar-example,#structure-cif-example').forEach(el=>el.disabled=state.busy||state.fileLoading);$('#structure-file').disabled=state.busy;$('#structure-poscar-example').disabled=state.busy;$('#structure-cif-example').disabled=state.busy;$('#structure-file-cancel').hidden=!state.fileLoading;$('#structure-file-cancel').disabled=state.busy;drawSiStatus();};
   $('#structure-file-cancel').onclick=()=>{if(!current()||state.busy||!state.fileLoading)return;state.fileTicket++;state.fileLoading=false;invalid();$('#structure-file').value='';state.refresh?.();toast("File reading canceled; the current structure text was retained.");};
-  $('#structure-text').oninput=e=>{state.fileTicket++;state.fileLoading=false;state.text=e.target.value;state.source={kind:'user-text',filename:''};state.sourceBytes=null;invalid();};
-  $('#structure-format').onchange=e=>{state.format=e.target.value;invalid();};
-  $('#structure-symprec').oninput=e=>{state.symprec=e.target.value;invalid();};
-  $('#structure-species').oninput=e=>{state.species=e.target.value;invalid();};
-  $('#structure-block').oninput=e=>{state.cifBlock=e.target.value;invalid();};
-  $('#structure-angle').oninput=e=>{state.angle=e.target.value;invalid();};
-  state.k.forEach((_,i)=>{$('#structure-k-'+i).oninput=e=>{state.k[i]=e.target.value;invalid();};});
-  const useExample=(text,format)=>{if(!current())return;state.fileTicket++;state.fileLoading=false;state.text=text;state.format=format;state.species='';state.cifBlock='';state.source={kind:'teaching-example',filename:format==='cif'?'CsCl_example.cif':'NaCl_example.POSCAR'};state.sourceBytes=null;state.doubleValued=false;invalid();renderStructureView({container,run,toast,download,openGroup});};
+  $('#structure-text').oninput=e=>{state.fileTicket++;state.fileLoading=false;state.text=e.target.value;state.source={kind:'user-text',filename:''};state.sourceBytes=null;interruptSiLoad();invalid();};
+  $('#structure-format').onchange=e=>{state.format=e.target.value;interruptSiLoad();invalid();};
+  $('#structure-symprec').oninput=e=>{state.symprec=e.target.value;interruptSiLoad();invalid();};
+  $('#structure-species').oninput=e=>{state.species=e.target.value;interruptSiLoad();invalid();};
+  $('#structure-block').oninput=e=>{state.cifBlock=e.target.value;interruptSiLoad();invalid();};
+  $('#structure-angle').oninput=e=>{state.angle=e.target.value;interruptSiLoad();invalid();};
+  state.k.forEach((_,i)=>{$('#structure-k-'+i).oninput=e=>{state.k[i]=e.target.value;interruptSiLoad();invalid();};});
+  const useExample=(text,format)=>{if(!current())return;interruptSiLoad();state.fileTicket++;state.fileLoading=false;state.text=text;state.format=format;state.species='';state.cifBlock='';state.source={kind:'teaching-example',filename:format==='cif'?'CsCl_example.cif':'NaCl_example.POSCAR'};state.sourceBytes=null;state.doubleValued=false;invalid();renderStructureView({container,run,toast,download,openGroup});};
   $('#structure-poscar-example').onclick=()=>useExample(sample,'poscar');
   $('#structure-cif-example').onclick=()=>useExample(cifSample,'cif');
   $('#structure-file').onchange=async e=>{
     if(!current())return;
-    const file=e.target.files[0];if(!file)return;
+    const file=e.target.files[0];if(!file)return;interruptSiLoad();
     const fileTicket=++state.fileTicket;state.fileLoading=true;invalid();state.refresh?.();
     try{
       if(file.size>4_000_000)throw Error("Structure file cannot exceed 4 MB.");
@@ -115,6 +191,7 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
   };
   $('#structure-run').onclick=async()=>{
     if(!current()||state.busy||state.fileLoading)return;
+    interruptSiLoad();
     const inputVersion=state.inputVersion;
     try{
       const payload={format:state.format,text:state.text,symprec:number(state.symprec),angle_tolerance:number(state.angle),k:state.k.map(number)};

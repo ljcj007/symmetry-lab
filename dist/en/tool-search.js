@@ -1,17 +1,28 @@
 // One query convention for the directory, home search and global finder.
 export function normalizeSearchText(value){
  return String(value??'').normalize('NFKC').toLocaleLowerCase()
+  .replace(/\bposcar[-‐‑‒–—−]0\b/g,'poscar0')
   .replace(/\b(su|so|sp|u|o)\s*\(\s*(\d+)\s*\)/g,'$1$2')
   .replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c))
   .replace(/[-‐‑‒–—−·()（）{}\[\],，]/g,' ').replace(/\s+/g,' ').trim();
 }
 // Treat a pasted path as its basename. This changes query interpretation only;
 // it never reads a file or chooses a conversion/compute mode.
-const queryTerms=query=>(normalizeSearchText(query).match(/"[^"]+"|'[^']+'|\S+/g)||[]).map(term=>{
- const plain=term.replace(/^["']|["']$/g,''),base=plain.split(/[\\/]/).at(-1);
- const filePath=/[\\/]/.test(plain)&&(/^[a-z]:[\\/]|^[\\/]/.test(plain)||plain.includes('\\')||/\.[a-z0-9]+$|^poscar$/i.test(base));
- return plain==='/'?'':filePath?base:plain;
-}).filter(Boolean);
+function fileBasename(term){
+ const base=term.split(/[\\/]/).at(-1);
+ const looksLikeFile=/^[a-z]:[\\/]|^[\\/]/i.test(term)||term.includes('\\')||/\.[a-z0-9]+$|^poscar(?:[-‐‑‒–—−]?0)?$/i.test(base);
+ return /[\\/]/.test(term)&&looksLikeFile&&base?base:term;
+}
+function queryTerms(query){
+ const raw=String(query??'').normalize('NFKC').trim();
+ const quoted=/^(?:"[^"]+"|'[^']+')$/.test(raw);
+ const complete=quoted?raw.slice(1,-1):raw;
+ const basename=quoted||!(/\s/.test(raw))?fileBasename(complete):complete;
+ if(basename!==complete)return [normalizeSearchText(basename)];
+ return (normalizeSearchText(raw).match(/"[^"]+"|'[^']+'|\S+/g)||[])
+  .map(term=>fileBasename(term.replace(/^["']|["']$/g,'')))
+  .filter(term=>term&&term!=='/');
+}
 export function matchingInputFormats(item,query){
  const terms=queryTerms(query);
  return (item.capability?.inputFormats||[]).filter(row=>row.files.some(file=>terms.includes(normalizeSearchText(file))));

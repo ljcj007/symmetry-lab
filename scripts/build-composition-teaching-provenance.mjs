@@ -17,8 +17,10 @@ for(const row of refs.cases){
  assert.equal(row.result.basis.dimension,2);assert.equal(row.result.group.order,8);
  assert.ok(row.result.checks.length&&row.result.checks.every(check=>check.passed===true));
 }
-const formatNames=new Set(Object.values(toolInputFormats).flatMap(rows=>rows.flatMap(row=>row.files)));
-assert.equal(Object.keys(toolInputFormats).length,5);
+const phononFormats=Object.entries(toolInputFormats).filter(([route])=>route.startsWith('compute/phon'));
+const qhaFormats=toolInputFormats['compute/qha-lab'];
+const formatNames=new Set([...phononFormats.map(([,rows])=>rows),qhaFormats].flatMap(rows=>rows.flatMap(row=>row.files)));
+assert.equal(phononFormats.length+1,5);
 assert.deepEqual([...formatNames].sort(),['band.yaml','mesh.yaml','partial_dos.dat','phonopy.yaml','phonopy_disp.yaml','projected_dos.dat','qpoints.yaml','thermal_properties.yaml','total_dos.dat'].sort());
 assert.equal(lessonProgressionInventory.length,197);assert.equal(lessonProgressionEdges.length,259);
 assert.equal(new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to])).size,197);

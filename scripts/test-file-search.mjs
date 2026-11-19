@@ -5,6 +5,7 @@ import {Element,Container} from './test-material-research-ui.mjs';
 
 const sourceOnly=process.argv.includes('--source-only');
 const expectations={
+ 'POSCAR-0':['structure'],
  'band.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
  'qpoints.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
  'mesh.yaml':['compute/phonopy','compute/phonon-modes','compute/phonon-thermo','compute/phonopy-scattering'],
@@ -62,7 +63,7 @@ for(const prefix of sourceOnly?['']:['','en/']){
  const {matchingInputFormats,inputFormatSummary}=await import(new URL('../dist/'+prefix+'tool-search.js',import.meta.url));
  const {toolInputFormats}=await import(new URL('../dist/'+prefix+'tool-capabilities.js',import.meta.url));
  assert.equal(toolsIndex.length,75);
- assert.equal(Object.keys(toolInputFormats).length,5);
+ assert.equal(Object.keys(toolInputFormats).length,6);
  for(const [query,expected] of Object.entries(expectations)){
   for(const variant of [query,query.toUpperCase(),'import '+query,'/tmp/phonons/'+query,'C:\\runs\\'+query,'"C:\\my results\\'+query+'"']){
    const finder=finderResults(toolsIndex,variant).map(x=>x.route);
@@ -82,6 +83,7 @@ for(const prefix of sourceOnly?['']:['','en/']){
  for(const query of ['FORCE_SETS','force_constants.hdf5','force_constants.yaml','unsupported.xyz'])assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
  assert.equal(finderResults(toolsIndex,'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
  assert.equal(finderResults(toolsIndex,'POSCAR')[0].route,'structure');
+ assert.equal(finderResults(toolsIndex,'Si-QHA/POSCAR-0')[0].route,'structure');
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',category:'structure'}),[]);
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',arithmetic:'exact'}),[]);
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',favorites:['compute/phonon-thermo']}).map(x=>x.route),['compute/phonon-thermo']);

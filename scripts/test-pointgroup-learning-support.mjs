@@ -11,10 +11,18 @@ globalThis.document={compatMode:'CSS1Compat',createElement:tag=>new Element(tag)
 globalThis.localStorage={getItem:key=>saved.get(key)||null,setItem:(key,value)=>saved.set(key,value)};
 let fetchCalls=0;globalThis.fetch=async url=>{fetchCalls++;return{ok:true,json:async()=>String(url).includes('lessons')?lessons:atlas};};
 const pg=await import('../dist/pointgroup-ui.js?learning-support'),page=new Container(),moves=[];
+const workbenchCalls=[];
 for(const [lesson,count]of [['operations-notation',2],['projection',1],['from-point-to-space',1]]){
- await pg.renderPointgroupView({container:page,selection:{tab:'learn',lesson},onNavigate:patch=>moves.push(patch)});
+ await pg.renderPointgroupView({container:page,selection:{tab:'learn',lesson},onNavigate:patch=>moves.push(patch),openGroup:input=>workbenchCalls.push(input)});
  assert.equal(page.querySelectorAll('[data-mb-bridge]').length,count,'The real lesson renders its optional concept bridge: '+lesson);
  assert.match(page.querySelector('#pg-content').innerHTML,/mb-course-bridges/);
+ const practice=page.querySelectorAll('[data-si-structure-practice]');
+ assert.equal(practice.length,lesson==='from-point-to-space'?1:0);
+ if(practice.length){
+   assert.equal(practice[0].querySelectorAll('a').filter(link=>link.getAttribute('href')==='#structure').length,1);
+   page.querySelector('#pg-open-sg99').onclick();
+   assert.deepEqual(workbenchCalls,[{mode:'sg',id:99,k:[0,0,0],doubleValued:false}]);
+ }
 }
 assert.equal(fetchCalls,2,'Concept bridges use the existing lesson/atlas load and do not start a computation');
 await pg.renderPointgroupView({container:page,selection:{tab:'quiz',lesson:'character-reduction'},onNavigate:patch=>moves.push(patch)});

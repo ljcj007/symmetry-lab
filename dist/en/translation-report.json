@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28218,
-  "translatedUnits": 28218,
+  "sourceUnits": 28250,
+  "translatedUnits": 28250,
   "missing": [],
-  "files": 493,
+  "files": 498,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -124,6 +124,9 @@
     "en-seitz-quotient-docs.json",
     "en-cu-qha-source-ui.json",
     "en-cu-qha-host.json",
-    "en-cu-qha-docs.json"
+    "en-cu-qha-docs.json",
+    "en-si-structure-import.json",
+    "en-si-structure-links.json",
+    "en-si-structure-docs.json"
   ]
 }
