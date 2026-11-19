@@ -44,7 +44,7 @@ function znoQuadratureHTML(open){
   <button type="button" class="secondary" id="cm-zno-two">载入两个方向（相位 0 和 π/2）</button>
   <button type="button" class="secondary" id="cm-zno-cancel" hidden>取消载入</button>
  </div>
- <a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO 数据来源与比较步骤 →</a>
+ <div class="obs-links"><a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO 数据来源与比较步骤 →</a><a href="#compute/diffraction?preset=zno-satellite">计算同一 ZnO 超胞的位移卫星 →</a></div>
  <p id="cm-zno-load-status" role="status"></p><p id="cm-zno-error" role="alert" hidden></p>
  </details>`;
 }

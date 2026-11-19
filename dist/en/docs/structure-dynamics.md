@@ -49,7 +49,7 @@ The six directions form the orbit of a polar vector, with an unchanged translati
 
 ## Diffraction conventions and material comparisons
 
-Use  conventional cell   fractional coordinates , integer `(h,k,l)`, and constant real user scattering weights:
+The diffraction calculation uses fractional coordinates in the chosen cell, integer indices `(h,k,l)`, and user-specified constant real scattering weights. For a supercell, index the reflections in that supercell’s reciprocal basis.
 
 ```text
 F(h,k,l) = Σj fj exp[2πi(h xj + k yj + l zj)]
@@ -72,6 +72,28 @@ Equal GaAs weights1 cancel200, but chosen weights do not establish a universal  
 For `{R|t}`, first verify `Rᵀh=h`, then inspect `exp(2πi h·t)`. A z-directed `2₁` screw gives `00l: l=2n`; a c glide with normal x and translation c/2 gives `0kl: l=2n`. Extending a row condition to every hkl is incorrect. Interactive calculations and custom sites help check phases; this is not a complete extinction classifier for every setting of all 230 groups.
 
 `|F|²` omits powder-intensity geometry, thermal motion, absorption, peak shapes, and multiple scattering. Physical assumptions still need checking between model zeros and actual peaks.
+
+<a id="zno-satellite"></a>
+
+### Finite-wavevector displacements and diffraction satellites in ZnO
+
+Open the [ZnO satellite reflection exercise](../#compute/diffraction?preset=zno-satellite). The frozen snapshot uses a ZnO phonon with `q = (1/4, 0, 1/4)` in primitive reciprocal coordinates. Replicate the primitive cell four times along its first and third basis vectors to obtain a `[4,1,4]` supercell with 16 primitive cells and 64 atoms. The integer reflection `H = (1,0,1)` in supercell indexing corresponds to this q. All three structures share the same cell and atom order, with unit occupancy at every site and scattering weights fixed at `fZn = fO = 1`.
+
+1. **Predict the parent result.** A translation along the first primitive basis vector multiplies the scattering phase for `(1,0,1)` by `i`. Choose any site in the primitive cell. Its four translation-equivalent copies along that direction have relative phases `1, i, −1, −i`, which sum to zero. Add the complex amplitudes before taking `|F|²`.
+2. **Switch the displacement amplitude.** Choose “Load parent cell,” “Load full-amplitude snapshot,” and “Load half-amplitude snapshot” in turn. Each time, confirm the preset supercell indices `(1,0,1)` and run the calculation. The full-amplitude snapshot uses phase `φ = π/3` and displacement envelope scale `A = 0.1 Å`. The largest actual displacement of any atom is about 0.08319 Å. The half-amplitude snapshot scales the same displacement field by one half, equivalent to setting A to 0.05 Å.
+
+| Structure at supercell `(1,0,1)` | Displacement envelope A (Å) | Model intensity I (arbitrary units) | Plane spacing d (Å) |
+| --- | --- | --- | --- |
+| Parent | 0 | 0 | 10.033522590330 |
+| Full-amplitude snapshot | 0.10 | 0.528522416147 | 10.033522590330 |
+| Half-amplitude snapshot | 0.05 | 0.132207891202 | 10.033522590330 |
+
+3. **Explain the ratio near one quarter.** For site j, let `Δsⱼ` be its fractional displacement in the supercell and define `xⱼ = 2π H·Δsⱼ`. The displacement multiplies that site’s amplitude by `exp(i xⱼ) = 1 + i xⱼ + O(xⱼ²)`. The constant term cancels in the parent, and the first surviving term at this reflection is proportional to A. The intensity therefore scales approximately as `A²` for small displacements. The table gives a half-to-full intensity ratio of about 0.25015. The reciprocal vector keeps the same length, so d stays fixed.
+4. **Test the scaling at a second reflection.** After each load, change the supercell indices to `(2,0,2)` and run again. This reflection corresponds to `2q`. The parent amplitude is zero, and the linear displacement term cancels when summed over primitive translations. The full- and half-amplitude model intensities are about 0.000393091 and 0.0000245887, a ratio of about 0.06255, close to `1/16`. Here the first nonzero scattering amplitude is quadratic in the displacement, so the intensity scales approximately as `A⁴` for small displacements.
+
+This static structure-factor exercise uses fixed atomic positions and equal scattering weights. It shows how periodic displacements change diffraction amplitudes. Experimental peak intensities require a suitable scattering model, inelastic scattering requires information on energy exchange, and structural stability requires an energy calculation.
+
+The [ZnO force data and Phonopy eigenvector verification](phonopy-import.md#zno-derived-example) documents the mode’s origin. The [ZnO phase-direction decomposition](coupled-materials.md#zno-mode-quadrature) studies the same snapshot in displacement space. Use the [published parent and frozen coordinates](../data/examples/zno-mode-quadrature.json) to reproduce the table.
 
 ## Phonopy data/animation
 

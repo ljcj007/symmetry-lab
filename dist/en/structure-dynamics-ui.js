@@ -5,18 +5,28 @@ import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlow
 import {setMaterialResearchInput} from './material-research-ui.js?v=20261120-zno-ir1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261120-zno-ir1';
+import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const opts=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
 const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const names={phase:"Structural phase transition and domain",diffraction:"Diffraction and extinction",phonopy:"Phonopy data import"};
+const znoSatelliteNames={parent:"Parent phase",full:"Full frozen displacement",half:"Half frozen displacement"};
+const znoSatelliteLesson="<p class=\"mr-scope\"><a href=\"#compute/diffraction?preset=zno-satellite\">Compare parent-cell extinction and displacement satellites in the same ZnO supercell →</a></p>";
+const znoSatelliteHTML=open=>`<details class="mr-scope" data-dyn-zno-satellite ${open?'open':''}><summary>Predict the displacement satellite in ZnO</summary><div data-dyn-zno-satellite-body></div></details>`;
 const defaults={phase:{a:-1,b:1,c:0,h:0,q:.7,axis:'z',qMax:1.6,displacementScale:.05,latticeConstant:4},diffraction:{preset:'silicon',hkl:[2,2,0],maxIndex:4,wavelength:1.5406,latticeConstant:5.43,scatteringFactors:{}},phonopy:{content:'',filename:'band.yaml',frequency_unit:'unknown',selected_q:0,selected_band:0,amplitude:.15,supercell:[2,1,1],dos_content:'',dos_kind:'total',structure_content:''}};
 function diffractionGeometry(input){
  if(!Array.isArray(input?.cell)||!Array.isArray(input?.atoms))return null;
  return JSON.stringify([input.cell,input.atoms.map(atom=>[atom?.species,atom?.fractional])]);
 }
-function diffractionSourceHTML(source){
+function diffractionSourceHTML(source,satellite){
  if(!source)return '';
+ if(satellite)return `<aside id="dyn-diffraction-source" class="obs-model-note" aria-labelledby="dyn-diffraction-source-title">
+  <h3 id="dyn-diffraction-source-title" tabindex="-1">Loaded the verified ZnO supercell</h3>
+  <p>${esc(znoSatelliteNames[satellite.stateKey])} · ${source.atomCount} atoms</p>
+  <p>Choose the reflection indices in this supercell's basis. Review the indices and scattering factors before running. The comparison uses equal constant scattering factors.</p>
+  <div class="obs-links"><a href="docs/structure-dynamics.md#zno-satellite">ZnO source, steps and calculation conventions →</a></div>
+ </aside>`;
  const cell=source.format==='cif'?"Input cell from the symmetry-expanded CIF":"Original input cell read by structure conversion";
  return `<aside id="dyn-diffraction-source" class="obs-model-note" aria-labelledby="dyn-diffraction-source-title">
   <h3 id="dyn-diffraction-source-title">Input cell copied from structure conversion</h3>
@@ -78,25 +88,42 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
  let tool=Object.hasOwn(names,selection.experiment)?selection.experiment:lesson.tool,tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn',result=null,busy=false,ticket=0,fileTicket=0,pendingRead=null,activeJob=null,stop=()=>{},progress={};
  const importedDiffraction=selection.calculationOnly&&tool==='diffraction'?validateStructureDiffractionHandoff(selection.diffractionHandoff):null;
- const importedGeometry=importedDiffraction?diffractionGeometry(importedDiffraction.custom):null;
- let diffractionSource=importedDiffraction?.source||null,hasMaterialBackground=!importedDiffraction;
+ let sourceGeometry=importedDiffraction?diffractionGeometry(importedDiffraction.custom):null;
+ let diffractionSource=importedDiffraction?.source||null,hasMaterialBackground=!importedDiffraction,satelliteEvidence=null;
+ const satelliteState={};let stopSatellite=()=>{},satelliteOpen=selection.preset==='zno-satellite';
  try{const p=JSON.parse(localStorage.getItem('symmetry-lab.structure-dynamics.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
  const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:hasMaterialBackground?material.id:undefined,exercise:exercise.id});
  function applyMaterial(){if(['silicon','gaas','nacl'].includes(material.id)){forms.diffraction.preset=material.id;forms.diffraction.latticeConstant={silicon:5.43,gaas:5.65,nacl:5.64}[material.id];}forms.diffraction.scatteringFactors=structuredClone(material.expected?.scatteringFactors||{});forms.diffraction.hkl=({silicon:[2,2,0],nacl:[1,1,1],gaas:[2,0,0]})[material.id]||[2,2,0];}
  if(tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');
- applyMaterial();if(selection.preset&&Object.hasOwn(names,tool)&&tool==='diffraction')forms.diffraction.preset=selection.preset;
+ applyMaterial();if(selection.preset&&selection.preset!=='zno-satellite'&&tool==='diffraction')forms.diffraction.preset=selection.preset;
  if(importedDiffraction)forms.diffraction={...structuredClone(defaults.diffraction),preset:'custom',custom:structuredClone(importedDiffraction.custom)};
  function detachDiffractionSource(){
   if(!diffractionSource)return;
   diffractionSource=null;
+  satelliteEvidence=null;
   const card=$('#dyn-diffraction-source');
   if(card)card.hidden=true;
  }
  function checkDiffractionSource(input){
-  if(diffractionSource&&(input.preset!=='custom'||diffractionGeometry(input)!==importedGeometry))detachDiffractionSource();
+  if(diffractionSource&&(input.preset!=='custom'||diffractionGeometry(input)!==sourceGeometry))detachDiffractionSource();
  }
  function checkDiffractionEdit(target){
   if(tool==='diffraction'&&(target?.id==='dyn-custom'||target?.id==='dyn-preset'&&target.value!=='custom'))detachDiffractionSource();
+ }
+ function loadSatelliteDraft({handoff,hkl,scatteringFactors,sourceEvidence}){
+  if(!current()||tab!=='lab'||tool!=='diffraction'||busy)return false;
+  const preset=validateStructureDiffractionHandoff(handoff);
+  if(!preset||!Object.hasOwn(znoSatelliteNames,sourceEvidence?.stateKey))return false;
+  try{readForm();}catch{}
+  flowDrafts.discard('diffraction');
+  Object.assign(forms.diffraction,{preset:'custom',custom:preset.custom,hkl,scatteringFactors});
+  diffractionSource=preset.source;
+  sourceGeometry=diffractionGeometry(preset.custom);
+  satelliteEvidence=structuredClone(sourceEvidence);
+  hasMaterialBackground=false;
+  invalidate();draw();
+  $('#dyn-diffraction-source-title')?.focus?.();
+  return true;
  }
  function readIsCurrent(request=pendingRead){return !!request&&pendingRead===request&&current()&&request.id===fileTicket&&tool==='phonopy'&&tab==='lab'&&$('#dyn-form')===request.form;}
  function syncLabControls(){
@@ -121,11 +148,11 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  }
 
  function links(c){return `<div class="obs-links"><a href="#classroom/structure-dynamics?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">Browse the materials learning pathways →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?"Phase transitions and domains":"Diffraction and extinction"} →</a><a href="#compute/phonopy?material=${esc(c.id)}">Import your own Phonopy data →</a>${c.id==='batio3'?"<a href=\"#compute/tensors?preset=tetragonal_4mm\">polarity Phase tensor constraints →</a>":`<a href="#atlas/materials?material=${esc(c.id)}">Structure and Symmetry Operation →</a><a href="#classroom/observables?material=${esc(c.id)}">phonon and physical properties class →</a>`}</div>`;}
- function draw(){if(!current())return;stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
+ function draw(){if(!current())return;const previous=$('[data-dyn-zno-satellite]');if(previous)satelliteOpen=previous.open;stopSatellite();stopSatellite=()=>{};stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
  const backgrounds=data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]);
  if(!hasMaterialBackground)backgrounds.unshift(['',"Custom input"]);
  root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?"Connecting structure, dynamics and experiments from one material":"How do structures change, and how do experiments detect it?"}</h2><p>from order parameter and domains, to diffraction cancellation, and then check the dynamics with your own phonon data.</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Structural Dynamics Course">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>material learning route (background)<select id="dyn-material">${opts(backgrounds,hasMaterialBackground?material.id:'')}</select></label>${hasMaterialBackground?`<p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?" The imported file determines the structure; this case name does not specify it.":''}</p>`:''}</div>
- ${tool==='diffraction'&&tab==='lab'?diffractionSourceHTML(diffractionSource):''}
+ ${tool==='diffraction'&&tab==='lab'?diffractionSourceHTML(diffractionSource,satelliteEvidence)+znoSatelliteHTML(satelliteOpen):''}
  <div class="obs-links"><a href="#classroom/structure-dynamics?module=modes">Continue: mode identification and frozen structures →</a><a href="#classroom/observables?module=thermo">Continued: phonon Thermodynamics →</a><a href="#atlas/notebook">Materials Research Record →</a></div><div id="dyn-content"></div>`;
  root.querySelectorAll('[data-dyn-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.dynTab;draw();sync();});
  const background=$('#dyn-material');
@@ -138,7 +165,7 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  }
  function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">Select theme<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">Open ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">step-by-step derivation →</button></div>
  ${lesson.id==='structure-factor'?"<aside class=\"obs-model-note\" id=\"dyn-structure-practice\"><p>You can also open a POSCAR or CIF and test your own reflection indices in the reciprocal basis of the input cell.</p><a href=\"#structure\">Read a structure and prepare diffraction input →</a></aside>":''}
- ${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+ ${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${lesson.tool==='diffraction'?znoSatelliteLesson:''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
  $('#dyn-lesson').onchange=e=>{invalidate();lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(x=>x.lesson===lesson.id);tool=lesson.tool;draw();sync();};$('#dyn-to-exercise').onclick=()=>{invalidate();exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
  function applyLessonPreset(){
   if(tool==='phase'){Object.assign(forms.phase,structuredClone(defaults.phase));material=data.cases.find(c=>c.id==='batio3');}
@@ -218,6 +245,10 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
    if(diffractionSource&&preset.value!=='custom')form.oninput(e);
    else syncLabControls();
   };
+  const entry=$('[data-dyn-zno-satellite]'),body=entry?.querySelector('[data-dyn-zno-satellite-body]');
+  stopSatellite=bindOptionalPanel({detail:entry,body,isCurrent:()=>current()&&$('[data-dyn-zno-satellite]')===entry,
+   load:()=>import('./zno-satellite-ui.js?v=20261120-zno-satellite1'),
+   mount:(component,isCurrent)=>component.bindZnOSatellite({root:body,isCurrent,state:satelliteState,onLoad:loadSatelliteDraft})});
  }
  form.onsubmit=async e=>{e.preventDefault();if(!current()||$('#dyn-form')!==form||busy||readIsCurrent())return;try{readForm();await calculate();}catch(error){if(current()&&$('#dyn-form')===form)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}};
  if(tool==='phonopy'){
@@ -236,12 +267,13 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
    checkDiffractionSource(input);
   }
   const diffractionMetadata=action==='diffraction'&&diffractionSource?{basis:'input-cell',...diffractionSource}:null;
+  const satelliteMetadata=diffractionMetadata&&satelliteEvidence?structuredClone(satelliteEvidence):null;
   activeJob=job;syncLabControls();$('#dyn-fields').disabled=true;$('#dyn-cancel').hidden=false;$('#dyn-output').setAttribute('aria-busy','true');$('#dyn-output').innerHTML="<p role=\"status\"><span class=\"spinner\"></span> Python is calculating; you need to download the environment for the first run...</p>";
   try{
    const answer=await run(action,input);
    if(!current()||job!==ticket)return;
    result=answer;
-   lastResult={kind:'structure-dynamics',tool:action,...(materialContext?{materialContext}:{}),input,result,...(diffractionMetadata?{diffractionSource:diffractionMetadata}:{})};
+   lastResult={kind:'structure-dynamics',tool:action,...(materialContext?{materialContext}:{}),input,result,...(diffractionMetadata?{diffractionSource:diffractionMetadata}:{}),...(satelliteMetadata?{sourceEvidence:satelliteMetadata}:{})};
    output();
   }catch(error){if(current()&&job===ticket)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}
   finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}
@@ -261,7 +293,7 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  if(tool==='phonopy'){const r=result;if(r.animation?.available)viewer({atoms:r.animation.atoms,frames:r.animation.frames,cell:r.structure.lattice,supercell:r.animation.supercell,title:"Complex eigenvector animation with mass unweighting",play:true});if($('#dyn-q-select'))$('#dyn-q-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_q=+e.target.value;invalidate();draw();await calculate();};if($('#dyn-band-select'))$('#dyn-band-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_band=+e.target.value;invalidate();draw();await calculate();};}
  }
  const notes=rows=>`<aside class="obs-model-note"><ul>${(rows||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside>`;
- function phaseOutput(r){return `<h2>maternal phase ${esc(r.structure.parentSymbol)} → ${esc(r.structure.distortedSymbol)}</h2>${!r.landau.boundedBelow?"<p class=\"obs-model-note\">is unbounded in free energy and has no global equilibrium state.</p>":r.landau.flat?"<p class=\"obs-model-note\">Free energy is always zero, and all Q are non-strict minima.</p>":''}<div class="obs-result-stats"><div><small>reserved mother phase point operation</small><strong>${r.symmetry.retainedOrder} / ${r.symmetry.parentOrder}</strong></div><div><small>geometrically equivalent domain number</small><strong>${r.symmetry.domainCount}</strong></div><div><small>selected Q</small><strong>${num(r.landau.selected.q)}</strong></div></div><p>The bias field h can increase the energy of some domains; geometric equivalence does not mean that the energy is still degenerate under external fields. Q=0 is the parent phase and does not have the six distinguishable polar domain .</p>${curveSVG(r.landau.curve.map(p=>[p.q,p.energy]),"order parameter Q","Free energy F (teaching unit)")}${table(["stationary point Q",'F','F″',"Classification","global lowest"],r.landau.stationary.map(p=>[num(p.q),num(p.energy),num(p.curvature),({minimum:"local minimum",maximum:"local maximum",stationary_inflection:"stagnation point inflection point"}[p.kind]||p.kind),p.isGlobalMinimum?"yes":"no"]))}<div class="obs-links">${r.landau.globalMinima.map(p=>`<button type="button" class="secondary" data-minimum="${p.q}" ${Math.abs(p.q)>3?'disabled':''}> adopts balanced Q = ${num(p.q)}</button>`).join('')}</div><div id="dyn-viewer"></div><div class="obs-links">${r.symmetry.domains.map((d,i)=>`<button type="button" class="secondary" data-domain="${i}">${esc(d.label)} domain</button>`).join('')}</div><details><summary>Operation of retained and lost 48 mother phase points</summary>${table(["Operation",'det R',"status","Matrix"],r.symmetry.operations.map(o=>[o.id,o.determinant,o.retained?"Retained":"lost",JSON.stringify(o.rotation)]))}</details>${notes(r.limitations)}`;}
+ function phaseOutput(r){return `<h2>Parent phase ${esc(r.structure.parentSymbol)} → ${esc(r.structure.distortedSymbol)}</h2>${!r.landau.boundedBelow?"<p class=\"obs-model-note\">is unbounded in free energy and has no global equilibrium state.</p>":r.landau.flat?"<p class=\"obs-model-note\">Free energy is always zero, and all Q are non-strict minima.</p>":''}<div class="obs-result-stats"><div><small>reserved mother phase point operation</small><strong>${r.symmetry.retainedOrder} / ${r.symmetry.parentOrder}</strong></div><div><small>geometrically equivalent domain number</small><strong>${r.symmetry.domainCount}</strong></div><div><small>selected Q</small><strong>${num(r.landau.selected.q)}</strong></div></div><p>The bias field h can increase the energy of some domains; geometric equivalence does not mean that the energy is still degenerate under external fields. Q=0 is the parent phase and does not have the six distinguishable polar domain .</p>${curveSVG(r.landau.curve.map(p=>[p.q,p.energy]),"order parameter Q","Free energy F (teaching unit)")}${table(["stationary point Q",'F','F″',"Classification","global lowest"],r.landau.stationary.map(p=>[num(p.q),num(p.energy),num(p.curvature),({minimum:"local minimum",maximum:"local maximum",stationary_inflection:"stagnation point inflection point"}[p.kind]||p.kind),p.isGlobalMinimum?"yes":"no"]))}<div class="obs-links">${r.landau.globalMinima.map(p=>`<button type="button" class="secondary" data-minimum="${p.q}" ${Math.abs(p.q)>3?'disabled':''}> adopts balanced Q = ${num(p.q)}</button>`).join('')}</div><div id="dyn-viewer"></div><div class="obs-links">${r.symmetry.domains.map((d,i)=>`<button type="button" class="secondary" data-domain="${i}">${esc(d.label)} domain</button>`).join('')}</div><details><summary>Operation of retained and lost 48 mother phase points</summary>${table(["Operation",'det R',"status","Matrix"],r.symmetry.operations.map(o=>[o.id,o.determinant,o.retained?"Retained":"lost",JSON.stringify(o.rotation)]))}</details>${notes(r.limitations)}`;}
  function diffractionOutput(r){const f=r.reflection;return `<h2>${esc(r.structure.name||r.structure.preset||forms.diffraction.preset)} · Reflection (${f.hkl.join(' ')}) · ${esc({allowed:"Allowed",accidental:"Scattering weights cancel out accidentally",centering:"Grid center matting",diamond_basis:"diamond base matt",screw_axis:"screw axis matt",model_cancellation:"model amplitude cancellation"}[f.extinction.kind]||f.extinction.kind)}</h2><p>${esc(f.extinction.reason)}</p><div class="obs-result-stats"><div><small>F = Re + i Im</small><strong>${num(f.real)} + i ${num(f.imag)}</strong></div><div><small>|F|²（ any unit)</small><strong>${num(f.intensity)}</strong></div><div><small>d（Å） / 2θ</small><strong>${num(f.dSpacing)} / ${f.accessible?num(f.twoTheta)+'°':"is not reachable"}</strong></div></div>${phasorSVG(f.components)}<details><summary>Phase and amplitude of each atom</summary>${table(["element","fractional coordinates","scattering weight","phase°",'Re','Im'],f.components.map(c=>[c.species,c.fractional.join(', '),num(c.weight),num(c.phaseDeg),num(c.real),num(c.imag)]))}</details><h3>limited index powder rod spectrum</h3>${sticks(r.powder)}<p class="obs-small">Reflections merged at the same d spacing; intensity contains enumerated multiplicities. Index truncation may miss higher order peaks, excluding instrument and temperature factors.</p><h3>Select another reflection</h3><div class="dyn-reflections">${r.reflections.slice(0,160).map(x=>`<button type="button" class="secondary" data-reflection="${x.hkl.join(',')}" title="${esc(x.extinction.reason)}">(${x.hkl.join(' ')}) · ${num(x.intensity)}</button>`).join('')}</div><p class="obs-small">displays the first 160 reflection quick entries; other indicators can be entered on the left, and the complete enumeration can be exported.</p>${notes(r.limitations)}`;}
  function sticks(rows){const points=rows.filter(p=>Number.isFinite(p.twoTheta)),max=Math.max(0,...points.map(p=>p.intensity))||1;return `<svg class="obs-curve" viewBox="0 0 720 300" role="img" aria-label="powder diffraction schematic rod spectrum"><path d="M60 20V250H680" fill="none" stroke="#a3b6a9"/>${points.map(p=>`<line x1="${60+610*p.twoTheta/180}" y1="250" x2="${60+610*p.twoTheta/180}" y2="${250-210*p.intensity/max}" stroke="#287c66" stroke-width="2"><title>${esc(JSON.stringify(p.hkls))} / ${num(p.twoTheta)}°</title></line>`).join('')}<text x="60" y="280">0°</text><text x="330" y="280">2θ</text><text x="620" y="280">180°</text></svg>`;}
  function phonopyOutput(r){const s=r.summary||{},a=r.animation||{};return `<h2>${esc(r.source?.filename||forms.phonopy.filename)} · ${esc(r.kind)}</h2>${notes(r.warnings)}${phonopySourceHTML(r)}${phonopyUnitSummary(r)}${r.qpoints?.length?`<div class="obs-result-stats"><div><small>q points / branches per q point</small><strong>${s.qpointCount} / ${s.bandCount}</strong></div><div><small>Mode entries below the negative tolerance (including repeated endpoints)</small><strong>${s.imaginaryCount}</strong></div><div><small>Unit</small><strong>${esc(r.frequencyUnit)}</strong></div></div>${phononBandSVG(r)}<div class="dyn-selectors"><label>Select q point<select id="dyn-q-select">${opts(r.qpoints.map(q=>[q.index,`${q.index} · (${q.q.join(', ')}) ${q.label||''}`]),r.selection.qIndex)}</select></label><label>Select phonon branch<select id="dyn-band-select">${opts(r.qpoints[r.selection.qIndex].frequencies.map((f,i)=>[i,`${i} · ${num(f)} ${r.frequencyUnit}`]),r.selection.bandIndex)}</select></label></div><p>current frequency:<strong>${num(r.selection.frequency)} ${esc(r.frequencyUnit)}</strong>. Negative values ​​are the drawing encoding of the imaginary frequency. The animation is still just a periodic display of the shape of the mode space and does not simulate the exponential growth of the unstable mode.</p>`:"<p>does not contain the phonon frequency. Only readable data is shown here, dispersion is not automatically generated from the structure.</p>"}${a.available?`<div id="dyn-viewer"></div><p class="obs-model-note">${esc(a.formula)};The overall display amplitude is normalized, not the thermal amplitude.${a.commensurate?"Selected supercell is compatible with q.":"Selected supercell is incompatible with q: finite lattice fragments are displayed, and the boundaries are not periodically spliced."}</p>`:`<p class="obs-model-note">${esc(a.reason||"The current file does not have a complete structure and eigenvectors available for animation.")}</p>`}${r.dos?`<h3>DOS data</h3>${r.dos.series.slice(0,12).map(s=>curveSVG(r.dos.frequency.map((x,i)=>[x,s.values[i]]),"frequency / "+r.frequencyUnit,s.label)).join('')}<p class="obs-small">displays up to the first 12 DOS curves; all columns are retained in the export result. Normalization and units are inherited from the input and are not automatically inferred.</p>`:''}${r.structure?.atoms?`<details><summary>file</summary>${table(["element","quality","fractional coordinates"],r.structure.atoms.map(a=>[a.symbol,a.mass??"is missing",a.coordinates?.join(', ')]))}</details>`:''}`;}
@@ -273,4 +305,5 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)applyLessonPreset();
  draw();
  if(selection.preset==='phonopy-zno'&&tool==='phonopy'&&tab==='lab')await loadPhonopyExample('zno');
+ return ()=>{stopSatellite();stop();};
 }

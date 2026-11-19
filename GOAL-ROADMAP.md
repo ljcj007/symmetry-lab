@@ -336,3 +336,8 @@ establish that all existing scientific and teaching content has been audited.
 - The IR selection-rule lesson leads to a pinned ZnO Γ-point comparison. Learners predict which optical clusters couple to an electric field along c or in the basal plane, then inspect projection trends from the archived mass-weighted eigenvectors and Born tensors. The E₂ clusters provide two zero-projection controls.
 - Rotating a basis for the two-dimensional E₁ cluster at fixed incident polarization changes the contributions of the two basis vectors. The total is invariant. Changing the polarization relative to the crystal changes the cluster projection. The two controls are independent.
 - The output reports squared mode dipole derivatives in e²/u for the fixed eigenpairs with non-analytic correction disabled. The published source includes the tensor and mode identities and the reproducible calculation.
+
+## Predict a displacement satellite in the same ZnO supercell
+
+- Compare the parent, full and half frozen geometry using the same 64 atoms, lattice and reciprocal indices. When the equal-weight parent translation phases cancel, the frozen modulation gives a nonzero (1,0,1) satellite. The indices refer to the supercell, equivalent to the parent fractional wave vector (1/4,0,1/4).
+- Holding the geometry basis, indices and scattering weights fixed gives relative intensities 0, 0.5285224 and 0.1322079. Halving displacements tests the small-amplitude square scaling. The existing diffraction engine reports these values for static snapshots and constant scattering factors.

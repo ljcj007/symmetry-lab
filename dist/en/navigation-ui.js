@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-zno-ir1';
+import {classroomPathways} from './classroom-ui.js?v=20261120-zno-satellite1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261120-structure-diffraction1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-gamma-trace1';
@@ -37,7 +37,7 @@ export const toolGroups=[
   ['compute/domain-wall-lab',"Domain walls and localized states · Continuum fields and SSH interfaces","Gradient free energy, wall widths and energies, mesh diagnostics and interface-localized spectra.","domain wall domain wall interface local state SSH"],
   ['compute/phase',"Structural phase transitions · Free energy and domains","Landau stationary points, stability, idealized polar distortions of BaTiO₃ and six domains.","phase transition Landau order parameter domain ferroelectric"],
   ['compute/distortion-modes',"Structural distortions · Mode decomposition and coupling","Structure pairs in a common cell, atom mapping, mode projection and reconstruction, and a two-order-parameter free energy.","Distortion Decomposition Structure Matching polarity Octahedral Mode Coupling BaTiO3 SrTiO3"],
-  ['compute/diffraction',"Diffraction · Structure factors and extinctions","Atomic phases, centering and basis extinctions, screw-axis conditions and powder stick patterns.","XRD diffraction extinction structure factor"],
+  ['compute/diffraction',"Diffraction · Structure factors and extinctions","Atomic phases, centering and basis extinctions, screw-axis conditions and powder stick patterns.","XRD diffraction extinction structure factor ZnO displacement satellite"],
   ['structure',"Structure standardization · BC cells","Import POSCAR / CIF, identify the space group and transform the primitive cell, origin and wavevector.","POSCAR CIF spglib primitive cell"],
  ]},
  {id:'representation',title:"Representations and corepresentations",summary:"Classify quantum states using symmetry operations.",tools:[

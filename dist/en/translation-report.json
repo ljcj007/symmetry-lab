@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28504,
-  "translatedUnits": 28504,
+  "sourceUnits": 28549,
+  "translatedUnits": 28549,
   "missing": [],
-  "files": 509,
+  "files": 510,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -149,6 +149,9 @@
     "en-gamma-periodicity-host.json",
     "en-zno-ir-polarization-ui.json",
     "en-zno-ir-polarization-docs.json",
-    "en-zno-ir-polarization-host.json"
+    "en-zno-ir-polarization-host.json",
+    "en-zno-satellite-ui.json",
+    "en-zno-satellite-docs.json",
+    "en-zno-satellite-host.json"
   ]
 }

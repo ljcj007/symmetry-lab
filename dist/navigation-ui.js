@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-zno-ir1';
+import {classroomPathways} from './classroom-ui.js?v=20261120-zno-satellite1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261120-structure-diffraction1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-gamma-trace1';
@@ -37,7 +37,7 @@ export const toolGroups=[
   ['compute/domain-wall-lab','畴壁与局域态 · 连续场和 SSH 界面','梯度自由能、壁宽、壁能、网格诊断和界面局域谱。','domain wall 畴壁 界面 局域态 SSH'],
   ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
   ['compute/distortion-modes','结构畸变 · 模式分解与耦合','同胞结构对、原子对应、模式投影与重构，两序参量自由能。','畸变 分解 结构匹配 极性 八面体 模式耦合 BaTiO3 SrTiO3'],
-  ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor'],
+  ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor ZnO 位移卫星 satellite'],
   ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[

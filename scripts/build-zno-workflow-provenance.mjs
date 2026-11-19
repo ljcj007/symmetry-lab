@@ -52,6 +52,9 @@ const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.
  'dist/data/examples/'+polarizationFile,'dist/zno-ir-polarization-ui.js','dist/optional-panel.js','dist/observables-ui.js',
  'scripts/build-zno-ir-polarization.py','scripts/test-zno-ir-polarization-ui.mjs',
  'locales/en-zno-ir-polarization-ui.json','locales/en-zno-ir-polarization-docs.json','locales/en-zno-ir-polarization-host.json',
+ 'dist/zno-satellite-ui.js','dist/structure-diffraction-handoff.js','dist/python/diffraction.py','dist/docs/structure-dynamics.md',
+ 'scripts/test-zno-satellite-ui.mjs','scripts/test-zno-satellite-host.mjs','scripts/test-python-zno-satellite.py',
+ 'locales/en-zno-satellite-ui.json','locales/en-zno-satellite-host.json','locales/en-zno-satellite-docs.json',
  ...fs.readdirSync(examples).filter(name=>name.startsWith('phonopy-zno-')).map(name=>'dist/data/examples/'+name)];
 const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf8-lf-v1 for registered text dependencies; original-byte dataset identities are recorded separately',
  scope:'Reviewed cross-course links and one authentic unequal-mass phonon input-to-frozen-export workflow. Browser calculations read supplied eigenvectors; Phonopy force-data postprocessing is reproducible offline.',
@@ -62,6 +65,7 @@ const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf
  generation:{classification:example.classification,commit:example.commit,generator:example.generator},
  phaseBasisExample:{file:quadratureFile,settings:quadrature.settings,checks:quadrature.checks},
  opticalPolarizationExample:{file:polarizationFile,settings:polarization.settings,checks:polarization.checks},
+ satelliteComparison:{file:quadratureFile,basis:'same 64-site supercell for all three inputs',hkl:[1,0,1],scatteringFactors:{Zn:1,O:1}},
  verification:['All 48 supplied modes have independently checked orthogonality, Hermitian dynamical matrices and eigenpair/frequency residuals. The selected nondegenerate complex mode has independently checked mass unweighting, spatial phases and all exported 64-atom coordinates.',
   'The exact distributed primary and companion text identities are checked separately. Browser textarea newline normalization preserves an unedited raw input; an explicit text edit or independent source replacement retires the old match and unit confirmation.',
   'The existing importer has one additive exact-source reference branch. Eleven historical requests execute the hash-verified old source and current code on the same host, retaining 6000 numeric and 896 other leaves exactly.',

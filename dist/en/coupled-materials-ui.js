@@ -44,7 +44,7 @@ function znoQuadratureHTML(open){
   <button type="button" class="secondary" id="cm-zno-two">Load two directions (phases 0 and π/2)</button>
   <button type="button" class="secondary" id="cm-zno-cancel" hidden>Cancel loading</button>
  </div>
- <a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO data sources and comparison steps →</a>
+ <div class="obs-links"><a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO data sources and comparison steps →</a><a href="#compute/diffraction?preset=zno-satellite">Calculate a displacement satellite for the same ZnO supercell →</a></div>
  <p id="cm-zno-load-status" role="status"></p><p id="cm-zno-error" role="alert" hidden></p>
  </details>`;
 }

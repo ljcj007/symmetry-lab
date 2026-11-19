@@ -46,6 +46,7 @@ catalogFiles.push('en-zno-mode-quadrature-ui.json','en-zno-mode-quadrature-docs.
 catalogFiles.push('en-trace-file-search.json');
 catalogFiles.push('en-gamma-periodicity.json','en-gamma-periodicity-host.json');
 catalogFiles.push('en-zno-ir-polarization-ui.json','en-zno-ir-polarization-docs.json','en-zno-ir-polarization-host.json');
+catalogFiles.push('en-zno-satellite-ui.json','en-zno-satellite-docs.json','en-zno-satellite-host.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

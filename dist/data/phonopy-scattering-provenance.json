@@ -54,13 +54,13 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 69036,
-      "sha256": "a0375f997b5c7928fb4b569fb0550f4434461003e7c95beca077185892972d1b"
+      "bytes": 69712,
+      "sha256": "9e223ac89facd58bfa71fd3ad456ff140b821f321f36d1c93f20bbbd18145383"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 101354,
-      "sha256": "6661fc3eb2851788cfb301da75c74adcb75bf9d583b5548413b54d9cbb696272"
+      "bytes": 101375,
+      "sha256": "fb500abce3b01716fc87d7f57d459a7b7db503c5949c57f7cb4247fc86cb007e"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -139,8 +139,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8182,
-      "sha256": "8438e35f40c5762e632e05499eece9b7de2e83be7b58db5e01131431fa5c8394"
+      "bytes": 8189,
+      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -169,8 +169,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31024,
-      "sha256": "850a65de85eb64b80b6ad7d24241873aa1daafe3d69a9ed14589b9f255be9cf2"
+      "bytes": 31058,
+      "sha256": "f95ca6a88630ea7d3fe0ba08eef7e6d0c55629593dc9476b36d0a20b22c88aaa"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -229,8 +229,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 56535,
-      "sha256": "f41adf5f8930152c11e5f28af449df1bb995062502b108d263d1e760084807e3"
+      "bytes": 59379,
+      "sha256": "d7cd22c3f71b7bb51de9c9971439724142d6b4bd6f93936ef0aec1f04e20e8c1"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -937,6 +937,21 @@
       "bytes": 20406,
       "sha256": "072a3644676b1f6fcc2c87723b6e8d697b8ca44f88d0fdb4e2b7171898fafd5f"
     },
+    "locales/en-zno-satellite-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6975,
+      "sha256": "fabae6e6733a87b7dfc6738d27fe7fe02fc73b69bb03b2fabece6a67e12fab1d"
+    },
+    "locales/en-zno-satellite-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1120,
+      "sha256": "bc003722cc36bbacee3d11ad9922089aa8439640804b4a4b442185974dec28d7"
+    },
+    "locales/en-zno-satellite-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2551,
+      "sha256": "604584180a8ba7692f7691161cafcc546caedab9c0bb4f16d8e4c63d6a0ba235"
+    },
     "package-lock.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 685,
@@ -944,8 +959,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 25625,
-      "sha256": "e4a77136be6754fc1f406ab43728f8d5641754d2c305d7733bbe8d7d2ab32f09"
+      "bytes": 25920,
+      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -974,8 +989,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5409,
-      "sha256": "54446d13ea0ba4a3f8ca44a0d8af6a5890f7e4bf2e19ba721fe9842f6932c2be"
+      "bytes": 5514,
+      "sha256": "b32ffe0c11de6313b8086c640b8bb7b2ebccee24620e33db9bc482035346cdf7"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
