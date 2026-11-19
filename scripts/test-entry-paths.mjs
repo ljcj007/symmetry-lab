@@ -6,7 +6,10 @@ import {knownTool} from '../dist/navigation-ui.js';
 assert.equal(studyStages.length,6);
 assert.equal(studyStages[0].links[0][1],'classroom/start');
 for(const stage of studyStages){assert.ok(stage.prior&&stage.goal);for(const [,route]of stage.links){if(route.startsWith('classroom')){const parsed=parseClassroomRoute(route);assert.ok(parsed,route);assert.deepEqual(parseClassroomRoute(buildClassroomHash(parsed)),parsed,route);}else assert.ok(['compute','atlas','atlas/projects','atlas/notebook'].includes(route)||knownTool(route),route);}}
-for(const [id,first]of [['foundations','lesson=group-basics'],['crystal','track=space'],['observables','lesson=mechanical-modes'],['spin','track=double'],['continuous','track=continuous']])assert.equal(classroomPathways.find(p=>p.id===id).links[0][1],first);
+for(const [id,first]of [['foundations','lesson=group-basics'],['crystal','tab=learn&lesson=space-01&track=space'],['observables','lesson=mechanical-modes'],['spin','track=double'],['continuous','track=continuous']])assert.equal(classroomPathways.find(p=>p.id===id).links[0][1],first);
+const legacyCrystal=parseClassroomRoute('classroom/crystal?track=space');
+assert.equal(legacyCrystal.section,'academy');
+assert.equal(legacyCrystal.track,'space');
 assert.equal(classroomPathways.length,7,'Preserve the established seven-pathway structure');
 assert.match(studyMapHTML(),/所有课程与工具都可直接进入/);
 const entry=fs.readFileSync(new URL('../dist/entry-home.js',import.meta.url),'utf8');assert.match(entry,/'classroom\/start','开始零基础导学'/);

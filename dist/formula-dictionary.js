@@ -1,7 +1,7 @@
 // A read-only companion to the formula renderer; never rewrites source math.
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {segmentFormula,findInlineMath} from './math-notation.js?v=20261113-prose2';
-const RELEASE='20261110-en1';
+const RELEASE='20261120-lesson-nav1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const selector='span.sl-math[data-math-source],.sl-equation[data-math-source],svg text[aria-label]';
 const interactive='button,a,input,select,textarea,code,[contenteditable="true"],[data-math-ignore],.fd-dialog,.fd-page';
@@ -93,13 +93,34 @@ export function dictionaryNotationHTML(source,{symbol=false}={}){
 const symbolList=entry=>[...new Map((entry.symbols||[]).map(s=>[normalizeDictionaryText(s),s])).values()];
 export function dictionaryEntryHTML(entry,catalog,{compact=false}={}){
  const refs=new Map((catalog.sources||[]).map(s=>[s.id,s]));
+ const lessonLinks=catalog.lessonLinks?.[entry.id];
  const head=`<h3>${dictionaryNotationHTML(entry.title)}</h3><p class="fd-symbols">${symbolList(entry).map(s=>`<span class="fd-symbol">${dictionaryNotationHTML(s,{symbol:true})}</span>`).join(' ')}</p>`;
- const body=`<p>${dictionaryNotationHTML(entry.definition)}</p>${(entry.variables||[]).length?`<dl class="fd-variables">${entry.variables.map(v=>`<div><dt>${dictionaryNotationHTML(v.symbol,{symbol:true})}</dt><dd>${dictionaryNotationHTML(v.meaning)}<span class="fd-unit">单位：${dictionaryNotationHTML(v.unit||'依模块约定')}</span></dd></div>`).join('')}</dl>`:''}<p><strong>约定：</strong>${dictionaryNotationHTML(entry.conventions||'请以当前模块标明的约定为准。')}</p><p><strong>适用条件：</strong>${dictionaryNotationHTML(entry.conditions||'仅在当前模块声明的模型范围内使用。')}</p><div class="fd-links">${linksHTML(entry.links)}</div><div class="fd-sources">${(entry.sources||[]).map(id=>{const s=refs.get(id),href=s&&safeDictionaryHref(s.url,true);return href?`<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`:'';}).join('')}</div>`;
+ const body=`<p>${dictionaryNotationHTML(entry.definition)}</p>${(entry.variables||[]).length?`<dl class="fd-variables">${entry.variables.map(v=>`<div><dt>${dictionaryNotationHTML(v.symbol,{symbol:true})}</dt><dd>${dictionaryNotationHTML(v.meaning)}<span class="fd-unit">单位：${dictionaryNotationHTML(v.unit||'依模块约定')}</span></dd></div>`).join('')}</dl>`:''}<p><strong>约定：</strong>${dictionaryNotationHTML(entry.conventions||'请以当前模块标明的约定为准。')}</p><p><strong>适用条件：</strong>${dictionaryNotationHTML(entry.conditions||'仅在当前模块声明的模型范围内使用。')}</p><div class="fd-links">${linksHTML([...(Array.isArray(lessonLinks)?lessonLinks:[]),...(entry.links||[])])}</div><div class="fd-sources">${(entry.sources||[]).map(id=>{const s=refs.get(id),href=s&&safeDictionaryHref(s.url,true);return href?`<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`:'';}).join('')}</div>`;
  return compact?`<details class="fd-entry"><summary>${dictionaryNotationHTML(entry.title)} <span class="fd-summary-symbols">${symbolList(entry).slice(0,3).map(s=>dictionaryNotationHTML(s,{symbol:true})).join(' · ')}</span></summary>${body}</details>`:`<article class="fd-entry">${head}${body}</article>`;
 }
 const sourceHTML=source=>`<section class="fd-original"><h3>公式原文</h3><pre data-math-ignore>${esc(source)}</pre></section>`;
-const resultHTML=(source,scope,catalog)=>{
- const resolved=resolveFormulaEntries(source,scope,catalog);
+const formulaEntries=({matches,ambiguous})=>[...matches,...ambiguous.flatMap(group=>group.entries)];
+function formulaSearchHref(source,resolved){
+ const ids=formulaEntries(resolved).map(entry=>entry.id).join(',');
+ return '#docs/dictionary?q='+encodeURIComponent(source)+(ids?'&entries='+encodeURIComponent(ids):'');
+}
+function linkedFormulaEntries(ids,catalog){
+ if(typeof ids!=='string'||!ids)return null;
+ const index=new Map(catalog.entries.map(entry=>[entry.id,entry]));
+ const selected=[...new Set(ids.split(',',catalog.entries.length))].map(id=>index.get(id)).filter(Boolean);
+ if(!selected.length)return null;
+ const groups=new Map();
+ for(const entry of selected){
+  if(!entry.ambiguity)continue;
+  const entries=groups.get(entry.ambiguity)||[];
+  entries.push(entry);
+  groups.set(entry.ambiguity,entries);
+ }
+ const ambiguous=[...groups].filter(([,entries])=>entries.length>1).map(([symbol,entries])=>({symbol,entries}));
+ const matches=selected.filter(entry=>(groups.get(entry.ambiguity)?.length||0)<2);
+ return {matches,ambiguous,unknown:false};
+}
+const resultHTML=(resolved,catalog)=>{
  return `${resolved.unknown?'<p class="fd-notice">暂未识别这段公式的可靠释义。原文已保留，请搜索关键词或进入相关课堂核对。</p>':''}${resolved.matches.map(e=>dictionaryEntryHTML(e,catalog)).join('')}${resolved.ambiguous.map(group=>`<section class="fd-ambiguity"><h3>${esc(group.symbol)} 有多个可能含义</h3><p>当前页面和公式不足以唯一确定，请根据所用模型选择；这里不自动指定。</p>${group.entries.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join('')}</section>`).join('')}`;
 };
 
@@ -113,7 +134,21 @@ export function renderFormulaDictionary({container,selection={}}={}){
   container.innerHTML=`<section class="fd-page"><header><span class="eyebrow">FORMULA DICTIONARY</span><h1>公式与符号词典</h1><p>搜索符号、公式或概念。相同字母可以代表不同物理量；每个词条同时列出约定、适用条件和来源。</p></header><form class="fd-search" role="search"><label for="fd-dictionary-query">符号、公式或关键词</label><div><input id="fd-dictionary-query" type="search" value="${esc(query)}" maxlength="1000" placeholder="例如 k、U、螺旋相位、S(Q,ω)" autocomplete="off"><button type="submit">搜索</button></div></form><p class="fd-count" role="status" aria-live="polite"></p><div class="fd-search-results"></div></section>`;
   form=container.querySelector('form');input=container.querySelector('input');
   const output=container.querySelector('.fd-search-results'),count=container.querySelector('.fd-count');
-  onInput=event=>{event?.preventDefault();const results=searchDictionary(input.value,catalog);count.textContent=`找到 ${results.length} 个词条。展开查看单位、约定与适用条件。`;output.innerHTML=results.length?results.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join(''):'<p class="fd-notice">没有可靠匹配。可改用概念名，或缩短搜索词。</p>';};
+  const linkedQuery=input.value;
+  let linked=linkedFormulaEntries(selection.entries,catalog);
+  onInput=event=>{
+   event?.preventDefault();
+   if(input.value!==linkedQuery)linked=null;
+   const results=linked?[]:searchDictionary(input.value,catalog);
+   const formula=linked||(!results.length&&input.value.trim()?resolveFormulaEntries(input.value,{},catalog):null);
+   if(formula&&!formula.unknown){
+    count.textContent='与公式相关的词条'+' · '+formulaEntries(formula).length;
+    output.innerHTML=resultHTML(formula,catalog);
+    return;
+   }
+   count.textContent=`找到 ${results.length} 个词条。展开查看单位、约定与适用条件。`;
+   output.innerHTML=results.length?results.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join(''):'<p class="fd-notice">没有可靠匹配。可改用概念名，或缩短搜索词。</p>';
+  };
   form.addEventListener('submit',onInput);input.addEventListener('input',onInput);onInput();
  }).catch(error=>{if(active){container.innerHTML=`<section class="fd-page"><h1>公式与符号词典</h1><p role="alert">${esc(error.message)}</p><button type="button" class="fd-retry">重新载入</button></section>`;container.querySelector('button').onclick=()=>{if(active){retryController?.destroy();retryController=renderFormulaDictionary({container,selection});}};}});
  return {ready,destroy(){active=false;retryController?.destroy();form?.removeEventListener('submit',onInput);input?.removeEventListener('input',onInput);}};
@@ -164,7 +199,8 @@ export function startFormulaDictionary(root=document.body){
   if(!dialog.open){if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
   dialog.querySelector('.fd-close').focus();
   try{const catalog=await loadFormulaDictionary();if(stopped||!opened||current!==job)return;
-   content.innerHTML=sourceHTML(source)+calculationContext+resultHTML(source,scope,catalog)+`<p class="fd-dialog-search"><a href="#docs/dictionary?q=${esc(encodeURIComponent(source))}">在词典中搜索这段公式 →</a></p>`;
+   const resolved=resolveFormulaEntries(source,scope,catalog);
+   content.innerHTML=sourceHTML(source)+calculationContext+resultHTML(resolved,catalog)+`<p class="fd-dialog-search"><a href="${esc(formulaSearchHref(source,resolved))}">在词典中搜索这段公式 →</a></p>`;
   }catch(error){if(!stopped&&opened&&current===job){content.innerHTML=sourceHTML(source)+`<p role="alert">${esc(error.message)}</p><button type="button" class="fd-dialog-retry">重试查词</button><p><a href="#docs/dictionary">打开词典搜索页 →</a></p>`;content.querySelector('button').onclick=()=>show(element);}}
  };
  const targetFor=event=>{const el=event.target?.closest?.('[data-fd-trigger]');return el&&eligible(el,root)?el:null;};

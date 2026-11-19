@@ -36,6 +36,28 @@ class CIFReciprocalReplayTests(unittest.TestCase):
                                   check=True, timeout=30)
         return json.loads(response.stdout)
 
+    def assert_screw_branch_labels(self, standard, characters, parameter, expected_labels):
+        self.assertTrue(standard['bc_complete'])
+        self.assertEqual(standard['bilbao_candidate_tables'], 0)
+        # The same fixed Seitz operation is compared on both raw-k charts.
+        positive_character = complex(1, 1) / (2 ** .5)
+        for target, label in zip((positive_character, -positive_character), expected_labels):
+            matches = [row for row in standard['mappings']
+                       if abs(characters[row['local_label']] - target) < 1e-12]
+            self.assertEqual(len(matches), 1)
+            mapping = matches[0]
+            self.assertEqual(mapping['bc_label'], label)
+            self.assertIsNone(mapping['bilbao_label'])
+            candidate, = mapping['candidates']
+            self.assertEqual(candidate['k_label'], 'Λ')
+            self.assertLess(candidate['residual'], 1e-12)
+            transport = candidate['transport']
+            self.assertEqual(transport['parameter'], parameter)
+            self.assertEqual(transport['reference_k'], [0, 0, parameter])
+            self.assertEqual(transport['star_rotation'], 'E')
+            self.assertEqual(transport['origin_translation'], [0, 0, 0])
+            self.assertFalse(transport['outside_space_group'])
+
     def test_same_structure_with_equivalent_and_opposite_reciprocal_coordinates(self):
         sys.path.insert(0, str(self.site_root / 'dist/python'))
         from browser_api import run
@@ -45,10 +67,12 @@ class CIFReciprocalReplayTests(unittest.TestCase):
         digest = hashlib.sha256(text.encode('utf-8')).hexdigest()
         database = json.loads((self.site_root / 'dist/data/space-groups.json').read_bytes())
         catalog = database['groups'][3]
-        screw = catalog['operations'][1]
         self.assertEqual(catalog['number'], 4)
-        self.assertEqual(screw['name'], 'C2z')
-        self.assertEqual(screw['translation'], [0, 0, .5])
+        # SG 4 Λ in SpaceGroupIrep's LittleGroupIrepData.wl uses the two C2 rows
+        # of LGIrepLabel[{2,1}], type b. For s = {C2z | 0 0 1/2}, these give
+        # χ_Λ1(s,u) = exp(-i*pi*u) and χ_Λ2(s,u) = -exp(-i*pi*u).
+        # A unit shift in u reverses both signs and exchanges the raw-u labels.
+        branch_labels = {-.25: ('Λ1', 'Λ2'), .75: ('Λ2', 'Λ1')}
 
         for k_input, k_bc, reduced, factor in [(.25, -.25, -.25, 1j), (-.75, .75, -.25, 1j), (-.25, .25, .25, -1j)]:
             with self.subTest(k_input=k_input):
@@ -59,14 +83,26 @@ class CIFReciprocalReplayTests(unittest.TestCase):
                 job = {'group_number': 4, 'k': result['k_bc'], 'doubleValued': False, 'bz_type': result['bz_type'],
                        'basis': catalog['basis'], 'operations': catalog['operations']}
                 analysis = run('analyze', job, database=database)
-                self.assertEqual(analysis['littleGroup']['order'], 2)
-                self.assertEqual(analysis['littleGroup']['translationDefects'][1][1], [0, 0, 1])
+                little_group = analysis['littleGroup']
+                self.assertEqual(little_group['order'], 2)
+                screw, = [i for i, op in enumerate(little_group['unitaryOperations'])
+                          if op['name'] == 'C2z' and op['translation'] == [0, 0, .5]]
+                self.assertEqual(little_group['translationDefects'][screw][screw], [0, 0, 1])
                 self.assertEqual([arm['k'] for arm in analysis['star']], [[0, 0, reduced]])
                 self.assertEqual([irrep['dimension'] for irrep in analysis['irreps']], [1, 1])
+                characters = {}
                 for irrep in analysis['irreps']:
-                    chi = irrep['characters'][1]
-                    self.assertAlmostEqual(complex(chi['re'], chi['im']) ** 2, factor)
-                self.assertEqual(analysis['littleGroup']['factors'][1][1], {'re': factor.real, 'im': factor.imag})
+                    chi = irrep['characters'][screw]
+                    value = complex(chi['re'], chi['im'])
+                    characters[irrep['label']] = value
+                    self.assertAlmostEqual(value ** 2, factor)
+                self.assertEqual(little_group['factors'][screw][screw], {'re': factor.real, 'im': factor.imag})
+                if k_bc in branch_labels:
+                    self.assert_screw_branch_labels(analysis['standardLabels'], characters, k_bc, branch_labels[k_bc])
+                if k_bc == .75:
+                    fixed_chart = run('standard_labels', {'action': 'match', 'group_number': 4,
+                                      'k': [0, 0, reduced], 'analysis': analysis}, database=database)
+                    self.assert_screw_branch_labels(fixed_chart, characters, reduced, branch_labels[reduced])
 
                 evidence = self.node(CHECK_SOURCE, {'result': result, 'input': input_, 'job': job,
                                                     'analysis': analysis, 'filename': case['filename']})

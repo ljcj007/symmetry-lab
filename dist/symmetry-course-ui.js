@@ -56,6 +56,12 @@ function cifReciprocalPracticeHTML(){
         <li>−1/4 → +1/4 · <span data-math-inline>χ = ±(1−i)/√2</span> · <span data-math-inline>χ² = −i</span></li>
       </ul>
       <p>三次都只有 1 个星臂，小群阶为 2。前两次的星臂折回同一坐标 (0,0,−1/4)。第三次在其相反波矢处得到共轭特征标。</p>
+      <aside data-cif-bc-branches>
+        <p>前两次是同一周期波矢。固定同一个 Seitz 代表后，两次的螺旋特征标集合相同。本站按工作台输入的 BC 参数 u 延拓标注分支，u 是波矢的第三个分量。</p>
+        <div class="sc-formula" data-cif-bc-branch-phase>exp(−iπ(u+1)) = −exp(−iπu)</div>
+        <p>当 u 增加 1 时，两个标注分支换号。因此同一个特征标在两次结果中的 BC 标签互换。 ${crystalSpan('Λ1','irrep')} ↔ ${crystalSpan('Λ2','irrep')}</p>
+        <p>D1 和 D2 是各次数值表的本地行号。核对两次结果时，直接比较固定螺旋代表的特征标值。</p>
+      </aside>
     </details>
     <p><a href="docs/cif-setting-practice.md#cif-reciprocal-replay">详细讲义与衍射延伸</a></p>
   </details>`;
@@ -201,6 +207,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     const spatialLevel=lesson.symmetryLevel||((lesson.track==='space')?'space':'point-and-space'),levelName={point:'点群',space:'三维空间群','point-and-space':'点群与三维空间群'}[spatialLevel];
     $('#sc-content').innerHTML=`<div class="sc-topic-filter"><label>空间层级<select id="sc-level-select">${options([['all','点群与三维空间群'],['point','点群'],['space','三维空间群']],state.level)}</select></label><span>空间层级与双值、磁性、颜色或自旋结构分别说明。</span></div><div class="classroom-chapter-picker"><label>${esc(trackTitle(state.track==='all'?lesson.track:state.track))} · 选择单元<select id="sc-chapter-select">${visible.map(({lesson:l,index})=>`<option value="${index}" ${state.lesson===index?'selected':''}>${esc(l.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="sc-chapter-derive">相关分步推导 →</button></div><div class="sc-learn-layout"><aside class="sc-lesson-nav" aria-label="课程目录"><label class="sc-label">学习路线<select id="sc-learn-track">${options([['all','全部课程'],...tracks.map(t=>[t.id,t.title])],state.track)}</select></label>${visible.map(({lesson:l,index})=>`<button type="button" data-sc-lesson="${index}" class="${state.lesson===index?'active':''}" ${state.lesson===index?'aria-current="step"':''}><span>${String(index+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(l))}<small>${correctCount(quizEntries([l]))===(l.quiz||[]).length&&l.quiz?.length?'✓ 本节自测已掌握':esc(trackTitle(l.track))}</small></span></button>`).join('')}</aside>
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · 单元 ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||'基础与应用')}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>学完这一节，你能</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
+      ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?'<p><a href="#classroom/foundations?lesson=from-point-to-space">复习点群如何连接空间群 →</a></p>':''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
       ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?cifSettingPracticeHTML()+siStructurePracticeHTML():''}
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?`<aside class="sc-callout" data-cif-orbit-lesson><strong>用 α 石英核对 CIF 位点重数</strong><p>同一组空间群操作下，写成 0.6667 或 2/3 会改变 Si1 的轨道吗？先预测，再用文件中的重数核对。</p><a href="#structure?cif-orbit=practice">打开石英位点重数练习 →</a></aside>`:''}

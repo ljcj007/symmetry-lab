@@ -249,8 +249,8 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 76222,
-      "sha256": "0fbaced2f57cf678621ebbc27b6520ed01906eebb5ce4a36227897eb42c47613"
+      "bytes": 76968,
+      "sha256": "b51d2d84f06ef93e4aa62209b7a5a08e4fe88bf227bdbf9bc62bb97bba5c0461"
     },
     "NOTICE.txt": {
       "normalization": "utf8-lf-v1",
@@ -264,13 +264,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102636,
-      "sha256": "122aa1a59ca0bca361cf073b1e75ba959f79202c92bf22443177d82fedf04983"
+      "bytes": 102640,
+      "sha256": "bdd196a1713c396c02837db7a73498935917cfbba589dd8dfd575245c5e69f9a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32660,
-      "sha256": "31f57990b3e92dc63b0eff415c6a78ed432d4ee8687ff2593f22a6b44ee90cf5"
+      "bytes": 32728,
+      "sha256": "7a3b6f681ffb6bf1e7ba015e68e9d5b605224c94c919117bd6c9f08be0192cb1"
     },
     "dist/coupled-materials-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -354,8 +354,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8217,
-      "sha256": "4f6e7095c4340b4d78477716cd9de7de0225c85fa3e77ffd2b86b958a14a670b"
+      "bytes": 8216,
+      "sha256": "9b8905f9543b3e2dfa404e88f5cc69be93822321f3101eab2965cdde8634bac1"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -499,13 +499,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28230,
-      "sha256": "9a2c0ab3b676b0c7c86faaf8408d459bfed829570b23fb1a3932c9ce85037653"
+      "bytes": 28374,
+      "sha256": "f16f8ea00c22374676f57951ccead7511a881f2af22ec77689e7c40946a1f720"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14812,
-      "sha256": "be533cbc38ebf8127863488422816c9e9a5691d339bd5765f5ab9faa625c7567"
+      "bytes": 14979,
+      "sha256": "3a8c64e9a65b20a036fd7bd55beb5053ca82d40b832744548da3c2773c8312d5"
     },
     "scripts/build-zno-ir-polarization.py": {
       "normalization": "utf8-lf-v1",
@@ -524,8 +524,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6374,
-      "sha256": "d1cdf2036e5ef3550b32a48a208347b12af58f6c35a6521796f02cae0be8a262"
+      "bytes": 6419,
+      "sha256": "4f2c0a4fe6bebfefaeb7a284cc82d80491ef4275a0708be791f587371562e4c2"
     },
     "scripts/fixtures/phonopy-source-baseline.py.gz": {
       "normalization": "raw-bytes",

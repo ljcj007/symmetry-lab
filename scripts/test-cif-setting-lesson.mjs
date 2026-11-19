@@ -71,6 +71,19 @@ assert.deepEqual(rows.map(row=>row.textContent),[
 for(const row of rows){
  assert.match(findInlineMath(row.querySelector('[data-math-inline]').textContent)[0].tex,/\\sqrt\{2\}/);
 }
+const branches=answer.querySelector('[data-cif-bc-branches]');
+assert.ok(branches);
+assert.match(branches.textContent,english?/sets of screw characters agree/:/螺旋特征标集合相同/);
+assert.match(branches.textContent,english?/BC labels for the same character value therefore swap/:/同一个特征标在两次结果中的 BC 标签互换/);
+assert.match(branches.textContent,english?/D1 and D2 identify rows/:/D1 和 D2 是各次数值表的本地行号/);
+const phase=branches.querySelector('[data-cif-bc-branch-phase]').textContent;
+assert.equal(phase,'exp(−iπ(u+1)) = −exp(−iπu)');
+assert.equal(segmentFormula(phase)[0]?.type,'math');
+const labels=branches.querySelectorAll('[data-crystal-kind="irrep"]');
+assert.deepEqual(labels.map(label=>label.getAttribute('data-math-source')),['Λ1','Λ2']);
+for(const [i,label] of labels.entries()){
+ assert.ok(crystalTex(label.getAttribute('data-math-source'),'irrep').includes('_{\\mathrm{'+(i+1)+'}}'));
+}
 assert.ok(lesson.querySelector('[data-si-structure-practice]'));
 assert.match(details.innerHTML,/101\.2°/);
 assert.match(details.innerHTML,/P 2c/);
@@ -110,6 +123,9 @@ assert.match(reciprocal,/\]\(\.\.\/#structure\?cif-setting=practice\)/);
 assert.match(reciprocal,/`-3\/4`、`-1\/4`|`-3\/4` and `-1\/4`/);
 assert.match(reciprocal,/`±\(1\+i\)\/√2`/);
 assert.match(reciprocal,/`±\(1−i\)\/√2`/);
+assert.ok(reciprocal.includes(phase));
+assert.match(reciprocal,/Λ₁[^\n]+Λ₂/);
+assert.match(reciprocal,english?/the original BC parameter entered in the workbench/:/工作台输入的原 BC 参数/);
 assert.match(reciprocal,/\b2\.900608\b/);
 
 console.log(`CIF axis setting lesson (${english?'English':'Chinese'}): canonical classroom handoff, document, and inactive neighboring lesson passed.`);

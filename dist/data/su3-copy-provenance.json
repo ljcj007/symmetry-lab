@@ -56,18 +56,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 76222,
-      "sha256": "0fbaced2f57cf678621ebbc27b6520ed01906eebb5ce4a36227897eb42c47613"
+      "bytes": 76968,
+      "sha256": "b51d2d84f06ef93e4aa62209b7a5a08e4fe88bf227bdbf9bc62bb97bba5c0461"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102636,
-      "sha256": "122aa1a59ca0bca361cf073b1e75ba959f79202c92bf22443177d82fedf04983"
+      "bytes": 102640,
+      "sha256": "bdd196a1713c396c02837db7a73498935917cfbba589dd8dfd575245c5e69f9a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32660,
-      "sha256": "31f57990b3e92dc63b0eff415c6a78ed432d4ee8687ff2593f22a6b44ee90cf5"
+      "bytes": 32728,
+      "sha256": "7a3b6f681ffb6bf1e7ba015e68e9d5b605224c94c919117bd6c9f08be0192cb1"
     },
     "dist/data/lie-group-lessons.json": {
       "normalization": "utf8-lf-v1",
@@ -86,8 +86,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8217,
-      "sha256": "4f6e7095c4340b4d78477716cd9de7de0225c85fa3e77ffd2b86b958a14a670b"
+      "bytes": 8216,
+      "sha256": "9b8905f9543b3e2dfa404e88f5cc69be93822321f3101eab2965cdde8634bac1"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -224,6 +224,11 @@
       "bytes": 65219,
       "sha256": "6ad3cbe5110a86afa313fdf27a0bb8fee1e22b97054091c9e82de9c8778a9d39"
     },
+    "locales/en-beginner-links.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 553,
+      "sha256": "a1ac073797cf7a6d9764d4ca014a391a227296e4900de077003a25ecdbde628a"
+    },
     "locales/en-character-water-bridge.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 3522,
@@ -246,8 +251,8 @@
     },
     "locales/en-cif-reciprocal-lesson.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6896,
-      "sha256": "e6f16fabdc465aad31c13c124fc9de2b30bc2476d6a18d0074f272de2348f8ed"
+      "bytes": 9021,
+      "sha256": "642cdbb622767ee9c98517befe9461125bc8075cd1e90a9a44e62807dcf9bcdb"
     },
     "locales/en-cif-setting-lesson.json": {
       "normalization": "utf8-lf-v1",
@@ -631,8 +636,8 @@
     },
     "locales/en-quality-dictionary.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31305,
-      "sha256": "da2fa9f5e4d675220bce57f87c3c1e4cfd03986e8d89474c67891ac33bab3944"
+      "bytes": 31370,
+      "sha256": "d4c05252f43081cd75a17a757edbc89b3493cde0e684feee3ea2844165b92739"
     },
     "locales/en-quality-physics.json": {
       "normalization": "utf8-lf-v1",
@@ -981,8 +986,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28230,
-      "sha256": "9a2c0ab3b676b0c7c86faaf8408d459bfed829570b23fb1a3932c9ce85037653"
+      "bytes": 28374,
+      "sha256": "f16f8ea00c22374676f57951ccead7511a881f2af22ec77689e7c40946a1f720"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1011,8 +1016,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6374,
-      "sha256": "d1cdf2036e5ef3550b32a48a208347b12af58f6c35a6521796f02cae0be8a262"
+      "bytes": 6419,
+      "sha256": "4f2c0a4fe6bebfefaeb7a284cc82d80491ef4275a0708be791f587371562e4c2"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

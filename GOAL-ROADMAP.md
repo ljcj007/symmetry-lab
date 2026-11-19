@@ -102,6 +102,19 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 - The source keeps the crystallographic displacement data. The generated
   geometric POSCAR controls and structure exports describe positions and lattice.
 
+## Teaching links and notation context
+
+- The foundations sidebar opens the 32 point groups and their character tables
+  directly. The crystal sidebar introduces the space-group sequence and the
+  lesson on little groups of k through separate links.
+- A link from a formula popover carries its matched dictionary entries to the
+  search page, including ambiguity groups. Older full-formula links fall back to
+  the same resolver. The character entry leads to the representation lesson
+  and water vibration demonstration.
+- The SG 4 exercise explains why the site's raw-parameter continuation of the
+  BC labels exchanges the two branches over a reciprocal period even though
+  the fixed screw operation gives the same pair of character values.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

@@ -1,7 +1,7 @@
 // A read-only companion to the formula renderer; never rewrites source math.
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {segmentFormula,findInlineMath} from './math-notation.js?v=20261113-prose2';
-const RELEASE='20261110-en1';
+const RELEASE='20261120-lesson-nav1';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const selector='span.sl-math[data-math-source],.sl-equation[data-math-source],svg text[aria-label]';
 const interactive='button,a,input,select,textarea,code,[contenteditable="true"],[data-math-ignore],.fd-dialog,.fd-page';
@@ -93,13 +93,34 @@ export function dictionaryNotationHTML(source,{symbol=false}={}){
 const symbolList=entry=>[...new Map((entry.symbols||[]).map(s=>[normalizeDictionaryText(s),s])).values()];
 export function dictionaryEntryHTML(entry,catalog,{compact=false}={}){
  const refs=new Map((catalog.sources||[]).map(s=>[s.id,s]));
+ const lessonLinks=catalog.lessonLinks?.[entry.id];
  const head=`<h3>${dictionaryNotationHTML(entry.title)}</h3><p class="fd-symbols">${symbolList(entry).map(s=>`<span class="fd-symbol">${dictionaryNotationHTML(s,{symbol:true})}</span>`).join(' ')}</p>`;
- const body=`<p>${dictionaryNotationHTML(entry.definition)}</p>${(entry.variables||[]).length?`<dl class="fd-variables">${entry.variables.map(v=>`<div><dt>${dictionaryNotationHTML(v.symbol,{symbol:true})}</dt><dd>${dictionaryNotationHTML(v.meaning)}<span class="fd-unit">Unit:${dictionaryNotationHTML(v.unit||"According to module agreement")}</span></dd></div>`).join('')}</dl>`:''}<p><strong>Agreement:</strong>${dictionaryNotationHTML(entry.conventions||"Please refer to the convention marked on the current module.")}</p><p><strong>applicable conditions:</strong>${dictionaryNotationHTML(entry.conditions||"is only used within the model scope declared by the current module.")}</p><div class="fd-links">${linksHTML(entry.links)}</div><div class="fd-sources">${(entry.sources||[]).map(id=>{const s=refs.get(id),href=s&&safeDictionaryHref(s.url,true);return href?`<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`:'';}).join('')}</div>`;
+ const body=`<p>${dictionaryNotationHTML(entry.definition)}</p>${(entry.variables||[]).length?`<dl class="fd-variables">${entry.variables.map(v=>`<div><dt>${dictionaryNotationHTML(v.symbol,{symbol:true})}</dt><dd>${dictionaryNotationHTML(v.meaning)}<span class="fd-unit">Unit:${dictionaryNotationHTML(v.unit||"According to module agreement")}</span></dd></div>`).join('')}</dl>`:''}<p><strong>Agreement:</strong>${dictionaryNotationHTML(entry.conventions||"Please refer to the convention marked on the current module.")}</p><p><strong>applicable conditions:</strong>${dictionaryNotationHTML(entry.conditions||"is only used within the model scope declared by the current module.")}</p><div class="fd-links">${linksHTML([...(Array.isArray(lessonLinks)?lessonLinks:[]),...(entry.links||[])])}</div><div class="fd-sources">${(entry.sources||[]).map(id=>{const s=refs.get(id),href=s&&safeDictionaryHref(s.url,true);return href?`<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`:'';}).join('')}</div>`;
  return compact?`<details class="fd-entry"><summary>${dictionaryNotationHTML(entry.title)} <span class="fd-summary-symbols">${symbolList(entry).slice(0,3).map(s=>dictionaryNotationHTML(s,{symbol:true})).join(' · ')}</span></summary>${body}</details>`:`<article class="fd-entry">${head}${body}</article>`;
 }
 const sourceHTML=source=>`<section class="fd-original"><h3>formula original text</h3><pre data-math-ignore>${esc(source)}</pre></section>`;
-const resultHTML=(source,scope,catalog)=>{
- const resolved=resolveFormulaEntries(source,scope,catalog);
+const formulaEntries=({matches,ambiguous})=>[...matches,...ambiguous.flatMap(group=>group.entries)];
+function formulaSearchHref(source,resolved){
+ const ids=formulaEntries(resolved).map(entry=>entry.id).join(',');
+ return '#docs/dictionary?q='+encodeURIComponent(source)+(ids?'&entries='+encodeURIComponent(ids):'');
+}
+function linkedFormulaEntries(ids,catalog){
+ if(typeof ids!=='string'||!ids)return null;
+ const index=new Map(catalog.entries.map(entry=>[entry.id,entry]));
+ const selected=[...new Set(ids.split(',',catalog.entries.length))].map(id=>index.get(id)).filter(Boolean);
+ if(!selected.length)return null;
+ const groups=new Map();
+ for(const entry of selected){
+  if(!entry.ambiguity)continue;
+  const entries=groups.get(entry.ambiguity)||[];
+  entries.push(entry);
+  groups.set(entry.ambiguity,entries);
+ }
+ const ambiguous=[...groups].filter(([,entries])=>entries.length>1).map(([symbol,entries])=>({symbol,entries}));
+ const matches=selected.filter(entry=>(groups.get(entry.ambiguity)?.length||0)<2);
+ return {matches,ambiguous,unknown:false};
+}
+const resultHTML=(resolved,catalog)=>{
  return `${resolved.unknown?"<p class=\"fd-notice\">No reliable interpretation of this formula has been identified yet. The original text has been retained, please search for keywords or enter the relevant class to check.</p>":''}${resolved.matches.map(e=>dictionaryEntryHTML(e,catalog)).join('')}${resolved.ambiguous.map(group=>`<section class="fd-ambiguity"><h3>${esc(group.symbol)} has multiple possible meanings</h3><p>The current page and formula are not enough to uniquely determine it. Please choose according to the model used; it is not automatically specified here.</p>${group.entries.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join('')}</section>`).join('')}`;
 };
 
@@ -113,7 +134,21 @@ export function renderFormulaDictionary({container,selection={}}={}){
   container.innerHTML=`<section class="fd-page"><header><span class="eyebrow">FORMULA DICTIONARY</span><h1>Dictionary of Formulas and Symbols</h1><p>Search for a symbol, formula, or concept. The same letters can represent different physical quantities; each entry also lists conventions, applicable conditions and sources.</p></header><form class="fd-search" role="search"><label for="fd-dictionary-query">symbol, formula or keyword</label><div><input id="fd-dictionary-query" type="search" value="${esc(query)}" maxlength="1000" placeholder="For example, k, U, spiral phase, S(Q,ω)" autocomplete="off"><button type="submit">Search</button></div></form><p class="fd-count" role="status" aria-live="polite"></p><div class="fd-search-results"></div></section>`;
   form=container.querySelector('form');input=container.querySelector('input');
   const output=container.querySelector('.fd-search-results'),count=container.querySelector('.fd-count');
-  onInput=event=>{event?.preventDefault();const results=searchDictionary(input.value,catalog);count.textContent=`found ${results.length} entries. Expand to view the units, agreements and applicable conditions.`;output.innerHTML=results.length?results.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join(''):"<p class=\"fd-notice\">has no reliable match. You can use a concept name instead, or shorten the search terms.</p>";};
+  const linkedQuery=input.value;
+  let linked=linkedFormulaEntries(selection.entries,catalog);
+  onInput=event=>{
+   event?.preventDefault();
+   if(input.value!==linkedQuery)linked=null;
+   const results=linked?[]:searchDictionary(input.value,catalog);
+   const formula=linked||(!results.length&&input.value.trim()?resolveFormulaEntries(input.value,{},catalog):null);
+   if(formula&&!formula.unknown){
+    count.textContent="Entries related to this formula"+' · '+formulaEntries(formula).length;
+    output.innerHTML=resultHTML(formula,catalog);
+    return;
+   }
+   count.textContent=`found ${results.length} entries. Expand to view the units, agreements and applicable conditions.`;
+   output.innerHTML=results.length?results.map(e=>dictionaryEntryHTML(e,catalog,{compact:true})).join(''):"<p class=\"fd-notice\">has no reliable match. You can use a concept name instead, or shorten the search terms.</p>";
+  };
   form.addEventListener('submit',onInput);input.addEventListener('input',onInput);onInput();
  }).catch(error=>{if(active){container.innerHTML=`<section class="fd-page"><h1>Dictionary of Formulas and Symbols</h1><p role="alert">${esc(error.message)}</p><button type="button" class="fd-retry">reload</button></section>`;container.querySelector('button').onclick=()=>{if(active){retryController?.destroy();retryController=renderFormulaDictionary({container,selection});}};}});
  return {ready,destroy(){active=false;retryController?.destroy();form?.removeEventListener('submit',onInput);input?.removeEventListener('input',onInput);}};
@@ -164,7 +199,8 @@ export function startFormulaDictionary(root=document.body){
   if(!dialog.open){if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
   dialog.querySelector('.fd-close').focus();
   try{const catalog=await loadFormulaDictionary();if(stopped||!opened||current!==job)return;
-   content.innerHTML=sourceHTML(source)+calculationContext+resultHTML(source,scope,catalog)+`<p class="fd-dialog-search"><a href="#docs/dictionary?q=${esc(encodeURIComponent(source))}">Search this formula in the dictionary →</a></p>`;
+   const resolved=resolveFormulaEntries(source,scope,catalog);
+   content.innerHTML=sourceHTML(source)+calculationContext+resultHTML(resolved,catalog)+`<p class="fd-dialog-search"><a href="${esc(formulaSearchHref(source,resolved))}">Search this formula in the dictionary →</a></p>`;
   }catch(error){if(!stopped&&opened&&current===job){content.innerHTML=sourceHTML(source)+`<p role="alert">${esc(error.message)}</p><button type="button" class="fd-dialog-retry">Retry word search</button><p><a href="#docs/dictionary">Open dictionary search page →</a></p>`;content.querySelector('button').onclick=()=>show(element);}}
  };
  const targetFor=event=>{const el=event.target?.closest?.('[data-fd-trigger]');return el&&eligible(el,root)?el:null;};
