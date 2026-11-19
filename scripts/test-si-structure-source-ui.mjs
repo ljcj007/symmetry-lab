@@ -42,7 +42,7 @@ const calls=[],handoffs=[],downloads=[];
 const transform=[[-1,1,1],[1,-1,1],[1,1,-1]],origin=[-.375,.625,.625];
 const inverseTranspose=[[0,.5,.5],[.5,0,.5],[.5,.5,0]];
 const exercise=manifest.input,reference=manifest.reference;
-const mount=()=>renderStructureView({container:page,toast(){},download:(...args)=>downloads.push(args),openGroup:(...args)=>handoffs.push(args),
+const mount=(structureQuery='')=>renderStructureView({container:page,structureQuery,toast(){},download:(...args)=>downloads.push(args),openGroup:(...args)=>handoffs.push(args),
   run:async(action,input)=>{
     calls.push({action,input});
     const k=inverseTranspose.map(row=>row.reduce((sum,value,index)=>sum+value*input.k[index],0));
@@ -163,5 +163,51 @@ assert.match($('#structure-text').value,/data_CsCl/);
 assert.equal(officialStatus().hidden,true);
 assert.ok(observers.every(observer=>observer.disconnected));
 
+const coordinates=()=>[0,1,2].map(i=>$('#structure-k-'+i).value);
+const foldingCases=[
+ ['gamma',[0,0,0],[0,0,0]],
+ ['x-100',[1,0,0],[0,.5,.5]],
+ ['x-010',[0,1,0],[.5,0,.5]],
+ ['x-001',[0,0,1],[.5,.5,0]]
+];
+for(const [id,inputK,bcK] of foldingCases){
+ const draft=coordinates(),text=$('#structure-text').value,readCount=fetches.length,runCount=calls.length;
+ mount('si-k='+id);
+ assert.deepEqual(coordinates(),draft,'Navigation alone keeps the prior coordinates');
+ assert.equal($('#structure-text').value,text);
+ assert.equal(fetches.length,readCount);
+ assert.equal(calls.length,runCount);
+ assert.match($('#structure-si-fold-note').textContent,english?/reciprocal fractional coordinates/:/倒易分数坐标/);
+
+ provide=async()=>response(changed);
+ await officialButton().onclick();
+ assert.match(officialStatus().textContent,mismatch);
+ assert.deepEqual(coordinates(),draft,'A refused file cannot change the draft');
+ assert.equal($('#structure-text').value,text);
+ provide=async()=>response();
+ await officialButton().onclick();
+ assert.deepEqual(coordinates(),inputK.map(String));
+ assert.equal($('#structure-text').value,utf8Text);
+ assert.equal(calls.length,runCount);
+ await $('#structure-run').onclick();
+ assert.deepEqual(calls.at(-1).input.k,inputK);
+ assert.deepEqual(getStructureResult().k_bc,bcK);
+ await $('#structure-open-group').onclick();
+ const [number,k,bzType,foldSource]=handoffs.at(-1);
+ assert.equal(number,227);
+ assert.deepEqual(k,bcK);
+ assert.equal(foldSource.source.sha256,manifest.structureFile.sha256);
+ assert.deepEqual(foldSource.coordinates.inputK,inputK);
+ assert.ok(structureHandoffForCalculation(foldSource,{input:{group_number:227,k,doubleValued:false,bz_type:bzType}}));
+ assert.equal(calls.length,runCount+1);
+}
+
+for(const query of ['si-k=bad-value','si-k=gamma&si-k=x-100','si-k=gamma&si-k=gamma','si-k=constructor']){
+ mount(query);
+ assert.equal($('#structure-si-fold-note'),null);
+ await officialButton().onclick();
+ assert.deepEqual(coordinates(),['1/2','0','0']);
+}
+
 globalThis.fetch=nativeFetch;
-console.log('Official Si structure UI passed lazy and exact byte verification, manual conversion, source-bound SG227 handoff, tolerance and text edits, aborted loads, and legacy examples.');
+console.log('Official Si structure UI passed byte verification, four explicit Γ/X source-bound conversions, draft safety, manual handoff, and legacy examples.');

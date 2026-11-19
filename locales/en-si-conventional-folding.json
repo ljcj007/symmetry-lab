@@ -17,9 +17,10 @@
   "核对预测": "Check prediction",
   "核对 24 个位移自由度": "Account for all 24 displacement degrees of freedom",
   "四个格心位置上的相位行两两正交。每行可分别乘上两原子各三个方向的位移，所以常规胞 Γ 的 24 个坐标分成四组六维。全同相的一组是原胞 Γ，另三组对应同一个 X 星的三条臂。每组六维由平移对称性和位移自由度决定，频率则要用动力学矩阵求得。": "The phase rows on the four centering positions are pairwise orthogonal. Each row can multiply independent displacements along three directions for each of the two atoms, so the 24 coordinates at conventional-cell Γ split into four six-dimensional sectors. The all-in-phase sector is primitive-cell Γ. The other three correspond to the three arms of one X star. The six dimensions follow from translation symmetry and the displacement degrees of freedom. Computing frequencies requires the dynamical matrix.",
-  "在结构工作台载入官方 Si 文件，在输入常规胞的倒易坐标中分别填写 (0,0,0) 与 (1,0,0)。每次手动完成转换并把转换后的波矢带入单值表示计算。前者在 BC 原胞仍是 (0,0,0)，k 星有 1 臂，小群阶为 48。后者变为 (0,1/2,1/2)，k 星有 3 臂，小群阶为 16。": "Load the official Si file in the structure workbench. Enter (0,0,0) and (1,0,0), in turn, in the input conventional cell’s reciprocal coordinates. Run the conversion each time and carry the converted wavevector into a single-valued representation calculation. The first stays (0,0,0) in the BC primitive cell, with one star arm and little-group order 48. The second becomes (0,1/2,1/2), with three star arms and little-group order 16.",
-  "用官方 Si 文件核对波矢 →": "Check the wavevectors with the official Si file →",
-  "查看 Si 文件来源与换基说明": "Read the Si source and basis-change guide",
+  "先选一行，再用下面的链接打开结构转换。完成原文件核验后检查输入波矢，用现有按钮手动转换并打开表示工作台。比较 Γ 行与任一 X 行的小群阶和星臂数。": "Choose a row and follow the link to the structure tool. Verify the original file and check the input wavevector, then run the conversion and open the representation workbench. Compare the little-group order and number of star arms for Γ and any X row.",
+  "用官方 Si 文件核对所选波矢 →": "Check the selected wavevector with the official Si file →",
+  "查看四行的波矢换基与结果": "See the basis changes and results for all four rows",
+  "来自相位行的波矢采用 Si 常规胞的倒易分数坐标。载入并手动转换后，再用 BC 原胞坐标比较星臂数和小群阶。": "The chosen phase row uses reciprocal fractional coordinates of the Si conventional cell. Verify and load the file, run the conversion, then use the BC primitive coordinates to compare the star arms and little-group order.",
   "先选择一个判断。": "Choose an answer first.",
   "再试一次。原胞 Γ 必须在三条原胞基矢的平移下都保持同号。试着换一条基矢，或者检查相位行。": "Try again. At primitive-cell Γ, the displacement sign must stay the same under all three primitive basis translations. Try another basis vector or check the phase row."
 }

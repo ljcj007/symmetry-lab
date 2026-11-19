@@ -1,8 +1,9 @@
+import {siFoldingStructureRoute,siFoldingWaves as waves} from './si-folding-route.js?v=20261120-si-fold-handoff1';
+
 // All positions are in exact eighths of the conventional lattice vectors.
 // The two seed sites and the order of their F-centering copies match the pinned Si POSCAR-0.
 const translations=[[0,0,0],[0,4,4],[4,0,4],[4,4,0]];
 const seeds=[[7,7,7],[1,1,1]];
-const waves=[[0,0,0],[1,0,0],[0,1,0],[0,0,1]];
 const basisLabels=['A','B'];
 const translationsLabels=['0','t₁','t₂','t₃'];
 const mod8=value=>value%8;
@@ -55,8 +56,8 @@ export function bindSiConventionalFolding({root,isCurrent=()=>true}){
  <div id="si-fold-feedback" class="obs-feedback" role="status"></div>
  <details><summary>Account for all 24 displacement degrees of freedom</summary>
  <p>The phase rows on the four centering positions are pairwise orthogonal. Each row can multiply independent displacements along three directions for each of the two atoms, so the 24 coordinates at conventional-cell Γ split into four six-dimensional sectors. The all-in-phase sector is primitive-cell Γ. The other three correspond to the three arms of one X star. The six dimensions follow from translation symmetry and the displacement degrees of freedom. Computing frequencies requires the dynamical matrix.</p>
- <p>Load the official Si file in the structure workbench. Enter (0,0,0) and (1,0,0), in turn, in the input conventional cell’s reciprocal coordinates. Run the conversion each time and carry the converted wavevector into a single-valued representation calculation. The first stays (0,0,0) in the BC primitive cell, with one star arm and little-group order 48. The second becomes (0,1/2,1/2), with three star arms and little-group order 16.</p>
- <p><a href="#structure">Check the wavevectors with the official Si file →</a> · <a href="docs/si-structure-example.md">Read the Si source and basis-change guide</a></p>
+ <p>Choose a row and follow the link to the structure tool. Verify the original file and check the input wavevector, then run the conversion and open the representation workbench. Compare the little-group order and number of star arms for Γ and any X row.</p>
+ <p><a id="si-fold-structure" href="${siFoldingStructureRoute(waveIndex)}">Check the selected wavevector with the official Si file →</a> · <a href="docs/si-structure-example.md#si-folding-check">See the basis changes and results for all four rows</a></p>
  </details>`;
 
  const events=new AbortController();
@@ -65,10 +66,12 @@ export function bindSiConventionalFolding({root,isCurrent=()=>true}){
  const sites=root.querySelector('#si-fold-sites');
  const choice=root.querySelector('#si-fold-choice');
  const feedback=root.querySelector('#si-fold-feedback');
+ const structureLink=root.querySelector('#si-fold-structure');
  const rowButtons=root.querySelectorAll('[data-si-fold-wave]');
 
  function draw(){
   const result=siConventionalFolding(waveIndex,translationIndex);
+  structureLink.setAttribute('href',siFoldingStructureRoute(waveIndex));
   const sign=result.translationSign===1?'+1':'−1';
   phases.textContent=`exp(2πi k·${translationsLabels[translationIndex]}) = ${sign}`;
   sites.innerHTML=result.sites.map(site=>`<tr><th scope="row">${site.basis} · ${translationsLabels[site.from]} → ${translationsLabels[site.to]}</th><td>${asTuple(site.beforePosition)} · ${asSign(site.beforeSign)}</td><td>${asTuple(site.afterPosition)} · ${asSign(site.afterSign)}</td></tr>`).join('');

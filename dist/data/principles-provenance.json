@@ -369,8 +369,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "49ff8e1ec3bfd9cbc50bfdafe78965ccc2e928525dac13b6cc126e3695f8ddd6",
-      "bytes": 101357
+      "sha256": "0cf36b6b286d5b729b408f76acd2a90632206c30d077ce1df30b52ec65e52edc",
+      "bytes": 101420
     },
     {
       "path": "dist/bridges-projects.js",
@@ -394,8 +394,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "a77e2f367274ac7fff29b52e5f80046dde5784ca8b2a2853f4af33045a51860b",
-      "bytes": 32243
+      "sha256": "9b5e72ebdf52b20a3582b3cef7ff77f34f0255f9996c827172389a99ff83168a",
+      "bytes": 32259
     },
     {
       "path": "dist/classroom.css",
@@ -444,7 +444,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "565d664518f63f760ddf15c2b7aa02a9f30e9d1144f02b80830692f5c59dd075",
+      "sha256": "fc8b9aadd983b2738459f0b12fd41080e41e21864716ba679cc2aad73ba197f1",
       "bytes": 56445
     },
     {
@@ -474,17 +474,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "989f2e1c72aa0be2e2ce8a991cdfca81addb307dc5c09e6d8186bdc1364217f7",
+      "sha256": "6383bf52dc9096cc38e2a8c18113875a259862cc3e130792752de945ce76bdc2",
       "bytes": 16856
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "da51b6284172f72c071557048eeb143229dd8cbc8cce14dcb9d1f83ede21a303",
+      "sha256": "fd10bfe8fdf839cb44f4e2d4e5203bde6f2c285970550a137a7ec7a1d7251e4e",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "76a7796be186645fd333b6593ef16c4a5c3a3378be4b83d04db64a6c311dd114",
+      "sha256": "e8edb6ac2bb82ce230f40021adb6622c07aea31efafa234049f1eda9e38108bd",
       "bytes": 5971
     },
     {
@@ -499,7 +499,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "d33d152e79b0fd5a777399d2b3f78612f75c801b95287ef70db4b1793aa06197",
+      "sha256": "6bb7af60272f1465eaa4c569c9fac7d212139feb1f9ecca9eef27f6418aa21d7",
       "bytes": 27431
     },
     {
@@ -529,12 +529,12 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "ccf38e31940988bd30461ae02c349fe6a6ee0f7b7ae1225d6dc8cec7f9cb57df",
+      "sha256": "d4054e069dde0c996bbdabd38d56d4e77e059083eae6056454c9829b348eb597",
       "bytes": 10435
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "28b268eca1852bc2fb4c7377c29cae9b02e3431e4d06faacbf80643f6b9a187f",
+      "sha256": "6bb509d275c059f4a7b67b3fe2aff63d52d9f882f28b518d2a05b1320d848eea",
       "bytes": 13329
     },
     {
@@ -544,7 +544,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "e1dfa8a98ddf8dcf759d70b7e23030e13665751d2b979ef93ac070e81928eb16",
+      "sha256": "151eb01a09077e55f79e4ae034bd9fd938d4053f2dac79729b5c9133a73884b9",
       "bytes": 15859
     },
     {
@@ -599,8 +599,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb",
-      "bytes": 8183
+      "sha256": "4c9220932089d3542bce88fdf2237149ab4929725fe8a32dec060fd0e5c237b1",
+      "bytes": 8191
     },
     {
       "path": "dist/induction.js",
@@ -659,8 +659,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "cfcdf6ddf62d8cc89f637973af446d5335e264c37540bc6b21646473c759fd59",
-      "bytes": 31191
+      "sha256": "2ee3926416a01ba551dc8c665f490eb4b83468d6ca45be8f1d735b243ec14a52",
+      "bytes": 31199
     },
     {
       "path": "dist/navigation.css",
@@ -669,8 +669,8 @@
     },
     {
       "path": "dist/observables-ui.js",
-      "sha256": "1a5cbdfa2bbdae37bea4ad21ac404133bebae5151f32f4d82f3577d5a53e9d0f",
-      "bytes": 31842
+      "sha256": "d2e611c5f171ab3d561be3d577d45ac0fe238d95218cb28bdf3ca64e72b4828d",
+      "bytes": 31850
     },
     {
       "path": "dist/observables.css",
@@ -829,8 +829,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "659f365408ce53dedec277ecba7507f138cb63134f34ef45a785ffa5e633264f",
-      "bytes": 59380
+      "sha256": "94069a08205f6470a2c26189817610b6aeff3330f63c9e634f97189cca7f14cb",
+      "bytes": 59388
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -839,8 +839,8 @@
     },
     {
       "path": "dist/structure-ui.js",
-      "sha256": "6c4e0c372b713bdc24f5ae3fbe97f18bce4e770eb152b63bca32cd22a19f905d",
-      "bytes": 23352
+      "sha256": "fe29b24f060b1a9a7ac36d216af7780f7d6a9f16629e0e86b2d641c0a08206a7",
+      "bytes": 23896
     },
     {
       "path": "dist/style.css",

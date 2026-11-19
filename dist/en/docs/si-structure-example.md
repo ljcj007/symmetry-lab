@@ -24,6 +24,21 @@ Send the confirmed space group and converted wave vector to the calculation cent
 
 Both calculations satisfy their respective little-group checks. Comparing them shows that copying the three numbers to another reciprocal basis changes the physical wave vector. Use `M` and the corresponding bases to check the phase, then explain why the little group and the representation dimensions change.
 
+<a id="si-folding-check"></a>
+
+## Recalculate the four primitive-cell sectors that fold to conventional Γ
+
+In the [Si phase-row lesson](../#classroom/observables?material=silicon&lesson=mechanical-modes), predict whether displacements in a chosen row reverse under each of two primitive translations. Open the row’s structure link, verify and load the official Si file, and check the prefilled conventional-cell reciprocal coordinates. Run the conversion, open the representation workbench with source information, and calculate the single-valued representations.
+
+| Phase row | Conventional-cell input k | BC primitive-cell k | Star arms | Little-group order |
+| --- | --- | --- | ---: | ---: |
+| [Γ](../#structure?si-k=gamma) | `(0,0,0)` | `(0,0,0)` | 1 | 48 |
+| [Xₓ](../#structure?si-k=x-100) | `(1,0,0)` | `(0,1/2,1/2)` | 3 | 16 |
+| [Xᵧ](../#structure?si-k=x-010) | `(0,1,0)` | `(1/2,0,1/2)` | 3 | 16 |
+| [X_z](../#structure?si-k=x-001) | `(0,0,1)` | `(1/2,1/2,0)` | 3 | 16 |
+
+The three X points are arms of the same star. Fractional coordinates in the star table may differ by a primitive reciprocal-lattice vector. For example, `−1/2` and `1/2` differ by an integer. Each sector has six displacement degrees of freedom. Calculating vibrational frequencies also requires the dynamical matrix.
+
 ## Check diffraction in the input conventional cell
 
 Choose Calculate diffraction from the input cell in the structure results. The diffraction form loads the eight atoms in the conventional cell, with reflection indices in that cell’s reciprocal basis. Keep the default scattering factor of 1 for each Si atom. Predict 100, 200, and 220, then enter each reflection and run the calculation.

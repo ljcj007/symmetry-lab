@@ -2,6 +2,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
+import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
@@ -68,7 +69,10 @@ const matrix = rows => `<div class="table-wrap"><table><tbody>${rows.map(row=>`<
 export const getStructureResult = () => state.result;
 
 export function renderStructureView(options) {
-  const {container,run,toast,download,openGroup,openDiffraction}=options;
+  const {container,run,toast,download,openGroup,openDiffraction,structureQuery=''}=options;
+  const foldingWave=siFoldingSourceWave(structureQuery);
+  const siInputCoordinates=foldingWave?.map(String)??['1/2','0','0'];
+  const siInputNotation=foldingWave?`(${foldingWave.join(',')})`:String.raw`(\frac{1}{2},0,0)`;
   const $=selector=>container.querySelector(selector);
   const revision=++state.revision;
   const current=()=>revision===state.revision&&container.dataset.researchView==='structure';
@@ -76,7 +80,7 @@ export function renderStructureView(options) {
   const invalid=()=>{state.inputVersion++;state.handoffTicket++;state.result=null;state.handoff=null;state.handoffPending=false;state.handoffError='';state.error='';drawResult();};
   container.innerHTML=`<div class="workspace-grid structure-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 导入晶体结构</div><span class="subtle">POSCAR / CIF</span></div><div class="panel-body">
     <div class="controls-row"><label class="secondary small" for="structure-file">↑ 打开结构文件</label><input type="file" class="sr-only" id="structure-file" accept=".cif,.vasp,.poscar,.txt,POSCAR,CONTCAR"><button type="button" class="secondary small" id="structure-file-cancel" hidden>取消文件读取</button><button class="text-button" id="structure-poscar-example">NaCl 示例</button><button class="text-button" id="structure-cif-example">CIF 示例</button></div>
-    <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">核对并载入官方 Si 结构与练习设置</button><p class="form-note">${esc('将输入晶胞的波矢设为')} ${inlineMath(String.raw`(\frac{1}{2},0,0)`)}${esc('，对称性容差设为')} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p><div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
+    <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">核对并载入官方 Si 结构与练习设置</button><p class="form-note">${esc('将输入晶胞的波矢设为')} ${inlineMath(siInputNotation)}${esc('，对称性容差设为')} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p>${foldingWave?'<p class="form-note" id="structure-si-fold-note">来自相位行的波矢采用 Si 常规胞的倒易分数坐标。载入并手动转换后，再用 BC 原胞坐标比较星臂数和小群阶。</p>':''}<div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
     <label class="field-label" for="structure-format">输入格式</label><select class="form-select" id="structure-format"><option value="poscar" ${state.format==='poscar'?'selected':''}>POSCAR / CONTCAR</option><option value="cif" ${state.format==='cif'?'selected':''}>CIF</option></select>
     <label class="field-label" for="structure-text">文件内容<span>仅在此浏览器读取</span></label><textarea id="structure-text" class="band-input structure-input" spellcheck="false" aria-label="POSCAR 或 CIF 文件内容">${esc(state.text)}</textarea>
     <div class="structure-options"><div><label class="field-label" for="structure-symprec">对称性容差 / Å</label><input id="structure-symprec" class="form-select" value="${esc(state.symprec)}" inputmode="decimal"></div><div><label class="field-label" for="structure-species">VASP 4 元素顺序</label><input id="structure-species" class="form-select" value="${esc(state.species)}" placeholder="如 Na Cl；无元素行时填写"></div></div>
@@ -172,7 +176,7 @@ export function renderStructureView(options) {
       if(!owns()||request.controller.signal.aborted)return;
       releaseSiLoad(request);
       state.fileTicket++;
-      Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:['1/2','0','0'],source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
+      Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:siInputCoordinates.slice(),source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
       invalid();
       renderStructureView(options);
       $('#structure-si-source')?.focus({preventScroll:true});

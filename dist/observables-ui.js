@@ -61,7 +61,7 @@ export async function renderObservablesView({container,selection={},run,cancelRu
   }else if(lesson.id==='mechanical-modes'){
    const marker=$('[data-obs-si-folding]'),body=marker?.querySelector('[data-obs-si-folding-body]');
    disposeDisplacementDemo=bindOptionalPanel({detail:marker,body,isCurrent:()=>current()&&$('[data-obs-si-folding]')===marker,
-    load:()=>import('./si-conventional-folding-ui.js?v=20261120-si-fold1'),
+    load:()=>import('./si-conventional-folding-ui.js?v=20261120-si-fold-handoff1'),
     mount:(component,isCurrent)=>component.bindSiConventionalFolding({root:body,isCurrent})});
   }
  }

@@ -41,7 +41,7 @@ const paths = [
   'scripts/test-si-structure-source-ui.mjs', 'scripts/test-file-search.mjs', 'scripts/test-symmetry-course-ui.mjs',
   'scripts/test-structure-diffraction-handoff.mjs', 'scripts/test-structure-diffraction-source-ui.mjs',
   'scripts/test-structure-diffraction-destination.mjs', 'scripts/test-python-structure-diffraction-handoff.py',
-  'dist/si-conventional-folding-ui.js','dist/observables-ui.js','dist/optional-panel.js',
+  'dist/si-conventional-folding-ui.js','dist/si-folding-route.js','dist/observables-ui.js','dist/optional-panel.js',
   'scripts/test-si-conventional-folding-ui.mjs','scripts/test-python-si-conventional-folding.py',
   'scripts/test-site-symmetry-search.mjs',
   'scripts/test-pointgroup-learning-support.mjs', 'scripts/english-catalog.mjs', 'scripts/test-source-package.py',
@@ -63,7 +63,7 @@ const manifest = {
     tool: 'compute/diffraction', basis: 'input-cell', scatteringFactor: 1,
     relativeIntensities: [{hkl: [1, 0, 0], intensity: 0}, {hkl: [2, 0, 0], intensity: 0}, {hkl: [2, 2, 0], intensity: 64}]
   },
-  conventionalFolding:{lesson:'classroom/observables?material=silicon&lesson=mechanical-modes',translationRows:['++++','++--','+-+-','+--+'],dimensions:[6,6,6,6],primitiveGamma:{starArmCount:1,littleGroupOrder:48},primitiveX:{starArmCount:3,littleGroupOrder:16}},
+  conventionalFolding:{lesson:'classroom/observables?material=silicon&lesson=mechanical-modes',translationRows:['++++','++--','+-+-','+--+'],dimensions:[6,6,6,6],primitiveGamma:{starArmCount:1,littleGroupOrder:48},primitiveX:{starArmCount:3,littleGroupOrder:16},structureSelections:['gamma','x-100','x-010','x-001'],sourceLoad:'explicit click and original-byte SHA-256 check before setting the conventional input coordinates'},
   verification: 'The archive checks the original Git blobs and their exact English copies. The numerical tests verify the primitive-cell transform, reciprocal phase, operation transport, both little-group inputs, and the custom diffraction calculation.',
   files
 };

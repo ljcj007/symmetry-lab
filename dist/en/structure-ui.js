@@ -2,6 +2,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
+import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
@@ -68,7 +69,10 @@ const matrix = rows => `<div class="table-wrap"><table><tbody>${rows.map(row=>`<
 export const getStructureResult = () => state.result;
 
 export function renderStructureView(options) {
-  const {container,run,toast,download,openGroup,openDiffraction}=options;
+  const {container,run,toast,download,openGroup,openDiffraction,structureQuery=''}=options;
+  const foldingWave=siFoldingSourceWave(structureQuery);
+  const siInputCoordinates=foldingWave?.map(String)??['1/2','0','0'];
+  const siInputNotation=foldingWave?`(${foldingWave.join(',')})`:String.raw`(\frac{1}{2},0,0)`;
   const $=selector=>container.querySelector(selector);
   const revision=++state.revision;
   const current=()=>revision===state.revision&&container.dataset.researchView==='structure';
@@ -76,7 +80,7 @@ export function renderStructureView(options) {
   const invalid=()=>{state.inputVersion++;state.handoffTicket++;state.result=null;state.handoff=null;state.handoffPending=false;state.handoffError='';state.error='';drawResult();};
   container.innerHTML=`<div class="workspace-grid structure-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> Import crystal structure</div><span class="subtle">POSCAR / CIF</span></div><div class="panel-body">
     <div class="controls-row"><label class="secondary small" for="structure-file">↑ Open structure file</label><input type="file" class="sr-only" id="structure-file" accept=".cif,.vasp,.poscar,.txt,POSCAR,CONTCAR"><button type="button" class="secondary small" id="structure-file-cancel" hidden>Cancel file read</button><button class="text-button" id="structure-poscar-example">NaCl example</button><button class="text-button" id="structure-cif-example">CIF Example</button></div>
-    <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">Verify and load the official Si structure and exercise settings</button><p class="form-note">${esc("Set the wave vector in input-cell coordinates to")} ${inlineMath(String.raw`(\frac{1}{2},0,0)`)}${esc(", with symmetry tolerance")} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p><div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
+    <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">Verify and load the official Si structure and exercise settings</button><p class="form-note">${esc("Set the wave vector in input-cell coordinates to")} ${inlineMath(siInputNotation)}${esc(", with symmetry tolerance")} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p>${foldingWave?"<p class=\"form-note\" id=\"structure-si-fold-note\">The chosen phase row uses reciprocal fractional coordinates of the Si conventional cell. Verify and load the file, run the conversion, then use the BC primitive coordinates to compare the star arms and little-group order.</p>":''}<div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
     <label class="field-label" for="structure-format">input format</label><select class="form-select" id="structure-format"><option value="poscar" ${state.format==='poscar'?'selected':''}>POSCAR / CONTCAR</option><option value="cif" ${state.format==='cif'?'selected':''}>CIF</option></select>
     <label class="field-label" for="structure-text">file content<span>can only be read in this browser</span></label><textarea id="structure-text" class="band-input structure-input" spellcheck="false" aria-label="POSCAR or CIF file content">${esc(state.text)}</textarea>
     <div class="structure-options"><div><label class="field-label" for="structure-symprec">Symmetry tolerance / Å</label><input id="structure-symprec" class="form-select" value="${esc(state.symprec)}" inputmode="decimal"></div><div><label class="field-label" for="structure-species">VASP 4 element order</label><input id="structure-species" class="form-select" value="${esc(state.species)}" placeholder="Such as Na Cl; fill in if there is no element row"></div></div>
@@ -172,7 +176,7 @@ export function renderStructureView(options) {
       if(!owns()||request.controller.signal.aborted)return;
       releaseSiLoad(request);
       state.fileTicket++;
-      Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:['1/2','0','0'],source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
+      Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:siInputCoordinates.slice(),source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
       invalid();
       renderStructureView(options);
       $('#structure-si-source')?.focus({preventScroll:true});

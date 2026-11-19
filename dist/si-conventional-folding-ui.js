@@ -1,8 +1,9 @@
+import {siFoldingStructureRoute,siFoldingWaves as waves} from './si-folding-route.js?v=20261120-si-fold-handoff1';
+
 // All positions are in exact eighths of the conventional lattice vectors.
 // The two seed sites and the order of their F-centering copies match the pinned Si POSCAR-0.
 const translations=[[0,0,0],[0,4,4],[4,0,4],[4,4,0]];
 const seeds=[[7,7,7],[1,1,1]];
-const waves=[[0,0,0],[1,0,0],[0,1,0],[0,0,1]];
 const basisLabels=['A','B'];
 const translationsLabels=['0','t₁','t₂','t₃'];
 const mod8=value=>value%8;
@@ -55,8 +56,8 @@ export function bindSiConventionalFolding({root,isCurrent=()=>true}){
  <div id="si-fold-feedback" class="obs-feedback" role="status"></div>
  <details><summary>核对 24 个位移自由度</summary>
  <p>四个格心位置上的相位行两两正交。每行可分别乘上两原子各三个方向的位移，所以常规胞 Γ 的 24 个坐标分成四组六维。全同相的一组是原胞 Γ，另三组对应同一个 X 星的三条臂。每组六维由平移对称性和位移自由度决定，频率则要用动力学矩阵求得。</p>
- <p>在结构工作台载入官方 Si 文件，在输入常规胞的倒易坐标中分别填写 (0,0,0) 与 (1,0,0)。每次手动完成转换并把转换后的波矢带入单值表示计算。前者在 BC 原胞仍是 (0,0,0)，k 星有 1 臂，小群阶为 48。后者变为 (0,1/2,1/2)，k 星有 3 臂，小群阶为 16。</p>
- <p><a href="#structure">用官方 Si 文件核对波矢 →</a> · <a href="docs/si-structure-example.md">查看 Si 文件来源与换基说明</a></p>
+ <p>先选一行，再用下面的链接打开结构转换。完成原文件核验后检查输入波矢，用现有按钮手动转换并打开表示工作台。比较 Γ 行与任一 X 行的小群阶和星臂数。</p>
+ <p><a id="si-fold-structure" href="${siFoldingStructureRoute(waveIndex)}">用官方 Si 文件核对所选波矢 →</a> · <a href="docs/si-structure-example.md#si-folding-check">查看四行的波矢换基与结果</a></p>
  </details>`;
 
  const events=new AbortController();
@@ -65,10 +66,12 @@ export function bindSiConventionalFolding({root,isCurrent=()=>true}){
  const sites=root.querySelector('#si-fold-sites');
  const choice=root.querySelector('#si-fold-choice');
  const feedback=root.querySelector('#si-fold-feedback');
+ const structureLink=root.querySelector('#si-fold-structure');
  const rowButtons=root.querySelectorAll('[data-si-fold-wave]');
 
  function draw(){
   const result=siConventionalFolding(waveIndex,translationIndex);
+  structureLink.setAttribute('href',siFoldingStructureRoute(waveIndex));
   const sign=result.translationSign===1?'+1':'−1';
   phases.textContent=`exp(2πi k·${translationsLabels[translationIndex]}) = ${sign}`;
   sites.innerHTML=result.sites.map(site=>`<tr><th scope="row">${site.basis} · ${translationsLabels[site.from]} → ${translationsLabels[site.to]}</th><td>${asTuple(site.beforePosition)} · ${asSign(site.beforeSign)}</td><td>${asTuple(site.afterPosition)} · ${asSign(site.afterSign)}</td></tr>`).join('');
