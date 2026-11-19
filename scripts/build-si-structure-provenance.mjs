@@ -25,17 +25,21 @@ for (const file of originals) {
   }
 }
 
-const locales = ['en-si-structure-import.json', 'en-si-structure-links.json', 'en-si-structure-docs.json'];
+const locales = ['en-si-structure-import.json', 'en-si-structure-links.json', 'en-si-structure-docs.json',
+  'en-structure-diffraction-source.json', 'en-structure-diffraction-destination.json'];
 for (const locale of locales) assert.ok(catalogFiles.includes(locale), locale);
 const binary = new Set(originals.map(file => source + file.path));
 const paths = [
   'GOAL-ROADMAP.md', 'package.json', 'dist/index.html', 'dist/app.js', 'dist/classroom-ui.js',
   'dist/structure-ui.js', 'dist/structure-provenance.js', 'dist/structure-handoff.js',
+  'dist/structure-diffraction-handoff.js', 'dist/structure-dynamics-ui.js', 'dist/python/diffraction.py',
   'dist/pointgroup-ui.js', 'dist/symmetry-course-ui.js', 'dist/docs/si-structure-example.md',
   'dist/tool-finder.js', 'dist/tool-search.js', 'dist/tool-directory.js', 'dist/tool-capabilities.js',
   'dist/navigation-ui.js', 'dist/data/search-index.json', 'dist/python/structure_bc.py',
   'scripts/build-si-structure-provenance.mjs', 'scripts/test-python-si-structure-source.py',
   'scripts/test-si-structure-source-ui.mjs', 'scripts/test-file-search.mjs', 'scripts/test-symmetry-course-ui.mjs',
+  'scripts/test-structure-diffraction-handoff.mjs', 'scripts/test-structure-diffraction-source-ui.mjs',
+  'scripts/test-structure-diffraction-destination.mjs', 'scripts/test-python-structure-diffraction-handoff.py',
   'scripts/test-pointgroup-learning-support.mjs', 'scripts/english-catalog.mjs', 'scripts/test-source-package.py',
   source + 'source.json', ...binary, ...locales.map(name => 'locales/' + name)
 ];
@@ -51,7 +55,11 @@ const manifest = {
   source: {revision: metadata.commit, manifest: source + 'source.json', license: metadata.license},
   input: metadata.input, reference: metadata.reference,
   negativeControl: {bcK: [0.5, 0, 0], starArmCount: 4, littleGroupOrder: 12},
-  verification: 'The archive checks both original Git blobs and their exact English copies. The numerical test independently verifies the primitive-cell transform, reciprocal phase, operation transport, and both little-group inputs.',
+  diffraction: {
+    tool: 'compute/diffraction', basis: 'input-cell', scatteringFactor: 1,
+    relativeIntensities: [{hkl: [1, 0, 0], intensity: 0}, {hkl: [2, 0, 0], intensity: 0}, {hkl: [2, 2, 0], intensity: 64}]
+  },
+  verification: 'The archive checks the original Git blobs and their exact English copies. The numerical tests verify the primitive-cell transform, reciprocal phase, operation transport, both little-group inputs, and the custom diffraction calculation.',
   files
 };
 const filename = 'dist/data/si-structure-provenance.json';

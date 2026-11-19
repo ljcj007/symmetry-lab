@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261119-si1';
+import {searchEntries} from './tool-search.js?v=20261120-structure-diffraction1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={

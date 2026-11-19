@@ -12,7 +12,8 @@ const expectations={
  'thermal_properties.yaml':['compute/phonon-thermo','compute/qha-lab'],
  'phonopy.yaml':['compute/phonopy','compute/phonopy-scattering'], 'phonopy_disp.yaml':['compute/phonopy','compute/phonopy-scattering'],
  'total_dos.dat':['compute/phonopy','compute/phonon-thermo'],
- 'projected_dos.dat':['compute/phonopy'], 'partial_dos.dat':['compute/phonopy']
+ 'projected_dos.dat':['compute/phonopy'], 'partial_dos.dat':['compute/phonopy'],
+ 'wannier90_hr.dat':['magnetictb'], 'Graphene_hr.dat':['magnetictb'], 'wt.in-bands':['magnetictb']
 };
 const read=name=>JSON.parse(fs.readFileSync(new URL(name,import.meta.url),'utf8'));
 // Use existing complete genuine results and their actual parser inputs rather
@@ -63,7 +64,7 @@ for(const prefix of sourceOnly?['']:['','en/']){
  const {matchingInputFormats,inputFormatSummary}=await import(new URL('../dist/'+prefix+'tool-search.js',import.meta.url));
  const {toolInputFormats}=await import(new URL('../dist/'+prefix+'tool-capabilities.js',import.meta.url));
  assert.equal(toolsIndex.length,75);
- assert.equal(Object.keys(toolInputFormats).length,6);
+ assert.equal(Object.keys(toolInputFormats).length,7);
  for(const [query,expected] of Object.entries(expectations)){
   for(const variant of [query,query.toUpperCase(),'import '+query,'/tmp/phonons/'+query,'C:\\runs\\'+query,'"C:\\my results\\'+query+'"']){
    const finder=finderResults(toolsIndex,variant).map(x=>x.route);
@@ -80,7 +81,7 @@ for(const prefix of sourceOnly?['']:['','en/']){
   }
   observations.push({edition:prefix?'en':'zh',query,routes:expected});
  }
- for(const query of ['FORCE_SETS','force_constants.hdf5','force_constants.yaml','unsupported.xyz'])assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
+ for(const query of ['FORCE_SETS','force_constants.hdf5','force_constants.yaml','unsupported.xyz','wannier90.wout'])assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
  assert.equal(finderResults(toolsIndex,'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
  assert.equal(finderResults(toolsIndex,'POSCAR')[0].route,'structure');
  assert.equal(finderResults(toolsIndex,'Si-QHA/POSCAR-0')[0].route,'structure');
@@ -89,6 +90,10 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',favorites:['compute/phonon-thermo']}).map(x=>x.route),['compute/phonon-thermo']);
  const byRoute=route=>toolsIndex.find(x=>x.route===route);
  const scopeText=(route,file)=>inputFormatSummary(byRoute(route),file);
+ for(const path of ['examples/Graphene/wt.in-bands','import examples/Graphene/wt.in-bands','/tmp/project/wannier90_hr.dat']){
+  assert.equal(finderResults(toolsIndex,path)[0]?.route,'magnetictb');
+  assert.ok(scopeText('magnetictb',path));
+ }
  if(prefix){
   assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/complete three-dimensional.*complex eigenvectors/);
   assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/matching negative q/);
@@ -96,6 +101,8 @@ for(const prefix of sourceOnly?['']:['','en/']){
   assert.match(scopeText('compute/phonopy','phonopy.yaml'),/only the structure[\s\S]*do not generate a phonon spectrum/);
   assert.match(scopeText('compute/phonopy','projected_dos.dat'),/cannot substitute for a complete total DOS/);
   assert.match(scopeText('compute/qha-lab','thermal_properties.yaml'),/Each volume[\s\S]*static energies[\s\S]*single file is not/);
+  assert.match(scopeText('magnetictb','wannier90_hr.dat'),/real-space Hamiltonian[\s\S]*10 MiB[\s\S]*fractional reciprocal[\s\S]*Å⁻¹/);
+  assert.match(scopeText('magnetictb','wt.in-bands'),/pinned Graphene_hr\.dat[\s\S]*verify both files[\s\S]*run the calculation/);
  }else{
   assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/完整三维复本征矢.*原胞/);
   assert.match(scopeText('compute/phonopy-scattering','qpoints.yaml'),/湮灭通道.*负 q/);
@@ -103,6 +110,8 @@ for(const prefix of sourceOnly?['']:['','en/']){
   assert.match(scopeText('compute/phonopy','phonopy.yaml'),/没有频率.*只显示结构.*不会生成声子谱/);
   assert.match(scopeText('compute/phonopy','projected_dos.dat'),/不能冒充完整总 DOS/);
   assert.match(scopeText('compute/qha-lab','thermal_properties.yaml'),/每个体积.*顺序.*静态能.*单独一份/);
+  assert.match(scopeText('magnetictb','wannier90_hr.dat'),/实空间哈密顿量.*10 MiB.*倒格分数坐标.*Å⁻¹/);
+  assert.match(scopeText('magnetictb','wt.in-bands'),/固定版本的 Graphene_hr\.dat.*核验两份文件.*手动运行/);
  }
 
  const stored=new Map(),body=new Element('body',{}, {isConnected:true}),documentEvents={};
@@ -119,6 +128,10 @@ for(const prefix of sourceOnly?['']:['','en/']){
  input.value='band.yaml';input.oninput();
  assert.equal(container.querySelectorAll('.nav-file-purpose').length,3);
  assert.doesNotMatch(container.querySelector('#tools-filtered').innerHTML,/data-route="compute\/phonon-thermo"/);
+ input.value='/tmp/project/wannier90_hr.dat';input.oninput();
+ assert.equal(container.querySelectorAll('.nav-file-purpose').length,1);
+ assert.match(container.querySelector('.nav-file-purpose').textContent,/wannier90_hr\.dat/);
+ assert.equal(container.querySelector('[data-favorite]').dataset.favorite,'magnetictb');
 
  const button=body.appendChild(new Element('button')),opened=[];
  const controller=startToolFinder({button,onNavigate:route=>opened.push(route)});
@@ -129,6 +142,13 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.ok(list.innerHTML.includes(prefix?'Each volume':'每个体积'));
  for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
  assert.deepEqual(opened,['compute/phonon-thermo'],'Enter opens the primary import; there is no automatic computation or file access');
+ assert.equal(dialog.hidden,true);
+ button.fire('click');
+ query.value='/tmp/project/wannier90_hr.dat';query.fire('input');
+ assert.equal(list.querySelectorAll('.tool-finder-file-purpose').length,1);
+ assert.match(list.querySelector('.tool-finder-file-purpose').textContent,/wannier90_hr\.dat/);
+ for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
+ assert.deepEqual(opened,['compute/phonon-thermo','magnetictb']);
  assert.equal(dialog.hidden,true);
  assert.equal(network,0,'Tools-only filename filtering does not fetch catalogs or read files');
  controller.destroy();assert.equal(body.querySelector('dialog'),null);

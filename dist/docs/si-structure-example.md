@@ -24,6 +24,12 @@ k_BC = M^(-T) k_input
 
 两组计算各自满足其小群的检验。比较它们可以发现，只把三位数字复制到另一套倒易基底会改变物理波矢。用 `M` 和两套基底核对相位，再解释为何小群和表示的维数分解改变。
 
+## 用输入常规胞核对衍射
+
+在结构结果区选择“用输入晶胞计算衍射”。衍射表单会载入常规胞中的 8 个原子，反射指标采用这个胞的倒易基底。保留默认设置，使每个 Si 原子的散射因子为 1。分别预测 100、200 和 220，再在表单中输入并手动运行。
+
+观察相位图。100 的格心相位成对抵消，200 有四个正虚振幅和四个负虚振幅，220 的八个振幅同相，得到相对强度 64。自定义结构的结果按给定坐标和权重解释。更多关于相位和消光的练习见[衍射课堂](../#classroom/structure-dynamics?lesson=structure-factor)。
+
 ## 来源和复现
 
 结构取自 [Phonopy 的 Si-QHA 原始 POSCAR-0](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Si-QHA/POSCAR-0)。本练习使用原始计算输入，并在浏览器中实际进行晶体对称性转换和小群计算。各文件的字节与版本可查阅[来源清单](../data/examples/phonopy-si-structure/source.json)和[原许可证](../data/examples/phonopy-si-structure/LICENSE.txt)。

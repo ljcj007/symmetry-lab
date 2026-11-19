@@ -17,7 +17,7 @@ const courseDefinitions={
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261119-si1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261117-derive1'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261115-tensor1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261117-derive1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-structure-diffraction1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261120-wannier1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
 ,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261119-cu-qha1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
 ,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261117-derive1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}

@@ -24,6 +24,12 @@ Send the confirmed space group and converted wave vector to the calculation cent
 
 Both calculations satisfy their respective little-group checks. Comparing them shows that copying the three numbers to another reciprocal basis changes the physical wave vector. Use `M` and the corresponding bases to check the phase, then explain why the little group and the representation dimensions change.
 
+## Check diffraction in the input conventional cell
+
+Choose Calculate diffraction from the input cell in the structure results. The diffraction form loads the eight atoms in the conventional cell, with reflection indices in that cell’s reciprocal basis. Keep the default scattering factor of 1 for each Si atom. Predict 100, 200, and 220, then enter each reflection and run the calculation.
+
+Inspect the phase diagrams. Centering phases cancel pairwise for 100. For 200, four positive imaginary amplitudes cancel four negative imaginary amplitudes. For 220, the eight amplitudes share a phase and give relative intensity 64. Interpret custom-structure results using the supplied coordinates and weights. Find more phase and extinction exercises in the [diffraction lesson](../#classroom/structure-dynamics?lesson=structure-factor).
+
 ## Sources and reproduction
 
 The structure is from the [original Phonopy Si-QHA POSCAR-0](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Si-QHA/POSCAR-0). The exercise uses the original calculation input and runs the crystal symmetry conversion and little-group calculation in the browser. See the [source manifest](../data/examples/phonopy-si-structure/source.json) and [upstream license](../data/examples/phonopy-si-structure/LICENSE.txt) for the file identities and release.

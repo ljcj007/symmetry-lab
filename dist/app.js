@@ -2,13 +2,14 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-characterwater1';
-import {startToolFinder} from './tool-finder.js?v=20261120-characterwater1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-structure-diffraction1';
+import {startToolFinder} from './tool-finder.js?v=20261120-structure-diffraction1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-characterwater1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-structure-diffraction1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
+import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261117-phonopy1';
 import {projectWorkbenchSelection,canRestoreProjectWorkbench} from './project-workbench.js?v=20261113-support1';
 
@@ -21,7 +22,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-wannier1'),structure:()=>import('./structure-ui.js?v=20261119-si1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-wannier1'),structure:()=>import('./structure-ui.js?v=20261120-structure-diffraction1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -164,6 +165,10 @@ function setView(request,options={}){
  if(primary==='compute'&&state.primary==='classroom'&&state.courseRoute?.section!=='overview')state.returnCourse=state.route;
  projectNavigation.enter(route,options.projectContext);
  state.structureHandoff=options.structureHandoff?validateStructureHandoff(options.structureHandoff):null;state.route=route;state.view=view;state.primary=primary;state.courseRoute=projectNavigation.selection(withClassroomNavigationContext(course,options.courseContext,route));
+ if(path==='compute/diffraction'&&options.diffractionHandoff&&state.courseRoute){
+   const inputCell=validateStructureDiffractionHandoff(options.diffractionHandoff);
+   if(inputCell)state.courseRoute.diffractionHandoff=inputCell;
+ }
  const importedScatteringDraft=phonopyScatteringVisit(route);if(importedScatteringDraft&&state.courseRoute&&!state.courseRoute.projectInput){if(importedScatteringDraft.sourceKind==='teaching-reference')state.courseRoute.teachingInput=importedScatteringDraft;else state.courseRoute.importerInput=importedScatteringDraft;}
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
  const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/frontiers','atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/connections','atlas/construction','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
@@ -290,7 +295,11 @@ async function render(){
   else if(view==='classroom'||isClassroomView(view)){const cleanup=await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput});retainRenderedViewCleanup(cleanup,ticket);}
   else if(view==='products')renderProducts();
   else if(view==='bands')renderBands();
-  else if(view==='structure')await page.renderStructureView({container:$('#app'),run:runPythonTask,toast,download,openGroup:(id,k,bzType,structureHandoff)=>openWorkbench({id,k,bzType,structureHandoff})});
+  else if(view==='structure')await page.renderStructureView({
+   container:$('#app'),run:runPythonTask,toast,download,
+   openGroup:(id,k,bzType,structureHandoff)=>openWorkbench({id,k,bzType,structureHandoff}),
+   openDiffraction:diffractionHandoff=>setView('compute/diffraction',{diffractionHandoff})
+  });
   else if(view==='advanced'){
    const isCurrent=()=>current()&&state.view==='advanced';
    const active=readAdvancedRoute(state.route,page.validateAdvancedPreset);

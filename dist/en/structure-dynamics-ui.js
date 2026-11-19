@@ -2,7 +2,8 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {setPhonopyScatteringInput} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261117-derive1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261120-wannier1';
+import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261115-tensor1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -10,6 +11,24 @@ const opts=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String
 const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const names={phase:"Structural phase transition and domain",diffraction:"Diffraction and extinction",phonopy:"Phonopy data import"};
 const defaults={phase:{a:-1,b:1,c:0,h:0,q:.7,axis:'z',qMax:1.6,displacementScale:.05,latticeConstant:4},diffraction:{preset:'silicon',hkl:[2,2,0],maxIndex:4,wavelength:1.5406,latticeConstant:5.43,scatteringFactors:{}},phonopy:{content:'',filename:'band.yaml',frequency_unit:'unknown',selected_q:0,selected_band:0,amplitude:.15,supercell:[2,1,1],dos_content:'',dos_kind:'total',structure_content:''}};
+function diffractionGeometry(input){
+ if(!Array.isArray(input?.cell)||!Array.isArray(input?.atoms))return null;
+ return JSON.stringify([input.cell,input.atoms.map(atom=>[atom?.species,atom?.fractional])]);
+}
+function diffractionSourceHTML(source){
+ if(!source)return '';
+ const cell=source.format==='cif'?"Input cell from the symmetry-expanded CIF":"Original input cell read by structure conversion";
+ return `<aside id="dyn-diffraction-source" class="obs-model-note" aria-labelledby="dyn-diffraction-source-title">
+  <h3 id="dyn-diffraction-source-title">Input cell copied from structure conversion</h3>
+  <p>${esc(cell)} · ${esc(source.filename||"Unnamed structure")}</p>
+  <p>Number of input atoms ${source.atomCount}</p>
+  <p>Reflection indices (h,k,l) use the reciprocal basis of this input cell. Cell vectors are in Å, and positions are fractional.</p>
+  <p>The default constant scattering factors and occupancies are both 1. Change the scattering factors to compare cancellation at different weights.</p>
+  <p>With a custom structure, the calculation shows numerical cancellation for the chosen weights. Check the basis and reflection indices before running it.</p>
+  ${source.sha256?`<details><summary>View the structure source digest</summary><code data-math-ignore>SHA-256 ${esc(source.sha256)}</code></details>`:''}
+  <div class="obs-links"><a href="#structure">Return to structure conversion →</a></div>
+ </aside>`;
+}
 let catalogPromise,lastResult=null;
 const catalog=()=>catalogPromise??=fetch('data/structure-dynamics.json?v=20261110-en1').then(r=>{if(!r.ok)throw Error("Structure and Dynamics course has not been loaded yet");return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getStructureDynamicsResult=()=>lastResult;
@@ -58,16 +77,34 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  const forms=structuredClone(defaults);let material=data.cases.find(c=>c.id===selection.material)||data.cases[0],lesson=data.lessons.find(l=>l.id===selection.lesson)||data.lessons[0],exercise=data.exercises.find(e=>e.id===selection.exercise)||data.exercises.find(e=>e.lesson===lesson.id)||data.exercises[0];
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
  let tool=Object.hasOwn(names,selection.experiment)?selection.experiment:lesson.tool,tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn',result=null,busy=false,ticket=0,fileTicket=0,pendingRead=null,activeJob=null,stop=()=>{},progress={};
+ const importedDiffraction=selection.calculationOnly&&tool==='diffraction'?validateStructureDiffractionHandoff(selection.diffractionHandoff):null;
+ const importedGeometry=importedDiffraction?diffractionGeometry(importedDiffraction.custom):null;
+ let diffractionSource=importedDiffraction?.source||null,hasMaterialBackground=!importedDiffraction;
  try{const p=JSON.parse(localStorage.getItem('symmetry-lab.structure-dynamics.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
- const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:material.id,exercise:exercise.id});
+ const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:hasMaterialBackground?material.id:undefined,exercise:exercise.id});
  function applyMaterial(){if(['silicon','gaas','nacl'].includes(material.id)){forms.diffraction.preset=material.id;forms.diffraction.latticeConstant={silicon:5.43,gaas:5.65,nacl:5.64}[material.id];}forms.diffraction.scatteringFactors=structuredClone(material.expected?.scatteringFactors||{});forms.diffraction.hkl=({silicon:[2,2,0],nacl:[1,1,1],gaas:[2,0,0]})[material.id]||[2,2,0];}
  if(tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');
  applyMaterial();if(selection.preset&&Object.hasOwn(names,tool)&&tool==='diffraction')forms.diffraction.preset=selection.preset;
+ if(importedDiffraction)forms.diffraction={...structuredClone(defaults.diffraction),preset:'custom',custom:structuredClone(importedDiffraction.custom)};
+ function detachDiffractionSource(){
+  if(!diffractionSource)return;
+  diffractionSource=null;
+  const card=$('#dyn-diffraction-source');
+  if(card)card.hidden=true;
+ }
+ function checkDiffractionSource(input){
+  if(diffractionSource&&(input.preset!=='custom'||diffractionGeometry(input)!==importedGeometry))detachDiffractionSource();
+ }
+ function checkDiffractionEdit(target){
+  if(tool==='diffraction'&&(target?.id==='dyn-custom'||target?.id==='dyn-preset'&&target.value!=='custom'))detachDiffractionSource();
+ }
  function readIsCurrent(request=pendingRead){return !!request&&pendingRead===request&&current()&&request.id===fileTicket&&tool==='phonopy'&&tab==='lab'&&$('#dyn-form')===request.form;}
  function syncLabControls(){
   if(!current())return;const submit=$('#dyn-run');if(!submit)return;const loading=readIsCurrent();
   submit.disabled=busy||loading;submit.textContent=busy?"Python Calculating…":loading?"Loading file…":tool==='phonopy'?"Read data and update demo →":"Calculate and update the demo →";
   const fields=$('#dyn-fields');if(fields)fields.disabled=busy;
+  const presetLattice=$('#dyn-lattice');
+  if(presetLattice)presetLattice.disabled=$('#dyn-preset').value==='custom';
   for(const [id,official] of [['dyn-demo',false],['dyn-official-al',true],['dyn-zno','zno']]){const button=$('#'+id);if(button)button.disabled=busy||(loading&&pendingRead.kind==='sample'&&pendingRead.official===official);}
   const status=$('#dyn-input-status');if(status){status.hidden=!loading;status.textContent=loading?"Loading the file. When loading finishes, click Read data to run it.":'';}
   const cancel=$('#dyn-cancel');if(cancel){cancel.hidden=!(busy||loading);cancel.textContent=busy?"Cancel calculation":"Cancel file loading";}
@@ -85,11 +122,23 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
 
  function links(c){return `<div class="obs-links"><a href="#classroom/structure-dynamics?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">Browse the materials learning pathways →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?"Phase transitions and domains":"Diffraction and extinction"} →</a><a href="#compute/phonopy?material=${esc(c.id)}">Import your own Phonopy data →</a>${c.id==='batio3'?"<a href=\"#compute/tensors?preset=tetragonal_4mm\">polarity Phase tensor constraints →</a>":`<a href="#atlas/materials?material=${esc(c.id)}">Structure and Symmetry Operation →</a><a href="#classroom/observables?material=${esc(c.id)}">phonon and physical properties class →</a>`}</div>`;}
  function draw(){if(!current())return;stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
- root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?"Connecting structure, dynamics and experiments from one material":"How do structures change, and how do experiments detect it?"}</h2><p>from order parameter and domains, to diffraction cancellation, and then check the dynamics with your own phonon data.</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Structural Dynamics Course">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>material learning route (background)<select id="dyn-material">${opts(data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]),material.id)}</select></label><p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?" The imported file determines the structure; this case name does not specify it.":''}</p></div><div class="obs-links"><a href="#classroom/structure-dynamics?module=modes">Continue: mode identification and frozen structures →</a><a href="#classroom/observables?module=thermo">Continued: phonon Thermodynamics →</a><a href="#atlas/notebook">Materials Research Record →</a></div><div id="dyn-content"></div>`;
- root.querySelectorAll('[data-dyn-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.dynTab;draw();sync();});$('#dyn-material').onchange=e=>{material=data.cases.find(c=>c.id===e.target.value);flowDrafts.discard('diffraction');applyMaterial();invalidate();draw();sync();};
+ const backgrounds=data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]);
+ if(!hasMaterialBackground)backgrounds.unshift(['',"Custom input"]);
+ root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?"Connecting structure, dynamics and experiments from one material":"How do structures change, and how do experiments detect it?"}</h2><p>from order parameter and domains, to diffraction cancellation, and then check the dynamics with your own phonon data.</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Structural Dynamics Course">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>material learning route (background)<select id="dyn-material">${opts(backgrounds,hasMaterialBackground?material.id:'')}</select></label>${hasMaterialBackground?`<p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?" The imported file determines the structure; this case name does not specify it.":''}</p>`:''}</div>
+ ${tool==='diffraction'&&tab==='lab'?diffractionSourceHTML(diffractionSource):''}
+ <div class="obs-links"><a href="#classroom/structure-dynamics?module=modes">Continue: mode identification and frozen structures →</a><a href="#classroom/observables?module=thermo">Continued: phonon Thermodynamics →</a><a href="#atlas/notebook">Materials Research Record →</a></div><div id="dyn-content"></div>`;
+ root.querySelectorAll('[data-dyn-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.dynTab;draw();sync();});
+ const background=$('#dyn-material');
+ background.onchange=e=>{
+  if(!current()||$('#dyn-material')!==background)return;
+  const next=data.cases.find(c=>c.id===e.target.value);if(!next)return;
+  detachDiffractionSource();hasMaterialBackground=true;material=next;flowDrafts.discard('diffraction');applyMaterial();invalidate();draw();sync();
+ };
  if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#dyn-form'),tool);}bindCourseFlowActions({root,prefix:'dyn',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'dyn-to-lab'});
  }
- function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">Select theme<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">Open ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">step-by-step derivation →</button></div>${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+ function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">Select theme<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">Open ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">step-by-step derivation →</button></div>
+ ${lesson.id==='structure-factor'?"<aside class=\"obs-model-note\" id=\"dyn-structure-practice\"><p>You can also open a POSCAR or CIF and test your own reflection indices in the reciprocal basis of the input cell.</p><a href=\"#structure\">Read a structure and prepare diffraction input →</a></aside>":''}
+ ${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
  $('#dyn-lesson').onchange=e=>{invalidate();lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(x=>x.lesson===lesson.id);tool=lesson.tool;draw();sync();};$('#dyn-to-exercise').onclick=()=>{invalidate();exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
  function applyLessonPreset(){
   if(tool==='phase'){Object.assign(forms.phase,structuredClone(defaults.phase));material=data.cases.find(c=>c.id==='batio3');}
@@ -110,11 +159,27 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
 
  const field=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" value="${value}" ${extra}></label>`;
  function controls(){const f=forms[tool];if(tool==='phase')return `<p class="obs-small">F = aQ² + bQ⁴ + cQ⁶ − hQ; both the coefficients and Q use dimensionless teaching units.</p>${[["quadratic coefficient a",'a'],["fourth degree coefficient b",'b'],["sixth order coefficient c",'c'],["bias field h",'h']].map(([t,k])=>field(t,'dyn-'+k,f[k],'step="any"')).join('')}<label>Selected order parameter Q<input id="dyn-q" type="range" min="-3" max="3" step="any" value="${f.q}"><output>${f.q}</output></label><label>polarity axis<select id="dyn-axis">${opts([['x',"x-axis"],['y',"y-axis"],['z',"z-axis"]],f.axis)}</select></label><p class="obs-small">Ti fractional displacement = 0.05 Q. This is a uniaxial distortion, not a fit to the real BaTiO₃ phase diagram. The selected Q does not automatically equal the equilibrium Q.</p>`;
- if(tool==='diffraction')return `<label>crystal model<select id="dyn-preset">${opts([['silicon',"Si · Diamond"],['gaas',"GaAs · zinc blende"],['nacl',"NaCl · Rock Salt"],['fcc',"single element FCC"],['bcc',"single element BCC"],['screw21',"2₁ screw axis Example"],['custom',"Custom unit cells and atoms"]],f.preset)}</select></label><label>Selected (h,k,l)<input id="dyn-hkl" value="${esc(JSON.stringify(f.hkl))}"></label>${field("Lattice constant a（Å）",'dyn-lattice',f.latticeConstant,'min="0.1" step="any"')}${field("Wavelength λ（Å）",'dyn-wavelength',f.wavelength,'min="0.01" step="any"')}${field("Reflection enumeration |h|,|k|,|l| upper limit",'dyn-max',f.maxIndex,'min="1" max="6" step="1"')}<label>Constant scattering factors (JSON; leave blank for the preset)<textarea id="dyn-factors" rows="2">${esc(JSON.stringify(f.scatteringFactors))}</textarea></label><details ${f.preset==='custom'?'open':''}><summary>Custom structure</summary><label>cell / atoms JSON<textarea id="dyn-custom" rows="6">${esc(JSON.stringify(f.custom||{cell:[[4,0,0],[0,4,0],[0,0,4]],atoms:[{species:'X',fractional:[0,0,0],factor:1,occupancy:1}]},null,2))}</textarea></label></details><p class="obs-small">I = |F|²; constant scattering factors and a stick spectrum over finite indices. Real atomic form factors, thermal motion, and instrumental broadening are omitted.</p>`;
+ if(tool==='diffraction')return `<label>crystal model<select id="dyn-preset">${opts([['silicon',"Si · Diamond"],['gaas',"GaAs · zinc blende"],['nacl',"NaCl · Rock Salt"],['fcc',"single element FCC"],['bcc',"single element BCC"],['screw21',"2₁ screw axis Example"],['custom',"Custom unit cells and atoms"]],f.preset)}</select></label><label>Selected (h,k,l)<input id="dyn-hkl" value="${esc(JSON.stringify(f.hkl))}"></label>${field("Preset lattice constant a (Å)",'dyn-lattice',f.latticeConstant,'min="0.1" step="any"')}${field("Wavelength λ（Å）",'dyn-wavelength',f.wavelength,'min="0.01" step="any"')}${field("Reflection enumeration |h|,|k|,|l| upper limit",'dyn-max',f.maxIndex,'min="1" max="6" step="1"')}<label>Constant scattering factors (JSON; leave blank for the preset)<textarea id="dyn-factors" rows="2">${esc(JSON.stringify(f.scatteringFactors))}</textarea></label><details ${f.preset==='custom'?'open':''}><summary>Custom structure</summary><label>cell / atoms JSON<textarea id="dyn-custom" rows="6">${esc(JSON.stringify(f.custom||{cell:[[4,0,0],[0,4,0],[0,0,4]],atoms:[{species:'X',fractional:[0,0,0],factor:1,occupancy:1}]},null,2))}</textarea></label></details><p class="obs-small">I = |F|²; constant scattering factors and a stick spectrum over finite indices. Real atomic form factors, thermal motion, and instrumental broadening are omitted.</p>`;
  return `<label>Choose band.yaml / qpoints.yaml / JSON<input id="dyn-file" type="file" accept=".yaml,.yml,.json"></label><button type="button" id="dyn-demo" class="secondary">Load the synthetic teaching example</button><button type="button" id="dyn-official-al" class="secondary">Load official Phonopy Al example</button><button type="button" id="dyn-zno" class="secondary">Load the ZnO derivative of real force data</button>${phonopyZnOTeachingHTML()}<p class="obs-small">The official example contains calculation data from a pinned revision. Its entry explicitly selects THz; the original file has no frequency-unit field. Both examples wait for “Read data” before running.</p><label>file content (left in browser)<textarea id="dyn-file-text" rows="9" spellcheck="false">${esc(f.content)}</textarea></label><details><summary>supplements the primitive cell structure (often required in qpoints.yaml)</summary><label>phonopy.yaml / primitive cell file<input id="dyn-structure-file" type="file" accept=".yaml,.yml,.json"></label><label>Supplementary structural content<textarea id="dyn-structure-text" rows="4">${esc(f.structure_content)}</textarea></label><p class="obs-small">must be consistent with primitive cell and the atomic sequence of the frequency file; the tool checks the available unit cell and atomic information.</p></details><label>Confirm frequency unit<select id="dyn-unit">${opts([['unknown',"Not confirmed (retain original values)"],['THz','THz'],['cm^-1','cm⁻¹'],['meV','meV']],f.frequency_unit)}</select></label>${field("q point index (starting from 0)",'dyn-qi',f.selected_q,'min="0" step="1"')}${field("phonon branch index (starting from 0)",'dyn-bi',f.selected_band,'min="0" step="1"')}${field("Display maximum displacement (input lattice units)",'dyn-amplitude',f.amplitude,'min="0" max="1" step="any"')}<label>animation supercell [nx,ny,nz]<input id="dyn-supercell" value="${esc(JSON.stringify(f.supercell))}"></label><details><summary>Optional: DOS text</summary><label>DOS type<select id="dyn-dos-kind">${opts([['total','total_dos.dat'],['projected','projected / partial_dos.dat'],['xyz',"XYZ_PROJECTION three-directional component"]],f.dos_kind)}</select></label><label>Import DOS file<input id="dyn-dos-file" type="file" accept=".dat,.txt"></label><label>Frequency and DOS Column<textarea id="dyn-dos" rows="4">${esc(f.dos_content)}</textarea></label></details><p class="obs-small">reads existing frequencies and eigenvectors; files with only structure or force constants will not automatically generate dispersion. Frequencies are still readable when no mass or eigenvectors are provided, but the animation is not faked.</p>`;
  }
  function sourceText(id,previous){const value=$('#'+id).value;return typeof previous==='string'&&value.replace(/\r\n?/g,'\n')===previous.replace(/\r\n?/g,'\n')?previous:value;}
- function readForm(){const f=forms[tool];if(tool==='phase'){for(const k of ['a','b','c','h','q'])f[k]=Number($('#dyn-'+k).value);f.axis=$('#dyn-axis').value;}else if(tool==='diffraction'){f.preset=$('#dyn-preset').value;f.hkl=JSON.parse($('#dyn-hkl').value);f.latticeConstant=Number($('#dyn-lattice').value);f.wavelength=Number($('#dyn-wavelength').value);f.maxIndex=Number($('#dyn-max').value);f.scatteringFactors=JSON.parse($('#dyn-factors').value);f.custom=JSON.parse($('#dyn-custom').value);if(f.preset==='custom')Object.assign(f,f.custom);else {delete f.cell;delete f.atoms;}}else Object.assign(f,{content:sourceText('dyn-file-text',f.content),frequency_unit:$('#dyn-unit').value,selected_q:Number($('#dyn-qi').value),selected_band:Number($('#dyn-bi').value),amplitude:Number($('#dyn-amplitude').value),supercell:JSON.parse($('#dyn-supercell').value),dos_content:sourceText('dyn-dos',f.dos_content),dos_kind:$('#dyn-dos-kind').value,structure_content:sourceText('dyn-structure-text',f.structure_content)});}
+ function readForm(){
+  const f=forms[tool];
+  if(tool==='phase'){for(const k of ['a','b','c','h','q'])f[k]=Number($('#dyn-'+k).value);f.axis=$('#dyn-axis').value;}
+  else if(tool==='diffraction'){
+   f.preset=$('#dyn-preset').value;f.hkl=JSON.parse($('#dyn-hkl').value);f.latticeConstant=Number($('#dyn-lattice').value);
+   f.wavelength=Number($('#dyn-wavelength').value);f.maxIndex=Number($('#dyn-max').value);f.scatteringFactors=JSON.parse($('#dyn-factors').value);
+   const custom=JSON.parse($('#dyn-custom').value);
+   f.custom={};
+   for(const key of ['cell','atoms']){
+    delete f[key];
+    if(!Object.hasOwn(custom??{},key))continue;
+    f.custom[key]=custom[key];
+    if(f.preset==='custom')f[key]=custom[key];
+   }
+   checkDiffractionSource(f);
+  }else Object.assign(f,{content:sourceText('dyn-file-text',f.content),frequency_unit:$('#dyn-unit').value,selected_q:Number($('#dyn-qi').value),selected_band:Number($('#dyn-bi').value),amplitude:Number($('#dyn-amplitude').value),supercell:JSON.parse($('#dyn-supercell').value),dos_content:sourceText('dyn-dos',f.dos_content),dos_kind:$('#dyn-dos-kind').value,structure_content:sourceText('dyn-structure-text',f.structure_content)});
+ }
  async function loadPhonopyExample(official=false,resetForm=true){
   if(!current()||tool!=='phonopy'||tab!=='lab'||busy)return;
   if(readIsCurrent()&&pendingRead.kind==='sample'&&pendingRead.official===official)return;
@@ -138,10 +203,22 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
   catch(error){showInputReadError(request,error,()=>readPhonopyFile(file,dos));}
  }
 
- function lab(){$('#dyn-content').innerHTML=`${selection.calculationOnly?'':`<div class="obs-tabs">${Object.entries(names).map(([id,label])=>`<button type="button" data-dyn-tool="${id}" class="${tool===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="obs-lab-layout"><form id="dyn-form" class="obs-controls"><fieldset id="dyn-fields" ${busy?'disabled':''}><legend>experimental parameters</legend>${controls()}<button id="dyn-run" class="primary" type="submit" ${busy?'disabled':''}>${busy?"Python Calculating…":tool==='phonopy'?"Read data and update demo →":"Calculate and update the demo →"}</button><p id="dyn-input-status" class="obs-small" role="status" hidden></p></fieldset><button id="dyn-cancel" type="button" class="secondary" ${busy?'':'hidden'}>Cancel calculation</button></form><section id="dyn-output" aria-live="polite" aria-busy="${busy}"></section></div>${links(material)}`;
+ function lab(){$('#dyn-content').innerHTML=`${selection.calculationOnly?'':`<div class="obs-tabs">${Object.entries(names).map(([id,label])=>`<button type="button" data-dyn-tool="${id}" class="${tool===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="obs-lab-layout"><form id="dyn-form" class="obs-controls"><fieldset id="dyn-fields" ${busy?'disabled':''}><legend>experimental parameters</legend>${controls()}<button id="dyn-run" class="primary" type="submit" ${busy?'disabled':''}>${busy?"Python Calculating…":tool==='phonopy'?"Read data and update demo →":"Calculate and update the demo →"}</button><p id="dyn-input-status" class="obs-small" role="status" hidden></p></fieldset><button id="dyn-cancel" type="button" class="secondary" ${busy?'':'hidden'}>Cancel calculation</button></form><section id="dyn-output" aria-live="polite" aria-busy="${busy}"></section></div>${hasMaterialBackground?links(material):''}`;
  root.querySelectorAll('[data-dyn-tool]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tool]')].includes(b)||tool===b.dataset.dynTool)return;invalidate();tool=b.dataset.dynTool;draw();sync();});
  const cancelButton=$('#dyn-cancel');cancelButton.onclick=()=>{if(!current()||$('#dyn-cancel')!==cancelButton)return;const wasBusy=busy;activeJob=null;busy=false;invalidate();if(wasBusy)cancelRun?.();draw();};
- const form=$('#dyn-form');form.oninput=e=>{if(!current()||$('#dyn-form')!==form)return;if(e.target?.id==='dyn-q'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;if(!busy){if(tool==='phonopy'){const key=({'dyn-file-text':'content','dyn-structure-text':'structure_content','dyn-dos':'dos_content'})[e.target?.id];if(key){forms.phonopy[key]=e.target.value;if(key==='content')delete forms.phonopy.data;if(key==='structure_content')delete forms.phonopy.structure_data;}}try{readForm();}catch{}invalidate();$('#dyn-output').innerHTML="<p class=\"obs-placeholder\">Parameters have changed, please recalculate.</p>";}};
+ const form=$('#dyn-form');form.oninput=e=>{
+  if(!current()||$('#dyn-form')!==form)return;
+  if(e.target?.id==='dyn-q'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;
+  if(!busy){checkDiffractionEdit(e.target);if(tool==='phonopy'){const key=({'dyn-file-text':'content','dyn-structure-text':'structure_content','dyn-dos':'dos_content'})[e.target?.id];if(key){forms.phonopy[key]=e.target.value;if(key==='content')delete forms.phonopy.data;if(key==='structure_content')delete forms.phonopy.structure_data;}}try{readForm();}catch{}invalidate();$('#dyn-output').innerHTML="<p class=\"obs-placeholder\">Parameters have changed, please recalculate.</p>";}
+ };
+ if(tool==='diffraction'){
+  const preset=$('#dyn-preset');
+  preset.onchange=e=>{
+   if(!current()||$('#dyn-preset')!==preset)return;
+   if(diffractionSource&&preset.value!=='custom')form.oninput(e);
+   else syncLabControls();
+  };
+ }
  form.onsubmit=async e=>{e.preventDefault();if(!current()||$('#dyn-form')!==form||busy||readIsCurrent())return;try{readForm();await calculate();}catch(error){if(current()&&$('#dyn-form')===form)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}};
  if(tool==='phonopy'){
   for(const [id,kind] of [['dyn-file',false],['dyn-dos-file',true],['dyn-structure-file','structure']]){const picker=$('#'+id);picker.onchange=e=>{if(current()&&$('#'+id)===picker)return readPhonopyFile(e.target.files?.[0],kind);};}
@@ -150,12 +227,37 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  syncLabControls();
  if(result)output();else $('#dyn-output').innerHTML=`<div class="obs-placeholder"><span>01 → 02 → 03</span><h3>${tool==='phase'?"free energy → symmetric reduction → polar domain":tool==='diffraction'?"atomic phase → structure factor → reflection condition":"import file → select q point with phonon branch → check vibration"}</h3><p>Run Python in the browser after selecting parameters; results, hypotheses and inputs can be exported together.</p></div>`;
  }
- async function calculate(){if(busy||readIsCurrent())return;busy=true;invalidate();const job=ticket,action=tool,input=structuredClone(forms[tool]);activeJob=job;syncLabControls();$('#dyn-fields').disabled=true;$('#dyn-cancel').hidden=false;$('#dyn-output').setAttribute('aria-busy','true');$('#dyn-output').innerHTML="<p role=\"status\"><span class=\"spinner\"></span> Python is calculating; you need to download the environment for the first run...</p>";try{const answer=await run(action,input);if(!current()||job!==ticket)return;result=answer;lastResult={kind:'structure-dynamics',tool:action,materialContext:material.id,input,result};output();}catch(error){if(current()&&job===ticket)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}}
- function output(){const out=$('#dyn-output');if(!out||!result)return;out.innerHTML=(tool==='phase'?phaseOutput(result):tool==='diffraction'?diffractionOutput(result):phonopyOutput(result))+`<div class="obs-links">${tool==='phonopy'?`<a id="dyn-scattering" href="#compute/phonopy-scattering">Copy the original files to the three-dimensional scattering tool →</a><a id="dyn-freeze" href="#compute/phonon-modes?material=${esc(encodeURIComponent(result?.sourceIdentity?.reference?.id===ZNO_PHONOPY_EXAMPLE.id?'zno':material.id))}">Send the current file to pattern recognition and frozen phonon →</a>`:''}<button id="dyn-download" class="secondary">↓ Inputs, assumptions and results JSON</button><a href="docs/structure-dynamics.md" target="_blank">Method and Scope ↗</a></div><details><summary>complete calculation data</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;$('#dyn-download').onclick=()=>download(JSON.stringify(lastResult,null,2),`symmetry-${tool}.json`);
+ async function calculate(){
+  if(busy||readIsCurrent())return;
+  busy=true;invalidate();
+  const job=ticket,action=tool,input=structuredClone(forms[tool]),materialContext=hasMaterialBackground?material.id:null;
+  if(action==='diffraction'){
+   if(input.preset==='custom')delete input.latticeConstant;
+   checkDiffractionSource(input);
+  }
+  const diffractionMetadata=action==='diffraction'&&diffractionSource?{basis:'input-cell',...diffractionSource}:null;
+  activeJob=job;syncLabControls();$('#dyn-fields').disabled=true;$('#dyn-cancel').hidden=false;$('#dyn-output').setAttribute('aria-busy','true');$('#dyn-output').innerHTML="<p role=\"status\"><span class=\"spinner\"></span> Python is calculating; you need to download the environment for the first run...</p>";
+  try{
+   const answer=await run(action,input);
+   if(!current()||job!==ticket)return;
+   result=answer;
+   lastResult={kind:'structure-dynamics',tool:action,...(materialContext?{materialContext}:{}),input,result,...(diffractionMetadata?{diffractionSource:diffractionMetadata}:{})};
+   output();
+  }catch(error){if(current()&&job===ticket)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}
+  finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}
+ }
+ function output(){const out=$('#dyn-output');if(!out||!result)return;out.innerHTML=(tool==='phase'?phaseOutput(result):tool==='diffraction'?diffractionOutput(result):phonopyOutput(result))+`<div class="obs-links">${tool==='phonopy'?`<a id="dyn-scattering" href="#compute/phonopy-scattering">Copy the original files to the three-dimensional scattering tool →</a><a id="dyn-freeze" href="#compute/phonon-modes?material=${esc(encodeURIComponent(result?.sourceIdentity?.reference?.id===ZNO_PHONOPY_EXAMPLE.id?'zno':material.id))}">Send the current file to pattern recognition and frozen phonon →</a>`:''}<button id="dyn-download" class="secondary">↓ Inputs, assumptions and results JSON</button><a href="docs/structure-dynamics.md" target="_blank">Method and Scope ↗</a></div><details><summary>complete calculation data</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;
+ const exportButton=$('#dyn-download'),record=lastResult;
+ exportButton.onclick=()=>{if(current()&&$('#dyn-download')===exportButton&&lastResult===record)download(JSON.stringify(record,null,2),`symmetry-${record.tool}.json`);};
  if($('#dyn-scattering')){const link=$('#dyn-scattering'),record=lastResult;link.onclick=event=>{if(event?.ctrlKey||event?.metaKey||event?.shiftKey||event?.altKey||event?.button>0)return;if(!current()||$('#dyn-scattering')!==link||lastResult!==record)return;setPhonopyScatteringInput(record.input);};}
  if($('#dyn-freeze'))$('#dyn-freeze').onclick=()=>setMaterialResearchInput('modes',{...lastResult.input,length_unit:'auto'});
  if(tool==='phase'){const r=result;viewer({atoms:r.structure.atoms.map(a=>({symbol:a.species,equilibrium:cart(a.parentFractional,r.structure.cell)})),frames:[{positions:r.structure.atoms.map(a=>a.cartesian)}],cell:r.structure.cell,title:"ideal BaTiO₃ · displacement and polar domain",play:false});root.querySelectorAll('[data-domain]').forEach(b=>b.onclick=async()=>{if(busy)return;const d=r.symmetry.domains[+b.dataset.domain],axis=d.direction.findIndex(v=>v!==0);if(axis<0){forms.phase.q=0;}else{forms.phase.axis=['x','y','z'][axis];forms.phase.q=Math.abs(forms.phase.q||.7)*Math.sign(d.direction[axis]);}invalidate();draw();await calculate();sync();});root.querySelectorAll('[data-minimum]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.phase.q=+b.dataset.minimum;invalidate();draw();await calculate();});}
- if(tool==='diffraction')root.querySelectorAll('[data-reflection]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.diffraction.hkl=b.dataset.reflection.split(',').map(Number);invalidate();draw();await calculate();});
+ if(tool==='diffraction'){
+  root.querySelectorAll('[data-reflection]').forEach(b=>b.onclick=async()=>{
+   if(!current()||tool!=='diffraction'||lastResult!==record||busy)return;
+   forms.diffraction.hkl=b.dataset.reflection.split(',').map(Number);invalidate();draw();await calculate();
+  });
+ }
  if(tool==='phonopy'){const r=result;if(r.animation?.available)viewer({atoms:r.animation.atoms,frames:r.animation.frames,cell:r.structure.lattice,supercell:r.animation.supercell,title:"Complex eigenvector animation with mass unweighting",play:true});if($('#dyn-q-select'))$('#dyn-q-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_q=+e.target.value;invalidate();draw();await calculate();};if($('#dyn-band-select'))$('#dyn-band-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_band=+e.target.value;invalidate();draw();await calculate();};}
  }
  const notes=rows=>`<aside class="obs-model-note"><ul>${(rows||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside>`;

@@ -2,6 +2,7 @@
 export function normalizeSearchText(value){
  return String(value??'').normalize('NFKC').toLocaleLowerCase()
   .replace(/\bposcar[-‐‑‒–—−]0\b/g,'poscar0')
+  .replace(/\bwt\.in[-‐‑‒–—−]bands\b/g,'wt.inbands')
   .replace(/\b(su|so|sp|u|o)\s*\(\s*(\d+)\s*\)/g,'$1$2')
   .replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c))
   .replace(/[-‐‑‒–—−·()（）{}\[\],，]/g,' ').replace(/\s+/g,' ').trim();
@@ -10,7 +11,7 @@ export function normalizeSearchText(value){
 // it never reads a file or chooses a conversion/compute mode.
 function fileBasename(term){
  const base=term.split(/[\\/]/).at(-1);
- const looksLikeFile=/^[a-z]:[\\/]|^[\\/]/i.test(term)||term.includes('\\')||/\.[a-z0-9]+$|^poscar(?:[-‐‑‒–—−]?0)?$/i.test(base);
+ const looksLikeFile=/^[a-z]:[\\/]|^[\\/]/i.test(term)||term.includes('\\')||/\.[a-z0-9]+$|^poscar(?:[-‐‑‒–—−]?0)?$|^wt\.in[-‐‑‒–—−]bands$/i.test(base);
  return /[\\/]/.test(term)&&looksLikeFile&&base?base:term;
 }
 function queryTerms(query){

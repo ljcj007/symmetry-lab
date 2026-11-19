@@ -313,3 +313,9 @@ establish that all existing scientific and teaching content has been audited.
 - The introductory trace exercise leads to the matrix and character demonstration. For a fixed representation and operation, a change of basis preserves the trace. Selecting a different action space changes which representation the learner is tracing.
 - In the water convention, σ(xz) keeps all three sites fixed and reverses the y component of each displacement. The learner predicts the trace of the resulting nine-dimensional action and can then inspect the displacement columns in the existing water workshop.
 - The tool finder recognizes the written tensor products of the five existing SU(3) 9j examples. The calculation directory also links directly to the four-octet singlet preset.
+
+## Carry the input cell into diffraction
+
+- The structure tool passes the parsed input lattice and sites to the custom diffraction form, with reciprocal indices in that cell's basis. For CIF, the sites are the complete set after symmetry expansion. The learner reviews the input before running the calculation.
+- With equal scattering factors on the eight sites of the official Si example, 100 and 200 cancel and 220 has relative intensity 64. The calculator reports cancellation within the custom structure model. Changing the indices, wavelength or factors keeps the structure source attached. Editing the geometry or switching presets clears it.
+- Searching for a Wannier90 HR filename now opens MagneticTB with the appropriate file-use instructions. The interface distinguishes a local HR file from the settings file paired with the pinned graphene example.

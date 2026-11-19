@@ -2,7 +2,8 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {setPhonopyScatteringInput} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261117-derive1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261120-wannier1';
+import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261115-tensor1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -10,6 +11,24 @@ const opts=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String
 const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const names={phase:'结构相变与畴',diffraction:'衍射与消光',phonopy:'Phonopy 数据导入'};
 const defaults={phase:{a:-1,b:1,c:0,h:0,q:.7,axis:'z',qMax:1.6,displacementScale:.05,latticeConstant:4},diffraction:{preset:'silicon',hkl:[2,2,0],maxIndex:4,wavelength:1.5406,latticeConstant:5.43,scatteringFactors:{}},phonopy:{content:'',filename:'band.yaml',frequency_unit:'unknown',selected_q:0,selected_band:0,amplitude:.15,supercell:[2,1,1],dos_content:'',dos_kind:'total',structure_content:''}};
+function diffractionGeometry(input){
+ if(!Array.isArray(input?.cell)||!Array.isArray(input?.atoms))return null;
+ return JSON.stringify([input.cell,input.atoms.map(atom=>[atom?.species,atom?.fractional])]);
+}
+function diffractionSourceHTML(source){
+ if(!source)return '';
+ const cell=source.format==='cif'?'CIF 对称展开后的输入晶胞':'结构转换读取的原始输入晶胞';
+ return `<aside id="dyn-diffraction-source" class="obs-model-note" aria-labelledby="dyn-diffraction-source-title">
+  <h3 id="dyn-diffraction-source-title">已复制结构转换的输入晶胞</h3>
+  <p>${esc(cell)} · ${esc(source.filename||'未命名结构')}</p>
+  <p>输入原子数 ${source.atomCount}</p>
+  <p>反射指标 (h,k,l) 使用该输入晶胞的倒易基矢。晶胞矢量以 Å 为单位，原子使用分数坐标。</p>
+  <p>每个原子的默认常数散射因子和占位率均为 1。修改散射因子可比较不同权重下的振幅抵消。</p>
+  <p>自定义输入的计算显示所选权重下的数值抵消。请核对基底和指标，再手动计算。</p>
+  ${source.sha256?`<details><summary>查看结构来源摘要</summary><code data-math-ignore>SHA-256 ${esc(source.sha256)}</code></details>`:''}
+  <div class="obs-links"><a href="#structure">返回结构转换 →</a></div>
+ </aside>`;
+}
 let catalogPromise,lastResult=null;
 const catalog=()=>catalogPromise??=fetch('data/structure-dynamics.json?v=20261110-en1').then(r=>{if(!r.ok)throw Error('结构与动力学课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getStructureDynamicsResult=()=>lastResult;
@@ -58,16 +77,34 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  const forms=structuredClone(defaults);let material=data.cases.find(c=>c.id===selection.material)||data.cases[0],lesson=data.lessons.find(l=>l.id===selection.lesson)||data.lessons[0],exercise=data.exercises.find(e=>e.id===selection.exercise)||data.exercises.find(e=>e.lesson===lesson.id)||data.exercises[0];
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
  let tool=Object.hasOwn(names,selection.experiment)?selection.experiment:lesson.tool,tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn',result=null,busy=false,ticket=0,fileTicket=0,pendingRead=null,activeJob=null,stop=()=>{},progress={};
+ const importedDiffraction=selection.calculationOnly&&tool==='diffraction'?validateStructureDiffractionHandoff(selection.diffractionHandoff):null;
+ const importedGeometry=importedDiffraction?diffractionGeometry(importedDiffraction.custom):null;
+ let diffractionSource=importedDiffraction?.source||null,hasMaterialBackground=!importedDiffraction;
  try{const p=JSON.parse(localStorage.getItem('symmetry-lab.structure-dynamics.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
- const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:material.id,exercise:exercise.id});
+ const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:hasMaterialBackground?material.id:undefined,exercise:exercise.id});
  function applyMaterial(){if(['silicon','gaas','nacl'].includes(material.id)){forms.diffraction.preset=material.id;forms.diffraction.latticeConstant={silicon:5.43,gaas:5.65,nacl:5.64}[material.id];}forms.diffraction.scatteringFactors=structuredClone(material.expected?.scatteringFactors||{});forms.diffraction.hkl=({silicon:[2,2,0],nacl:[1,1,1],gaas:[2,0,0]})[material.id]||[2,2,0];}
  if(tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');
  applyMaterial();if(selection.preset&&Object.hasOwn(names,tool)&&tool==='diffraction')forms.diffraction.preset=selection.preset;
+ if(importedDiffraction)forms.diffraction={...structuredClone(defaults.diffraction),preset:'custom',custom:structuredClone(importedDiffraction.custom)};
+ function detachDiffractionSource(){
+  if(!diffractionSource)return;
+  diffractionSource=null;
+  const card=$('#dyn-diffraction-source');
+  if(card)card.hidden=true;
+ }
+ function checkDiffractionSource(input){
+  if(diffractionSource&&(input.preset!=='custom'||diffractionGeometry(input)!==importedGeometry))detachDiffractionSource();
+ }
+ function checkDiffractionEdit(target){
+  if(tool==='diffraction'&&(target?.id==='dyn-custom'||target?.id==='dyn-preset'&&target.value!=='custom'))detachDiffractionSource();
+ }
  function readIsCurrent(request=pendingRead){return !!request&&pendingRead===request&&current()&&request.id===fileTicket&&tool==='phonopy'&&tab==='lab'&&$('#dyn-form')===request.form;}
  function syncLabControls(){
   if(!current())return;const submit=$('#dyn-run');if(!submit)return;const loading=readIsCurrent();
   submit.disabled=busy||loading;submit.textContent=busy?'Python 计算中…':loading?'文件载入中…':tool==='phonopy'?'读取数据并更新演示 →':'计算并更新演示 →';
   const fields=$('#dyn-fields');if(fields)fields.disabled=busy;
+  const presetLattice=$('#dyn-lattice');
+  if(presetLattice)presetLattice.disabled=$('#dyn-preset').value==='custom';
   for(const [id,official] of [['dyn-demo',false],['dyn-official-al',true],['dyn-zno','zno']]){const button=$('#'+id);if(button)button.disabled=busy||(loading&&pendingRead.kind==='sample'&&pendingRead.official===official);}
   const status=$('#dyn-input-status');if(status){status.hidden=!loading;status.textContent=loading?'文件载入中，请稍候。载入完成后仍需手动点击读取数据。':'';}
   const cancel=$('#dyn-cancel');if(cancel){cancel.hidden=!(busy||loading);cancel.textContent=busy?'取消计算':'取消文件载入';}
@@ -85,11 +122,23 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
 
  function links(c){return `<div class="obs-links"><a href="#classroom/structure-dynamics?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">浏览材料学习路线 →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?'相变与畴':'衍射与消光'} →</a><a href="#compute/phonopy?material=${esc(c.id)}">导入自己的 Phonopy 数据 →</a>${c.id==='batio3'?'<a href="#compute/tensors?preset=tetragonal_4mm">极性相张量约束 →</a>':`<a href="#atlas/materials?material=${esc(c.id)}">结构与对称操作 →</a><a href="#classroom/observables?material=${esc(c.id)}">声子与物性课堂 →</a>`}</div>`;}
  function draw(){if(!current())return;stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?'计算中心 / ':selection.atlasOnly?'材料图谱 / ':'学习中心 / ')+(selection.calculationOnly?names[tool]:'结构、相变与实验'));
- root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?'从一个材料串起结构、动力学与实验':'结构如何变化，实验如何看见？'}</h2><p>从序参量与畴，到衍射相消，再用自己的声子数据检验动力学。</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="结构动力学课程">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料路线']].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>材料学习路线（背景）<select id="dyn-material">${opts(data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]),material.id)}</select></label><p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?' 导入文件的结构以文件为准，不由此案例名称指定。':''}</p></div><div class="obs-links"><a href="#classroom/structure-dynamics?module=modes">继续：模式识别与冻结结构 →</a><a href="#classroom/observables?module=thermo">继续：声子热力学 →</a><a href="#atlas/notebook">材料研究记录 →</a></div><div id="dyn-content"></div>`;
- root.querySelectorAll('[data-dyn-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.dynTab;draw();sync();});$('#dyn-material').onchange=e=>{material=data.cases.find(c=>c.id===e.target.value);flowDrafts.discard('diffraction');applyMaterial();invalidate();draw();sync();};
+ const backgrounds=data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]);
+ if(!hasMaterialBackground)backgrounds.unshift(['','自定义输入']);
+ root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?'从一个材料串起结构、动力学与实验':'结构如何变化，实验如何看见？'}</h2><p>从序参量与畴，到衍射相消，再用自己的声子数据检验动力学。</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="结构动力学课程">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料路线']].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>材料学习路线（背景）<select id="dyn-material">${opts(backgrounds,hasMaterialBackground?material.id:'')}</select></label>${hasMaterialBackground?`<p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?' 导入文件的结构以文件为准，不由此案例名称指定。':''}</p>`:''}</div>
+ ${tool==='diffraction'&&tab==='lab'?diffractionSourceHTML(diffractionSource):''}
+ <div class="obs-links"><a href="#classroom/structure-dynamics?module=modes">继续：模式识别与冻结结构 →</a><a href="#classroom/observables?module=thermo">继续：声子热力学 →</a><a href="#atlas/notebook">材料研究记录 →</a></div><div id="dyn-content"></div>`;
+ root.querySelectorAll('[data-dyn-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.dynTab;draw();sync();});
+ const background=$('#dyn-material');
+ background.onchange=e=>{
+  if(!current()||$('#dyn-material')!==background)return;
+  const next=data.cases.find(c=>c.id===e.target.value);if(!next)return;
+  detachDiffractionSource();hasMaterialBackground=true;material=next;flowDrafts.discard('diffraction');applyMaterial();invalidate();draw();sync();
+ };
  if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#dyn-form'),tool);}bindCourseFlowActions({root,prefix:'dyn',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'dyn-to-lab'});
  }
- function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">选择主题<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">打开 ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">分步推导 →</button></div>${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+ function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">选择主题<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">打开 ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">分步推导 →</button></div>
+ ${lesson.id==='structure-factor'?'<aside class="obs-model-note" id="dyn-structure-practice"><p>也可以先读取 POSCAR 或 CIF，再用输入晶胞的倒易基矢检验自己的反射指标。</p><a href="#structure">读取结构并准备衍射输入 →</a></aside>':''}
+ ${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
  $('#dyn-lesson').onchange=e=>{invalidate();lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(x=>x.lesson===lesson.id);tool=lesson.tool;draw();sync();};$('#dyn-to-exercise').onclick=()=>{invalidate();exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
  function applyLessonPreset(){
   if(tool==='phase'){Object.assign(forms.phase,structuredClone(defaults.phase));material=data.cases.find(c=>c.id==='batio3');}
@@ -110,11 +159,27 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
 
  const field=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" value="${value}" ${extra}></label>`;
  function controls(){const f=forms[tool];if(tool==='phase')return `<p class="obs-small">F = aQ² + bQ⁴ + cQ⁶ − hQ；系数和 Q 均采用无量纲教学单位。</p>${[['二次系数 a','a'],['四次系数 b','b'],['六次系数 c','c'],['偏置场 h','h']].map(([t,k])=>field(t,'dyn-'+k,f[k],'step="any"')).join('')}<label>所选序参量 Q<input id="dyn-q" type="range" min="-3" max="3" step="any" value="${f.q}"><output>${f.q}</output></label><label>极性轴<select id="dyn-axis">${opts([['x','x 轴'],['y','y 轴'],['z','z 轴']],f.axis)}</select></label><p class="obs-small">Ti 分数位移 = 0.05 Q；只沿单轴畸变，不拟合真实 BaTiO₃ 相图。所选 Q 不自动等于平衡 Q。</p>`;
- if(tool==='diffraction')return `<label>晶体模型<select id="dyn-preset">${opts([['silicon','Si · 金刚石'],['gaas','GaAs · 闪锌矿'],['nacl','NaCl · 岩盐'],['fcc','单元素 FCC'],['bcc','单元素 BCC'],['screw21','2₁ 螺旋轴示例'],['custom','自定义晶胞与原子']],f.preset)}</select></label><label>所选 (h,k,l)<input id="dyn-hkl" value="${esc(JSON.stringify(f.hkl))}"></label>${field('晶格常数 a（Å）','dyn-lattice',f.latticeConstant,'min="0.1" step="any"')}${field('波长 λ（Å）','dyn-wavelength',f.wavelength,'min="0.01" step="any"')}${field('反射枚举 |h|,|k|,|l| 上限','dyn-max',f.maxIndex,'min="1" max="6" step="1"')}<label>常数散射因子（JSON；空值用预设）<textarea id="dyn-factors" rows="2">${esc(JSON.stringify(f.scatteringFactors))}</textarea></label><details ${f.preset==='custom'?'open':''}><summary>自定义结构</summary><label>cell / atoms JSON<textarea id="dyn-custom" rows="6">${esc(JSON.stringify(f.custom||{cell:[[4,0,0],[0,4,0],[0,0,4]],atoms:[{species:'X',fractional:[0,0,0],factor:1,occupancy:1}]},null,2))}</textarea></label></details><p class="obs-small">I = |F|²；常数散射因子、有限指标棒谱，不含真实原子形状因子、热振动或仪器展宽。</p>`;
+ if(tool==='diffraction')return `<label>晶体模型<select id="dyn-preset">${opts([['silicon','Si · 金刚石'],['gaas','GaAs · 闪锌矿'],['nacl','NaCl · 岩盐'],['fcc','单元素 FCC'],['bcc','单元素 BCC'],['screw21','2₁ 螺旋轴示例'],['custom','自定义晶胞与原子']],f.preset)}</select></label><label>所选 (h,k,l)<input id="dyn-hkl" value="${esc(JSON.stringify(f.hkl))}"></label>${field('预设晶格常数 a（Å）','dyn-lattice',f.latticeConstant,'min="0.1" step="any"')}${field('波长 λ（Å）','dyn-wavelength',f.wavelength,'min="0.01" step="any"')}${field('反射枚举 |h|,|k|,|l| 上限','dyn-max',f.maxIndex,'min="1" max="6" step="1"')}<label>常数散射因子（JSON；空值用预设）<textarea id="dyn-factors" rows="2">${esc(JSON.stringify(f.scatteringFactors))}</textarea></label><details ${f.preset==='custom'?'open':''}><summary>自定义结构</summary><label>cell / atoms JSON<textarea id="dyn-custom" rows="6">${esc(JSON.stringify(f.custom||{cell:[[4,0,0],[0,4,0],[0,0,4]],atoms:[{species:'X',fractional:[0,0,0],factor:1,occupancy:1}]},null,2))}</textarea></label></details><p class="obs-small">I = |F|²；常数散射因子、有限指标棒谱，不含真实原子形状因子、热振动或仪器展宽。</p>`;
  return `<label>选择 band.yaml / qpoints.yaml / JSON<input id="dyn-file" type="file" accept=".yaml,.yml,.json"></label><button type="button" id="dyn-demo" class="secondary">载入原创合成示例</button><button type="button" id="dyn-official-al" class="secondary">载入 Phonopy 官方 Al 示例</button><button type="button" id="dyn-zno" class="secondary">载入 ZnO 真实力数据衍生示例</button>${phonopyZnOTeachingHTML()}<p class="obs-small">官方示例来自固定版本计算数据，入口明确选择 THz；原文件没有频率单位字段。两个示例均等待点击“读取数据”后计算。</p><label>文件内容（留在浏览器）<textarea id="dyn-file-text" rows="9" spellcheck="false">${esc(f.content)}</textarea></label><details><summary>补充原胞结构（qpoints.yaml 常需要）</summary><label>phonopy.yaml / 原胞文件<input id="dyn-structure-file" type="file" accept=".yaml,.yml,.json"></label><label>补充结构内容<textarea id="dyn-structure-text" rows="4">${esc(f.structure_content)}</textarea></label><p class="obs-small">须与频率文件的原胞、原子顺序一致；工具核对可用的晶胞和原子信息。</p></details><label>确认频率单位<select id="dyn-unit">${opts([['unknown','未确认（保留原始数值）'],['THz','THz'],['cm^-1','cm⁻¹'],['meV','meV']],f.frequency_unit)}</select></label>${field('q 点索引（从 0 开始）','dyn-qi',f.selected_q,'min="0" step="1"')}${field('声子支索引（从 0 开始）','dyn-bi',f.selected_band,'min="0" step="1"')}${field('显示最大位移（输入晶格单位）','dyn-amplitude',f.amplitude,'min="0" max="1" step="any"')}<label>动画超胞 [nx,ny,nz]<input id="dyn-supercell" value="${esc(JSON.stringify(f.supercell))}"></label><details><summary>可选：DOS 文本</summary><label>DOS 类型<select id="dyn-dos-kind">${opts([['total','total_dos.dat'],['projected','projected / partial_dos.dat'],['xyz','XYZ_PROJECTION 三方向分量']],f.dos_kind)}</select></label><label>导入 DOS 文件<input id="dyn-dos-file" type="file" accept=".dat,.txt"></label><label>频率与 DOS 列<textarea id="dyn-dos" rows="4">${esc(f.dos_content)}</textarea></label></details><p class="obs-small">读取已有频率和本征矢；只有结构或力常数的文件不会自动产生色散。未提供质量或本征矢时仍可读频率，但不伪造动画。</p>`;
  }
  function sourceText(id,previous){const value=$('#'+id).value;return typeof previous==='string'&&value.replace(/\r\n?/g,'\n')===previous.replace(/\r\n?/g,'\n')?previous:value;}
- function readForm(){const f=forms[tool];if(tool==='phase'){for(const k of ['a','b','c','h','q'])f[k]=Number($('#dyn-'+k).value);f.axis=$('#dyn-axis').value;}else if(tool==='diffraction'){f.preset=$('#dyn-preset').value;f.hkl=JSON.parse($('#dyn-hkl').value);f.latticeConstant=Number($('#dyn-lattice').value);f.wavelength=Number($('#dyn-wavelength').value);f.maxIndex=Number($('#dyn-max').value);f.scatteringFactors=JSON.parse($('#dyn-factors').value);f.custom=JSON.parse($('#dyn-custom').value);if(f.preset==='custom')Object.assign(f,f.custom);else {delete f.cell;delete f.atoms;}}else Object.assign(f,{content:sourceText('dyn-file-text',f.content),frequency_unit:$('#dyn-unit').value,selected_q:Number($('#dyn-qi').value),selected_band:Number($('#dyn-bi').value),amplitude:Number($('#dyn-amplitude').value),supercell:JSON.parse($('#dyn-supercell').value),dos_content:sourceText('dyn-dos',f.dos_content),dos_kind:$('#dyn-dos-kind').value,structure_content:sourceText('dyn-structure-text',f.structure_content)});}
+ function readForm(){
+  const f=forms[tool];
+  if(tool==='phase'){for(const k of ['a','b','c','h','q'])f[k]=Number($('#dyn-'+k).value);f.axis=$('#dyn-axis').value;}
+  else if(tool==='diffraction'){
+   f.preset=$('#dyn-preset').value;f.hkl=JSON.parse($('#dyn-hkl').value);f.latticeConstant=Number($('#dyn-lattice').value);
+   f.wavelength=Number($('#dyn-wavelength').value);f.maxIndex=Number($('#dyn-max').value);f.scatteringFactors=JSON.parse($('#dyn-factors').value);
+   const custom=JSON.parse($('#dyn-custom').value);
+   f.custom={};
+   for(const key of ['cell','atoms']){
+    delete f[key];
+    if(!Object.hasOwn(custom??{},key))continue;
+    f.custom[key]=custom[key];
+    if(f.preset==='custom')f[key]=custom[key];
+   }
+   checkDiffractionSource(f);
+  }else Object.assign(f,{content:sourceText('dyn-file-text',f.content),frequency_unit:$('#dyn-unit').value,selected_q:Number($('#dyn-qi').value),selected_band:Number($('#dyn-bi').value),amplitude:Number($('#dyn-amplitude').value),supercell:JSON.parse($('#dyn-supercell').value),dos_content:sourceText('dyn-dos',f.dos_content),dos_kind:$('#dyn-dos-kind').value,structure_content:sourceText('dyn-structure-text',f.structure_content)});
+ }
  async function loadPhonopyExample(official=false,resetForm=true){
   if(!current()||tool!=='phonopy'||tab!=='lab'||busy)return;
   if(readIsCurrent()&&pendingRead.kind==='sample'&&pendingRead.official===official)return;
@@ -138,10 +203,22 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
   catch(error){showInputReadError(request,error,()=>readPhonopyFile(file,dos));}
  }
 
- function lab(){$('#dyn-content').innerHTML=`${selection.calculationOnly?'':`<div class="obs-tabs">${Object.entries(names).map(([id,label])=>`<button type="button" data-dyn-tool="${id}" class="${tool===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="obs-lab-layout"><form id="dyn-form" class="obs-controls"><fieldset id="dyn-fields" ${busy?'disabled':''}><legend>实验参数</legend>${controls()}<button id="dyn-run" class="primary" type="submit" ${busy?'disabled':''}>${busy?'Python 计算中…':tool==='phonopy'?'读取数据并更新演示 →':'计算并更新演示 →'}</button><p id="dyn-input-status" class="obs-small" role="status" hidden></p></fieldset><button id="dyn-cancel" type="button" class="secondary" ${busy?'':'hidden'}>取消计算</button></form><section id="dyn-output" aria-live="polite" aria-busy="${busy}"></section></div>${links(material)}`;
+ function lab(){$('#dyn-content').innerHTML=`${selection.calculationOnly?'':`<div class="obs-tabs">${Object.entries(names).map(([id,label])=>`<button type="button" data-dyn-tool="${id}" class="${tool===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="obs-lab-layout"><form id="dyn-form" class="obs-controls"><fieldset id="dyn-fields" ${busy?'disabled':''}><legend>实验参数</legend>${controls()}<button id="dyn-run" class="primary" type="submit" ${busy?'disabled':''}>${busy?'Python 计算中…':tool==='phonopy'?'读取数据并更新演示 →':'计算并更新演示 →'}</button><p id="dyn-input-status" class="obs-small" role="status" hidden></p></fieldset><button id="dyn-cancel" type="button" class="secondary" ${busy?'':'hidden'}>取消计算</button></form><section id="dyn-output" aria-live="polite" aria-busy="${busy}"></section></div>${hasMaterialBackground?links(material):''}`;
  root.querySelectorAll('[data-dyn-tool]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-dyn-tool]')].includes(b)||tool===b.dataset.dynTool)return;invalidate();tool=b.dataset.dynTool;draw();sync();});
  const cancelButton=$('#dyn-cancel');cancelButton.onclick=()=>{if(!current()||$('#dyn-cancel')!==cancelButton)return;const wasBusy=busy;activeJob=null;busy=false;invalidate();if(wasBusy)cancelRun?.();draw();};
- const form=$('#dyn-form');form.oninput=e=>{if(!current()||$('#dyn-form')!==form)return;if(e.target?.id==='dyn-q'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;if(!busy){if(tool==='phonopy'){const key=({'dyn-file-text':'content','dyn-structure-text':'structure_content','dyn-dos':'dos_content'})[e.target?.id];if(key){forms.phonopy[key]=e.target.value;if(key==='content')delete forms.phonopy.data;if(key==='structure_content')delete forms.phonopy.structure_data;}}try{readForm();}catch{}invalidate();$('#dyn-output').innerHTML='<p class="obs-placeholder">参数已改变，请重新计算。</p>';}};
+ const form=$('#dyn-form');form.oninput=e=>{
+  if(!current()||$('#dyn-form')!==form)return;
+  if(e.target?.id==='dyn-q'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;
+  if(!busy){checkDiffractionEdit(e.target);if(tool==='phonopy'){const key=({'dyn-file-text':'content','dyn-structure-text':'structure_content','dyn-dos':'dos_content'})[e.target?.id];if(key){forms.phonopy[key]=e.target.value;if(key==='content')delete forms.phonopy.data;if(key==='structure_content')delete forms.phonopy.structure_data;}}try{readForm();}catch{}invalidate();$('#dyn-output').innerHTML='<p class="obs-placeholder">参数已改变，请重新计算。</p>';}
+ };
+ if(tool==='diffraction'){
+  const preset=$('#dyn-preset');
+  preset.onchange=e=>{
+   if(!current()||$('#dyn-preset')!==preset)return;
+   if(diffractionSource&&preset.value!=='custom')form.oninput(e);
+   else syncLabControls();
+  };
+ }
  form.onsubmit=async e=>{e.preventDefault();if(!current()||$('#dyn-form')!==form||busy||readIsCurrent())return;try{readForm();await calculate();}catch(error){if(current()&&$('#dyn-form')===form)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}};
  if(tool==='phonopy'){
   for(const [id,kind] of [['dyn-file',false],['dyn-dos-file',true],['dyn-structure-file','structure']]){const picker=$('#'+id);picker.onchange=e=>{if(current()&&$('#'+id)===picker)return readPhonopyFile(e.target.files?.[0],kind);};}
@@ -150,12 +227,37 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  syncLabControls();
  if(result)output();else $('#dyn-output').innerHTML=`<div class="obs-placeholder"><span>01 → 02 → 03</span><h3>${tool==='phase'?'自由能 → 对称降低 → 极性畴':tool==='diffraction'?'原子相位 → 结构因子 → 反射条件':'导入文件 → 选择 q 点与声子支 → 检查振动'}</h3><p>选择参数后运行浏览器内 Python；结果、假设与输入可一起导出。</p></div>`;
  }
- async function calculate(){if(busy||readIsCurrent())return;busy=true;invalidate();const job=ticket,action=tool,input=structuredClone(forms[tool]);activeJob=job;syncLabControls();$('#dyn-fields').disabled=true;$('#dyn-cancel').hidden=false;$('#dyn-output').setAttribute('aria-busy','true');$('#dyn-output').innerHTML='<p role="status"><span class="spinner"></span> Python 正在计算；首次运行需要下载环境…</p>';try{const answer=await run(action,input);if(!current()||job!==ticket)return;result=answer;lastResult={kind:'structure-dynamics',tool:action,materialContext:material.id,input,result};output();}catch(error){if(current()&&job===ticket)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}}
- function output(){const out=$('#dyn-output');if(!out||!result)return;out.innerHTML=(tool==='phase'?phaseOutput(result):tool==='diffraction'?diffractionOutput(result):phonopyOutput(result))+`<div class="obs-links">${tool==='phonopy'?`<a id="dyn-scattering" href="#compute/phonopy-scattering">复制原始文件到三维散射工具 →</a><a id="dyn-freeze" href="#compute/phonon-modes?material=${esc(encodeURIComponent(result?.sourceIdentity?.reference?.id===ZNO_PHONOPY_EXAMPLE.id?'zno':material.id))}">将当前文件送入模式识别与冻结模 →</a>`:''}<button id="dyn-download" class="secondary">↓ 输入、假设与结果 JSON</button><a href="docs/structure-dynamics.md" target="_blank">方法与范围 ↗</a></div><details><summary>完整计算数据</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;$('#dyn-download').onclick=()=>download(JSON.stringify(lastResult,null,2),`symmetry-${tool}.json`);
+ async function calculate(){
+  if(busy||readIsCurrent())return;
+  busy=true;invalidate();
+  const job=ticket,action=tool,input=structuredClone(forms[tool]),materialContext=hasMaterialBackground?material.id:null;
+  if(action==='diffraction'){
+   if(input.preset==='custom')delete input.latticeConstant;
+   checkDiffractionSource(input);
+  }
+  const diffractionMetadata=action==='diffraction'&&diffractionSource?{basis:'input-cell',...diffractionSource}:null;
+  activeJob=job;syncLabControls();$('#dyn-fields').disabled=true;$('#dyn-cancel').hidden=false;$('#dyn-output').setAttribute('aria-busy','true');$('#dyn-output').innerHTML='<p role="status"><span class="spinner"></span> Python 正在计算；首次运行需要下载环境…</p>';
+  try{
+   const answer=await run(action,input);
+   if(!current()||job!==ticket)return;
+   result=answer;
+   lastResult={kind:'structure-dynamics',tool:action,...(materialContext?{materialContext}:{}),input,result,...(diffractionMetadata?{diffractionSource:diffractionMetadata}:{})};
+   output();
+  }catch(error){if(current()&&job===ticket)$('#dyn-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;}
+  finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}
+ }
+ function output(){const out=$('#dyn-output');if(!out||!result)return;out.innerHTML=(tool==='phase'?phaseOutput(result):tool==='diffraction'?diffractionOutput(result):phonopyOutput(result))+`<div class="obs-links">${tool==='phonopy'?`<a id="dyn-scattering" href="#compute/phonopy-scattering">复制原始文件到三维散射工具 →</a><a id="dyn-freeze" href="#compute/phonon-modes?material=${esc(encodeURIComponent(result?.sourceIdentity?.reference?.id===ZNO_PHONOPY_EXAMPLE.id?'zno':material.id))}">将当前文件送入模式识别与冻结模 →</a>`:''}<button id="dyn-download" class="secondary">↓ 输入、假设与结果 JSON</button><a href="docs/structure-dynamics.md" target="_blank">方法与范围 ↗</a></div><details><summary>完整计算数据</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;
+ const exportButton=$('#dyn-download'),record=lastResult;
+ exportButton.onclick=()=>{if(current()&&$('#dyn-download')===exportButton&&lastResult===record)download(JSON.stringify(record,null,2),`symmetry-${record.tool}.json`);};
  if($('#dyn-scattering')){const link=$('#dyn-scattering'),record=lastResult;link.onclick=event=>{if(event?.ctrlKey||event?.metaKey||event?.shiftKey||event?.altKey||event?.button>0)return;if(!current()||$('#dyn-scattering')!==link||lastResult!==record)return;setPhonopyScatteringInput(record.input);};}
  if($('#dyn-freeze'))$('#dyn-freeze').onclick=()=>setMaterialResearchInput('modes',{...lastResult.input,length_unit:'auto'});
  if(tool==='phase'){const r=result;viewer({atoms:r.structure.atoms.map(a=>({symbol:a.species,equilibrium:cart(a.parentFractional,r.structure.cell)})),frames:[{positions:r.structure.atoms.map(a=>a.cartesian)}],cell:r.structure.cell,title:'理想 BaTiO₃ · 位移与极性畴',play:false});root.querySelectorAll('[data-domain]').forEach(b=>b.onclick=async()=>{if(busy)return;const d=r.symmetry.domains[+b.dataset.domain],axis=d.direction.findIndex(v=>v!==0);if(axis<0){forms.phase.q=0;}else{forms.phase.axis=['x','y','z'][axis];forms.phase.q=Math.abs(forms.phase.q||.7)*Math.sign(d.direction[axis]);}invalidate();draw();await calculate();sync();});root.querySelectorAll('[data-minimum]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.phase.q=+b.dataset.minimum;invalidate();draw();await calculate();});}
- if(tool==='diffraction')root.querySelectorAll('[data-reflection]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.diffraction.hkl=b.dataset.reflection.split(',').map(Number);invalidate();draw();await calculate();});
+ if(tool==='diffraction'){
+  root.querySelectorAll('[data-reflection]').forEach(b=>b.onclick=async()=>{
+   if(!current()||tool!=='diffraction'||lastResult!==record||busy)return;
+   forms.diffraction.hkl=b.dataset.reflection.split(',').map(Number);invalidate();draw();await calculate();
+  });
+ }
  if(tool==='phonopy'){const r=result;if(r.animation?.available)viewer({atoms:r.animation.atoms,frames:r.animation.frames,cell:r.structure.lattice,supercell:r.animation.supercell,title:'质量反加权的复本征矢动画',play:true});if($('#dyn-q-select'))$('#dyn-q-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_q=+e.target.value;invalidate();draw();await calculate();};if($('#dyn-band-select'))$('#dyn-band-select').onchange=async e=>{if(busy)return;forms.phonopy.selected_band=+e.target.value;invalidate();draw();await calculate();};}
  }
  const notes=rows=>`<aside class="obs-model-note"><ul>${(rows||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside>`;

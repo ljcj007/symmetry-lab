@@ -19,12 +19,13 @@ for (const entry of readdirSync(new URL('dist/', root), {recursive: true, withFi
 }
 
 const localeFiles = ['source', 'ui', 'lesson', 'docs'].map(kind => `en-wannier-graphene-${kind}.json`);
+localeFiles.push('en-wannier-file-search.json');
 for (const file of localeFiles) assert.ok(catalogFiles.includes(file), file);
 const paths = [
   'GOAL-ROADMAP.md', 'package.json', 'dist/index.html', 'dist/app.js', 'dist/classroom-ui.js',
   'dist/research-ui.js', 'dist/wannier-graphene-source.js', 'dist/wannier-graphene.css',
   'dist/material-research-ui.js', 'dist/data/material-research.json', 'dist/data/search-index.json',
-  'dist/navigation-ui.js', 'dist/tool-capabilities.js', 'dist/tool-finder.js',
+  'dist/navigation-ui.js', 'dist/tool-capabilities.js', 'dist/tool-finder.js', 'dist/tool-search.js',
   'dist/docs/wannier-graphene-example.md', 'dist/examples/magnetictb-graphene.json',
   'dist/python/magnetictb_browser.py', 'scripts/english-catalog.mjs', 'scripts/test-source-package.py',
   'scripts/build-wannier-graphene-provenance.mjs', 'scripts/test-wannier-graphene-source.mjs',

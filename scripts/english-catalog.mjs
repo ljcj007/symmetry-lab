@@ -40,6 +40,8 @@ catalogFiles.push('en-wannier-graphene-source.json','en-wannier-graphene-ui.json
 catalogFiles.push('en-zero-trace-prediction.json');
 catalogFiles.push('en-zero-trace-water-link.json','en-character-water-bridge.json');
 catalogFiles.push('en-ninej-search.json');
+catalogFiles.push('en-structure-diffraction-source.json','en-structure-diffraction-destination.json');
+catalogFiles.push('en-wannier-file-search.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

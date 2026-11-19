@@ -109,12 +109,13 @@ assert.equal(freeze.attributes.href,'#compute/phonon-modes?material=gaas');
 transfer.container.querySelector('#dyn-file-text').value='unsubmitted control edit';freeze.onclick();
 const researchData=JSON.parse(fs.readFileSync(new URL('../dist/data/material-research.json',import.meta.url),'utf8'));
 globalThis.fetch=async url=>String(url).includes('material-research.json')?{ok:true,json:async()=>researchData}:normalFetch(url);
-// Follow the production handoff target, including its cache query. Loading an
-// unrelated version creates a second module-local handoff slot in Node as well
-// as in a browser, and would not exercise the actual connected workflow.
+// A cache-version split creates distinct module-local handoff slots.
 const dynamicsModuleURL=new URL('../dist/structure-dynamics-ui.js',import.meta.url);
 const handoffSpecifier=fs.readFileSync(dynamicsModuleURL,'utf8').match(/import \{setMaterialResearchInput\} from '([^']+)'/)[1];
-const {renderMaterialResearchView}=await import(new URL(handoffSpecifier,dynamicsModuleURL).href);
+const classroomModuleURL=new URL('../dist/classroom-ui.js',import.meta.url);
+const destinationSpecifier=fs.readFileSync(classroomModuleURL,'utf8').match(/'material-research':\{load:\(\)=>import\('([^']+)'\)/)[1];
+assert.equal(handoffSpecifier,destinationSpecifier,'The Phonopy sender and classroom destination must share a module instance');
+const {renderMaterialResearchView}=await import(new URL(destinationSpecifier,classroomModuleURL).href);
 const handoffContainer=new Container();let handoffInput;
 await renderMaterialResearchView({container:handoffContainer,selection:{calculationOnly:true,module:'modes',material:'gaas'},run:async(action,input)=>{handoffInput=input;throw Error('Input captured for transfer regression');},download:()=>{}});
 assert.equal(handoffContainer.querySelector('#mr-preset').value,'custom');

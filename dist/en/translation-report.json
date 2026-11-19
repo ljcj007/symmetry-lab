@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28368,
-  "translatedUnits": 28368,
+  "sourceUnits": 28392,
+  "translatedUnits": 28392,
   "missing": [],
-  "files": 503,
+  "files": 504,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -138,6 +138,9 @@
     "en-zero-trace-prediction.json",
     "en-zero-trace-water-link.json",
     "en-character-water-bridge.json",
-    "en-ninej-search.json"
+    "en-ninej-search.json",
+    "en-structure-diffraction-source.json",
+    "en-structure-diffraction-destination.json",
+    "en-wannier-file-search.json"
   ]
 }

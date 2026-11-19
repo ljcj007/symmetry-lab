@@ -1,0 +1,5 @@
+{
+  "用输入晶胞计算衍射 →": "Calculate diffraction from the input cell →",
+  "沿用输入晶胞的晶格、原子顺序和分数坐标。打开衍射计算后，按输入晶胞选取 (h,k,l)，再手动运行。": "Keep the input lattice, atom order, and fractional coordinates. In the diffraction tool, choose (h,k,l) in this cell’s basis and then run the calculation.",
+  "这一入口支持含 1 至 128 个原子的有效三维输入晶胞。": "This transfer accepts a valid three-dimensional input cell with 1 to 128 atoms."
+}

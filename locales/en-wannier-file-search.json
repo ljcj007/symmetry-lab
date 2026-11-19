@@ -1,0 +1,6 @@
+{
+  "导入 Wannier90 实空间哈密顿量并计算能带。": "Import a Wannier90 real-space Hamiltonian and calculate its bands.",
+  "HR 文件上限为 10 MiB。核对倒格分数坐标路径，补充对应晶格可得到 Å⁻¹ 路径距离，然后手动运行。": "The HR file limit is 10 MiB. Check the path in fractional reciprocal coordinates. Supply its lattice to obtain path distances in Å⁻¹, then run the calculation.",
+  "与固定版本的 Graphene_hr.dat 配对，载入石墨烯示例的晶格和能带路径。": "Pair with the pinned Graphene_hr.dat to load the graphene lattice and band path.",
+  "请在石墨烯原文件入口核验两份文件后手动运行。任意项目的路径设置须另行填入计算输入。": "Use the original graphene file panel to verify both files, then run the calculation. Enter path settings for other projects in the editable calculation input."
+}

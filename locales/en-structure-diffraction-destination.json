@@ -1,0 +1,16 @@
+{
+  "CIF 对称展开后的输入晶胞": "Input cell from the symmetry-expanded CIF",
+  "结构转换读取的原始输入晶胞": "Original input cell read by structure conversion",
+  "未命名结构": "Unnamed structure",
+  "查看结构来源摘要": "View the structure source digest",
+  "已复制结构转换的输入晶胞": "Input cell copied from structure conversion",
+  "输入原子数": "Number of input atoms",
+  "反射指标 (h,k,l) 使用该输入晶胞的倒易基矢。晶胞矢量以 Å 为单位，原子使用分数坐标。": "Reflection indices (h,k,l) use the reciprocal basis of this input cell. Cell vectors are in Å, and positions are fractional.",
+  "每个原子的默认常数散射因子和占位率均为 1。修改散射因子可比较不同权重下的振幅抵消。": "The default constant scattering factors and occupancies are both 1. Change the scattering factors to compare cancellation at different weights.",
+  "自定义输入的计算显示所选权重下的数值抵消。请核对基底和指标，再手动计算。": "With a custom structure, the calculation shows numerical cancellation for the chosen weights. Check the basis and reflection indices before running it.",
+  "返回结构转换 →": "Return to structure conversion →",
+  "自定义输入": "Custom input",
+  "预设晶格常数 a（Å）": "Preset lattice constant a (Å)",
+  "也可以先读取 POSCAR 或 CIF，再用输入晶胞的倒易基矢检验自己的反射指标。": "You can also open a POSCAR or CIF and test your own reflection indices in the reciprocal basis of the input cell.",
+  "读取结构并准备衍射输入 →": "Read a structure and prepare diffraction input →"
+}

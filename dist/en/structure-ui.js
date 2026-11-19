@@ -1,6 +1,7 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
+import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
@@ -66,7 +67,8 @@ const fmt = value => typeof value === 'number' ? (Math.abs(value)<1e-10?'0':Numb
 const matrix = rows => `<div class="table-wrap"><table><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${fmt(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 export const getStructureResult = () => state.result;
 
-export function renderStructureView({container,run,toast,download,openGroup}) {
+export function renderStructureView(options) {
+  const {container,run,toast,download,openGroup,openDiffraction}=options;
   const $=selector=>container.querySelector(selector);
   const revision=++state.revision;
   const current=()=>revision===state.revision&&container.dataset.researchView==='structure';
@@ -90,11 +92,21 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
     if(!r){target.innerHTML=`<div class="empty-state">${state.busy?"<span class=\"spinner\"></span>Identifying symmetries and verifying BC operations...":"After importing the structure, BC primitive cell , basis vector and origin transformation are displayed.<br>You can also start with the NaCl / CIF example."}</div>`;return;}
     // The result schema is shared by CPython and the browser worker.
     const cell=r.bc_primitive;
+    const previousDiffractionButton=$('#structure-open-diffraction');
+    const restoreDiffractionFocus=previousDiffractionButton&&globalThis.document?.activeElement===previousDiffractionButton;
+    const canOpenDiffraction=typeof openDiffraction==='function';
+    const diffraction=canOpenDiffraction?createStructureDiffractionHandoff(r,{
+      format:state.format,filename:state.source.filename,sha256:state.handoff?.source.sha256
+    }):null;
     target.innerHTML=`<div class="structure-summary"><span class="eyebrow">SPACE GROUP ${esc(r.group_number)}</span><h2>${crystalSpan(r.international,'hm')}</h2><p>${esc(r.bz_type||r.bravais)} · Hall ${esc(r.hall_number)}</p></div>
       <label class="sth-spin" for="structure-spin">${esc("Representation type for the workbench handoff")}<select id="structure-spin"><option value="false" ${!state.doubleValued?'selected':''}>${esc("Single-valued representation (default)")}</option><option value="true" ${state.doubleValued?'selected':''}>${esc("Double-valued representation (half-integer spin)")}</option></select></label><p class="form-note">${esc("Select the representation type explicitly; the structure file alone cannot determine SOC strength or magnetic order. Check the source and settings in the workbench, then start the calculation manually.")}</p>
       <div class="controls-row"><button class="primary small" id="structure-open-group" ${!state.handoff||state.handoffPending?'disabled':''}>${esc("Open the representation workbench with this source →")}</button><button class="text-button" id="structure-json">↓ Complete JSON</button></div>
       <div id="structure-handoff-card">${state.handoff?structureHandoffHTML(state.handoff):`<p class="sth-state ${state.handoffError?'sth-error':''}" role="status">${esc(state.handoffError||(state.handoffPending?"Computing the source fingerprint; geometry exports remain available.":"The source summary is not ready; geometry exports remain available."))}</p>`}</div>
       <div class="structure-downloads"><button class="secondary small" id="structure-poscar">↓ BC POSCAR</button><button class="secondary small" id="structure-cif">↓ BC CIF</button></div>
+      ${canOpenDiffraction?`<div class="structure-details">
+        <button class="secondary" type="button" id="structure-open-diffraction" aria-describedby="structure-diffraction-scope" ${diffraction?'':'disabled'}>${esc("Calculate diffraction from the input cell →")}</button>
+        <p id="structure-diffraction-scope">${diffraction?"Keep the input lattice, atom order, and fractional coordinates. In the diffraction tool, choose (h,k,l) in this cell’s basis and then run the calculation.":"This transfer accepts a valid three-dimensional input cell with 1 to 128 atoms."}</p>
+      </div>`:''}
       <p class="mini-heading">BC primitive cell basis vectors / Å · One basis vector per row</p>${matrix(cell.lattice)}<p class="form-note">${cell.positions.length} atoms · ${esc([...new Set(cell.species)].join(' / '))}</p>
       <p class="mini-heading">input → BC · ${inlineMath(String.raw`x_{\mathrm{BC}}=M x_{\mathrm{input}}+q`,'x_BC = M x_input + q')}</p>${matrix(r.transform.coordinate_matrix)}<p class="form-note">q = (${r.transform.origin_shift.map(fmt).join(', ')})</p>
       <div class="notice">${inlineMath(String.raw`k_{\mathrm{BC}}=(${r.k_bc.map(fmt).join(', ')})`,'k_BC = ('+r.k_bc.map(fmt).join(', ')+')')}<br><small>use M⁻ᵀ; the transformed wavevector can be sent to the workbench.</small></div>
@@ -104,6 +116,14 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
       <details class="structure-details"><summary>More unit cell exports</summary><p class="form-note">is not idealized BC unit cell retains the actual lattice of the input; ITA conventional cell uses international table settings, unlike BC primitive cell .</p><div class="controls-row"><button class="secondary small" id="structure-unidealized">↓ Not idealized BC POSCAR</button><button class="secondary small" id="structure-standard">↓ ITA conventional cell POSCAR</button></div></details><details class="structure-details"><summary>Verification and idealization records</summary><pre class="structure-json">${esc(JSON.stringify(r.verification,null,2))}</pre></details>`;
     const spin=$('#structure-spin');spin.onchange=()=>{if(!current()||$('#structure-spin')!==spin||state.result!==r)return;state.doubleValued=spin.value==='true';if(state.handoff)state.handoff=validateStructureHandoff({...state.handoff,doubleValued:state.doubleValued});drawResult();};
     const openButton=$('#structure-open-group');openButton.onclick=()=>{if(!current()||$('#structure-open-group')!==openButton||openButton.disabled||state.result!==r||!state.handoff)return;const handoff=validateStructureHandoff({...state.handoff,doubleValued:state.doubleValued});return openGroup(r.group_number,[...r.k_bc],r.bz_type,handoff);};
+    const diffractionButton=$('#structure-open-diffraction');
+    if(diffractionButton){
+      diffractionButton.onclick=()=>{
+        if(!current()||$('#structure-open-diffraction')!==diffractionButton||state.result!==r||!diffraction)return;
+        return openDiffraction(diffraction);
+      };
+      if(restoreDiffractionFocus&&!diffractionButton.disabled)diffractionButton.focus?.({preventScroll:true});
+    }
     if(state.handoff)disposeHandoff=bindStructureHandoff({root:$('#structure-handoff-card'),value:state.handoff,isCurrent:()=>current()&&state.result===r,download});
     $('#structure-json').onclick=()=>{if(!current()||state.result!==r)return;download(JSON.stringify(r,null,2),'bc-structure.json');};
     $('#structure-poscar').onclick=()=>{if(!current()||state.result!==r)return;download(r.exports.bc_poscar,'POSCAR_BC','text/plain;charset=utf-8');};
@@ -154,7 +174,7 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
       state.fileTicket++;
       Object.assign(state,{text,format:'poscar',species:'',cifBlock:'',symprec:'0.00001',angle:'-1',k:['1/2','0','0'],source:{kind:'teaching-example',filename:siExample.filename},sourceBytes:null,doubleValued:false});
       invalid();
-      renderStructureView({container,run,toast,download,openGroup});
+      renderStructureView(options);
       $('#structure-si-source')?.focus({preventScroll:true});
     }catch(error){
       if(owns())siLoadError=request.controller.signal.aborted?"The official Si example took too long to load. Please try again.":error.message;
@@ -173,7 +193,7 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
   $('#structure-block').oninput=e=>{state.cifBlock=e.target.value;interruptSiLoad();invalid();};
   $('#structure-angle').oninput=e=>{state.angle=e.target.value;interruptSiLoad();invalid();};
   state.k.forEach((_,i)=>{$('#structure-k-'+i).oninput=e=>{state.k[i]=e.target.value;interruptSiLoad();invalid();};});
-  const useExample=(text,format)=>{if(!current())return;interruptSiLoad();state.fileTicket++;state.fileLoading=false;state.text=text;state.format=format;state.species='';state.cifBlock='';state.source={kind:'teaching-example',filename:format==='cif'?'CsCl_example.cif':'NaCl_example.POSCAR'};state.sourceBytes=null;state.doubleValued=false;invalid();renderStructureView({container,run,toast,download,openGroup});};
+  const useExample=(text,format)=>{if(!current())return;interruptSiLoad();state.fileTicket++;state.fileLoading=false;state.text=text;state.format=format;state.species='';state.cifBlock='';state.source={kind:'teaching-example',filename:format==='cif'?'CsCl_example.cif':'NaCl_example.POSCAR'};state.sourceBytes=null;state.doubleValued=false;invalid();renderStructureView(options);};
   $('#structure-poscar-example').onclick=()=>useExample(sample,'poscar');
   $('#structure-cif-example').onclick=()=>useExample(cifSample,'cif');
   $('#structure-file').onchange=async e=>{
@@ -185,7 +205,7 @@ export function renderStructureView({container,run,toast,download,openGroup}) {
       const bytes=typeof file.arrayBuffer==='function'?new Uint8Array(await file.arrayBuffer()):null;if(fileTicket!==state.fileTicket)return;
       const text=await file.text();if(fileTicket!==state.fileTicket)return;
       state.text=text;state.format=file.name.toLowerCase().endsWith('.cif')||/^\s*data_/im.test(text)?'cif':'poscar';state.species='';state.cifBlock='';state.source={kind:'user-file',filename:file.name};state.sourceBytes=bytes;state.doubleValued=false;invalid();
-      if(current()){renderStructureView({container,run,toast,download,openGroup});toast("has been read locally "+file.name);}
+      if(current()){renderStructureView(options);toast("has been read locally "+file.name);}
     }catch(error){if(fileTicket===state.fileTicket)state.error=error.message;}
     finally{if(fileTicket===state.fileTicket){state.fileLoading=false;if(current())$('#structure-file').value='';state.refresh?.();}}
   };
