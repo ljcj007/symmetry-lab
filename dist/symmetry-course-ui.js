@@ -66,6 +66,27 @@ function cifReciprocalPracticeHTML(){
     <p><a href="docs/cif-setting-practice.md#cif-reciprocal-replay">详细讲义与衍射延伸</a></p>
   </details>`;
 }
+function cifExplicitHallActivityHTML(){
+  return `<details data-cif-explicit-hall-activity>
+    <summary>显式操作与 Hall 声明不一致时如何展开？</summary>
+    <p>先预测。保持两个位点和显式操作，单独改 Hall 声明。展开位点数与标准化空间群会变吗？</p>
+    <ol>
+      <li><a href="#structure?cif-setting=practice">打开 CIF 轴设置练习 →</a> 点「载入 P 2c CIF」。在现有原子表之前插入以下四行，保留 Hall 声明，手动转换。
+        <pre class="sc-formula" data-cif-explicit-hall-ops data-math-ignore>loop_
+_space_group_symop_operation_xyz
+'x,y,z'
+'-x,-y,z+1/2'</pre>
+      </li>
+      <li>只把 Hall 行改为 <code>_space_group_name_Hall 'P 2'</code>。再次手动转换。在两次结果中查看「Hall 声明与显式操作核对」，对照其状态与标准化空间群。</li>
+    </ol>
+    <details data-cif-explicit-hall-answer>
+      <summary>核对展开方式与结果</summary>
+      <p>两次都使用两条显式操作展开为 4 个位点，几何标准化都得到空间群 4、Hall 记录 6。P 2c 显示「在输入设置中匹配」。P 2 有相同的半转，缺少沿 c 的半格平移，显示「在输入设置中不同」。</p>
+      <p>这项核对以输入基底和原点为准。目录未能解析时，当前声明仍待核对。若两份操作采用不同原点，先统一原点再比较。</p>
+      <p>完整 P1 晶胞导出已列出展开位点，按恒等操作回读即可。若这些位点的几何有更高对称性，几何识别仍会报告较高的空间群。</p>
+    </details>
+  </details>`;
+}
 function cifSettingPracticeHTML(){
   return `<details class="sc-callout" data-cif-setting-practice>
     <summary>同为 4 号空间群，螺旋轴沿哪个输入基矢？</summary>
@@ -76,6 +97,7 @@ function cifSettingPracticeHTML(){
       <li><strong>核对不相容的声明。</strong>在同一个斜晶胞中改用明确给出 P 2yb 的 CIF，手动运行，检查转换器怎样报告晶胞度量冲突。</li>
     </ol>
     <p>也可以用点号标签重放同一个 P 2c 结构，核对换了字段名之后，哪些计算量保持原值。<a href="docs/cif-setting-practice.md#dotted-cif-replay">比较两种字段写法 →</a></p>
+    ${cifExplicitHallActivityHTML()}
     ${cifReciprocalPracticeHTML()}
     <p><a href="#structure?cif-setting=practice">打开 CIF 轴设置练习 →</a> · <a href="docs/cif-setting-practice.md">查看三次核对的步骤与预期结果</a></p>
   </details>`;

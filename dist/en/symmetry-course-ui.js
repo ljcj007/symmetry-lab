@@ -66,6 +66,27 @@ function cifReciprocalPracticeHTML(){
     <p><a href="docs/cif-setting-practice.md#cif-reciprocal-replay">Detailed notes and diffraction extension</a></p>
   </details>`;
 }
+function cifExplicitHallActivityHTML(){
+  return `<details data-cif-explicit-hall-activity>
+    <summary>How are sites expanded when explicit operations and the Hall declaration differ?</summary>
+    <p>Predict first. Keep the two sites and the explicit operations fixed. If you change the Hall declaration alone, will the expanded site count or the standardized space group change?</p>
+    <ol>
+      <li><a href="#structure?cif-setting=practice">Open the CIF axis-setting exercise →</a> Choose “Load the P 2c CIF.” Insert the four lines below before the existing atom table. Keep the Hall declaration and run the conversion manually.
+        <pre class="sc-formula" data-cif-explicit-hall-ops data-math-ignore>loop_
+_space_group_symop_operation_xyz
+'x,y,z'
+'-x,-y,z+1/2'</pre>
+      </li>
+      <li>Change only the Hall line to <code>_space_group_name_Hall 'P 2'</code>. Run the conversion again manually. In both results, open “Check the Hall declaration against explicit operations.” Compare the status and the standardized space group.</li>
+    </ol>
+    <details data-cif-explicit-hall-answer>
+      <summary>Check the expansion and result</summary>
+      <p>Both runs use the two explicit operations to expand the structure to four sites. Geometry standardization gives space group 4, Hall record 6, in each run. P 2c reports “Match in the input setting.” P 2 has the same half-turn without the half-cell translation along c and reports “Difference in the input setting.”</p>
+      <p>This check uses the input basis and origin. If the catalog cannot resolve the declaration, it remains unchecked. When the operation sets use different origins, bring them to a common origin before comparing.</p>
+      <p>An exported complete P1 cell already lists the expanded sites. Reloading it therefore needs only the identity operation. If the geometry of those sites has higher symmetry, identification reports the higher-symmetry space group.</p>
+    </details>
+  </details>`;
+}
 function cifSettingPracticeHTML(){
   return `<details class="sc-callout" data-cif-setting-practice>
     <summary>For space group 4, which input basis vector carries the screw axis?</summary>
@@ -76,6 +97,7 @@ function cifSettingPracticeHTML(){
       <li><strong>Test an incompatible declaration.</strong>Use the same oblique cell with an explicit P 2yb declaration. Run the conversion and check how it reports the cell-metric conflict.</li>
     </ol>
     <p>You can also replay the same P 2c structure with dotted tags and check which calculated quantities stay the same.<a href="docs/cif-setting-practice.md#dotted-cif-replay">Compare the two tag spellings →</a></p>
+    ${cifExplicitHallActivityHTML()}
     ${cifReciprocalPracticeHTML()}
     <p><a href="#structure?cif-setting=practice">Open the CIF axis-setting exercise →</a> · <a href="docs/cif-setting-practice.md">Read the steps and expected results</a></p>
   </details>`;

@@ -26,7 +26,7 @@ const base={
 };
 const container=new Container();container.dataset={researchView:'structure'};
 const calls=[],downloads=[];
-let pendingConversion,holdConversion=false,nextError,nextWarning;
+let pendingConversion,holdConversion=false,nextError,nextWarning,nextHallCheck;
 const workbench={
  container,toast(){},download:(...values)=>downloads.push(values),openGroup(){},
  async run(action,payload){
@@ -44,6 +44,10 @@ const workbench={
     selected_hall:{number:7,symbol:'P 2c',choice:'c'},
     compatible_hall_count:inferred?1:null,ambiguous:false
    }};
+  }
+  if(nextHallCheck){
+   result.input_metadata={declared_symmetry_operation_count:3,cif_symmetry_setting:{method:'explicit_operations',selected_hall:null,compatible_hall_count:null,ambiguous:false},cif_explicit_hall_check:nextHallCheck};
+   nextHallCheck=null;
   }
   return result;
  }
@@ -228,6 +232,56 @@ const legacyWarning=$('#structure-result').querySelectorAll('.warning').find(ite
 assert.equal(legacyWarning?.textContent,english
  ?'CIF atom-site row 1 (Na1) expands to multiplicity 2. The value 1 in the legacy field _atom_site_symmetry_multiplicity agrees with the site-symmetry order. The source value is retained.'
  :'CIF 原子位点第 1 行 (Na1)展开后的重数为 2。旧字段 _atom_site_symmetry_multiplicity 中的值 1 与位点稳定子阶一致，已保留源值。');
+
+const comparison=()=>$('#structure-cif-explicit-hall-check');
+assert.equal(comparison(),null,'Earlier results without check metadata keep their existing presentation');
+const hallWarning="The Hall catalogue and the explicit CIF operations differ in the input basis and origin. The explicit operations were used.";
+const candidate=(hall_number,group_number,operation_count,status)=>({hall_number,group_number,operation_count,status});
+for(const [hall,status,candidates,expected] of [
+ ['P 2c','match',[candidate(7,4,2,'match')],english?'Match in the input setting':'在输入设置中匹配'],
+ ['P 2','different_in_input_setting',[candidate(4,3,2,'translations')],english?'Difference in the input setting':'在输入设置中不同'],
+ ['P 2yb','different_in_input_setting',[candidate(6,4,2,'rotations')],english?'Difference in the input setting':'在输入设置中不同'],
+ ['P 1','different_in_input_setting',[candidate(1,1,1,'operation_count')],english?'Difference in the input setting':'在输入设置中不同'],
+ ['P 2c (0 0 1) <img src=x> &','catalogue_unresolved',[],english?'Unresolved in the catalogue used':'所用目录中未解析']
+]){
+ const metadata={declared_hall_symbol:hall,status,explicit_operation_count:2,translation_tolerance_fractional:1e-6,candidates};
+ nextHallCheck=metadata;
+ if(status==='different_in_input_setting')nextWarning=hallWarning;
+ await convert();
+ const card=comparison();
+ assert.ok(card);
+ assert.equal(card.open,false);
+ assert.match(card.innerHTML,english?/same input lattice basis and origin/:/同一输入晶胞基底和原点/);
+ assert.match(card.innerHTML,english?/fractional coordinates/:/分数坐标/);
+ assert.match(card.innerHTML,/1e-6/);
+ assert.ok(card.querySelector('summary').textContent.includes(expected));
+ assert.equal(card.querySelector('code').textContent,hall);
+ assert.equal(card.querySelector('img'),null,'User-supplied Hall symbols are displayed as literal text');
+ assert.equal(card.querySelector('tbody')?.querySelectorAll('tr').length??0,candidates.length);
+ assert.match($('#structure-result').querySelector('.structure-summary').textContent,/Hall 6/);
+ assert.match(evidence().innerHTML,english?/Uses the operations listed explicitly in the CIF/:/采用 CIF 中明确列出的操作/);
+ const warnings=$('#structure-result').querySelectorAll('.warning');
+ if(status==='different_in_input_setting'){
+  assert.equal(warnings.at(-1)?.textContent,english?hallWarning:"Hall 目录操作与显式 CIF 操作在输入基底和原点中不同。转换采用显式操作。");
+ }else assert.equal(warnings.length,0);
+ if(candidates.length){
+  const row=card.querySelector('tbody').querySelector('tr');
+  const labels=english?{match:'Full operation sets match',translations:'Different translation parts',rotations:'Different rotation parts',operation_count:'Different operation counts'}
+   :{match:'完整操作集匹配',translations:'平移部分不同',rotations:'旋转部分不同',operation_count:'操作数不同'};
+  assert.deepEqual(row.querySelectorAll('td').map(cell=>cell.textContent),[
+   ...['hall_number','group_number','operation_count'].map(key=>String(candidates[0][key])),labels[candidates[0].status]
+  ]);
+ }
+ card.open=true;
+ $('#structure-spin').onchange();
+ assert.equal(comparison().open,true,'The same result keeps its disclosure open on redraw');
+ $('#structure-json').onclick();
+ const exported=JSON.parse(downloads.at(-1)[0]);
+ assert.deepEqual(exported.input_metadata.cif_explicit_hall_check,metadata);
+ if(warnings.length)assert.ok(exported.warnings.includes(hallWarning));
+}
+await convert();
+assert.equal(comparison(),null,'A later conversion cannot inherit an earlier comparison');
 
 const fetchedQuartz=[];
 let tamperQuartz=true;

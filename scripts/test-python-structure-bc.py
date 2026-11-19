@@ -164,7 +164,12 @@ Cl1 Cl 0.271 0.414 0.159 1
                     'compatible_hall_count': 1 if method == 'metadata_hall' else None,
                     'ambiguous': False,
                 })
-                self.assertEqual(result['warnings'], [])
+                if method == 'explicit_operations':
+                    self.assertEqual(result['input_metadata']['cif_explicit_hall_check']['status'],
+                                     'different_in_input_setting')
+                    self.assertIn('The explicit operations were used.', result['warnings'][0])
+                else:
+                    self.assertEqual(result['warnings'], [])
                 np.testing.assert_allclose(result['input_cell']['positions'][1], [.877, .655, .734], atol=1e-12)
                 np.testing.assert_allclose(np.array(result['transform']['coordinate_matrix']).T @ result['k_bc'],
                                            [0, 0, .25], atol=1e-12)
@@ -371,6 +376,73 @@ Cl1 Cl 0.271 0.414 0.159 1
                            "'x,y,z' 'x,y,z'\n'-x,-y,z+1/2' 'x,y,z'")
         with self.assertRaisesRegex(ValueError, 'Repeated CIF data item: .* aliases '):
             bc.parse_cif(repeated)
+
+    def test_explicit_cif_operations_and_hall_are_compared_in_input_coordinates(self):
+        sites = 'Na .123 .345 .234\nCl .271 .159 .414'
+        operations = "loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n'-x,-y,z+3/2'\n'x+1,y,z'"
+        cases = (
+            (101.2, 4, 'P 2c', 7, 'match'),
+            (101.2, 3, 'P 2', 4, 'translations'),
+            (90, 4, 'P 2yb', 6, 'rotations'),
+            (101.2, 1, 'P 1', 1, 'operation_count'),
+            (101.2, 4, 'P 2c (0 0 1)', None, None),
+            (101.2, 4, '?', None, None),
+        )
+        for gamma, group, hall, hall_number, mismatch in cases:
+            with self.subTest(hall=hall):
+                declaration = f"_space_group.IT_number {group}\n_space_group.name_Hall '{hall}'\n{operations}"
+                text = cif_with_setting((3, 5, 4), (90, 90, gamma), declaration, sites)
+                result = bc.run({'format': 'cif', 'text': text})
+                self.assertEqual((result['group_number'], result['hall_number']), (4, 6))
+                self.assertEqual(result['input_cell']['species'], ['Na', 'Na', 'Cl', 'Cl'])
+                metadata = result['input_metadata']
+                self.assertEqual(metadata['declared_symmetry_operation_count'], 3)
+                self.assertEqual(metadata['cif_symmetry_setting']['method'], 'explicit_operations')
+                if hall == '?':
+                    self.assertNotIn('cif_explicit_hall_check', metadata)
+                    self.assertEqual(result['warnings'], [])
+                    continue
+                check = metadata['cif_explicit_hall_check']
+                self.assertEqual(check['declared_hall_symbol'], hall)
+                self.assertEqual(check['explicit_operation_count'], 2)
+                if hall_number is None:
+                    self.assertEqual(check['status'], 'catalogue_unresolved')
+                    self.assertEqual(check['candidates'], [])
+                    self.assertEqual(result['warnings'], [])
+                else:
+                    self.assertEqual(check['candidates'], [{
+                        'hall_number': hall_number, 'group_number': group,
+                        'operation_count': 1 if group == 1 else 2, 'status': mismatch,
+                    }])
+                    if mismatch == 'match':
+                        self.assertEqual(check['status'], 'match')
+                        self.assertEqual(result['warnings'], [])
+                    else:
+                        self.assertEqual(check['status'], 'different_in_input_setting')
+                        self.assertIn('The explicit operations were used.', result['warnings'][0])
+
+    def test_matched_explicit_hall_can_give_higher_geometric_symmetry(self):
+        operations = "_space_group_name_Hall 'P 1'\n_space_group_IT_number 1\nloop_\n"
+        operations += "_space_group_symop_operation_xyz\n'x,y,z'"
+        text = cif_with_setting((3, 5, 4), (82, 94, 101.2), operations, 'Na .123 .345 .234')
+        result = bc.run({'format': 'cif', 'text': text})
+        self.assertEqual((result['group_number'], result['hall_number']), (2, 2))
+        check = result['input_metadata']['cif_explicit_hall_check']
+        self.assertEqual(check['status'], 'match')
+        self.assertEqual(check['candidates'][0]['hall_number'], 1)
+        self.assertEqual(result['warnings'], [])
+
+    def test_original_quartz_and_p1_export_need_no_hall_comparison(self):
+        source = ROOT / 'dist/data/examples/quartz-298k/9005017.cif'
+        original = bc.run({'format': 'cif', 'text': source.read_text(encoding='utf-8')})
+        reopened = bc.run({'format': 'cif', 'text': original['exports']['bc_cif']})
+        for result, count in ((original, 6), (reopened, 1)):
+            self.assertEqual((result['group_number'], result['hall_number'], result['atom_count']), (154, 443, 9))
+            metadata = result['input_metadata']
+            self.assertEqual(metadata['declared_symmetry_operation_count'], count)
+            self.assertNotIn('cif_explicit_hall_check', metadata)
+        self.assertEqual(reopened['input_metadata']['source_tags']['_space_group_it_number'], '1')
+        self.assertEqual(reopened['warnings'], [])
 
     def test_cif_metadata_retains_first_choice_warning_for_multiple_metric_matches(self):
         sites = 'Na .123 .345 .234\nCl .271 .159 .414'

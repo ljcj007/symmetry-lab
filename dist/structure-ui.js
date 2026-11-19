@@ -3,7 +3,7 @@ import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
-import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML} from './cif-setting-practice.js?v=20261120-cif-dotted2';
+import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML,cifExplicitHallCheckHTML} from './cif-setting-practice.js?v=20261120-cif-explicit-hall1';
 import {cifOrbitCases,cifOrbitPracticeEnabled,cifOrbitPracticeHTML} from './cif-orbit-practice.js?v=20261120-cif-orbit1';
 import {quartzStructureCases,quartzStructurePracticeEnabled,quartzStructurePracticeHTML} from './quartz-structure-practice.js?v=20261120-quartz-hand1';
 // Structure files are read locally; the Python worker performs all conversion.
@@ -11,6 +11,7 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
 const formatDiagnosticFields=(template,fields)=>template.replace(/\{([1-5])\}/g,(_,index)=>fields[index-1]);
 function structureDiagnosticText(message){
+  if(message==="The Hall catalogue and the explicit CIF operations differ in the input basis and origin. The explicit operations were used.")return "Hall 目录操作与显式 CIF 操作在输入基底和原点中不同。转换采用显式操作。";
   if(message==='The input CIF contains displacement data. Geometry exports omit these data; use the original CIF to recover the full records.')return '输入 CIF 包含原子位移参数。几何导出省略这些数据，完整记录请查阅原 CIF。';
   if(message==='CIF symmetry rotations do not preserve the declared cell metric at this tolerance')return 'CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。';
   if(message==='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number')return 'CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。';
@@ -143,6 +144,7 @@ export function renderStructureView(options) {
     if(!r){target.innerHTML=`<div class="empty-state">${state.busy?'<span class="spinner"></span>正在识别对称性并核对 BC 操作…':'导入结构后，显示 BC 原胞、基矢和原点变换。<br>也可以先使用 NaCl / CIF 示例。'}</div>`;return;}
     // The result schema is shared by CPython and the browser worker.
     const cell=r.bc_primitive;
+    const hallCheckOpen=$('#structure-cif-explicit-hall-check')?.open===true;
     const previousDiffractionButton=$('#structure-open-diffraction');
     const restoreDiffractionFocus=previousDiffractionButton&&globalThis.document?.activeElement===previousDiffractionButton;
     const canOpenDiffraction=typeof openDiffraction==='function';
@@ -150,7 +152,7 @@ export function renderStructureView(options) {
       format:state.format,filename:state.source.filename,sha256:state.handoff?.source.sha256
     }):null;
     target.innerHTML=`<div class="structure-summary"><span class="eyebrow">SPACE GROUP ${esc(r.group_number)}</span><h2>${crystalSpan(r.international,'hm')}</h2><p>${esc(r.bz_type||r.bravais)} · Hall ${esc(r.hall_number)}</p></div>
-      ${state.format==='cif'?cifInputSettingHTML(r.input_metadata?.cif_symmetry_setting):''}
+      ${state.format==='cif'?cifInputSettingHTML(r.input_metadata?.cif_symmetry_setting)+cifExplicitHallCheckHTML(r.input_metadata?.cif_explicit_hall_check,hallCheckOpen):''}
       <label class="sth-spin" for="structure-spin">${esc('交接到工作台的表示类型')}<select id="structure-spin"><option value="false" ${!state.doubleValued?'selected':''}>${esc('单值表示（默认）')}</option><option value="true" ${state.doubleValued?'selected':''}>${esc('双值表示（半整数自旋）')}</option></select></label><p class="form-note">${esc('这是明确的表示类型选择；结构文件本身不能决定 SOC 强弱或磁序。打开工作台后先核对来源和选择，再手动计算。')}</p>
       <div class="controls-row"><button class="primary small" id="structure-open-group" ${!state.handoff||state.handoffPending?'disabled':''}>${esc('携带来源打开表示工作台 →')}</button><button class="text-button" id="structure-json">↓ 完整 JSON</button></div>
       <div id="structure-handoff-card">${state.handoff?structureHandoffHTML(state.handoff):`<p class="sth-state ${state.handoffError?'sth-error':''}" role="status">${esc(state.handoffError||(state.handoffPending?'正在计算来源指纹；几何导出可继续使用。':'来源摘要尚未就绪；可先保留几何导出。'))}</p>`}</div>

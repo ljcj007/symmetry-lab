@@ -70,3 +70,30 @@ export function cifInputSettingHTML(setting){
   <p class="form-note">上方空间群结果中的 Hall 编号对应标准化后的晶胞。</p>
  </aside>`;
 }
+
+const hallCheckStatuses=Object.freeze({
+ match:'在输入设置中匹配',
+ different_in_input_setting:'在输入设置中不同',
+ catalogue_unresolved:'所用目录中未解析'
+});
+const hallCandidateStatuses=Object.freeze({
+ match:'完整操作集匹配',
+ operation_count:'操作数不同',
+ rotations:'旋转部分不同',
+ translations:'平移部分不同'
+});
+
+export function cifExplicitHallCheckHTML(check,open=false){
+ if(!check||!Object.hasOwn(hallCheckStatuses,check.status)||typeof check.declared_hall_symbol!=='string'||!check.declared_hall_symbol.trim()||!Array.isArray(check.candidates))return '';
+ const count=check.explicit_operation_count,tolerance=check.translation_tolerance_fractional;
+ if(!Number.isInteger(count)||count<1||!Number.isFinite(tolerance)||tolerance<=0)return '';
+ const rows=check.candidates.filter(row=>row&&Number.isInteger(row.hall_number)&&row.hall_number>=1&&row.hall_number<=530&&
+  Number.isInteger(row.group_number)&&row.group_number>=1&&row.group_number<=230&&Number.isInteger(row.operation_count)&&row.operation_count>=1&&Object.hasOwn(hallCandidateStatuses,row.status));
+ return `<details class="structure-details" id="structure-cif-explicit-hall-check"${open?' open':''}>
+  <summary><span>Hall 声明与显式操作核对</span> · ${esc(hallCheckStatuses[check.status])}</summary>
+  <p><strong>CIF 中声明的 Hall 符号</strong> · <code style="overflow-wrap:anywhere">${esc(check.declared_hall_symbol)}</code></p>
+  <p>比较限定在同一输入晶胞基底和原点，平移按整数晶格周期比较。结构展开采用 CIF 明确列出的操作。</p>
+  <p class="form-note"><span>去除等价项后的显式操作数</span> · ${count}<br><span>平移比较容差（分数坐标）</span> · ${tolerance.toExponential()}</p>
+  ${rows.length?`<div class="table-wrap"><table><thead><tr><th>目录 Hall 编号</th><th>目录空间群编号</th><th>目录操作数</th><th>匹配情况</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.hall_number}</td><td>${row.group_number}</td><td>${row.operation_count}</td><td>${esc(hallCandidateStatuses[row.status])}</td></tr>`).join('')}</tbody></table></div>`:''}
+ </details>`;
+}

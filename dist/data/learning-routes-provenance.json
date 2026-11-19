@@ -45,8 +45,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 76968,
-      "sha256": "b51d2d84f06ef93e4aa62209b7a5a08e4fe88bf227bdbf9bc62bb97bba5c0461"
+      "bytes": 77543,
+      "sha256": "45b78db49f90b76ffc72c5a002451027386d16ce67fbb98bafb994e9f82a051f"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -57,8 +57,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 102640,
-      "sha256": "bdd196a1713c396c02837db7a73498935917cfbba589dd8dfd575245c5e69f9a"
+      "bytes": 102659,
+      "sha256": "9a37ca0d95825a0892d3004e3e23ee6f964ad7297a88c6627e2543927589d06c"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -73,12 +73,12 @@
       "sha256": "23a1ee00e79cda17a7e38be5a7978f0f2d09e8cef60525843500e7fb48b6d164"
     },
     "dist/cif-setting-practice.js": {
-      "bytes": 3936,
-      "sha256": "b21f9bb91b49405b73620742520417cf53d86b978e224e988e69f88ca034a75c"
+      "bytes": 6123,
+      "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32728,
-      "sha256": "7a3b6f681ffb6bf1e7ba015e68e9d5b605224c94c919117bd6c9f08be0192cb1"
+      "bytes": 32735,
+      "sha256": "8be27d23821ba1ad4d26494fc5618bab2bec2215a32ccd3397d4f67dd1ddfe2d"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -205,8 +205,8 @@
       "sha256": "8109ca7f597d3923943264d457b4903ec640948cfe6b28ccdb64e244a39fb6c3"
     },
     "dist/docs/structure-bc.md": {
-      "bytes": 8060,
-      "sha256": "489dacb0bc6af287c2fc514326c43be43743a9959e855f857b8c3955dbf59c29"
+      "bytes": 8595,
+      "sha256": "c5b43703da95c40b08d6ff3b586e59806c52180b0bddf2e015e65fb12679aa8b"
     },
     "dist/electronic-materials-ui.js": {
       "bytes": 32616,
@@ -233,8 +233,8 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8216,
-      "sha256": "9b8905f9543b3e2dfa404e88f5cc69be93822321f3101eab2965cdde8634bac1"
+      "bytes": 8223,
+      "sha256": "6533f4f4f327405a944d239542094ab6d2411fa69e24bb120a8bfbc0cc2f7ee7"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -285,12 +285,12 @@
       "sha256": "46182a660770fae690a2d83b7ef8d61bdaa835291136cebbb2b1d7d594bfdd64"
     },
     "dist/python-client.js": {
-      "bytes": 3143,
-      "sha256": "31decbd3fd317825c71ae08420272c97114b98eb04ad98b8a842847fc2aaba96"
+      "bytes": 3149,
+      "sha256": "26807d1f0db1c66682ad5a7c2e056a91c23361be7ab1f40f7dc8b03610a8073d"
     },
     "dist/python-worker.js": {
-      "bytes": 12064,
-      "sha256": "96a50a8acd66f10d4d9a2e0cc8e789ef123f15452cab55d28e41fce54f21cc44"
+      "bytes": 12070,
+      "sha256": "a5194009ae03adb4ba40160232996177e270a707bf855566b0b239d9a3b53be6"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -393,8 +393,8 @@
       "sha256": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4"
     },
     "dist/python/structure_bc.py": {
-      "bytes": 129334,
-      "sha256": "6f4274c29f4149417c41aac5c55d2dc34ad24434e3c3b20fe99f67a6c3f82c6b"
+      "bytes": 132395,
+      "sha256": "27d8be06f7909ab23d2dfd132f1a7d48cce01a83e50d7bde0879ae14fab1fa70"
     },
     "dist/python/su3_cg.py": {
       "bytes": 21975,
@@ -457,8 +457,8 @@
       "sha256": "0957d4d27e96ee8bf54af4dcc2409e1e3b10fabb1b5f11a31960aeca8b7eeccd"
     },
     "dist/structure-ui.js": {
-      "bytes": 30630,
-      "sha256": "95e21b9395d90010e94a9a1b014e6381cbc47789003c77029fe40ca22a0b7c0d"
+      "bytes": 31074,
+      "sha256": "29ba07d465db6253d7e810c9650e5c3d38d28a5d0763998d9176867f7d35dd9a"
     },
     "dist/style.css": {
       "bytes": 24172,
@@ -477,8 +477,8 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 102621,
-      "sha256": "aff9fe1c81f7ccbac9ccd1a9c1a583027c36f5654247c8946cbdb4f9e332d03e"
+      "bytes": 104282,
+      "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
     },
     "dist/tool-capabilities.js": {
       "bytes": 44716,
@@ -533,12 +533,12 @@
       "sha256": "642cdbb622767ee9c98517befe9461125bc8075cd1e90a9a44e62807dcf9bcdb"
     },
     "locales/en-cif-setting-lesson.json": {
-      "bytes": 8433,
-      "sha256": "9864406a6fb2f374b8300af521a38386ce8547900283b819bcb1d9f561d44955"
+      "bytes": 10951,
+      "sha256": "a44066e03d46e80f33b75c65a567838c64c36fbdd0ca585063de3fc9b0b74494"
     },
     "locales/en-cif-setting-practice.json": {
-      "bytes": 3961,
-      "sha256": "a6505ffaddb7d40473672ea16a056056966dcd5502af81bc51e1fbc7e8ff02a9"
+      "bytes": 5454,
+      "sha256": "a0d6ccb8d9461e0d6481eba7c07c28e65b3cd56576bb112e06177451d5f53462"
     },
     "locales/en-cif-setting-search.json": {
       "bytes": 143,
@@ -617,12 +617,12 @@
       "sha256": "7740eb2e330d382a1b60c952541abe05edccee089e3625db900a0fb4514894c7"
     },
     "scripts/test-cif-setting-lesson.mjs": {
-      "bytes": 8219,
-      "sha256": "20aaeea422acc72710dba0f86c0b861ce7bd8655ab236722fdde4ccfdde5a8dc"
+      "bytes": 9817,
+      "sha256": "e9a32786fda4ab806eda06c18bf55136b5be08012e1c2bf8a8b55ce386efd913"
     },
     "scripts/test-cif-setting-practice.mjs": {
-      "bytes": 15636,
-      "sha256": "8ef2a50fe4e302b9c141355270691a7391f40ba48f6b0d8ddfe5057fb432ac65"
+      "bytes": 19596,
+      "sha256": "3fa83908c66b0cb34d4f706c20b04d960424f1ae8c22c77a4b5b774262f25863"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
@@ -733,8 +733,8 @@
       "sha256": "1868e22d96dbf8334b77321542759ed6cb2d1c11f01c76c679523c140de311f1"
     },
     "scripts/test-python-structure-bc.py": {
-      "bytes": 29897,
-      "sha256": "f6ae1dc059be1e7444a7a2781f9e5773ebfa469d409b8b5bd259ffaf4fd1fe66"
+      "bytes": 34413,
+      "sha256": "3608b33fb3f642529528d3eebc39b42fbe868e93386e35c9149223c6276361d4"
     },
     "scripts/test-route-focus.mjs": {
       "bytes": 7243,

@@ -115,6 +115,16 @@ separate bounded complete-source restoration path. The directory now has 75 tool
   BC labels exchanges the two branches over a reciprocal period even though
   the fixed screw operation gives the same pair of character values.
 
+## Explicit CIF operations and the Hall setting
+
+- When an ordered CIF supplies both a complete operation list and a Hall
+  symbol, the result compares the supplied list with the catalogue in the
+  input basis and origin. The supplied list remains the source for expansion.
+- The result distinguishes catalogue agreement, an input-setting difference,
+  and an unresolved Hall record. A difference in the catalogue representatives
+  is compatible with an origin or basis change. Geometry standardization is
+  displayed separately, including for complete P1 coordinate lists.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

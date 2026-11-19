@@ -46,6 +46,26 @@ assert.equal(details.children.find(child=>child.tag==='ol').querySelectorAll('li
 assert.equal(details.querySelector(`a[href="${practiceRoute}"]`).getAttribute('href'),practiceRoute);
 assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md"]'));
 assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md#dotted-cif-replay"]'));
+const explicit=details.querySelector('[data-cif-explicit-hall-activity]');
+assert.equal(explicit.tag,'details');
+assert.equal(Object.hasOwn(explicit.attributes,'open'),false);
+assert.ok(explicit.querySelector(`a[href="${practiceRoute}"]`));
+const explicitSteps=explicit.querySelectorAll('li');
+assert.equal(explicitSteps.length,2);
+const operations=explicitSteps[0].querySelector('[data-cif-explicit-hall-ops]');
+assert.equal(operations.getAttribute('data-math-ignore'),'');
+assert.deepEqual(operations.textContent.split(/\r?\n/u),[
+ 'loop_','_space_group_symop_operation_xyz',"'x,y,z'","'-x,-y,z+1/2'"
+]);
+assert.equal(explicitSteps[1].querySelector('code').textContent,"_space_group_name_Hall 'P 2'");
+assert.match(explicitSteps[1].textContent,english?/Check the Hall declaration against explicit operations/:/Hall 声明与显式操作核对/);
+const explicitAnswer=explicit.querySelector('[data-cif-explicit-hall-answer]');
+assert.equal(explicitAnswer.tag,'details');
+assert.equal(Object.hasOwn(explicitAnswer.attributes,'open'),false);
+assert.match(explicitAnswer.textContent,english?/four sites.*space group 4, Hall record 6/:/4 个位点.*空间群 4、Hall 记录 6/);
+assert.match(explicitAnswer.textContent,english?/Match in the input setting.*Difference in the input setting/:/在输入设置中匹配.*在输入设置中不同/);
+assert.match(explicitAnswer.textContent,english?/different origins.*common origin/:/不同原点.*统一原点/);
+assert.match(explicitAnswer.textContent,english?/P1 cell.*identity operation.*higher symmetry/:/P1 晶胞.*恒等操作.*更高对称性/su);
 const activity=details.querySelector('[data-cif-reciprocal-activity]');
 assert.equal(activity.tag,'details');
 assert.equal(Object.hasOwn(activity.attributes,'open'),false);

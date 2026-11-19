@@ -79,6 +79,13 @@ data remain in metadata, but geometry-only exports do not transform them.
   remains. Supply an explicit Hall symbol or operations to resolve such
   ambiguity. Incompatible settings are rejected. A file with no symmetry
   declaration is interpreted as a complete cell, also with a warning.
+- With both a complete operation list and a Hall symbol, the converter uses
+  the list and compares it with the recognized catalogue record in the input
+  basis and origin. The periodic translation comparison uses a fractional
+  tolerance of `1e-6`. A difference identifies the catalogue count, rotations
+  or translations that disagree in that setting. An unrecognized Hall symbol
+  is recorded separately. The standardized space group is determined from
+  the expanded geometry. Complete P1 inputs can give a higher geometric group.
   The conversion JSON records which rule expanded the CIF under
   `input_metadata.cif_symmetry_setting`. Its selected Hall record describes
   the input coordinates. The top-level Hall fields describe the standardized

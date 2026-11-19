@@ -3,7 +3,7 @@ import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
-import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML} from './cif-setting-practice.js?v=20261120-cif-dotted2';
+import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML,cifExplicitHallCheckHTML} from './cif-setting-practice.js?v=20261120-cif-explicit-hall1';
 import {cifOrbitCases,cifOrbitPracticeEnabled,cifOrbitPracticeHTML} from './cif-orbit-practice.js?v=20261120-cif-orbit1';
 import {quartzStructureCases,quartzStructurePracticeEnabled,quartzStructurePracticeHTML} from './quartz-structure-practice.js?v=20261120-quartz-hand1';
 // Structure files are read locally; the Python worker performs all conversion.
@@ -11,6 +11,7 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
 const formatDiagnosticFields=(template,fields)=>template.replace(/\{([1-5])\}/g,(_,index)=>fields[index-1]);
 function structureDiagnosticText(message){
+  if(message==="The Hall catalogue and the explicit CIF operations differ in the input basis and origin. The explicit operations were used.")return "The Hall catalogue and the explicit CIF operations differ in the input basis and origin. The explicit operations were used.";
   if(message==='The input CIF contains displacement data. Geometry exports omit these data; use the original CIF to recover the full records.')return "The input CIF contains atomic displacement parameters. Geometry exports omit these data. Consult the original CIF for the complete records.";
   if(message==='CIF symmetry rotations do not preserve the declared cell metric at this tolerance')return "The CIF symmetry rotations do not preserve the input cell metric at the current tolerance.";
   if(message==='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number')return "CIF fields _space_group_IT_number and _symmetry_Int_Tables_number give different space-group numbers. Check the original structure.";
@@ -143,6 +144,7 @@ export function renderStructureView(options) {
     if(!r){target.innerHTML=`<div class="empty-state">${state.busy?"<span class=\"spinner\"></span>Identifying symmetries and verifying BC operations...":"After importing the structure, BC primitive cell , basis vector and origin transformation are displayed.<br>You can also start with the NaCl / CIF example."}</div>`;return;}
     // The result schema is shared by CPython and the browser worker.
     const cell=r.bc_primitive;
+    const hallCheckOpen=$('#structure-cif-explicit-hall-check')?.open===true;
     const previousDiffractionButton=$('#structure-open-diffraction');
     const restoreDiffractionFocus=previousDiffractionButton&&globalThis.document?.activeElement===previousDiffractionButton;
     const canOpenDiffraction=typeof openDiffraction==='function';
@@ -150,7 +152,7 @@ export function renderStructureView(options) {
       format:state.format,filename:state.source.filename,sha256:state.handoff?.source.sha256
     }):null;
     target.innerHTML=`<div class="structure-summary"><span class="eyebrow">SPACE GROUP ${esc(r.group_number)}</span><h2>${crystalSpan(r.international,'hm')}</h2><p>${esc(r.bz_type||r.bravais)} · Hall ${esc(r.hall_number)}</p></div>
-      ${state.format==='cif'?cifInputSettingHTML(r.input_metadata?.cif_symmetry_setting):''}
+      ${state.format==='cif'?cifInputSettingHTML(r.input_metadata?.cif_symmetry_setting)+cifExplicitHallCheckHTML(r.input_metadata?.cif_explicit_hall_check,hallCheckOpen):''}
       <label class="sth-spin" for="structure-spin">${esc("Representation type for the workbench handoff")}<select id="structure-spin"><option value="false" ${!state.doubleValued?'selected':''}>${esc("Single-valued representation (default)")}</option><option value="true" ${state.doubleValued?'selected':''}>${esc("Double-valued representation (half-integer spin)")}</option></select></label><p class="form-note">${esc("Select the representation type explicitly; the structure file alone cannot determine SOC strength or magnetic order. Check the source and settings in the workbench, then start the calculation manually.")}</p>
       <div class="controls-row"><button class="primary small" id="structure-open-group" ${!state.handoff||state.handoffPending?'disabled':''}>${esc("Open the representation workbench with this source →")}</button><button class="text-button" id="structure-json">↓ Complete JSON</button></div>
       <div id="structure-handoff-card">${state.handoff?structureHandoffHTML(state.handoff):`<p class="sth-state ${state.handoffError?'sth-error':''}" role="status">${esc(state.handoffError||(state.handoffPending?"Computing the source fingerprint; geometry exports remain available.":"The source summary is not ready; geometry exports remain available."))}</p>`}</div>

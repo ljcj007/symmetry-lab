@@ -70,3 +70,30 @@ export function cifInputSettingHTML(setting){
   <p class="form-note">The Hall number in the space-group result above refers to the standardized cell.</p>
  </aside>`;
 }
+
+const hallCheckStatuses=Object.freeze({
+ match:"Match in the input setting",
+ different_in_input_setting:"Difference in the input setting",
+ catalogue_unresolved:"Unresolved in the catalogue used"
+});
+const hallCandidateStatuses=Object.freeze({
+ match:"Full operation sets match",
+ operation_count:"Different operation counts",
+ rotations:"Different rotation parts",
+ translations:"Different translation parts"
+});
+
+export function cifExplicitHallCheckHTML(check,open=false){
+ if(!check||!Object.hasOwn(hallCheckStatuses,check.status)||typeof check.declared_hall_symbol!=='string'||!check.declared_hall_symbol.trim()||!Array.isArray(check.candidates))return '';
+ const count=check.explicit_operation_count,tolerance=check.translation_tolerance_fractional;
+ if(!Number.isInteger(count)||count<1||!Number.isFinite(tolerance)||tolerance<=0)return '';
+ const rows=check.candidates.filter(row=>row&&Number.isInteger(row.hall_number)&&row.hall_number>=1&&row.hall_number<=530&&
+  Number.isInteger(row.group_number)&&row.group_number>=1&&row.group_number<=230&&Number.isInteger(row.operation_count)&&row.operation_count>=1&&Object.hasOwn(hallCandidateStatuses,row.status));
+ return `<details class="structure-details" id="structure-cif-explicit-hall-check"${open?' open':''}>
+  <summary><span>Check the Hall declaration against explicit operations</span> · ${esc(hallCheckStatuses[check.status])}</summary>
+  <p><strong>Hall symbol declared in the CIF</strong> · <code style="overflow-wrap:anywhere">${esc(check.declared_hall_symbol)}</code></p>
+  <p>The comparison uses the same input lattice basis and origin. Translations are compared modulo integer lattice periods. The structure is expanded using the explicit CIF operations.</p>
+  <p class="form-note"><span>Distinct explicit operations</span> · ${count}<br><span>Translation comparison tolerance (fractional coordinates)</span> · ${tolerance.toExponential()}</p>
+  ${rows.length?`<div class="table-wrap"><table><thead><tr><th>Catalogue Hall number</th><th>Catalogue space-group number</th><th>Catalogue operation count</th><th>Comparison</th></tr></thead><tbody>${rows.map(row=>`<tr><td>${row.hall_number}</td><td>${row.group_number}</td><td>${row.operation_count}</td><td>${esc(hallCandidateStatuses[row.status])}</td></tr>`).join('')}</tbody></table></div>`:''}
+ </details>`;
+}

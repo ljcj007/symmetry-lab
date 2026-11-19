@@ -315,6 +315,60 @@ def _cif_it_number(value):
     return int(number)
 
 
+def _compact_cif_symbol(symbol):
+    return re.sub(r'[\s_]', '', symbol).lower()
+
+
+def _cif_explicit_hall_check(hall, operations):
+    """Compare catalogue representatives in the input basis and origin only."""
+    tolerance = 1e-6
+
+    def by_rotation(items):
+        groups = {}
+        for rotation, translation in items:
+            groups.setdefault(tuple(rotation.ravel()), []).append(translation)
+        return groups
+
+    source = by_rotation(operations)
+    source_counts = {rotation: len(translations) for rotation, translations in source.items()}
+    symbol = _compact_cif_symbol(hall)
+    checks = []
+    for number in range(1, 531):
+        info = spglib.get_spacegroup_type(number)
+        if info is None or _compact_cif_symbol(info.hall_symbol) != symbol:
+            continue
+        reference = spglib.get_symmetry_from_database(number)
+        if reference is None:
+            continue
+        reference_count = len(reference['rotations'])
+        if len(operations) != reference_count:
+            status = 'operation_count'
+        else:
+            target = by_rotation(zip(reference['rotations'], reference['translations']))
+            if source_counts != {rotation: len(translations) for rotation, translations in target.items()}:
+                status = 'rotations'
+            else:
+                status = 'match'
+                for rotation in source:
+                    delta = np.array(source[rotation])[:, None, :] - np.array(target[rotation])[None, :, :]
+                    matches = np.max(abs(delta - np.rint(delta)), axis=2) <= tolerance
+                    # Within a Hall record the distinct translations for one rotation
+                    # are well separated, so each row and column must match exactly once.
+                    if not (np.all(matches.sum(axis=0) == 1) and np.all(matches.sum(axis=1) == 1)):
+                        status = 'translations'
+                        break
+        checks.append({'hall_number': number, 'group_number': int(info.number),
+                       'operation_count': reference_count, 'status': status})
+    if not checks:
+        status = 'catalogue_unresolved'
+    elif any(check['status'] == 'match' for check in checks):
+        status = 'match'
+    else:
+        status = 'different_in_input_setting'
+    return {'declared_hall_symbol': hall, 'status': status, 'explicit_operation_count': len(operations),
+            'translation_tolerance_fractional': tolerance, 'candidates': checks}
+
+
 def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
     key = '_space_group_symop_operation_xyz'
     operations = [_linear_symop(tags[key])] if key in tags else []
@@ -323,7 +377,6 @@ def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
             operations.extend(_linear_symop(row[columns[key]]) for row in rows)
     if operations:
         return operations, _cif_setting('explicit_operations')
-    def compact(s): return re.sub(r'[\s_]', '', s).lower()
     hall = tags.get('_space_group_name_hall')
     hm = tags.get('_space_group_name_h-m_alt', tags.get('_symmetry_space_group_name_h-m'))
     it = tags.get('_space_group_it_number')
@@ -331,9 +384,10 @@ def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
     candidates = []
     for h in range(1,531):
         info = spglib.get_spacegroup_type(h)
-        if hall and compact(info.hall_symbol) != compact(hall): continue
+        if hall and _compact_cif_symbol(info.hall_symbol) != _compact_cif_symbol(hall): continue
         if number and int(info.number) != number: continue
-        if hm and compact(hm) not in (compact(info.international_short), compact(info.international_full)): continue
+        if hm and _compact_cif_symbol(hm) not in (_compact_cif_symbol(info.international_short),
+                                                 _compact_cif_symbol(info.international_full)): continue
         if hall or number or hm: candidates.append((h, info))
     if not candidates:
         if hall or number or hm: raise ValueError('CIF declared space-group setting could not be resolved; supply explicit symmetry operations or Hall symbol')
@@ -480,10 +534,17 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     thermal_names = ('_atom_site_aniso', '_atom_site_u_', '_atom_site_b_', '_atom_site.u_', '_atom_site.b_')
     if any(key.startswith(thermal_names) for key in all_keys):
         warnings.append('The input CIF contains displacement data. Geometry exports omit these data; use the original CIF to recover the full records.')
-    return _validate_cell(lattice,positions,species,{'format':'cif','block':block['name'],'warnings':warnings,
-                           'cif_symmetry_setting':setting,
-                          'declared_symmetry_operation_count':len(operations),
-                          'source_site_rows':source_rows,'source_tags':source_tags})
+    metadata = {'format': 'cif', 'block': block['name'], 'warnings': warnings, 'cif_symmetry_setting': setting,
+                'declared_symmetry_operation_count': len(operations), 'source_site_rows': source_rows,
+                'source_tags': source_tags}
+    hall = tags.get('_space_group_name_hall', '').strip()
+    if setting['method'] == 'explicit_operations' and hall not in ('', '.', '?'):
+        check = _cif_explicit_hall_check(hall, [operations[i] for i in operation_indices.values()])
+        metadata['cif_explicit_hall_check'] = check
+        if check['status'] == 'different_in_input_setting':
+            warnings.append('The Hall catalogue and the explicit CIF operations differ in the input basis and origin. '
+                            'The explicit operations were used.')
+    return _validate_cell(lattice, positions, species, metadata)
 
 
 def _orientation(number, lattice):
