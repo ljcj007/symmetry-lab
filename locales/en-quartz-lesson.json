@@ -1,0 +1,16 @@
+{
+  "298 K α 石英：镜像还是换基？": "α-Quartz at 298 K: mirror image or change of basis?",
+  "原始结构属于空间群 154。先预测两种操作各得到 152 还是 154。第一种固定晶格，只将分数坐标取反。第二种同时将晶格基矢和分数坐标取反。": "The original structure is in space group 154. Predict whether each operation gives 152 or 154. First, negate the fractional coordinates with the lattice held fixed. Second, negate both the lattice basis vectors and the fractional coordinates.",
+  "转换三个石英结构 →": "Convert the three quartz structures →",
+  "逐一载入原始 CIF、主动镜像和被动换基，手动转换到 BC。记下空间群号和位点数。": "Load the original CIF, the active mirror image, and the passive change of basis one at a time. Manually convert each to BC and record the space-group number and site count.",
+  "核对 CrystKit 目录操作 →": "Check the CrystKit catalog operations →",
+  "比较 154 与 152。先只允许保持取向，再允许反转取向。载入每组设置后手动运行。": "Compare 154 and 152. Allow only orientation-preserving changes first, then allow orientation reversal. Run the calculation manually after loading each setting.",
+  "核对预测与解释": "Check your prediction and explanation",
+  "原始、主动镜像、被动换基依次得到 154、152、154，各有 9 个位点。固定晶格时，原子的笛卡尔位置随分数坐标取反。同时取反晶格基矢和分数坐标时，两个负号相消，晶体的笛卡尔位置保持不变。": "The original, active mirror image, and passive change of basis give 154, 152, and 154, respectively, with nine sites in each. With the lattice held fixed, negating the fractional coordinates inverts the Cartesian positions of the atoms. Negating both the lattice basis vectors and the fractional coordinates cancels the two minus signs, leaving the Cartesian positions unchanged.",
+  "对于给定候选 I 和 −I，154 与 152 的完整目录操作集在允许反转取向时由 −I 配合原点平移匹配。被动换基的标准化结果可用 I 与 154 匹配。": "Among the supplied candidates I and −I, the complete catalog operation sets for 154 and 152 match by −I with an origin shift when orientation reversal is allowed. The standardized result of the passive change of basis matches space group 154 by I.",
+  "完整 CIF 来自 Kihara 的 298 K 衍射研究。两份对照由其晶格和原子坐标派生。练习比较原子几何和空间群操作。实验旋光需要独立的测量与约定。": "The complete CIF comes from Kihara’s 298 K diffraction study. Both comparison structures are derived from its lattice and atomic coordinates. This exercise compares atomic geometry and space-group operations. Experimental optical rotation requires a separate measurement and an explicit convention.",
+  "COD 9005017，修订版 291351": "COD 9005017, revision 291351",
+  "Kihara 原始论文 ↗": "Kihara’s original paper ↗",
+  "回到结构镜像课 →": "Return to the structural chirality lesson →",
+  "查看石英的点群与极性案例 →": "See the quartz point-group and polarity case →"
+}

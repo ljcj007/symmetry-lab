@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {Container,Element} from './test-material-research-ui.mjs';
 
 const english=process.argv.includes('--english');
@@ -6,6 +7,7 @@ const edition=new URL(english?'../dist/en/':'../dist/',import.meta.url);
 const {renderStructureView,getStructureResult}=await import(new URL('structure-ui.js',edition));
 const {cifSettingCases,cifInputSettingHTML}=await import(new URL('cif-setting-practice.js',edition));
 const {cifOrbitCases}=await import(new URL('cif-orbit-practice.js',edition));
+const {quartzStructureCases}=await import(new URL('quartz-structure-practice.js',edition));
 const queryAll=Element.prototype.querySelectorAll;
 Element.prototype.querySelectorAll=function(selector){
  return selector.includes(',')?selector.split(',').flatMap(item=>queryAll.call(this,item.trim())):queryAll.call(this,selector);
@@ -226,4 +228,39 @@ const legacyWarning=$('#structure-result').querySelectorAll('.warning').find(ite
 assert.equal(legacyWarning?.textContent,english
  ?'CIF atom-site row 1 (Na1) expands to multiplicity 2. The value 1 in the legacy field _atom_site_symmetry_multiplicity agrees with the site-symmetry order. The source value is retained.'
  :'CIF 原子位点第 1 行 (Na1)展开后的重数为 2。旧字段 _atom_site_symmetry_multiplicity 中的值 1 与位点稳定子阶一致，已保留源值。');
+
+const fetchedQuartz=[];
+let tamperQuartz=true;
+globalThis.fetch=async url=>{
+ const name=new URL(url).pathname.split('/').at(-1);
+ const entry=quartzStructureCases.find(item=>item.filename===name);
+ assert.ok(entry,'Only the selected structure should be fetched');
+ fetchedQuartz.push(name);
+ const bytes=Uint8Array.from(readFileSync(new URL(`data/examples/quartz-298k/${name}`,edition)));
+ if(tamperQuartz)bytes[0]^=1;
+ return {ok:true,arrayBuffer:async()=>bytes.buffer};
+};
+for(const query of ['', 'quartz-hand=wrong', 'quartz-hand=practice&quartz-hand=practice']){
+ view(query);
+ assert.equal($('#structure-quartz-hand').open,false);
+}
+view('quartz-hand=practice');
+assert.equal($('#structure-quartz-hand').open,true);
+assert.equal($('#structure-text').value,cifOrbitCases[1].text);
+assert.deepEqual(fetchedQuartz,[],'Opening the activity neither replaces a draft nor fetches');
+const beforeQuartzRun=calls.length;
+await $('#structure-quartz-original').onclick();
+assert.match($('#structure-quartz-status').textContent,/SHA-256/);
+assert.equal($('#structure-text').value,cifOrbitCases[1].text);
+tamperQuartz=false;
+for(const entry of quartzStructureCases){
+ await $('#structure-quartz-'+entry.id).onclick();
+ const bytes=readFileSync(new URL(`data/examples/quartz-298k/${entry.filename}`,edition));
+ assert.equal($('#structure-text').value,bytes.toString('utf8'));
+ assert.equal($('#structure-format').value,entry.format);
+ assert.equal($('#structure-quartz-hand').open,true);
+ assert.equal(document.activeElement,$('#structure-quartz-status'));
+ assert.equal(calls.length,beforeQuartzRun,'The quartz source load keeps conversion manual');
+}
+assert.deepEqual(fetchedQuartz,['9005017.cif',...quartzStructureCases.map(x=>x.filename)]);
 console.log('CIF exercises ('+(english?'English':'Chinese')+'): draft and disclosure persistence, manual conversion, separate input/output Hall evidence, raw JSON, errors and stale guards passed.');

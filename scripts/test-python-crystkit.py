@@ -124,6 +124,34 @@ class CrystKitTests(unittest.TestCase):
         result = c.run({"group_number": 76}, DB)
         self.assertEqual(result["enantiomorphicPartner"], 78)
 
+    def test_quartz_handedness_fixed_catalogue_group_comparisons(self):
+        identity = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        inversion = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
+
+        def compare(right, positive):
+            return c.run({"action": "compare", "left": {"group_number": 154},
+                          "right": {"group_number": right}, "bases": [identity, inversion],
+                          "positive_only": positive}, DB)
+
+        positive = compare(152, True)
+        self.assertEqual(positive["status"], "no_match_in_search")
+        self.assertIsNone(positive["equivalent"])
+        mirror = compare(152, False)
+        self.assertTrue(mirror["identityVerified"])
+        self.assertEqual((mirror["basis"], mirror["determinant"]), (inversion, -1))
+        self.assertFalse(mirror["orientationPreserved"])
+        origin = tuple(map(F, mirror["origin"]))
+        self.assertEqual(origin, (F(0), F(0), F(-1, 2)))
+        transported = {(r, tuple((-x - sum(a*b for a, b in zip(row, origin)) + o) % 1
+                                 for x, row, o in zip(t, r, origin))) for r, t in ops(154)}
+        self.assertEqual(len(transported), 6)
+        self.assertEqual(transported, {(r, tuple(x % 1 for x in t)) for r, t in ops(152)})
+
+        same = compare(154, True)
+        self.assertTrue(same["identityVerified"])
+        self.assertTrue(same["orientationPreserved"])
+        self.assertEqual((same["basis"], same["determinant"], same["origin"]), (identity, 1, [0, 0, 0]))
+
     def test_positive_only_checks_explicit_bases(self):
         identity = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
         inversion = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]

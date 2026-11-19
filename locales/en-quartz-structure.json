@@ -1,0 +1,21 @@
+{
+  "载入 298 K 原始 CIF": "Load the original 298 K CIF",
+  "载入主动镜像结构": "Load the actively inverted structure",
+  "载入被动换基对照": "Load the passive basis-change control",
+  "298 K α 石英 · 主动镜像与被动换基": "298 K α-quartz · Active inversion and passive basis change",
+  "先预测。对分数坐标取反时，分别固定晶格、同时对晶格基矢取反。哪一次会得到原结构的几何镜像？": "Predict the result. Negate the fractional coordinates with the lattice fixed, then negate both the coordinates and the lattice basis. Which operation produces the geometric mirror of the original structure?",
+  "核对三个结构结果": "Check the three structure results",
+  "原始结构识别为空间群 154。固定晶格的主动镜像变为空间群 152，同时改变坐标和晶格基矢的被动换基仍是空间群 154。三个结构都含 3 个 Si 位点和 6 个 O 位点。": "The original structure has space group 154. Active inversion with the lattice fixed gives space group 152. A passive change of the coordinates and lattice basis keeps space group 154. All three structures have three Si sites and six O sites.",
+  "两份 POSCAR 是从原始 CIF 派生的教学几何。各向异性热位移保留在完整原文件中。": "The two POSCAR files are teaching geometries derived from the original CIF. Anisotropic displacement data remain in the complete source file.",
+  "下载保留原字节的 CIF ↓": "Download the byte-preserved CIF ↓",
+  "查看结构来源与换基说明 ↗": "See the structure source and basis conventions ↗",
+  "在 CrystKit 核对空间群操作 →": "Check the space-group operations in CrystKit →",
+  "需要 HTTPS 或本机地址核对石英练习文件的指纹。": "Use HTTPS or a local address to verify the quartz exercise files.",
+  "石英练习文件暂未载入，请重试。": "The quartz exercise file could not be loaded. Try again.",
+  "石英练习文件的字节数或 SHA-256 不匹配。": "The byte count or SHA-256 of the quartz exercise file does not match.",
+  "石英练习文件无法按原样保留为 UTF-8 文本。": "The quartz exercise file could not be preserved as UTF-8 text.",
+  "石英练习文件读取超时，请重试。": "Reading the quartz exercise file timed out. Try again.",
+  "正在读取并核对石英练习文件…": "Reading and verifying the quartz exercise file…",
+  "已核对并载入石英练习文件。请手动转换。": "The verified quartz exercise file is in the editor. Run the conversion manually.",
+  "输入 CIF 包含原子位移参数。几何导出省略这些数据，完整记录请查阅原 CIF。": "The input CIF contains atomic displacement parameters. Geometry exports omit these data. Consult the original CIF for the complete records."
+}

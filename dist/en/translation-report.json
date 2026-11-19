@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28809,
-  "translatedUnits": 28809,
+  "sourceUnits": 28852,
+  "translatedUnits": 28852,
   "missing": [],
-  "files": 520,
+  "files": 527,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -169,6 +169,8 @@
     "en-cif-setting-practice.json",
     "en-cif-dotted-lesson.json",
     "en-cif-reciprocal-lesson.json",
-    "en-cif-orbit-practice.json"
+    "en-cif-orbit-practice.json",
+    "en-quartz-structure.json",
+    "en-quartz-lesson.json"
   ]
 }

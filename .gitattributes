@@ -5,3 +5,5 @@ upstream/** -text
 *.cmd text eol=crlf
 dist/data/examples/phonopy-zno-qpoints.yaml -text
 dist/en/data/examples/phonopy-zno-qpoints.yaml -text
+dist/data/examples/quartz-298k/9005017.cif -text
+dist/en/data/examples/quartz-298k/9005017.cif -text

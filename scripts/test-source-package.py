@@ -22,7 +22,7 @@ builders = [
     'build-operational-bridges-provenance', 'build-thermal-onsager-provenance',
     'build-evidence-workflows-provenance', 'build-precision-teaching-provenance',
     'build-actions-teaching-provenance', 'build-derivation-teaching-provenance',
-    'build-zno-workflow-provenance',
+    'build-zno-workflow-provenance', 'build-quartz-handedness-provenance',
     'build-tensor-teaching-provenance',
     'build-spin-actions-provenance',
     'build-momentum-teaching-provenance',

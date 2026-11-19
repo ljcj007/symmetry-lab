@@ -88,7 +88,7 @@ export const toolGroups=[
   ['bands','能带特征标匹配','导入 trace / JSON，将能带特征标分解到当前群的表示。','DFT trace'],
  ]},
  {id:'algebra',title:'群分类与精确代数',summary:'使用矩阵生成元、整数格和仿射扩张研究群。',tools:[
-  ['crystkit','仿射操作与晶体群工具','群闭合、点轨道、坐标变换、生成元及三维参考匹配。','CrystKit 对映空间群 手性 212 213 enantiomorphic space groups'],
+  ['crystkit','仿射操作与晶体群工具','群闭合、点轨道、坐标变换、生成元及三维参考匹配。','CrystKit 对映空间群 手性 212 213 enantiomorphic space groups 石英 α alpha quartz chirality 154 152 P3_221 P3_121 P3221 P3121'],
   ['compute/advanced/carat','高维有理类 · CARAT','检索 1–6 维 Q 类代表，查看矩阵与分类依据。','Q类 高维 CARAT'],
   ['compute/advanced/carat_integral','整数类与仿射类','在有理类内研究 Z 类、仿射类与完整性证书。','Z类 仿射'],
   ['compute/advanced/integral_normalizer','整数正规化子','求保持给定整数点群的整系数基变换。','正规化子'],
@@ -112,6 +112,7 @@ export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>文件用途：</strong> ${esc(text)}</${tag}>`:'';};
 const namedExamples={
+ 'crystkit':['preset=quartz-handedness','打开 α-石英手性目录比较 →'],
  'compute/band-representation-lab':['module=bandrep&preset=perovskite-sites','打开 SG 221 的 3c 位点算例'],
  'compute/lie/su3_ninej':['preset=su3-ninej-four-octets-singlet','打开 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 单态算例'],
  'compute/advanced/carat_integral':['preset=noncyclic-affine','六维非循环群的 Z 类与仿射类 →'],

@@ -33,5 +33,16 @@
   "1. 先预测只允许保持取向的基底时，完整操作集能否重合。载入第一组并手动运行。基底集合为 I 与 −I，取向限制只留下 I。": "1. Predict whether the full operation sets will match if the basis must preserve orientation. Load the first input and run it manually. The candidate bases are I and −I. The orientation constraint retains I.",
   "2. 放宽为允许反转取向并再次运行。结果给出 det B = −1，并核对变换后模整数平移的全部 24 个操作。坐标约定为 x_in = B x_out + o。": "2. Allow orientation reversal and run again. The result gives det B = −1 and verifies all 24 transformed operations modulo integer translations. The coordinate convention is x_in = B x_out + o.",
   "3. 用 207 → 207 作正对照。保持取向时 I 就能匹配。第一组的未匹配结果只针对所搜索基底与相容原点平移。212 与 213 的对映关系见《国际晶体学表》。": "3. Use 207 → 207 as a positive control. I matches while preserving orientation. The first result applies only to the searched bases and their compatible origin shifts. The International Tables for Crystallography classifies 212 and 213 as an enantiomorphic pair.",
-  "[CrystKit 原始算例](https://github.com/hongyi-zhao/CrystKit#main-features) · [《国际晶体学表》空间群对映分类](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)": "[Original CrystKit example](https://github.com/hongyi-zhao/CrystKit#main-features) · [Enantiomorphic space groups in the International Tables for Crystallography](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)"
+  "[CrystKit 原始算例](https://github.com/hongyi-zhao/CrystKit#main-features) · [《国际晶体学表》空间群对映分类](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)": "[Original CrystKit example](https://github.com/hongyi-zhao/CrystKit#main-features) · [Enantiomorphic space groups in the International Tables for Crystallography](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)",
+  "CrystKit 对映空间群 手性 212 213 enantiomorphic space groups 石英 α alpha quartz chirality 154 152 P3_221 P3_121 P3221 P3121": "CrystKit enantiomorphic space groups handedness 212 213 α alpha quartz chirality 154 152 P3_221 P3_121 P3221 P3121",
+  "对照原始 α-石英、主动镜像和被动换基的标准化结果。此处按空间群编号从固定目录取完整操作集。": "Compare the identified settings for original α-quartz, its active mirror, and the standardized passive change of basis. Here the group numbers select complete operation sets from the fixed catalogue.",
+  "石英的主动镜像与被动换基": "Active reflection and passive basis change in quartz",
+  "原始 → 主动镜像 · 保持取向": "Original → active mirror · preserve orientation",
+  "原始 → 主动镜像 · 允许反转取向": "Original → active mirror · allow orientation reversal",
+  "被动换基标准化 · 154 → 154": "Standardized passive basis change · 154 → 154",
+  "先预测哪些候选基底能匹配完整操作集。只枚举 I 和 −I，对相容的原点平移作精确检验。载入会替换当前 JSON，随后请手动运行。": "Predict which candidate bases can match the full operation sets. The search enumerates I and −I and tests compatible origin shifts exactly. Loading replaces the current JSON. Run the calculation manually afterwards.",
+  "回到真实石英结构练习 →": "Return to the quartz structure exercise →",
+  "打开 α-石英手性目录比较 →": "Open the α-quartz catalogue handedness comparison →",
+  "原始与被动换基标准化 · 154 (": "Original and standardized passive basis change · 154 (",
+  "主动镜像 · 152 (": "Active mirror · 152 ("
 }

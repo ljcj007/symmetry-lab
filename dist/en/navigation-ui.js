@@ -88,7 +88,7 @@ export const toolGroups=[
   ['bands',"Band-character matching","Import trace / JSON data to decompose band characters into representations of the current group.",'DFT trace'],
  ]},
  {id:'algebra',title:"Group classification and exact algebra",summary:"Study groups using matrix generators, integral lattices and affine extensions.",tools:[
-  ['crystkit',"Affine operations and crystal-group tools","Group closure, point orbits, coordinate transformations, generators and matching to 3D reference groups.","CrystKit chirality enantiomorphic space groups 212 213"],
+  ['crystkit',"Affine operations and crystal-group tools","Group closure, point orbits, coordinate transformations, generators and matching to 3D reference groups.","CrystKit enantiomorphic space groups handedness 212 213 α alpha quartz chirality 154 152 P3_221 P3_121 P3221 P3121"],
   ['compute/advanced/carat',"Higher-dimensional rational classes · CARAT","Find Q-class representatives in dimensions 1–6 and inspect their matrices and classification evidence.","Class Q High Dimension CARAT"],
   ['compute/advanced/carat_integral',"Integral and affine classes","Study Z classes and affine classes within a rational class, with completeness certificates.","Class Z Affine"],
   ['compute/advanced/integral_normalizer',"Integral normalizer","Find integral changes of basis that preserve a given integral point group.","normalizer"],
@@ -112,6 +112,7 @@ export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>File use:</strong> ${esc(text)}</${tag}>`:'';};
 const namedExamples={
+ 'crystkit':['preset=quartz-handedness',"Open the α-quartz catalogue handedness comparison →"],
  'compute/band-representation-lab':['module=bandrep&preset=perovskite-sites',"Open the SG 221 3c site example"],
  'compute/lie/su3_ninej':['preset=su3-ninej-four-octets-singlet',"Open the 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 singlet example"],
  'compute/advanced/carat_integral':['preset=noncyclic-affine',"Z and affine classes of a six-dimensional noncyclic group →"],

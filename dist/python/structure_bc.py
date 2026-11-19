@@ -477,8 +477,9 @@ def parse_cif(text, block_name=None, symprec=1e-5):
                                  f'{len(orbit)} distinct periodic sites at {dedup_tolerance:g} Angstrom. '
                                  'Check the symmetry setting, multiplicity field and site coordinates.')
     positions,species = _deduplicate(positions,species,lattice,dedup_tolerance)
-    if any(key.startswith('_atom_site_aniso') or key.startswith('_atom_site_u_') or key.startswith('_atom_site_b_') for key in all_keys):
-        warnings.append('Thermal displacement metadata are retained in source CIF metadata; geometry exports omit displacement tensors.')
+    thermal_names = ('_atom_site_aniso', '_atom_site_u_', '_atom_site_b_', '_atom_site.u_', '_atom_site.b_')
+    if any(key.startswith(thermal_names) for key in all_keys):
+        warnings.append('The input CIF contains displacement data. Geometry exports omit these data; use the original CIF to recover the full records.')
     return _validate_cell(lattice,positions,species,{'format':'cif','block':block['name'],'warnings':warnings,
                            'cif_symmetry_setting':setting,
                           'declared_symmetry_operation_count':len(operations),

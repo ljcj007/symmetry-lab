@@ -89,6 +89,19 @@ separate bounded complete-source restoration path. The directory now has 75 tool
   quartz exercise checks a declared Wyckoff multiplicity against the input
   orbit using the retained rounded coordinate and one labeled exact control.
 
+## Experimental quartz and the orientation of a basis
+
+- The 298 K Kihara CIF for COD 9005017 is distributed byte-for-byte from a
+  pinned archive of revision 291351. Both language editions verify the selected
+  original or generated teaching file before replacing the local draft.
+- The complete source structure and two derived geometry controls connect the
+  chirality lesson, materials atlas, structure converter and CrystKit. Active
+  inversion yields space group 152, and a passive orientation-reversing change
+  of basis preserves space group 154. The tests also check the periodic Cartesian
+  geometry and the full operation-set comparison in the supplied basis search.
+- The source keeps the crystallographic displacement data. The generated
+  geometric POSCAR controls and structure exports describe positions and lattice.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

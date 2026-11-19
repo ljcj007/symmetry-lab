@@ -5,7 +5,7 @@ const courseDefinitions={
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261120-gamma-trace1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
-'frontiers':{load:()=>import('./frontiers-ui.js?v=20261120-affine-hand1'),render:'renderFrontiersView',result:'getFrontiersResult'}
+'frontiers':{load:()=>import('./frontiers-ui.js?v=20261120-quartz-hand1'),render:'renderFrontiersView',result:'getFrontiersResult'}
 ,'connections':{load:()=>import('./connections-ui.js?v=20261117-derive1'),render:'renderConnectionsView',result:'getConnectionsResult'}
 ,'construction':{load:()=>import('./construction-ui.js?v=20261117-derive1'),render:'renderConstructionView',result:'getConstructionResult'}
 ,'principles':{load:()=>import('./principles-ui.js?v=20261117-derive1'),render:'renderPrinciplesView',result:'getPrinciplesResult'}

@@ -1,7 +1,7 @@
 // Presentation only. All model, group and topology calculations run in Python.
 import {GRAPHENE_REFERENCE, fetchGrapheneSources, verifyGrapheneSources} from './wannier-graphene-source.js?v=20261120-wannier1';
 
-import {affineComparisonHTML,handednessExample,handednessExerciseHTML} from './crystkit-handedness-ui.js?v=20261120-affine-hand1';
+import {affineComparisonHTML,handednessExample,handednessExerciseHTML,quartzHandednessExample,quartzHandednessHTML} from './crystkit-handedness-ui.js?v=20261120-quartz-hand1';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pretty=value=>JSON.stringify(value,null,2);
@@ -161,6 +161,7 @@ function results(view,s){
 export function renderResearchView(view,options){
  const {container,run,toast,download,context,isCurrent=()=>true}=options,s=states[view],tb=view==='magnetictb';
  let grapheneWidget,startedDefault=false,handednessOpen=context.handednessExercise||s.handednessOpen;
+ let quartzHandednessOpen=context.quartzHandednessExercise||s.quartzHandednessOpen;
  const owner={view,draw,dispose};
  researchRenderers.get(container)?.dispose();
  researchRenderers.set(container,owner);
@@ -173,7 +174,7 @@ export function renderResearchView(view,options){
  if(!current())return;
  grapheneWidget?.dispose();
  container.dataset.researchView=view;
- container.innerHTML=`<div class="notice research-intro">${tb?'从原子位置、轨道和对称操作生成紧束缚模型；也可导入 Wannier90 hr 文件。选择示例后运行，所有数值计算均由浏览器中的 Python 完成。':'对晶体群进行精确有理数运算。可直接选用本站 230 个空间群，或输入自定义生成元；空间群识别只报告已验证的匹配。'}</div>${tb?'':handednessExerciseHTML(handednessOpen)}<div class="research-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> ${tb?'模型与计算输入':'晶体群与计算输入'}</div><span class="badge">Python</span></div><div class="panel-body"><label class="field-label" for="research-example">快速示例</label><div class="controls-row"><select id="research-example" aria-label="选择计算示例">${examples[view].map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${label}</option>`).join('')}</select><button id="load-research-example" class="secondary small">载入示例</button></div>${!tb?`<div class="controls-row"><label for="cryst-number">空间群编号</label><input id="cryst-number" type="number" min="1" max="230" value="${context.mode==='sg'?context.group.number:19}"><button class="secondary small" id="cryst-use-number">使用该群</button></div>`:`<div class="controls-row"><button class="secondary small" id="tb-use-operations">使用工作台群操作</button><label class="secondary small file-label">导入 hr 文件<input type="file" id="tb-hr-file" accept=".dat,.txt" hidden></label></div>${grapheneSourcePanel(s)}`}<label class="field-label" for="research-json">${tb?'晶格、轨道、对称性和 k 路径':'操作、坐标变换与分析方式'}<span>可编辑 JSON</span></label><textarea class="band-input research-input" id="research-json" spellcheck="false" aria-label="Python 计算输入 JSON">${esc(s.text)}</textarea><details class="input-help"><summary>输入约定与可用计算</summary><p>${tb?'lattice 的每一行为一个实空间晶格矢量；position、translation 和 k 均为分数坐标。轨道可用 s、px/py/pz 或完整实 d 基底。operations 必须构成完整有限群，旋转在分数坐标列向量上作用。':'operations 或 generators 使用 rotation 和 translation；分数写为字符串，例如 "1/2"。basis 与 origin 满足 x_input = basis × x_BC + origin。没有变换时仅在当前 BC 设置中匹配。'}</p><p>${tb?'action 可选 model、bands、slab、finite、surface、topology。参数单位由你指定，能量图使用同一单位。非零跃迁的 Fourier 相位约定为 exp(+2πi k·R)。':'action 可选 analyze、finite_orders、conjugacy、blocks、simplify、normalizer_orbit 或 compare。有限阶算法区分本维数首次出现的阶与该维数全部允许的阶。'}</p><a href="python/${tb?'magnetictb_browser':'crystkit_browser'}.py" download>下载该工具 Python 源码 ↓</a></details><button id="run-research" class="primary" ${s.busy?'disabled':''}>${s.busy?'<i class="spinner"></i>Python 正在计算…':'运行 Python 计算 →'}</button><div id="research-error" role="alert">${s.error?`<p class="notice error">${esc(s.error)}</p>`:''}</div></div></section><section class="panel"><div class="result-header"><div class="result-heading">${tb?'模型与能带':'精确群分析'}<small>计算结果</small></div><div class="result-tools"><button id="research-export" class="text-button">↓ JSON</button>${tb?'<button id="tb-csv" class="text-button">↓ CSV</button><button id="tb-hr" class="text-button">↓ hr</button>':''}</div></div><div class="result-content">${results(view,s)}</div></section></div>${tb?`<section class="panel research-followup"><div class="panel-top"><div class="panel-title"><span class="step">02</span> 用当前模型继续计算</div></div><div class="panel-body"><div class="controls-row"><label>占据带数 <input id="tb-occupied" type="number" min="1" value="1"></label><label>网格 <input id="tb-mesh" type="number" min="5" max="101" value="21"></label><label>层数 <input id="tb-layers" type="number" min="1" max="80" value="12"></label><label>开放方向 <select id="tb-axis"><option value="0">a₁</option><option value="1">a₂</option><option value="2">a₃</option></select></label></div><div class="controls-row"><button data-post="slab" class="secondary small">薄膜能带</button><button data-post="chern" class="secondary small">Chern 数 · k₁k₂ 面</button><button data-post="wilson" class="secondary small">Wilson 环 · k₁</button><button data-post="surface" class="secondary small">表面谱 · k = 0</button></div><p class="form-note">这些按钮把当前模型和参数写入左侧输入框；可调整后运行。Chern 数要求占据子空间有直接带隙，并应使用更密网格核对收敛。表面谱使用指定开放方向与 η = 0.02。</p></div></section>`:''}<p class="notice research-scope">${tb?'覆盖：对称性约束建模、s/p/d 与自旋轨道、能带、hr、薄膜、有限系统、表面 Green 函数、Berry/Wilson 和 Chern 数。精确符号 Hamiltonian、分圆域和多项式轨道可在“精确代数与高维群”中计算。完整自旋空间群目录、DFT 拟合和 Z₂ 算法仍未覆盖。':'覆盖：精确仿射闭合与坐标变换、有限商群生成元、点轨道、矩阵共轭和三维参考数据库匹配。CARAT 1–6 维 Q 类目录、群扩张、特定完整正规化子与无限群生成证书已接入“精确代数与高维群”。一般 Z 类分类仍有范围限制。'}<a href="#" data-view="advanced"> 打开精确代数与高维群 →</a></p>`;
+ container.innerHTML=`<div class="notice research-intro">${tb?'从原子位置、轨道和对称操作生成紧束缚模型；也可导入 Wannier90 hr 文件。选择示例后运行，所有数值计算均由浏览器中的 Python 完成。':'对晶体群进行精确有理数运算。可直接选用本站 230 个空间群，或输入自定义生成元；空间群识别只报告已验证的匹配。'}</div>${tb?'':handednessExerciseHTML(handednessOpen)+quartzHandednessHTML(quartzHandednessOpen)}<div class="research-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> ${tb?'模型与计算输入':'晶体群与计算输入'}</div><span class="badge">Python</span></div><div class="panel-body"><label class="field-label" for="research-example">快速示例</label><div class="controls-row"><select id="research-example" aria-label="选择计算示例">${examples[view].map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${label}</option>`).join('')}</select><button id="load-research-example" class="secondary small">载入示例</button></div>${!tb?`<div class="controls-row"><label for="cryst-number">空间群编号</label><input id="cryst-number" type="number" min="1" max="230" value="${context.mode==='sg'?context.group.number:19}"><button class="secondary small" id="cryst-use-number">使用该群</button></div>`:`<div class="controls-row"><button class="secondary small" id="tb-use-operations">使用工作台群操作</button><label class="secondary small file-label">导入 hr 文件<input type="file" id="tb-hr-file" accept=".dat,.txt" hidden></label></div>${grapheneSourcePanel(s)}`}<label class="field-label" for="research-json">${tb?'晶格、轨道、对称性和 k 路径':'操作、坐标变换与分析方式'}<span>可编辑 JSON</span></label><textarea class="band-input research-input" id="research-json" spellcheck="false" aria-label="Python 计算输入 JSON">${esc(s.text)}</textarea><details class="input-help"><summary>输入约定与可用计算</summary><p>${tb?'lattice 的每一行为一个实空间晶格矢量；position、translation 和 k 均为分数坐标。轨道可用 s、px/py/pz 或完整实 d 基底。operations 必须构成完整有限群，旋转在分数坐标列向量上作用。':'operations 或 generators 使用 rotation 和 translation；分数写为字符串，例如 "1/2"。basis 与 origin 满足 x_input = basis × x_BC + origin。没有变换时仅在当前 BC 设置中匹配。'}</p><p>${tb?'action 可选 model、bands、slab、finite、surface、topology。参数单位由你指定，能量图使用同一单位。非零跃迁的 Fourier 相位约定为 exp(+2πi k·R)。':'action 可选 analyze、finite_orders、conjugacy、blocks、simplify、normalizer_orbit 或 compare。有限阶算法区分本维数首次出现的阶与该维数全部允许的阶。'}</p><a href="python/${tb?'magnetictb_browser':'crystkit_browser'}.py" download>下载该工具 Python 源码 ↓</a></details><button id="run-research" class="primary" ${s.busy?'disabled':''}>${s.busy?'<i class="spinner"></i>Python 正在计算…':'运行 Python 计算 →'}</button><div id="research-error" role="alert">${s.error?`<p class="notice error">${esc(s.error)}</p>`:''}</div></div></section><section class="panel"><div class="result-header"><div class="result-heading">${tb?'模型与能带':'精确群分析'}<small>计算结果</small></div><div class="result-tools"><button id="research-export" class="text-button">↓ JSON</button>${tb?'<button id="tb-csv" class="text-button">↓ CSV</button><button id="tb-hr" class="text-button">↓ hr</button>':''}</div></div><div class="result-content">${results(view,s)}</div></section></div>${tb?`<section class="panel research-followup"><div class="panel-top"><div class="panel-title"><span class="step">02</span> 用当前模型继续计算</div></div><div class="panel-body"><div class="controls-row"><label>占据带数 <input id="tb-occupied" type="number" min="1" value="1"></label><label>网格 <input id="tb-mesh" type="number" min="5" max="101" value="21"></label><label>层数 <input id="tb-layers" type="number" min="1" max="80" value="12"></label><label>开放方向 <select id="tb-axis"><option value="0">a₁</option><option value="1">a₂</option><option value="2">a₃</option></select></label></div><div class="controls-row"><button data-post="slab" class="secondary small">薄膜能带</button><button data-post="chern" class="secondary small">Chern 数 · k₁k₂ 面</button><button data-post="wilson" class="secondary small">Wilson 环 · k₁</button><button data-post="surface" class="secondary small">表面谱 · k = 0</button></div><p class="form-note">这些按钮把当前模型和参数写入左侧输入框；可调整后运行。Chern 数要求占据子空间有直接带隙，并应使用更密网格核对收敛。表面谱使用指定开放方向与 η = 0.02。</p></div></section>`:''}<p class="notice research-scope">${tb?'覆盖：对称性约束建模、s/p/d 与自旋轨道、能带、hr、薄膜、有限系统、表面 Green 函数、Berry/Wilson 和 Chern 数。精确符号 Hamiltonian、分圆域和多项式轨道可在“精确代数与高维群”中计算。完整自旋空间群目录、DFT 拟合和 Z₂ 算法仍未覆盖。':'覆盖：精确仿射闭合与坐标变换、有限商群生成元、点轨道、矩阵共轭和三维参考数据库匹配。CARAT 1–6 维 Q 类目录、群扩张、特定完整正规化子与无限群生成证书已接入“精确代数与高维群”。一般 Z 类分类仍有范围限制。'}<a href="#" data-view="advanced"> 打开精确代数与高维群 →</a></p>`;
  const $=q=>container.querySelector(q);
  const setInput=(value,{preserveModel=false,graphene=null}={})=>{
   s.revision++;s.text=pretty(value);s.result=null;s.error=null;s.graphene=graphene;
@@ -229,23 +230,28 @@ export function renderResearchView(view,options){
    setInput(payload,{preserveModel:true});toast('已写入计算输入，点击运行即可。');
   });
  }else{
-  const exercise=$('#crystkit-handedness');
-  exercise.ontoggle=()=>{if(current()&&exercise===$('#crystkit-handedness'))handednessOpen=s.handednessOpen=exercise.open;};
-  exercise.querySelectorAll('[data-crystkit-hand]').forEach(button=>{
-   button.disabled=s.busy;
-   button.onclick=()=>{
-    if(!current()||s.busy||exercise!==$('#crystkit-handedness'))return;
-    const input=handednessExample(button.dataset.crystkitHand);
-    if(!input)return;
-    handednessOpen=s.handednessOpen=exercise.open;
-    setInput(input);
-    $('#run-research').focus?.();
-   };
-  });
+  function bindHandedness(id,example,rememberOpen){
+   const exercise=$('#'+id);
+   const owns=()=>current()&&exercise===$('#'+id);
+   exercise.ontoggle=()=>{if(owns())rememberOpen(exercise.open);};
+   exercise.querySelectorAll('[data-crystkit-hand]').forEach(button=>{
+    button.disabled=s.busy;
+    button.onclick=()=>{
+     if(!owns()||s.busy)return;
+     const input=example(button.dataset.crystkitHand);
+     if(!input)return;
+     rememberOpen(exercise.open);
+     setInput(input);
+     $('#run-research').focus?.();
+    };
+   });
+  }
+  bindHandedness('crystkit-handedness',handednessExample,open=>{handednessOpen=s.handednessOpen=open;});
+  bindHandedness('crystkit-quartz-handedness',quartzHandednessExample,open=>{quartzHandednessOpen=s.quartzHandednessOpen=open;});
   $('#cryst-use-number').onclick=()=>setInput({action:'analyze',group_number:Number($('#cryst-number').value),point:['1/7','2/7','3/7']});
  }
  if(s.busy)container.querySelectorAll('textarea,select,input,#load-research-example,#cryst-use-number,#tb-use-operations,[data-post]').forEach(el=>el.disabled=true);
- if(!s.text&&!startedDefault){startedDefault=true;loadExample();}
+ if(!s.text&&!startedDefault&&!context.quartzHandednessExercise){startedDefault=true;loadExample();}
  }
  draw();
  return dispose;
