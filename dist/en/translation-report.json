@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28681,
-  "translatedUnits": 28681,
+  "sourceUnits": 28717,
+  "translatedUnits": 28717,
   "missing": [],
-  "files": 516,
+  "files": 517,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -162,6 +162,7 @@
     "en-crystkit-handedness.json",
     "en-al-gamma-source.json",
     "en-al-gamma-host.json",
-    "en-al-gamma-discovery.json"
+    "en-al-gamma-discovery.json",
+    "en-zero-start-placement.json"
   ]
 }

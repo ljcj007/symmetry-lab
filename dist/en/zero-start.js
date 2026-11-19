@@ -1,4 +1,7 @@
 // A small geometric bridge before the existing representation courses.
+import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
+
+const loadDefaultPlacement=()=>import('./zero-start-placement.js?v=20261120-start-placement1');
 export const ZERO_START_KEY='symmetry-lab.zero-start.progress.v1';
 export const ZERO_START_STEPS=[
  {id:'objects',title:"What does symmetry mean?",goal:"Check the whole object, not just its outline."},
@@ -113,10 +116,12 @@ const continuations=[
  ['#compute',"Calculation center","For a specific task, find the tool and enter its parameters directly."]
 ];
 
-export function renderZeroStart({container,selection={},onNavigate=()=>{},download,toast=()=>{}}){
+export function renderZeroStart({container,selection={},onNavigate=()=>{},download,toast=()=>{},loadPlacementModule=loadDefaultPlacement}){
  let progress=load(),step=ids.includes(selection.lesson)?selection.lesson:ids[0],drafts=copy(defaults),answers={},feedback={};
  for(const id of ids)if(progress.answers[id]){drafts[id]=copy(progress.answers[id].context);answers[id]=progress.answers[id].choice;}
  container.innerHTML='<div class="zs-course"></div>';const host=container.firstElementChild,current=()=>host.parentNode===container&&container.isConnected!==false,$=selector=>host.querySelector(selector);
+ const placementState={};
+ let disposePlacement=()=>{};
  function report(){return {kind:'zero-foundation-learning-record',schemaVersion:1,steps:ids,checkedSteps:ids.filter(id=>own(progress.answers,id)),answers:copy(progress.answers),note:'These checks record answers to six introductory tasks; they are not a grade or certification of readiness.'};}
  function remember(){save(progress);latestResult=report();}
  function invalidate(id){delete progress.answers[id];delete answers[id];delete feedback[id];remember();}
@@ -149,7 +154,13 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   const reason={objects:!c.marked?"The four equivalent sites match one-to-one after any integer multiple of 90°.":c.turns===4?"Four 90° rotations return everything, including the type-B site, to the start.":"The outline matches, but the type-B site has moved to a different corner. This is not a symmetry of the typed object.",repeat:c.point==='axis'?"The operation still has order 4. The on-axis point stays fixed after every application, so its point period is 1.":"The off-axis point returns after four applications; the rotation's order is also 4.",coordinates:"The rightward (1,0) must rotate to the upward (0,1), giving the general rule (−y,x).",matrix:"The first column records the image (0,1) of (1,0); the second records the image (−1,0) of (0,1). Do not interchange rows and columns.",next:"For systematic study, start with the first foundations lesson. For spectroscopy, open the water demonstration. For specific inputs, go to the calculation center."}[step];return (correct?"Your answer matches.":"Try again.")+reason;
  }
  function draw(activeId=globalThis.document?.activeElement?.id){if(!current())return;remember();const index=ids.indexOf(step),completed=ids.filter(id=>progress.answers[id]).length;
-  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">Start from Zero · No prior matrices needed</span><h2 id="zs-heading" tabindex="-1">Explore first, then read the language of symmetry.</h2><p>Start with a square and an arrow. Six short steps connect you to the group-theory classroom. Jump freely; progress records checked answers, not course grades.</p><p class="zs-progress" role="status">Checked ${completed} / 6 steps · Current step ${index+1} / 6</p></header><nav class="zs-step-nav" aria-label="Introductory steps">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?"✓ Checked":"Open directly"}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">This step: ${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?"<button type=\"button\" id=\"zs-previous\" class=\"secondary\">← Previous step</button>":''}${index<5?"<button type=\"button\" id=\"zs-next\" class=\"primary\">Next step →</button>":"<a class=\"primary\" href=\"#classroom/foundations?lesson=group-basics\">Continue with the first foundations lesson →</a>"}</div></article><footer class="zs-footer"><p>Learning records stay in this browser. You can still use this page when storage is unavailable, and export a copy for yourself.</p><button type="button" id="zs-export" class="secondary">Export this path's check record</button><button type="button" id="zs-clear" class="secondary">Clear this path's record</button><a href="#classroom">View all lessons</a></footer>`;
+  const placementOpen=$('#zs-placement')?.open;
+  disposePlacement();
+  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">Start from Zero · No prior matrices needed</span><h2 id="zs-heading" tabindex="-1">Explore first, then read the language of symmetry.</h2><p>Start with a square and an arrow. Six short steps connect you to the group-theory classroom. Jump freely; progress records checked answers, not course grades.</p><p class="zs-progress" role="status">Checked ${completed} / 6 steps · Current step ${index+1} / 6</p></header><details id="zs-placement" class="zs-panel" ${placementOpen?'open':''}><summary>Find your starting point (four optional questions)</summary><div id="zs-placement-body"></div></details><nav class="zs-step-nav" aria-label="Introductory steps">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?"✓ Checked":"Open directly"}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">This step: ${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?"<button type=\"button\" id=\"zs-previous\" class=\"secondary\">← Previous step</button>":''}${index<5?"<button type=\"button\" id=\"zs-next\" class=\"primary\">Next step →</button>":"<a class=\"primary\" href=\"#classroom/foundations?lesson=group-basics\">Continue with the first foundations lesson →</a>"}</div></article><footer class="zs-footer"><p>Learning records stay in this browser. You can still use this page when storage is unavailable, and export a copy for yourself.</p><button type="button" id="zs-export" class="secondary">Export this path's check record</button><button type="button" id="zs-clear" class="secondary">Clear this path's record</button><a href="#classroom">View all lessons</a></footer>`;
+  const placement=$('#zs-placement');
+  disposePlacement=bindOptionalPanel({detail:placement,body:$('#zs-placement-body'),load:loadPlacementModule,
+   isCurrent:()=>current()&&$('#zs-placement')===placement,
+   mount:({bindZeroStartPlacement},owns)=>bindZeroStartPlacement({root:$('#zs-placement-body'),stateStore:placementState,isCurrent:owns})});
   host.querySelectorAll('[data-zs-step]').forEach(button=>button.onclick=()=>advance(button.dataset.zsStep));
   if($('#zs-previous'))$('#zs-previous').onclick=()=>advance(ids[index-1]);if($('#zs-next'))$('#zs-next').onclick=()=>advance(ids[index+1]);
   $('#zs-answer').onchange=event=>{if(!current())return;const value=event.target.value;delete progress.answers[step];answers[step]=value;feedback[step]="Your answer changed; please check it again.";remember();draw();};
@@ -172,4 +183,5 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   if(/^zs-[a-z0-9-]+$/.test(activeId||''))$('#'+activeId)?.focus?.({preventScroll:activeId!=='zs-trace-worked'});
  }
  draw();
+ return ()=>disposePlacement();
 }

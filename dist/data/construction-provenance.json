@@ -416,8 +416,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522",
-      "bytes": 102160
+      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1",
+      "bytes": 102512
     },
     {
       "path": "dist/bridges-projects.js",
@@ -441,8 +441,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c",
-      "bytes": 32652
+      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5",
+      "bytes": 32653
     },
     {
       "path": "dist/classroom.css",
@@ -511,8 +511,8 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "4db131f57d3a1d706ce930ed378de0f2698f665b5d6b036f79e2aca9784dbc6f",
-      "bytes": 56445
+      "sha256": "2ccd9048401addcaac221256adde5e7708c58051943b5635aa2030a3d3aa4568",
+      "bytes": 56446
     },
     {
       "path": "dist/data/construction-materials.json",
@@ -536,17 +536,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "19ebb89f3f4329c03b91782a43aba1f0936615b175881a9df90607594ddab49f",
+      "sha256": "c46750b82b14b7456d09c4772a2a75deef37d0dbbf3f0067459ed3780ada1320",
       "bytes": 16856
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "572901b18bdb391745d574bcb8b032317df073d0b121cb2d87ae026c0e534be4",
+      "sha256": "7689377890bc23f69e7dec1f71fdf1d804d8512189e9ccf25144e4df931f36aa",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "a3bf91141447c2109c274fa2f01e372ac20d586d98db40375e133bc939c59609",
+      "sha256": "11b75fa6bf4bf453ac9d628811c3d535e47e2dadabd7fad5e5566ea8c6893e66",
       "bytes": 5971
     },
     {
@@ -561,7 +561,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "d23a7c3bc0b278264d5c10d518e6c6af00cd0cbbda74a734ede528a361a188dc",
+      "sha256": "de81f12fc676aa1f482a4d99153b0e5370cb63fa339824bf34f0ff35f58c97b6",
       "bytes": 27431
     },
     {
@@ -571,8 +571,8 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "bd19b54025cf41842e11f3b3f1153e692708da14efcd4ddcdd65cc19fe049eb0",
-      "bytes": 58570
+      "sha256": "ca6c32fcdf7753378a46c3c43d542de482e57a76afa6be0f82f48974056c7be0",
+      "bytes": 58571
     },
     {
       "path": "dist/data/provenance.json",
@@ -581,7 +581,7 @@
     },
     {
       "path": "dist/data/python-provenance.json",
-      "sha256": "bf2662b41ef62cfceca8005117bf91b42fd95cccf1cf75afe520659054671fec",
+      "sha256": "6e7e766d71cba7a2379aee050ed1d757e79de4d1d6129694abb881027784f5de",
       "bytes": 56687
     },
     {
@@ -591,7 +591,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "f9ce64c79f80959814c51b88c9b392eda959ba9a71d09b64c0f3d0d09f0f4213",
+      "sha256": "4dee47a56a9757cdbf34e1b0af74c34e25cc1549f4eb79fa62c7d59ad094ae6c",
       "bytes": 10435
     },
     {
@@ -601,7 +601,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "8efca6bd95c3283b82a4b10edb753d0403585e3a9d273b61862fb35ea3e7876c",
+      "sha256": "7ec14177233eda6ef277838428b20a82509be46f97ef7f80e57189a6a3c9db96",
       "bytes": 13329
     },
     {
@@ -611,7 +611,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "14be234bbb0a66c71c89fd9e779174f6938bcd70bbd88f8fedae8cd4f54485fa",
+      "sha256": "082d1aa219d3e12073fc99912b7f90a01b9332708ab154b0ad7262d96dceb9b8",
       "bytes": 15859
     },
     {
@@ -671,8 +671,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "3b16d7030988db4f250d516469aa72daef160165f82defbecb8beb2f5971e4db",
-      "bytes": 8197
+      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5",
+      "bytes": 8221
     },
     {
       "path": "dist/induction.js",
@@ -736,8 +736,8 @@
     },
     {
       "path": "dist/navigation.css",
-      "sha256": "0673b6f2f00c0cbefc1c3f9b2dcde5779f910a7f803169f0b74f03ea900971a1",
-      "bytes": 8396
+      "sha256": "d950f43e5d93f15d5de365d1b0a0bb96de8dc1934d852ae3fbf5983c003bc8f3",
+      "bytes": 8478
     },
     {
       "path": "dist/observables-ui.js",
@@ -801,13 +801,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b",
+      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95",
       "bytes": 3143
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0",
-      "bytes": 12052
+      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51",
+      "bytes": 12152
     },
     {
       "path": "dist/python/browser_api.py",
@@ -951,8 +951,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "736f4869db6509f7f3d16ebe5ccd5a9992f8521369f7efb57f3ed85786d41714",
-      "bytes": 27322
+      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d",
+      "bytes": 27580
     },
     {
       "path": "scripts/build-bilbao-labels.py",
@@ -1666,8 +1666,8 @@
     },
     {
       "path": "scripts/test-python-structure-bc.py",
-      "sha256": "a3b23c57f6d21e8c70a5b0a88949b00c6be72950cc11956af2490f13d52b2a97",
-      "bytes": 7524
+      "sha256": "420d0000809136943db66b6f3a84403adb17ead8554c91ea3a4add5b2dc96b3a",
+      "bytes": 12318
     },
     {
       "path": "scripts/test-python-su3-cg-exact.py",

@@ -60,6 +60,18 @@ separate bounded complete-source restoration path. The directory now has 75 tool
   original frequency and raw input. Source loading and calculation are explicit
   actions.
 
+## Optional starting-point check and CIF settings
+
+- Four optional questions on operation types, order, matrix columns and trace
+  offer links into the existing zero-start sequence. Partial answers and skipped
+  questions are supported.
+- On explicit keyboard and mobile navigation, the new page title receives focus.
+  Internal course updates and browser history use their existing behavior.
+- For CIF files with H–M or IT metadata, the converter checks which candidate
+  settings agree with the declared lattice metric. Explicit Hall symbols and
+  symmetry operation loops still receive strict checks. A regression covers
+  all 230 space groups in ordinary and oblique test cells.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

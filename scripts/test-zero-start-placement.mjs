@@ -1,0 +1,110 @@
+import assert from 'node:assert/strict';
+
+const english=process.argv.includes('--english');
+const {bindZeroStartPlacement,placementAdvice}=await import(english?'../dist/en/zero-start-placement.js':'../dist/zero-start-placement.js');
+const local=(zh,en)=>english?en:zh;
+const site=new URL('../',import.meta.url);
+const {Container,Element,flush}=await import(new URL('scripts/test-material-research-ui.mjs',site));
+const edition=english?'dist/en/':'dist/';
+const {parseClassroomRoute,buildClassroomHash}=await import(new URL(edition+'classroom-ui.js',site));
+const {renderZeroStart,ZERO_START_STEPS}=await import(new URL(edition+'zero-start.js',site));
+const {progressionForSelection}=await import(new URL(edition+'lesson-progression.js',site));
+
+const reviewSteps=['objects','repeat','matrix','trace'];
+const complete={objects:'no',repeat:'3',matrix:'clockwise',trace:'0,-1'};
+assert.deepEqual(placementAdvice(),{kind:'unanswered',route:null});
+assert.deepEqual(placementAdvice({objects:'fake-answer',unknown:'3'}),{kind:'unanswered',route:null});
+for(const id of reviewSteps){
+ const route='#classroom/start?lesson='+id;
+ assert.deepEqual(placementAdvice({[id]:'unsure'}),{kind:'review',question:id,route});
+ const selection=parseClassroomRoute(route);
+ assert.equal(selection.section,'zero-start');
+ assert.equal(selection.lesson,id);
+ assert.equal(buildClassroomHash(selection),route);
+ const container=new Container();renderZeroStart({container,selection});
+ assert.equal(container.querySelector(`[data-zs-step="${id}"]`).getAttribute('aria-current'),'step');
+}
+assert.equal(ZERO_START_STEPS.length,6);
+assert.deepEqual(placementAdvice({repeat:'3'}),{kind:'partial',route:null});
+assert.equal(placementAdvice({trace:'0,0'}).question,'trace','An earlier empty question is not an error');
+assert.equal(placementAdvice({trace:'0,0',matrix:'reverse'}).question,'matrix','Recommend the earliest observed gap');
+assert.equal(placementAdvice({...complete,objects:'yes'}).question,'objects');
+assert.equal(placementAdvice({...complete,repeat:'1'}).question,'repeat');
+assert.equal(placementAdvice({...complete,matrix:'reverse'}).question,'matrix');
+assert.equal(placementAdvice({...complete,trace:'0,0'}).question,'trace');
+const continueAdvice=placementAdvice(complete);
+assert.deepEqual(continueAdvice,{kind:'continue',route:'#classroom/foundations?lesson=group-basics'});
+assert.equal(progressionForSelection(parseClassroomRoute(continueAdvice.route)).current?.lessonId,'group-basics');
+const water=parseClassroomRoute('#classroom/foundations?module=demos&experiment=water');
+assert.equal(water.section,'foundations-demos');
+assert.equal(water.experiment,'water');
+const existingNext=new Container();renderZeroStart({container:existingNext,selection:{lesson:'next'}});
+assert.ok(existingNext.querySelector('a[href="#compute"]'));
+
+let writes=[];
+globalThis.localStorage={getItem:()=>null,setItem:(...args)=>writes.push(args)};
+const stateStore={};let current=true;
+function mount(){
+ const root=new Element();
+ const cleanup=bindZeroStartPlacement({root,isCurrent:()=>current,stateStore});
+ return {root,cleanup,$:selector=>root.querySelector(selector)};
+}
+let mounted=mount();
+const answer=(id,value)=>{const input=mounted.$('#zp-'+id);input.value=value;input.onchange();};
+const check=()=>mounted.$('#zp-check').onclick();
+const feedback=()=>mounted.$('#zp-advice');
+assert.equal(feedback().innerHTML,'');
+const links=mounted.root.querySelectorAll('a');
+assert.equal(links.length,7,'Every entry point is available before any answer');
+assert.ok(links.some(link=>link.getAttribute('href')==='#compute'));
+assert.match(mounted.$('summary').textContent,local(/自由选择/,/Choose any/));
+check();
+assert.match(feedback().innerHTML,local(/你可以先选一题/,/Answer any question/));
+answer('trace','0,0');
+assert.equal(feedback().innerHTML,'','Feedback clears after a changed response');
+check();
+assert.match(feedback().innerHTML,/href="#classroom\/start\?lesson=trace"/);
+assert.match(feedback().innerHTML,local(/多一个 −1/,/extra −1/));
+answer('trace','0,-1');check();
+assert.match(feedback().innerHTML,local(/已回答/,/answers so far/));
+const previous=mounted.$('#zp-check');mounted.cleanup();
+assert.equal(previous.onclick,null);
+mounted=mount();
+assert.equal(mounted.$('#zp-trace').value,'0,-1','The optional mount can restore in-memory answers');
+assert.match(feedback().innerHTML,local(/已回答/,/answers so far/));
+for(const [id,value] of Object.entries(complete))answer(id,value);
+check();
+assert.match(feedback().innerHTML,/href="#classroom\/foundations\?lesson=group-basics"/);
+current=false;
+answer('matrix','reverse');check();
+assert.equal(stateStore.answers.matrix,'clockwise','A stale view cannot update diagnostic answers');
+assert.deepEqual(writes,[],'Placement answers never write to the existing lesson-progress storage');
+
+const host=new Container();
+let loadCount=0;
+const retireHost=renderZeroStart({container:host,loadPlacementModule:async()=>{
+ loadCount++;
+ return {bindZeroStartPlacement};
+}});
+const hostPlacement=()=>host.querySelector('#zs-placement');
+assert.equal(loadCount,0,'Ordinary zero-start still opens without fetching the diagnostic');
+assert.equal(hostPlacement().open,false);
+hostPlacement().open=true;
+hostPlacement().ontoggle();
+await flush();
+assert.equal(loadCount,1);
+const hostedAnswer=host.querySelector('#zp-matrix');
+hostedAnswer.value='unsure';
+hostedAnswer.onchange();
+host.querySelector('#zp-check').onclick();
+assert.ok(host.querySelector('a[href="#classroom/start?lesson=matrix"]'));
+host.querySelector('[data-zs-step="repeat"]').onclick();
+await flush();
+assert.equal(hostPlacement().open,true);
+assert.equal(host.querySelector('#zp-matrix').value,'unsure');
+assert.equal(hostedAnswer.onchange,null);
+const activeAnswer=host.querySelector('#zp-matrix');
+retireHost();
+assert.equal(activeAnswer.onchange,null,'Leaving the classroom disposes the optional diagnostic');
+
+console.log(`Zero-start placement (${english?'English':'Chinese'}): optional checks, actual prerequisite destinations, and state ownership passed.`);

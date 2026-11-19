@@ -6,8 +6,8 @@ import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=
 import {startToolFinder} from './tool-finder.js?v=20261120-al-gamma1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261120-affine-hand1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-al-gamma1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261120-cif-setting1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-start-placement1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -85,6 +85,7 @@ function toast(text){const t=$('#toast');t.textContent=text;t.classList.add('sho
 function download(content,name,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 function showError(message){const dest=$('#calculation-error');if(dest)dest.innerHTML=`<div class="notice error" role="alert">${esc(message)}</div>`;else toast(message);}
 function setView(request,options={}){
+ const previousRoute=state.route;
  let route=String(request||'home').replace(/^#/,''),view;
  const aliases={pointgroups:'classroom/foundations',academy:'classroom/crystal',lie:'classroom/continuous',database:'atlas/sg',advanced:'compute/advanced/carat_integral'};
  route=aliases[route]||route;
@@ -173,7 +174,7 @@ function setView(request,options={}){
  const importedScatteringDraft=phonopyScatteringVisit(route);if(importedScatteringDraft&&state.courseRoute&&!state.courseRoute.projectInput){if(importedScatteringDraft.sourceKind==='teaching-reference')state.courseRoute.teachingInput=importedScatteringDraft;else state.courseRoute.importerInput=importedScatteringDraft;}
  if(location.hash!=='#'+route){const fn=options.history===false?'replaceState':'pushState';history[fn](null,'','#'+route);}
  const title=knownTool(path)?.title||(primary==='atlas'&&course?(['atlas/frontiers','atlas/dynamics','atlas/research','atlas/mechanisms','atlas/electronic','atlas/quantum','atlas/response','atlas/spectroscopy','atlas/connections','atlas/construction','atlas/principles','atlas/bridges','atlas/pathways'].includes(path)?'材料研究路线':path.endsWith('materials')?'晶体与磁性材料':'32 晶体学点群'):labels[view][0]);
- $('#page-title').textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];
+ const heading=$('#page-title');heading.textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];
  updateBreadcrumb(title);
  $$('.nav-item').forEach(n=>{const selected=n.dataset.view===primary;n.classList.toggle('active',selected);if(selected)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});
  $('#export-top').classList.toggle('hidden',['home','compute','atlas','classroom','docs','dictionary','notebook','compare','projects'].includes(view));
@@ -183,7 +184,13 @@ function setView(request,options={}){
  if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  context.innerHTML+=projectNavigation.html();projectNavigation.bind(context,route=>setView(route));
  if(view!=='advanced')rememberRoute(route);
- if(options.render!==false)return render();
+ if(options.render===false)return;
+ const page=render();
+ if(options.focusTitle&&route!==previousRoute){
+  window.scrollTo(0,0);
+  heading.focus();
+ }
+ return page;
 }
 function updateBreadcrumb(detail){
  const top=primaryTitles[state.primary]||'总览';
@@ -503,18 +510,19 @@ function handleSiteClick(event){
   );
   if(!browserNavigation){
    event.preventDefault();
-   setView(nav.dataset.route||nav.dataset.view);
+   const focusTitle=document.activeElement===nav||nav.matches('.nav-item');
+   setView(nav.dataset.route||nav.dataset.view,{focusTitle});
   }
  }
  if(!event.target.closest('.search-wrap'))$('#group-options')?.classList.add('hidden');
 }
 document.addEventListener('click',handleSiteClick);
-$('#help-button').onclick=()=>setView('docs');$('#export-top').onclick=()=>{if(state.view==='phonopy-scattering'){const result=optionalViews.peek('phonopyScattering')?.getPhonopyScatteringResult();if(result)download(JSON.stringify(result,null,2),'phonopy-scattering-result.json');else toast('请先手动运行三维散射计算。');}else if(isClassroomView(state.view)){const result=getClassroomResult(state.view);if(result)download(JSON.stringify(result,null,2),'classroom-'+state.view+'.json');else toast('请先载入课程或运行交互实验。');}else if(state.view==='structure'){const result=getStructureResult();if(result)download(JSON.stringify(result,null,2),'bc-structure.json');else toast('请先完成晶胞转换。');}else if(state.view==='advanced'){const result=getAdvancedResult();if(result)download(JSON.stringify(result,null,2),'exact-result.json');else toast('请先运行当前工具的计算。');}else if(['magnetictb','crystkit'].includes(state.view)){const result=getResearchResult(state.view);if(result)download(JSON.stringify(result,null,2),state.view+'-result.json');else toast('请先运行当前工具的计算。');}else if(state.view==='products'){const button=$('#export-product');if(button)button.click();else toast('请先完成当前直积分解。');}else if(state.view==='bands'){const button=$('#export-bands');if(button)button.click();else toast('请先完成当前能带匹配。');}else exportJSON();};
+$('#help-button').onclick=event=>setView('docs',{focusTitle:document.activeElement===event.currentTarget});$('#export-top').onclick=()=>{if(state.view==='phonopy-scattering'){const result=optionalViews.peek('phonopyScattering')?.getPhonopyScatteringResult();if(result)download(JSON.stringify(result,null,2),'phonopy-scattering-result.json');else toast('请先手动运行三维散射计算。');}else if(isClassroomView(state.view)){const result=getClassroomResult(state.view);if(result)download(JSON.stringify(result,null,2),'classroom-'+state.view+'.json');else toast('请先载入课程或运行交互实验。');}else if(state.view==='structure'){const result=getStructureResult();if(result)download(JSON.stringify(result,null,2),'bc-structure.json');else toast('请先完成晶胞转换。');}else if(state.view==='advanced'){const result=getAdvancedResult();if(result)download(JSON.stringify(result,null,2),'exact-result.json');else toast('请先运行当前工具的计算。');}else if(['magnetictb','crystkit'].includes(state.view)){const result=getResearchResult(state.view);if(result)download(JSON.stringify(result,null,2),state.view+'-result.json');else toast('请先运行当前工具的计算。');}else if(state.view==='products'){const button=$('#export-product');if(button)button.click();else toast('请先完成当前直积分解。');}else if(state.view==='bands'){const button=$('#export-bands');if(button)button.click();else toast('请先完成当前能带匹配。');}else exportJSON();};
 $('#cancel-python').onclick=cancelPython;
 onPythonStatus(({status,message})=>{$('#data-status').textContent=message;$('#cancel-python').classList.toggle('hidden',!['loading','running'].includes(status));});
 window.addEventListener('hashchange',()=>setView(location.hash.slice(1),{history:false}));
 $('#data-status').textContent='页面就绪 · 计算按需启动';
-const toolFinder=startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route)});
+const toolFinder=startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route,{focusTitle:true})});
 setView(location.hash.slice(1)||'home',{history:false});
 
 startMathDisplay(document.body);

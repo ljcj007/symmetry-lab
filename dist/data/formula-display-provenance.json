@@ -56,13 +56,13 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522",
-      "bytes": 102160
+      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1",
+      "bytes": 102512
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c",
-      "bytes": 32652
+      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5",
+      "bytes": 32653
     },
     {
       "path": "dist/classroom.css",
@@ -131,8 +131,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "3b16d7030988db4f250d516469aa72daef160165f82defbecb8beb2f5971e4db",
-      "bytes": 8197
+      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5",
+      "bytes": 8221
     },
     {
       "path": "dist/induction.js",
@@ -196,8 +196,8 @@
     },
     {
       "path": "dist/navigation.css",
-      "sha256": "0673b6f2f00c0cbefc1c3f9b2dcde5779f910a7f803169f0b74f03ea900971a1",
-      "bytes": 8396
+      "sha256": "d950f43e5d93f15d5de365d1b0a0bb96de8dc1934d852ae3fbf5983c003bc8f3",
+      "bytes": 8478
     },
     {
       "path": "dist/observables-ui.js",
@@ -221,13 +221,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b",
+      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95",
       "bytes": 3143
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0",
-      "bytes": 12052
+      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51",
+      "bytes": 12152
     },
     {
       "path": "dist/quantum-materials-ui.js",
@@ -466,8 +466,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "736f4869db6509f7f3d16ebe5ccd5a9992f8521369f7efb57f3ed85786d41714",
-      "bytes": 27322
+      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d",
+      "bytes": 27580
     },
     {
       "path": "scripts/build-crystal-symbol-data.py",

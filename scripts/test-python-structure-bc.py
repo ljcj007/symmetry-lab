@@ -26,6 +26,13 @@ def synthetic(number):
     return {'lattice':lattice.tolist(),'positions':positions.tolist(),'species':species}
 
 
+def cif_with_setting(lengths, angles, declaration, sites):
+    keys = ('length_a', 'length_b', 'length_c', 'angle_alpha', 'angle_beta', 'angle_gamma')
+    cell = '\n'.join(f'_cell_{key} {value}' for key, value in zip(keys, (*lengths, *angles)))
+    return (f'data_metric\n{cell}\n{declaration}\nloop_\n_atom_site_type_symbol\n'
+            f'_atom_site_fract_x\n_atom_site_fract_y\n_atom_site_fract_z\n{sites}\n')
+
+
 class StructureBCTests(unittest.TestCase):
     def test_poscar_negative_cartesian_selective_vasp4(self):
         text = 'anonymous\n-64\n1 0 0\n0 1 0\n0 0 1\n1 1\nSelective dynamics\nCartesian\n0 0 0 T F T\n.5 .5 .5 F F F\n'
@@ -89,6 +96,70 @@ Cl1 Cl 0.271 0.414 0.159 1
         self.assertEqual(len(parsed['species']),len(cell['species']))
         no_ops=text.replace("loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n",'')
         self.assertEqual(len(bc.parse_cif(no_ops)['species']),len(cell['species']))
+
+    def test_cif_metadata_uses_the_unique_metric_compatible_screw_setting(self):
+        # Swap b and c of the site's P2_1 CIF fixture. Hall 7 is unique-c,
+        # whereas Hall 6 (the first IT 4 record in spglib) is unique-b.
+        sites = 'Na .123 .345 .234\nCl .271 .159 .414'
+        lengths, angles = (3, 5, 4), (90, 90, '101.2(1)')
+        number_tag = '_space_group_IT_number 4'
+        hall = "_space_group_name_Hall 'P 2c'"
+        explicit = "loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n'-x,-y,z+1/2'"
+        declarations = (number_tag, "_space_group_name_H-M_alt 'P 21'", hall,
+                        "_space_group_name_Hall 'P 2yb'\n" + explicit)
+        for declaration in declarations:
+            with self.subTest(declaration=declaration):
+                text = cif_with_setting(lengths, angles, declaration, sites)
+                result = bc.run({'format': 'cif', 'text': text, 'k': [0, 0, '1/4']})
+                self.assertTrue(result['verified'])
+                self.assertEqual((result['group_number'], result['group_order']), (4, 2))
+                self.assertEqual(result['input_cell']['atom_count'], 4)
+                self.assertEqual(result['input_metadata']['declared_symmetry_operation_count'], 2)
+                self.assertEqual(result['warnings'], [])
+                np.testing.assert_allclose(result['input_cell']['positions'][1], [.877, .655, .734], atol=1e-12)
+                np.testing.assert_allclose(np.array(result['transform']['coordinate_matrix']).T @ result['k_bc'],
+                                           [0, 0, .25], atol=1e-12)
+
+        wrong_hall = cif_with_setting(lengths, angles, "_space_group_name_Hall 'P 2yb'", sites)
+        wrong_operations = cif_with_setting(lengths, angles,
+                                            number_tag + '\n' + explicit.replace('-x,-y,z+1/2', '-x,y+1/2,-z'), sites)
+        no_match = cif_with_setting(lengths, (82, 94, 101.2), number_tag, sites)
+        for invalid in (wrong_hall, wrong_operations, no_match):
+            with self.assertRaisesRegex(ValueError, 'rotations do not preserve the declared cell metric'):
+                bc.parse_cif(invalid)
+
+    def test_cif_metadata_retains_first_choice_warning_for_multiple_metric_matches(self):
+        sites = 'Na .123 .345 .234\nCl .271 .159 .414'
+        lengths, angles = (3, 5, 4), (90, 90, 90)
+        inferred = bc.parse_cif(cif_with_setting(lengths, angles, '_space_group_IT_number 4', sites))
+        first = bc.parse_cif(cif_with_setting(lengths, angles, "_space_group_name_Hall 'P 2yb'", sites))
+        self.assertEqual(inferred['species'], first['species'])
+        np.testing.assert_array_equal(inferred['positions'], first['positions'])
+        self.assertTrue(any('no unique Hall setting' in message for message in inferred['metadata']['warnings']))
+        self.assertEqual(first['metadata']['warnings'], [])
+
+    def test_cif_metadata_distinguishes_hexagonal_and_rhombohedral_settings(self):
+        # IT 166 has Hall 458 (H, centered) and 459 (R, primitive).
+        sites = 'C .117 .236 .371\nO .192 .287 .426'
+        cases = (
+            ((5, 5, 12), (90, 90, 120), "_space_group_name_Hall '-R 3 2\"'", 36),
+            ((5, 5, 5), (77, 77, 77), "_space_group_name_Hall '-P 3* 2'", 12),
+        )
+        for lengths, angles, hall, operation_count in cases:
+            with self.subTest(hall=hall):
+                inferred = cif_with_setting(lengths, angles, '_space_group_IT_number 166', sites)
+                explicit = cif_with_setting(lengths, angles, hall, sites)
+                request = {'format': 'cif', 'k': ['1/4', 0, '1/4']}
+                result = bc.run(dict(request, text=inferred))
+                control = bc.run(dict(request, text=explicit))
+                self.assertTrue(result['verified'])
+                self.assertEqual((result['group_number'], result['group_order']), (166, 12))
+                self.assertEqual(result['input_metadata']['declared_symmetry_operation_count'], operation_count)
+                self.assertEqual(result['input_cell']['atom_count'], 2 * operation_count)
+                self.assertEqual(result['input_cell'], control['input_cell'])
+                self.assertEqual(result['bc_primitive'], control['bc_primitive'])
+                self.assertEqual(result['k_bc'], control['k_bc'])
+                self.assertEqual(result['warnings'], [])
 
     def test_shifted_oblique_supercell_and_reciprocal(self):
         # A deliberately non-symmetry-adapted determinant-two cubic supercell.

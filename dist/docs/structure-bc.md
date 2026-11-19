@@ -49,10 +49,13 @@ data remain in metadata, but geometry-only exports do not transform them.
   blocks require an explicit `cif_block` name. Explicit affine symmetry
   operations expand the asymmetric unit. Operations are parsed by a strict
   arithmetic AST allowlist; user text is never evaluated as Python.
-- If a CIF omits operations, a Hall symbol or an unambiguous space-group
-  declaration supplies operations from spglib. Ambiguous H–M/IT metadata use
-  the first conventional Hall setting with a visible warning. A file with no
-  symmetry declaration is interpreted as a complete cell, also with a warning.
+- If a CIF omits operations, an explicit Hall symbol supplies the corresponding
+  operations from spglib. For H–M/IT metadata without a Hall symbol, only
+  settings whose rotations preserve the declared cell metric are eligible.
+  The first eligible setting is used with a visible warning if more than one
+  remains. Supply an explicit Hall symbol or operations to resolve such
+  ambiguity. Incompatible settings are rejected. A file with no symmetry
+  declaration is interpreted as a complete cell, also with a warning.
 - Direct JSON `cell: {lattice, positions, species}`.
 
 Partial occupancy, disorder, magnetic/modulated CIFs and singular lattices are

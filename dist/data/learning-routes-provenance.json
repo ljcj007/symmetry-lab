@@ -45,8 +45,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 73478,
-      "sha256": "2f0680802a5ea9480839d191a6a9670e80959acdfcac451dc6f3fb316ba935cb"
+      "bytes": 74164,
+      "sha256": "e4ac1b4a14591917fe4fc7677e726fa48eb5148ba1ab62cc33d92461c1e01ab5"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -57,8 +57,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 102160,
-      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522"
+      "bytes": 102512,
+      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -69,8 +69,8 @@
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32652,
-      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c"
+      "bytes": 32653,
+      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -192,6 +192,10 @@
       "bytes": 19648,
       "sha256": "8109ca7f597d3923943264d457b4903ec640948cfe6b28ccdb64e244a39fb6c3"
     },
+    "dist/docs/structure-bc.md": {
+      "bytes": 5939,
+      "sha256": "8bffd3210c71553c98266d94257552076be74901092e5b530ca0af189cda9a3e"
+    },
     "dist/electronic-materials-ui.js": {
       "bytes": 32616,
       "sha256": "b78b94571c5e8c8ed4c6c4e803296dd437dfc3972b3aefdfeffec155ba8d5da2"
@@ -213,8 +217,8 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8197,
-      "sha256": "3b16d7030988db4f250d516469aa72daef160165f82defbecb8beb2f5971e4db"
+      "bytes": 8221,
+      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -244,6 +248,10 @@
       "bytes": 31279,
       "sha256": "b72658038519223c6aebe276c87411c727cbce5b4fef5b4d001861a14834a9ca"
     },
+    "dist/navigation.css": {
+      "bytes": 8478,
+      "sha256": "d950f43e5d93f15d5de365d1b0a0bb96de8dc1934d852ae3fbf5983c003bc8f3"
+    },
     "dist/observables-ui.js": {
       "bytes": 32300,
       "sha256": "377119ad1c44384540d41cecbeaa52c3c0cf16340cf07b84bbd3da2bf7dc03e3"
@@ -262,11 +270,11 @@
     },
     "dist/python-client.js": {
       "bytes": 3143,
-      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b"
+      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95"
     },
     "dist/python-worker.js": {
-      "bytes": 12052,
-      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0"
+      "bytes": 12152,
+      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -369,8 +377,8 @@
       "sha256": "772b07b408897768e011b8b82140334c00f00d023bde38050780e724f6dd58d4"
     },
     "dist/python/structure_bc.py": {
-      "bytes": 122394,
-      "sha256": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c"
+      "bytes": 122912,
+      "sha256": "080dcce24156993295153e98f538dbc24afac24425ca8296001ab460fbfed982"
     },
     "dist/python/su3_cg.py": {
       "bytes": 21975,
@@ -464,6 +472,14 @@
       "bytes": 2619,
       "sha256": "db4808d3b1db14e8520fe3c5c30eb104abfc7d36ac2e36818f6240ee13669224"
     },
+    "dist/zero-start-placement.js": {
+      "bytes": 5147,
+      "sha256": "69b0e0a0621aa4af6b1a2e57c97791591a4677c6a961e66b6f36a03e20b7f4e0"
+    },
+    "dist/zero-start.js": {
+      "bytes": 25881,
+      "sha256": "ec84c79d8c261a96568ff6c05a313481f41b18a5537a5d486cb743df742e56ec"
+    },
     "locales/en-al-gamma-discovery.json": {
       "bytes": 6295,
       "sha256": "b8278aa8172e994b77f6132fb88a4d7f2dc7609d44fbf4e2270442d6a4f3d353"
@@ -516,21 +532,25 @@
       "bytes": 640,
       "sha256": "99ddb6afd02ca5068960afd8a4e537fd5c60d8ddf55f5567671407c06c954bee"
     },
+    "locales/en-zero-start-placement.json": {
+      "bytes": 4575,
+      "sha256": "cc7602d29ceadfe79ac1c247387b29bac85dd421393c5f084d3d30e25b9ae36a"
+    },
     "package.json": {
-      "bytes": 27322,
-      "sha256": "736f4869db6509f7f3d16ebe5ccd5a9992f8521369f7efb57f3ed85786d41714"
+      "bytes": 27580,
+      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 13994,
-      "sha256": "844865a4d4534b691df886f604a15a8605088a476b0f3274612bf102692852a4"
+      "bytes": 14261,
+      "sha256": "1f7eccf981a337a89a114255c5ed17b80485d043e9db9152b56b5e3f18db95ea"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 5974,
-      "sha256": "3f58958e4a99bfb604f2b461b5ad7bc772dce8d666b94840a2ab66d38785af60"
+      "bytes": 6025,
+      "sha256": "f3451b90ae967f1b2c8235645fded8f1dfa1cc1bc02dc5e7d80f502f667ea08e"
     },
     "scripts/test-al-gamma-discovery.mjs": {
       "bytes": 4267,
@@ -636,9 +656,21 @@
       "bytes": 27627,
       "sha256": "1868e22d96dbf8334b77321542759ed6cb2d1c11f01c76c679523c140de311f1"
     },
+    "scripts/test-python-structure-bc.py": {
+      "bytes": 12318,
+      "sha256": "420d0000809136943db66b6f3a84403adb17ead8554c91ea3a4add5b2dc96b3a"
+    },
+    "scripts/test-route-focus.mjs": {
+      "bytes": 7243,
+      "sha256": "f084df17a7c47118b355770b38395454ef7b2760da08b3dd35fbed3ee6835829"
+    },
     "scripts/test-structure-dynamics-ui.mjs": {
       "bytes": 37074,
       "sha256": "19fd3fb68d0fc18752f6d050ef21bd26326dd76eb67c706db69feecc1bae8553"
+    },
+    "scripts/test-zero-start-placement.mjs": {
+      "bytes": 6089,
+      "sha256": "b2e7e4f3afcb96d31837e9b4799f30e4109843a53aa21ba1d79943b343951582"
     }
   },
   "reviewHistory": [

@@ -1,4 +1,7 @@
 // A small geometric bridge before the existing representation courses.
+import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
+
+const loadDefaultPlacement=()=>import('./zero-start-placement.js?v=20261120-start-placement1');
 export const ZERO_START_KEY='symmetry-lab.zero-start.progress.v1';
 export const ZERO_START_STEPS=[
  {id:'objects',title:'什么叫对称？',goal:'检查整个对象，而不只看外轮廓。'},
@@ -113,10 +116,12 @@ const continuations=[
  ['#compute','计算中心','已有具体任务时，直接检索工具与输入参数。']
 ];
 
-export function renderZeroStart({container,selection={},onNavigate=()=>{},download,toast=()=>{}}){
+export function renderZeroStart({container,selection={},onNavigate=()=>{},download,toast=()=>{},loadPlacementModule=loadDefaultPlacement}){
  let progress=load(),step=ids.includes(selection.lesson)?selection.lesson:ids[0],drafts=copy(defaults),answers={},feedback={};
  for(const id of ids)if(progress.answers[id]){drafts[id]=copy(progress.answers[id].context);answers[id]=progress.answers[id].choice;}
  container.innerHTML='<div class="zs-course"></div>';const host=container.firstElementChild,current=()=>host.parentNode===container&&container.isConnected!==false,$=selector=>host.querySelector(selector);
+ const placementState={};
+ let disposePlacement=()=>{};
  function report(){return {kind:'zero-foundation-learning-record',schemaVersion:1,steps:ids,checkedSteps:ids.filter(id=>own(progress.answers,id)),answers:copy(progress.answers),note:'These checks record answers to six introductory tasks; they are not a grade or certification of readiness.'};}
  function remember(){save(progress);latestResult=report();}
  function invalidate(id){delete progress.answers[id];delete answers[id];delete feedback[id];remember();}
@@ -149,7 +154,13 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   const reason={objects:!c.marked?'四个同类位置经过 90° 的整数倍旋转可以一一重合。':c.turns===4?'四次 90° 回到原位，B 类位置也回到原处。':'外轮廓重合，但 B 类位置移动到了另一个角，所以不是这个带类型对象的对称。',repeat:c.point==='axis'?'整个操作的阶仍是 4；轴上的这个点每次都不动，点周期是 1。':'一般点做四次才返回；这个旋转操作的阶也是 4。',coordinates:'向右的 (1,0) 应转到向上的 (0,1)，所以一般规则是 (−y,x)。',matrix:'第一列记录 (1,0) 的像 (0,1)，第二列记录 (0,1) 的像 (−1,0)；不要把列和行对调。',next:'系统学习从基础第一课开始；光谱问题进入水分子演示；已有明确输入时进入计算中心。'}[step];return (correct?'核对一致。':'再试一次。')+reason;
  }
  function draw(activeId=globalThis.document?.activeElement?.id){if(!current())return;remember();const index=ids.indexOf(step),completed=ids.filter(id=>progress.answers[id]).length;
-  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">零基础起步 · 无需先学矩阵</span><h2 id="zs-heading" tabindex="-1">先动手，再读懂对称性的语言。</h2><p>从一个正方形和一支箭头出发，用六个短步骤接上现有群论课堂。可以自由跳转；进度只记录已核对的答案，不代表课程成绩。</p><p class="zs-progress" role="status">已核对 ${completed} / 6 步 · 当前 ${index+1} / 6</p></header><nav class="zs-step-nav" aria-label="零基础起步步骤">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?'✓ 已核对':'可直接进入'}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">这一小步：${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?'<button type="button" id="zs-previous" class="secondary">← 上一步</button>':''}${index<5?'<button type="button" id="zs-next" class="primary">下一步 →</button>':'<a class="primary" href="#classroom/foundations?lesson=group-basics">继续基础第一课 →</a>'}</div></article><footer class="zs-footer"><p>学习记录只保存在当前浏览器；存储不可用时仍可操作本页。你可以导出记录自行保留。</p><button type="button" id="zs-export" class="secondary">导出这条路线的核对记录</button><button type="button" id="zs-clear" class="secondary">清空这条路线的记录</button><a href="#classroom">查看全部课程</a></footer>`;
+  const placementOpen=$('#zs-placement')?.open;
+  disposePlacement();
+  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">零基础起步 · 无需先学矩阵</span><h2 id="zs-heading" tabindex="-1">先动手，再读懂对称性的语言。</h2><p>从一个正方形和一支箭头出发，用六个短步骤接上现有群论课堂。可以自由跳转；进度只记录已核对的答案，不代表课程成绩。</p><p class="zs-progress" role="status">已核对 ${completed} / 6 步 · 当前 ${index+1} / 6</p></header><details id="zs-placement" class="zs-panel" ${placementOpen?'open':''}><summary>找适合自己的起点（四题，可跳过）</summary><div id="zs-placement-body"></div></details><nav class="zs-step-nav" aria-label="零基础起步步骤">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?'✓ 已核对':'可直接进入'}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">这一小步：${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?'<button type="button" id="zs-previous" class="secondary">← 上一步</button>':''}${index<5?'<button type="button" id="zs-next" class="primary">下一步 →</button>':'<a class="primary" href="#classroom/foundations?lesson=group-basics">继续基础第一课 →</a>'}</div></article><footer class="zs-footer"><p>学习记录只保存在当前浏览器；存储不可用时仍可操作本页。你可以导出记录自行保留。</p><button type="button" id="zs-export" class="secondary">导出这条路线的核对记录</button><button type="button" id="zs-clear" class="secondary">清空这条路线的记录</button><a href="#classroom">查看全部课程</a></footer>`;
+  const placement=$('#zs-placement');
+  disposePlacement=bindOptionalPanel({detail:placement,body:$('#zs-placement-body'),load:loadPlacementModule,
+   isCurrent:()=>current()&&$('#zs-placement')===placement,
+   mount:({bindZeroStartPlacement},owns)=>bindZeroStartPlacement({root:$('#zs-placement-body'),stateStore:placementState,isCurrent:owns})});
   host.querySelectorAll('[data-zs-step]').forEach(button=>button.onclick=()=>advance(button.dataset.zsStep));
   if($('#zs-previous'))$('#zs-previous').onclick=()=>advance(ids[index-1]);if($('#zs-next'))$('#zs-next').onclick=()=>advance(ids[index+1]);
   $('#zs-answer').onchange=event=>{if(!current())return;const value=event.target.value;delete progress.answers[step];answers[step]=value;feedback[step]='答案已更改，请重新核对。';remember();draw();};
@@ -172,4 +183,5 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   if(/^zs-[a-z0-9-]+$/.test(activeId||''))$('#'+activeId)?.focus?.({preventScroll:activeId!=='zs-trace-worked'});
  }
  draw();
+ return ()=>disposePlacement();
 }

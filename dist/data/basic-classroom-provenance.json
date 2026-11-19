@@ -37,12 +37,12 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 102160,
-      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522"
+      "bytes": 102512,
+      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32652,
-      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c"
+      "bytes": 32653,
+      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5"
     },
     "dist/navigation-ui.js": {
       "bytes": 31279,
@@ -70,11 +70,11 @@
     },
     "dist/python-client.js": {
       "bytes": 3143,
-      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b"
+      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95"
     },
     "dist/python-worker.js": {
-      "bytes": 12052,
-      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0"
+      "bytes": 12152,
+      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -150,11 +150,11 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "bytes": 1737009,
-      "sha256": "50c4825363724f03b532061af1056a86685e2b1f923665aed00020281a998dcd"
+      "sha256": "3bf13ff8ab2bae76be7e7003ffad4d64242a1d3129b370e4547dbc873eb76326"
     },
     "scripts/fixtures/bridges-projects.json": {
       "bytes": 869953,
-      "sha256": "7c29dbc686b14fe9a1450b2b119575e7df0366dfae54241f0be309bb12ef6a2e"
+      "sha256": "3229ea7dacfedffbcf2263ae3b873a4d333f87a8f46126804248c6bd548f785e"
     },
     "dist/foundations-demos.css": {
       "bytes": 4314,

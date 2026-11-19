@@ -30,6 +30,9 @@ files.push('dist/research-ui.js','dist/crystkit-handedness-ui.js','dist/frontier
 files.push('dist/al-gamma-source.js','dist/material-research-ui.js','scripts/test-al-gamma-source.mjs',
  'scripts/test-al-gamma-discovery.mjs','scripts/test-python-al-gamma-source.py','scripts/test-material-research-content.py',
  'locales/en-al-gamma-source.json','locales/en-al-gamma-host.json','locales/en-al-gamma-discovery.json');
+files.push('dist/zero-start.js','dist/zero-start-placement.js','dist/navigation.css','dist/docs/structure-bc.md',
+ 'scripts/test-zero-start-placement.mjs','scripts/test-route-focus.mjs','scripts/test-python-structure-bc.py',
+ 'locales/en-zero-start-placement.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',

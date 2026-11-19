@@ -259,7 +259,14 @@ def _deduplicate(positions, species, lattice, tolerance):
     return np.asarray(result), labels
 
 
-def _cif_operations(tags, loops, warnings):
+_CIF_METRIC_ERROR = 'CIF symmetry rotations do not preserve the declared cell metric at this tolerance'
+
+
+def _cif_metric_compatible(rotations, gram, tolerance):
+    return all(np.max(np.abs(r.T @ gram @ r - gram)) <= tolerance for r in rotations)
+
+
+def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
     keys = ('_space_group_symop_operation_xyz', '_symmetry_equiv_pos_as_xyz', '_space_group_symop.operation_xyz')
     operations = []
     for key in keys:
@@ -286,9 +293,15 @@ def _cif_operations(tags, loops, warnings):
         if hall or number or hm: raise ValueError('CIF declared space-group setting could not be resolved; supply explicit symmetry operations or Hall symbol')
         warnings.append('CIF has no symmetry metadata; atom rows are treated as the complete cell (P1 expansion).')
         return [(np.eye(3,dtype=int),np.zeros(3))]
-    if len(candidates) > 1:
-        warnings.append('CIF has no unique Hall setting; the first conventional Hall setting was used. Supply explicit symmetry operations/Hall symbol for a different setting.')
-    operations = spglib.get_symmetry_from_database(candidates[0])
+    choices = [spglib.get_symmetry_from_database(h) for h in candidates]
+    if not hall:
+        choices = [ops for ops in choices if _cif_metric_compatible(ops['rotations'], gram, metric_tolerance)]
+        if not choices:
+            raise ValueError(_CIF_METRIC_ERROR)
+    if len(choices) > 1:
+        first = 'conventional' if hall else 'metric-compatible'
+        warnings.append(f'CIF has no unique Hall setting; the first {first} Hall setting was used. Supply explicit symmetry operations/Hall symbol for a different setting.')
+    operations = choices[0]
     return list(zip(operations['rotations'],operations['translations']))
 
 
@@ -321,11 +334,11 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     cartesian = '_atom_site_fract_x' not in columns
     prefix = '_atom_site_cartn_' if cartesian else '_atom_site_fract_'
     positions, species = [], []
-    operations = _cif_operations(tags,loops,warnings)
     gram = lattice @ lattice.T
     metric_tolerance = max(1e-7,8*symprec*np.linalg.norm(lattice))
-    if any(np.max(np.abs(r.T @ gram @ r-gram)) > metric_tolerance for r,_ in operations):
-        raise ValueError('CIF symmetry rotations do not preserve the declared cell metric at this tolerance')
+    operations = _cif_operations(tags,loops,warnings,gram,metric_tolerance)
+    if not _cif_metric_compatible((r for r,_ in operations), gram, metric_tolerance):
+        raise ValueError(_CIF_METRIC_ERROR)
     def operation_key(r,t): return tuple(r.ravel())+tuple(np.round(_wrap(t),10))
     keys = {operation_key(r,t) for r,t in operations}
     if operation_key(np.eye(3,dtype=int),np.zeros(3)) not in keys:
