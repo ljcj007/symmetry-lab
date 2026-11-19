@@ -12,14 +12,20 @@ const state = {tab:'learn',lesson:0,group:null,search:'',system:'',operation:0,p
 let dataPromise, loaded;
 const compositionState=new Map();
 const representationActionsState=new Map();
+const pointgroupIdentifyState=new Map();
+let pointgroupIdentifyOpen=false;
 let compositionModulePromise,previousCompositionCleanup=()=>{};
 const defaultCompositionLoader=()=>compositionModulePromise||(compositionModulePromise=import('./composition-ui.js?v=20261116-composition1').catch(error=>{compositionModulePromise=null;throw error;}));
 const defaultRepresentationActionsLoader=()=>import('./representation-actions-ui.js?v=20261117-rep1');
+const defaultPointgroupIdentifyLoader=()=>import('./pointgroup-identify-ui.js?v=20261119-pointgroups1');
 export function compositionEntryHTML(lessonId,opened=false){
   return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>先旋转再照镜子，会一样吗？</summary><p>先把两种动作按顺序做出来，再读矩阵乘法、封闭性与撤销。</p><div data-composition-body></div></details>`:'';
 }
 export function representationActionsEntryHTML(lessonId,opened=false){
   return ['representations','character-reduction'].includes(lessonId)?`<details class="rpa-entry" data-representation-actions-entry${opened?' open':''}><summary>这些矩阵真的构成表示吗？</summary><p>先跟踪基矢，再检验全部操作的乘法；比较统一换基与只改一项矩阵，解释为什么相同特征标还不够。</p><div data-representation-actions-body></div></details>`:'';
+}
+export function pointgroupIdentifyEntryHTML(lessonId,opened=false){
+  return lessonId==='thirty-two'?`<details class="pg-identify-entry" data-pointgroup-identify-entry${opened?' open':''}><summary>从操作证据识别晶体点群</summary><p>观察旋转、镜面和反演，判断现有证据能否确定一个点群，再到图谱核对。</p><div data-pointgroup-identify-body></div></details>`:'';
 }
 try { const saved=JSON.parse(localStorage.getItem(storageKey)||'{}'); if(saved&&typeof saved==='object'&&!Array.isArray(saved))state.answers=saved; } catch { /* Private browsing can disable storage. */ }
 const persist = () => { try { localStorage.setItem(storageKey,JSON.stringify(state.answers)); } catch { /* Progress remains in memory. */ } };
@@ -72,7 +78,7 @@ export function getPointgroupResult() {
   return {kind:'point-group-teaching',pointGroup:g,experiment:{coordinateConvention:'orthonormal Cartesian column vectors; r′ = R r',operation:op,initialPoint:state.point.slice(),applications:state.step,result:transformed(op,state.point,state.step),fullGroupOrbit:orbit(g,state.point)},source:loaded.lessons.source};
 }
 
-export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},run,cancelRun,loadComposition=defaultCompositionLoader,loadRepresentationActions=defaultRepresentationActionsLoader}) {
+export async function renderPointgroupView({container,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},run,cancelRun,loadComposition=defaultCompositionLoader,loadRepresentationActions=defaultRepresentationActionsLoader,loadPointgroupIdentify=defaultPointgroupIdentifyLoader}) {
   previousCompositionCleanup();
   stop();
   const revision=++state.revision;
@@ -81,15 +87,17 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   let disposed=false,retryCleanup=null;
   const current=()=>!disposed&&revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
   let disposeBridges=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,disposeRepresentation=()=>{},representationTicket=0,representationDetail=null,representationLesson=null,representationOpening=null,representationBound=false,detachObserver;
+  let disposeIdentify=()=>{};
+  const clearIdentify=()=>{disposeIdentify();disposeIdentify=()=>{};};
   const clearComposition=()=>{compositionTicket++;disposeComposition();disposeComposition=()=>{};};
   const clearRepresentation=()=>{
     if(representationDetail&&representationLesson)representationActionsState.set('host:'+representationLesson,{open:typeof representationDetail.open==='boolean'?representationDetail.open:representationDetail.getAttribute('open')!==null});
     representationTicket++;representationOpening=null;representationBound=false;disposeRepresentation();disposeRepresentation=()=>{};representationDetail=null;representationLesson=null;
   };
-  const cleanupCompositionView=()=>{clearComposition();clearRepresentation();detachObserver?.disconnect();};
+  const cleanupCompositionView=()=>{clearComposition();clearRepresentation();clearIdentify();detachObserver?.disconnect();};
   previousCompositionCleanup=cleanupCompositionView;
   if(typeof MutationObserver==='function'){detachObserver=new MutationObserver(()=>{if(!current())cleanupCompositionView();});detachObserver.observe(container.ownerDocument?.documentElement||container,{childList:true,subtree:true});}
-  const clearLearningSupport=()=>{clearComposition();clearRepresentation();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
+  const clearLearningSupport=()=>{clearComposition();clearRepresentation();clearIdentify();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
   function disposeView(){
     if(disposed)return;disposed=true;
     const child=retryCleanup;retryCleanup=null;if(typeof child==='function')child();
@@ -101,7 +109,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   try { ({lessons,atlas}=await load()); } catch(error) {
     if(current()){root.innerHTML=`<div class="notice error" role="alert">${esc(error.message)}</div><button class="secondary pg-retry">重新载入</button>`;$('.pg-retry').onclick=async()=>{
       if(!current())return;
-      const child=await renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation,run,cancelRun,loadComposition,loadRepresentationActions});
+      const child=await renderPointgroupView({container,toast,download,openGroup,selection,onNavigate,onLocation,run,cancelRun,loadComposition,loadRepresentationActions,loadPointgroupIdentify});
       if(typeof child!=='function')return;
       if(disposed)child();else{if(typeof retryCleanup==='function')retryCleanup();retryCleanup=child;}
     };}
@@ -153,6 +161,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
       ${(lesson.objectives||[]).length?`<div class="pg-objectives"><h3>学完这一节，你能</h3><ul>${lesson.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${pointgroupIdentifyEntryHTML(lesson.id,pointgroupIdentifyOpen)}
       ${representationActionsEntryHTML(lesson.id,representationActionsState.get('host:'+lesson.id)?.open===true)}
       ${matrixBridgeHTML(lesson.id)}
       ${compositionEntryHTML(lesson.id,compositionState.get('host:group-basics')?.open===true)}
@@ -166,12 +175,72 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
     mountComposition(lesson.id);
     mountRepresentation(lesson.id);
+    disposeIdentify=mountPointgroupIdentify();
     $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
     $('#pg-lesson-lab').onclick=()=>navigate('lab');
     if($('#pg-open-sg99')){const handoff=$('#pg-open-sg99');handoff.onclick=()=>{if(current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id==='from-point-to-space'&&$('#pg-open-sg99')===handoff)openGroup({mode:'sg',id:99,k:[0,0,0],doubleValued:false});};}
     if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
+  }
+  function mountPointgroupIdentify(){
+    const disclosure=$('[data-pointgroup-identify-entry]');
+    const body=disclosure?.querySelector('[data-pointgroup-identify-body]');
+    if(!body)return ()=>{};
+    let alive=true,attempt=0,pending=null,cleanup=null;
+    const here=()=>alive&&current()&&$('[data-pointgroup-identify-entry]')===disclosure;
+    const reset=()=>{
+      attempt++;
+      pending=null;
+      cleanup?.();
+      cleanup=null;
+    };
+    function loadOpen(){
+      if(!here()||!disclosure.open||cleanup)return;
+      if(pending)return pending;
+      const ticket=++attempt;
+      const active=()=>here()&&disclosure.open&&ticket===attempt;
+      body.innerHTML='<p role="status">正在载入点群识别练习…</p>';
+      const loading=Promise.resolve().then(async()=>{
+        try{
+          const module=await loadPointgroupIdentify();
+          if(!active())return;
+          if(typeof module?.bindPointgroupIdentify!=='function')throw Error('点群识别练习暂未载入。');
+          const child=module.bindPointgroupIdentify({root:body,atlas,stateStore:pointgroupIdentifyState,isCurrent:active,openGroup:(groupId,tab)=>{
+            if(!active()||(tab!=='atlas'&&tab!=='lab'))return;
+            const match=atlas.groups.find(group=>String(group.id)===String(groupId));
+            if(!match)return;
+            changeGroup(match.id);
+            navigate(tab);
+          }});
+          const disposeChild=typeof child==='function'?child:()=>{};
+          if(active())cleanup=disposeChild;
+          else disposeChild();
+        }catch{
+          if(!active())return;
+          body.innerHTML='<p class="notice error" role="alert">点群识别练习暂未载入。</p><button class="secondary" type="button" data-pointgroup-identify-retry>重试点群识别练习</button>';
+          body.querySelector('[data-pointgroup-identify-retry]').onclick=loadOpen;
+        }finally{
+          if(pending===loading)pending=null;
+        }
+      });
+      pending=loading;
+      return loading;
+    }
+    disclosure.ontoggle=()=>{
+      if(!here())return;
+      pointgroupIdentifyOpen=disclosure.open;
+      if(disclosure.open)return loadOpen();
+      reset();
+      body.innerHTML='';
+    };
+    if(disclosure.open)loadOpen();
+    return ()=>{
+      pointgroupIdentifyOpen=disclosure.open;
+      alive=false;
+      disclosure.ontoggle=null;
+      reset();
+    };
   }
   function mountRepresentation(lessonId){
     const detail=$('[data-representation-actions-entry]'),body=detail?.querySelector('[data-representation-actions-body]');if(!detail||!body)return;

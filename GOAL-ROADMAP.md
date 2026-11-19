@@ -4,11 +4,10 @@ Active objective: welcome zero-foundation learners, provide deeper study for
 prepared learners, make tools quick to find for experts, maintain a coherent
 ordered structure, and continue expanding useful verified functionality.
 
-The user resumed the active objective after the verified Phonopy scattering
-release. Current work deepens the existing scattering classroom through
-source-bound numerical derivation, two-point counterexamples and targeted
-feedback, while preserving the general expert tool and its physical input
-contract. The full curriculum and scientific-workflow audits below remain open.
+The user resumed the objective after the two-point Phonopy derivation release.
+Current work deepens the 32-point-group classroom through an exercise in
+identifying an unknown group from operation evidence. The full curriculum and
+scientific-workflow audits below remain open.
 
 The new lazy calculation entry uses complete supplied complex modes, an ordered
 primitive cell, explicit units and sourced real neutron lengths. Eight genuine
@@ -262,6 +261,13 @@ establish that all existing scientific and teaching content has been audited.
 - Fourteen independent Python tests and 22 genuine derivation/grade/rejection references accompany real UI and host lifecycle checks. The 328 original API calls are genuinely recomputed, preserving 761111 float64 bit patterns and 550038 other leaves and JSON structure while their dispatcher source identities change. The original numerical cores, raw ZnO files and official Phonopy reference remain unchanged.
 - This is a classroom-depth milestone. Broader diagnostics, the 32-point-group identification gap and authentic workflows across other tool families remain open; the full objective stays active.
 
-## Requested publication boundary (2026-11-17)
+## Publication pause and resumption
 
-- The user requested a pause after this batch is uploaded. Finish verification and publication of the source-bound two-point workshop, then pause the existing goal. The wider objective remains unfinished; no next curriculum milestone should start before the user resumes.
+- The user paused after the verified two-point workshop release on 2026-11-17. The goal resumed on 2026-11-19. Continue website work after this upload at the user's request.
+
+## Identify an unknown point group from operations
+
+- Lesson 3 presents 32 exercises without the group names, from small introductory cases to complete cubic groups. Learners predict a group, map Cartesian basis vectors through individual operations, check operation types and interpret the progressively revealed evidence. A failed group identification points to the first count that rules that hypothesis out.
+- Exact fractional matrices from the 32 atlas representatives determine the operation counts. The determinant and order of the proper part separate inversion from reflection and the two six-step rotoinversions. An independent trace and determinant calculation agrees for the atlas, and all 230 ordinary BC space-group tables yield their assigned point-group types when reduced to the linear part.
+- Partial observations use count lower bounds. Closure of the observed set can indicate a subgroup. Reviewing a complete list supports a transition to the matching named atlas entry or operation lab. Existing lesson, practice, expert-tool and project routes remain available.
+- The next classroom connection uses real BC space-group operations to show exactly what is lost under projection to the point group. The same linear half turn in P2 and P2₁ gives different translations after two applications. The 230-group data audit is available as evidence for this next step. Wider lesson and expert-workflow audits remain open.

@@ -10,7 +10,7 @@ Lesson text, exercises and derivations were newly written in Chinese for this we
 | --- | --- | --- |
 | 01 From symmetry actions to groups | What makes a complete set of symmetry operations? | Generate C₄ from 90° rotation and distinguish group order from element order |
 | 02 Rotations, mirrors, and inversion | What do the two notations describe? | Compose C₂ with a perpendicular mirror to obtain inversion |
-|03 Why exactly 32?|How does periodicity restrict rotations, and how do32/230 differ?|Compare4,4mm,4/mmm|
+| 03 Why are there exactly 32 classes? | How does periodicity restrict rotations, and why are there 32 point-group types and 230 space-group types? | Compare 4, 4mm, and 4/mmm, then identify a point group from unknown operations |
 | 04 Turn geometric symmetry into matrices | What are representations, irreducible representations and conjugacy classes? | Obtain vector characters from C₄v coordinate matrices |
 | 05 Decompose representations with characters | How does one character row give irreducible components? | Derive A₁+B₁+B₂ for the C₂v polar vector |
 |06 Find bases using  projection operator |Extract a chosen symmetry from functions?|Decompose x+y+z+xy|
@@ -18,6 +18,18 @@ Lesson text, exercises and derivations were newly written in Chinese for this we
 | 08 From classroom to workbench | When are space groups, k little groups, and double groups needed? | Compare Γ and generic k in P4mm |
 
 Machine-readable source:[pointgroup-lessons.json](../data/pointgroup-lessons.json). Eight stable IDs support links, progress, extensions. Copyable Unicode formulas need no external rendering service.
+
+## Identify a point group from unknown operations
+
+[Open Lesson 3](../#classroom/foundations?lesson=thirty-two) and expand the identification workshop. Make a prediction, then see how an operation transforms the three unit basis vectors. Reveal determinants, operation types, and counts as needed, and explain why each clue narrows the candidates. After checking your answer, open the matched group’s character table or three-dimensional operation lab.
+
+The workshop takes exact fractional-coordinate matrices from the complete linear parts of 32 representative space groups. Each selected space group has point-group representatives with zero translational parts. Integer matrices supply the classification and orthonormal Cartesian matrices supply the visualization. The two matrices describe the same linear action in different bases. Their determinant, trace, and finite order are identical.
+
+For det R = +1, use the finite order of R to count the identity or a proper rotation. For det R = −1, use the order of −R to count rotoinversions. Order 1 of −R gives inversion, and order 2 gives reflection in a plane. The order of R alone groups inversion and reflection together as order 2 and groups threefold and sixfold rotoinversion together as order 6.
+
+When you have seen only some operations, each observed count is a lower bound. Even an observed set that is closed under multiplication can be a subgroup of a larger point group. With a complete operation list, the count in every category must agree. The workshop checks for matches among the 32 ordinary crystallographic point-group types. Use the matrices to interpret a specific setting or axis direction. For actual structures with incomplete or noisy operations, use a structure symmetry analysis.
+
+For the international notation and the 32 classes within seven crystal systems, see [International Tables for Crystallography, Section 3.2.1 and Table 3.2.1.1](https://onlinelibrary.wiley.com/iucr/itc/Ac/ch3o2v0001/sec3o2o1/). For generating matrices, see [An introduction to crystal physics, Tables 2 and 3, IUCr](https://www.iucr.org/what-we-do/education/pamphlets/introduction-crystal-physics). The workshop uses the matrices in the site’s [BC space-group data](../../data/space-groups.json) and [point-group atlas](../data/pointgroup-atlas.json).
 
 ## Coordinates, notation and teaching scope
 

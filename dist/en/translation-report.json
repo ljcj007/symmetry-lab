@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 27974,
-  "translatedUnits": 27974,
+  "sourceUnits": 28071,
+  "translatedUnits": 28071,
   "missing": [],
-  "files": 467,
+  "files": 471,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -115,6 +115,9 @@
     "en-phonopy-derivation-ui.json",
     "en-phonopy-derivation-host.json",
     "en-phonopy-derivation-python.json",
-    "en-phonopy-derivation-docs.json"
+    "en-phonopy-derivation-docs.json",
+    "en-pointgroup-identify-ui.json",
+    "en-pointgroup-identify-host.json",
+    "en-pointgroup-identify-docs.json"
   ]
 }

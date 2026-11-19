@@ -1,0 +1,254 @@
+.pg-identify-entry {
+  margin: 1.35rem 0;
+  padding: 1rem;
+  border: 1px solid #bed2c3;
+  border-radius: 9px;
+  background: #f4f8f1;
+  overflow-wrap: anywhere;
+}
+
+.pg-identify-entry > summary,
+.pgi-candidates > summary {
+  cursor: pointer;
+  color: #21533d;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.pgi-workshop {
+  display: grid;
+  gap: 0.85rem;
+  font-size: 18px;
+  min-width: 0;
+}
+
+.pgi-section {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #cedcd1;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.pgi-section h4 {
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.pgi-section p {
+  margin: 0.65rem 0;
+}
+
+.pgi-controls,
+.pgi-action {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.pgi-section label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  margin: 0.65rem 0;
+  color: #264a38;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.pg-page .pgi-section select,
+.pg-page .pgi-section button {
+  min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.pgi-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0.75rem 0;
+}
+
+.pg-page .pgi-buttons button {
+  width: auto;
+  white-space: normal;
+}
+
+.pgi-buttons:empty {
+  display: none;
+}
+
+.pgi-action {
+  align-items: center;
+}
+
+.pgi-matrix {
+  width: auto;
+  max-width: 100%;
+  margin: 0.5rem 0;
+  border-inline: 2px solid #739282;
+  font: 18px/1.5 var(--mono, monospace);
+}
+
+.pgi-matrix td {
+  padding: 0.2rem 0.32rem;
+  border: 0;
+  text-align: right;
+}
+
+.pgi-action figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.pgi-graphic {
+  display: block;
+  width: 100%;
+  max-width: 14rem;
+  margin-inline: auto;
+  border-radius: 8px;
+  background: #f4f8f4;
+}
+
+.pgi-graphic text {
+  fill: #243b31;
+  font-size: 7px;
+  font-family: var(--mono, monospace);
+}
+
+.pgi-axis {
+  fill: none;
+  stroke: #637c6f;
+  stroke-width: 0.85;
+  stroke-dasharray: 2 2;
+}
+
+.pgi-graphic .pgi-before {
+  fill: white;
+  stroke: #1e5493;
+  stroke-width: 1.65;
+}
+
+.pgi-graphic .pgi-after {
+  fill: #176846;
+  stroke: #176846;
+  stroke-width: 1.1;
+}
+
+.pgi-action figcaption {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 0.45rem;
+  font-size: 18px;
+}
+
+.pgi-action figcaption span::before {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  margin-inline-end: 0.3em;
+  border: 2px solid #1e5493;
+  border-radius: 50%;
+}
+
+.pgi-action figcaption .pgi-key-after::before {
+  background: #176846;
+  border-color: #176846;
+}
+
+.pgi-count-meta,
+.pgi-action dl,
+.pgi-feedback dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.6rem;
+  margin: 0.6rem 0;
+}
+
+.pgi-count-meta dd,
+.pgi-action dd,
+.pgi-feedback dd {
+  margin: 0;
+}
+
+.pgi-action .pgi-number,
+.pgi-counts .pgi-number {
+  font-family: var(--mono, monospace);
+}
+
+.pgi-counts {
+  overflow-x: auto;
+  border: 1px solid #cfdbd1;
+  border-radius: 6px;
+}
+
+.pgi-counts table {
+  margin: 0;
+  font-size: 18px;
+}
+
+.pgi-counts th,
+.pgi-counts td {
+  padding: 0.4rem 0.55rem;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+.pgi-counts td {
+  text-align: right;
+}
+
+.pgi-candidates {
+  margin: 0.8rem 0;
+}
+
+.pgi-candidates ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.7rem;
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pgi-candidates li {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid #cbdcd0;
+  border-radius: 4px;
+}
+
+.pg-page .pgi-feedback {
+  margin: 0.8rem 0;
+  padding: 0.6rem 0.8rem;
+  border-inline-start: 3px solid #3a7e59;
+  background: #f0f7ed;
+  color: #203d31;
+}
+
+.pgi-workshop :focus-visible,
+.pg-identify-entry > summary:focus-visible {
+  outline: 3px solid #235e4c;
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .pg-identify-entry,
+  .pgi-section {
+    padding: 0.75rem;
+  }
+
+  .pgi-controls,
+  .pgi-action,
+  .pgi-feedback dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+}

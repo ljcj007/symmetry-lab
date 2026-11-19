@@ -10,6 +10,7 @@ assert.equal(finderResults([...toolsIndex,...catalog],'225',{scope:'groups'})[0]
 assert.equal(finderResults([...toolsIndex,...catalog],'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
 assert.equal(finderResults([...toolsIndex,...catalog],'SU(3) 27')[0].route,'compute/lie/su3_ninej');
 assert.ok(finderResults([...toolsIndex,...catalog],'C₄v',{scope:'all'}).length);
+assert.equal(finderResults(catalog,'点群识别',{scope:'courses'})[0].route,'classroom/foundations?lesson=thirty-two');
 assert.equal(finderResults([...toolsIndex,...catalog],'',{scope:'courses'}).length,0);
 assert.equal(finderResults([...toolsIndex,...toolsIndex],'',{scope:'tools',limit:100}).length,75);
 assert.equal(finderResults(toolsIndex,'U1')[0].route,'compute/lie/u1');
