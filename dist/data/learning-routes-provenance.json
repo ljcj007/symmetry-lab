@@ -43,24 +43,24 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 65074,
-      "sha256": "a8de2f35d3c24a620cd364b7e305bada1bddd49312f87c4a61becece6a11005b"
+      "bytes": 65820,
+      "sha256": "ee4b65bd872a404676f218788046937a9fb924bc5a62ff9640e24ff9724ecb9f"
     },
     "NOTICE.txt": {
       "bytes": 15904,
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/app.js": {
-      "bytes": 100874,
-      "sha256": "72a69e5da8733da57c9b96b077fd1e5dcc19f9e1f38a516a84beb617f689da10"
+      "bytes": 100901,
+      "sha256": "4a329b3042e9bc1e469189b09fb0edb7d495418552438c8bd2a73314191e6077"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32220,
-      "sha256": "87bcc6393c877f32e316117b2f24494f5973d4c3b0174e23d4a9b9986d1ebf62"
+      "bytes": 32238,
+      "sha256": "eee2ae391098ed72a4d9ea10462e9ba17233ebcde50561a93108b7a8d1b5bb8b"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -187,8 +187,8 @@
       "sha256": "cacf724c0da68a55060287755bd67f43de4e5843d8c38869b36bf20a58107413"
     },
     "dist/index.html": {
-      "bytes": 8181,
-      "sha256": "a113830fbbfe29eb585bce1d8e48f44d780216d5b53b20da7667ed4317830fed"
+      "bytes": 8190,
+      "sha256": "10981107b6145b8c899cc0c6800c1a3e962b8217d68be91516e122285d89ce7a"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -407,8 +407,8 @@
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
     },
     "package.json": {
-      "bytes": 24312,
-      "sha256": "ec8069b91915d64b725c66b44f76b85d0e78467356827ce180ae485d0035c752"
+      "bytes": 24504,
+      "sha256": "f1a9e82bca91c1ec2d504d3a915c5abaf26fee20411d0dfe76d2f7ea93c97b68"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "bytes": 11803,
@@ -419,8 +419,8 @@
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 4788,
-      "sha256": "87a0259d080050e03c949926cc257ae812cd77f20f6c2913ccd170aa8ea166bf"
+      "bytes": 4916,
+      "sha256": "05cd864316b488ee4a2041359df6124a79edb2c6c4ec9b824d7a19896a25dfb9"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,

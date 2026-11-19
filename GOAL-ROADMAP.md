@@ -307,3 +307,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - In the fifth zero-start step, learners find the diagonal entries of a 90-degree rotation before seeing their sum. Switching between the xy plane and xyz space starts a new prediction with the corresponding matrix.
 - After a correct check, the exercise shows the sum beside the rotated unit arrow. The xy calculation gives trace zero although the arrow changes direction. Extending to xyz adds the fixed z direction, so the trace becomes one. The existing lesson links and progress record still apply.
+
+## From one vector to water displacement characters
+
+- The introductory trace exercise leads to the matrix and character demonstration. For a fixed representation and operation, a change of basis preserves the trace. Selecting a different action space changes which representation the learner is tracing.
+- In the water convention, σ(xz) keeps all three sites fixed and reverses the y component of each displacement. The learner predicts the trace of the resulting nine-dimensional action and can then inspect the displacement columns in the existing water workshop.
+- The tool finder recognizes the written tensor products of the five existing SU(3) 9j examples. The calculation directory also links directly to the four-octet singlet preset.

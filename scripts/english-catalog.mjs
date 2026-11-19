@@ -38,6 +38,8 @@ catalogFiles.push('en-si-structure-import.json','en-si-structure-links.json','en
 catalogFiles.push('en-advanced-shared-presets-ui.json','en-advanced-shared-presets-directory.json','en-advanced-shared-presets-docs.json');
 catalogFiles.push('en-wannier-graphene-source.json','en-wannier-graphene-ui.json','en-wannier-graphene-lesson.json','en-wannier-graphene-docs.json');
 catalogFiles.push('en-zero-trace-prediction.json');
+catalogFiles.push('en-zero-trace-water-link.json','en-character-water-bridge.json');
+catalogFiles.push('en-ninej-search.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

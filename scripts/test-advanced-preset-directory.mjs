@@ -24,7 +24,9 @@ for (const [tool, preset] of pairs) {
   assert.ok(link?.textContent.includes('→'), `Missing calculator case link for ${tool}`);
   if (english) assert.doesNotMatch(link.textContent, /[\u3400-\u9fff]/);
 }
-assert.equal(container.querySelectorAll('.nav-tool-example').length, pairs.length);
+const advancedLinks = container.querySelectorAll('.nav-tool-example').filter(link =>
+  link.getAttribute('href')?.startsWith('#compute/advanced/'));
+assert.equal(advancedLinks.length, pairs.length);
 const queries = english ? ['Kramers corepresentation', '1.3 BNS corepresentation'] : ['Kramers 共表示', '1.3 BNS 共表示'];
 for (const query of queries) {
   for (const scope of ['tools', 'all']) {

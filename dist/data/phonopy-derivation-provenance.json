@@ -59,18 +59,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 65074,
-      "sha256": "a8de2f35d3c24a620cd364b7e305bada1bddd49312f87c4a61becece6a11005b"
+      "bytes": 65820,
+      "sha256": "ee4b65bd872a404676f218788046937a9fb924bc5a62ff9640e24ff9724ecb9f"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 100874,
-      "sha256": "72a69e5da8733da57c9b96b077fd1e5dcc19f9e1f38a516a84beb617f689da10"
+      "bytes": 100901,
+      "sha256": "4a329b3042e9bc1e469189b09fb0edb7d495418552438c8bd2a73314191e6077"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32220,
-      "sha256": "87bcc6393c877f32e316117b2f24494f5973d4c3b0174e23d4a9b9986d1ebf62"
+      "bytes": 32238,
+      "sha256": "eee2ae391098ed72a4d9ea10462e9ba17233ebcde50561a93108b7a8d1b5bb8b"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -159,8 +159,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8181,
-      "sha256": "a113830fbbfe29eb585bce1d8e48f44d780216d5b53b20da7667ed4317830fed"
+      "bytes": 8190,
+      "sha256": "10981107b6145b8c899cc0c6800c1a3e962b8217d68be91516e122285d89ce7a"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -194,8 +194,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30879,
-      "sha256": "0ffc1ff79d3c0c39aecbb27a80ee70d4d27095f244811a93fda7d7906aa70618"
+      "bytes": 30997,
+      "sha256": "ffcc38f1871023518539440f8d76dad65997f18324a430a1013bd61526132cfb"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -289,8 +289,8 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 43535,
-      "sha256": "f9fdca861ab32d0ca62f772bcf7ae9a6bb9d3867ed575f006fdd06d458562bef"
+      "bytes": 43628,
+      "sha256": "c390df6fcdcc013d63996ec1e3a6433780cf4d922c6d4394bb87b2fa52ff9b7d"
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
@@ -331,6 +331,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 65219,
       "sha256": "6ad3cbe5110a86afa313fdf27a0bb8fee1e22b97054091c9e82de9c8778a9d39"
+    },
+    "locales/en-character-water-bridge.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3522,
+      "sha256": "4c007441a8eb13c72d85a23bfc955bfba57105a22426e241f476c00d0a70e29b"
     },
     "locales/en-chirality-actions-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -541,6 +546,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 122,
       "sha256": "50ca5650a04ed45bad209abaecce0a6150fac6f54caa27a381d906832db45a07"
+    },
+    "locales/en-ninej-search.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 108,
+      "sha256": "8e16797200feea8b5a4f511db063947619bd5aaa55c1c605bc0abbc0463e69a3"
     },
     "locales/en-onsager-learning-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -912,6 +922,11 @@
       "bytes": 1478,
       "sha256": "207f2b36957ba62141f4bf710f36a61ecab9d55ad95f07fb50b15dd79a735f4f"
     },
+    "locales/en-zero-trace-water-link.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 148,
+      "sha256": "a58f97d000b6656f5c564b0bd16ff8f960e3a4fbc50a0f60c7fd2d2bbdb40767"
+    },
     "locales/en-zno-navigation.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 436,
@@ -929,8 +944,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24312,
-      "sha256": "ec8069b91915d64b725c66b44f76b85d0e78467356827ce180ae485d0035c752"
+      "bytes": 24504,
+      "sha256": "f1a9e82bca91c1ec2d504d3a915c5abaf26fee20411d0dfe76d2f7ea93c97b68"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -964,8 +979,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4788,
-      "sha256": "87a0259d080050e03c949926cc257ae812cd77f20f6c2913ccd170aa8ea166bf"
+      "bytes": 4916,
+      "sha256": "05cd864316b488ee4a2041359df6124a79edb2c6c4ec9b824d7a19896a25dfb9"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

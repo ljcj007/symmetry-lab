@@ -23,8 +23,8 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 65074,
-      "sha256": "a8de2f35d3c24a620cd364b7e305bada1bddd49312f87c4a61becece6a11005b"
+      "bytes": 65820,
+      "sha256": "ee4b65bd872a404676f218788046937a9fb924bc5a62ff9640e24ff9724ecb9f"
     },
     "dist/advanced-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -33,8 +33,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 100874,
-      "sha256": "72a69e5da8733da57c9b96b077fd1e5dcc19f9e1f38a516a84beb617f689da10"
+      "bytes": 100901,
+      "sha256": "4a329b3042e9bc1e469189b09fb0edb7d495418552438c8bd2a73314191e6077"
     },
     "dist/docs/advanced-example-links.md": {
       "normalization": "utf8-lf-v1",
@@ -83,8 +83,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8181,
-      "sha256": "a113830fbbfe29eb585bce1d8e48f44d780216d5b53b20da7667ed4317830fed"
+      "bytes": 8190,
+      "sha256": "10981107b6145b8c899cc0c6800c1a3e962b8217d68be91516e122285d89ce7a"
     },
     "dist/material-research.css": {
       "normalization": "utf8-lf-v1",
@@ -93,8 +93,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30879,
-      "sha256": "0ffc1ff79d3c0c39aecbb27a80ee70d4d27095f244811a93fda7d7906aa70618"
+      "bytes": 30997,
+      "sha256": "ffcc38f1871023518539440f8d76dad65997f18324a430a1013bd61526132cfb"
     },
     "dist/navigation.css": {
       "normalization": "utf8-lf-v1",
@@ -103,13 +103,13 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 43535,
-      "sha256": "f9fdca861ab32d0ca62f772bcf7ae9a6bb9d3867ed575f006fdd06d458562bef"
+      "bytes": 43628,
+      "sha256": "c390df6fcdcc013d63996ec1e3a6433780cf4d922c6d4394bb87b2fa52ff9b7d"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8441,
-      "sha256": "bda2dd6e82541fa0081c4ad786463106b6b6ae9cd3c433ed4e0ec188c93f6b68"
+      "bytes": 8450,
+      "sha256": "0e673ce3113c826a34d660658e6c99781b644a6da71edfe10782de0a385a0317"
     },
     "locales/en-advanced-shared-presets-directory.json": {
       "normalization": "utf8-lf-v1",
@@ -128,8 +128,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24312,
-      "sha256": "ec8069b91915d64b725c66b44f76b85d0e78467356827ce180ae485d0035c752"
+      "bytes": 24504,
+      "sha256": "f1a9e82bca91c1ec2d504d3a915c5abaf26fee20411d0dfe76d2f7ea93c97b68"
     },
     "scripts/build-advanced-presets-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -138,13 +138,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4788,
-      "sha256": "87a0259d080050e03c949926cc257ae812cd77f20f6c2913ccd170aa8ea166bf"
+      "bytes": 4916,
+      "sha256": "05cd864316b488ee4a2041359df6124a79edb2c6c4ec9b824d7a19896a25dfb9"
     },
     "scripts/test-advanced-preset-directory.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1893,
-      "sha256": "331e4e22a4a68cbe408f6fd976aee3976b15575ea13a686730cd16c5d1a2db8a"
+      "bytes": 2008,
+      "sha256": "e82e91926273a4fe61293a2aca2299cc78d1323097ef170153ddd083d4749b9d"
     },
     "scripts/test-advanced-preset-host.mjs": {
       "normalization": "utf8-lf-v1",

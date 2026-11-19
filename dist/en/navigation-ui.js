@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-trace1';
+import {classroomPathways} from './classroom-ui.js?v=20261120-characterwater1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261119-si1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261119-si1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-wannier1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-characterwater1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -111,7 +111,8 @@ export function rememberRoute(route){if(['home','compute','atlas','classroom','d
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>File use:</strong> ${esc(text)}</${tag}>`:'';};
-const advancedExamples={
+const namedExamples={
+ 'compute/lie/su3_ninej':['su3-ninej-four-octets-singlet',"Open the 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 singlet example"],
  'compute/advanced/carat_integral':['noncyclic-affine',"Z and affine classes of a six-dimensional noncyclic group →"],
  'compute/advanced/integral_normalizer':['glued6',"Normalizer of a glued six-dimensional integral lattice →"],
  'compute/advanced/arithmetic_centralizer':['a5',"Arithmetic centralizer for six-dimensional A₅ →"],
@@ -125,7 +126,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ["Existing files and their uses",capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc("Inputs and supported scope")}">Inputs and supported scope</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- const example=showScope&&advancedExamples[item.route];
+ const example=showScope&&namedExamples[item.route];
  const exampleLink=example?link(`${item.route}?preset=${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }

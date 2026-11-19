@@ -88,6 +88,7 @@ assert.ok(!getZeroStartResult().checkedSteps.includes('trace'));
 check(view,'0');
 assert.match(view.$('#zs-trace-worked').innerHTML,/0 \+ 0 = 0/);
 assert.match(view.$('#zs-trace-worked').innerHTML,local(/迹为 0 时旋转仍可改变向量/,/zero trace can still change a vector/));
+assert.match(view.$('#zs-trace-worked').innerHTML,/href="#classroom\/foundations\?module=demos&amp;experiment=characters"/);
 assert.equal(document.activeElement,view.$('#zs-trace-worked'));
 assert.equal(focusOptions.preventScroll,false,'The newly revealed explanation can scroll into view');
 assert.ok(getZeroStartResult().checkedSteps.includes('trace'));
