@@ -1,5 +1,5 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261117-derive1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261120-zno-quadrature1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -15,6 +15,39 @@ const distortionSVG=(structure,yaw=-35)=>frozenStructureSVG(structure,yaw).repla
 let catalogPromise,lastResult=null,handoff=null;
 const loadCuQhaSource=()=>import('./cu-qha-source-ui.js?v=20261119-cu-qha1');
 const cuQhaLessonHTML=()=>`<details class="notice"><summary>Investigate thermal expansion with the official Cu data</summary><p>Consider what evidence for thermal expansion is missing from the phonon free energy at just one volume. In the calculation center, verify the multi-volume Cu source, load it, and run the calculation to compare equilibrium volumes at different temperatures.</p><div class="obs-links"><a href="#compute/qha-lab">Verify and load the Cu example in the calculation center →</a><a href="docs/cu-qha-example.md">Cu data and comparison notes →</a></div></details>`;
+const znoQuadrature={
+ filename:'zno-mode-quadrature.json',schema:'symmetry-lab.zno-mode-quadrature.v1',
+ bytes:34241,sha256:'e2186db63054497d22d25f2203739d9cf195733978505afe45bd7294ccbfcacc'
+};
+async function readZnOQuadrature(signal){
+ const response=await fetch('data/examples/'+znoQuadrature.filename+'?v=20261120-zno-quadrature1',{signal});
+ if(!response.ok)throw new Error();
+ const bytes=new Uint8Array(await response.arrayBuffer());
+ signal.throwIfAborted();
+ if(bytes.length!==znoQuadrature.bytes)throw new Error();
+ const digest=new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256',bytes));
+ signal.throwIfAborted();
+ const hex=Array.from(digest,byte=>byte.toString(16).padStart(2,'0')).join('');
+ if(hex!==znoQuadrature.sha256)throw new Error();
+ const data=parseDataObject(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
+ if(data.schema!==znoQuadrature.schema||data.settings?.removeTranslation!==false||data.modes?.length!==2)throw new Error();
+ return data;
+}
+function znoQuadratureHTML(open){
+ return `<details class="mr-scope" data-cm-zno-entry ${open?'open':''}>
+ <summary>Verify and load the ZnO mode-direction comparison</summary>
+ <p>Predict first. Fit one displacement snapshot using the phase 0 direction, then add the phase π/2 direction. How will the displacement residual change?</p>
+ <p>Both runs use the same parent structure and displacement snapshot. The snapshot uses a finite-wave-vector eigenvector derived from the official Phonopy ZnO force data, with the non-analytic correction switched off.</p>
+ <p>Loading replaces the current structure and mode input. After each manual run, record the displacement residual and the rank of the mode matrix.</p>
+ <div class="obs-links">
+  <button type="button" class="secondary" id="cm-zno-one">Load one direction (phase 0)</button>
+  <button type="button" class="secondary" id="cm-zno-two">Load two directions (phases 0 and π/2)</button>
+  <button type="button" class="secondary" id="cm-zno-cancel" hidden>Cancel loading</button>
+ </div>
+ <a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO data sources and comparison steps →</a>
+ <p id="cm-zno-load-status" role="status"></p><p id="cm-zno-error" role="alert" hidden></p>
+ </details>`;
+}
 const catalog=()=>catalogPromise??=fetch('data/coupled-materials.json?v='+RELEASE).then(r=>{if(!r.ok)throw Error("Distortion and excitation course failed to load");return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getCoupledMaterialsResult=()=>lastResult;
 export function setCoupledMaterialsInput(module,input){const copy=structuredClone(input);if(module==='distortion'&&(copy.parent||copy.distorted||copy.preset==='custom')){copy.content=typeof copy.content==='string'&&copy.content.trim()?copy.content:JSON.stringify(copy);copy.preset='custom';for(const key of ['parent','distorted','modes','data','atom_mapping','image_shifts'])delete copy[key];}if(module==='qha'&&copy.data){copy.content=JSON.stringify(copy.data);delete copy.data;}handoff={module,input:copy};}
@@ -48,10 +81,11 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  if(handoff?.module===module.id){mergeLabInput(handoff.input);handoff=null;tab='lab';}
  let result=null,busy=false,ticket=0,fileTicket=0,cursor=0,quantity='volume',frame=0,playing=false,animationTicket=0,progress={};try{const p=JSON.parse(localStorage.getItem('symmetry-lab.coupled-materials.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
  let activeJob=null,cuProof=null,disposeCuWidget=()=>{};
+ let znoOpen=false,znoData=null,znoProof=null,znoWidget=null;
  const sync=()=>onNavigate({module:module.id,tab,lesson:lesson.id,exercise:exercise.id,material:materialContext()||undefined,preset:forms[module.id].preset||selection.preset});
  const stopAnimation=()=>{playing=false;animationTicket++;if($('#cm-play'))$('#cm-play').textContent="Play precession";};
  const activeForm=()=>tab==='lab'?$('#cm-form'):null;
- function syncRunControls(){const form=activeForm();if(!form)return;form.querySelector('button[type="submit"]').disabled=busy;$('#cm-cancel').hidden=!busy;}
+ function syncRunControls(){const form=activeForm();if(!form)return;form.querySelector('button[type="submit"]').disabled=busy;$('#cm-cancel').hidden=!busy;znoWidget?.refresh();}
  function cancelOwnJob(fallback=false){
    const job=activeJob;
    if(!job)return;
@@ -67,16 +101,27 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  const currentCuEvidence=()=>module.id==='qha'&&cuProof&&forms.qha.source==='thermal'&&forms.qha.content===cuProof.content?cuProof.sourceEvidence:null;
  const cuReadyMessage="The official Cu data are verified and loaded. Check pressure and fit settings, then run the calculation.";
  const clearCuProof=()=>{cuProof=null;const status=$('#cm-cu-source-status');if(status){status.hidden=true;status.textContent='';}};
+ const retireZnOWidget=()=>{znoWidget?.dispose();znoWidget=null;};
+ const currentZnOEvidence=()=>{
+  const f=forms.distortion;
+  return module.id==='distortion'&&znoProof&&f.preset==='custom'&&f.content===znoProof.content&&!f.remove_translation&&!f.amplitudes
+   ?znoProof.sourceEvidence:null;
+ };
+ const clearZnOProof=()=>{
+  znoProof=null;
+  const status=$('#cm-zno-source-status');
+  if(status){status.hidden=true;status.textContent='';}
+ };
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
  const materialContext=()=>module.id==='distortion'&&['batio3','srtio3'].includes(forms.distortion.preset)?forms.distortion.preset:module.id==='qha'&&tab==='lab'&&selection.material==='cu-qha'?'':selection.material||'';
  const contextQuery=(withModule=true)=>{const params=new URLSearchParams();if(withModule)params.set('module',module.id);if(materialContext())params.set('material',materialContext());const preset=forms[module.id].preset||selection.preset;if(preset)params.set('preset',preset);return params.toString();};
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(coupledCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">Return to this lesson →</a><a href="#atlas/mechanisms?${esc(contextQuery())}">distortion and excitation route →</a><a href="#atlas/notebook">Materials Research Record →</a></div>`;
- function draw(){if(!current())return;retireCuWidget();onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → EXCITATIONS → THERMODYNAMICS</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Distortion and Excitation Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-cm-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="cm-content"></div>`;root.querySelectorAll('[data-cm-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-cm-tab]')].includes(b))return;rememberLabDraft();cancelOwnJob(true);invalidate();tab=b.dataset.cmTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#cm-form'),module.id);}bindCourseFlowActions({root,prefix:'cm',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'cm-to-lab'});}
+ function draw(){if(!current())return;retireCuWidget();retireZnOWidget();onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → EXCITATIONS → THERMODYNAMICS</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Distortion and Excitation Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-cm-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="cm-content"></div>`;root.querySelectorAll('[data-cm-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-cm-tab]')].includes(b))return;rememberLabDraft();cancelOwnJob(true);invalidate();tab=b.dataset.cmTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#cm-form'),module.id);}bindCourseFlowActions({root,prefix:'cm',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'cm-to-lab'});}
  function learn(){$('#cm-content').innerHTML=`<label class="obs-chapter">Select theme<select id="cm-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.id==='qha-free-energy'?cuQhaLessonHTML():''}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}<div class="obs-links"><button id="cm-to-lab" class="primary">Open the corresponding experiment →</button><button id="cm-to-derive" class="secondary">step-by-step derivation →</button></div>${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;$('#cm-lesson').onchange=e=>{lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(e=>e.lesson===lesson.id);draw();sync();};$('#cm-to-derive').onclick=()=>{exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
  function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#cm-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);const calculationRoute='#compute/'+m.route+(c.id==='cu-qha'?'':'?material='+encodeURIComponent(c.id));return `<a href="${coupledCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · Learn →</a><a href="${esc(calculationRoute)}">corresponding calculation →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">Save material research records →</a></div></article>`).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{read();}catch(error){draftError=error?.message||"Check the current input";}flowDrafts.remember($('#cm-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);clearCuProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
+ function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);clearCuProof();clearZnOProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
  function derive(){const exercises=data.exercises.filter(e=>data.lessons.some(l=>l.id===e.lesson&&l.module===module.id));$('#cm-content').innerHTML=`<label class="obs-chapter">Select exercise<select id="cm-exercise">${options(exercises.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}</select></label><article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="cm-steps"></div><p id="cm-progress" role="status"></p>${courseFlowActions('cm')}${navlinks()}</article>`;const exerciseSelect=$('#cm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#cm-exercise')!==exerciseSelect)return;exercise=data.exercises.find(x=>x.id===e.target.value);lesson=data.lessons.find(x=>x.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#cm-steps'),exerciseId=exercise.id;
@@ -90,8 +135,15 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   if(module.id==='magnons')return `<label>nearest neighbor XXZ chain<select id="cm-model">${options([['fm',"ferromagnetic FM"],['afm',"Gemini lattice antiferromagnetic AFM"]],f.model)}</select></label>${input("Exchange strength J > 0（meV）",'cm-exchange',f.exchange,'min="0.001"')}${input("spin S (positive half integer)",'cm-spin',f.spin,'min="0.5" step="0.5"')}${range("Exchange anisotropy Δ",'cm-anisotropy',f.anisotropy,1,3,.01)}${input("Zeeman Energy h = gμB B（meV）",'cm-field',f.field)}${range("Select wavevector qa/π",'cm-q',f.q,f.model==='afm'?-.5:-1,f.model==='afm'?.5:1,.005)}${f.model==='afm'?`<label>mode branch<select id="cm-branch">${options([[0,'ε₋ = ω₀ − h'],[1,'ε₊ = ω₀ + h']],f.branch)}</select></label>`:''}${range("Transverse spin amplitude / S",'cm-amplitude',f.amplitude,0,.2,.005)}<p class="obs-small">Δ is the XXZ exchange anisotropy. h is an energy in meV, not a magnetic field in tesla. The dispersion comes from linear spin waves about a collinear reference state; the interface checks the classical ground state and local stability separately.</p>`;
   return `<label>free energy source<select id="cm-source">${options([['preset',"Volume dependent Einstein teaching model"],['matrix',"Multi-volume free energy matrix JSON"],['thermal',"multi-volume Phonopy thermal data packet"]],f.source)}</select></label>${f.source!=='preset'?imported(f):`${input("reference volume V₀（Å³/ input cell)",'cm-v0',f.v0,'min="1"')}${input("Enter the number of atoms in the cell n",'cm-natom',f.natom,'min="1" step="1"')}${input("Static body modulus parameter B₀（GPa）",'cm-bulk_modulus',f.bulk_modulus,'min="1" max="1000"')}${input("Reference Einstein Temperature θ (K)",'cm-theta',f.theta,'min="1" max="3000"')}${range("Grüneisen parameters γ",'cm-gamma',f.gamma,-4,4,.1)}${input("starting temperature (K)",'cm-t_min',f.t_min,'min="0"')}${input("termination temperature (K)",'cm-t_max',f.t_max,'min="0"')}${input("temperature step size (K)",'cm-t_step',f.t_step,'min="1"')}`}${input("Hydrostatic pressure p (GPa)",'cm-pressure',f.pressure,'min="-100" max="1000"')}<label>local fitting order<select id="cm-fit_degree">${options([[2,"secondary"],[3,"three times"]],f.fit_degree)}</select></label><label>Fitting window volume points<select id="cm-fit_window">${options([[5,5],[7,7],[9,9]],f.fit_window)}</select></label><p class="obs-small">At least 5 volumes; E, F, and V must correspond to the same input calculation cell. The thermal data packet carries the YAML content of each volume in the thermalFiles array. The format is shown in the template. A local polynomial fit is not equivalent to a complete equation of state.</p>`;
  }
+ function readLandau(){
+  const landau=forms.distortion.landau;
+  for(const k of ['a1','b1','a2','b2','c','range','q1','q2']){
+   const field=$('#cm-'+k);
+   if(field)landau[k]=Number(field.value);
+  }
+ }
  function read(){const f=forms[module.id],v=(id,old)=>$('#cm-'+id)?.value??old,n=(id,old)=>Number(v(id,old));
-  if(module.id==='distortion'){f.preset=v('preset',f.preset);f.remove_translation=$('#cm-remove-translation')?.checked??f.remove_translation;const a=v('amplitudes',f.amplitudes?JSON.stringify(f.amplitudes):'').trim();if(a)f.amplitudes=JSON.parse(a);else delete f.amplitudes;for(const k of ['a1','b1','a2','b2','c','range','q1','q2'])f.landau[k]=n(k,f.landau[k]);}
+  if(module.id==='distortion'){f.preset=v('preset',f.preset);f.remove_translation=$('#cm-remove-translation')?.checked??f.remove_translation;const a=v('amplitudes',f.amplitudes?JSON.stringify(f.amplitudes):'').trim();if(a)f.amplitudes=JSON.parse(a);else delete f.amplitudes;readLandau();}
   if(module.id==='magnons'){f.model=v('model',f.model);for(const k of ['exchange','spin','anisotropy','field','q','branch','amplitude'])f[k]=n(k,f[k]);if(f.model==='fm')f.branch=0;}
   if(module.id==='qha'){f.source=v('source',f.source);for(const k of ['v0','natom','bulk_modulus','theta','gamma','t_min','t_max','t_step','pressure','fit_degree','fit_window'])f[k]=n(k,f[k]);}
   if($('#cm-json'))f.content=$('#cm-json').value;
@@ -117,7 +169,10 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   const cuEntry=module.id==='qha'?"<details class=\"notice cm-cu-source-entry\" data-cm-cu-qha-entry><summary>Verify and load the official multi-volume Cu example</summary><div data-cm-cu-qha-body></div></details>":'';
   const verified=currentCuEvidence();
   const cuStatus=module.id==='qha'?`<p id="cm-cu-source-status" class="mr-scope" role="status" tabindex="-1"${verified?'':' hidden'}>${verified?esc(cuReadyMessage):''}</p>`:'';
-  $('#cm-content').innerHTML=`${cuEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${cuStatus}${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
+  const znoEntry=module.id==='distortion'?znoQuadratureHTML(znoOpen):'';
+  const znoEvidence=currentZnOEvidence();
+  const znoStatus=module.id==='distortion'?`<p id="cm-zno-source-status" class="mr-scope" role="status" tabindex="-1"${znoEvidence?'':' hidden'}>${znoEvidence?(znoEvidence.directionCount===1?"The verified ZnO input now contains the phase 0 direction. Run the calculation when ready.":"The verified ZnO input now contains the phase 0 and π/2 directions. Run the calculation when ready."):''}</p>`:'';
+  $('#cm-content').innerHTML=`${cuEntry}${znoEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${cuStatus}${znoStatus}${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
   const form=$('#cm-form');
   const formCurrent=()=>current()&&activeForm()===form;
   form.onsubmit=e=>{e.preventDefault();if(formCurrent())return calculate();};
@@ -125,25 +180,92 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   form.oninput=e=>{
     if(!formCurrent()||e.target.type==='file')return;
     if(module.id==='qha'&&['cm-json','cm-source'].includes(e.target.getAttribute('id'))){closeCuWidget();clearCuProof();}
+    if(module.id==='distortion'){
+      if(['cm-json','cm-preset','cm-remove-translation','cm-amplitudes'].includes(e.target.id))clearZnOProof();
+      znoWidget?.cancel();
+    }
     if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;
     invalidate();
   };
-  for(const id of ['preset','model','source'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{if(!formCurrent())return;try{read();if(id==='source')clearCuProof();if(id==='preset')delete forms.distortion.amplitudes;if(id==='model'){forms.magnons.q=Math.max(forms.magnons.model==='afm'?-.5:-1,Math.min(forms.magnons.model==='afm'?.5:1,forms.magnons.q));forms.magnons.branch=0;}invalidate();draw();}catch(e){$('#cm-result').textContent=e.message;}};
+  for(const id of ['preset','model','source'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{if(!formCurrent())return;try{read();if(id==='source')clearCuProof();if(id==='preset'){delete forms.distortion.amplitudes;clearZnOProof();}if(id==='model'){forms.magnons.q=Math.max(forms.magnons.model==='afm'?-.5:-1,Math.min(forms.magnons.model==='afm'?.5:1,forms.magnons.q));forms.magnons.branch=0;}invalidate();draw();}catch(e){$('#cm-result').textContent=e.message;}};
   for(const id of ['q','anisotropy','amplitude','c','q1','q2','gamma'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{if(formCurrent())return calculate();};
   const context=()=>module.id+':'+(module.id==='distortion'?forms.distortion.preset:forms.qha.source);
   const accept=async getText=>{
     if(!formCurrent())return;
+    znoWidget?.cancel();
     closeCuWidget();invalidate();
     const request=++fileTicket,key=context(),valid=()=>formCurrent()&&request===fileTicket&&context()===key;
     try{
       const text=await getText();if(!valid())return;
-      parseDataObject(text);read();clearCuProof();forms[module.id].content=text;invalidate();draw();
+      parseDataObject(text);read();clearCuProof();clearZnOProof();forms[module.id].content=text;invalidate();draw();
     }catch(e){if(valid())$('#cm-result').textContent=e.message;}
   };
   if($('#cm-file'))$('#cm-file').onchange=e=>{const file=e.target.files?.[0];if(file)accept(async()=>{if(file.size>8*1024*1024)throw Error("JSON Packets up to 8 MiB");return file.text();});};
   if($('#cm-demo'))$('#cm-demo').onclick=()=>accept(async()=>{const name=module.id==='distortion'?'distortion-batio3.json':forms.qha.source==='thermal'?'qha-thermal-files-demo.json':'qha-multivolume-demo.json',r=await fetch('data/examples/'+name+'?v='+RELEASE);if(!r.ok)throw Error("template failed to load");return r.text();});
   syncRunControls();
   disposeCuWidget=bindCuQhaWidget(formCurrent);
+  znoWidget=bindZnOQuadrature(formCurrent);
+ }
+ function bindZnOQuadrature(formCurrent){
+  const entry=$('[data-cm-zno-entry]');
+  if(!entry)return null;
+  const one=$('#cm-zno-one'),two=$('#cm-zno-two'),stop=$('#cm-zno-cancel');
+  const status=$('#cm-zno-load-status'),error=$('#cm-zno-error');
+  let alive=true,pending=null;
+  const here=()=>alive&&formCurrent()&&$('[data-cm-zno-entry]')===entry;
+  const refresh=()=>{
+   one.disabled=two.disabled=busy||Boolean(pending);
+   stop.hidden=!pending;
+  };
+  const cancel=()=>{
+   if(pending){pending.abort();pending=null;}
+   status.textContent='';
+   error.hidden=true;
+   refresh();
+  };
+  async function load(directionCount){
+   if(!here()||!entry.open||busy||pending)return;
+   const request=new AbortController(),requested=++fileTicket;
+   pending=request;
+   error.hidden=true;
+   status.textContent="Reading and verifying the ZnO data…";
+   refresh();
+   const owns=()=>here()&&entry.open&&pending===request&&!request.signal.aborted&&fileTicket===requested;
+   try{
+    const data=znoData??await readZnOQuadrature(request.signal);
+    if(!owns())return;
+    znoData=data;
+    const {parent,distorted}=data;
+    const modes=data.modes.slice(0,directionCount).map((mode,index)=>({...mode,label:index?"Phase π/2":"Phase 0"}));
+    const content=JSON.stringify({parent,distorted,modes,atom_mapping:parent.atoms.map((_,index)=>index)},null,2);
+    readLandau();
+    flowDrafts.discard('distortion');
+    Object.assign(forms.distortion,{preset:'custom',content,remove_translation:false});
+    delete forms.distortion.amplitudes;
+    znoProof={content,sourceEvidence:{kind:'zno-mode-quadrature',datasetSHA256:znoQuadrature.sha256,directionCount,source:data.source,settings:data.settings}};
+    znoOpen=true;
+    invalidate();
+    draw();
+    $('#cm-zno-source-status')?.focus?.();
+   }catch{
+    if(owns()){
+     error.textContent="The ZnO data could not be read or verified. Your inputs are still in place. Try loading again.";
+     error.hidden=false;
+    }
+   }finally{
+    if(here()&&pending===request){
+     pending=null;
+     status.textContent='';
+     refresh();
+    }
+   }
+  }
+  one.onclick=()=>load(1);
+  two.onclick=()=>load(2);
+  stop.onclick=()=>{cancel();one.focus?.();};
+  entry.ontoggle=()=>{if(!here())return;znoOpen=entry.open;if(!entry.open)cancel();};
+  refresh();
+  return {refresh,cancel,dispose(){alive=false;entry.ontoggle=null;pending?.abort();}};
  }
  function bindCuQhaWidget(formCurrent){
   const detail=$('[data-cm-cu-qha-entry]');
@@ -200,12 +322,14 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  }
  async function calculate(){
   if(busy||!current()||!activeForm())return;
+  znoWidget?.cancel();
   const form=activeForm();
   let job;
   const ownsJob=()=>current()&&activeForm()===form&&job===activeJob&&job?.id===ticket;
   try{
     const inputValue=payload();
-    const sourceEvidence=currentCuEvidence();
+    const sourceEvidence=currentCuEvidence()||currentZnOEvidence();
+    if(znoProof&&!sourceEvidence)clearZnOProof();
     job={id:++ticket,task:null};activeJob=job;busy=true;stopAnimation();lastResult=null;syncRunControls();
     $('#cm-result').innerHTML="<p role=\"status\">Python is calculating; the calculation environment needs to be loaded for the first run...</p>";
     job.task=run(module.action,inputValue);
@@ -229,7 +353,17 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   recordLink.onclick=()=>{if(current()&&$('#cm-record')===recordLink&&lastResult===record)captureCalculation(module.action,record.input,record.result,{route:'compute/'+module.route+'?'+contextQuery(),title:module.title,material:materialContext()});};
   if(module.id==='distortion')bindDistortion();else if(module.id==='magnons')bindMagnon();else bindQha();
  }
- function distortionOutput(){const r=result,d=r.decomposition,l=r.landau;return `<h2>Structure reconstruction from mode amplitude</h2><p>${esc(r.description)}</p><div class="mr-metrics"><div>Atom/Mode Number<strong>${r.parent.atoms.length} / ${d.modeCount}</strong></div><div>displacement fitting residual<strong>${num(d.residualNorm)} Å</strong></div><div>mode matrix rank<strong>${d.rank} / ${d.modeCount}</strong></div></div>${warningPanel(r.warnings,w=>/线性相关|无下界|高阶项|全局极小|非紧|退化|连续解/.test(w))}${table(["Mode","Projection Q / Å","reconstruction Q / Å"],d.modes.map(m=>[m.label||m.id,num(m.amplitude),num(m.selectedAmplitude)]))}<div id="cm-structure">${distortionSVG(r.reconstruction)}</div>${range("Rotate viewing direction",'cm-yaw',-35,-180,180,1)}<p>The open circle is the reference position of the parent phase fractional coordinates in the selected reconstructed lattice, and the solid circle is the reconstructed position. The slider changes the reconstruction amplitude without redefining the resulting Q from the projection.</p><div class="cm-amplitude-controls">${d.modes.map((m,i)=>range(m.label||m.id,'cm-mode-'+i,m.selectedAmplitude,-Math.max(1,Math.abs(m.selectedAmplitude)*2),Math.max(1,Math.abs(m.selectedAmplitude)*2),.01)).join('')}</div><div class="obs-links"><button id="cm-poscar" class="secondary">↓ Refactor POSCAR</button><button id="cm-cif" class="secondary">↓ Refactor CIF（P1）</button></div><details><summary>Atomic correspondence, strain and normalization</summary><pre>${esc(JSON.stringify({mapping:r.mapping,strain:r.strain,gram:d.gram,normalization:d.normalization,removedTranslation:r.displacement.removedTranslation},null,2))}</pre></details><h2>Dual order parameter Free Energy</h2><div class="obs-formula">${esc(l.formula)}</div><p>${esc(l.boundedness.label)} · This is an independent reduced model with coefficients not fit from the structure above.</p>${landauSVG(l)}<p>current probe F(${num(l.selection.q1)}, ${num(l.selection.q2)}) = ${num(l.selection.energy)}; global lowest energy ${num(l.globalMinimumEnergy)}. The circles mark the discrete global minima within the plot area, and the white dot column shows the family of continuous degenerate minima.</p>${table(['Q₁','Q₂','F',"stationary point type"],l.stationaryPoints.map(p=>[num(p.q1),num(p.q2),num(p.energy),p.label]))}${(l.stationaryFamilies||[]).map(f=>`<p class="mr-scope">${esc(f.label)}：${esc(f.equation)}; Energy ${num(f.energy)}</p>`).join('')}`;}
+ function distortionOutput(){
+  const r=result,d=r.decomposition,l=r.landau;
+  const checked=lastResult?.sourceEvidence?.kind==='zno-mode-quadrature';
+  const description=checked
+   ? `<p id="cm-zno-result-source">Verified Phonopy ZnO data. <a href="docs/coupled-materials.md#zno-mode-quadrature">ZnO data sources and comparison steps →</a></p>`
+   : `<p>${esc(r.description)}</p>`;
+  const residual=d.residualNorm;
+  const small=Number.isFinite(residual)&&residual>0&&residual<1e-4;
+  const [mantissa,exponent]=small?residual.toExponential(5).split('e'):[];
+  const metric=small?`${Number(mantissa)} × 10<sup>${exponent.replace('-','−')}</sup>`:num(residual);
+  return `<h2>Structure reconstruction from mode amplitude</h2>${description}<div class="mr-metrics"><div>Atom/Mode Number<strong>${r.parent.atoms.length} / ${d.modeCount}</strong></div><div>displacement fitting residual<strong id="cm-displacement-residual" data-math-ignore>${metric} Å</strong></div><div>mode matrix rank<strong>${d.rank} / ${d.modeCount}</strong></div></div>${warningPanel(r.warnings,w=>/线性相关|无下界|高阶项|全局极小|非紧|退化|连续解/.test(w))}${table(["Mode","Projection Q / Å","reconstruction Q / Å"],d.modes.map(m=>[m.label||m.id,num(m.amplitude),num(m.selectedAmplitude)]))}<div id="cm-structure">${distortionSVG(r.reconstruction)}</div>${range("Rotate viewing direction",'cm-yaw',-35,-180,180,1)}<p>The open circle is the reference position of the parent phase fractional coordinates in the selected reconstructed lattice, and the solid circle is the reconstructed position. The slider changes the reconstruction amplitude without redefining the resulting Q from the projection.</p><div class="cm-amplitude-controls">${d.modes.map((m,i)=>range(m.label||m.id,'cm-mode-'+i,m.selectedAmplitude,-Math.max(1,Math.abs(m.selectedAmplitude)*2),Math.max(1,Math.abs(m.selectedAmplitude)*2),.01)).join('')}</div><div class="obs-links"><button id="cm-poscar" class="secondary">↓ Refactor POSCAR</button><button id="cm-cif" class="secondary">↓ Refactor CIF（P1）</button></div><details><summary>Atomic correspondence, strain and normalization</summary><pre>${esc(JSON.stringify({mapping:r.mapping,strain:r.strain,gram:d.gram,normalization:d.normalization,removedTranslation:r.displacement.removedTranslation},null,2))}</pre></details><h2>Dual order parameter Free Energy</h2><div class="obs-formula">${esc(l.formula)}</div><p>${esc(l.boundedness.label)} · This is an independent reduced model with coefficients not fit from the structure above.</p>${landauSVG(l)}<p>current probe F(${num(l.selection.q1)}, ${num(l.selection.q2)}) = ${num(l.selection.energy)}; global lowest energy ${num(l.globalMinimumEnergy)}. The circles mark the discrete global minima within the plot area, and the white dot column shows the family of continuous degenerate minima.</p>${table(['Q₁','Q₂','F',"stationary point type"],l.stationaryPoints.map(p=>[num(p.q1),num(p.q2),num(p.energy),p.label]))}${(l.stationaryFamilies||[]).map(f=>`<p class="mr-scope">${esc(f.label)}：${esc(f.equation)}; Energy ${num(f.energy)}</p>`).join('')}`;}
  function bindDistortion(){$('#cm-yaw').oninput=e=>{$('#cm-structure').innerHTML=distortionSVG(result.reconstruction,+e.target.value);e.target.nextElementSibling.textContent=e.target.value;};for(const [id,key,name] of [['cm-poscar','poscar','POSCAR-distortion'],['cm-cif','cif','distortion.cif']])$('#'+id).onclick=()=>download(result.reconstruction.exports[key],name,'text/plain');result.decomposition.modes.forEach((m,i)=>{$('#cm-mode-'+i).oninput=e=>{e.target.nextElementSibling.textContent=e.target.value;};$('#cm-mode-'+i).onchange=e=>{if(busy)return;forms.distortion.amplitudes=result.reconstruction.amplitudes.slice();forms.distortion.amplitudes[i]=+e.target.value;$('#cm-amplitudes').value=JSON.stringify(forms.distortion.amplitudes);invalidate();calculate();};});}
  function magnonOutput(){const r=result,s=r.stability;return `<h2>${esc(r.title)}</h2><div class="obs-formula">${esc(r.hamiltonian.formula)}</div><div class="mr-metrics"><div>lowest branch energy<strong>${num(s.gap)} meV</strong></div><div>local energy stabilization<strong>${s.energeticallyStable?"yes":"no"}</strong></div><div>classical ground state<strong>${esc(s.classicalPhase)}</strong></div></div>${warningPanel(r.warnings,w=>/不是全局经典基态|最低分支出现负值|存在零能软模/.test(w))}${multiCurveSVG(r.bands.map(b=>({label:b.label,points:b.energies.map((e,i)=>[r.path.coordinates[i],e])})),{xLabel:r.path.label,yLabel:"excitation energy ε / meV",cursor:r.selection.q})}<p>${esc(r.path.convention)}</p><h3>Current mode: qa/π = ${num(r.selection.q)}，ε = ${num(r.selection.energy)} meV</h3><p>${esc(r.selection.polarization)}</p><p>sublattice transverse coefficient: [${r.selection.sublatticeCoefficients.map(num).join(', ')}]</p><div id="cm-spins">${spinWaveSVG(r.animation,frame,r.parameters.spin)}</div>${r.animation.available?`<div class="mr-slider-row">${range("precession phase frame",'cm-frame',0,0,r.animation.frames.length-1,1)}${range("observation direction",'cm-spin-yaw',-35,-180,180,1)}</div><button id="cm-play" class="secondary">Play precession</button><p>The playback speed is easy to observe, and the real time is marked in the picture; it is not played in real time in picoseconds.</p>`:''}<details><summary>Stability threshold and intrinsic equation test</summary><pre>${esc(JSON.stringify({stability:r.stability,dynamicMatrix:r.selection.dynamicMatrix,validation:r.validation},null,2))}</pre></details>`;}
  function bindMagnon(){if(!result.animation.available)return;let yaw=-35;const paint=()=>{if(!current()||!result||!$('#cm-spins'))return;$('#cm-spins').innerHTML=spinWaveSVG(result.animation,frame,result.parameters.spin,yaw);$('#cm-frame').value=String(frame);$('#cm-frame').nextElementSibling.textContent=String(frame);};$('#cm-frame').oninput=e=>{stopAnimation();frame=+e.target.value;paint();};$('#cm-spin-yaw').oninput=e=>{yaw=+e.target.value;e.target.nextElementSibling.textContent=e.target.value;paint();};$('#cm-play').onclick=()=>{if(playing){stopAnimation();return;}playing=true;const request=++animationTicket;$('#cm-play').textContent="pauses precession";let previous=0;const tick=time=>{if(!current()||!playing||request!==animationTicket||!result||tab!=='lab')return;if(time-previous>80){frame=(frame+1)%result.animation.frames.length;paint();previous=time;}requestAnimationFrame(tick);};requestAnimationFrame(tick);};}
@@ -238,5 +372,5 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)mergeLabInput(lesson.lab);
  draw();
  if(module.id==='qha'&&tab==='lab'&&selection.material==='cu-qha')sync();
- return ()=>{if(disposed)return;disposed=true;retireCuWidget();stopAnimation();ticket++;fileTicket++;cancelOwnJob();};
+ return ()=>{if(disposed)return;disposed=true;retireCuWidget();retireZnOWidget();stopAnimation();ticket++;fileTicket++;cancelOwnJob();};
 }

@@ -319,3 +319,8 @@ establish that all existing scientific and teaching content has been audited.
 - The structure tool passes the parsed input lattice and sites to the custom diffraction form, with reciprocal indices in that cell's basis. For CIF, the sites are the complete set after symmetry expansion. The learner reviews the input before running the calculation.
 - With equal scattering factors on the eight sites of the official Si example, 100 and 200 cancel and 220 has relative intensity 64. The calculator reports cancellation within the custom structure model. Changing the indices, wavelength or factors keeps the structure source attached. Editing the geometry or switching presets clears it.
 - Searching for a Wannier90 HR filename now opens MagneticTB with the appropriate file-use instructions. The interface distinguishes a local HR file from the settings file paired with the pinned graphene example.
+
+## Check the phase basis of one ZnO mode
+
+- A frozen 64-site structure is constructed from a pinned ZnO eigenvector at q = (1/4, 0, 1/4). The comparison applies two mode bases to this same displacement. One basis contains the phase-zero direction. The other adds the direction at a quarter-period phase shift.
+- The learner can predict and then check the residual in the existing distortion calculator. A one-direction fit leaves a residual of about 0.31343 Å over the complete displacement vector. The two directions recover the frozen displacement to numerical precision. Both directions come from the same eigenvector and frequency.

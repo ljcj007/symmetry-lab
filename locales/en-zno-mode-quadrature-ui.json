@@ -1,0 +1,16 @@
+{
+  "核对并载入 ZnO 模式方向比较": "Verify and load the ZnO mode-direction comparison",
+  "先预测。用相位 0 的方向重构一帧位移，再加入相位 π/2 的方向。位移拟合残差会怎样变化？": "Predict first. Fit one displacement snapshot using the phase 0 direction, then add the phase π/2 direction. How will the displacement residual change?",
+  "两次使用相同的母相与位移快照。快照由 Phonopy 官方 ZnO 力数据衍生的有限波矢本征矢构造，采用关闭非解析修正的设置。": "Both runs use the same parent structure and displacement snapshot. The snapshot uses a finite-wave-vector eigenvector derived from the official Phonopy ZnO force data, with the non-analytic correction switched off.",
+  "载入会替换当前结构与模式输入。每次手动运行后，记录位移拟合残差和模式矩阵秩。": "Loading replaces the current structure and mode input. After each manual run, record the displacement residual and the rank of the mode matrix.",
+  "载入一个方向（相位 0）": "Load one direction (phase 0)",
+  "载入两个方向（相位 0 和 π/2）": "Load two directions (phases 0 and π/2)",
+  "ZnO 数据来源与比较步骤 →": "ZnO data sources and comparison steps →",
+  "已核验的 Phonopy ZnO 数据。": "Verified Phonopy ZnO data.",
+  "已核对 ZnO 数据并载入相位 0 的方向。请手动运行。": "The verified ZnO input now contains the phase 0 direction. Run the calculation when ready.",
+  "已核对 ZnO 数据并载入相位 0 和 π/2 的方向。请手动运行。": "The verified ZnO input now contains the phase 0 and π/2 directions. Run the calculation when ready.",
+  "正在读取并核对 ZnO 数据包…": "Reading and verifying the ZnO data…",
+  "相位 π/2": "Phase π/2",
+  "相位 0": "Phase 0",
+  "ZnO 数据包读取或核验失败。当前输入已保留，可重试载入。": "The ZnO data could not be read or verified. Your inputs are still in place. Try loading again."
+}

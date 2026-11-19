@@ -69,6 +69,23 @@ POSCAR and P1 CIF export retain all reconstructed atoms. POSCAR groups elements;
 
 See [ISODISTORT notes](https://iso.byu.edu/isodistorthelp.php) and [ISODISPLACE paper](https://doi.org/10.1107/S0021889806014075) for structural modes and standardized analysis. This module does not fully reproduce mode generation, group–subgroup databases, or refinement.
 
+<a id="zno-mode-quadrature"></a>
+
+### Compare two phase directions of one ZnO phonon mode
+
+In the [structural distortion calculator](../#compute/distortion-modes), expand “Verify and load the ZnO mode-direction comparison.” The fixed example uses zero-based q index 2 and branch index 10, with reciprocal fractional coordinates `q = (1/4, 0, 1/4)` and frequency 13.5565890715 THz. The compatible `[4,1,4]` supercell has 64 atoms. The parent structure and the target snapshot share the same cell and atom order.
+
+Divide the complex eigenvector components by the square roots of the atomic masses, then apply the spatial phase `exp[2πi q·(R+rⱼ)]`, where R is the cell translation and rⱼ is the atom’s position in the primitive cell. Divide all components by the largest norm of an atomic mass-unweighted vector in that cell. Call the resulting complex supercell vector w. The snapshot displacement is `u(φ) = A Re[w exp(−iφ)] = A(Re w cosφ + Im w sinφ)`. The example fixes A = 0.1 Å and φ = π/3 and uses the global phase of the distributed eigenvector. A sets the single-atom displacement envelope. The norm of the full displacement vector is about 0.36192 Å.
+
+1. **Predict first.** In this compatible supercell, the phase-0 and phase-π/2 displacement directions are orthogonal and have equal norms before normalization. With only phase 0, the component along the other direction remains in the residual. Predict a relative residual of `sin(π/3) = √3/2`.
+2. **Use one direction.** Choose “Load one direction (phase 0),” check the structure and mode copied to the custom inputs, and run the calculation. The projection has rank 1, an amplitude of about 0.18096 Å and a residual norm of about 0.31343 Å.
+3. **Use two directions.** Choose “Load two directions (phases 0 and π/2)” and run the calculation again for the same snapshot. The projection has rank 2 and its Gram matrix is the identity to numerical precision. The amplitudes are about 0.18096 Å and 0.31343 Å. The published preset gives a residual of about 9×10⁻¹¹ Å, below the 10⁻⁹ Å verification tolerance. Both calculations give zero lattice strain to numerical precision.
+4. **Interpret the comparison.** The two real directions come from the same complex phonon branch. Adding the second direction completes the displacement space needed to describe the snapshot. The preset fixes the source mode and the amplitude and phase of the target snapshot. After projection, you can adjust the reconstruction amplitudes separately. The calculation gives a geometric reconstruction. Energy, forces and stability require independent calculations.
+
+This example uses eigenvectors generated with Phonopy 4.10.0 from pinned ZnO force data, with non-analytical corrections (NAC) disabled. See the [original force data](../data/examples/phonopy-zno-FORCE_SETS), [companion primitive cell](../data/examples/phonopy-zno-structure.yaml), [derived eigenvectors](../data/examples/phonopy-zno-qpoints.yaml), and [version, input digests and generation settings](../data/examples/phonopy-zno-source.json). The [ZnO Phonopy import and frozen-mode exercise](phonopy-import.md#zno-derived-example) explains the coordinates and atom order for the same branch.
+
+[Published comparison inputs and reference values](../data/examples/zno-mode-quadrature.json)
+
 ## 3. Independent two-order-parameter Landau model
 
 The interactive free energy uses

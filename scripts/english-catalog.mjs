@@ -42,6 +42,7 @@ catalogFiles.push('en-zero-trace-water-link.json','en-character-water-bridge.jso
 catalogFiles.push('en-ninej-search.json');
 catalogFiles.push('en-structure-diffraction-source.json','en-structure-diffraction-destination.json');
 catalogFiles.push('en-wannier-file-search.json');
+catalogFiles.push('en-zno-mode-quadrature-ui.json','en-zno-mode-quadrature-docs.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

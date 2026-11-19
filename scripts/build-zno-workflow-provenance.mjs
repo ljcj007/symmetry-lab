@@ -12,6 +12,18 @@ for(const file of [...example.inputs,{localFile:example.localFile,sha256:example
 assert.equal(example.generator.settings.is_nac,false);
 assert.equal(example.generator.versions.phonopy,'4.10.0');
 assert.deepEqual([example.counts.atoms,example.counts.qpointOccurrences,example.counts.bandsPerQ,example.counts.eigenvectors,example.defaultSelection.frozenAtoms],[4,4,12,48,64]);
+const quadratureFile='zno-mode-quadrature.json';
+const quadrature=JSON.parse(fs.readFileSync(new URL(quadratureFile,examples),'utf8'));
+assert.equal(quadrature.schema,'symmetry-lab.zno-mode-quadrature.v1');
+assert.equal(quadrature.source.commit,example.commit);
+assert.equal(quadrature.source.qpoints.sha256,example.sha256);
+assert.equal(quadrature.source.structure.sha256,example.companion.sha256);
+assert.equal(quadrature.source.nonAnalyticCorrection,false);
+assert.deepEqual(quadrature.settings.q,[0.25,0,0.25]);
+assert.deepEqual([quadrature.parent.atoms.length,quadrature.distorted.atoms.length,quadrature.modes.length],[64,64,2]);
+assert.ok(Math.abs(quadrature.checks.oneDirection.relativeResidual-Math.sqrt(3)/2)<1e-8);
+assert.equal(quadrature.checks.compareTolerance,1e-9);
+assert.equal(quadrature.checks.twoDirections.residualNorm,0);
 const reviewed=new Set(lessonProgressionEdges.flatMap(edge=>[edge.from,edge.to]));
 assert.equal(lessonProgressionInventory.length,197);
 assert.ok(reviewed.size>=65&&lessonProgressionEdges.length>=82);
@@ -22,6 +34,9 @@ const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.
  'scripts/build-zno-workflow-provenance.mjs','scripts/build-learning-routes-provenance.mjs','scripts/test-lesson-progression.mjs','scripts/test-tool-directory.mjs','scripts/test-material-notebook.mjs','scripts/test-mode-frequency-confirmation.mjs','scripts/test-zno-phonopy-example.mjs','scripts/test-python-zno-phonopy-example.py',
  'scripts/fixtures/phonopy-zno.json','scripts/fixtures/phonopy-source-baseline.py.gz','scripts/package-source.py','scripts/test-source-package.py',
  'locales/en-lesson-progression.json','locales/en-mode-frequency-confirmation.json','locales/en-zno-phonopy-example.json','locales/en-zno-navigation.json',
+ 'dist/data/examples/'+quadratureFile,'dist/coupled-materials-ui.js','dist/docs/coupled-materials.md','dist/python/distortion_lab.py',
+ 'scripts/build-zno-mode-quadrature.py','scripts/test-zno-mode-quadrature-ui.mjs',
+ 'locales/en-zno-mode-quadrature-ui.json','locales/en-zno-mode-quadrature-docs.json',
  ...fs.readdirSync(examples).filter(name=>name.startsWith('phonopy-zno-')).map(name=>'dist/data/examples/'+name)];
 const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf8-lf-v1 for registered text dependencies; original-byte dataset identities are recorded separately',
  scope:'Reviewed cross-course links and one authentic unequal-mass phonon input-to-frozen-export workflow. Browser calculations read supplied eigenvectors; Phonopy force-data postprocessing is reproducible offline.',
@@ -30,6 +45,7 @@ const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf
  currentGraph:{indexedLessons:lessonProgressionInventory.length,reviewedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length},
  sourceByteIdentities:{qpoints:{file:example.localFile,sha256:example.sha256,bytes:example.byteCount,newline:example.newline},companion:example.companion,upstreamInputs:example.inputs,license:{file:example.licenseFile,sha256:example.licenseSha256,bytes:example.licenseByteCount}},
  generation:{classification:example.classification,commit:example.commit,generator:example.generator},
+ phaseBasisExample:{file:quadratureFile,settings:quadrature.settings,checks:quadrature.checks},
  verification:['All 48 supplied modes have independently checked orthogonality, Hermitian dynamical matrices and eigenpair/frequency residuals. The selected nondegenerate complex mode has independently checked mass unweighting, spatial phases and all exported 64-atom coordinates.',
   'The exact distributed primary and companion text identities are checked separately. Browser textarea newline normalization preserves an unedited raw input; an explicit text edit or independent source replacement retires the old match and unit confirmation.',
   'The existing importer has one additive exact-source reference branch. Eleven historical requests execute the hash-verified old source and current code on the same host, retaining 6000 numeric and 896 other leaves exactly.',
@@ -43,5 +59,5 @@ const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf
   'A reviewed connection does not certify complete operation-level derivations, targeted remediation or authentic workflows in all 197 lessons or all tool families. No student learning gains are inferred.'],
  files:Object.fromEntries([...new Set(files)].sort().map(name=>{const raw=fs.readFileSync(new URL(name,root)),binary=name.endsWith('.gz')||!/[.](?:js|mjs|py|json|html|css|md|txt|yaml|yml)$/.test(name)&&!['.gitattributes'].includes(name),bytes=binary?raw:Buffer.from(raw.toString('utf8').replace(/\r\n?/g,'\n'));return[name,{normalization:binary?'raw-bytes':'utf8-lf-v1',bytes:bytes.length,sha256:hash(bytes)}];}))};
 const target=new URL('dist/data/zno-workflow-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
-if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'ZnO workflow provenance is stale');else fs.writeFileSync(target,body);
+if(process.argv.includes('--check'))assert.deepEqual(JSON.parse(fs.readFileSync(target,'utf8')),data,'ZnO workflow provenance is stale');else fs.writeFileSync(target,body);
 console.log('ZnO workflow:',JSON.stringify(data.counts));
