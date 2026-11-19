@@ -1,0 +1,222 @@
+{
+  "format": "symmetry-lab-phonopy-cu-qha-source-1",
+  "id": "phonopy-cu-qha",
+  "title": "Official Phonopy Cu-QHA input files",
+  "repository": "https://github.com/phonopy/phonopy",
+  "commit": "18cad919af8fe8aad349e04f101887fa19b051a0",
+  "upstreamDirectory": "test/cui/phonopy_qha/Cu-QHA",
+  "upstreamUrl": "https://github.com/phonopy/phonopy/tree/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA",
+  "upstreamTest": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/test_phonopy_qha_script.py",
+  "license": "BSD-3-Clause",
+  "licenseFile": {
+    "path": "LICENSE.txt",
+    "sourcePath": "LICENSE",
+    "gitBlobSha1": "ad98c46d8bef0cac32974e405865147cc80679ff",
+    "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/LICENSE",
+    "bytes": 1470,
+    "sha256": "2ce26839c8b70d28765d73e934cc1a979d896d8d228d30694fdd9a92e94d43a9"
+  },
+  "eVFile": {
+    "path": "e-v.dat",
+    "sourcePath": "test/cui/phonopy_qha/Cu-QHA/e-v.dat",
+    "gitBlobSha1": "396e5eff37652220f86756a42fcfb4e3b3763a50",
+    "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/e-v.dat",
+    "bytes": 518,
+    "sha256": "aefe2836439967daeb76952bf91b85c480fd6fd9c6cbe6fcd7b6b91cf7b84704"
+  },
+  "volumeCount": 11,
+  "natom": 4,
+  "cellBasis": "same-input-cell",
+  "temperatureCount": 251,
+  "temperatureMinK": 0,
+  "temperatureMaxK": 2500,
+  "temperatureStepK": 10,
+  "numModes": 96000,
+  "numIntegratedModes": 96000,
+  "pairingToleranceAngstrom3": 5e-11,
+  "thermalFiles": [
+    {
+      "index": 0,
+      "path": "thermal_properties.yaml-00.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-00.xz",
+      "gitBlobSha1": "c2489619f0c3a9e52a63a4d02bc73b51a1fe9d10",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-00.xz",
+      "bytes": 4924,
+      "sha256": "923b95433d81b0bed4c173ca8f6a6d30dbffa7bd9cec1d563c582da3ebcbd4a3",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "111e4659d8847c20560fbc3f8cf9f41bce15df4c52d5e6e134ce81e22586ce04"
+      },
+      "staticVolumeAngstrom3": 43.0804791127649,
+      "printedThermalVolumeAngstrom3": 43.0804791128,
+      "staticEnergyEVPerInputCell": -17.27885993
+    },
+    {
+      "index": 1,
+      "path": "thermal_properties.yaml-01.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-01.xz",
+      "gitBlobSha1": "74677de41d5c99938c648c22bd8a6aa42d6da997",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-01.xz",
+      "bytes": 4912,
+      "sha256": "db2ec9ed6053ef5d00cc5e51d18a35fb46b26e0320feeb7e6554cd0575d25c7f",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "6901c38ac13303a65524152f273af5de2d3befecf84cfa0d501c247cb440ce25"
+      },
+      "staticVolumeAngstrom3": 43.9779889420447,
+      "printedThermalVolumeAngstrom3": 43.977988942,
+      "staticEnergyEVPerInputCell": -17.3222749
+    },
+    {
+      "index": 2,
+      "path": "thermal_properties.yaml-02.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-02.xz",
+      "gitBlobSha1": "62df3146d935f356ac5e2d8dfc0ae533f3e6c38f",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-02.xz",
+      "bytes": 4924,
+      "sha256": "5569a38b3cf4503e43cb0de1f7fdc7f22067733c9d1fa9da23e563f93bde43ae",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "5c2b3defcc0c232871409f9b34ffe05d4a62cabe508da5abfccb6a3e3ac2a59c"
+      },
+      "staticVolumeAngstrom3": 44.8754989139109,
+      "printedThermalVolumeAngstrom3": 44.8754989139,
+      "staticEnergyEVPerInputCell": -17.34336569
+    },
+    {
+      "index": 3,
+      "path": "thermal_properties.yaml-03.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-03.xz",
+      "gitBlobSha1": "45f19c246aa9ea279ef79c20c209e0ad754c7269",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-03.xz",
+      "bytes": 4900,
+      "sha256": "5b984ec574b14fa1d92b640f64cd5659e05591e2ef3e021974fd9262a49016a2",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "2bd24655c4a0b301a0a033f9476c8699825cc3ee3665bdade3ef9b2931662a6f"
+      },
+      "staticVolumeAngstrom3": 45.7730090104272,
+      "printedThermalVolumeAngstrom3": 45.7730090104,
+      "staticEnergyEVPerInputCell": -17.3447976
+    },
+    {
+      "index": 4,
+      "path": "thermal_properties.yaml-04.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-04.xz",
+      "gitBlobSha1": "7d209038c1df17392181bd32b5e31a79bd0c1f23",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-04.xz",
+      "bytes": 4928,
+      "sha256": "c7f71fa188697d9654bd0c271be91cb02bec7859629ee50fdb0768348baf12d5",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "bd80993a12bb28bde543113be9edd8e5ae41e3fc19f8069704265931c31d4227"
+      },
+      "staticVolumeAngstrom3": 46.670518908989,
+      "printedThermalVolumeAngstrom3": 46.670518909,
+      "staticEnergyEVPerInputCell": -17.32843604
+    },
+    {
+      "index": 5,
+      "path": "thermal_properties.yaml-05.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz",
+      "gitBlobSha1": "3518fc3ad5bdc29d75338a0496723979fb37bc32",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz",
+      "bytes": 4900,
+      "sha256": "36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1"
+      },
+      "staticVolumeAngstrom3": 47.568028774394,
+      "printedThermalVolumeAngstrom3": 47.5680287744,
+      "staticEnergyEVPerInputCell": -17.29673896
+    },
+    {
+      "index": 6,
+      "path": "thermal_properties.yaml-06.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-06.xz",
+      "gitBlobSha1": "0cca4d4a61a02cbbd6aa94adbedfba81baf61609",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-06.xz",
+      "bytes": 4896,
+      "sha256": "2a6d24ba92f494908b2e5349b4c1774360d5a550bd1b39dd22f8dc42bf91666c",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "c7eb8084cd616dd783eebb6186e216128c354cfb21b3dda899551221f7ad9a58"
+      },
+      "staticVolumeAngstrom3": 48.4655386546724,
+      "printedThermalVolumeAngstrom3": 48.4655386547,
+      "staticEnergyEVPerInputCell": -17.25081954
+    },
+    {
+      "index": 7,
+      "path": "thermal_properties.yaml-07.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-07.xz",
+      "gitBlobSha1": "e2dc723691bec3de8c91a7e9935a6f0bfa8cb93b",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-07.xz",
+      "bytes": 4908,
+      "sha256": "174d28532ebd9094cb6354c9ea94b9984d6f58f7176432328d977947a0bf86e9",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "50a9723efaf843605029f4c89e558473c55b5d1757b33d76565b85b3a3874946"
+      },
+      "staticVolumeAngstrom3": 49.3630487614241,
+      "printedThermalVolumeAngstrom3": 49.3630487614,
+      "staticEnergyEVPerInputCell": -17.19263337
+    },
+    {
+      "index": 8,
+      "path": "thermal_properties.yaml-08.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-08.xz",
+      "gitBlobSha1": "512802dd283d4245e39c86d4b4097ae2ab678ddc",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-08.xz",
+      "bytes": 4904,
+      "sha256": "d3f4316308c540d5c2df96fb963e3226db0eb0c41b20e9610e6a4a3223f9b5cc",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "850053f408919eee33e7aed9c9192bdb114eed8acbd4fd1a7df13c209133249a"
+      },
+      "staticVolumeAngstrom3": 50.2605586587267,
+      "printedThermalVolumeAngstrom3": 50.2605586587,
+      "staticEnergyEVPerInputCell": -17.12356816
+    },
+    {
+      "index": 9,
+      "path": "thermal_properties.yaml-09.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-09.xz",
+      "gitBlobSha1": "352b2201f799487497cfed0c40b4e003bebbbfb3",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-09.xz",
+      "bytes": 4912,
+      "sha256": "d74a7708eb164bc3d5839e0a061a162f42ecba4ce0da1acc2a78380e85b0914f",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "15a0135929df128c9114af8e33760a28d8e0d514fd867474ed865ed5666376fc"
+      },
+      "staticVolumeAngstrom3": 51.1580685636184,
+      "printedThermalVolumeAngstrom3": 51.1580685636,
+      "staticEnergyEVPerInputCell": -17.04467997
+    },
+    {
+      "index": 10,
+      "path": "thermal_properties.yaml-10.xz",
+      "sourcePath": "test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-10.xz",
+      "gitBlobSha1": "1d00e695ed0a47298047adb845afe545d35b36f7",
+      "url": "https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-10.xz",
+      "bytes": 4960,
+      "sha256": "f646564eba495a5d3656aaf9eb8c03c1294862d80442173692b0afc9e79c90e3",
+      "yaml": {
+        "bytes": 41975,
+        "sha256": "837d736889aa0798e7592b9fa19f5059bba9bbe2d59d47bd42dce880803962d3"
+      },
+      "staticVolumeAngstrom3": 52.0555787437377,
+      "printedThermalVolumeAngstrom3": 52.0555787437,
+      "staticEnergyEVPerInputCell": -16.95752155
+    }
+  ],
+  "payload": {
+    "path": "payload.json",
+    "bytes": 478997,
+    "sha256": "b2becb625519c4aa7e95fe01d69a7efaf5eaafc82c2a562232251cfcbf954be3"
+  },
+  "representation": "Original XZ files and static table, with losslessly decoded YAML UTF-8 strings in payload.json.",
+  "rebuild": "python scripts/build-cu-qha-source.py"
+}

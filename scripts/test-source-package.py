@@ -37,6 +37,7 @@ builders = [
     'build-phonopy-derivation-provenance',
     'build-pointgroup-identify-provenance',
     'build-seitz-quotient-provenance',
+    'build-cu-qha-provenance',
 ]
 temp_root = Path(tempfile.gettempdir()).resolve()
 with tempfile.TemporaryDirectory(prefix='symmetry-source-check-', dir=temp_root) as temp:
@@ -68,6 +69,7 @@ with tempfile.TemporaryDirectory(prefix='symmetry-source-check-', dir=temp_root)
                 required.add(name)
     commands = [[node, 'scripts/' + name + '.mjs', '--check'] for name in builders]
     commands.append([node, 'scripts/build-pointgroup-identify-data.mjs', '--check'])
+    commands.append([sys.executable, 'scripts/build-cu-qha-source.py', '--check'])
     commands.append([sys.executable, 'scripts/refresh-english-provenance.py', '--check'])
     environment = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONIOENCODING='utf-8')
     for variable in ('PYTHONPATH', 'NODE_PATH', 'NODE_OPTIONS'):

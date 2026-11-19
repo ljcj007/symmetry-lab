@@ -1,0 +1,16 @@
+{
+  "用官方 Cu 数据检验热膨胀": "Investigate thermal expansion with the official Cu data",
+  "先想一想，单个体积的声子自由能缺少哪项用于判断热膨胀的证据。然后在计算中心核对 Cu 的多体积来源，载入输入并手动比较不同温度的平衡体积。": "Consider what evidence for thermal expansion is missing from the phonon free energy at just one volume. In the calculation center, verify the multi-volume Cu source, load it, and run the calculation to compare equilibrium volumes at different temperatures.",
+  "在计算中心核对并载入 Cu 示例 →": "Verify and load the Cu example in the calculation center →",
+  "Cu 多体积数据与比较说明 →": "Cu data and comparison notes →",
+  "核对并载入官方 Cu 多体积示例": "Verify and load the official multi-volume Cu example",
+  "正在载入 Cu 数据核对界面…": "Opening the Cu source verification panel…",
+  "Cu 数据核对界面暂未载入。": "The Cu source verification panel could not load.",
+  "重试载入 Cu 数据核对界面": "Retry opening the Cu source verification panel",
+  "官方 Cu 数据已核对并载入。请检查压力与拟合参数，再手动运行。": "The official Cu data are verified and loaded. Check pressure and fit settings, then run the calculation.",
+  "铜的多体积准谐热膨胀": "Quasiharmonic thermal expansion of copper across multiple volumes",
+  "逐一核对 11 个体积的声子热性质文件和静态能量，再计算 251 个温度点上的平衡体积与响应。": "Verify phonon thermal properties and static energies for 11 volumes, then calculate the equilibrium volume and response at 251 temperatures.",
+  "输入为 Phonopy 官方计算数据，采用四原子输入胞。本工具用局部多项式拟合，结果会随窗口、阶数和体积范围而变化。": "The calculation uses official Phonopy inputs for a four-atom cell. Results from the local polynomial fit depend on the fit window, degree, and sampled volume range.",
+  "官方 Cu 多体积数据与复现说明": "Official multi-volume Cu data and reproduction notes",
+  "复习 Cu 的固定体积声子热力学": "Review fixed-volume phonon thermodynamics for Cu"
+}

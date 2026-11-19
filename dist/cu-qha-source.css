@@ -1,0 +1,107 @@
+.cq-source {
+  min-width: 0;
+  margin: 0.85rem 0;
+  padding: 1rem;
+  border: 1px solid #bed2c3;
+  border-radius: 9px;
+  background: #f4f8f1;
+  color: #234033;
+  font-size: 18px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.cq-source h3 {
+  margin: 0 0 0.55rem;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.cq-source p,
+.cq-source ul {
+  margin: 0.6rem 0;
+}
+
+.cq-source .secondary {
+  width: auto;
+  max-width: 100%;
+  min-height: 46px;
+  padding: 0.55rem 0.8rem;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+.cq-source .secondary:disabled {
+  opacity: 0.55;
+}
+
+.cq-table {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0.7rem 0;
+  border: 1px solid #c7d8cd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.cq-table table {
+  min-width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+.cq-table td,
+.cq-table th {
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid #d4e2d9;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.cq-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.cq-table tr:last-child > * {
+  border-bottom: 0;
+}
+
+.cq-source a {
+  color: #21533d;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.cq-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.05rem;
+  padding: 0;
+  list-style: none;
+}
+
+.cq-source .cq-status,
+.cq-source .cq-error {
+  padding: 0.55rem 0.7rem;
+  border-inline-start: 3px solid #397b59;
+  background: #e9f3e8;
+}
+
+.cq-source .cq-error {
+  color: #762819;
+  border-color: #973527;
+  background: #fff1ec;
+}
+
+.cq-source :focus-visible {
+  outline: 3px solid #235e4c;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .cq-source {
+    padding: 0.7rem;
+  }
+}

@@ -40,3 +40,7 @@ Question 3: Can one thermal_properties.yaml yield thermal expansion, Cp, or ther
 ## Save and reproduce
 
 The result JSON retains the input text and calculation output. When the original content is recognized, it includes the pinned version, content hash, and Cu source identity. Use Save to Material Research Records to include the calculation in an explicit research workflow. File reading and example loading occur in the browser. You can cancel or replace a pending input and must run manually after loading. Editing the text invalidates the old result and requires a new calculation.
+
+## Continue from a fixed volume to thermal expansion
+
+This file is volume index 05 of the official multi-volume Cu data. To compare free energy across volumes and find the equilibrium volume, continue to the [multi-volume quasi-harmonic exercise](cu-qha-example.md).

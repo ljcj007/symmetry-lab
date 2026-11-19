@@ -51,18 +51,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 60436,
-      "sha256": "64cbdfdcace1794e6395baa84d60ea53d73bd76b6568e6d020d62d4fa5941ff5"
+      "bytes": 61512,
+      "sha256": "829d0435980ece33ceefde5adc4e633769a02a176852a20900cbd727cebe930e"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 99585,
-      "sha256": "310f87d76b810f66a4282dc89b76f813234bf7b6e9769f0512bc8941bb315f62"
+      "bytes": 99588,
+      "sha256": "881e54c1938d7244da9a99995769230ba991ed90fcd782b90081ece569cacb7f"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 32231,
-      "sha256": "4c213cbe9ee4b50963727d37c4fae8c44e6ac678e231125a13838992a785d6e4"
+      "sha256": "83241dcdce76f3c8d04e87a7d3821bd72064283375a4ef4653a6cf4fc4b65f2a"
     },
     "dist/composition-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -76,8 +76,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 395254,
-      "sha256": "5a6ca41c053c1df082f0dd2848d2afd8b16feb3b5be5b8f0adcd3f96343f5cc9"
+      "bytes": 395599,
+      "sha256": "2b1854916f423c02086979f77f5ac859641ffaaede1e681a5cdc185df91d990a"
     },
     "dist/docs/representation-actions.md": {
       "normalization": "utf8-lf-v1",
@@ -91,8 +91,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8035,
-      "sha256": "a245c94e89b10fec03152fddc86c2423946d2a05c242f253050b7e61b87b88e4"
+      "bytes": 8104,
+      "sha256": "9dc8f54d0a2c9587dac57181e6ed121962c0f2f89bcb3b418b7c71827f141572"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -228,6 +228,21 @@
       "normalization": "utf8-lf-v1",
       "bytes": 3543,
       "sha256": "c674b55a959431bff2ffa9b99db500afd44b419cd44447c0a3c469a234028daa"
+    },
+    "locales/en-cu-qha-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6684,
+      "sha256": "fc9db29be61fee70e3d964af4065633f27104f876ba8ca22b017c57740a60674"
+    },
+    "locales/en-cu-qha-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2246,
+      "sha256": "ce0477afc2575235a10a8e9a2bd6bae94ad4b23f1f4fd2ce1375e7ab9d29243b"
+    },
+    "locales/en-cu-qha-source-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3392,
+      "sha256": "40553ac4d6557a10c32432da6af27c1c69d5a7b7d4b7950025aeb2b938d52073"
     },
     "locales/en-cu-thermal-example.json": {
       "normalization": "utf8-lf-v1",
@@ -736,8 +751,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 22716,
-      "sha256": "9265cb220bd9c4a19c622c57923b53236b4b7e775e742dc95956cd36897a7bbd"
+      "bytes": 23051,
+      "sha256": "ea576ad366276f9d6e8b2128a8eb44e493370b650d5fbb7909def44a74e5b6b1"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -766,8 +781,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4248,
-      "sha256": "01b3de7816a739a69a3bf237702bae404e10a11b0e37333c3797166cd56a5f6e"
+      "bytes": 4339,
+      "sha256": "f45181dfa6410069f553077facde30ad27c7fcee876c25c4421d0455db219d6c"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -836,8 +851,8 @@
     },
     "scripts/search-catalog-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 9055,
-      "sha256": "9e7e3dfda36a46339d55e988b870879d27d5ac9dae0a4a187fa0a2013f7f0ef2"
+      "bytes": 9147,
+      "sha256": "0ea5018f84c280b63400aa9ddf4d69f15483bfae5d4e96c0eb9f9d36de0c196d"
     },
     "scripts/test-classroom-disposal.mjs": {
       "normalization": "utf8-lf-v1",
@@ -891,8 +906,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4496,
-      "sha256": "8c8f3c513344b371bb51a25280b67fbfa4c877199eec08fbb63f85b051703832"
+      "bytes": 4610,
+      "sha256": "8e3ec5ecf954d09ce4cc622d5ade110fef3a01f1c215a9d1fba2d444e653185d"
     }
   }
 }

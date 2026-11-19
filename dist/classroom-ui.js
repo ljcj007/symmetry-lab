@@ -19,7 +19,7 @@ const courseDefinitions={
 ,'observables':{load:()=>import('./observables-ui.js?v=20261115-tensor1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261117-derive1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261117-derive1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
-,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261117-derive1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
+,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261119-cu-qha1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
 ,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261117-derive1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
 ,'quantum-materials':{load:()=>import('./quantum-materials-ui.js?v=20261117-derive1'),render:'renderQuantumMaterialsView',result:'getQuantumMaterialsResult'}
 ,'flagship':{load:()=>import('./shg-flagship.js?v=20261117-derive1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}

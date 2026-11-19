@@ -24,7 +24,7 @@ export const learningEntries=([pg,sg,lie,materials,observables,dynamics,research
   ...electronic.lessons.map(l=>({route:"classroom/"+electronic.modules.find(m=>m.id===l.module).pathway+"?module="+l.module+"&lesson="+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+" 超导 BdG SHG 能带展开",kind:"课程"})),
   ...electronic.cases.map(c=>({route:"atlas/electronic?material="+encodeURIComponent(c.id)+"&module="+c.module,title:c.title,summary:c.summary,keywords:c.id+" 配对 非线性 光学 超胞",kind:"材料"})),
   ...coupled.lessons.map(l=>({route:'classroom/'+coupled.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 畸变 磁振子 自旋波 QHA 热膨胀',kind:'课程'})),
-  ...coupled.cases.map(c=>({route:'atlas/mechanisms?material='+encodeURIComponent(c.id),title:c.title+' · 材料机制',summary:c.summary,keywords:c.id+' 畸变 模式耦合 磁交换 热膨胀',kind:'材料'})),
+  ...coupled.cases.map(c=>({route:'atlas/mechanisms?material='+encodeURIComponent(c.id),title:c.title+' · 材料机制',summary:c.summary,keywords:c.id+(c.id==='cu-qha'?' 铜 多体积 准谐 热膨胀 Phonopy e-v.dat thermal_properties.yaml':' 畸变 模式耦合 磁交换 热膨胀'),kind:'材料'})),
   ...research.lessons.map(l=>({route:'classroom/'+research.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 材料 声子 能带 热力学',kind:'课程'})),
   ...research.cases.map(c=>({route:'atlas/research?material='+encodeURIComponent(c.id),title:c.title+' · 材料分析',summary:c.summary,keywords:c.id+' 模式 冻结 能带 热力学',kind:'材料'})),
   ...dynamics.lessons.map(l=>({route:'classroom/structure-dynamics?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'相变 衍射 Phonopy '+l.id,kind:'课程'})),

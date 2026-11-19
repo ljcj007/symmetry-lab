@@ -13,6 +13,8 @@ const sources=rows=>`<div class="obs-sources">${(rows||[]).map(s=>typeof s==='st
 const palette=['#247b65','#b17a31','#617caf','#a75f85'];
 const distortionSVG=(structure,yaw=-35)=>frozenStructureSVG(structure,yaw).replace("balance position","The reference position of the parent phase fractional position in the reconstructed unit cell");
 let catalogPromise,lastResult=null,handoff=null;
+const loadCuQhaSource=()=>import('./cu-qha-source-ui.js?v=20261119-cu-qha1');
+const cuQhaLessonHTML=()=>`<details class="notice"><summary>Investigate thermal expansion with the official Cu data</summary><p>Consider what evidence for thermal expansion is missing from the phonon free energy at just one volume. In the calculation center, verify the multi-volume Cu source, load it, and run the calculation to compare equilibrium volumes at different temperatures.</p><div class="obs-links"><a href="#compute/qha-lab">Verify and load the Cu example in the calculation center →</a><a href="docs/cu-qha-example.md">Cu data and comparison notes →</a></div></details>`;
 const catalog=()=>catalogPromise??=fetch('data/coupled-materials.json?v='+RELEASE).then(r=>{if(!r.ok)throw Error("Distortion and excitation course failed to load");return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getCoupledMaterialsResult=()=>lastResult;
 export function setCoupledMaterialsInput(module,input){const copy=structuredClone(input);if(module==='distortion'&&(copy.parent||copy.distorted||copy.preset==='custom')){copy.content=typeof copy.content==='string'&&copy.content.trim()?copy.content:JSON.stringify(copy);copy.preset='custom';for(const key of ['parent','distorted','modes','data','atom_mapping','image_shifts'])delete copy[key];}if(module==='qha'&&copy.data){copy.content=JSON.stringify(copy.data);delete copy.data;}handoff={module,input:copy};}
@@ -33,8 +35,9 @@ const defaults={
  magnons:{model:'fm',exchange:1,spin:1,anisotropy:1.15,field:0,samples:161,q:.25,branch:0,amplitude:.12,sites:16,frames:48},
  qha:{source:'preset',preset:'einstein-volume',pressure:0,fit_degree:3,fit_window:5,gamma:1.5,theta:400,bulk_modulus:100,v0:40,natom:2,t_min:0,t_max:1000,t_step:25,content:''}
 };
-export async function renderCoupledMaterialsView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{}}){
- container.innerHTML="<div class=\"obs-page mr-page cm-page\"><p role=\"status\">is preparing the distortion and excitation course...</p></div>";const root=container.firstElementChild,$=s=>root.querySelector(s),current=()=>root.parentNode===container&&container.isConnected!==false;lastResult=null;
+export async function renderCoupledMaterialsView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{},loadCuQhaSourceModule=loadCuQhaSource}){
+ let disposed=false;
+ container.innerHTML="<div class=\"obs-page mr-page cm-page\"><p role=\"status\">is preparing the distortion and excitation course...</p></div>";const root=container.firstElementChild,$=s=>root.querySelector(s),current=()=>!disposed&&root.parentNode===container&&container.isConnected!==false;lastResult=null;
  let data;try{data=await catalog();}catch(e){if(current())root.innerHTML=`<p role="alert">${esc(e.message)}</p>`;return;}if(!current())return;
  const flowSteps=new Map(),flowDrafts=createCourseFlowDrafts();
  let module=data.modules.find(m=>m.id===selection.module)||data.modules[0],lesson=data.lessons.find(l=>l.id===selection.lesson&&l.module===module.id)||data.lessons.find(l=>l.module===module.id),exercise=data.exercises.find(e=>e.id===selection.exercise&&data.lessons.some(l=>l.id===e.lesson&&l.module===module.id))||data.exercises.find(e=>e.lesson===lesson.id),tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn';
@@ -44,19 +47,36 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  if(module.id==='distortion'&&!selection.lesson&&!selection.exercise&&forms.distortion.preset==='srtio3'){lesson=data.lessons.find(l=>l.module==='distortion'&&l.lab?.preset==='srtio3')||lesson;exercise=data.exercises.find(e=>e.lesson===lesson.id)||exercise;}
  if(handoff?.module===module.id){mergeLabInput(handoff.input);handoff=null;tab='lab';}
  let result=null,busy=false,ticket=0,fileTicket=0,cursor=0,quantity='volume',frame=0,playing=false,animationTicket=0,progress={};try{const p=JSON.parse(localStorage.getItem('symmetry-lab.coupled-materials.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
+ let activeJob=null,cuProof=null,disposeCuWidget=()=>{};
  const sync=()=>onNavigate({module:module.id,tab,lesson:lesson.id,exercise:exercise.id,material:materialContext()||undefined,preset:forms[module.id].preset||selection.preset});
  const stopAnimation=()=>{playing=false;animationTicket++;if($('#cm-play'))$('#cm-play').textContent="Play precession";};
- const invalidate=()=>{stopAnimation();ticket++;fileTicket++;result=null;lastResult=null;if($('#cm-result'))$('#cm-result').innerHTML="<p role=\"status\">parameters have been changed. Update results and export files after running calculations.</p>";};
+ const activeForm=()=>tab==='lab'?$('#cm-form'):null;
+ function syncRunControls(){const form=activeForm();if(!form)return;form.querySelector('button[type="submit"]').disabled=busy;$('#cm-cancel').hidden=!busy;}
+ function cancelOwnJob(fallback=false){
+   const job=activeJob;
+   if(!job)return;
+   activeJob=null;
+   busy=false;
+   if(typeof job.task?.cancel==='function')job.task.cancel();
+   else if(fallback)cancelRun?.();
+   if(current())syncRunControls();
+ }
+ const invalidate=()=>{stopAnimation();ticket++;fileTicket++;if(module.id==='qha')cancelOwnJob();result=null;lastResult=null;if($('#cm-result'))$('#cm-result').innerHTML="<p role=\"status\">parameters have been changed. Update results and export files after running calculations.</p>";};
+ const retireCuWidget=()=>{disposeCuWidget();disposeCuWidget=()=>{};};
+ const closeCuWidget=()=>{const entry=$('[data-cm-cu-qha-entry]');if(entry?.open){entry.open=false;entry.ontoggle?.();}};
+ const currentCuEvidence=()=>module.id==='qha'&&cuProof&&forms.qha.source==='thermal'&&forms.qha.content===cuProof.content?cuProof.sourceEvidence:null;
+ const cuReadyMessage="The official Cu data are verified and loaded. Check pressure and fit settings, then run the calculation.";
+ const clearCuProof=()=>{cuProof=null;const status=$('#cm-cu-source-status');if(status){status.hidden=true;status.textContent='';}};
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
- const materialContext=()=>module.id==='distortion'&&['batio3','srtio3'].includes(forms.distortion.preset)?forms.distortion.preset:selection.material||'';
+ const materialContext=()=>module.id==='distortion'&&['batio3','srtio3'].includes(forms.distortion.preset)?forms.distortion.preset:module.id==='qha'&&tab==='lab'&&selection.material==='cu-qha'?'':selection.material||'';
  const contextQuery=(withModule=true)=>{const params=new URLSearchParams();if(withModule)params.set('module',module.id);if(materialContext())params.set('material',materialContext());const preset=forms[module.id].preset||selection.preset;if(preset)params.set('preset',preset);return params.toString();};
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(coupledCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">Return to this lesson →</a><a href="#atlas/mechanisms?${esc(contextQuery())}">distortion and excitation route →</a><a href="#atlas/notebook">Materials Research Record →</a></div>`;
- function draw(){if(!current())return;onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → EXCITATIONS → THERMODYNAMICS</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Distortion and Excitation Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-cm-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="cm-content"></div>`;root.querySelectorAll('[data-cm-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-cm-tab]')].includes(b))return;rememberLabDraft();if(busy)cancelRun?.();invalidate();tab=b.dataset.cmTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#cm-form'),module.id);}bindCourseFlowActions({root,prefix:'cm',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'cm-to-lab'});}
- function learn(){$('#cm-content').innerHTML=`<label class="obs-chapter">Select theme<select id="cm-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}<div class="obs-links"><button id="cm-to-lab" class="primary">Open the corresponding experiment →</button><button id="cm-to-derive" class="secondary">step-by-step derivation →</button></div>${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;$('#cm-lesson').onchange=e=>{lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(e=>e.lesson===lesson.id);draw();sync();};$('#cm-to-derive').onclick=()=>{exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
- function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#cm-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);return `<a href="${coupledCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · Learn →</a><a href="#compute/${m.route}?material=${esc(c.id)}">corresponding calculation →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">Save material research records →</a></div></article>`).join('')}</div>`;}
+ function draw(){if(!current())return;retireCuWidget();onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → EXCITATIONS → THERMODYNAMICS</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Distortion and Excitation Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-cm-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="cm-content"></div>`;root.querySelectorAll('[data-cm-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-cm-tab]')].includes(b))return;rememberLabDraft();cancelOwnJob(true);invalidate();tab=b.dataset.cmTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#cm-form'),module.id);}bindCourseFlowActions({root,prefix:'cm',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'cm-to-lab'});}
+ function learn(){$('#cm-content').innerHTML=`<label class="obs-chapter">Select theme<select id="cm-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.id==='qha-free-energy'?cuQhaLessonHTML():''}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}<div class="obs-links"><button id="cm-to-lab" class="primary">Open the corresponding experiment →</button><button id="cm-to-derive" class="secondary">step-by-step derivation →</button></div>${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;$('#cm-lesson').onchange=e=>{lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(e=>e.lesson===lesson.id);draw();sync();};$('#cm-to-derive').onclick=()=>{exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
+ function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#cm-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);const calculationRoute='#compute/'+m.route+(c.id==='cu-qha'?'':'?material='+encodeURIComponent(c.id));return `<a href="${coupledCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · Learn →</a><a href="${esc(calculationRoute)}">corresponding calculation →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">Save material research records →</a></div></article>`).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{read();}catch(error){draftError=error?.message||"Check the current input";}flowDrafts.remember($('#cm-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
+ function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);clearCuProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
  function derive(){const exercises=data.exercises.filter(e=>data.lessons.some(l=>l.id===e.lesson&&l.module===module.id));$('#cm-content').innerHTML=`<label class="obs-chapter">Select exercise<select id="cm-exercise">${options(exercises.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}</select></label><article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="cm-steps"></div><p id="cm-progress" role="status"></p>${courseFlowActions('cm')}${navlinks()}</article>`;const exerciseSelect=$('#cm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#cm-exercise')!==exerciseSelect)return;exercise=data.exercises.find(x=>x.id===e.target.value);lesson=data.lessons.find(x=>x.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#cm-steps'),exerciseId=exercise.id;
@@ -76,20 +96,138 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   if(module.id==='qha'){f.source=v('source',f.source);for(const k of ['v0','natom','bulk_modulus','theta','gamma','t_min','t_max','t_step','pressure','fit_degree','fit_window'])f[k]=n(k,f[k]);}
   if($('#cm-json'))f.content=$('#cm-json').value;
  }
- function payload(){read();const f=structuredClone(forms[module.id]);if(module.id==='distortion'&&f.preset==='custom'){const d=parseDataObject(f.content);const out={...d,...f};delete out.content;if(!Object.hasOwn(f,'amplitudes'))delete out.amplitudes;return out;}if(module.id==='qha'&&f.source!=='preset'){const d=parseDataObject(f.content);f.data=Object.hasOwn(d,'data')?d.data:d;if(!f.data||Array.isArray(f.data)||typeof f.data!=='object')throw Error("QHA data must be an object");delete f.content;return f;}for(const key of ['content','data','parent','distorted','modes','atom_mapping','image_shifts'])delete f[key];return f;}
- function lab(){$('#cm-content').innerHTML=`<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
-  $('#cm-form').onsubmit=e=>{e.preventDefault();calculate();};$('#cm-cancel').onclick=()=>{invalidate();cancelRun?.();$('#cm-result').innerHTML="<p role=\"status\">Calculation canceled. New results are generated after re-running.</p>";};
-  $('#cm-form').oninput=e=>{if(e.target.type==='file')return;if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;invalidate();};
-  for(const id of ['preset','model','source'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{try{read();if(id==='preset')delete forms.distortion.amplitudes;if(id==='model'){forms.magnons.q=Math.max(forms.magnons.model==='afm'?-.5:-1,Math.min(forms.magnons.model==='afm'?.5:1,forms.magnons.q));forms.magnons.branch=0;}invalidate();draw();}catch(e){$('#cm-result').textContent=e.message;}};
-  for(const id of ['q','anisotropy','amplitude','c','q1','q2','gamma'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>calculate();
+ function payload(){
+  read();
+  const f=structuredClone(forms[module.id]);
+  if(module.id==='distortion'&&f.preset==='custom'){
+    const out={...parseDataObject(f.content),...f};delete out.content;if(!Object.hasOwn(f,'amplitudes'))delete out.amplitudes;return out;
+  }
+  if(module.id==='qha'&&f.source!=='preset'){
+    const parsed=parseDataObject(f.content);
+    f.data=Object.hasOwn(parsed,'data')?parsed.data:parsed;
+    if(!f.data||Array.isArray(f.data)||typeof f.data!=='object')throw Error("QHA data must be an object");
+    if(currentCuEvidence())return {source:f.source,pressure:f.pressure,fit_degree:f.fit_degree,fit_window:f.fit_window,data:f.data};
+    delete f.content;
+    return f;
+  }
+  for(const key of ['content','data','parent','distorted','modes','atom_mapping','image_shifts'])delete f[key];
+  return f;
+ }
+ function lab(){
+  const cuEntry=module.id==='qha'?"<details class=\"notice cm-cu-source-entry\" data-cm-cu-qha-entry><summary>Verify and load the official multi-volume Cu example</summary><div data-cm-cu-qha-body></div></details>":'';
+  const verified=currentCuEvidence();
+  const cuStatus=module.id==='qha'?`<p id="cm-cu-source-status" class="mr-scope" role="status" tabindex="-1"${verified?'':' hidden'}>${verified?esc(cuReadyMessage):''}</p>`:'';
+  $('#cm-content').innerHTML=`${cuEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${cuStatus}${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
+  const form=$('#cm-form');
+  const formCurrent=()=>current()&&activeForm()===form;
+  form.onsubmit=e=>{e.preventDefault();if(formCurrent())return calculate();};
+  $('#cm-cancel').onclick=()=>{if(!formCurrent())return;cancelOwnJob(true);invalidate();$('#cm-result').innerHTML="<p role=\"status\">Calculation canceled. New results are generated after re-running.</p>";};
+  form.oninput=e=>{
+    if(!formCurrent()||e.target.type==='file')return;
+    if(module.id==='qha'&&['cm-json','cm-source'].includes(e.target.getAttribute('id'))){closeCuWidget();clearCuProof();}
+    if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;
+    invalidate();
+  };
+  for(const id of ['preset','model','source'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{if(!formCurrent())return;try{read();if(id==='source')clearCuProof();if(id==='preset')delete forms.distortion.amplitudes;if(id==='model'){forms.magnons.q=Math.max(forms.magnons.model==='afm'?-.5:-1,Math.min(forms.magnons.model==='afm'?.5:1,forms.magnons.q));forms.magnons.branch=0;}invalidate();draw();}catch(e){$('#cm-result').textContent=e.message;}};
+  for(const id of ['q','anisotropy','amplitude','c','q1','q2','gamma'])if($('#cm-'+id))$('#cm-'+id).onchange=()=>{if(formCurrent())return calculate();};
   const context=()=>module.id+':'+(module.id==='distortion'?forms.distortion.preset:forms.qha.source);
-  const accept=async(getText)=>{invalidate();const request=++fileTicket,key=context(),valid=()=>current()&&request===fileTicket&&tab==='lab'&&context()===key;try{const text=await getText();if(!valid())return;parseDataObject(text);read();forms[module.id].content=text;invalidate();draw();}catch(e){if(valid())$('#cm-result').textContent=e.message;}};
+  const accept=async getText=>{
+    if(!formCurrent())return;
+    closeCuWidget();invalidate();
+    const request=++fileTicket,key=context(),valid=()=>formCurrent()&&request===fileTicket&&context()===key;
+    try{
+      const text=await getText();if(!valid())return;
+      parseDataObject(text);read();clearCuProof();forms[module.id].content=text;invalidate();draw();
+    }catch(e){if(valid())$('#cm-result').textContent=e.message;}
+  };
   if($('#cm-file'))$('#cm-file').onchange=e=>{const file=e.target.files?.[0];if(file)accept(async()=>{if(file.size>8*1024*1024)throw Error("JSON Packets up to 8 MiB");return file.text();});};
   if($('#cm-demo'))$('#cm-demo').onclick=()=>accept(async()=>{const name=module.id==='distortion'?'distortion-batio3.json':forms.qha.source==='thermal'?'qha-thermal-files-demo.json':'qha-multivolume-demo.json',r=await fetch('data/examples/'+name+'?v='+RELEASE);if(!r.ok)throw Error("template failed to load");return r.text();});
+  syncRunControls();
+  disposeCuWidget=bindCuQhaWidget(formCurrent);
  }
- async function calculate(){if(busy)return;let request,inputValue;try{inputValue=payload();request=++ticket;busy=true;stopAnimation();lastResult=null;$('#cm-form').querySelector('button[type="submit"]').disabled=true;$('#cm-cancel').hidden=false;$('#cm-result').innerHTML="<p role=\"status\">Python is calculating; the calculation environment needs to be loaded for the first run...</p>";const value=await run(module.action,inputValue);if(!current()||request!==ticket||tab!=='lab')return;result=value;lastResult={tool:module.action,module:module.id,input:inputValue,result:value,release:RELEASE};cursor=0;frame=0;output();}catch(e){if(current()&&(request===undefined||request===ticket)){$('#cm-result').innerHTML=`<p role="alert">${esc(e.message)}</p>`;result=null;lastResult=null;}}finally{busy=false;if(current()&&$('#cm-form')){$('#cm-form').querySelector('button[type="submit"]').disabled=false;$('#cm-cancel').hidden=true;}}}
+ function bindCuQhaWidget(formCurrent){
+  const detail=$('[data-cm-cu-qha-entry]');
+  const body=detail?.querySelector('[data-cm-cu-qha-body]');
+  if(!body)return ()=>{};
+  let alive=true,attempt=0,pending=null,cleanup=null;
+  const here=()=>alive&&formCurrent()&&$('[data-cm-cu-qha-entry]')===detail;
+  const reset=()=>{attempt++;pending=null;cleanup?.();cleanup=null;};
+  function loadOpen(){
+    if(!here()||!detail.open||cleanup)return;
+    if(pending)return pending;
+    const requested=++attempt;
+    const active=()=>here()&&detail.open&&attempt===requested;
+    body.innerHTML="<p role=\"status\">Opening the Cu source verification panel…</p>";
+    const loading=Promise.resolve().then(async()=>{
+      try{
+        if(!active())return;
+        const module=await loadCuQhaSourceModule();
+        if(!active())return;
+        const child=module.bindCuQhaSource({root:body,isCurrent:active,onApply:value=>{
+          if(!active()||value?.source!=='thermal'||!value.sourceEvidence)return false;
+          let parsed;
+          try{parsed=parseDataObject(value.content);}catch{return false;}
+          const input=parsed.data??parsed;
+          if(input.thermalFiles?.length!==11||input.natom!==4||input.volumes?.length!==11)return false;
+          read();
+          flowDrafts.discard('qha');
+          Object.assign(forms.qha,{source:'thermal',content:value.content});
+          cuProof={content:value.content,sourceEvidence:structuredClone(value.sourceEvidence)};
+          invalidate();draw();
+          $('#cm-cu-source-status')?.focus({preventScroll:true});
+          return true;
+        }});
+        const disposeChild=typeof child==='function'?child:()=>{};
+        if(active())cleanup=disposeChild;else disposeChild();
+      }catch{
+        if(!active())return;
+        body.innerHTML="<p class=\"notice error\" role=\"alert\">The Cu source verification panel could not load.</p><button type=\"button\" class=\"secondary\" data-cm-cu-qha-retry>Retry opening the Cu source verification panel</button>";
+        body.querySelector('[data-cm-cu-qha-retry]').onclick=loadOpen;
+      }finally{
+        if(pending===loading)pending=null;
+      }
+    });
+    pending=loading;
+    return loading;
+  }
+  detail.ontoggle=()=>{
+    if(!here())return;
+    if(detail.open)return loadOpen();
+    reset();
+    body.innerHTML='';
+  };
+  return ()=>{alive=false;detail.ontoggle=null;reset();};
+ }
+ async function calculate(){
+  if(busy||!current()||!activeForm())return;
+  const form=activeForm();
+  let job;
+  const ownsJob=()=>current()&&activeForm()===form&&job===activeJob&&job?.id===ticket;
+  try{
+    const inputValue=payload();
+    const sourceEvidence=currentCuEvidence();
+    job={id:++ticket,task:null};activeJob=job;busy=true;stopAnimation();lastResult=null;syncRunControls();
+    $('#cm-result').innerHTML="<p role=\"status\">Python is calculating; the calculation environment needs to be loaded for the first run...</p>";
+    job.task=run(module.action,inputValue);
+    const value=await job.task;
+    if(!ownsJob())return;
+    result=value;
+    lastResult={tool:module.action,module:module.id,input:inputValue,result:value,release:RELEASE};
+    if(sourceEvidence)lastResult.sourceEvidence=structuredClone(sourceEvidence);
+    cursor=0;frame=0;output();
+  }catch(e){
+    if(ownsJob()||(!job&&current()&&activeForm()===form)){
+      $('#cm-result').innerHTML=`<p role="alert">${esc(e.message)}</p>`;result=null;lastResult=null;
+    }
+  }finally{
+    if(job&&job===activeJob){activeJob=null;busy=false;if(current())syncRunControls();}
+  }
+ }
  function output(){if(!result||!$('#cm-result'))return;$('#cm-result').innerHTML=(module.id==='distortion'?distortionOutput():module.id==='magnons'?magnonOutput():qhaOutput())+`<details><summary>This calculation steps and assumptions</summary>${(result.steps||[]).map(s=>`<h3>${esc(s.title)}</h3><p>${esc(s.detail)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}`).join('')}${notes(result.assumptions)}</details><div class="obs-links"><button id="cm-download" class="secondary">↓ Input and complete results JSON</button><a id="cm-record" href="#atlas/notebook">Save to Materials Research Record →</a><a href="docs/coupled-materials.md" target="_blank">Method and data convention ↗</a></div><details><summary>complete calculation data</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;
-  $('#cm-download').onclick=()=>download(JSON.stringify(lastResult,null,2),module.route+'.json');$('#cm-record').onclick=()=>captureCalculation(module.action,lastResult.input,result,{route:'compute/'+module.route+'?'+contextQuery(),title:module.title,material:materialContext()});if(module.id==='distortion')bindDistortion();else if(module.id==='magnons')bindMagnon();else bindQha();
+  const record=lastResult,downloadButton=$('#cm-download'),recordLink=$('#cm-record');
+  downloadButton.onclick=()=>{if(current()&&$('#cm-download')===downloadButton&&lastResult===record)download(JSON.stringify(record,null,2),module.route+'.json');};
+  recordLink.onclick=()=>{if(current()&&$('#cm-record')===recordLink&&lastResult===record)captureCalculation(module.action,record.input,record.result,{route:'compute/'+module.route+'?'+contextQuery(),title:module.title,material:materialContext()});};
+  if(module.id==='distortion')bindDistortion();else if(module.id==='magnons')bindMagnon();else bindQha();
  }
  function distortionOutput(){const r=result,d=r.decomposition,l=r.landau;return `<h2>Structure reconstruction from mode amplitude</h2><p>${esc(r.description)}</p><div class="mr-metrics"><div>Atom/Mode Number<strong>${r.parent.atoms.length} / ${d.modeCount}</strong></div><div>displacement fitting residual<strong>${num(d.residualNorm)} Å</strong></div><div>mode matrix rank<strong>${d.rank} / ${d.modeCount}</strong></div></div>${warningPanel(r.warnings,w=>/线性相关|无下界|高阶项|全局极小|非紧|退化|连续解/.test(w))}${table(["Mode","Projection Q / Å","reconstruction Q / Å"],d.modes.map(m=>[m.label||m.id,num(m.amplitude),num(m.selectedAmplitude)]))}<div id="cm-structure">${distortionSVG(r.reconstruction)}</div>${range("Rotate viewing direction",'cm-yaw',-35,-180,180,1)}<p>The open circle is the reference position of the parent phase fractional coordinates in the selected reconstructed lattice, and the solid circle is the reconstructed position. The slider changes the reconstruction amplitude without redefining the resulting Q from the projection.</p><div class="cm-amplitude-controls">${d.modes.map((m,i)=>range(m.label||m.id,'cm-mode-'+i,m.selectedAmplitude,-Math.max(1,Math.abs(m.selectedAmplitude)*2),Math.max(1,Math.abs(m.selectedAmplitude)*2),.01)).join('')}</div><div class="obs-links"><button id="cm-poscar" class="secondary">↓ Refactor POSCAR</button><button id="cm-cif" class="secondary">↓ Refactor CIF（P1）</button></div><details><summary>Atomic correspondence, strain and normalization</summary><pre>${esc(JSON.stringify({mapping:r.mapping,strain:r.strain,gram:d.gram,normalization:d.normalization,removedTranslation:r.displacement.removedTranslation},null,2))}</pre></details><h2>Dual order parameter Free Energy</h2><div class="obs-formula">${esc(l.formula)}</div><p>${esc(l.boundedness.label)} · This is an independent reduced model with coefficients not fit from the structure above.</p>${landauSVG(l)}<p>current probe F(${num(l.selection.q1)}, ${num(l.selection.q2)}) = ${num(l.selection.energy)}; global lowest energy ${num(l.globalMinimumEnergy)}. The circles mark the discrete global minima within the plot area, and the white dot column shows the family of continuous degenerate minima.</p>${table(['Q₁','Q₂','F',"stationary point type"],l.stationaryPoints.map(p=>[num(p.q1),num(p.q2),num(p.energy),p.label]))}${(l.stationaryFamilies||[]).map(f=>`<p class="mr-scope">${esc(f.label)}：${esc(f.equation)}; Energy ${num(f.energy)}</p>`).join('')}`;}
  function bindDistortion(){$('#cm-yaw').oninput=e=>{$('#cm-structure').innerHTML=distortionSVG(result.reconstruction,+e.target.value);e.target.nextElementSibling.textContent=e.target.value;};for(const [id,key,name] of [['cm-poscar','poscar','POSCAR-distortion'],['cm-cif','cif','distortion.cif']])$('#'+id).onclick=()=>download(result.reconstruction.exports[key],name,'text/plain');result.decomposition.modes.forEach((m,i)=>{$('#cm-mode-'+i).oninput=e=>{e.target.nextElementSibling.textContent=e.target.value;};$('#cm-mode-'+i).onchange=e=>{if(busy)return;forms.distortion.amplitudes=result.reconstruction.amplitudes.slice();forms.distortion.amplitudes[i]=+e.target.value;$('#cm-amplitudes').value=JSON.stringify(forms.distortion.amplitudes);invalidate();calculate();};});}
@@ -97,5 +235,8 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  function bindMagnon(){if(!result.animation.available)return;let yaw=-35;const paint=()=>{if(!current()||!result||!$('#cm-spins'))return;$('#cm-spins').innerHTML=spinWaveSVG(result.animation,frame,result.parameters.spin,yaw);$('#cm-frame').value=String(frame);$('#cm-frame').nextElementSibling.textContent=String(frame);};$('#cm-frame').oninput=e=>{stopAnimation();frame=+e.target.value;paint();};$('#cm-spin-yaw').oninput=e=>{yaw=+e.target.value;e.target.nextElementSibling.textContent=e.target.value;paint();};$('#cm-play').onclick=()=>{if(playing){stopAnimation();return;}playing=true;const request=++animationTicket;$('#cm-play').textContent="pauses precession";let previous=0;const tick=time=>{if(!current()||!playing||request!==animationTicket||!result||tab!=='lab')return;if(time-previous>80){frame=(frame+1)%result.animation.frames.length;paint();previous=time;}requestAnimationFrame(tick);};requestAnimationFrame(tick);};}
  function qhaOutput(){const r=result;return `<h2>Equilibrium volume and finite temperature response</h2><div class="mr-metrics"><div>volume/temperature point<strong>${r.summary.volumeCount} / ${r.summary.temperatureCount}</strong></div><div>effective minimum value<strong>${r.summary.validCount} / ${r.rows.length}</strong></div><div>Available temperature derivatives<strong>${r.summary.derivativeCount}</strong></div></div><p>${esc(r.summary.method)}</p>${warningPanel(r.warnings,w=>/没有受采样区间|含拟合或热力学警告|模式比例|非零频率截止/.test(w))}<label>thermodynamic curve<select id="cm-quantity">${options([['volume',"equilibrium volume V"],['alphaVolume',"volume thermal expansion coefficient αV"],['heatCapacity',"constant pressure heat capacity Cp"],['bulkModulus',"isothermal modulus BT"],['gibbsEnergy',"Gibbs free energy G"]],quantity)}</select></label><div id="cm-thermal-plot"></div>${range("Select temperature index",'cm-temperature',0,0,r.rows.length-1,1)}<div id="cm-thermal-point"></div><h3>Free energy-volume curve at current temperature</h3><div id="cm-free-energy"></div><div id="cm-qha-fit"></div><details><summary>Validity and warnings for all temperatures</summary>${table(['T / K',"status","derivative status","warning"],r.rows.map(x=>[x.temperature,qhaStatus(x.status),qhaStatus(x.derivativeStatus),(x.warnings||[]).join('；')]))}</details>`;}
  function bindQha(){const units={volume:"Å³/ input cell",alphaVolume:'K⁻¹',heatCapacity:"J/(mol input cell K)",bulkModulus:'GPa',gibbsEnergy:"eV/input cell"},names={volume:'V',alphaVolume:'αV',heatCapacity:'Cp',bulkModulus:'BT',gibbsEnergy:'G'};const paint=()=>{const r=result,row=r.rows[cursor];const segments=[];let segment=[];for(const x of r.rows){if(Number.isFinite(x[quantity]))segment.push([x.temperature,x[quantity]]);else if(segment.length){segments.push(segment);segment=[];}}if(segment.length)segments.push(segment);$('#cm-thermal-plot').innerHTML=multiCurveSVG(segments.map((p,i)=>({label:names[quantity]+(segments.length>1?" · Valid segment "+(i+1):''),points:p})),{xLabel:"Temperature T / K",yLabel:names[quantity]+' / '+units[quantity],cursor:row.temperature,includeZero:!['volume','bulkModulus','gibbsEnergy'].includes(quantity)});$('#cm-thermal-point').innerHTML=`<h3>T = ${num(row.temperature)} K</h3>`+table(['V / Å³','BT / GPa','αV / K⁻¹',"Cp/J/(mol input cell K)"],[[num(row.volume),num(row.bulkModulus),num(row.alphaVolume),num(row.heatCapacity)]])+`<p>status:${esc(qhaStatus(row.status))}; Derivative:${esc(qhaStatus(row.derivativeStatus))}. A null value indicates that the current data is not supported and is not equal to zero.</p>`+notes(row.warnings);const offset=Math.min(...row.samples.map(p=>p.totalFreeEnergy));$('#cm-free-energy').innerHTML=multiCurveSVG([{label:"input sampling (wired only for boot)",points:row.samples.map(p=>[p.volume,p.totalFreeEnergy-offset])},{label:"local fitting",points:(row.curve||[]).map(p=>[p.volume,p.freeEnergy-offset])}],{xLabel:"Volume V / Å³",yLabel:"Ftotal − Current minimum sampling energy / eV",cursor:row.volume});$('#cm-qha-fit').innerHTML=`<p>Drawing deduction ${num(offset)} eV/input cell to observe curvature, and the output still retains the original energy.</p>${row.fit?table(["local order","RMS residual / eV","Maximum residual error / eV","Second/third volume difference / Å³"],[[row.fit.degree,num(row.fit.rmsResidual),num(row.fit.maxResidual),num(row.fit.volumeDegreeDifference)]]):"<p class=\"mr-scope\">No acceptable interior point fit; please extend the volume range or check the data.</p>"}`;};$('#cm-quantity').onchange=e=>{quantity=e.target.value;paint();};$('#cm-temperature').oninput=e=>{cursor=+e.target.value;e.target.nextElementSibling.textContent=e.target.value;paint();};paint();}
- if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)mergeLabInput(lesson.lab);draw();
+ if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)mergeLabInput(lesson.lab);
+ draw();
+ if(module.id==='qha'&&tab==='lab'&&selection.material==='cu-qha')sync();
+ return ()=>{if(disposed)return;disposed=true;retireCuWidget();stopAnimation();ticket++;fileTicket++;cancelOwnJob();};
 }

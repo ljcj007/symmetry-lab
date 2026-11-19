@@ -62,16 +62,21 @@ class CoupledContentTests(unittest.TestCase):
             'magnons': ('magnon_lab', 'magnon-lab', 'spin'),
             'qha': ('qha_lab', 'qha-lab', 'observables')})
         cases = {c['id']: c for c in DATA['cases']}
-        self.assertEqual(set(cases), {'batio3', 'srtio3', 'afm-chain', 'qha-solid'})
+        self.assertEqual(set(cases), {'batio3', 'srtio3', 'afm-chain', 'qha-solid', 'cu-qha'})
         self.assertIn('不使用链参数冒充定量谱', cases['afm-chain']['assumption'])
         self.assertIn('不是某个材料的第一性原理数据', cases['qha-solid']['assumption'])
         self.assertIn('线性', cases['srtio3']['summary'])
+        self.assertEqual(cases['cu-qha']['modules'], ['qha'])
+        self.assertIn('四原子输入胞', cases['cu-qha']['assumption'])
         material_ids = {m['id'] for m in json.loads((ROOT/'dist/data/symmetry-materials.json').read_text(encoding='utf8'))['materials']}
         for case in cases.values():
             self.assertTrue(set(case['modules']) <= set(mapping))
             for label, link in case['links']:
                 self.assertTrue(label)
-                self.assertTrue(link.startswith(('#compute/', '#classroom/', '#atlas/')))
+                if case['id'] == 'cu-qha' and link == 'docs/cu-qha-example.md':
+                    self.assertTrue((ROOT/'dist'/link).is_file())
+                else:
+                    self.assertTrue(link.startswith(('#compute/', '#classroom/', '#atlas/')))
                 self.assertNotIn('javascript:', link)
                 if link.startswith('#atlas/materials?'):
                     self.assertIn(parse_qs(link.split('?', 1)[1])['material'][0], material_ids)

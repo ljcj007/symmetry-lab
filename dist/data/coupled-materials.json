@@ -921,6 +921,26 @@
           "#compute/phonopy"
         ]
       ]
+    },
+    {
+      "id": "cu-qha",
+      "formula": "Cu",
+      "title": "铜的多体积准谐热膨胀",
+      "summary": "逐一核对 11 个体积的声子热性质文件和静态能量，再计算 251 个温度点上的平衡体积与响应。",
+      "assumption": "输入为 Phonopy 官方计算数据，采用四原子输入胞。本工具用局部多项式拟合，结果会随窗口、阶数和体积范围而变化。",
+      "modules": [
+        "qha"
+      ],
+      "links": [
+        [
+          "官方 Cu 多体积数据与复现说明",
+          "docs/cu-qha-example.md"
+        ],
+        [
+          "复习 Cu 的固定体积声子热力学",
+          "#classroom/observables?module=thermo&lesson=thermal-data"
+        ]
+      ]
     }
   ]
 }
