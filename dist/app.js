@@ -2,11 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-lesson-topic1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-affine-hand1';
 import {startToolFinder} from './tool-finder.js?v=20261120-lesson-topic1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261120-affine-hand1';
 import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-lesson-topic1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
@@ -23,7 +23,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-wannier1'),structure:()=>import('./structure-ui.js?v=20261120-si-fold-handoff1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-affine-hand1'),structure:()=>import('./structure-ui.js?v=20261120-si-fold-handoff1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -326,7 +326,7 @@ async function render(){
   }else if(['magnetictb','crystkit'].includes(view)){
    const cleanup=await page.renderResearchView(view,{
     container:$('#app'),isCurrent:current,run:runPythonTask,toast,download,
-    context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued}
+    context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued,handednessExercise:state.route==='crystkit?preset=handedness'}
    });
    retainRenderedViewCleanup(cleanup,ticket);
   }
@@ -492,7 +492,24 @@ function renderDocs(){$('#app').innerHTML=`<div class="docs-layout"><section cla
  <section class="panel prose"><h2>当前功能覆盖</h2><table><thead><tr><th>功能</th><th>状态</th></tr></thead><tbody><tr><td>230 SG、1651 MSG、122 MPG 数据</td><td>已实现</td></tr><tr><td>BNS / OG 编号与符号检索</td><td>已实现</td></tr><tr><td>任意数值 k 点的小群与 k 星</td><td>已实现</td></tr><tr><td>单值 / 双值小群不可约表示</td><td>已实现 · 数值标签</td></tr><tr><td>磁小群 Wigner 类型与共表示</td><td>已实现 · 数值标签</td></tr><tr><td>SG / MSG 全 k 星诱导表示</td><td>已实现</td></tr><tr><td>SG / MSG 任意 k 星直积</td><td>已实现</td></tr><tr><td>trace / JSON 能带表示匹配</td><td>已实现 · BC 原胞输入</td></tr><tr><td>磁点群共表示直积</td><td>已实现</td></tr><tr><td>BC / Bilbao 标准标签映射</td><td>已实现 · 普通 SG，按标准表与完整特征标匹配</td></tr><tr><td>POSCAR / CIF → BC 晶胞</td><td>已实现 · 230 SG 设置，有序三维周期结构</td></tr></tbody></table><h3>晶胞与标准标签</h3><p><a href="#structure" data-view="structure">结构 → BC 晶胞</a>支持 POSCAR / CONTCAR、CIF 和 Python 晶胞数据。浏览器通过 spglib WebAssembly 识别空间群，沿用原项目全部 230 组 BC 设置；输出基矢、原点、波矢变换和 POSCAR / CIF。CIF 部分占位、无序和磁结构需先给出适用的有序结构模型。已有 DFT trace 还涉及平移相位与自旋框架，结构标准化不能自动代替 trace 转换。</p><p>普通 SG 表示按完整特征标匹配 BC 和 Bilbao 标准表，保留每个本地编号与匹配证书。BZ 类型、特殊参数点或标准库未覆盖处可能无法唯一命名。<a href="docs/standard-labels.md">标准标签来源与范围</a> · <a href="docs/structure-bc.md">结构转换方法</a>。</p><h3>MagneticTB · 模型与拓扑</h3><p>对称性约束跃迁、实 s/p/d 轨道、自旋和反幺正操作；支持能带、Wannier90 hr、有限边界、薄膜、表面 Green 函数、Wilson/Berry 与 Chern 数。晶格按行输入，H(k) 使用 exp(+2πi k·R) 周期轨道规范。拓扑量需要有带隙，并应核对网格收敛。</p><p>精确符号模块支持分圆域、精确跃迁约束、Bloch Hamiltonian、k·p 与多项式轨道。符号空间群工具可从群号和符号 k 线自动构造精确小表示、磁共表示及全 k 星诱导，重建精确自旋提升并逐项验证半线性乘法；符号接口还处理共核、交织和投影。输出使用本次计算的局部编号。<a href="docs/symbolic-spacegroups.md">查看符号算法与限制</a>；<a href="data/symbolic-api-coverage.json">查看逐项覆盖记录</a>。完整自旋空间群目录、DFT 拟合和 Z₂ 不变量仍未移植。</p><h3>CrystKit · 精确晶体群</h3><p>有理数仿射闭合、坐标与原点变换、平移格简化、有限商群生成元、点轨道、矩阵共轭、GL(n,ℤ) 元素有限阶和 230 个三维空间群参考匹配。未找到受限搜索匹配时不推断非同构。</p><p>新增 CARAT 1–6 维全部 8,329 个 Q 类代表与精确分类证书；固定整数点群的完整上同调、特定完整正规化子、扩张轨道和无限空间群生成证书。整数类工具新增有限导子区间算法：对已验证的极大序模型，有限遍历证明候选整数格已覆盖，再通过完整算术作用区分 Z 类。支持交换群、分裂有理表示及绝对不可约表示等情形；仿射类再求完整上同调与正规化子轨道。算术中心化子工具计算饱和整数序、中心分解和单位范数方程，并对已实现的分裂、实二次及定值范数分支给出完整单位群。一般数域、除代数或资源未穷尽的情况会明确报告未完成。新增无挠性和中心判定以精确 Smith 可解性检验全部点群陪集。商群最小生成元不等于无限空间群最小生成元。</p><p><a href="#" data-view="advanced">打开精确代数与高维群 →</a>。Q 等价、Z 等价和仿射等价有不同约束；界面保留完整性状态和精确证书。符号秩的例外参数条件必须一并使用，未找到受限搜索结果不能作为不存在的证明。</p><h3>可复现与开放源码</h3><p>程序、数据与数值算法随静态网站提供。<a href="source.zip" download>下载网站完整源代码</a>。该版本遵循 <a href="licenses/MSGCorep-GPL-3.0.txt">GPL-3.0</a>；四个项目及 CARAT 的作者声明与许可证均保留。<a href="data/python-provenance.json">Python 移植来源与覆盖记录</a>。<a href="python/cli.py" download>下载 Python 命令行入口</a>。</p><h3>如何解释结果</h3><p>普通小群表示列出幺正操作的特征标。磁共表示的反幺正矩阵必须与 K 一起使用，不能当作普通线性表示。能带匹配由幺正特征标确定共表示分解，磁小群匹配使用共表示限制的归一化范数；磁共表示的上游标准标签仍需参考原 MSGCorep。</p></section>
  <section class="panel prose full-span"><h2>项目来源与文献</h2><div class="workspace-grid"><div><h3>SpaceGroupIrep</h3><p><a target="_blank" rel="noreferrer" href="https://github.com/goodluck1982/SpaceGroupIrep">goodluck1982 / SpaceGroupIrep ↗</a><br>空间群生成元、BC 原胞旋转、k 点表及表示元数据。<br><a href="https://doi.org/10.1016/j.cpc.2021.107993" target="_blank" rel="noreferrer">Computer Physics Communications 265, 107993 (2021)</a></p></div><div><h3>MSGCorep</h3><p><a target="_blank" rel="noreferrer" href="https://github.com/goodluck1982/MSGCorep">goodluck1982 / MSGCorep ↗</a><br>磁群编号、磁群操作、自旋矩阵及磁点群数据。<br><a href="https://doi.org/10.1016/j.cpc.2023.108722" target="_blank" rel="noreferrer">Computer Physics Communications 288, 108722 (2023)</a></p></div></div><div class="workspace-grid"><div><h3>MagneticTB</h3><p><a href="https://github.com/zhangzeyingvv/MagneticTB" target="_blank" rel="noreferrer">zhangzeyingvv / MagneticTB ↗</a><br>对称性约束紧束缚模型工作流；本站采用 NumPy 数值和 SymPy 精确实现。<a href="licenses/MagneticTB-LICENSE.txt">GPL-3.0 许可</a>。</p></div><div><h3>CrystKit</h3><p><a href="https://github.com/hongyi-zhao/CrystKit" target="_blank" rel="noreferrer">hongyi-zhao / CrystKit ↗</a><br>精确仿射群与矩阵群算法；本站采用 Fraction / SymPy 实现。<a href="licenses/CrystKit-LICENSE.txt">GPL-2.0-or-later 许可</a>，组合版本采用 GPL-3.0。</p></div></div><h3>CARAT · 高维有理类</h3><p><a href="https://github.com/lbfm-rwth/carat" target="_blank" rel="noreferrer">lbfm-rwth / carat ↗</a> · <a href="data/carat/manifest.json">完整目录与来源哈希</a> · <a href="licenses/CARAT-LICENSE.txt">GPL-2.0-or-later 许可</a>。</p><p>使用这些数据发表研究时，请引用原始软件和论文。本网站为独立浏览器实现，不代表原项目作者发布或背书。</p></section></div>`;}
 
-document.addEventListener('click',e=>{const nav=e.target.closest('[data-route],[data-view]');if(nav){e.preventDefault();setView(nav.dataset.route||nav.dataset.view);}if(!e.target.closest('.search-wrap'))$('#group-options')?.classList.add('hidden');});$('#help-button').onclick=()=>setView('docs');$('#export-top').onclick=()=>{if(state.view==='phonopy-scattering'){const result=optionalViews.peek('phonopyScattering')?.getPhonopyScatteringResult();if(result)download(JSON.stringify(result,null,2),'phonopy-scattering-result.json');else toast('请先手动运行三维散射计算。');}else if(isClassroomView(state.view)){const result=getClassroomResult(state.view);if(result)download(JSON.stringify(result,null,2),'classroom-'+state.view+'.json');else toast('请先载入课程或运行交互实验。');}else if(state.view==='structure'){const result=getStructureResult();if(result)download(JSON.stringify(result,null,2),'bc-structure.json');else toast('请先完成晶胞转换。');}else if(state.view==='advanced'){const result=getAdvancedResult();if(result)download(JSON.stringify(result,null,2),'exact-result.json');else toast('请先运行当前工具的计算。');}else if(['magnetictb','crystkit'].includes(state.view)){const result=getResearchResult(state.view);if(result)download(JSON.stringify(result,null,2),state.view+'-result.json');else toast('请先运行当前工具的计算。');}else if(state.view==='products'){const button=$('#export-product');if(button)button.click();else toast('请先完成当前直积分解。');}else if(state.view==='bands'){const button=$('#export-bands');if(button)button.click();else toast('请先完成当前能带匹配。');}else exportJSON();};
+function handleSiteClick(event){
+ const nav=event.target.closest('[data-route],[data-view]');
+ if(nav&&!event.defaultPrevented&&event.button===0){
+  const href=nav.matches('a')?nav.getAttribute('href')?.trim():null;
+  const target=nav.getAttribute('target')?.toLowerCase();
+  const browserNavigation=href&&href!=='#'&&(
+   !href.startsWith('#')||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||
+   (target&&target!=='_self')||nav.getAttribute('download')!==null
+  );
+  if(!browserNavigation){
+   event.preventDefault();
+   setView(nav.dataset.route||nav.dataset.view);
+  }
+ }
+ if(!event.target.closest('.search-wrap'))$('#group-options')?.classList.add('hidden');
+}
+document.addEventListener('click',handleSiteClick);
+$('#help-button').onclick=()=>setView('docs');$('#export-top').onclick=()=>{if(state.view==='phonopy-scattering'){const result=optionalViews.peek('phonopyScattering')?.getPhonopyScatteringResult();if(result)download(JSON.stringify(result,null,2),'phonopy-scattering-result.json');else toast('请先手动运行三维散射计算。');}else if(isClassroomView(state.view)){const result=getClassroomResult(state.view);if(result)download(JSON.stringify(result,null,2),'classroom-'+state.view+'.json');else toast('请先载入课程或运行交互实验。');}else if(state.view==='structure'){const result=getStructureResult();if(result)download(JSON.stringify(result,null,2),'bc-structure.json');else toast('请先完成晶胞转换。');}else if(state.view==='advanced'){const result=getAdvancedResult();if(result)download(JSON.stringify(result,null,2),'exact-result.json');else toast('请先运行当前工具的计算。');}else if(['magnetictb','crystkit'].includes(state.view)){const result=getResearchResult(state.view);if(result)download(JSON.stringify(result,null,2),state.view+'-result.json');else toast('请先运行当前工具的计算。');}else if(state.view==='products'){const button=$('#export-product');if(button)button.click();else toast('请先完成当前直积分解。');}else if(state.view==='bands'){const button=$('#export-bands');if(button)button.click();else toast('请先完成当前能带匹配。');}else exportJSON();};
 $('#cancel-python').onclick=cancelPython;
 onPythonStatus(({status,message})=>{$('#data-status').textContent=message;$('#cancel-python').classList.toggle('hidden',!['loading','running'].includes(status));});
 window.addEventListener('hashchange',()=>setView(location.hash.slice(1),{history:false}));

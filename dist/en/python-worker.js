@@ -44,7 +44,8 @@ let runtime;
 const modules = new Set(), packages = new Set(), catalogs = new Set();
 let databaseLoaded = false, magneticDatabaseLoaded = false, labelsLoaded = false, spglibLoaded = false;
 async function resource(path) {
-  const url = new URL(path, new URL('../', import.meta.url)); url.searchParams.set('v', BUILD);
+  const url = new URL(path, new URL('../', import.meta.url));
+  url.searchParams.set('v', path === './python/crystkit_browser.py' ? '20261120-affine-hand1' : BUILD);
   const response = await fetch(url);
   if (!response.ok) throw new Error(`resource loading failed (${response.status}): ${path}`);
   return response;

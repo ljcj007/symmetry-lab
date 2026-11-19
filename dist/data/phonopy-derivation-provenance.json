@@ -59,18 +59,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 72208,
-      "sha256": "ce925041fe1e0522110626c9551a96a0d9709d600e05328c571985a1e3192b0f"
+      "bytes": 72901,
+      "sha256": "cbdb1e37a6865b905e1cd78f52fc0b3f1e84c943229657853a4991f3a3d697dc"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 101622,
-      "sha256": "aa823205ef22f18be8ecaede1c86f61ebb91f048ed7f0af3d26d8a9505e49cda"
+      "bytes": 102171,
+      "sha256": "16b3c8a77c352ed2ec20ebf45dc775d6b3f5d08b96afa702cc79851c93f7ab3f"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32649,
-      "sha256": "6f48ab01d609572d46738c1461e5c92bcfe17f8ad40194ee388446ee3c01d9f4"
+      "bytes": 32654,
+      "sha256": "2ff5ae28a00a71797afb7f35cd37e9df745bb37b2a576b389c1d52e9f69daacc"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -159,8 +159,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8201,
-      "sha256": "4114e816c53f3c794d6fdb5cbaee47198b37b4a21199655dd46e437b607c22a9"
+      "bytes": 8200,
+      "sha256": "c81d00b570f52d07b3362848510c880305d972792806cb030bb8d86764cb764e"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -194,8 +194,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31196,
-      "sha256": "1622d755b7f051c576b17f11cbd240b067ac15efeeb65dc1a5f4bdadb0583ed9"
+      "bytes": 31255,
+      "sha256": "70a511ca3ed1d1a4a89e161bfcd2705ecfe4d5f7e2138eb50873f82240a07b3a"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -249,13 +249,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3138,
-      "sha256": "92f5974b6d36f8b92432f546727200cb2f71e41a7f2c261008e5e0b723828f6d"
+      "bytes": 3143,
+      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11982,
-      "sha256": "076f4b201c34fc537b746ee99886df2a520c19090b5ecf0f05d7c5696b81e97a"
+      "bytes": 12052,
+      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -329,8 +329,8 @@
     },
     "locales/en-band-match-display.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 573,
-      "sha256": "4d56beaf7631e4f8199ba17cab5a61e8b42a44016c9118e5caac0508a900f949"
+      "bytes": 575,
+      "sha256": "75f13eb34d7934fc073231bee8fac27c3cea9abc708c47643aa51ba4dcf5692b"
     },
     "locales/en-basic-classroom-20261112.json": {
       "normalization": "utf8-lf-v1",
@@ -376,6 +376,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 3543,
       "sha256": "c674b55a959431bff2ffa9b99db500afd44b419cd44447c0a3c469a234028daa"
+    },
+    "locales/en-crystkit-handedness.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4851,
+      "sha256": "0be1ab84c56ad96e1d934231f047702edab409a8a27b718fa450da6898c933d2"
     },
     "locales/en-cu-qha-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -1044,8 +1049,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 26703,
-      "sha256": "6b4aa7fac6fef4f1439a627f29c3be941c8060a8b9c5aa0563c556f206afa658"
+      "bytes": 27037,
+      "sha256": "382f1362632ee9350ee9a2deb952022ed5dffe6da54195fd91524064f5c021ea"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1079,8 +1084,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5805,
-      "sha256": "e3d1a8b0e7a1d4e3f49745ea5f12c2d769279361bfa586357194dbdf5e6ae2fa"
+      "bytes": 5855,
+      "sha256": "38e0479b038a629383a13d03fe36a8e9b119f4d31a12fb3201cd2d93f374d414"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

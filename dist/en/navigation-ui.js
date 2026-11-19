@@ -88,7 +88,7 @@ export const toolGroups=[
   ['bands',"Band-character matching","Import trace / JSON data to decompose band characters into representations of the current group.",'DFT trace'],
  ]},
  {id:'algebra',title:"Group classification and exact algebra",summary:"Study groups using matrix generators, integral lattices and affine extensions.",tools:[
-  ['crystkit',"Affine operations and crystal-group tools","Group closure, point orbits, coordinate transformations, generators and matching to 3D reference groups.",'CrystKit'],
+  ['crystkit',"Affine operations and crystal-group tools","Group closure, point orbits, coordinate transformations, generators and matching to 3D reference groups.","CrystKit chirality enantiomorphic space groups 212 213"],
   ['compute/advanced/carat',"Higher-dimensional rational classes · CARAT","Find Q-class representatives in dimensions 1–6 and inspect their matrices and classification evidence.","Class Q High Dimension CARAT"],
   ['compute/advanced/carat_integral',"Integral and affine classes","Study Z classes and affine classes within a rational class, with completeness certificates.","Class Z Affine"],
   ['compute/advanced/integral_normalizer',"Integral normalizer","Find integral changes of basis that preserve a given integral point group.","normalizer"],

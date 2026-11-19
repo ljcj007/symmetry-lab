@@ -18,6 +18,18 @@
 
 三个项目分别连接既有序参量、SHG 与密度矩阵工具。各阶段保留实际计算输入，说明独立模型新增的假设；不声称自动完成真实材料参数拟合。
 
+<a id="crystkit-handedness"></a>
+
+## 用 CrystKit 比较对映空间群
+
+在「[晶体群工具](../index.html#crystkit?preset=handedness)」中对照空间群 212（P4₃32）与 213（P4₁32）。两者的旋转点群都是 432。选定沿 z 轴的同一 +90° 旋转，在本站采用的原胞约定下，两个操作沿 z 的平移分别为 3/4 和 1/4，均以晶格周期为单位并折回到 [0,1)。
+
+1. 先预测只允许保持取向的基底时，完整操作集能否重合。载入第一组并手动运行。基底集合为 I 与 −I，取向限制只留下 I。
+2. 放宽为允许反转取向并再次运行。结果给出 det B = −1，并核对变换后模整数平移的全部 24 个操作。坐标约定为 x_in = B x_out + o。
+3. 用 207 → 207 作正对照。保持取向时 I 就能匹配。第一组的未匹配结果只针对所搜索基底与相容原点平移。212 与 213 的对映关系见《国际晶体学表》。
+
+[CrystKit 原始算例](https://github.com/hongyi-zhao/CrystKit#main-features) · [《国际晶体学表》空间群对映分类](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)
+
 ## 入口与验证
 
 - `#classroom/crystal?module=layers` / `#compute/layer-symmetry-lab`

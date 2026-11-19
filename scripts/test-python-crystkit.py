@@ -124,6 +124,57 @@ class CrystKitTests(unittest.TestCase):
         result = c.run({"group_number": 76}, DB)
         self.assertEqual(result["enantiomorphicPartner"], 78)
 
+    def test_positive_only_checks_explicit_bases(self):
+        identity = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        inversion = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
+
+        def compare(left, right, bases, positive_only):
+            return c.run({"action": "compare", "left": {"group_number": left},
+                          "right": {"group_number": right}, "bases": bases,
+                          "positive_only": positive_only}, DB)
+
+        # SG 212/213 form the enantiomorphic pair in the upstream README.
+        mirror = compare(212, 213, [inversion], False)
+        self.assertEqual(mirror["status"], "verified")
+        self.assertTrue(mirror["identityVerified"])
+        self.assertEqual(mirror["determinant"], -1)
+        self.assertFalse(mirror["orientationPreserved"])
+        self.assertEqual(mirror["basis"], inversion)
+        origin = tuple(map(F, mirror["origin"]))
+        self.assertEqual(origin, (F(-1, 2),)*3)
+        # Replay the full inversion-plus-origin conjugation in exact fractions.
+        transported = {(r, tuple((-x - sum(a*b for a, b in zip(row, origin)) + o) % 1
+                                 for x, row, o in zip(t, r, origin))) for r, t in ops(212)}
+        self.assertEqual(len(transported), 24)
+        self.assertEqual(transported, {(r, tuple(x % 1 for x in t)) for r, t in ops(213)})
+
+        for bases in ([inversion], [identity], [inversion, identity], []):
+            with self.subTest(bases=bases):
+                miss = compare(212, 213, bases, True)
+                self.assertEqual(miss["status"], "no_match_in_search")
+                self.assertIsNone(miss["equivalent"])
+                self.assertNotIn("basis", miss)
+
+        # Both bases can map the symmorphic SG 207 to itself. The restriction
+        # must skip the first one and still inspect later eligible candidates.
+        unfiltered = compare(207, 207, [inversion, identity], False)
+        self.assertEqual(unfiltered["basis"], inversion)
+        positive = compare(207, 207, [inversion, identity], True)
+        self.assertEqual(positive["status"], "verified")
+        self.assertEqual(positive["basis"], identity)
+        self.assertEqual(positive["determinant"], 1)
+        self.assertTrue(positive["orientationPreserved"])
+        self.assertEqual(compare(212, 212, [identity], True)["basis"], identity)
+
+        for bad in ([[2, 0, 0], [0, 1, 0], [0, 0, 1]],
+                    [[-2, 0, 0], [0, 1, 0], [0, 0, 1]],
+                    [["-1/2", 0, 0], [0, 2, 0], [0, 0, 1]],
+                    [[0, 0, 0], [0, 1, 0], [0, 0, 1]]):
+            with self.subTest(invalid_basis=bad), self.assertRaisesRegex(ValueError, "primitive integer lattice"):
+                compare(207, 207, [bad, identity], True)
+        with self.assertRaisesRegex(ValueError, "dimensions do not match"):
+            compare(207, 207, [[[-1, 0], [0, 1]], identity], True)
+
     def test_simplification_recovers_arbitrary_rational_setting(self):
         for number in [1, 2, 19, 76, 212, 227]:
             group = ops(number)

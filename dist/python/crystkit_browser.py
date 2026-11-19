@@ -493,6 +493,7 @@ def affine_equivalence(source, target, bases=None, positive_only=False):
 
     A miss is 'no_match_in_search', never a proof of nonisomorphism under GL(Z).
     Integer translations must already be primitive (one coset per rotation).
+    The orientation restriction applies to supplied as well as generated bases.
     """
     if len(source) != len(target):
         return {"status": "different_quotient_orders", "equivalent": False}
@@ -503,8 +504,13 @@ def affine_equivalence(source, target, bases=None, positive_only=False):
     target_set = set(target)
     for b in bases:
         b = matrix(b)
-        if abs(determinant(b)) != 1 or any(x.denominator != 1 for row in b for x in row):
+        det_b = determinant(b)
+        if abs(det_b) != 1 or any(x.denominator != 1 for row in b for x in row):
             raise ValueError("Comparison basis must preserve the primitive integer lattice")
+        if len(b) != d:
+            raise ValueError("Matrix dimensions do not match")
+        if positive_only and det_b < 0:
+            continue
         transformed = change_basis(source, b)
         origin = _origin_solution(transformed, target)
         if origin is not None:
@@ -512,7 +518,7 @@ def affine_equivalence(source, target, bases=None, positive_only=False):
             check = {(r, tuple(x % 1 for x in t)) for r, t in change_basis(source, b, old_origin)}
             if check == target_set:
                 return {"status": "verified", "equivalent": True, "basis": b, "origin": old_origin,
-                        "determinant": determinant(b), "orientationPreserved": determinant(b) > 0,
+                        "determinant": det_b, "orientationPreserved": det_b > 0,
                         "identityVerified": True}
     return {"status": "no_match_in_search", "equivalent": None,
             "scope": "Supplied bases or signed-permutation bases plus every compatible rational origin shift"}

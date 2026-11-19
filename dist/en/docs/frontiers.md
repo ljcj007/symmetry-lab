@@ -18,6 +18,18 @@ The path panel shows real pointwise results and loads selected points. A/B retai
 
 The three projects connect existing order-parameter, SHG and density-matrix tools. Each stage retains actual computational inputs and states the additional assumptions of the independent models, without claiming automatic real-material parameter fitting.
 
+<a id="crystkit-handedness"></a>
+
+## Comparing enantiomorphic space groups with CrystKit
+
+Compare space groups 212 (P4₃32) and 213 (P4₁32) in the [crystallographic group workbench](../index.html#crystkit?preset=handedness). Both have rotation point group 432. For the same +90° rotation about z, the two operations translate along z by 3/4 and 1/4 respectively in this site's primitive-cell convention, in lattice periods reduced to [0,1).
+
+1. Predict whether the full operation sets will match if the basis must preserve orientation. Load the first input and run it manually. The candidate bases are I and −I. The orientation constraint retains I.
+2. Allow orientation reversal and run again. The result gives det B = −1 and verifies all 24 transformed operations modulo integer translations. The coordinate convention is x_in = B x_out + o.
+3. Use 207 → 207 as a positive control. I matches while preserving orientation. The first result applies only to the searched bases and their compatible origin shifts. The International Tables for Crystallography classifies 212 and 213 as an enantiomorphic pair.
+
+[Original CrystKit example](https://github.com/hongyi-zhao/CrystKit#main-features) · [Enantiomorphic space groups in the International Tables for Crystallography](https://it.iucr.org/Ac/ch1o3v0001/sec1o3o4o2.pdf)
+
 ## Entry points and validation
 
 - `#classroom/crystal?module=layers` / `#compute/layer-symmetry-lab`

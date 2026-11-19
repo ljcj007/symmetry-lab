@@ -24,6 +24,9 @@ files.push('dist/tool-finder.js','dist/lesson-topic-finder.js','dist/tool-search
  'scripts/test-lesson-topic-finder.mjs','scripts/test-lesson-topic-host.mjs','locales/en-lesson-topic-finder.json','locales/en-lesson-topic-host.json');
 files.push('dist/band-match-results.js','dist/style.css','dist/python/symmetry_core.py','scripts/test-band-match-results.mjs',
  'scripts/test-python-band-match-display.py','locales/en-band-match-display.json');
+files.push('dist/research-ui.js','dist/crystkit-handedness-ui.js','dist/frontiers-ui.js','dist/python/crystkit_browser.py',
+ 'scripts/test-crystkit-handedness-ui.mjs','scripts/test-python-crystkit.py','scripts/test-native-navigation.mjs',
+ 'locales/en-crystkit-handedness.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',

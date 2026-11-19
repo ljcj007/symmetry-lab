@@ -37,6 +37,18 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 - Extend cross-module material projects where the physical connection and inputs are explicit.
 - Verify representative real-file import/export and scientific workflows for each major tool family.
 
+## Space-group handedness and native links
+
+- The chirality lessons and material atlas lead to the exact CrystKit exercise for
+  space groups 212 and 213. Learners compare orientation-preserving and
+  orientation-reversing bases against a positive control, then inspect the exact
+  determinant and origin shift when a full operation-set match is verified.
+- The Python comparison now applies the orientation constraint to explicit bases.
+  Result cards describe the finite search scope and preserve the exact JSON
+  certificate for export.
+- Expert preset links support opening another tab with the browser's modifier
+  keys while ordinary clicks and Enter still navigate in the current tab.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

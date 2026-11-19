@@ -37,16 +37,16 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 101622,
-      "sha256": "aa823205ef22f18be8ecaede1c86f61ebb91f048ed7f0af3d26d8a9505e49cda"
+      "bytes": 102171,
+      "sha256": "16b3c8a77c352ed2ec20ebf45dc775d6b3f5d08b96afa702cc79851c93f7ab3f"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32649,
-      "sha256": "6f48ab01d609572d46738c1461e5c92bcfe17f8ad40194ee388446ee3c01d9f4"
+      "bytes": 32654,
+      "sha256": "2ff5ae28a00a71797afb7f35cd37e9df745bb37b2a576b389c1d52e9f69daacc"
     },
     "dist/navigation-ui.js": {
-      "bytes": 31196,
-      "sha256": "1622d755b7f051c576b17f11cbd240b067ac15efeeb65dc1a5f4bdadb0583ed9"
+      "bytes": 31255,
+      "sha256": "70a511ca3ed1d1a4a89e161bfcd2705ecfe4d5f7e2138eb50873f82240a07b3a"
     },
     "dist/tool-directory.js": {
       "bytes": 3068,
@@ -69,12 +69,12 @@
       "sha256": "b6ec80e81106c9f69529f4253b2fd0d7c1b99ab01760923f4888a56ac43e5614"
     },
     "dist/python-client.js": {
-      "bytes": 3138,
-      "sha256": "92f5974b6d36f8b92432f546727200cb2f71e41a7f2c261008e5e0b723828f6d"
+      "bytes": 3143,
+      "sha256": "7bfd666bcae7ba7a850b5bda4110f2159f8a102b940d5ff63bfb9e5293aadf7b"
     },
     "dist/python-worker.js": {
-      "bytes": 11982,
-      "sha256": "076f4b201c34fc537b746ee99886df2a520c19090b5ecf0f05d7c5696b81e97a"
+      "bytes": 12052,
+      "sha256": "053cedc755b033cd757dbaf723b41bb85cdf3997d67f9e06827f224913d90de0"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163220,
@@ -150,11 +150,11 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "bytes": 1737009,
-      "sha256": "7826441e0195d7092d5076bfc5dbf51a95c1d35567aa289842c81ed8795defe2"
+      "sha256": "50c4825363724f03b532061af1056a86685e2b1f923665aed00020281a998dcd"
     },
     "scripts/fixtures/bridges-projects.json": {
       "bytes": 869953,
-      "sha256": "ef49fa203cd37bbbeb8994f19def1c1f7e0ca3ffd716c98835b861c16dd9ff7c"
+      "sha256": "7c29dbc686b14fe9a1450b2b119575e7df0366dfae54241f0be309bb12ef6a2e"
     },
     "dist/foundations-demos.css": {
       "bytes": 4314,

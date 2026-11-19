@@ -88,7 +88,7 @@ export const toolGroups=[
   ['bands','能带特征标匹配','导入 trace / JSON，将能带特征标分解到当前群的表示。','DFT trace'],
  ]},
  {id:'algebra',title:'群分类与精确代数',summary:'使用矩阵生成元、整数格和仿射扩张研究群。',tools:[
-  ['crystkit','仿射操作与晶体群工具','群闭合、点轨道、坐标变换、生成元及三维参考匹配。','CrystKit'],
+  ['crystkit','仿射操作与晶体群工具','群闭合、点轨道、坐标变换、生成元及三维参考匹配。','CrystKit 对映空间群 手性 212 213 enantiomorphic space groups'],
   ['compute/advanced/carat','高维有理类 · CARAT','检索 1–6 维 Q 类代表，查看矩阵与分类依据。','Q类 高维 CARAT'],
   ['compute/advanced/carat_integral','整数类与仿射类','在有理类内研究 Z 类、仿射类与完整性证书。','Z类 仿射'],
   ['compute/advanced/integral_normalizer','整数正规化子','求保持给定整数点群的整系数基变换。','正规化子'],
