@@ -542,7 +542,7 @@ def _dos(content, kind, structure=None):
             'columnConvention': '首列频率；其余列为原胞原子顺序的投影；xyz 时按原子逐一排列 x,y,z。'}
 
 
-def run(payload=None):
+def run(payload=None, *, include_animation=True):
     """Import text/object data. All q/branch indices in payload/result are 0-based."""
     payload = payload or {}
     if not isinstance(payload, dict):
@@ -633,7 +633,8 @@ def run(payload=None):
         kind = payload.get('dos_kind', 'total')
         result['dos'] = _dos(payload.get('dos_content', payload.get('content')), kind, structure)
         warnings.append('DOS 保留输入的投影顺序与归一化；不是从所导入的高对称路径重新估算得到。')
-    result['animation'] = _animation(structure, result['selection'], payload, warnings)
+    if include_animation:
+        result['animation'] = _animation(structure, result['selection'], payload, warnings)
     if result['synthetic']:
         warnings.insert(0, '原创合成教学数据：不对应真实材料或第一性原理计算，不能引用为实验/计算结果。')
     return result

@@ -117,6 +117,10 @@ class OfficialAlGammaTests(unittest.TestCase):
         frozen = result['frozen']
         self.assertTrue(frozen['commensurate'])
         self.assertEqual(frozen['supercell'], [2, 2, 2])
+        self.assertFalse(any('展示超胞不相容' in warning for warning in result['warnings']))
+        preview = self.run_mode('phonopy', dict(self.base, selected_q=83, supercell=[1, 1, 1]))
+        self.assertFalse(preview['animation']['commensurate'])
+        self.assertTrue(any('展示超胞不相容' in warning for warning in preview['warnings']))
         self.assertEqual(len(frozen['atoms']), 8)
         self.assertEqual({atom['symbol'] for atom in frozen['atoms']}, {'Al'})
         self.assertTrue(result['exports']['poscar'])

@@ -1,10 +1,7 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261117-derive1';
-const RESOURCE_BUILDS = {
-  './python/crystkit_browser.py': '20261120-affine-hand1',
-  './python/structure_bc.py': '20261120-cif-setting-practice1',
-};
+const BUILD = '20261120-phonon-freezing1';
+const DATA_BUILD = '20261117-derive1';
 const plans = {
   group_theorems: ['group_theorems'],
   symmetry_mini_demos: ['symmetry_mini_demos'],
@@ -47,7 +44,7 @@ const modules = new Set(), packages = new Set(), catalogs = new Set();
 let databaseLoaded = false, magneticDatabaseLoaded = false, labelsLoaded = false, spglibLoaded = false;
 async function resource(path) {
   const url = new URL(path, import.meta.url);
-  url.searchParams.set('v', RESOURCE_BUILDS[path] ?? BUILD);
+  url.searchParams.set('v', path.endsWith('.py') ? BUILD : DATA_BUILD);
   const response = await fetch(url);
   if (!response.ok) throw new Error(`资源加载失败 (${response.status}): ${path}`);
   return response;

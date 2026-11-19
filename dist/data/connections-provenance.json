@@ -44,8 +44,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "8e51008540e18d63cd1c55607f3c742a7fe4d267eb05ee145c8e8d7ebdf97e70",
-      "bytes": 102555
+      "sha256": "a9167196799105a144136d27382998f53503d533563d57339fe1c3c47032fed9",
+      "bytes": 102550
     },
     {
       "path": "dist/bridges-projects.js",
@@ -189,8 +189,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "0b33f76da22899f3023911a0d95cbf24a755039f4b17e7ff9d76b6486009d090",
-      "bytes": 8226
+      "sha256": "a5785f7973ecd3d07e13b5a8bc1ed3b81d9ff9d753208e3f322c88341c142b60",
+      "bytes": 8221
     },
     {
       "path": "dist/induction.js",
@@ -319,13 +319,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "af2dce530f6b1d252210c1755d9fa3bc29539fa14601d84e13de6380ed7d13eb",
-      "bytes": 3152
+      "sha256": "21bc552432b3047149f2df4741e8d266fd53955c2639a1bb64f5cd4112c51980",
+      "bytes": 3147
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "06a324123264d8f1ef12f3690626502f5b3b4743442294d5f7cb1a71c561012d",
-      "bytes": 12161
+      "sha256": "70066c9bc74716d8f7cc171a0d1c89bdbdbdde5acc086f9d69540e57070e9b7a",
+      "bytes": 12068
     },
     {
       "path": "dist/quantum-materials-ui.js",
@@ -469,7 +469,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "ae45943438d626feca8f748f2ae4eecf609ef88274d270ea30890b9e2db543b1",
+      "sha256": "161c08373f6d6455bad565d69a2651b7d2b6176ae8108e17305b8fcae31f8e95",
       "bytes": 56446
     },
     {
@@ -489,7 +489,7 @@
     },
     {
       "path": "dist/data/construction-provenance.json",
-      "sha256": "b9ff837ec812bb5f24c346def3ef08e3744ab5e8c8b01f099caa25298481384b",
+      "sha256": "c4076498eeac5b58e769c34e898510548ee729d045cdfd971d2f88b307b4950f",
       "bytes": 64067
     },
     {
@@ -559,7 +559,7 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "c78a223cea4e45ef73d814da011e01a9579452655782d915d9ee3e2c9fffb03f",
+      "sha256": "c9f10a64ae700ca178abf3f72de7442acb54bb3d4482c443a26c2a417abcfa28",
       "bytes": 16856
     },
     {
@@ -609,7 +609,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "e855e5d5a7dfcd964b1b973c472d3b35ace18e471ac1984d256271f274836179",
+      "sha256": "c72a8e4ea539f59458a95b6f29b4b918230d207ed39e5691c3d6177ce04ef6a8",
       "bytes": 5971
     },
     {
@@ -619,7 +619,7 @@
     },
     {
       "path": "dist/data/material-research-provenance.json",
-      "sha256": "38fe4c3ca0a037773f477acb32cac2ff863998d918ef1b7822307007f84e9832",
+      "sha256": "292a319656b4708d776cde897c2b7e727ee505eb62e4a1d02594b1904295b303",
       "bytes": 1758
     },
     {
@@ -644,7 +644,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "e4aff5783551927180e0b97ede880f1fa24ae8ffd4b16c112523c3526cb4d43a",
+      "sha256": "6b4729a71b308f6f593d76c04e091f0287312e8dbc10e9200e1ad077c2536ca9",
       "bytes": 27431
     },
     {
@@ -679,7 +679,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "d60f3bcbec8284e1c92723134cbbbd0f17f8297d8b0252787f79b772608a3b8f",
+      "sha256": "89c190b204163e0b548e11d9c592942cb55a3dca09fa79383ec6cbe8778f9e94",
       "bytes": 58571
     },
     {
@@ -689,7 +689,7 @@
     },
     {
       "path": "dist/data/python-provenance.json",
-      "sha256": "d8c1fbe96b80d8a71d160d0cda5d474afc03850b2cd7cece272770b8dc21c44c",
+      "sha256": "b17b6fee53a8733cdaa6d595675177dccbe82346d2181c54139687ae765e06ea",
       "bytes": 56687
     },
     {
@@ -714,7 +714,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "17767fce949a4ff460e4f931843436d2c914411955a27b3d2a9ecdb323c3b947",
+      "sha256": "e2801cabe394be413800fbb30710f793e7ed966dd8001df28f303809b4368ce4",
       "bytes": 10435
     },
     {
@@ -744,7 +744,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "b98e5e1b7ad7d0f884b71b2db3ac578dd0e91e2ae5f697e34f4453481c53a19a",
+      "sha256": "6e4f62669a90b950e0400d863b26e321c3e9885a0a3f1ad8b6eae0e1e1880949",
       "bytes": 13329
     },
     {
@@ -754,7 +754,7 @@
     },
     {
       "path": "dist/data/structure-dynamics-provenance.json",
-      "sha256": "39a4a07732799455a7c54b9c4be1cd408d2717ee543c7ce590ced1ae62558060",
+      "sha256": "6c4618f96f64abf74bb3f6b70b70fb96caf7933b9143695e9b8f28bdd795d03a",
       "bytes": 1332
     },
     {
@@ -1999,8 +1999,8 @@
     },
     {
       "path": "dist/python/phonon_modes.py",
-      "sha256": "61645f39143554a0382b1b3b1d730913959cf903c30abf6b6ea0054107a39a29",
-      "bytes": 24519
+      "sha256": "576a9f99c970fd730eae651bbdc5afd03bb9b2c9b0247d382024bf41665ac54c",
+      "bytes": 24653
     },
     {
       "path": "dist/python/phonon_spectra.py",
@@ -2014,8 +2014,8 @@
     },
     {
       "path": "dist/python/phonopy_import.py",
-      "sha256": "e71f96331d4e5b71dff9041494e90f0fddf0ce8a763124176ce8869db25b6b07",
-      "bytes": 36795
+      "sha256": "eebef54f97ab90da7ff6ee4369b3e4b8f8912fb63cc93767e66aa6ced6f7e8bb",
+      "bytes": 36852
     },
     {
       "path": "dist/python/polaron_lab.py",
@@ -3159,7 +3159,7 @@
     },
     {
       "path": "scripts/fixtures/bridges-projects.json",
-      "sha256": "ff21a6cc7f1a90d83f6436794f987a1192cc9ea3f8903558512521940014f737",
+      "sha256": "637ad936a014e5a51a60719db9aacd6d3da43a91c7690dddd1d4a1c1bd94f0e0",
       "bytes": 869953
     },
     {
@@ -3194,12 +3194,12 @@
     },
     {
       "path": "scripts/fixtures/material-research.json",
-      "sha256": "816d5aa066a76b31a8a9bcc7c59ad9db5fdd2ae9d44b4649108540424971539c",
-      "bytes": 287780
+      "sha256": "a69adcbd4aee42e4f515719cdd5ab56566cc40a03205b8a77a72c46ac88f77e8",
+      "bytes": 287473
     },
     {
       "path": "scripts/fixtures/pathways-projects.json",
-      "sha256": "a159372ff4687c3b346d611e4c65b4904b9dce3eed7f1953443391ffc44ed88a",
+      "sha256": "eb56066838807f4e504c702e891ce9e62f8e4f94d50e2c76db02fd0808494695",
       "bytes": 1737009
     },
     {

@@ -357,11 +357,13 @@ def run(payload=None):
         raise ValueError('payload 必须是对象')
     imported = any(importer._provided(payload, key) for key in ('content', 'data'))
     data = importer._parse(payload) if imported else preset_data(payload.get('preset', 'silicon'))
-    parse_payload = dict(payload, data=data, amplitude=0, phase=0, supercell=[1, 1, 1])
+    parse_payload = dict(payload, data=data)
     parse_payload.setdefault('selected_band', 0 if imported else 3)
     if not imported:
         parse_payload.setdefault('filename', f"{payload.get('preset', 'silicon')}-synthetic-gamma.json")
-    result = importer.run(parse_payload)
+    # The importer translates data into a common representation. This lab
+    # builds its own periodic structure rather than using the preview window.
+    result = importer.run(parse_payload, include_animation=False)
     if result['kind'] != 'phonon-data' or result['selection'] is None:
         raise ValueError('模式分析需要包含频率和本征矢的 band.yaml / qpoints.yaml，结构文件本身不能生成模式')
     structure = result['structure']
