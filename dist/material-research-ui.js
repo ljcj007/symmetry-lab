@@ -3,17 +3,19 @@ import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
+import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
 const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const notes=rows=>rows?.length?`<aside class="mr-scope"><ul>${rows.map(x=>`<li>${esc(typeof x==='string'?x:JSON.stringify(x))}</li>`).join('')}</ul></aside>`:'';
-const sources=rows=>`<div class="obs-sources">${(rows||[]).map(s=>typeof s==='string'?{title:s,url:s}:s).filter(s=>/^https:\/\//.test(s.url||'')).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(s.title||s.url)} ↗</a>`).join('')}</div>`;
+const sources=rows=>`<div class="obs-sources">${(rows||[]).map(s=>typeof s==='string'?{title:s,url:s}:s).filter(s=>/^https:\/\//.test(s.url||'')).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noreferrer"${s.id?.startsWith('graphene-wannier-')?' data-math-ignore':''}>${esc(s.title||s.url)} ↗</a>`).join('')}</div>`;
 const palette=['#247b65','#b17a31','#617caf','#a75f85'];
 const thermalBasis=r=>{const label=r.basisLabel||(r.basis==='per-input-cell'?'每输入计算胞':'每模型原胞'),cell=label.replace(/^每/,'');return {label,cell,energy:'kJ/mol'+cell,entropy:'J/(mol'+cell+' K)'};};
 export const CU_THERMAL_EXAMPLE=Object.freeze({id:'official-phonopy-cu-thermal-index05',filename:'phonopy-cu-thermal-index05.yaml',sha256:'1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1',byteCount:41975,commit:'18cad919af8fe8aad349e04f101887fa19b051a0',path:'test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',url:'https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',archiveFile:'phonopy-cu-thermal-index05.yaml.xz',archiveSha256:'36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f',archiveByteCount:4900,natom:4,rowCount:251,license:'BSD-3-Clause',representation:'losslessly-decompressed-upstream-utf8'});
 const CU_EXAMPLE_CACHE='20261114-evidence1';
+const MATERIAL_RESEARCH_CACHE='20261120-wannier1';
 export async function verifyCuThermalExample(content){
  if(typeof content!=='string')return null;const bytes=new TextEncoder().encode(content);
  if(bytes.length!==CU_THERMAL_EXAMPLE.byteCount||!globalThis.crypto?.subtle)return null;
@@ -27,8 +29,73 @@ function modeSourceIdentityHTML(identity){
  const companion=reference.companion||{};
  return `<aside class="mr-scope"><h3>ZnO 派生计算来源</h3><p>本征矢由 Phonopy 对官方 ZnO 力数据离线后处理生成，本例关闭 NAC；它不是原仓库已有的 qpoints 输出，也不是本站新执行的第一性原理计算。</p><p>${companion.matchesPinnedSource?'伴随原胞与固定版本原文逐字节一致。':'伴随原胞未与固定原文逐字节匹配；请核对所用原胞、原子顺序和质量。'}</p><details><summary>主文件与伴随原胞的身份</summary><pre data-math-ignore>${esc('qpoints SHA-256: '+identity.sha256+'\nqpoints UTF-8 bytes: '+identity.byteCount+'\ncompanion SHA-256: '+(companion.actualSha256||'—')+'\nexpected companion SHA-256: '+(companion.expectedSha256||'—')+'\nPhonopy: '+(reference.generator?.phonopy||'—'))}</pre></details><div class="obs-links"><a href="data/examples/phonopy-zno-source.json" target="_blank">ZnO 输入与生成记录 ↗</a><a href="docs/phonopy-import.md#zno-derived-example" target="_blank">ZnO 数据与练习 ↗</a></div></aside>`;
 }
+const grapheneProgress={ideal:false,interpretation:false};
+const formula=tex=>`<span class="sl-math">${mathHTML(tex)}</span>`;
+function grapheneActivityHTML(){
+ const {ideal,interpretation}=grapheneProgress;
+ return `<details id="mr-graphene-activity" class="learning-remediation" ${ideal?'open':''}>
+  <summary>石墨烯在 K 点一定简并吗？</summary>
+  <fieldset id="mr-graphene-ideal-question" ${ideal?'disabled':''}>
+   <legend>1. 预测理想模型的 K 点</legend>
+   <p>取等价的 A、B 子晶格，仅保留相同的最近邻跃迁，并忽略自旋轨道耦合。K 点三个跃迁的相位是 ${formula('1,\\,\\omega,\\,\\omega^2')}，其中 ${formula('\\omega=\\exp(2\\pi i/3)')}。两条能带在这里怎样排列？</p>
+   <label><input type="radio" name="mr-graphene-ideal" value="equal" ${ideal?'checked':''}><span>两条能带简并</span></label>
+   <label><input type="radio" name="mr-graphene-ideal" value="split"><span>相等的跃迁幅度会让两个能量分开</span></label>
+   <label><input type="radio" name="mr-graphene-ideal" value="unknown"><span>需要先知道跃迁的数值</span></label>
+   <button id="mr-graphene-check-ideal" type="button" class="secondary">检查预测</button>
+   <p id="mr-graphene-ideal-status" class="learning-feedback" role="status">${ideal?'预测正确。':''}</p>
+  </fieldset>
+  <div id="mr-graphene-compare" ${ideal?'':'hidden'}>
+   <p>三个相位相加为 ${formula('1+\\omega+\\omega^2=0')}，所以非对角跃迁在 K 点抵消。两个子晶格的在位能相等，此处两个本征值相同。</p>
+   <h4 id="mr-graphene-import-heading" tabindex="-1">2. 核验文件并计算能量</h4>
+   <p>打开 MagneticTB，展开「核验并载入石墨烯原始文件」，载入两份固定版本文件，再点击「运行 Python 计算」。沿原文件的 M–K–Γ–M 路径找到 K，记录两个原始能量。</p>
+   <p>先用 eV 作差，再乘以 1000 换算为 meV。</p>
+   <div class="obs-links"><a href="#magnetictb">打开 MagneticTB 并核验石墨烯文件 →</a></div>
+   <fieldset id="mr-graphene-interpretation-question" ${interpretation?'disabled':''}>
+    <legend>3. 比较 K 点的数值证据</legend>
+    <label><input type="radio" name="mr-graphene-interpretation" value="zero"><span>劈裂为零，因为通过了厄米性检查</span></label>
+    <label><input type="radio" name="mr-graphene-interpretation" value="point" ${interpretation?'checked':''}><span>有 meV 量级的直接劈裂，结论适用于这份输入的这个 K 点</span></label>
+    <label><input type="radio" name="mr-graphene-interpretation" value="global"><span>有 eV 量级的劈裂，可以据此得到整个布里渊区的最小带隙</span></label>
+    <button id="mr-graphene-check-interpretation" type="button" class="secondary">核对结果与结论</button>
+    <p id="mr-graphene-interpretation-status" class="learning-feedback" role="status">${interpretation?'结果与结论正确。':''}</p>
+   </fieldset>
+   <div id="mr-graphene-explanation" tabindex="-1" ${interpretation?'':'hidden'}>
+    <p>固定文件在路径标出的 K 点给出 −1.2621987299 eV 和 −1.2592532701 eV。改用精确分数坐标 ${formula('(1/3,1/3,0)')} 后，仍有约 2.946 meV 的劈裂。把两个能量同时减去费米能，差值保持不变。</p>
+    <p>厄米性保证本征值为实数。判断简并需要检查使两态保持同能的对称条件，寻找全区最小带隙需要检查整个布里渊区。</p>
+    <div class="obs-links"><a href="docs/wannier-graphene-example.md">文件来源、坐标约定与复现 →</a><a href="#atlas/research?material=graphene-wannier">石墨烯材料案例 →</a></div>
+   </div>
+  </div>
+ </details>`;
+}
+function bindGrapheneActivity(root,isCurrent){
+ const activity=root.querySelector('#mr-graphene-activity');
+ if(!activity)return;
+ const find=id=>activity.querySelector('#mr-graphene-'+id);
+ function bindAnswer(stage,correct,{hint,success,reveal,focus}){
+  find('check-'+stage).onclick=()=>{
+   if(!isCurrent()||root.querySelector('#mr-graphene-activity')!==activity||grapheneProgress[stage])return;
+   if(stage==='interpretation'&&!grapheneProgress.ideal)return;
+   const selection=[...activity.querySelectorAll(`[name="mr-graphene-${stage}"]`)].find(input=>input.checked);
+   const feedback=find(stage+'-status');
+   if(!selection){feedback.textContent='请先选择一个答案。';return;}
+   if(selection.value!==correct){feedback.textContent=hint;return;}
+   grapheneProgress[stage]=true;
+   feedback.textContent=success;
+   find(stage+'-question').disabled=true;
+   find(reveal).hidden=false;
+   find(focus).focus?.();
+  };
+ }
+ bindAnswer('ideal','equal',{
+  hint:'把三个等长的相位矢量首尾相接，再想一想它们的和。',
+  success:'预测正确。',reveal:'compare',focus:'import-heading'
+ });
+ bindAnswer('interpretation','point',{
+  hint:'请比较两个能量的差值和单位。厄米性不要求两条带等能。',
+  success:'结果与结论正确。',reveal:'explanation',focus:'explanation'
+ });
+}
 let catalogPromise,lastResult=null,handoff=null;
-const catalog=()=>catalogPromise??=fetch('data/material-research.json?v='+RELEASE).then(r=>{if(!r.ok)throw Error('材料分析课程未能载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/material-research.json?v='+MATERIAL_RESEARCH_CACHE).then(r=>{if(!r.ok)throw Error('材料分析课程未能载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getMaterialResearchResult=()=>lastResult;
 export function setMaterialResearchInput(module,input){handoff={module,input:structuredClone(input)};}
 export const researchCourseRoute=(module,query='')=>'#classroom/'+({modes:'structure-dynamics',bands:'crystal',thermo:'observables'}[module]||'structure-dynamics')+'?module='+module+(query?'&'+query:'');
@@ -123,8 +190,25 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(researchCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">回到本课讲解 →</a><a href="#atlas/research${materialContext()?'?material='+encodeURIComponent(materialContext()):''}">材料分析路线 →</a><a href="#atlas/notebook">材料研究记录 →</a></div>`;
  function draw(){if(!current())return;disposeThermalBridge();onLocation((selection.calculationOnly?'计算中心 / ':selection.atlasOnly?'群与材料图谱 / ':'学习中心 / ')+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">SYMMETRY → MODES → MATERIAL RESPONSE</span><h2>${selection.atlasOnly?'把计算串成一份材料研究':module.title}</h2><p>${selection.atlasOnly?'从一个问题进入课程、计算和可恢复的研究记录。':esc(module.summary)}</p></header>${projectInputStatusHTML(projectLoad)}${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="材料分析课堂">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料路线']].map(([id,title])=>`<button type="button" data-mr-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="mr-content"></div>`;root.querySelectorAll('[data-mr-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-mr-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.mrTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#mr-form'),module.id);syncLabControls();}bindCourseFlowActions({root,prefix:'mr',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'mr-to-lab'});}
- function learn(){$('#mr-content').innerHTML=`<label class="obs-chapter">选择主题<select id="mr-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${module.id==='modes'?phonopyDerivationLearningLinkHTML():''}${lesson.id==='thermal-data'?cuThermalSourceHTML()+'<button id="mr-cu-lesson" type="button" class="primary">载入官方 Cu 热性质计算示例 →</button>':''}${learningBridgeHTML('thermal',lesson.id)}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}<div class="obs-links"><button id="mr-to-lab" class="primary">打开对应实验 →</button><button id="mr-to-derive" class="secondary">分步推导 →</button></div>${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;const bridgeLesson=lesson.id;disposeThermalBridge=bindLearningBridge({root,family:'thermal',lessonId:bridgeLesson,isCurrent:current,stateStore:thermalBridgeStates,onOpenLab:openThermalBridgeLab});if($('#mr-cu-lesson')){const button=$('#mr-cu-lesson');button.onclick=()=>{if(current()&&$('#mr-cu-lesson')===button)return openCuThermalExample();};}$('#mr-lesson').onchange=e=>{lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(e=>e.lesson===lesson.id);draw();sync();};$('#mr-to-derive').onclick=()=>{exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
- function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#mr-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);return `<a href="${researchCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · 学习 →</a><a href="#compute/${m.route}?material=${esc(c.id)}">对应计算 →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">保存材料研究记录 →</a></div></article>`).join('')}</div>`;}
+ function learn(){
+  $('#mr-content').innerHTML=`<label class="obs-chapter">选择主题<select id="mr-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label>
+  <article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>
+  ${module.id==='modes'?phonopyDerivationLearningLinkHTML():''}${lesson.id==='thermal-data'?cuThermalSourceHTML()+'<button id="mr-cu-lesson" type="button" class="primary">载入官方 Cu 热性质计算示例 →</button>':''}
+  ${learningBridgeHTML('thermal',lesson.id)}
+  ${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}
+  ${lesson.id==='band-crossing'?grapheneActivityHTML():''}
+  <div class="obs-links"><button id="mr-to-lab" class="primary">打开对应实验 →</button><button id="mr-to-derive" class="secondary">分步推导 →</button></div>
+  ${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+  disposeThermalBridge=bindLearningBridge({root,family:'thermal',lessonId:lesson.id,isCurrent:current,stateStore:thermalBridgeStates,onOpenLab:openThermalBridgeLab});
+  bindGrapheneActivity(root,current);
+  if($('#mr-cu-lesson')){const button=$('#mr-cu-lesson');button.onclick=()=>{if(current()&&$('#mr-cu-lesson')===button)return openCuThermalExample();};}
+  $('#mr-lesson').onchange=e=>{lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(e=>e.lesson===lesson.id);draw();sync();};
+  $('#mr-to-derive').onclick=()=>{exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};
+ }
+ function cases(){
+  const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));
+  $('#mr-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);return `<a href="${researchCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · 学习 →</a><a href="#compute/${m.route}?material=${esc(c.id)}">对应计算 →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">保存材料研究记录 →</a></div>${c.sources?.length?sources(data.sources.filter(source=>c.sources.includes(source.id))):''}</article>`).join('')}</div>`;
+ }
  async function openCuThermalExample(){
   if(!current()||module.id!=='thermo')return false;flowDrafts.discard(module.id);invalidate();forms.thermo={...structuredClone(defaults.thermo),source:'thermal'};tab='lab';draw();sync();await loadExample('cu');return true;
  }

@@ -63,18 +63,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 63552,
-      "sha256": "bdc0436fd9d964644f823271966568c14559d7fad29eb358bed5efe6c6bbc315"
+      "bytes": 64521,
+      "sha256": "09a1d480f146376723ff5bfe5b0b50a2f9369a9a8a517705948a03d13798901c"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 100774,
-      "sha256": "7a0e13252f9ce259a62d480dc47d5d1a228a8e642dbdc35f38694de672ba6ef7"
+      "bytes": 100880,
+      "sha256": "d4a20dbf7e2b678d8b67182b592d46131b088e773dee60dd42a1601c9811bd49"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32219,
-      "sha256": "0f304e678d5c7f9736010b614da20d07c00d16c151000760bdab7508902a67ad"
+      "bytes": 32220,
+      "sha256": "c42990c83f0c8940f07dd296d7480ccb4af47e2cebcc8ca09c38b8b7fba2efd1"
     },
     "dist/data/material-observables.json": {
       "normalization": "utf8-lf-v1",
@@ -93,8 +93,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8113,
-      "sha256": "d539be3230523d54bff7b026b006dfa62078768d51238b97be1493320516afe7"
+      "bytes": 8183,
+      "sha256": "6c6d6f9864467c146568cf3b52b7e3dd2d35e64560e9b56f46be9a50141c9c0b"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -173,8 +173,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23718,
-      "sha256": "fd9ccad7238f3459a0793d941ed92811cb8252399d6e34026f8ed8e37ce98b47"
+      "bytes": 24266,
+      "sha256": "ac14499bf7471c9ce21889ec36f3329642c6020165e69ed83cd584031ebdfbd7"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -213,8 +213,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4586,
-      "sha256": "c856238d284308142527e5a885796036b012890a7db56fe83fcc41b6c9c7df1e"
+      "bytes": 4736,
+      "sha256": "cdece1159a1fcc7883307419d4014709ff76b48466b490fa236f367036971519"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -278,8 +278,8 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4688,
-      "sha256": "51e7040cb801c6a90ac3b78c2a0117e92dfef696ee7f829156ad7af307659fb8"
+      "bytes": 4729,
+      "sha256": "d140b859742b160f4a100b800e611eb88f592876a9cc1736daa7b644881fac4d"
     },
     "scripts/test-tensor-replay-ui.mjs": {
       "normalization": "utf8-lf-v1",

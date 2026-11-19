@@ -1,0 +1,16 @@
+{
+  "两份原始文件的 SHA-256 已核验。已填入原始晶格和能带路径，请手动运行 Python 计算。": "Both originals match their pinned SHA-256 hashes. The original lattice and band path are loaded. Run the Python calculation when ready.",
+  "核验并载入石墨烯原始文件": "Verify and load the original graphene files",
+  "用 WannierTools 示例的两份原始文件重放能带。实空间晶格以 Å 为单位，M–K–Γ–M 路径使用该晶格的倒格分数坐标。": "Reproduce the bands using two original files from the WannierTools example. The lattice vectors are in Å. The M–K–Γ–M path uses fractional coordinates in that lattice’s reciprocal basis.",
+  "从 WannierTools 下载并载入两份文件": "Download and load both files from WannierTools",
+  "从本地选择同一版本的两份文件": "Choose both matching files from your device",
+  "可以从下面的链接保存原始文件，保留原文件内容，再分别选择两个文件。": "Save the originals from the links below and select each file without editing it.",
+  "核验并载入本地文件": "Verify and load the local files",
+  "WannierTools 固定版本目录": "WannierTools folder at the pinned commit",
+  "正在读取并核验两份文件…": "Reading and verifying both files…",
+  "无法核验这对文件。请核对固定版本的原始文件，或使用本地文件入口重试。": "Could not verify the file pair. Check the originals at the pinned commit or retry with local files.",
+  "原始路径上的 K 点两带劈裂": "Two-band splitting at K on the original path",
+  "（倒格分数坐标）": "(fractional reciprocal coordinates)",
+  "能量沿用输入文件的零点。这个差值由路径标出的 K 点两条能带得到。比较理想模型的简并预测时，还要核对坐标、对称性与模型本身。": "Energies use the input file’s zero. The difference comes from the two bands at the K point marked on the path. When comparing it with the ideal model’s degeneracy prediction, check the coordinates, symmetries, and model.",
+  "回到课堂解释 K 点结果": "Return to the lesson to interpret the K-point result"
+}

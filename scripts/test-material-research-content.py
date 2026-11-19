@@ -52,13 +52,20 @@ class MaterialResearchContentTests(unittest.TestCase):
                                   'bands': ('band_connectivity', 'band-connectivity'),
                                   'thermo': ('phonon_thermo', 'phonon-thermo')})
         cases = {c['id']: c for c in DATA['cases']}
-        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model'})
+        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model', 'graphene-wannier'})
         self.assertEqual(cases['square-model']['modules'], ['bands'])
         self.assertIn('二维模型', cases['square-model']['assumption'])
         self.assertIn('教学', cases['silicon']['assumption'])
+        graphene = cases['graphene-wannier']
+        self.assertEqual(graphene['modules'], [])
+        self.assertEqual(set(graphene['sources']), {'graphene-wannier-hr', 'graphene-wannier-bands'})
+        self.assertEqual({path for _, path in graphene['links']}, {
+            '#classroom/crystal?module=bands&tab=learn&lesson=band-crossing', '#magnetictb'
+        })
         for case in cases.values():
             self.assertTrue(set(case['modules']) <= set(mapping))
             self.assertTrue(all(link[1].startswith('#') for link in case['links']))
+            self.assertTrue(set(case.get('sources', [])) <= {source['id'] for source in DATA['sources']})
 
     def test_unitary_basis_change_preserves_trace_and_multiplicities(self):
         angle = .37

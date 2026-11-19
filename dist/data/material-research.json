@@ -5,7 +5,9 @@
     {"id":"phonopy","title":"Phonopy：动力学矩阵、本征矢与热力学公式","url":"https://phonopy.github.io/phonopy/formulation.html"},
     {"id":"files","title":"Phonopy：输出文件与单位","url":"https://phonopy.github.io/phonopy/output-files.html"},
     {"id":"isodistort","title":"ISODISTORT：畸变模与母相—子相关系","url":"https://iso.byu.edu/isodistorthelp.php"},
-    {"id":"bilbao","title":"Double crystallographic groups and their representations on the Bilbao Crystallographic Server","url":"https://arxiv.org/abs/1706.09272"}
+    {"id":"bilbao","title":"Double crystallographic groups and their representations on the Bilbao Crystallographic Server","url":"https://arxiv.org/abs/1706.09272"},
+    {"id":"graphene-wannier-hr","title":"WannierTools 原始跃迁文件 Graphene_hr.dat","url":"https://github.com/quanshengwu/wannier_tools/blob/362171ce35450118828c6960a882e3a6d08c73f5/examples/Graphene/Graphene_hr.dat"},
+    {"id":"graphene-wannier-bands","title":"WannierTools 原始晶格与路径文件 wt.in-bands","url":"https://github.com/quanshengwu/wannier_tools/blob/362171ce35450118828c6960a882e3a6d08c73f5/examples/Graphene/wt.in-bands"}
   ],
   "modules": [
     {"id":"modes","action":"phonon_modes","route":"phonon-modes","pathway":"structure-dynamics","title":"声子模式识别与冻结模","summary":"在 Γ 点识别整个简并子空间，再把选定振动冻结为可导出的结构。","lesson":"mode-subspaces"},
@@ -118,6 +120,16 @@
   "cases": [
     {"id":"silicon","formula":"Si","title":"从 Γ 模式到冻结结构与热容","summary":"识别 Oh 的声学 T1u 与光学 T2g，检查位移后导出结构；再用自己的网格数据研究热力学。","assumption":"内置频率和模式是可核验的教学构造；θE/θD 为用户参数，不是 Si 的拟合参数。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=silicon"],["衍射消光","#compute/diffraction?material=silicon"],["Phonopy 导入","#compute/phonopy?material=silicon"]]},
     {"id":"gaas","formula":"GaAs","title":"不同原子质量与 Td 振动表示","summary":"比较质量加权本征矢与实际位移，理解声学和光学 T2 子空间，并构造冻结模。","assumption":"演示不由模式标签推算 Raman 强度或真实软模频率。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=gaas"],["红外与 Raman 选择定则","#compute/phonons?preset=gaas"],["Phonopy 导入","#compute/phonopy?material=gaas"]]},
-    {"id":"square-model","formula":"C4v 模型","title":"方格晶格上的轨道、镜面与交叉","summary":"用 p_x/p_y 两轨道的周期模型，计算 E→A′+A″ 和镜面破缺开隙；再切换到自旋 Rashba 模型。","assumption":"这是二维模型，不指代某一真实材料，也不是所有空间群的能带连接目录。","modules":["bands"],"links":[["点群与表示","#classroom/foundations"],["双群与自旋","#classroom/spin"],["紧束缚与拓扑计算","#magnetictb"]]}
+    {"id":"square-model","formula":"C4v 模型","title":"方格晶格上的轨道、镜面与交叉","summary":"用 p_x/p_y 两轨道的周期模型，计算 E→A′+A″ 和镜面破缺开隙；再切换到自旋 Rashba 模型。","assumption":"这是二维模型，不指代某一真实材料，也不是所有空间群的能带连接目录。","modules":["bands"],"links":[["点群与表示","#classroom/foundations"],["双群与自旋","#classroom/spin"],["紧束缚与拓扑计算","#magnetictb"]]},
+    {
+      "id":"graphene-wannier",
+      "formula":"C",
+      "title":"石墨烯的 K 点：理想简并与文件能带",
+      "summary":"比较理想最近邻模型的相位抵消与两轨道 WannierTools 输入。先作预测，再核对原文件和倒格坐标，沿 M–K–Γ–M 路径运行能带计算。",
+      "assumption":"原文件是计算示例，关闭自旋轨道耦合。它给出指定路径和 K 点的能量，研究全布里渊区的最小带隙还需采样其他波矢。",
+      "modules":[],
+      "links":[["到课堂预测石墨烯简并","#classroom/crystal?module=bands&tab=learn&lesson=band-crossing"],["打开 MagneticTB 并核验石墨烯文件","#magnetictb"]],
+      "sources":["graphene-wannier-hr","graphene-wannier-bands"]
+    }
   ]
 }

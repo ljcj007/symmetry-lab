@@ -1,0 +1,114 @@
+.research-grid .graphene-source,
+.research-grid .graphene-source details,
+.graphene-diagnostic {
+  min-width: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: #284739;
+  overflow-wrap: anywhere;
+}
+
+.graphene-source,
+.graphene-diagnostic {
+  border: 1px solid #c9dcd0;
+  border-radius: 10px;
+  background: #f5faf7;
+  padding: 14px;
+}
+
+.graphene-source p,
+.graphene-diagnostic p {
+  margin: 12px 0;
+}
+
+.graphene-source a,
+.graphene-diagnostic a {
+  color: #215e49;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.graphene-actions,
+.graphene-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 12px 0;
+}
+
+.graphene-source-links {
+  list-style: none;
+  padding: 0;
+}
+
+.graphene-source button,
+.graphene-source input {
+  max-width: 100%;
+  min-height: 44px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.graphene-source button {
+  white-space: normal;
+  text-align: left;
+}
+
+.graphene-source [hidden] {
+  display: none;
+}
+
+.graphene-source summary {
+  min-height: 32px;
+}
+
+.graphene-source :focus-visible,
+.graphene-diagnostic a:focus-visible {
+  outline: 2px solid #1d664f;
+  outline-offset: 3px;
+}
+
+.graphene-files {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.graphene-files input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.graphene-files input::file-selector-button {
+  font: inherit;
+}
+
+.graphene-diagnostic {
+  margin: 18px 0;
+}
+
+.graphene-diagnostic h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.graphene-diagnostic dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: 8px 16px;
+  margin: 12px 0;
+}
+
+.graphene-diagnostic dd {
+  margin: 4px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .graphene-actions button,
+  #graphene-verify-local {
+    width: 100%;
+  }
+}

@@ -296,3 +296,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - Four calculation-directory cards link to their verified inputs for Z and affine classification, the integral normalizer, the arithmetic centralizer, and symbolic magnetic corepresentations. The exact example identity remains in the address. Loading replaces the draft only after the user selects the load button and the example has been read and checked. Running remains explicit.
 - The example guide links these same cases to the results and certificates students should inspect. `BNS 1.3` and `Kramers` queries now find the symbolic corepresentation tool in both language editions. The original tool routes, ordinary example menus and result handoffs remain available.
+
+## Compare graphene's ideal crossing with a Wannier input
+
+- The band-crossing lesson and graphene material case compare the ideal nearest-neighbor model with a specific WannierTools input. Learners predict the ideal K-point degeneracy from the three hopping phases, then examine the separation at the supplied K point in a different Hamiltonian.
+- MagneticTB reads and verifies the official files only when requested. The browser can instead verify a pair selected locally. The settings file supplies the lattice and M–K–Γ–M path, and the user runs the existing HR calculation manually. Ordinary HR imports and the ideal graphene preset retain their previous entry points.
+- The original input gives about 2.94546 meV between its two levels at the supplied K point. The case distinguishes level separation from Hermiticity and identifies the units and reciprocal basis. The source package holds the revision, digests and code to verify the two upstream files.

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28271,
-  "translatedUnits": 28271,
+  "sourceUnits": 28343,
+  "translatedUnits": 28343,
   "missing": [],
-  "files": 500,
+  "files": 503,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -130,6 +130,10 @@
     "en-si-structure-docs.json",
     "en-advanced-shared-presets-ui.json",
     "en-advanced-shared-presets-directory.json",
-    "en-advanced-shared-presets-docs.json"
+    "en-advanced-shared-presets-docs.json",
+    "en-wannier-graphene-source.json",
+    "en-wannier-graphene-ui.json",
+    "en-wannier-graphene-lesson.json",
+    "en-wannier-graphene-docs.json"
   ]
 }
