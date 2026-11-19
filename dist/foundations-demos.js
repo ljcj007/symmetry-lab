@@ -148,7 +148,8 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   if(theme!=='water')return '';
   const characterLink=`<a href="${charactersRoute}">矩阵与特征标演示</a>`;
   return `<p id="fd-water-character-prerequisite" class="fd-scope">要观察镜面对一个矢量的作用，打开${characterLink}。在该演示中选择 ${math('\\sigma(xz)')} 和完整三维矢量。这里再把同一个镜面操作作用到水分子的三个原子上。</p>
-  <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>水的特征标 −1 是怎样算出的？</summary><p>逐列跟踪三个原子的九个位移，区分交换原子与转动箭头，再约化并扣除刚性运动。</p><div data-water-actions-body></div></details>`;
+  <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>水的特征标 −1 是怎样算出的？</summary><p>逐列跟踪三个原子的九个位移，区分交换原子与转动箭头，再约化并扣除刚性运动。</p><div data-water-actions-body></div></details>
+  <p class="fd-scope"><a href="#classroom/observables?material=gaas&amp;lesson=acoustic-optical">把整体转动放进周期晶体，结果会怎样？ →</a></p>`;
  }
  function mountWater(){
   const detail=root.querySelector('[data-water-actions-entry]'),body=detail?.querySelector('[data-water-actions-body]');if(!detail||!body)return;

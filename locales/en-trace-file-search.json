@@ -1,0 +1,4 @@
+{
+  "读取 VASP2Trace 或 MagVasp2trace 能带特征标，并匹配当前群的表示。": "Read VASP2Trace or MagVasp2trace band characters and match them to representations of the current group.",
+  "文件上限为 10 MiB。普通格式的对称操作行有 20 列，磁格式有 21 列。先在工作台用同一 BC 原胞、波矢和自旋框架完成分析，再手动匹配。": "The file limit is 10 MiB. The ordinary format has 20 columns per symmetry operation, and the magnetic format has 21. First run the workbench analysis using the same BC primitive cell, wave vector, and spin frame. Then match the characters manually."
+}

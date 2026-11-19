@@ -1,4 +1,4 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-zno-quadrature1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-gamma-trace1';
 import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -148,7 +148,8 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   if(theme!=='water')return '';
   const characterLink=`<a href="${charactersRoute}">matrices and characters demo</a>`;
   return `<p id="fd-water-character-prerequisite" class="fd-scope">To see how the mirror acts on one vector, open the ${characterLink}. Select  ${math('\\sigma(xz)')}  and the full three-dimensional vector. Here we apply the same mirror to all three atoms of water.</p>
-  <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>How does water acquire a character of −1?</summary><p>Follow the nine displacement columns of three atoms, distinguish atom exchange from arrow rotation, then reduce the representation and remove rigid motions.</p><div data-water-actions-body></div></details>`;
+  <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>How does water acquire a character of −1?</summary><p>Follow the nine displacement columns of three atoms, distinguish atom exchange from arrow rotation, then reduce the representation and remove rigid motions.</p><div data-water-actions-body></div></details>
+  <p class="fd-scope"><a href="#classroom/observables?material=gaas&amp;lesson=acoustic-optical">What happens if we try a rigid rotation in a periodic crystal? →</a></p>`;
  }
  function mountWater(){
   const detail=root.querySelector('[data-water-actions-entry]'),body=detail?.querySelector('[data-water-actions-body]');if(!detail||!body)return;

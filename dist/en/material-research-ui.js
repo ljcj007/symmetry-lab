@@ -184,7 +184,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
   invalidate();pendingRead={...extra,kind,id:fileTicket,context:fileContext(),form:$('#mr-form'),controller:kind==='sample'&&typeof AbortController==='function'?new AbortController():null};syncLabControls();return pendingRead;
  }
  function inputReadFailed(request,error,retry){
-  if(!readIsCurrent(request))return;invalidate();$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)} ${esc("Loading failed; retry or choose another file.")}</p><button id="mr-retry-input" type="button" class="secondary">Retry loading</button>`;
+  if(!readIsCurrent(request))return;invalidate();$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)} ${esc("Loading failed; retry or choose another file.")}</p><button id="mr-retry-input" type="button" class="secondary">Try loading again</button>`;
   const button=$('#mr-retry-input');button.onclick=()=>{if(current()&&$('#mr-retry-input')===button&&!busy&&!readIsCurrent())return retry();};
  }
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;

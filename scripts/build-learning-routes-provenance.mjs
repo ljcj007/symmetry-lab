@@ -16,6 +16,10 @@ files.push('dist/pathways-ui.js','scripts/test-pathways-ui.mjs');
 files.push(...lessonProgressionCatalogs.map(item=>'dist/data/'+item.catalog+'.json'));
 files.push('scripts/test-material-research-ui.mjs','scripts/test-material-notebook.mjs',
  'scripts/test-navigation-ui.mjs','scripts/test-lie-group-ui.mjs');
+files.push('dist/foundations-demos.js','dist/optional-panel.js','dist/gamma-periodicity-ui.js','dist/python/phonon_spectra.py',
+ 'locales/en-gamma-periodicity.json','locales/en-gamma-periodicity-host.json',
+ 'scripts/test-gamma-periodicity.mjs','scripts/test-python-gamma-periodicity-reference.py',
+ 'dist/tool-capabilities.js','locales/en-trace-file-search.json','scripts/test-file-search.mjs');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -48,6 +52,7 @@ data.limitations.push('Course connections do not themselves implement or certify
 data.reviewHistory=[{release:'20261115-tensor1',reviewedLessons:112,optionalEdges:130},{release:'20261115-spin1',reviewedLessons:148,optionalEdges:172},{release:'20261115-momentum1',reviewedLessons:197,optionalEdges:259,newConnections:87,newlyConnectedLessons:49}];
 data.verification.push('Eighty-seven further read optional relationships preserve all preceding 172 edges and connect the remaining 49 named inventory lessons. All 197 lessons now have recommendations through 259 acyclic edges. Tests lock every new pair and identity, all native lesson links, complete English reasons, 142 real classroom-shell contexts and 46 independent expert entries without calculation or mastery-state access.');
 data.verification.push('New visible boundaries retain equal-input-frequency SHG j/k symmetry without full Kleinman permutation, χ versus piezoelectric e and d=χ/2, reciprocal fractions versus radian wavevectors, exact complex amplitudes versus fixed-irrep path spaces, single-particle versus Slater determinant models, electric versus magnetic probes and their separate units/thermal weights, same-k antiunitary tests, complete fermionic exchange, and declared order-parameter manifolds.');
+data.verification.push('The water lesson links to a GaAs displacement comparison. Both editions check the rigid rotation against all three fcc primitive directions. The optical contrast uses the existing Python phonon example geometry and a verified model frame. The exact trace.txt lookup opens the ordinary and magnetic band-character tool with its existing input constraints.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

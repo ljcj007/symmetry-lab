@@ -37,6 +37,9 @@ export const toolInputFormats=Object.freeze({
  'compute/qha-lab':Object.freeze([
   fileInput(['thermal_properties.yaml'],'将多个体积对应的热性质表与静态能配对，开展准谐计算。','每个体积都要一份完整热性质表，顺序须匹配体积和静态能；单独一份文件不是完整 QHA 输入。',1)
  ]),
+ 'bands':Object.freeze([
+  fileInput(['trace.txt'],'读取 VASP2Trace 或 MagVasp2trace 能带特征标，并匹配当前群的表示。','文件上限为 10 MiB。普通格式的对称操作行有 20 列，磁格式有 21 列。先在工作台用同一 BC 原胞、波矢和自旋框架完成分析，再手动匹配。',3)
+ ]),
  'magnetictb':Object.freeze([
   fileInput(['wannier90_hr.dat','Graphene_hr.dat'],'导入 Wannier90 实空间哈密顿量并计算能带。','HR 文件上限为 10 MiB。核对倒格分数坐标路径，补充对应晶格可得到 Å⁻¹ 路径距离，然后手动运行。',3),
   fileInput(['wt.in-bands'],'与固定版本的 Graphene_hr.dat 配对，载入石墨烯示例的晶格和能带路径。','请在石墨烯原文件入口核验两份文件后手动运行。任意项目的路径设置须另行填入计算输入。',3)
@@ -108,7 +111,7 @@ export const toolCapabilities=Object.freeze({
  'compute/magnon-lab':record('numeric',['XXZ 铁磁／反铁磁链参数','外场、波矢与偏振选择'],['自旋波分支、模式与进动','动力学、能量和参考态稳定性诊断'],'给定有序参考态附近的线性自旋波演示。',['先核对参考态及稳定性；模式谱按所用线性化近似读取。'],'magnon XXZ spin wave Goldstone 磁振子 自旋波 稳定性',['dist/coupled-materials-ui.js','dist/python/magnon_lab.py']),
  'compute/band-connectivity':record('numeric',['C4v 分支及方格 px／py 或 Rashba 原型','k 路径、SOC 与破缺参数'],['表示限制、模型能带与交叉','保护条件和开隙对照'],'选定高对称线与低维 Bloch 模型的能带连接。',['表示分支与能量排序分别判断；真实材料结论还需相应能带数据。'],'compatibility band connectivity C4v Rashba 能带 相容关系 简并',['dist/material-research-ui.js','dist/python/band_connectivity.py']),
  'compute/nonsymmorphic-lab':record('numeric',['螺旋／滑移操作与单／双值选择','动量、跃迁、质量和 Zeeman 项'],['操作本征相位和最小 Bloch 谱','伙伴连接、沙漏与受控破缺'],'在声明的最小模型中联动分数平移相位与动量相关简并。',['小群与时间反演条件均在所选动量核对；交叉取决于保留的对称。'],'nonsymmorphic screw glide hourglass 螺旋 滑移 沙漏 Bloch 相位',['dist/construction-ui.js','dist/python/nonsymmorphic_lab.py']),
- 'bands':record('numeric',['本地 trace 文件或有序特征标 JSON／文本','工作台当前群、k 点和自旋分析'],['能带表示／共表示重数','重构、维数与能带 JSON 导出'],'将输入的能带特征标匹配到当前工作台表示。',['输入操作顺序必须与当前分析一致；简并聚合和容差随输入核对。'],'DFT trace JSON character band import 能带 导入 特征标 匹配',['dist/app.js','dist/python/symmetry_core.py']),
+ 'bands':record('numeric',['本地 trace 文件或有序特征标 JSON／文本','工作台当前群、k 点和自旋分析'],['能带表示／共表示重数','重构、维数与能带 JSON 导出'],'将输入的能带特征标匹配到当前工作台表示。',['输入操作顺序必须与当前分析一致；简并聚合和容差随输入核对。'],'DFT trace JSON character band import 能带 导入 特征标 匹配',['dist/app.js','dist/python/symmetry_core.py'],toolInputFormats.bands),
  'compute/unfold-lab':record('numeric',['一维超胞的跃迁、二聚化和杂质','超胞尺寸与采样'],['有限超胞谱和原胞投影谱权重','折叠／展开对照与归一化检查'],'一维紧束缚超胞的谱展开和局域缺陷示例。',['展开权重依赖声明的原胞基底；尺寸与采样分别控制有限效应。'],'band unfolding supercell defect spectral weight 能带展开 超胞 缺陷 谱权重',['dist/electronic-materials-ui.js','dist/python/unfold_lab.py']),
  'compute/quantum-geometry-lab':record('numeric',['SSH／QWZ 模型、质量与跃迁','网格、路径及规范变换'],['Zak 相、Berry 曲率和量子度规','FHS Chern、直接能隙与收敛检查'],'选定一维／二维两能带模型的量子几何与拓扑诊断。',['闭隙处需单独处理；离散积分与规范对照结合网格收敛读取。'],'Berry quantum metric Chern Zak SSH QWZ 量子几何 度规 拓扑',['dist/quantum-materials-ui.js','dist/python/quantum_geometry_lab.py']),
  'compute/hubbard-cluster-lab':record('numeric',['2–4 格点与固定上下自旋粒子数','跃迁、U、位能和边界条件'],['多体能谱、双占据和自旋关联','有限团簇能隙与超交换对照'],'在固定粒子数的有限 Fock 空间内数值精确对角化。',['这里的“精确对角化”指有限基内求解；本征值以浮点数计算。'],'Hubbard ED exact diagonalization cluster 关联 精确对角化 小团簇 超交换',['dist/pathways-ui.js','dist/python/hubbard_lab.py']),

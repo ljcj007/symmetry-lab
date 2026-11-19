@@ -4,7 +4,7 @@ import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlow
 // Course and calculators share the same Python interfaces; uploaded data stay local.
 import {setMaterialResearchInput} from './material-research-ui.js?v=20261120-zno-quadrature1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
-import {curveSVG} from './observables-ui.js?v=20261115-tensor1';
+import {curveSVG} from './observables-ui.js?v=20261120-gamma-trace1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const opts=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');

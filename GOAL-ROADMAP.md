@@ -324,3 +324,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - A frozen 64-site structure is constructed from a pinned ZnO eigenvector at q = (1/4, 0, 1/4). The comparison applies two mode bases to this same displacement. One basis contains the phase-zero direction. The other adds the direction at a quarter-period phase shift.
 - The learner can predict and then check the residual in the existing distortion calculator. A one-direction fit leaves a residual of about 0.31343 Å over the complete displacement vector. The two directions recover the frozen displacement to numerical precision. Both directions come from the same eigenvector and frequency.
+
+## Compare rigid motion in a molecule and a periodic crystal
+
+- The water displacement lesson leads to the GaAs Γ-point periodicity exercise. A rotation about z gives identical displacements along one translation parallel to the axis. A second translation with a transverse component gives a nonzero displacement difference, so rigid rotation fails the fixed-cell periodicity condition.
+- In the optical example, Ga and As move oppositely within the cell and every equivalent site repeats its displacement in all cells. The preconfigured GaAs phonon tool checks the mechanical, acoustic and optical dimensions of 6, 3 and 3.
+- The calculation finder recognizes `trace.txt`, `VASP2Trace` and `MagVasp2trace`. It links to band-character matching and states the existing file size, symmetry, wave-vector and spin-frame requirements.

@@ -4,7 +4,7 @@ const courseDefinitions={
 'zero-start':{load:()=>import('./zero-start.js?v=20261120-characterwater1'),render:'renderZeroStart',result:'getZeroStartResult'},
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
-'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261120-characterwater1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
+'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261120-gamma-trace1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
 'frontiers':{load:()=>import('./frontiers-ui.js?v=20261117-derive1'),render:'renderFrontiersView',result:'getFrontiersResult'}
 ,'connections':{load:()=>import('./connections-ui.js?v=20261117-derive1'),render:'renderConnectionsView',result:'getConnectionsResult'}
 ,'construction':{load:()=>import('./construction-ui.js?v=20261117-derive1'),render:'renderConstructionView',result:'getConstructionResult'}
@@ -16,8 +16,8 @@ const courseDefinitions={
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261119-si1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261119-si1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261117-derive1'),render:'renderLieGroupView',result:'getLieGroupResult'}
-,'observables':{load:()=>import('./observables-ui.js?v=20261115-tensor1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-zno-quadrature1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261120-gamma-trace1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-gamma-trace1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261120-zno-quadrature1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
 ,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261120-zno-quadrature1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
 ,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261117-derive1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
