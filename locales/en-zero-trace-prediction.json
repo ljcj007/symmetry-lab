@@ -1,0 +1,12 @@
+{
+  "向右的单位箭头转向上方。": "The right-pointing unit vector rotates to point up.",
+  "图中两个箭头都在 xy 平面，z 分量为 0。": "Both arrows lie in the xy plane and have zero z component.",
+  "单位箭头经四分之一圈旋转，从向右转为向上": "The unit vector rotates a quarter turn from right to up",
+  "从左上到右下读取对角元。": "Read the diagonal entries from top left to bottom right.",
+  "平面表示的特征标为 0。图中的箭头由向右变为向上，说明迹为 0 时旋转仍可改变向量。": "The character of the plane representation is 0. The vector changes from pointing right to pointing up, so a rotation with zero trace can still change a vector.",
+  "同一旋转保持 z 方向的单位箭头不变，因此三维矩阵比平面矩阵多一个对角元 1。平面箭头仍转过四分之一圈。": "The same rotation fixes the unit vector along z, adding a diagonal entry of 1 in three dimensions. The in-plane arrow still makes a quarter turn.",
+  "核对对角元之和": "Check the sum of the diagonal entries",
+  "当前作用空间的特征标计算正确。": "The character is correct for the selected space.",
+  "请先选择你算出的特征标。": "Choose the character you calculated.",
+  "再试一次。只沿左上到右下的对角线取数，然后把这些数相加。": "Try again. Take only the entries along the diagonal from top left to bottom right, then add them."
+}

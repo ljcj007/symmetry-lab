@@ -302,3 +302,8 @@ establish that all existing scientific and teaching content has been audited.
 - The band-crossing lesson and graphene material case compare the ideal nearest-neighbor model with a specific WannierTools input. Learners predict the ideal K-point degeneracy from the three hopping phases, then examine the separation at the supplied K point in a different Hamiltonian.
 - MagneticTB reads and verifies the official files only when requested. The browser can instead verify a pair selected locally. The settings file supplies the lattice and M–K–Γ–M path, and the user runs the existing HR calculation manually. Ordinary HR imports and the ideal graphene preset retain their previous entry points.
 - The original input gives about 2.94546 meV between its two levels at the supplied K point. The case distinguishes level separation from Hermiticity and identifies the units and reciprocal basis. The source package holds the revision, digests and code to verify the two upstream files.
+
+## Predict a character from the matrix diagonal
+
+- In the fifth zero-start step, learners find the diagonal entries of a 90-degree rotation before seeing their sum. Switching between the xy plane and xyz space starts a new prediction with the corresponding matrix.
+- After a correct check, the exercise shows the sum beside the rotated unit arrow. The xy calculation gives trace zero although the arrow changes direction. Extending to xyz adds the fixed z direction, so the trace becomes one. The existing lesson links and progress record still apply.

@@ -1,7 +1,7 @@
 import {createResourceLoader} from './resource-loader.js?v=20261110-en1';
 import {studyMapHTML} from './learning-map.js?v=20261112-paths1';
 const courseDefinitions={
-'zero-start':{load:()=>import('./zero-start.js?v=20261112-paths1'),render:'renderZeroStart',result:'getZeroStartResult'},
+'zero-start':{load:()=>import('./zero-start.js?v=20261120-trace1'),render:'renderZeroStart',result:'getZeroStartResult'},
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261116-water1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},

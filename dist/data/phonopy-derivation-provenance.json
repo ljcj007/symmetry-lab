@@ -59,18 +59,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 64521,
-      "sha256": "09a1d480f146376723ff5bfe5b0b50a2f9369a9a8a517705948a03d13798901c"
+      "bytes": 65074,
+      "sha256": "a8de2f35d3c24a620cd364b7e305bada1bddd49312f87c4a61becece6a11005b"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 100880,
-      "sha256": "d4a20dbf7e2b678d8b67182b592d46131b088e773dee60dd42a1601c9811bd49"
+      "bytes": 100874,
+      "sha256": "72a69e5da8733da57c9b96b077fd1e5dcc19f9e1f38a516a84beb617f689da10"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 32220,
-      "sha256": "c42990c83f0c8940f07dd296d7480ccb4af47e2cebcc8ca09c38b8b7fba2efd1"
+      "sha256": "87bcc6393c877f32e316117b2f24494f5973d4c3b0174e23d4a9b9986d1ebf62"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -159,8 +159,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8183,
-      "sha256": "6c6d6f9864467c146568cf3b52b7e3dd2d35e64560e9b56f46be9a50141c9c0b"
+      "bytes": 8181,
+      "sha256": "a113830fbbfe29eb585bce1d8e48f44d780216d5b53b20da7667ed4317830fed"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -194,8 +194,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30881,
-      "sha256": "b5bc70daaf96602c2f2a6abe5b6f80b6951918c8e711508c89259fcb81f4684e"
+      "bytes": 30879,
+      "sha256": "0ffc1ff79d3c0c39aecbb27a80ee70d4d27095f244811a93fda7d7906aa70618"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -907,6 +907,11 @@
       "bytes": 17359,
       "sha256": "fc5dd75d277495c70909d908814c350221712deb4966704d58128ee915d64475"
     },
+    "locales/en-zero-trace-prediction.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1478,
+      "sha256": "207f2b36957ba62141f4bf710f36a61ecab9d55ad95f07fb50b15dd79a735f4f"
+    },
     "locales/en-zno-navigation.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 436,
@@ -924,8 +929,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24266,
-      "sha256": "ac14499bf7471c9ce21889ec36f3329642c6020165e69ed83cd584031ebdfbd7"
+      "bytes": 24312,
+      "sha256": "ec8069b91915d64b725c66b44f76b85d0e78467356827ce180ae485d0035c752"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -959,8 +964,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4736,
-      "sha256": "cdece1159a1fcc7883307419d4014709ff76b48466b490fa236f367036971519"
+      "bytes": 4788,
+      "sha256": "87a0259d080050e03c949926cc257ae812cd77f20f6c2913ccd170aa8ea166bf"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
