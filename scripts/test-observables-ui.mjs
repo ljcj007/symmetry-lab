@@ -43,12 +43,14 @@ lab.container.querySelector('#obs-angle').value='45';lab.container.querySelector
 await submit(lab.container);
 assert.equal(calls[0].action,'phonons');assert.equal(calls[0].input.preset,'silicon');assert.equal(calls[0].input.frequency_cm1,400);
 assert.equal(getObservablesResult().input.frequency_cm1,400);
-assert.match(lab.container.querySelector('#obs-output').innerHTML,/T2g/);
+const phononResults=lab.container.querySelector('#obs-output').innerHTML;
+for(const irrep of ['T1u','T2g'])assert.match(phononResults,new RegExp(`data-crystal-kind="irrep" data-math-source="${irrep}"`));
 assert.match(lab.container.querySelector('#obs-output').innerHTML,/用户假设峰位/);
 assert.match(lab.container.querySelector('#obs-output').innerHTML,/LO-TO/);
 assert.equal(lab.container.querySelector('#obs-output').querySelectorAll('.obs-curve').length,2);
 lab.container.querySelector('#obs-download').onclick();
 assert.equal(JSON.parse(lab.downloads[0].body).input.frequency_cm1,400);
+assert.equal(JSON.parse(lab.downloads[0].body).result.decomposition.optical[0].irrep,'T2g');
 assert.match(lab.downloads[0].name,/phonons-silicon\.json$/);
 lab.container.querySelector('#obs-frame').oninput({target:{value:'1'}});
 assert.match(lab.container.querySelector('#obs-motion-svg').innerHTML,/marker-end/);

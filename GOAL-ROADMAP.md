@@ -348,3 +348,13 @@ establish that all existing scientific and teaching content has been audited.
 - The official Si structure and existing reciprocal-basis conversion connect the phase exercise to calculations of the stars and little groups. The comparison derives the translation sectors and their dimensions from geometry.
 - Each phase row opens the same structure calculator with a visible selection. Only clicking to load and verify the original Si file fills the corresponding reciprocal input. The subsequent structure conversion and representation calculation are both manual and retain the file digest and converted BC coordinates.
 - The calculation finder also recognizes site-stabilizer and site-symmetry terms. The ordinary band-representation entry remains available, and an example link opens the existing SG 221 3c, R-point p-orbital input for manual calculation.
+
+## Search the current topic from a lesson
+
+- Each of the 197 indexed lessons opens its topic in the course finder. The initial results list the related lessons without a keyword. The finder identifies lessons by their catalog and lesson key, so the point-group and Lie-group lessons on representations keep distinct destinations.
+- Learners can broaden a search to the surrounding catalog or all 197 lessons while keeping their term. The context uses the 51 resolved topics and returns focus to the same classroom control when dismissed. The ordinary quick finder remains available for tools, groups, courses and materials.
+
+## Read the verified band decompositions
+
+- The trace results render the positive representation multiplicities from the Python decomposition and display the verified dimension or supplied degeneracy in each row. Ordinary results use their available label mappings, and magnetic results keep their local corepresentation identifiers. The JSON export retains the original decomposition object and its reconstruction checks.
+- The phonon results render each representation label separately, so the complete `2g` of `T2g` appears as the subscript while any multiplicity stays on the baseline. The formatter preserves the original representation strings in exported data.

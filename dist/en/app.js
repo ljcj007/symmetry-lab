@@ -2,11 +2,12 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-si-fold-handoff1';
-import {startToolFinder} from './tool-finder.js?v=20261120-si-fold-handoff1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-lesson-topic1';
+import {startToolFinder} from './tool-finder.js?v=20261120-lesson-topic1';
+import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-si-fold-handoff1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261120-lesson-topic1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -292,7 +293,7 @@ async function render(){
   else if(view==='projects')await page.renderResponseProjects({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||'')),download,onOpenLab:openProjectLab,canOpenCurrent:canOpenProjectInput});
   else if(view==='compare')await page.renderComparisonLab({container:$('#app'),download});
   else if(view==='notebook')await renderMaterialNotebook({container:$('#app'),run:runPythonTask,cancelRun:cancelPython,toast,download});
-  else if(view==='classroom'||isClassroomView(view)){const cleanup=await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput});retainRenderedViewCleanup(cleanup,ticket);}
+  else if(view==='classroom'||isClassroomView(view)){const cleanup=await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput,onOpenLessonTopic:(context,trigger)=>toolFinder.openLessonTopic(context,trigger)});retainRenderedViewCleanup(cleanup,ticket);}
   else if(view==='products')renderProducts();
   else if(view==='bands')renderBands();
   else if(view==='structure')await page.renderStructureView({
@@ -471,13 +472,15 @@ async function runBands(){
   const r=resultMatches()?state.result:null;if(!r)throw new Error("Please calculate the corresponding group, k-point and spin type on the workbench first.");
   const group=state.group,mode=state.mode,revision=state.bandRevision,k=state.k.slice(),doubleValued=state.doubleValued;
   state.bandBusy=true;controls.forEach(control=>control.disabled=true);
+  out.innerHTML="<div class=\"empty-state\" role=\"status\">Matching the band representations…</div>";
   const response=await compute({group,analysis:r,text,k,doubleValued,mode},'match_bands');
   if(!out.isConnected||state.result!==r||state.bandRevision!==revision||input.value.trim()!==text||!resultMatches()||state.group!==group||state.mode!==mode)return false;
   const rows=response.bands;
-  out.innerHTML=tableHTML(["energy band","Energy / eV","represents decomposition"],rows.map(b=>[esc(b.index),typeof b.energy==='number'?b.energy.toFixed(6):'—',b.terms.filter(t=>(t.multiplicity??t.coefficient??t.count??0)>0).map(t=>((t.multiplicity??t.coefficient??t.count)>1?esc(t.multiplicity??t.coefficient??t.count)+' ':'')+labelDisplayHTML(r,t.label||t.id)).join(' ⊕ ')]))+"<p class=\"form-note\">matched "+rows.length+" energy levels. Python character reconstruction and degeneracy checked; retain local numbering and attach matched standard labels.</p><button class=\"text-button\" id=\"export-bands\">↓ Export band matching JSON</button>";
+  const termHeading=r.corepresentations?.length?"Coreps":"Irreps";
+  out.innerHTML=tableHTML(["Level","Energy / eV","Degeneracy",termHeading],bandMatchRows(rows,label=>labelDisplayHTML(r,label)))+"<p class=\"form-note\">matched "+rows.length+" energy levels. Python character reconstruction and degeneracy checked; retain local numbering and attach matched standard labels.</p><button class=\"text-button\" id=\"export-bands\">↓ Export band matching JSON</button>";
   $('#export-bands').onclick=()=>download(JSON.stringify({group:{id:gid(group,mode),mode},k:r.k,doubleValued:r.doubleValued,standardLabels:r.standardLabels,bands:rows},null,2),'band-representations.json');
   return true;
- }catch(e){if(err.isConnected)err.innerHTML='<div class="notice error">'+esc(e.message)+'</div>';return false;}
+ }catch(e){if(err.isConnected){err.innerHTML='<div class="notice error">'+esc(e.message)+'</div>';out.innerHTML="<div class=\"empty-state\">This run produced no matches.</div>";}return false;}
  finally{
   state.bandBusy=false;
   if(out.isConnected){controls.forEach(control=>control.disabled=false);button.disabled=state.busy;}
@@ -494,7 +497,7 @@ $('#cancel-python').onclick=cancelPython;
 onPythonStatus(({status,message})=>{$('#data-status').textContent=message;$('#cancel-python').classList.toggle('hidden',!['loading','running'].includes(status));});
 window.addEventListener('hashchange',()=>setView(location.hash.slice(1),{history:false}));
 $('#data-status').textContent="Ready · compute on demand";
-startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route)});
+const toolFinder=startToolFinder({button:$('#tool-finder-open'),onNavigate:route=>setView(route)});
 setView(location.hash.slice(1)||'home',{history:false});
 
 startMathDisplay(document.body);

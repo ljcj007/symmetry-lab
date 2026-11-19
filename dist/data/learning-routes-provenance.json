@@ -25,7 +25,8 @@
     "Visible reasons retain proper-rotation lift limits, complete double-group versus representative counts, antiunitary conjugation and same-momentum conditions, ordinary versus magnetic settings, and SO(3) versus generalized O(3). Structural reasons distinguish angstrom geometric amplitudes from dimensionless Landau coordinates, positive diffraction phases, per-input-cell quasiharmonic energies and Cp, reduced scalar walls versus independent eV SSH chains, and meV spin-wave energies with different magnetic-cell momentum intervals.",
     "Eighty-seven further read optional relationships preserve all preceding 172 edges and connect the remaining 49 named inventory lessons. All 197 lessons now have recommendations through 259 acyclic edges. Tests lock every new pair and identity, all native lesson links, complete English reasons, 142 real classroom-shell contexts and 46 independent expert entries without calculation or mastery-state access.",
     "New visible boundaries retain equal-input-frequency SHG j/k symmetry without full Kleinman permutation, χ versus piezoelectric e and d=χ/2, reciprocal fractions versus radian wavevectors, exact complex amplitudes versus fixed-irrep path spaces, single-particle versus Slater determinant models, electric versus magnetic probes and their separate units/thermal weights, same-k antiunitary tests, complete fermionic exchange, and declared order-parameter manifolds.",
-    "The water lesson links to a GaAs displacement comparison. Both editions check the rigid rotation against all three fcc primitive directions. The optical contrast uses the existing Python phonon example geometry and a verified model frame. The exact trace.txt lookup opens the ordinary and magnetic band-character tool with its existing input constraints."
+    "The water lesson links to a GaAs displacement comparison. Both editions check the rigid rotation against all three fcc primitive directions. The optical contrast uses the existing Python phonon example geometry and a verified model frame. The exact trace.txt lookup opens the ordinary and magnetic band-character tool with its existing input constraints.",
+    "Every indexed lesson opens contextual course search from its current learning panel. All 197 canonical lesson identities resolve into 51 topics. Same-name lessons stay distinct. Users can browse their topic or retain the query when broadening to the course catalog or the whole lesson inventory."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -44,24 +45,28 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 70914,
-      "sha256": "e4e768ed9e88c768fa6b8d21fe5f56d4b9dd215064c3cd538bdf0a8b8b6e8987"
+      "bytes": 72208,
+      "sha256": "ce925041fe1e0522110626c9551a96a0d9709d600e05328c571985a1e3192b0f"
     },
     "NOTICE.txt": {
       "bytes": 15904,
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/app.js": {
-      "bytes": 101420,
-      "sha256": "0cf36b6b286d5b729b408f76acd2a90632206c30d077ce1df30b52ec65e52edc"
+      "bytes": 101622,
+      "sha256": "aa823205ef22f18be8ecaede1c86f61ebb91f048ed7f0af3d26d8a9505e49cda"
+    },
+    "dist/band-match-results.js": {
+      "bytes": 1046,
+      "sha256": "32bf53723f74776f4a7f8071e9ad4571a784e93dea660ba60bd9120eb10f2309"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32259,
-      "sha256": "9b5e72ebdf52b20a3582b3cef7ff77f34f0255f9996c827172389a99ff83168a"
+      "bytes": 32649,
+      "sha256": "6f48ab01d609572d46738c1461e5c92bcfe17f8ad40194ee388446ee3c01d9f4"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -196,16 +201,20 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8191,
-      "sha256": "4c9220932089d3542bce88fdf2237149ab4929725fe8a32dec060fd0e5c237b1"
+      "bytes": 8201,
+      "sha256": "4114e816c53f3c794d6fdb5cbaee47198b37b4a21199655dd46e437b607c22a9"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
       "sha256": "7effa7aeb165f6ba16be7f7088da8127ce43afda45afeea01b85e60fcf72151c"
     },
     "dist/lesson-progression.js": {
-      "bytes": 70944,
-      "sha256": "14b26daadbd8f11b0638d5a4d7cf8770bd89bac0a30610148a7d1eb519bfe4d7"
+      "bytes": 71130,
+      "sha256": "dae690760467b7bcadadcfd21e0dc29a6d93d1893d630ec1b57ab8ca95b13060"
+    },
+    "dist/lesson-topic-finder.js": {
+      "bytes": 1717,
+      "sha256": "bab47e6580c1f64492952fc3d90aa9d066af25138126a2e46e29b3dab4211aed"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,
@@ -215,9 +224,13 @@
       "bytes": 24916,
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
+    "dist/navigation-ui.js": {
+      "bytes": 31196,
+      "sha256": "1622d755b7f051c576b17f11cbd240b067ac15efeeb65dc1a5f4bdadb0583ed9"
+    },
     "dist/observables-ui.js": {
-      "bytes": 31850,
-      "sha256": "d2e611c5f171ab3d561be3d577d45ac0fe238d95218cb28bdf3ca64e72b4828d"
+      "bytes": 32300,
+      "sha256": "377119ad1c44384540d41cecbeaa52c3c0cf16340cf07b84bbd3da2bf7dc03e3"
     },
     "dist/optional-panel.js": {
       "bytes": 1198,
@@ -392,8 +405,12 @@
       "sha256": "4a21d69b2fadbdf16eedf4f091a7d09dc9739374448f3954a38a1009bf29cd8c"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 59388,
-      "sha256": "94069a08205f6470a2c26189817610b6aeff3330f63c9e634f97189cca7f14cb"
+      "bytes": 59385,
+      "sha256": "c390092a924ebbc7c2c251c11cd74a4e79b0136b302f74300724bd8232f6315d"
+    },
+    "dist/style.css": {
+      "bytes": 24172,
+      "sha256": "22538272ea95383bed78b2266c5984a50cb9706032bbb8ab2119c960cd845bbf"
     },
     "dist/su3-cg-ui.js": {
       "bytes": 22382,
@@ -415,6 +432,18 @@
       "bytes": 44716,
       "sha256": "55213a8e421e185ca7242f7964dd0c246f5956c18c64702b045525f20def2677"
     },
+    "dist/tool-finder.js": {
+      "bytes": 12727,
+      "sha256": "c06a73510e00e2bd3c17d3df1329de17bd98def95d6fbc6593d7d540baf28727"
+    },
+    "dist/tool-search.js": {
+      "bytes": 2619,
+      "sha256": "db4808d3b1db14e8520fe3c5c30eb104abfc7d36ac2e36818f6240ee13669224"
+    },
+    "locales/en-band-match-display.json": {
+      "bytes": 573,
+      "sha256": "4d56beaf7631e4f8199ba17cab5a61e8b42a44016c9118e5caac0508a900f949"
+    },
     "locales/en-entropy-conventions.json": {
       "bytes": 10355,
       "sha256": "12082dd274c3ada7f43052bf64dc2ff12df391ac5cbf064e41e81357c3eee967"
@@ -431,6 +460,14 @@
       "bytes": 98001,
       "sha256": "bf07a8f0ba93bbca70126ad68df8a1085edc1123fed21896b94ac832baa8108c"
     },
+    "locales/en-lesson-topic-finder.json": {
+      "bytes": 1044,
+      "sha256": "f08100f55a0384731b581e1700bde27442d4a186e364025d3bf355b6829bad69"
+    },
+    "locales/en-lesson-topic-host.json": {
+      "bytes": 57,
+      "sha256": "5ddedb01875cc490e04321e0c457743f36c8a68e68640fc211a915ba1e34cb52"
+    },
     "locales/en-phonopy-units.json": {
       "bytes": 18040,
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
@@ -440,20 +477,24 @@
       "sha256": "99ddb6afd02ca5068960afd8a4e537fd5c60d8ddf55f5567671407c06c954bee"
     },
     "package.json": {
-      "bytes": 26237,
-      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4"
+      "bytes": 26703,
+      "sha256": "6b4aa7fac6fef4f1439a627f29c3be941c8060a8b9c5aa0563c556f206afa658"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 12582,
-      "sha256": "67e4984301d562b1ab154eaacf93c20578e12b8fafed539582e4005a3c42d88d"
+      "bytes": 13379,
+      "sha256": "c4c5c7ebb1a31d7a4331158ade3b5c28dc17c924ddf8f2018c6babec862bf842"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 5658,
-      "sha256": "bcf2ad02072ab9dde6286702226160fa90192077910a22258d29472c2c3853a2"
+      "bytes": 5805,
+      "sha256": "e3d1a8b0e7a1d4e3f49745ea5f12c2d769279361bfa586357194dbdf5e6ae2fa"
+    },
+    "scripts/test-band-match-results.mjs": {
+      "bytes": 1406,
+      "sha256": "36a7e29fb0542aecbff920aade9e0ab9da9b048b40fc9b7d704e8713051997fa"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
@@ -475,6 +516,14 @@
       "bytes": 52336,
       "sha256": "cf2e96196ae3cb2ac21acc704dcd5e39bb0a57630530bd4640fdb62681f87b06"
     },
+    "scripts/test-lesson-topic-finder.mjs": {
+      "bytes": 9417,
+      "sha256": "b1eb2e0a821dd1510c04ca53c2c50f2cbb4653afd20723833e76efee35e3288f"
+    },
+    "scripts/test-lesson-topic-host.mjs": {
+      "bytes": 3664,
+      "sha256": "8b8f570a9d10b66e8152b718fa9a40f3bf6d13dea460e10b0845030e6f2e849a"
+    },
     "scripts/test-lie-group-ui.mjs": {
       "bytes": 81283,
       "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
@@ -494,6 +543,10 @@
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,
       "sha256": "715f2384b3f493f030027208d7e26f7d3843a5b6d63425a64b1b42e19cf8a95f"
+    },
+    "scripts/test-python-band-match-display.py": {
+      "bytes": 7982,
+      "sha256": "abb84ccedf1df54599eb2aaf50b47b183e81162ab6cc8a55c5c3667720bc52db"
     },
     "scripts/test-python-density-matrix.py": {
       "bytes": 10321,

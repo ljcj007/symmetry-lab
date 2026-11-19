@@ -49,6 +49,9 @@ catalogFiles.push('en-zno-ir-polarization-ui.json','en-zno-ir-polarization-docs.
 catalogFiles.push('en-zno-satellite-ui.json','en-zno-satellite-docs.json','en-zno-satellite-host.json');
 catalogFiles.push('en-site-symmetry-search.json');
 catalogFiles.push('en-si-conventional-folding.json','en-si-conventional-folding-host.json');
+catalogFiles.push('en-lesson-topic-finder.json');
+catalogFiles.push('en-lesson-topic-host.json');
+catalogFiles.push('en-band-match-display.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

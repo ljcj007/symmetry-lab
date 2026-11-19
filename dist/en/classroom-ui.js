@@ -16,8 +16,8 @@ const courseDefinitions={
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261119-si1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261119-si1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261117-derive1'),render:'renderLieGroupView',result:'getLieGroupResult'}
-,'observables':{load:()=>import('./observables-ui.js?v=20261120-si-fold-handoff1'),render:'renderObservablesView',result:'getObservablesResult'}
-,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-si-fold-handoff1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261120-lesson-topic1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-lesson-topic1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261120-zno-ir1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
 ,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261120-zno-satellite1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
 ,'electronic-materials':{load:()=>import('./electronic-materials-ui.js?v=20261117-derive1'),render:'renderElectronicMaterialsView',result:'getElectronicMaterialsResult'}
@@ -25,7 +25,7 @@ const courseDefinitions={
 ,'flagship':{load:()=>import('./shg-flagship.js?v=20261117-derive1'),render:'renderSHGFlagship',result:'getSHGFlagshipResult'}
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
-const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261115-momentum1'));
+const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261120-lesson-topic1'));
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
@@ -170,7 +170,7 @@ const renderers=Object.fromEntries(Object.keys(courseDefinitions).map(section=>[
 }]));
 export function getClassroomResult(section){const course=courseModules.peek(section)?.[courseDefinitions[section]?.result]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
 
-export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,courseRenderers=renderers,loadProgression=()=>progressionModules.get('lessons')}){
+export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,onOpenLessonTopic,courseRenderers=renderers,loadProgression=()=>progressionModules.get('lessons')}){
   let selection=typeof route==='string'?parseClassroomRoute(route):route;
   selection=selection||parseClassroomRoute(classroomHash(section));
   section=selection.section;
@@ -192,11 +192,19 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
       const module=await loadProgression();
       if(!current()||ticket!==progressionTicket)return;
       const progress=module.progressionForSelection(selection);
-      const markup=progress.current?module.lessonProgressionHTML(progress.current):'';
+      const markup=progress.current?module.lessonProgressionHTML(progress.current,{topicSearch:typeof onOpenLessonTopic==='function'}):'';
       // Course hydration and local input/tab updates can report the same lesson
       // again. Keep its native links and open disclosures mounted while the
       // displayed recommendations are unchanged, including during pointer input.
-      if(markup!==progressionMarkup){host.innerHTML=markup;progressionMarkup=markup;}
+      if(markup!==progressionMarkup){
+        host.innerHTML=markup;progressionMarkup=markup;
+        const trigger=host.querySelector('[data-lesson-topic-search]');
+        if(trigger)trigger.onclick=()=>{
+          if(current()&&!host.hidden&&host.querySelector('[data-lesson-topic-search]')===trigger){
+            onOpenLessonTopic({route:progress.current.route},trigger);
+          }
+        };
+      }
       host.hidden=!progress.current;
     }catch(error){
       if(!current()||ticket!==progressionTicket)return;

@@ -55,3 +55,9 @@ footer{flex-wrap:wrap;gap:8px 20px}
 .structure-json{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.6}
 .structure-grid .mini-heading{margin-top:22px}
 @media(max-width:600px){.structure-options{grid-template-columns:1fr}.structure-input{min-height:280px}.structure-summary h2{font-size:28px}}
+#band-output table{table-layout:fixed;white-space:normal}
+#band-output th,#band-output td{padding-inline:clamp(5px,0.8vw,7px);overflow-wrap:anywhere}
+#band-output th{color:#435c4c}
+#band-output th:nth-child(1){width:17%}
+#band-output th:nth-child(2){width:28%}
+#band-output th:nth-child(3){width:28%}

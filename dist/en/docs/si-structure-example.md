@@ -33,9 +33,9 @@ In the [Si phase-row lesson](../#classroom/observables?material=silicon&lesson=m
 | Phase row | Conventional-cell input k | BC primitive-cell k | Star arms | Little-group order |
 | --- | --- | --- | ---: | ---: |
 | [Γ](../#structure?si-k=gamma) | `(0,0,0)` | `(0,0,0)` | 1 | 48 |
-| [Xₓ](../#structure?si-k=x-100) | `(1,0,0)` | `(0,1/2,1/2)` | 3 | 16 |
-| [Xᵧ](../#structure?si-k=x-010) | `(0,1,0)` | `(1/2,0,1/2)` | 3 | 16 |
-| [X_z](../#structure?si-k=x-001) | `(0,0,1)` | `(1/2,1/2,0)` | 3 | 16 |
+| [X (100)](../#structure?si-k=x-100) | `(1,0,0)` | `(0,1/2,1/2)` | 3 | 16 |
+| [X (010)](../#structure?si-k=x-010) | `(0,1,0)` | `(1/2,0,1/2)` | 3 | 16 |
+| [X (001)](../#structure?si-k=x-001) | `(0,0,1)` | `(1/2,1/2,0)` | 3 | 16 |
 
 The three X points are arms of the same star. Fractional coordinates in the star table may differ by a primitive reciprocal-lattice vector. For example, `−1/2` and `1/2` differ by an integer. Each sector has six displacement degrees of freedom. Calculating vibrational frequencies also requires the dynamical matrix.
 
