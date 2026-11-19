@@ -34,6 +34,32 @@ function siStructurePracticeHTML(){
     <a href="#structure">在结构工作台载入 Phonopy 硅算例 →</a> · <a href="docs/si-structure-example.md">查看硅算例的来源与步骤</a>
   </aside>`;
 }
+function cifReciprocalPracticeHTML(){
+  const screw=crystalSpan('{C2z|(0,0,1/2)}','operation');
+  return `<details data-cif-reciprocal-activity>
+    <summary>同一个 CIF 的三个波矢</summary>
+    <p>先预测。BC 坐标中的 −1/4、3/4 和 +1/4，哪两个只相差一个倒格矢？它们的小群同样大，螺旋特征标还会相同吗？</p>
+    <p>固定使用 4 号群目录中的螺旋代表。${screw}</p>
+    <p>螺旋操作的平方沿 BC 第三基矢平移一格。每个一维表示的螺旋特征标 χ(s) 满足下式。</p>
+    <div class="sc-formula" data-cif-reciprocal-phase>χ(s)² = exp(−2πi k_z)</div>
+    <ol data-cif-reciprocal-steps>
+      <li><a href="#structure?cif-setting=practice">打开结构转换练习 →</a> 载入 P 2c CIF，保留预填的输入波矢 (0,0,1/4)，手动转换。携带来源打开表示工作台，保持单值表示并计算。</li>
+      <li>回到结构转换页。每次先载入同一份 P 2c CIF，再依次使用下面两个输入 k_z。 <code>-3/4, -1/4</code> 分别转换并携带来源，手动完成两次表示计算。</li>
+      <li>在工作台的特征标表中核对螺旋一列 ${crystalSpan('C2z','operation')}。将任一个一维表示的螺旋特征标平方，再核对 k 星表中的坐标。</li>
+    </ol>
+    <details data-cif-reciprocal-answer>
+      <summary>查看三个结果</summary>
+      <p>每行依次列出输入 k_z、BC 输出 k_z、螺旋特征标和它的平方。</p>
+      <ul data-cif-reciprocal-results>
+        <li>1/4 → −1/4 · <span data-math-inline>χ = ±(1+i)/√2</span> · <span data-math-inline>χ² = +i</span></li>
+        <li>−3/4 → 3/4 · <span data-math-inline>χ = ±(1+i)/√2</span> · <span data-math-inline>χ² = +i</span></li>
+        <li>−1/4 → +1/4 · <span data-math-inline>χ = ±(1−i)/√2</span> · <span data-math-inline>χ² = −i</span></li>
+      </ul>
+      <p>三次都只有 1 个星臂，小群阶为 2。前两次的星臂折回同一坐标 (0,0,−1/4)。第三次在其相反波矢处得到共轭特征标。</p>
+    </details>
+    <p><a href="docs/cif-setting-practice.md#cif-reciprocal-replay">详细讲义与衍射延伸</a></p>
+  </details>`;
+}
 function cifSettingPracticeHTML(){
   return `<details class="sc-callout" data-cif-setting-practice>
     <summary>同为 4 号空间群，螺旋轴沿哪个输入基矢？</summary>
@@ -44,6 +70,7 @@ function cifSettingPracticeHTML(){
       <li><strong>核对不相容的声明。</strong>在同一个斜晶胞中改用明确给出 P 2yb 的 CIF，手动运行，检查转换器怎样报告晶胞度量冲突。</li>
     </ol>
     <p>也可以用点号标签重放同一个 P 2c 结构，核对换了字段名之后，哪些计算量保持原值。<a href="docs/cif-setting-practice.md#dotted-cif-replay">比较两种字段写法 →</a></p>
+    ${cifReciprocalPracticeHTML()}
     <p><a href="#structure?cif-setting=practice">打开 CIF 轴设置练习 →</a> · <a href="docs/cif-setting-practice.md">查看三次核对的步骤与预期结果</a></p>
   </details>`;
 }
@@ -176,6 +203,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · 单元 ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||'基础与应用')}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>学完这一节，你能</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
       ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?cifSettingPracticeHTML()+siStructurePracticeHTML():''}
+      ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?`<aside class="sc-callout" data-cif-orbit-lesson><strong>用 α 石英核对 CIF 位点重数</strong><p>同一组空间群操作下，写成 0.6667 或 2/3 会改变 Si1 的轨道吗？先预测，再用文件中的重数核对。</p><a href="#structure?cif-orbit=practice">打开石英位点重数练习 →</a></aside>`:''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}

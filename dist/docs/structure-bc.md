@@ -57,6 +57,21 @@ data remain in metadata, but geometry-only exports do not transform them.
   A conflict stops conversion. Source metadata retains the input's punctuation
   in lowercased data names. Source digests use the original input.
   See the [paired CIF replay](cif-setting-practice.md#dotted-cif-replay).
+- When the atom-site loop declares a Wyckoff multiplicity, the converter
+  counts the distinct periodic images of that source row at the conversion's
+  duplicate-site tolerance, `min(symprec, 1e-5 Å)`. The converter checks each
+  row separately, so another row on the same orbit leaves its count unchanged.
+  Try the [α-quartz teaching comparison](../#structure?cif-orbit=practice) or consult
+  the [original structure](https://www.crystallography.net/cod/5000035.html).
+  The two teaching inputs differ in the Si1 coordinate, from a rounded value
+  to an exact fraction. Fraction syntax is a Symmetry Lab extension for the
+  teaching copy. Use standard numeric fields when exchanging CIF files.
+  [IUCr CIF 1.1 file syntax](https://www.iucr.org/what-we-do/digital-standards/cif/cif1/file-syntax).
+  The converter preserves the input values.
+  Some historical refiners used the deprecated `_atom_site_symmetry_multiplicity`
+  field for the order of the site stabilizer. The converter accepts that reading
+  with a warning if the counted site stabilizer and the orbit–stabilizer relation
+  both agree with the stored value. The source value remains in the metadata.
 - If a CIF omits operations, an explicit Hall symbol supplies the corresponding
   operations from spglib. For H–M/IT metadata without a Hall symbol, only
   settings whose rotations preserve the declared cell metric are eligible.

@@ -6,6 +6,8 @@ const english=process.argv.includes('--english');
 const base=new URL(english?'../dist/en/':'../dist/',import.meta.url);
 const {parseClassroomRoute,buildClassroomHash,renderClassroomView}=await import(new URL('classroom-ui.js',base));
 const {renderSymmetryCourseView}=await import(new URL('symmetry-course-ui.js',base));
+const {findInlineMath,segmentFormula}=await import(new URL('math-notation.js',base));
+const {crystalTex}=await import(new URL('../dist/crystal-notation.js',import.meta.url));
 const read=name=>JSON.parse(readFileSync(new URL('data/'+name+'.json',base),'utf8'));
 const catalogue=read('symmetry-course-lessons');
 const atlas=read('symmetry-course-atlas');
@@ -40,10 +42,35 @@ const lesson=page.querySelector('.sc-lesson');
 const details=lesson.querySelector('[data-cif-setting-practice]');
 assert.equal(details.tag,'details');
 assert.equal(Object.hasOwn(details.attributes,'open'),false);
-assert.equal(details.querySelectorAll('li').length,3);
+assert.equal(details.children.find(child=>child.tag==='ol').querySelectorAll('li').length,3);
 assert.equal(details.querySelector(`a[href="${practiceRoute}"]`).getAttribute('href'),practiceRoute);
 assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md"]'));
 assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md#dotted-cif-replay"]'));
+const activity=details.querySelector('[data-cif-reciprocal-activity]');
+assert.equal(activity.tag,'details');
+assert.equal(Object.hasOwn(activity.attributes,'open'),false);
+assert.match(activity.children[0].textContent,english?/Three wavevectors/:/三个波矢/);
+const steps=activity.querySelector('[data-cif-reciprocal-steps]');
+assert.equal(steps.querySelectorAll('li').length,3);
+assert.ok(steps.querySelector(`a[href="${practiceRoute}"]`));
+assert.equal(steps.querySelector('code').textContent,'-3/4, -1/4');
+assert.ok(activity.querySelector('a[href="docs/cif-setting-practice.md#cif-reciprocal-replay"]'));
+const answer=activity.querySelector('[data-cif-reciprocal-answer]');
+assert.equal(answer.tag,'details');
+assert.equal(Object.hasOwn(answer.attributes,'open'),false);
+assert.match(answer.children[0].textContent,english?/Reveal the three results/:/查看三个结果/);
+assert.equal(activity.querySelector('[data-cif-reciprocal-phase]').textContent,'χ(s)² = exp(−2πi k_z)');
+assert.equal(segmentFormula(activity.querySelector('[data-cif-reciprocal-phase]').textContent)[0]?.type,'math');
+assert.match(crystalTex(activity.querySelector('[data-crystal-kind="operation"]').getAttribute('data-math-source'),'operation'),/\\mathrm\{2z\}/);
+const rows=answer.querySelector('[data-cif-reciprocal-results]').querySelectorAll('li');
+assert.deepEqual(rows.map(row=>row.textContent),[
+ '1/4 → −1/4 · χ = ±(1+i)/√2 · χ² = +i',
+ '−3/4 → 3/4 · χ = ±(1+i)/√2 · χ² = +i',
+ '−1/4 → +1/4 · χ = ±(1−i)/√2 · χ² = −i',
+]);
+for(const row of rows){
+ assert.match(findInlineMath(row.querySelector('[data-math-inline]').textContent)[0].tex,/\\sqrt\{2\}/);
+}
 assert.ok(lesson.querySelector('[data-si-structure-practice]'));
 assert.match(details.innerHTML,/101\.2°/);
 assert.match(details.innerHTML,/P 2c/);
@@ -55,6 +82,12 @@ const picker=page.querySelector('#sc-chapter-select');
 picker.value=String(catalogue.lessons.findIndex(row=>row.id==='space-05'));
 picker.onchange({target:picker});
 assert.equal(page.querySelector('[data-cif-setting-practice]'),null,'The optional guidance belongs to space-06');
+assert.equal(page.querySelector('[data-cif-orbit-lesson]'),null,'The orbit exercise belongs to space-04');
+picker.value=String(catalogue.lessons.findIndex(row=>row.id==='space-04'));
+picker.onchange({target:picker});
+const orbit=page.querySelector('[data-cif-orbit-lesson]');
+assert.ok(orbit?.querySelector('a[href="#structure?cif-orbit=practice"]'));
+assert.match(orbit.textContent,english?/site multiplicity with α-quartz/i:/用 α 石英核对 CIF 位点重数/);
 dispose?.();
 
 const doc=readFileSync(new URL('docs/cif-setting-practice.md',base),'utf8');
@@ -71,5 +104,12 @@ assert.match(replay,/_cell\.length_a/);
 assert.match(replay,/github\.com\/COMCIFS\/cif_core\/blob\/v3\.3\.0\/cif_core\.dic/);
 assert.match(replay,/source_site_rows/);
 assert.match(replay,/SHA-256/);
+const reciprocal=doc.split('<a id="cif-reciprocal-replay"></a>')[1];
+assert.ok(reciprocal);
+assert.match(reciprocal,/\]\(\.\.\/#structure\?cif-setting=practice\)/);
+assert.match(reciprocal,/`-3\/4`、`-1\/4`|`-3\/4` and `-1\/4`/);
+assert.match(reciprocal,/`±\(1\+i\)\/√2`/);
+assert.match(reciprocal,/`±\(1−i\)\/√2`/);
+assert.match(reciprocal,/\b2\.900608\b/);
 
 console.log(`CIF axis setting lesson (${english?'English':'Chinese'}): canonical classroom handoff, document, and inactive neighboring lesson passed.`);

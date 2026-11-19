@@ -95,7 +95,7 @@ function restore(saved,kind){
 const options=(rows,value)=>rows.map(([id,label])=>'<option value="'+esc(id)+'"'+(String(id)===String(value)?' selected':'')+'>'+esc(label)+'</option>').join('');
 const select=(id,label,rows,value)=>'<label for="'+id+'">'+esc(label)+'<select id="'+id+'">'+options(rows,value)+'</select></label>';
 const button=(id,label)=>'<button type="button" id="'+id+'">'+esc(label)+'</button>';
-function questionHTML(prefix,kind,i,state){const q=QUESTIONS[kind][i];return'<section class="chab-question">'+h(q.prompt)+select(prefix+'-q'+i,"Predict first, then check",[['',"Choose an answer"],...q.options],state.choices[i])+button(prefix+'-check'+i,"Check prediction")+'<p id="'+prefix+'-feedback'+i+'" class="chab-feedback" role="status"></p></section>';}
+function questionHTML(prefix,kind,i,state){const q=QUESTIONS[kind][i];return'<section class="chab-question">'+h(q.prompt)+select(prefix+'-q'+i,"Predict first, then check",[['',"Choose an answer"],...q.options],state.choices[i])+button(prefix+'-check'+i,"Check your prediction")+'<p id="'+prefix+'-feedback'+i+'" class="chab-feedback" role="status"></p></section>';}
 function bodyHTML(prefix,kind,state,canCopy){
  const mirror=kind==='mirror-trace';
  return p(mirror?"Start from one declared atom coordinate and distinguish the physical mirror, proper alignment and the original structure's own symmetry operation.":"Apply each generator to the same trial polar vector and find the subspace that satisfies all constraints together.")+

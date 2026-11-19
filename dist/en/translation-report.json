@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28770,
-  "translatedUnits": 28770,
+  "sourceUnits": 28809,
+  "translatedUnits": 28809,
   "missing": [],
-  "files": 519,
+  "files": 520,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -167,6 +167,8 @@
     "en-cif-setting-search.json",
     "en-cif-setting-lesson.json",
     "en-cif-setting-practice.json",
-    "en-cif-dotted-lesson.json"
+    "en-cif-dotted-lesson.json",
+    "en-cif-reciprocal-lesson.json",
+    "en-cif-orbit-practice.json"
   ]
 }

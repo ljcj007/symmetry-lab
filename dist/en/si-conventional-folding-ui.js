@@ -52,7 +52,7 @@ export function bindSiConventionalFolding({root,isCurrent=()=>true}){
  <p>A and B are the two Si basis sites in a primitive cell. Coordinates outside the conventional cell wrap back periodically.</p>
  <label for="si-fold-choice">Does the selected phase row also belong to primitive-cell Γ?</label>
  <select id="si-fold-choice" aria-describedby="si-fold-feedback">${questionOptions}</select>
- <div class="obs-links"><button type="button" class="primary" id="si-fold-check">Check prediction</button></div>
+ <div class="obs-links"><button type="button" class="primary" id="si-fold-check">Check your prediction</button></div>
  <div id="si-fold-feedback" class="obs-feedback" role="status"></div>
  <details><summary>Account for all 24 displacement degrees of freedom</summary>
  <p>The phase rows on the four centering positions are pairwise orthogonal. Each row can multiply independent displacements along three directions for each of the two atoms, so the 24 coordinates at conventional-cell Γ split into four six-dimensional sectors. The all-in-phase sector is primitive-cell Γ. The other three correspond to the three arms of one X star. The six dimensions follow from translation symmetry and the displacement degrees of freedom. Computing frequencies requires the dynamical matrix.</p>

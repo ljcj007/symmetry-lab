@@ -32,3 +32,23 @@ Both runs identify space group 4, expand to four atoms using input Hall record 7
 To test duplicate detection, add `_cell_length_a 3` on a new line before `loop_` in the dotted input. It declares the same data item as `_cell.length_a 3` even though their values agree. Remove the duplicate line to run the conversion again.
 
 This compatibility covers a fixed set of Core CIF names for importing ordered, three-dimensional small crystal structures. See the [IUCr COMCIFS Core CIF v3.3.0 dictionary](https://github.com/COMCIFS/cif_core/blob/v3.3.0/cif_core.dic) for field names and aliases and the [CIF input conventions](structure-bc.md#accepted-files) for import scope.
+
+<a id="cif-reciprocal-replay"></a>
+
+## Compare equivalent and opposite wavevectors with the same CIF
+
+Predict which two BC primitive coordinates among `−1/4`, `3/4` and `+1/4` differ by a reciprocal-lattice vector. Use the site's fixed space-group 4 screw representative `s = {C₂z | (0,0,1/2)}`. Squaring it translates by one lattice period along the third BC basis vector. Under the active translation convention, predict `exp(−2πi k_z)` for each wavevector.
+
+1. Open the [CIF setting exercise](../#structure?cif-setting=practice) and choose “Load the P 2c CIF.” Keep `k_x = k_y = 0` and convert with the initial `k_z = 1/4`. Open the representation workbench with this source, keep single-valued representations selected, and run the calculation.
+2. Return to the same structure exercise. Each time, load the same P 2c CIF, then enter `-3/4` and `-1/4` in turn for `k_z` on the **structure conversion page**. Convert each input and open the representation workbench with the source. Each calculation then has its own change-of-basis record.
+3. Check the `C₂z` column in the character table and inspect the k-star. Each single-valued representation in this example is one-dimensional, so squaring either screw character gives the translation phase you predicted. Compare the pair of characters together.
+
+| Input `k_z` on the structure page | Converted BC `k_z` | BC `C₂z` characters | Squared character |
+| ---: | ---: | --- | --- |
+| `1/4` | `−1/4` | `±(1+i)/√2` | `+i` |
+| `−3/4` | `3/4` | `±(1+i)/√2` | `+i` |
+| `−1/4` | `+1/4` | `±(1−i)/√2` | `−i` |
+
+All three calculations give one star arm and a little group of order two. The first two reduce to the same BC representative `(0,0,−1/4)`. Copying the initial `+1/4` directly into the BC coordinates gives the opposite wavevector in the third row. The little-group order stays the same. The conjugate characters reveal the difference.
+
+**Optional extension.** From the CIF conversion result, choose diffraction with the input cell. Keep the constant scattering weights for `Na` and `Cl` at 1. Run the input-cell reflections `001` and `002`. For `001`, the two sites of each species are separated by half a period along c. Their complex amplitudes cancel and the model intensity is 0. The model intensity for `002` is about 2.900608, with plane spacings of 4 Å and 2 Å for the two reflections respectively. The reflection indices here are integers in the input-cell basis. The representation calculation above uses fractional wavevectors in the BC primitive basis.

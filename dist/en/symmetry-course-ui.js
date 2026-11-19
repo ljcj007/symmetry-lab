@@ -34,6 +34,32 @@ function siStructurePracticeHTML(){
     <a href="#structure">Load the Phonopy silicon example in the structure tool →</a> · <a href="docs/si-structure-example.md">Read the silicon example's source and steps</a>
   </aside>`;
 }
+function cifReciprocalPracticeHTML(){
+  const screw=crystalSpan('{C2z|(0,0,1/2)}','operation');
+  return `<details data-cif-reciprocal-activity>
+    <summary>Three wavevectors for the same CIF</summary>
+    <p>Predict first. Which two BC coordinates among −1/4, 3/4 and +1/4 differ by a reciprocal-lattice vector? All three have little groups of the same order. Will their screw characters agree?</p>
+    <p>Use the fixed screw representative from the space-group 4 catalogue.${screw}</p>
+    <p>Squaring the screw translates by one lattice period along the third BC basis vector. In each one-dimensional representation the screw character χ(s) obeys the following equation.</p>
+    <div class="sc-formula" data-cif-reciprocal-phase>χ(s)² = exp(−2πi k_z)</div>
+    <ol data-cif-reciprocal-steps>
+      <li><a href="#structure?cif-setting=practice">Open the structure conversion exercise →</a> Load the P 2c CIF and keep the initial input wavevector (0,0,1/4). Run the conversion, open the representation workbench with the source, and calculate single-valued representations.</li>
+      <li>Return to structure conversion. Reload the same P 2c CIF each time, and use these two input values of k_z in turn. <code>-3/4, -1/4</code> Convert each input, carry its source to the workbench, and run both calculations manually.</li>
+      <li>In the workbench character table, check the column for the screw ${crystalSpan('C2z','operation')}. Square either one-dimensional screw character and check the coordinates in the k-star table.</li>
+    </ol>
+    <details data-cif-reciprocal-answer>
+      <summary>Reveal the three results</summary>
+      <p>Each line gives the input k_z, the converted BC k_z, the screw characters and their square.</p>
+      <ul data-cif-reciprocal-results>
+        <li>1/4 → −1/4 · <span data-math-inline>χ = ±(1+i)/√2</span> · <span data-math-inline>χ² = +i</span></li>
+        <li>−3/4 → 3/4 · <span data-math-inline>χ = ±(1+i)/√2</span> · <span data-math-inline>χ² = +i</span></li>
+        <li>−1/4 → +1/4 · <span data-math-inline>χ = ±(1−i)/√2</span> · <span data-math-inline>χ² = −i</span></li>
+      </ul>
+      <p>Each calculation has one star arm and a little group of order two. The first two arms reduce to (0,0,−1/4). The third calculation gives conjugate characters at the opposite wavevector.</p>
+    </details>
+    <p><a href="docs/cif-setting-practice.md#cif-reciprocal-replay">Detailed notes and diffraction extension</a></p>
+  </details>`;
+}
 function cifSettingPracticeHTML(){
   return `<details class="sc-callout" data-cif-setting-practice>
     <summary>For space group 4, which input basis vector carries the screw axis?</summary>
@@ -44,6 +70,7 @@ function cifSettingPracticeHTML(){
       <li><strong>Test an incompatible declaration.</strong>Use the same oblique cell with an explicit P 2yb declaration. Run the conversion and check how it reports the cell-metric conflict.</li>
     </ol>
     <p>You can also replay the same P 2c structure with dotted tags and check which calculated quantities stay the same.<a href="docs/cif-setting-practice.md#dotted-cif-replay">Compare the two tag spellings →</a></p>
+    ${cifReciprocalPracticeHTML()}
     <p><a href="#structure?cif-setting=practice">Open the CIF axis-setting exercise →</a> · <a href="docs/cif-setting-practice.md">Read the steps and expected results</a></p>
   </details>`;
 }
@@ -176,6 +203,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · Unit ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||"Basics and Applications")}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>After studying this section, can you</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
       ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?cifSettingPracticeHTML()+siStructurePracticeHTML():''}
+      ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?`<aside class="sc-callout" data-cif-orbit-lesson><strong>Check CIF site multiplicity with α-quartz</strong><p>Under the same space-group operations, will using 0.6667 or 2/3 change the orbit of Si1? Predict the result and compare with the declared multiplicity.</p><a href="#structure?cif-orbit=practice">Open the quartz site-multiplicity exercise →</a></aside>`:''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}

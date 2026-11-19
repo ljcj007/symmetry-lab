@@ -34,8 +34,10 @@ _CIF_ALIASES = {
     '_symmetry_equiv_pos_as_xyz': '_space_group_symop_operation_xyz',
     **{f'_atom_site.{field}': f'_atom_site_{field}' for field in (
         'fract_x', 'fract_y', 'fract_z', 'cartn_x', 'cartn_y', 'cartn_z', 'type_symbol',
-        'label', 'occupancy', 'disorder_group', 'disorder_assembly')},
+        'label', 'occupancy', 'disorder_group', 'disorder_assembly', 'site_symmetry_multiplicity')},
     '_atom_site.id': '_atom_site_label',
+    '_atom_site.symmetry_multiplicity': '_atom_site_site_symmetry_multiplicity',
+    '_atom_site_symmetry_multiplicity': '_atom_site_site_symmetry_multiplicity',
 }
 
 
@@ -408,19 +410,24 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     if not _cif_metric_compatible((r for r,_ in operations), gram, metric_tolerance):
         raise ValueError(_CIF_METRIC_ERROR)
     def operation_key(r,t): return tuple(r.ravel())+tuple(np.round(_wrap(t),10))
-    keys = {operation_key(r,t) for r,t in operations}
-    if operation_key(np.eye(3,dtype=int),np.zeros(3)) not in keys:
+    operation_indices = {operation_key(r,t): i for i,(r,t) in enumerate(operations)}
+    if operation_key(np.eye(3,dtype=int),np.zeros(3)) not in operation_indices:
         raise ValueError('CIF symmetry operations must include identity')
+    closed_by_key = True
     for r,t in operations:
         for s,v in operations:
             rotation,translation=r@s,r@v+t
-            if operation_key(rotation,translation) not in keys:
+            if operation_key(rotation,translation) not in operation_indices:
+                closed_by_key = False
                 bounds=symprec*np.linalg.norm(np.linalg.inv(lattice),axis=0)
                 if not any(np.array_equal(rotation,candidate_r) and
                            _periodic_near(translation-candidate_t,lattice,symprec,bounds)
                            for candidate_r,candidate_t in operations):
                     raise ValueError('CIF symmetry operations are not a complete closed group')
-    for source_row in source_rows:
+    dedup_tolerance = min(symprec, 1e-5)
+    multiplicity_field = '_atom_site_site_symmetry_multiplicity'
+    legacy_order_field = columns.get(multiplicity_field) == '_atom_site_symmetry_multiplicity'
+    for site_index, source_row in enumerate(source_rows, 1):
         row = {field: source_row[name] for field, name in columns.items()}
         occupancy = _number(row.get('_atom_site_occupancy','1'))
         if abs(occupancy-1) > 1e-8: raise ValueError('Partial/zero occupancy is not an ordered crystal; provide an explicit ordered model')
@@ -434,10 +441,42 @@ def parse_cif(text, block_name=None, symprec=1e-5):
             if not match: raise ValueError('CIF atom species missing')
             label = match.group(0)
         if cartesian: position = position @ np.linalg.inv(lattice)
+        orbit_start = len(positions)
         for rotation, translation in operations:
             positions.append(rotation @ position + translation); species.append(label)
             if len(positions) > 200000: raise ValueError('CIF symmetry expansion exceeds the 200000 candidate-site browser budget')
-    positions,species = _deduplicate(positions,species,lattice,min(symprec,1e-5))
+        declared_multiplicity = row.get(multiplicity_field, '.')
+        if declared_multiplicity not in ('.', '?'):
+            site = f'CIF atom-site row {site_index}'
+            site_label = row.get('_atom_site_label')
+            if site_label and site_label not in ('.', '?'):
+                site += f' ({site_label[:48]})'
+            expected = _number(declared_multiplicity)
+            if not expected.is_integer() or not 1 <= expected <= 192:
+                raise ValueError(f'{site} multiplicity must be an integer from 1 to 192')
+            # Count only the images generated from this source row. A different row can
+            # overlap its orbit, but cannot change its declared Wyckoff multiplicity.
+            orbit, _ = _deduplicate(positions[orbit_start:], species[orbit_start:], lattice, dedup_tolerance)
+            if len(orbit) != expected:
+                # Some historical files used the deprecated short tag for the stabilizer
+                # order. Only retain that reading when both orbit-stabilizer and explicit
+                # site fixes agree on the independently counted affine quotient operations.
+                if legacy_order_field and closed_by_key:
+                    order, remainder = divmod(len(operation_indices), len(orbit))
+                    if not remainder and order == expected:
+                        bounds = dedup_tolerance * np.linalg.norm(np.linalg.inv(lattice), axis=0)
+                        fixes = sum(_periodic_near(positions[orbit_start + i] - position,
+                                                   lattice, dedup_tolerance, bounds)
+                                    for i in operation_indices.values())
+                        if fixes == order:
+                            warnings.append(f'{site} expands to multiplicity {len(orbit)}. Deprecated '
+                                            f'_atom_site_symmetry_multiplicity records {int(expected)}, consistent '
+                                            'with the site symmetry order. The source value is retained.')
+                            continue
+                raise ValueError(f'{site} declares multiplicity {int(expected)}, but symmetry expansion gives '
+                                 f'{len(orbit)} distinct periodic sites at {dedup_tolerance:g} Angstrom. '
+                                 'Check the symmetry setting, multiplicity field and site coordinates.')
+    positions,species = _deduplicate(positions,species,lattice,dedup_tolerance)
     if any(key.startswith('_atom_site_aniso') or key.startswith('_atom_site_u_') or key.startswith('_atom_site_b_') for key in all_keys):
         warnings.append('Thermal displacement metadata are retained in source CIF metadata; geometry exports omit displacement tensors.')
     return _validate_cell(lattice,positions,species,{'format':'cif','block':block['name'],'warnings':warnings,

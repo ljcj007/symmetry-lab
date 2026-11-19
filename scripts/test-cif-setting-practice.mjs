@@ -5,6 +5,7 @@ const english=process.argv.includes('--english');
 const edition=new URL(english?'../dist/en/':'../dist/',import.meta.url);
 const {renderStructureView,getStructureResult}=await import(new URL('structure-ui.js',edition));
 const {cifSettingCases,cifInputSettingHTML}=await import(new URL('cif-setting-practice.js',edition));
+const {cifOrbitCases}=await import(new URL('cif-orbit-practice.js',edition));
 const queryAll=Element.prototype.querySelectorAll;
 Element.prototype.querySelectorAll=function(selector){
  return selector.includes(',')?selector.split(',').flatMap(item=>queryAll.call(this,item.trim())):queryAll.call(this,selector);
@@ -23,7 +24,7 @@ const base={
 };
 const container=new Container();container.dataset={researchView:'structure'};
 const calls=[],downloads=[];
-let pendingConversion,holdConversion=false,nextError;
+let pendingConversion,holdConversion=false,nextError,nextWarning;
 const workbench={
  container,toast(){},download:(...values)=>downloads.push(values),openGroup(){},
  async run(action,payload){
@@ -33,6 +34,7 @@ const workbench={
   const example=cifSettingCases.find(item=>item.text===payload.text);
   if(example?.id==='unique-b')throw Error(metricError);
   const result={...structuredClone(base),symprec:payload.symprec,angle_tolerance:payload.angle_tolerance,k_input:payload.k,k_bc:payload.k};
+  if(nextWarning){result.warnings.push(nextWarning);nextWarning=null;}
   if(example){
    const inferred=example.id==='number-only';
    result.input_metadata={declared_symmetry_operation_count:2,cif_symmetry_setting:{
@@ -132,6 +134,28 @@ assert.ok($('#structure-error').textContent.includes(literalTag),'A dynamic fiel
 assert.ok($('#structure-error').innerHTML.includes('_item&lt;img&gt;$&amp;'));
 assert.equal($('#structure-error').querySelector('img'),null);
 
+nextError='CIF atom-site row 1 (Si1) declares multiplicity 3, but symmetry expansion gives 6 distinct periodic sites at 1e-05 Angstrom. Check the symmetry setting, multiplicity field and site coordinates.';
+await convert();
+assert.equal(getStructureResult(),null);
+assert.equal(evidence(),null);
+assert.equal($('#structure-error').textContent,english
+ ?'CIF atom-site row 1 (Si1) declares multiplicity 3. Symmetry expansion gives 6 distinct periodic sites at a deduplication tolerance of 1e-05 Å. Check the symmetry setting, multiplicity field, and site coordinates.'
+ :'CIF 原子位点第 1 行 (Si1)声明重数为 3。对称展开使用 1e-05 Å 的去重容差，得到 6 个不同的周期位点。请核对对称设置、重数字段和位点坐标。');
+
+nextError='CIF atom-site row 2 multiplicity must be an integer from 1 to 192';
+await convert();
+assert.equal($('#structure-error').textContent,english
+ ?'The multiplicity in CIF atom-site row 2 must be an integer from 1 to 192.'
+ :'CIF 原子位点第 2 行的重数必须是 1 至 192 的整数。');
+
+const literalSite='Si (split)<img>$&{4}';
+nextError='CIF atom-site row 3 ('+literalSite+') declares multiplicity 1, but symmetry expansion gives 2 distinct periodic sites at 2.5e-06 Angstrom. Check the symmetry setting, multiplicity field and site coordinates.';
+await convert();
+assert.ok($('#structure-error').textContent.includes(literalSite));
+assert.ok($('#structure-error').textContent.includes('2.5e-06 Å'));
+assert.ok($('#structure-error').innerHTML.includes('&lt;img&gt;$&amp;{4}'));
+assert.equal($('#structure-error').querySelector('img'),null);
+
 const conflictingNumbers=dottedInput.replace("_space_group.name_Hall 'P 2c'",'_space_group_IT_number 4\n_symmetry_Int_Tables_number 3');
 $('#structure-text').oninput({target:{value:conflictingNumbers}});
 nextError='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number';
@@ -168,4 +192,38 @@ assert.equal(cifInputSettingHTML({method:'unknown'}),'');
 assert.equal(cifInputSettingHTML({method:'metadata_hall',selected_hall:null}),'');
 assert.match(cifInputSettingHTML({method:'explicit_hall',selected_hall:{number:7,symbol:'<input>',choice:'<b>'}}),/&lt;input&gt;.*&lt;b&gt;/);
 assert.doesNotMatch(cifInputSettingHTML({method:'explicit_operations',selected_hall:null}),/Hall [0-9]/);
-console.log('CIF setting exercise ('+(english?'English':'Chinese')+'): draft and disclosure persistence, manual conversion, separate input/output Hall evidence, raw JSON, errors and stale guards passed.');
+
+const orbitPanel=()=>$('#structure-cif-orbit-practice');
+const orbitStatus=()=>$('#structure-cif-orbit-practice-status');
+const loadOrbit=id=>$('#structure-cif-orbit-practice-'+id).onclick();
+for(const query of ['', 'cif-orbit=practice&cif-orbit=practice', 'cif-orbit=unknown']){
+ view(query);
+ assert.equal(orbitPanel().open,false);
+ assert.equal($('#structure-text').value,'data_own_structure');
+}
+view('cif-orbit=practice');
+assert.equal(orbitPanel().open,true);
+assert.equal(panel().open,false);
+assert.equal(orbitStatus().hidden,true);
+const countBeforeOrbit=calls.length;
+loadOrbit('rounded');
+assert.equal(orbitPanel().open,true);
+assert.equal(document.activeElement,orbitStatus());
+assert.equal($('#structure-text').value,cifOrbitCases[0].text);
+assert.match(orbitStatus().textContent,english?/Run the conversion manually/:/请手动转换/);
+assert.equal($('#structure-k-2').value,'0');
+assert.equal(calls.length,countBeforeOrbit);
+loadOrbit('exact');
+assert.equal(orbitPanel().open,true);
+assert.equal($('#structure-text').value,cifOrbitCases[1].text);
+await convert();
+assert.deepEqual(calls.at(-1),{action:'structure_bc',payload:{format:'cif',text:cifOrbitCases[1].text,symprec:1e-5,angle_tolerance:-1,k:[0,0,0]}});
+assert.equal(calls.length,countBeforeOrbit+1);
+
+nextWarning='CIF atom-site row 1 (Na1) expands to multiplicity 2. Deprecated _atom_site_symmetry_multiplicity records 1, consistent with the site symmetry order. The source value is retained.';
+await convert();
+const legacyWarning=$('#structure-result').querySelectorAll('.warning').find(item=>item.textContent.includes('_atom_site_symmetry_multiplicity'));
+assert.equal(legacyWarning?.textContent,english
+ ?'CIF atom-site row 1 (Na1) expands to multiplicity 2. The value 1 in the legacy field _atom_site_symmetry_multiplicity agrees with the site-symmetry order. The source value is retained.'
+ :'CIF 原子位点第 1 行 (Na1)展开后的重数为 2。旧字段 _atom_site_symmetry_multiplicity 中的值 1 与位点稳定子阶一致，已保留源值。');
+console.log('CIF exercises ('+(english?'English':'Chinese')+'): draft and disclosure persistence, manual conversion, separate input/output Hall evidence, raw JSON, errors and stale guards passed.');

@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261120-cif-dotted2';
+const BUILD = '20261120-cif-orbit1';
 const DATA_BUILD = '20261117-derive1';
 const plans = {
   group_theorems: ['group_theorems'],

@@ -4,14 +4,27 @@ import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bin
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
 import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML} from './cif-setting-practice.js?v=20261120-cif-dotted2';
+import {cifOrbitCases,cifOrbitPracticeEnabled,cifOrbitPracticeHTML} from './cif-orbit-practice.js?v=20261120-cif-orbit1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
-function structureErrorText(message){
+const formatDiagnosticFields=(template,fields)=>template.replace(/\{([1-5])\}/g,(_,index)=>fields[index-1]);
+function structureDiagnosticText(message){
   if(message==='CIF symmetry rotations do not preserve the declared cell metric at this tolerance')return 'CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。';
   if(message==='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number')return 'CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。';
   const aliases=/^Repeated CIF data item: (_\S+) aliases (_\S+)$/.exec(message);
-  return aliases?'CIF 字段 {1} 和 {2} 指向同一个数据项。请保留一种写法。'.replace(/\{([12])\}/g,(_,index)=>aliases[index]):message;
+  if(aliases)return formatDiagnosticFields('CIF 字段 {1} 和 {2} 指向同一个数据项。请保留一种写法。',aliases.slice(1));
+  const site=/^CIF atom-site row (\d+)(?: \((.{1,48})\))? (.*)$/su.exec(message);
+  if(!site)return message;
+  const [,row,label,detail]=site;
+  const location=[row,label?` (${label})`:''];
+  if(detail==='multiplicity must be an integer from 1 to 192'){
+    return formatDiagnosticFields('CIF 原子位点第 {1} 行{2}的重数必须是 1 至 192 的整数。',location);
+  }
+  const legacy=/^expands to multiplicity (\d+)\. Deprecated _atom_site_symmetry_multiplicity records (\d+), consistent with the site symmetry order\. The source value is retained\.$/.exec(detail);
+  if(legacy)return formatDiagnosticFields('CIF 原子位点第 {1} 行{2}展开后的重数为 {3}。旧字段 _atom_site_symmetry_multiplicity 中的值 {4} 与位点稳定子阶一致，已保留源值。',[...location,...legacy.slice(1)]);
+  const mismatch=/^declares multiplicity (\d+), but symmetry expansion gives (\d+) distinct periodic sites at (\d+(?:\.\d+)?(?:[eE][+-]?\d+)?) Angstrom\. Check the symmetry setting, multiplicity field and site coordinates\.$/.exec(detail);
+  return mismatch?formatDiagnosticFields('CIF 原子位点第 {1} 行{2}声明重数为 {3}。对称展开使用 {5} Å 的去重容差，得到 {4} 个不同的周期位点。请核对对称设置、重数字段和位点坐标。',[...location,...mismatch.slice(1)]):message;
 }
 const sample = `NaCl conventional cell
 1.0
@@ -76,7 +89,8 @@ const matrix = rows => `<div class="table-wrap"><table><tbody>${rows.map(row=>`<
 export const getStructureResult = () => state.result;
 
 export function renderStructureView(options) {
-  const {container,run,toast,download,openGroup,openDiffraction,structureQuery='',cifPracticeOpen=cifSettingPracticeEnabled(structureQuery)}=options;
+  const {container,run,toast,download,openGroup,openDiffraction,structureQuery='',
+    cifPracticeOpen=cifSettingPracticeEnabled(structureQuery),cifOrbitOpen=cifOrbitPracticeEnabled(structureQuery)}=options;
   const foldingWave=siFoldingSourceWave(structureQuery);
   const siInputCoordinates=foldingWave?.map(String)??['1/2','0','0'];
   const siInputNotation=foldingWave?`(${foldingWave.join(',')})`:String.raw`(\frac{1}{2},0,0)`;
@@ -89,6 +103,7 @@ export function renderStructureView(options) {
     <div class="controls-row"><label class="secondary small" for="structure-file">↑ 打开结构文件</label><input type="file" class="sr-only" id="structure-file" accept=".cif,.vasp,.poscar,.txt,POSCAR,CONTCAR"><button type="button" class="secondary small" id="structure-file-cancel" hidden>取消文件读取</button><button class="text-button" id="structure-poscar-example">NaCl 示例</button><button class="text-button" id="structure-cif-example">CIF 示例</button></div>
     <div class="structure-details"><button type="button" class="secondary" id="structure-si-example">核对并载入官方 Si 结构与练习设置</button><p class="form-note">${esc('将输入晶胞的波矢设为')} ${inlineMath(siInputNotation)}${esc('，对称性容差设为')} ${inlineMath(String.raw`10^{-5}\,\mathrm{\AA}`)}.</p>${foldingWave?'<p class="form-note" id="structure-si-fold-note">来自相位行的波矢采用 Si 常规胞的倒易分数坐标。载入并手动转换后，再用 BC 原胞坐标比较星臂数和小群阶。</p>':''}<div id="structure-si-source" role="status" tabindex="-1" hidden></div></div>
     ${cifSettingPracticeHTML(cifPracticeOpen)}
+    ${cifOrbitPracticeHTML(cifOrbitOpen)}
     <label class="field-label" for="structure-format">输入格式</label><select class="form-select" id="structure-format"><option value="poscar" ${state.format==='poscar'?'selected':''}>POSCAR / CONTCAR</option><option value="cif" ${state.format==='cif'?'selected':''}>CIF</option></select>
     <label class="field-label" for="structure-text">文件内容<span>仅在此浏览器读取</span></label><textarea id="structure-text" class="band-input structure-input" spellcheck="false" aria-label="POSCAR 或 CIF 文件内容">${esc(state.text)}</textarea>
     <div class="structure-options"><div><label class="field-label" for="structure-symprec">对称性容差 / Å</label><input id="structure-symprec" class="form-select" value="${esc(state.symprec)}" inputmode="decimal"></div><div><label class="field-label" for="structure-species">VASP 4 元素顺序</label><input id="structure-species" class="form-select" value="${esc(state.species)}" placeholder="如 Na Cl；无元素行时填写"></div></div>
@@ -96,16 +111,20 @@ export function renderStructureView(options) {
     <button class="primary" id="structure-run" ${state.busy?'disabled':''}>${state.busy?'正在转换…':'识别空间群并转换到 BC →'}</button><div id="structure-error" role="alert"></div>
     <p class="form-note">适用于三维周期、满占位结构。识别结果随容差变化；CIF 无序、部分占位和磁矩信息会明确提示。<a href="docs/structure-bc.md" target="_blank">转换约定与输入范围 ↗</a></p>
   </div></section><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">02</span> BC 晶胞与坐标变换</div><span class="subtle">VERIFIED CONVERSION</span></div><div class="panel-body" id="structure-result"></div></section></div>`;
-  const practice=$('#structure-cif-practice');
-  const redraw=()=>renderStructureView({...options,cifPracticeOpen:practice.open});
-  const practiceButtons=[...container.querySelectorAll('[data-cif-setting-case]')];
-  const practiceStatus=$('#structure-cif-practice-status');
+  const practicePanels=[
+    {id:'structure-cif-practice',openKey:'cifPracticeOpen',cases:cifSettingCases,kz:'1/4',message:'合成练习 CIF 已在编辑框中。请手动转换。'},
+    {id:'structure-cif-orbit-practice',openKey:'cifOrbitOpen',cases:cifOrbitCases,kz:'0',message:'石英练习 CIF 已在编辑框中。请手动转换。'}
+  ].map(panel=>({...panel,element:$('#'+panel.id),status:$('#'+panel.id+'-status')}));
+  const practiceButtons=practicePanels.flatMap(panel=>panel.cases.map(preset=>({
+    panel,preset,button:$('#'+panel.id+'-'+preset.id)
+  })));
+  const redraw=()=>renderStructureView({...options,...Object.fromEntries(practicePanels.map(({openKey,element})=>[openKey,element.open]))});
   function drawResult() {
     if(!current())return;
-    if(practiceStatus){
-      const loaded=state.format==='cif'&&state.source.kind==='teaching-example'&&cifSettingCases.some(example=>example.filename===state.source.filename);
-      practiceStatus.hidden=!loaded;
-      practiceStatus.textContent=loaded?'合成练习 CIF 已在编辑框中。请手动转换。':'';
+    for(const {cases,status,message} of practicePanels){
+      const loaded=state.format==='cif'&&state.source.kind==='teaching-example'&&cases.some(example=>example.filename===state.source.filename);
+      status.hidden=!loaded;
+      status.textContent=loaded?message:'';
     }
     disposeHandoff();disposeHandoff=()=>{};
     $('#structure-error').innerHTML=state.error?`<div class="notice error">${esc(state.error)}</div>`:'';
@@ -133,7 +152,7 @@ export function renderStructureView(options) {
       <p class="mini-heading">输入 → BC · ${inlineMath(String.raw`x_{\mathrm{BC}}=M x_{\mathrm{input}}+q`,'x_BC = M x_input + q')}</p>${matrix(r.transform.coordinate_matrix)}<p class="form-note">q = (${r.transform.origin_shift.map(fmt).join(', ')})</p>
       <div class="notice">${inlineMath(String.raw`k_{\mathrm{BC}}=(${r.k_bc.map(fmt).join(', ')})`,'k_BC = ('+r.k_bc.map(fmt).join(', ')+')')}<br><small>倒易坐标使用 M⁻ᵀ；变换后的波矢可送入工作台。</small></div>
       <div class="notice structure-verification">${r.verified?'✓ BC 生成元与结构对称性核对通过':'转换检查未通过，请检查完整 JSON。'}</div>
-      ${(r.warnings||[]).map(w=>`<div class="notice warning">${esc(w)}</div>`).join('')}
+      ${(r.warnings||[]).map(w=>`<div class="notice warning">${esc(structureDiagnosticText(w))}</div>`).join('')}
       <details class="structure-details"><summary>查看原子分数坐标</summary><div class="table-wrap"><table><thead><tr><th>元素</th><th>x</th><th>y</th><th>z</th></tr></thead><tbody>${cell.positions.map((p,i)=>`<tr><td>${esc(cell.species[i])}</td>${p.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>
       <details class="structure-details"><summary>更多晶胞导出</summary><p class="form-note">未理想化 BC 晶胞保留输入的实际晶格；ITA 常规胞使用国际表设置，与 BC 原胞不同。</p><div class="controls-row"><button class="secondary small" id="structure-unidealized">↓ 未理想化 BC POSCAR</button><button class="secondary small" id="structure-standard">↓ ITA 常规胞 POSCAR</button></div></details><details class="structure-details"><summary>验证与理想化记录</summary><pre class="structure-json">${esc(JSON.stringify(r.verification,null,2))}</pre></details>`;
     const spin=$('#structure-spin');spin.onchange=()=>{if(!current()||$('#structure-spin')!==spin||state.result!==r)return;state.doubleValued=spin.value==='true';if(state.handoff)state.handoff=validateStructureHandoff({...state.handoff,doubleValued:state.doubleValued});drawResult();};
@@ -206,7 +225,7 @@ export function renderStructureView(options) {
       if(active)drawSiStatus();
     }
   };
-  const setDisabled=()=>{$('#structure-run').disabled=state.busy||state.fileLoading;container.querySelectorAll('input,textarea,select,#structure-poscar-example,#structure-cif-example').forEach(el=>el.disabled=state.busy||state.fileLoading);$('#structure-file').disabled=state.busy;$('#structure-poscar-example').disabled=state.busy;$('#structure-cif-example').disabled=state.busy;practiceButtons.forEach(button=>button.disabled=state.busy||state.fileLoading);$('#structure-file-cancel').hidden=!state.fileLoading;$('#structure-file-cancel').disabled=state.busy;drawSiStatus();};
+  const setDisabled=()=>{$('#structure-run').disabled=state.busy||state.fileLoading;container.querySelectorAll('input,textarea,select,#structure-poscar-example,#structure-cif-example').forEach(el=>el.disabled=state.busy||state.fileLoading);$('#structure-file').disabled=state.busy;$('#structure-poscar-example').disabled=state.busy;$('#structure-cif-example').disabled=state.busy;practiceButtons.forEach(({button})=>button.disabled=state.busy||state.fileLoading);$('#structure-file-cancel').hidden=!state.fileLoading;$('#structure-file-cancel').disabled=state.busy;drawSiStatus();};
   $('#structure-file-cancel').onclick=()=>{if(!current()||state.busy||!state.fileLoading)return;state.fileTicket++;state.fileLoading=false;invalid();$('#structure-file').value='';state.refresh?.();toast('已取消文件读取；当前结构文本保留。');};
   $('#structure-text').oninput=e=>{state.fileTicket++;state.fileLoading=false;state.text=e.target.value;state.source={kind:'user-text',filename:''};state.sourceBytes=null;interruptSiLoad();invalid();};
   $('#structure-format').onchange=e=>{state.format=e.target.value;interruptSiLoad();invalid();};
@@ -218,13 +237,12 @@ export function renderStructureView(options) {
   const useExample=(text,format,filename=format==='cif'?'CsCl_example.cif':'NaCl_example.POSCAR')=>{if(!current())return;interruptSiLoad();state.fileTicket++;state.fileLoading=false;state.text=text;state.format=format;state.species='';state.cifBlock='';state.source={kind:'teaching-example',filename};state.sourceBytes=null;state.doubleValued=false;invalid();redraw();};
   $('#structure-poscar-example').onclick=()=>useExample(sample,'poscar');
   $('#structure-cif-example').onclick=()=>useExample(cifSample,'cif');
-  for(const button of practiceButtons){
-    const preset=cifSettingCases.find(example=>example.id===button.dataset.cifSettingCase);
+  for(const {button,panel,preset} of practiceButtons){
     button.onclick=()=>{
-      if(!current()||!preset||$('#'+button.id)!==button||state.busy||state.fileLoading)return;
-      Object.assign(state,{symprec:'0.00001',angle:'-1',k:['0','0','1/4']});
+      if(!current()||$('#'+button.id)!==button||state.busy||state.fileLoading)return;
+      Object.assign(state,{symprec:'0.00001',angle:'-1',k:['0','0',panel.kz]});
       useExample(preset.text,'cif',preset.filename);
-      $('#structure-cif-practice-status')?.focus?.({preventScroll:true});
+      $('#'+panel.id+'-status')?.focus?.({preventScroll:true});
     };
   }
   $('#structure-file').onchange=async e=>{
@@ -257,7 +275,7 @@ export function renderStructureView(options) {
       catch(error){if(owns()){state.handoff=null;state.handoffPending=false;state.handoffError=error.message||'来源摘要未完成；几何导出仍可使用。';}}
     }catch(error){
       if(inputVersion===state.inputVersion){
-        state.error=structureErrorText(error.message);
+        state.error=structureDiagnosticText(error.message);
       }
     }
     finally{state.busy=false;state.refresh?.();}

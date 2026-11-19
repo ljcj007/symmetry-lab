@@ -20,5 +20,8 @@
   "合成练习 CIF 已在编辑框中。请手动转换。": "The synthetic CIF is in the editor. Run the conversion manually.",
   "CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。": "The CIF symmetry rotations do not preserve the input cell metric at the current tolerance.",
   "CIF 字段 {1} 和 {2} 指向同一个数据项。请保留一种写法。": "CIF fields {1} and {2} refer to the same data item. Keep one spelling.",
-  "CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。": "CIF fields _space_group_IT_number and _symmetry_Int_Tables_number give different space-group numbers. Check the original structure."
+  "CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。": "CIF fields _space_group_IT_number and _symmetry_Int_Tables_number give different space-group numbers. Check the original structure.",
+  "CIF 原子位点第 {1} 行{2}声明重数为 {3}。对称展开使用 {5} Å 的去重容差，得到 {4} 个不同的周期位点。请核对对称设置、重数字段和位点坐标。": "CIF atom-site row {1}{2} declares multiplicity {3}. Symmetry expansion gives {4} distinct periodic sites at a deduplication tolerance of {5} Å. Check the symmetry setting, multiplicity field, and site coordinates.",
+  "CIF 原子位点第 {1} 行{2}的重数必须是 1 至 192 的整数。": "The multiplicity in CIF atom-site row {1}{2} must be an integer from 1 to 192.",
+  "CIF 原子位点第 {1} 行{2}展开后的重数为 {3}。旧字段 _atom_site_symmetry_multiplicity 中的值 {4} 与位点稳定子阶一致，已保留源值。": "CIF atom-site row {1}{2} expands to multiplicity {3}. The value {4} in the legacy field _atom_site_symmetry_multiplicity agrees with the site-symmetry order. The source value is retained."
 }

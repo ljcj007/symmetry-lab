@@ -39,6 +39,39 @@ def sg4_cif(declaration):
                             'Na .123 .345 .234\nCl .271 .159 .414')
 
 
+def cod_alpha_quartz_fields():
+    # Crystallographic numeric fields from COD 5000035, revision 202022 (CC0).
+    # https://www.crystallography.net/cod/5000035.cif@202022
+    return '''data_5000035_fields
+_space_group_IT_number 154
+_symmetry_Int_Tables_number 154
+_cell_length_a 4.91239(4)
+_cell_length_b 4.91239(4)
+_cell_length_c 5.40385(7)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 120
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-y,x-y,2/3+z
+y-x,-x,1/3+z
+y,x,-z
+x-y,-y,1/3-z
+-x,y-x,2/3-z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+Si1 Si4+ 3 0.4701(4) 0. 0.6667 1.
+O1 O2- 6 0.4139(7) 0.2674(7) 0.7856(6) 1.
+'''
+
+
 class StructureBCTests(unittest.TestCase):
     def test_poscar_negative_cartesian_selective_vasp4(self):
         text = 'anonymous\n-64\n1 0 0\n0 1 0\n0 0 1\n1 1\nSelective dynamics\nCartesian\n0 0 0 T F T\n.5 .5 .5 F F F\n'
@@ -252,6 +285,74 @@ Cl1 Cl 0.271 0.414 0.159 1
                 bc.parse_cif(variant.replace('_symmetry_Int_Tables_number 4', '_symmetry_Int_Tables_number 3'))
         with self.assertRaisesRegex(ValueError, 'Repeated CIF data item: .* aliases '):
             bc.parse_cif(text.replace('_space_group_IT_number', '_space_group.IT_number'))
+
+    def test_cif_site_multiplicity_checks_the_cod_quartz_coordinates_without_snapping(self):
+        source = cod_alpha_quartz_fields()
+        expected_error = r'CIF atom-site row 1 \(Si1\) declares multiplicity 3.*gives 6 distinct periodic sites'
+        with self.assertRaisesRegex(ValueError, expected_error):
+            bc.run({'format': 'cif', 'text': source})
+        # Deliberate diagnostic input, not a correction performed by the parser.
+        exact = source.replace('0. 0.6667 1.', '0. 2/3 1.')
+        converted = bc.run({'format': 'cif', 'text': exact})
+        self.assertEqual((converted['group_number'], converted['hall_number']), (154, 443))
+        self.assertTrue(converted['verified'])
+        self.assertEqual(converted['input_cell']['species'], ['Si4+'] * 3 + ['O2-'] * 6)
+        self.assertEqual(converted['input_metadata']['source_site_rows'][0]['_atom_site_fract_z'], '2/3')
+
+    def test_cif_site_multiplicity_counts_one_row_even_if_another_row_shares_its_orbit(self):
+        operations = "loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n'-x,-y,-z'\n'x,y,z'"
+        text = cif_with_setting((3, 5, 4), (82, 94, 101.2), operations,
+                                'Na .12 .20 .34 2 1\nNa .88 .80 .66 2 1\nCl 0 0 0 1 2\n'
+                                'O .10 .34 .41 ? 1\nO .90 .66 .59 . 1')
+        for name in ('_atom_site.site_symmetry_multiplicity', '_atom_site_site_symmetry_multiplicity',
+                     '_atom_site.symmetry_multiplicity', '_atom_site_symmetry_multiplicity'):
+            with self.subTest(name=name):
+                decorated = text.replace('_atom_site_fract_z\n', f'_atom_site_fract_z\n{name}\n'
+                                         '_atom_site.site_symmetry_order\n')
+                parsed = bc.parse_cif(decorated)
+                self.assertEqual(parsed['species'], ['Na', 'Na', 'Cl', 'O', 'O'])
+                self.assertEqual(parsed['metadata']['source_site_rows'][1][name], '2')
+                with self.assertRaisesRegex(ValueError, 'row 2 declares multiplicity 3.*gives 2 distinct'):
+                    bc.parse_cif(decorated.replace('Na .88 .80 .66 2 1', 'Na .88 .80 .66 3 1'))
+                for invalid in ('0', '193', '1.5'):
+                    with self.assertRaisesRegex(ValueError, 'multiplicity must be an integer from 1 to 192'):
+                        bc.parse_cif(decorated.replace('Cl 0 0 0 1 2', f'Cl 0 0 0 {invalid} 2'))
+
+    def test_cif_deprecated_multiplicity_can_record_independently_verified_site_order(self):
+        # The repeated affine representatives differ only by integer translation.
+        operation_loop = ("loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n'-x,-y,-z'\n"
+                          "'x+1,y,z'\n'-x+1,-y,-z'")
+        text = cif_with_setting((3, 5, 4), (82, 94, 101.2), operation_loop,
+                                'Na .12 .20 .34 Na1 1\nCl 0 0 0 Cl1 2')
+        text = text.replace('_atom_site_fract_z\n', '_atom_site_fract_z\n_atom_site_label\n'
+                            '_atom_site_symmetry_multiplicity\n')
+        result = bc.parse_cif(text)
+        self.assertEqual(result['species'], ['Na', 'Na', 'Cl'])
+        self.assertEqual(result['metadata']['source_site_rows'][0]['_atom_site_symmetry_multiplicity'], '1')
+        self.assertEqual(result['metadata']['source_site_rows'][1]['_atom_site_symmetry_multiplicity'], '2')
+        warning = result['metadata']['warnings']
+        self.assertEqual(len(warning), 2)
+        self.assertRegex(warning[0], r'row 1 \(Na1\) expands to multiplicity 2\. Deprecated '
+                                     r'_atom_site_symmetry_multiplicity records 1, consistent with the site symmetry order')
+        self.assertRegex(warning[1], r'row 2 \(Cl1\) expands to multiplicity 1\. Deprecated '
+                                     r'_atom_site_symmetry_multiplicity records 2, consistent with the site symmetry order')
+        with self.assertRaisesRegex(ValueError, 'row 1 .*declares multiplicity 3'):
+            bc.parse_cif(text.replace('Na1 1', 'Na1 3'))
+        for name in ('_atom_site.site_symmetry_multiplicity', '_atom_site_site_symmetry_multiplicity',
+                     '_atom_site.symmetry_multiplicity'):
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, 'row 1 .*declares multiplicity 1'):
+                bc.parse_cif(text.replace('_atom_site_symmetry_multiplicity', name))
+
+    def test_cif_legacy_order_does_not_reinterpret_a_nearly_closed_operation_list(self):
+        # This rounded translation list can pass the pre-existing fuzzy closure
+        # check. Its affine keys do not close, so it cannot support the exception.
+        operation_loop = ("loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n"
+                          "'x+0.3333333,y,z'\n'x+0.6666667,y,z'")
+        text = cif_with_setting((3, 5, 4), (82, 94, 101.2), operation_loop, 'Na .12 .20 .34 1')
+        text = text.replace('_atom_site_fract_z\n', '_atom_site_fract_z\n_atom_site_symmetry_multiplicity\n')
+        with self.assertRaisesRegex(ValueError, 'declares multiplicity 1.*gives 3 distinct'):
+            bc.parse_cif(text)
+        self.assertEqual(bc.parse_cif(text.replace('.34 1', '.34 3'))['species'], ['Na', 'Na', 'Na'])
 
     def test_cif_dotted_and_old_symop_names_preserve_explicit_operation_rules(self):
         control = bc.parse_cif(sg4_cif("_space_group_name_Hall 'P 2c'"))

@@ -82,6 +82,12 @@ separate bounded complete-source restoration path. The directory now has 75 tool
   in both editions. A new visit from the material atlas or homepage shows
   the current tool's learning links, while related steps within a classroom
   visit retain their return link.
+- The standard-cell lesson follows a constant geometry through three separate
+  structure-to-representation calculations. Two wavevectors that differ by a
+  reciprocal vector give the same screw characters. The opposite wavevector
+  has the same little-group order and the conjugate characters. A separate
+  quartz exercise checks a declared Wyckoff multiplicity against the input
+  orbit using the retained rounded coordinate and one labeled exact control.
 
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
