@@ -3,10 +3,16 @@ import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {createStructureHandoff,validateStructureHandoff,structureHandoffHTML,bindStructureHandoff} from './structure-handoff.js?v=20261114-evidence2';
 import {createStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
-import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML} from './cif-setting-practice.js?v=20261120-cif-practice1';
+import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML} from './cif-setting-practice.js?v=20261120-cif-dotted2';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
+function structureErrorText(message){
+  if(message==='CIF symmetry rotations do not preserve the declared cell metric at this tolerance')return 'CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。';
+  if(message==='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number')return 'CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。';
+  const aliases=/^Repeated CIF data item: (_\S+) aliases (_\S+)$/.exec(message);
+  return aliases?'CIF 字段 {1} 和 {2} 指向同一个数据项。请保留一种写法。'.replace(/\{([12])\}/g,(_,index)=>aliases[index]):message;
+}
 const sample = `NaCl conventional cell
 1.0
 5.64 0 0
@@ -251,8 +257,7 @@ export function renderStructureView(options) {
       catch(error){if(owns()){state.handoff=null;state.handoffPending=false;state.handoffError=error.message||'来源摘要未完成；几何导出仍可使用。';}}
     }catch(error){
       if(inputVersion===state.inputVersion){
-        state.error=error.message==='CIF symmetry rotations do not preserve the declared cell metric at this tolerance'
-          ?'CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。':error.message;
+        state.error=structureErrorText(error.message);
       }
     }
     finally{state.busy=false;state.refresh?.();}

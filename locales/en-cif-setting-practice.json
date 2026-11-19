@@ -2,6 +2,8 @@
   "载入仅编号的 CIF": "Load the number-only CIF",
   "载入 P 2c CIF": "Load the P 2c CIF",
   "载入 P 2yb CIF": "Load the P 2yb CIF",
+  "载入点号 P 2c CIF": "Load the dotted P 2c CIF",
+  "再对照点号写法。与 P 2c 版本逐项比较输入 Hall 记录、展开原子数和 BC 波矢。": "Compare the dotted spelling with the P 2c input above. Check the input Hall record, expanded atom count, and BC wave vector.",
   "空间群 4 · CIF 设置练习": "Space group 4 · CIF setting exercise",
   "三份合成 CIF 使用同一个单斜晶胞和同一组原子坐标。改变的是空间群的声明。先预测哪份声明会通过晶胞度量核对，再逐一载入并手动转换。": "The three synthetic CIFs share a monoclinic cell and atomic coordinates. The space-group declaration varies. Predict which declarations will pass the cell-metric check, then load and convert each one manually.",
   "载入会替换编辑框中的结构，并采用默认角度容差及该练习的波矢和对称性容差。": "Loading replaces the structure in the editor and applies the default angle tolerance and the exercise's wave vector and symmetry tolerance.",
@@ -16,5 +18,7 @@
   "多个候选与度量相容。解析器采用目录中的第一个匹配设置。": "Several settings are compatible with the cell metric. The parser uses the first matching setting in the catalog.",
   "上方空间群结果中的 Hall 编号对应标准化后的晶胞。": "The Hall number in the space-group result above refers to the standardized cell.",
   "合成练习 CIF 已在编辑框中。请手动转换。": "The synthetic CIF is in the editor. Run the conversion manually.",
-  "CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。": "The CIF symmetry rotations do not preserve the input cell metric at the current tolerance."
+  "CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。": "The CIF symmetry rotations do not preserve the input cell metric at the current tolerance.",
+  "CIF 字段 {1} 和 {2} 指向同一个数据项。请保留一种写法。": "CIF fields {1} and {2} refer to the same data item. Keep one spelling.",
+  "CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。": "CIF fields _space_group_IT_number and _symmetry_Int_Tables_number give different space-group numbers. Check the original structure."
 }

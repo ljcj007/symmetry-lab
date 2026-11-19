@@ -43,6 +43,7 @@ assert.equal(Object.hasOwn(details.attributes,'open'),false);
 assert.equal(details.querySelectorAll('li').length,3);
 assert.equal(details.querySelector(`a[href="${practiceRoute}"]`).getAttribute('href'),practiceRoute);
 assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md"]'));
+assert.ok(details.querySelector('a[href="docs/cif-setting-practice.md#dotted-cif-replay"]'));
 assert.ok(lesson.querySelector('[data-si-structure-practice]'));
 assert.match(details.innerHTML,/101\.2°/);
 assert.match(details.innerHTML,/P 2c/);
@@ -62,5 +63,13 @@ assert.match(doc,/\]\(\.\.\/#classroom\/crystal\?track=space&tab=learn&lesson=sp
 assert.match(doc,/Rᵀ G R = G/);
 assert.match(doc,/Ispace_group_IT_number\.html/);
 assert.match(doc,/Ispace_group_name_Hall\.html/);
+const replay=doc.split('<a id="dotted-cif-replay"></a>')[1];
+assert.ok(replay);
+assert.match(replay,english?/Load the dotted P 2c CIF/:/载入点号 P 2c CIF/);
+assert.match(replay,/_cell_length_a/);
+assert.match(replay,/_cell\.length_a/);
+assert.match(replay,/github\.com\/COMCIFS\/cif_core\/blob\/v3\.3\.0\/cif_core\.dic/);
+assert.match(replay,/source_site_rows/);
+assert.match(replay,/SHA-256/);
 
 console.log(`CIF axis setting lesson (${english?'English':'Chinese'}): canonical classroom handoff, document, and inactive neighboring lesson passed.`);

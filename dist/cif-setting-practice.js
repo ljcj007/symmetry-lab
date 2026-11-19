@@ -3,27 +3,30 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const settingRows=[
  ['number-only','sg4_number_only.cif','载入仅编号的 CIF','_space_group_IT_number 4'],
  ['unique-c','sg4_unique_c.cif','载入 P 2c CIF',"_space_group_name_Hall 'P 2c'"],
- ['unique-b','sg4_unique_b.cif','载入 P 2yb CIF',"_space_group_name_Hall 'P 2yb'"]
+ ['unique-b','sg4_unique_b.cif','载入 P 2yb CIF',"_space_group_name_Hall 'P 2yb'"],
+ ['dotted-c','sg4_dotted_c.cif','载入点号 P 2c CIF',"_space_group.name_Hall 'P 2c'",true]
 ];
 
-export const cifSettingCases=Object.freeze(settingRows.map(([id,filename,label,declaration])=>Object.freeze({
- id,filename,label,text:`data_metric
-_cell_length_a 3
-_cell_length_b 5
-_cell_length_c 4
-_cell_angle_alpha 90
-_cell_angle_beta 90
-_cell_angle_gamma 101.2(1)
+export const cifSettingCases=Object.freeze(settingRows.map(([id,filename,label,declaration,dotted])=>{
+ const join=dotted?'.':'_';
+ return Object.freeze({id,filename,label,text:`data_metric
+_cell${join}length_a 3
+_cell${join}length_b 5
+_cell${join}length_c 4
+_cell${join}angle_alpha 90
+_cell${join}angle_beta 90
+_cell${join}angle_gamma 101.2(1)
 ${declaration}
 loop_
-_atom_site_type_symbol
-_atom_site_fract_x
-_atom_site_fract_y
-_atom_site_fract_z
+_atom_site${join}type_symbol
+_atom_site${join}fract_x
+_atom_site${join}fract_y
+_atom_site${join}fract_z
 Na .123 .345 .234
 Cl .271 .159 .414
 `
-})));
+ });
+}));
 
 export function cifSettingPracticeEnabled(query){
  const values=new URLSearchParams(query).getAll('cif-setting');
@@ -31,11 +34,14 @@ export function cifSettingPracticeEnabled(query){
 }
 
 export function cifSettingPracticeHTML(open){
+ const button=({id,label})=>`<button type="button" id="structure-cif-practice-${id}" class="secondary small" data-cif-setting-case="${id}">${esc(label)}</button>`;
  return `<details class="structure-details" id="structure-cif-practice"${open?' open':''}>
   <summary>空间群 4 · CIF 设置练习</summary>
   <p>三份合成 CIF 使用同一个单斜晶胞和同一组原子坐标。改变的是空间群的声明。先预测哪份声明会通过晶胞度量核对，再逐一载入并手动转换。</p>
   <p class="form-note">载入会替换编辑框中的结构，并采用默认角度容差及该练习的波矢和对称性容差。</p>
-  <div class="controls-row">${cifSettingCases.map(({id,label})=>`<button type="button" id="structure-cif-practice-${id}" class="secondary small" data-cif-setting-case="${id}">${esc(label)}</button>`).join('')}</div>
+  <div class="controls-row">${cifSettingCases.slice(0,3).map(button).join('')}</div>
+  <p>再对照点号写法。与 P 2c 版本逐项比较输入 Hall 记录、展开原子数和 BC 波矢。</p>
+  <div class="controls-row">${button(cifSettingCases[3])}</div>
   <p id="structure-cif-practice-status" class="form-note" role="status" tabindex="-1" hidden></p>
   <p class="controls-row"><a href="#classroom/crystal?track=space&amp;tab=learn&amp;lesson=space-06">返回空间群课堂 →</a><a href="docs/cif-setting-practice.md">查看练习步骤与坐标约定 →</a></p>
  </details>`;

@@ -43,6 +43,7 @@ function cifSettingPracticeHTML(){
       <li><strong>对照两次转换。</strong>保持晶胞与位点不变，分别载入仅给编号 4 和明确给出 P 2c 的 CIF，再手动运行。比较结果中的输入 Hall 设置、展开原子数和结构验证。标准化结果的 Hall 记录对应另一套坐标。</li>
       <li><strong>核对不相容的声明。</strong>在同一个斜晶胞中改用明确给出 P 2yb 的 CIF，手动运行，检查转换器怎样报告晶胞度量冲突。</li>
     </ol>
+    <p>也可以用点号标签重放同一个 P 2c 结构，核对换了字段名之后，哪些计算量保持原值。<a href="docs/cif-setting-practice.md#dotted-cif-replay">比较两种字段写法 →</a></p>
     <p><a href="#structure?cif-setting=practice">打开 CIF 轴设置练习 →</a> · <a href="docs/cif-setting-practice.md">查看三次核对的步骤与预期结果</a></p>
   </details>`;
 }

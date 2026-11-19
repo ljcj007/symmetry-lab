@@ -49,6 +49,14 @@ data remain in metadata, but geometry-only exports do not transform them.
   blocks require an explicit `cif_block` name. Explicit affine symmetry
   operations expand the asymmetric unit. Operations are parsed by a strict
   arithmetic AST allowlist; user text is never evaluated as Python.
+- The small-structure reader also accepts a fixed set of dotted item names for
+  cell, symmetry and site data from [IUCr COMCIFS Core CIF v3.3.0](https://github.com/COMCIFS/cif_core/blob/v3.3.0/cif_core.dic).
+  Dotted and underscored names for the same item cannot appear together.
+  Files with both legacy space-group number tags, `_space_group_IT_number`
+  and `_symmetry_Int_Tables_number`, are accepted when the two integers agree.
+  A conflict stops conversion. Source metadata retains the input's punctuation
+  in lowercased data names. Source digests use the original input.
+  See the [paired CIF replay](cif-setting-practice.md#dotted-cif-replay).
 - If a CIF omits operations, an explicit Hall symbol supplies the corresponding
   operations from spglib. For H–M/IT metadata without a Hall symbol, only
   settings whose rotations preserve the declared cell metric are eligible.

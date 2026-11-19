@@ -23,12 +23,13 @@ const base={
 };
 const container=new Container();container.dataset={researchView:'structure'};
 const calls=[],downloads=[];
-let pendingConversion,holdConversion=false;
+let pendingConversion,holdConversion=false,nextError;
 const workbench={
  container,toast(){},download:(...values)=>downloads.push(values),openGroup(){},
  async run(action,payload){
   calls.push({action,payload});
   if(holdConversion){holdConversion=false;await new Promise(resolve=>{pendingConversion=resolve;});}
+  if(nextError){const message=nextError;nextError=null;throw Error(message);}
   const example=cifSettingCases.find(item=>item.text===payload.text);
   if(example?.id==='unique-b')throw Error(metricError);
   const result={...structuredClone(base),symprec:payload.symprec,angle_tolerance:payload.angle_tolerance,k_input:payload.k,k_bc:payload.k};
@@ -102,6 +103,45 @@ example('unique-c').onclick();
 await convert();
 assert.match(evidence().textContent,english?/declared explicitly/:/明确声明/);
 assert.doesNotMatch(evidence().textContent,english?/compatible with the input cell metric/:/相容的候选数/);
+const plainSetting=structuredClone(getStructureResult().input_metadata.cif_symmetry_setting);
+const countBeforeDotted=calls.length;
+assert.equal(example('dotted-c').textContent,english?'Load the dotted P 2c CIF':'载入点号 P 2c CIF');
+example('dotted-c').onclick();
+assert.equal(calls.length,countBeforeDotted,'Dotted input also waits for manual conversion');
+const dottedInput=$('#structure-text').value;
+assert.match(dottedInput,/_cell\.length_a 3[\s\S]*_space_group\.name_Hall 'P 2c'[\s\S]*_atom_site\.fract_z/);
+assert.equal($('#structure-k-2').value,'1/4');
+await convert();
+assert.equal(calls.at(-1).payload.text,dottedInput);
+assert.deepEqual(getStructureResult().input_metadata.cif_symmetry_setting,plainSetting);
+
+const duplicateInput=dottedInput.replace('_cell.length_a 3','_cell.length_a 3\n_cell_length_a 5');
+$('#structure-text').oninput({target:{value:duplicateInput}});
+nextError='Repeated CIF data item: _cell.length_a aliases _cell_length_a';
+await convert();
+assert.equal(calls.at(-1).payload.text,duplicateInput);
+assert.equal(getStructureResult(),null);
+assert.equal($('#structure-error').textContent,english
+ ?'CIF fields _cell.length_a and _cell_length_a refer to the same data item. Keep one spelling.'
+ :'CIF 字段 _cell.length_a 和 _cell_length_a 指向同一个数据项。请保留一种写法。');
+assert.equal(evidence(),null);
+const literalTag='_item<img>$&';
+nextError='Repeated CIF data item: '+literalTag+' aliases _cell_length_a';
+await convert();
+assert.ok($('#structure-error').textContent.includes(literalTag),'A dynamic field remains literal text');
+assert.ok($('#structure-error').innerHTML.includes('_item&lt;img&gt;$&amp;'));
+assert.equal($('#structure-error').querySelector('img'),null);
+
+const conflictingNumbers=dottedInput.replace("_space_group.name_Hall 'P 2c'",'_space_group_IT_number 4\n_symmetry_Int_Tables_number 3');
+$('#structure-text').oninput({target:{value:conflictingNumbers}});
+nextError='Conflicting CIF International Tables space-group numbers in _space_group_IT_number and _symmetry_Int_Tables_number';
+await convert();
+assert.equal(calls.at(-1).payload.text,conflictingNumbers);
+assert.equal(getStructureResult(),null);
+assert.equal($('#structure-error').textContent,english
+ ?'CIF fields _space_group_IT_number and _symmetry_Int_Tables_number give different space-group numbers. Check the original structure.'
+ :'CIF 中的 _space_group_IT_number 和 _symmetry_Int_Tables_number 给出了不同的空间群编号。请核对原始结构。');
+
 example('unique-b').onclick();
 await convert();
 assert.equal(getStructureResult(),null);

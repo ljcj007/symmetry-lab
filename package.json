@@ -20,7 +20,7 @@
     "test:si-fold": "node scripts/test-si-conventional-folding-ui.mjs && node scripts/test-si-conventional-folding-ui.mjs --english && node scripts/test-site-symmetry-search.mjs && node scripts/test-site-symmetry-search.mjs --english",
     "test:lesson-topic": "node scripts/test-lesson-topic-finder.mjs && node scripts/test-lesson-topic-finder.mjs --english && node scripts/test-lesson-topic-host.mjs && node scripts/test-lesson-topic-host.mjs --english",
     "test:cif-setting-practice": "node scripts/test-cif-setting-lesson.mjs && node scripts/test-cif-setting-lesson.mjs --english && node scripts/test-cif-setting-practice.mjs && node scripts/test-cif-setting-practice.mjs --english",
-    "test:placement-route-focus": "node scripts/test-zero-start-placement.mjs && node scripts/test-zero-start-placement.mjs --english && node scripts/test-route-focus.mjs && node scripts/test-route-focus.mjs --english",
+    "test:placement-route-focus": "node scripts/test-zero-start-placement.mjs && node scripts/test-zero-start-placement.mjs --english && node scripts/test-route-focus.mjs && node scripts/test-route-focus.mjs --english && node scripts/test-course-return.mjs && node scripts/test-course-return.mjs --english",
     "test:al-gamma": "node scripts/test-al-gamma-source.mjs && node scripts/test-al-gamma-source.mjs --english && node scripts/test-al-gamma-discovery.mjs && node scripts/test-al-gamma-discovery.mjs --english",
     "test:crystkit-handedness": "node scripts/test-crystkit-handedness-ui.mjs && node scripts/test-crystkit-handedness-ui.mjs --english",
     "test:native-navigation": "node scripts/test-native-navigation.mjs && node scripts/test-native-navigation.mjs --english",

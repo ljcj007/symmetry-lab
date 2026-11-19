@@ -15,6 +15,41 @@ import spglib
 
 _MAX_ATOMS = 20000
 
+# COMCIFS Core v3.3.0 definitions and aliases for fields read by this parser.
+# https://github.com/COMCIFS/cif_core/blob/v3.3.0/cif_core.dic
+_CIF_ALIASES = {
+    **{f'_cell.{field}': f'_cell_{field}' for field in (
+        'length_a', 'length_b', 'length_c', 'angle_alpha', 'angle_beta', 'angle_gamma')},
+    '_space_group.name_hall': '_space_group_name_hall',
+    '_symmetry.space_group_name_hall': '_space_group_name_hall',
+    '_symmetry_space_group_name_hall': '_space_group_name_hall',
+    '_space_group.it_number': '_space_group_it_number',
+    '_symmetry.int_tables_number': '_space_group_it_number',
+    '_symmetry_int_tables_number': '_space_group_it_number',
+    '_space_group.name_h-m_alt': '_space_group_name_h-m_alt',
+    '_space_group.name_h-m_full': '_symmetry_space_group_name_h-m',
+    '_symmetry.space_group_name_h-m': '_symmetry_space_group_name_h-m',
+    '_space_group_symop.operation_xyz': '_space_group_symop_operation_xyz',
+    '_symmetry_equiv.pos_as_xyz': '_space_group_symop_operation_xyz',
+    '_symmetry_equiv_pos_as_xyz': '_space_group_symop_operation_xyz',
+    **{f'_atom_site.{field}': f'_atom_site_{field}' for field in (
+        'fract_x', 'fract_y', 'fract_z', 'cartn_x', 'cartn_y', 'cartn_z', 'type_symbol',
+        'label', 'occupancy', 'disorder_group', 'disorder_assembly')},
+    '_atom_site.id': '_atom_site_label',
+}
+
+
+def _cif_field_names(names, declared):
+    """Read known dictionary aliases without changing the source metadata."""
+    fields = {}
+    for name in names:
+        field = _CIF_ALIASES.get(name, name)
+        earlier = declared.setdefault(field, name)
+        if earlier != name:
+            raise ValueError(f'Repeated CIF data item: {earlier} aliases {name}')
+        fields[field] = name
+    return fields
+
 
 def _number(value):
     """CIF uncertainty syntax, fractions and Fortran exponents; never eval."""
@@ -271,22 +306,26 @@ def _cif_setting(method, selected_hall=None, compatible_hall_count=None, ambiguo
             'compatible_hall_count': compatible_hall_count, 'ambiguous': ambiguous}
 
 
-def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
-    keys = ('_space_group_symop_operation_xyz', '_symmetry_equiv_pos_as_xyz', '_space_group_symop.operation_xyz')
-    operations = []
-    for key in keys:
-        if key in tags: operations.append(_linear_symop(tags[key]))
-        for columns, rows in loops:
-            if key in columns: operations.extend(_linear_symop(row[key]) for row in rows)
-        if operations: return operations, _cif_setting('explicit_operations')
-    def compact(s): return re.sub(r'[\s_]', '', s).lower()
-    hall = tags.get('_space_group_name_hall',tags.get('_symmetry_space_group_name_hall'))
-    hm = tags.get('_space_group_name_h-m_alt', tags.get('_symmetry_space_group_name_h-m'))
-    it = tags.get('_space_group_it_number',tags.get('_symmetry_int_tables_number'))
-    number = _number(it) if it else None
-    if number is not None and (not number.is_integer() or not 1 <= number <= 230):
+def _cif_it_number(value):
+    number = _number(value)
+    if not number.is_integer() or not 1 <= number <= 230:
         raise ValueError('CIF International Tables space-group number must be an integer from 1 to 230')
-    number = int(number) if number is not None else None
+    return int(number)
+
+
+def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
+    key = '_space_group_symop_operation_xyz'
+    operations = [_linear_symop(tags[key])] if key in tags else []
+    for columns, rows in loops:
+        if key in columns:
+            operations.extend(_linear_symop(row[columns[key]]) for row in rows)
+    if operations:
+        return operations, _cif_setting('explicit_operations')
+    def compact(s): return re.sub(r'[\s_]', '', s).lower()
+    hall = tags.get('_space_group_name_hall')
+    hm = tags.get('_space_group_name_h-m_alt', tags.get('_symmetry_space_group_name_h-m'))
+    it = tags.get('_space_group_it_number')
+    number = _cif_it_number(it) if it else None
     candidates = []
     for h in range(1,531):
         info = spglib.get_spacegroup_type(h)
@@ -326,9 +365,24 @@ def parse_cif(text, block_name=None, symprec=1e-5):
         blocks = [b for b in blocks if b['name'] == block_name]
         if len(blocks) != 1: raise ValueError('Requested CIF data block does not exist or is ambiguous')
     else:
-        blocks = [b for b in blocks if '_cell_length_a' in b['tags']]
+        blocks = [b for b in blocks if any(_CIF_ALIASES.get(name, name) == '_cell_length_a' for name in b['tags'])]
         if len(blocks) != 1: raise ValueError('CIF must have one crystal data block, or select cif_block explicitly')
-    block = blocks[0]; tags, loops = block['tags'], block['loops']; warnings = []
+    block = blocks[0]
+    source_tags = block['tags']
+    # COD and older CIFs can include both generations of the IT number tag.
+    # Keep both in the source but require an unambiguous valid number for reading.
+    new_it = '_space_group_it_number'
+    old_it = '_symmetry_int_tables_number'
+    field_tags = source_tags
+    if new_it in source_tags and old_it in source_tags:
+        if _cif_it_number(source_tags[new_it]) != _cif_it_number(source_tags[old_it]):
+            raise ValueError('Conflicting CIF International Tables space-group numbers in '
+                             '_space_group_IT_number and _symmetry_Int_Tables_number')
+        field_tags = {name: value for name, value in source_tags.items() if name != old_it}
+    declared = {}
+    tags = {field: source_tags[name] for field, name in _cif_field_names(field_tags, declared).items()}
+    loops = [(_cif_field_names(columns, declared), rows) for columns, rows in block['loops']]
+    warnings = []
     all_keys = set(tags).union(*(set(c) for c,_ in loops))
     if any('magn' in key or 'moment' in key or 'modulation' in key for key in all_keys):
         raise ValueError('Magnetic/modulated CIF data need magnetic structure conversion; ordinary 230-group conversion cannot discard those fields')
@@ -344,7 +398,7 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     lattice = np.array([[a,0,0],[b*math.cos(gamma),b*math.sin(gamma),0], [c*math.cos(beta),c*cy,c*math.sqrt(cz2)]])
     site_loops = [(columns,rows) for columns,rows in loops if '_atom_site_fract_x' in columns or '_atom_site_cartn_x' in columns]
     if len(site_loops) != 1: raise ValueError('CIF needs one atom-site fractional or Cartesian coordinate loop')
-    columns, rows = site_loops[0]
+    columns, source_rows = site_loops[0]
     cartesian = '_atom_site_fract_x' not in columns
     prefix = '_atom_site_cartn_' if cartesian else '_atom_site_fract_'
     positions, species = [], []
@@ -366,7 +420,8 @@ def parse_cif(text, block_name=None, symprec=1e-5):
                            _periodic_near(translation-candidate_t,lattice,symprec,bounds)
                            for candidate_r,candidate_t in operations):
                     raise ValueError('CIF symmetry operations are not a complete closed group')
-    for row in rows:
+    for source_row in source_rows:
+        row = {field: source_row[name] for field, name in columns.items()}
         occupancy = _number(row.get('_atom_site_occupancy','1'))
         if abs(occupancy-1) > 1e-8: raise ValueError('Partial/zero occupancy is not an ordered crystal; provide an explicit ordered model')
         if any(row.get(key,'.') not in ('.','?','0') for key in ('_atom_site_disorder_group','_atom_site_disorder_assembly')):
@@ -387,7 +442,8 @@ def parse_cif(text, block_name=None, symprec=1e-5):
         warnings.append('Thermal displacement metadata are retained in source CIF metadata; geometry exports omit displacement tensors.')
     return _validate_cell(lattice,positions,species,{'format':'cif','block':block['name'],'warnings':warnings,
                            'cif_symmetry_setting':setting,
-                          'declared_symmetry_operation_count':len(operations),'source_site_rows':rows,'source_tags':tags})
+                          'declared_symmetry_operation_count':len(operations),
+                          'source_site_rows':source_rows,'source_tags':source_tags})
 
 
 def _orientation(number, lattice):

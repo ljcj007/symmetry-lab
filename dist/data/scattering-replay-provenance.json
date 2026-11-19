@@ -49,18 +49,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 74380,
-      "sha256": "e98a41c2c39a2c369286b65b202ebd2bebe3020e79d5f6267628336cd5dd2182"
+      "bytes": 74930,
+      "sha256": "3a3c7a2a8623fbebec5eb180dedf202b10b2fc8912d49877944321a8de14714c"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102550,
-      "sha256": "a9167196799105a144136d27382998f53503d533563d57339fe1c3c47032fed9"
+      "bytes": 102576,
+      "sha256": "59cd174e77b550ce51c0065876faff16e43a0e4943307765a2f059fa748df51b"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32671,
-      "sha256": "2889e35326735e433c1a9a09c584957f6efb0228ccaa1dfd773361ec382f3779"
+      "bytes": 32661,
+      "sha256": "70be533409a721068b744aada40ea24f42c8d6891a208e4e74d487e3fbb0b20d"
     },
     "dist/course-flow.js": {
       "normalization": "utf8-lf-v1",
@@ -94,8 +94,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8221,
-      "sha256": "a5785f7973ecd3d07e13b5a8bc1ed3b81d9ff9d753208e3f322c88341c142b60"
+      "bytes": 8216,
+      "sha256": "bec74c37742126537ac1d769246f5452cd4fedd9da10bc1cee1f297e93e4138b"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -144,13 +144,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3147,
-      "sha256": "21bc552432b3047149f2df4741e8d266fd53955c2639a1bb64f5cd4112c51980"
+      "bytes": 3142,
+      "sha256": "c3d1ec54bc2961559af71d0455ea09f72e18a211dcb31680428e539186bb3c08"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12068,
-      "sha256": "70066c9bc74716d8f7cc171a0d1c89bdbdbdde5acc086f9d69540e57070e9b7a"
+      "bytes": 12063,
+      "sha256": "23aa0092c1f0328cb19b645546465f8870422d5977c006a5a5a92a7ffba65e41"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -247,6 +247,11 @@
       "bytes": 16980,
       "sha256": "8459eee0f8406e58b1342d11a6958007fdcbfe1acaf7a62bdc35cdff77bb7956"
     },
+    "locales/en-cif-dotted-lesson.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3771,
+      "sha256": "dc9b29582880179abd8556f13400d41fa927b4fe9e76479242437446dfdba924"
+    },
     "locales/en-cif-setting-lesson.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 8433,
@@ -254,8 +259,8 @@
     },
     "locales/en-cif-setting-practice.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2317,
-      "sha256": "34f993947cc0e729ac18f1a058ef7512b4d60387d8b3e685a47b1aff099a20ab"
+      "bytes": 3030,
+      "sha256": "50bb1ae6610529b4ee29b9e7e32c468bfa99050ad173b206a7ac5447bfbc197a"
     },
     "locales/en-cif-setting-search.json": {
       "normalization": "utf8-lf-v1",
@@ -969,8 +974,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27850,
-      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48"
+      "bytes": 27938,
+      "sha256": "6141fbc2474454a409c99929c2c0f290550329a5d47e08c26660e0bc96637700"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -1019,8 +1024,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6174,
-      "sha256": "32c9ff9fb904b3a02999c9d034b66ea9e1968f6bc8bac010fff12378c172fe6a"
+      "bytes": 6222,
+      "sha256": "b7149008f65e22d32594db7cdb65a84071fcfa29d5342a60649e7a3d8238b62e"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1035,12 +1040,12 @@
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 869953,
-      "sha256": "637ad936a014e5a51a60719db9aacd6d3da43a91c7690dddd1d4a1c1bd94f0e0"
+      "sha256": "c697d950519119f88dd9d7ba2587f80448e22f2026ca36f0e5a2374ea4ca025c"
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1737009,
-      "sha256": "eb56066838807f4e504c702e891ce9e62f8e4f94d50e2c76db02fd0808494695"
+      "sha256": "e51a37405a49e9f8472270460f70d10c3d02e4ed33ac7bad486b4fdb98acc322"
     },
     "scripts/fixtures/pathways.json.gz": {
       "normalization": "binary",

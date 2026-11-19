@@ -45,18 +45,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 74380,
-      "sha256": "e98a41c2c39a2c369286b65b202ebd2bebe3020e79d5f6267628336cd5dd2182"
+      "bytes": 74930,
+      "sha256": "3a3c7a2a8623fbebec5eb180dedf202b10b2fc8912d49877944321a8de14714c"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102550,
-      "sha256": "a9167196799105a144136d27382998f53503d533563d57339fe1c3c47032fed9"
+      "bytes": 102576,
+      "sha256": "59cd174e77b550ce51c0065876faff16e43a0e4943307765a2f059fa748df51b"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32671,
-      "sha256": "2889e35326735e433c1a9a09c584957f6efb0228ccaa1dfd773361ec382f3779"
+      "bytes": 32661,
+      "sha256": "70be533409a721068b744aada40ea24f42c8d6891a208e4e74d487e3fbb0b20d"
     },
     "dist/data/material-research.json": {
       "normalization": "utf8-lf-v1",
@@ -80,8 +80,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8221,
-      "sha256": "a5785f7973ecd3d07e13b5a8bc1ed3b81d9ff9d753208e3f322c88341c142b60"
+      "bytes": 8216,
+      "sha256": "bec74c37742126537ac1d769246f5452cd4fedd9da10bc1cee1f297e93e4138b"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -155,8 +155,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27850,
-      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48"
+      "bytes": 27938,
+      "sha256": "6141fbc2474454a409c99929c2c0f290550329a5d47e08c26660e0bc96637700"
     },
     "scripts/build-wannier-graphene-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -165,8 +165,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6174,
-      "sha256": "32c9ff9fb904b3a02999c9d034b66ea9e1968f6bc8bac010fff12378c172fe6a"
+      "bytes": 6222,
+      "sha256": "b7149008f65e22d32594db7cdb65a84071fcfa29d5342a60649e7a3d8238b62e"
     },
     "scripts/test-material-research-content.py": {
       "normalization": "utf8-lf-v1",

@@ -43,6 +43,7 @@ function cifSettingPracticeHTML(){
       <li><strong>Compare two conversions.</strong>Keep the cell and sites fixed. Load the CIF with only number 4 and the CIF with explicit P 2c in turn, and run each manually. Compare the input Hall setting, expanded atom count and structure validation. The Hall record in the standardized result refers to a different coordinate setting.</li>
       <li><strong>Test an incompatible declaration.</strong>Use the same oblique cell with an explicit P 2yb declaration. Run the conversion and check how it reports the cell-metric conflict.</li>
     </ol>
+    <p>You can also replay the same P 2c structure with dotted tags and check which calculated quantities stay the same.<a href="docs/cif-setting-practice.md#dotted-cif-replay">Compare the two tag spellings →</a></p>
     <p><a href="#structure?cif-setting=practice">Open the CIF axis-setting exercise →</a> · <a href="docs/cif-setting-practice.md">Read the steps and expected results</a></p>
   </details>`;
 }

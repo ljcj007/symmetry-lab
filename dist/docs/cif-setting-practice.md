@@ -19,3 +19,16 @@
 度量只有在筛到一个候选时才足以在这些候选中选定设置。如果把这个算例的 γ 改成 90°，三条候选轴的旋转都能保持度量。多个候选时，优先从原文件取得明确的 Hall 符号或对称操作。本站详细说明见 [CIF 输入约定与转换边界](structure-bc.md#accepted-files)。
 
 字段定义见 [IUCr 国际空间群编号](https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Ispace_group_IT_number.html)与 [IUCr Hall 符号](https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/Ispace_group_name_Hall.html)。
+
+<a id="dotted-cif-replay"></a>
+
+## 点号与下划线写法的对照
+
+1. 在 [CIF 设置练习](../#structure?cif-setting=practice)中点「载入 P 2c CIF」，保留预填的输入波矢 `(0,0,1/4)`，再手动转换。记下输入 Hall、展开原子数和 BC 波矢，或下载完整 JSON。
+2. 点「载入点号 P 2c CIF」，保持波矢和容差相同，再手动转换。两份 CIF 的晶胞、位点和 Hall 声明值相同，只把 `_cell_length_a`、`_space_group_name_Hall`、`_atom_site_fract_x` 等旧写法换成 `_cell.length_a`、`_space_group.name_Hall`、`_atom_site.fract_x` 等对应写法。预期晶格、分数坐标和 BC 波矢的差为零，两次都通过相同的结构验证。
+
+两次均识别空间群 4。展开采用输入 Hall 记录 7 `P 2c`，得到 4 个原子，标准化结果为 Hall 记录 6 `P 2yb`，BC 波矢为 `(0,0,−1/4)`。对照完整 JSON 中 `input_metadata` 下的 `source_tags` 与 `source_site_rows`。读取记录中的字段名统一为小写，并保留输入用的是点号还是下划线。来源卡上的 SHA-256 按原始输入文本计算，所以两份文本的摘要不同。
+
+在点号版本的 `loop_` 前再加一行 `_cell_length_a 3` 可以核对重复项提示。即使数值相同，它也与已有的 `_cell.length_a 3` 表示同一个数据项。删掉重复行后即可重新转换。
+
+这项兼容性只覆盖普通三维有序小晶体结构导入所需的有限 Core CIF 字段。字段与别名以 [IUCr COMCIFS Core CIF v3.3.0](https://github.com/COMCIFS/cif_core/blob/v3.3.0/cif_core.dic) 为准，适用边界见 [CIF 输入约定](structure-bc.md#accepted-files)。

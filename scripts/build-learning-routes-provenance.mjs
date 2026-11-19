@@ -34,8 +34,8 @@ files.push('dist/zero-start.js','dist/zero-start-placement.js','dist/navigation.
  'scripts/test-zero-start-placement.mjs','scripts/test-route-focus.mjs','scripts/test-python-structure-bc.py',
  'locales/en-zero-start-placement.json');
 files.push('dist/symmetry-course-ui.js','dist/structure-ui.js','dist/cif-setting-practice.js','dist/docs/cif-setting-practice.md',
- 'scripts/test-cif-setting-lesson.mjs','scripts/test-cif-setting-practice.mjs',
- 'locales/en-cif-setting-search.json','locales/en-cif-setting-lesson.json','locales/en-cif-setting-practice.json');
+ 'scripts/test-cif-setting-lesson.mjs','scripts/test-cif-setting-practice.mjs','scripts/test-course-return.mjs',
+ 'locales/en-cif-setting-search.json','locales/en-cif-setting-lesson.json','locales/en-cif-setting-practice.json','locales/en-cif-dotted-lesson.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',

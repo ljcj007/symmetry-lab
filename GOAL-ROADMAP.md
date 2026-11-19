@@ -74,6 +74,14 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 - The standard-cell lesson and structure tool share a three-input CIF exercise
   for space group 4. The results distinguish the Hall record used to expand
   the input from the Hall record of the standardized output.
+- The companion P 2c input uses dotted Core CIF field names for the same
+  monoclinic cell. Learners compare the input Hall record, expanded atom
+  count and BC wave vector while each export records its own source.
+- Older CIFs with the two agreeing International Tables number tags remain
+  readable. The workbench explains repeated aliases and conflicting numbers
+  in both editions. A new visit from the material atlas or homepage shows
+  the current tool's learning links, while related steps within a classroom
+  visit retain their return link.
 
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.

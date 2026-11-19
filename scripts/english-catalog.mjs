@@ -59,6 +59,7 @@ catalogFiles.push('en-zero-start-placement.json');
 catalogFiles.push('en-cif-setting-search.json');
 catalogFiles.push('en-cif-setting-lesson.json');
 catalogFiles.push('en-cif-setting-practice.json');
+catalogFiles.push('en-cif-dotted-lesson.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }
