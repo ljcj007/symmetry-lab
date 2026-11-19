@@ -77,3 +77,5 @@ This is not a general implementation of arithmetic unit groups for arbitrary ord
 - L. C. Washington, Introduction to Cyclotomic Fields, 2nd ed., Springer, Graduate Texts in Mathematics 83, Chapters 4 and 8: https://link.springer.com/book/10.1007/978-1-4612-1934-7 (CM unit index and circular-unit index theorem).
 - G. Eric Moorhouse, Cyclotomic Fields with Applications: https://ericmoorhouse.org/handouts/cyclotomic_fields.pdf (cyclotomic integer/unit arithmetic).
 - CARAT source, fixed commit 65619d6ae4ec911c8cf7aa3c9fa09866a0d36ab9: https://github.com/lbfm-rwth/carat (upstream functionality; this Python implementation uses the independent algorithms above).
+
+Load the original site examples and compare the results in the [shared examples and certificate exercise](advanced-example-links.md).

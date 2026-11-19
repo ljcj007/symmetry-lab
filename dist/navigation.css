@@ -12,3 +12,4 @@
 .nav-tool-scope ul{margin:0;padding-left:1.25em}.nav-tool-scope li+li{margin-top:5px}
 
 .nav-card-grid:has(>.nav-tool-card:only-child){grid-template-columns:minmax(0,1fr)}
+.nav-tool-card>a.nav-tool-example{margin-top:10px;min-height:44px;display:flex;align-items:center;font-size:18px;line-height:1.5;font-weight:650;color:#245e46;text-decoration:underline;text-underline-offset:3px}

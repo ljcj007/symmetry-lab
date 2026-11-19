@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28250,
-  "translatedUnits": 28250,
+  "sourceUnits": 28271,
+  "translatedUnits": 28271,
   "missing": [],
-  "files": 498,
+  "files": 500,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -127,6 +127,9 @@
     "en-cu-qha-docs.json",
     "en-si-structure-import.json",
     "en-si-structure-links.json",
-    "en-si-structure-docs.json"
+    "en-si-structure-docs.json",
+    "en-advanced-shared-presets-ui.json",
+    "en-advanced-shared-presets-directory.json",
+    "en-advanced-shared-presets-docs.json"
   ]
 }

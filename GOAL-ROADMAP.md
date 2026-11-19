@@ -291,3 +291,8 @@ establish that all existing scientific and teaching content has been audited.
 - The Si conventional cell contains eight atoms. Space group 227 is identified, and the BC primitive cell contains two atoms. Input reciprocal coordinates (1/2,0,0) transform to (0,1/4,1/4) in the BC basis. The two coordinate descriptions give the same translation phase for the same physical displacement.
 - Ask learners to predict what changes when the original three numbers are entered directly in the BC basis. The converted input gives six star arms and a little group of order eight. Entering the original numbers in the BC basis gives four star arms and a little group of order twelve. Both representation calculations are checked against their inputs.
 - The tool finder recognizes the exact source filename in either edition. The archived source preserves the original structure and BSD license, and the tests verify atom and operation transport, reciprocal phase, and both little-group results.
+
+## Open and share named advanced calculations
+
+- Four calculation-directory cards link to their verified inputs for Z and affine classification, the integral normalizer, the arithmetic centralizer, and symbolic magnetic corepresentations. The exact example identity remains in the address. Loading replaces the draft only after the user selects the load button and the example has been read and checked. Running remains explicit.
+- The example guide links these same cases to the results and certificates students should inspect. `BNS 1.3` and `Kramers` queries now find the symbolic corepresentation tool in both language editions. The original tool routes, ordinary example menus and result handoffs remain available.

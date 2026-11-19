@@ -2,8 +2,8 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261119-si1';
-import {startToolFinder} from './tool-finder.js?v=20261119-si1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261120-advanced1';
+import {startToolFinder} from './tool-finder.js?v=20261120-advanced1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
 import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261119-si1';
@@ -21,7 +21,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261111-demos1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261119-si1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261111-demos1'),structure:()=>import('./structure-ui.js?v=20261119-si1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -176,7 +176,7 @@ function setView(request,options={}){
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+="<div class=\"mr-notebook-link\"><a href=\"#atlas/notebook\">Record recent calculations / Open material project →</a><a href=\"#compute/symmetry-audit\">Three-layer symmetry diagnosis →</a><a href=\"#atlas/compare\">parameter comparison and prediction →</a></div>";
  if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  context.innerHTML+=projectNavigation.html();projectNavigation.bind(context,route=>setView(route));
- rememberRoute(route);
+ if(view!=='advanced')rememberRoute(route);
  if(options.render!==false)return render();
 }
 function updateBreadcrumb(detail){
@@ -253,6 +253,15 @@ let dictionaryController=null;
 let renderedViewCleanup=null;
 function clearRenderedView(){const cleanup=renderedViewCleanup;renderedViewCleanup=null;if(typeof cleanup==='function')cleanup();}
 function retainRenderedViewCleanup(cleanup,ticket){if(typeof cleanup!=='function')return;if(ticket!==renderTicket){cleanup();return;}renderedViewCleanup=cleanup;}
+const advancedRoute=(tool,preset)=>'compute/advanced/'+tool+(preset?'?'+new URLSearchParams({preset}):'');
+function readAdvancedRoute(route,validatePreset){
+ const separator=route.indexOf('?');
+ const path=separator<0?route:route.slice(0,separator);
+ const tool=path.slice('compute/advanced/'.length);
+ const candidates=new URLSearchParams(separator<0?'':route.slice(separator+1)).getAll('preset');
+ const preset=candidates.length===1&&validatePreset(tool,candidates[0])?candidates[0]:null;
+ return {tool,route:advancedRoute(tool,preset),sharedPreset:preset?{tool,id:preset}:null};
+}
 async function render(){
  const ticket=++renderTicket,current=()=>ticket===renderTicket;const view=state.view;
  clearRenderedView();
@@ -283,8 +292,27 @@ async function render(){
   else if(view==='bands')renderBands();
   else if(view==='structure')await page.renderStructureView({container:$('#app'),run:runPythonTask,toast,download,openGroup:(id,k,bzType,structureHandoff)=>openWorkbench({id,k,bzType,structureHandoff})});
   else if(view==='advanced'){
-   if(state.route.startsWith('compute/advanced/'))page.selectAdvancedTool(state.route.split('/')[2].split('?')[0]);
-   await page.renderAdvancedView({container:$('#app'),onToolChange:tool=>{const next='compute/advanced/'+tool;if(state.route!==next)setView(next,{render:false});},run:runPythonTask,toast,download,sendToBands:async payload=>{const research=await optionalViews.get('research');if(!current())return;research.setResearchInput('magnetictb',payload);setView('magnetictb');toast("Numerical substitution of the accurate model has been loaded.");}});
+   const isCurrent=()=>current()&&state.view==='advanced';
+   const active=readAdvancedRoute(state.route,page.validateAdvancedPreset);
+   if(state.route!==active.route)setView(active.route,{render:false,history:false});
+   rememberRoute(active.route);
+   page.selectAdvancedTool(active.tool);
+   const cleanup=await page.renderAdvancedView({
+    container:$('#app'),sharedPreset:active.sharedPreset,isCurrent,run:runPythonTask,toast,download,
+    onToolChange:(tool,preset)=>{
+     const path=advancedRoute(tool);
+     if(!isCurrent()||!knownTool(path))return;
+     const next=page.validateAdvancedPreset(tool,preset)?advancedRoute(tool,preset):path;
+     if(state.route!==next){setView(next,{render:false});rememberRoute(next);}
+    },
+    sendToBands:async payload=>{
+     if(!isCurrent())return;
+     const sourceRoute=state.route,research=await optionalViews.get('research');
+     if(!isCurrent()||state.route!==sourceRoute)return;
+     research.setResearchInput('magnetictb',payload);setView('magnetictb');toast("Numerical substitution of the accurate model has been loaded.");
+    }
+   });
+   retainRenderedViewCleanup(cleanup,ticket);
   }else if(['magnetictb','crystkit'].includes(view))await page.renderResearchView(view,{container:$('#app'),run:runPythonTask,toast,download,context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued}});
   if(current()){projectNavigation.consumeInput();if(state.courseRoute)delete state.courseRoute.projectInput;}
  }catch(error){if(current()){$('#app').innerHTML="<div class=\"notice error\" role=\"alert\">This page has not been loaded yet:"+esc(error.message)+" <button id=\"resource-retry\" class=\"secondary\">Retry this page</button> <a href=\"#home\">Return to home page</a></div>";$('#resource-retry').onclick=()=>render();}}

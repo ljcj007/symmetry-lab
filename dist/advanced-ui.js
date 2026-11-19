@@ -28,10 +28,20 @@ const specs = {
   examples:[['glide','二维反射与滑移反射',{action:'extension_orbits',rotations:[[[1,0],[0,-1]]]}],['screw','四重螺旋扩张',{action:'extensions',rotations:[[[0,-1,0],[1,0,0],[0,0,1]]]}],['normalizer','四重旋转的整数正规化子',{action:'integral_normalizer',rotations:[[[0,-1],[1,0]]]}],['generators','P2₁2₁2₁ 无限群最小生成元',{action:'spacegroup_generators',group_number:19}]],
   help:'rotations / point_generators 接受 1–6 维整数矩阵；三维也可使用 group_number。扩张先固定整数点群，再对所有原点平移取商。完整性取决于算术正规化子的证明分支；若仅得到子群，结果会明确说明。affine_properties / torsionfree 可精确判定无挠性、中心和平凡中心。', module:'crystkit_extensions'}
 };
-const states = Object.fromEntries(Object.entries(specs).map(([tool,s]) => [tool,{text:pretty(s.examples[0][2]),example:s.examples[0][0],revision:0,result:null,error:null,busy:false}]));
+const states = Object.fromEntries(Object.entries(specs).map(([tool,s]) => [tool,{
+ text:pretty(s.examples[0][2]),example:s.examples[0][0],revision:0,result:null,error:null,loadedPreset:null
+}]));
 let selected = 'carat_integral';
+let disposePreviousAdvancedView = () => {};
 export function selectAdvancedTool(tool){if(Object.hasOwn(specs,tool)){selected=tool;return true;}return false;}
 export function getAdvancedResult(){return states[selected].result;}
+function namedExample(tool,id){
+ if(typeof tool!=='string'||!Object.hasOwn(specs,tool)||typeof id!=='string'||!/^[a-z0-9][a-z0-9-]{0,63}$/.test(id))return null;
+ const example=specs[tool].examples.find(entry=>entry[0]===id);
+ if(typeof example?.[2]==='string'&&!/^[a-z0-9-]+\.json$/.test(example[2]))return null;
+ return example||null;
+}
+export function validateAdvancedPreset(tool,id){return Boolean(namedExample(tool,id));}
 const table = (headers,rows) => `<div class="table-wrap"><table><thead><tr>${headers.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(typeof x==='object'?JSON.stringify(x):x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const cards = rows => `<div class="stats exact-stats">${rows.map(([label,value])=>`<div class="stat"><div class="stat-label">${esc(label)}</div><strong>${esc(value)}</strong></div>`).join('')}</div>`;
 const matrix = value => Array.isArray(value) ? table(value[0]?.map((_,i)=>i+1)||[], value) : `<pre class="exact-expression">${esc(value)}</pre>`;
@@ -92,31 +102,227 @@ function resultView(tool,s){
  return out;
 }
 
+const sharedStatus = loaded => loaded
+ ? '已载入此示例。请检查参数，再运行计算。'
+ : '载入会替换当前 JSON。请先保存需要保留的草稿。';
+
+function sharedPresetHTML(example, loaded, disabled) {
+ if (!example) return '';
+ return `<section class="notice" id="exact-shared-preset" aria-labelledby="exact-shared-title">
+   <strong id="exact-shared-title">链接中的示例</strong><p>${esc(example[1])}</p>
+   <p id="exact-shared-status" role="status">${esc(sharedStatus(loaded))}</p>
+   <button type="button" id="exact-load-shared" class="secondary" aria-controls="exact-input" ${disabled?'disabled':''}>${'载入链接中的示例'}</button>
+ </section>`;
+}
+
+function layout(tool,s,{input,shared,loading,busy,loadError}){
+ const spec=specs[tool];
+ return `<div class="advanced-tabs" role="group" aria-label="选择精确计算工具">${Object.entries(specs).map(([key,item])=>`<button data-exact-tool="${key}" class="${key===tool?'active':''}">${esc(item.name)}</button>`).join('')}</div><p class="notice research-intro">${esc(spec.intro)}${['symbolic_interfaces','symbolic_spacegroups'].includes(tool)?' <a href="data/symbolic-api-coverage.json" target="_blank" rel="noreferrer">逐项接口覆盖表 ↗</a>':''}${tool==='carat_integral'?' <a href="docs/integral-classification.md" target="_blank" rel="noreferrer">算法与证明范围 ↗</a>':''}${tool==='integral_normalizer'?' <a href="docs/integral-normalizer.md" target="_blank" rel="noreferrer">算法与证明范围 ↗</a>':''}${tool==='arithmetic_centralizer'?' <a href="docs/arithmetic-centralizer.md" target="_blank" rel="noreferrer">整数序与单位群说明 ↗</a>':''}</p>
+ <div class="research-grid advanced-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 精确计算输入</div><span class="badge">Python · SymPy</span></div><div class="panel-body">
+ ${sharedPresetHTML(shared,s.loadedPreset===shared?.[0],loading||busy)}
+ <label class="field-label" for="exact-example">可运行示例</label><div class="controls-row"><select id="exact-example" ${loading?'disabled':''}>${spec.examples.map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${esc(label)}</option>`).join('')}</select><button id="exact-load" class="secondary small" ${loading||busy?'disabled':''}>${loading?'加载中…':'载入示例'}</button></div>
+ ${loading?'<p role="status">正在读取示例文件…</p><button type="button" id="exact-cancel-load" class="secondary">取消载入</button>':''}
+ ${tool==='carat'?`<div class="controls-row exact-catalog-controls"><label for="carat-dimension">目录维数</label><select id="carat-dimension">${[1,2,3,4,5,6].map(d=>`<option ${d===(input.dimension??6)?'selected':''}>${d}</option>`).join('')}</select><input id="carat-query" aria-label="搜索 CARAT 名称或符号" placeholder="名称 / 符号（可留空）" value="${esc(input.query||'')}"><button id="exact-catalog" class="secondary small" ${loading?'disabled':''}>${'载入查询'}</button></div>`:''}
+ <label class="field-label" for="exact-input">参数与操作 <span>JSON · 根式 / 分数写为字符串</span></label><textarea id="exact-input" class="band-input research-input" spellcheck="false" ${loading?'disabled':''}>${esc(s.text)}</textarea><details class="input-help"><summary>输入与计算约定</summary><p>${esc(spec.help)}</p><a href="python/${spec.module}.py" download>下载 Python 源码 ↓</a></details>
+ <button id="exact-run" class="primary" ${busy||loading?'disabled':''}>${loading?'正在加载示例…':busy?'<i class="spinner"></i>Python 正在计算…':'运行精确计算 →'}</button>${loadError||s.error?`<p class="notice error" id="exact-input-error" role="alert">${esc(loadError||s.error)}</p>`:''}</div></section>
+ <section class="panel"><div class="result-header"><div class="result-heading">${esc(spec.name)}<small>精确结果与证据</small></div><div class="result-tools"><button id="exact-json" class="text-button">↓ JSON</button>${['symbolic','symbolic_interfaces','symbolic_spacegroups'].includes(tool)?'<button id="exact-tex" class="text-button">↓ LaTeX</button>':''}</div></div><div id="exact-results" class="result-content">${resultView(tool,{...s,loading,busy})}</div></section></div><section id="exact-coverage" class="coverage-panel"></section>
+ <p class="notice research-scope">Q 类目录完整覆盖 1–6 维。Z 类算法对已验证的极大序模型给出有限导子区间穷尽证明；仿射类还须完成正规化子作用。资源截断和未支持的算术类型会明确标注。自动符号表示使用局部编号；逐项覆盖表列出与上游接口的对应及剩余限制。<a href="#" data-view="docs">查看方法与覆盖范围 →</a></p>`;
+}
+
+function updateDraft(state,payload,loadedPreset=null){
+ state.revision++;
+ state.text=pretty(payload);
+ state.result=null;
+ state.error=null;
+ state.loadedPreset=loadedPreset;
+}
+
 export function renderAdvancedView(options){
- const {container,run,toast,download}=options,tool=selected,s=states[tool],spec=specs[tool];
- options.onToolChange?.(tool);
- let input={};try{input=JSON.parse(s.text)||{};}catch{}
- const here=()=>container.dataset.researchView==='advanced'&&selected===tool;
- const draw=()=>{if(here())renderAdvancedView(options);};
- container.innerHTML=`<div class="advanced-tabs" role="group" aria-label="选择精确计算工具">${Object.entries(specs).map(([key,item])=>`<button data-exact-tool="${key}" class="${key===tool?'active':''}">${esc(item.name)}</button>`).join('')}</div><p class="notice research-intro">${esc(spec.intro)}${['symbolic_interfaces','symbolic_spacegroups'].includes(tool)?' <a href="data/symbolic-api-coverage.json" target="_blank" rel="noreferrer">逐项接口覆盖表 ↗</a>':''}${tool==='carat_integral'?' <a href="docs/integral-classification.md" target="_blank" rel="noreferrer">算法与证明范围 ↗</a>':''}${tool==='integral_normalizer'?' <a href="docs/integral-normalizer.md" target="_blank" rel="noreferrer">算法与证明范围 ↗</a>':''}${tool==='arithmetic_centralizer'?' <a href="docs/arithmetic-centralizer.md" target="_blank" rel="noreferrer">整数序与单位群说明 ↗</a>':''}</p><div class="research-grid advanced-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 精确计算输入</div><span class="badge">Python · SymPy</span></div><div class="panel-body"><label class="field-label" for="exact-example">可运行示例</label><div class="controls-row"><select id="exact-example" ${s.loading?'disabled':''}>${spec.examples.map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${esc(label)}</option>`).join('')}</select><button id="exact-load" class="secondary small" ${s.loading?'disabled':''}>${s.loading?'加载中…':'载入示例'}</button></div>${tool==='carat'?`<div class="controls-row exact-catalog-controls"><label for="carat-dimension">目录维数</label><select id="carat-dimension">${[1,2,3,4,5,6].map(d=>`<option ${d===(input.dimension??6)?'selected':''}>${d}</option>`).join('')}</select><input id="carat-query" aria-label="搜索 CARAT 名称或符号" placeholder="名称 / 符号（可留空）" value="${esc(input.query||'')}"><button id="exact-catalog" class="secondary small">载入查询</button></div>`:''}<label class="field-label" for="exact-input">参数与操作 <span>JSON · 根式 / 分数写为字符串</span></label><textarea id="exact-input" class="band-input research-input" spellcheck="false" ${s.loading?'disabled':''}>${esc(s.text)}</textarea><details class="input-help"><summary>输入与计算约定</summary><p>${esc(spec.help)}</p><a href="python/${spec.module}.py" download>下载 Python 源码 ↓</a></details><button id="exact-run" class="primary" ${s.busy||s.loading?'disabled':''}>${s.loading?'正在加载示例…':s.busy?'<i class="spinner"></i>Python 正在计算…':'运行精确计算 →'}</button>${s.error?`<p class="notice error" role="alert">${esc(s.error)}</p>`:''}</div></section><section class="panel"><div class="result-header"><div class="result-heading">${esc(spec.name)}<small>精确结果与证据</small></div><div class="result-tools"><button id="exact-json" class="text-button">↓ JSON</button>${['symbolic','symbolic_interfaces','symbolic_spacegroups'].includes(tool)?'<button id="exact-tex" class="text-button">↓ LaTeX</button>':''}</div></div><div id="exact-results" class="result-content">${resultView(tool,s)}</div></section></div><section id="exact-coverage" class="coverage-panel"></section><p class="notice research-scope">Q 类目录完整覆盖 1–6 维。Z 类算法对已验证的极大序模型给出有限导子区间穷尽证明；仿射类还须完成正规化子作用。资源截断和未支持的算术类型会明确标注。自动符号表示使用局部编号；逐项覆盖表列出与上游接口的对应及剩余限制。<a href="#" data-view="docs">查看方法与覆盖范围 →</a></p>`;
- const $=selector=>container.querySelector(selector);
- mountCoverage($('#exact-coverage'));
- const setInput=p=>{s.revision++;s.loading=false;s.text=pretty(p);s.result=null;s.error=null;draw();};
- container.querySelectorAll('[data-exact-tool]').forEach(b=>b.onclick=()=>{selected=b.dataset.exactTool;renderAdvancedView(options);});
- $('#exact-input').oninput=e=>{s.revision++;s.text=e.target.value;s.result=null;s.error=null;$('#exact-results').innerHTML='<div class="empty-state">输入已修改，请重新运行。</div>';};
- $('#exact-example').onchange=e=>{s.example=e.target.value;};
- $('#exact-load').onclick=async()=>{const example=spec.examples.find(e=>e[0]===s.example),revision=++s.revision;s.loading=true;s.result=null;s.error=null;draw();try{let p=example[2];if(typeof p==='string'){const response=await fetch(`examples/${p}?v=20261110-en1`);if(!response.ok)throw new Error('示例加载失败');p=await response.json();}if(s.revision===revision)setInput(p);}catch(e){if(s.revision===revision){s.loading=false;s.error=e.message;draw();toast(e.message);}}};
- $('#exact-catalog')?.addEventListener('click',()=>setInput({action:'catalog',dimension:Number($('#carat-dimension').value),query:$('#carat-query').value,limit:20}));
- for(const [id,sign] of [['carat-prev',-1],['carat-next',1]])$('#'+id)?.addEventListener('click',()=>{const payload=JSON.parse(s.text);setInput({...payload,offset:Math.max(0,(payload.offset||0)+sign*(payload.limit||20))});container.querySelector('#exact-run').click();});
- $('#carat-representative')?.addEventListener('click',()=>setInput({action:'representative',dimension:JSON.parse(s.text).dimension||3,name:$('#carat-name').value}));
- $('#exact-run').onclick=async()=>{if(s.loading||s.busy)return;const revision=s.revision;try{const payload=JSON.parse(s.text);if(!payload||Array.isArray(payload)||typeof payload!=='object')throw new Error('输入须为 JSON 对象');s.busy=true;s.error=null;s.result=null;draw();const result=await run(tool,payload);if(s.revision===revision)s.result=result;}catch(e){if(s.revision===revision)s.error=e.message;}finally{s.busy=false;draw();}};
- $('#exact-to-bands')?.addEventListener('click',()=>options.sendToBands?.({...s.result.numerical_model,path:[{label:'−X',k:[-.5,0,0]},{label:'Γ',k:[0,0,0]},{label:'X',k:[.5,0,0]}],points_per_segment:40}));
- const continueIntegral=target=>{const entry=s.result.z_classes[Number($('#integral-class').value)],next=states[target];next.revision++;next.loading=false;next.result=null;next.error=null;next.text=pretty({action:target==='crystkit_ext'?'extensions':'integral_normalizer',rotations:entry.generators});selected=target;renderAdvancedView(options);};
- $('#integral-to-normalizer')?.addEventListener('click',()=>continueIntegral('integral_normalizer'));
- $('#integral-to-extensions')?.addEventListener('click',()=>continueIntegral('crystkit_ext'));
- $('#exact-json').onclick=()=>s.result?download(pretty(s.result),`${tool}-exact-result.json`):toast('请先运行精确计算。');
- $('#exact-tex')?.addEventListener('click',()=>{const latex=s.result?.hamiltonian?.latex||s.result?.latex;if(latex)download(latex,'symbolic-result.tex','text/plain');else toast('当前结果没有 LaTeX 表达式。');});
- for(const [selector,source] of [['hamiltonian',s.result?.hamiltonian?.mathml],['result',s.result?.mathml]]){const target=$(`[data-formula="${selector}"]`);if(target&&source){const math=safeMathML(source);if(math)target.replaceChildren(math);}}
+ const {container,run,toast=()=>{},download=()=>{},isCurrent=()=>true}=options;
+ disposePreviousAdvancedView();
+ let disposed=false,retireTool=()=>{};
+ const current=()=>!disposed&&isCurrent()&&container.isConnected!==false&&
+  (!container.dataset?.researchView||container.dataset.researchView==='advanced');
+ const dispose=()=>{
+  if(disposed)return;
+  disposed=true;
+  retireTool();
+ };
+ disposePreviousAdvancedView=dispose;
+
+ function mountTool(requested){
+  retireTool();
+  const tool=selected,s=states[tool];
+  let shared=requested?.tool===tool?namedExample(tool,requested.id):null;
+  let retired=false,read=null,pendingRun=null,loadError='',renderVersion=0;
+  const here=()=>current()&&!retired&&selected===tool;
+  const $=selector=>container.querySelector(selector);
+  const abortRead=()=>{
+   const request=read;
+   read=null;
+   request?.controller.abort();
+  };
+  retireTool=()=>{
+   retired=true;
+   abortRead();
+   pendingRun=null;
+  };
+  const notify=()=>options.onToolChange?.(tool,shared?.[0]??null);
+  notify();
+  draw();
+
+  function draft(){
+   try{return JSON.parse(s.text)||{};}catch{return {};}
+  }
+
+  async function loadExample(example,fromShared){
+   if(!here()||!example||read||pendingRun)return;
+   const request={controller:new AbortController(),fromShared};
+   read=request;
+   loadError='';
+   draw('#exact-cancel-load');
+   const owns=()=>here()&&read===request&&!request.controller.signal.aborted;
+   try{
+    let payload=example[2];
+    if(typeof payload==='string'){
+     const response=await fetch(`examples/${payload}?v=20261120-advanced1`,{signal:request.controller.signal});
+     if(!response.ok)throw new Error('示例加载失败');
+     payload=await response.json();
+    }
+    if(!owns())return;
+    if(!payload||Array.isArray(payload)||typeof payload!=='object')throw new Error('示例文件须包含 JSON 对象。');
+    s.example=example[0];
+    updateDraft(s,payload,example[0]);
+    if(shared&&!fromShared){
+     shared=null;
+     notify();
+    }
+   }catch(error){
+    if(owns()){
+     loadError=error.message;
+     toast(loadError);
+    }
+   }finally{
+    if(owns()){
+     read=null;
+     draw(loadError?(fromShared?'#exact-load-shared':'#exact-load'):'#exact-input');
+    }
+   }
+  }
+
+  async function runCurrent(){
+   if(!here()||read||pendingRun)return;
+   const request={revision:s.revision};
+   pendingRun=request;
+   const owns=()=>here()&&pendingRun===request&&s.revision===request.revision;
+   try{
+    const payload=JSON.parse(s.text);
+    if(!payload||Array.isArray(payload)||typeof payload!=='object')throw new Error('输入须为 JSON 对象');
+    s.error=null;
+    s.result=null;
+    loadError='';
+    draw();
+    const result=await run(tool,payload);
+    if(owns())s.result=result;
+   }catch(error){
+    if(owns())s.error=error.message;
+   }finally{
+    if(here()&&pendingRun===request){
+     pendingRun=null;
+     draw();
+    }
+   }
+  }
+
+  function continueIntegral(target){
+   const entry=s.result?.z_classes?.[Number($('#integral-class')?.value)];
+   if(!entry)return;
+   updateDraft(states[target],{action:target==='crystkit_ext'?'extensions':'integral_normalizer',rotations:entry.generators});
+   selected=target;
+   mountTool(null);
+  }
+
+  function draw(focusSelector){
+   if(!here())return;
+   const version=++renderVersion;
+   container.innerHTML=layout(tool,s,{input:draft(),shared,loading:Boolean(read),busy:Boolean(pendingRun),loadError});
+   const bind=(element,event,handler)=>{
+    if(element)element[event]=args=>{
+     if(here()&&version===renderVersion)return handler(args);
+    };
+   };
+   const on=(selector,event,handler)=>bind($(selector),event,handler);
+   mountCoverage($('#exact-coverage'));
+   for(const button of container.querySelectorAll('[data-exact-tool]')){
+    bind(button,'onclick',()=>{
+     if(button.dataset.exactTool===tool)return;
+     if(selectAdvancedTool(button.dataset.exactTool))mountTool(null);
+    });
+   }
+   on('#exact-input','oninput',event=>{
+    if(read)return;
+    s.revision++;
+    s.text=event.target.value;
+    s.result=null;
+    s.error=null;
+    s.loadedPreset=null;
+    loadError='';
+    const inputError=$('#exact-input-error');
+    if(inputError)inputError.hidden=true;
+    const status=$('#exact-shared-status');
+    if(status)status.textContent=sharedStatus(false);
+    $('#exact-results').innerHTML='<div class="empty-state">输入已修改，请重新运行。</div>';
+   });
+   on('#exact-example','onchange',event=>{
+    if(!read&&namedExample(tool,event.target.value))s.example=event.target.value;
+   });
+   on('#exact-load','onclick',()=>loadExample(namedExample(tool,s.example),false));
+   on('#exact-load-shared','onclick',()=>loadExample(shared,true));
+   on('#exact-cancel-load','onclick',()=>{
+    const selector=read?.fromShared?'#exact-load-shared':'#exact-load';
+    abortRead();
+    draw(selector);
+   });
+   on('#exact-catalog','onclick',()=>{
+    if(read)return;
+    updateDraft(s,{action:'catalog',dimension:Number($('#carat-dimension').value),query:$('#carat-query').value,limit:20});
+    draw();
+   });
+   for(const [id,sign] of [['carat-prev',-1],['carat-next',1]]){
+    on('#'+id,'onclick',()=>{
+     if(read||pendingRun)return;
+     const payload=draft();
+     updateDraft(s,{...payload,offset:Math.max(0,(payload.offset||0)+sign*(payload.limit||20))});
+     return runCurrent();
+    });
+   }
+   on('#carat-representative','onclick',()=>{
+    if(read)return;
+    updateDraft(s,{action:'representative',dimension:draft().dimension||3,name:$('#carat-name').value});
+    draw();
+   });
+   on('#exact-run','onclick',runCurrent);
+   on('#exact-to-bands','onclick',()=>options.sendToBands?.({...s.result.numerical_model,path:[
+    {label:'−X',k:[-.5,0,0]},{label:'Γ',k:[0,0,0]},{label:'X',k:[.5,0,0]}
+   ],points_per_segment:40}));
+   on('#integral-to-normalizer','onclick',()=>continueIntegral('integral_normalizer'));
+   on('#integral-to-extensions','onclick',()=>continueIntegral('crystkit_ext'));
+   on('#exact-json','onclick',()=>s.result?download(pretty(s.result),`${tool}-exact-result.json`):toast('请先运行精确计算。'));
+   on('#exact-tex','onclick',()=>{
+    const latex=s.result?.hamiltonian?.latex||s.result?.latex;
+    if(latex)download(latex,'symbolic-result.tex','text/plain');
+    else toast('当前结果没有 LaTeX 表达式。');
+   });
+   for(const [selector,source] of [['hamiltonian',s.result?.hamiltonian?.mathml],['result',s.result?.mathml]]){
+    const target=$(`[data-formula="${selector}"]`);
+    if(target&&source){const math=safeMathML(source);if(math)target.replaceChildren(math);}
+   }
+   if(focusSelector)$(focusSelector)?.focus?.({preventScroll:true});
+  }
+ }
+
+ if(current())mountTool(options.sharedPreset);
+ return dispose;
 }
 
 // Additional source examples are loaded only when explicitly selected.

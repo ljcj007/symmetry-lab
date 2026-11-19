@@ -105,3 +105,5 @@ Remaining work includes standard BC/CDML labels and library overloads, exhaustiv
 The companion 36-test `symbolic_interfaces` suite checks the supplied-matrix algorithms separately. Browsing and scientific use should inspect conditions and certificates, not only the presence of a matrix.
 
 Sources are pinned in the inventory: [SpaceGroupIrep](https://github.com/goodluck1982/SpaceGroupIrep/blob/7b43201ac0973333edbe69bc3dd6ccb308abf624/SpaceGroupIrep.wl), [MSGCorep usage](https://github.com/goodluck1982/MSGCorep/blob/5082f30499afea656287a2054c86d523618f9f8a/Usage.wl), [MagneticTB usage](https://github.com/zhangzeyingvv/MagneticTB/blob/3575e8356af282c9d9447bfbf03e282ef3bac77d/Mathematica/MagneticTB/Usage.wl), and [CrystKit declarations](https://github.com/hongyi-zhao/CrystKit/blob/0f4f85e31d8166bb5a3e3474287449fa5572d5fd/gap/CrystKit.gd). The implementation uses [SymPy exact matrix operations](https://docs.sympy.org/latest/modules/matrices/matrices.html).
+
+Load the original site examples and compare the results in the [shared examples and certificate exercise](advanced-example-links.md).

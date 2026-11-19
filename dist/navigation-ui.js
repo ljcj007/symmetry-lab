@@ -3,7 +3,7 @@ import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en
 import {classroomPathways} from './classroom-ui.js?v=20261117-derive1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261119-si1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261119-si1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261119-si1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-advanced1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -111,6 +111,12 @@ export function rememberRoute(route){if(['home','compute','atlas','classroom','d
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>文件用途：</strong> ${esc(text)}</${tag}>`:'';};
+const advancedExamples={
+ 'compute/advanced/carat_integral':['noncyclic-affine','六维非循环群的 Z 类与仿射类 →'],
+ 'compute/advanced/integral_normalizer':['glued6','六维非直和整数格的正规化子 →'],
+ 'compute/advanced/arithmetic_centralizer':['a5','六维 A₅ 的算术中心化子 →'],
+ 'compute/advanced/symbolic_spacegroups':['magnetic','BNS 1.3 的反铁磁半平移共表示 →']
+};
 function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
  const rows=capability?[
@@ -119,7 +125,9 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ['已有文件与用途',capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc('输入与适用范围')}">输入与适用范围</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+ const example=showScope&&advancedExamples[item.route];
+ const exampleLink=example?link(`${item.route}?preset=${example[0]}`,esc(example[1]),'nav-tool-example'):'';
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261119-cu-qha1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}

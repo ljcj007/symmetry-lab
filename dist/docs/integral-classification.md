@@ -236,3 +236,5 @@ for these computations.
   sections on Dedekind modules, Minkowski bounds, units and cyclotomic rings.
 - The small cyclotomic PID/unit proof table and its primary references are in
   [integral-normalizer.md](integral-normalizer.md).
+
+可从[共享算例与证书练习](advanced-example-links.md)载入站内原始示例并比较结果。

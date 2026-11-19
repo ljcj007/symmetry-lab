@@ -91,3 +91,5 @@ Examples: `centralizer-order.json`, `centralizer-glued.json`, `centralizer-hurwi
 - [Magma, Endomorphisms of Matrix Groups over Q and Z](https://docs.magma-maths.org/FiniteGroups/MatrixGroupsOverQAndZ/Endomorphisms.html): rational and integral endomorphism-algebra interfaces and their distinction from unit generation.
 - [Magma, Quaternion Unit Groups](https://docs.magma-maths.org/Algebras/QuaternionAlgebras/unit-group.html): definite norm-one unit groups and their finite enumeration.
 - [CARAT manual, functions](https://www.math.rwth-aachen.de/~Greg.Gamble/gap4r3/pkg/carat/htm/CHAP003.htm): original centralizer, normalizer and Z-class functionality. This browser implementation uses independent Python algorithms; it does not call CARAT, GAP, Magma or Mathematica.
+
+Load the original site examples and compare the results in the [shared examples and certificate exercise](advanced-example-links.md).

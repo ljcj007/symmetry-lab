@@ -43,16 +43,16 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 62831,
-      "sha256": "1f27d38e556cdfe8c9f9d7a4c0e4be94a94651ff1d881417531d2ea4bde4f83d"
+      "bytes": 63552,
+      "sha256": "bdc0436fd9d964644f823271966568c14559d7fad29eb358bed5efe6c6bbc315"
     },
     "NOTICE.txt": {
       "bytes": 15904,
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/app.js": {
-      "bytes": 99570,
-      "sha256": "ad17df76c248b32514035b45be162e68e5a14a310d56c36ec0eefb04d3345224"
+      "bytes": 100774,
+      "sha256": "7a0e13252f9ce259a62d480dc47d5d1a228a8e642dbdc35f38694de672ba6ef7"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
@@ -187,8 +187,8 @@
       "sha256": "cacf724c0da68a55060287755bd67f43de4e5843d8c38869b36bf20a58107413"
     },
     "dist/index.html": {
-      "bytes": 8100,
-      "sha256": "d54d543d2172ee6a1430fe734b9258366c210e14fc7cb6636f68d9371d4fe342"
+      "bytes": 8113,
+      "sha256": "d539be3230523d54bff7b026b006dfa62078768d51238b97be1493320516afe7"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -407,8 +407,8 @@
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
     },
     "package.json": {
-      "bytes": 23322,
-      "sha256": "ddc9658cc553cfe32b1324a3acced4ca2bbfef8c1ef8ef40cfe66080bdbb3a36"
+      "bytes": 23718,
+      "sha256": "fd9ccad7238f3459a0793d941ed92811cb8252399d6e34026f8ed8e37ce98b47"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "bytes": 11803,
@@ -419,8 +419,8 @@
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 4446,
-      "sha256": "b7ed8fee531b6e710f55bad04ad33ed8e9d4a4a9954eed0ab9dc6d1f53f2cf8a"
+      "bytes": 4586,
+      "sha256": "c856238d284308142527e5a885796036b012890a7db56fe83fcc41b6c9c7df1e"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
