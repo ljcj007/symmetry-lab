@@ -161,6 +161,53 @@
       "compareTolerance": 1e-09
     }
   },
+  "opticalPolarizationExample": {
+    "file": "zno-ir-polarization.json",
+    "settings": {
+      "qIndex": 0,
+      "q": [
+        0,
+        0,
+        0
+      ],
+      "spaceGroup": 186,
+      "pointGroup": "6mm",
+      "frequencyUnit": "THz",
+      "projectionUnit": "e^2/u",
+      "frequencyTolerance": 1e-05,
+      "symprec": 1e-05,
+      "clusterScope": "selected-optical-clusters"
+    },
+    "checks": {
+      "tolerance": 1e-09,
+      "tiltedPolarization": {
+        "direction": [
+          0.707106781187,
+          0,
+          0.707106781187
+        ],
+        "a1": 0.353126411474,
+        "e1": 0.35751680914
+      },
+      "e1BasisRotation": {
+        "radians": 0.6283185307179586,
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "perModeBefore": [
+          0.711465895196,
+          0.003567723085
+        ],
+        "perModeAfter": [
+          0.514808913343,
+          0.200224704938
+        ],
+        "sum": 0.715033618281
+      }
+    }
+  },
   "verification": [
     "All 48 supplied modes have independently checked orthogonality, Hermitian dynamical matrices and eigenpair/frequency residuals. The selected nondegenerate complex mode has independently checked mass unweighting, spatial phases and all exported 64-atom coordinates.",
     "The exact distributed primary and companion text identities are checked separately. Browser textarea newline normalization preserves an unedited raw input; an explicit text edit or independent source replacement retires the old match and unit confirmation.",
@@ -189,8 +236,8 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 68153,
-      "sha256": "2e6d513998c1acc1f802e3899eef309afd44d2f6514b16c806fbabf4f34716df"
+      "bytes": 69036,
+      "sha256": "a0375f997b5c7928fb4b569fb0550f4434461003e7c95beca077185892972d1b"
     },
     "NOTICE.txt": {
       "normalization": "utf8-lf-v1",
@@ -204,18 +251,18 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 101369,
-      "sha256": "b1ab5fcec06b118b667af0720ae851337e59c41ccf1fa9d2a1356891a60809d9"
+      "bytes": 101354,
+      "sha256": "6661fc3eb2851788cfb301da75c74adcb75bf9d583b5548413b54d9cbb696272"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32260,
-      "sha256": "eb287a5e3acb8fb9896a2b0b839d1ce50412af445e4f9a9217f155c9a8d758b4"
+      "bytes": 32234,
+      "sha256": "9caa0ce3163f25b5265283d46b627131f0e666190af857fef2e60e5f1935d2a6"
     },
     "dist/coupled-materials-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 49021,
-      "sha256": "7a9f4411f66764c87783ca7c7e7fbc772b4b6dd7ef8fefa3b497b6ecb633dcae"
+      "bytes": 49013,
+      "sha256": "2cc31976c3aebd3e9670e262ec2affbdc488f7647b22d999be1c65616af69d46"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "raw-bytes",
@@ -262,6 +309,11 @@
       "bytes": 224,
       "sha256": "ab3fc552ab8f60269014ca61a6aed2c716376966e3f0a4cdeb3ce06bd0f36c1d"
     },
+    "dist/data/examples/zno-ir-polarization.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6283,
+      "sha256": "7faf5a93b7590f44d81e6fd7acd9ff4e7fe4f6e7a65d1e04e8177bf52a49666b"
+    },
     "dist/data/examples/zno-mode-quadrature.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 34241,
@@ -274,8 +326,8 @@
     },
     "dist/docs/material-research.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13258,
-      "sha256": "4a984e179aaf9c65907e43ec25b902d19cd59e6bf58ba8ed733b7ecc6758d16c"
+      "bytes": 15137,
+      "sha256": "0d20ee773c804505abe090513f5d179fa85099c558bb8121a07d2a9645b31940"
     },
     "dist/docs/phonopy-import.md": {
       "normalization": "utf8-lf-v1",
@@ -284,8 +336,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8187,
-      "sha256": "c7c6c2c850f05525abd5ee83e130bcb99126151238afddcce5c8d6b33b21ce83"
+      "bytes": 8182,
+      "sha256": "8438e35f40c5762e632e05499eece9b7de2e83be7b58db5e01131431fa5c8394"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -299,8 +351,18 @@
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 56477,
-      "sha256": "f0a8dec978d7f92314850308b4cb5b6da790156a479ed3fabce3b905c2890140"
+      "bytes": 57509,
+      "sha256": "e90e637bd6cbbbbeb32d08ef6547011560336fee0e9206c3d90f043206e94e02"
+    },
+    "dist/observables-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 31103,
+      "sha256": "10222d1fcd86df13771a497243832f1b92ad952b180a6befb8ae7e1568aa1558"
+    },
+    "dist/optional-panel.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1198,
+      "sha256": "a2f95487963cf05afe263f1e7dbdfa738067c3be94266ed8beb0f01968efeaa9"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
@@ -329,13 +391,18 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 56548,
-      "sha256": "bedce3affdd0b5dffcf05f3c97c3d5695c7b96cb812f9cfcb691a90264aab49a"
+      "bytes": 56535,
+      "sha256": "f41adf5f8930152c11e5f28af449df1bb995062502b108d263d1e760084807e3"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 44546,
       "sha256": "a2da53f9f823aab3f1128ea22dd9b61c58f287ed216cd894237ca234533ebb8d"
+    },
+    "dist/zno-ir-polarization-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 12086,
+      "sha256": "25414a78030d36079ed0d732b3d7df742036ca7d8a33127f2dd185709582cb96"
     },
     "locales/en-lesson-progression.json": {
       "normalization": "utf8-lf-v1",
@@ -346,6 +413,21 @@
       "normalization": "utf8-lf-v1",
       "bytes": 3946,
       "sha256": "4b674d4f4137472a5ce091ac5657bb4db9b680a8ac504bbaaa4939ecd3f00c1c"
+    },
+    "locales/en-zno-ir-polarization-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3986,
+      "sha256": "b16d8d920634c740ff544183ea5aab7f10f5a20fc0f1c54874b8c35bc023f832"
+    },
+    "locales/en-zno-ir-polarization-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 309,
+      "sha256": "51a2c35a8446d0074cd4c045ddf2502982fb1ce673a6a90c99794ce41e855885"
+    },
+    "locales/en-zno-ir-polarization-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3986,
+      "sha256": "ed923d8a55aee4f43e6eb4a93d55f4720d1a17511dfcca80f01e11771b1af8e4"
     },
     "locales/en-zno-mode-quadrature-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -369,13 +451,18 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 25396,
-      "sha256": "f173cf9ac340dae9985e744b6ba2e1a435c669302ab02530cf5f43ef7817f629"
+      "bytes": 25625,
+      "sha256": "e4a77136be6754fc1f406ab43728f8d5641754d2c305d7733bbe8d7d2ab32f09"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 12582,
       "sha256": "67e4984301d562b1ab154eaacf93c20578e12b8fafed539582e4005a3c42d88d"
+    },
+    "scripts/build-zno-ir-polarization.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 13530,
+      "sha256": "325a45a12399cc8bfab46fe9f2c17ddc3e0434286871a6590e334fad03857826"
     },
     "scripts/build-zno-mode-quadrature.py": {
       "normalization": "utf8-lf-v1",
@@ -384,13 +471,13 @@
     },
     "scripts/build-zno-workflow-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8562,
-      "sha256": "a3a2bb373377cf777899df86b25c3919a83df2a2135095d0d16c2ca5f2fe2f61"
+      "bytes": 9795,
+      "sha256": "c9d90b4fe23a335b0a11ab7a9c09fdbd49cab92c45751b77de12737260282271"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5286,
-      "sha256": "b2dc034953484301dcc5b1c2abda4c93c513ee3eb79c308e8ec39bc855e98be0"
+      "bytes": 5409,
+      "sha256": "54446d13ea0ba4a3f8ca44a0d8af6a5890f7e4bf2e19ba721fe9842f6932c2be"
     },
     "scripts/fixtures/phonopy-source-baseline.py.gz": {
       "normalization": "raw-bytes",
@@ -436,6 +523,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 7118,
       "sha256": "04814cf5fc23014bf8bf44fade358126e54dbe9d7390818d6c05c7ed08c97da6"
+    },
+    "scripts/test-zno-ir-polarization-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7535,
+      "sha256": "fb22b9ff7d83ebad250fbb09e0a1ad0d7fe8f30f7f828af1f7cb7a62f09a3ddb"
     },
     "scripts/test-zno-mode-quadrature-ui.mjs": {
       "normalization": "utf8-lf-v1",

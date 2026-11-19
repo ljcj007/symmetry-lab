@@ -133,3 +133,22 @@ Projects stay in this browser's database, not auto-uploaded/published to GitHub.
 - [Elcoro et al.: double crystallographic groups and Bilbao representation tools](https://arxiv.org/abs/1706.09272)
 
 Lessons, stepped exercises, and teaching models are original to this project. Sources establish methods and formats, not full ports of these tools into this module.
+
+
+<a id="zno-ir-polarization"></a>
+
+## Infrared polarization and degenerate subspaces at Γ in ZnO
+
+Open the ZnO infrared polarization exercise in the [phonon mode calculator](../#compute/phonon-modes?preset=zno-ir). Predict which optical cluster couples to an electric field along the crystal's c axis. Then verify the inputs and compare fields along c and in the basal plane.
+
+Convert each atom's components of a normalized mass-weighted mode vector to Cartesian displacements by dividing by the square root of its mass, then map them to a mode dipole derivative with the Born effective-charge tensor. For a closed degenerate cluster, sum the squared magnitudes of all these dipole derivatives along the same unit polarization. The result is in e²/u.
+
+`d_ν = Σⱼ Z_j* e_jν / √m_j`，`S(e) = Σ_ν |e† d_ν|² = e† D P D†e`。
+
+Here P is the orthogonal projector onto the mass-weighted mode subspace. Rotating the two orthonormal basis vectors leaves P invariant. At fixed x polarization, rotating the E₁ basis by π/5 changes the individual weights from about (0.711466, 0.003568) to (0.514809, 0.200225), while their sum remains about 0.715034.
+
+Compare the A₁ projection of 0.706253 for a field along c with the E₁ projection of 0.715034 in the basal plane. Use the two closed E₂ optical clusters as controls. Their projections are zero within numerical tolerance. The polarization and the degenerate basis are independent choices. Only the polarization changes the projection of a fixed cluster onto the electric field.
+
+The exercise uses the pinned Phonopy ZnO data, matching primitive cell and original Born tensors, with non-analytic correction disabled for the Γ-point eigenvectors. It preserves the residual charge sum of the source tensors and compares optical clusters. The output is a squared mode dipole derivative. An experimental lineshape or a directional LO–TO splitting requires additional dynamical or spectroscopic inputs.
+
+[Eigenvectors and source manifest](../data/examples/phonopy-zno-source.json) · [Matching structure](../data/examples/phonopy-zno-structure.yaml) · [Original Born file](../data/examples/phonopy-zno-BORN) · [Optical cluster data](../data/examples/zno-ir-polarization.json) · [Phonopy license](../data/examples/phonopy-zno-LICENSE.txt)

@@ -21,8 +21,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "b1ab5fcec06b118b667af0720ae851337e59c41ccf1fa9d2a1356891a60809d9",
-      "bytes": 101369
+      "sha256": "6661fc3eb2851788cfb301da75c74adcb75bf9d583b5548413b54d9cbb696272",
+      "bytes": 101354
     },
     {
       "path": "dist/bridges-projects.js",
@@ -46,8 +46,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "eb287a5e3acb8fb9896a2b0b839d1ce50412af445e4f9a9217f155c9a8d758b4",
-      "bytes": 32260
+      "sha256": "9caa0ce3163f25b5265283d46b627131f0e666190af857fef2e60e5f1935d2a6",
+      "bytes": 32234
     },
     {
       "path": "dist/classroom.css",
@@ -106,8 +106,8 @@
     },
     {
       "path": "dist/coupled-materials-ui.js",
-      "sha256": "7a9f4411f66764c87783ca7c7e7fbc772b4b6dd7ef8fefa3b497b6ecb633dcae",
-      "bytes": 49021
+      "sha256": "2cc31976c3aebd3e9670e262ec2affbdc488f7647b22d999be1c65616af69d46",
+      "bytes": 49013
     },
     {
       "path": "dist/coupled-materials.css",
@@ -191,8 +191,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "c7c6c2c850f05525abd5ee83e130bcb99126151238afddcce5c8d6b33b21ce83",
-      "bytes": 8187
+      "sha256": "8438e35f40c5762e632e05499eece9b7de2e83be7b58db5e01131431fa5c8394",
+      "bytes": 8182
     },
     {
       "path": "dist/induction.js",
@@ -226,8 +226,8 @@
     },
     {
       "path": "dist/material-research-ui.js",
-      "sha256": "f0a8dec978d7f92314850308b4cb5b6da790156a479ed3fabce3b905c2890140",
-      "bytes": 56477
+      "sha256": "e90e637bd6cbbbbeb32d08ef6547011560336fee0e9206c3d90f043206e94e02",
+      "bytes": 57509
     },
     {
       "path": "dist/material-research.css",
@@ -256,8 +256,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "48445172e524cdbd7ab0521120098f1d40d6051816b653cd9f2a120bfe4e841d",
-      "bytes": 31029
+      "sha256": "850a65de85eb64b80b6ad7d24241873aa1daafe3d69a9ed14589b9f255be9cf2",
+      "bytes": 31024
     },
     {
       "path": "dist/navigation.css",
@@ -266,8 +266,8 @@
     },
     {
       "path": "dist/observables-ui.js",
-      "sha256": "f34ae6955da8bc7a5823afb4fe2f412bcd85ce1240f0af06708a1db6c04fddee",
-      "bytes": 30908
+      "sha256": "10222d1fcd86df13771a497243832f1b92ad952b180a6befb8ae7e1568aa1558",
+      "bytes": 31103
     },
     {
       "path": "dist/observables.css",
@@ -411,8 +411,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "bedce3affdd0b5dffcf05f3c97c3d5695c7b96cb812f9cfcb691a90264aab49a",
-      "bytes": 56548
+      "sha256": "f41adf5f8930152c11e5f28af449df1bb995062502b108d263d1e760084807e3",
+      "bytes": 56535
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -486,7 +486,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "c0ab1b56c5e638b8a0ee10879a4d56055dfedad0b295f4881021b63ad80500f7",
+      "sha256": "265287ce9da086a2611e10611e287f76808d508b0ac77ede27d1e1a97b5d8f04",
       "bytes": 56445
     },
     {
@@ -496,7 +496,7 @@
     },
     {
       "path": "dist/data/connections-provenance.json",
-      "sha256": "91ff7067a1ab767d01946daf6a38903e0d89a9a470b56a602a308e94bab03942",
+      "sha256": "7f72a3e0628c6f44cb906cc48b9a3e87a10784037c3a6097c231aa974a60291b",
       "bytes": 110301
     },
     {
@@ -511,12 +511,12 @@
     },
     {
       "path": "dist/data/construction-provenance.json",
-      "sha256": "ec6d4289ca6e56ae77b23ddf1d360fc7c4fe8858b0af4e8d62841134a69263c5",
+      "sha256": "2aedc774c34fd74700172622cb13d16174a203a289906a944368656dab4e8b12",
       "bytes": 64066
     },
     {
       "path": "dist/data/coupled-materials-provenance.json",
-      "sha256": "83341ff0d7e9939df6371e4ece4730c41a80c63871d74ba7c4d5daa02a500dcc",
+      "sha256": "b220950159fe0162be9afa2246be76411d8ff4b87d49874e169ad7f40905683a",
       "bytes": 2964
     },
     {
@@ -581,7 +581,7 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "6e5c437c60af218c33e305b1c49c56fd69aafcf2ede56e31147f60cf5bd18f5f",
+      "sha256": "7834981b316ec4aef64bcf7b94d6fbe613167b8aac4d8c0d907506baa8b42ea5",
       "bytes": 16856
     },
     {
@@ -591,7 +591,7 @@
     },
     {
       "path": "dist/data/frontiers-provenance.json",
-      "sha256": "cc20a6f7678044efe65b1018868498f59fd5099fdf43bc0bcbd8c5683cae221b",
+      "sha256": "017f25b3330f64888b491877b6e463d7a8a0ab7d4d298f3a0ceceb85e416d6b2",
       "bytes": 113041
     },
     {
@@ -606,7 +606,7 @@
     },
     {
       "path": "dist/data/learning-experience-provenance.json",
-      "sha256": "c2b8c052ffdabac6ce3c41985c7ab91110f1a74cc9ae5f7ece12aca33e683f78",
+      "sha256": "e0f6c9ec3ad6c9ee2061c9b2bfb1e16e1818c9141e90ad5ec46cf6065cba7c11",
       "bytes": 114033
     },
     {
@@ -626,7 +626,7 @@
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "9b110987b0db889705f6d80ad0ae6ecd9770308be5ae290929e3f157fc8fbc76",
+      "sha256": "2950628e4470c660812b02bffbe71c37eae7439aa25535325aeb2c6635cd5f25",
       "bytes": 16897
     },
     {
@@ -646,7 +646,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "bf47ef6488e19e1b48cb03cf4162def4543affc0e47f794702a1052545367f9d",
+      "sha256": "ac3e97f081d08a174529539e1d49e17cf201881fe96e2f88816819305ff077e5",
       "bytes": 5971
     },
     {
@@ -681,7 +681,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "2d78bdb199cbfd5eaa90ca650d0fda448c5fefbaa3dbc74e5b6cb203721340cb",
+      "sha256": "ebef5206050bfb61c464083b8698f1bea0a633db6ccb7ebca67694036cb4f142",
       "bytes": 27431
     },
     {
@@ -716,7 +716,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "30c1464377461630d8bb836f81ba0d553045956489b4f1ddcca35bbc1963c857",
+      "sha256": "54bd2fdfb7a0de069bda0e1ac86c68ffebbe98b09a147a3d227422889834fca9",
       "bytes": 58570
     },
     {
@@ -751,7 +751,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "dba4262f5a4787a8f174210228777d5f1783b8514b2e07c29c22c863e246037b",
+      "sha256": "2e823a3e650fc7950a79387b173beb9808cdd07ee81cb90af8c95cfedeffce1d",
       "bytes": 10435
     },
     {
@@ -786,7 +786,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "9905bde55ee6077fec1380773b64efcccb31fbc930444e2db4008908f557796b",
+      "sha256": "880a28234ef6c344ccaae5ae80b57c847190f45c23c16afde7baa88d983df96f",
       "bytes": 13329
     },
     {
@@ -821,7 +821,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "2fa8b24d391e7a3361637ce842e71d80a5c24455c7f850f476468bd85a504427",
+      "sha256": "78e733f6864965e7549b73c00e3377ecf035fa73c01b98ba248660624a3de7b4",
       "bytes": 15859
     },
     {
@@ -1001,8 +1001,8 @@
     },
     {
       "path": "dist/docs/material-research.md",
-      "sha256": "4a984e179aaf9c65907e43ec25b902d19cd59e6bf58ba8ed733b7ecc6758d16c",
-      "bytes": 13258
+      "sha256": "0d20ee773c804505abe090513f5d179fa85099c558bb8121a07d2a9645b31940",
+      "bytes": 15137
     },
     {
       "path": "dist/docs/materials-classroom.md",
@@ -3401,8 +3401,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "f173cf9ac340dae9985e744b6ba2e1a435c669302ab02530cf5f43ef7817f629",
-      "bytes": 25396
+      "sha256": "e4a77136be6754fc1f406ab43728f8d5641754d2c305d7733bbe8d7d2ab32f09",
+      "bytes": 25625
     }
   ]
 }

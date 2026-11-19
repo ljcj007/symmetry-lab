@@ -330,3 +330,9 @@ establish that all existing scientific and teaching content has been audited.
 - The water displacement lesson leads to the GaAs Γ-point periodicity exercise. A rotation about z gives identical displacements along one translation parallel to the axis. A second translation with a transverse component gives a nonzero displacement difference, so rigid rotation fails the fixed-cell periodicity condition.
 - In the optical example, Ga and As move oppositely within the cell and every equivalent site repeats its displacement in all cells. The preconfigured GaAs phonon tool checks the mechanical, acoustic and optical dimensions of 6, 3 and 3.
 - The calculation finder recognizes `trace.txt`, `VASP2Trace` and `MagVasp2trace`. It links to band-character matching and states the existing file size, symmetry, wave-vector and spin-frame requirements.
+
+## Distinguish polarization from a choice of basis in ZnO
+
+- The IR selection-rule lesson leads to a pinned ZnO Γ-point comparison. Learners predict which optical clusters couple to an electric field along c or in the basal plane, then inspect projection trends from the archived mass-weighted eigenvectors and Born tensors. The E₂ clusters provide two zero-projection controls.
+- Rotating a basis for the two-dimensional E₁ cluster at fixed incident polarization changes the contributions of the two basis vectors. The total is invariant. Changing the polarization relative to the crystal changes the cluster projection. The two controls are independent.
+- The output reports squared mode dipole derivatives in e²/u for the fixed eigenpairs with non-analytic correction disabled. The published source includes the tensor and mode identities and the reproducible calculation.

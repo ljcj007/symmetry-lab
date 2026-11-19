@@ -1,0 +1,377 @@
+{
+  "schema": "symmetry-lab.zno-ir-polarization.v1",
+  "source": {
+    "referenceId": "phonopy-zno-derived-qpoints",
+    "repository": "https://github.com/phonopy/phonopy",
+    "commit": "0937453a793eb504f674b7d4fd98421d508008e6",
+    "manifest": "phonopy-zno-source.json",
+    "qpoints": {
+      "file": "phonopy-zno-qpoints.yaml",
+      "byteCount": 55277,
+      "sha256": "37b738912bec7bd696a90a16c674fa6e745fc0a2df355e380818760893c1e0b5"
+    },
+    "structure": {
+      "file": "phonopy-zno-structure.yaml",
+      "byteCount": 7641,
+      "sha256": "93f4adbeafa702a85c30da81f17895c13bf38e1d88fe55433966c9137138b40c",
+      "upstreamPath": "example/ZnO/phonopy_disp.yaml"
+    },
+    "born": {
+      "file": "phonopy-zno-BORN",
+      "byteCount": 112,
+      "sha256": "902118e6b31c9046c0b22eadac279e079563d2386e675a88409443923ee5063e",
+      "upstreamPath": "example/ZnO/BORN"
+    },
+    "license": {
+      "file": "phonopy-zno-LICENSE.txt",
+      "byteCount": 1470,
+      "sha256": "2ce26839c8b70d28765d73e934cc1a979d896d8d228d30694fdd9a92e94d43a9",
+      "upstreamPath": "LICENSE",
+      "id": "BSD-3-Clause"
+    },
+    "nonAnalyticCorrection": false
+  },
+  "settings": {
+    "qIndex": 0,
+    "q": [
+      0,
+      0,
+      0
+    ],
+    "spaceGroup": 186,
+    "pointGroup": "6mm",
+    "frequencyUnit": "THz",
+    "projectionUnit": "e^2/u",
+    "frequencyTolerance": 1e-05,
+    "symprec": 1e-05,
+    "clusterScope": "selected-optical-clusters"
+  },
+  "primitive": {
+    "symbols": [
+      "Zn",
+      "Zn",
+      "O",
+      "O"
+    ],
+    "masses": [
+      65.38,
+      65.38,
+      15.9994,
+      15.9994
+    ],
+    "independentAtomIndices": [
+      0,
+      2
+    ],
+    "bornRowForAtom": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "independentBornTensors": [
+      [
+        [
+          2.1195,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.1195,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.14964
+        ]
+      ],
+      [
+        [
+          -2.14963,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -2.14963,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -2.12582
+        ]
+      ]
+    ],
+    "bornChargeSum": [
+      [
+        -0.06026,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.06026,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.04764
+      ]
+    ]
+  },
+  "groups": [
+    {
+      "id": "a1",
+      "label": "A1",
+      "bands": [
+        6
+      ],
+      "frequency": 10.5812002046,
+      "classification": {
+        "dimension": 1,
+        "c6Characters": [
+          1,
+          1
+        ],
+        "mirrorCharacters": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "closureError": 0.0
+      },
+      "modeDipoles": [
+        [
+          0.0
+        ],
+        [
+          0.0
+        ],
+        [
+          -0.84038849525
+        ]
+      ],
+      "projectionTensor": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.706252822948
+        ]
+      ]
+    },
+    {
+      "id": "e1",
+      "label": "E1",
+      "bands": [
+        7,
+        8
+      ],
+      "frequency": 11.180046402,
+      "classification": {
+        "dimension": 2,
+        "c6Characters": [
+          1,
+          1
+        ],
+        "mirrorCharacters": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "closureError": 0.0
+      },
+      "modeDipoles": [
+        [
+          -0.843484377565,
+          -0.059730420096
+        ],
+        [
+          0.059730420096,
+          -0.843484377565
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "projectionTensor": [
+        [
+          0.71503361828,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.71503361828,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "id": "e2-low",
+      "label": "E2",
+      "bands": [
+        3,
+        4
+      ],
+      "frequency": 2.718847621,
+      "classification": {
+        "dimension": 2,
+        "c6Characters": [
+          -1,
+          -1
+        ],
+        "mirrorCharacters": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "closureError": 0.0
+      },
+      "modeDipoles": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "projectionTensor": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "id": "e2-high",
+      "label": "E2",
+      "bands": [
+        9,
+        10
+      ],
+      "frequency": 12.0685925431,
+      "classification": {
+        "dimension": 2,
+        "c6Characters": [
+          -1,
+          -1
+        ],
+        "mirrorCharacters": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "closureError": 0.0
+      },
+      "modeDipoles": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "projectionTensor": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  ],
+  "checks": {
+    "tolerance": 1e-09,
+    "tiltedPolarization": {
+      "direction": [
+        0.707106781187,
+        0.0,
+        0.707106781187
+      ],
+      "a1": 0.353126411474,
+      "e1": 0.35751680914
+    },
+    "e1BasisRotation": {
+      "radians": 0.6283185307179586,
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "perModeBefore": [
+        0.711465895196,
+        0.003567723085
+      ],
+      "perModeAfter": [
+        0.514808913343,
+        0.200224704938
+      ],
+      "sum": 0.715033618281
+    }
+  }
+}

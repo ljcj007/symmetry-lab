@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28455,
-  "translatedUnits": 28455,
+  "sourceUnits": 28504,
+  "translatedUnits": 28504,
   "missing": [],
-  "files": 507,
+  "files": 509,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -146,6 +146,9 @@
     "en-zno-mode-quadrature-docs.json",
     "en-trace-file-search.json",
     "en-gamma-periodicity.json",
-    "en-gamma-periodicity-host.json"
+    "en-gamma-periodicity-host.json",
+    "en-zno-ir-polarization-ui.json",
+    "en-zno-ir-polarization-docs.json",
+    "en-zno-ir-polarization-host.json"
   ]
 }
