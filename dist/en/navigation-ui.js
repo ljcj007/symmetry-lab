@@ -38,7 +38,7 @@ export const toolGroups=[
   ['compute/phase',"Structural phase transitions · Free energy and domains","Landau stationary points, stability, idealized polar distortions of BaTiO₃ and six domains.","phase transition Landau order parameter domain ferroelectric"],
   ['compute/distortion-modes',"Structural distortions · Mode decomposition and coupling","Structure pairs in a common cell, atom mapping, mode projection and reconstruction, and a two-order-parameter free energy.","Distortion Decomposition Structure Matching polarity Octahedral Mode Coupling BaTiO3 SrTiO3"],
   ['compute/diffraction',"Diffraction · Structure factors and extinctions","Atomic phases, centering and basis extinctions, screw-axis conditions and powder stick patterns.","XRD diffraction extinction structure factor ZnO displacement satellite"],
-  ['structure',"Structure standardization · BC cells","Import POSCAR / CIF, identify the space group and transform the primitive cell, origin and wavevector.","POSCAR CIF spglib primitive cell"],
+  ['structure',"Structure standardization · BC cells","Import POSCAR / CIF, identify the space group and transform the primitive cell, origin and wavevector.","POSCAR CIF spglib primitive cell Hall space group setting lattice metric"],
  ]},
  {id:'representation',title:"Representations and corepresentations",summary:"Classify quantum states using symmetry operations.",tools:[
   ['compute/lie/su2',"SU(2) · Spinors and the Bloch sphere","Rotate a two-component state and compare its matrix, Bloch vector, measurement probabilities, and overall phase.","SU2 Pauli Bloch spinor spin sphere probability"],

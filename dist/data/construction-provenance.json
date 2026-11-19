@@ -416,8 +416,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1",
-      "bytes": 102512
+      "sha256": "8e51008540e18d63cd1c55607f3c742a7fe4d267eb05ee145c8e8d7ebdf97e70",
+      "bytes": 102555
     },
     {
       "path": "dist/bridges-projects.js",
@@ -441,8 +441,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5",
-      "bytes": 32653
+      "sha256": "2889e35326735e433c1a9a09c584957f6efb0228ccaa1dfd773361ec382f3779",
+      "bytes": 32671
     },
     {
       "path": "dist/classroom.css",
@@ -511,7 +511,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "2ccd9048401addcaac221256adde5e7708c58051943b5635aa2030a3d3aa4568",
+      "sha256": "ae45943438d626feca8f748f2ae4eecf609ef88274d270ea30890b9e2db543b1",
       "bytes": 56446
     },
     {
@@ -536,17 +536,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "c46750b82b14b7456d09c4772a2a75deef37d0dbbf3f0067459ed3780ada1320",
+      "sha256": "c78a223cea4e45ef73d814da011e01a9579452655782d915d9ee3e2c9fffb03f",
       "bytes": 16856
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "7689377890bc23f69e7dec1f71fdf1d804d8512189e9ccf25144e4df931f36aa",
+      "sha256": "69dc9846d9f79f91e4b43bc5dc2bc6c44493225d7e18a6e52b446a2c0a5d1070",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "11b75fa6bf4bf453ac9d628811c3d535e47e2dadabd7fad5e5566ea8c6893e66",
+      "sha256": "e855e5d5a7dfcd964b1b973c472d3b35ace18e471ac1984d256271f274836179",
       "bytes": 5971
     },
     {
@@ -561,7 +561,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "de81f12fc676aa1f482a4d99153b0e5370cb63fa339824bf34f0ff35f58c97b6",
+      "sha256": "e4aff5783551927180e0b97ede880f1fa24ae8ffd4b16c112523c3526cb4d43a",
       "bytes": 27431
     },
     {
@@ -571,7 +571,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "ca6c32fcdf7753378a46c3c43d542de482e57a76afa6be0f82f48974056c7be0",
+      "sha256": "d60f3bcbec8284e1c92723134cbbbd0f17f8297d8b0252787f79b772608a3b8f",
       "bytes": 58571
     },
     {
@@ -581,7 +581,7 @@
     },
     {
       "path": "dist/data/python-provenance.json",
-      "sha256": "6e7e766d71cba7a2379aee050ed1d757e79de4d1d6129694abb881027784f5de",
+      "sha256": "d8c1fbe96b80d8a71d160d0cda5d474afc03850b2cd7cece272770b8dc21c44c",
       "bytes": 56687
     },
     {
@@ -591,7 +591,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "4dee47a56a9757cdbf34e1b0af74c34e25cc1549f4eb79fa62c7d59ad094ae6c",
+      "sha256": "17767fce949a4ff460e4f931843436d2c914411955a27b3d2a9ecdb323c3b947",
       "bytes": 10435
     },
     {
@@ -601,7 +601,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "7ec14177233eda6ef277838428b20a82509be46f97ef7f80e57189a6a3c9db96",
+      "sha256": "b98e5e1b7ad7d0f884b71b2db3ac578dd0e91e2ae5f697e34f4453481c53a19a",
       "bytes": 13329
     },
     {
@@ -611,7 +611,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "082d1aa219d3e12073fc99912b7f90a01b9332708ab154b0ad7262d96dceb9b8",
+      "sha256": "7ab5352c28dfdd38271639ebcbdbe49f8095451d9b68a31e932af82685ffebb9",
       "bytes": 15859
     },
     {
@@ -671,8 +671,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5",
-      "bytes": 8221
+      "sha256": "0b33f76da22899f3023911a0d95cbf24a755039f4b17e7ff9d76b6486009d090",
+      "bytes": 8226
     },
     {
       "path": "dist/induction.js",
@@ -731,8 +731,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "b72658038519223c6aebe276c87411c727cbce5b4fef5b4d001861a14834a9ca",
-      "bytes": 31279
+      "sha256": "fc2b6c0271e69f00ffb5f11cc21a7ff62f3e50e2efa097cb7e087530bd8eb945",
+      "bytes": 31313
     },
     {
       "path": "dist/navigation.css",
@@ -801,13 +801,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95",
-      "bytes": 3143
+      "sha256": "af2dce530f6b1d252210c1755d9fa3bc29539fa14601d84e13de6380ed7d13eb",
+      "bytes": 3152
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51",
-      "bytes": 12152
+      "sha256": "06a324123264d8f1ef12f3690626502f5b3b4743442294d5f7cb1a71c561012d",
+      "bytes": 12161
     },
     {
       "path": "dist/python/browser_api.py",
@@ -911,8 +911,8 @@
     },
     {
       "path": "dist/structure-ui.js",
-      "sha256": "fe29b24f060b1a9a7ac36d216af7780f7d6a9f16629e0e86b2d641c0a08206a7",
-      "bytes": 23896
+      "sha256": "d4579a0617d993c71d2e2b7fde2eeaef3fb6db78b0aeedd777692974acc4371f",
+      "bytes": 25561
     },
     {
       "path": "dist/style.css",
@@ -936,8 +936,8 @@
     },
     {
       "path": "dist/symmetry-course-ui.js",
-      "sha256": "b6ec80e81106c9f69529f4253b2fd0d7c1b99ab01760923f4888a56ac43e5614",
-      "bytes": 97594
+      "sha256": "28e5460a2fbf53e8ee3effad3045ef25f343fc0db887c76c5ce7a72d7b369acc",
+      "bytes": 98810
     },
     {
       "path": "dist/symmetry-course.css",
@@ -951,8 +951,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d",
-      "bytes": 27580
+      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48",
+      "bytes": 27850
     },
     {
       "path": "scripts/build-bilbao-labels.py",
@@ -1666,8 +1666,8 @@
     },
     {
       "path": "scripts/test-python-structure-bc.py",
-      "sha256": "420d0000809136943db66b6f3a84403adb17ead8554c91ea3a4add5b2dc96b3a",
-      "bytes": 12318
+      "sha256": "5b84ec91af7ddc9f61faa3cf3ad22e36e4248c0d21d2b9ca4789351f27e7a8ec",
+      "bytes": 14899
     },
     {
       "path": "scripts/test-python-su3-cg-exact.py",

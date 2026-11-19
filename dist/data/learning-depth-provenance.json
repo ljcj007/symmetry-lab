@@ -40,12 +40,12 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 74164,
-      "sha256": "e4ac1b4a14591917fe4fc7677e726fa48eb5148ba1ab62cc33d92461c1e01ab5"
+      "bytes": 74380,
+      "sha256": "e98a41c2c39a2c369286b65b202ebd2bebe3020e79d5f6267628336cd5dd2182"
     },
     "dist/app.js": {
-      "bytes": 102512,
-      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1"
+      "bytes": 102555,
+      "sha256": "8e51008540e18d63cd1c55607f3c742a7fe4d267eb05ee145c8e8d7ebdf97e70"
     },
     "dist/data/lie-derivations.json": {
       "bytes": 138720,
@@ -64,24 +64,24 @@
       "sha256": "cf272e245b24e950bd981255e3c1751d603c4615722883cfefddfe263432525e"
     },
     "dist/index.html": {
-      "bytes": 8221,
-      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5"
+      "bytes": 8226,
+      "sha256": "0b33f76da22899f3023911a0d95cbf24a755039f4b17e7ff9d76b6486009d090"
     },
     "dist/lie-group-ui.js": {
       "bytes": 59790,
       "sha256": "09ee1b2cb9755b2d7c3ffb42c0a8365cdf3613c4a743a6cc8915f17948ad0a5e"
     },
     "dist/navigation-ui.js": {
-      "bytes": 31279,
-      "sha256": "b72658038519223c6aebe276c87411c727cbce5b4fef5b4d001861a14834a9ca"
+      "bytes": 31313,
+      "sha256": "fc2b6c0271e69f00ffb5f11cc21a7ff62f3e50e2efa097cb7e087530bd8eb945"
     },
     "dist/navigation.css": {
       "bytes": 8478,
       "sha256": "d950f43e5d93f15d5de365d1b0a0bb96de8dc1934d852ae3fbf5983c003bc8f3"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 97594,
-      "sha256": "b6ec80e81106c9f69529f4253b2fd0d7c1b99ab01760923f4888a56ac43e5614"
+      "bytes": 98810,
+      "sha256": "28e5460a2fbf53e8ee3effad3045ef25f343fc0db887c76c5ce7a72d7b369acc"
     },
     "dist/tool-capabilities.js": {
       "bytes": 44716,
@@ -92,8 +92,8 @@
       "sha256": "5fd71493b287a2972e1ed3f9d1d566c0b48293e3c4b4f26d4512140caa6b80eb"
     },
     "dist/tool-finder.js": {
-      "bytes": 13086,
-      "sha256": "4101836d65a741924d199751ba30e430ec9a6358056683f92e3bfc1bfd8bc0b2"
+      "bytes": 13098,
+      "sha256": "a670723f2b75292d8827e12b45ca3f0552bfd50c24bae09487030a5cb3c40e87"
     },
     "dist/tool-search.js": {
       "bytes": 2619,
@@ -116,8 +116,8 @@
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
     },
     "package.json": {
-      "bytes": 27580,
-      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d"
+      "bytes": 27850,
+      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48"
     },
     "scripts/build-advanced-derivations.py": {
       "bytes": 18465,

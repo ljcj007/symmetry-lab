@@ -61,13 +61,13 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 74164,
-      "sha256": "e4ac1b4a14591917fe4fc7677e726fa48eb5148ba1ab62cc33d92461c1e01ab5"
+      "bytes": 74380,
+      "sha256": "e98a41c2c39a2c369286b65b202ebd2bebe3020e79d5f6267628336cd5dd2182"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102512,
-      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1"
+      "bytes": 102555,
+      "sha256": "8e51008540e18d63cd1c55607f3c742a7fe4d267eb05ee145c8e8d7ebdf97e70"
     },
     "dist/chirality-actions-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -126,8 +126,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8221,
-      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5"
+      "bytes": 8226,
+      "sha256": "0b33f76da22899f3023911a0d95cbf24a755039f4b17e7ff9d76b6486009d090"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -146,13 +146,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3143,
-      "sha256": "cc00c6cb46258b0d65f589a5e90d383aa34af27e107e8e4a51abf1cf431aec95"
+      "bytes": 3152,
+      "sha256": "af2dce530f6b1d252210c1755d9fa3bc29539fa14601d84e13de6380ed7d13eb"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12152,
-      "sha256": "38453544b8c4c8dde1458e7485413b85a64215b9943ef99a347318200f07cd51"
+      "bytes": 12161,
+      "sha256": "06a324123264d8f1ef12f3690626502f5b3b4743442294d5f7cb1a71c561012d"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -216,8 +216,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27580,
-      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d"
+      "bytes": 27850,
+      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -266,13 +266,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6025,
-      "sha256": "f3451b90ae967f1b2c8235645fded8f1dfa1cc1bc02dc5e7d80f502f667ea08e"
+      "bytes": 6174,
+      "sha256": "32c9ff9fb904b3a02999c9d034b66ea9e1968f6bc8bac010fff12378c172fe6a"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 869953,
-      "sha256": "3229ea7dacfedffbcf2263ae3b873a4d333f87a8f46126804248c6bd548f785e"
+      "sha256": "ff21a6cc7f1a90d83f6436794f987a1192cc9ea3f8903558512521940014f737"
     },
     "scripts/fixtures/fhs-baseline-source.py.gz": {
       "normalization": "raw-bytes",
@@ -282,7 +282,7 @@
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1737009,
-      "sha256": "3bf13ff8ab2bae76be7e7003ffad4d64242a1d3129b370e4547dbc873eb76326"
+      "sha256": "a159372ff4687c3b346d611e4c65b4904b9dce3eed7f1953443391ffc44ed88a"
     },
     "scripts/fixtures/quantum-materials.json": {
       "normalization": "utf8-lf-v1",

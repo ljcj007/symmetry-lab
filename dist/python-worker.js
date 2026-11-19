@@ -3,7 +3,7 @@ const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
 const BUILD = '20261117-derive1';
 const RESOURCE_BUILDS = {
   './python/crystkit_browser.py': '20261120-affine-hand1',
-  './python/structure_bc.py': '20261120-cif-setting1',
+  './python/structure_bc.py': '20261120-cif-setting-practice1',
 };
 const plans = {
   group_theorems: ['group_theorems'],

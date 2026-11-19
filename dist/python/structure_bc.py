@@ -266,6 +266,11 @@ def _cif_metric_compatible(rotations, gram, tolerance):
     return all(np.max(np.abs(r.T @ gram @ r - gram)) <= tolerance for r in rotations)
 
 
+def _cif_setting(method, selected_hall=None, compatible_hall_count=None, ambiguous=False):
+    return {'method': method, 'selected_hall': selected_hall,
+            'compatible_hall_count': compatible_hall_count, 'ambiguous': ambiguous}
+
+
 def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
     keys = ('_space_group_symop_operation_xyz', '_symmetry_equiv_pos_as_xyz', '_space_group_symop.operation_xyz')
     operations = []
@@ -273,7 +278,7 @@ def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
         if key in tags: operations.append(_linear_symop(tags[key]))
         for columns, rows in loops:
             if key in columns: operations.extend(_linear_symop(row[key]) for row in rows)
-        if operations: return operations
+        if operations: return operations, _cif_setting('explicit_operations')
     def compact(s): return re.sub(r'[\s_]', '', s).lower()
     hall = tags.get('_space_group_name_hall',tags.get('_symmetry_space_group_name_hall'))
     hm = tags.get('_space_group_name_h-m_alt', tags.get('_symmetry_space_group_name_h-m'))
@@ -288,21 +293,30 @@ def _cif_operations(tags, loops, warnings, gram, metric_tolerance):
         if hall and compact(info.hall_symbol) != compact(hall): continue
         if number and int(info.number) != number: continue
         if hm and compact(hm) not in (compact(info.international_short), compact(info.international_full)): continue
-        if hall or number or hm: candidates.append(h)
+        if hall or number or hm: candidates.append((h, info))
     if not candidates:
         if hall or number or hm: raise ValueError('CIF declared space-group setting could not be resolved; supply explicit symmetry operations or Hall symbol')
         warnings.append('CIF has no symmetry metadata; atom rows are treated as the complete cell (P1 expansion).')
-        return [(np.eye(3,dtype=int),np.zeros(3))]
-    choices = [spglib.get_symmetry_from_database(h) for h in candidates]
-    if not hall:
-        choices = [ops for ops in choices if _cif_metric_compatible(ops['rotations'], gram, metric_tolerance)]
-        if not choices:
-            raise ValueError(_CIF_METRIC_ERROR)
-    if len(choices) > 1:
+        return [(np.eye(3,dtype=int),np.zeros(3))], _cif_setting('complete_cell_p1')
+    choices = []
+    for h, info in candidates:
+        ops = spglib.get_symmetry_from_database(h)
+        if hall or _cif_metric_compatible(ops['rotations'], gram, metric_tolerance):
+            choices.append((h, info, ops))
+    if not choices:
+        raise ValueError(_CIF_METRIC_ERROR)
+    ambiguous = len(choices) > 1
+    if ambiguous:
         first = 'conventional' if hall else 'metric-compatible'
         warnings.append(f'CIF has no unique Hall setting; the first {first} Hall setting was used. Supply explicit symmetry operations/Hall symbol for a different setting.')
-    operations = choices[0]
-    return list(zip(operations['rotations'],operations['translations']))
+    h, info, operations = choices[0]
+    setting = _cif_setting(
+        'explicit_hall' if hall else 'metadata_hall',
+        selected_hall={'number': h, 'symbol': info.hall_symbol, 'choice': info.choice},
+        compatible_hall_count=None if hall else len(choices),
+        ambiguous=ambiguous,
+    )
+    return list(zip(operations['rotations'],operations['translations'])), setting
 
 
 def parse_cif(text, block_name=None, symprec=1e-5):
@@ -336,7 +350,7 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     positions, species = [], []
     gram = lattice @ lattice.T
     metric_tolerance = max(1e-7,8*symprec*np.linalg.norm(lattice))
-    operations = _cif_operations(tags,loops,warnings,gram,metric_tolerance)
+    operations, setting = _cif_operations(tags,loops,warnings,gram,metric_tolerance)
     if not _cif_metric_compatible((r for r,_ in operations), gram, metric_tolerance):
         raise ValueError(_CIF_METRIC_ERROR)
     def operation_key(r,t): return tuple(r.ravel())+tuple(np.round(_wrap(t),10))
@@ -372,6 +386,7 @@ def parse_cif(text, block_name=None, symprec=1e-5):
     if any(key.startswith('_atom_site_aniso') or key.startswith('_atom_site_u_') or key.startswith('_atom_site_b_') for key in all_keys):
         warnings.append('Thermal displacement metadata are retained in source CIF metadata; geometry exports omit displacement tensors.')
     return _validate_cell(lattice,positions,species,{'format':'cif','block':block['name'],'warnings':warnings,
+                           'cif_symmetry_setting':setting,
                           'declared_symmetry_operation_count':len(operations),'source_site_rows':rows,'source_tags':tags})
 
 

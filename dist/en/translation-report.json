@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28717,
-  "translatedUnits": 28717,
+  "sourceUnits": 28758,
+  "translatedUnits": 28758,
   "missing": [],
-  "files": 517,
+  "files": 519,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -163,6 +163,9 @@
     "en-al-gamma-source.json",
     "en-al-gamma-host.json",
     "en-al-gamma-discovery.json",
-    "en-zero-start-placement.json"
+    "en-zero-start-placement.json",
+    "en-cif-setting-search.json",
+    "en-cif-setting-lesson.json",
+    "en-cif-setting-practice.json"
   ]
 }

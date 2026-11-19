@@ -34,6 +34,18 @@ function siStructurePracticeHTML(){
     <a href="#structure">在结构工作台载入 Phonopy 硅算例 →</a> · <a href="docs/si-structure-example.md">查看硅算例的来源与步骤</a>
   </aside>`;
 }
+function cifSettingPracticeHTML(){
+  return `<details class="sc-callout" data-cif-setting-practice>
+    <summary>同为 4 号空间群，螺旋轴沿哪个输入基矢？</summary>
+    <p>国际编号指定群型。输入 CIF 的轴设置还取决于坐标约定。只给编号时，晶胞度量有时能筛到唯一相容的设置。</p>
+    <ol>
+      <li><strong>先预测。</strong>本例 α = β = 90°，γ = 101.2°。哪一根输入基矢垂直于另外两根？沿它做半转，斜夹角能保持吗？</li>
+      <li><strong>对照两次转换。</strong>保持晶胞与位点不变，分别载入仅给编号 4 和明确给出 P 2c 的 CIF，再手动运行。比较结果中的输入 Hall 设置、展开原子数和结构验证。标准化结果的 Hall 记录对应另一套坐标。</li>
+      <li><strong>核对不相容的声明。</strong>在同一个斜晶胞中改用明确给出 P 2yb 的 CIF，手动运行，检查转换器怎样报告晶胞度量冲突。</li>
+    </ol>
+    <p><a href="#structure?cif-setting=practice">打开 CIF 轴设置练习 →</a> · <a href="docs/cif-setting-practice.md">查看三次核对的步骤与预期结果</a></p>
+  </details>`;
+}
 export function spinActionsLessonOriginalInput(id){
  const presets={'color-03':['color_group','c3_point',3],'spin-03':['spin_group','triangular_point',3],'spin-04':['spin_group','c2_point',4]},p=presets[id];
  return p?{lab:p[0],preset:p[1],steps:p[2],variant:'combined'}:null;
@@ -162,7 +174,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     $('#sc-content').innerHTML=`<div class="sc-topic-filter"><label>空间层级<select id="sc-level-select">${options([['all','点群与三维空间群'],['point','点群'],['space','三维空间群']],state.level)}</select></label><span>空间层级与双值、磁性、颜色或自旋结构分别说明。</span></div><div class="classroom-chapter-picker"><label>${esc(trackTitle(state.track==='all'?lesson.track:state.track))} · 选择单元<select id="sc-chapter-select">${visible.map(({lesson:l,index})=>`<option value="${index}" ${state.lesson===index?'selected':''}>${esc(l.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="sc-chapter-derive">相关分步推导 →</button></div><div class="sc-learn-layout"><aside class="sc-lesson-nav" aria-label="课程目录"><label class="sc-label">学习路线<select id="sc-learn-track">${options([['all','全部课程'],...tracks.map(t=>[t.id,t.title])],state.track)}</select></label>${visible.map(({lesson:l,index})=>`<button type="button" data-sc-lesson="${index}" class="${state.lesson===index?'active':''}" ${state.lesson===index?'aria-current="step"':''}><span>${String(index+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(l))}<small>${correctCount(quizEntries([l]))===(l.quiz||[]).length&&l.quiz?.length?'✓ 本节自测已掌握':esc(trackTitle(l.track))}</small></span></button>`).join('')}</aside>
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · 单元 ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||'基础与应用')}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>学完这一节，你能</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
-      ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?siStructurePracticeHTML():''}
+      ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?cifSettingPracticeHTML()+siStructurePracticeHTML():''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}

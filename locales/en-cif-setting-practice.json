@@ -1,0 +1,20 @@
+{
+  "载入仅编号的 CIF": "Load the number-only CIF",
+  "载入 P 2c CIF": "Load the P 2c CIF",
+  "载入 P 2yb CIF": "Load the P 2yb CIF",
+  "空间群 4 · CIF 设置练习": "Space group 4 · CIF setting exercise",
+  "三份合成 CIF 使用同一个单斜晶胞和同一组原子坐标。改变的是空间群的声明。先预测哪份声明会通过晶胞度量核对，再逐一载入并手动转换。": "The three synthetic CIFs share a monoclinic cell and atomic coordinates. The space-group declaration varies. Predict which declarations will pass the cell-metric check, then load and convert each one manually.",
+  "载入会替换编辑框中的结构，并采用默认角度容差及该练习的波矢和对称性容差。": "Loading replaces the structure in the editor and applies the default angle tolerance and the exercise's wave vector and symmetry tolerance.",
+  "返回空间群课堂 →": "Return to the space-group lesson →",
+  "查看练习步骤与坐标约定 →": "Read the exercise and coordinate conventions →",
+  "采用 CIF 中明确列出的操作": "Uses the operations listed explicitly in the CIF",
+  "读取 CIF 中明确声明的 Hall 符号": "Uses the Hall symbol declared explicitly in the CIF",
+  "从 CIF 编号或 Hermann–Mauguin 符号筛选相容设置": "Finds compatible settings from the CIF space-group number or Hermann–Mauguin symbol",
+  "按完整 P1 晶胞读取": "Reads the input as a complete P1 cell",
+  "读取输入 CIF 时采用的设置": "Setting used to read the input CIF",
+  "与输入晶胞度量相容的候选数": "Settings compatible with the input cell metric",
+  "多个候选与度量相容。解析器采用目录中的第一个匹配设置。": "Several settings are compatible with the cell metric. The parser uses the first matching setting in the catalog.",
+  "上方空间群结果中的 Hall 编号对应标准化后的晶胞。": "The Hall number in the space-group result above refers to the standardized cell.",
+  "合成练习 CIF 已在编辑框中。请手动转换。": "The synthetic CIF is in the editor. Run the conversion manually.",
+  "CIF 声明的对称操作在当前容差下与输入晶胞度量不相容。": "The CIF symmetry rotations do not preserve the input cell metric at the current tolerance."
+}

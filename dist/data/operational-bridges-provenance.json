@@ -53,20 +53,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 74164,
-      "sha256": "e4ac1b4a14591917fe4fc7677e726fa48eb5148ba1ab62cc33d92461c1e01ab5"
+      "bytes": 74380,
+      "sha256": "e98a41c2c39a2c369286b65b202ebd2bebe3020e79d5f6267628336cd5dd2182"
     },
     "dist/app.js": {
-      "bytes": 102512,
-      "sha256": "a7510b8eca8d2fa239327f8d4c18158d6c1cb3f656051d7cd3ea1c1171aa9bd1"
+      "bytes": 102555,
+      "sha256": "8e51008540e18d63cd1c55607f3c742a7fe4d267eb05ee145c8e8d7ebdf97e70"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32653,
-      "sha256": "9daf83990e7f2a24dcbf92c4bf545144cd3af43fd8e01278399d6b33505509a5"
+      "bytes": 32671,
+      "sha256": "2889e35326735e433c1a9a09c584957f6efb0228ccaa1dfd773361ec382f3779"
     },
     "dist/data/bridges-materials.json": {
       "bytes": 90485,
@@ -85,8 +85,8 @@
       "sha256": "0809613c138da0156008072ab882f617f4474422b57f7ceae6dd3d27e633706b"
     },
     "dist/index.html": {
-      "bytes": 8221,
-      "sha256": "7a76ae1aa10a626d59d1b77eb7a2936e06d024d94fc417773fce0dba509e2fc5"
+      "bytes": 8226,
+      "sha256": "0b33f76da22899f3023911a0d95cbf24a755039f4b17e7ff9d76b6486009d090"
     },
     "dist/learning-bridge-host.js": {
       "bytes": 4606,
@@ -145,16 +145,16 @@
       "sha256": "59267b8cac09f7e69e948845f7e2b432f7a6814ff8202b5989af8568300b7468"
     },
     "package.json": {
-      "bytes": 27580,
-      "sha256": "2e749f1c6a9cd42c47a3f1df555059bb2105c1d7db4895f9ea5b508027c0fe2d"
+      "bytes": 27850,
+      "sha256": "3d5b77f45b9e3cb96642f53664232158b0a69c03e5a3d3be91f71762fb058c48"
     },
     "scripts/build-operational-bridges-provenance.mjs": {
       "bytes": 4580,
       "sha256": "f4741cdec59f133d24b325eb3bb96a304c13553594fb2daf1a37c0060a3b04c6"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6025,
-      "sha256": "f3451b90ae967f1b2c8235645fded8f1dfa1cc1bc02dc5e7d80f502f667ea08e"
+      "bytes": 6174,
+      "sha256": "32c9ff9fb904b3a02999c9d034b66ea9e1968f6bc8bac010fff12378c172fe6a"
     },
     "scripts/test-hubbard-learning-bridge.mjs": {
       "bytes": 15965,

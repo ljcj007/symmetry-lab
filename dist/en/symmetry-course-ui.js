@@ -34,6 +34,18 @@ function siStructurePracticeHTML(){
     <a href="#structure">Load the Phonopy silicon example in the structure tool →</a> · <a href="docs/si-structure-example.md">Read the silicon example's source and steps</a>
   </aside>`;
 }
+function cifSettingPracticeHTML(){
+  return `<details class="sc-callout" data-cif-setting-practice>
+    <summary>For space group 4, which input basis vector carries the screw axis?</summary>
+    <p>The international number identifies the space-group type. The input CIF also needs an axis convention. When only a number is supplied, the cell metric can sometimes leave just one compatible setting.</p>
+    <ol>
+      <li><strong>Predict first.</strong>In this example, α = β = 90° and γ = 101.2°. Which input basis vector is perpendicular to the other two? Does a half-turn about it preserve the oblique angle?</li>
+      <li><strong>Compare two conversions.</strong>Keep the cell and sites fixed. Load the CIF with only number 4 and the CIF with explicit P 2c in turn, and run each manually. Compare the input Hall setting, expanded atom count and structure validation. The Hall record in the standardized result refers to a different coordinate setting.</li>
+      <li><strong>Test an incompatible declaration.</strong>Use the same oblique cell with an explicit P 2yb declaration. Run the conversion and check how it reports the cell-metric conflict.</li>
+    </ol>
+    <p><a href="#structure?cif-setting=practice">Open the CIF axis-setting exercise →</a> · <a href="docs/cif-setting-practice.md">Read the steps and expected results</a></p>
+  </details>`;
+}
 export function spinActionsLessonOriginalInput(id){
  const presets={'color-03':['color_group','c3_point',3],'spin-03':['spin_group','triangular_point',3],'spin-04':['spin_group','c2_point',4]},p=presets[id];
  return p?{lab:p[0],preset:p[1],steps:p[2],variant:'combined'}:null;
@@ -162,7 +174,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     $('#sc-content').innerHTML=`<div class="sc-topic-filter"><label>spatial level<select id="sc-level-select">${options([['all',"point group and 3D space group"],['point',"point group"],['space',"3D space group"]],state.level)}</select></label><span>Spatial hierarchy and binary, magnetic, color or spin structures are explained separately.</span></div><div class="classroom-chapter-picker"><label>${esc(trackTitle(state.track==='all'?lesson.track:state.track))} · Select unit<select id="sc-chapter-select">${visible.map(({lesson:l,index})=>`<option value="${index}" ${state.lesson===index?'selected':''}>${esc(l.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="sc-chapter-derive">related step-by-step derivation →</button></div><div class="sc-learn-layout"><aside class="sc-lesson-nav" aria-label="course catalog"><label class="sc-label">Learning path<select id="sc-learn-track">${options([['all',"All courses"],...tracks.map(t=>[t.id,t.title])],state.track)}</select></label>${visible.map(({lesson:l,index})=>`<button type="button" data-sc-lesson="${index}" class="${state.lesson===index?'active':''}" ${state.lesson===index?'aria-current="step"':''}><span>${String(index+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(l))}<small>${correctCount(quizEntries([l]))===(l.quiz||[]).length&&l.quiz?.length?"✓ This section of self-test has been mastered":esc(trackTitle(l.track))}</small></span></button>`).join('')}</aside>
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · Unit ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||"Basics and Applications")}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>After studying this section, can you</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
-      ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?siStructurePracticeHTML():''}
+      ${lesson.id==='space-06'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?cifSettingPracticeHTML()+siStructurePracticeHTML():''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}

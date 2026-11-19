@@ -56,6 +56,10 @@ data remain in metadata, but geometry-only exports do not transform them.
   remains. Supply an explicit Hall symbol or operations to resolve such
   ambiguity. Incompatible settings are rejected. A file with no symmetry
   declaration is interpreted as a complete cell, also with a warning.
+  The conversion JSON records which rule expanded the CIF under
+  `input_metadata.cif_symmetry_setting`. Its selected Hall record describes
+  the input coordinates. The top-level Hall fields describe the standardized
+  result. See the [three-input CIF setting exercise](cif-setting-practice.md).
 - Direct JSON `cell: {lattice, positions, species}`.
 
 Partial occupancy, disorder, magnetic/modulated CIFs and singular lattices are

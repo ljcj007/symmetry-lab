@@ -38,7 +38,7 @@ export const toolGroups=[
   ['compute/phase','结构相变 · 自由能与畴','Landau 驻点、稳定性、理想 BaTiO₃ 极性畸变及六个畴。','相变 Landau 序参量 畴 铁电'],
   ['compute/distortion-modes','结构畸变 · 模式分解与耦合','同胞结构对、原子对应、模式投影与重构，两序参量自由能。','畸变 分解 结构匹配 极性 八面体 模式耦合 BaTiO3 SrTiO3'],
   ['compute/diffraction','衍射 · 结构因子与消光','原子相位、格心与基底消光、螺旋轴条件和粉末棒谱。','XRD 衍射 消光 structure factor ZnO 位移卫星 satellite'],
-  ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞'],
+  ['structure','结构标准化 · BC 晶胞','导入 POSCAR / CIF，识别空间群，转换原胞、原点和波矢。','POSCAR CIF spglib 原胞 Hall 空间群设置 晶胞度量'],
  ]},
  {id:'representation',title:'表示与共表示',summary:'从对称操作得到量子态的分类。',tools:[
   ['compute/lie/su2','SU(2) · 旋量与 Bloch 球','旋转二分量态，比较矩阵、Bloch 向量、测量概率和整体相位。','SU2 Pauli Bloch 旋量 自旋 球 概率'],

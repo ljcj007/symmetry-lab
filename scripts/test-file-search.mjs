@@ -96,6 +96,8 @@ for(const prefix of sourceOnly?['']:['','en/']){
  for(const query of ['FORCE_SETS','force_constants.hdf5','force_constants.yaml','unsupported.xyz','wannier90.wout','OUTCAR','WAVECAR'])assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
  assert.equal(finderResults(toolsIndex,'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
  assert.equal(finderResults(toolsIndex,'POSCAR')[0].route,'structure');
+ assert.equal(finderResults(toolsIndex,'CIF Hall')[0]?.route,'structure');
+ assert.equal(filterToolDirectory(toolsIndex,{query:'CIF Hall'})[0]?.route,'structure');
  assert.equal(finderResults(toolsIndex,'Si-QHA/POSCAR-0')[0].route,'structure');
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',category:'structure'}),[]);
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',arithmetic:'exact'}),[]);

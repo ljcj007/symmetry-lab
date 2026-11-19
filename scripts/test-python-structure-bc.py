@@ -105,9 +105,11 @@ Cl1 Cl 0.271 0.414 0.159 1
         number_tag = '_space_group_IT_number 4'
         hall = "_space_group_name_Hall 'P 2c'"
         explicit = "loop_\n_space_group_symop_operation_xyz\n'x,y,z'\n'-x,-y,z+1/2'"
-        declarations = (number_tag, "_space_group_name_H-M_alt 'P 21'", hall,
-                        "_space_group_name_Hall 'P 2yb'\n" + explicit)
-        for declaration in declarations:
+        declarations = ((number_tag, 'metadata_hall'),
+                        ("_space_group_name_H-M_alt 'P 21'", 'metadata_hall'),
+                        (hall, 'explicit_hall'),
+                        ("_space_group_name_Hall 'P 2yb'\n" + explicit, 'explicit_operations'))
+        for declaration, method in declarations:
             with self.subTest(declaration=declaration):
                 text = cif_with_setting(lengths, angles, declaration, sites)
                 result = bc.run({'format': 'cif', 'text': text, 'k': [0, 0, '1/4']})
@@ -115,6 +117,14 @@ Cl1 Cl 0.271 0.414 0.159 1
                 self.assertEqual((result['group_number'], result['group_order']), (4, 2))
                 self.assertEqual(result['input_cell']['atom_count'], 4)
                 self.assertEqual(result['input_metadata']['declared_symmetry_operation_count'], 2)
+                self.assertEqual(result['hall_number'], 6)
+                self.assertEqual(result['input_metadata']['cif_symmetry_setting'], {
+                    'method': method,
+                    'selected_hall': None if method == 'explicit_operations' else
+                    {'number': 7, 'symbol': 'P 2c', 'choice': 'c'},
+                    'compatible_hall_count': 1 if method == 'metadata_hall' else None,
+                    'ambiguous': False,
+                })
                 self.assertEqual(result['warnings'], [])
                 np.testing.assert_allclose(result['input_cell']['positions'][1], [.877, .655, .734], atol=1e-12)
                 np.testing.assert_allclose(np.array(result['transform']['coordinate_matrix']).T @ result['k_bc'],
@@ -137,15 +147,37 @@ Cl1 Cl 0.271 0.414 0.159 1
         np.testing.assert_array_equal(inferred['positions'], first['positions'])
         self.assertTrue(any('no unique Hall setting' in message for message in inferred['metadata']['warnings']))
         self.assertEqual(first['metadata']['warnings'], [])
+        selected = {'number': 6, 'symbol': 'P 2yb', 'choice': 'b'}
+        self.assertEqual(inferred['metadata']['cif_symmetry_setting'], {
+            'method': 'metadata_hall', 'selected_hall': selected,
+            'compatible_hall_count': 3, 'ambiguous': True,
+        })
+        self.assertEqual(first['metadata']['cif_symmetry_setting'], {
+            'method': 'explicit_hall', 'selected_hall': selected,
+            'compatible_hall_count': None, 'ambiguous': False,
+        })
+
+    def test_cif_without_symmetry_metadata_records_complete_cell_expansion(self):
+        text = cif_with_setting((3, 5, 4), (82, 94, 101.2), '', 'Na .123 .345 .234')
+        result = bc.run({'format': 'cif', 'text': text})
+        self.assertEqual(result['input_cell']['atom_count'], 1)
+        self.assertEqual(result['input_metadata']['declared_symmetry_operation_count'], 1)
+        self.assertEqual(result['input_metadata']['cif_symmetry_setting'], {
+            'method': 'complete_cell_p1', 'selected_hall': None,
+            'compatible_hall_count': None, 'ambiguous': False,
+        })
+        self.assertTrue(any('complete cell (P1 expansion)' in message for message in result['warnings']))
+        self.assertEqual((result['group_number'], result['hall_number']), (2, 2))
 
     def test_cif_metadata_distinguishes_hexagonal_and_rhombohedral_settings(self):
         # IT 166 has Hall 458 (H, centered) and 459 (R, primitive).
         sites = 'C .117 .236 .371\nO .192 .287 .426'
         cases = (
-            ((5, 5, 12), (90, 90, 120), "_space_group_name_Hall '-R 3 2\"'", 36),
-            ((5, 5, 5), (77, 77, 77), "_space_group_name_Hall '-P 3* 2'", 12),
+            ((5, 5, 12), (90, 90, 120), {'number': 458, 'symbol': '-R 3 2"', 'choice': 'H'}, 36),
+            ((5, 5, 5), (77, 77, 77), {'number': 459, 'symbol': '-P 3* 2', 'choice': 'R'}, 12),
         )
-        for lengths, angles, hall, operation_count in cases:
+        for lengths, angles, selected, operation_count in cases:
+            hall = f"_space_group_name_Hall '{selected['symbol']}'"
             with self.subTest(hall=hall):
                 inferred = cif_with_setting(lengths, angles, '_space_group_IT_number 166', sites)
                 explicit = cif_with_setting(lengths, angles, hall, sites)
@@ -155,6 +187,15 @@ Cl1 Cl 0.271 0.414 0.159 1
                 self.assertTrue(result['verified'])
                 self.assertEqual((result['group_number'], result['group_order']), (166, 12))
                 self.assertEqual(result['input_metadata']['declared_symmetry_operation_count'], operation_count)
+                self.assertEqual((result['hall_number'], control['hall_number']), (458, 458))
+                self.assertEqual(result['input_metadata']['cif_symmetry_setting'], {
+                    'method': 'metadata_hall', 'selected_hall': selected,
+                    'compatible_hall_count': 1, 'ambiguous': False,
+                })
+                self.assertEqual(control['input_metadata']['cif_symmetry_setting'], {
+                    'method': 'explicit_hall', 'selected_hall': selected,
+                    'compatible_hall_count': None, 'ambiguous': False,
+                })
                 self.assertEqual(result['input_cell']['atom_count'], 2 * operation_count)
                 self.assertEqual(result['input_cell'], control['input_cell'])
                 self.assertEqual(result['bc_primitive'], control['bc_primitive'])

@@ -71,6 +71,9 @@ separate bounded complete-source restoration path. The directory now has 75 tool
   settings agree with the declared lattice metric. Explicit Hall symbols and
   symmetry operation loops still receive strict checks. A regression covers
   all 230 space groups in ordinary and oblique test cells.
+- The standard-cell lesson and structure tool share a three-input CIF exercise
+  for space group 4. The results distinguish the Hall record used to expand
+  the input from the Hall record of the standardized output.
 
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
