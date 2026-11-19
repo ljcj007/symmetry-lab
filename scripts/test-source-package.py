@@ -36,6 +36,7 @@ builders = [
     'build-phonopy-scattering-provenance',
     'build-phonopy-derivation-provenance',
     'build-pointgroup-identify-provenance',
+    'build-seitz-quotient-provenance',
 ]
 temp_root = Path(tempfile.gettempdir()).resolve()
 with tempfile.TemporaryDirectory(prefix='symmetry-source-check-', dir=temp_root) as temp:

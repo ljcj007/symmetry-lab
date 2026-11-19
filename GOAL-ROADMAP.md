@@ -5,9 +5,9 @@ prepared learners, make tools quick to find for experts, maintain a coherent
 ordered structure, and continue expanding useful verified functionality.
 
 The user resumed the objective after the two-point Phonopy derivation release.
-Current work deepens the 32-point-group classroom through an exercise in
-identifying an unknown group from operation evidence. The full curriculum and
-scientific-workflow audits below remain open.
+The current classroom sequence moves from identifying one of the 32 point-group
+types to computing what the point-group projection loses from a space-group
+operation. The full curriculum and scientific-workflow audits below remain open.
 
 The new lazy calculation entry uses complete supplied complex modes, an ordered
 primitive cell, explicit units and sourced real neutron lengths. Eight genuine
@@ -271,3 +271,10 @@ establish that all existing scientific and teaching content has been audited.
 - Exact fractional matrices from the 32 atlas representatives determine the operation counts. The determinant and order of the proper part separate inversion from reflection and the two six-step rotoinversions. An independent trace and determinant calculation agrees for the atlas, and all 230 ordinary BC space-group tables yield their assigned point-group types when reduced to the linear part.
 - Partial observations use count lower bounds. Closure of the observed set can indicate a subgroup. Reviewing a complete list supports a transition to the matching named atlas entry or operation lab. Existing lesson, practice, expert-tool and project routes remain available.
 - The next classroom connection uses real BC space-group operations to show exactly what is lost under projection to the point group. The same linear half turn in P2 and P2₁ gives different translations after two applications. The 230-group data audit is available as evidence for this next step. Wider lesson and expert-workflow audits remain open.
+
+## Space-group multiplication and the translation quotient
+
+- The first space-group lesson compares P2 with P2₁ and Pm with Pc. A prediction precedes the result. After two applications, the linear parts return to the identity in both examples. The screw and glide move the unwrapped point by an integer primitive lattice vector.
+- In the full catalogue, learners choose the order of two operations, inspect their exact affine product alongside the selected representative, and trace what remains after successive powers. The integer translation explains why the wrapped positions agree. For space group 19, switching the order of two half turns keeps the same linear result and changes the integer translation.
+- The translation phase uses the active convention with reciprocal fractional coordinates in quarters. The interface reports whether the selected linear actions preserve momentum modulo a reciprocal vector. A manual handoff retains the selected space group and wave vector when entering the calculation center.
+- The independent source test checks 2,609 operation rows and 52,381 ordered products across the 230 groups. There are 15,636 nonzero integer shifts. The tests include a displaced inversion with zero net translation on squaring, alongside screws, glides and Bloch-phase controls.

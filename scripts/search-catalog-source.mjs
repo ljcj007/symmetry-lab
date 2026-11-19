@@ -33,7 +33,9 @@ export const learningEntries=([pg,sg,lie,materials,observables,dynamics,research
   ...pg.lessons.map(l=>({route:'classroom/foundations?lesson='+encodeURIComponent(l.id),title:l.title,
     summary:l.id==='thirty-two'?'从旋转、镜面和反演的操作矩阵识别未知点群。比较部分证据和完整操作表。':l.summary,
     keywords:'点群 基础 '+l.id+(['representations','character-reduction'].includes(l.id)?' 表示乘法 同态 共同换基 同时对角化 非忠实 representation homomorphism common basis diagonalization':'')+(l.id==='thirty-two'?' 32点群识别 判定 旋转反演 操作计数 候选 point group identification classify operation matrix rotoinversion':''),kind:'课程'})),
-  ...sg.lessons.map(l=>({route:'classroom/'+(['double','magnetic','color','spin'].includes(l.track)?'spin':'crystal')+'?lesson='+encodeURIComponent(l.id)+'&track='+encodeURIComponent(l.track),title:l.title,summary:l.summary,keywords:l.track+' '+l.id,kind:'课程'})),
+  ...sg.lessons.map(l=>({route:'classroom/'+(['double','magnetic','color','spin'].includes(l.track)?'spin':'crystal')+'?lesson='+encodeURIComponent(l.id)+'&track='+encodeURIComponent(l.track),title:l.title,
+    summary:l.id==='space-01'?'比较 P2 与 P2₁，逐步检查 Seitz 操作乘积、原胞平移和 Bloch 相位。':l.summary,
+    keywords:l.track+' '+l.id+(l.id==='space-01'?' 平移商群 Seitz乘法 螺旋轴 滑移面 原胞边界 quotient Seitz product screw glide lattice translation':''),kind:'课程'})),
   ...lie.lessons.map(l=>({route:'classroom/'+(/cg|racah|ninej|tensor|coupling/.test(l.lab||'')?'coupling':'continuous')+'?lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:'SU2 SU3 李群 '+l.id,kind:'课程'})),
   ...materials.materials.map(m=>({route:'atlas/materials?material='+encodeURIComponent(m.id),title:m.formula+' · '+m.name,summary:m.summary,keywords:m.category+' '+m.id,kind:'材料'}))
 ];

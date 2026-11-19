@@ -2,11 +2,11 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261113-prose2';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261119-pointgroups1';
-import {startToolFinder} from './tool-finder.js?v=20261119-pointgroups1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261119-seitz1';
+import {startToolFinder} from './tool-finder.js?v=20261119-seitz1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261117-derive1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261119-pointgroups1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261119-seitz1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {createProjectNavigator,prepareProjectNavigation} from './project-navigation.js?v=20261117-phonopy1';
@@ -28,12 +28,12 @@ const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(
 const groupLoader=createGroupLoader();
 async function ensureGroups(mode){const data=await groupLoader.get(mode);databases[mode]=data;return data;}
 let renderTicket=0;
-async function openWorkbench({mode='sg',id,k=[0,0,0],doubleValued=false,bzType='',structureHandoff=null}){
+async function openWorkbench({mode='sg',id,k=[0,0,0],doubleValued=false,bzType='',structureHandoff=null,manual=false}){
  if(!['sg','msg','mpg'].includes(mode))return;const origin=renderTicket;let destination='';
  try{let source=null;if(structureHandoff){source=validateStructureHandoff(structureHandoff);doubleValued=source.doubleValued;if(mode!=='sg'||!structureHandoffForCalculation(source,{input:{group_number:Number(id),k,doubleValued,bz_type:bzType}}))throw Error("The structure source does not match the workbench selection.");await optionalViews.get('structureHandoff');if(origin!==renderTicket)return;}await ensureGroups(mode);if(origin!==renderTicket)return;const group=list(mode).find(g=>gid(g,mode)===String(id));if(!group)throw Error("The group was not found.");
  if(bzType&&(mode!=='sg'||!(group.bzTypes||[]).includes(bzType)))throw Error("This group does not support the specified BZ type.");
  destination=buildWorkbenchRoute({mode,id,k,doubleValued,bzType,labelK:k.every(x=>x===0)?'Γ':null});
- await setView(destination,source?{structureHandoff:source}:{});if(state.view==='workbench'&&state.route===destination&&!source)await calculate();
+ await setView(destination,source?{structureHandoff:source}:{});if(state.view==='workbench'&&state.route===destination&&!source&&manual!==true)await calculate();
  }catch(e){if(origin===renderTicket||(destination&&state.view==='workbench'&&state.route===destination))toast(e.message);}
 }
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];

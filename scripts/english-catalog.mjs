@@ -32,6 +32,7 @@ catalogFiles.push('en-scattering-replay-ui.json','en-scattering-replay-host.json
 catalogFiles.push('en-phonopy-scattering-ui.json','en-phonopy-scattering-host.json','en-phonopy-scattering-python.json','en-phonopy-scattering-docs.json');
 catalogFiles.push('en-phonopy-derivation-ui.json','en-phonopy-derivation-host.json','en-phonopy-derivation-python.json','en-phonopy-derivation-docs.json');
 catalogFiles.push('en-pointgroup-identify-ui.json','en-pointgroup-identify-host.json','en-pointgroup-identify-docs.json');
+catalogFiles.push('en-seitz-quotient-ui.json','en-seitz-quotient-host.json','en-seitz-quotient-docs.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

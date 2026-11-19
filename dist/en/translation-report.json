@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28071,
-  "translatedUnits": 28071,
+  "sourceUnits": 28158,
+  "translatedUnits": 28158,
   "missing": [],
-  "files": 471,
+  "files": 475,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -118,6 +118,9 @@
     "en-phonopy-derivation-docs.json",
     "en-pointgroup-identify-ui.json",
     "en-pointgroup-identify-host.json",
-    "en-pointgroup-identify-docs.json"
+    "en-pointgroup-identify-docs.json",
+    "en-seitz-quotient-ui.json",
+    "en-seitz-quotient-host.json",
+    "en-seitz-quotient-docs.json"
   ]
 }

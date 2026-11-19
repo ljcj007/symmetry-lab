@@ -18,6 +18,15 @@ const initialInputs={seitz:{preset:'screw21',point:[.2,.3,.1],steps:4,k:[0,0,.5]
 const spinActionsHooks=Object.freeze({'color-03':"Color exchange and time reversal",'spin-02':"Half translations, Bloch fibers, and pairing at the same wavevector",'spin-03':"Spin-only stabilizer",'spin-04':"SOC-locking comparison"});
 const spinActionsStates=new Map();let disposeSpinActions=()=>{},spinActionsModulePromise,antitranslationModulePromise;
 const loadSpinActions=id=>id==='spin-02'?(antitranslationModulePromise||(antitranslationModulePromise=import('./antitranslation-ui.js?v=20261115-momentum1').catch(error=>{antitranslationModulePromise=null;throw error;}))):(spinActionsModulePromise||(spinActionsModulePromise=import('./spin-actions-ui.js?v=20261115-momentum1').catch(error=>{spinActionsModulePromise=null;throw error;})));
+const seitzQuotientState=new Map();
+let seitzQuotientOpen=false,disposePreviousSeitzWorkshop=()=>{};
+const loadSeitzQuotient=()=>import('./seitz-quotient-ui.js?v=20261119-seitz1');
+const seitzLessonLink='#classroom/crystal?tab=learn&amp;lesson=space-01&amp;track=space';
+function seitzQuotientEntryHTML(lessonId){
+  if(lessonId==='space-01')return `<details class="sq-entry" data-seitz-quotient-entry${seitzQuotientOpen?' open':''}><summary>Find the point group from space-group operations</summary><p>Compose real space-group operations step by step. Inspect the matrix product and the remaining lattice translation.</p><p><a href="#classroom/foundations?tab=learn&amp;lesson=thirty-two">Review point-group identification from operations →</a></p><div data-seitz-quotient-body></div></details>`;
+  if(lessonId==='space-02'||lessonId==='space-03')return `<p class="sc-callout"><a href="${seitzLessonLink}">Compose operations from the actual catalog in the first space-group lesson →</a></p>`;
+  return '';
+}
 export function spinActionsLessonOriginalInput(id){
  const presets={'color-03':['color_group','c3_point',3],'spin-03':['spin_group','triangular_point',3],'spin-04':['spin_group','c2_point',4]},p=presets[id];
  return p?{lab:p[0],preset:p[1],steps:p[2],variant:'combined'}:null;
@@ -90,22 +99,43 @@ export function getSymmetryCourseResult(){
   return {kind:'space-double-magnetic-group-teaching',selectedGroup:{mode:state.mode,data:selectedGroup()},experiment:state.labResult?{input:state.labPayload,result:state.labResult}:null,materialExperiment:extensionState.result?{input:extensionState.payload,result:extensionState.result,camera:viewer?.getView()||null}:null,sources:loaded.lessons.sources,convention:'Teaching demonstrations are calculated by the browser Python engine. Catalog operation counts refer to the supplied representatives, not infinite group order.'};
 }
 
-export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions}){
-  disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
+export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions,loadSeitzQuotientModule=loadSeitzQuotient}){
+  disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML="<div class=\"sc-page\"><div class=\"sc-loading\" role=\"status\"><span class=\"spinner\"></span>is loading space group , double group , magnetic group, color group and spin group courses...</div></div>";
-  const root=container.firstElementChild,current=()=>state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
+  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{};
+  const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};};
+  disposePreviousSeitzWorkshop=clearSeitzWorkshop;
+  function disposeView(){
+    if(disposed)return;
+    disposed=true;
+    disposeRetry?.();
+    clearSeitzWorkshop();
+    if(state.revision===revision)invalidateLab();
+  }
   let lessons,atlas;
-  try{({lessons,atlas}=await load());}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary sc-retry">reload</button>`;$('.sc-retry').onclick=()=>{if(current())return renderSymmetryCourseView({container,run,toast,download,openGroup,selection,onNavigate,onLocation});};}return;}
-  if(!current())return;
+  try{({lessons,atlas}=await load());}catch(error){
+    if(current()){
+      root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary sc-retry">reload</button>`;
+      $('.sc-retry').onclick=async()=>{
+        if(!current())return;
+        const child=await renderSymmetryCourseView({container,run,cancelRun,toast,download,openGroup,selection,onNavigate,onLocation,loadSpinActionsModule,loadSeitzQuotientModule});
+        if(disposed)child();else disposeRetry=child;
+      };
+    }
+    return disposeView;
+  }
+  if(!current())return disposeView;
   const allQuestions=quizEntries(lessons.lessons),tracks=lessons.tracks||[],trackTitle=id=>tracks.find(t=>t.id===id)?.title||id;
   if(selection.pathway||selection.tab){state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.track=tracks.some(t=>t.id===selection.track)?selection.track:'all';state.level=['point','space'].includes(selection.level)?selection.level:'all';const chosen=lessons.lessons.findIndex(l=>l.id===selection.lesson);state.lesson=chosen>=0?chosen:Math.max(0,lessons.lessons.findIndex(l=>state.track==='all'||l.track===state.track));if(chosen>=0)state.track=lessons.lessons[chosen].track;if(selection.experiment&&labNames[selection.experiment]){if(state.lab!==selection.experiment){state.labResult=null;state.labPayload=null;}state.lab=selection.experiment;}if(selection.preset&&isGroupLab(state.lab)&&groupPresets[state.lab].some(([id])=>id===selection.preset)){state.inputs[state.lab].preset=selection.preset;state.labResult=null;state.labPayload=null;}if(selection.material)chooseMaterial(selection.material);if(state.tab==='derive')extensionState.exercise=selection.exercise||null;if(state.tab==='quiz'&&selection.lesson)state.quizLesson=selection.lesson;}
   const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,track:state.track,level:state.level,experiment:state.lab,preset:isGroupLab(state.lab)?state.inputs[state.lab].preset:undefined,material:extensionState.material,exercise:extensionState.exercise});onLocation("Learning center / "+(selection.pathway==='spin'?"Spin and extended symmetries":"Crystal symmetry")+' / '+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
   const sourceHTML=()=>`<details class="sc-source"><summary>Reference sources and calculation conventions</summary><p>course is organized with original Chinese instructions; the crystal group map comes from the existing checkable database of this project, and the interactive experiment is calculated by calling Python in the browser. Chapter page numbers are used to locate reference readings, and the text or illustrations of the textbook are not reproduced.</p>${(lessons.sources||[]).map(source=>`<p>${safeURL(source.url)?`<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.title)} ↗</a>`:esc(source.title)}${(source.note||source.referenceNote)?' · '+esc(source.note||source.referenceNote):''}</p>`).join('')}<p>space group is infinite. The finite count in the map is the representative number of translation equivalent operations used by the database; double group needs to specify a single value or double-valued representation at the same time, and antiunitary operation of the magnetic group uses corepresentation . They cannot be judged solely by the common point group character .</p></details>`;
-  function invalidateLab(){disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();state.labJob++;state.busy=false;extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;}
+  function invalidateLab(){clearSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();state.labJob++;state.busy=false;extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;}
   function navigate(tab){if(!current())return;captureLabDraft();invalidateLab();state.tab=tab;if(tab==='quiz'){state.quizTrack='all';state.quizLesson=lessons.lessons[state.lesson]?.id||'all';}const rendered=draw();$('#sc-content')?.focus({preventScroll:true});if(rendered?.then)return rendered.then(()=>{if(current()&&state.tab===tab)sync();});sync();return rendered;}
   function openWorkbench(spec){captureLabDraft();invalidateLab();openGroup({mode:spec.mode||'sg',id:spec.id,k:spec.k||[0,0,0],doubleValued:!!spec.doubleValued});}
   function draw(){
     if(!current()){invalidateLab();return;}
+    clearSeitzWorkshop();
     disposeSpinActions();disposeSpinActions=()=>{};
     root.innerHTML=`<section class="sc-intro"><div><span class="sc-kicker">from lattice translation to spin with time reversal</span><h2>connects space, spin and magnetic symmetry.</h2><p>extends from point group to three-dimensional periodic structures, and understands space translation, spinor, time reversal and internal degrees of freedom respectively. Read the explanations, operate the model, and complete the exercises in the current unit.</p></div><div class="sc-stats"><div><strong>230</strong><span>space group Type</span></div><div><strong>1651</strong><span>magnetic space group Type</span></div><div><strong>${lessons.lessons.length}</strong><span>Learning Unit</span></div></div></section>
       <div class="sc-tracks" aria-label="Group Theory Learning Route">${tracks.map(track=>`<button type="button" data-sc-track="${esc(track.id)}" class="${state.track===track.id?'active':''}"><strong>${esc(track.title)}</strong><span>${esc(track.summary)}</span><small>Enter the learning route →</small></button>`).join('')}</div>
@@ -116,6 +146,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if(state.tab==='learn')drawLearn();if(state.tab==='atlas')drawAtlas();if(state.tab==='lab')drawLab();if(state.tab==='quiz')drawQuiz();if(state.tab==='materials'||state.tab==='derive')return drawExtension();
   }
   function drawLearn(){
+    clearSeitzWorkshop();
     disposeSpinActions();disposeSpinActions=()=>{};
     const topic=lessons.lessons.map((lesson,index)=>({lesson,index})).filter(({lesson})=>state.track==='all'||lesson.track===state.track),matchesLevel=lesson=>state.level==='all'||!lesson.symmetryLevel||lesson.symmetryLevel==='point-and-space'||lesson.symmetryLevel===state.level;let visible=topic.filter(({lesson})=>matchesLevel(lesson));if(!visible.length){state.level='all';visible=topic;}
     if(!visible.some(({index})=>index===state.lesson))state.lesson=visible[0]?.index||0;
@@ -123,6 +154,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     const spatialLevel=lesson.symmetryLevel||((lesson.track==='space')?'space':'point-and-space'),levelName={point:"point group",space:"3D space group",'point-and-space':"point group and 3D space group"}[spatialLevel];
     $('#sc-content').innerHTML=`<div class="sc-topic-filter"><label>spatial level<select id="sc-level-select">${options([['all',"point group and 3D space group"],['point',"point group"],['space',"3D space group"]],state.level)}</select></label><span>Spatial hierarchy and binary, magnetic, color or spin structures are explained separately.</span></div><div class="classroom-chapter-picker"><label>${esc(trackTitle(state.track==='all'?lesson.track:state.track))} · Select unit<select id="sc-chapter-select">${visible.map(({lesson:l,index})=>`<option value="${index}" ${state.lesson===index?'selected':''}>${esc(l.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="sc-chapter-derive">related step-by-step derivation →</button></div><div class="sc-learn-layout"><aside class="sc-lesson-nav" aria-label="course catalog"><label class="sc-label">Learning path<select id="sc-learn-track">${options([['all',"All courses"],...tracks.map(t=>[t.id,t.title])],state.track)}</select></label>${visible.map(({lesson:l,index})=>`<button type="button" data-sc-lesson="${index}" class="${state.lesson===index?'active':''}" ${state.lesson===index?'aria-current="step"':''}><span>${String(index+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(l))}<small>${correctCount(quizEntries([l]))===(l.quiz||[]).length&&l.quiz?.length?"✓ This section of self-test has been mastered":esc(trackTitle(l.track))}</small></span></button>`).join('')}</aside>
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · Unit ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||"Basics and Applications")}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>After studying this section, can you</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
+      ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
@@ -137,6 +169,64 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if($('#sc-lesson-workbench'))$('#sc-lesson-workbench').onclick=()=>openWorkbench(lesson.workbench);
     if($('#sc-next-lesson'))$('#sc-next-lesson').onclick=()=>{state.lesson=next.index;drawLearn();sync();$('.sc-lesson h2')?.scrollIntoView({block:'nearest'});};
     bindSpinActionsHost(lesson);
+    disposeSeitzWorkshop=bindSeitzQuotientHost();
+  }
+  function bindSeitzQuotientHost(){
+    const detail=$('[data-seitz-quotient-entry]');
+    const body=detail?.querySelector('[data-seitz-quotient-body]');
+    if(!body)return ()=>{};
+    let alive=true,attempt=0,pending=null,cleanup=null;
+    const here=()=>alive&&current()&&$('[data-seitz-quotient-entry]')===detail;
+    const reset=()=>{
+      attempt++;
+      pending=null;
+      cleanup?.();
+      cleanup=null;
+    };
+    function start(){
+      if(!here()||!detail.open||cleanup)return;
+      if(pending)return pending;
+      const ticket=++attempt;
+      const active=()=>here()&&detail.open&&attempt===ticket;
+      body.innerHTML="<p role=\"status\">Loading the space-group operation exercise…</p>";
+      const loading=Promise.resolve().then(async()=>{
+        try{
+          if(!active())return;
+          const module=await loadSeitzQuotientModule();
+          if(!active())return;
+          const child=module.bindSeitzQuotient({root:body,stateStore:seitzQuotientState,isCurrent:active,openGroup:(id,options)=>{
+            if(!active()||!Number.isInteger(id)||!atlas.spaceGroups.some(group=>group.number===id))return;
+            const k=options?.k??[0,0,0];
+            if(!Array.isArray(k)||k.length!==3||![...k].every(value=>Number.isFinite(value)&&Math.abs(value)<=100))return;
+            return openGroup({mode:'sg',id,k:[...k],doubleValued:false,manual:true});
+          }});
+          const disposeChild=typeof child==='function'?child:()=>{};
+          if(active())cleanup=disposeChild;else disposeChild();
+        }catch{
+          if(!active())return;
+          body.innerHTML="<p class=\"notice error\" role=\"alert\">The space-group operation exercise could not load.</p><button type=\"button\" class=\"secondary\" data-seitz-quotient-retry>Retry the space-group operation exercise</button>";
+          body.querySelector('[data-seitz-quotient-retry]').onclick=start;
+        }finally{
+          if(pending===loading)pending=null;
+        }
+      });
+      pending=loading;
+      return loading;
+    }
+    detail.ontoggle=()=>{
+      if(!here())return;
+      seitzQuotientOpen=detail.open;
+      if(detail.open)return start();
+      reset();
+      body.innerHTML='';
+    };
+    if(detail.open)start();
+    return ()=>{
+      seitzQuotientOpen=detail.open;
+      alive=false;
+      detail.ontoggle=null;
+      reset();
+    };
   }
   function openSpinActionsCopy(input){
     if(!current()||!input)return false;
@@ -344,6 +434,7 @@ m′ = εₜ det(R) Rm</pre><p class="sc-small">εₜ = −1 means it comes with
   }
   function questionHTML({lesson,li,quiz,qi,key}){const answer=state.answers[key],checked=answer?.checked===true,correct=checked&&answer.selected===quiz.answer;return `<article class="sc-question ${checked?(correct?'is-correct':'is-incorrect'):''}" id="sc-q-${li}-${qi}"><span class="sc-kicker">${esc(trackTitle(lesson.track))} · ${esc(lesson.title)}</span><fieldset><legend>${qi+1}. ${esc(quiz.question)}</legend>${quiz.choices.map((choice,i)=>`<label class="sc-answer ${checked&&i===quiz.answer?'correct-choice':''}"><input type="radio" name="sc-answer-${li}-${qi}" value="${i}" ${answer?.selected===i?'checked':''}><span class="sc-choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary sc-check-answer" id="sc-check-${li}-${qi}">${checked?"Check again":"Check answers"}</button><div class="sc-answer-feedback" tabindex="-1" aria-live="polite">${checked?`<strong>${correct?"answered correctly":"Think again"} · Answer ${String.fromCharCode(65+quiz.answer)}</strong><p>${esc(quiz.explanation)}</p>`:''}</div></article>`;}
   draw();
+  return disposeView;
 }
 
 // SVG helpers only map computed coordinates to screen pixels.

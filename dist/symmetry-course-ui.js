@@ -18,6 +18,15 @@ const initialInputs={seitz:{preset:'screw21',point:[.2,.3,.1],steps:4,k:[0,0,.5]
 const spinActionsHooks=Object.freeze({'color-03':'颜色交换与时间反演','spin-02':'半平移、Bloch 纤维与同波矢配对','spin-03':'纯自旋稳定子','spin-04':'SOC 锁定对照'});
 const spinActionsStates=new Map();let disposeSpinActions=()=>{},spinActionsModulePromise,antitranslationModulePromise;
 const loadSpinActions=id=>id==='spin-02'?(antitranslationModulePromise||(antitranslationModulePromise=import('./antitranslation-ui.js?v=20261115-momentum1').catch(error=>{antitranslationModulePromise=null;throw error;}))):(spinActionsModulePromise||(spinActionsModulePromise=import('./spin-actions-ui.js?v=20261115-momentum1').catch(error=>{spinActionsModulePromise=null;throw error;})));
+const seitzQuotientState=new Map();
+let seitzQuotientOpen=false,disposePreviousSeitzWorkshop=()=>{};
+const loadSeitzQuotient=()=>import('./seitz-quotient-ui.js?v=20261119-seitz1');
+const seitzLessonLink='#classroom/crystal?tab=learn&amp;lesson=space-01&amp;track=space';
+function seitzQuotientEntryHTML(lessonId){
+  if(lessonId==='space-01')return `<details class="sq-entry" data-seitz-quotient-entry${seitzQuotientOpen?' open':''}><summary>从空间群操作得到点群</summary><p>逐步复合实际空间群的操作，查看矩阵结果以及剩下的晶格平移。</p><p><a href="#classroom/foundations?tab=learn&amp;lesson=thirty-two">复习如何从操作证据识别点群 →</a></p><div data-seitz-quotient-body></div></details>`;
+  if(lessonId==='space-02'||lessonId==='space-03')return `<p class="sc-callout"><a href="${seitzLessonLink}">到空间群第一课复合真实目录中的操作 →</a></p>`;
+  return '';
+}
 export function spinActionsLessonOriginalInput(id){
  const presets={'color-03':['color_group','c3_point',3],'spin-03':['spin_group','triangular_point',3],'spin-04':['spin_group','c2_point',4]},p=presets[id];
  return p?{lab:p[0],preset:p[1],steps:p[2],variant:'combined'}:null;
@@ -90,22 +99,43 @@ export function getSymmetryCourseResult(){
   return {kind:'space-double-magnetic-group-teaching',selectedGroup:{mode:state.mode,data:selectedGroup()},experiment:state.labResult?{input:state.labPayload,result:state.labResult}:null,materialExperiment:extensionState.result?{input:extensionState.payload,result:extensionState.result,camera:viewer?.getView()||null}:null,sources:loaded.lessons.sources,convention:'Teaching demonstrations are calculated by the browser Python engine. Catalog operation counts refer to the supplied representatives, not infinite group order.'};
 }
 
-export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions}){
-  disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
+export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions,loadSeitzQuotientModule=loadSeitzQuotient}){
+  disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML='<div class="sc-page"><div class="sc-loading" role="status"><span class="spinner"></span>正在载入空间群、双群、磁群、色群与自旋群课程…</div></div>';
-  const root=container.firstElementChild,current=()=>state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
+  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{};
+  const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};};
+  disposePreviousSeitzWorkshop=clearSeitzWorkshop;
+  function disposeView(){
+    if(disposed)return;
+    disposed=true;
+    disposeRetry?.();
+    clearSeitzWorkshop();
+    if(state.revision===revision)invalidateLab();
+  }
   let lessons,atlas;
-  try{({lessons,atlas}=await load());}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary sc-retry">重新载入</button>`;$('.sc-retry').onclick=()=>{if(current())return renderSymmetryCourseView({container,run,toast,download,openGroup,selection,onNavigate,onLocation});};}return;}
-  if(!current())return;
+  try{({lessons,atlas}=await load());}catch(error){
+    if(current()){
+      root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary sc-retry">重新载入</button>`;
+      $('.sc-retry').onclick=async()=>{
+        if(!current())return;
+        const child=await renderSymmetryCourseView({container,run,cancelRun,toast,download,openGroup,selection,onNavigate,onLocation,loadSpinActionsModule,loadSeitzQuotientModule});
+        if(disposed)child();else disposeRetry=child;
+      };
+    }
+    return disposeView;
+  }
+  if(!current())return disposeView;
   const allQuestions=quizEntries(lessons.lessons),tracks=lessons.tracks||[],trackTitle=id=>tracks.find(t=>t.id===id)?.title||id;
   if(selection.pathway||selection.tab){state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.track=tracks.some(t=>t.id===selection.track)?selection.track:'all';state.level=['point','space'].includes(selection.level)?selection.level:'all';const chosen=lessons.lessons.findIndex(l=>l.id===selection.lesson);state.lesson=chosen>=0?chosen:Math.max(0,lessons.lessons.findIndex(l=>state.track==='all'||l.track===state.track));if(chosen>=0)state.track=lessons.lessons[chosen].track;if(selection.experiment&&labNames[selection.experiment]){if(state.lab!==selection.experiment){state.labResult=null;state.labPayload=null;}state.lab=selection.experiment;}if(selection.preset&&isGroupLab(state.lab)&&groupPresets[state.lab].some(([id])=>id===selection.preset)){state.inputs[state.lab].preset=selection.preset;state.labResult=null;state.labPayload=null;}if(selection.material)chooseMaterial(selection.material);if(state.tab==='derive')extensionState.exercise=selection.exercise||null;if(state.tab==='quiz'&&selection.lesson)state.quizLesson=selection.lesson;}
   const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,track:state.track,level:state.level,experiment:state.lab,preset:isGroupLab(state.lab)?state.inputs[state.lab].preset:undefined,material:extensionState.material,exercise:extensionState.exercise});onLocation('学习中心 / '+(selection.pathway==='spin'?'自旋与扩展对称':'晶体对称')+' / '+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
   const sourceHTML=()=>`<details class="sc-source"><summary>参考来源与计算约定</summary><p>课程以原创中文说明组织；晶体群图谱来自本项目已有的可核对数据库，交互实验在浏览器内调用 Python 计算。章节页码用于定位参考阅读，未转载教材正文或插图。</p>${(lessons.sources||[]).map(source=>`<p>${safeURL(source.url)?`<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.title)} ↗</a>`:esc(source.title)}${(source.note||source.referenceNote)?' · '+esc(source.note||source.referenceNote):''}</p>`).join('')}<p>空间群的阶是无限的。图谱中的有限计数是数据库采用的平移等价操作代表数；双群需同时指定单值或双值表示，磁群的反幺正操作使用共表示。它们不能只凭普通点群特征标判断。</p></details>`;
-  function invalidateLab(){disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();state.labJob++;state.busy=false;extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;}
+  function invalidateLab(){clearSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();state.labJob++;state.busy=false;extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;}
   function navigate(tab){if(!current())return;captureLabDraft();invalidateLab();state.tab=tab;if(tab==='quiz'){state.quizTrack='all';state.quizLesson=lessons.lessons[state.lesson]?.id||'all';}const rendered=draw();$('#sc-content')?.focus({preventScroll:true});if(rendered?.then)return rendered.then(()=>{if(current()&&state.tab===tab)sync();});sync();return rendered;}
   function openWorkbench(spec){captureLabDraft();invalidateLab();openGroup({mode:spec.mode||'sg',id:spec.id,k:spec.k||[0,0,0],doubleValued:!!spec.doubleValued});}
   function draw(){
     if(!current()){invalidateLab();return;}
+    clearSeitzWorkshop();
     disposeSpinActions();disposeSpinActions=()=>{};
     root.innerHTML=`<section class="sc-intro"><div><span class="sc-kicker">从晶格平移到自旋与时间反演</span><h2>让空间、自旋与磁对称性连起来。</h2><p>从点群推广到三维周期结构，分别理解空间平移、旋量、时间反演与内部自由度。在当前单元中阅读讲解、操作模型并完成练习。</p></div><div class="sc-stats"><div><strong>230</strong><span>空间群类型</span></div><div><strong>1651</strong><span>磁空间群类型</span></div><div><strong>${lessons.lessons.length}</strong><span>学习单元</span></div></div></section>
       <div class="sc-tracks" aria-label="群论学习路线">${tracks.map(track=>`<button type="button" data-sc-track="${esc(track.id)}" class="${state.track===track.id?'active':''}"><strong>${esc(track.title)}</strong><span>${esc(track.summary)}</span><small>进入学习路线 →</small></button>`).join('')}</div>
@@ -116,6 +146,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if(state.tab==='learn')drawLearn();if(state.tab==='atlas')drawAtlas();if(state.tab==='lab')drawLab();if(state.tab==='quiz')drawQuiz();if(state.tab==='materials'||state.tab==='derive')return drawExtension();
   }
   function drawLearn(){
+    clearSeitzWorkshop();
     disposeSpinActions();disposeSpinActions=()=>{};
     const topic=lessons.lessons.map((lesson,index)=>({lesson,index})).filter(({lesson})=>state.track==='all'||lesson.track===state.track),matchesLevel=lesson=>state.level==='all'||!lesson.symmetryLevel||lesson.symmetryLevel==='point-and-space'||lesson.symmetryLevel===state.level;let visible=topic.filter(({lesson})=>matchesLevel(lesson));if(!visible.length){state.level='all';visible=topic;}
     if(!visible.some(({index})=>index===state.lesson))state.lesson=visible[0]?.index||0;
@@ -123,6 +154,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     const spatialLevel=lesson.symmetryLevel||((lesson.track==='space')?'space':'point-and-space'),levelName={point:'点群',space:'三维空间群','point-and-space':'点群与三维空间群'}[spatialLevel];
     $('#sc-content').innerHTML=`<div class="sc-topic-filter"><label>空间层级<select id="sc-level-select">${options([['all','点群与三维空间群'],['point','点群'],['space','三维空间群']],state.level)}</select></label><span>空间层级与双值、磁性、颜色或自旋结构分别说明。</span></div><div class="classroom-chapter-picker"><label>${esc(trackTitle(state.track==='all'?lesson.track:state.track))} · 选择单元<select id="sc-chapter-select">${visible.map(({lesson:l,index})=>`<option value="${index}" ${state.lesson===index?'selected':''}>${esc(l.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="sc-chapter-derive">相关分步推导 →</button></div><div class="sc-learn-layout"><aside class="sc-lesson-nav" aria-label="课程目录"><label class="sc-label">学习路线<select id="sc-learn-track">${options([['all','全部课程'],...tracks.map(t=>[t.id,t.title])],state.track)}</select></label>${visible.map(({lesson:l,index})=>`<button type="button" data-sc-lesson="${index}" class="${state.lesson===index?'active':''}" ${state.lesson===index?'aria-current="step"':''}><span>${String(index+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(l))}<small>${correctCount(quizEntries([l]))===(l.quiz||[]).length&&l.quiz?.length?'✓ 本节自测已掌握':esc(trackTitle(l.track))}</small></span></button>`).join('')}</aside>
       <article class="sc-lesson"><header><span class="sc-kicker">${esc(trackTitle(lesson.track))} · 单元 ${state.lesson+1}</span><h2>${esc(lesson.title)}</h2><p class="sc-lesson-level">${esc(levelName)} · ${esc(lesson.difficulty||'基础与应用')}</p><p>${esc(lesson.summary)}</p></header><div class="sc-objectives"><h3>学完这一节，你能</h3><ul>${(lesson.objectives||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>
+      ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzQuotientEntryHTML(lesson.id):''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
@@ -137,6 +169,64 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if($('#sc-lesson-workbench'))$('#sc-lesson-workbench').onclick=()=>openWorkbench(lesson.workbench);
     if($('#sc-next-lesson'))$('#sc-next-lesson').onclick=()=>{state.lesson=next.index;drawLearn();sync();$('.sc-lesson h2')?.scrollIntoView({block:'nearest'});};
     bindSpinActionsHost(lesson);
+    disposeSeitzWorkshop=bindSeitzQuotientHost();
+  }
+  function bindSeitzQuotientHost(){
+    const detail=$('[data-seitz-quotient-entry]');
+    const body=detail?.querySelector('[data-seitz-quotient-body]');
+    if(!body)return ()=>{};
+    let alive=true,attempt=0,pending=null,cleanup=null;
+    const here=()=>alive&&current()&&$('[data-seitz-quotient-entry]')===detail;
+    const reset=()=>{
+      attempt++;
+      pending=null;
+      cleanup?.();
+      cleanup=null;
+    };
+    function start(){
+      if(!here()||!detail.open||cleanup)return;
+      if(pending)return pending;
+      const ticket=++attempt;
+      const active=()=>here()&&detail.open&&attempt===ticket;
+      body.innerHTML='<p role="status">正在载入空间群操作练习…</p>';
+      const loading=Promise.resolve().then(async()=>{
+        try{
+          if(!active())return;
+          const module=await loadSeitzQuotientModule();
+          if(!active())return;
+          const child=module.bindSeitzQuotient({root:body,stateStore:seitzQuotientState,isCurrent:active,openGroup:(id,options)=>{
+            if(!active()||!Number.isInteger(id)||!atlas.spaceGroups.some(group=>group.number===id))return;
+            const k=options?.k??[0,0,0];
+            if(!Array.isArray(k)||k.length!==3||![...k].every(value=>Number.isFinite(value)&&Math.abs(value)<=100))return;
+            return openGroup({mode:'sg',id,k:[...k],doubleValued:false,manual:true});
+          }});
+          const disposeChild=typeof child==='function'?child:()=>{};
+          if(active())cleanup=disposeChild;else disposeChild();
+        }catch{
+          if(!active())return;
+          body.innerHTML='<p class="notice error" role="alert">空间群操作练习暂未载入。</p><button type="button" class="secondary" data-seitz-quotient-retry>重试空间群操作练习</button>';
+          body.querySelector('[data-seitz-quotient-retry]').onclick=start;
+        }finally{
+          if(pending===loading)pending=null;
+        }
+      });
+      pending=loading;
+      return loading;
+    }
+    detail.ontoggle=()=>{
+      if(!here())return;
+      seitzQuotientOpen=detail.open;
+      if(detail.open)return start();
+      reset();
+      body.innerHTML='';
+    };
+    if(detail.open)start();
+    return ()=>{
+      seitzQuotientOpen=detail.open;
+      alive=false;
+      detail.ontoggle=null;
+      reset();
+    };
   }
   function openSpinActionsCopy(input){
     if(!current()||!input)return false;
@@ -343,6 +433,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
   }
   function questionHTML({lesson,li,quiz,qi,key}){const answer=state.answers[key],checked=answer?.checked===true,correct=checked&&answer.selected===quiz.answer;return `<article class="sc-question ${checked?(correct?'is-correct':'is-incorrect'):''}" id="sc-q-${li}-${qi}"><span class="sc-kicker">${esc(trackTitle(lesson.track))} · ${esc(lesson.title)}</span><fieldset><legend>${qi+1}. ${esc(quiz.question)}</legend>${quiz.choices.map((choice,i)=>`<label class="sc-answer ${checked&&i===quiz.answer?'correct-choice':''}"><input type="radio" name="sc-answer-${li}-${qi}" value="${i}" ${answer?.selected===i?'checked':''}><span class="sc-choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary sc-check-answer" id="sc-check-${li}-${qi}">${checked?'再次检查':'检查答案'}</button><div class="sc-answer-feedback" tabindex="-1" aria-live="polite">${checked?`<strong>${correct?'回答正确':'再想一想'} · 答案 ${String.fromCharCode(65+quiz.answer)}</strong><p>${esc(quiz.explanation)}</p>`:''}</div></article>`;}
   draw();
+  return disposeView;
 }
 
 // SVG helpers only map computed coordinates to screen pixels.

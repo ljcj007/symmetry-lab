@@ -35,18 +35,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 59091,
-      "sha256": "a7d4972f09e6ce564e69e03180fcb8ec1157704b6fb343b3a62ded7e9b35573d"
+      "bytes": 60436,
+      "sha256": "64cbdfdcace1794e6395baa84d60ea53d73bd76b6568e6d020d62d4fa5941ff5"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 99575,
-      "sha256": "626b338b5a4bd2d153b0f24760036fa34d11b063207411672a3805ae082d6724"
+      "bytes": 99585,
+      "sha256": "310f87d76b810f66a4282dc89b76f813234bf7b6e9769f0512bc8941bb315f62"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32234,
-      "sha256": "f95cb93538d4b5c1e4703f6b7b17ac138d7e6d84d50179536a20068f3427e4a1"
+      "bytes": 32231,
+      "sha256": "4c213cbe9ee4b50963727d37c4fae8c44e6ac678e231125a13838992a785d6e4"
     },
     "dist/crystal-notation.js": {
       "normalization": "utf8-lf-v1",
@@ -70,8 +70,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 395139,
-      "sha256": "6694aa158d0d01493319d1d2e9f0563b1082e7e6999cc0ab81df01a04265192e"
+      "bytes": 395254,
+      "sha256": "5a6ca41c053c1df082f0dd2848d2afd8b16feb3b5be5b8f0adcd3f96343f5cc9"
     },
     "dist/data/space-groups.json": {
       "normalization": "utf8-lf-v1",
@@ -85,8 +85,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7973,
-      "sha256": "ad38c640f8aa54a9ee4e7552d57b174be8ee71ebca9be23970671ca8cd5a95fb"
+      "bytes": 8035,
+      "sha256": "a245c94e89b10fec03152fddc86c2423946d2a05c242f253050b7e61b87b88e4"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -100,8 +100,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30300,
-      "sha256": "3a65d05855d58cf42d31ea9f4a64939c1c86d4c89302eba5c540075b26e6c566"
+      "bytes": 30294,
+      "sha256": "6627f511962714bb03e187cf09337f2b41644d0612add6e59ac2ea39b9d73261"
     },
     "dist/pointgroup-identify-core.js": {
       "normalization": "utf8-lf-v1",
@@ -130,8 +130,8 @@
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8662,
-      "sha256": "e20235dc76b13d29179cbb62b23cbe5fddc2d410f88bca3d4b5bd9a846172de2"
+      "bytes": 8656,
+      "sha256": "c575205c2cb53e19a45f0124c57a51f81ac9d390a98ad09d2ad0b99573b07e73"
     },
     "locales/en-pointgroup-identify-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -155,8 +155,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 22412,
-      "sha256": "2455d26080272a914e8763fe1a9e8952e03bcb00d62c8d8ca2da60bfc6263b96"
+      "bytes": 22716,
+      "sha256": "9265cb220bd9c4a19c622c57923b53236b4b7e775e742dc95956cd36897a7bbd"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -185,8 +185,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4140,
-      "sha256": "19de058b05e6e593d44c15716fca93453173a2a917a473eea340539c06ef3c98"
+      "bytes": 4248,
+      "sha256": "01b3de7816a739a69a3bf237702bae404e10a11b0e37333c3797166cd56a5f6e"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",
@@ -200,8 +200,8 @@
     },
     "scripts/search-catalog-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8798,
-      "sha256": "7e56dea59873ac050860a5f87257b9541c689a25b1f1417da98afe521d710826"
+      "bytes": 9055,
+      "sha256": "9e7e3dfda36a46339d55e988b870879d27d5ac9dae0a4a187fa0a2013f7f0ef2"
     },
     "scripts/test-pointgroup-course.py": {
       "normalization": "utf8-lf-v1",
@@ -235,13 +235,13 @@
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4457,
-      "sha256": "e81726ffdc66b6e2b331dccd8ccb594f4746cdfd9f99b3fe370bef7472293d3e"
+      "bytes": 4496,
+      "sha256": "8c8f3c513344b371bb51a25280b67fbfa4c877199eec08fbb63f85b051703832"
     },
     "scripts/test-tool-finder.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7037,
-      "sha256": "b8c7a8f28013f3f5bcb4826a93de83d02b4a296ba4c916493b38d7e2d8c457ba"
+      "bytes": 7165,
+      "sha256": "21d592b972430311c96dc5a284c808cf10b91158438e35512b3fa0492030970e"
     }
   }
 }
