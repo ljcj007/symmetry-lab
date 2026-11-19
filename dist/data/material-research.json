@@ -7,7 +7,9 @@
     {"id":"isodistort","title":"ISODISTORT：畸变模与母相—子相关系","url":"https://iso.byu.edu/isodistorthelp.php"},
     {"id":"bilbao","title":"Double crystallographic groups and their representations on the Bilbao Crystallographic Server","url":"https://arxiv.org/abs/1706.09272"},
     {"id":"graphene-wannier-hr","title":"WannierTools 原始跃迁文件 Graphene_hr.dat","url":"https://github.com/quanshengwu/wannier_tools/blob/362171ce35450118828c6960a882e3a6d08c73f5/examples/Graphene/Graphene_hr.dat"},
-    {"id":"graphene-wannier-bands","title":"WannierTools 原始晶格与路径文件 wt.in-bands","url":"https://github.com/quanshengwu/wannier_tools/blob/362171ce35450118828c6960a882e3a6d08c73f5/examples/Graphene/wt.in-bands"}
+    {"id":"graphene-wannier-bands","title":"WannierTools 原始晶格与路径文件 wt.in-bands","url":"https://github.com/quanshengwu/wannier_tools/blob/362171ce35450118828c6960a882e3a6d08c73f5/examples/Graphene/wt.in-bands"},
+    {"id":"al-phonopy-band","title":"Phonopy 原始 Al/ABACUS 色散与本征矢 band.yaml","url":"https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml"},
+    {"id":"al-phonopy-structure","title":"Phonopy 原始 Al/ABACUS 原胞与计算设置 phonopy.yaml","url":"https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/phonopy.yaml"}
   ],
   "modules": [
     {"id":"modes","action":"phonon_modes","route":"phonon-modes","pathway":"structure-dynamics","title":"声子模式识别与冻结模","summary":"在 Γ 点识别整个简并子空间，再把选定振动冻结为可导出的结构。","lesson":"mode-subspaces"},
@@ -130,6 +132,28 @@
       "modules":[],
       "links":[["到课堂预测石墨烯简并","#classroom/crystal?module=bands&tab=learn&lesson=band-crossing"],["打开 MagneticTB 并核验石墨烯文件","#magnetictb"]],
       "sources":["graphene-wannier-hr","graphene-wannier-bands"]
+    },
+    {
+      "id": "al-phonopy-gamma",
+      "formula": "Al",
+      "title": "铝的声学子空间与有限 q 冻结",
+      "summary": "比较两个 Γ 坐标的完整位移子空间，再用布里渊区边界点检验冻结超胞的周期性。",
+      "assumption": "示例采用 Phonopy 官方发布的 Al/ABACUS 计算文件。保留原始近零频率，频率标记采用 THz，晶格与显示位移使用 au。",
+      "modules": [],
+      "links": [
+        [
+          "从课堂读懂 Phonopy 文件",
+          "#classroom/structure-dynamics?tab=learn&lesson=phonopy-files"
+        ],
+        [
+          "打开官方 Al 模式实验",
+          "#compute/phonon-modes?preset=al-gamma"
+        ]
+      ],
+      "sources": [
+        "al-phonopy-band",
+        "al-phonopy-structure"
+      ]
     }
   ]
 }

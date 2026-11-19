@@ -56,18 +56,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 72901,
-      "sha256": "cbdb1e37a6865b905e1cd78f52fc0b3f1e84c943229657853a4991f3a3d697dc"
+      "bytes": 73478,
+      "sha256": "2f0680802a5ea9480839d191a6a9670e80959acdfcac451dc6f3fb316ba935cb"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102171,
-      "sha256": "16b3c8a77c352ed2ec20ebf45dc775d6b3f5d08b96afa702cc79851c93f7ab3f"
+      "bytes": 102160,
+      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32654,
-      "sha256": "2ff5ae28a00a71797afb7f35cd37e9df745bb37b2a576b389c1d52e9f69daacc"
+      "bytes": 32652,
+      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c"
     },
     "dist/data/lie-group-lessons.json": {
       "normalization": "utf8-lf-v1",
@@ -86,8 +86,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8200,
-      "sha256": "c81d00b570f52d07b3362848510c880305d972792806cb030bb8d86764cb764e"
+      "bytes": 8197,
+      "sha256": "3b16d7030988db4f250d516469aa72daef160165f82defbecb8beb2f5971e4db"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -183,6 +183,21 @@
       "normalization": "utf8-lf-v1",
       "bytes": 588,
       "sha256": "af99492af610ad745e906cd3a4a11a929350901b1aaf9c0733a55f22861424a3"
+    },
+    "locales/en-al-gamma-discovery.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6295,
+      "sha256": "b8278aa8172e994b77f6132fb88a4d7f2dc7609d44fbf4e2270442d6a4f3d353"
+    },
+    "locales/en-al-gamma-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2644,
+      "sha256": "d47c90d849df6ffd15a6566ed175aca4a4d401aaafeb716e38bb53ac33b5cb24"
+    },
+    "locales/en-al-gamma-source.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 773,
+      "sha256": "69eb5719e7484bea369732feda2af78dabf6d5bbbc7defd2fe4f010bc85b93f0"
     },
     "locales/en-antitranslation-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -401,8 +416,8 @@
     },
     "locales/en-lesson-topic-finder.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1044,
-      "sha256": "f08100f55a0384731b581e1700bde27442d4a186e364025d3bf355b6829bad69"
+      "bytes": 1118,
+      "sha256": "ce6d0228bbbbd81860f7a4f66f9e64d77f12ecb3dee57ada0885be4854187966"
     },
     "locales/en-lesson-topic-host.json": {
       "normalization": "utf8-lf-v1",
@@ -921,8 +936,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27037,
-      "sha256": "382f1362632ee9350ee9a2deb952022ed5dffe6da54195fd91524064f5c021ea"
+      "bytes": 27322,
+      "sha256": "736f4869db6509f7f3d16ebe5ccd5a9992f8521369f7efb57f3ed85786d41714"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -951,8 +966,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5855,
-      "sha256": "38e0479b038a629383a13d03fe36a8e9b119f4d31a12fb3201cd2d93f374d414"
+      "bytes": 5974,
+      "sha256": "3f58958e4a99bfb604f2b461b5ad7bc772dce8d666b94840a2ab66d38785af60"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1036,8 +1051,8 @@
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23369,
-      "sha256": "250935491fb8ad0ff4745cbdd490c7afff99bdb0630189e38ecf72d595b6f8b7"
+      "bytes": 28728,
+      "sha256": "5d298e79ada34b1cae1334700cec74fdda2bfaf1b5977c297db5867274ab51c2"
     },
     "scripts/test-python-client.mjs": {
       "normalization": "utf8-lf-v1",

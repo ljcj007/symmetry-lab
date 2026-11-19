@@ -1,4 +1,4 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-lesson-topic1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-al-gamma1';
 import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -29,6 +29,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  const scopeButtons=[...dialog.querySelectorAll('[data-finder-scope]')];
  const queryLabel=dialog.querySelector('#tool-finder-query-label'),expand=dialog.querySelector('[data-finder-topic-expand]');
  const catalogButton=dialog.querySelector('[data-finder-topic-catalog]');
+ const courseButton=scopeButtons.find(control=>control.dataset.finderScope==='courses');
+ const ordinaryCourseLabel=courseButton.textContent;
  const ordinaryLabel=queryLabel.textContent,ordinaryPlaceholder=input.getAttribute('placeholder');
  let opened=false,previousFocus=null,scope='tools',selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
  let topic=null,topicModuleRequest=null;
@@ -43,6 +45,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  function render(){
   if(!opened||destroyed)return;
   for(const button of scopeButtons)button.hidden=Boolean(topic)&&button.dataset.finderScope!=='courses';
+  courseButton.textContent=topic?"This topic":ordinaryCourseLabel;
+  courseButton.setAttribute('aria-pressed',String(topic?topic.range==='topic':scope==='courses'));
   expand.hidden=!topic?.data;expand.disabled=expand.hidden;
   expand.textContent=topic?.range==='all'?"Return to this topic":"Search all lessons";
   catalogButton.hidden=!topic?.data||topic.range==='all'||topic.data.catalog.length===topic.data.topic.length;
@@ -62,7 +66,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
    else if(!topic.data)status.textContent="Open a lesson to search its topic.";
    else if(topic.range==='all')status.textContent=`Searching all ${topic.data.all.length} lessons. Showing ${results.length} results (up to 16).`;
    else if(topic.range==='catalog')status.textContent=`${topic.data.catalogTitle} · Lessons in this catalog: ${topic.data.catalog.length} total. Showing ${results.length} results (up to 16).`;
-   else status.textContent=`${topic.data.title} · Lessons in this topic: ${topic.data.topic.length} total. Showing ${results.length}`;
+   else status.textContent=`Current lesson · ${topic.data.title} · Lessons in this topic: ${topic.data.topic.length} total. Showing ${results.length}`;
   }else if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} in tools (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
   else if(loading)status.textContent="Loading the compact catalogue; no calculation is started.";
   else if(failed)status.innerHTML="The catalogue is temporarily unavailable. Tools remain searchable in the Tools scope. <button type=\"button\" data-finder-retry>Retry catalogue</button>";
@@ -156,6 +160,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  scopeButtons.forEach(x=>x.addEventListener('click',()=>{
   scope=x.dataset.finderScope;
   if(scope!=='courses')topic=null;
+  else if(topic)topic.range='topic';
   selected=0;updateScopeButtons();render();load();input.focus();
  }));
  for(const [control,range] of [[catalogButton,'catalog'],[expand,'all']]){

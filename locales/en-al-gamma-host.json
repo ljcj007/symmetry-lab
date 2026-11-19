@@ -1,0 +1,21 @@
+{
+  "载入 q = (1, 1, 1)": "Load q = (1, 1, 1)",
+  "载入 q = (0, 0, 0)": "Load q = (0, 0, 0)",
+  "载入边界 q = (1/2, 1/2, 1/2)": "Load boundary q = (1/2, 1/2, 1/2)",
+  "用官方 Al 数据核对 Γ 等价性": "Check equivalent Γ points with official Al data",
+  "先预测。两种原胞倒易坐标 q = (1, 1, 1) 和 q = (0, 0, 0) 会给出相同的 Γ 点表示吗？边界波矢 q = (1/2, 1/2, 1/2) 能用一个原胞冻结吗？": "Predict first. Do q = (1, 1, 1) and q = (0, 0, 0) in primitive reciprocal coordinates give the same Γ-point representation? Can the boundary wavevector q = (1/2, 1/2, 1/2) be frozen in one primitive cell?",
+  "选择后核对并载入两份原文件。按下运行按钮后比较表示、原始频率与长度单位。边界波矢预填 [2, 2, 2]，可以改成 [1, 1, 1] 检验周期性。": "Choose a case to verify and load both original files. Run the calculation and compare the representation, original frequencies and length units. The boundary case starts with [2, 2, 2]. Change this to [1, 1, 1] to test periodicity.",
+  "Al 原文件与分步核对 →": "Original Al files and step-by-step checks →",
+  "用同一组 Phonopy 计算数据比较两种 Γ 点坐标写法，再检验边界波矢能否用一个原胞冻结。": "Use the same Phonopy calculation to compare two ways of writing Γ, then test whether a boundary wavevector can be frozen in one primitive cell.",
+  "打开 Al 声子模式练习 →": "Open the Al phonon-mode exercise →",
+  "官方 Al 配套文件已核对": "Official Al file pair verified",
+  "两份文件均匹配固定版本的 SHA-256。THz 是此算例明确采用的频率单位，原文件中的长度单位为 au。": "Both files match the SHA-256 digests of the pinned release. The exercise explicitly uses THz for frequencies. The original length unit is au.",
+  "固定版本、单位与许可证 ↗": "Pinned version, units and license ↗",
+  "两份 Al 原文件已核对并载入。检查波矢索引、超胞和单位，再手动运行。": "Both original Al files have been verified and loaded. Check the wavevector index, supercell and units, then run the calculation.",
+  "铝声子材料案例 →": "Al phonon material case →",
+  "已给出特征标": "Characters available",
+  "子空间不封闭": "Subspace is not invariant",
+  "分类条件不满足": "Classification checks failed",
+  "有限波矢的频率子空间": "Frequency subspaces at finite wavevector",
+  "当前为非 Γ 点。这里显示频率分组与冻结结构。": "This point is away from Γ. The results show frequency groups and the frozen structure."
+}

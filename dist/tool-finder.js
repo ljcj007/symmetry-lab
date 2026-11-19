@@ -1,4 +1,4 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-lesson-topic1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-al-gamma1';
 import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -29,6 +29,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  const scopeButtons=[...dialog.querySelectorAll('[data-finder-scope]')];
  const queryLabel=dialog.querySelector('#tool-finder-query-label'),expand=dialog.querySelector('[data-finder-topic-expand]');
  const catalogButton=dialog.querySelector('[data-finder-topic-catalog]');
+ const courseButton=scopeButtons.find(control=>control.dataset.finderScope==='courses');
+ const ordinaryCourseLabel=courseButton.textContent;
  const ordinaryLabel=queryLabel.textContent,ordinaryPlaceholder=input.getAttribute('placeholder');
  let opened=false,previousFocus=null,scope='tools',selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
  let topic=null,topicModuleRequest=null;
@@ -43,6 +45,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  function render(){
   if(!opened||destroyed)return;
   for(const button of scopeButtons)button.hidden=Boolean(topic)&&button.dataset.finderScope!=='courses';
+  courseButton.textContent=topic?'本主题课程':ordinaryCourseLabel;
+  courseButton.setAttribute('aria-pressed',String(topic?topic.range==='topic':scope==='courses'));
   expand.hidden=!topic?.data;expand.disabled=expand.hidden;
   expand.textContent=topic?.range==='all'?'返回本主题课程':'查找全部课程';
   catalogButton.hidden=!topic?.data||topic.range==='all'||topic.data.catalog.length===topic.data.topic.length;
@@ -62,7 +66,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
    else if(!topic.data)status.textContent='请在具体课程中使用主题查找。';
    else if(topic.range==='all')status.textContent=`在全部 ${topic.data.all.length} 课中查找，显示 ${results.length} 项（最多 16 项）。`;
    else if(topic.range==='catalog')status.textContent=`${topic.data.catalogTitle} · 本目录共 ${topic.data.catalog.length} 课，显示 ${results.length} 项（最多 16 项）。`;
-   else status.textContent=`${topic.data.title} · 本主题共 ${topic.data.topic.length} 课。当前显示 ${results.length}`;
+   else status.textContent=`当前课 · ${topic.data.title} · 本主题共 ${topic.data.topic.length} 课。当前显示 ${results.length}`;
   }else if(scope==='tools')status.textContent=input.value.trim()?`找到 ${results.length} 项工具（最多显示 16 项）`:'常用工具与收藏；直接选择即可打开。';
   else if(loading)status.textContent='正在读取精简目录；不会启动计算。';
   else if(failed)status.innerHTML='目录暂不可用。工具仍可在“工具”范围查找。 <button type="button" data-finder-retry>重试目录</button>';
@@ -156,6 +160,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  scopeButtons.forEach(x=>x.addEventListener('click',()=>{
   scope=x.dataset.finderScope;
   if(scope!=='courses')topic=null;
+  else if(topic)topic.range='topic';
   selected=0;updateScopeButtons();render();load();input.focus();
  }));
  for(const [control,range] of [[catalogButton,'catalog'],[expand,'all']]){

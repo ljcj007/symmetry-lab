@@ -53,6 +53,8 @@ catalogFiles.push('en-lesson-topic-finder.json');
 catalogFiles.push('en-lesson-topic-host.json');
 catalogFiles.push('en-band-match-display.json');
 catalogFiles.push('en-crystkit-handedness.json');
+catalogFiles.push('en-al-gamma-source.json');
+catalogFiles.push('en-al-gamma-host.json','en-al-gamma-discovery.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

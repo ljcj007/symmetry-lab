@@ -68,6 +68,17 @@ The matching official `phonopy.yaml` is also retained unchanged as `data/example
 
 Sources: [original file at the pinned revision](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml), [matching companion settings](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/phonopy.yaml), [ABACUS output-conversion documentation](https://phonopy.github.io/phonopy/abacus.html), and [physical-unit definitions at the pinned revision](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/phonopy/physical_units.py).
 
+<a id="official-al-gamma"></a>
+### Check equivalent Γ points and frozen supercells at finite q
+
+1. **Predict, then load.** Open the [official Al phonon exercise](../#compute/phonon-modes?preset=al-gamma). Decide whether the reciprocal fractional coordinates `(1,1,1)` and `(0,0,0)` describe the same Γ point. Select “Load q = (1, 1, 1)” and “Load q = (0, 0, 0)” in turn. Each load checks the byte counts and SHA-256 digests of both original files and fills in an editable form. Run the calculation manually after each load.
+2. **Compare the full acoustic subspace.** The two scenes select zero-based q indices 0 and 62 in the original file. Both should give the three-dimensional acoustic subspace T₁ᵤ for space group 225. All three frequencies retain the near-zero numerical residual of `0.0008274596 THz` from the file. The scene explicitly confirms THz and preserves the raw frequency values. The input lattice and displayed displacements use `au` (bohr). POSCAR and CIF exports convert lengths to Å.
+3. **Test a boundary counterexample.** Load the boundary coordinate `(1/2,1/2,1/2)` at file index 83. Change the supercell to `[1,1,1]` and run the calculation manually. The product `q_i n_i` fails the integer condition in all three directions, so the frozen-mode tool rejects periodic export. Restore `[2,2,2]` and run again to export a displacement snapshot with eight Al atoms. This is the smallest compatible diagonal supercell. A translation by any primitive basis vector reverses the displacement. The Γ labels apply to the first two scenes.
+
+For a polarization comparison, express the boundary q in conventional cubic coordinates using the reciprocal basis in the original file. It lies along [111]. Zero-based band 0 at 9.7063938967 THz is longitudinal. Bands 1 and 2 at 4.1396545728 THz together span the transverse plane. Switch band indices to inspect the displacement arrows and consider both degenerate bands when identifying the transverse subspace. The reduced wave vector at the folded Γ point is zero. The propagation direction here refers to this finite q.
+
+Run `python -B scripts/test-python-al-gamma-source.py` to repeat the checks using the two distributed source files. The test covers Γ classification, raw frequencies, length conversion, rejection of an incompatible finite-q supercell, and displacement sign reversal. See the [Phonopy file import lesson](../#classroom/structure-dynamics?tab=learn&lesson=phonopy-files) for practice interpreting the file format.
+
 <a id="zno-derived-example"></a>
 ## ZnO: real force data, complex eigenvectors and periodic frozen structures
 

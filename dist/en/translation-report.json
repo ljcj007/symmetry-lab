@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28638,
-  "translatedUnits": 28638,
+  "sourceUnits": 28681,
+  "translatedUnits": 28681,
   "missing": [],
-  "files": 515,
+  "files": 516,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -159,6 +159,9 @@
     "en-lesson-topic-finder.json",
     "en-lesson-topic-host.json",
     "en-band-match-display.json",
-    "en-crystkit-handedness.json"
+    "en-crystkit-handedness.json",
+    "en-al-gamma-source.json",
+    "en-al-gamma-host.json",
+    "en-al-gamma-discovery.json"
   ]
 }

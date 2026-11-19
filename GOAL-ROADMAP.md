@@ -49,6 +49,17 @@ separate bounded complete-source restoration path. The directory now has 75 tool
 - Expert preset links support opening another tab with the browser's modifier
   keys while ordinary clicks and Enter still navigate in the current tab.
 
+## Official Al phonon comparison
+
+- The file-import lesson, mode-subspace lesson and materials atlas lead to the
+  same verified Phonopy/ABACUS file pair. Learners compare two representatives
+  of Γ and use a finite-wavevector control to check diagonal supercell
+  compatibility and longitudinal versus transverse polarization.
+- Both original files are verified byte-for-byte when learners choose a scene.
+  The workbench keeps the selected frequency-unit convention and exposes the
+  original frequency and raw input. Source loading and calculation are explicit
+  actions.
+
 This roadmap preserves the full objective. A single navigation release does not
 establish that all existing scientific and teaching content has been audited.
 

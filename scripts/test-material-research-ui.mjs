@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 const camel=value=>value.replace(/-([a-z])/g,(_,c)=>c.toUpperCase());
 const decode=value=>String(value).replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 export class Element{
- constructor(tag='div',attributes={},parentNode=null){this.tag=tag;this.attributes=attributes;this.parentNode=parentNode;this.children=[];this.dataset={};for(const [key,value]of Object.entries(attributes))if(key.startsWith('data-'))this.dataset[camel(key.slice(5))]=decode(value);this.value=decode(attributes.value||'');this.disabled=Object.hasOwn(attributes,'disabled');this.checked=Object.hasOwn(attributes,'checked');this.hidden=Object.hasOwn(attributes,'hidden');}
+ constructor(tag='div',attributes={},parentNode=null){this.tag=tag;this.attributes=attributes;this.parentNode=parentNode;this.children=[];this.dataset={};for(const [key,value]of Object.entries(attributes))if(key.startsWith('data-'))this.dataset[camel(key.slice(5))]=decode(value);this.value=decode(attributes.value||'');this.disabled=Object.hasOwn(attributes,'disabled');this.checked=Object.hasOwn(attributes,'checked');this.hidden=Object.hasOwn(attributes,'hidden');this.open=Object.hasOwn(attributes,'open');}
  get type(){return this.attributes.type||'';}
  get id(){return this.attributes.id||'';}
  get isConnected(){return !!this.parentNode&&this.parentNode.isConnected!==false;}
@@ -37,7 +37,20 @@ async function runUITests(){
  const fixtures=JSON.parse(fs.readFileSync(new URL('./fixtures/material-research.json',import.meta.url),'utf8'));
  const storage=new Map();globalThis.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)};
  globalThis.document={createElement:tag=>new Element(tag)};
- globalThis.fetch=async url=>({ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')});
+ const alManifest=JSON.parse(fs.readFileSync(new URL('../dist/data/examples/phonopy-al-abacus-source.json',import.meta.url),'utf8'));
+ const alFiles=new Map([alManifest.localFile,alManifest.companion.localFile].map(name=>[name,fs.readFileSync(new URL('../dist/data/examples/'+name,import.meta.url))]));
+ const alReads=[];let corruptAlFile=null,alGate=null;
+ globalThis.fetch=async(url,{signal}={})=>{
+  const filename=String(url).split('?')[0].split('/').at(-1),raw=alFiles.get(filename);
+  if(raw){
+   alReads.push({filename,signal});
+   if(alGate)await alGate;
+   const bytes=Uint8Array.from(raw);
+   if(filename===corruptAlFile)bytes[0]^=1;
+   return {ok:true,arrayBuffer:async()=>bytes.buffer};
+  }
+  return {ok:true,json:async()=>structuredClone(data),text:async()=>fs.readFileSync(new URL('../dist/'+String(url).split('?')[0],import.meta.url),'utf8')};
+ };
  const ui=await import('../dist/material-research-ui.js');
  const notebook=await import('../dist/material-notebook.js?v=20261117-derive1');
  const {parseClassroomRoute,buildClassroomHash,classroomPathways}=await import('../dist/classroom-ui.js');
@@ -52,7 +65,7 @@ async function runUITests(){
   else throw Error('Unexpected action '+action);
   return structuredClone(fixtures.results[key]);
  };
- const mount=async(selection={},run=calculate)=>{const container=new Container(),downloads=[],navigations=[],locations=[],cancelled=[];await ui.renderMaterialResearchView({container,selection,run,download:(body,name,type)=>downloads.push({body,name,type}),cancelRun:()=>cancelled.push(true),onNavigate:r=>navigations.push(r),onLocation:r=>locations.push(r)});return {container,downloads,navigations,locations,cancelled,$:selector=>container.querySelector(selector)};};
+ const mount=async(selection={},run=calculate)=>{const container=new Container(),downloads=[],navigations=[],locations=[],cancelled=[];const dispose=await ui.renderMaterialResearchView({container,selection,run,download:(body,name,type)=>downloads.push({body,name,type}),cancelRun:()=>cancelled.push(true),onNavigate:r=>navigations.push(r),onLocation:r=>locations.push(r)});return {container,downloads,navigations,locations,cancelled,dispose,$:selector=>container.querySelector(selector)};};
  const submit=async view=>{view.$('#mr-form').onsubmit({preventDefault(){}});await flush();};
  const change=(view,id,value)=>{const control=view.$('#'+id);control.value=String(value);view.$('#mr-form').oninput({target:control});};
  const select=async(view,id,value)=>{const control=view.$('#'+id);control.value=value;await control.onchange({target:control});await flush();};
@@ -91,7 +104,7 @@ async function runUITests(){
 
  const modes=await mount({calculationOnly:true,module:'modes'});await submit(modes);
  assert.equal(ui.getMaterialResearchResult().tool,'phonon_modes');
- assert.match(modes.$('#mr-result').innerHTML,/T2g/);
+ assert.match(modes.$('#mr-result').innerHTML,/data-crystal-kind="irrep" data-math-source="T2g"/);
  assert.ok(modes.$('#mr-frozen-view').querySelector('svg'));
  assert.equal(modes.$('#mr-poscar').disabled,false);
  modes.$('#mr-poscar').onclick();modes.$('#mr-cif').onclick();modes.$('#mr-download').onclick();
@@ -123,6 +136,8 @@ async function runUITests(){
  assert.equal(ui.getMaterialResearchResult().result.frozen.atoms.length,4);
  assert.equal(ui.getMaterialResearchResult().input.preset,'custom');
  assert.match(finite.$('#mr-result').innerHTML,/非 Γ 点/);
+ assert.match(finite.$('#mr-result').innerHTML,/有限波矢的频率子空间/);
+ assert.doesNotMatch(finite.$('#mr-result').innerHTML,/<th>(?:不可约分解|封闭残差)<\/th>|<td>unavailable<\/td>/);
  const replacement=JSON.stringify(fixtures.requests.modesUnknownUnit.input.data);
  await finite.$('#mr-file').onchange({target:{files:[{name:'replacement.json',size:replacement.length,text:async()=>replacement}]}});
  await submit(finite);
@@ -141,6 +156,82 @@ async function runUITests(){
  assert.equal(ui.getMaterialResearchResult().result.modeGroups[0].classification.status,'characters-only');
  assert.match(characters.$('#mr-result').innerHTML,/THz/);
  assert.ok(characters.$('#mr-result').querySelectorAll('tbody').some(body=>body.querySelectorAll('tr').length===8),'Uncovered mmm labels must still display all eight operation characters');
+
+ const alLesson=await mount(parseClassroomRoute('#classroom/structure-dynamics?module=modes&lesson=mode-subspaces'));
+ assert.equal(alLesson.$('a[href="#compute/phonon-modes?preset=al-gamma"]').getAttribute('href'),'#compute/phonon-modes?preset=al-gamma');
+ assert.equal(modes.$('#mr-al-gamma').open,false);
+ const alCase=parseClassroomRoute('#compute/phonon-modes?preset=al-gamma');
+ ui.setMaterialResearchInput('modes',{preset:'custom',content:'personal draft',structure_content:'personal companion',frequency_unit:'meV'});
+ const al=await mount(alCase);
+ const countBeforeAl=calls.length;
+ assert.equal(al.$('#mr-al-gamma').open,true);
+ assert.ok(al.$('a[href="#atlas/research?material=al-phonopy-gamma"]'));
+ assert.equal(alReads.length,0,'Opening the shared Al route does not request either file');
+ assert.equal(al.$('#mr-file-text').value,'personal draft');
+ assert.equal(al.$('#mr-structure-text').value,'personal companion');
+ assert.equal(al.$('#mr-frequency-unit').value,'meV');
+ const button=id=>al.$(`[data-mr-al-scene="${id}"]`);
+ for(const [scene,q,cell] of [['gamma-reciprocal',0,[1,1,1]],['gamma-origin',62,[1,1,1]],['boundary',83,[2,2,2]]]){
+  await button(scene).onclick();
+  assert.equal(al.$('#mr-al-gamma').open,true);
+  assert.equal(al.$('#mr-qi').value,String(q));
+  assert.equal(al.$('#mr-bi').value,'0');
+  assert.deepEqual(JSON.parse(al.$('#mr-supercell').value),cell);
+  assert.equal(al.$('#mr-length').value,'auto');
+  assert.equal(al.$('#mr-frequency-unit').value,'THz');
+  assert.match(al.$('#mr-input-provenance').innerHTML,/官方 Al 配套文件已核对/);
+  assert.equal(calls.length,countBeforeAl,'Loading a verified scene waits for manual Python Run');
+ }
+ assert.equal(alReads.length,6);
+ change(al,'mr-supercell','[1,1,1]');
+ await submit(al);
+ const alInput=calls.at(-1).input;
+ assert.equal(calls.at(-1).action,'phonon_modes');
+ assert.equal(alInput.selected_q,83);
+ assert.deepEqual(alInput.supercell,[1,1,1]);
+ assert.deepEqual(Buffer.from(alInput.content,'utf8'),alFiles.get(alManifest.localFile));
+ assert.deepEqual(Buffer.from(alInput.structure_content,'utf8'),alFiles.get(alManifest.companion.localFile));
+ assert.equal(alInput.structure_filename,alManifest.companion.localFile);
+ assert.equal(Object.hasOwn(alInput,'length_unit'),false);
+ assert.equal(ui.getMaterialResearchResult().result.inputSourceIdentity.companion.sha256,alManifest.companion.sha256);
+ assert.equal(ui.getMaterialResearchResult().material,'al-phonopy-gamma');
+ al.$('#mr-download').onclick();
+ assert.equal(JSON.parse(al.downloads.at(-1).body).result.inputSourceIdentity.band.sha256,alManifest.sha256);
+
+ change(al,'mr-structure-text','edited companion');
+ await submit(al);
+ assert.equal(al.$('#mr-input-provenance').innerHTML,'');
+ assert.equal(Object.hasOwn(ui.getMaterialResearchResult().result,'inputSourceIdentity'),false);
+ assert.equal(ui.getMaterialResearchResult().material,'');
+ corruptAlFile=alManifest.companion.localFile;
+ await button('gamma-origin').onclick();
+ corruptAlFile=null;
+ assert.equal(al.$('#mr-structure-text').value,'edited companion','A failed verification leaves the editable draft intact');
+ assert.equal(al.$('#mr-qi').value,'83');
+ assert.match(al.$('#mr-result').innerHTML,/SHA-256/);
+ await al.$('#mr-retry-input').onclick();
+ assert.equal(al.$('#mr-qi').value,'62','The manual retry restores the selected case');
+
+ let releaseAl;
+ alGate=new Promise(resolve=>{releaseAl=resolve;});
+ const countBeforePending=calls.length;
+ const readWhileOpen=button('boundary').onclick();
+ await flush();
+ assert.equal(al.$('#mr-run').disabled,true);
+ await submit(al);
+ assert.equal(calls.length,countBeforePending);
+ const disclosure=al.$('#mr-al-gamma');
+ disclosure.open=false;disclosure.ontoggle();
+ assert.ok(alReads.slice(-2).every(read=>read.signal.aborted));
+ alGate=null;releaseAl();await readWhileOpen;
+ assert.equal(al.$('#mr-qi').value,'62','A closed panel cannot apply a late response');
+ disclosure.open=true;disclosure.ontoggle();
+ alGate=new Promise(resolve=>{releaseAl=resolve;});
+ const readWhileMounted=button('boundary').onclick();
+ await flush();al.dispose();
+ assert.ok(alReads.slice(-2).every(read=>read.signal.aborted));
+ alGate=null;releaseAl();await readWhileMounted;
+ assert.equal(al.$('#mr-qi').value,'62','A disposed route cannot apply a late response');
 
  const bands=await mount({calculationOnly:true,module:'bands'});
  assert.match(bands.$('#mr-content').innerHTML,/C₄ᵥ · pₓ \/ pᵧ 轨道/,'A native model option displays subscripts without literal TeX or underscores');
@@ -235,7 +326,7 @@ async function runUITests(){
  assert.equal(ui.getMaterialResearchResult().result.model,'rashba');
  const atlas=await mount({atlasOnly:true,material:'gaas'});assert.ok(atlas.$('.obs-case-grid'));assert.equal(atlas.$('[data-mr-tab]'),null);assert.match(atlas.$('#mr-content').innerHTML,/#atlas\/notebook/);
  assert.ok(calls.some(x=>x.action==='phonon_modes')&&calls.some(x=>x.action==='band_connectivity')&&calls.some(x=>x.action==='phonon_thermo'));
- console.log('Material research UI: real Python fixtures, frozen structures and exports, character branches, Rashba labels, temperature/k-point controls, imported-source transitions, stale result guards and persisted stepwise exercises passed.');
+ console.log('Material research UI: real Python fixtures, frozen structures and exports, character branches, Rashba labels, temperature/k-point controls, verified official Al handoffs, imported-source transitions, stale result guards and persisted stepwise exercises passed.');
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await runUITests();

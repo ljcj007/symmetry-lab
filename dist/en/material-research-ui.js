@@ -2,6 +2,7 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-derive1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
+import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
@@ -9,15 +10,66 @@ import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
-const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const table=(heads,rows,renderCell=esc)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((value,column)=>`<td>${renderCell(value,column)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const notes=rows=>rows?.length?`<aside class="mr-scope"><ul>${rows.map(x=>`<li>${esc(typeof x==='string'?x:JSON.stringify(x))}</li>`).join('')}</ul></aside>`:'';
 const sources=rows=>`<div class="obs-sources">${(rows||[]).map(s=>typeof s==='string'?{title:s,url:s}:s).filter(s=>/^https:\/\//.test(s.url||'')).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noreferrer"${s.id?.startsWith('graphene-wannier-')?' data-math-ignore':''}>${esc(s.title||s.url)} ↗</a>`).join('')}</div>`;
 const palette=['#247b65','#b17a31','#617caf','#a75f85'];
+
+function modeLabelHTML(classification){
+ const {decomposition=[],label,status}=classification;
+ if(decomposition.length)return decomposition.map(({irrep,multiplicity})=>
+  (multiplicity>1?esc(multiplicity)+' × ':'')+crystalSpan(irrep,'irrep')
+ ).join(' ⊕ ');
+ if(label)return crystalSpan(label,'irrep');
+ const statusText={
+  'characters-only':"Characters available",
+  'not-invariant':"Subspace is not invariant",
+  inconsistent:"Classification checks failed",
+  unavailable:"Uncategorized",
+ };
+ return esc(statusText[status]||"Uncategorized");
+}
+
+function modeGroupsHTML(result){
+ // Keep the same integer-equivalence tolerance as phonon_modes._groups.
+ const gamma=result.selection.q.every(component=>Math.abs(component-Math.round(component))<1e-8);
+ const groups=result.modeGroups||[];
+ const heads=["mode index","frequency / "+(result.frequencyUnit==='unknown'?"Unknown (document not declared)":result.frequencyUnit),"subspace dimension"];
+ if(gamma)heads.push("Irreducible decomposition","closed residual");
+ const rows=groups.map(group=>{
+  const row=[group.bands.join(', '),group.frequencies.map(num).join(', '),group.dimension];
+  if(gamma)row.push(group.classification,num(group.classification.invarianceError));
+  return row;
+ });
+ return `<h3>${gamma?"frequency subspace and Γ point representation":"Frequency subspaces at finite wavevector"}</h3>
+  ${gamma?'':"<p>This point is away from Γ. The results show frequency groups and the frozen structure.</p>"}
+  ${table(heads,rows,(value,column)=>column===3?modeLabelHTML(value):esc(value))}
+  <div class="mr-choices">${groups.map(group=>`<button class="secondary" type="button" data-mr-mode="${group.bands[0]}">Select ${group.bands.join('/')}${gamma?' · '+modeLabelHTML(group.classification):''}</button>`).join('')}</div>
+  ${gamma?groups.map(group=>`<details><summary>Mode ${group.bands.join(', ')}: characters and classification basis</summary><p>${esc(group.classification.reason)}</p>${table(["Class/Operation","quantity",'Re χ','Im χ'],modeCharacterRows(group.classification))}</details>`).join(''):''}`;
+}
+
 const thermalBasis=r=>{const label=r.basisLabel||(r.basis==='per-input-cell'?"Each input calculation cell":"Per model primitive cell"),cell=label.replace(/^每/,'');return {label,cell,energy:'kJ/mol'+cell,entropy:'J/(mol'+cell+' K)'};};
 export const CU_THERMAL_EXAMPLE=Object.freeze({id:'official-phonopy-cu-thermal-index05',filename:'phonopy-cu-thermal-index05.yaml',sha256:'1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1',byteCount:41975,commit:'18cad919af8fe8aad349e04f101887fa19b051a0',path:'test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',url:'https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',archiveFile:'phonopy-cu-thermal-index05.yaml.xz',archiveSha256:'36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f',archiveByteCount:4900,natom:4,rowCount:251,license:'BSD-3-Clause',representation:'losslessly-decompressed-upstream-utf8'});
 const CU_EXAMPLE_CACHE='20261114-evidence1';
-const MATERIAL_RESEARCH_CACHE='20261120-wannier1';
+const MATERIAL_RESEARCH_CACHE='20261120-al-gamma1';
 const znoIRPanelHTML=open=>`<details class="mr-scope" data-mr-zno-ir-entry ${open?'open':''}><summary>Predict infrared polarization for Γ-point ZnO modes</summary><div data-mr-zno-ir-body></div></details>`;
+const alGammaScenes=[
+ ['gamma-reciprocal',"Load q = (1, 1, 1)"],
+ ['gamma-origin',"Load q = (0, 0, 0)"],
+ ['boundary',"Load boundary q = (1/2, 1/2, 1/2)"],
+];
+const alGammaPanelHTML=open=>`<details class="mr-scope" id="mr-al-gamma" ${open?'open':''}>
+ <summary>Check equivalent Γ points with official Al data</summary>
+ <p>Predict first. Do q = (1, 1, 1) and q = (0, 0, 0) in primitive reciprocal coordinates give the same Γ-point representation? Can the boundary wavevector q = (1/2, 1/2, 1/2) be frozen in one primitive cell?</p>
+ <div class="obs-links">${alGammaScenes.map(([id,label])=>`<button type="button" class="secondary" data-mr-al-scene="${id}">${label}</button>`).join('')}</div>
+ <p>Choose a case to verify and load both original files. Run the calculation and compare the representation, original frequencies and length units. The boundary case starts with [2, 2, 2]. Change this to [1, 1, 1] to test periodicity.</p>
+ <div class="obs-links"><a href="docs/phonopy-import.md#official-al-gamma">Original Al files and step-by-step checks →</a><a href="#atlas/research?material=al-phonopy-gamma">Al phonon material case →</a></div>
+ </details>`;
+const alGammaLessonHTML=()=>`<aside class="mr-scope"><h3>Check equivalent Γ points with official Al data</h3><p>Use the same Phonopy calculation to compare two ways of writing Γ, then test whether a boundary wavevector can be frozen in one primitive cell.</p><p><a href="#compute/phonon-modes?preset=al-gamma">Open the Al phonon-mode exercise →</a></p></aside>`;
+function alGammaSourceHTML(identity){
+ const {band,companion}=identity;
+ return `<aside class="mr-scope"><h3>Official Al file pair verified</h3><p>Both files match the SHA-256 digests of the pinned release. The exercise explicitly uses THz for frequencies. The original length unit is au.</p><ul>${[band,companion].map(file=>`<li><a href="${esc(file.url)}" target="_blank" rel="noreferrer" data-math-ignore>${esc(file.filename)} ↗</a></li>`).join('')}</ul><p><a href="data/examples/phonopy-al-abacus-source.json" target="_blank">Pinned version, units and license ↗</a></p></aside>`;
+}
 export async function verifyCuThermalExample(content){
  if(typeof content!=='string')return null;const bytes=new TextEncoder().encode(content);
  if(bytes.length!==CU_THERMAL_EXAMPLE.byteCount||!globalThis.crypto?.subtle)return null;
@@ -126,6 +178,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const flowSteps=new Map(),flowDrafts=createCourseFlowDrafts();
  const thermalBridgeStates=new Map();let disposeThermalBridge=()=>{};
  const irState={};let disposeIR=()=>{},irOpen=selection.preset==='zno-ir';
+ let alOpen=selection.preset==='al-gamma',verifiedAl=null;
  let module=data.modules.find(m=>m.id===selection.module)||data.modules[0],lesson=data.lessons.find(l=>l.id===selection.lesson&&l.module===module.id)||data.lessons.find(l=>l.module===module.id),exercise=data.exercises.find(e=>e.id===selection.exercise&&data.lessons.some(l=>l.id===e.lesson&&l.module===module.id))||data.exercises.find(e=>e.lesson===lesson.id),tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn';
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
  const forms=structuredClone(defaults);if(['silicon','gaas','nacl'].includes(selection.material))forms.modes.preset=selection.material;
@@ -133,10 +186,14 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const projectLoad=projectInputFor(selection,module.action,forms[module.id]);if(projectLoad.status==='loaded'){forms[module.id]=projectLoad.input;tab='lab';}
  let result=null,busy=false,ticket=0,fileTicket=0,pendingRead=null,activeJob=null,verifiedCuContent=null,inputNotice='',cursor=0,quantity='heatCapacity',progress={};try{const p=JSON.parse(localStorage.getItem('symmetry-lab.material-research.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
  const isCuInput=()=>module.id==='thermo'&&forms.thermo.source==='thermal'&&verifiedCuContent!==null&&forms.thermo.content===verifiedCuContent;
+ const alSourceFor=input=>module.id==='modes'&&input.preset==='custom'&&verifiedAl&&
+  input.content===verifiedAl.content&&input.structure_content===verifiedAl.structure_content&&
+  !Object.hasOwn(input,'data')&&!Object.hasOwn(input,'structure_data')?verifiedAl.sourceEvidence:null;
  // Imported files do not inherit the material of a prior synthetic model.
  // The teaching-background selection remains separate from file identity.
  const materialContext=()=>{
   if(module.id==='modes'){
+   if(alSourceFor(forms.modes))return 'al-phonopy-gamma';
    if(forms.modes.preset==='custom')return result?.sourceIdentity?.reference?.id==='phonopy-zno-derived-qpoints'&&result.sourceIdentity.reference.companion?.matchesPinnedSource?'zno':undefined;
    return ['silicon','gaas','nacl'].includes(forms.modes.preset)?forms.modes.preset:undefined;
   }
@@ -173,8 +230,10 @@ export async function renderMaterialResearchView({container,selection={},run,can
   if(!current()||!$('#mr-form'))return;const loading=readIsCurrent(),submit=$('#mr-run');
   if(submit){submit.disabled=busy||loading;submit.textContent=busy?"Python Calculating…":loading?"Loading file…":"runs Python and updates the demo →";}
   for(const [id,sample] of [['mr-demo','synthetic'],['mr-cu-example','cu']]){const button=$('#'+id);if(button)button.disabled=busy||(loading&&pendingRead.kind==='sample'&&pendingRead.sample===sample);}
+  for(const button of root.querySelectorAll('[data-mr-al-scene]'))button.disabled=busy||(loading&&pendingRead.sample==='al'&&pendingRead.scene===button.dataset.mrAlScene);
   const cancel=$('#mr-cancel');if(cancel){cancel.hidden=!(busy||loading);cancel.textContent=loading?"Cancel file loading":"Cancel calculation";}
   const status=$('#mr-input-status');if(status){status.hidden=!(loading||inputNotice);status.textContent=loading?"Loading the file. Run the calculation manually after loading finishes.":inputNotice;}
+  const provenance=$('#mr-input-provenance');if(module.id==='modes'&&provenance){const identity=alSourceFor(forms.modes);provenance.innerHTML=identity?alGammaSourceHTML(identity):'';}
   if($('#mr-result'))$('#mr-result').setAttribute('aria-busy',String(busy||loading));
  }
  function invalidate(){
@@ -192,11 +251,12 @@ export async function renderMaterialResearchView({container,selection={},run,can
  }
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(researchCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">Return to this lesson →</a><a href="#atlas/research${materialContext()?'?material='+encodeURIComponent(materialContext()):''}">material analysis route →</a><a href="#atlas/notebook">Materials Research Record →</a></div>`;
- function draw(){if(!current())return;const previousIR=$('[data-mr-zno-ir-entry]');if(previousIR)irOpen=previousIR.open;disposeIR();disposeIR=()=>{};disposeThermalBridge();onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">SYMMETRY → MODES → MATERIAL RESPONSE</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${projectInputStatusHTML(projectLoad)}${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Materials Analysis Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-mr-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="mr-content"></div>`;root.querySelectorAll('[data-mr-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-mr-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.mrTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#mr-form'),module.id);syncLabControls();}bindCourseFlowActions({root,prefix:'mr',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'mr-to-lab'});}
+ function draw(){if(!current())return;const previousIR=$('[data-mr-zno-ir-entry]');if(previousIR)irOpen=previousIR.open;const previousAl=$('#mr-al-gamma');if(previousAl)alOpen=previousAl.open;disposeIR();disposeIR=()=>{};disposeThermalBridge();onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"group and material map / ":"Learning center / ")+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">SYMMETRY → MODES → MATERIAL RESPONSE</span><h2>${selection.atlasOnly?"String calculations into a material study":module.title}</h2><p>${selection.atlasOnly?"Access courses, calculations, and restorable research records from a question.":esc(module.summary)}</p></header>${projectInputStatusHTML(projectLoad)}${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Materials Analysis Classroom">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-mr-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="mr-content"></div>`;root.querySelectorAll('[data-mr-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-mr-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.mrTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#mr-form'),module.id);syncLabControls();}bindCourseFlowActions({root,prefix:'mr',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'mr-to-lab'});}
  function learn(){
   $('#mr-content').innerHTML=`<label class="obs-chapter">Select theme<select id="mr-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label>
   <article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>
   ${module.id==='modes'?phonopyDerivationLearningLinkHTML():''}${lesson.id==='thermal-data'?cuThermalSourceHTML()+"<button id=\"mr-cu-lesson\" type=\"button\" class=\"primary\">Load the official Cu thermal calculation →</button>":''}
+  ${lesson.id==='mode-subspaces'?alGammaLessonHTML():''}
   ${learningBridgeHTML('thermal',lesson.id)}
   ${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}
   ${lesson.id==='band-crossing'?grapheneActivityHTML():''}
@@ -232,18 +292,47 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function read(){const f=forms[module.id],val=(id,old)=>$('#'+id)?$('#'+id).value:old,n=(id,old)=>Number(val(id,old));if(module.id==='modes'){const nextContent=sourceText('mr-file-text',f.content);if(nextContent!==f.content)replaceModeSource(nextContent);const nextCompanion=sourceText('mr-structure-text',f.structure_content);if(nextCompanion!==f.structure_content)replaceModeCompanion(nextCompanion);Object.assign(f,{preset:val('mr-preset',f.preset),selected_q:n('mr-qi',f.selected_q),selected_band:n('mr-bi',f.selected_band),amplitude:n('mr-amplitude',f.amplitude),phase:n('mr-phase',f.phase),supercell:JSON.parse(val('mr-supercell',JSON.stringify(f.supercell))),length_unit:val('mr-length',f.length_unit),frequency_unit:val('mr-frequency-unit',f.frequency_unit),frequency_tolerance:n('mr-ftol',f.frequency_tolerance),symprec:n('mr-symprec',f.symprec),content:sourceText('mr-file-text',f.content),structure_content:sourceText('mr-structure-text',f.structure_content)});}else if(module.id==='bands'){f.model=val('mr-model',f.model);for(const key of ['beta','gamma','eta','mixing','soc','zeeman','hopping','samples'])f[key]=n('mr-'+key,f[key]);}else{Object.assign(f,{source:val('mr-source',f.source),natom:n('mr-natom',f.natom),theta_e:n('mr-theta-e',f.theta_e),theta_d:n('mr-theta-d',f.theta_d),t_min:n('mr-tmin',f.t_min),t_max:n('mr-tmax',f.t_max),t_step:n('mr-tstep',f.t_step),content:sourceText('mr-file-text',f.content),frequency_unit:val('mr-frequency-unit',f.frequency_unit),zero_policy:val('mr-zero',f.zero_policy)});if($('#mr-dos-complete'))f.dos_complete=$('#mr-dos-complete').checked;}}
  function payload(){read();const f=structuredClone(forms[module.id]);if(module.id==='modes'){if(f.length_unit==='auto')delete f.length_unit;if(f.preset!=='custom'){delete f.content;delete f.data;delete f.structure_content;delete f.structure_data;delete f.filename;delete f.frequency_unit;}else{if(f.content?.trim())delete f.data;if(f.structure_content?.trim())delete f.structure_data;}}if(module.id==='thermo'){if(!['compare','einstein','debye','dos'].includes(f.source))delete f.natom;if(f.source==='dos'){if(f.content?.trim()){f.dos_content=f.content;delete f.data;}delete f.content;}if(['einstein','debye','compare'].includes(f.source)){delete f.content;delete f.data;delete f.filename;delete f.dos_content;}else if(f.content?.trim())delete f.data;}return f;}
  function lab(){
-  $('#mr-content').innerHTML=`${module.id==='modes'?znoIRPanelHTML(irOpen):''}<div class="obs-lab-layout"><form class="obs-controls" id="mr-form"><fieldset><legend>experimental parameters</legend>${controls()}<button id="mr-run" type="submit" class="primary">runs Python and updates the demo →</button><button id="mr-cancel" type="button" class="secondary" hidden>Cancel calculation</button><p id="mr-input-status" role="status" hidden></p></fieldset><div id="mr-input-provenance">${isCuInput()?cuThermalSourceHTML():''}</div></form><section id="mr-result" class="mr-result"><h3>Input → Calculate → Check → Save</h3><p>Runs Python within the browser and saves the assumptions along with the original input in the materials study record.</p></section></div>${navlinks()}`;
+  $('#mr-content').innerHTML=`${module.id==='modes'?alGammaPanelHTML(alOpen)+znoIRPanelHTML(irOpen):''}<div class="obs-lab-layout"><form class="obs-controls" id="mr-form"><fieldset><legend>experimental parameters</legend>${controls()}<button id="mr-run" type="submit" class="primary">runs Python and updates the demo →</button><button id="mr-cancel" type="button" class="secondary" hidden>Cancel calculation</button><p id="mr-input-status" role="status" hidden></p></fieldset><div id="mr-input-provenance">${isCuInput()?cuThermalSourceHTML():''}</div></form><section id="mr-result" class="mr-result"><h3>Input → Calculate → Check → Save</h3><p>Runs Python within the browser and saves the assumptions along with the original input in the materials study record.</p></section></div>${navlinks()}`;
   if(module.id==='modes'&&forms.modes.preset==='custom'){for(const[id,key]of [['mr-file-text','content'],['mr-structure-text','structure_content']])if($('#'+id))$('#'+id).value=forms.modes[key]??'';}const form=$('#mr-form');form.onsubmit=e=>{e.preventDefault();if(current()&&$('#mr-form')===form)return calculate();};
   const irEntry=$('[data-mr-zno-ir-entry]'),irBody=irEntry?.querySelector('[data-mr-zno-ir-body]');
   disposeIR=bindOptionalPanel({detail:irEntry,body:irBody,isCurrent:()=>current()&&$('[data-mr-zno-ir-entry]')===irEntry,
    load:()=>import('./zno-ir-polarization-ui.js?v=20261120-zno-ir1'),
    mount:(component,isCurrent)=>component.bindZnOIRPolarization({root:irBody,isCurrent,state:irState})});
+  const alEntry=$('#mr-al-gamma');
+  if(alEntry){
+   alEntry.ontoggle=()=>{
+    if(!current()||$('#mr-al-gamma')!==alEntry)return;
+    alOpen=alEntry.open;
+    if(!alOpen&&readIsCurrent()&&pendingRead.sample==='al'){
+     invalidate();inputNotice="File loading was cancelled. You can choose another input.";syncLabControls();
+    }
+   };
+   for(const button of alEntry.querySelectorAll('[data-mr-al-scene]'))button.onclick=()=>{
+    if(current()&&$('#mr-al-gamma')===alEntry&&alEntry.open&&!button.disabled)return loadAlGammaScene(button.dataset.mrAlScene);
+   };
+  }
   $('#mr-cancel').onclick=()=>{if(!current()||$('#mr-form')!==form)return;const loading=readIsCurrent();invalidate();inputNotice=loading?"File loading was cancelled. You can choose another input.":"The calculation was cancelled. Edit the parameters and run again manually.";syncLabControls();};
-  form.oninput=e=>{if(!current()||$('#mr-form')!==form||e.target.type==='file')return;let replacedModeSource=false;if(e.target.id==='mr-file-text'){if(module.id==='modes')replacedModeSource=replaceModeSource(e.target.value);else{delete forms[module.id].data;forms[module.id].content=e.target.value;}verifiedCuContent=null;}if(e.target.id==='mr-structure-text'){if(module.id==='modes')replaceModeCompanion(e.target.value);else delete forms[module.id].structure_data;}if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;invalidate();if(e.target.id==='mr-file-text'&&$('#mr-input-provenance'))$('#mr-input-provenance').innerHTML='';if(replacedModeSource){inputNotice="The primary file has changed. Frequency and length confirmations have been reset and the previous companion structure has been cleared. Check the new source, then run manually.";syncLabControls();}};
+  form.oninput=e=>{if(!current()||$('#mr-form')!==form||e.target.type==='file')return;let replacedModeSource=false;if(e.target.id==='mr-file-text'){if(module.id==='modes')replacedModeSource=replaceModeSource(e.target.value);else{delete forms[module.id].data;forms[module.id].content=e.target.value;}verifiedCuContent=null;}if(e.target.id==='mr-structure-text'){if(module.id==='modes')replaceModeCompanion(e.target.value);else delete forms[module.id].structure_data;}if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;invalidate();if(e.target.id==='mr-file-text'&&module.id!=='modes'&&$('#mr-input-provenance'))$('#mr-input-provenance').innerHTML='';if(replacedModeSource){inputNotice="The primary file has changed. Frequency and length confirmations have been reset and the previous companion structure has been cleared. Check the new source, then run manually.";syncLabControls();}};
   for(const id of ['mr-preset','mr-model','mr-source'])if($('#'+id)){const control=$('#'+id);control.onchange=()=>{if(!current()||$('#'+id)!==control)return;try{read();if(id==='mr-preset'&&forms.modes.preset==='custom')forms.modes.length_unit='auto';invalidate();draw();sync();}catch(e){$('#mr-result').textContent=e.message;}};}
   for(const [id,kind]of [['mr-file','content'],['mr-structure-file','structure_content']])if($('#'+id)){const control=$('#'+id);control.onchange=e=>{if(current()&&$('#'+id)===control)return loadLocalFile(e.target.files?.[0],kind);};}
   for(const [id,sample]of [['mr-demo','synthetic'],['mr-cu-example','cu']])if($('#'+id)){const button=$('#'+id);button.onclick=()=>{if(current()&&$('#'+id)===button)return loadExample(sample);};}
   syncLabControls();
+ }
+ async function loadAlGammaScene(scene){
+  if(module.id!=='modes'||busy||!$('#mr-al-gamma')?.open||!alGammaScenes.some(([id])=>id===scene))return;
+  const request=beginInputRead('sample',{sample:'al',scene});if(!request)return;
+  try{
+   const {readAlGammaSource}=await import('./al-gamma-source.js?v=20261120-al-gamma1');
+   if(!readIsCurrent(request)||!$('#mr-al-gamma')?.open)return;
+   const verified=await readAlGammaSource({signal:request.controller?.signal});
+   if(!readIsCurrent(request)||!$('#mr-al-gamma')?.open)return;
+   const draft=verified.createInput(scene);if(!draft)return;
+   forms.modes={...structuredClone(defaults.modes),...draft};
+   verifiedAl={content:draft.content,structure_content:draft.structure_content,sourceEvidence:verified.sourceEvidence};
+   flowDrafts.discard('modes');invalidate();
+   inputNotice="Both original Al files have been verified and loaded. Check the wavevector index, supercell and units, then run the calculation.";
+   draw();sync();$('#mr-run')?.focus?.();
+  }catch(error){inputReadFailed(request,error,()=>loadAlGammaScene(scene));}
  }
  async function loadLocalFile(file,kind){
   if(!file)return;const request=beginInputRead('file',{filename:file.name});if(!request)return;
@@ -267,14 +356,15 @@ export async function renderMaterialResearchView({container,selection={},run,can
   if(!current()||busy||readIsCurrent()||tab!=='lab'||!$('#mr-form'))return;
   let inputValue;result=null;lastResult=null;try{inputValue=payload();}catch(error){$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)}</p>`;return;}
   const job={id:++ticket,form:$('#mr-form'),module:module.id,action:module.action};activeJob=job;busy=true;syncLabControls();$('#mr-result').innerHTML="<p role=\"status\">Python is calculating; you need to download the calculation environment for the first run...</p>";
-  try{const identity=job.module==='thermo'&&inputValue.source==='thermal'?await verifyCuThermalExample(inputValue.content):null;if(!jobIsCurrent(job))return;const value=await run(job.action,inputValue);if(!jobIsCurrent(job))return;
-   result=identity?{...value,inputSourceIdentity:identity}:value;if(identity)verifiedCuContent=inputValue.content;lastResult={tool:job.action,module:job.module,input:inputValue,result,release:RELEASE};if(job.module==='modes'){lastResult.material=materialContext()||'';if(selection.material)lastResult.teachingBackground={material:selection.material,role:'teaching-background'};}cursor=0;output();sync();
+  try{const cuIdentity=job.module==='thermo'&&inputValue.source==='thermal'?await verifyCuThermalExample(inputValue.content):null;if(!jobIsCurrent(job))return;const value=await run(job.action,inputValue);if(!jobIsCurrent(job))return;
+   const identity=cuIdentity||alSourceFor(inputValue);
+   result=identity?{...value,inputSourceIdentity:identity}:value;if(cuIdentity)verifiedCuContent=inputValue.content;lastResult={tool:job.action,module:job.module,input:inputValue,result,release:RELEASE};if(job.module==='modes'){lastResult.material=materialContext()||'';if(selection.material)lastResult.teachingBackground={material:selection.material,role:'teaching-background'};}cursor=0;output();sync();
   }catch(error){if(jobIsCurrent(job)){$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)}</p>`;result=null;lastResult=null;}}
   finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}
  }
 
  function output(){if(!result||!$('#mr-result'))return;$('#mr-result').innerHTML=(module.id==='modes'?modesOutput():module.id==='bands'?bandsOutput():thermoOutput())+(result.inputSourceIdentity?.id===CU_THERMAL_EXAMPLE.id?cuThermalSourceHTML():'')+`<div class="obs-links"><button id="mr-download" type="button" class="secondary">↓ Input and complete results JSON</button><a id="mr-record" href="#atlas/notebook">Save to Materials Research Record →</a><a href="docs/material-research.md" target="_blank">Method and data convention ↗</a></div><details><summary>complete calculation data</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;$('#mr-download').onclick=()=>download(JSON.stringify(lastResult,null,2),module.route+'.json');$('#mr-record').onclick=()=>captureCalculation(module.action,lastResult.input,result,{route:'compute/'+module.route,title:module.title,material:materialContext()||''});if(module.id==='modes')bindModes();else if(module.id==='bands')bindBands();else bindThermo();}
- function modesOutput(){const r=result,s=r.symmetry||{},f=r.frozen||{};return `<h2>${esc(r.source)} · ${esc(s.pointGroup||"not recognized")}</h2>${r.synthetic?"<p class=\"mr-scope\">Original synthesis teaching mode; frequency does not represent first-principles results of real materials.</p>":''}${forms.modes.preset==='custom'&&selection.material?'<p>'+esc("Teaching-background label")+'：'+esc(({silicon:'Si',gaas:'GaAs',nacl:'NaCl',zno:'ZnO'})[selection.material]||selection.material)+'；'+esc("See the source record for the imported file's identity.")+'</p>':''}${modeSourceIdentityHTML(r.sourceIdentity)}<div class="mr-metrics"><div>space group / point group<strong>${esc(s.symbol||'—')} / ${esc(s.pointGroup||'—')}</strong></div><div>geometry operand<strong>${s.operationCount??'—'}</strong></div><div>current q/mode<strong>${r.selection.qIndex} / ${r.selection.bandIndex}</strong></div></div>${notes(r.warnings)}<h3>frequency subspace and Γ point representation</h3>${table(["mode index","frequency / "+(r.frequencyUnit==='unknown'?"Unknown (document not declared)":r.frequencyUnit),"subspace dimension","Irreducible decomposition","closed residual"],(r.modeGroups||[]).map(g=>[g.bands.join(', '),g.frequencies.map(num).join(', '),g.dimension,g.classification.label||g.classification.status,num(g.classification.invarianceError)]))}<div class="mr-choices">${(r.modeGroups||[]).map(g=>`<button class="secondary" type="button" data-mr-mode="${g.bands[0]}">Select ${g.bands.join('/')} · ${esc(g.classification.label||"Uncategorized")}</button>`).join('')}</div>${(r.modeGroups||[]).map(g=>`<details><summary>Mode ${g.bands.join(', ')}: characters and classification basis</summary><p>${esc(g.classification.reason)}</p>${table(["Class/Operation","quantity",'Re χ','Im χ'],modeCharacterRows(g.classification))}</details>`).join('')}${f.available?`<h3> frozen phonon  structure · ${f.atoms.length} Atom</h3><div id="mr-frozen-view">${frozenStructureSVG(f)}</div><label>observation direction<input id="mr-yaw" type="range" min="-180" max="180" value="-35"></label><p>The hollow circle is the original position, and the solid circle is the frozen position; the maximum actual displacement ${num(f.maxDisplacement)} ${esc(f.lengthUnit)}. Snapshot phase and amplitude are determined by the left input.</p><div class="obs-links"><button id="mr-poscar" class="secondary" ${r.exports?.poscar?'':'disabled'}>↓ frozen structure POSCAR</button><button id="mr-cif" class="secondary" ${r.exports?.cif?'':'disabled'}>↓ frozen structure CIF（P1）</button></div><p class="obs-small">${esc(f.reason)} ${esc(r.exports?.reason||'')} POSCAR is retained in the full result.</p>`:`<p class="mr-scope">${esc(f.reason||"The current data cannot generate a frozen structure.")}</p>`}`;}
+ function modesOutput(){const r=result,s=r.symmetry||{},f=r.frozen||{};return `<h2>${esc(r.source)} · ${esc(s.pointGroup||"not recognized")}</h2>${r.synthetic?"<p class=\"mr-scope\">Original synthesis teaching mode; frequency does not represent first-principles results of real materials.</p>":''}${forms.modes.preset==='custom'&&selection.material?'<p>'+esc("Teaching-background label")+'：'+esc(({silicon:'Si',gaas:'GaAs',nacl:'NaCl',zno:'ZnO'})[selection.material]||selection.material)+'；'+esc("See the source record for the imported file's identity.")+'</p>':''}${modeSourceIdentityHTML(r.sourceIdentity)}<div class="mr-metrics"><div>space group / point group<strong>${esc(s.symbol||'—')} / ${esc(s.pointGroup||'—')}</strong></div><div>geometry operand<strong>${s.operationCount??'—'}</strong></div><div>current q/mode<strong>${r.selection.qIndex} / ${r.selection.bandIndex}</strong></div></div>${notes(r.warnings)}${modeGroupsHTML(r)}${f.available?`<h3> frozen phonon  structure · ${f.atoms.length} Atom</h3><div id="mr-frozen-view">${frozenStructureSVG(f)}</div><label>observation direction<input id="mr-yaw" type="range" min="-180" max="180" value="-35"></label><p>The hollow circle is the original position, and the solid circle is the frozen position; the maximum actual displacement ${num(f.maxDisplacement)} ${esc(f.lengthUnit)}. Snapshot phase and amplitude are determined by the left input.</p><div class="obs-links"><button id="mr-poscar" class="secondary" ${r.exports?.poscar?'':'disabled'}>↓ frozen structure POSCAR</button><button id="mr-cif" class="secondary" ${r.exports?.cif?'':'disabled'}>↓ frozen structure CIF（P1）</button></div><p class="obs-small">${esc(f.reason)} ${esc(r.exports?.reason||'')} POSCAR is retained in the full result.</p>`:`<p class="mr-scope">${esc(f.reason||"The current data cannot generate a frozen structure.")}</p>`}`;}
  function bindModes(){if($('#mr-yaw'))$('#mr-yaw').oninput=e=>{$('#mr-frozen-view').innerHTML=frozenStructureSVG(result.frozen,+e.target.value);};for(const [id,key,name] of [['mr-poscar','poscar','POSCAR-frozen'],['mr-cif','cif','frozen-mode.cif']])if($('#'+id))$('#'+id).onclick=()=>download(result.exports[key],name,'text/plain');root.querySelectorAll('[data-mr-mode]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.modes.selected_band=+b.dataset.mrMode;invalidate();draw();await calculate();});}
  function bandsOutput(){const r=result;return `<h2>${esc(r.title)}</h2>${notes(r.warnings)}<div class="mr-metrics"><div>Mirror Constraints<strong>${r.summary.mirrorActive?"keep":"is broken"}</strong></div><div>time reversal<strong>${r.summary.timeReversal?"keep":"is broken"}</strong></div><div>${esc(r.summary.gapLabel)}<strong>${num(r.summary.perturbationGap)}</strong></div></div><h3>Model energy band along Γ–X</h3><div id="mr-band-plot"></div><label>moving path position kx/π<input id="mr-k-cursor" type="range" min="0" max="${r.path.coordinates.length-1}" step="1" value="0"></label><div id="mr-band-point"></div><h3>represents connection (vertical position does not represent energy)</h3>${connectionSVG(r.connections)}<p>${esc(r.connections.note)}</p>${['compatibility','endpointCompatibility'].map(key=>{const c=r[key];if(!c)return '';return `<h3>${esc(c.parentGroup)} → ${esc(c.lineGroup)}</h3><p>${esc(c.formula)}</p>${table(["endpoint representation","Dimension",...c.lineIrreps.map(x=>typeof x==='string'?x:x.label),"sum of branch dimensions"],c.rows.map(row=>[row.parent,row.dimension,...row.multiplicities,row.dimensionSum]))}`;}).join('')}<details><summary>Hamiltonian and validation residuals</summary><pre>${esc(JSON.stringify({hamiltonian:r.hamiltonian,validation:r.validation},null,2))}</pre></details>${table(["Position","clearance","Notes"],r.crossings.map(c=>[c.label+' · '+num(c.t),num(c.gap),c.explanation]))}`;}
  function bindBands(){const paint=()=>{const r=result,i=cursor;$('#mr-band-plot').innerHTML=multiCurveSVG(r.bands.map(b=>({label:b.label,points:b.energies.map((e,j)=>[r.path.coordinates[j],e])})),{xLabel:'kx / π（Γ → X）',yLabel:"Energy/Model Unit",cursor:r.path.coordinates[i]});$('#mr-band-point').innerHTML=table(["energy band","Energy","mirror label","Mirror operator expectation"],r.bands.map(b=>[b.label,num(b.energies[i]),b.mirrorLabels?.[i]||'—',(r.summary.spinful?'i × ':'')+num(b.mirror?.[i])]))+"<p class=\"obs-small\">curves are sorted by energy; compatible connection diagrams represent branch connections. At the degeneracy point, the mirror expectation of a single numerical eigenvector can depend on the chosen basis.</p>";};$('#mr-k-cursor').oninput=e=>{cursor=+e.target.value;paint();};paint();}
@@ -282,5 +372,5 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function bindThermo(){const paint=()=>{const r=result,b=thermalBasis(r),energy=['freeEnergy','internalEnergy'].includes(quantity),label={heatCapacity:'Cv',entropy:'S',freeEnergy:'F',internalEnergy:'U'}[quantity],temp=r.series[0]?.rows[cursor]?.temperature;$('#mr-thermal-plot').innerHTML=multiCurveSVG(r.series.map(s=>({label:s.label,points:s.rows.map(row=>[row.temperature,row[quantity]])})),{xLabel:"Temperature T / K",yLabel:label+' / '+(energy?b.energy:b.entropy),cursor:temp});$('#mr-temperature-values').innerHTML=`<h3>T = ${num(temp)} K · ${esc(b.label)}</h3>`+table(["model/data",'F / '+b.energy,'U / '+b.energy,'S / '+b.entropy,'Cv / '+b.entropy],r.series.map(s=>{const row=s.rows.find(x=>x.temperature===temp)||{};return [s.label,num(row.freeEnergy),num(row.internalEnergy),num(row.entropy),num(row.heatCapacity)];}));};$('#mr-quantity').onchange=e=>{quantity=e.target.value;paint();};$('#mr-temperature').oninput=e=>{cursor=+e.target.value;paint();};paint();}
 
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)Object.assign(forms[module.id],structuredClone(lesson.lab||{}));draw();
- return ()=>{disposeIR();disposeThermalBridge();};
+ return ()=>{disposeIR();disposeThermalBridge();if(pendingRead?.sample==='al'){const request=pendingRead;pendingRead=null;request.controller?.abort();}};
 }

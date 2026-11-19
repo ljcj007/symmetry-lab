@@ -68,6 +68,17 @@ e^{i2\pi q\cdot(R+r_j)-i\phi}\right].
 
 来源：[固定版本原文件](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/band.yaml)、[匹配的伴随设置](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/example/Al-ABACUS/abacus-pw/phonopy.yaml)、[ABACUS 输出转换文档](https://phonopy.github.io/phonopy/abacus.html)、[固定版本物理单位定义](https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/phonopy/physical_units.py)。
 
+<a id="official-al-gamma"></a>
+### 核对 Γ 等价性与有限 q 的冻结超胞
+
+1. **先预测，再载入。** 打开[官方 Al 模式实验](../#compute/phonon-modes?preset=al-gamma)。比较倒易分数坐标 `(1,1,1)` 与 `(0,0,0)`，判断它们是否对应同一个 Γ 点。分别点击“载入 q = (1, 1, 1)”和“载入 q = (0, 0, 0)”。每次载入会核对两份原文件的字节数与 SHA-256，将选定场景填入可编辑表单。最后手动运行。
+2. **比较完整的声学子空间。** 两个场景分别选原文件中从零计数的第 0 和 62 个 q 条目。两次都应得到空间群 225 的三维声学子空间 T₁ᵤ。原始三个频率均为 `0.0008274596 THz`，是文件中保留的近零数值残差。THz 由场景明确确认，原频率值保持不变。输入晶格与显示位移沿用 `au`（波尔）。POSCAR 和 CIF 导出时把长度换算为 Å。
+3. **用边界 q 验证反例。** 载入边界 `(1/2,1/2,1/2)`（原文件索引 83）。先将超胞改为 `[1,1,1]` 并手动运行。三个方向都不满足 `q_i n_i` 为整数，冻结工具拒绝周期导出。改回 `[2,2,2]` 后重新运行，可导出 8 个 Al 原子的位移快照。这是相容的最小对角超胞。沿任一原胞基矢平移时，位移反号。Γ 点标签仅用于前两个场景。
+
+可再比较边界模式的极化。用原文件的倒易基矢换到常规立方坐标，所选 q 沿 [111]。从零计数的支 0（9.7063938967 THz）是纵向模式。支 1 与 2（4.1396545728 THz）共同张成横向平面。可切换支索引、观察位移箭头，并把两支合起来判断横向子空间。折回 Γ 后，约化波矢为零。传播方向的比较适用于这个有限 q 场景。
+
+可用 `python -B scripts/test-python-al-gamma-source.py` 从本站分发的两份原文件重复检查 Γ 归类、原始频率、长度换算、有限 q 的不相容拒绝与相位反号。文件格式的基础练习见 [Phonopy 文件导入课堂](../#classroom/structure-dynamics?tab=learn&lesson=phonopy-files)。
+
 <a id="zno-derived-example"></a>
 ## ZnO：真实力数据、复本征矢与周期冻结结构
 

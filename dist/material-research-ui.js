@@ -2,6 +2,7 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {learningBridgeHTML,bindLearningBridge} from './learning-bridge-host.js?v=20261117-derive1';
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
+import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
@@ -9,15 +10,66 @@ import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
 const options=(rows,v)=>rows.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(label)}</option>`).join('');
-const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const table=(heads,rows,renderCell=esc)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map((value,column)=>`<td>${renderCell(value,column)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const notes=rows=>rows?.length?`<aside class="mr-scope"><ul>${rows.map(x=>`<li>${esc(typeof x==='string'?x:JSON.stringify(x))}</li>`).join('')}</ul></aside>`:'';
 const sources=rows=>`<div class="obs-sources">${(rows||[]).map(s=>typeof s==='string'?{title:s,url:s}:s).filter(s=>/^https:\/\//.test(s.url||'')).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noreferrer"${s.id?.startsWith('graphene-wannier-')?' data-math-ignore':''}>${esc(s.title||s.url)} ↗</a>`).join('')}</div>`;
 const palette=['#247b65','#b17a31','#617caf','#a75f85'];
+
+function modeLabelHTML(classification){
+ const {decomposition=[],label,status}=classification;
+ if(decomposition.length)return decomposition.map(({irrep,multiplicity})=>
+  (multiplicity>1?esc(multiplicity)+' × ':'')+crystalSpan(irrep,'irrep')
+ ).join(' ⊕ ');
+ if(label)return crystalSpan(label,'irrep');
+ const statusText={
+  'characters-only':'已给出特征标',
+  'not-invariant':'子空间不封闭',
+  inconsistent:'分类条件不满足',
+  unavailable:'未分类',
+ };
+ return esc(statusText[status]||'未分类');
+}
+
+function modeGroupsHTML(result){
+ // Keep the same integer-equivalence tolerance as phonon_modes._groups.
+ const gamma=result.selection.q.every(component=>Math.abs(component-Math.round(component))<1e-8);
+ const groups=result.modeGroups||[];
+ const heads=['模式索引','频率 / '+(result.frequencyUnit==='unknown'?'未知（文件未声明）':result.frequencyUnit),'子空间维数'];
+ if(gamma)heads.push('不可约分解','封闭残差');
+ const rows=groups.map(group=>{
+  const row=[group.bands.join(', '),group.frequencies.map(num).join(', '),group.dimension];
+  if(gamma)row.push(group.classification,num(group.classification.invarianceError));
+  return row;
+ });
+ return `<h3>${gamma?'频率子空间与 Γ 点表示':'有限波矢的频率子空间'}</h3>
+  ${gamma?'':'<p>当前为非 Γ 点。这里显示频率分组与冻结结构。</p>'}
+  ${table(heads,rows,(value,column)=>column===3?modeLabelHTML(value):esc(value))}
+  <div class="mr-choices">${groups.map(group=>`<button class="secondary" type="button" data-mr-mode="${group.bands[0]}">选择 ${group.bands.join('/')}${gamma?' · '+modeLabelHTML(group.classification):''}</button>`).join('')}</div>
+  ${gamma?groups.map(group=>`<details><summary>模式 ${group.bands.join(', ')}：字符与分类依据</summary><p>${esc(group.classification.reason)}</p>${table(['类 / 操作','个数','Re χ','Im χ'],modeCharacterRows(group.classification))}</details>`).join(''):''}`;
+}
+
 const thermalBasis=r=>{const label=r.basisLabel||(r.basis==='per-input-cell'?'每输入计算胞':'每模型原胞'),cell=label.replace(/^每/,'');return {label,cell,energy:'kJ/mol'+cell,entropy:'J/(mol'+cell+' K)'};};
 export const CU_THERMAL_EXAMPLE=Object.freeze({id:'official-phonopy-cu-thermal-index05',filename:'phonopy-cu-thermal-index05.yaml',sha256:'1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1',byteCount:41975,commit:'18cad919af8fe8aad349e04f101887fa19b051a0',path:'test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',url:'https://github.com/phonopy/phonopy/blob/18cad919af8fe8aad349e04f101887fa19b051a0/test/cui/phonopy_qha/Cu-QHA/thermal_properties.yaml-05.xz',archiveFile:'phonopy-cu-thermal-index05.yaml.xz',archiveSha256:'36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f',archiveByteCount:4900,natom:4,rowCount:251,license:'BSD-3-Clause',representation:'losslessly-decompressed-upstream-utf8'});
 const CU_EXAMPLE_CACHE='20261114-evidence1';
-const MATERIAL_RESEARCH_CACHE='20261120-wannier1';
+const MATERIAL_RESEARCH_CACHE='20261120-al-gamma1';
 const znoIRPanelHTML=open=>`<details class="mr-scope" data-mr-zno-ir-entry ${open?'open':''}><summary>ZnO Γ 点红外偏振预测</summary><div data-mr-zno-ir-body></div></details>`;
+const alGammaScenes=[
+ ['gamma-reciprocal','载入 q = (1, 1, 1)'],
+ ['gamma-origin','载入 q = (0, 0, 0)'],
+ ['boundary','载入边界 q = (1/2, 1/2, 1/2)'],
+];
+const alGammaPanelHTML=open=>`<details class="mr-scope" id="mr-al-gamma" ${open?'open':''}>
+ <summary>用官方 Al 数据核对 Γ 等价性</summary>
+ <p>先预测。两种原胞倒易坐标 q = (1, 1, 1) 和 q = (0, 0, 0) 会给出相同的 Γ 点表示吗？边界波矢 q = (1/2, 1/2, 1/2) 能用一个原胞冻结吗？</p>
+ <div class="obs-links">${alGammaScenes.map(([id,label])=>`<button type="button" class="secondary" data-mr-al-scene="${id}">${label}</button>`).join('')}</div>
+ <p>选择后核对并载入两份原文件。按下运行按钮后比较表示、原始频率与长度单位。边界波矢预填 [2, 2, 2]，可以改成 [1, 1, 1] 检验周期性。</p>
+ <div class="obs-links"><a href="docs/phonopy-import.md#official-al-gamma">Al 原文件与分步核对 →</a><a href="#atlas/research?material=al-phonopy-gamma">铝声子材料案例 →</a></div>
+ </details>`;
+const alGammaLessonHTML=()=>`<aside class="mr-scope"><h3>用官方 Al 数据核对 Γ 等价性</h3><p>用同一组 Phonopy 计算数据比较两种 Γ 点坐标写法，再检验边界波矢能否用一个原胞冻结。</p><p><a href="#compute/phonon-modes?preset=al-gamma">打开 Al 声子模式练习 →</a></p></aside>`;
+function alGammaSourceHTML(identity){
+ const {band,companion}=identity;
+ return `<aside class="mr-scope"><h3>官方 Al 配套文件已核对</h3><p>两份文件均匹配固定版本的 SHA-256。THz 是此算例明确采用的频率单位，原文件中的长度单位为 au。</p><ul>${[band,companion].map(file=>`<li><a href="${esc(file.url)}" target="_blank" rel="noreferrer" data-math-ignore>${esc(file.filename)} ↗</a></li>`).join('')}</ul><p><a href="data/examples/phonopy-al-abacus-source.json" target="_blank">固定版本、单位与许可证 ↗</a></p></aside>`;
+}
 export async function verifyCuThermalExample(content){
  if(typeof content!=='string')return null;const bytes=new TextEncoder().encode(content);
  if(bytes.length!==CU_THERMAL_EXAMPLE.byteCount||!globalThis.crypto?.subtle)return null;
@@ -126,6 +178,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const flowSteps=new Map(),flowDrafts=createCourseFlowDrafts();
  const thermalBridgeStates=new Map();let disposeThermalBridge=()=>{};
  const irState={};let disposeIR=()=>{},irOpen=selection.preset==='zno-ir';
+ let alOpen=selection.preset==='al-gamma',verifiedAl=null;
  let module=data.modules.find(m=>m.id===selection.module)||data.modules[0],lesson=data.lessons.find(l=>l.id===selection.lesson&&l.module===module.id)||data.lessons.find(l=>l.module===module.id),exercise=data.exercises.find(e=>e.id===selection.exercise&&data.lessons.some(l=>l.id===e.lesson&&l.module===module.id))||data.exercises.find(e=>e.lesson===lesson.id),tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn';
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
  const forms=structuredClone(defaults);if(['silicon','gaas','nacl'].includes(selection.material))forms.modes.preset=selection.material;
@@ -133,10 +186,14 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const projectLoad=projectInputFor(selection,module.action,forms[module.id]);if(projectLoad.status==='loaded'){forms[module.id]=projectLoad.input;tab='lab';}
  let result=null,busy=false,ticket=0,fileTicket=0,pendingRead=null,activeJob=null,verifiedCuContent=null,inputNotice='',cursor=0,quantity='heatCapacity',progress={};try{const p=JSON.parse(localStorage.getItem('symmetry-lab.material-research.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
  const isCuInput=()=>module.id==='thermo'&&forms.thermo.source==='thermal'&&verifiedCuContent!==null&&forms.thermo.content===verifiedCuContent;
+ const alSourceFor=input=>module.id==='modes'&&input.preset==='custom'&&verifiedAl&&
+  input.content===verifiedAl.content&&input.structure_content===verifiedAl.structure_content&&
+  !Object.hasOwn(input,'data')&&!Object.hasOwn(input,'structure_data')?verifiedAl.sourceEvidence:null;
  // Imported files do not inherit the material of a prior synthetic model.
  // The teaching-background selection remains separate from file identity.
  const materialContext=()=>{
   if(module.id==='modes'){
+   if(alSourceFor(forms.modes))return 'al-phonopy-gamma';
    if(forms.modes.preset==='custom')return result?.sourceIdentity?.reference?.id==='phonopy-zno-derived-qpoints'&&result.sourceIdentity.reference.companion?.matchesPinnedSource?'zno':undefined;
    return ['silicon','gaas','nacl'].includes(forms.modes.preset)?forms.modes.preset:undefined;
   }
@@ -173,8 +230,10 @@ export async function renderMaterialResearchView({container,selection={},run,can
   if(!current()||!$('#mr-form'))return;const loading=readIsCurrent(),submit=$('#mr-run');
   if(submit){submit.disabled=busy||loading;submit.textContent=busy?'Python 计算中…':loading?'文件载入中…':'运行 Python 并更新演示 →';}
   for(const [id,sample] of [['mr-demo','synthetic'],['mr-cu-example','cu']]){const button=$('#'+id);if(button)button.disabled=busy||(loading&&pendingRead.kind==='sample'&&pendingRead.sample===sample);}
+  for(const button of root.querySelectorAll('[data-mr-al-scene]'))button.disabled=busy||(loading&&pendingRead.sample==='al'&&pendingRead.scene===button.dataset.mrAlScene);
   const cancel=$('#mr-cancel');if(cancel){cancel.hidden=!(busy||loading);cancel.textContent=loading?'取消文件载入':'取消计算';}
   const status=$('#mr-input-status');if(status){status.hidden=!(loading||inputNotice);status.textContent=loading?'文件载入中，请稍候；完成后仍需手动运行。':inputNotice;}
+  const provenance=$('#mr-input-provenance');if(module.id==='modes'&&provenance){const identity=alSourceFor(forms.modes);provenance.innerHTML=identity?alGammaSourceHTML(identity):'';}
   if($('#mr-result'))$('#mr-result').setAttribute('aria-busy',String(busy||loading));
  }
  function invalidate(){
@@ -192,11 +251,12 @@ export async function renderMaterialResearchView({container,selection={},run,can
  }
  const input=(label,id,value,extra='')=>`<label>${label}<input id="${id}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
  const navlinks=()=>`<div class="obs-links"><a data-course-flow-learn href="${esc(courseFlowRoute(researchCourseRoute(module.id),{module:module.id,lesson:lesson.id,exercise:exercise.id,material:materialContext(),preset:forms[module.id].preset}))}">回到本课讲解 →</a><a href="#atlas/research${materialContext()?'?material='+encodeURIComponent(materialContext()):''}">材料分析路线 →</a><a href="#atlas/notebook">材料研究记录 →</a></div>`;
- function draw(){if(!current())return;const previousIR=$('[data-mr-zno-ir-entry]');if(previousIR)irOpen=previousIR.open;disposeIR();disposeIR=()=>{};disposeThermalBridge();onLocation((selection.calculationOnly?'计算中心 / ':selection.atlasOnly?'群与材料图谱 / ':'学习中心 / ')+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">SYMMETRY → MODES → MATERIAL RESPONSE</span><h2>${selection.atlasOnly?'把计算串成一份材料研究':module.title}</h2><p>${selection.atlasOnly?'从一个问题进入课程、计算和可恢复的研究记录。':esc(module.summary)}</p></header>${projectInputStatusHTML(projectLoad)}${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="材料分析课堂">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料路线']].map(([id,title])=>`<button type="button" data-mr-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="mr-content"></div>`;root.querySelectorAll('[data-mr-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-mr-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.mrTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#mr-form'),module.id);syncLabControls();}bindCourseFlowActions({root,prefix:'mr',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'mr-to-lab'});}
+ function draw(){if(!current())return;const previousIR=$('[data-mr-zno-ir-entry]');if(previousIR)irOpen=previousIR.open;const previousAl=$('#mr-al-gamma');if(previousAl)alOpen=previousAl.open;disposeIR();disposeIR=()=>{};disposeThermalBridge();onLocation((selection.calculationOnly?'计算中心 / ':selection.atlasOnly?'群与材料图谱 / ':'学习中心 / ')+module.title);root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">SYMMETRY → MODES → MATERIAL RESPONSE</span><h2>${selection.atlasOnly?'把计算串成一份材料研究':module.title}</h2><p>${selection.atlasOnly?'从一个问题进入课程、计算和可恢复的研究记录。':esc(module.summary)}</p></header>${projectInputStatusHTML(projectLoad)}${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="材料分析课堂">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料路线']].map(([id,title])=>`<button type="button" data-mr-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div id="mr-content"></div>`;root.querySelectorAll('[data-mr-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-mr-tab]')].includes(b))return;rememberLabDraft();invalidate();tab=b.dataset.mrTab;draw();sync();});if(tab==='learn')learn();else if(tab==='derive')derive();else if(tab==='cases')cases();else {lab();flowDrafts.restore($('#mr-form'),module.id);syncLabControls();}bindCourseFlowActions({root,prefix:'mr',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'mr-to-lab'});}
  function learn(){
   $('#mr-content').innerHTML=`<label class="obs-chapter">选择主题<select id="mr-lesson">${options(data.lessons.filter(l=>l.module===module.id).map(l=>[l.id,l.title]),lesson.id)}</select></label>
   <article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>
   ${module.id==='modes'?phonopyDerivationLearningLinkHTML():''}${lesson.id==='thermal-data'?cuThermalSourceHTML()+'<button id="mr-cu-lesson" type="button" class="primary">载入官方 Cu 热性质计算示例 →</button>':''}
+  ${lesson.id==='mode-subspaces'?alGammaLessonHTML():''}
   ${learningBridgeHTML('thermal',lesson.id)}
   ${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}
   ${lesson.id==='band-crossing'?grapheneActivityHTML():''}
@@ -232,18 +292,47 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function read(){const f=forms[module.id],val=(id,old)=>$('#'+id)?$('#'+id).value:old,n=(id,old)=>Number(val(id,old));if(module.id==='modes'){const nextContent=sourceText('mr-file-text',f.content);if(nextContent!==f.content)replaceModeSource(nextContent);const nextCompanion=sourceText('mr-structure-text',f.structure_content);if(nextCompanion!==f.structure_content)replaceModeCompanion(nextCompanion);Object.assign(f,{preset:val('mr-preset',f.preset),selected_q:n('mr-qi',f.selected_q),selected_band:n('mr-bi',f.selected_band),amplitude:n('mr-amplitude',f.amplitude),phase:n('mr-phase',f.phase),supercell:JSON.parse(val('mr-supercell',JSON.stringify(f.supercell))),length_unit:val('mr-length',f.length_unit),frequency_unit:val('mr-frequency-unit',f.frequency_unit),frequency_tolerance:n('mr-ftol',f.frequency_tolerance),symprec:n('mr-symprec',f.symprec),content:sourceText('mr-file-text',f.content),structure_content:sourceText('mr-structure-text',f.structure_content)});}else if(module.id==='bands'){f.model=val('mr-model',f.model);for(const key of ['beta','gamma','eta','mixing','soc','zeeman','hopping','samples'])f[key]=n('mr-'+key,f[key]);}else{Object.assign(f,{source:val('mr-source',f.source),natom:n('mr-natom',f.natom),theta_e:n('mr-theta-e',f.theta_e),theta_d:n('mr-theta-d',f.theta_d),t_min:n('mr-tmin',f.t_min),t_max:n('mr-tmax',f.t_max),t_step:n('mr-tstep',f.t_step),content:sourceText('mr-file-text',f.content),frequency_unit:val('mr-frequency-unit',f.frequency_unit),zero_policy:val('mr-zero',f.zero_policy)});if($('#mr-dos-complete'))f.dos_complete=$('#mr-dos-complete').checked;}}
  function payload(){read();const f=structuredClone(forms[module.id]);if(module.id==='modes'){if(f.length_unit==='auto')delete f.length_unit;if(f.preset!=='custom'){delete f.content;delete f.data;delete f.structure_content;delete f.structure_data;delete f.filename;delete f.frequency_unit;}else{if(f.content?.trim())delete f.data;if(f.structure_content?.trim())delete f.structure_data;}}if(module.id==='thermo'){if(!['compare','einstein','debye','dos'].includes(f.source))delete f.natom;if(f.source==='dos'){if(f.content?.trim()){f.dos_content=f.content;delete f.data;}delete f.content;}if(['einstein','debye','compare'].includes(f.source)){delete f.content;delete f.data;delete f.filename;delete f.dos_content;}else if(f.content?.trim())delete f.data;}return f;}
  function lab(){
-  $('#mr-content').innerHTML=`${module.id==='modes'?znoIRPanelHTML(irOpen):''}<div class="obs-lab-layout"><form class="obs-controls" id="mr-form"><fieldset><legend>实验参数</legend>${controls()}<button id="mr-run" type="submit" class="primary">运行 Python 并更新演示 →</button><button id="mr-cancel" type="button" class="secondary" hidden>取消计算</button><p id="mr-input-status" role="status" hidden></p></fieldset><div id="mr-input-provenance">${isCuInput()?cuThermalSourceHTML():''}</div></form><section id="mr-result" class="mr-result"><h3>输入 → 计算 → 核对 → 保存</h3><p>在浏览器内运行 Python，并将假设和原始输入一起保存在材料研究记录中。</p></section></div>${navlinks()}`;
+  $('#mr-content').innerHTML=`${module.id==='modes'?alGammaPanelHTML(alOpen)+znoIRPanelHTML(irOpen):''}<div class="obs-lab-layout"><form class="obs-controls" id="mr-form"><fieldset><legend>实验参数</legend>${controls()}<button id="mr-run" type="submit" class="primary">运行 Python 并更新演示 →</button><button id="mr-cancel" type="button" class="secondary" hidden>取消计算</button><p id="mr-input-status" role="status" hidden></p></fieldset><div id="mr-input-provenance">${isCuInput()?cuThermalSourceHTML():''}</div></form><section id="mr-result" class="mr-result"><h3>输入 → 计算 → 核对 → 保存</h3><p>在浏览器内运行 Python，并将假设和原始输入一起保存在材料研究记录中。</p></section></div>${navlinks()}`;
   if(module.id==='modes'&&forms.modes.preset==='custom'){for(const[id,key]of [['mr-file-text','content'],['mr-structure-text','structure_content']])if($('#'+id))$('#'+id).value=forms.modes[key]??'';}const form=$('#mr-form');form.onsubmit=e=>{e.preventDefault();if(current()&&$('#mr-form')===form)return calculate();};
   const irEntry=$('[data-mr-zno-ir-entry]'),irBody=irEntry?.querySelector('[data-mr-zno-ir-body]');
   disposeIR=bindOptionalPanel({detail:irEntry,body:irBody,isCurrent:()=>current()&&$('[data-mr-zno-ir-entry]')===irEntry,
    load:()=>import('./zno-ir-polarization-ui.js?v=20261120-zno-ir1'),
    mount:(component,isCurrent)=>component.bindZnOIRPolarization({root:irBody,isCurrent,state:irState})});
+  const alEntry=$('#mr-al-gamma');
+  if(alEntry){
+   alEntry.ontoggle=()=>{
+    if(!current()||$('#mr-al-gamma')!==alEntry)return;
+    alOpen=alEntry.open;
+    if(!alOpen&&readIsCurrent()&&pendingRead.sample==='al'){
+     invalidate();inputNotice='文件载入已取消，可以选择其他输入。';syncLabControls();
+    }
+   };
+   for(const button of alEntry.querySelectorAll('[data-mr-al-scene]'))button.onclick=()=>{
+    if(current()&&$('#mr-al-gamma')===alEntry&&alEntry.open&&!button.disabled)return loadAlGammaScene(button.dataset.mrAlScene);
+   };
+  }
   $('#mr-cancel').onclick=()=>{if(!current()||$('#mr-form')!==form)return;const loading=readIsCurrent();invalidate();inputNotice=loading?'文件载入已取消，可以选择其他输入。':'计算已取消，可以修改参数后手动运行。';syncLabControls();};
-  form.oninput=e=>{if(!current()||$('#mr-form')!==form||e.target.type==='file')return;let replacedModeSource=false;if(e.target.id==='mr-file-text'){if(module.id==='modes')replacedModeSource=replaceModeSource(e.target.value);else{delete forms[module.id].data;forms[module.id].content=e.target.value;}verifiedCuContent=null;}if(e.target.id==='mr-structure-text'){if(module.id==='modes')replaceModeCompanion(e.target.value);else delete forms[module.id].structure_data;}if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;invalidate();if(e.target.id==='mr-file-text'&&$('#mr-input-provenance'))$('#mr-input-provenance').innerHTML='';if(replacedModeSource){inputNotice='主文件已改变：频率和长度确认已重置，旧伴随结构已清除；请核对新来源后手动运行。';syncLabControls();}};
+  form.oninput=e=>{if(!current()||$('#mr-form')!==form||e.target.type==='file')return;let replacedModeSource=false;if(e.target.id==='mr-file-text'){if(module.id==='modes')replacedModeSource=replaceModeSource(e.target.value);else{delete forms[module.id].data;forms[module.id].content=e.target.value;}verifiedCuContent=null;}if(e.target.id==='mr-structure-text'){if(module.id==='modes')replaceModeCompanion(e.target.value);else delete forms[module.id].structure_data;}if(e.target.type==='range'&&e.target.nextElementSibling)e.target.nextElementSibling.textContent=e.target.value;invalidate();if(e.target.id==='mr-file-text'&&module.id!=='modes'&&$('#mr-input-provenance'))$('#mr-input-provenance').innerHTML='';if(replacedModeSource){inputNotice='主文件已改变：频率和长度确认已重置，旧伴随结构已清除；请核对新来源后手动运行。';syncLabControls();}};
   for(const id of ['mr-preset','mr-model','mr-source'])if($('#'+id)){const control=$('#'+id);control.onchange=()=>{if(!current()||$('#'+id)!==control)return;try{read();if(id==='mr-preset'&&forms.modes.preset==='custom')forms.modes.length_unit='auto';invalidate();draw();sync();}catch(e){$('#mr-result').textContent=e.message;}};}
   for(const [id,kind]of [['mr-file','content'],['mr-structure-file','structure_content']])if($('#'+id)){const control=$('#'+id);control.onchange=e=>{if(current()&&$('#'+id)===control)return loadLocalFile(e.target.files?.[0],kind);};}
   for(const [id,sample]of [['mr-demo','synthetic'],['mr-cu-example','cu']])if($('#'+id)){const button=$('#'+id);button.onclick=()=>{if(current()&&$('#'+id)===button)return loadExample(sample);};}
   syncLabControls();
+ }
+ async function loadAlGammaScene(scene){
+  if(module.id!=='modes'||busy||!$('#mr-al-gamma')?.open||!alGammaScenes.some(([id])=>id===scene))return;
+  const request=beginInputRead('sample',{sample:'al',scene});if(!request)return;
+  try{
+   const {readAlGammaSource}=await import('./al-gamma-source.js?v=20261120-al-gamma1');
+   if(!readIsCurrent(request)||!$('#mr-al-gamma')?.open)return;
+   const verified=await readAlGammaSource({signal:request.controller?.signal});
+   if(!readIsCurrent(request)||!$('#mr-al-gamma')?.open)return;
+   const draft=verified.createInput(scene);if(!draft)return;
+   forms.modes={...structuredClone(defaults.modes),...draft};
+   verifiedAl={content:draft.content,structure_content:draft.structure_content,sourceEvidence:verified.sourceEvidence};
+   flowDrafts.discard('modes');invalidate();
+   inputNotice='两份 Al 原文件已核对并载入。检查波矢索引、超胞和单位，再手动运行。';
+   draw();sync();$('#mr-run')?.focus?.();
+  }catch(error){inputReadFailed(request,error,()=>loadAlGammaScene(scene));}
  }
  async function loadLocalFile(file,kind){
   if(!file)return;const request=beginInputRead('file',{filename:file.name});if(!request)return;
@@ -267,14 +356,15 @@ export async function renderMaterialResearchView({container,selection={},run,can
   if(!current()||busy||readIsCurrent()||tab!=='lab'||!$('#mr-form'))return;
   let inputValue;result=null;lastResult=null;try{inputValue=payload();}catch(error){$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)}</p>`;return;}
   const job={id:++ticket,form:$('#mr-form'),module:module.id,action:module.action};activeJob=job;busy=true;syncLabControls();$('#mr-result').innerHTML='<p role="status">Python 正在计算；首次运行需要下载计算环境…</p>';
-  try{const identity=job.module==='thermo'&&inputValue.source==='thermal'?await verifyCuThermalExample(inputValue.content):null;if(!jobIsCurrent(job))return;const value=await run(job.action,inputValue);if(!jobIsCurrent(job))return;
-   result=identity?{...value,inputSourceIdentity:identity}:value;if(identity)verifiedCuContent=inputValue.content;lastResult={tool:job.action,module:job.module,input:inputValue,result,release:RELEASE};if(job.module==='modes'){lastResult.material=materialContext()||'';if(selection.material)lastResult.teachingBackground={material:selection.material,role:'teaching-background'};}cursor=0;output();sync();
+  try{const cuIdentity=job.module==='thermo'&&inputValue.source==='thermal'?await verifyCuThermalExample(inputValue.content):null;if(!jobIsCurrent(job))return;const value=await run(job.action,inputValue);if(!jobIsCurrent(job))return;
+   const identity=cuIdentity||alSourceFor(inputValue);
+   result=identity?{...value,inputSourceIdentity:identity}:value;if(cuIdentity)verifiedCuContent=inputValue.content;lastResult={tool:job.action,module:job.module,input:inputValue,result,release:RELEASE};if(job.module==='modes'){lastResult.material=materialContext()||'';if(selection.material)lastResult.teachingBackground={material:selection.material,role:'teaching-background'};}cursor=0;output();sync();
   }catch(error){if(jobIsCurrent(job)){$('#mr-result').innerHTML=`<p role="alert">${esc(error.message)}</p>`;result=null;lastResult=null;}}
   finally{if(activeJob===job){activeJob=null;busy=false;syncLabControls();}}
  }
 
  function output(){if(!result||!$('#mr-result'))return;$('#mr-result').innerHTML=(module.id==='modes'?modesOutput():module.id==='bands'?bandsOutput():thermoOutput())+(result.inputSourceIdentity?.id===CU_THERMAL_EXAMPLE.id?cuThermalSourceHTML():'')+`<div class="obs-links"><button id="mr-download" type="button" class="secondary">↓ 输入与完整结果 JSON</button><a id="mr-record" href="#atlas/notebook">保存到材料研究记录 →</a><a href="docs/material-research.md" target="_blank">方法与数据约定 ↗</a></div><details><summary>完整计算数据</summary><pre>${esc(JSON.stringify(result,null,2))}</pre></details>${sources(result.sources)}`;$('#mr-download').onclick=()=>download(JSON.stringify(lastResult,null,2),module.route+'.json');$('#mr-record').onclick=()=>captureCalculation(module.action,lastResult.input,result,{route:'compute/'+module.route,title:module.title,material:materialContext()||''});if(module.id==='modes')bindModes();else if(module.id==='bands')bindBands();else bindThermo();}
- function modesOutput(){const r=result,s=r.symmetry||{},f=r.frozen||{};return `<h2>${esc(r.source)} · ${esc(s.pointGroup||'未识别')}</h2>${r.synthetic?'<p class="mr-scope">原创合成教学模式；频率不代表真实材料的第一性原理结果。</p>':''}${forms.modes.preset==='custom'&&selection.material?'<p>'+esc('课堂背景标签')+'：'+esc(({silicon:'Si',gaas:'GaAs',nacl:'NaCl',zno:'ZnO'})[selection.material]||selection.material)+'；'+esc('导入文件身份见来源记录。')+'</p>':''}${modeSourceIdentityHTML(r.sourceIdentity)}<div class="mr-metrics"><div>空间群 / 点群<strong>${esc(s.symbol||'—')} / ${esc(s.pointGroup||'—')}</strong></div><div>几何操作数<strong>${s.operationCount??'—'}</strong></div><div>当前 q / 模式<strong>${r.selection.qIndex} / ${r.selection.bandIndex}</strong></div></div>${notes(r.warnings)}<h3>频率子空间与 Γ 点表示</h3>${table(['模式索引','频率 / '+(r.frequencyUnit==='unknown'?'未知（文件未声明）':r.frequencyUnit),'子空间维数','不可约分解','封闭残差'],(r.modeGroups||[]).map(g=>[g.bands.join(', '),g.frequencies.map(num).join(', '),g.dimension,g.classification.label||g.classification.status,num(g.classification.invarianceError)]))}<div class="mr-choices">${(r.modeGroups||[]).map(g=>`<button class="secondary" type="button" data-mr-mode="${g.bands[0]}">选择 ${g.bands.join('/')} · ${esc(g.classification.label||'未分类')}</button>`).join('')}</div>${(r.modeGroups||[]).map(g=>`<details><summary>模式 ${g.bands.join(', ')}：字符与分类依据</summary><p>${esc(g.classification.reason)}</p>${table(['类 / 操作','个数','Re χ','Im χ'],modeCharacterRows(g.classification))}</details>`).join('')}${f.available?`<h3>冻结模结构 · ${f.atoms.length} 原子</h3><div id="mr-frozen-view">${frozenStructureSVG(f)}</div><label>观察方位<input id="mr-yaw" type="range" min="-180" max="180" value="-35"></label><p>空心圆为原位置，实心圆为冻结后位置；最大实际位移 ${num(f.maxDisplacement)} ${esc(f.lengthUnit)}。快照相位与幅度由左侧输入决定。</p><div class="obs-links"><button id="mr-poscar" class="secondary" ${r.exports?.poscar?'':'disabled'}>↓ 冻结结构 POSCAR</button><button id="mr-cif" class="secondary" ${r.exports?.cif?'':'disabled'}>↓ 冻结结构 CIF（P1）</button></div><p class="obs-small">${esc(f.reason)} ${esc(r.exports?.reason||'')} POSCAR 的元素分组映射保留在完整结果中。</p>`:`<p class="mr-scope">${esc(f.reason||'当前数据不能生成冻结结构。')}</p>`}`;}
+ function modesOutput(){const r=result,s=r.symmetry||{},f=r.frozen||{};return `<h2>${esc(r.source)} · ${esc(s.pointGroup||'未识别')}</h2>${r.synthetic?'<p class="mr-scope">原创合成教学模式；频率不代表真实材料的第一性原理结果。</p>':''}${forms.modes.preset==='custom'&&selection.material?'<p>'+esc('课堂背景标签')+'：'+esc(({silicon:'Si',gaas:'GaAs',nacl:'NaCl',zno:'ZnO'})[selection.material]||selection.material)+'；'+esc('导入文件身份见来源记录。')+'</p>':''}${modeSourceIdentityHTML(r.sourceIdentity)}<div class="mr-metrics"><div>空间群 / 点群<strong>${esc(s.symbol||'—')} / ${esc(s.pointGroup||'—')}</strong></div><div>几何操作数<strong>${s.operationCount??'—'}</strong></div><div>当前 q / 模式<strong>${r.selection.qIndex} / ${r.selection.bandIndex}</strong></div></div>${notes(r.warnings)}${modeGroupsHTML(r)}${f.available?`<h3>冻结模结构 · ${f.atoms.length} 原子</h3><div id="mr-frozen-view">${frozenStructureSVG(f)}</div><label>观察方位<input id="mr-yaw" type="range" min="-180" max="180" value="-35"></label><p>空心圆为原位置，实心圆为冻结后位置；最大实际位移 ${num(f.maxDisplacement)} ${esc(f.lengthUnit)}。快照相位与幅度由左侧输入决定。</p><div class="obs-links"><button id="mr-poscar" class="secondary" ${r.exports?.poscar?'':'disabled'}>↓ 冻结结构 POSCAR</button><button id="mr-cif" class="secondary" ${r.exports?.cif?'':'disabled'}>↓ 冻结结构 CIF（P1）</button></div><p class="obs-small">${esc(f.reason)} ${esc(r.exports?.reason||'')} POSCAR 的元素分组映射保留在完整结果中。</p>`:`<p class="mr-scope">${esc(f.reason||'当前数据不能生成冻结结构。')}</p>`}`;}
  function bindModes(){if($('#mr-yaw'))$('#mr-yaw').oninput=e=>{$('#mr-frozen-view').innerHTML=frozenStructureSVG(result.frozen,+e.target.value);};for(const [id,key,name] of [['mr-poscar','poscar','POSCAR-frozen'],['mr-cif','cif','frozen-mode.cif']])if($('#'+id))$('#'+id).onclick=()=>download(result.exports[key],name,'text/plain');root.querySelectorAll('[data-mr-mode]').forEach(b=>b.onclick=async()=>{if(busy)return;forms.modes.selected_band=+b.dataset.mrMode;invalidate();draw();await calculate();});}
  function bandsOutput(){const r=result;return `<h2>${esc(r.title)}</h2>${notes(r.warnings)}<div class="mr-metrics"><div>镜面约束<strong>${r.summary.mirrorActive?'保持':'已破缺'}</strong></div><div>时间反演<strong>${r.summary.timeReversal?'保持':'已破缺'}</strong></div><div>${esc(r.summary.gapLabel)}<strong>${num(r.summary.perturbationGap)}</strong></div></div><h3>沿 Γ–X 的模型能带</h3><div id="mr-band-plot"></div><label>移动路径位置 kx/π<input id="mr-k-cursor" type="range" min="0" max="${r.path.coordinates.length-1}" step="1" value="0"></label><div id="mr-band-point"></div><h3>表示连接（纵向位置不代表能量）</h3>${connectionSVG(r.connections)}<p>${esc(r.connections.note)}</p>${['compatibility','endpointCompatibility'].map(key=>{const c=r[key];if(!c)return '';return `<h3>${esc(c.parentGroup)} → ${esc(c.lineGroup)}</h3><p>${esc(c.formula)}</p>${table(['端点表示','维数',...c.lineIrreps.map(x=>typeof x==='string'?x:x.label),'分支维数之和'],c.rows.map(row=>[row.parent,row.dimension,...row.multiplicities,row.dimensionSum]))}`;}).join('')}<details><summary>Hamiltonian 与验证残差</summary><pre>${esc(JSON.stringify({hamiltonian:r.hamiltonian,validation:r.validation},null,2))}</pre></details>${table(['位置','间隙','说明'],r.crossings.map(c=>[c.label+' · '+num(c.t),num(c.gap),c.explanation]))}`;}
  function bindBands(){const paint=()=>{const r=result,i=cursor;$('#mr-band-plot').innerHTML=multiCurveSVG(r.bands.map(b=>({label:b.label,points:b.energies.map((e,j)=>[r.path.coordinates[j],e])})),{xLabel:'kx / π（Γ → X）',yLabel:'能量 / 模型单位',cursor:r.path.coordinates[i]});$('#mr-band-point').innerHTML=table(['能带','能量','镜面标签','镜面算符期望'],r.bands.map(b=>[b.label,num(b.energies[i]),b.mirrorLabels?.[i]||'—',(r.summary.spinful?'i × ':'')+num(b.mirror?.[i])]))+'<p class="obs-small">曲线按能量排序；相容连接图按表示分支连接。在简并点，单个数值本征矢的镜面期望可依赖选基。</p>';};$('#mr-k-cursor').oninput=e=>{cursor=+e.target.value;paint();};paint();}
@@ -282,5 +372,5 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function bindThermo(){const paint=()=>{const r=result,b=thermalBasis(r),energy=['freeEnergy','internalEnergy'].includes(quantity),label={heatCapacity:'Cv',entropy:'S',freeEnergy:'F',internalEnergy:'U'}[quantity],temp=r.series[0]?.rows[cursor]?.temperature;$('#mr-thermal-plot').innerHTML=multiCurveSVG(r.series.map(s=>({label:s.label,points:s.rows.map(row=>[row.temperature,row[quantity]])})),{xLabel:'温度 T / K',yLabel:label+' / '+(energy?b.energy:b.entropy),cursor:temp});$('#mr-temperature-values').innerHTML=`<h3>T = ${num(temp)} K · ${esc(b.label)}</h3>`+table(['模型 / 数据','F / '+b.energy,'U / '+b.energy,'S / '+b.entropy,'Cv / '+b.entropy],r.series.map(s=>{const row=s.rows.find(x=>x.temperature===temp)||{};return [s.label,num(row.freeEnergy),num(row.internalEnergy),num(row.entropy),num(row.heatCapacity)];}));};$('#mr-quantity').onchange=e=>{quantity=e.target.value;paint();};$('#mr-temperature').oninput=e=>{cursor=+e.target.value;paint();};paint();}
 
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)Object.assign(forms[module.id],structuredClone(lesson.lab||{}));draw();
- return ()=>{disposeIR();disposeThermalBridge();};
+ return ()=>{disposeIR();disposeThermalBridge();if(pendingRead?.sample==='al'){const request=pendingRead;pendingRead=null;request.controller?.abort();}};
 }

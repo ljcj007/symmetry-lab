@@ -21,7 +21,7 @@ export const toolGroups=[
   ['compute/spin-resonance-lab','磁共振 · 有效自旋与 EPR','各向异性 g、零场分裂、超精细作用、磁场方向与磁偶极跃迁谱。','EPR ESR resonance 磁共振 有效自旋 超精细'],
   ['compute/atomic-spectra-lab','多重态光谱 · 偏振 XAS','完整 Slater、SOC 与 d⁸/d⁹ 原子近似的 2p→3d 偏振吸收。','XAS XMCD XLD 多重态 偏振 选择定则 Slater'],
   ['compute/phonons','Γ 点声子 · IR / Raman 光谱','Si、GaAs、NaCl 的机械表示、声学 / 光学分解、三维位移与偏振选择定则。','声子 振动 红外 拉曼 Raman phonon 光谱'],
-  ['compute/phonon-modes','声子模式 · 分类与冻结结构','Γ 点简并子空间、相容超胞、POSCAR / CIF 冻结模导出。','Phonopy irrep 冻结模 对称 声子'],
+  ['compute/phonon-modes','声子模式 · 分类与冻结结构','Γ 点简并子空间、相容超胞、POSCAR / CIF 冻结模导出。','Phonopy irrep 冻结模 对称 声子 Al-ABACUS 铝 Γ 等价'],
   ['compute/phonon-thermo','声子热力学 · F / S / Cv','Einstein / Debye、加权网格与总 DOS、Phonopy 热性质导入。','热容 自由能 熵 热力学 Debye Einstein'],
   ['compute/qha-lab','准谐近似 · 热膨胀与 Cp','多体积静态能与振动自由能、平衡体积、体模量和导数收敛。','QHA 准谐 热膨胀 定压热容 Phonopy 自由能'],
   ['compute/phonopy','Phonopy · 声子数据导入','读取 band / qpoints YAML、复本征矢、分段色散与 DOS。','Phonopy phonon band yaml DOS 软模 虚频'],

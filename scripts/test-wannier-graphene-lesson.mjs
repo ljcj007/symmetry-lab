@@ -36,7 +36,7 @@ globalThis.localStorage={getItem:()=>null,setItem:()=>assert.fail('The exercise 
 globalThis.fetch=async resource=>{
  const path=String(resource);
  imports.push(path);
- assert.equal(path,'data/material-research.json?v=20261120-wannier1');
+ assert.equal(path.split('?')[0],'data/material-research.json');
  return {ok:true,json:async()=>structuredClone(catalog)};
 };
 
@@ -108,7 +108,7 @@ try{
  assert.equal(state.courseRoute.atlasOnly,true);
  assert.equal(state.courseRoute.material,'graphene-wannier');
  const cases=container.querySelector('.obs-case-grid').children;
- assert.equal(cases.length,4,'The existing three cases remain available');
+ assert.equal(cases.length,catalog.cases.length,'The full material catalog remains available');
  const graphene=cases[0];
  assert.ok(graphene.innerHTML.includes(localized('石墨烯的 K 点','Graphene at K')));
  assert.ok(links(graphene).includes('#'+classroom));

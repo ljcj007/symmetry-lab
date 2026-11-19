@@ -249,8 +249,8 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 72901,
-      "sha256": "cbdb1e37a6865b905e1cd78f52fc0b3f1e84c943229657853a4991f3a3d697dc"
+      "bytes": 73478,
+      "sha256": "2f0680802a5ea9480839d191a6a9670e80959acdfcac451dc6f3fb316ba935cb"
     },
     "NOTICE.txt": {
       "normalization": "utf8-lf-v1",
@@ -264,13 +264,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102171,
-      "sha256": "16b3c8a77c352ed2ec20ebf45dc775d6b3f5d08b96afa702cc79851c93f7ab3f"
+      "bytes": 102160,
+      "sha256": "0caba50ec9ecd68198df28601f495858be16b5a92e8b361b028b1be449e61522"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32654,
-      "sha256": "2ff5ae28a00a71797afb7f35cd37e9df745bb37b2a576b389c1d52e9f69daacc"
+      "bytes": 32652,
+      "sha256": "d0a67cd2e66011c9c9d00f453c62e2433d515c1017f660b79c660f078eb53f0c"
     },
     "dist/coupled-materials-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -344,8 +344,8 @@
     },
     "dist/docs/phonopy-import.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17591,
-      "sha256": "58d06b84c7ad6e11fefad813df869c42bcc8a552a80648b9231f7c742f2b3d6e"
+      "bytes": 19648,
+      "sha256": "8109ca7f597d3923943264d457b4903ec640948cfe6b28ccdb64e244a39fb6c3"
     },
     "dist/docs/structure-dynamics.md": {
       "normalization": "utf8-lf-v1",
@@ -354,8 +354,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8200,
-      "sha256": "c81d00b570f52d07b3362848510c880305d972792806cb030bb8d86764cb764e"
+      "bytes": 8197,
+      "sha256": "3b16d7030988db4f250d516469aa72daef160165f82defbecb8beb2f5971e4db"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -369,8 +369,8 @@
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 57509,
-      "sha256": "e90e637bd6cbbbbeb32d08ef6547011560336fee0e9206c3d90f043206e94e02"
+      "bytes": 63427,
+      "sha256": "d2f5c7eb1774ed5d79e2683140533939a9ae05baa28606521ead2caf04ed69dc"
     },
     "dist/observables-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -419,8 +419,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 59385,
-      "sha256": "c390092a924ebbc7c2c251c11cd74a4e79b0136b302f74300724bd8232f6315d"
+      "bytes": 59969,
+      "sha256": "0957d4d27e96ee8bf54af4dcc2409e1e3b10fabb1b5f11a31960aeca8b7eeccd"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -499,13 +499,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27037,
-      "sha256": "382f1362632ee9350ee9a2deb952022ed5dffe6da54195fd91524064f5c021ea"
+      "bytes": 27322,
+      "sha256": "736f4869db6509f7f3d16ebe5ccd5a9992f8521369f7efb57f3ed85786d41714"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13659,
-      "sha256": "6def5c0f4dd7a7c2e3fc73f8f31d94f48b4de55999b8d82370341281e67d8f59"
+      "bytes": 13994,
+      "sha256": "844865a4d4534b691df886f604a15a8605088a476b0f3274612bf102692852a4"
     },
     "scripts/build-zno-ir-polarization.py": {
       "normalization": "utf8-lf-v1",
@@ -524,8 +524,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5855,
-      "sha256": "38e0479b038a629383a13d03fe36a8e9b119f4d31a12fb3201cd2d93f374d414"
+      "bytes": 5974,
+      "sha256": "3f58958e4a99bfb604f2b461b5ad7bc772dce8d666b94840a2ab66d38785af60"
     },
     "scripts/fixtures/phonopy-source-baseline.py.gz": {
       "normalization": "raw-bytes",

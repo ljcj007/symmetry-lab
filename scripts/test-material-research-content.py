@@ -52,7 +52,7 @@ class MaterialResearchContentTests(unittest.TestCase):
                                   'bands': ('band_connectivity', 'band-connectivity'),
                                   'thermo': ('phonon_thermo', 'phonon-thermo')})
         cases = {c['id']: c for c in DATA['cases']}
-        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model', 'graphene-wannier'})
+        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model', 'graphene-wannier', 'al-phonopy-gamma'})
         self.assertEqual(cases['square-model']['modules'], ['bands'])
         self.assertIn('二维模型', cases['square-model']['assumption'])
         self.assertIn('教学', cases['silicon']['assumption'])
@@ -61,6 +61,13 @@ class MaterialResearchContentTests(unittest.TestCase):
         self.assertEqual(set(graphene['sources']), {'graphene-wannier-hr', 'graphene-wannier-bands'})
         self.assertEqual({path for _, path in graphene['links']}, {
             '#classroom/crystal?module=bands&tab=learn&lesson=band-crossing', '#magnetictb'
+        })
+        aluminium = cases['al-phonopy-gamma']
+        self.assertEqual(aluminium['modules'], [])
+        self.assertEqual(set(aluminium['sources']), {'al-phonopy-band', 'al-phonopy-structure'})
+        self.assertEqual({path for _, path in aluminium['links']}, {
+            '#classroom/structure-dynamics?tab=learn&lesson=phonopy-files',
+            '#compute/phonon-modes?preset=al-gamma',
         })
         for case in cases.values():
             self.assertTrue(set(case['modules']) <= set(mapping))
