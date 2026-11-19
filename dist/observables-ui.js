@@ -8,6 +8,7 @@ const options=(rows,value)=>rows.map(([id,title])=>`<option value="${esc(id)}" $
 const table=(heads,rows)=>`<div class="obs-table"><table><thead><tr>${heads.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const gammaPeriodicityHTML='<details class="mr-scope" data-obs-gamma-entry><summary>为什么晶体 Γ 点不扣整体转动？</summary><div data-obs-gamma-body></div></details>';
+const siFoldingHTML='<details class="mr-scope" data-obs-si-folding><summary>八原子常规胞的 Γ 模式都属于原胞 Γ 吗？</summary><div data-obs-si-folding-body></div></details>';
 const znoIRCourseLink='<p class="mr-scope"><a href="#compute/phonon-modes?preset=zno-ir">用 ZnO 的 Born 有效电荷检验红外偏振 →</a></p>';
 const params={phonons:{preset:'silicon',angle:45,polarization:'parallel',mode:'sum',channel:'raman',frequency_cm1:300,width_cm1:20,amplitude:.10,steps:48},tensors:{preset:'cubic_m3m',tensor:'dielectric',orientation_deg:0,field:[1,0,0],strain:[1,0,0,0,0,1],parameters:{},plane:'xy'}};
 let catalogPromise,lastResult=null;
@@ -28,7 +29,7 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  let data;try{data=await catalog();}catch(e){if(current())root.innerHTML=`<p role="alert">${esc(e.message)}</p>`;return;}if(!current())return;
  const flowSteps=new Map(),flowDrafts=createCourseFlowDrafts();
  const tensorLessonStates=new Map(),tensorResultStates=new Map();let disposeTensorLesson=()=>{},disposeTensorResult=()=>{},tensorResultSerial=0;
- let disposeGamma=()=>{};
+ let disposeDisplacementDemo=()=>{};
  let tab=selection.calculationOnly?'lab':(['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn');
  let material=data.cases.find(x=>x.id===selection.material)||data.cases[0];
  let lesson=data.lessons.find(x=>x.id===selection.lesson)||data.lessons[0];
@@ -43,20 +44,25 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  function sync(){onNavigate({tab,lesson:lesson.id,material:material.id,experiment:tool,exercise:exercise.id});}
  function invalidate(){disposeTensorResult();disposeTensorResult=()=>{};tensorResultStates.clear();tensorResultSerial++;result=null;payload=null;lastResult=null;ticket++;stopAnimation();if(busy){cancelRun?.();busy=false;}}
  function caseLinks(c){return `<div class="obs-links"><a href="#classroom/observables?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">浏览材料学习路线 →</a><a href="#compute/phonons?material=${esc(c.id)}">声子与光谱 →</a><a href="#compute/tensors?material=${esc(c.id)}">物性张量 →</a><a href="#classroom/structure-dynamics?material=${esc(c.id)}">相变、衍射与数据导入 →</a><a href="#atlas/materials?material=${esc(c.id)}">晶体结构与操作 →</a></div>`;}
- function draw(){if(!current())return;disposeGamma();disposeGamma=()=>{};disposeTensorLesson();disposeTensorLesson=()=>{};disposeTensorResult();disposeTensorResult=()=>{};stopAnimation();onLocation((selection.calculationOnly?'计算中心':'学习中心 / 材料物性')+' / '+(selection.calculationOnly?(tool==='phonons'?'声子与光谱':'物性张量'):lesson.title));
+ function draw(){if(!current())return;disposeDisplacementDemo();disposeDisplacementDemo=()=>{};disposeTensorLesson();disposeTensorLesson=()=>{};disposeTensorResult();disposeTensorResult=()=>{};stopAnimation();onLocation((selection.calculationOnly?'计算中心':'学习中心 / 材料物性')+' / '+(selection.calculationOnly?(tool==='phonons'?'声子与光谱':'物性张量'):lesson.title));
  root.innerHTML=`<div class="obs-header"><span class="obs-eyebrow">SYMMETRY → OBSERVABLES</span><h2>${selection.calculationOnly?(tool==='phonons'?'从位移表示到光谱选择定则':'从对称操作到允许的物性张量'):'让群论走进可观测的材料性质'}</h2><p>以 Si、GaAs、NaCl 为线索，连接结构、表示、响应与实验几何。</p></div>${selection.calculationOnly?'':`<nav class="obs-tabs" aria-label="材料物性课程内容">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料案例']].map(([id,t])=>`<button type="button" data-obs-tab="${id}" aria-pressed="${tab===id}" class="${tab===id?'active':''}">${t}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>案例导航（计算模型可另选）<select id="obs-material">${options(data.cases.map(c=>[c.id,c.formula+' · '+c.name]),material.id)}</select></label><p>${esc(material.summary)}</p></div><div id="obs-content"></div>`;
  root.querySelectorAll('[data-obs-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-obs-tab]')].includes(b))return;rememberLabDraft();if(busy)invalidate();tab=b.dataset.obsTab;draw();sync();});
  $('#obs-material').onchange=e=>{material=data.cases.find(x=>x.id===e.target.value);flowDrafts.discard('phonons');flowDrafts.discard('tensors');invalidate();applyCase();draw();sync();};
  if(tab==='learn')drawLearn();else if(tab==='derive')drawExercise();else if(tab==='cases')drawCases();else {drawLab();flowDrafts.restore($('#obs-form'),tool);}bindCourseFlowActions({root,prefix:'obs',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'obs-learn-lab'});
  }
- function drawLearn(){const relevant=data.exercises.filter(e=>e.lesson===lesson.id);$('#obs-content').innerHTML=`<label class="obs-chapter">选择主题<select id="obs-lesson">${options(data.lessons.map(x=>[x.id,x.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${tensorReplayLessonHTML(lesson.id)}${lesson.id==='acoustic-optical'?gammaPeriodicityHTML:''}${lesson.id==='ir-raman'?znoIRCourseLink:''}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(e=>`<aside class="obs-example"><h3>${esc(e.title)}</h3><ol>${e.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p><strong>${esc(e.result)}</strong></p></aside>`).join('')}<div class="obs-links"><button id="obs-learn-lab" class="primary">打开交互实验 →</button>${relevant.length?'<button id="obs-learn-exercise" class="secondary">分步推导练习 →</button>':''}</div>${caseLinks(material)}${sourcesHTML(data.sources.filter(s=>(lesson.references||[]).includes(s.id)))}</article>`;
+ function drawLearn(){const relevant=data.exercises.filter(e=>e.lesson===lesson.id);$('#obs-content').innerHTML=`<label class="obs-chapter">选择主题<select id="obs-lesson">${options(data.lessons.map(x=>[x.id,x.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${tensorReplayLessonHTML(lesson.id)}${lesson.id==='acoustic-optical'?gammaPeriodicityHTML:''}${lesson.id==='mechanical-modes'?siFoldingHTML:''}${lesson.id==='ir-raman'?znoIRCourseLink:''}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(e=>`<aside class="obs-example"><h3>${esc(e.title)}</h3><ol>${e.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p><strong>${esc(e.result)}</strong></p></aside>`).join('')}<div class="obs-links"><button id="obs-learn-lab" class="primary">打开交互实验 →</button>${relevant.length?'<button id="obs-learn-exercise" class="secondary">分步推导练习 →</button>':''}</div>${caseLinks(material)}${sourcesHTML(data.sources.filter(s=>(lesson.references||[]).includes(s.id)))}</article>`;
  $('#obs-lesson').onchange=e=>{lesson=data.lessons.find(x=>x.id===e.target.value);exercise=data.exercises.find(x=>x.lesson===lesson.id)||exercise;draw();sync();};if($('#obs-learn-exercise'))$('#obs-learn-exercise').onclick=()=>{exercise=relevant[0];tab='derive';draw();sync();};
   disposeTensorLesson=bindTensorReplayLesson({root,lessonId:lesson.id,isCurrent:current,stateStore:tensorLessonStates,onCopy:openTensorReplayLab});
   if(lesson.id==='acoustic-optical'){
    const marker=$('[data-obs-gamma-entry]'),body=marker?.querySelector('[data-obs-gamma-body]');
-   disposeGamma=bindOptionalPanel({detail:marker,body,isCurrent:()=>current()&&$('[data-obs-gamma-entry]')===marker,
+   disposeDisplacementDemo=bindOptionalPanel({detail:marker,body,isCurrent:()=>current()&&$('[data-obs-gamma-entry]')===marker,
     load:()=>import('./gamma-periodicity-ui.js?v=20261120-gamma-trace1'),
     mount:(component,isCurrent)=>component.bindGammaPeriodicity({root:body,isCurrent})});
+  }else if(lesson.id==='mechanical-modes'){
+   const marker=$('[data-obs-si-folding]'),body=marker?.querySelector('[data-obs-si-folding-body]');
+   disposeDisplacementDemo=bindOptionalPanel({detail:marker,body,isCurrent:()=>current()&&$('[data-obs-si-folding]')===marker,
+    load:()=>import('./si-conventional-folding-ui.js?v=20261120-si-fold1'),
+    mount:(component,isCurrent)=>component.bindSiConventionalFolding({root:body,isCurrent})});
   }
  }
  function drawCases(){$('#obs-content').innerHTML=`<div class="obs-case-grid">${data.cases.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.name)}</h2><p>${esc(c.phase)}</p><h3>${esc(c.question)}</h3><p>${esc(c.answer)}</p>${caseLinks(c)}<p><a href="#classroom/observables?lesson=neumann&amp;material=${esc(c.id)}">比较张量约束方法（教学对照，非材料常数） →</a></p><details><summary>模型范围与来源</summary><ul>${c.limitations.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>${sourcesHTML(data.sources.filter(s=>c.references.includes(s.id)))}</details></article>`).join('')}</div>`;}
@@ -94,5 +100,5 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  stopAnimation=()=>{playing=false;clearTimeout(handle);};const tick=()=>{if(!playing||!current()||!$('#obs-play')){stopAnimation();return;}frame=(frame+1)%frames.length;paint();handle=setTimeout(tick,65);};$('#obs-play').onclick=()=>{playing=!playing;$('#obs-play').textContent=playing?'暂停位移':'播放位移';if(playing)tick();else clearTimeout(handle);};$('#obs-frame').oninput=e=>{stopAnimation();$('#obs-play').textContent='播放位移';frame=+e.target.value;paint();};$('#obs-yaw').oninput=e=>{yaw=+e.target.value;paint();};paint();
  }
  draw();
- return ()=>{disposeGamma();disposeTensorLesson();disposeTensorResult();stopAnimation();};
+ return ()=>{disposeDisplacementDemo();disposeTensorLesson();disposeTensorResult();stopAnimation();};
 }

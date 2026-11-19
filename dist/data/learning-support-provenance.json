@@ -35,20 +35,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 69712,
-      "sha256": "9e223ac89facd58bfa71fd3ad456ff140b821f321f36d1c93f20bbbd18145383"
+      "bytes": 70599,
+      "sha256": "d1e7dbfeb0bdb571485b32cfd1c7abedb3aadc18fb4bab77758aca051d464491"
     },
     "dist/app.js": {
-      "bytes": 101375,
-      "sha256": "fb500abce3b01716fc87d7f57d459a7b7db503c5949c57f7cb4247fc86cb007e"
+      "bytes": 101357,
+      "sha256": "49ff8e1ec3bfd9cbc50bfdafe78965ccc2e928525dac13b6cc126e3695f8ddd6"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32248,
-      "sha256": "ecf34c44cad11746def7022b8dca0144ffe0bb64866c2923ef6ebd698fa276fc"
+      "bytes": 32243,
+      "sha256": "a77e2f367274ac7fff29b52e5f80046dde5784ca8b2a2853f4af33045a51860b"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -91,8 +91,8 @@
       "sha256": "f5df267450581ec62b3a87865c0ae0ccfc8d0b52e00615dcc5e91addb391cd5e"
     },
     "dist/index.html": {
-      "bytes": 8189,
-      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2"
+      "bytes": 8183,
+      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb"
     },
     "dist/lie-group-ui.js": {
       "bytes": 59790,
@@ -187,16 +187,16 @@
       "sha256": "b1143d0449ad784ac5b8eaf21b047802182a851a0727dce371fcce3aa1e1f4c3"
     },
     "package.json": {
-      "bytes": 25920,
-      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6"
+      "bytes": 26237,
+      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4"
     },
     "scripts/build-learning-support-provenance.mjs": {
       "bytes": 5915,
       "sha256": "bca3c6c72d0d2c1c56e4249ec79c0417ddf8079ed8694cee0c51e13f3c3c02b2"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 5514,
-      "sha256": "b32ffe0c11de6313b8086c640b8bb7b2ebccee24620e33db9bc482035346cdf7"
+      "bytes": 5658,
+      "sha256": "bcf2ad02072ab9dde6286702226160fa90192077910a22258d29472c2c3853a2"
     },
     "scripts/test-hall-bridges.mjs": {
       "bytes": 14598,

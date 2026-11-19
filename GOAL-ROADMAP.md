@@ -341,3 +341,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - Compare the parent, full and half frozen geometry using the same 64 atoms, lattice and reciprocal indices. When the equal-weight parent translation phases cancel, the frozen modulation gives a nonzero (1,0,1) satellite. The indices refer to the supercell, equivalent to the parent fractional wave vector (1/4,0,1/4).
 - Holding the geometry basis, indices and scattering weights fixed gives relative intensities 0, 0.5285224 and 0.1322079. Halving displacements tests the small-amplitude square scaling. The existing diffraction engine reports these values for static snapshots and constant scattering factors.
+
+## Resolve the folded Γ space of the conventional Si cell
+
+- The 24 Cartesian displacement coordinates of the eight-atom conventional cell split into four six-dimensional sectors under the retained primitive translations. The all-positive phase row is primitive Γ. The three signed rows form the X star. Testing every primitive translation distinguishes them even though all four are periodic in the conventional cell.
+- The official Si structure and existing reciprocal-basis conversion connect the phase exercise to calculations of the stars and little groups. The comparison derives the translation sectors and their dimensions from geometry.
+- The calculation finder also recognizes site-stabilizer and site-symmetry terms. The ordinary band-representation entry remains available, and an example link opens the existing SG 221 3c, R-point p-orbital input for manual calculation.

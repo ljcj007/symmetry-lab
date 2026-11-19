@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28549,
-  "translatedUnits": 28549,
+  "sourceUnits": 28575,
+  "translatedUnits": 28575,
   "missing": [],
-  "files": 510,
+  "files": 511,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -152,6 +152,9 @@
     "en-zno-ir-polarization-host.json",
     "en-zno-satellite-ui.json",
     "en-zno-satellite-docs.json",
-    "en-zno-satellite-host.json"
+    "en-zno-satellite-host.json",
+    "en-site-symmetry-search.json",
+    "en-si-conventional-folding.json",
+    "en-si-conventional-folding-host.json"
   ]
 }

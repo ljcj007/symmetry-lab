@@ -26,7 +26,8 @@ for (const file of originals) {
 }
 
 const locales = ['en-si-structure-import.json', 'en-si-structure-links.json', 'en-si-structure-docs.json',
-  'en-structure-diffraction-source.json', 'en-structure-diffraction-destination.json'];
+  'en-structure-diffraction-source.json', 'en-structure-diffraction-destination.json',
+  'en-si-conventional-folding.json','en-si-conventional-folding-host.json','en-site-symmetry-search.json'];
 for (const locale of locales) assert.ok(catalogFiles.includes(locale), locale);
 const binary = new Set(originals.map(file => source + file.path));
 const paths = [
@@ -40,6 +41,9 @@ const paths = [
   'scripts/test-si-structure-source-ui.mjs', 'scripts/test-file-search.mjs', 'scripts/test-symmetry-course-ui.mjs',
   'scripts/test-structure-diffraction-handoff.mjs', 'scripts/test-structure-diffraction-source-ui.mjs',
   'scripts/test-structure-diffraction-destination.mjs', 'scripts/test-python-structure-diffraction-handoff.py',
+  'dist/si-conventional-folding-ui.js','dist/observables-ui.js','dist/optional-panel.js',
+  'scripts/test-si-conventional-folding-ui.mjs','scripts/test-python-si-conventional-folding.py',
+  'scripts/test-site-symmetry-search.mjs',
   'scripts/test-pointgroup-learning-support.mjs', 'scripts/english-catalog.mjs', 'scripts/test-source-package.py',
   source + 'source.json', ...binary, ...locales.map(name => 'locales/' + name)
 ];
@@ -59,6 +63,7 @@ const manifest = {
     tool: 'compute/diffraction', basis: 'input-cell', scatteringFactor: 1,
     relativeIntensities: [{hkl: [1, 0, 0], intensity: 0}, {hkl: [2, 0, 0], intensity: 0}, {hkl: [2, 2, 0], intensity: 64}]
   },
+  conventionalFolding:{lesson:'classroom/observables?material=silicon&lesson=mechanical-modes',translationRows:['++++','++--','+-+-','+--+'],dimensions:[6,6,6,6],primitiveGamma:{starArmCount:1,littleGroupOrder:48},primitiveX:{starArmCount:3,littleGroupOrder:16}},
   verification: 'The archive checks the original Git blobs and their exact English copies. The numerical tests verify the primitive-cell transform, reciprocal phase, operation transport, both little-group inputs, and the custom diffraction calculation.',
   files
 };

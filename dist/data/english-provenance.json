@@ -3,10 +3,10 @@
   "sourceHashNormalization": "utf8-lf-v1",
   "scope": "Static English teaching and interface edition; shared Python computation cores, crystallographic data, calculation inputs and numeric results. See docs/english-edition.md.",
   "counts": {
-    "sourceUnits": 28549,
-    "translatedUnits": 28549,
+    "sourceUnits": 28575,
+    "translatedUnits": 28575,
     "missingUnits": 0,
-    "generatedFiles": 510
+    "generatedFiles": 511
   },
   "files": [
     {
@@ -36,8 +36,8 @@
     },
     {
       "path": "dist/en/app.js",
-      "sha256": "03b4485eb04cdccfe764ed7f5093a10a733e85d11b8d8419739c339bc4b3a727",
-      "bytes": 110995
+      "sha256": "b8e62ee30a854917727532cab55b0282036f6e41218e6a12d7235cc1ae1ce48c",
+      "bytes": 110977
     },
     {
       "path": "dist/en/bridges-projects.js",
@@ -66,8 +66,8 @@
     },
     {
       "path": "dist/en/classroom-ui.js",
-      "sha256": "132c039efe06f1982f11586279988b9f76f75ed36738b96c90542e7512091386",
-      "bytes": 34561
+      "sha256": "0659ea3916d71c72b9042d32f73e77860fc78ade8166e8e05e85383d005aa0e9",
+      "bytes": 34556
     },
     {
       "path": "dist/en/comparison-lab.js",
@@ -151,12 +151,12 @@
     },
     {
       "path": "dist/en/data/actions-teaching-provenance.json",
-      "sha256": "cd6d2a1ce9560ac98c48925f96df69262b7ac76f9d0f9101b03faa93db02805a",
+      "sha256": "b9375a2bd200e8702dbe76fa90b6655bf0a41f6309f7e369ccae8a82ac9a0f2e",
       "bytes": 9147
     },
     {
       "path": "dist/en/data/advanced-presets-provenance.json",
-      "sha256": "69114932ce7f48c80490066400f54e475828523588128fa0a77b6b6c8fedaa6b",
+      "sha256": "a154b40bd6405167393e0672a0f5676e7902bb8da9ead301d0243b6c22b62a2f",
       "bytes": 5045
     },
     {
@@ -176,7 +176,7 @@
     },
     {
       "path": "dist/en/data/basic-classroom-provenance.json",
-      "sha256": "ac97e7675eb9916d1de0f885bbbfaeee84ab42d992cd71bf15b821a2fac17f27",
+      "sha256": "9270f209568e5435a0776810d952af03bcd31cea05bed5590029cb7c7df9af9c",
       "bytes": 6888
     },
     {
@@ -186,12 +186,12 @@
     },
     {
       "path": "dist/en/data/bridges-provenance.json",
-      "sha256": "70856eca31a16f31dedbfa78b038c68d6c3e09c2f5db0e79d1cf23fe23ed36a1",
+      "sha256": "7636cf9e8a9181c9d2e81f50f70acbe7074db1d9c1abb29ed99dacb6ac2a63e2",
       "bytes": 45721
     },
     {
       "path": "dist/en/data/composition-teaching-provenance.json",
-      "sha256": "5058bafbeaa971c0f1fd5665c55c793a5874324b243225995ce56118d35ecf01",
+      "sha256": "a043cd2aef2f3153eb48ebc26b852c1ecb2f63d9372d293daeb2ca5fc15eb098",
       "bytes": 12449
     },
     {
@@ -201,7 +201,7 @@
     },
     {
       "path": "dist/en/data/connections-provenance.json",
-      "sha256": "fceb1db2d4c0fe517be52a418d2145a13e19ed04f74f3f69cd509de464f17043",
+      "sha256": "b5f7c12841988679247bc06ef95abfd915eab9b3d7f2cdb500450bbd61dd9766",
       "bytes": 88040
     },
     {
@@ -216,7 +216,7 @@
     },
     {
       "path": "dist/en/data/construction-provenance.json",
-      "sha256": "12fd6f087fe55a46d399e860e219c34cc151dccc499155b07cd243ca2ba562fb",
+      "sha256": "10d9765dfe4e5ccb6587bfc1ff59e13f30fd163ee1eeb15357fc55622c2bdf04",
       "bytes": 52245
     },
     {
@@ -231,7 +231,7 @@
     },
     {
       "path": "dist/en/data/course-navigation-provenance.json",
-      "sha256": "dc1124032936bbbf9b21a7557463949c72559f5bc5d39c3696c4cabc36b9e431",
+      "sha256": "854925d1c6673f7474fdccd91ca5fdb2d748098afcbf7373413e575a35be12a8",
       "bytes": 3515
     },
     {
@@ -241,7 +241,7 @@
     },
     {
       "path": "dist/en/data/cu-qha-provenance.json",
-      "sha256": "86da1343b9b3d3d5e864e3103b6fc14d631b9104bbb3174d916ac05d222a7584",
+      "sha256": "40e96164e796143fe34950e5c9f0aebbab225eb243468a1a1deaccffe30d17a6",
       "bytes": 8975
     },
     {
@@ -251,7 +251,7 @@
     },
     {
       "path": "dist/en/data/derivation-teaching-provenance.json",
-      "sha256": "8affaaaa1f429d30c218a0fee8d01bdfda7276f07bdc85552d559014d5168ac5",
+      "sha256": "43c17ecb96af344bff2af341667012842c61065a73ec8eecf41978542b8bffe0",
       "bytes": 13724
     },
     {
@@ -286,7 +286,7 @@
     },
     {
       "path": "dist/en/data/evidence-workflows-provenance.json",
-      "sha256": "f7d80d054dbf62ab144efb25aa8b8ca4bd820effd8dd887798215873443c5b1b",
+      "sha256": "65723ebe8f1fd51276b43c1ffeeb08ad01c37103f271b2d3ec7a71b6f384d1d2",
       "bytes": 7867
     },
     {
@@ -466,7 +466,7 @@
     },
     {
       "path": "dist/en/data/formula-display-provenance.json",
-      "sha256": "30f4cd014be1e114d522086d0ec9d6a43c3063d8a2ea89107545625f38b035ec",
+      "sha256": "8939f5857b97a0c8c7ffa19ee2ecb567071fe5f016de1b37b452e1c5ed626b68",
       "bytes": 13440
     },
     {
@@ -481,7 +481,7 @@
     },
     {
       "path": "dist/en/data/frontiers-provenance.json",
-      "sha256": "21ab07a85451c26172e6d29a9ffbed848a7a6e70bdb64dbf2202a5ba792af87d",
+      "sha256": "9ad81a34e9e712636a4fe662b1f7c77590d71c312ad22c9d24d0ebe16355d52f",
       "bytes": 90307
     },
     {
@@ -496,27 +496,27 @@
     },
     {
       "path": "dist/en/data/learning-depth-provenance.json",
-      "sha256": "584073837cfa364b1c2222cfa976b4080b69d5d36e9a34791e1d36af4234aac5",
+      "sha256": "b962e56dd14ea8f73dcb60abc8ee8a801e31a46ba84ebeb2113845a5f67c9e03",
       "bytes": 6574
     },
     {
       "path": "dist/en/data/learning-experience-provenance.json",
-      "sha256": "e6a7105bab969fb7f65f84ff2960b552ea47f599ec59f571028eb848de8d5c7c",
+      "sha256": "e504069889a1d67a54030914f42ff6ec0b494b99789ed2946f1a83c317a6ecad",
       "bytes": 91027
     },
     {
       "path": "dist/en/data/learning-flow-provenance.json",
-      "sha256": "cbe3c8d0c92301e0aea297b93d969608986b6ad5a864f32685510a09d188ce90",
+      "sha256": "780171fd298ddb303640af7f58f7f1a071acec1a1fc839980c43a13281ea7362",
       "bytes": 7870
     },
     {
       "path": "dist/en/data/learning-routes-provenance.json",
-      "sha256": "df8485e95c39e2a382606e9a25233447003df733b34f6ec1e296771b8d37e970",
+      "sha256": "d9a56d604096a4a171af6db5cfc72dd91be1c0bc357e31eb5fe12157744d2d7e",
       "bytes": 22396
     },
     {
       "path": "dist/en/data/learning-support-provenance.json",
-      "sha256": "8af52b0186f7bf5948812b2d7e4da57b99bd4c3a306e07fa61211e6642a60c86",
+      "sha256": "08f39fdfb41aa0253cd70377eaf8a5871f86519591c6fee56f63615ea03bca6f",
       "bytes": 9009
     },
     {
@@ -531,7 +531,7 @@
     },
     {
       "path": "dist/en/data/lie-group-provenance.json",
-      "sha256": "f473f176f091f216ab1cddf71bb7bf6be9b8e77bcb1a245c4b04f48135f147ca",
+      "sha256": "30ab78a4de9c2c80f1fc9985edb4ee6394ccb2bac95cdff29b2adb823b2a5732",
       "bytes": 15767
     },
     {
@@ -546,7 +546,7 @@
     },
     {
       "path": "dist/en/data/material-observables-provenance.json",
-      "sha256": "e897de739e671fc2a0d13fceb18b39725861c74d8b23e83b23255d9f9d400f7a",
+      "sha256": "945e4063a8b589b10529fc2a2d0390c03a5ff497b87309cb494bb416aef2399c",
       "bytes": 5475
     },
     {
@@ -566,12 +566,12 @@
     },
     {
       "path": "dist/en/data/math-audit-provenance.json",
-      "sha256": "6c79ae39b93354cbfa66167d69f52b6dcb6b1ae23b4c8b3f76c7a0119234bc7e",
+      "sha256": "8e7cadff85610058668c1dccb5f824186f7143a5ff8580f1754ec094d696505f",
       "bytes": 91566
     },
     {
       "path": "dist/en/data/momentum-teaching-provenance.json",
-      "sha256": "ff7e70d723e747fa47fab4f063707ea9beb00c5a008856b1aeec5285da14521f",
+      "sha256": "929c9cd8ac7509a748cefb4ca26b448852564b5d5c3645726988d551826e9a8c",
       "bytes": 13860
     },
     {
@@ -581,7 +581,7 @@
     },
     {
       "path": "dist/en/data/operational-bridges-provenance.json",
-      "sha256": "5e78069ba04ac39ad96e1f9176e50617841821498ef50f90a12ce522fc995274",
+      "sha256": "d0546ee78d84ddeeb78a18f3a285dab6f133e99718c56efad1be38b1e7922048",
       "bytes": 6469
     },
     {
@@ -596,18 +596,18 @@
     },
     {
       "path": "dist/en/data/pathways-provenance.json",
-      "sha256": "62d0aec5ac39d4ef5b00e623ba42435da5ce8165d59ef20b2988cb907fc5799b",
+      "sha256": "77befcbbf8c715ebd2235153b1e651176b9db917eb2d56d0ee40bf5e37cf19d0",
       "bytes": 22426
     },
     {
       "path": "dist/en/data/phonopy-derivation-provenance.json",
-      "sha256": "4d2f4dae691379987207d2eb6c461e3b62b456b466859adc2c6886ea122e2004",
-      "bytes": 39102
+      "sha256": "935858ec9f695eab2414b422ae4e2149425933abe816f02c5fc7ddcc1bd01073",
+      "bytes": 39588
     },
     {
       "path": "dist/en/data/phonopy-scattering-provenance.json",
-      "sha256": "62adf8c679a9f7411a13b8ad3fad55157ec1e96d289ae8242ff671e0458a8f8e",
-      "bytes": 36306
+      "sha256": "34d758e7360a849b40eda0f91e8bc55274a09fdca9fdad90345f6ee90fdf66e4",
+      "bytes": 36792
     },
     {
       "path": "dist/en/data/pointgroup-atlas.json",
@@ -616,7 +616,7 @@
     },
     {
       "path": "dist/en/data/pointgroup-identify-provenance.json",
-      "sha256": "70fbb4c49059ffd0d4d55178d0686120751558ec6dd9f868d5d961374df48a96",
+      "sha256": "2710a8f99b0edc87979f3bedb6115f5b1251dff555b0ec03db81348db1de477f",
       "bytes": 7839
     },
     {
@@ -641,7 +641,7 @@
     },
     {
       "path": "dist/en/data/precision-teaching-provenance.json",
-      "sha256": "3859adadf9b24e7ff71e5b188f4c9c66e126d566e0ae8c5d8fc9e42958eb9f33",
+      "sha256": "ad31854ccf13b8f9c26e322ea29ea8aec26e698c5ed58b308b8a5919ddeab7b3",
       "bytes": 10584
     },
     {
@@ -651,12 +651,12 @@
     },
     {
       "path": "dist/en/data/principles-provenance.json",
-      "sha256": "34fd0b5c5204f4d498bce6b300eb7528e0ea44994d522db6c461eae7336abd64",
+      "sha256": "8f4fd63a8eecf1fd5356eb7f79d3419d24816733166e66645c8ff923126f9ba1",
       "bytes": 47607
     },
     {
       "path": "dist/en/data/prose-math-provenance.json",
-      "sha256": "f0ceb8f622aac16adf7ccf6641f0f1e893e4806b337ac88dc2c8dd9b7fb436e4",
+      "sha256": "4b8824f96ca3e681b89ca5c0fa9d8a0f7abeefbb62d5e58c206a34e2aa8b6a75",
       "bytes": 6220
     },
     {
@@ -696,12 +696,12 @@
     },
     {
       "path": "dist/en/data/representation-actions-provenance.json",
-      "sha256": "342640ce8c0891b1dd24388b7c19d971f0c190be581759a6d2336c46c49e8f15",
-      "bytes": 34659
+      "sha256": "bfcf6a0a23373adbffa4afabb81cbb7541d62d5eacbcecfdd4319562476e92d5",
+      "bytes": 35145
     },
     {
       "path": "dist/en/data/response-materials-provenance.json",
-      "sha256": "772b992d7e2ceed94cb875b2cd19fd01e538462da2ca3475b6f564a8a2286ec6",
+      "sha256": "efd2b45372e7e709682f15ad60d7115098e2195478e64f216083034a8bbba212",
       "bytes": 8734
     },
     {
@@ -721,8 +721,8 @@
     },
     {
       "path": "dist/en/data/scattering-replay-provenance.json",
-      "sha256": "f0599c2bf1e536431803b5e109b1df33167ef721dedf2bf2814da51066b83387",
-      "bytes": 34659
+      "sha256": "d34aa1b35831f4f36806fb101a64bc1833b68146e00f3f9886977ba9fdbf6dfa",
+      "bytes": 35145
     },
     {
       "path": "dist/en/data/search-index.json",
@@ -731,13 +731,13 @@
     },
     {
       "path": "dist/en/data/seitz-quotient-provenance.json",
-      "sha256": "bd1c3a3276ea3499c571af753f77caa6076080c8b2f3280ead8eaba991b92faf",
+      "sha256": "2eb9aa37d23564fe7d0c2ec7d71a776508e79470fc4b870e38f3c21d0139d4f3",
       "bytes": 7286
     },
     {
       "path": "dist/en/data/si-structure-provenance.json",
-      "sha256": "3ed7b2058511c7ee37d7be7b6a0fa6200fcaf03d795f247479a7ff4a31e6bde1",
-      "bytes": 7682
+      "sha256": "16a7c9d9a3c9de2613783662b159fa639729f2569fc19c5c93e3a8415d2f64e1",
+      "bytes": 9392
     },
     {
       "path": "dist/en/data/spectroscopy-materials.json",
@@ -746,12 +746,12 @@
     },
     {
       "path": "dist/en/data/spectroscopy-provenance.json",
-      "sha256": "9fda73fc41d1c0ee7c26fb3bb3a8af887e91201154a2ec1a01bff6d15f9d8dd3",
+      "sha256": "d69bb9489d867959304ba3d3a1777e846ca2e811ff480386d5a794bd2b6a94be",
       "bytes": 11063
     },
     {
       "path": "dist/en/data/spin-actions-provenance.json",
-      "sha256": "1973eff44732a703a2cfa440c54b48334450b7568f1dd0d3060cb78ba574e700",
+      "sha256": "7b27e646c3e928b74d07df40bebc60a5d421300e1b48023c3831950d4ef1bf0a",
       "bytes": 12166
     },
     {
@@ -771,13 +771,13 @@
     },
     {
       "path": "dist/en/data/su3-basis-provenance.json",
-      "sha256": "0576caef8d27edbc1f843e9b29215e93254b32922f736029e4967e37bc4e71d5",
+      "sha256": "404296ba4afa8cd3aacdceb7311f800d4e8b914a137ed971d2293d34945b3a87",
       "bytes": 14369
     },
     {
       "path": "dist/en/data/su3-copy-provenance.json",
-      "sha256": "8faa57a03ee83e93f27a6ad49ea60bab44c89ed294e1f686b185889ffe372bdd",
-      "bytes": 34601
+      "sha256": "6824621e3f7be9a29715badc0d7d54cc61e94d6fecaddc556a9a260d18e671e6",
+      "bytes": 35087
     },
     {
       "path": "dist/en/data/symbolic-api-coverage.json",
@@ -796,7 +796,7 @@
     },
     {
       "path": "dist/en/data/symmetry-course-provenance.json",
-      "sha256": "244ed0fe49872bfc98260319062d2f93eb809bde1274248f15c0fae56cd4967e",
+      "sha256": "66662d2c8227033cd7e49d994ed776cfd045126c09992aac9de280ffa6dc306b",
       "bytes": 14155
     },
     {
@@ -811,23 +811,23 @@
     },
     {
       "path": "dist/en/data/tensor-teaching-provenance.json",
-      "sha256": "1ce6f96c31b43ed601ba99494e327bcb2b265937b51e871aabdc0abba1d55578",
+      "sha256": "e0b4ff82a4f777ffbecd1204a12d881dd176b7d765c190469319598423d08a7e",
       "bytes": 10682
     },
     {
       "path": "dist/en/data/thermal-onsager-provenance.json",
-      "sha256": "f8965c910eef9c20836e97414210b6952021e40d9f5f313e05142fda0feb58f7",
+      "sha256": "31fca4181a98e1c1535bea3a5d3d8d97142a7ad8582f438872e7ef15e8a7ea86",
       "bytes": 6106
     },
     {
       "path": "dist/en/data/wannier-graphene-provenance.json",
-      "sha256": "1c019082e4d81ad8f64d6f3f88a7a3b31368db3a9ca9300e8c0c106a9dc9d523",
+      "sha256": "5028488ff5cb4fc236d5af4f7d9d5fb5fe53466897581b0c687b58b586466f9b",
       "bytes": 6606
     },
     {
       "path": "dist/en/data/water-actions-provenance.json",
-      "sha256": "e6947226711a7e55c8a57cd14f20287ea04bfaab34b080354f327cc5034883e0",
-      "bytes": 33945
+      "sha256": "b3067b985abca686208b27d603c3d150a431a9f92fe4fd4565cdfbf3e5501568",
+      "bytes": 34431
     },
     {
       "path": "dist/en/data/wavevector-content.json",
@@ -841,7 +841,7 @@
     },
     {
       "path": "dist/en/data/zno-workflow-provenance.json",
-      "sha256": "2f28165c24a8e4e688e7badf50e549ddc03023c20aadad658703965ecfd19baf",
+      "sha256": "e53ae357b0cf9d3015147ef86edf18d964ff6ba4a658dbea49608a2f88deb89f",
       "bytes": 18712
     },
     {
@@ -2016,8 +2016,8 @@
     },
     {
       "path": "dist/en/index.html",
-      "sha256": "4bd2966cb12309976c2e029db54832f6c69e2f94f72dedc6e849672a76f0a900",
-      "bytes": 8537
+      "sha256": "f4e6714a374bbb95cf58ff448f69441ee6a0a8bd3e4342d0bc50aedc40aa29a0",
+      "bytes": 8531
     },
     {
       "path": "dist/en/induction.js",
@@ -2111,13 +2111,13 @@
     },
     {
       "path": "dist/en/navigation-ui.js",
-      "sha256": "ec1c869df50942b74f32ccdfe85ad745b92c31b2b1f4b48ed6e4cc3fd47e0294",
-      "bytes": 36592
+      "sha256": "fcc6bab7d5fa80c58024b5ea18bab08b6ac779dd7a0e751115d7fddcdc5ab380",
+      "bytes": 36723
     },
     {
       "path": "dist/en/observables-ui.js",
-      "sha256": "f00c99359a8b8d15a1e0c02c5e6a4f4a1e3dacf8ce1cba7de6b42e2e3230f285",
-      "bytes": 33059
+      "sha256": "8ac631ed5167d943ba944c548ac1fddf152f93dda785856baf6fbcda80308f06",
+      "bytes": 33817
     },
     {
       "path": "dist/en/onsager-learning-bridge.js",
@@ -2325,6 +2325,11 @@
       "bytes": 22277
     },
     {
+      "path": "dist/en/si-conventional-folding-ui.js",
+      "sha256": "046045f95e77ed23b866ba2281d01c52139fdef91ae798e524b4d2f24f8d7b8a",
+      "bytes": 8426
+    },
+    {
       "path": "dist/en/spectroscopy-projects.js",
       "sha256": "5400022962ffb4fab9c44ea5b2a411d91a9caf36b5d9fbce9d954127c07d6365",
       "bytes": 7748
@@ -2356,8 +2361,8 @@
     },
     {
       "path": "dist/en/structure-dynamics-ui.js",
-      "sha256": "c13ff567a1620a2926c1e9c7717c87c127e581c60f0ef5cc6b2819bb2c5d7be4",
-      "bytes": 62877
+      "sha256": "7bb97853933019f69f28332dcd35c0a3483abc00bc8324794322e5efb17f8e7f",
+      "bytes": 62878
     },
     {
       "path": "dist/en/structure-handoff.js",
@@ -2436,8 +2441,8 @@
     },
     {
       "path": "dist/en/tool-capabilities.js",
-      "sha256": "90121f741b43f24e9bd0a9e48ab8e24b63afb44a26716ccf41a7cfd97230b651",
-      "bytes": 55419
+      "sha256": "38b713a93f6cea73856318d22328bf741a9011c4814c7320d153785798104793",
+      "bytes": 55608
     },
     {
       "path": "dist/en/tool-directory.js",
@@ -2446,8 +2451,8 @@
     },
     {
       "path": "dist/en/tool-finder.js",
-      "sha256": "9264b67e75168212d80702e02a3e8fe31eb36b9d4fd9315476106d010fedc6ae",
-      "bytes": 8554
+      "sha256": "5706dc673cf7f5437f41b01b58b1136513109690728344326558f3d99c12508c",
+      "bytes": 8548
     },
     {
       "path": "dist/en/tool-search.js",
@@ -2461,8 +2466,8 @@
     },
     {
       "path": "dist/en/translation-report.json",
-      "sha256": "bc1aae8f11fde6ff1e151c032acbe67e123217e212c5a602db4172ac7fe1e7da",
-      "bytes": 5130
+      "sha256": "50523b4b8c43c1a61a05df7b154db2e72c0d1bd30362d4fddc632cbacf836f1e",
+      "bytes": 5249
     },
     {
       "path": "dist/en/wannier-graphene-source.js",
@@ -2501,8 +2506,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2",
-      "bytes": 8189
+      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb",
+      "bytes": 8183
     },
     {
       "path": "dist/language-switch.css",
@@ -3015,6 +3020,16 @@
       "bytes": 5620
     },
     {
+      "path": "locales/en-si-conventional-folding-host.json",
+      "sha256": "16ba36dd91c4dca6b351da43f2224b43b63a4b673ce627038ccbd1c54dce9faf",
+      "bytes": 142
+    },
+    {
+      "path": "locales/en-si-conventional-folding.json",
+      "sha256": "1d70131f280dd90ef19f856afb5161c8e3b024ec24506aeed1f8268ceac57489",
+      "bytes": 5256
+    },
+    {
       "path": "locales/en-si-structure-docs.json",
       "sha256": "d5bc3dd2ce4131c01d5103a68bf5071be3decc475ed045fcf706ca2f91fe301c",
       "bytes": 6880
@@ -3028,6 +3043,11 @@
       "path": "locales/en-si-structure-links.json",
       "sha256": "3bf0f6180b022672a81c9102cdf31b15ff0d6a5f60a126d07285112205c395a0",
       "bytes": 1017
+    },
+    {
+      "path": "locales/en-site-symmetry-search.json",
+      "sha256": "0bb7ec4a094fde55daaa9c34b8e81df17ce5296a8a87b33e4b652ec82a64d677",
+      "bytes": 579
     },
     {
       "path": "locales/en-sources.json",
@@ -3256,8 +3276,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6",
-      "bytes": 25920
+      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4",
+      "bytes": 26237
     },
     {
       "path": "scripts/audit-english-results.mjs",
@@ -3281,8 +3301,8 @@
     },
     {
       "path": "scripts/english-catalog.mjs",
-      "sha256": "b32ffe0c11de6313b8086c640b8bb7b2ebccee24620e33db9bc482035346cdf7",
-      "bytes": 5514
+      "sha256": "bcf2ad02072ab9dde6286702226160fa90192077910a22258d29472c2c3853a2",
+      "bytes": 5658
     },
     {
       "path": "scripts/english-source.mjs",

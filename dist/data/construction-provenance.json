@@ -416,8 +416,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "fb500abce3b01716fc87d7f57d459a7b7db503c5949c57f7cb4247fc86cb007e",
-      "bytes": 101375
+      "sha256": "49ff8e1ec3bfd9cbc50bfdafe78965ccc2e928525dac13b6cc126e3695f8ddd6",
+      "bytes": 101357
     },
     {
       "path": "dist/bridges-projects.js",
@@ -441,8 +441,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "ecf34c44cad11746def7022b8dca0144ffe0bb64866c2923ef6ebd698fa276fc",
-      "bytes": 32248
+      "sha256": "a77e2f367274ac7fff29b52e5f80046dde5784ca8b2a2853f4af33045a51860b",
+      "bytes": 32243
     },
     {
       "path": "dist/classroom.css",
@@ -511,7 +511,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "2d671929d4cf5856cad92aca977249b9a0942f0170e380021ea843f6a4195e62",
+      "sha256": "565d664518f63f760ddf15c2b7aa02a9f30e9d1144f02b80830692f5c59dd075",
       "bytes": 56445
     },
     {
@@ -536,17 +536,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "809b9f53be61dc2d37b9f36e9e8f72256542c5b7aba3e9520f4b4725b4c2ab4c",
+      "sha256": "989f2e1c72aa0be2e2ce8a991cdfca81addb307dc5c09e6d8186bdc1364217f7",
       "bytes": 16856
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "dd5cdaf226a6032cdb64af878329122952472334ac59cbac78bd4c4a0fd6c8fd",
+      "sha256": "da51b6284172f72c071557048eeb143229dd8cbc8cce14dcb9d1f83ede21a303",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "c0b5dc541f99766cdd5793067c3e4bf4aa338519651ade1ef0d6d65248d377f0",
+      "sha256": "76a7796be186645fd333b6593ef16c4a5c3a3378be4b83d04db64a6c311dd114",
       "bytes": 5971
     },
     {
@@ -561,7 +561,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "797d2c2b57579849969ab57e3fae5a9d5ca3ff80a436a84eac4eb3a7279322df",
+      "sha256": "d33d152e79b0fd5a777399d2b3f78612f75c801b95287ef70db4b1793aa06197",
       "bytes": 27431
     },
     {
@@ -571,7 +571,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "fad4bc7c03ec52ac61b9f0bc18bd6de76fe1107c457137f89ce4f14ca703d021",
+      "sha256": "aa013bc7ce1b0860c56245f496f3618730fef48d858286ee8fe15b193afad9e0",
       "bytes": 58570
     },
     {
@@ -591,7 +591,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "b9ee6d7ef1abbacdcd690d1ea6f40d67547e18aae62806b61626b37c380851c8",
+      "sha256": "ccf38e31940988bd30461ae02c349fe6a6ee0f7b7ae1225d6dc8cec7f9cb57df",
       "bytes": 10435
     },
     {
@@ -601,7 +601,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "17b5b0f7edfe587ca413be06c8c0dea78bf1de05bcfa6d89e67b49bdb49d3899",
+      "sha256": "28b268eca1852bc2fb4c7377c29cae9b02e3431e4d06faacbf80643f6b9a187f",
       "bytes": 13329
     },
     {
@@ -611,7 +611,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "4e6c8c0fe6358ce3620c120e38bf5151ef8a376606e9436dffb87085479417d0",
+      "sha256": "e1dfa8a98ddf8dcf759d70b7e23030e13665751d2b979ef93ac070e81928eb16",
       "bytes": 15859
     },
     {
@@ -671,8 +671,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2",
-      "bytes": 8189
+      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb",
+      "bytes": 8183
     },
     {
       "path": "dist/induction.js",
@@ -731,8 +731,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "f95ca6a88630ea7d3fe0ba08eef7e6d0c55629593dc9476b36d0a20b22c88aaa",
-      "bytes": 31058
+      "sha256": "cfcdf6ddf62d8cc89f637973af446d5335e264c37540bc6b21646473c759fd59",
+      "bytes": 31191
     },
     {
       "path": "dist/navigation.css",
@@ -741,8 +741,8 @@
     },
     {
       "path": "dist/observables-ui.js",
-      "sha256": "10222d1fcd86df13771a497243832f1b92ad952b180a6befb8ae7e1568aa1558",
-      "bytes": 31103
+      "sha256": "1a5cbdfa2bbdae37bea4ad21ac404133bebae5151f32f4d82f3577d5a53e9d0f",
+      "bytes": 31842
     },
     {
       "path": "dist/observables.css",
@@ -901,8 +901,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "d7cd22c3f71b7bb51de9c9971439724142d6b4bd6f93936ef0aec1f04e20e8c1",
-      "bytes": 59379
+      "sha256": "659f365408ce53dedec277ecba7507f138cb63134f34ef45a785ffa5e633264f",
+      "bytes": 59380
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -951,8 +951,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6",
-      "bytes": 25920
+      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4",
+      "bytes": 26237
     },
     {
       "path": "scripts/build-bilbao-labels.py",

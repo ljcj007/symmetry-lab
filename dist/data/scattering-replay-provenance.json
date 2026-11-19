@@ -49,18 +49,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 69712,
-      "sha256": "9e223ac89facd58bfa71fd3ad456ff140b821f321f36d1c93f20bbbd18145383"
+      "bytes": 70599,
+      "sha256": "d1e7dbfeb0bdb571485b32cfd1c7abedb3aadc18fb4bab77758aca051d464491"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 101375,
-      "sha256": "fb500abce3b01716fc87d7f57d459a7b7db503c5949c57f7cb4247fc86cb007e"
+      "bytes": 101357,
+      "sha256": "49ff8e1ec3bfd9cbc50bfdafe78965ccc2e928525dac13b6cc126e3695f8ddd6"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32248,
-      "sha256": "ecf34c44cad11746def7022b8dca0144ffe0bb64866c2923ef6ebd698fa276fc"
+      "bytes": 32243,
+      "sha256": "a77e2f367274ac7fff29b52e5f80046dde5784ca8b2a2853f4af33045a51860b"
     },
     "dist/course-flow.js": {
       "normalization": "utf8-lf-v1",
@@ -94,8 +94,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8189,
-      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2"
+      "bytes": 8183,
+      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -662,6 +662,16 @@
       "bytes": 5620,
       "sha256": "f9e97389a1388399706b62a74998aa5b4d3726143d46128d9aebc8a49bcf1d47"
     },
+    "locales/en-si-conventional-folding-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 142,
+      "sha256": "16ba36dd91c4dca6b351da43f2224b43b63a4b673ce627038ccbd1c54dce9faf"
+    },
+    "locales/en-si-conventional-folding.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5256,
+      "sha256": "1d70131f280dd90ef19f856afb5161c8e3b024ec24506aeed1f8268ceac57489"
+    },
     "locales/en-si-structure-docs.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 6880,
@@ -676,6 +686,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 1017,
       "sha256": "3bf0f6180b022672a81c9102cdf31b15ff0d6a5f60a126d07285112205c395a0"
+    },
+    "locales/en-site-symmetry-search.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 579,
+      "sha256": "0bb7ec4a094fde55daaa9c34b8e81df17ce5296a8a87b33e4b652ec82a64d677"
     },
     "locales/en-spin-actions-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -899,8 +914,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 25920,
-      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6"
+      "bytes": 26237,
+      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -949,8 +964,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5514,
-      "sha256": "b32ffe0c11de6313b8086c640b8bb7b2ebccee24620e33db9bc482035346cdf7"
+      "bytes": 5658,
+      "sha256": "bcf2ad02072ab9dde6286702226160fa90192077910a22258d29472c2c3853a2"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

@@ -81,22 +81,45 @@
       }
     ]
   },
+  "conventionalFolding": {
+    "lesson": "classroom/observables?material=silicon&lesson=mechanical-modes",
+    "translationRows": [
+      "++++",
+      "++--",
+      "+-+-",
+      "+--+"
+    ],
+    "dimensions": [
+      6,
+      6,
+      6,
+      6
+    ],
+    "primitiveGamma": {
+      "starArmCount": 1,
+      "littleGroupOrder": 48
+    },
+    "primitiveX": {
+      "starArmCount": 3,
+      "littleGroupOrder": 16
+    }
+  },
   "verification": "The archive checks the original Git blobs and their exact English copies. The numerical tests verify the primitive-cell transform, reciprocal phase, operation transport, both little-group inputs, and the custom diffraction calculation.",
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 69712,
-      "sha256": "9e223ac89facd58bfa71fd3ad456ff140b821f321f36d1c93f20bbbd18145383"
+      "bytes": 70599,
+      "sha256": "d1e7dbfeb0bdb571485b32cfd1c7abedb3aadc18fb4bab77758aca051d464491"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 101375,
-      "sha256": "fb500abce3b01716fc87d7f57d459a7b7db503c5949c57f7cb4247fc86cb007e"
+      "bytes": 101357,
+      "sha256": "49ff8e1ec3bfd9cbc50bfdafe78965ccc2e928525dac13b6cc126e3695f8ddd6"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32248,
-      "sha256": "ecf34c44cad11746def7022b8dca0144ffe0bb64866c2923ef6ebd698fa276fc"
+      "bytes": 32243,
+      "sha256": "a77e2f367274ac7fff29b52e5f80046dde5784ca8b2a2853f4af33045a51860b"
     },
     "dist/data/examples/phonopy-si-structure/LICENSE.txt": {
       "normalization": "binary",
@@ -125,13 +148,23 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8189,
-      "sha256": "0ea2aadde20c03effd34b53879f5ba39321bc6637f9da231aad9d94d1d2062c2"
+      "bytes": 8183,
+      "sha256": "0306bddd61ab14ca683495e9d0c220223a11fc9081ea2808b2c077e904b105eb"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31058,
-      "sha256": "f95ca6a88630ea7d3fe0ba08eef7e6d0c55629593dc9476b36d0a20b22c88aaa"
+      "bytes": 31191,
+      "sha256": "cfcdf6ddf62d8cc89f637973af446d5335e264c37540bc6b21646473c759fd59"
+    },
+    "dist/observables-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 31842,
+      "sha256": "1a5cbdfa2bbdae37bea4ad21ac404133bebae5151f32f4d82f3577d5a53e9d0f"
+    },
+    "dist/optional-panel.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1198,
+      "sha256": "a2f95487963cf05afe263f1e7dbdfa738067c3be94266ed8beb0f01968efeaa9"
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -148,6 +181,11 @@
       "bytes": 122394,
       "sha256": "a5e320f2905c45a68a9b12a3b75e54beb7103433b56589c26f7a2dd4f7b7211c"
     },
+    "dist/si-conventional-folding-ui.js": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7603,
+      "sha256": "8112cbeee1bb90b5ef544c96356190abc3405559cd2e1fbadaef85be9f6e9da2"
+    },
     "dist/structure-diffraction-handoff.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 3585,
@@ -155,8 +193,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 59379,
-      "sha256": "d7cd22c3f71b7bb51de9c9971439724142d6b4bd6f93936ef0aec1f04e20e8c1"
+      "bytes": 59380,
+      "sha256": "659f365408ce53dedec277ecba7507f138cb63134f34ef45a785ffa5e633264f"
     },
     "dist/structure-handoff.js": {
       "normalization": "utf8-lf-v1",
@@ -180,8 +218,8 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 44546,
-      "sha256": "a2da53f9f823aab3f1128ea22dd9b61c58f287ed216cd894237ca234533ebb8d"
+      "bytes": 44716,
+      "sha256": "55213a8e421e185ca7242f7964dd0c246f5956c18c64702b045525f20def2677"
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
@@ -190,13 +228,23 @@
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8468,
-      "sha256": "93a9b92e4be32a8035f7a4783711126997eaa19b357f84a79f88742275add708"
+      "bytes": 8462,
+      "sha256": "e2834c4519c3c94d8c248a8cfeb5125339c173b806fe7faad8fc4e8e5b660473"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 2619,
       "sha256": "db4808d3b1db14e8520fe3c5c30eb104abfc7d36ac2e36818f6240ee13669224"
+    },
+    "locales/en-si-conventional-folding-host.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 142,
+      "sha256": "16ba36dd91c4dca6b351da43f2224b43b63a4b673ce627038ccbd1c54dce9faf"
+    },
+    "locales/en-si-conventional-folding.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5256,
+      "sha256": "1d70131f280dd90ef19f856afb5161c8e3b024ec24506aeed1f8268ceac57489"
     },
     "locales/en-si-structure-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -213,6 +261,11 @@
       "bytes": 1017,
       "sha256": "3bf0f6180b022672a81c9102cdf31b15ff0d6a5f60a126d07285112205c395a0"
     },
+    "locales/en-site-symmetry-search.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 579,
+      "sha256": "0bb7ec4a094fde55daaa9c34b8e81df17ce5296a8a87b33e4b652ec82a64d677"
+    },
     "locales/en-structure-diffraction-destination.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1715,
@@ -225,18 +278,18 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 25920,
-      "sha256": "e8243fadbe79ef9dafdd75f30e6ee5964dd007b8b6d51cd63c92b9ebb57f04c6"
+      "bytes": 26237,
+      "sha256": "b7de35d4467b04d27421b93160784ac3a4787c904b7e6788cab12f211f888ff4"
     },
     "scripts/build-si-structure-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4459,
-      "sha256": "1f56dfd3749ecac211f9338e469d405ace2d833f6bf9e1ecbfad307348f0932b"
+      "bytes": 5061,
+      "sha256": "d12fe204a4eedfe3cb0f47cbc2dd6e2f8e87d524a23cf3d6df056f7897fffc00"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5514,
-      "sha256": "b32ffe0c11de6313b8086c640b8bb7b2ebccee24620e33db9bc482035346cdf7"
+      "bytes": 5658,
+      "sha256": "bcf2ad02072ab9dde6286702226160fa90192077910a22258d29472c2c3853a2"
     },
     "scripts/test-file-search.mjs": {
       "normalization": "utf8-lf-v1",
@@ -248,6 +301,11 @@
       "bytes": 5408,
       "sha256": "fa963608b6582c7040373391d77355739a72d9d46c68ddbfdbd1595bc8fb388b"
     },
+    "scripts/test-python-si-conventional-folding.py": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 8053,
+      "sha256": "a6e2c2ffd1faf781994877a65510355f272b08bd14012e17be2d9c49bbe6b81a"
+    },
     "scripts/test-python-si-structure-source.py": {
       "normalization": "utf8-lf-v1",
       "bytes": 11424,
@@ -258,10 +316,20 @@
       "bytes": 6507,
       "sha256": "f58c2397c12a19c2fb6abd36959c5a41bfc575008681a56cc70f7bcf2b398443"
     },
+    "scripts/test-si-conventional-folding-ui.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4807,
+      "sha256": "888bc4e0fe0632c7388084cbc2a926efee8e380525e13e1376a6f8fd2ededf8d"
+    },
     "scripts/test-si-structure-source-ui.mjs": {
       "normalization": "utf8-lf-v1",
       "bytes": 9057,
       "sha256": "7ab7e84618c6a3ac29d3598bbeff7207fd1791e8e757e8bfc4abe69751c50546"
+    },
+    "scripts/test-site-symmetry-search.mjs": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3130,
+      "sha256": "f287da8d669a1151411055b1f1809c40612a129de04cd04ae0b3e52e731e1f86"
     },
     "scripts/test-source-package.py": {
       "normalization": "utf8-lf-v1",

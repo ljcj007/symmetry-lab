@@ -1,9 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-zno-satellite1';
+import {classroomPathways} from './classroom-ui.js?v=20261120-si-fold1';
 import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261120-structure-diffraction1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-gamma-trace1';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-si-fold1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -112,11 +112,12 @@ export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>文件用途：</strong> ${esc(text)}</${tag}>`:'';};
 const namedExamples={
- 'compute/lie/su3_ninej':['su3-ninej-four-octets-singlet','打开 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 单态算例'],
- 'compute/advanced/carat_integral':['noncyclic-affine','六维非循环群的 Z 类与仿射类 →'],
- 'compute/advanced/integral_normalizer':['glued6','六维非直和整数格的正规化子 →'],
- 'compute/advanced/arithmetic_centralizer':['a5','六维 A₅ 的算术中心化子 →'],
- 'compute/advanced/symbolic_spacegroups':['magnetic','BNS 1.3 的反铁磁半平移共表示 →']
+ 'compute/band-representation-lab':['module=bandrep&preset=perovskite-sites','打开 SG 221 的 3c 位点算例'],
+ 'compute/lie/su3_ninej':['preset=su3-ninej-four-octets-singlet','打开 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 单态算例'],
+ 'compute/advanced/carat_integral':['preset=noncyclic-affine','六维非循环群的 Z 类与仿射类 →'],
+ 'compute/advanced/integral_normalizer':['preset=glued6','六维非直和整数格的正规化子 →'],
+ 'compute/advanced/arithmetic_centralizer':['preset=a5','六维 A₅ 的算术中心化子 →'],
+ 'compute/advanced/symbolic_spacegroups':['preset=magnetic','BNS 1.3 的反铁磁半平移共表示 →']
 };
 function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
@@ -127,7 +128,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc('输入与适用范围')}">输入与适用范围</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
  const example=showScope&&namedExamples[item.route];
- const exampleLink=example?link(`${item.route}?preset=${example[0]}`,esc(example[1]),'nav-tool-example'):'';
+ const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261120-wannier1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
