@@ -195,7 +195,8 @@ function scene(theme,s){return ({water:waterScene,characters:charactersScene,pro
 export async function renderFoundationsDemosView({container,selection={},run,cancelRun,download=()=>{},onNavigate=()=>{},loadWaterActions=defaultWaterActionsLoader}){
  previousFoundationsCleanup();
  let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water';
- const preset=theme==='characters'?characterPresets.get(selection.preset):undefined;
+ let routePreset=selection.preset;
+ const preset=theme==='characters'?characterPresets.get(routePreset):undefined;
  let s={...DEFAULTS[theme],...preset},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0,comparisonBasis;
  container.innerHTML='<article class="fd-course"></article>';const root=container.firstElementChild;
  let disposed=false,waterTicket=0,disposeWater=()=>{},waterDetail=null,waterOpening=null,waterBound=false,legacyRequest=null,detachObserver;
@@ -295,7 +296,16 @@ export async function renderFoundationsDemosView({container,selection={},run,can
  root.addEventListener('change',e=>{if(!current())return;const id=e.target.dataset.param;if(!id)return;s[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;revision++;pythonResult=null;pythonStatus="Parameters changed. Run Python again to check them.";update();root.querySelector('.fd-status').textContent=pythonStatus;});
  root.addEventListener('click',async e=>{
   if(!current())return;
-  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme,preset:undefined});draw();return;}
+  const tab=e.target.closest('[data-theme]');
+  if(tab){
+   stopAnimation();stopLegacy();
+   theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;
+   const patch=routePreset===undefined?{experiment:theme}:{experiment:theme,preset:undefined};
+   routePreset=undefined;
+   onNavigate(patch);
+   draw();
+   return;
+  }
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='animate'){if(timer)stopAnimation();else timer=setInterval(()=>{if(!current()){stopAnimation();return;}s.phase=(s.phase+5)%360;const input=root.querySelector('[data-param="phase"]');if(input)input.value=s.phase;update();},65);}
   if(action==='python'&&run&&!busy){

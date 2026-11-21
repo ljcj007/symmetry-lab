@@ -56,12 +56,12 @@
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 105723,
-      "sha256": "b477fc17dc3ce76ad5f49257b6905bd42fe6c43ed3db53372c3fdc2d8d6f0221"
+      "sha256": "662267526ba3d39b8a9f7b5ed45a9a80998e913e1afe9cdbb110db9ee5eb6ea1"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 32812,
-      "sha256": "256e0876610a52ce73f37e88f16bb764f89f785cfa87fef421377958719327a2"
+      "sha256": "3928de378e2afc21913d06f8a8758c8389f90319d01fbba5411138d540a95ae3"
     },
     "dist/data/pointgroup-lessons.json": {
       "normalization": "utf8-lf-v1",
@@ -90,13 +90,13 @@
     },
     "dist/foundations-demos.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 38059,
-      "sha256": "7edddebb4fccec5a27dbbf2f9c66fb3464f46b1acb9aeb46b21e6290950b148a"
+      "bytes": 38206,
+      "sha256": "59c4b6e4d4ba635d976a9ab8803730a53516132bd3e03047f6716b96bac219c9"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
       "bytes": 8433,
-      "sha256": "69d2fa2acbb34906e20ef3018d1972e2502127f446590f911b7c4d53a4cb7963"
+      "sha256": "0570334b883bf8880201d99faf4db9b97db7937829d014139e54b933b4d2df59"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -1135,8 +1135,8 @@
     },
     "scripts/test-foundations-demos.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10649,
-      "sha256": "b39dcb99dc3555a79a68858266f76cab405c366a6b3a0264f7e815ee2badf976"
+      "bytes": 10932,
+      "sha256": "b67e5ee31a24261de7095544011d7e5194bec5eac3e7f4aca959ad5c9b25acf4"
     },
     "scripts/test-foundations-routing.mjs": {
       "normalization": "utf8-lf-v1",
