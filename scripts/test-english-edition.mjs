@@ -23,6 +23,7 @@ for(const row of collectEnglishSources()){
 // Traverse every catalog independently of the translation visitor. Identifiers,
 // enums, defaults and all numerical/scalar values must remain identical.
 const opaque=new Set('id module action model route url path filename file sha256 sourceHashes catalogSHA256 input inputs parameters defaults default value schema schemaVersion release version format code poscar cif trace rotations operations generators matrix matrices arithmetic sourceId sourceIds references exerciseIds materialIds lesson lessonId exercise preset presetId tool function api implementation symbols formulaAliases aliases contexts'.split(' '));
+opaque.add('activityAliases');
 let files=0,numbers=0,protectedTrees=0;
 function compare(a,b,pointer='',key=''){
  if(opaque.has(key)&&!['aliases','contexts','formulaAliases'].includes(key)){

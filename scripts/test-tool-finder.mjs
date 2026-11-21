@@ -4,8 +4,11 @@ import {Element,flush} from './test-material-research-ui.mjs';
 import {finderResults,normalizeFinderText,startToolFinder} from '../dist/tool-finder.js';
 import {toolsIndex} from '../dist/navigation-ui.js';
 import {learningActivities} from '../dist/learning-activity-search.js';
+import {learningActivities as englishActivities} from '../dist/en/learning-activity-search.js';
+import {finderResults as findEnglishActivities} from '../dist/en/tool-finder.js';
 
 const catalog=JSON.parse(fs.readFileSync(new URL('../dist/data/search-index.json',import.meta.url),'utf8')).entries;
+const englishCatalog=JSON.parse(fs.readFileSync(new URL('../dist/en/data/search-index.json',import.meta.url),'utf8')).entries;
 assert.equal(normalizeFinderText(' C₄v / Clebsch–Gordan '),'c4v / clebsch gordan');
 assert.equal(finderResults([...toolsIndex,...catalog],'225',{scope:'groups'})[0].route,'atlas/sg?q=225');
 assert.equal(finderResults([...toolsIndex,...catalog],'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
@@ -28,9 +31,19 @@ const activities=[
  ['氧化锌 拉曼','ZnO Raman','compute/phonon-modes?preset=zno-ir'],
  ['Rashba 时间反演','Rashba time reversal','classroom/foundations?module=mini&experiment=bands&preset=rashba-trim-check'],
  ['三顶点 投影矩阵秩','triangle projector rank','classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation'],
- ['双值螺旋 工作台','double screw eigenvalue','classroom/crystal?track=double&lesson=double-06']
+ ['双值螺旋 工作台','double screw eigenvalue','classroom/crystal?track=double&lesson=double-06'],
+ ['反幺正螺旋','antiunitary screw','classroom/spin?track=magnetic&lesson=magnetic-04']
 ];
 const localEntries=[...toolsIndex,...learningActivities];
+assert.deepEqual(englishActivities.map(item=>item.activityAliases),learningActivities.map(item=>item.activityAliases));
+for(const activity of englishActivities){
+ const indexed=englishCatalog.find(item=>item.route===activity.route&&item.activityAliases);
+ assert.deepEqual(indexed?.activityAliases,activity.activityAliases);
+ for(const query of activity.activityAliases){
+  assert.equal(findEnglishActivities(englishActivities,query)[0]?.route,activity.route);
+  assert.equal(findEnglishActivities(englishCatalog,query,{scope:'courses'})[0]?.route,activity.route);
+ }
+}
 for(const [chinese,english,route] of activities){
  for(const query of [chinese,english,`“${english}”`]){
   const results=finderResults(localEntries,query);

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29139,
-  "translatedUnits": 29139,
+  "sourceUnits": 29165,
+  "translatedUnits": 29165,
   "missing": [],
-  "files": 531,
+  "files": 533,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -191,6 +191,7 @@
     "en-rashba-trim-bridge.json",
     "en-response-bridges-docs.json",
     "en-learning-activity-search.json",
-    "en-seitz-little-group.json"
+    "en-seitz-little-group.json",
+    "en-antiunitary-screw.json"
   ]
 }

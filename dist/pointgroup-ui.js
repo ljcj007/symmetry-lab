@@ -19,7 +19,7 @@ const defaultCompositionLoader=()=>compositionModulePromise||(compositionModuleP
 const defaultRepresentationActionsLoader=()=>import('./representation-actions-ui.js?v=20261117-rep1');
 const defaultPointgroupIdentifyLoader=()=>import('./pointgroup-identify-ui.js?v=20261119-pointgroups1');
 export function compositionEntryHTML(lessonId,opened=false){
-  return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>先旋转再照镜子，会一样吗？</summary><p>先把两种动作按顺序做出来，再读矩阵乘法、封闭性与撤销。</p><div data-composition-body></div></details>`:'';
+  return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>把正方形转 90° 再照镜子，交换顺序会怎样？</summary><p>用导学里的正方形比较两个顺序怎样移动同一个点。再用结果理解矩阵乘法、封闭性和逆操作。</p><div data-composition-body></div></details>`:'';
 }
 export function representationActionsEntryHTML(lessonId,opened=false){
   return ['representations','character-reduction'].includes(lessonId)?`<details class="rpa-entry" data-representation-actions-entry${opened?' open':''}><summary>这些矩阵真的构成表示吗？</summary><p>先跟踪基矢，再检验全部操作的乘法；比较统一换基与只改一项矩阵，解释为什么相同特征标还不够。</p><div data-representation-actions-body></div></details>`:'';

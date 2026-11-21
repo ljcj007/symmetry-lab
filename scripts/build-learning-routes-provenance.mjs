@@ -72,6 +72,8 @@ files.push('dist/zno-ir-polarization-ui.js','dist/symmetry-mini-demos.js','dist/
  'locales/en-response-bridges-docs.json');
 files.push('dist/learning-activity-search.js','dist/seitz-little-group-ui.js','scripts/search-catalog-source.mjs',
  'scripts/test-seitz-lesson-handoff.mjs','locales/en-learning-activity-search.json','locales/en-seitz-little-group.json');
+files.push('dist/learning-activity-aliases.js','dist/antiunitary-screw-ui.js','scripts/test-antiunitary-screw-lesson.mjs',
+ 'locales/en-antiunitary-screw.json','scripts/test-beginner-links.mjs','scripts/english-source.mjs','scripts/test-english-edition.mjs');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -121,6 +123,8 @@ data.verification.push('The derived ZnO Gamma example links both E₂ clusters w
 data.verification.push('A Rashba example compares the Hamiltonian time-reversal condition and the equality of positive and negative momentum spectra at the same three momenta as the Kramers lesson. The student can check both Zeeman choices against the same momentum.');
 data.verification.push('Named spectra, time reversal, triangle projection and double-screw activities open their exact routes from the quick finder, home search and calculator directory. Activity aliases preserve strict group and material scopes, and opening an activity waits for user input before running a calculation.');
 data.verification.push('The space-group 4 single-valued comparison checks screw little-group membership modulo reciprocal translations before comparing the square phase. The proposed momenta hand off to the workbench with explicit settings and manual calculation.');
+data.verification.push('The entrance and first lesson use the same square rotation and mirror sequence before making the transition to matrix representations. The first lesson keeps its optional operation exercise lazy.');
+data.verification.push('The BNS 4.8 comparison derives the spinful antiunitary square at three cuts and hands off to explicit common-basis workbench inputs. Reference calculations verify a one-dimensional a-type corepresentation at the center and a two-dimensional b-type corepresentation at the boundary. Matching atlas entries link to the relevant ordinary and magnetic lessons.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

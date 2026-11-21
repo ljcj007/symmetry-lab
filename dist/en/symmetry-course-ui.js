@@ -1,6 +1,7 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
-import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-littlegroup1';
+import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-antisc1';
+import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';
 import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
@@ -198,9 +199,9 @@ export function getSymmetryCourseResult(){
 export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions,loadSeitzQuotientModule=loadSeitzQuotient}){
   disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML="<div class=\"sc-page\"><div class=\"sc-loading\" role=\"status\"><span class=\"spinner\"></span>is loading space group , double group , magnetic group, color group and spin group courses...</div></div>";
-  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{},disposeSeitzComparison=()=>{};
+  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{},disposeLessonComparison=()=>{};
   const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
-  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeSeitzComparison();disposeSeitzComparison=()=>{};};
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeLessonComparison();disposeLessonComparison=()=>{};};
   disposePreviousSeitzWorkshop=clearSeitzWorkshop;
   function disposeView(){
     if(disposed)return;
@@ -292,6 +293,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?"<p><a id=\"sc-rashba-trim-link\" href=\"#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check\">Compare spectra and time reversal at these three wavevectors →</a></p>":''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
       ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
+      ${lesson.id==='magnetic-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?antiunitaryScrewHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="sc-references"><strong>References</strong>${(lesson.references||[]).map(ref=>{const source=(lessons.sources||[]).find(s=>s.id===ref.sourceId),url=safeURL(ref.url)||safeURL(source?.url);return `<span>${esc(source?.title||ref.sourceId||'')} · ${esc(ref.chapter||'')}${ref.printedPages?" · Book page "+esc(ref.printedPages):''}${ref.pdfPages?" · PDF page "+esc(ref.pdfPages):''}${url?` <a href="${esc(url)}" target="_blank" rel="noreferrer">Source ↗</a>`:''}</span>`;}).join('')}</div>
       <div class="sc-actions"><button class="secondary" type="button" id="sc-lesson-quiz">Self-test in this section →</button>${lesson.lab&&labNames[lesson.lab]?`<button class="secondary" type="button" id="sc-lesson-lab">${lesson.labInputs?"Open this lesson's experiment (reset to example parameters)":"Open the related experiment"}</button>`:''}${lesson.workbench?"<button class=\"secondary\" type=\"button\" id=\"sc-lesson-workbench\">Verified on the workbench</button>":''}${next?"<button class=\"primary\" type=\"button\" id=\"sc-next-lesson\">Next unit →</button>":''}</div></article></div>`;
@@ -306,15 +308,17 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     bindSpinActionsHost(lesson);
     disposeSeitzWorkshop=bindSeitzQuotientHost();
     const comparison=$('#sc-seitz-comparison');
-    if(comparison)disposeSeitzComparison=bindSeitzComparison(comparison,{
+    if(comparison)disposeLessonComparison=bindSeitzComparison(comparison,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-comparison')===comparison,
       formatNumber:fmt,formatComplex:complex
     });
     const littleGroupComparison=$('#sc-seitz-little-group');
-    if(littleGroupComparison)disposeSeitzComparison=bindSeitzLittleGroup(littleGroupComparison,{
+    if(littleGroupComparison)disposeLessonComparison=bindSeitzLittleGroup(littleGroupComparison,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-little-group')===littleGroupComparison,
       formatNumber:fmt,formatComplex:complex
     });
+    const antiunitaryScrew=$('#sc-antiunitary-screw');
+    if(antiunitaryScrew)disposeLessonComparison=bindAntiunitaryScrew(antiunitaryScrew);
   }
   function bindSeitzQuotientHost(){
     const detail=$('[data-seitz-quotient-entry]');

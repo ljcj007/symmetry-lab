@@ -109,7 +109,7 @@ function traceWorkedAnswer(space){
  </section>`;
 }
 const continuations={
- foundations:['#classroom/foundations?lesson=group-basics','点群与表示 · 从第一课继续','用群的规则整理刚才的动作，再学习表示与约化。'],
+ foundations:['#classroom/foundations?lesson=group-basics','点群与表示 · 从第一课继续','用导学里的正方形组合 90° 旋转和镜面反射。随后在「把几何对称变成矩阵」一课把矩阵的对角元相加，求出特征标。'],
  water:['#classroom/foundations?module=demos&experiment=water','水分子、红外与拉曼','已有矩阵和特征标概念后，连接位移与光谱通道。'],
  theorems:['#classroom/foundations?module=theorems&experiment=rearrangement','定理证明与应用','有表示基础后，沿 S₃ 检查重排、Schur 与正交关系。'],
  crystal:['#classroom/crystal?track=space','晶体与空间群','在点群基础上加入周期平移、螺旋轴和滑移面。'],

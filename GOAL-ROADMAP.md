@@ -506,3 +506,12 @@ establish that all existing scientific and teaching content has been audited.
 
 - The homepage, quick finder and calculator directory use the same bilingual activity titles and destinations. Examples include `ZnO Raman`, `Rashba time reversal`, `triangle projector rank` and `double screw eigenvalue`. In the directory, a named activity appears alongside the calculator results while calculation filters retain their usual scope.
 - In [the nonsymmorphic space-group lesson](dist/index.html#classroom/crystal?track=space&lesson=space-05), predict whether the same screw belongs to the little group at three wavevectors for space group 4. The reciprocal-coordinate comparison gives differences 0, −1/2 and −1 along x. All three wavevectors have the same axial square phase, while only the axis and boundary cases satisfy the little-group condition. The worksheet links each case to the single-valued workbench for an explicit calculation. [International Tables for Crystallography](https://onlinelibrary.wiley.com/iucr/itc/Bb/ch1o5v0001/sec1o5o3/)
+
+## Follow one example from the guide to the course
+
+- The sixth zero-start step previews the same square's 90° rotation and the mirror operation explored in the first course lesson. Learners compare operation order in the workshop and can continue into matrices and characters through the existing course sequence.
+
+## Test how a screw and time reversal combine
+
+- The [magnetic symmetry lesson](dist/index.html#classroom/spin?track=magnetic&lesson=magnetic-04) holds the transverse coordinate fixed in gray group BNS 4.8. Learners predict where the composition returns a state to the same wavevector, then separately check where its square enforces equal-energy pairing. The linked workbench compares the one-dimensional, intermediate, and two-dimensional cases using the published magnetic operations. [Physical Review B](https://doi.org/10.1103/2f4l-tz7p)
+- The atlas records for ordinary space group 4 and BNS 4.8 link to their corresponding exercises. The exact bilingual name of the antiunitary screw activity also opens the magnetic lesson from the three search surfaces.

@@ -94,7 +94,8 @@ export function bindSeitzLittleGroup(host, {run, isCurrent, formatNumber, format
       <p>${math(String.raw`k'=R^{-\mathsf{T}}k=(-k_x,-k_y,k_z)`)} · ${math(String.raw`k'-k\in\mathbb{Z}^3`)}</p>
       <p>在这里的原胞倒格基底中，波矢差的三个分量都必须是整数。A 的差为零，C 的差为一个倒格矢，因此螺旋都保持相应的波矢空间。</p>
       <p>螺旋连做两次给出沿 z 的整格平移。三个例子的平方相位都为 −1，因为它们的轴向分量相同。</p>
-      <p>A、C 的单值小表示可在同一波矢空间里给螺旋分配本征值 ±i。B 的第一步连接不同的星臂。平方的平移相位仍成立，但单独在 B 的波矢空间里无法给螺旋分配本征值。打开对应工作台后可手动计算并对照小群操作表。</p>`;
+      <p>A、C 的单值小表示可在同一波矢空间里给螺旋分配本征值 ±i。B 的第一步连接不同的星臂。平方的平移相位仍成立，但单独在 B 的波矢空间里无法给螺旋分配本征值。打开对应工作台后可手动计算并对照小群操作表。</p>
+      <p><a href="#classroom/spin?tab=learn&amp;lesson=magnetic-04&amp;track=magnetic">继续用 B 点检验反幺正螺旋配对 →</a></p>`;
   }
 
   prediction.onchange = () => reset('预测已更改，可以重新核对。');

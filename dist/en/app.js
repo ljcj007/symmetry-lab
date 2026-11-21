@@ -2,14 +2,14 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261120-lesson-nav1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-activity1';
-import {startToolFinder} from './tool-finder.js?v=20261122-activity1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-antisc1';
+import {startToolFinder} from './tool-finder.js?v=20261122-antisc1';
 import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {spaceGroupNumberForQuery,spaceGroupSymbolKey} from './tool-search.js?v=20261122-activity1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261122-fourfold1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-activity1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-antisc1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -490,8 +490,14 @@ function renderDatabase(){const groups=list(state.dbMode);
  const exactMatches=spaceNumber?groups.filter(g=>gid(g,state.dbMode)===spaceNumber)
   :state.dbMode==='msg'?matchMagneticGroupQuery(groups,state.dbQuery,g=>({bns:g.id,og:g.ogId})):symbolMatches.length?symbolMatches:null;
  const filtered=(exactMatches??groups).filter(g=>(state.dbType==='all'||String(g.type)===state.dbType)&&(exactMatches!==null||[gid(g,state.dbMode),g.symbol,g.bcSymbol,g.ogId,g.lattice,g.pointGroup].some(v=>String(v||'').toLowerCase().includes(q))));
- const comparisonLink=state.dbMode==='sg'&&filtered.length===1&&[75,76,78].includes(filtered[0].number)
-  ?"<p><a href=\"#classroom/crystal?track=space&amp;lesson=space-01\">Compare four steps of P 4, P 4₁, and P 4₃ →</a></p>":'';
+ const singleMatch=filtered.length===1?filtered[0]:null;
+ let comparisonLink='';
+ if(state.dbMode==='sg'&&[75,76,78].includes(singleMatch?.number))
+  comparisonLink="<p><a href=\"#classroom/crystal?track=space&amp;lesson=space-01\">Compare four steps of P 4, P 4₁, and P 4₃ →</a></p>";
+ else if(state.dbMode==='sg'&&singleMatch?.number===4)
+  comparisonLink="<p><a href=\"#classroom/crystal?track=space&amp;lesson=space-05\">Test the screw little group of space group 4 at three wavevectors →</a></p>";
+ else if(state.dbMode==='msg'&&singleMatch?.id==='4.8')
+  comparisonLink="<p><a href=\"#classroom/spin?track=magnetic&amp;lesson=magnetic-04\">Test the antiunitary screw and zone-boundary degeneracy in BNS 4.8 →</a></p>";
  const pageSize=25;state.dbPage=Math.min(state.dbPage,Math.max(0,Math.ceil(filtered.length/pageSize)-1));const selected=filtered.slice(state.dbPage*pageSize,(state.dbPage+1)*pageSize);$('#app').innerHTML=`<section class="panel"><div class="panel-body">${modeButtons(state.dbMode,'db-mode')}<div class="controls-row" style="margin-top:20px"><input id="db-search" placeholder="Search number, international symbol, OG number or lattice..." aria-label="Search database" value="${esc(state.dbQuery)}">${state.dbMode==='sg'?'':`<select id="db-type" aria-label="magnetic group type"><option value="all">All types</option>${[1,2,3,4].map(t=>`<option value="${t}" ${String(t)===state.dbType?'selected':''}>Type ${['','I','II','III','IV'][t]}</option>`).join('')}</select>`}<span class="subtle">${filtered.length} matching results</span></div>${comparisonLink}${tableHTML([state.dbMode==='sg'?'No.':state.dbMode==='msg'?'BNS':'MPG',"International Symbol / BC","lattice",state.dbMode==='msg'?"OG No.":"point group / Type","Operation count",''],selected.map(g=>[esc(gid(g,state.dbMode)),`<span class="db-symbol">${crystalSpan(gtitle(g),'hm')}</span>`,esc(lattices[g.lattice]||g.lattice),state.dbMode==='msg'?esc(g.ogId):g.pointGroup?crystalSpan(g.pointGroup,'schoenflies'):esc(['','I','II','III','IV'][g.type]),g.operations.length,`<button class="text-button" data-open-group="${esc(gid(g,state.dbMode))}">Open workbench ↗</button>`]))}<div class="pagination"><span>No. ${state.dbPage+1} / ${Math.max(1,Math.ceil(filtered.length/pageSize))} page · Data comes from the upstream complete table</span><div><button class="secondary small" id="prev-page" ${state.dbPage===0?'disabled':''}>← Previous page</button><button class="secondary small" id="next-page" ${(state.dbPage+1)*pageSize>=filtered.length?'disabled':''}>Next page →</button></div></div></div></section>`;$$('[data-db-mode]').forEach(b=>b.onclick=()=>{setView('atlas/'+b.dataset.dbMode);});$('#db-search').oninput=e=>{const pos=e.target.selectionStart;state.dbQuery=e.target.value;state.dbPage=0;const route='atlas/'+state.dbMode+'?q='+encodeURIComponent(state.dbQuery);state.route=route;history.replaceState(null,'','#'+route);renderDatabase();$('#db-search').focus();$('#db-search').setSelectionRange(pos,pos);};if($('#db-type'))$('#db-type').onchange=e=>{state.dbType=e.target.value;state.dbPage=0;renderDatabase();};$('#prev-page').onclick=()=>{state.dbPage--;renderDatabase();};$('#next-page').onclick=()=>{state.dbPage++;renderDatabase();};
  $$('[data-open-group]').forEach(button=>button.onclick=()=>{
   const mode=state.dbMode,id=button.dataset.openGroup;

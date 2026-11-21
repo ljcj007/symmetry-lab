@@ -19,7 +19,7 @@ const defaultCompositionLoader=()=>compositionModulePromise||(compositionModuleP
 const defaultRepresentationActionsLoader=()=>import('./representation-actions-ui.js?v=20261117-rep1');
 const defaultPointgroupIdentifyLoader=()=>import('./pointgroup-identify-ui.js?v=20261119-pointgroups1');
 export function compositionEntryHTML(lessonId,opened=false){
-  return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>Does the order of rotation and reflection matter?</summary><p>Apply two different operations in sequence, then interpret matrix multiplication, closure, and inverses.</p><div data-composition-body></div></details>`:'';
+  return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>Turn a square 90° and then reflect it. What changes if you swap the order?</summary><p>Use the square from the introductory guide to see where each order sends the same point. Then use the results to understand matrix multiplication, closure, and inverses.</p><div data-composition-body></div></details>`:'';
 }
 export function representationActionsEntryHTML(lessonId,opened=false){
   return ['representations','character-reduction'].includes(lessonId)?`<details class="rpa-entry" data-representation-actions-entry${opened?' open':''}><summary>Do these matrices really form a representation?</summary><p>Follow basis vectors and then check multiplication across all operations. Compare a common basis change with changing a single matrix, and explain why matching characters are not enough.</p><div data-representation-actions-body></div></details>`:'';

@@ -94,7 +94,8 @@ export function bindSeitzLittleGroup(host, {run, isCurrent, formatNumber, format
       <p>${math(String.raw`k'=R^{-\mathsf{T}}k=(-k_x,-k_y,k_z)`)} · ${math(String.raw`k'-k\in\mathbb{Z}^3`)}</p>
       <p>In this primitive reciprocal basis, the wavevector difference must have three integer components. The difference is zero for A and a reciprocal lattice vector for C, so the screw preserves both wavevector spaces.</p>
       <p>Applying the screw twice gives a full lattice translation along z. The square has phase −1 in all three cases because their axial components are equal.</p>
-      <p>The single-valued small representations at A and C give screw eigenvalues ±i within their respective wavevector spaces. At B, the first step connects different star arms. The square still gives the translation phase, while a screw eigenvalue requires a wavevector space preserved by the screw itself. Open the relevant workbench and run the calculation to compare its little-group operations.</p>`;
+      <p>The single-valued small representations at A and C give screw eigenvalues ±i within their respective wavevector spaces. At B, the first step connects different star arms. The square still gives the translation phase, while a screw eigenvalue requires a wavevector space preserved by the screw itself. Open the relevant workbench and run the calculation to compare its little-group operations.</p>
+      <p><a href="#classroom/spin?tab=learn&amp;lesson=magnetic-04&amp;track=magnetic">Continue with B and test pairing under the antiunitary screw →</a></p>`;
   }
 
   prediction.onchange = () => reset("Prediction changed. You can check it again.");

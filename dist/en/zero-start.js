@@ -109,7 +109,7 @@ function traceWorkedAnswer(space){
  </section>`;
 }
 const continuations={
- foundations:['#classroom/foundations?lesson=group-basics',"Point groups and representations · Continue with the first lesson","Organize the actions using group rules, then study representations and reduction."],
+ foundations:['#classroom/foundations?lesson=group-basics',"Point groups and representations · Continue with the first lesson","Use the square from the introductory guide to combine a 90° turn and a reflection. In “From geometric symmetry to matrices,” add the diagonal entries of the matrix to find its character."],
  water:['#classroom/foundations?module=demos&experiment=water',"Water, infrared, and Raman","With matrices and characters in place, connect displacements to spectroscopic channels."],
  theorems:['#classroom/foundations?module=theorems&experiment=rearrangement',"Theorem proofs and applications","With a foundation in representations, use S₃ to examine rearrangement, Schur's lemma, and orthogonality."],
  crystal:['#classroom/crystal?track=space',"Crystals and space groups","Extend point groups with periodic translations, screw axes, and glide planes."],
