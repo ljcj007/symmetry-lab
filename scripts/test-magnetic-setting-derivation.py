@@ -45,17 +45,37 @@ spin_connection_ids = {'double-01', 'double-02', 'double-03', 'double-04',
 verify('the first space-group lesson opens its 4₁ screw model',
        [(row.get('lab'), row.get('labInputs')) for row in lessons['lessons'] if row['id'] == 'space-01']
        == [('seitz', {'preset': 'screw41'})])
-original_non_spin_lessons = [
-    {key: value for key, value in row.items()
-     if key != 'derivationIds' and (row['id'] != 'space-01' or key != 'labInputs')}
-    for row in lessons['lessons'] if row['id'] not in spin_connection_ids
-]
+feedback_lessons = {'space-05', 'double-06', 'magnetic-04', 'magnetic-05'}
+verify('only the eight targeted questions carry the added feedback field',
+       {(row['id'], index) for row in lessons['lessons']
+        for index, question in enumerate(row.get('quiz', [])) if 'feedback' in question}
+       == {(lesson_id, index) for lesson_id in feedback_lessons for index in (0, 1)})
+
+
+def historical_lesson(row):
+    record = {key: value for key, value in row.items()
+              if key != 'derivationIds' and (row['id'] != 'space-01' or key != 'labInputs')}
+    if row['id'] in feedback_lessons:
+        record['quiz'] = [{key: value for key, value in question.items() if key != 'feedback'}
+                          for question in row['quiz']]
+    return record
+
+
+def ordered_quiz_content(rows):
+    fields = ('question', 'choices', 'answer', 'explanation')
+    return [(row['id'], [tuple(question[field] for field in fields)
+                         for question in row.get('quiz', [])]) for row in rows]
+
+
+historical_lessons = [historical_lesson(row) for row in lessons['lessons']]
+verify('historical hashes still include original quiz prompts, choices, keys, explanations and order',
+       ordered_quiz_content(historical_lessons) == ordered_quiz_content(lessons['lessons']))
+original_non_spin_lessons = [row for row in historical_lessons if row['id'] not in spin_connection_ids]
 verify('the other 18 lesson texts retain their pre-spin-connection content',
        canonical_hash(original_non_spin_lessons) ==
        '7e1674f7e1a052581ca6d57daa99e74a7fd311958274e22b8b764c4791a6a1ef')
 verify('the six spin lesson texts match the independently checked connection revision',
-       canonical_hash([{k: v for k, v in row.items() if k != 'derivationIds'}
-                       for row in lessons['lessons'] if row['id'] in spin_connection_ids]) ==
+       canonical_hash([row for row in historical_lessons if row['id'] in spin_connection_ids]) ==
        '3dd5acce03a9a1da438e296ad84110a5a0cab9e0a7f7b1d00ffab6b355e63a85')
 verify('only the intended lesson declares this exercise',
        [row['id'] for row in lessons['lessons'] if ID in row.get('derivationIds', [])] == ['magnetic-03'])

@@ -102,6 +102,7 @@ for(const edition of process.argv.includes('--source-only')?['../dist/']:['../di
  const setScope=scope=>dialog.querySelector(`[data-finder-scope="${scope}"]`).fire('click');
  const results=()=>dialog.querySelectorAll('[data-finder-result]');
  const enter=()=>documentEvents.get('keydown')({key:'Enter',preventDefault(){}});
+ setScope('tools');
  setQuery('BNS 1.3');
  assert.equal(fetches,0);
  assert.ok(results().length>0,'The explicit tools scope retains its ordinary tool candidates');
