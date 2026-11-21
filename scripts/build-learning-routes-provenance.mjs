@@ -46,6 +46,7 @@ files.push('dist/magnetic-group-query.js','dist/tool-finder.js','scripts/test-ma
 files.push('scripts/test-atlas-workbench-routes.mjs','scripts/test-gaas-mixed-exercise-ui.mjs',
  'locales/en-gaas-mixed-exercise.json');
 files.push('scripts/test-seitz-lesson-handoff.mjs','scripts/test-lie-foundations-ui.mjs','scripts/test-lie-group-course.py',
+ 'scripts/test-magnetic-setting-derivation.py',
  'dist/data/symmetry-course-lessons.json','dist/data/lie-group-lessons.json','scripts/search-catalog-source.mjs',
  'scripts/test-qe-si-navigation.mjs','locales/en-qe-si-navigation.json','dist/end-to-end/index.html','dist/end-to-end/app.js');
 files.push('scripts/test-workbench-group-numbers.mjs');

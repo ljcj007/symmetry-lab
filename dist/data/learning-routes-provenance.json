@@ -622,8 +622,8 @@
       "sha256": "c6fca2255513e9e0fb8e2e6931021714a79175caa7c080d19aaa3abfa6099dea"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 17415,
-      "sha256": "42e83365c2ac4c779b60fdad4aa7ff46964c8280de0f44d1508e0d8a9db25a35"
+      "bytes": 17463,
+      "sha256": "663870ada102ae97dcf44ba2384dfccb56badccbbfb9678194c1ffad04022bd5"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -732,6 +732,10 @@
     "scripts/test-magnetic-group-search.mjs": {
       "bytes": 10727,
       "sha256": "1acb56fdc17e8d9a177ecf121f4dda988e5f61b3a27f93a7387d1ed1c08d3f58"
+    },
+    "scripts/test-magnetic-setting-derivation.py": {
+      "bytes": 15724,
+      "sha256": "098816bf066cd9bac9bdc143f8952f3da4714f0b15306bf0a45d046b4b2330f1"
     },
     "scripts/test-material-notebook.mjs": {
       "bytes": 15291,

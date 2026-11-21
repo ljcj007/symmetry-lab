@@ -42,9 +42,16 @@ verify('exactly one new task follows the unchanged original 22',
        canonical_hash(items[:-1]) == 'eb2bc33fe15258e9833931eb4f27d874e785d29337de281ebb379439aa87ab83')
 spin_connection_ids = {'double-01', 'double-02', 'double-03', 'double-04',
                        'magnetic-04', 'magnetic-05'}
+verify('the first space-group lesson opens its 4₁ screw model',
+       [(row.get('lab'), row.get('labInputs')) for row in lessons['lessons'] if row['id'] == 'space-01']
+       == [('seitz', {'preset': 'screw41'})])
+original_non_spin_lessons = [
+    {key: value for key, value in row.items()
+     if key != 'derivationIds' and (row['id'] != 'space-01' or key != 'labInputs')}
+    for row in lessons['lessons'] if row['id'] not in spin_connection_ids
+]
 verify('the other 18 lesson texts retain their pre-spin-connection content',
-       canonical_hash([{k: v for k, v in row.items() if k != 'derivationIds'}
-                       for row in lessons['lessons'] if row['id'] not in spin_connection_ids]) ==
+       canonical_hash(original_non_spin_lessons) ==
        '7e1674f7e1a052581ca6d57daa99e74a7fd311958274e22b8b764c4791a6a1ef')
 verify('the six spin lesson texts match the independently checked connection revision',
        canonical_hash([{k: v for k, v in row.items() if k != 'derivationIds'}
