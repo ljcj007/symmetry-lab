@@ -33,9 +33,10 @@ class PhononModesTests(unittest.TestCase):
         from browser_api import run as run_api
         path=Path(__file__).resolve().parents[1]/'dist/data/examples/phonopy-al-abacus-band.yaml'
         raw=path.read_bytes(); text=raw.decode('utf8'); original=yaml.safe_load(text)
-        result=run_api('phonon_modes',{'content':text,'frequency_unit':'THz',
+        result=run_api('phonon_modes',{'content':text,'frequency_unit':'THz','preset':'gaas-mixed',
                         'selected_q':0,'selected_band':0,'amplitude':0.1,'supercell':[1,1,1]})
         self.assertFalse(result['synthetic'])
+        self.assertIsNone(result['teachingPreset'])
         self.assertEqual(result['sourceIdentity']['sha256'],hashlib.sha256(raw).hexdigest())
         self.assertEqual(result['sourceIdentity']['reference']['commit'],'18cad919af8fe8aad349e04f101887fa19b051a0')
         self.assertEqual(result['sourceIdentity']['representation'],'utf8-source-text')
@@ -169,6 +170,27 @@ class PhononModesTests(unittest.TestCase):
         self.assertAlmostEqual(diagnostic['nearZeroWeightFraction'], .5)
         self.assertAlmostEqual(diagnostic['outsideWeightFraction'], .5)
         self.assertNotAlmostEqual(*(a['displacement'][0] for a in result['frozen']['atoms']))
+
+    def test_selectable_mixed_gaas_matches_the_independent_rotation(self):
+        original, mixed = (preset_data(preset) for preset in ('gaas', 'gaas-mixed'))
+        self.assertTrue(mixed['synthetic'])
+        for key in ('frequency_unit', 'lattice', 'points', 'physical_unit'):
+            self.assertEqual(original[key], mixed[key])
+        source_bands, mixed_bands = (data['phonon'][0]['band'] for data in (original, mixed))
+        self.assertEqual([b['frequency'] for b in source_bands], [b['frequency'] for b in mixed_bands])
+        eye = np.eye(3)
+        rotation = np.block([[eye, eye], [eye, -eye]]) / math.sqrt(2)
+        expected = unpack(source_bands) @ rotation
+        np.testing.assert_allclose(unpack(mixed_bands), expected, atol=1e-12)
+        np.testing.assert_allclose(expected.conj().T @ expected, np.eye(6), atol=1e-12)
+        result = run({'preset': 'gaas-mixed', 'selected_band': 0})
+        self.assertTrue(result['synthetic'])
+        self.assertEqual(result['teachingPreset'], 'gaas-mixed')
+        self.assertEqual(result['source'], 'gaas-mixed-synthetic-gamma.json')
+        self.assertEqual(result['sourceIdentity']['representation'], 'canonical-json-object-not-original-file')
+        self.assertNotIn('reference', result['sourceIdentity'])
+        self.assertEqual([g['classification']['label'] for g in result['modeGroups']], ['T2', 'T2'])
+        self.assertAlmostEqual(result['translationDiagnostic']['nearZeroWeightFraction'], .5)
 
     def test_translation_frequency_window_uses_magnitude_and_preserves_cluster_imprecision(self):
         data = preset_data('gaas')

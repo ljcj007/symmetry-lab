@@ -44,17 +44,24 @@ def preset_data(preset='silicon'):
         'gaas': ('Ga', 'As', 69.723, 74.9216, 5.653, .25, 8.0),
         'nacl': ('Na', 'Cl', 22.98977, 35.45, 5.64, .5, 6.0),
     }
-    if preset not in models:
-        raise ValueError('preset 必须是 silicon、gaas 或 nacl')
-    first, second, m1, m2, lattice, coordinate, frequency = models[preset]
+    mixed = preset == 'gaas-mixed'
+    model = 'gaas' if mixed else preset
+    if not isinstance(model, str) or model not in models:
+        raise ValueError('未知 Γ 点教学预设')
+    first, second, m1, m2, lattice, coordinate, frequency = models[model]
+    # Physical translations have equal displacements; the optical triplet
+    # has fixed centre of mass. Both vectors below are mass-weighted.
+    acoustic = [math.sqrt(m1 / (m1 + m2)), math.sqrt(m2 / (m1 + m2))]
+    optical = [acoustic[1], -acoustic[0]]
+    if mixed:
+        # Mix the two T2 copies at fixed frequency only to expose why the
+        # irrep labels by themselves do not test rigid translations.
+        acoustic, optical = ([(a + o) / math.sqrt(2) for a, o in zip(acoustic, optical)],
+                             [(a - o) / math.sqrt(2) for a, o in zip(acoustic, optical)])
     bands = []
-    # e is mass-weighted: translations have equal physical displacements;
-    # optical modes have zero centre-of-mass displacement.
-    for optical in (False, True):
-        weights = ([math.sqrt(m2 / (m1 + m2)), -math.sqrt(m1 / (m1 + m2))]
-                   if optical else [math.sqrt(m1 / (m1 + m2)), math.sqrt(m2 / (m1 + m2))])
+    for value, weights in ((0.0, acoustic), (frequency, optical)):
         for axis in range(3):
-            bands.append({'frequency': frequency if optical else 0.0,
+            bands.append({'frequency': value,
                           'eigenvector': [[[weight if j == axis else 0.0, 0.0]
                                            for j in range(3)] for weight in weights]})
     return {'natom': 2, 'nqpoint': 1, 'synthetic': True,
@@ -400,11 +407,12 @@ def run(payload=None):
     if not isinstance(payload, dict):
         raise ValueError('payload 必须是对象')
     imported = any(importer._provided(payload, key) for key in ('content', 'data'))
-    data = importer._parse(payload) if imported else preset_data(payload.get('preset', 'silicon'))
+    preset = payload.get('preset', 'silicon')
+    data = importer._parse(payload) if imported else preset_data(preset)
     parse_payload = dict(payload, data=data)
     parse_payload.setdefault('selected_band', 0 if imported else 3)
     if not imported:
-        parse_payload.setdefault('filename', f"{payload.get('preset', 'silicon')}-synthetic-gamma.json")
+        parse_payload.setdefault('filename', f'{preset}-synthetic-gamma.json')
     # The importer translates data into a common representation. This lab
     # builds its own periodic structure rather than using the preview window.
     result = importer.run(parse_payload, include_animation=False)
@@ -430,7 +438,7 @@ def run(payload=None):
                  '冻结模只生成指定幅度的结构；负频模式不表示周期性真实运动，也不能单独决定最终相变结构。',
                  '标签表目前覆盖 O_h、T_d、C_1、C_i 的非磁性原胞 Γ 模式；其他点群保留计算特征标。']
     return {'kind': 'phonon-modes', 'source': result['source'], 'synthetic': result['synthetic'],
-            'description': result['description'], 'structure': structure, 'qpoints': result['qpoints'],
+            'teachingPreset': None if imported else preset, 'description': result['description'], 'structure': structure, 'qpoints': result['qpoints'],
             'frequencyUnit': result['frequencyUnit'],
             'frequencyUnitSource': result['frequencyUnitSource'],
             'frequencyUnitDeclarations': result['frequencyUnitDeclarations'],

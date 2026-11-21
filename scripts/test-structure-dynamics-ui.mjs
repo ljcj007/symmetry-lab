@@ -386,5 +386,56 @@ assert.equal(jobs.container.querySelector('#dyn-output').attributes['aria-busy']
 currentRun.reject(Error('current run error'));await currentRunRequest;
 assert.equal(jobs.container.querySelector('#dyn-run').disabled,false);
 assert.match(jobs.container.querySelector('#dyn-output').innerHTML,/current run error/);
+for(const edition of ['../dist/','../dist/en/']){
+ const address=file=>new URL(edition+file,import.meta.url);
+ const courseData=JSON.parse(fs.readFileSync(address('data/structure-dynamics.json'),'utf8'));
+ const {parseClassroomRoute:parseRoute}=await import(address('classroom-ui.js'));
+ const {renderStructureDynamicsView:renderCourse,getStructureDynamicsResult:courseResult}=await import(address('structure-dynamics-ui.js'));
+ globalThis.fetch=async url=>{
+  assert.match(String(url),/data\/structure-dynamics\.json/);
+  return {ok:true,json:async()=>courseData};
+ };
+ let automaticRuns=0;
+ const open=async(selection)=>{
+  const container=new Container();
+  await renderCourse({container,selection,run:async()=>{automaticRuns++;}});
+  return container;
+ };
+ const routeOf=link=>link.attributes.href.replaceAll('&amp;','&');
+ const casesFor=async(material='')=>{
+  // Mirrors the atlas/dynamics route, which embeds the cases tab.
+  const selection=parseRoute('classroom/structure-dynamics?tab=cases&material='+encodeURIComponent(material||'batio3'));
+  const container=await open({...selection,atlasOnly:true,embeddedOnly:true});
+  return container.querySelector('.obs-case-grid').children;
+ };
+ for(const [id,weights] of [['nacl',{Na:1,Cl:2}],['gaas',{Ga:1,As:2}]]){
+  const currentCase=courseData.cases.find(row=>row.id===id);
+  const expectedOrder=[currentCase,...courseData.cases.filter(row=>row!==currentCase)];
+  const [card,...others]=await casesFor(id);
+  assert.deepEqual([card,...others].map(article=>routeOf(article.querySelector('a'))),expectedOrder.map(row=>row.routes.classroom));
+  assert.deepEqual(card.querySelector('ol').querySelectorAll('a').map(a=>parseRoute(routeOf(a)).lesson),currentCase.lessonIds);
+  const resume=parseRoute(routeOf(card.querySelector('a')));
+  assert.equal(resume.material,id);
+  assert.equal(resume.lesson,'centering-basis');
+  const lessonPage=await open(resume);
+  assert.equal(lessonPage.querySelector('#dyn-lesson').value,'centering-basis');
+  await lessonPage.querySelector('#dyn-to-lab').onclick();
+  assert.equal(lessonPage.querySelector('#dyn-material').value,id);
+  assert.equal(lessonPage.querySelector('#dyn-preset').value,id);
+  assert.equal(lessonPage.querySelector('#dyn-hkl').value,'[2,0,0]');
+  assert.deepEqual(JSON.parse(lessonPage.querySelector('#dyn-factors').value),weights);
+  assert.equal(lessonPage.querySelector('#dyn-run').disabled,false);
+  assert.equal(courseResult(),null);
+ }
+ const intro=await open(parseRoute('classroom/structure-dynamics?material=nacl&lesson=structure-factor'));
+ await intro.querySelector('#dyn-to-lab').onclick();
+ assert.equal(intro.querySelector('#dyn-preset').value,'custom','The existing introductory link keeps its generic two-site exercise');
+ const defaultPage=await open(parseRoute('classroom/structure-dynamics'));
+ assert.equal(defaultPage.querySelector('#dyn-lesson').value,courseData.lessons[0].id);
+ const defaultCards=await casesFor();
+ assert.equal(routeOf(defaultCards[0].querySelector('a')),courseData.cases[0].routes.classroom);
+ assert.equal(automaticRuns,0,'Opening routes and their labs leaves computation manual');
+ console.log(`Material case handoff (${edition.includes('/en/')?'English':'Chinese'}): declared routes, ordered lessons, NaCl and GaAs diffraction presets, default entry and manual Run passed.`);
+}
 globalThis.fetch=normalFetch;
 console.log('Structure dynamics UI: real Python schemas, six-domain and origin interaction, reflection selection, band segmentation, mode selection, 3D projection, snapshot handoff, pending sample/file Run gates, HTTP/body/local-file retry, editable replacement, canceled/detached reads, obsolete Python completion isolation, routes and persisted stepwise exercises passed.');

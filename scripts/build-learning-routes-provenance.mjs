@@ -43,6 +43,8 @@ files.push('scripts/test-recent-lesson-names.mjs','scripts/test-observables-ui.m
  'dist/python/phonon_spectra.py','locales/en-si-response-comparison.json');
 files.push('dist/magnetic-group-query.js','dist/tool-finder.js','scripts/test-magnetic-group-search.mjs',
  'dist/material-research-ui.js','scripts/test-python-phonon-modes.py','scripts/test-gamma-translations-ui.mjs','locales/en-gamma-translations.json');
+files.push('scripts/test-atlas-workbench-routes.mjs','scripts/test-gaas-mixed-exercise-ui.mjs',
+ 'locales/en-gaas-mixed-exercise.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -78,6 +80,8 @@ data.verification.push('New visible boundaries retain equal-input-frequency SHG 
 data.verification.push('The water lesson links to a GaAs displacement comparison. Both editions check the rigid rotation against all three fcc primitive directions. The optical contrast uses the existing Python phonon example geometry and a verified model frame. The exact trace.txt lookup opens the ordinary and magnetic band-character tool with its existing input constraints.');
 data.verification.push('Every indexed lesson opens contextual course search from its current learning panel. All 197 canonical lesson identities resolve into 51 topics. Same-name lessons stay distinct. Users can browse their topic or retain the query when broadening to the course catalog or the whole lesson inventory.');
 data.verification.push('Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing.');
+data.verification.push('Atlas material cards open their declared lessons and preserve material-specific lab inputs. Atlas workbench links record the selected group and valid reciprocal-space conventions when the browser history entry is created.');
+data.verification.push('The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

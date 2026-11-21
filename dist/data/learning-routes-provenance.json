@@ -27,7 +27,9 @@
     "New visible boundaries retain equal-input-frequency SHG j/k symmetry without full Kleinman permutation, χ versus piezoelectric e and d=χ/2, reciprocal fractions versus radian wavevectors, exact complex amplitudes versus fixed-irrep path spaces, single-particle versus Slater determinant models, electric versus magnetic probes and their separate units/thermal weights, same-k antiunitary tests, complete fermionic exchange, and declared order-parameter manifolds.",
     "The water lesson links to a GaAs displacement comparison. Both editions check the rigid rotation against all three fcc primitive directions. The optical contrast uses the existing Python phonon example geometry and a verified model frame. The exact trace.txt lookup opens the ordinary and magnetic band-character tool with its existing input constraints.",
     "Every indexed lesson opens contextual course search from its current learning panel. All 197 canonical lesson identities resolve into 51 topics. Same-name lessons stay distinct. Users can browse their topic or retain the query when broadening to the course catalog or the whole lesson inventory.",
-    "Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing."
+    "Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing.",
+    "Atlas material cards open their declared lessons and preserve material-specific lab inputs. Atlas workbench links record the selected group and valid reciprocal-space conventions when the browser history entry is created.",
+    "The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -46,8 +48,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 79644,
-      "sha256": "53c58b0ed7c7bae0425bf8caa9b4962368ebc18005965c6c6c253e0bec7dc498"
+      "bytes": 80530,
+      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -58,8 +60,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 102901,
-      "sha256": "5ede495d01e94de8a14b8cf375a4d16ba86d7fee989c90dafc7efeccaca8df7d"
+      "bytes": 103040,
+      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -78,8 +80,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32790,
-      "sha256": "07b3559b61afc90d4ab959b98190930b356514ce065a319776257c32927d7d8c"
+      "bytes": 32802,
+      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -234,8 +236,8 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8215,
-      "sha256": "2361a9e02a4b801c439db7b8650706f218f186efcc4c2e442cff8c68024900e9"
+      "bytes": 8221,
+      "sha256": "d2df576c9bee6074fbadac83807c5b6d43741b4c27bd99617c97939e22fb0b35"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -262,12 +264,12 @@
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 65151,
-      "sha256": "96df49ff160ec82254a238b16492de30e792d66e5a595b7096fcd1bcf1c2fa60"
+      "bytes": 67091,
+      "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
     },
     "dist/navigation-ui.js": {
-      "bytes": 33841,
-      "sha256": "23321fd558b0df4cd7e208c0f37181ca967266b91e1ae64c45e09df8291977da"
+      "bytes": 33847,
+      "sha256": "823dde3ba52e1168c9c58d24a45884171e1e86ba50c26164671371d75fa61da7"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -290,12 +292,12 @@
       "sha256": "46182a660770fae690a2d83b7ef8d61bdaa835291136cebbb2b1d7d594bfdd64"
     },
     "dist/python-client.js": {
-      "bytes": 3141,
-      "sha256": "6971086f42da233d1b2544a09d8de0dfdb8d451f0ac407b5dc7ff4c0e7e762ed"
+      "bytes": 3147,
+      "sha256": "1879bdac03d347448c606e8d9a635777c1930f446d0370c590052b4fbad566c4"
     },
     "dist/python-worker.js": {
-      "bytes": 12062,
-      "sha256": "5891d7b168f5e463deaefac81a6167a1b3d08fba69b64a662a9d255ed2947114"
+      "bytes": 12068,
+      "sha256": "f2dd64ed3f335f0ec16c8c9a91bbc733d3c75a64c72ceecc46c0d49e1a93760a"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -362,8 +364,8 @@
       "sha256": "df9aac4624b6339ff178c36c8d198d49fd31fdcbb5ae5c482d218ea627f3116e"
     },
     "dist/python/phonon_modes.py": {
-      "bytes": 27260,
-      "sha256": "18f1f37c20027fcae4c821aae77cbde2e60ff368230e6bdbe0bee7f43153334e"
+      "bytes": 27693,
+      "sha256": "1c7ded45c000cc560bc7235f3bd19c3148e94da668b9943975a44ed117655fe3"
     },
     "dist/python/phonon_spectra.py": {
       "bytes": 18918,
@@ -458,8 +460,8 @@
       "sha256": "4a21d69b2fadbdf16eedf4f091a7d09dc9739374448f3954a38a1009bf29cd8c"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 59970,
-      "sha256": "ec7456d3e18b113532913c331b8e208dacb08c9faca7dd8ea5e35f426910c006"
+      "bytes": 60079,
+      "sha256": "ee5570bf4f1d1d5cbbf77eb4e25e3a8ba75967afc06c8513d922e0eaf7471c77"
     },
     "dist/structure-ui.js": {
       "bytes": 31074,
@@ -490,8 +492,8 @@
       "sha256": "55213a8e421e185ca7242f7964dd0c246f5956c18c64702b045525f20def2677"
     },
     "dist/tool-finder.js": {
-      "bytes": 13819,
-      "sha256": "b0a3a13935bb02f93486d40eb4e88c4b57c6e0feaf504661e23f15f0538f0c3b"
+      "bytes": 13825,
+      "sha256": "9dcee4792ce9c15aed66918ef5d0683fc28d5dfaf47b49542199081fc60ecbfd"
     },
     "dist/tool-search.js": {
       "bytes": 3183,
@@ -557,6 +559,10 @@
       "bytes": 10355,
       "sha256": "12082dd274c3ada7f43052bf64dc2ff12df391ac5cbf064e41e81357c3eee967"
     },
+    "locales/en-gaas-mixed-exercise.json": {
+      "bytes": 1839,
+      "sha256": "daa7f8cde706b492c2942f61689042b23f38ec08604c75400c6e0acd5adc57b1"
+    },
     "locales/en-gamma-periodicity-host.json": {
       "bytes": 413,
       "sha256": "35c62ec8b176c07de81ce8cd617461b69a5aa14d7a01b337c0bab740b1bec9db"
@@ -598,20 +604,20 @@
       "sha256": "cc7602d29ceadfe79ac1c247387b29bac85dd421393c5f084d3d30e25b9ae36a"
     },
     "package.json": {
-      "bytes": 28714,
-      "sha256": "dc04dc9601cfb1d789efe0ed6cbab6727026fde850670e4f3cc00e8b2cb2a0e7"
+      "bytes": 28916,
+      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 15804,
-      "sha256": "0310232e3bb3169096e2768962d15e3b424100ce8cc03ae47549c922282e7a1b"
+      "bytes": 16411,
+      "sha256": "511a0b861eedd866e53173cf0863a224636179863673fd9b43a5599af414845c"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6545,
-      "sha256": "d9d0a3beb0af5fe0b0b17adde85f17baba3edc59eca6079e4665129d1d78af7e"
+      "bytes": 6595,
+      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
     },
     "scripts/test-al-gamma-discovery.mjs": {
       "bytes": 4267,
@@ -620,6 +626,10 @@
     "scripts/test-al-gamma-source.mjs": {
       "bytes": 4372,
       "sha256": "8c20f4446b0a78a5fcb99539cf8ffd41da9b035a79b7a594a52e45ffc7e23280"
+    },
+    "scripts/test-atlas-workbench-routes.mjs": {
+      "bytes": 5066,
+      "sha256": "e0b73910eb236aca3a899ebceb201fcbe2aabb143465e46eeb6b6fd10406f64d"
     },
     "scripts/test-band-match-results.mjs": {
       "bytes": 1406,
@@ -664,6 +674,10 @@
     "scripts/test-frontiers-ui.mjs": {
       "bytes": 8679,
       "sha256": "61e21132e0ff0d82ae633cb33557f3ef5b2df40c1b74b21ad2795fe49ca8489a"
+    },
+    "scripts/test-gaas-mixed-exercise-ui.mjs": {
+      "bytes": 4915,
+      "sha256": "6ae119d8c8c24ef39518b6f09edc32bcd61c5b0a7c7110bc1abdf2faf66261ed"
     },
     "scripts/test-gamma-periodicity.mjs": {
       "bytes": 5660,
@@ -750,8 +764,8 @@
       "sha256": "bc89ef0735fc0b8927cfb6d28f21e74f49ac2ad6c04ea6ffce09f25b183ca581"
     },
     "scripts/test-python-phonon-modes.py": {
-      "bytes": 25062,
-      "sha256": "6817d5c6e6dc14c9859ca14dce2807cbe5fc65bfffe41db135a330bf348f5b8a"
+      "bytes": 26609,
+      "sha256": "518dd598f7f9b4723f97fca93d5758b1d4dcb12f562ea05a0ed778d9a639e7c3"
     },
     "scripts/test-python-phonon-spectra.py": {
       "bytes": 11497,
@@ -774,8 +788,8 @@
       "sha256": "f084df17a7c47118b355770b38395454ef7b2760da08b3dd35fbed3ee6835829"
     },
     "scripts/test-structure-dynamics-ui.mjs": {
-      "bytes": 37074,
-      "sha256": "19fd3fb68d0fc18752f6d050ef21bd26326dd76eb67c706db69feecc1bae8553"
+      "bytes": 40406,
+      "sha256": "0a956e66f0068796b57250b68cc97fda5b78881e9141e4f296e5682737a86209"
     },
     "scripts/test-zero-start-placement.mjs": {
       "bytes": 6089,

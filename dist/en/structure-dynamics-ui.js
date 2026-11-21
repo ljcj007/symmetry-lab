@@ -2,7 +2,7 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {setPhonopyScatteringInput} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261121-msg-gamma1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261121-atlas-workbench1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261120-lesson-topic1';
 import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
@@ -148,7 +148,9 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
   const button=$('#dyn-retry-input');button.onclick=()=>{if(current()&&$('#dyn-retry-input')===button&&!busy&&!readIsCurrent())return retry();};
  }
 
- function links(c){return `<div class="obs-links"><a href="#classroom/structure-dynamics?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">Browse the materials learning pathways →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?"Phase transitions and domains":"Diffraction and extinction"} →</a><a href="#compute/phonopy?material=${esc(c.id)}">Import your own Phonopy data →</a>${c.id==='batio3'?"<a href=\"#compute/tensors?preset=tetragonal_4mm\">polarity Phase tensor constraints →</a>":`<a href="#atlas/materials?material=${esc(c.id)}">Structure and Symmetry Operation →</a><a href="#classroom/observables?material=${esc(c.id)}">phonon and physical properties class →</a>`}</div>`;}
+ function links(c){
+  const classroomRoute=c.routes?.classroom??`#classroom/structure-dynamics?material=${encodeURIComponent(c.id)}&lesson=${encodeURIComponent(c.lessonIds[0])}`;
+  return `<div class="obs-links"><a href="${esc(classroomRoute)}">Browse the materials learning pathways →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?"Phase transitions and domains":"Diffraction and extinction"} →</a><a href="#compute/phonopy?material=${esc(c.id)}">Import your own Phonopy data →</a>${c.id==='batio3'?"<a href=\"#compute/tensors?preset=tetragonal_4mm\">polarity Phase tensor constraints →</a>":`<a href="#atlas/materials?material=${esc(c.id)}">Structure and Symmetry Operation →</a><a href="#classroom/observables?material=${esc(c.id)}">phonon and physical properties class →</a>`}</div>`;}
  function draw(){if(!current())return;const previous=$('[data-dyn-zno-satellite]');if(previous)satelliteOpen=previous.open;stopSatellite();stopSatellite=()=>{};stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
  const backgrounds=data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]);
  if(!hasMaterialBackground)backgrounds.unshift(['',"Custom input"]);

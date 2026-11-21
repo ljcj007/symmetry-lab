@@ -1,0 +1,12 @@
+{
+  "对照练习：同为 T₂，都是刚性平移吗？": "Compare the T₂ triplets: are both rigid translations?",
+  "先预测。把每个方向的两个 GaAs 教学本征矢等权混合，保持 0 和 8 THz 的频率标签。两个三重态的不可约标签和平移权重会怎样变？": "Predict first. Mix the two GaAs teaching eigenvectors equally in each direction, keeping their frequency labels at 0 and 8 THz. How will the irrep labels and rigid-translation weights change?",
+  "载入原始 GaAs": "Load original GaAs",
+  "载入混合 GaAs": "Load mixed GaAs",
+  "分别载入并手动运行。记录两个频率簇的刚性平移权重，再比较 0 THz 模式中 Ga 和 As 的冻结位移。": "Load and run each case manually. Record the rigid-translation weights for both frequency clusters. Then compare the frozen displacements of Ga and As in the 0 THz mode.",
+  "核对解释": "Check the explanation",
+  "两组仍标为 T₂。原始权重为 100% 和 0%，混合后各为 50%。相同的不可约标签允许两个副本混合。原始零频模式中的两个原子等量平移，混合后的两种位移不再相同。": "Both groups still have the label T₂. The original weights are 100% and 0%. The mixed groups each carry 50%. The two copies can mix because they carry the same irrep. The atoms move by equal amounts in the original zero-frequency mode and by different amounts in the mixed mode.",
+  "GaAs · 人工混合 T₂ 对照": "GaAs · synthetic mixed T₂ control",
+  "人工混合 T₂ 对照：在质量加权坐标中把两组三重态等权混合，保留原频率标签。": "Synthetic mixed T₂ control. The two triplets are mixed equally in mass-weighted coordinates, with their original frequency labels retained.",
+  "未知 Γ 点教学预设": "Unknown Γ-mode teaching preset"
+}

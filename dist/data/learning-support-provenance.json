@@ -35,20 +35,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 79644,
-      "sha256": "53c58b0ed7c7bae0425bf8caa9b4962368ebc18005965c6c6c253e0bec7dc498"
+      "bytes": 80530,
+      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
     },
     "dist/app.js": {
-      "bytes": 102901,
-      "sha256": "5ede495d01e94de8a14b8cf375a4d16ba86d7fee989c90dafc7efeccaca8df7d"
+      "bytes": 103040,
+      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32790,
-      "sha256": "07b3559b61afc90d4ab959b98190930b356514ce065a319776257c32927d7d8c"
+      "bytes": 32802,
+      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -91,8 +91,8 @@
       "sha256": "f5df267450581ec62b3a87865c0ae0ccfc8d0b52e00615dcc5e91addb391cd5e"
     },
     "dist/index.html": {
-      "bytes": 8215,
-      "sha256": "2361a9e02a4b801c439db7b8650706f218f186efcc4c2e442cff8c68024900e9"
+      "bytes": 8221,
+      "sha256": "d2df576c9bee6074fbadac83807c5b6d43741b4c27bd99617c97939e22fb0b35"
     },
     "dist/lie-group-ui.js": {
       "bytes": 59790,
@@ -103,8 +103,8 @@
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 65151,
-      "sha256": "96df49ff160ec82254a238b16492de30e792d66e5a595b7096fcd1bcf1c2fa60"
+      "bytes": 67091,
+      "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
     },
     "dist/pathways-ui.js": {
       "bytes": 18106,
@@ -187,16 +187,16 @@
       "sha256": "b1143d0449ad784ac5b8eaf21b047802182a851a0727dce371fcce3aa1e1f4c3"
     },
     "package.json": {
-      "bytes": 28714,
-      "sha256": "dc04dc9601cfb1d789efe0ed6cbab6727026fde850670e4f3cc00e8b2cb2a0e7"
+      "bytes": 28916,
+      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
     },
     "scripts/build-learning-support-provenance.mjs": {
       "bytes": 5915,
       "sha256": "bca3c6c72d0d2c1c56e4249ec79c0417ddf8079ed8694cee0c51e13f3c3c02b2"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6545,
-      "sha256": "d9d0a3beb0af5fe0b0b17adde85f17baba3edc59eca6079e4665129d1d78af7e"
+      "bytes": 6595,
+      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
     },
     "scripts/test-hall-bridges.mjs": {
       "bytes": 14598,

@@ -29,20 +29,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 79644,
-      "sha256": "53c58b0ed7c7bae0425bf8caa9b4962368ebc18005965c6c6c253e0bec7dc498"
+      "bytes": 80530,
+      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
     },
     "dist/app.js": {
-      "bytes": 102901,
-      "sha256": "5ede495d01e94de8a14b8cf375a4d16ba86d7fee989c90dafc7efeccaca8df7d"
+      "bytes": 103040,
+      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32790,
-      "sha256": "07b3559b61afc90d4ab959b98190930b356514ce065a319776257c32927d7d8c"
+      "bytes": 32802,
+      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -97,8 +97,8 @@
       "sha256": "f592645ed95212eb65b41474c62bfb53441c7cdb5ac730422e6665550916e796"
     },
     "dist/index.html": {
-      "bytes": 8215,
-      "sha256": "2361a9e02a4b801c439db7b8650706f218f186efcc4c2e442cff8c68024900e9"
+      "bytes": 8221,
+      "sha256": "d2df576c9bee6074fbadac83807c5b6d43741b4c27bd99617c97939e22fb0b35"
     },
     "dist/learning-feedback.js": {
       "bytes": 4472,
@@ -113,8 +113,8 @@
       "sha256": "c0ab99dddb17479695c7a927973ab92a4f9f150fd73e5cf93efd659db6fa9016"
     },
     "dist/material-research-ui.js": {
-      "bytes": 65151,
-      "sha256": "96df49ff160ec82254a238b16492de30e792d66e5a595b7096fcd1bcf1c2fa60"
+      "bytes": 67091,
+      "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
     },
     "dist/matrix-bridges.css": {
       "bytes": 2928,
@@ -157,8 +157,8 @@
       "sha256": "4a21d69b2fadbdf16eedf4f091a7d09dc9739374448f3954a38a1009bf29cd8c"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 59970,
-      "sha256": "ec7456d3e18b113532913c331b8e208dacb08c9faca7dd8ea5e35f426910c006"
+      "bytes": 60079,
+      "sha256": "ee5570bf4f1d1d5cbbf77eb4e25e3a8ba75967afc06c8513d922e0eaf7471c77"
     },
     "locales/en-flow-bridges.json": {
       "bytes": 15903,
@@ -173,16 +173,16 @@
       "sha256": "614cca565ad1ce9a78026b3207505384d77777bce38d31530148ab3fc4e6aaff"
     },
     "package.json": {
-      "bytes": 28714,
-      "sha256": "dc04dc9601cfb1d789efe0ed6cbab6727026fde850670e4f3cc00e8b2cb2a0e7"
+      "bytes": 28916,
+      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
     },
     "scripts/build-learning-flow-provenance.mjs": {
       "bytes": 5216,
       "sha256": "20d87a77010fd2966af24b2e871828b6fdd5e1b297a02a1afc3ba556c5a0d4cc"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6545,
-      "sha256": "d9d0a3beb0af5fe0b0b17adde85f17baba3edc59eca6079e4665129d1d78af7e"
+      "bytes": 6595,
+      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
     },
     "scripts/test-course-flow.mjs": {
       "bytes": 17467,
@@ -217,8 +217,8 @@
       "sha256": "ade9e6f3a1ad023860cda0c9441ac41c2cb8d5571d41fe2f7eabbf6c3753f868"
     },
     "scripts/test-structure-dynamics-ui.mjs": {
-      "bytes": 37074,
-      "sha256": "19fd3fb68d0fc18752f6d050ef21bd26326dd76eb67c706db69feecc1bae8553"
+      "bytes": 40406,
+      "sha256": "0a956e66f0068796b57250b68cc97fda5b78881e9141e4f296e5682737a86209"
     }
   }
 }

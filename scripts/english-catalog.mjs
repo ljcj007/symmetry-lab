@@ -65,6 +65,7 @@ catalogFiles.push('en-quartz-structure.json','en-quartz-lesson.json');
 catalogFiles.push('en-beginner-links.json');
 catalogFiles.push('en-si-response-comparison.json','en-zno-ir-search.json');
 catalogFiles.push('en-gamma-translations.json');
+catalogFiles.push('en-gaas-mixed-exercise.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

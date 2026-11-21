@@ -460,3 +460,9 @@ establish that all existing scientific and teaching content has been audited.
 - The finder and magnetic space-group atlas accept full BNS or OG numbers. Both indexes map all 1651 number pairs to their BNS atlas routes. Full identifiers wait for the group catalog before a keyboard selection is offered.
 - In the phonon mode calculator, the Γ-point result projects the supplied mass-weighted frequency subspaces onto the three rigid translations. The adjustable near-zero window uses the input frequency unit and reports any frequency cluster that straddles the threshold.
 - A simulated GaAs test mixes the original acoustic and optical triplets while keeping their frequencies fixed. Both triplets retain the T₂ label. The translation weight shifts from 100% and 0% to 50% and 50%, distinguishing a symmetry label from a rigid-translation check on the supplied mode data.
+
+## Carry the chosen material or group from the atlas
+
+- The NaCl and GaAs classroom links open their declared diffraction lessons. The experiment starts with the corresponding crystal and teaching scattering weights, and the material cards retain the full lesson list.
+- Opening a workbench from an ordinary, magnetic space-group or magnetic point-group row writes a complete route. Reload and language switch recover the group, momentum and spin convention. The new origin example resets the momentum label to Γ and carries over a Brillouin-zone choice only when supported by the selected group.
+- The phonon mode exercise provides both GaAs models on the same experimental settings. Learners predict, run each model, and compare the T₂ labels, translation weights and Ga/As displacements. Switching back to uploaded data restores the previous source and frequency-unit selection.
