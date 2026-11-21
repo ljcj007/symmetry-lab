@@ -1,5 +1,6 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
+import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
@@ -14,6 +15,21 @@ const seitzPresets=[['screw21','2₁ 螺旋轴 · 绕 z'],['rotation4','四重�
 const isSeitzPreset=value=>seitzPresets.some(([id])=>id===value);
 const groupPresets={double_group:[['c2_point','点群 C₂：二重旋转的双覆盖'],['d2_point','点群 D₂：Q₈ 与非交换旋量'],['screw21_space','三维空间群：2₁ 螺旋轴的双覆盖']],color_group:[['c3_point','点群 C₃：三色三角图案'],['translation3_space','三维空间群：三色层状周期模型']],spin_group:[['c2_point','点群 C₂：独立空间与自旋旋转'],['triangular_point','点群 C₃：三角形 120° 自旋构型'],['af_space','三维空间群：共线反铁磁周期模型'],['helix3_space','三维空间群：三层 120° 螺旋自旋']]};
 const isGroupLab=lab=>Object.hasOwn(groupPresets,lab);
+const doubleScrewKz=Object.freeze({'0':0,'1/4':.25,'1/2':.5});
+
+function doubleScrewWorkbenchHTML(result,payload){
+  if(payload?.lab!=='double_group'||payload.preset!=='screw21_space')return '';
+  const {kz}=payload;
+  if(result.lab!==payload.lab||result.preset!==payload.preset||result.dimension!=='space'||
+      result.kz!==kz||result.closure?.kz!==kz||!Object.hasOwn(doubleScrewKz,kz))return '';
+  const route=buildWorkbenchRoute({mode:'sg',id:4,k:[0,0,doubleScrewKz[kz]],doubleValued:true});
+  return `<aside class="sc-worked" aria-labelledby="sc-double-screw-workbench-title">
+    <h3 id="sc-double-screw-workbench-title">在空间群工作台核对螺旋本征值</h3>
+    <p>工作台采用 SG 4 的 Bradley–Cracknell（BC）设置。找到绕 z 轴的二重螺旋，核对它的平移分量 (0, 0, ½)。</p>
+    <p>先预测两个一维双值小表示的螺旋本征值。打开工作台并手动计算，用该操作的特征标核对预测。两条分支的顺序可以互换，它们的平方都应等于本实验给出的值。</p>
+    <a id="sc-double-screw-workbench" href="#${esc(route)}">带上本次计算的波矢打开双值工作台 →</a>
+  </aside>`;
+}
 const latticeNames={TricPrim:'三斜 · 原始',MonoPrim:'单斜 · 原始',MonoBase:'单斜 · 底心',OrthPrim:'正交 · 原始',OrthBase:'正交 · 底心',OrthBody:'正交 · 体心',OrthFace:'正交 · 面心',TetrPrim:'四方 · 原始',TetrBody:'四方 · 体心',TrigPrim:'三方 · 菱方原始',HexaPrim:'六方 · 原始',CubiPrim:'立方 · 原始',CubiBody:'立方 · 体心',CubiFace:'立方 · 面心'};
 const storageKey='symmetry-lab.academy.progress.v1';
 const derivationStorageKey='symmetry-lab.academy.derivations.v1';
@@ -504,14 +520,22 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     root.querySelectorAll('[data-sc-lab]').forEach(button=>button.onclick=()=>{if(!current()||state.tab!=='lab'||$('[data-sc-lab="'+button.dataset.scLab+'"]')!==button)return;changeLab(button.dataset.scLab);state.labLesson=null;drawLab();sync();});
     const form=$('#sc-lab-form'),activeForm=()=>current()&&state.tab==='lab'&&$('#sc-lab-form')===form;
     form.onsubmit=e=>{e.preventDefault();if(activeForm()&&!state.busy)return runLab();};
+    const clearEditedResult=()=>{
+      if(!activeForm()||state.busy)return;
+      captureLabDraft();stop();state.labError='';
+      if(state.labResult){state.labResult=null;state.labPayload=null;drawLabResult();}
+    };
     const presetControl=$('#sc-preset')||$('#sc-group-preset');
     if(presetControl)presetControl.onchange=e=>{
       if(!activeForm()||(state.lab==='seitz'&&!isSeitzPreset(e.target.value)))return;
       state.inputs[state.lab].preset=e.target.value;
-      captureLabDraft();
+      if(state.lab==='double_group')clearEditedResult();
+      else captureLabDraft();
       sync();
     };
-    form.oninput=()=>{if(!activeForm())return;captureLabDraft();stop();state.labError='';if(state.labResult){state.labResult=null;state.labPayload=null;drawLabResult();}};
+    const screwKzControl=$('#sc-group-kz');
+    if(screwKzControl)screwKzControl.onchange=clearEditedResult;
+    form.oninput=clearEditedResult;
     root.querySelectorAll('[data-sc-k]').forEach(button=>button.onclick=()=>{if(!activeForm()||state.lab!=='antiferro'||state.busy)return;$('#sc-af-k').value=button.dataset.scK;captureLabDraft();runLab();});
     drawLabResult();
   }
@@ -544,9 +568,13 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if(state.lab==='spinor'&&frame){body=`${spinorSVG(frame)}<div class="sc-legend"><span><i class="start"></i>期望自旋方向</span><span><i class="current"></i>初态重叠</span></div><div class="sc-result-facts"><div><span>转角</span><code>${esc(frame.angle)}°</code></div><div><span>旋量分量</span><code>(${(frame.spinor||[]).map(c=>esc(complex(c))).join(', ')})</code></div><div><span>Bloch 向量</span><code>${esc(vector(frame.blochVector))}</code></div><div><span>与初态的重叠</span><code>${esc(complex(frame.overlap))}</code></div><div><span>↑ / ↓ 概率</span><code>${esc((frame.probabilities||[]).map(fmt).join(' / '))}</code></div></div><p class="sc-callout">360° 后 U = −I，720° 后 U = I。整体负号不改变单态的测量概率；相对相位可在干涉比较中体现。Bloch 箭头相同，不能说明两个旋量的振幅完全相同。</p><details class="sc-result-details"><summary>当前 SU(2) 旋转矩阵</summary>${matrixHTML(frame.matrix,true)}</details>${timeReversalHTML(result)}`;}
     if(state.lab==='magnetic'){body=`${magneticSVG(result,state.labPayload)}<div class="sc-legend"><span><i class="start"></i>初始向量</span><span><i class="current"></i>变换后向量</span></div><div class="sc-result-facts"><div><span>det R</span><code>${esc(fmt(result.determinant))}</code></div><div><span>时间反演符号</span><code>${esc(fmt(result.timeSign))}</code></div><div><span>变换后位置 Rr</span><code>${esc(vector(result.transformedPosition))}</code></div><div><span>变换后磁矩</span><code>${esc(vector(result.transformedMoment))}</code></div></div><pre class="sc-formula">r′ = Rr\nm′ = εₜ det(R) Rm</pre><p class="sc-small">εₜ = −1 表示附带时间反演，否则为 +1。反演不改变轴向量磁矩，时间反演则改变它的方向。</p>`;}
     if(state.lab==='antiferro'){body=`${antiferroSVG(result)}<div class="sc-legend"><span><i class="start"></i>向上磁矩</span><span><i class="current"></i>向下磁矩</span></div><div class="sc-result-facts"><div><span>k → −k</span><code>${esc(fmt(state.labPayload?.k))} → ${esc(fmt(result.momentumImage))}</code></div><div><span>k 与 −k 等价？</span><code>${result.isTrim?'是（模倒格矢）':'否'}</code></div><div><span>S²</span><code>${esc(complex(result.square))}</code></div><div><span>同一 k 的 Kramers 充分条件</span><strong>${result.kramersEligible?'满足':'不满足'}</strong></div></div><div class="sc-symmetry-tests">${(result.symmetryTests||[]).map(test=>`<div><code>${crystalSpan(test.label||test.operation,'operation')}</code><span>${test.preservesPattern?'✓ 保持磁序':'✕ 不保持磁序'}</span></div>`).join('')}</div><p class="sc-callout">必须同时检查 S 把态带回同一 k（模倒格矢）和 S² = −1。条件不满足只说明这个对称性不能保证该处 Kramers 简并，不排除其他对称性造成的简并。</p>`;}
-    if(isGroupLab(state.lab)&&frame)body=groupResultHTML(result,frame);
+    if(isGroupLab(state.lab)&&frame)body=groupResultHTML(result,frame)+doubleScrewWorkbenchHTML(result,state.labPayload);
     target.innerHTML=`<h3 class="sc-result-title">${esc(result.title||labNames[state.lab])}</h3>${body}${frames.length?`<div class="sc-frame-controls"><label for="sc-frame">${state.lab==='spinor'?'旋转角度':'连续复合步骤'}<output id="sc-frame-value">${state.lab==='spinor'?esc(frame?.angle)+'°':esc(frame?.step)}</output></label><input id="sc-frame" type="range" min="0" max="${frames.length-1}" step="1" value="${state.frame}"><div class="sc-actions"><button type="button" class="secondary" id="sc-play">${state.timer!==null?'暂停':'播放逐帧演示'}</button><button type="button" class="secondary" id="sc-reset-frame">回到起点</button>${state.lab==='spinor'?'<button type="button" class="secondary" data-sc-angle="360">360°</button><button type="button" class="secondary" data-sc-angle="720">720°</button>':''}</div></div>`:''}<p class="sc-convention">${esc(result.convention||'')}</p>${Array.isArray(result.notes)?`<ul class="sc-notes">${result.notes.map(note=>`<li>${esc(note)}</li>`).join('')}</ul>`:''}<button type="button" class="sc-text-button" id="sc-export-lab">↓ 导出输入与 Python 结果</button>`;
     if(isGroupLab(state.lab)&&frame)groupViewer=createSpinColorViewer({container:$('#sc-group-viewer'),data:result,frameIndex:state.frame,initialView:groupCamera,isCurrent:()=>current()&&state.tab==='lab'&&state.labResult===result});
+    const screwWorkbench=$('#sc-double-screw-workbench');
+    if(screwWorkbench)screwWorkbench.onclick=event=>{
+      if(!current()||state.tab!=='lab'||state.labResult!==result||$('#sc-double-screw-workbench')!==screwWorkbench)event.preventDefault();
+    };
     root.querySelectorAll('[data-sc-theta-step]').forEach(button=>button.onclick=()=>{const step=Number(button.dataset.scThetaStep);if(current()&&state.tab==='lab'&&state.lab==='spinor'&&state.labResult===result&&$('[data-sc-theta-step="'+step+'"]')===button&&Number.isInteger(step)&&step>=0&&step<=2){timeReversalStep=step;drawLabResult();}});
     if(frames.length){$('#sc-frame').oninput=e=>{stop();state.frame=Number(e.target.value);drawLabResult();};$('#sc-reset-frame').onclick=()=>{stop();state.frame=0;drawLabResult();};$('#sc-play').onclick=()=>{if(state.timer!==null){stop();drawLabResult();return;}if(state.frame>=frames.length-1)state.frame=0;function tick(){if(!current()||state.tab!=='lab'||state.busy||state.labResult!==result){stop();return;}if(state.frame>=frames.length-1){stop();drawLabResult();return;}state.frame++;state.timer=setTimeout(tick,state.lab==='spinor'?180:850);drawLabResult();}state.timer=setTimeout(tick,180);drawLabResult();};root.querySelectorAll('[data-sc-angle]').forEach(button=>button.onclick=()=>{stop();state.frame=Math.max(0,frames.findIndex(f=>f.angle===Number(button.dataset.scAngle)));drawLabResult();});}
     $('#sc-export-lab').onclick=()=>{download(JSON.stringify({input:state.labPayload,result:state.labResult,...(groupViewer?{camera:groupViewer.getView()}:{} )},null,2),`teaching-lab-${state.lab}.json`);toast('已导出实验输入和 Python 计算结果');};

@@ -61,6 +61,8 @@ The space-group route teaches classification hierarchy and catalogue use for all
 
 Finite  double group  doubles ordinary  point group  elements, not mechanically  conjugacy class  counts,  irreducible representation  counts, or levels. Double-valued1D reps exist; SOC alone does not double every k. Spherical j=1/2,3/2 splitting does not replace arbitrary-crystal  double group  reduction.
 
+Run the twofold screw demonstration in the [double-space-group lesson](../index.html#classroom/crystal?track=double&lesson=double-06), then carry the current axial wavevector into the double-valued workbench for space group 4. Find the operation about z with translation (0, 0, ½). Manually calculate the two one-dimensional little-group representations and compare the characters of that operation. They are ±i at Γ and ±1 at k_z=½. [IUCr definition of a screw operation](https://www.iucr.org/who-we-are/commissions/commission-on-crystallographic-nomenclature/published-reports/symsym)
+
 Magnetic-group counts are I=230, II=230, III=674 and IV=517, totaling 1651; magnetic point groups instead have 32+32+58=122 types. Interpret BNS/OG labels with their respective cell settings; their numbers are not decimals. Discarding translations turns a type-IV antitranslation into pure time reversal, explaining why ordered antiferromagnets can have gray magnetic point groups.
 
 “No such pairing protection” in the antiferromagnetic experiment means only that the selected antiunitary operation fails to establish that Kramers-type result, not that all degeneracy disappears. Net moment, magnetic-group type, or half translations alone do not determine actual order, splitting magnitudes, or topology.

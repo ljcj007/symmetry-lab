@@ -56,6 +56,10 @@ files.push('scripts/test-foundations-demos.mjs','scripts/test-foundations-routin
  'scripts/test-file-search.mjs','dist/docs/foundations-demos.md','dist/tool-capabilities.js',
  'locales/en-character-comparison.json','locales/en-character-discovery.json','locales/en-structure-file-discovery.json');
 files.push('locales/en-workbench-intent-search.json','scripts/test-python-symbolic-spacegroups.py');
+files.push('dist/group-theorems.js','dist/python/group_theorems.py','dist/python/foundations_demos.py',
+ 'dist/docs/group-theorems.md','dist/docs/symmetry-course.md','scripts/test-group-theorems.mjs',
+ 'scripts/test-symmetry-course-ui.mjs','locales/en-triangle-reduction-bridge.json',
+ 'locales/en-double-screw-workbench.json','locales/en-classroom-lab-bridges-docs.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -99,6 +103,8 @@ data.verification.push('The introductory fourfold comparison uses a common rotat
 data.verification.push('The foundations preview compares one and two actions for C₄(z) and σ(xz) on xy and xyz. Exact lesson links retain the verified beginner basis and give the xz mirror convention used for the water displacement character.');
 data.verification.push('The shared finder and calculation directory match declared CIF and POSCAR filename patterns and the CONTCAR alias. Choosing the structure tool leaves the file selection and conversion to the user.');
 data.verification.push('The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request.');
+data.verification.push('The three-vertex character reduction opens the corresponding D₃ projection experiment with the reordered classes. The rank exercise checks the images of all three basis vectors and a symmetric vector with zero E projection.');
+data.verification.push('The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

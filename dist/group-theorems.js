@@ -42,6 +42,21 @@ export function theoremPreview(experiment,params={}){
 }
 
 const table=(heads,rows)=>`<div class="gt-scroll"><table><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const triangleProjectionRoute='#classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation';
+function triangleReductionBridge(result){
+ const order=[0,2,1];
+ const tuple=values=>'('+values.join(', ')+')';
+ return `<section class="gt-exercise" aria-labelledby="gt-triangle-reduction-title">
+   <h3 id="gt-triangle-reduction-title">从重数到三角形的投影</h3>
+   <p>三个顶点各放一个标量基函数。三重旋转使三个顶点循环换位，绕顶点轴的二重旋转交换另两个顶点。</p>
+   ${table(['实验','共轭类顺序','类大小','三顶点特征标'],[
+    ['S₃','恒等、对换、三循环',tuple(sizes),tuple(result.inputCharacters)],
+    ['D₃','恒等、三重旋转、二重旋转',tuple(order.map(i=>sizes[i])),tuple(order.map(i=>result.inputCharacters[i]))]
+   ])}
+   <p>交换最后两个共轭类的位置时，类大小和特征标随各自的类一起移动。带着约化得到的重数，去检验三个顶点如何投到各子空间。</p>
+   <a href="${esc(triangleProjectionRoute)}">沿用三个顶点，检验投影 →</a>
+  </section>`;
+}
 const matrix=a=>`<div class="gt-matrix" style="--gt-cols:${a[0].length}">${a.flatMap(r=>r.map(x=>`<span>${fmt(x)}</span>`)).join('')}</div>`;
 const text=(x,y,value,color='#183c52',size=17)=>`<text x="${x}" y="${y}" fill="${color}" font-size="${size}" text-anchor="middle">${esc(value)}</text>`;
 const line=(x,y,a,b,color='#7c96a6',w=2)=>`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}" stroke="${color}" stroke-width="${w}"/>`;
@@ -104,6 +119,7 @@ function scene(t,p){
   ['A1','A2','E'].forEach((name,i)=>{const x=40+i*215,m=r.multiplicities[name];body+=`<rect x="${x}" y="90" width="190" height="145" rx="12" fill="${r.validCharacter?'#edf6f7':'#fff1e6'}" stroke="#a8bec8"/>`+text(x+95,136,name,undefined,25)+text(x+95,183,`重数 ${fmt(m)}`);});body+=text(330,285,`维数重建：${fmt(r.reconstructedDimension)}；χ(e)=${fmt(r.inputCharacters[0])}`);
   html=`<h3>${r.validCharacter?'约化得到非负整数重数':'此特征标猜测未通过非负整数重数检验'}</h3><p>${math(String.raw`m_\alpha=\frac16\sum_c n_c\chi_\alpha(c)^*\chi(c)`)}，本页列序为恒等、对换、三循环，权重为1、3、2。</p>${table(['不可约表示','加权三项','重数'],Object.entries(r.multiplicities).map(([name,m])=>[name,r.weightedTerms[name].map(fmt).join(' + '),fmt(m)]))}<p>维数重建本身不够：还需每个重数是非负整数。当前 ${math(String.raw`\sum_\alpha m_\alpha d_\alpha`)}=${fmt(r.reconstructedDimension)}。</p><p>完整不可约表中，${math(String.raw`1^2+1^2+2^2=6`)}；不可约表示数3等于共轭类数3。正则表示中每个不可约表示的重数等于其维数。</p>`;
   task=exercise('把 χ=(3,1,0) 的第二项当成三个独立类重复使用，再额外乘3，会发生什么？',['第二项代表同一共轭类中每个对换的特征标，类大小3只计入一次。','正确公式用类权重1、3、2，得到A₁重数1、A₂重数0、E重数1。','若逐元素求和，则应列6项并取消类权重；两种方式等价，不能混用。']);
+  if(p.preset==='permutation')task+=triangleReductionBridge(r);
  }
  if(t==='degeneracy'){
   const lo=Math.min(...r.levels.map(x=>x.energy))-.3,hi=Math.max(...r.levels.map(x=>x.energy))+.3,Y=e=>275-(e-lo)/(hi-lo)*220;r.levels.forEach((o,i)=>{const x=75+i*210;body+=line(x,Y(o.energy),x+135,Y(o.energy),i?'#277c9e':'#b36a38',5)+text(x+67,Y(o.energy)-16,o.basis)+text(x+67,Y(o.energy)+28,fmt(o.energy));});

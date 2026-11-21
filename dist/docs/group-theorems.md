@@ -52,6 +52,8 @@ A₃={e,(123),(132)} 在任意共轭下保持不变，是 S₃ 的正规子群�
 
 **演示与证明：**将同一组数分别用于三顶点表示和六维正则表示。正则表示分解为 A₁+A₂+2E；比较“不可约维数 d”与“出现重数 m”，并说明为什么类大小不能省略。
 
+[打开三顶点投影练习](../index.html#classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation)，用同一组基函数检查约化结果。按操作对齐两张表后，D₃ 的列序为恒等、三重旋转、二重旋转，特征标随之写成 (3, 0, 1)。将三个基函数逐一投影，得到 A₁、A₂、E 的秩为 1、0、2。对称和在 E 下投影为零，但单独投影任意顶点函数会得到非零分量。[MIT 投影公式讲义](https://ocw.mit.edu/courses/res-18-011-algebra-i-student-notes-fall-2021/pages/student-notes/)
+
 ## 9. 不可约维数与受保护简并
 
 若量子哈密顿量在所选有限对称群下不变，Schur 引理限制其在单个不可约块中的作用为标量。因此一个孤立 E 块给出受该对称性保护的二重多重态。若 E 出现 m 次，对称性允许 H=H重数⊗I₂：不同 E 拷贝可混合并具有不同能量，而每个分支保留两重。此应用建立在上述 [Schur 对易子结构](https://symm4ml.mit.edu/symm4ml_s26/notes/representations)上。

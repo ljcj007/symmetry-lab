@@ -43,14 +43,26 @@ export function characterComparisonPreview(basis){
   return {operation,matrix:first.matrix,trace:first.trace,squared,squaredTrace};
  });
 }
+const trianglePermutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]];
+const triangleOperationNames=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
+const triangleMatrices=trianglePermutations.map(perm=>perm.map((_,i)=>perm.map(destination=>Number(destination===i))));
+const triangleCharacters={A1:[1,1,1,1,1,1],A2:[1,1,1,-1,-1,-1],E:[2,-1,-1,0,0,0]};
+const triangleProjectors=Object.fromEntries(Object.entries(triangleCharacters).map(([irrep,characters])=>{
+ const dimension=characters[0];
+ const projector=triangleMatrices[0].map((row,i)=>row.map((_,j)=>
+  dimension*triangleMatrices.reduce((total,matrix,g)=>total+characters[g]*matrix[i][j],0)/triangleMatrices.length
+ ));
+ return [irrep,projector];
+}));
+
 export function projectionPreview(s){
- const permutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]],names=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
  const q=[2/Math.sqrt(6),-1/Math.sqrt(6),-1/Math.sqrt(6)],v=[0,1/Math.sqrt(2),-1/Math.sqrt(2)],a=[1,1,1].map(x=>x/Math.sqrt(3));
- const permutation=permutations[s.operation],P=Array.from({length:3},(_,i)=>Array.from({length:3},(_,j)=>permutation[j]===i?1:0));
+ const permutation=[...trianglePermutations[s.operation]],P=triangleMatrices[s.operation].map(row=>[...row]);
  const seed=[0,0,0];seed[s.seedSite]=1;
- let projected=s.irrep==='A1'?a.map(x=>x*a[s.seedSite]):s.irrep==='A2'?[0,0,0]:s.row===1?v.map(x=>x*q[s.seedSite]):seed.map((x,i)=>x-1/3);
+ const irrep=s.irrep==='A1'||s.irrep==='A2'?s.irrep:'E';
+ const projected=irrep==='E'&&s.row===1?v.map(x=>x*q[s.seedSite]):mv(triangleProjectors[irrep],seed);
  const norm=Math.hypot(...projected),normalized=norm>1e-9?projected.map(x=>x/norm):[0,0,0];
- return {matrix:P,eMatrix:[q,v].map(b=>[q,v].map(c=>dot(b,mv(P,c)))),character:P.reduce((a,r,i)=>a+r[i],0),permutation,name:names[s.operation],projected,normalized,norm,basis:[a,q,v]};
+ return {matrix:P,eMatrix:[q,v].map(b=>[q,v].map(c=>dot(b,mv(P,c)))),character:P.reduce((a,r,i)=>a+r[i],0),permutation,name:triangleOperationNames[s.operation],projected,normalized,norm,basis:[a,q,v]};
 }
 export function splittingPreview(s){
  const d=Number(s.delta),ds=Number(s.ds),dt=Number(s.dt);
@@ -170,6 +182,61 @@ function characterWaterBridgeHTML(){
   </div>
  </details>`;
 }
+function triangleProjectionBridgeHTML(){
+ const vectorTeX=vector=>{
+  const numerators=vector.map(value=>Math.round(3*value));
+  return numerators.every(x=>x===0)?'\\mathbf{0}':String.raw`\tfrac13\left(${numerators.join(',')}\right)`;
+ };
+ const symbols={A1:'A_1',A2:'A_2',E:'E'};
+ const rows=Object.entries(triangleProjectors).map(([irrep,projector])=>{
+  const columns=projector.map((_,i)=>math(vectorTeX(projector.map(row=>row[i]))));
+  const rank=Math.round(projector.reduce((sum,row,i)=>sum+row[i],0));
+  return [math(symbols[irrep]),...columns,rank];
+ });
+ const symmetric=vectorTeX(mv(triangleProjectors.E,[1,1,1]));
+ const firstVertex=vectorTeX(mv(triangleProjectors.E,[1,0,0]));
+ return `<section class="fd-exercise" aria-labelledby="fd-triangle-projection-title">
+  <h3 id="fd-triangle-projection-title">Check three projection columns after reduction</h3>
+  <p>Keep the scalar basis on the three vertices. Start by applying ${math('P^{(A_2)}')} to the first vertex basis function, giving the zero vector.</p>
+  <div class="controls-row">
+   <label for="fd-triangle-projection-guess">Apply the same projector to vertices 2 and 3. What do you expect?</label>
+   <select class="form-select" id="fd-triangle-projection-guess" aria-describedby="fd-triangle-projection-feedback">
+    <option value="">Choose an answer</option>
+    <option value="all-zero">Both other columns are zero</option>
+    <option value="nonzero">At least one of the other columns is nonzero</option>
+    <option value="one-enough">One column is enough to determine the rank</option>
+   </select>
+   <button id="fd-triangle-projection-check" type="button" class="secondary" aria-controls="fd-triangle-projection-result">Check all three vertices</button>
+  </div>
+  <p id="fd-triangle-projection-feedback" role="status"></p>
+  <div id="fd-triangle-projection-result" hidden>
+   <p>The images of the three basis vectors are the columns of the projector matrix. All three columns must vanish for the projector to vanish.</p>
+   ${table(["Target representation",...['1','2','3'].map(i=>math('P\\phi_'+i)),"Projector rank"],rows)}
+   <p>These projectors satisfy ${math('P^2=P')}, so rank equals trace. Compare the symmetric combination and a single vertex in the same model.</p>
+   <p>${math('P^{(E)}(\\phi_1+\\phi_2+\\phi_3)='+symmetric)}，${math('P^{(E)}\\phi_1='+firstVertex)}。</p>
+   <p>Run the Python check below and open its output to inspect all three projector matrices.</p>
+  </div>
+  <a href="#classroom/foundations?module=theorems&amp;experiment=reduction">Review the three-vertex character reduction →</a>
+ </section>`;
+}
+
+function bindTriangleProjectionBridge(root,isCurrent){
+ const guess=root.querySelector('#fd-triangle-projection-guess');
+ if(!guess)return;
+ const feedback=root.querySelector('#fd-triangle-projection-feedback');
+ const result=root.querySelector('#fd-triangle-projection-result');
+ const here=()=>isCurrent()&&root.querySelector('#fd-triangle-projection-guess')===guess;
+ guess.onchange=()=>{if(here()){feedback.textContent='';result.hidden=true;}};
+ root.querySelector('#fd-triangle-projection-check').onclick=()=>{
+  if(!here())return;
+  result.hidden=guess.value!=='all-zero';
+  if(!result.hidden)feedback.textContent="Correct. The A₂ projector sends all three vertex vectors to zero, so its rank is zero.";
+  else if(guess.value==='one-enough')feedback.textContent="One column gives the image of one basis vector. Check the other two columns.";
+  else if(guess.value==='nonzero')feedback.textContent="Recall the A₂ multiplicity from the three-vertex reduction, then check the other two vertices.";
+  else feedback.textContent="Predict the projection of the other two vertices first.";
+ };
+}
+
 function bindCharacterWaterBridge(root,isCurrent){
  const guess=root.querySelector('#fd-character-water-guess');
  if(!guess)return;
@@ -279,10 +346,12 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">Foundational demonstrations · from operations to physical consequences</span><h2>Make abstract symmetry an interactive lesson</h2><p>Choose a topic, vary parameters, and predict before checking. Each demonstration states its basis, coordinates, and model conventions.</p></header>
   <nav class="fd-tabs" aria-label="Teaching demonstration topics">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav>
   ${waterEntry()}
+  ${theme==='projection'&&routePreset==='triangle-permutation'?triangleProjectionBridgeHTML():''}
   <div class="fd-workspace"><aside class="fd-controls"><h3>Adjust and predict</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?"Python is checking…":"Check with browser Python"}</button><p class="fd-status" role="status">${esc(pythonStatus||"The figure responds immediately to parameters; the Python button provides an independent calculation check.")}</p></aside><section class="fd-preview" aria-live="polite"></section></div>
   ${theme==='characters'?'<div id="fd-character-comparison"></div>'+characterWaterBridgeHTML():''}
   <div class="fd-questions"></div><details class="fd-python"><summary>Inspect the Python check data</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):"Not checked yet. Use the Python button above."}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">Existing water selection-rule lesson</a> · <a href="#classroom/foundations?module=salc">Symmetry-adapted basis calculator</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching models, conventions, and sources</a></footer>`;
   update();
+  bindTriangleProjectionBridge(root,current);
   bindCharacterWaterBridge(root,current);
   mountWater();
  }

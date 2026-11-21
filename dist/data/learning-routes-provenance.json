@@ -35,7 +35,9 @@
     "The introductory fourfold comparison uses a common rotation and starting point. The P 4, P 4₁ and P 4₃ representatives return to the same wrapped point and accumulate 0, 1 and 3 axial cells after four steps. Exact ordinary space-group symbols with spaces, numerical subscripts or underscores resolve across the finder, atlas and workbench.",
     "The foundations preview compares one and two actions for C₄(z) and σ(xz) on xy and xyz. Exact lesson links retain the verified beginner basis and give the xz mirror convention used for the water displacement character.",
     "The shared finder and calculation directory match declared CIF and POSCAR filename patterns and the CONTCAR alias. Choosing the structure tool leaves the file selection and conversion to the user.",
-    "The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request."
+    "The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request.",
+    "The three-vertex character reduction opens the corresponding D₃ projection experiment with the reordered classes. The rank exercise checks the images of all three basis vectors and a symmetric vector with zero E projection.",
+    "The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -54,8 +56,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 83797,
-      "sha256": "392a960b4e5d49a215219d76e9ab7e38d1060f501a80742c73e0243da0bfad1d"
+      "bytes": 84720,
+      "sha256": "ac2689b999923c0aa25d2cf576d299b92a268f95aeb21d1f440425d28df29c84"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -66,8 +68,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 105717,
-      "sha256": "9ebbda2e13c3ff68b77063c3570307547a8a6bdb9ce37fa0ca46647b123bbe5b"
+      "bytes": 105966,
+      "sha256": "2d1a2406afa3e961df56481bb9f908ddd91f9522acca850adc494125a0cee85e"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -86,8 +88,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32812,
-      "sha256": "3928de378e2afc21913d06f8a8758c8389f90319d01fbba5411138d540a95ae3"
+      "bytes": 32822,
+      "sha256": "38beee59e6202dc40d5b9c6740268001df3f1b9c1734eb31fc6ee7560ecb9d16"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -213,6 +215,10 @@
       "bytes": 5021,
       "sha256": "7c86eb35213e05805b111f71aaa33ffd266c58eb32a8d063ed699fd40c36d898"
     },
+    "dist/docs/group-theorems.md": {
+      "bytes": 7752,
+      "sha256": "ed1c0f799951f76a401917ebfd3773340d880d4ddba5cd0cb2ac948d7eba560c"
+    },
     "dist/docs/phonopy-import.md": {
       "bytes": 19648,
       "sha256": "8109ca7f597d3923943264d457b4903ec640948cfe6b28ccdb64e244a39fb6c3"
@@ -220,6 +226,10 @@
     "dist/docs/structure-bc.md": {
       "bytes": 8595,
       "sha256": "c5b43703da95c40b08d6ff3b586e59806c52180b0bddf2e015e65fb12679aa8b"
+    },
+    "dist/docs/symmetry-course.md": {
+      "bytes": 15832,
+      "sha256": "66ce6da753be1ccb2b24996f96384f0d19054164ff5c938def684438d3470cc3"
     },
     "dist/electronic-materials-ui.js": {
       "bytes": 32616,
@@ -238,8 +248,8 @@
       "sha256": "691ac26f95becef59c35f187b4fb10a5f4a3eb37a804d24228cd7fe5ebe2fa91"
     },
     "dist/foundations-demos.js": {
-      "bytes": 38206,
-      "sha256": "59c4b6e4d4ba635d976a9ab8803730a53516132bd3e03047f6716b96bac219c9"
+      "bytes": 42468,
+      "sha256": "d293671599bfd5bd370a494b2703d0c5f8fc3f1ba94623b74410582d947899ad"
     },
     "dist/frontiers-ui.js": {
       "bytes": 23526,
@@ -253,9 +263,13 @@
       "bytes": 7212,
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
+    "dist/group-theorems.js": {
+      "bytes": 29045,
+      "sha256": "c1d71a4d23bace51cde11bd42b6e1a0c9814539f5b598e93b9aea5eb6b6f7741"
+    },
     "dist/index.html": {
-      "bytes": 8431,
-      "sha256": "b91a91e5a3bb910e8f27bd7e99d46f789ab193db4070043a30e7f088931b5f11"
+      "bytes": 8430,
+      "sha256": "16f5cb8416ac331c42a8565baa47f2055793ec133a85bc38aac81d9da59e710d"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -266,8 +280,8 @@
       "sha256": "dae690760467b7bcadadcfd21e0dc29a6d93d1893d630ec1b57ab8ca95b13060"
     },
     "dist/lesson-topic-finder.js": {
-      "bytes": 1721,
-      "sha256": "9a95e6321c64c52a31a0096273722d60b67971358065f7e8a8be362b1e6a23d2"
+      "bytes": 1718,
+      "sha256": "99184c636301249bee6e0793e9b6303bc5ab75fc95ce79adb20570004b729616"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,
@@ -286,8 +300,8 @@
       "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
     },
     "dist/navigation-ui.js": {
-      "bytes": 35937,
-      "sha256": "47e95d7082855e2c37d93bd515c43a905737d586c55459d192a2b1c26d51db52"
+      "bytes": 35934,
+      "sha256": "5ee7e2848c263beca16c833b1fa5af64700b1d237249ed7b25bcca33067db852"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -349,9 +363,17 @@
       "bytes": 12465,
       "sha256": "a8655606e6567c6e5de4b6e9f5c9c204cb945a726c891c15d17ae0dab8fdd3cf"
     },
+    "dist/python/foundations_demos.py": {
+      "bytes": 19199,
+      "sha256": "2cb7cfd4f88c3e8e94eabc7d277876ef28cd2718e9f956f17b953aa79e2aefb1"
+    },
     "dist/python/group_extensions.py": {
       "bytes": 24875,
       "sha256": "31284d885c0012b88e8289d5ab8b271124166bbee9f3536b79305134c1e864ef"
+    },
+    "dist/python/group_theorems.py": {
+      "bytes": 11124,
+      "sha256": "484eab9c5e1fdb949c363fb2af14156d4fbaf300e6817f548581d7d6d21a6e35"
     },
     "dist/python/hubbard_lab.py": {
       "bytes": 17459,
@@ -506,16 +528,16 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 106168,
-      "sha256": "c30a5d56f3b86d43878b8075197b144bfc68d3b7416c503f6f9aab3c3d0edca2"
+      "bytes": 107987,
+      "sha256": "0417d177d3f24782fcf32f16b15279501904b9ee9d54aaaaa93907c1458c3f9e"
     },
     "dist/tool-capabilities.js": {
       "bytes": 45026,
       "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
     },
     "dist/tool-finder.js": {
-      "bytes": 13199,
-      "sha256": "9a934d73a8ccaedbb12d967bdcb9cb32d9eb5545dcc994b2a68ccf6b1a90a3af"
+      "bytes": 13195,
+      "sha256": "aeed8372cab7a273e9ae1e51ac3982d225775de470cec52d57ed241e7f65f68d"
     },
     "dist/tool-search.js": {
       "bytes": 5606,
@@ -581,9 +603,17 @@
       "bytes": 143,
       "sha256": "a5dbe5b9b176969555e80bc0f30b726a075e6f07d3580d7f728a9386f7737408"
     },
+    "locales/en-classroom-lab-bridges-docs.json": {
+      "bytes": 2368,
+      "sha256": "96dc1ec02367d18c6ad67bad0f9f72976c67cbd9ceb695b32f9ab358039b753a"
+    },
     "locales/en-crystkit-handedness.json": {
       "bytes": 6600,
       "sha256": "a0565d2897a5ff11000ddbe9f0c575084ec1f49e2d7162e56fe67b5212237bf1"
+    },
+    "locales/en-double-screw-workbench.json": {
+      "bytes": 1049,
+      "sha256": "9db309fe6bc67a133b2385b2a9dfcc4e95cd65abe05708c84add9aa8cd0e1c3d"
     },
     "locales/en-entropy-conventions.json": {
       "bytes": 10355,
@@ -645,6 +675,10 @@
       "bytes": 640,
       "sha256": "99ddb6afd02ca5068960afd8a4e537fd5c60d8ddf55f5567671407c06c954bee"
     },
+    "locales/en-triangle-reduction-bridge.json": {
+      "bytes": 3323,
+      "sha256": "5eb7af7cdf2fcee851c69e9694c75a34d5678b2cf95732fe722ac7c991d31a2f"
+    },
     "locales/en-workbench-intent-search.json": {
       "bytes": 948,
       "sha256": "86480dc7d680fcb298a9f22109365205b90758efd4b5ca93f2c2a448d3f6385e"
@@ -658,8 +692,8 @@
       "sha256": "c6fca2255513e9e0fb8e2e6931021714a79175caa7c080d19aaa3abfa6099dea"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 19245,
-      "sha256": "416b07e41bf293c183acdf0010becdaf97481a339eb4db8e41dd4cff93674ba5"
+      "bytes": 20147,
+      "sha256": "fecf93237139e63a5b665350de0a004b56647a59742ea9f340b47b96cc4c05aa"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -670,8 +704,8 @@
       "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6905,
-      "sha256": "e77ad4fab1a7b2f9b5f93dd6e47cad50a0918d0e943673a8046b8de9a517a826"
+      "bytes": 7031,
+      "sha256": "1fec10d322967b2d8108c12cdaaa175f5e27b2f569e47e14e2ac711c518ffa9b"
     },
     "scripts/search-catalog-source.mjs": {
       "bytes": 9400,
@@ -686,8 +720,8 @@
       "sha256": "8c20f4446b0a78a5fcb99539cf8ffd41da9b035a79b7a594a52e45ffc7e23280"
     },
     "scripts/test-atlas-workbench-routes.mjs": {
-      "bytes": 6470,
-      "sha256": "4cb921e794e78719528a9f2edd8a05b4081b954e5d373889395fbdd1654b0701"
+      "bytes": 10129,
+      "sha256": "158cd1f2ffdcd042bcb708a40bf502845e76de667194b1dac72d766abacf0677"
     },
     "scripts/test-band-match-results.mjs": {
       "bytes": 1406,
@@ -730,8 +764,8 @@
       "sha256": "56e0fb7862cdea5bc4d63a6061d4f17d643099496be99c1723a73fbb18ed2679"
     },
     "scripts/test-foundations-demos.mjs": {
-      "bytes": 10932,
-      "sha256": "b67e5ee31a24261de7095544011d7e5194bec5eac3e7f4aca959ad5c9b25acf4"
+      "bytes": 14691,
+      "sha256": "fcb2d1e0806f7405059a90a9b4d6d464e6daf771b24dce240f020808034fe3be"
     },
     "scripts/test-foundations-routing.mjs": {
       "bytes": 2492,
@@ -752,6 +786,10 @@
     "scripts/test-gamma-translations-ui.mjs": {
       "bytes": 4169,
       "sha256": "926c3eacc5773b78c3c78786d812cd6e8202678f2f85811d47b0ef6127dda283"
+    },
+    "scripts/test-group-theorems.mjs": {
+      "bytes": 5896,
+      "sha256": "4493f463a9a235cd22d275a725bdba055da4d1e31b0c6ebeb210a88828eeedd4"
     },
     "scripts/test-lesson-progression.mjs": {
       "bytes": 52336,
@@ -884,6 +922,10 @@
     "scripts/test-structure-dynamics-ui.mjs": {
       "bytes": 40406,
       "sha256": "0a956e66f0068796b57250b68cc97fda5b78881e9141e4f296e5682737a86209"
+    },
+    "scripts/test-symmetry-course-ui.mjs": {
+      "bytes": 29604,
+      "sha256": "24ef02be2c3ef774729bfc3ca13fe26d555791d718ec533567abec484e551ddd"
     },
     "scripts/test-tool-finder.mjs": {
       "bytes": 10521,

@@ -42,6 +42,21 @@ export function theoremPreview(experiment,params={}){
 }
 
 const table=(heads,rows)=>`<div class="gt-scroll"><table><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const triangleProjectionRoute='#classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation';
+function triangleReductionBridge(result){
+ const order=[0,2,1];
+ const tuple=values=>'('+values.join(', ')+')';
+ return `<section class="gt-exercise" aria-labelledby="gt-triangle-reduction-title">
+   <h3 id="gt-triangle-reduction-title">From multiplicities to triangle projectors</h3>
+   <p>Place one scalar basis function at each vertex. A threefold rotation cycles the three vertices. A twofold rotation about a vertex axis swaps the other two.</p>
+   ${table(["Experiment","Class order","class size","Three-vertex character"],[
+    ['S₃',"Identity, transpositions, 3-cycles",tuple(sizes),tuple(result.inputCharacters)],
+    ['D₃',"Identity, threefold rotations, twofold rotations",tuple(order.map(i=>sizes[i])),tuple(order.map(i=>result.inputCharacters[i]))]
+   ])}
+   <p>When you swap the last two classes, carry each class size and character with its class. Use the multiplicities from the reduction to check how all three vertices project onto each subspace.</p>
+   <a href="${esc(triangleProjectionRoute)}">Check the projectors for the same three vertices →</a>
+  </section>`;
+}
 const matrix=a=>`<div class="gt-matrix" style="--gt-cols:${a[0].length}">${a.flatMap(r=>r.map(x=>`<span>${fmt(x)}</span>`)).join('')}</div>`;
 const text=(x,y,value,color='#183c52',size=17)=>`<text x="${x}" y="${y}" fill="${color}" font-size="${size}" text-anchor="middle">${esc(value)}</text>`;
 const line=(x,y,a,b,color='#7c96a6',w=2)=>`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}" stroke="${color}" stroke-width="${w}"/>`;
@@ -104,6 +119,7 @@ function scene(t,p){
   ['A1','A2','E'].forEach((name,i)=>{const x=40+i*215,m=r.multiplicities[name];body+=`<rect x="${x}" y="90" width="190" height="145" rx="12" fill="${r.validCharacter?'#edf6f7':'#fff1e6'}" stroke="#a8bec8"/>`+text(x+95,136,name,undefined,25)+text(x+95,183,`Multiplicity ${fmt(m)}`);});body+=text(330,285,`Dimension reconstruction:${fmt(r.reconstructedDimension)}；χ(e)=${fmt(r.inputCharacters[0])}`);
   html=`<h3>${r.validCharacter?"Reduction gives nonnegative integer multiplicities":"This candidate character fails the nonnegative-integer multiplicity test"}</h3><p>${math(String.raw`m_\alpha=\frac16\sum_c n_c\chi_\alpha(c)^*\chi(c)`)}, with columns identity, transpositions, three-cycles and weights 1,3,2.</p>${table(["Irreducible representation","Three weighted terms","Multiplicity"],Object.entries(r.multiplicities).map(([name,m])=>[name,r.weightedTerms[name].map(fmt).join(' + '),fmt(m)]))}<p>Dimension reconstruction alone is insufficient: each multiplicity must also be a nonnegative integer. Currently, ${math(String.raw`\sum_\alpha m_\alpha d_\alpha`)}=${fmt(r.reconstructedDimension)}。</p><p>For the complete irrep table,${math(String.raw`1^2+1^2+2^2=6`)}; the 3 irreps equal the 3 conjugacy classes in number. Each irrep appears in the regular representation with multiplicity equal to its dimension.</p>`;
   task=exercise("What happens if the second entry of χ=(3,1,0) is treated as three separate classes and then weighted by 3 again?",["The second entry is the character of each transposition in one conjugacy class. Its class size, 3, is included once.","The correct class weights 1,3,2 give multiplicities A₁:1, A₂:0, E:1.","For an element-by-element sum, list 6 terms and omit class weights. The methods are equivalent but cannot be mixed."]);
+  if(p.preset==='permutation')task+=triangleReductionBridge(r);
  }
  if(t==='degeneracy'){
   const lo=Math.min(...r.levels.map(x=>x.energy))-.3,hi=Math.max(...r.levels.map(x=>x.energy))+.3,Y=e=>275-(e-lo)/(hi-lo)*220;r.levels.forEach((o,i)=>{const x=75+i*210;body+=line(x,Y(o.energy),x+135,Y(o.energy),i?'#277c9e':'#b36a38',5)+text(x+67,Y(o.energy)-16,o.basis)+text(x+67,Y(o.energy)+28,fmt(o.energy));});

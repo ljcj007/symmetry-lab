@@ -52,6 +52,8 @@ The rows are A₁:(1,1,1), A₂:(1,−1,1), and E:(2,0,−1). Using class sizes 
 
 **Demonstration and proof:** Compare the three-site representation with the six-dimensional regular representation A₁+A₂+2E. Distinguish irrep dimension d from occurrence multiplicity m, and explain why class-size weights are necessary.
 
+[Open the three-vertex projection exercise](../index.html#classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation) and check the reduction using the same basis functions. Align the columns by operation. The D₃ order is identity, threefold rotation, and twofold rotation, with characters (3, 0, 1). Projecting the three basis functions gives ranks 1, 0, and 2 for A₁, A₂, and E. The symmetric sum projects to zero in E, while each individual vertex function has a nonzero E projection. [MIT notes on the projection formula](https://ocw.mit.edu/courses/res-18-011-algebra-i-student-notes-fall-2021/pages/student-notes/)
+
 ## 9. Irrep dimension and protected degeneracy
 
 If a quantum Hamiltonian preserves the chosen finite group, Schur's lemma makes its action on a single irrep scalar. An isolated E block therefore gives a symmetry-protected doublet. With m copies of E, symmetry permits H=Hmultiplicity⊗I₂: copies may mix and have different energies while each branch remains twofold. This follows from the [Schur commutant structure](https://symm4ml.mit.edu/symm4ml_s26/notes/representations).

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {parseWorkbenchSelection} from '../dist/workbench-route.js';
 
 // Run the production module against an inert DOM. This isolates loader races and
 // stored-progress validation without adding a browser or a test dependency.
@@ -261,6 +262,7 @@ for(const [index,fixture] of groupCases.entries()){
   const groupPage=new Container(),input=fixture.input,lesson=realData['symmetry-course-lessons'].lessons.find(item=>item.lab===input.lab&&item.labPreset===input.preset);
   await groupsUI.renderSymmetryCourseView({container:groupPage,selection:{pathway:'spin',tab:'lab',lesson:lesson?.id,experiment:input.lab,preset:input.preset},onNavigate:patch=>groupRoutes.push(patch),run:async(action,payload)=>{groupCalls.push({action,payload});return fixture.result;},download:(text,name)=>groupDownloads.push({data:JSON.parse(text),name})});
   const root=groupPage.firstElementChild,$=selector=>root.querySelector(selector);
+  assert.equal($('#sc-double-screw-workbench'),null,'A lab link waits for a completed scientific result');
   $('#sc-group-preset').value=input.preset;$('#sc-group-steps').value=String(input.steps);
   if(input.lab==='double_group')$('#sc-group-kz').value=input.kz;else $('#sc-group-variant').value=input.variant;
   await $('#sc-lab-form').onsubmit({preventDefault(){}});
@@ -270,6 +272,23 @@ for(const [index,fixture] of groupCases.entries()){
   if(fixture.result.dimension==='space')assert.match($('#sc-lab-output').innerHTML,/完整空间对称群是无限群/);
   if(input.lab==='spin_group')assert.match($('#sc-lab-output').innerHTML,/SOC 锁定/);
   if(input.variant==='spatial_only'||input.variant==='internal_only')assert.match($('#sc-lab-output').innerHTML,/这个操作破坏指定图案/,'A control variant opens at step 1, not the misleading identity frame');
+  const screwLink=$('#sc-double-screw-workbench');
+  if(input.preset==='screw21_space'){
+    assert.equal(screwLink.tag,'a');
+    assert.equal(screwLink.attributes['data-route'],undefined,'The workbench link uses ordinary browser navigation');
+    const href=screwLink.attributes.href.replaceAll('&amp;','&');
+    const kz={'0':0,'1/4':.25,'1/2':.5}[input.kz];
+    assert.ok(href.startsWith('#workbench?'));
+    assert.deepEqual(parseWorkbenchSelection(href.split('?')[1]),{
+      mode:'sg',id:'4',k:[0,0,kz],doubleValued:true,bzType:'',labelK:kz===0?'Γ':null
+    });
+    assert.match($('#sc-lab-output').innerHTML,/平移分量 \(0, 0, ½\)/);
+    const callsBefore=groupCalls.length;
+    screwLink.onclick({preventDefault(){assert.fail('A valid link must allow native navigation');}});
+    assert.equal(groupCalls.length,callsBefore,'Opening the link never submits a calculation');
+  }else{
+    assert.equal(screwLink,null,'Other lab presets have no SG 4 link');
+  }
   const yaw=root.querySelector('[data-gx="yaw"]');yaw.value='51';yaw.oninput();
   $('#sc-frame').oninput({target:{value:'2'}});
   assert.equal(root.querySelector('[data-gx="yaw"]').value,'51','Changing composition step preserves the camera');
@@ -281,6 +300,36 @@ for(const [index,fixture] of groupCases.entries()){
   if(lesson)assert.equal(groupRoutes.at(-1).lesson,lesson.id,'Exercise navigation keeps its teaching lesson');
 }
 assert.equal(groupCalls.length,23);
+
+const screwLessonUI=await import('../dist/symmetry-course-ui.js?double-screw-workbench'),screwPage=new Container();
+const screwFixture=kz=>groupCases.find(item=>item.input.preset==='screw21_space'&&item.input.kz===kz).result;
+const screwRoutes=[];
+let settleScrew;
+await screwLessonUI.renderSymmetryCourseView({container:screwPage,selection:{pathway:'spin',track:'double',lesson:'double-06'},
+  onNavigate:route=>screwRoutes.push(route),run:(_,input)=>input.kz==='1/4'?Promise.resolve(screwFixture('1/4')):
+    new Promise(resolve=>{settleScrew=resolve;})});
+const ds=selector=>screwPage.firstElementChild.querySelector(selector);
+ds('#sc-lesson-lab').onclick();
+assert.equal(screwRoutes.at(-1).preset,'screw21_space');
+assert.equal(ds('#sc-double-screw-workbench'),null);
+ds('#sc-group-preset').value=screwRoutes.at(-1).preset;
+ds('#sc-group-kz').value='1/4';ds('#sc-group-kz').onchange();
+await ds('#sc-lab-form').onsubmit({preventDefault(){}});
+const previousScrewLink=ds('#sc-double-screw-workbench');
+assert.ok(previousScrewLink);
+ds('#sc-group-kz').value='1/2';ds('#sc-group-kz').onchange();
+assert.equal(ds('#sc-double-screw-workbench'),null,'Editing the wavevector retires the completed route');
+let retired=false;previousScrewLink.onclick({preventDefault(){retired=true;}});
+assert.equal(retired,true,'A detached result link cannot navigate');
+let pendingScrew=ds('#sc-lab-form').onsubmit({preventDefault(){}});
+assert.equal(ds('#sc-double-screw-workbench'),null);
+settleScrew(screwFixture('0'));await pendingScrew;
+assert.equal(ds('#sc-double-screw-workbench'),null,'A mismatched result cannot bind a workbench route');
+pendingScrew=ds('#sc-lab-form').onsubmit({preventDefault(){}});
+ds('#sc-tab-learn').onclick();
+settleScrew(screwFixture('1/2'));await pendingScrew;
+assert.equal(ds('#sc-double-screw-workbench'),null,'A retired request cannot restore a link after navigation');
+console.log('Double screw workbench handoff: all three real axial cases, native route, edit invalidation, mismatched output and late completion passed.');
 
 const groupLate=await import('../dist/symmetry-course-ui.js?group-late-result'),groupLatePage=new Container();let finishGroup;
 await groupLate.renderSymmetryCourseView({container:groupLatePage,selection:{pathway:'spin',tab:'lab',experiment:'spin_group',preset:'af_space'},run:()=>new Promise(resolve=>{finishGroup=resolve;})});

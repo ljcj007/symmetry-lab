@@ -2,14 +2,14 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261120-lesson-nav1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-expert-intents1';
-import {startToolFinder} from './tool-finder.js?v=20261122-expert-intents1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-class-bridges1';
+import {startToolFinder} from './tool-finder.js?v=20261122-class-bridges1';
 import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {spaceGroupNumberForQuery,spaceGroupSymbolKey} from './tool-search.js?v=20261122-expert-intents1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261122-fourfold1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-foundations-char2';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-class-bridges1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -92,6 +92,9 @@ function setView(request,options={}){
  let route=String(request||'home').replace(/^#/,''),view;
  const aliases={pointgroups:'classroom/foundations',academy:'classroom/crystal',lie:'classroom/continuous',database:'atlas/sg',advanced:'compute/advanced/carat_integral'};
  route=aliases[route]||route;
+ // A bare workbench link reopens the pending selection while its catalog loads.
+ const pending=state.pendingGroup;
+ if(route==='workbench'&&options.history!==false&&state.view==='workbench'&&pending&&!groupLoader.peek(pending.mode))route=previousRoute;
  const path=route.split('?')[0],params=new URLSearchParams(route.split('?')[1]||'');
  let course=parseClassroomRoute(route),primary;
  if(course){view=course.section==='overview'?'classroom':course.section;primary=course.calculationOnly?'compute':'classroom';}

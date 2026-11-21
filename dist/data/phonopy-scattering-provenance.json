@@ -54,13 +54,13 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 83797,
-      "sha256": "392a960b4e5d49a215219d76e9ab7e38d1060f501a80742c73e0243da0bfad1d"
+      "bytes": 84720,
+      "sha256": "ac2689b999923c0aa25d2cf576d299b92a268f95aeb21d1f440425d28df29c84"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 105717,
-      "sha256": "9ebbda2e13c3ff68b77063c3570307547a8a6bdb9ce37fa0ca46647b123bbe5b"
+      "bytes": 105966,
+      "sha256": "2d1a2406afa3e961df56481bb9f908ddd91f9522acca850adc494125a0cee85e"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -139,8 +139,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "b91a91e5a3bb910e8f27bd7e99d46f789ab193db4070043a30e7f088931b5f11"
+      "bytes": 8430,
+      "sha256": "16f5cb8416ac331c42a8565baa47f2055793ec133a85bc38aac81d9da59e710d"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -169,8 +169,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 35937,
-      "sha256": "47e95d7082855e2c37d93bd515c43a905737d586c55459d192a2b1c26d51db52"
+      "bytes": 35934,
+      "sha256": "5ee7e2848c263beca16c833b1fa5af64700b1d237249ed7b25bcca33067db852"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -352,6 +352,11 @@
       "bytes": 143,
       "sha256": "a5dbe5b9b176969555e80bc0f30b726a075e6f07d3580d7f728a9386f7737408"
     },
+    "locales/en-classroom-lab-bridges-docs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2368,
+      "sha256": "96dc1ec02367d18c6ad67bad0f9f72976c67cbd9ceb695b32f9ab358039b753a"
+    },
     "locales/en-composition-docs.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 8098,
@@ -426,6 +431,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 1255,
       "sha256": "785720a6c765364e8d3fa49d401112cf60040ca9f020d91666a7b567cb4c1012"
+    },
+    "locales/en-double-screw-workbench.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1049,
+      "sha256": "9db309fe6bc67a133b2385b2a9dfcc4e95cd65abe05708c84add9aa8cd0e1c3d"
     },
     "locales/en-draft.json": {
       "normalization": "utf8-lf-v1",
@@ -992,6 +1002,11 @@
       "bytes": 640,
       "sha256": "99ddb6afd02ca5068960afd8a4e537fd5c60d8ddf55f5567671407c06c954bee"
     },
+    "locales/en-triangle-reduction-bridge.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 3323,
+      "sha256": "5eb7af7cdf2fcee851c69e9694c75a34d5678b2cf95732fe722ac7c991d31a2f"
+    },
     "locales/en-wannier-file-search.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 914,
@@ -1144,8 +1159,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6905,
-      "sha256": "e77ad4fab1a7b2f9b5f93dd6e47cad50a0918d0e943673a8046b8de9a517a826"
+      "bytes": 7031,
+      "sha256": "1fec10d322967b2d8108c12cdaaa175f5e27b2f569e47e14e2ac711c518ffa9b"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

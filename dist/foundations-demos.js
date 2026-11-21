@@ -43,14 +43,26 @@ export function characterComparisonPreview(basis){
   return {operation,matrix:first.matrix,trace:first.trace,squared,squaredTrace};
  });
 }
+const trianglePermutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]];
+const triangleOperationNames=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
+const triangleMatrices=trianglePermutations.map(perm=>perm.map((_,i)=>perm.map(destination=>Number(destination===i))));
+const triangleCharacters={A1:[1,1,1,1,1,1],A2:[1,1,1,-1,-1,-1],E:[2,-1,-1,0,0,0]};
+const triangleProjectors=Object.fromEntries(Object.entries(triangleCharacters).map(([irrep,characters])=>{
+ const dimension=characters[0];
+ const projector=triangleMatrices[0].map((row,i)=>row.map((_,j)=>
+  dimension*triangleMatrices.reduce((total,matrix,g)=>total+characters[g]*matrix[i][j],0)/triangleMatrices.length
+ ));
+ return [irrep,projector];
+}));
+
 export function projectionPreview(s){
- const permutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]],names=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
  const q=[2/Math.sqrt(6),-1/Math.sqrt(6),-1/Math.sqrt(6)],v=[0,1/Math.sqrt(2),-1/Math.sqrt(2)],a=[1,1,1].map(x=>x/Math.sqrt(3));
- const permutation=permutations[s.operation],P=Array.from({length:3},(_,i)=>Array.from({length:3},(_,j)=>permutation[j]===i?1:0));
+ const permutation=[...trianglePermutations[s.operation]],P=triangleMatrices[s.operation].map(row=>[...row]);
  const seed=[0,0,0];seed[s.seedSite]=1;
- let projected=s.irrep==='A1'?a.map(x=>x*a[s.seedSite]):s.irrep==='A2'?[0,0,0]:s.row===1?v.map(x=>x*q[s.seedSite]):seed.map((x,i)=>x-1/3);
+ const irrep=s.irrep==='A1'||s.irrep==='A2'?s.irrep:'E';
+ const projected=irrep==='E'&&s.row===1?v.map(x=>x*q[s.seedSite]):mv(triangleProjectors[irrep],seed);
  const norm=Math.hypot(...projected),normalized=norm>1e-9?projected.map(x=>x/norm):[0,0,0];
- return {matrix:P,eMatrix:[q,v].map(b=>[q,v].map(c=>dot(b,mv(P,c)))),character:P.reduce((a,r,i)=>a+r[i],0),permutation,name:names[s.operation],projected,normalized,norm,basis:[a,q,v]};
+ return {matrix:P,eMatrix:[q,v].map(b=>[q,v].map(c=>dot(b,mv(P,c)))),character:P.reduce((a,r,i)=>a+r[i],0),permutation,name:triangleOperationNames[s.operation],projected,normalized,norm,basis:[a,q,v]};
 }
 export function splittingPreview(s){
  const d=Number(s.delta),ds=Number(s.ds),dt=Number(s.dt);
@@ -170,6 +182,61 @@ function characterWaterBridgeHTML(){
   </div>
  </details>`;
 }
+function triangleProjectionBridgeHTML(){
+ const vectorTeX=vector=>{
+  const numerators=vector.map(value=>Math.round(3*value));
+  return numerators.every(x=>x===0)?'\\mathbf{0}':String.raw`\tfrac13\left(${numerators.join(',')}\right)`;
+ };
+ const symbols={A1:'A_1',A2:'A_2',E:'E'};
+ const rows=Object.entries(triangleProjectors).map(([irrep,projector])=>{
+  const columns=projector.map((_,i)=>math(vectorTeX(projector.map(row=>row[i]))));
+  const rank=Math.round(projector.reduce((sum,row,i)=>sum+row[i],0));
+  return [math(symbols[irrep]),...columns,rank];
+ });
+ const symmetric=vectorTeX(mv(triangleProjectors.E,[1,1,1]));
+ const firstVertex=vectorTeX(mv(triangleProjectors.E,[1,0,0]));
+ return `<section class="fd-exercise" aria-labelledby="fd-triangle-projection-title">
+  <h3 id="fd-triangle-projection-title">从约化重数检查三列投影</h3>
+  <p>沿用三个顶点的标量基。先对第一个顶点的基函数应用 ${math('P^{(A_2)}')}，得到零向量。</p>
+  <div class="controls-row">
+   <label for="fd-triangle-projection-guess">对第二和第三个顶点再做同一投影，会看到什么？</label>
+   <select class="form-select" id="fd-triangle-projection-guess" aria-describedby="fd-triangle-projection-feedback">
+    <option value="">请选择</option>
+    <option value="all-zero">其余两列也都是零</option>
+    <option value="nonzero">其余两列至少有一列非零</option>
+    <option value="one-enough">只测一列就足以判定整个投影的秩</option>
+   </select>
+   <button id="fd-triangle-projection-check" type="button" class="secondary" aria-controls="fd-triangle-projection-result">核对三个顶点</button>
+  </div>
+  <p id="fd-triangle-projection-feedback" role="status"></p>
+  <div id="fd-triangle-projection-result" hidden>
+   <p>三个基向量的像组成投影矩阵的三列。只有三列全为零，投影矩阵才为零。</p>
+   ${table(['目标表示',...['1','2','3'].map(i=>math('P\\phi_'+i)),'投影矩阵的秩'],rows)}
+   <p>这些投影满足 ${math('P^2=P')}，所以秩等于迹。比较同一个模型中的对称组合和单个顶点。</p>
+   <p>${math('P^{(E)}(\\phi_1+\\phi_2+\\phi_3)='+symmetric)}，${math('P^{(E)}\\phi_1='+firstVertex)}。</p>
+   <p>点按下方的 Python 核对，再展开核对数据，即可检查三个完整投影矩阵。</p>
+  </div>
+  <a href="#classroom/foundations?module=theorems&amp;experiment=reduction">回看三顶点的特征标约化 →</a>
+ </section>`;
+}
+
+function bindTriangleProjectionBridge(root,isCurrent){
+ const guess=root.querySelector('#fd-triangle-projection-guess');
+ if(!guess)return;
+ const feedback=root.querySelector('#fd-triangle-projection-feedback');
+ const result=root.querySelector('#fd-triangle-projection-result');
+ const here=()=>isCurrent()&&root.querySelector('#fd-triangle-projection-guess')===guess;
+ guess.onchange=()=>{if(here()){feedback.textContent='';result.hidden=true;}};
+ root.querySelector('#fd-triangle-projection-check').onclick=()=>{
+  if(!here())return;
+  result.hidden=guess.value!=='all-zero';
+  if(!result.hidden)feedback.textContent='正确。A₂ 在三个顶点上的像都为零，秩为零。';
+  else if(guess.value==='one-enough')feedback.textContent='一列只记录一个基向量的像。还需要检查其余两列。';
+  else if(guess.value==='nonzero')feedback.textContent='回想三顶点约化时 A₂ 的重数，再检查另外两个顶点。';
+  else feedback.textContent='请先预测其余两个顶点的投影。';
+ };
+}
+
 function bindCharacterWaterBridge(root,isCurrent){
  const guess=root.querySelector('#fd-character-water-guess');
  if(!guess)return;
@@ -279,10 +346,12 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">基础概念演示 · 从操作到物理结果</span><h2>把抽象对称性变成可以操作的课堂</h2><p>选择主题，改变参数，先预测再核对。每个演示都保留基底、坐标与模型约定。</p></header>
   <nav class="fd-tabs" aria-label="教学演示主题">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav>
   ${waterEntry()}
+  ${theme==='projection'&&routePreset==='triangle-permutation'?triangleProjectionBridgeHTML():''}
   <div class="fd-workspace"><aside class="fd-controls"><h3>调节与预测</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?'Python 正在核对…':'用浏览器内 Python 核对'}</button><p class="fd-status" role="status">${esc(pythonStatus||'图像随参数即时变化；Python 按钮用于独立核对计算。')}</p></aside><section class="fd-preview" aria-live="polite"></section></div>
   ${theme==='characters'?'<div id="fd-character-comparison"></div>'+characterWaterBridgeHTML():''}
   <div class="fd-questions"></div><details class="fd-python"><summary>查看 Python 核对数据</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):'尚未核对。请点击上方 Python 按钮。'}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">原有水分子选择定则讲义</a> · <a href="#classroom/foundations?module=salc">对称适应基计算</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学模型、约定与来源</a></footer>`;
   update();
+  bindTriangleProjectionBridge(root,current);
   bindCharacterWaterBridge(root,current);
   mountWater();
  }

@@ -1,5 +1,6 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
+import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
@@ -14,6 +15,21 @@ const seitzPresets=[['screw21',"2₁ screw axis · around z"],['rotation4',"Four
 const isSeitzPreset=value=>seitzPresets.some(([id])=>id===value);
 const groupPresets={double_group:[['c2_point',"point group C₂: Double coverage with double rotation"],['d2_point',"point group D₂: Q₈ with non-commutative spinors"],['screw21_space',"Three-dimensional space group : Dual coverage of 2₁ screw axis"]],color_group:[['c3_point',"point group C₃: three-color triangle pattern"],['translation3_space',"3D space group : Three-color layered periodic model"]],spin_group:[['c2_point',"point group C₂: independent space and spin rotation"],['triangular_point',"point group C₃: Triangular 120° spin configuration"],['af_space',"three-dimensional space group : collinear antiferromagnetic periodic model"],['helix3_space',"three-dimensional space group : three-layer 120° spiral spin"]]};
 const isGroupLab=lab=>Object.hasOwn(groupPresets,lab);
+const doubleScrewKz=Object.freeze({'0':0,'1/4':.25,'1/2':.5});
+
+function doubleScrewWorkbenchHTML(result,payload){
+  if(payload?.lab!=='double_group'||payload.preset!=='screw21_space')return '';
+  const {kz}=payload;
+  if(result.lab!==payload.lab||result.preset!==payload.preset||result.dimension!=='space'||
+      result.kz!==kz||result.closure?.kz!==kz||!Object.hasOwn(doubleScrewKz,kz))return '';
+  const route=buildWorkbenchRoute({mode:'sg',id:4,k:[0,0,doubleScrewKz[kz]],doubleValued:true});
+  return `<aside class="sc-worked" aria-labelledby="sc-double-screw-workbench-title">
+    <h3 id="sc-double-screw-workbench-title">Check the screw eigenvalues in the space-group workbench</h3>
+    <p>The workbench uses the Bradley–Cracknell (BC) setting of SG 4. Locate the twofold screw about z and check its translation (0, 0, ½).</p>
+    <p>Predict the screw eigenvalues in the two one-dimensional double-valued little-group representations. Open the workbench, start the calculation, and use the characters of this operation to check your prediction. The branches may appear in either order. Each eigenvalue must square to the value shown in this experiment.</p>
+    <a id="sc-double-screw-workbench" href="#${esc(route)}">Open the double-valued workbench at this wavevector →</a>
+  </aside>`;
+}
 const latticeNames={TricPrim:"triclinic · original",MonoPrim:"monoclinic · original",MonoBase:"monoclinic · bottom center",OrthPrim:"Orthogonal · Original",OrthBase:"orthogonal · bottom center",OrthBody:"Orthogonal · Body-centered",OrthFace:"Orthogonal · Face-centered",TetrPrim:"Sifang · Original",TetrBody:"Sifang·Tixin",TrigPrim:"Sanfang·Lingfang Original",HexaPrim:"Hexagonal · Original",CubiPrim:"Cube · Original",CubiBody:"Cube · Body Center",CubiFace:"Cube · Noodle Center"};
 const storageKey='symmetry-lab.academy.progress.v1';
 const derivationStorageKey='symmetry-lab.academy.derivations.v1';
@@ -504,14 +520,22 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     root.querySelectorAll('[data-sc-lab]').forEach(button=>button.onclick=()=>{if(!current()||state.tab!=='lab'||$('[data-sc-lab="'+button.dataset.scLab+'"]')!==button)return;changeLab(button.dataset.scLab);state.labLesson=null;drawLab();sync();});
     const form=$('#sc-lab-form'),activeForm=()=>current()&&state.tab==='lab'&&$('#sc-lab-form')===form;
     form.onsubmit=e=>{e.preventDefault();if(activeForm()&&!state.busy)return runLab();};
+    const clearEditedResult=()=>{
+      if(!activeForm()||state.busy)return;
+      captureLabDraft();stop();state.labError='';
+      if(state.labResult){state.labResult=null;state.labPayload=null;drawLabResult();}
+    };
     const presetControl=$('#sc-preset')||$('#sc-group-preset');
     if(presetControl)presetControl.onchange=e=>{
       if(!activeForm()||(state.lab==='seitz'&&!isSeitzPreset(e.target.value)))return;
       state.inputs[state.lab].preset=e.target.value;
-      captureLabDraft();
+      if(state.lab==='double_group')clearEditedResult();
+      else captureLabDraft();
       sync();
     };
-    form.oninput=()=>{if(!activeForm())return;captureLabDraft();stop();state.labError='';if(state.labResult){state.labResult=null;state.labPayload=null;drawLabResult();}};
+    const screwKzControl=$('#sc-group-kz');
+    if(screwKzControl)screwKzControl.onchange=clearEditedResult;
+    form.oninput=clearEditedResult;
     root.querySelectorAll('[data-sc-k]').forEach(button=>button.onclick=()=>{if(!activeForm()||state.lab!=='antiferro'||state.busy)return;$('#sc-af-k').value=button.dataset.scK;captureLabDraft();runLab();});
     drawLabResult();
   }
@@ -545,9 +569,13 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if(state.lab==='magnetic'){body=`${magneticSVG(result,state.labPayload)}<div class="sc-legend"><span><i class="start"></i>initial vector</span><span><i class="current"></i>transformed vector</span></div><div class="sc-result-facts"><div><span>det R</span><code>${esc(fmt(result.determinant))}</code></div><div><span>time reversal Symbol</span><code>${esc(fmt(result.timeSign))}</code></div><div><span>transformed position Rr</span><code>${esc(vector(result.transformedPosition))}</code></div><div><span>Magnetic moment after transformation</span><code>${esc(vector(result.transformedMoment))}</code></div></div><pre class="sc-formula">r′ = Rr
 m′ = εₜ det(R) Rm</pre><p class="sc-small">εₜ = −1 means it comes with time reversal , otherwise +1. The inversion does not change the axial vector magnetic moment, but time reversal changes its direction.</p>`;}
     if(state.lab==='antiferro'){body=`${antiferroSVG(result)}<div class="sc-legend"><span><i class="start"></i>upward magnetic moment</span><span><i class="current"></i>downward magnetic moment</span></div><div class="sc-result-facts"><div><span>k → −k</span><code>${esc(fmt(state.labPayload?.k))} → ${esc(fmt(result.momentumImage))}</code></div><div><span>k is equivalent to −k?</span><code>${result.isTrim?"is (module reciprocal lattice vector)":"no"}</code></div><div><span>S²</span><code>${esc(complex(result.square))}</code></div><div><span>Sufficient condition for Kramers of the same k</span><strong>${result.kramersEligible?"satisfied":"Not satisfied"}</strong></div></div><div class="sc-symmetry-tests">${(result.symmetryTests||[]).map(test=>`<div><code>${crystalSpan(test.label||test.operation,'operation')}</code><span>${test.preservesPattern?"✓ Maintain magnetic sequence":"✕ Does not maintain magnetic sequence"}</span></div>`).join('')}</div><p class="sc-callout">must check both S to bring the state back to the same k (modulo reciprocal lattice vector) and S² = −1. If the condition is not met, it only means that this symmetry cannot guarantee the degeneracy of Kramers there, and does not exclude degeneracy caused by other symmetries.</p>`;}
-    if(isGroupLab(state.lab)&&frame)body=groupResultHTML(result,frame);
+    if(isGroupLab(state.lab)&&frame)body=groupResultHTML(result,frame)+doubleScrewWorkbenchHTML(result,state.labPayload);
     target.innerHTML=`<h3 class="sc-result-title">${esc(result.title||labNames[state.lab])}</h3>${body}${frames.length?`<div class="sc-frame-controls"><label for="sc-frame">${state.lab==='spinor'?"rotation angle":"Continuous compounding steps"}<output id="sc-frame-value">${state.lab==='spinor'?esc(frame?.angle)+'°':esc(frame?.step)}</output></label><input id="sc-frame" type="range" min="0" max="${frames.length-1}" step="1" value="${state.frame}"><div class="sc-actions"><button type="button" class="secondary" id="sc-play">${state.timer!==null?"Pause":"Play frame-by-frame demo"}</button><button type="button" class="secondary" id="sc-reset-frame">Back to the starting point</button>${state.lab==='spinor'?'<button type="button" class="secondary" data-sc-angle="360">360°</button><button type="button" class="secondary" data-sc-angle="720">720°</button>':''}</div></div>`:''}<p class="sc-convention">${esc(result.convention||'')}</p>${Array.isArray(result.notes)?`<ul class="sc-notes">${result.notes.map(note=>`<li>${esc(note)}</li>`).join('')}</ul>`:''}<button type="button" class="sc-text-button" id="sc-export-lab">↓ Export input and Python results</button>`;
     if(isGroupLab(state.lab)&&frame)groupViewer=createSpinColorViewer({container:$('#sc-group-viewer'),data:result,frameIndex:state.frame,initialView:groupCamera,isCurrent:()=>current()&&state.tab==='lab'&&state.labResult===result});
+    const screwWorkbench=$('#sc-double-screw-workbench');
+    if(screwWorkbench)screwWorkbench.onclick=event=>{
+      if(!current()||state.tab!=='lab'||state.labResult!==result||$('#sc-double-screw-workbench')!==screwWorkbench)event.preventDefault();
+    };
     root.querySelectorAll('[data-sc-theta-step]').forEach(button=>button.onclick=()=>{const step=Number(button.dataset.scThetaStep);if(current()&&state.tab==='lab'&&state.lab==='spinor'&&state.labResult===result&&$('[data-sc-theta-step="'+step+'"]')===button&&Number.isInteger(step)&&step>=0&&step<=2){timeReversalStep=step;drawLabResult();}});
     if(frames.length){$('#sc-frame').oninput=e=>{stop();state.frame=Number(e.target.value);drawLabResult();};$('#sc-reset-frame').onclick=()=>{stop();state.frame=0;drawLabResult();};$('#sc-play').onclick=()=>{if(state.timer!==null){stop();drawLabResult();return;}if(state.frame>=frames.length-1)state.frame=0;function tick(){if(!current()||state.tab!=='lab'||state.busy||state.labResult!==result){stop();return;}if(state.frame>=frames.length-1){stop();drawLabResult();return;}state.frame++;state.timer=setTimeout(tick,state.lab==='spinor'?180:850);drawLabResult();}state.timer=setTimeout(tick,180);drawLabResult();};root.querySelectorAll('[data-sc-angle]').forEach(button=>button.onclick=()=>{stop();state.frame=Math.max(0,frames.findIndex(f=>f.angle===Number(button.dataset.scAngle)));drawLabResult();});}
     $('#sc-export-lab').onclick=()=>{download(JSON.stringify({input:state.labPayload,result:state.labResult,...(groupViewer?{camera:groupViewer.getView()}:{} )},null,2),`teaching-lab-${state.lab}.json`);toast("has exported experimental input and Python calculation results");};

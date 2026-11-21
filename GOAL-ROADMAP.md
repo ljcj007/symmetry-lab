@@ -490,3 +490,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - The finder and calculator directory recognize searches such as `little-group irreps`, `spinful irrep` and `antiunitary corepresentation`. The numerical workbench retains the current group, wavevector and spin setting and offers the controls named in the search result.
 - A query such as `exact symbolic little group irreps` opens symbolic space-group representations. The result describes the supported rational wavevectors and affine parameter lines. Both destinations keep calculation under the user's control.
+
+## Check a classroom prediction in a second tool
+
+- The S₃ reduction lesson carries its three-vertex example into the D₃ projection demo. The two tables order the conjugacy classes differently. Learners align the columns, predict the A₂ projection, and compare the ranks 1, 0, and 2 from the images of three basis functions. The zero E image of the symmetric sum supplies a separate check involving one vector.
+- The double-space-group lesson carries the computed axial wavevector into the double-valued workbench for space group 4 in the BC setting. Learners calculate manually and compare the two screw eigenvalues at Γ, kz = 1/4 and the zone boundary with the square shown in the lesson.
+- Reopening the workbench from a generic search result during a deep link's group-catalog load preserves the requested group and wavevector. The current load stays shared and calculation starts only with an explicit action.

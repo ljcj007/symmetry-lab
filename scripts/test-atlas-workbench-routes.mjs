@@ -7,12 +7,14 @@ const catalog=name=>JSON.parse(readFileSync(new URL(`../dist/data/${name}.json`,
 const groups={sg:catalog('space-groups').groups,msg:catalog('magnetic-groups').groups,mpg:catalog('points').points};
 const noop=()=>{};
 
-async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
+async function appInstance(edition,{hash,selectedId='',priorSelection=false,loadCatalog=async mode=>groups[mode],beforeReady}){
  const address=file=>new URL('../dist/'+edition+file,import.meta.url);
  const app=readFileSync(address('app.js'),'utf8');
  const {buildWorkbenchRoute,parseWorkbenchSelection}=await import(address('workbench-route.js'));
  const {matchMagneticGroupQuery}=await import(address('magnetic-group-query.js'));
  const {spaceGroupNumberForQuery,spaceGroupSymbolKey}=await import(address('tool-search.js'));
+ const {createResourceLoader}=await import(address('resource-loader.js'));
+ const groupLoader=createResourceLoader(loadCatalog);
  const section=(start,end)=>{
   const from=app.indexOf(start),to=app.indexOf(end,from+start.length);
   assert.ok(from>=0&&to>from,start);
@@ -22,7 +24,7 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
  if(priorSelection===true)Object.assign(state,{group:groups.sg[21],k:[.5,0,0],bzType:'OrthFace(a)',labelK:'X',doubleValued:true});
  else if(priorSelection)Object.assign(state,priorSelection);
  const gid=(group=state.group,mode=state.mode)=>mode==='sg'?String(group.number):group.id;
- const button={dataset:{openGroup:selectedId}},host={innerHTML:'',dataset:{},classList:{toggle:noop,add:noop}},location={hash};
+ const button={dataset:{openGroup:selectedId}},host={innerHTML:'',dataset:{},classList:{toggle:noop,add:noop},focus:noop},location={hash};
  const calculations=[],historyWrites=[];
  const context={state,location,URLSearchParams,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber:Number,matchMagneticGroupQuery,spaceGroupNumberForQuery,spaceGroupSymbolKey,
   labels:{home:['home',''],database:['database',''],workbench:['workbench','']},knownTool:noop,parseClassroomRoute:noop,withClassroomNavigationContext:noop,
@@ -32,7 +34,8 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
    replaceState(_state,_title,next){historyWrites.push(['replace',next]);location.hash=next;}
   },
   $:()=>host,$$:selector=>selector==='[data-open-group]'?[button]:[],updateBreadcrumb:noop,rememberRoute:noop,esc:String,
-  groupLoader:{peek:()=>true},optionalViews:{peek:()=>true},ensureGroups:async mode=>groups[mode],list:mode=>groups[mode],gid,
+  groupLoader,optionalViews:{peek:()=>true},ensureGroups:mode=>groupLoader.get(mode),list:mode=>groups[mode],gid,
+  databases:{},renderNavigationHub:noop,window:{scrollTo:noop},
   modeButtons:()=>'',gtitle:group=>group.bcSymbol||group.symbol,crystalSpan:String,lattices:{},tableHTML:()=>'',
   resultMatches:()=>false,fraction:String,bindWorkbench:noop,renderResults:noop,renderViz:noop,
   async calculate(){calculations.push([location.hash,gid(),state.mode]);},
@@ -46,11 +49,82 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
   ['function renderDatabase(){', '\nfunction activeContext(){']
  ];
  vm.runInContext('let renderTicket=0,renderedViewCleanup=null,dictionaryController=null;'+fragments.map(args=>section(...args)).join('\n'),context);
- await context.setView(hash,{history:false});
+ const opening=context.setView(hash,{history:false});
+ if(beforeReady)await beforeReady({opening,navigate:context.setView,location,host,state,historyWrites});
+ await opening;
  return {state,button,host,location,calculations,historyWrites,gid};
 }
 
+const pendingMagneticHash='#workbench?msg=62.448&kx=0.5&ky=0&kz=0&double=true&label=X';
+
 for(const [edition,otherEdition,targetLanguage] of [['','en/','en'],['en/','','zh-CN']]){
+ const pending=Promise.withResolvers(),loads=[];
+ const repeated=await appInstance(edition,{hash:pendingMagneticHash,
+  loadCatalog:async mode=>{loads.push(mode);return mode==='msg'?pending.promise:groups[mode];},
+  async beforeReady({navigate,state,location}){
+   assert.equal(state.pendingGroup?.mode,'msg');
+   // These bare routes are the navigation callback used by the global finder.
+   const reentries=[navigate('workbench',{focusTitle:true}),navigate('workbench',{focusTitle:true})];
+   pending.resolve(groups.msg);
+   await Promise.all(reentries);
+   assert.equal(location.hash,pendingMagneticHash,'Finder re-entry must preserve a deep link still loading');
+  }
+ });
+ assert.equal(repeated.gid(),'62.448');
+ assert.deepEqual(Array.from(repeated.state.k),[.5,0,0]);
+ assert.equal(repeated.state.labelK,'X');
+ assert.equal(repeated.state.doubleValued,true);
+ assert.deepEqual(repeated.historyWrites,[]);
+ assert.deepEqual(repeated.calculations,[]);
+ assert.deepEqual(loads,['msg'],'Repeated re-entry shares the pending catalog load');
+
+ const retrying=Promise.withResolvers();let attempts=0;
+ const retried=await appInstance(edition,{hash:pendingMagneticHash,loadCatalog:async mode=>{
+  if(mode!=='msg')return groups[mode];
+  if(++attempts===1)throw Error('Temporary catalog failure');
+  return retrying.promise;
+ },async beforeReady({opening,navigate,host}){
+  await opening;
+  assert.match(host.innerHTML,/Temporary catalog failure/);
+  const retry=host.onclick(),reentry=navigate('workbench',{focusTitle:true});
+  retrying.resolve(groups.msg);
+  await Promise.all([retry,reentry]);
+ }});
+ assert.equal(attempts,2);
+ assert.equal(retried.gid(),'62.448');
+ assert.equal(retried.location.hash,pendingMagneticHash);
+ assert.deepEqual(retried.historyWrites,[]);
+ assert.deepEqual(retried.calculations,[]);
+
+ for(const route of ['workbench?sg=22&kx=0&ky=0&kz=0&double=false&label=%CE%93','home','workbench']){
+  const obsolete=Promise.withResolvers();
+  const replaced=await appInstance(edition,{hash:pendingMagneticHash,loadCatalog:async mode=>mode==='msg'?obsolete.promise:groups[mode],
+   async beforeReady({navigate,location}){
+    if(route==='workbench'){
+     location.hash='#workbench';
+     await navigate(route,{history:false});
+    }else await navigate(route);
+    if(route==='home')await navigate('workbench');
+    obsolete.resolve(groups.msg);
+   }
+  });
+  assert.equal(replaced.state.mode,'sg');
+  assert.equal(replaced.gid(),route.includes('?')?'22':'225','A stale MSG reply must never replace a newer destination');
+  assert.deepEqual(replaced.calculations,[]);
+ }
+
+ const invalidated=Promise.withResolvers();
+ const recovered=await appInstance(edition,{hash:pendingMagneticHash,loadCatalog:async mode=>mode==='msg'?invalidated.promise:groups[mode],
+  async beforeReady({navigate,host}){
+   await navigate('workbench?sg=invalid');
+   assert.match(host.innerHTML,/resource-retry/,'An explicit invalid replacement displays the existing error');
+   await navigate('workbench');
+   invalidated.resolve(groups.msg);
+  }
+ });
+ assert.equal(recovered.gid(),'225','Re-entry can leave an invalid selection after its catalog was already read');
+ assert.deepEqual(recovered.calculations,[]);
+
  const priorMagneticSelection={mode:'msg',group:groups.msg.find(group=>group.id==='62.448'),k:[.5,0,0],labelK:'X',doubleValued:true};
  const retained=await appInstance(edition,{hash:'#workbench',priorSelection:priorMagneticSelection});
  assert.equal(retained.gid(),'62.448');
