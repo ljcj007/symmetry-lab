@@ -105,7 +105,7 @@ function traceWorkedAnswer(space){
  return `<section id="zs-trace-worked" tabindex="-1" aria-labelledby="zs-trace-worked-heading">
  <h4 id="zs-trace-worked-heading">核对对角元之和</h4>
  <p class="zs-calculation">${diagonal} = ${matrixTrace(matrix)}</p><p>${explanation}</p>
- <p><a href="#classroom/foundations?module=demos&amp;experiment=characters">继续练习同一操作在不同表示中的特征标 →</a></p>
+ <p><a href="#classroom/foundations?module=demos&amp;experiment=characters&amp;preset=quarter-turn-${space}">继续练习同一操作在不同表示中的特征标 →</a></p>
  </section>`;
 }
 const continuations={

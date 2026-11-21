@@ -1,0 +1,6 @@
+{
+  "读取普通晶体学 CIF 并转换到 BC 晶胞。": "Import an ordinary crystallographic CIF and convert it to the BC cell.",
+  "转换前可选定数据块，核对晶胞、原子位置与显式对称操作。": "Choose the data block when needed and check the cell, atomic positions, and explicit symmetry operations before conversion.",
+  "读取 POSCAR 格式的几何结构并转换到 BC 晶胞。": "Import a POSCAR-format structure and convert it to the BC cell.",
+  "按文件中的晶格、元素与坐标识别空间群。": "Space-group identification uses the lattice, elements, and coordinates in the file."
+}

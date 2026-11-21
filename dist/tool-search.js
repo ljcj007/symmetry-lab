@@ -11,24 +11,37 @@ export function normalizeSearchText(value){
 }
 // Treat a pasted path as its basename. This changes query interpretation only;
 // it never reads a file or chooses a conversion/compute mode.
+const filenameSuffix=/\.[a-z0-9]+$/iu;
+const rootedPath=/^(?:[a-z]:[\\/]|[\\/]|\.{1,2}[\\/])/iu;
 function fileBasename(term){
  const base=term.split(/[\\/]/).at(-1);
- const looksLikeFile=/^[a-z]:[\\/]|^[\\/]/i.test(term)||term.includes('\\')||/\.[a-z0-9]+$|^poscar(?:[-‐‑‒–—−]?0)?$|^wt\.in[-‐‑‒–—−]bands$/i.test(base);
+ const looksLikeFile=rootedPath.test(term)||term.includes('\\')||filenameSuffix.test(base)||/^(?:poscar(?:[-‐‑‒–—−]?0)?|contcar|wt\.in[-‐‑‒–—−]bands)$/iu.test(base);
  return /[\\/]/.test(term)&&looksLikeFile&&base?base:term;
 }
 function queryTerms(query){
  const raw=String(query??'').normalize('NFKC').trim();
  const quoted=/^(?:"[^"]+"|'[^']+')$/.test(raw);
  const complete=quoted?raw.slice(1,-1):raw;
- const basename=quoted||!(/\s/.test(raw))?fileBasename(complete):complete;
- if(basename!==complete)return [normalizeSearchText(basename)];
+ const single=quoted||!(/\s/.test(raw))||rootedPath.test(complete);
+ const basename=single?fileBasename(complete):complete;
+ if(basename!==complete||(single&&filenameSuffix.test(basename)))return [normalizeSearchText(basename)];
  return (normalizeSearchText(raw).match(/"[^"]+"|'[^']+'|\S+/g)||[])
   .map(term=>fileBasename(term.replace(/^["']|["']$/g,'')))
   .filter(term=>term&&term!=='/');
 }
+function matchesInputFormat(row,term){
+ return row.files.some(file=>{
+  const name=normalizeSearchText(file);
+  if(!name.startsWith('*.'))return term===name;
+  const suffix=name.slice(1);
+  return term.length>suffix.length&&!term.startsWith('*')&&term.endsWith(suffix);
+ });
+}
+function inputFormatsForTerms(item,terms){
+ return (item.capability?.inputFormats||[]).filter(row=>terms.some(term=>matchesInputFormat(row,term)));
+}
 export function matchingInputFormats(item,query){
- const terms=queryTerms(query);
- return (item.capability?.inputFormats||[]).filter(row=>row.files.some(file=>terms.includes(normalizeSearchText(file))));
+ return inputFormatsForTerms(item,queryTerms(query));
 }
 export function inputFormatSummary(item,query){
  return matchingInputFormats(item,query).map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions).join(' ');
@@ -38,15 +51,16 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  if(!terms.length)return [];
  const exampleTerms=terms.join(' ').replace(/[“”‘’]/gu,'').split(' ').filter(Boolean);
  const exampleQuery=exampleTerms.join(' ');
- const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords)}));
+ const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords),formats:inputFormatsForTerms(item,terms)}));
  const matchingExamples=entries.filter(({searchExample:example})=>example?.matches(exampleQuery,exampleTerms));
  const examples=matchingExamples.map(item=>{
   if(!includeExampleRoutes)return item;
   const {params,title,summary}=item.searchExample;
   return {...item,route:`${item.route}?${params}`,title,summary};
  });
- const score=row=>matchingInputFormats(row.item,query).reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
- const tools=prepared.filter(row=>!matchingExamples.includes(row.item)&&terms.every(term=>(row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)))
+ const score=row=>row.formats.reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
+ const tools=prepared.filter(row=>!matchingExamples.includes(row.item)&&terms.every(term=>
+  (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
  return [...examples,...tools].slice(0,limit);
 }

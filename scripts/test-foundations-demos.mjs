@@ -4,13 +4,22 @@ import {Container,Element} from './test-material-research-ui.mjs';
 
 const english=process.argv.includes('--english');
 const edition=english?'../dist/en/':'../dist/';
-const {charactersPreview,projectionPreview,splittingPreview,jtPreview,waterPreview,foundationsDemoThemes,
+const {charactersPreview,characterComparisonPreview,projectionPreview,splittingPreview,jtPreview,waterPreview,foundationsDemoThemes,
  renderFoundationsDemosView,getFoundationsDemosResult}=await import(edition+'foundations-demos.js');
 const {parseClassroomRoute,buildClassroomHash}=await import(edition+'classroom-ui.js');
 assert.equal(foundationsDemoThemes.length,6);
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 assert.equal(charactersPreview({operation:'C4',basis:'xyz'}).trace,1);
 assert.equal(charactersPreview({operation:'C4',basis:'xy'}).trace,0);
+const [rotationXY,mirrorXY]=characterComparisonPreview('xy');
+const [rotationXYZ,mirrorXYZ]=characterComparisonPreview('xyz');
+assert.deepEqual([rotationXY,mirrorXY,rotationXYZ,mirrorXYZ].map(row=>[row.trace,row.squaredTrace]),[
+ [0,-2],[0,2],[1,-1],[1,3]
+]);
+assert.deepEqual(rotationXY.squared,[[-1,0],[0,-1]]);
+assert.deepEqual(mirrorXY.squared,[[1,0],[0,1]]);
+assert.deepEqual(rotationXYZ.squared,[[-1,0,0],[0,-1,0],[0,0,1]]);
+assert.deepEqual(mirrorXYZ.squared,[[1,0,0],[0,1,0],[0,0,1]]);
 const id=projectionPreview({operation:0,seedSite:0,irrep:'E',row:0});
 close(id.normalized[0],2/Math.sqrt(6));close(id.normalized[1],-1/Math.sqrt(6));
 const partner=projectionPreview({operation:1,seedSite:0,irrep:'E',row:1});
@@ -46,7 +55,8 @@ const options={container:page,onNavigate:route=>routes.push(route),
  loadWaterActions:()=>assert.fail('The bridge never opens the Water Actions module automatically')};
 const characters='#classroom/foundations?module=demos&experiment=characters';
 const water='#classroom/foundations?module=demos&experiment=water';
-for(const route of [characters,water])assert.equal(buildClassroomHash(parseClassroomRoute(route)),route);
+const waterMirrorCharacters=characters+'&preset=water-mirror-xyz';
+for(const route of [characters,water,waterMirrorCharacters])assert.equal(buildClassroomHash(parseClassroomRoute(route)),route);
 let dispose=await renderFoundationsDemosView({...options,selection:parseClassroomRoute(characters)});
 const $=selector=>page.querySelector(selector),local=(zh,en)=>english?en:zh;
 const bridge=$('#fd-character-water-bridge');
@@ -79,11 +89,46 @@ const lesson=result.querySelector('a').getAttribute('href');
 assert.equal(lesson,water);
 assert.deepEqual(getFoundationsDemosResult(),original);
 const operation=$('[data-param="operation"]');
+const squareExercise=$('#fd-character-comparison');
+const squareGuess=$('#fd-character-square-guess'),squareCheck=$('#fd-character-square-check');
+const squareResult=$('#fd-character-square-result'),squareFeedback=$('#fd-character-square-feedback');
+const tableColumns=host=>host.querySelectorAll('[data-character-operation]').map(row=>
+ row.querySelectorAll('td').map(cell=>cell.textContent)
+);
+assert.equal(squareGuess.getAttribute('aria-describedby'),'fd-character-square-feedback');
+assert.equal(squareCheck.getAttribute('aria-controls'),'fd-character-square-result');
+assert.equal(squareFeedback.getAttribute('role'),'status');
+assert.equal(squareResult.hidden,true);
+assert.deepEqual(tableColumns(squareExercise).slice(0,2).map(row=>row[1]),['1','1']);
+squareCheck.onclick();
+assert.match(squareFeedback.textContent,local(/请先选择/,/Choose/));
+squareGuess.value='equal';squareGuess.onchange();squareCheck.onclick();
+assert.equal(squareResult.hidden,true);
+assert.match(squareFeedback.textContent,local(/试着跟踪/,/Follow/));
+squareGuess.value='mirror';squareGuess.onchange();squareCheck.onclick();
+assert.equal(squareResult.hidden,false);
+assert.deepEqual(tableColumns(squareResult).map(row=>row[1]),['−1','3']);
+assert.deepEqual(squareResult.querySelectorAll('[data-character-operation]').map(row=>row.querySelectorAll('td')[2]
+ .querySelector('[data-math-source]').getAttribute('data-math-source')),['+i,\\,-i,\\,+1','+1,\\,-1,\\,+1']);
+assert.equal(calls.length,0);
 operation.value='C2';
 page.firstElementChild.eventchange({target:operation});
 assert.equal($('#fd-character-water-bridge'),bridge,'Updating the matrix preview leaves the fixed mirror exercise intact');
 assert.equal($('[data-param="operation"]').value,'C2');
 assert.equal(result.hidden,false);
+assert.equal($('#fd-character-square-result'),squareResult,'Changing the preview operation preserves the fixed comparison');
+const basis=$('[data-param="basis"]');
+basis.value='xy';
+page.firstElementChild.eventchange({target:basis});
+assert.equal($('#fd-character-comparison'),squareExercise);
+assert.equal($('#fd-character-square-result').hidden,true,'A basis change resets the prediction for the new dimension');
+const afterBasisChange=squareFeedback.textContent;
+squareCheck.onclick();
+assert.equal(squareFeedback.textContent,afterBasisChange,'A detached quiz cannot update after the basis changes');
+assert.deepEqual(tableColumns(squareExercise).slice(0,2).map(row=>row[1]),['0','0']);
+$('#fd-character-square-guess').value='mirror';
+$('#fd-character-square-check').onclick();
+assert.deepEqual(tableColumns($('#fd-character-square-result')).map(row=>row[1]),['−2','2']);
 guess.value='1';guess.onchange();
 assert.equal(result.hidden,true);
 dispose();
@@ -92,7 +137,7 @@ assert.equal($('#fd-character-water-bridge'),null);
 assert.ok($('[data-water-actions-entry]'));
 assert.equal($('[data-water-actions-entry]').getAttribute('open'),null);
 const prerequisite=$('#fd-water-character-prerequisite');
-assert.equal(prerequisite.querySelector('a').getAttribute('href'),characters);
+assert.equal(prerequisite.querySelector('a').getAttribute('href'),waterMirrorCharacters);
 assert.match(prerequisite.innerHTML,/\bsigma\(xz\)/);
 const staleFeedback=feedback.textContent;
 check.onclick();
@@ -100,4 +145,29 @@ assert.equal(feedback.textContent,staleFeedback,'Detached exercises cannot chang
 assert.equal(calls.length,0);
 assert.deepEqual(routes,[]);
 dispose();
-console.log(`Foundations demo (${english?'English':'Chinese'}): preview invariants, fixed mirror check, water prerequisites, old outputs and stale guards passed.`);
+for(const [route,operation,basis] of [
+ [waterMirrorCharacters,'mirror','xyz'],
+ [characters+'&preset=quarter-turn-xy','C4','xy'],
+ [characters+'&preset=quarter-turn-xyz','C4','xyz'],
+ [characters+'&preset=unknown','C4','xyz']
+]){
+ dispose=await renderFoundationsDemosView({...options,selection:parseClassroomRoute(route)});
+ assert.equal($('[data-param="operation"]').value,operation);
+ assert.equal($('[data-param="basis"]').value,basis);
+ assert.equal(getFoundationsDemosResult().input.operation,operation);
+ assert.equal(getFoundationsDemosResult().input.basis,basis);
+ assert.equal(calls.length,0);
+ dispose();
+}
+const misrouted=water+'&preset=quarter-turn-xy';
+dispose=await renderFoundationsDemosView({...options,selection:parseClassroomRoute(misrouted)});
+assert.equal($('#fd-character-comparison'),null);
+assert.equal(getFoundationsDemosResult().input.basis,undefined);
+dispose();
+dispose=await renderFoundationsDemosView({...options,selection:parseClassroomRoute(waterMirrorCharacters)});
+await page.firstElementChild.eventclick({target:$('[data-action="python"]')});
+assert.deepEqual(calls,[['foundations_demos',{experiment:'characters',theme:'characters',operation:'mirror',basis:'xyz'}]]);
+await page.firstElementChild.eventclick({target:$('[data-theme="water"]')});
+assert.deepEqual(routes,[{experiment:'water',preset:undefined}]);
+dispose();
+console.log(`Foundations demo (${english?'English':'Chinese'}): preview invariants, trace comparison, fixed mirror check, preset handoffs and stale guards passed.`);

@@ -13,6 +13,12 @@ const text=(x,y,value,color='#17354c',size=18)=>`<text x="${x}" y="${y}" fill="$
 const THEMES=[['water',"Water · infrared and Raman"],['characters',"Matrices, characters, and basis functions"],['projection',"D₃ triangle · projection operators"],['splitting',"SO(3) → O → D₄ energy levels"],['jt',"Jahn–Teller Effect"],['macro',"Macroscopic Crystal Symmetry"]];
 const DEFAULTS={water:{mode:'symmetric',phase:30,amplitude:.2,channel:'ir-z'},characters:{operation:'C4',basis:'xyz'},projection:{operation:1,seedSite:0,irrep:'E',row:0},splitting:{delta:1,ds:.12,dt:.03},jt:{qtheta:.65,qepsilon:.25,g:1,k:1,occupancy:1},macro:{n:4,translation:.35}};
 const charactersRoute='#classroom/foundations?module=demos&experiment=characters';
+const waterMirrorCharacterRoute=charactersRoute+'&preset=water-mirror-xyz';
+const characterPresets=new Map([
+ ['quarter-turn-xy',{operation:'C4',basis:'xy'}],
+ ['quarter-turn-xyz',{operation:'C4',basis:'xyz'}],
+ ['water-mirror-xyz',{operation:'mirror',basis:'xyz'}]
+]);
 const waterRoute='#classroom/foundations?module=demos&experiment=water';
 const waterSiteCount=3;
 let latest=null;
@@ -26,6 +32,16 @@ export function charactersPreview(s){
  const matrices={C4:[[0,-1,0],[1,0,0],[0,0,1]],C2:[[-1,0,0],[0,-1,0],[0,0,1]],mirror:[[1,0,0],[0,-1,0],[0,0,1]],identity:[[1,0,0],[0,1,0],[0,0,1]]};
  const full=matrices[s.operation]||matrices.C4,xy=full.slice(0,2).map(r=>r.slice(0,2)),m=s.basis==='xy'?xy:full;
  return {matrix:m,trace:m.reduce((a,r,i)=>a+r[i],0),fullTrace:full.reduce((a,r,i)=>a+r[i],0),xyTrace:xy.reduce((a,r,i)=>a+r[i],0),fullMatrix:full,xyMatrix:xy};
+}
+export function characterComparisonPreview(basis){
+ return ['C4','mirror'].map(operation=>{
+  const first=charactersPreview({operation,basis});
+  const squared=first.matrix.map(row=>row.map((_,column)=>row.reduce(
+   (entry,value,index)=>entry+value*first.matrix[index][column],0
+  )));
+  const squaredTrace=squared.reduce((sum,row,index)=>sum+row[index],0);
+  return {operation,matrix:first.matrix,trace:first.trace,squared,squaredTrace};
+ });
 }
 export function projectionPreview(s){
  const permutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]],names=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
@@ -73,6 +89,64 @@ function waterScene(s){
  return {plot:svg("Schematic water vibration in the xz plane",body),data:{mode:s.mode,phase:s.phase,positions:pts,irrep,allowed},html:`<h3>H₂O：${irrep} mode · ${allowed?"Symmetry allows this polarization":"Symmetry forbids this polarization"}</h3><p>The molecule lies in xz with its principal axis along z. The two A₁ modes match z and diagonal polarizability components; B₁ matches x and xz.</p>${table(["Operation",'E','C₂(z)','σ(xz)','σ(yz)'],[["Fixed atoms",3,1,3,1],["Vector trace",3,-1,1,1],["Characters of Γ₃N",9,-1,3,1]])}<p>${math('\\Gamma_{3N}=3A_1+A_2+3B_1+2B_2')}; subtracting translations and rotations gives ${math('\\Gamma_{\\mathrm{vib}}=2A_1+B_1')}。</p><p class="fd-scope">The displacements illustrate mode symmetry, without computing real frequencies, peak positions, or relative intensities. An allowed mode need not produce a strong peak in every experimental geometry.</p>`,exercise:exercise("When infrared polarization changes from z to x, which modes become forbidden? Why does another water table give 2A₁+B₂?",["A₁ contains z and B₁ contains x; infrared coupling must match the same vector component as the mode.","In the present xz convention, the two A₁ modes are allowed for z polarization and B₁ for x polarization.","Placing water in yz exchanges x and y and hence the B₁/B₂ labels. The physical modes are unchanged."])};
 }
 function charactersScene(s){const r=charactersPreview(s),p=mv(r.fullMatrix,[.7,.4,.6]);let body=line(90,250,270,250,'#abb8c2')+line(180,310,180,50,'#abb8c2');body+=line(180,250,285,190,'#2673aa',4)+line(180,250,180+p[0]*150,250-p[1]*150,'#b1583d',4)+text(285,175,'r','#2673aa')+text(180+p[0]*150,230-p[1]*150,'Rr','#b1583d');return {plot:svg("Geometric action and the selected matrix space",body+text(460,130,"Three-dimensional vector space")+text(460,175,'(x,y) ⊕ z')+text(460,240,"χ = sum of matrix diagonal entries")),data:r,html:`<h3>Character in the selected space, χ = ${r.trace}</h3>${matrix(r.matrix)}<p>Full three-dimensional trace:${r.fullTrace}; xy-subspace trace:${r.xyTrace}. Restricting the three-dimensional action to the invariant xy subspace gives a different representation.</p><p>For C₄ᵥ, ${math('D_{\\mathrm{vector}}=D_E\\oplus D_{A_1}')}. For C₄, the xy block has trace 0 and z contributes 1, giving a character of 1 for the full vector representation.</p><p>For the same representation and operation, a change of basis gives  ${math("D'(g)=S^{-1}D(g)S")}. The matrix entries can change while the character stays unchanged.</p>`,exercise:exercise("The trace of a two-dimensional rotation is 0. Does that mean there is no transformation?",["Read the xy block of C₄: [[0,−1],[1,0]].","It takes the x basis vector to y and y to −x. Its square is −I, so it is clearly not a zero matrix.","The full three-dimensional representation also contains the unchanged z component, giving χ(C₄)=0+1=1."])};}
+function characterComparisonTable(label,headers,rows){
+ return `<div class="fd-scroll" role="region" tabindex="0" aria-label="${esc(label)}">
+  <table><caption class="sr-only">${esc(label)}</caption><thead><tr><th scope="col">Operation</th>${headers.map(header=>
+   `<th scope="col">${header}</th>`).join('')}</tr></thead><tbody>${rows.map(({operation,name,values})=>
+   `<tr data-character-operation="${operation}"><th scope="row">${name}</th>${values.map(value=>
+    `<td>${value}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function characterComparisonHTML(basis){
+ const plane=basis==='xy';
+ const rows=characterComparisonPreview(basis).map(row=>({
+  ...row,name:math(row.operation==='C4'?'C_4(z)':'\\sigma(xz)'),
+  spectrum:math((row.operation==='C4'?'+i,\\,-i':'+1,\\,-1')+(plane?'':',\\,+1'))
+ }));
+ const number=value=>String(value).replace('-','−');
+ return `<section class="fd-exercise" aria-labelledby="fd-character-square-title">
+  <h3 id="fd-character-square-title">The characters agree after one application. What happens after two?</h3>
+  <p>Current representation space ${math(plane?'(x,y)':'(x,y,z)')}. Compare a positive quarter-turn about z with reflection in the xz plane.</p>
+  ${characterComparisonTable("Matrices and characters after one application",[math('D(g)'),math('\\chi(g)')],rows.map(row=>
+   ({...row,values:[matrix(row.matrix),number(row.trace)]})))}
+  <div class="controls-row">
+   <label for="fd-character-square-guess">Apply each operation twice in succession. Which has the larger character?</label>
+   <select class="form-select" id="fd-character-square-guess" aria-describedby="fd-character-square-feedback">
+    <option value="">Choose an answer</option><option value="equal">The two characters still agree</option>
+    <option value="rotation">Fourfold rotation</option><option value="mirror">Mirror reflection</option>
+   </select>
+   <button id="fd-character-square-check" type="button" class="secondary" aria-controls="fd-character-square-result">Check the result of two applications</button>
+  </div>
+  <p id="fd-character-square-feedback" role="status"></p>
+  <div id="fd-character-square-result" hidden>
+   <ol>
+    <li>First square each matrix. Two rotations reverse both x and y. Two reflections restore both coordinates.</li>
+    <li>${plane?"In the plane, the squares are the negative identity and the identity, respectively.":"Both operations fix z, so each three-dimensional character is one larger than its planar counterpart."} Add the diagonal entries of the squared matrices.</li>
+    <li>You can also start with eigenvalues. The quarter-turn has two planar eigenvalues over the complex numbers, ${math('\\pm i')}, and the planar eigenvalues of the reflection are  ${math('\\pm 1')}. Each pair cancels when summed for a single application. For two applications, square the eigenvalues before summing.</li>
+   </ol>
+   ${characterComparisonTable("Matrices and characters after two applications",
+    [math('D(g)^2'),math('\\chi(g^2)'),"Eigenvalues of the original matrix"],
+    rows.map(row=>({...row,values:[matrix(row.squared),number(row.squaredTrace),row.spectrum]})))}
+  </div>
+ </section>`;
+}
+function bindCharacterComparison(host,isCurrent){
+ const guess=host.querySelector('#fd-character-square-guess');
+ const feedback=host.querySelector('#fd-character-square-feedback');
+ const result=host.querySelector('#fd-character-square-result');
+ const here=()=>isCurrent()&&host.querySelector('#fd-character-square-guess')===guess;
+ guess.onchange=()=>{
+  if(!here())return;
+  feedback.textContent='';
+  result.hidden=true;
+ };
+ host.querySelector('#fd-character-square-check').onclick=()=>{
+  if(!here())return;
+  result.hidden=guess.value!=='mirror';
+  if(!result.hidden)feedback.textContent="Correct. Applying the reflection twice leaves both planar directions unchanged.";
+  else if(guess.value)feedback.textContent="Follow x and y through two applications. Then add the diagonal entries of the resulting matrix.";
+  else feedback.textContent="Choose how the characters compare after two applications.";
+ };
+}
 function characterWaterBridgeHTML(){
  const mirror=charactersPreview({operation:'mirror',basis:'xyz'});
  return `<details id="fd-character-water-bridge" class="fd-exercise">
@@ -120,7 +194,9 @@ function scene(theme,s){return ({water:waterScene,characters:charactersScene,pro
 
 export async function renderFoundationsDemosView({container,selection={},run,cancelRun,download=()=>{},onNavigate=()=>{},loadWaterActions=defaultWaterActionsLoader}){
  previousFoundationsCleanup();
- let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water',s={...DEFAULTS[theme]},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0;
+ let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water';
+ const preset=theme==='characters'?characterPresets.get(selection.preset):undefined;
+ let s={...DEFAULTS[theme],...preset},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0,comparisonBasis;
  container.innerHTML='<article class="fd-course"></article>';const root=container.firstElementChild;
  let disposed=false,waterTicket=0,disposeWater=()=>{},waterDetail=null,waterOpening=null,waterBound=false,legacyRequest=null,detachObserver;
  const current=()=>!disposed&&container.isConnected!==false&&root.isConnected!==false&&container.firstElementChild===root;
@@ -146,8 +222,8 @@ export async function renderFoundationsDemosView({container,selection={},run,can
  }
  function waterEntry(){
   if(theme!=='water')return '';
-  const characterLink=`<a href="${charactersRoute}">matrices and characters demo</a>`;
-  return `<p id="fd-water-character-prerequisite" class="fd-scope">To see how the mirror acts on one vector, open the ${characterLink}. Select  ${math('\\sigma(xz)')}  and the full three-dimensional vector. Here we apply the same mirror to all three atoms of water.</p>
+  const characterLink=`<a href="${waterMirrorCharacterRoute}">matrices and characters demo</a>`;
+  return `<p id="fd-water-character-prerequisite" class="fd-scope">In the ${characterLink} see how the mirror  ${math('\\sigma(xz)')}  acts on a full three-dimensional vector. Then return here to examine the displacements of the three water atoms.</p>
   <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>How does water acquire a character of −1?</summary><p>Follow the nine displacement columns of three atoms, distinguish atom exchange from arrow rotation, then reduce the representation and remove rigid motions.</p><div data-water-actions-body></div></details>
   <p class="fd-scope"><a href="#classroom/observables?material=gaas&amp;lesson=acoustic-optical">What happens if we try a rigid rotation in a periodic crystal? →</a></p>`;
  }
@@ -182,15 +258,28 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   if(opened(detail))loadOpen();
  }
  const payload=()=>({experiment:theme,theme:theme==='projection'?'d3':theme,...s});
- function update(){const out=scene(theme,s);root.querySelector('.fd-preview').innerHTML=out.plot+out.html;root.querySelector('.fd-questions').innerHTML=out.exercise;latest={tool:'foundations_demos_preview',input:payload(),result:{...out.data,computation:'JavaScript interactive teaching preview'}};root.querySelectorAll('[data-output]').forEach(el=>el.textContent=s[el.dataset.output]);}
+ function update(){
+  const out=scene(theme,s);
+  root.querySelector('.fd-preview').innerHTML=out.plot+out.html;
+  root.querySelector('.fd-questions').innerHTML=out.exercise;
+  latest={tool:'foundations_demos_preview',input:payload(),result:{...out.data,computation:'JavaScript interactive teaching preview'}};
+  root.querySelectorAll('[data-output]').forEach(el=>el.textContent=s[el.dataset.output]);
+  const comparison=root.querySelector('#fd-character-comparison');
+  if(comparison&&comparisonBasis!==s.basis){
+   comparisonBasis=s.basis;
+   comparison.innerHTML=characterComparisonHTML(comparisonBasis);
+   bindCharacterComparison(comparison,()=>current()&&root.querySelector('#fd-character-comparison')===comparison);
+  }
+ }
  function draw(){
   if(!current())return;
   clearWater();
+  comparisonBasis=undefined;
   root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">Foundational demonstrations · from operations to physical consequences</span><h2>Make abstract symmetry an interactive lesson</h2><p>Choose a topic, vary parameters, and predict before checking. Each demonstration states its basis, coordinates, and model conventions.</p></header>
   <nav class="fd-tabs" aria-label="Teaching demonstration topics">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav>
   ${waterEntry()}
   <div class="fd-workspace"><aside class="fd-controls"><h3>Adjust and predict</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?"Python is checking…":"Check with browser Python"}</button><p class="fd-status" role="status">${esc(pythonStatus||"The figure responds immediately to parameters; the Python button provides an independent calculation check.")}</p></aside><section class="fd-preview" aria-live="polite"></section></div>
-  ${theme==='characters'?characterWaterBridgeHTML():''}
+  ${theme==='characters'?'<div id="fd-character-comparison"></div>'+characterWaterBridgeHTML():''}
   <div class="fd-questions"></div><details class="fd-python"><summary>Inspect the Python check data</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):"Not checked yet. Use the Python button above."}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">Existing water selection-rule lesson</a> · <a href="#classroom/foundations?module=salc">Symmetry-adapted basis calculator</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching models, conventions, and sources</a></footer>`;
   update();
   bindCharacterWaterBridge(root,current);
@@ -206,7 +295,7 @@ export async function renderFoundationsDemosView({container,selection={},run,can
  root.addEventListener('change',e=>{if(!current())return;const id=e.target.dataset.param;if(!id)return;s[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;revision++;pythonResult=null;pythonStatus="Parameters changed. Run Python again to check them.";update();root.querySelector('.fd-status').textContent=pythonStatus;});
  root.addEventListener('click',async e=>{
   if(!current())return;
-  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme});draw();return;}
+  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme,preset:undefined});draw();return;}
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='animate'){if(timer)stopAnimation();else timer=setInterval(()=>{if(!current()){stopAnimation();return;}s.phase=(s.phase+5)%360;const input=root.querySelector('[data-param="phase"]');if(input)input.value=s.phase;update();},65);}
   if(action==='python'&&run&&!busy){

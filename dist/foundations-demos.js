@@ -13,6 +13,12 @@ const text=(x,y,value,color='#17354c',size=18)=>`<text x="${x}" y="${y}" fill="$
 const THEMES=[['water','水分子 · 红外与拉曼'],['characters','矩阵、特征标与基函数'],['projection','D₃ 三角形 · 投影算符'],['splitting','SO(3) → O → D₄ 能级'],['jt','Jahn–Teller 效应'],['macro','晶体宏观对称性']];
 const DEFAULTS={water:{mode:'symmetric',phase:30,amplitude:.2,channel:'ir-z'},characters:{operation:'C4',basis:'xyz'},projection:{operation:1,seedSite:0,irrep:'E',row:0},splitting:{delta:1,ds:.12,dt:.03},jt:{qtheta:.65,qepsilon:.25,g:1,k:1,occupancy:1},macro:{n:4,translation:.35}};
 const charactersRoute='#classroom/foundations?module=demos&experiment=characters';
+const waterMirrorCharacterRoute=charactersRoute+'&preset=water-mirror-xyz';
+const characterPresets=new Map([
+ ['quarter-turn-xy',{operation:'C4',basis:'xy'}],
+ ['quarter-turn-xyz',{operation:'C4',basis:'xyz'}],
+ ['water-mirror-xyz',{operation:'mirror',basis:'xyz'}]
+]);
 const waterRoute='#classroom/foundations?module=demos&experiment=water';
 const waterSiteCount=3;
 let latest=null;
@@ -26,6 +32,16 @@ export function charactersPreview(s){
  const matrices={C4:[[0,-1,0],[1,0,0],[0,0,1]],C2:[[-1,0,0],[0,-1,0],[0,0,1]],mirror:[[1,0,0],[0,-1,0],[0,0,1]],identity:[[1,0,0],[0,1,0],[0,0,1]]};
  const full=matrices[s.operation]||matrices.C4,xy=full.slice(0,2).map(r=>r.slice(0,2)),m=s.basis==='xy'?xy:full;
  return {matrix:m,trace:m.reduce((a,r,i)=>a+r[i],0),fullTrace:full.reduce((a,r,i)=>a+r[i],0),xyTrace:xy.reduce((a,r,i)=>a+r[i],0),fullMatrix:full,xyMatrix:xy};
+}
+export function characterComparisonPreview(basis){
+ return ['C4','mirror'].map(operation=>{
+  const first=charactersPreview({operation,basis});
+  const squared=first.matrix.map(row=>row.map((_,column)=>row.reduce(
+   (entry,value,index)=>entry+value*first.matrix[index][column],0
+  )));
+  const squaredTrace=squared.reduce((sum,row,index)=>sum+row[index],0);
+  return {operation,matrix:first.matrix,trace:first.trace,squared,squaredTrace};
+ });
 }
 export function projectionPreview(s){
  const permutations=[[0,1,2],[1,2,0],[2,0,1],[0,2,1],[1,0,2],[2,1,0]],names=['E','C₃⁺','C₃⁻','C₂(1)','C₂(2)','C₂(3)'];
@@ -73,6 +89,64 @@ function waterScene(s){
  return {plot:svg('水分子在 xz 平面的示意振动',body),data:{mode:s.mode,phase:s.phase,positions:pts,irrep,allowed},html:`<h3>H₂O：${irrep} 模式 · ${allowed?'该偏振对称性允许':'该偏振被对称性禁止'}</h3><p>分子位于 xz 平面，主轴沿 z。两条 A₁ 模式与 z、对角极化率分量相容；B₁ 模式与 x、xz 相容。</p>${table(['操作','E','C₂(z)','σ(xz)','σ(yz)'],[['固定原子数',3,1,3,1],['矢量的迹',3,-1,1,1],['Γ₃N 的特征标',9,-1,3,1]])}<p>${math('\\Gamma_{3N}=3A_1+A_2+3B_1+2B_2')}，扣除平移与转动得到 ${math('\\Gamma_{\\mathrm{vib}}=2A_1+B_1')}。</p><p class="fd-scope">位移为模式对称性的示意动画，不计算真实频率、峰位或相对强度。“允许”不保证任意实验几何都出现强峰。</p>`,exercise:exercise('把红外偏振从 z 改成 x，哪些模式由允许变为禁止？为什么水在另一份表里写成 2A₁+B₂？',['A₁ 含有 z，B₁ 含有 x；当前模式的红外耦合必须与相同的矢量分量相容。','在当前 xz 平面约定中，两条 A₁ 对 z 偏振允许，B₁ 对 x 偏振允许。','若把分子放在 yz 平面，交换 x/y 会交换 B₁/B₂ 标签，物理模式并没有改变。'])};
 }
 function charactersScene(s){const r=charactersPreview(s),p=mv(r.fullMatrix,[.7,.4,.6]);let body=line(90,250,270,250,'#abb8c2')+line(180,310,180,50,'#abb8c2');body+=line(180,250,285,190,'#2673aa',4)+line(180,250,180+p[0]*150,250-p[1]*150,'#b1583d',4)+text(285,175,'r','#2673aa')+text(180+p[0]*150,230-p[1]*150,'Rr','#b1583d');return {plot:svg('几何作用与选取的矩阵空间',body+text(460,130,'三维矢量空间')+text(460,175,'(x,y) ⊕ z')+text(460,240,'χ = 矩阵对角元之和')),data:r,html:`<h3>选定空间的特征标 χ = ${r.trace}</h3>${matrix(r.matrix)}<p>完整三维的迹：${r.fullTrace}；xy 子空间的迹：${r.xyTrace}。把三维作用限制到保持不变的 xy 子空间，得到的是另一个表示。</p><p>在 C₄ᵥ 中，${math('D_{\\mathrm{vector}}=D_E\\oplus D_{A_1}')}。对 C₄ 而言，xy 块的迹为 0，z 的贡献为 1，所以完整矢量字符为 1。</p><p>对同一表示和同一操作，更换基底得到 ${math("D'(g)=S^{-1}D(g)S")}。矩阵元素可以改变，特征标保持不变。</p>`,exercise:exercise('二维旋转矩阵的迹是 0，它是否表示“没有变换”？',['读出 C₄ 的 xy 块：[[0,−1],[1,0]]。','它把 x 基向量变成 y，把 y 变成 −x；平方为 −I，明显不是零矩阵。','完整三维表示还包含不动的 z，因而 χ(C₄)=0+1=1。'])};}
+function characterComparisonTable(label,headers,rows){
+ return `<div class="fd-scroll" role="region" tabindex="0" aria-label="${esc(label)}">
+  <table><caption class="sr-only">${esc(label)}</caption><thead><tr><th scope="col">操作</th>${headers.map(header=>
+   `<th scope="col">${header}</th>`).join('')}</tr></thead><tbody>${rows.map(({operation,name,values})=>
+   `<tr data-character-operation="${operation}"><th scope="row">${name}</th>${values.map(value=>
+    `<td>${value}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function characterComparisonHTML(basis){
+ const plane=basis==='xy';
+ const rows=characterComparisonPreview(basis).map(row=>({
+  ...row,name:math(row.operation==='C4'?'C_4(z)':'\\sigma(xz)'),
+  spectrum:math((row.operation==='C4'?'+i,\\,-i':'+1,\\,-1')+(plane?'':',\\,+1'))
+ }));
+ const number=value=>String(value).replace('-','−');
+ return `<section class="fd-exercise" aria-labelledby="fd-character-square-title">
+  <h3 id="fd-character-square-title">一次特征标相同，两次呢？</h3>
+  <p>当前表示空间 ${math(plane?'(x,y)':'(x,y,z)')}。比较绕 z 轴转正四分之一圈和 xz 镜面反射。</p>
+  ${characterComparisonTable('一次作用的矩阵和特征标',[math('D(g)'),math('\\chi(g)')],rows.map(row=>
+   ({...row,values:[matrix(row.matrix),number(row.trace)]})))}
+  <div class="controls-row">
+   <label for="fd-character-square-guess">对同一个操作连续做两次，哪一个特征标更大？</label>
+   <select class="form-select" id="fd-character-square-guess" aria-describedby="fd-character-square-feedback">
+    <option value="">请选择</option><option value="equal">两者仍相同</option>
+    <option value="rotation">四重旋转</option><option value="mirror">镜面反射</option>
+   </select>
+   <button id="fd-character-square-check" type="button" class="secondary" aria-controls="fd-character-square-result">核对两次作用</button>
+  </div>
+  <p id="fd-character-square-feedback" role="status"></p>
+  <div id="fd-character-square-result" hidden>
+   <ol>
+    <li>先把一次作用的矩阵自乘。两次旋转使 x、y 都变号。两次镜面反射让 x、y 都复原。</li>
+    <li>${plane?'在平面上，平方矩阵分别为负单位矩阵和单位矩阵。':'两种操作都固定 z，因此三维特征标各比平面的大 1。'} 再将平方矩阵的对角元相加。</li>
+    <li>也可以先求本征值。旋转在复数空间中的两个平面本征值为 ${math('\\pm i')}，反射的平面本征值为 ${math('\\pm 1')}。一次作用时两对本征值各自相消，两次时先平方再求和。</li>
+   </ol>
+   ${characterComparisonTable('两次作用的矩阵和特征标',
+    [math('D(g)^2'),math('\\chi(g^2)'),'一次作用的本征值'],
+    rows.map(row=>({...row,values:[matrix(row.squared),number(row.squaredTrace),row.spectrum]})))}
+  </div>
+ </section>`;
+}
+function bindCharacterComparison(host,isCurrent){
+ const guess=host.querySelector('#fd-character-square-guess');
+ const feedback=host.querySelector('#fd-character-square-feedback');
+ const result=host.querySelector('#fd-character-square-result');
+ const here=()=>isCurrent()&&host.querySelector('#fd-character-square-guess')===guess;
+ guess.onchange=()=>{
+  if(!here())return;
+  feedback.textContent='';
+  result.hidden=true;
+ };
+ host.querySelector('#fd-character-square-check').onclick=()=>{
+  if(!here())return;
+  result.hidden=guess.value!=='mirror';
+  if(!result.hidden)feedback.textContent='正确。平方后，镜面反射的两个平面方向都不变。';
+  else if(guess.value)feedback.textContent='试着跟踪 x 和 y 各两次，再将第二次作用后的矩阵对角元相加。';
+  else feedback.textContent='请先选择两次作用后的特征标关系。';
+ };
+}
 function characterWaterBridgeHTML(){
  const mirror=charactersPreview({operation:'mirror',basis:'xyz'});
  return `<details id="fd-character-water-bridge" class="fd-exercise">
@@ -120,7 +194,9 @@ function scene(theme,s){return ({water:waterScene,characters:charactersScene,pro
 
 export async function renderFoundationsDemosView({container,selection={},run,cancelRun,download=()=>{},onNavigate=()=>{},loadWaterActions=defaultWaterActionsLoader}){
  previousFoundationsCleanup();
- let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water',s={...DEFAULTS[theme]},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0;
+ let theme=THEMES.some(([id])=>id===selection.experiment)?selection.experiment:'water';
+ const preset=theme==='characters'?characterPresets.get(selection.preset):undefined;
+ let s={...DEFAULTS[theme],...preset},timer=null,pythonStatus='',pythonResult=null,busy=false,revision=0,comparisonBasis;
  container.innerHTML='<article class="fd-course"></article>';const root=container.firstElementChild;
  let disposed=false,waterTicket=0,disposeWater=()=>{},waterDetail=null,waterOpening=null,waterBound=false,legacyRequest=null,detachObserver;
  const current=()=>!disposed&&container.isConnected!==false&&root.isConnected!==false&&container.firstElementChild===root;
@@ -146,8 +222,8 @@ export async function renderFoundationsDemosView({container,selection={},run,can
  }
  function waterEntry(){
   if(theme!=='water')return '';
-  const characterLink=`<a href="${charactersRoute}">矩阵与特征标演示</a>`;
-  return `<p id="fd-water-character-prerequisite" class="fd-scope">要观察镜面对一个矢量的作用，打开${characterLink}。在该演示中选择 ${math('\\sigma(xz)')} 和完整三维矢量。这里再把同一个镜面操作作用到水分子的三个原子上。</p>
+  const characterLink=`<a href="${waterMirrorCharacterRoute}">矩阵与特征标演示</a>`;
+  return `<p id="fd-water-character-prerequisite" class="fd-scope">先在${characterLink}中观察镜面 ${math('\\sigma(xz)')} 对完整三维矢量的作用，再回到这里考察水分子三个原子的位移。</p>
   <details class="wax-entry" data-water-actions-entry${waterActionsStates.get('host:water-actions')?.open?' open':''}><summary>水的特征标 −1 是怎样算出的？</summary><p>逐列跟踪三个原子的九个位移，区分交换原子与转动箭头，再约化并扣除刚性运动。</p><div data-water-actions-body></div></details>
   <p class="fd-scope"><a href="#classroom/observables?material=gaas&amp;lesson=acoustic-optical">把整体转动放进周期晶体，结果会怎样？ →</a></p>`;
  }
@@ -182,15 +258,28 @@ export async function renderFoundationsDemosView({container,selection={},run,can
   if(opened(detail))loadOpen();
  }
  const payload=()=>({experiment:theme,theme:theme==='projection'?'d3':theme,...s});
- function update(){const out=scene(theme,s);root.querySelector('.fd-preview').innerHTML=out.plot+out.html;root.querySelector('.fd-questions').innerHTML=out.exercise;latest={tool:'foundations_demos_preview',input:payload(),result:{...out.data,computation:'JavaScript interactive teaching preview'}};root.querySelectorAll('[data-output]').forEach(el=>el.textContent=s[el.dataset.output]);}
+ function update(){
+  const out=scene(theme,s);
+  root.querySelector('.fd-preview').innerHTML=out.plot+out.html;
+  root.querySelector('.fd-questions').innerHTML=out.exercise;
+  latest={tool:'foundations_demos_preview',input:payload(),result:{...out.data,computation:'JavaScript interactive teaching preview'}};
+  root.querySelectorAll('[data-output]').forEach(el=>el.textContent=s[el.dataset.output]);
+  const comparison=root.querySelector('#fd-character-comparison');
+  if(comparison&&comparisonBasis!==s.basis){
+   comparisonBasis=s.basis;
+   comparison.innerHTML=characterComparisonHTML(comparisonBasis);
+   bindCharacterComparison(comparison,()=>current()&&root.querySelector('#fd-character-comparison')===comparison);
+  }
+ }
  function draw(){
   if(!current())return;
   clearWater();
+  comparisonBasis=undefined;
   root.innerHTML=`<header class="fd-hero"><span class="fd-eyebrow">基础概念演示 · 从操作到物理结果</span><h2>把抽象对称性变成可以操作的课堂</h2><p>选择主题，改变参数，先预测再核对。每个演示都保留基底、坐标与模型约定。</p></header>
   <nav class="fd-tabs" aria-label="教学演示主题">${THEMES.map(([id,title])=>`<button type="button" data-theme="${id}" aria-pressed="${theme===id}">${title}</button>`).join('')}</nav>
   ${waterEntry()}
   <div class="fd-workspace"><aside class="fd-controls"><h3>调节与预测</h3>${controls(theme,s)}<button class="primary" type="button" data-action="python" ${busy||!run?'disabled':''}>${busy?'Python 正在核对…':'用浏览器内 Python 核对'}</button><p class="fd-status" role="status">${esc(pythonStatus||'图像随参数即时变化；Python 按钮用于独立核对计算。')}</p></aside><section class="fd-preview" aria-live="polite"></section></div>
-  ${theme==='characters'?characterWaterBridgeHTML():''}
+  ${theme==='characters'?'<div id="fd-character-comparison"></div>'+characterWaterBridgeHTML():''}
   <div class="fd-questions"></div><details class="fd-python"><summary>查看 Python 核对数据</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):'尚未核对。请点击上方 Python 按钮。'}</pre></details><footer class="fd-footer"><a href="#classroom/foundations?lesson=selection-rules">原有水分子选择定则讲义</a> · <a href="#classroom/foundations?module=salc">对称适应基计算</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学模型、约定与来源</a></footer>`;
   update();
   bindCharacterWaterBridge(root,current);
@@ -206,7 +295,7 @@ export async function renderFoundationsDemosView({container,selection={},run,can
  root.addEventListener('change',e=>{if(!current())return;const id=e.target.dataset.param;if(!id)return;s[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;revision++;pythonResult=null;pythonStatus='参数已改变；可重新用 Python 核对。';update();root.querySelector('.fd-status').textContent=pythonStatus;});
  root.addEventListener('click',async e=>{
   if(!current())return;
-  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme});draw();return;}
+  const tab=e.target.closest('[data-theme]');if(tab){stopAnimation();stopLegacy();theme=tab.dataset.theme;revision++;s={...DEFAULTS[theme]};pythonStatus='';pythonResult=null;onNavigate({experiment:theme,preset:undefined});draw();return;}
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='animate'){if(timer)stopAnimation();else timer=setInterval(()=>{if(!current()){stopAnimation();return;}s.phase=(s.phase+5)%360;const input=root.querySelector('[data-param="phase"]');if(input)input.value=s.phase;update();},65);}
   if(action==='python'&&run&&!busy){

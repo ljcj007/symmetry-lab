@@ -105,7 +105,7 @@ function traceWorkedAnswer(space){
  return `<section id="zs-trace-worked" tabindex="-1" aria-labelledby="zs-trace-worked-heading">
  <h4 id="zs-trace-worked-heading">Check the sum of the diagonal entries</h4>
  <p class="zs-calculation">${diagonal} = ${matrixTrace(matrix)}</p><p>${explanation}</p>
- <p><a href="#classroom/foundations?module=demos&amp;experiment=characters">Continue with the character of one operation in different representations →</a></p>
+ <p><a href="#classroom/foundations?module=demos&amp;experiment=characters&amp;preset=quarter-turn-${space}">Continue with the character of one operation in different representations →</a></p>
  </section>`;
 }
 const continuations={

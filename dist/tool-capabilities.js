@@ -9,12 +9,14 @@ export const arithmeticDescriptions=Object.freeze({
  mixed:'同一工具结合精确构造与数值响应，或允许切换计算模式；具体区分见适用范围。',
  reference:'检索已收录的分类数据，并对选定输入进行相应校验；目录计数与完整代表列表分别读取。'
 });
-// Conventional filenames are discovery hints. Their content is still validated
-// by the destination parser; neither a name nor a suffix certifies a result.
+// Conventional filenames and declared *.ext patterns are discovery hints.
+// The destination parser still validates their contents.
 const fileInput=(files,purpose,conditions,priority=1)=>Object.freeze({files:Object.freeze(files),purpose,conditions,priority});
 export const toolInputFormats=Object.freeze({
  'structure':Object.freeze([
-  fileInput(['POSCAR','POSCAR-0'],'识别三维晶体空间群、转换到 BC 晶胞及重算波矢坐标。','POSCAR-0 是课堂所用 Phonopy 硅常规胞原文件。',3)
+  fileInput(['POSCAR','POSCAR-0'],'识别三维晶体空间群、转换到 BC 晶胞及重算波矢坐标。','POSCAR-0 是课堂所用 Phonopy 硅常规胞原文件。',3),
+  fileInput(['*.cif'],'读取普通晶体学 CIF 并转换到 BC 晶胞。','转换前可选定数据块，核对晶胞、原子位置与显式对称操作。',3),
+  fileInput(['CONTCAR','*.vasp','*.poscar'],'读取 POSCAR 格式的几何结构并转换到 BC 晶胞。','按文件中的晶格、元素与坐标识别空间群。',3)
  ]),
  'compute/phonopy':Object.freeze([
   fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],'查看已有色散、离散 q 点及所附本征矢。','仅有分段信息才连接为路径；此入口读取已有频率，不求解力常数。',3),

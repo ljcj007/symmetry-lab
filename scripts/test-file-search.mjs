@@ -6,6 +6,7 @@ import {Element,Container} from './test-material-research-ui.mjs';
 const sourceOnly=process.argv.includes('--source-only');
 const expectations={
  'POSCAR-0':['structure'],
+ 'CONTCAR':['structure'],
  'band.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
  'qpoints.yaml':['compute/phonopy','compute/phonon-modes','compute/phonopy-scattering'],
  'mesh.yaml':['compute/phonopy','compute/phonon-modes','compute/phonon-thermo','compute/phonopy-scattering'],
@@ -17,6 +18,10 @@ const expectations={
  'trace.txt':['bands']
 };
 const read=name=>JSON.parse(fs.readFileSync(new URL(name,import.meta.url),'utf8'));
+const quartz=read('../dist/data/examples/quartz-298k/source.json');
+const quartzCif=fs.readFileSync(new URL('../dist/data/examples/quartz-298k/9005017.cif',import.meta.url),'utf8');
+assert.match(quartzCif,/^data_9005017\b/m);
+assert.match(JSON.stringify(quartz),/9005017\.cif/);
 // Use existing complete genuine results and their actual parser inputs rather
 // than inventing a filename-to-tool contract disconnected from scientific data.
 const zno=read('./fixtures/phonopy-zno.json');
@@ -94,10 +99,30 @@ for(const prefix of sourceOnly?['']:['','en/']){
   observations.push({edition:prefix?'en':'zh',query,routes:expected});
  }
  for(const query of ['FORCE_SETS','force_constants.hdf5','force_constants.yaml','unsupported.xyz','wannier90.wout','OUTCAR','WAVECAR'])assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
+ for(const [query,pattern] of [
+  ['9005017.cif','*.cif'],['import 9005017.CIF','*.cif'],['quartz-sample.cif','*.cif'],
+  ['"C:\\runs experiment\\9005017.CIF"','*.cif'],['C:\\runs experiment\\9005017.CIF','*.cif'],
+  ['/tmp/quartz samples/9005017.cif','*.cif'],
+  ['"quartz with spaces.cif"','*.cif'],['Si_cell.VASP','*.vasp'],['/tmp/Si-primitive.vasp','*.vasp'],
+  ['relative/CONTCAR','CONTCAR'],['C:\\runs\\Si.poscar','*.poscar']
+ ]) {
+  assert.deepEqual(finderResults(toolsIndex,query).map(row=>row.route),['structure'],prefix+' finder '+query);
+  assert.deepEqual(filterToolDirectory(toolsIndex,{query}).map(row=>row.route),['structure'],prefix+' directory '+query);
+  const [structure]=finderResults(toolsIndex,query);
+  assert.equal(matchingInputFormats(structure,query).length,1);
+  assert.ok(inputFormatSummary(structure,query).includes(pattern));
+  assert.match(inputFormatSummary(structure,query),prefix?/BC (?:cell|primitive cell)/:/BC 晶胞/);
+  if(prefix)assert.doesNotMatch(inputFormatSummary(structure,query),/[\u3400-\u9fff]/);
+ }
+ for(const query of ['quartz.mcif','/tmp/structure.txt','9005017.cif.backup','quartz.xyz','SAMPLE.POSCAR.zip']){
+  assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
+  assert.deepEqual(filterToolDirectory(toolsIndex,{query}),[],prefix+' unsupported file in directory '+query);
+ }
  assert.equal(finderResults(toolsIndex,'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
  assert.equal(finderResults(toolsIndex,'POSCAR')[0].route,'structure');
  assert.equal(finderResults(toolsIndex,'CIF Hall')[0]?.route,'structure');
  assert.equal(filterToolDirectory(toolsIndex,{query:'CIF Hall'})[0]?.route,'structure');
+ assert.deepEqual(matchingInputFormats(toolsIndex.find(row=>row.route==='structure'),'CIF Hall'),[],'Ordinary keywords keep their usual search behavior');
  assert.equal(finderResults(toolsIndex,'Si-QHA/POSCAR-0')[0].route,'structure');
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',category:'structure'}),[]);
  assert.deepEqual(filterToolDirectory(toolsIndex,{query:'mesh.yaml',arithmetic:'exact'}),[]);
@@ -152,6 +177,10 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.equal(container.querySelectorAll('.nav-file-purpose').length,1);
  assert.match(container.querySelector('.nav-file-purpose').textContent,/trace\.txt/);
  assert.equal(container.querySelector('[data-favorite]').dataset.favorite,'bands');
+ input.value='"C:\\runs experiment\\9005017.CIF"';input.oninput();
+ assert.equal(container.querySelectorAll('.nav-file-purpose').length,1);
+ assert.match(container.querySelector('.nav-file-purpose').textContent,/\*\.cif/);
+ assert.equal(container.querySelector('[data-favorite]').dataset.favorite,'structure');
 
  const button=body.appendChild(new Element('button')),opened=[];
  const controller=startToolFinder({button,onNavigate:route=>opened.push(route)});
@@ -176,6 +205,14 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.match(list.querySelector('.tool-finder-file-purpose').textContent,/trace\.txt/);
  for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
  assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands']);
+ assert.equal(dialog.hidden,true);
+ button.fire('click');
+ query.value='"C:\\runs experiment\\9005017.CIF"';query.fire('input');
+ assert.equal(list.querySelectorAll('.tool-finder-file-purpose').length,1);
+ assert.match(list.querySelector('.tool-finder-file-purpose').textContent,/\*\.cif/);
+ assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands'],'Typing the filename only shows the route');
+ for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
+ assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands','structure']);
  assert.equal(dialog.hidden,true);
  assert.equal(network,0,'Tools-only filename filtering does not fetch catalogs or read files');
  controller.destroy();assert.equal(body.querySelector('dialog'),null);

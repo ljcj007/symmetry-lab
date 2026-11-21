@@ -22,4 +22,19 @@ for(const [module,section,tool,experiments] of [
  assert.equal(compute.section,section);assert.equal(compute.calculationOnly,true);
  assert.deepEqual(parseClassroomRoute(buildClassroomHash(compute)),compute);
 }
-console.log('Twenty-one demo routes, application registration, Python dispatch, and calculation links passed.');
+
+for(const edition of ['../dist/','../dist/en/']){
+ const {parseClassroomRoute:parseRoute,buildClassroomHash:buildHash}=await import(new URL(edition+'classroom-ui.js',import.meta.url));
+ for(const preset of ['quarter-turn-xy','quarter-turn-xyz','water-mirror-xyz']){
+  const classroom=parseRoute('#classroom/foundations?module=demos&experiment=characters&preset='+preset);
+  const compute=parseRoute('#compute/foundations-demos?experiment=characters&preset='+preset);
+  for(const route of [classroom,compute]){
+   assert.equal(route.section,'foundations-demos');
+   assert.equal(route.experiment,'characters');
+   assert.equal(route.preset,preset);
+   assert.deepEqual(parseRoute(buildHash(route)),route);
+  }
+  assert.equal(compute.calculationOnly,true);
+ }
+}
+console.log('Twenty-one demo routes, application registration, Python dispatch, and bilingual character preset routes passed.');

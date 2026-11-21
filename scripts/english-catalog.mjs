@@ -69,6 +69,7 @@ catalogFiles.push('en-gaas-mixed-exercise.json');
 catalogFiles.push('en-qe-si-navigation.json');
 catalogFiles.push('en-fourfold-search.json');
 catalogFiles.push('en-seitz-comparison.json');
+catalogFiles.push('en-character-comparison.json','en-character-discovery.json','en-structure-file-discovery.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

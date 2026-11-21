@@ -12,6 +12,8 @@ assert.equal(finderResults([...toolsIndex,...catalog],'SU(3) 27')[0].route,'comp
 assert.ok(finderResults([...toolsIndex,...catalog],'C₄v',{scope:'all'}).length);
 assert.equal(finderResults(catalog,'点群识别',{scope:'courses'})[0].route,'classroom/foundations?lesson=thirty-two');
 assert.equal(finderResults(catalog,'平移商群',{scope:'courses'})[0].route,'classroom/crystal?lesson=space-01&track=space');
+assert.equal(finderResults(catalog,'旋转与镜面 特征标相同',{scope:'courses'})[0].route,'classroom/foundations?module=demos&experiment=characters');
+assert.equal(finderResults(catalog,'turn and mirror same character',{scope:'courses'})[0].route,'classroom/foundations?module=demos&experiment=characters');
 assert.equal(finderResults(catalog,'Cu-QHA',{scope:'materials'})[0].route,'atlas/mechanisms?material=cu-qha');
 assert.equal(finderResults([...toolsIndex,...catalog],'',{scope:'courses'}).length,0);
 assert.equal(finderResults([...toolsIndex,...toolsIndex],'',{scope:'tools',limit:100}).length,75);

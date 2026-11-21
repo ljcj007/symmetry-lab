@@ -24,18 +24,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 82344,
-      "sha256": "5d40279ac62b1b69331a45519b122fb626895eca76499a853390df1f4b6d3137"
+      "bytes": 83214,
+      "sha256": "fc8deb0e20a03842c0be795d21eefca26098842364a7785e6d5651cd9c4f00c4"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 105691,
-      "sha256": "376f10d3321d4fab4d926b9c9969cb64a1b68f998b99fb3f3dc9cac09c8e0634"
+      "bytes": 105723,
+      "sha256": "b477fc17dc3ce76ad5f49257b6905bd42fe6c43ed3db53372c3fdc2d8d6f0221"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32799,
-      "sha256": "de64894939f36f15666a43a424611fbd0048bfff3f9bcb19609c636884fc2106"
+      "bytes": 32812,
+      "sha256": "256e0876610a52ce73f37e88f16bb764f89f785cfa87fef421377958719327a2"
     },
     "dist/coupled-materials-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -154,8 +154,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 401215,
-      "sha256": "5bc5a69a94008037e211740024ffe77dc7827bc3502a8de38036d7f874175dd0"
+      "bytes": 401303,
+      "sha256": "e6a45d60d7424cc6bea824d6e415ad72c2b2aaf658f4bd6c40040699c9c966f4"
     },
     "dist/docs/cu-qha-example.md": {
       "normalization": "utf8-lf-v1",
@@ -169,13 +169,13 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8425,
-      "sha256": "db5a9bf5554a258b7fc70279e5f18bbf1522a1f69f8fc9430227b5456639a6c4"
+      "bytes": 8433,
+      "sha256": "69d2fa2acbb34906e20ef3018d1972e2502127f446590f911b7c4d53a4cb7963"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 34019,
-      "sha256": "38a91816d15c512022e0d51861c8a4609560822bb2edd38dfa5c5783a2be5a71"
+      "bytes": 34060,
+      "sha256": "e402461a64430bcfa220308414cabf9fe96e4a7703f500e34a04ef2563ae5822"
     },
     "dist/python/phonopy_import.py": {
       "normalization": "utf8-lf-v1",
@@ -224,13 +224,13 @@
     },
     "scripts/build-search-index.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3590,
-      "sha256": "f64311c5400be681a073b236c99181b70fcd34362983e3e2b2a61e7298ff0643"
+      "bytes": 3678,
+      "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6735,
-      "sha256": "885d4f7004c5f6f8a2e97356f6a6f6e75218fe7d3498ec29406e51564f0a2460"
+      "bytes": 6851,
+      "sha256": "9bba9cd81b84b920e33fce20b782d70fb25808b9c1e888ebe3530b0178c2e637"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",

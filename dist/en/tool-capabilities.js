@@ -9,12 +9,14 @@ export const arithmeticDescriptions=Object.freeze({
  mixed:"Combines exact constructions with numerical responses, or provides selectable calculation modes. See the scope for the distinction.",
  reference:"Retrieves recorded classification data and performs the relevant checks on the selected input. Catalogue counts and complete representative lists are reported separately."
 });
-// Conventional filenames are discovery hints. Their content is still validated
-// by the destination parser; neither a name nor a suffix certifies a result.
+// Conventional filenames and declared *.ext patterns are discovery hints.
+// The destination parser still validates their contents.
 const fileInput=(files,purpose,conditions,priority=1)=>Object.freeze({files:Object.freeze(files),purpose,conditions,priority});
 export const toolInputFormats=Object.freeze({
  'structure':Object.freeze([
-  fileInput(['POSCAR','POSCAR-0'],"Identify the three-dimensional crystal space group, convert to the BC cell, and recalculate wavevector coordinates.","POSCAR-0 is the original Phonopy conventional silicon cell used in the lesson.",3)
+  fileInput(['POSCAR','POSCAR-0'],"Identify the three-dimensional crystal space group, convert to the BC cell, and recalculate wavevector coordinates.","POSCAR-0 is the original Phonopy conventional silicon cell used in the lesson.",3),
+  fileInput(['*.cif'],"Import an ordinary crystallographic CIF and convert it to the BC cell.","Choose the data block when needed and check the cell, atomic positions, and explicit symmetry operations before conversion.",3),
+  fileInput(['CONTCAR','*.vasp','*.poscar'],"Import a POSCAR-format structure and convert it to the BC cell.","Space-group identification uses the lattice, elements, and coordinates in the file.",3)
  ]),
  'compute/phonopy':Object.freeze([
   fileInput(['band.yaml','qpoints.yaml','mesh.yaml'],"Inspect supplied dispersions, discrete q points, and accompanying eigenvectors.","Only segmentation information establishes connected paths. This tool reads existing frequencies and does not solve force constants.",3),

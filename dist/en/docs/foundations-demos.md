@@ -28,6 +28,10 @@ In the full three-dimensional coordinate basis (x,y,z), C₄(z) has matrix [[0,�
 
 **Try it:** Switch between the three-dimensional vector basis and the two-dimensional xy basis for the same C₄ operation, and explain their characters 1 and 0. Do not combine character rows from different representations in a reduction. Move the general point onto z: its point period becomes 1 while the operation order remains 4. Distinguish the matrix's representation space, the operation, and the object being transformed.
 
+Open the [rotation and mirror character comparison](../index.html#classroom/foundations?module=demos&experiment=characters&preset=quarter-turn-xy). C₄(z) and σ(xz) both have trace 0 on the xy plane. Predict what happens when each operation acts twice, then inspect the two squared matrices. The rotation gives −I₂ and the mirror gives +I₂. Include the fixed z direction in both cases. The three-dimensional traces become 1 and 1 after one step, and −1 and 3 after two steps.
+
+In the [water mirror preset](../index.html#classroom/foundations?module=demos&experiment=characters&preset=water-mirror-xyz), first verify that the trace of σ(xz) on xyz is 1. All three atoms in the water model lie in that mirror plane. The nine-dimensional displacement representation has three atomic diagonal blocks contributing 1 each, for a character of 3.
+
 ## 3. The D₃ triangle: projection, basis functions, and matrices
 
 Place scalar s-type basis functions s₁, s₂, s₃ at the vertices of an equilateral triangle in xy. The original space is a **three-dimensional scalar-function space**, not the six-dimensional space of x and y displacements at three sites. D₃ has classes E, 2C₃, and 3C₂. The C₂ axes lie in the triangle's plane; their three-dimensional rotations look like flips in projection, but they are not mirror operations σ. See the characters and function types in the [Bilbao D₃(32) table](https://www.cryst.ehu.eus/cgi-bin/rep/programs/sam/point.py?num=18&sg=149).

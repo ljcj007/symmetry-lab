@@ -479,3 +479,9 @@ establish that all existing scientific and teaching content has been audited.
 
 - In [the first space-group lesson](dist/index.html#classroom/crystal?track=space&lesson=space-01), learners use the same starting point and axial wavevector for representative operations from P 4, P 4₁ and P 4₃. After four steps, the traces coincide in the wrapped cell and retain 0, 1 and 3 cells of axial translation. At axial fractional wavevector 1/4, the associated Bloch phases are 1, −i and +i.
 - The finder, the ordinary space-group atlas and the representation workbench resolve these symbols with or without spaces, Unicode subscripts or numerical underscores. Each of the three exact atlas records links back to the lesson.
+
+## Carry a character prediction into the matrix exercise
+
+- The fifth zero-start step opens the character demo in the xy or xyz space used for the learner's answer. The [rotation and mirror comparison](dist/index.html#classroom/foundations?module=demos&experiment=characters&preset=quarter-turn-xy) shows both matrices, then asks for a prediction before displaying their squares and spectra. The paired traces are 0 and 0 after one action on xy, and −2 and +2 after two.
+- The water prerequisite opens σ(xz) in xyz. All three atoms lie in the mirror plane. Each atom supplies a displacement block of trace +1, so the nine-dimensional trace is +3.
+- The quick finder and calculator directory route CIF, VASP and POSCAR filenames, including paths and CONTCAR, to structure standardization. Opening the tool presents its upload controls and waits for the user's input.

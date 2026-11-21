@@ -28,6 +28,10 @@
 
 **动手任务：**在同一个 C₄ 操作下切换三维矢量基与二维 xy 基，解释为什么特征标分别为 1 与 0。不要把不同表示的两行特征标混在一起约化。再把一般点移到 z 轴上：该点周期变成 1，但操作阶仍为 4。矩阵的作用空间、操作本身与被作用对象是三个需要分别说明的量。
 
+打开[旋转与镜面的特征标对照](../index.html#classroom/foundations?module=demos&experiment=characters&preset=quarter-turn-xy)。C₄(z) 与 σ(xz) 在 xy 平面上的迹都是 0。先预测连续作用两次的结果，再查看两个矩阵的平方。旋转得到 −I₂，镜面得到 +I₂。给两种操作各加一个保持不动的 z 方向，就得到三维的单步迹 1、1，以及两步迹 −1、3。
+
+在[水分子的镜面预设](../index.html#classroom/foundations?module=demos&experiment=characters&preset=water-mirror-xyz)里，先核对 σ(xz) 在 xyz 中的迹为 1。在水分子模型里，三个原子都位于该镜面，九维位移表示可沿三个原子的对角块各加一个 1，得到特征标 3。
+
 ## 三、D₃ 三角形：从投影到基函数和表示矩阵
 
 在 xy 平面等边三角形的三个顶点各放一个标量 s 型基函数 s₁、s₂、s₃。这里的原空间是 **三维标量函数空间**，不是三个顶点各有 x、y 位移的六维空间。D₃ 有 E、2C₃、3C₂ 三类操作；三个 C₂ 轴在三角形平面内，三维旋转的平面投影看起来像翻面，不应把它们改名为镜面 σ。D₃ 的字符与基函数类型可查 [Bilbao 的 D₃(32) 表](https://www.cryst.ehu.eus/cgi-bin/rep/programs/sam/point.py?num=18&sg=149)。
