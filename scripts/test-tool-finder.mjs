@@ -23,6 +23,35 @@ assert.equal(finderResults(toolsIndex,'Rabi')[0].route,'compute/lie/rabi');
 assert.equal(finderResults([{route:'javascript:alert(1)',title:'bad',kind:'计算'}],'bad').length,0);
 assert.ok(finderResults([...toolsIndex,...catalog],'Young',{scope:'courses'}).every(x=>x.kind==='课程'));
 
+for(const edition of process.argv.includes('--source-only')?['']:['','en/']){
+ const address=file=>new URL('../dist/'+edition+file,import.meta.url);
+ const {toolsIndex:tools}=await import(address('navigation-ui.js'));
+ const {finderResults:find}=await import(address('tool-finder.js'));
+ const {filterToolDirectory:filter}=await import(address('tool-directory.js'));
+ const symbolic='compute/advanced/symbolic_spacegroups';
+ const searchCases=[
+  {queries:['  LITTLE‑GROUP   IRREPS ','小群不可约表示','small representation'],route:'workbench',arithmetic:'numeric',zh:/BC 原胞/,en:/BC fractional/},
+  {queries:['spinful irrep','双值不可约表示','double-valued little-group representations'],route:'workbench',arithmetic:'numeric',zh:/双值表示/,en:/double-valued/},
+  {queries:['antiunitary corepresentation','反幺正共表示','magnetic little-group coreps'],route:'workbench',arithmetic:'numeric',zh:/反幺正操作/,en:/antiunitary operations/},
+  {queries:['exact symbolic little group irreps','符号小群不可约表示','exact spinful irrep','精确双值不可约表示','symbolic antiunitary corepresentation','精确磁共表示'],
+   route:symbolic,arithmetic:'exact',zh:/仿射参数线/,en:/affine parameter lines/}
+ ];
+ for(const {queries,route,arithmetic,zh,en} of searchCases)for(const query of queries){
+  const rows=find(tools,query);
+  assert.equal(rows[0]?.route,route,edition+query);
+  assert.match(rows[0].summary,edition?en:zh);
+  assert.equal(rows.filter(row=>row.route===route).length,1,'Aliases preserve a single entry per tool');
+  assert.equal(filter(tools,{query,category:'representation',arithmetic})[0]?.route,route);
+  assert.ok(!filter(tools,{query,arithmetic:arithmetic==='exact'?'numeric':'exact'}).some(row=>row.route===route));
+  assert.deepEqual(filter(tools,{query,category:'structure'}),[]);
+  assert.deepEqual(filter(tools,{query,favorites:[]}),[]);
+  assert.deepEqual(find(tools,query,{scope:'groups'}),[]);
+ }
+ for(const query of ['spinful irrep POSCAR','antiunitary corepresentation Γ unknownfilter','exact magnetic point group corepresentation']){
+  assert.deepEqual(find(tools,query),[],edition+query+' keeps additional constraints');
+ }
+}
+
 // Extend the shared lightweight DOM adapter only for native dialog/event behavior.
 const queryAll=Element.prototype.querySelectorAll;
 Element.prototype.querySelectorAll=function(selector){return selector.includes(',')?this.children.flatMap(child=>[...(selector.split(',').some(s=>child.matches(s))?[child]:[]),...child.querySelectorAll(selector)]):queryAll.call(this,selector);};
@@ -58,6 +87,11 @@ type('Clebsch-Gordan');assert.match(list.innerHTML,/CG/);assert.equal(requests,0
 key('Enter');assert.equal(routes[0],'compute/lie/su3_cg');assert.equal(dialog.hidden,true);assert.equal(document.activeElement,button);
 button.fire('click');type('ZnO Born effective charge');assert.match(list.innerHTML,/ZnO Γ 点模式的红外偏振/);
 key('Enter');assert.equal(routes.at(-1),'compute/phonon-modes?preset=zno-ir');assert.equal(requests,0);
+button.fire('click');type('spinful irrep');assert.match(list.innerHTML,/选择工作台的双值表示/);
+assert.equal(routes.at(-1),'compute/phonon-modes?preset=zno-ir','Typing leaves the active tool unchanged');
+key('Enter');assert.equal(routes.at(-1),'workbench');assert.equal(requests,0);
+button.fire('click');type('精确磁共表示');assert.match(list.innerHTML,/仿射参数线/);
+key('Enter');assert.equal(routes.at(-1),'compute/advanced/symbolic_spacegroups');assert.equal(requests,0);
 assert.equal(key('k',{metaKey:true}),true);assert.equal(dialog.hidden,false);
 type('225');scope('groups');await flush();assert.equal(requests,1);assert.ok(status.querySelector('[data-finder-retry]'));assert.match(status.innerHTML,/工具/);
 type('225.1');await flush();assert.equal(requests,1,'Failed requests wait for explicit retry');

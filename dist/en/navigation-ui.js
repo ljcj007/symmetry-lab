@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
 import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-foundations-char2';
-import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-foundations-char2';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-foundations-char2';
+import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-expert-intents1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
 export {searchEntries};
@@ -107,10 +107,48 @@ const znoInfraredExample={
   &&/(?:\binfrared\b|\bir\b|\bborn\b|红外|有效电荷)/u.test(query)
   &&terms.every(term=>/^(?:(?:zno|氧化锌)(?:红外(?:偏振)?)?|zinc|oxide|infrared|ir|红外(?:偏振)?|polari[sz]ation|偏振|born|effective|charges?|有效电荷|γ|gamma|点|c|axis|c轴|基面|basal|plane|modes?|光学声子)$/u.test(term))
 };
+// Whole-query aliases keep expert searches on the existing tool routes.
+// The bilingual matching expressions are shared by both editions.
+const representationSearchIntents={
+ workbench:[
+  {
+   aliases:[
+    /^(?:little group (?:irreps?|(?:irreducible )?representations?)|small representations?|irreducible representations? of the little group)$/u,
+    /^(?:小群\s*(?:的\s*)?(?:不可约)?表示|小表示)$/u
+   ],
+   summary:"Choose a space group and enter a wavevector in BC fractional reciprocal coordinates to calculate little-group irreducible representations."
+  },
+  {
+   aliases:[
+    /^(?:spinful|spinorial|double valued)(?: little group)? (?:irreps?|(?:irreducible )?representations?)$/u,
+    /^(?:自旋双值|双值)\s*(?:小群\s*)?(?:不可约)?表示$/u
+   ],
+   summary:"Choose the group and wavevector, then select double-valued representations in the workbench."
+  },
+  {
+   aliases:[
+    /^(?:antiunitary|magnetic)(?: little group)? (?:coreps?|corepresentations?)$/u,
+    /^(?:反幺正\s*(?:磁|小群)?|磁\s*(?:小群)?)\s*共表示$/u
+   ],
+   summary:"Choose a magnetic space group or magnetic point group. A little group with antiunitary operations gives magnetic corepresentations."
+  }
+ ],
+ 'compute/advanced/symbolic_spacegroups':[
+  {
+   aliases:[
+    /^(?:exact symbolic|exact|symbolic) (?:little group (?:irreps?|(?:irreducible )?representations?)|(?:spinful|double valued)(?: little group)? (?:irreps?|(?:irreducible )?representations?))$/u,
+    /^(?:exact symbolic|exact|symbolic) (?:(?:antiunitary|magnetic)(?: little group)? (?:coreps?|corepresentations?)|k lines?)$/u,
+    /^(?:精确符号|精确|符号)\s*(?:小群\s*(?:不可约)?表示|小表示|(?:自旋)?双值\s*(?:不可约)?表示|(?:反幺正\s*(?:磁)?|磁(?:小群)?)\s*共表示|波矢线)$/u
+   ],
+   summary:"Choose an ordinary space group or a BNS magnetic space group. Construct exact representations for supported rational wavevectors or affine parameter lines, with a double-valued option."
+  }
+ ]
+};
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?" file import "+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
- return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability,searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability,
+  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();

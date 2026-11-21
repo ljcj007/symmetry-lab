@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
 import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-foundations-char2';
-import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-foundations-char2';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-foundations-char2';
+import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-expert-intents1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
 export {searchEntries};
@@ -107,10 +107,48 @@ const znoInfraredExample={
   &&/(?:\binfrared\b|\bir\b|\bborn\b|红外|有效电荷)/u.test(query)
   &&terms.every(term=>/^(?:(?:zno|氧化锌)(?:红外(?:偏振)?)?|zinc|oxide|infrared|ir|红外(?:偏振)?|polari[sz]ation|偏振|born|effective|charges?|有效电荷|γ|gamma|点|c|axis|c轴|基面|basal|plane|modes?|光学声子)$/u.test(term))
 };
+// Whole-query aliases keep expert searches on the existing tool routes.
+// The bilingual matching expressions are shared by both editions.
+const representationSearchIntents={
+ workbench:[
+  {
+   aliases:[
+    /^(?:little group (?:irreps?|(?:irreducible )?representations?)|small representations?|irreducible representations? of the little group)$/u,
+    /^(?:小群\s*(?:的\s*)?(?:不可约)?表示|小表示)$/u
+   ],
+   summary:'选择空间群并填写 BC 原胞倒易分数波矢，再计算小群不可约表示。'
+  },
+  {
+   aliases:[
+    /^(?:spinful|spinorial|double valued)(?: little group)? (?:irreps?|(?:irreducible )?representations?)$/u,
+    /^(?:自旋双值|双值)\s*(?:小群\s*)?(?:不可约)?表示$/u
+   ],
+   summary:'选定群与波矢，再选择工作台的双值表示。'
+  },
+  {
+   aliases:[
+    /^(?:antiunitary|magnetic)(?: little group)? (?:coreps?|corepresentations?)$/u,
+    /^(?:反幺正\s*(?:磁|小群)?|磁\s*(?:小群)?)\s*共表示$/u
+   ],
+   summary:'选择磁空间群或磁点群。含反幺正操作的小群给出磁共表示。'
+  }
+ ],
+ 'compute/advanced/symbolic_spacegroups':[
+  {
+   aliases:[
+    /^(?:exact symbolic|exact|symbolic) (?:little group (?:irreps?|(?:irreducible )?representations?)|(?:spinful|double valued)(?: little group)? (?:irreps?|(?:irreducible )?representations?))$/u,
+    /^(?:exact symbolic|exact|symbolic) (?:(?:antiunitary|magnetic)(?: little group)? (?:coreps?|corepresentations?)|k lines?)$/u,
+    /^(?:精确符号|精确|符号)\s*(?:小群\s*(?:不可约)?表示|小表示|(?:自旋)?双值\s*(?:不可约)?表示|(?:反幺正\s*(?:磁)?|磁(?:小群)?)\s*共表示|波矢线)$/u
+   ],
+   summary:'选取普通空间群或 BNS 磁空间群。对支持的有理波矢或仿射参数线构造精确表示，也可选择双值模式。'
+  }
+ ]
+};
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?' file import 文件 导入 '+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
- return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:'计算',category:group.id,capability,searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:'计算',category:group.id,capability,
+  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();

@@ -1,8 +1,8 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28981,
-  "translatedUnits": 28981,
+  "sourceUnits": 28985,
+  "translatedUnits": 28985,
   "missing": [],
   "files": 529,
   "shared": {
@@ -182,6 +182,7 @@
     "en-seitz-comparison.json",
     "en-character-comparison.json",
     "en-character-discovery.json",
-    "en-structure-file-discovery.json"
+    "en-structure-file-discovery.json",
+    "en-workbench-intent-search.json"
   ]
 }

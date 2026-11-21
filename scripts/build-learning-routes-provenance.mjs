@@ -55,6 +55,7 @@ files.push('dist/seitz-comparison-ui.js','locales/en-seitz-comparison.json','loc
 files.push('scripts/test-foundations-demos.mjs','scripts/test-foundations-routing.mjs','scripts/test-tool-finder.mjs',
  'scripts/test-file-search.mjs','dist/docs/foundations-demos.md','dist/tool-capabilities.js',
  'locales/en-character-comparison.json','locales/en-character-discovery.json','locales/en-structure-file-discovery.json');
+files.push('locales/en-workbench-intent-search.json','scripts/test-python-symbolic-spacegroups.py');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -97,6 +98,7 @@ data.verification.push('The representation workbench menu and calculation action
 data.verification.push('The introductory fourfold comparison uses a common rotation and starting point. The P 4, P 4₁ and P 4₃ representatives return to the same wrapped point and accumulate 0, 1 and 3 axial cells after four steps. Exact ordinary space-group symbols with spaces, numerical subscripts or underscores resolve across the finder, atlas and workbench.');
 data.verification.push('The foundations preview compares one and two actions for C₄(z) and σ(xz) on xy and xyz. Exact lesson links retain the verified beginner basis and give the xz mirror convention used for the water displacement character.');
 data.verification.push('The shared finder and calculation directory match declared CIF and POSCAR filename patterns and the CONTCAR alias. Choosing the structure tool leaves the file selection and conversion to the user.');
+data.verification.push('The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

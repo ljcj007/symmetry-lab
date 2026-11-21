@@ -485,3 +485,8 @@ establish that all existing scientific and teaching content has been audited.
 - The fifth zero-start step opens the character demo in the xy or xyz space used for the learner's answer. The [rotation and mirror comparison](dist/index.html#classroom/foundations?module=demos&experiment=characters&preset=quarter-turn-xy) shows both matrices, then asks for a prediction before displaying their squares and spectra. The paired traces are 0 and 0 after one action on xy, and −2 and +2 after two.
 - The water prerequisite opens σ(xz) in xyz. All three atoms lie in the mirror plane. Each atom supplies a displacement block of trace +1, so the nine-dimensional trace is +3.
 - The quick finder and calculator directory route CIF, VASP and POSCAR filenames, including paths and CONTCAR, to structure standardization. Opening the tool presents its upload controls and waits for the user's input.
+
+## Find a representation calculator by its scientific terminology
+
+- The finder and calculator directory recognize searches such as `little-group irreps`, `spinful irrep` and `antiunitary corepresentation`. The numerical workbench retains the current group, wavevector and spin setting and offers the controls named in the search result.
+- A query such as `exact symbolic little group irreps` opens symbolic space-group representations. The result describes the supported rational wavevectors and affine parameter lines. Both destinations keep calculation under the user's control.

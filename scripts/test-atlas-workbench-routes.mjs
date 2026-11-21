@@ -19,7 +19,8 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
   return app.slice(from,to);
  };
  const state={view:'home',route:'home',primary:'home',mode:'sg',group:null,k:[0,0,0],bzType:'',labelK:null,doubleValued:false,dbMode:'sg',dbQuery:'',dbType:'all',dbPage:0};
- if(priorSelection)Object.assign(state,{group:groups.sg[21],k:[.5,0,0],bzType:'OrthFace(a)',labelK:'X',doubleValued:true});
+ if(priorSelection===true)Object.assign(state,{group:groups.sg[21],k:[.5,0,0],bzType:'OrthFace(a)',labelK:'X',doubleValued:true});
+ else if(priorSelection)Object.assign(state,priorSelection);
  const gid=(group=state.group,mode=state.mode)=>mode==='sg'?String(group.number):group.id;
  const button={dataset:{openGroup:selectedId}},host={innerHTML:'',dataset:{},classList:{toggle:noop,add:noop}},location={hash};
  const calculations=[],historyWrites=[];
@@ -50,6 +51,25 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
 }
 
 for(const [edition,otherEdition,targetLanguage] of [['','en/','en'],['en/','','zh-CN']]){
+ const priorMagneticSelection={mode:'msg',group:groups.msg.find(group=>group.id==='62.448'),k:[.5,0,0],labelK:'X',doubleValued:true};
+ const retained=await appInstance(edition,{hash:'#workbench',priorSelection:priorMagneticSelection});
+ assert.equal(retained.gid(),'62.448');
+ assert.equal(retained.state.mode,'msg');
+ assert.deepEqual(Array.from(retained.state.k),[.5,0,0]);
+ assert.equal(retained.state.labelK,'X');
+ assert.equal(retained.state.doubleValued,true);
+ assert.deepEqual(retained.calculations,[],'An expert alias opens the workbench without launching a calculation');
+ const fresh=await appInstance(edition,{hash:'#workbench'});
+ assert.equal(fresh.gid(),'225');
+ assert.equal(fresh.state.mode,'sg');
+ assert.equal(fresh.state.doubleValued,false);
+ assert.deepEqual(Array.from(fresh.state.k),[0,0,0]);
+ assert.deepEqual(fresh.calculations,[]);
+ const switched=new URL(languageURL('https://example.org/symmetry-lab/'+edition+retained.location.hash,targetLanguage));
+ const restored=await appInstance(otherEdition,{hash:switched.hash});
+ assert.equal(restored.location.hash,retained.location.hash);
+ assert.equal(restored.gid(),'62.448');
+ assert.deepEqual(restored.calculations,[]);
  for(const [mode,id,bzType] of [['sg','4',''],['msg','62.448',''],['mpg','2.3',''],['sg','22','OrthFace(a)']]){
   const atlas=await appInstance(edition,{hash:`#atlas/${mode}?q=${id}`,selectedId:id,priorSelection:true});
   assert.equal(atlas.state.view,'database');

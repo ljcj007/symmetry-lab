@@ -51,7 +51,9 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  if(!terms.length)return [];
  const exampleTerms=terms.join(' ').replace(/[“”‘’]/gu,'').split(' ').filter(Boolean);
  const exampleQuery=exampleTerms.join(' ');
- const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords),formats:inputFormatsForTerms(item,terms)}));
+ const intentQuery=normalizeSearchText(query);
+ const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords),formats:inputFormatsForTerms(item,terms),
+  intent:item.searchIntents?.find(({aliases})=>aliases.some(alias=>alias.test(intentQuery)))}));
  const matchingExamples=entries.filter(({searchExample:example})=>example?.matches(exampleQuery,exampleTerms));
  const examples=matchingExamples.map(item=>{
   if(!includeExampleRoutes)return item;
@@ -59,10 +61,11 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
   return {...item,route:`${item.route}?${params}`,title,summary};
  });
  const score=row=>row.formats.reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
- const tools=prepared.filter(row=>!matchingExamples.includes(row.item)&&terms.every(term=>
+ const intents=prepared.filter(row=>row.intent&&!matchingExamples.includes(row.item)).map(({item,intent})=>({...item,summary:intent.summary}));
+ const tools=prepared.filter(row=>!row.intent&&!matchingExamples.includes(row.item)&&terms.every(term=>
   (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
- return [...examples,...tools].slice(0,limit);
+ return [...examples,...intents,...tools].slice(0,limit);
 }
 
 const magneticRoute=/^atlas\/msg\?q=(\d+\.\d+)$/u;

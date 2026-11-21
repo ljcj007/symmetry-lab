@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-foundations-char2';
-import {normalizeSearchText,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-foundations-char2';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-expert-intents1';
+import {normalizeSearchText,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

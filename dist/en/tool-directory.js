@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261122-foundations-char2';
+import {searchEntries} from './tool-search.js?v=20261122-expert-intents1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={
