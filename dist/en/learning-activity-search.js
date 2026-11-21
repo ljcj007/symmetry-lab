@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-nextpaths1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-friedel1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -57,5 +57,13 @@ export const learningActivities = [
     keywords: "quartz screw extinction Friedel pair chirality diffraction COD 9005017",
     kind: "Lesson",
     activityAliases: activityAliases.quartzExtinction
+  },
+  {
+    route: 'classroom/structure-dynamics?tab=learn&lesson=screw-glide&preset=quartz-friedel',
+    title: "Complex scattering weights and Friedel-pair contrast",
+    summary: "Compare the 110 and 101 intensity differences in the same quartz structure, then check inversion and the combined powder peak.",
+    keywords: "complex scattering Friedel pair Bijvoet quartz intensity contrast",
+    kind: "Lesson",
+    activityAliases: activityAliases.friedelContrast
   }
 ];

@@ -32,4 +32,8 @@ export const activityAliases = {
     'quartz extinction', 'quartz Friedel pair', 'alpha quartz screw extinctions',
     '石英 消光', '石英消光', '石英 手性衍射', '石英 弗里德尔对'
   ],
+  friedelContrast: [
+    'complex Friedel pair', 'Bijvoet contrast', 'quartz intensity difference',
+    '复散射 弗里德尔对', '复权重 弗里德尔差', '石英 成对强度差'
+  ],
 };

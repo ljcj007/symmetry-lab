@@ -5,6 +5,7 @@ import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=
 import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';
 import {quartzConjugacyHTML,bindQuartzConjugacy} from './quartz-conjugacy-ui.js?v=20261122-quartzclass1';
 import {quartzExtinctionHTML,bindQuartzExtinction} from './quartz-extinction-ui.js?v=20261122-nextpaths1';
+import {quartzFriedelHTML,bindQuartzFriedel} from './quartz-friedel-ui.js?v=20261122-friedel1';
 import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
@@ -300,7 +301,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?"<p><a id=\"sc-rashba-trim-link\" href=\"#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check\">Compare spectra and time reversal at these three wavevectors →</a></p>":''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
-      ${lesson.id==='space-03'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzExtinctionHTML():''}
+      ${lesson.id==='space-03'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzExtinctionHTML()+quartzFriedelHTML({open:selection.preset==='quartz-friedel'}):''}
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzConjugacyHTML():''}
       ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
       ${lesson.id==='magnetic-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?antiunitaryScrewHTML():''}
@@ -337,6 +338,12 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if(extinction)disposeLessonComparison=bindQuartzExtinction(extinction,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('[data-quartz-extinction]')===extinction
     });
+    const friedel=$('[data-quartz-friedel]');
+    if(friedel){
+      const disposeExtinction=disposeLessonComparison;
+      const disposeFriedel=bindQuartzFriedel(friedel,{run,isCurrent:()=>current()&&state.tab==='learn'&&$('[data-quartz-friedel]')===friedel});
+      disposeLessonComparison=()=>{disposeExtinction();disposeFriedel();};
+    }
   }
   function bindSeitzQuotientHost(){
     const detail=$('[data-seitz-quotient-entry]');

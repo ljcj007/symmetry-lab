@@ -416,8 +416,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "9e36fa7c119e2ae95809366644144e63d5b55fa41335c6e68d17a38d61e85ec3",
-      "bytes": 106522
+      "sha256": "5b4ad9945f05e9c0db2ce24f6120a483e5072d4256da0de09e93a5d86b275450",
+      "bytes": 106514
     },
     {
       "path": "dist/bridges-projects.js",
@@ -441,8 +441,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "88da3a591b0cc0625f5e68c91c760010bfb962f91e8d88794773c86c7bc9a1ae",
-      "bytes": 32802
+      "sha256": "10be539f31da76b35df588eab11c86119250caabfc76df4789d21f161230f0bc",
+      "bytes": 32798
     },
     {
       "path": "dist/classroom.css",
@@ -511,7 +511,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "605418d32d94d30962fac6c8b133ac733a3ca40fe8b2c912c5dee0d53e9ae576",
+      "sha256": "fdba7807d2bccdb4c7692455918df7432b9db49ce1648ec200ee40d7b75ccdc9",
       "bytes": 56448
     },
     {
@@ -536,17 +536,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "9c4f76d5331f8eb106d1985574b44ff5f08aa48a18f9414f093fac53126404c8",
+      "sha256": "92e86ef9365e5b997b6f26e256e7d1b986dd4221f494c93cca91bd49eab16883",
       "bytes": 16857
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "6978ce8511d6bd68d919d43d26552c3433f39ea9c59e83f001a71941ca22c54a",
+      "sha256": "88f985ef497b040240c22ef7a6c08c54008ba88705ab55ec9a822766f8ab291f",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "4ee75f4b05f7ba5266ae270eb1487a84abdba117a6c6fd3ccaa2165cda8a48fd",
+      "sha256": "c0c8d022ff895a4a3658c7d6993fae36cbecdbcb637db25d0cb721ec94cb961f",
       "bytes": 5973
     },
     {
@@ -561,7 +561,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "3506cb4351310cdeb9ce719d43c9b2cc2f1fb823ba4b4e114c64d3e3a425589c",
+      "sha256": "e55cc185bd8b717ad18947aed0f9f5a182db48544fa2f1acf5d387f2fa3b8db0",
       "bytes": 27432
     },
     {
@@ -571,7 +571,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "38de40f7b9f5e88dab615288b285d0c7a02b9bc8b6ff3d23812d33b91c37eeb9",
+      "sha256": "7f972f09126c01aadfd22b808d1b7ebaa145980f1aa73bb3246c6ae813d611a9",
       "bytes": 58573
     },
     {
@@ -581,7 +581,7 @@
     },
     {
       "path": "dist/data/python-provenance.json",
-      "sha256": "4fc68ad647211001a834a40a41617efce068b5a2bd5c9a7a45c211495912a2d8",
+      "sha256": "03881b90a85fff41ec1272ea4bec512605e697530cf612eebb36681dc12922e0",
       "bytes": 56687
     },
     {
@@ -591,7 +591,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "3d8e85cd6dbf11cf53ae1b4664d901bf7188ad594dc4bb6da2f3a5947178b394",
+      "sha256": "2aeda76a810d0d19508ace3566648d9a6970d567065b91f1a237d3a65350b50f",
       "bytes": 10435
     },
     {
@@ -601,17 +601,17 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "30fcb4e906db9d51060b1375fdf0356c25ba045a4f612b689e6d7b6f04f3ef5c",
+      "sha256": "397a03297e813bfdc2c91ba7f2d3b17bd0ba221289a6f76b5138a21e27d47fee",
       "bytes": 13329
     },
     {
       "path": "dist/data/structure-dynamics-provenance.json",
-      "sha256": "6c4618f96f64abf74bb3f6b70b70fb96caf7933b9143695e9b8f28bdd795d03a",
+      "sha256": "2f89a1d67c0b027accad9e2dab3ef7f42b5216cedf94ba65b07577a8e3320410",
       "bytes": 1332
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "82e1203108eab84297ef82c699c6ddae46280a645b6a82152cddc336bfa606fa",
+      "sha256": "ef273e1edcf58b7b35ce2b16cb9b383bccc681d3c4b5f26b567e9bddb33a2db4",
       "bytes": 15860
     },
     {
@@ -671,8 +671,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "e81802370eb6381e3e55e021d12f0da20d0188ec11e1bb3be7d4e9aa05b80b83",
-      "bytes": 8426
+      "sha256": "87ecc19cb5bb15df87471929558c82a9d55e27e15f9acd0d67ed1506894de8f1",
+      "bytes": 8424
     },
     {
       "path": "dist/induction.js",
@@ -731,8 +731,8 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "4be62fc86ee6ce38227460dcc92fdd7f6b80a02bf1c19d239d191a5fc34a9497",
-      "bytes": 38267
+      "sha256": "b72fdf610448256fdccd81dfee31e390f14dfe1cbce87116de37fd91592d6e63",
+      "bytes": 38261
     },
     {
       "path": "dist/navigation.css",
@@ -801,13 +801,13 @@
     },
     {
       "path": "dist/python-client.js",
-      "sha256": "2959c4cf068aec7b647bc7a23b50758fc2a0231aee3a4db2d40b56b5e669fb77",
-      "bytes": 3141
+      "sha256": "bef6f4cffb10f45d5ad2ce3aec9e76943740eae9ee6465df19605346c15522ea",
+      "bytes": 3139
     },
     {
       "path": "dist/python-worker.js",
-      "sha256": "e4ea60278dac3511fca88b54ace196515084df6bbdc904deb52fa373ccb0a8cb",
-      "bytes": 12475
+      "sha256": "c6c43794db0969e34e35b0c813699576954dabb58f934a670e8647d06b3fb23e",
+      "bytes": 12667
     },
     {
       "path": "dist/python/browser_api.py",
@@ -901,8 +901,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "07057fba2e1f2cbb6e51addb46b69c0b6a9d27736aaf465129158caa2d14181d",
-      "bytes": 60478
+      "sha256": "51e580f624b80ae4d28ecb27d9ba270f7fa66f77a07d29ac9c347f5c24e37221",
+      "bytes": 61213
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -936,8 +936,8 @@
     },
     {
       "path": "dist/symmetry-course-ui.js",
-      "sha256": "cc8d78001964d1fe0adfd8cdff3337cc5c1d2b4a6d8618626774e96038b9a803",
-      "bytes": 111232
+      "sha256": "c7fafd7d46ef41c42c94e16a254d5f137745f80f319d5f81b4049048192a6bce",
+      "bytes": 111733
     },
     {
       "path": "dist/symmetry-course.css",
@@ -951,8 +951,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "8e0fabff3549b3b3ad788cd35f61720588b6971f8e87a4721a2ce35d90d0e333",
-      "bytes": 29539
+      "sha256": "e5eed73144f620c97b9c16597213181f9f048ec6c6b0e647c4999aab5c8c1e76",
+      "bytes": 29681
     },
     {
       "path": "scripts/build-bilbao-labels.py",

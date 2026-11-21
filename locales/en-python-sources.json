@@ -1,4 +1,10 @@
 [
+  {"source":"scatteringFactors 必须为最多 64 项的元素→散射权重对象","origins":["python/diffraction.py"]},
+  {"source":"复散射权重必须恰好包含 re 和 im 两个实数分量","origins":["python/diffraction.py"]},
+  {"source":"compareFriedel 必须是布尔值","origins":["python/diffraction.py"]},
+  {"source":"f 为恒定标量散射权重。复分量为示意输入，未代入随波长和散射矢量变化的表值。","origins":["python/diffraction.py"]},
+  {"source":"I=|F|² 为运动学结构因子强度。粉末棒谱按等 d 汇总两向贡献。张量散射、偏振、热振动、吸收、展宽与织构需要额外模型。","origins":["python/diffraction.py"]},
+  {"source":"仅枚举 |h|、|k|、|l|≤ZXQD0DQXZ，独立计算每个 ±hkl 对的两项强度，并在同一棒峰内相加。","origins":["python/diffraction.py"]},
   {
     "source": "E=±Δ 的理想电极表面函数在本公式中需取阈值极限；请稍移能量并比较两侧，当前点留空。",
     "origins": [

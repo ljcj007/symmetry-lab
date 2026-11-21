@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29327,
-  "translatedUnits": 29327,
+  "sourceUnits": 29387,
+  "translatedUnits": 29387,
   "missing": [],
-  "files": 536,
+  "files": 538,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -196,6 +196,8 @@
     "en-quartz-conjugacy-ui.json",
     "en-symmetry-course-feedback.json",
     "en-quartz-extinction-ui.json",
-    "en-next-paths.json"
+    "en-next-paths.json",
+    "en-friedel-pair-ui.json",
+    "en-quartz-friedel-ui.json"
   ]
 }

@@ -1,8 +1,9 @@
 """Finite kinematic structure-factor and extinction demonstrations.
 
-Scattering factors are constant real user weights, not tabulated X-ray form
-factors.  Only explicitly constructed lattice/basis/screw examples receive
-systematic labels. Arbitrary input structures are never assigned space groups.
+Scattering factors are constant scalar user weights, given as real numbers
+or explicit {"re": ..., "im": ...} objects. They do not model tensor or
+polarization-dependent scattering. Only explicitly constructed lattice,
+basis and screw examples receive systematic labels.
 Cell vectors are rows in Cartesian angstrom; hkl uses the reciprocal dual.
 """
 from itertools import product
@@ -55,14 +56,34 @@ def _cell(value):
     return cell
 
 
+def _factor(value, name):
+    if isinstance(value, dict):
+        if set(value) != {'re', 'im'}:
+            raise ValueError('复散射权重必须恰好包含 re 和 im 两个实数分量')
+        return {key: _number(value[key], f'{name}.{key}', -1000, 1000) for key in ('re', 'im')}
+    return _number(value, name, -1000, 1000)
+
+
+def _weighted(factor, occupancy):
+    if isinstance(factor, dict):
+        return {key: value * occupancy for key, value in factor.items()}
+    return factor * occupancy
+
+
+def _scalar(weight):
+    if isinstance(weight, dict):
+        return complex(weight['re'], weight['im']) if weight['im'] else weight['re']
+    return weight
+
+
 def _factors(value):
     if not isinstance(value, dict) or len(value) > 64:
-        raise ValueError('scatteringFactors 必须为最多 64 项的元素→恒定实权重对象')
+        raise ValueError('scatteringFactors 必须为最多 64 项的元素→散射权重对象')
     result = {}
     for key, factor in value.items():
         if not isinstance(key, str) or not key or len(key) > 32:
             raise ValueError('元素标签必须是长度 1 至 32 的字符串')
-        result[key] = _number(factor, 'scatteringFactors', -1000, 1000)
+        result[key] = _factor(factor, 'scatteringFactors')
     return result
 
 
@@ -84,9 +105,9 @@ def _structure(data, preset):
                 raise ValueError('species 必须为长度 1 至 32 的字符串')
             fractional = _vector(atom.get('fractional'), 'fractional')
             occupancy = _number(atom.get('occupancy', 1), 'occupancy', 0, 1)
-            factor = _number(atom.get('factor', overrides.get(species, 1)), 'factor', -1000, 1000)
+            factor = _factor(atom.get('factor', overrides.get(species, 1)), 'factor')
             atoms.append({'index': index + 1, 'species': species, 'fractional': [v % 1 for v in fractional],
-                          'factor': factor, 'occupancy': occupancy, 'weight': factor * occupancy})
+                          'factor': factor, 'occupancy': occupancy, 'weight': _weighted(factor, occupancy)})
         return {'name': '用户自定义完整晶胞', 'cell': cell.tolist(), 'atoms': atoms,
                 'centering': 'not_inferred', 'volume': float(abs(np.linalg.det(cell))),
                 'coordinateConvention': '晶胞矢量按行排列，原子为分数坐标；所有原子需显式列出。'}
@@ -125,7 +146,7 @@ def _extinction(preset, hkl, cancelled):
 
 
 def run(payload=None):
-    """Calculate one resolved reflection and a bounded Friedel-complete stick sum."""
+    """Calculate one reflection, its optional Friedel partner and a bounded powder sum."""
     if payload is None:
         payload = {}
     if not isinstance(payload, dict):
@@ -145,10 +166,15 @@ def run(payload=None):
         raise ValueError('(000) 为直射束，不作为 Bragg 衍射峰')
     maximum = _integer(data.get('maxIndex', 4), 'maxIndex', 1, 6)
     wavelength = _number(data.get('wavelength', 1.5406), 'wavelength', 0.01, 100)
+    compare_friedel = data.get('compareFriedel')
+    if 'compareFriedel' in data and not isinstance(compare_friedel, bool):
+        raise ValueError('compareFriedel 必须是布尔值')
     structure = _structure(data, preset)
     atoms = structure['atoms']
+    advanced = any(isinstance(atom['factor'], dict) for atom in atoms)
     inverse = np.linalg.inv(np.array(structure['cell']))
-    weights = np.array([atom['weight'] for atom in atoms])
+    weights = np.array([_scalar(atom['weight']) for atom in atoms])
+    signed = np.iscomplexobj(weights)
     positions = np.array([atom['fractional'] for atom in atoms])
     scale = max(float(np.abs(weights).sum()), 1.0)
     tolerance = 1e-10 * scale
@@ -191,12 +217,13 @@ def run(payload=None):
         return result
 
     selected = reflection(hkl, components=True)
-    # Retain one member of every ±hkl pair; all weights are real so Friedel's
-    # intensity equality applies. Powder sum restores both members explicitly.
+    # With real weights a representative suffices. With complex effective
+    # weights each sign contributes its own intensity to the same-angle bin.
+    multiplicity = 1 if signed else 2
     reflections = []
     for index in product(range(-maximum, maximum + 1), repeat=3):
         first = next((value for value in index if value), 0)
-        if first > 0:
+        if first > 0 or (signed and first < 0):
             reflections.append(reflection(index))
     reflections.sort(key=lambda row: (-row['dSpacing'], row['hkl']))
     powder = []
@@ -208,8 +235,8 @@ def run(payload=None):
         if not powder or abs(powder[-1]['dSpacing'] - item['dSpacing']) > 1e-8 * item['dSpacing']:
             powder.append({'dSpacing': item['dSpacing'], 'twoTheta': item['twoTheta'],
                            'intensity': 0.0, 'multiplicity': 0, 'hkls': []})
-        powder[-1]['intensity'] += 2 * item['intensity']
-        powder[-1]['multiplicity'] += 2
+        powder[-1]['intensity'] += multiplicity * item['intensity']
+        powder[-1]['multiplicity'] += multiplicity
         powder[-1]['hkls'].append(item['hkl'])
     max_intensity = max((peak['intensity'] for peak in powder), default=0)
     for peak in powder:
@@ -222,20 +249,38 @@ def run(payload=None):
         '格心/金刚石基底/2₁ 分类只针对已构造预设；自定义结构需列出完整晶胞所有原子，未展开 CIF 非对称单元或自动识别空间群消光。',
         '数值抵消阈值为 1e-10×max(1,Σ|占据率×f|)；非常弱的非零反射可能被归为数值零。',
     ]
+    if advanced:
+        limitations[0] = 'f 为恒定标量散射权重。复分量为示意输入，未代入随波长和散射矢量变化的表值。'
+        limitations[1] = 'I=|F|² 为运动学结构因子强度。粉末棒谱按等 d 汇总两向贡献。张量散射、偏振、热振动、吸收、展宽与织构需要额外模型。'
+        if signed:
+            limitations[3] = f'仅枚举 |h|、|k|、|l|≤{maximum}，独立计算每个 ±hkl 对的两项强度，并在同一棒峰内相加。'
     steps = [
         {'title': '形成每个原子的复振幅', 'detail': '由分数坐标计算 φⱼ=2π(hxⱼ+kyⱼ+lzⱼ)，每项为占据率×fⱼ(cosφⱼ+i sinφⱼ)。'},
         {'title': '相位矢量求和', 'detail': f'当前 F={selected["real"]:.6g}+({selected["imag"]:.6g})i，|F|²={selected["intensity"]:.6g}。'},
         {'title': '区分消光来源', 'detail': selected['extinction']['reason']},
         {'title': '从倒易长度得到衍射角', 'detail': '行向量晶胞 A 满足 A g=hkl；d=1/|g|，若 λ/(2d)≤1 则 2θ=2asin[λ/(2d)]，否则该波长不可达。'},
     ]
-    return {'kind': 'diffraction', 'parameters': {'preset': preset, 'hkl': hkl,
+    result = {'kind': 'diffraction', 'parameters': {'preset': preset, 'hkl': hkl,
                 'maxIndex': maximum, 'wavelength': wavelength,
                 'scatteringFactors': {atom['species']: atom['factor'] for atom in atoms}},
             'structure': structure, 'reflection': selected, 'selected': selected,
             'reflections': reflections, 'powder': powder,
-            'statistics': {'friedelPairs': len(reflections),
+            'statistics': {'friedelPairs': len(reflections) // 2 if signed else len(reflections),
                 'nonzeroReflections': sum(item['intensity'] > tolerance ** 2 for item in reflections),
                 'powderPeaks': len(powder), 'cancellationTolerance': tolerance},
             'formulas': {'structureFactor': 'F(hkl)=Σⱼ occupancyⱼ fⱼ exp[2πi(hxⱼ+kyⱼ+lzⱼ)]',
                 'intensity': 'I=|F|²', 'bragg': '2d sinθ=λ'},
             'steps': steps, 'limitations': limitations, 'sources': SOURCES}
+    show_pair = advanced if compare_friedel is None else compare_friedel
+    if show_pair:
+        opposite = reflection([-index for index in hkl], components=True)
+        total = selected['intensity'] + opposite['intensity']
+        difference = selected['intensity'] - opposite['intensity']
+        result['friedelPair'] = {
+            'forward': selected,
+            'reverse': opposite,
+            'intensityDifference': difference,
+            'intensitySum': total,
+            'normalizedContrast': difference / total if total else None,
+        }
+    return result

@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-nextpaths1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-friedel1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -57,5 +57,13 @@ export const learningActivities = [
     keywords: 'quartz screw extinction Friedel pair chirality diffraction COD 9005017 石英 螺旋 消光 弗里德尔 手性 衍射',
     kind: '课程',
     activityAliases: activityAliases.quartzExtinction
+  },
+  {
+    route: 'classroom/structure-dynamics?tab=learn&lesson=screw-glide&preset=quartz-friedel',
+    title: '复散射权重与弗里德尔对比',
+    summary: '用同一片石英比较 110、101 的强度差，再核对反演与合并粉末峰。',
+    keywords: 'complex scattering Friedel pair Bijvoet quartz 复散射 弗里德尔 布伊弗特 石英 强度差',
+    kind: '课程',
+    activityAliases: activityAliases.friedelContrast
   }
 ];

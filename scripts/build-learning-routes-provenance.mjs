@@ -80,6 +80,9 @@ files.push('dist/python-worker.js','dist/python-client.js','dist/group-theorems.
 files.push('dist/tool-search-terms.js','dist/workbench-route.js','dist/quartz-extinction-ui.js','dist/python/quartz_extinction.py',
  'scripts/test-quartz-extinction-ui.mjs','scripts/test-python-quartz-extinction.py','scripts/fixtures/quartz-extinction.json',
  'locales/en-quartz-extinction-ui.json','locales/en-symmetry-course-feedback.json','locales/en-next-paths.json');
+files.push('dist/friedel-pair-ui.js','dist/quartz-friedel-ui.js','dist/python/quartz_friedel.py',
+ 'scripts/test-quartz-friedel-ui.mjs','scripts/test-python-friedel-pair.py','scripts/fixtures/quartz-friedel.json',
+ 'locales/en-friedel-pair-ui.json','locales/en-quartz-friedel-ui.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -135,6 +138,7 @@ data.verification.push('The authentic 298 K quartz case derives every site orbit
 data.verification.push('Four symmetry course lessons identify errors in the translation phase, spinor and Bloch factors, conjugation in antiunitary multiplication, and invariance of the wavevector. Transfer questions remain independent of the primary quiz record.');
 data.verification.push('The initial quick finder recognizes explicit group identifiers and indexed H–M symbols, and file searches combine a genuine supported format with its bilingual purpose. Workbench history retains a verified group, wavevector and spin mode as distinct native links.');
 data.verification.push('From the same preserved quartz CIF, the original and inverted structures share the real-weight axial extinction rule and intensities. An allowed axial reflection and an off-axis Friedel pair distinguish screw selection, phase conjugation and a passive basis change.');
+data.verification.push('The complex scalar extension checks a nonzero 110 Friedel contrast, equal 101 and 003 partners, axial extinction and inversion of the signed difference on the preserved quartz geometry. Direct diffraction users can inspect either index, with powder intensities summed at their common angle and existing real-input calculations preserved.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);
