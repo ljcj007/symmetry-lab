@@ -145,7 +145,41 @@ def _class_labels(symmetry, operations):
     return classes, table, indices
 
 
-def _groups(bands, q, structure, symmetry, operations, tolerance):
+def _translation_diagnostic(groups, bases, masses, frequency_tolerance, frequency_unit):
+    # The Gamma-gauge mass-weighted unit translations are three orthonormal
+    # columns. Degenerate eigenvectors can be changed within each cluster.
+    diagnostic = {'status': 'unavailable', 'frequencyTolerance': frequency_tolerance,
+                  'frequencyUnit': frequency_unit, 'groups': []}
+    if len(bases) != len(groups):
+        return diagnostic
+    basis = np.column_stack(bases)
+    weight_tolerance = 1e-5
+    if np.linalg.norm(basis.conj().T @ basis - np.eye(basis.shape[1])) > weight_tolerance:
+        return diagnostic
+
+    atoms = np.sqrt(np.asarray(masses) / sum(masses))
+    translations = (atoms[:, None, None] * np.eye(3)).reshape(-1, 3)
+    totals = {'near-zero': 0.0, 'outside': 0.0, 'straddling': 0.0}
+    for group, cluster_basis in zip(groups, bases):
+        inside = [abs(f) <= frequency_tolerance for f in group['frequencies']]
+        window = ('near-zero' if all(inside) else 'straddling' if any(inside) else 'outside')
+        weight = float(np.linalg.norm(cluster_basis.conj().T @ translations)**2 / 3)
+        totals[window] += weight
+        diagnostic['groups'].append({'bands': group['bands'], 'window': window,
+                                     'weightFraction': min(weight, 1.0)})
+    if totals['outside'] > weight_tolerance:
+        status = 'outside'
+    elif totals['outside'] + totals['straddling'] > weight_tolerance:
+        status = 'straddling'
+    else:
+        status = 'resolved'
+    return dict(diagnostic, status=status, weightTolerance=weight_tolerance,
+                nearZeroWeightFraction=min(totals['near-zero'], 1.0),
+                outsideWeightFraction=min(totals['outside'], 1.0),
+                straddlingWeightFraction=min(totals['straddling'], 1.0))
+
+
+def _groups(bands, q, structure, symmetry, operations, tolerance, zero_tolerance, frequency_unit):
     frequencies = [float(b['frequency']) for b in bands]
     pending = sorted(range(len(bands)), key=lambda i: frequencies[i])
     grouped = []
@@ -159,7 +193,8 @@ def _groups(bands, q, structure, symmetry, operations, tolerance):
     positions = np.asarray([a['coordinates'] for a in structure['atoms']])
     gauge = np.exp(2j * math.pi * (positions @ np.asarray(q)))
     basis_problem = None
-    if all('eigenvector' in band for band in bands):
+    complete = all('eigenvector' in band for band in bands)
+    if complete:
         full = np.column_stack([np.asarray(b['eigenvector'], dtype=float).view(np.complex128).reshape(-1)
                                 for b in bands])
         norms = np.linalg.norm(full, axis=0)
@@ -176,7 +211,8 @@ def _groups(bands, q, structure, symmetry, operations, tolerance):
                                      if group_index[i] != group_index[j]), default=0)
                 if cross_overlap > 1e-5:
                     basis_problem = '不同频率簇的质量加权本征矢不正交；请检查模式文件与本征矢约定。'
-    results = []
+    results, gamma_bases = [], []
+    collect_gamma_basis = gamma and complete and basis_problem is None
     for indices in grouped:
         classification = {'status': 'unavailable', 'label': None, 'decomposition': [],
                           'characters': [], 'invarianceError': None, 'reason': ''}
@@ -188,7 +224,8 @@ def _groups(bands, q, structure, symmetry, operations, tolerance):
             continue
         if not symmetry['primitiveCell']:
             classification['reason'] = '当前输入不是原胞；折叠模式需要额外平移量子数，本接口不强行赋予原胞 Γ 标签。'
-            continue
+            if not collect_gamma_basis:
+                continue
         if basis_problem:
             classification['reason'] = basis_problem
             continue
@@ -210,6 +247,10 @@ def _groups(bands, q, structure, symmetry, operations, tolerance):
             classification['reason'] = '此频率簇的本征矢线性相关；简并空间不完整。'
             continue
         basis = u[:, :len(indices)]
+        if collect_gamma_basis:
+            gamma_bases.append(basis)
+        if not symmetry['primitiveCell']:
+            continue
         characters, error = [], 0.0
         for op in operations:
             transformed = np.empty_like(basis).reshape(len(positions), 3, -1)
@@ -253,7 +294,10 @@ def _groups(bands, q, structure, symmetry, operations, tolerance):
                 classification.update(status='classified', label=label, decomposition=decomposition,
                                       reason='标签属于整个简并频率子空间；子空间内可任意酉换基，不能把一个基矢当作完整多维表示。')
         classification['characters'] = class_chars
-    return results
+    diagnostic = _translation_diagnostic(results, gamma_bases,
+                                         [atom['mass'] for atom in structure['atoms']],
+                                         zero_tolerance, frequency_unit) if gamma else None
+    return results, diagnostic
 
 
 def _export_text(lattice, atoms, title):
@@ -373,11 +417,13 @@ def run(payload=None):
             or any(a['mass'] is None or a['coordinates'] is None for a in structure['atoms'])):
         raise ValueError('需要同一原胞完整 lattice、points、coordinates 和 mass；缺少元数据时不能匹配原子或恢复物理位移')
     tolerance = _number(payload, 'frequency_tolerance', 1e-5, 0, 10)
+    zero_tolerance = _number(payload, 'translation_frequency_tolerance', 1e-5, 0, 1e4)
     symprec = _number(payload, 'symprec', 1e-5, 1e-8, 1e-2)
     symmetry, operations = _symmetry(structure, symprec)
     selection = result['selection']
     bands = data['phonon'][selection['qIndex']]['band']
-    groups = _groups(bands, selection['q'], structure, symmetry, operations, tolerance)
+    groups, translation = _groups(bands, selection['q'], structure, symmetry, operations,
+                                  tolerance, zero_tolerance, result['frequencyUnit'])
     frozen, exports = _freeze(structure, selection, dict(payload, _synthetic=result['synthetic']))
     warnings = result['warnings'][:]
     warnings += ['模式标签属于整个简并子空间，频率接近不自动保证该空间对称封闭。',
@@ -389,7 +435,7 @@ def run(payload=None):
             'frequencyUnitSource': result['frequencyUnitSource'],
             'frequencyUnitDeclarations': result['frequencyUnitDeclarations'],
             'sourceIdentity': importer._source_identity(payload) if imported else result['sourceIdentity'],
-            'selection': selection, 'modeGroups': groups,
+            'selection': selection, 'modeGroups': groups, 'translationDiagnostic': translation,
             'symmetry': symmetry, 'frequencyTolerance': tolerance, 'frozen': frozen, 'exports': exports,
             'warnings': warnings, 'sources': SOURCES,
             'scope': 'Gamma invariant frequency subspaces + commensurate diagonal supercell frozen modes',

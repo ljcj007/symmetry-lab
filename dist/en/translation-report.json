@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28901,
-  "translatedUnits": 28901,
+  "sourceUnits": 28911,
+  "translatedUnits": 28911,
   "missing": [],
-  "files": 527,
+  "files": 528,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -174,6 +174,7 @@
     "en-quartz-lesson.json",
     "en-beginner-links.json",
     "en-si-response-comparison.json",
-    "en-zno-ir-search.json"
+    "en-zno-ir-search.json",
+    "en-gamma-translations.json"
   ]
 }

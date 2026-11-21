@@ -145,18 +145,65 @@ class PhononModesTests(unittest.TestCase):
         group = result['modeGroups'][0]
         self.assertEqual(group['dimension'], 6)
         self.assertEqual({x['irrep'] for x in group['classification']['decomposition']}, {'T1u', 'T2g'})
+        diagnostic = result['translationDiagnostic']
+        self.assertEqual(diagnostic['status'], 'resolved')
+        self.assertAlmostEqual(diagnostic['groups'][0]['weightFraction'], 1)
+
+    def test_gamma_translations_distinguish_equal_td_irreps(self):
+        original = self.results['gaas']['translationDiagnostic']
+        self.assertEqual(original['status'], 'resolved')
+        self.assertAlmostEqual(original['nearZeroWeightFraction'], 1)
+        self.assertAlmostEqual(original['outsideWeightFraction'], 0)
+
+        data = preset_data('gaas')
+        matrix = unpack(data['phonon'][0]['band'])
+        acoustic, optical = matrix[:, :3], matrix[:, 3:]
+        replace_vectors(data, np.column_stack((acoustic + optical, acoustic - optical)) / math.sqrt(2))
+        result = run({'data': data, 'selected_band': 0})
+        self.assertEqual([g['classification']['label'] for g in result['modeGroups']], ['T2', 'T2'])
+        diagnostic = result['translationDiagnostic']
+        self.assertEqual(diagnostic['status'], 'outside')
+        self.assertEqual(diagnostic['frequencyUnit'], 'THz')
+        self.assertEqual([g['window'] for g in diagnostic['groups']], ['near-zero', 'outside'])
+        np.testing.assert_allclose([g['weightFraction'] for g in diagnostic['groups']], [.5, .5])
+        self.assertAlmostEqual(diagnostic['nearZeroWeightFraction'], .5)
+        self.assertAlmostEqual(diagnostic['outsideWeightFraction'], .5)
+        self.assertNotAlmostEqual(*(a['displacement'][0] for a in result['frozen']['atoms']))
+
+    def test_translation_frequency_window_uses_magnitude_and_preserves_cluster_imprecision(self):
+        data = preset_data('gaas')
+        for band in data['phonon'][0]['band'][:3]:
+            band['frequency'] = -.02
+        params = {'data': data, 'translation_frequency_tolerance': .01}
+        result = run(params)['translationDiagnostic']
+        self.assertEqual(result['status'], 'outside')
+        self.assertEqual(result['frequencyTolerance'], .01)
+        self.assertAlmostEqual(result['outsideWeightFraction'], 1)
+        self.assertEqual(run(dict(params, translation_frequency_tolerance=.02))['translationDiagnostic']['status'],
+                         'resolved')
+        for band, frequency in zip(data['phonon'][0]['band'], [-.02, 0, .02]):
+            band['frequency'] = frequency
+        result = run(dict(params, frequency_tolerance=.05))['translationDiagnostic']
+        self.assertEqual(result['status'], 'straddling')
+        self.assertAlmostEqual(result['straddlingWeightFraction'], 1)
 
     def test_missing_member_of_degenerate_space_not_labeled(self):
         data = preset_data('silicon')
         del data['phonon'][0]['band'][5]['eigenvector']
-        group = run({'data': data})['modeGroups'][1]
+        result = run({'data': data})
+        self.assertEqual(result['translationDiagnostic']['status'], 'unavailable')
+        self.assertEqual(result['translationDiagnostic']['groups'], [])
+        group = result['modeGroups'][1]
         self.assertEqual(group['classification']['status'], 'unavailable')
         self.assertIn('缺少', group['classification']['reason'])
 
     def test_linearly_dependent_eigenvectors_not_labeled(self):
         data = preset_data('silicon')
         data['phonon'][0]['band'][4]['eigenvector'] = copy.deepcopy(data['phonon'][0]['band'][3]['eigenvector'])
-        group = run({'data': data})['modeGroups'][1]
+        result = run({'data': data})
+        self.assertEqual(result['translationDiagnostic']['status'], 'unavailable')
+        self.assertEqual(result['translationDiagnostic']['groups'], [])
+        group = result['modeGroups'][1]
         self.assertEqual(group['classification']['status'], 'unavailable')
         self.assertIn('线性相关', group['classification']['reason'])
 
@@ -175,6 +222,7 @@ class PhononModesTests(unittest.TestCase):
         replace_vectors(data, vectors)
         result = run({'data': data})
         self.assertTrue(all('不正交' in g['classification']['reason'] for g in result['modeGroups']))
+        self.assertEqual(result['translationDiagnostic']['status'], 'unavailable')
 
     def test_finite_q_alternation_and_position_gauge(self):
         data = preset_data('silicon')
@@ -186,6 +234,7 @@ class PhononModesTests(unittest.TestCase):
         self.assertAlmostEqual(atoms[1]['displacement'][0], -.1 * math.cos(math.pi / 4))
         self.assertEqual(len(atoms), 4)
         self.assertIsNone(result['modeGroups'][0]['classification']['label'])
+        self.assertIsNone(result['translationDiagnostic'])
         self.assertTrue(result['frozen']['commensurate'])
 
     def test_incommensurate_supercell_rejected(self):
@@ -204,6 +253,9 @@ class PhononModesTests(unittest.TestCase):
         replace_vectors(data, vectors.reshape(6, 6))
         result = run({'data': data, 'selected_band': 3})
         self.assertEqual([g['classification']['label'] for g in result['modeGroups']], ['T1u', 'T2g'])
+        diagnostic = result['translationDiagnostic']
+        self.assertEqual(diagnostic['status'], 'resolved')
+        self.assertAlmostEqual(diagnostic['nearZeroWeightFraction'], 1)
         np.testing.assert_allclose([a['displacement'] for a in result['frozen']['atoms']],
                                    [a['displacement'] for a in self.results['silicon']['frozen']['atoms']], atol=1e-12)
 
@@ -356,6 +408,7 @@ class PhononModesTests(unittest.TestCase):
         self.assertFalse(result['symmetry']['primitiveCell'])
         self.assertTrue(all(g['classification']['label'] is None for g in result['modeGroups']))
         self.assertTrue(all('不是原胞' in g['classification']['reason'] for g in result['modeGroups']))
+        self.assertAlmostEqual(result['translationDiagnostic']['nearZeroWeightFraction'], 1)
 
     def test_isotope_masses_are_not_permuted_as_same_species(self):
         data = preset_data()

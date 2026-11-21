@@ -54,8 +54,8 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 78779,
-      "sha256": "e9c1a06da67f5876dcf63ede476137051f4e9d71f4285081b888240f2efbaa48"
+      "bytes": 79644,
+      "sha256": "53c58b0ed7c7bae0425bf8caa9b4962368ebc18005965c6c6c253e0bec7dc498"
     },
     "dist/connections-ui.js": {
       "bytes": 18457,
@@ -70,16 +70,16 @@
       "sha256": "112b655763219311014b4fb679452a7bed2beee84df1292e69066c7ad8f59cfe"
     },
     "dist/index.html": {
-      "bytes": 8214,
-      "sha256": "8cb2e5deb6073e9bb66534476677d3ab21fcc76eece6636faa1ee24e22a0bba3"
+      "bytes": 8215,
+      "sha256": "2361a9e02a4b801c439db7b8650706f218f186efcc4c2e442cff8c68024900e9"
     },
     "dist/learning-bridge-host.js": {
       "bytes": 4606,
       "sha256": "32b768c75334454f7efd7ec784da89d3002a87c822600a82fbc49c40455725c1"
     },
     "dist/material-research-ui.js": {
-      "bytes": 63427,
-      "sha256": "d2f5c7eb1774ed5d79e2683140533939a9ae05baa28606521ead2caf04ed69dc"
+      "bytes": 65151,
+      "sha256": "96df49ff160ec82254a238b16492de30e792d66e5a595b7096fcd1bcf1c2fa60"
     },
     "dist/onsager-learning-bridge.css": {
       "bytes": 3922,
@@ -118,16 +118,16 @@
       "sha256": "8a3c52eafaeac0648f0d6bf71f3e4794adc783c05d586699df7f558376ebf9bb"
     },
     "package.json": {
-      "bytes": 28620,
-      "sha256": "77ac852b85a875ff79b89e76356f65b91b85343331798f0e3d41aca281da49c5"
+      "bytes": 28714,
+      "sha256": "dc04dc9601cfb1d789efe0ed6cbab6727026fde850670e4f3cc00e8b2cb2a0e7"
     },
     "scripts/build-thermal-onsager-provenance.mjs": {
       "bytes": 5135,
       "sha256": "4f42354ac793ba59e18d0fabc06de25740eb742c423e4ef683a785922bd88d66"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6496,
-      "sha256": "614552c70d6d3625fb6285f89d379615fe501d76edf1650934efebd7320b1f6a"
+      "bytes": 6545,
+      "sha256": "d9d0a3beb0af5fe0b0b17adde85f17baba3edc59eca6079e4665129d1d78af7e"
     },
     "scripts/test-learning-bridge-host.mjs": {
       "bytes": 4915,

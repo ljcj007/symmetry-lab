@@ -1,5 +1,6 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-spectral1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-msg-gamma1';
 import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
+import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
@@ -7,14 +8,20 @@ const kindFor={tools:'计算',courses:'课程',groups:'群目录',materials:'材
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
 const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261120-lesson-topic1');
+const magneticRoute=/^atlas\/msg\?q=(\d+\.\d+)$/u;
+function catalogMagneticIds(item){
+ return {bns:item.route.match(magneticRoute)?.[1],og:item.summary?.match(/^OG (\d+\.\d+\.\d+)$/u)?.[1]};
+}
 export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);
  const normalized=normalizeFinderText(query);
  if(!normalized)return scope==='tools'?selected.slice(0,limit):[];
- const found=searchEntries(selected,query,selected.length);
+ const magneticMatches=scope==='groups'||scope==='all'?matchMagneticGroupQuery(selected.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds):null;
+ const ordinary=magneticMatches===null?selected:selected.filter(item=>!magneticRoute.test(item.route));
+ const found=searchEntries(ordinary,query,ordinary.length);
  const numeric=/^\d+$/.test(normalized),exactGroup=x=>numeric&&x.route==='atlas/sg?q='+encodeURIComponent(normalized);
- return found.sort((a,b)=>Number(exactGroup(b))-Number(exactGroup(a))).slice(0,limit);
+ return [...(magneticMatches??[]),...found.sort((a,b)=>Number(exactGroup(b))-Number(exactGroup(a)))].slice(0,limit);
 }
 
 export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModule}){
@@ -44,6 +51,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  }
  function render(){
   if(!opened||destroyed)return;
+  const needsMagneticCatalog=!extra&&scope==='all'&&isFullMagneticGroupQuery(input.value);
   for(const button of scopeButtons)button.hidden=Boolean(topic)&&button.dataset.finderScope!=='courses';
   courseButton.textContent=topic?'本主题课程':ordinaryCourseLabel;
   courseButton.setAttribute('aria-pressed',String(topic?topic.range==='topic':scope==='courses'));
@@ -57,9 +65,9 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   if(topic){
    const pool=topic.data?.[topic.range]||[];
    results=normalizeFinderText(input.value)?searchEntries(pool,input.value,16):pool.slice(0,16);
-  }else results=finderResults([...preferred(),...(extra||[])],input.value,{scope});
+  }else results=needsMagneticCatalog?[]:finderResults([...preferred(),...(extra||[])],input.value,{scope});
   selected=Math.min(selected,Math.max(0,results.length-1));
-  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?'当前课':item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>文件用途：</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):topic?(topic.data?'<p class="tool-finder-empty">在当前范围内没有匹配课程。</p>':''):`<p class="tool-finder-empty">${input.value.trim()?'没有匹配结果。试试工具缩写、材料名称或完整群编号。':'输入关键词后查找此类内容。'}</p>`;
+  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?'当前课':item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>文件用途：</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):needsMagneticCatalog?'':topic?(topic.data?'<p class="tool-finder-empty">在当前范围内没有匹配课程。</p>':''):`<p class="tool-finder-empty">${input.value.trim()?'没有匹配结果。试试工具缩写、材料名称或完整群编号。':'输入关键词后查找此类内容。'}</p>`;
   if(topic){
    if(topic.loading)status.textContent='正在读取课堂主题目录…';
    else if(topic.failed)status.innerHTML='课堂主题目录暂未载入。 <button type="button" data-finder-topic-retry>重试课程目录</button>';

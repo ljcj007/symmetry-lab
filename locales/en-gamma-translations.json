@@ -1,0 +1,12 @@
+{
+  "Γ 点刚性平移诊断": "Γ-point rigid-translation diagnostic",
+  "需要完整的 3N 本征矢和相互正交的频率子空间。": "This diagnostic requires a complete set of 3N eigenvectors and mutually orthogonal frequency subspaces.",
+  "在权重容差内，三个刚性平移方向均落在零频窗口内。": "Within the weight tolerance, the zero-frequency window contains all three rigid-translation directions.",
+  "零频窗口外仍有刚性平移权重。检查本征矢约定及零频窗口容差。": "Some rigid-translation weight lies outside the zero-frequency window. Check the eigenvector convention and the window tolerance.",
+  "含有平移权重的频率簇跨越零频窗口边界。请调整分组或窗口容差后再判读。": "A cluster with translation weight straddles the zero-frequency window. Adjust the grouping or window tolerance before interpreting it.",
+  "零频窗口": "Zero-frequency window",
+  "窗口内的平移权重": "Translation weight inside the window",
+  "表中的平移权重按三个质量加权的刚性平移方向归一化。此处只核对输入本征矢与频率。": "The table normalizes translation weight by the three mass-weighted rigid-translation directions. The diagnostic checks the input eigenvectors and frequencies.",
+  "刚性平移权重": "Rigid-translation weight",
+  "刚性平移的零频窗口容差（与输入频率同单位）": "Rigid-translation zero-frequency tolerance (input frequency units)"
+}

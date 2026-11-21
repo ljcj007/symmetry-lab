@@ -454,3 +454,9 @@ establish that all existing scientific and teaching content has been audited.
 - Chinese and English searches for ZnO infrared polarization or Born effective charge link to the ZnO Γ-point exercise. The calculation directory also offers the exact preset while retaining its general phonon calculation entry.
 - The Si polarization lesson compares the cubic equilibrium dielectric tensor with the derivative that drives first-order Raman scattering. It links to both calculations, with a prediction and a folded derivation for the parallel and crossed geometries at 0° and 45°.
 - The model Lorentzian spectrum samples across the specified linewidth, including the center and visible half-maximum points. The wavenumber axis preserves narrow peak intervals.
+
+## Identify a magnetic space group and test Γ-point translations
+
+- The finder and magnetic space-group atlas accept full BNS or OG numbers. Both indexes map all 1651 number pairs to their BNS atlas routes. Full identifiers wait for the group catalog before a keyboard selection is offered.
+- In the phonon mode calculator, the Γ-point result projects the supplied mass-weighted frequency subspaces onto the three rigid translations. The adjustable near-zero window uses the input frequency unit and reports any frequency cluster that straddles the threshold.
+- A simulated GaAs test mixes the original acoustic and optical triplets while keeping their frequencies fixed. Both triplets retain the T₂ label. The translation weight shifts from 100% and 0% to 50% and 50%, distinguishing a symmetry label from a rigid-translation check on the supplied mode data.
