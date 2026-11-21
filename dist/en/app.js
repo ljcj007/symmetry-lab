@@ -4,7 +4,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
 import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261121-course-entry1';
 import {startToolFinder} from './tool-finder.js?v=20261121-course-entry1';
-import {matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {spaceGroupNumberForQuery} from './tool-search.js?v=20261121-course-entry1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
@@ -363,13 +363,57 @@ function renderWorkbench(){const route=buildWorkbenchRoute({...state,id:gid()});
  <div class="stats"><div class="stat"><div class="stat-label">little group operand<small>LITTLE GROUP ORDER</small></div><strong>${r?r.littleGroup.operations.length:'—'}</strong></div><div class="stat"><div class="stat-label">Number of k-star arms<small>ARMS OF THE k-STAR</small></div><strong>${r?r.star.length:'—'}</strong></div><div class="stat"><div class="stat-label">${r?.littleGroup.antiunitaryIndices.length?"irreducible corepresentation":"Irreducible representation"}<small>${r?.littleGroup.antiunitaryIndices.length?'IRREDUCIBLE COREPS':'IRREDUCIBLE REPS'}</small></div><strong>${r?(r.littleGroup.antiunitaryIndices.length?r.corepresentations.length:r.irreps.length):'—'}</strong></div></div>
  <section class="panel results"><div class="result-header"><div class="result-heading">calculation results<small>${r?`${crystalSpan(gtitle(g),'hm')} · k = (${state.k.map(fraction).join(', ')})`:"starts calculation after selecting group and wavevector"}</small></div><div class="result-tools"><button class="text-button" id="export-csv">↓ CSV</button><button class="text-button" id="export-json">↓ JSON</button></div></div><div class="tabs">${[['characters',"character table"],['labels',"BC / Bilbao Tags"],['operations',"Symmetric operation"],['matrices',"Representation matrix"],['stars',"k star"],['coreps',"Magnetic corepresentations"],['full',"full space group representation"]].map(([t,n])=>`<button data-tab="${t}" class="${state.tab===t?'active':''}">${n}</button>`).join('')}</div><div class="result-content" id="result-content"></div></section>`;
  bindWorkbench();if(state.structureHandoff||state.resultHandoff)renderStructureSource();if(state.busy){$$('#app input,#app #label-bz,#app [data-mode],#app [data-spin],#app .presets button').forEach(e=>e.disabled=true);}renderResults();renderViz();}
-function bindWorkbench(){const input=$('#group-search');input.addEventListener('focus',()=>{input.select();showSearch('');});input.addEventListener('input',()=>showSearch(input.value));input.addEventListener('keydown',e=>{if(e.key==='Escape')$('#group-options').classList.add('hidden');if(e.key==='Enter'){e.preventDefault();$('#group-options button')?.click();}});$$('[data-mode]').forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;state.group=null;state.result=null;state.k=[0,0,0];state.bzType='';state.labelK=null;return render();});$$('[data-spin]').forEach(b=>b.onclick=()=>{try{readCoords();state.doubleValued=b.dataset.spin==='true';render();}catch(e){showError(e.message);}});$$('[data-preset]').forEach(b=>b.onclick=()=>{const point=(state.group.kpoints||[{coordinates:[0,0,0]}])[+b.dataset.preset];state.k=point.coordinates.slice();state.labelK=point.label;state.result=null;render();});$('#generic-k').onclick=()=>{state.k=[.123,.234,.345];state.labelK=null;state.result=null;render();};$$('.coords input').forEach(i=>i.onchange=()=>{try{readCoords();state.labelK=null;render();}catch(e){showError(e.message);}});if($('#label-bz'))$('#label-bz').onchange=e=>{state.bzType=e.target.value;state.result=null;render();};$('#calculate').onclick=()=>calculate();$$('[data-tab]').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;$$('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));renderResults();});$('#export-json').onclick=exportJSON;$('#export-csv').onclick=exportCSV;}
-function showSearch(q){q=q.trim().toLowerCase().replace(/\s/g,'');const rows=list(state.mode).filter(g=>[gid(g),g.symbol,g.bcSymbol,g.ogId].some(v=>String(v||'').toLowerCase().replace(/\s/g,'').includes(q))).slice(0,70);const el=$('#group-options');el.classList.remove('hidden');el.innerHTML=rows.length?rows.map(g=>`<button data-select="${esc(gid(g))}"><span>${esc(gid(g))} <b>${crystalSpan(gtitle(g),'hm')}</b></span><small>${esc(lattices[g.lattice]||'')}${g.type?' · '+['','I','II','III','IV'][g.type]:''}</small></button>`).join(''):"<div class=\"empty-state\">No matching number or symbol found</div>";$$('button',el).forEach(b=>b.onclick=()=>selectGroup(list(state.mode).find(g=>gid(g)===b.dataset.select)));}
+function bindWorkbench(){
+ const input=$('#group-search');
+ input.addEventListener('focus',()=>{input.select();showSearch('');});
+ input.addEventListener('input',()=>showSearch(input.value));
+ input.addEventListener('keydown',event=>{
+  const options=$('#group-options');
+  if(event.key==='Escape'){options.classList.add('hidden');return;}
+  if(event.key!=='Enter')return;
+  event.preventDefault();
+  const query=input.value.trim();
+  if(!query||options.classList.contains('hidden')||query===gid()+'   '+gtitle()||workbenchGroupMatches(query).length>1)return;
+  $('#group-options button')?.click();
+ });
+ $$('[data-mode]').forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;state.group=null;state.result=null;state.k=[0,0,0];state.bzType='';state.labelK=null;return render();});$$('[data-spin]').forEach(b=>b.onclick=()=>{try{readCoords();state.doubleValued=b.dataset.spin==='true';render();}catch(e){showError(e.message);}});$$('[data-preset]').forEach(b=>b.onclick=()=>{const point=(state.group.kpoints||[{coordinates:[0,0,0]}])[+b.dataset.preset];state.k=point.coordinates.slice();state.labelK=point.label;state.result=null;render();});$('#generic-k').onclick=()=>{state.k=[.123,.234,.345];state.labelK=null;state.result=null;render();};$$('.coords input').forEach(i=>i.onchange=()=>{try{readCoords();state.labelK=null;render();}catch(e){showError(e.message);}});if($('#label-bz'))$('#label-bz').onchange=e=>{state.bzType=e.target.value;state.result=null;render();};$('#calculate').onclick=()=>calculate();$$('[data-tab]').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;$$('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));renderResults();});$('#export-json').onclick=exportJSON;$('#export-csv').onclick=exportCSV;}
+function workbenchGroupMatches(value,partial=false){
+ const groups=list(state.mode),query=String(value??'').normalize('NFKC').trim();
+ if(!query)return partial?groups:[];
+ if(state.mode==='sg'){
+  const number=spaceGroupNumberForQuery(query);
+  if(number!==null)return groups.filter(group=>String(group.number)===number);
+ }
+ if(state.mode==='msg'){
+  const matches=matchMagneticGroupQuery(groups,query,group=>({bns:group.id,og:group.ogId}));
+  if(matches!==null)return partial||isFullMagneticGroupQuery(query)?matches:[];
+ }
+ const normalize=text=>String(text??'').normalize('NFKC').toLowerCase().replace(/\s/gu,'');
+ const term=normalize(query),exact=[],broader=[];
+ for(const group of groups){
+  const fields=[gid(group),group.symbol,group.bcSymbol,group.ogId].map(normalize);
+  if(fields.includes(term))exact.push(group);
+  else if(partial&&fields.some(field=>field.includes(term)))broader.push(group);
+ }
+ return [...exact,...broader];
+}
+function showSearch(q){
+ const mode=state.mode,rows=workbenchGroupMatches(q,true).slice(0,70),el=$('#group-options');
+ el.classList.remove('hidden');
+ el.innerHTML=rows.length?rows.map(g=>`<button data-select="${esc(gid(g))}"><span>${esc(gid(g))} <b>${crystalSpan(gtitle(g),'hm')}</b></span><small>${esc(lattices[g.lattice]||'')}${g.type?' · '+['','I','II','III','IV'][g.type]:''}${g.ogId?' · OG '+esc(g.ogId):''}</small></button>`).join(''):"<div class=\"empty-state\">No matching number or symbol found</div>";
+ $$('button',el).forEach(button=>button.onclick=()=>{
+  if(state.mode!==mode)return;
+  const group=list(mode).find(g=>gid(g,mode)===button.dataset.select);
+  if(!group)return;
+  if(group===state.group){$('#group-search').value=gid()+'   '+gtitle();el.classList.add('hidden');}
+  else selectGroup(group);
+ });
+}
 function readCoords(){if(state.view==='workbench'&&$('#k-0')){const k=[0,1,2].map(i=>parseNumber($('#k-'+i).value));if(k.some((x,i)=>Math.abs(x-state.k[i])>1e-8))state.labelK=null;state.k=k;}}
 function compute(payload,action='analyze',context={}){return runPythonTask(action,payload,context);}
 async function calculate(){
  try{
-  if(state.view==='workbench'&&$('#group-search')){const raw=$('#group-search').value.trim();if(raw!==(gid()+'   '+gtitle())){const exact=list(state.mode).filter(g=>[gid(g),g.symbol,g.bcSymbol,g.ogId].some(v=>String(v||'').toLowerCase()===raw.toLowerCase()));if(exact.length!==1)throw new Error("Please select a unique group from the search list or enter the complete number.");if(state.group!==exact[0]){state.bzType='';state.labelK=null;}state.group=exact[0];}}
+  if(state.view==='workbench'&&$('#group-search')){const raw=$('#group-search').value.trim();if(raw!==(gid()+'   '+gtitle())){const exact=workbenchGroupMatches(raw);if(exact.length!==1)throw new Error("Please select a unique group from the search list or enter the complete number.");if(state.group!==exact[0]){state.bzType='';state.labelK=null;}state.group=exact[0];}}
   readCoords();const group=state.group,mode=state.mode,k=state.k.slice(),doubleValued=state.doubleValued,bzType=state.bzType,labelK=state.labelK,source=workbenchSource();
   const same=request=>request&&request.group===group&&request.mode===mode&&request.doubleValued===doubleValued&&request.bzType===bzType&&request.labelK===labelK&&request.k.every((x,i)=>Math.abs(x-k[i])<1e-8);
   if(state.busy&&same(state.calculationRequest))return state.calculationPromise;

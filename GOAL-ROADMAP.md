@@ -470,6 +470,7 @@ establish that all existing scientific and teaching content has been audited.
 ## Match course experiments and group numbers across entry points
 
 - The homepage, atlas search and quick finder use the same lookup for BNS, OG and ordinary space-group numbers. Opening a numbered space-group record in the atlas filters the table to the requested group.
+- The representation workbench uses the exact group match for the menu, Enter and Calculate. OG aliases map to the same BNS entries, and reselecting the current group by its alias preserves the momentum and spin convention.
 - The first space-group lesson opens its 4₁ screw example. The Seitz lab preserves supported model names in shared links and keeps an edited draft when students revisit tabs within the same lesson.
 - Lie lessons open the experiment used in their example, whether the learner chooses the lab tab or the link at the end of the lesson. This includes the SU(2) double-cover interferometer and the exact SU(3) four-factor exercise with a 27-dimensional input.
 - The Si material card and quick finder reach the QE–Si evidence chain. Each edition opens the workshop on its current host and in its selected interface language.

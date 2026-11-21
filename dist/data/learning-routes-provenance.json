@@ -30,7 +30,8 @@
     "Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing.",
     "Atlas material cards open their declared lessons and preserve material-specific lab inputs. Atlas workbench links record the selected group and valid reciprocal-space conventions when the browser history entry is created.",
     "The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units.",
-    "The homepage, atlas and finder share exact group-number lookup. The introductory screw-axis and Lie lessons open the cases used in their worked examples. The silicon atlas and bilingual catalog reach the local QE–Si evidence page through a standard link."
+    "The homepage, atlas and finder share exact group-number lookup. The introductory screw-axis and Lie lessons open the cases used in their worked examples. The silicon atlas and bilingual catalog reach the local QE–Si evidence page through a standard link.",
+    "The representation workbench menu and calculation action resolve exact SG, BNS and OG identifiers against the current catalog. Exact symbols take precedence over partial matches. Alias selections preserve the current momentum and spin when they refer to the same group."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -49,8 +50,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 81426,
-      "sha256": "f6742a2dc28a61495a82b4cef715906083f1d3e75b3c861425368fec10b9d80b"
+      "bytes": 81650,
+      "sha256": "55de62d87c6afcefe3002ab724e83cd3da644f6820be1a1c590c7e8b43e68fe1"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -61,8 +62,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 103960,
-      "sha256": "8df22981794a64c21902bd7ee454378f0474cb0623454328cacc5ed4a88023bd"
+      "bytes": 105183,
+      "sha256": "fe66fc1c52e84fb0ef6f7f4b0de8d47695dd0c7884118c4180d598d84a2a73fb"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -245,8 +246,8 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8429,
-      "sha256": "5dff7a3edcfa826451e3dfc4547733f453cc2b7ab0879b890228d5205861881f"
+      "bytes": 8433,
+      "sha256": "dca670ccf4979eabaeb0b0c3e457692c76345ed70ce65e593dfb223b26b8d9ee"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -617,12 +618,12 @@
       "sha256": "cc7602d29ceadfe79ac1c247387b29bac85dd421393c5f084d3d30e25b9ae36a"
     },
     "package.json": {
-      "bytes": 29018,
-      "sha256": "7f8ab950464fe8b4659f9abfeea685df659909e90499ceed1f7ee949f926141f"
+      "bytes": 29126,
+      "sha256": "c6fca2255513e9e0fb8e2e6931021714a79175caa7c080d19aaa3abfa6099dea"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 17062,
-      "sha256": "9b4639af3b3500f3f0442e757a20815bacafbd77b3f4ba09ee2980dda07c1dc7"
+      "bytes": 17415,
+      "sha256": "42e83365c2ac4c779b60fdad4aa7ff46964c8280de0f44d1508e0d8a9db25a35"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -823,6 +824,10 @@
     "scripts/test-structure-dynamics-ui.mjs": {
       "bytes": 40406,
       "sha256": "0a956e66f0068796b57250b68cc97fda5b78881e9141e4f296e5682737a86209"
+    },
+    "scripts/test-workbench-group-numbers.mjs": {
+      "bytes": 7729,
+      "sha256": "f263ca945478569d2836eed3f7b0204629dfe4f6bb2ee8bfb14fa8d59a0951cb"
     },
     "scripts/test-zero-start-placement.mjs": {
       "bytes": 6089,
