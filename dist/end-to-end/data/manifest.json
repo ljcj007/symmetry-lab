@@ -1,0 +1,30 @@
+{
+  "schema": "symmetry-lab.public-scalar-projection-manifest.v1",
+  "canonicalization": "Recursive sorted object keys, JSON compact separators, UTF-8; array order retained",
+  "receipt": "si-reference-receipt.json",
+  "canonical_sha256": "883d321f7723fe6421a6623b7c03f6f2bdc1e58d8425fc67bea1d16dff76bfdf",
+  "file_sha256": "ad960d3df8127085a52c9426ac12044d5444732987dce7282517637658c76273",
+  "original_receipt_pins": {
+    "finite_scf": {
+      "sha256": "57caef8609b878ce7b544dea40783245e251b4989836e95383a91ba1bd9b1172",
+      "bytes": 24411
+    },
+    "infinite_frozen": {
+      "sha256": "e31bf5f774d4872bf24e98b99110b1eb95749546311f95258e5fd296a8554ac6",
+      "bytes": 1702340
+    },
+    "continuous_bridge": {
+      "sha256": "d35a4ae588ad17d1d759a4a0f9e62ed6b2ecd9b66a5a270329510115d6c5aca0",
+      "bytes": 272617
+    },
+    "final_composition": {
+      "sha256": "4a2f177851aaacdfe84247e573422ea3df13c527a1b1069939b293646cb348c0",
+      "bytes": 26151
+    },
+    "independent_acceptance": {
+      "sha256": "190f5d780d2cf5b2f6dd13bf135378e2cf9c0424497e7103d05199d399f6f38b",
+      "bytes": 24554
+    }
+  },
+  "scope": "Exact scalar projection of executed parent receipts. Original parent bytes, native DFT, 72 response calculations and 925 matrix receivers are not included or reexecuted by this public scalar receiver."
+}

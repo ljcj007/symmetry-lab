@@ -354,13 +354,13 @@
   "files": [
     {
       "path": ".github/workflows/pages.yml",
-      "sha256": "6f7db8d1ab7b15607b19324fd10c24c8c7f1d4f816779cff2702576f4426ca21",
-      "bytes": 1882
+      "sha256": "431341c29e709078173b19125090b627cdf0d815a58a036ba28411693eddbe9d",
+      "bytes": 1993
     },
     {
       "path": "README.md",
-      "sha256": "b338261a85986b65109d001db28a0c2d6de5b6440651c45254f98353881d1694",
-      "bytes": 76630
+      "sha256": "bbe676bf91358319e26e83ed3f840da5101617fb69bdb5ba9c330178d70cdedf",
+      "bytes": 77188
     },
     {
       "path": "dist/advanced-ui.js",
@@ -444,7 +444,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "d693e5cdad73072696801cef9ad269b462c825937f5807dc5dace123733fdfa8",
+      "sha256": "5ed2276defd8282be3e5130760c053a0399287d48bd0c5b0682f5a97c52a2ef8",
       "bytes": 56448
     },
     {
@@ -474,7 +474,7 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "25ab541a8f8159d1de0ea4c47c4f489454fe63d1d9eb99e6ba7b3ac1f4327157",
+      "sha256": "45ffea2a4e085a97d3eea7b6c10ef5acf5afb3dd0659f197dfc316287fb3939b",
       "bytes": 16857
     },
     {
@@ -484,7 +484,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "0a74d4b37b7c7a5566d8d0f2aa4385d8dc83485ef849f055649fa04296dcaafb",
+      "sha256": "e3a1c32e3c53dd012e81f0a75cfe44dbd4fe2a10b3bfff881159be5951642c1f",
       "bytes": 5973
     },
     {
@@ -499,7 +499,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "2448b9b8f0d514a6b95ad207cfa9f659cc84b4b800f2cb90a53689b5ede4a89c",
+      "sha256": "fdc0b9c42361f240d2ab9c45981704db961e40af637d7c926bfffbc306019433",
       "bytes": 27432
     },
     {
@@ -529,12 +529,12 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "d935df2cefb1fb82fcdd5ec8a140e7d2ae1b53d651dc2ddc0fe2f69664c08e77",
+      "sha256": "8969f04472fe927bdf9b0b9c75a876a994e23aa6d3ad9f19e3644ead5c1f375e",
       "bytes": 10435
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "b20c3e247dc888b888f3754390a73bd51e82fecc52f997c8db0387e52a2f97b4",
+      "sha256": "fbc9595e35b26173a9fbcc519e2fc0f9e7c667f605b3c55e39bd13c180704106",
       "bytes": 13329
     },
     {
@@ -599,8 +599,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "d2df576c9bee6074fbadac83807c5b6d43741b4c27bd99617c97939e22fb0b35",
-      "bytes": 8221
+      "sha256": "f61cadf9b5eb91a0e5d7028f2bb8b374c02fd60e7658ff06403c11f996277cf4",
+      "bytes": 8473
     },
     {
       "path": "dist/induction.js",

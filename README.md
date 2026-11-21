@@ -1,5 +1,7 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
+**QE–Si 端到端证据链：** [中文入口](https://ljcj007.github.io/symmetry-lab/end-to-end/) · [English](https://ljcj007.github.io/symmetry-lab/end-to-end/?lang=en)。从原生数据、构造与舍入误差、有限参考自洽根到同势无限平面波冻结谱，最终共同带隙严格大于 **0.081 eV**。页面可一键重算已发布证明的精确标量合成，并下载独立 Python 复核包和本次报告。完整矩阵重放及原始 DFT 需要研究工作区；当前原生链针对本次 QE–Si 案例。旧入口继续保留。
+
 **源绑定电子结构认证：** [一键工作台](https://ljcj007.github.io/symmetry-lab/source-bound/) · [共享接口与代码](source-bound-workbench/README.md) · [方法与文献对照](source-bound-workbench/docs/PRIOR_ART_COMPARISON.md)。原中英文网站入口继续保留。
 
 
