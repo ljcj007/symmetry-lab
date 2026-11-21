@@ -1,0 +1,121 @@
+{
+  "schema": "dft-one-click-public-run-summary.v1",
+  "run_id": "20261121t160924-01aedb4456",
+  "label": "QE–Si 参考模型验证",
+  "started_at": "2026-11-21T16:09:24.637264+00:00",
+  "finished_at": "2026-11-21T16:16:15.435374+00:00",
+  "overall_status": "UNRESOLVED",
+  "full_chain_certified": false,
+  "material": "Si",
+  "engine": "QE with complete NC operator exporter",
+  "model": {
+    "plane_wave_cutoff_Ry": 80,
+    "charge_grid": [
+      48,
+      48,
+      48
+    ],
+    "k_quadrature": [
+      12,
+      12,
+      12
+    ],
+    "native_reduced_points": 72,
+    "frozen_spectral_domains": 925,
+    "functional": "specified reference C1/PBE model"
+  },
+  "accepted_claims": [
+    "construction_rounding_enclosed",
+    "finite_reference_scf_root_enclosed",
+    "infinite_basis_tail_enclosed",
+    "native_dft_executed",
+    "operator_identity_bridge",
+    "raw_source_intake",
+    "same_potential_infinite_global_gap"
+  ],
+  "stages": [
+    {
+      "id": "native-dft",
+      "label": "实际原生 QE 计算与源接收",
+      "state": "SUCCEEDED",
+      "reexecution": "fresh_compute",
+      "accepted_claims": [
+        "native_dft_executed",
+        "raw_source_intake",
+        "operator_identity_bridge"
+      ],
+      "elapsed_seconds": 238.458,
+      "receipt": {
+        "bytes": 21049,
+        "sha256": "70bdb8e136a45a8881117edb216180ce37ad895589a542064a9bff74934a2eed"
+      }
+    },
+    {
+      "id": "construction-rounding",
+      "label": "72 点完整算符构造与舍入接收",
+      "state": "SUCCEEDED",
+      "reexecution": "fresh_compute",
+      "accepted_claims": [
+        "construction_rounding_enclosed"
+      ],
+      "elapsed_seconds": 131.783,
+      "receipt": {
+        "bytes": 14116,
+        "sha256": "290cb5997400a09796628b7021290c228249d1af26fb2526ecd73516218a7d94"
+      }
+    },
+    {
+      "id": "finite-scf",
+      "label": "72 点汇总、完整逆矩阵与有限自洽根",
+      "state": "SUCCEEDED",
+      "reexecution": "received_proof_composition",
+      "accepted_claims": [
+        "finite_reference_scf_root_enclosed"
+      ],
+      "elapsed_seconds": 38.247,
+      "receipt": {
+        "bytes": 3990,
+        "sha256": "50218f97ba2c01d26ae0aab0465ac76b55d2a2f5e38030b16b5afb8d710756d4"
+      }
+    },
+    {
+      "id": "frozen-spectrum",
+      "label": "同势无限冻结谱（接收 925 域证明）",
+      "state": "SUCCEEDED",
+      "reexecution": "received_proof_composition",
+      "accepted_claims": [
+        "infinite_basis_tail_enclosed",
+        "same_potential_infinite_global_gap"
+      ],
+      "elapsed_seconds": 1.512,
+      "receipt": {
+        "bytes": 1049,
+        "sha256": "e0d3013cb4794c7c159a4b1c22fa11ac0068931bceb07d59787d8aa5fd0256f3"
+      }
+    },
+    {
+      "id": "nonlinear-scf",
+      "label": "无限轨道非线性自洽根",
+      "state": "UNRESOLVED",
+      "reason": "尚未有本次源对应的无限轨道非线性自洽根接收器；有限根与冻结谱不替代此目标。"
+    }
+  ],
+  "finite_reference_symmetric_scf_root_received": true,
+  "all_BZ_infinite_frozen_spectrum_at_that_potential_received": true,
+  "conservative_global_gap_lower_eV": "0.081",
+  "infinite_orbital_nonlinear_scf_root_received": false,
+  "scope": "Fresh QE NSCF exports use a received existing SCF parent source. Fresh 72-point complete operator/rounding bridges feed received finite-reference SCF and 925-domain frozen-spectrum proof packets. The parent SCF is not recomputed; the nonlinear infinite-orbital SCF root remains unresolved.",
+  "public_summary_only": true,
+  "original_run_metadata": {
+    "bytes": 16506,
+    "sha256": "af6993b3df5aceca338c0113b837708fc5a643abcfd4f6cb98273f82bf5132ef"
+  },
+  "private_server_configuration_included": false,
+  "native_execution": {
+    "calculation": "nscf",
+    "starting_potential": "file",
+    "parent_scf_source": "Received existing frozen parent charge; not recomputed in this run.",
+    "fresh_scf_executed": false,
+    "new_calculations": "Gamma and complete 72-point non-self-consistent native exports."
+  }
+}

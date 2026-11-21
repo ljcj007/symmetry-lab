@@ -57,6 +57,6 @@ try {
   assert.equal(replay.status,0,replay.stderr);
   assert.deepEqual(JSON.parse(replay.stdout).exact,result.exact,'Extracted package runs outside workspace');
 } finally { await rm(temp,{recursive:true,force:true}); }
-assert.doesNotMatch(JSON.stringify(r),/C:\\\\Users|10\.20\.160\.50|ljcj007|password|token/i,'Public projection excludes local account/path/secrets');
+assert.doesNotMatch(JSON.stringify(r),/C:\\\\Users|\b10\.(?:\d{1,3}\.){2}\d{1,3}\b|password|token/i,'Public projection excludes local paths, private addresses and secrets');
 console.log(JSON.stringify({status:'PASS',exactJSAndPythonParity:true,negativeCases:negativeCases.length,archiveExtractedAndExecuted:true,outputOverwriteRejected:true,projectionSha256:PINNED_PROJECTION_SHA256}));
 await import('./test-qe-si-navigation.mjs');

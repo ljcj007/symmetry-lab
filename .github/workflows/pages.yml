@@ -42,6 +42,8 @@ jobs:
         run: npm test
       - name: Verify QE-Si scalar receipt and independent replay
         run: node scripts/test-end-to-end.mjs
+      - name: Verify native-run scope and extracted companion
+        run: node scripts/test-native-run-entry.mjs
       - name: Verify source provenance
         run: python scripts/refresh-english-provenance.py --check
       - name: Test Python computation cores

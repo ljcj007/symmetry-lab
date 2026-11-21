@@ -1,0 +1,15 @@
+{
+  "schema": "native-QE-SSH-profile.v1",
+  "host": "<your-server>",
+  "user": "<your-user>",
+  "port": 22,
+  "expectedHostKey": "<verified-64-character-SHA256-hex>",
+  "hostKeyType": "<verified-SSH-host-key-algorithm>",
+  "executable": "/path/to/QE-with-complete-NC-export/pw.x",
+  "template": "/path/to/scientific-reference/native72_input_v1.in",
+  "serverroot": "/path/to/scientific-reference",
+  "parentSave": "/path/to/scientific-reference/frozen-source/qe-si.save",
+  "scfInput": "/path/to/scientific-reference/new-scf.in",
+  "scfExecutable": "/path/to/working-QE/pw.x",
+  "scfExecutableSha256": "<verified-64-character-SCF-executable-SHA256-hex>"
+}

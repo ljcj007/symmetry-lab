@@ -1,0 +1,98 @@
+{
+  "schema": "dft-one-click-public-run-summary.v2",
+  "run_id": "20261121t163348-31056a6eb5",
+  "label": "QE–Si 全新 SCF 与原生源验证",
+  "started_at": "2026-11-21T16:33:48.838617+00:00",
+  "finished_at": "2026-11-21T16:39:45.740953+00:00",
+  "overall_status": "UNRESOLVED",
+  "full_chain_certified": false,
+  "material": "Si",
+  "engine": "QE SCF plus complete NC operator-source exporter",
+  "accepted_claims": [
+    "native_dft_executed",
+    "native_scf_executed",
+    "raw_source_intake"
+  ],
+  "native_execution": {
+    "calculation": "scf_then_nscf",
+    "fresh_scf_executed": true,
+    "scf_numerical_convergence": true,
+    "scf_source_unchanged": true,
+    "scf_execution_inputs_unchanged": true,
+    "scf_elapsed_seconds": 90.895,
+    "received_scf_source_files": 86,
+    "parent_mode": "fresh_scf",
+    "new_native_exports": [
+      "Gamma",
+      "complete 72-point set"
+    ],
+    "new_scf_parent_copied_from_old_run": false
+  },
+  "complete_finite_NC_source_received": true,
+  "operator_identity_bridge": {
+    "received": false,
+    "compared_points": 72,
+    "changed_points": 72,
+    "changed_fields": [
+      "atoms_tau",
+      "beta",
+      "cell_at",
+      "k_inverse_bohr",
+      "kinetic",
+      "radial_table",
+      "tpiba_omega_dq",
+      "vrs"
+    ]
+  },
+  "finite_reference_symmetric_scf_root_received": false,
+  "all_BZ_infinite_frozen_spectrum_at_that_potential_received": false,
+  "infinite_orbital_nonlinear_scf_root_received": false,
+  "old_reference_proofs_inherited": false,
+  "current_source_gap_certified": false,
+  "stages": [
+    {
+      "id": "native-dft",
+      "label": "全新数值 SCF、非自洽导出与源接收",
+      "state": "SUCCEEDED",
+      "reexecution": "fresh_compute",
+      "accepted_claims": [
+        "native_dft_executed",
+        "raw_source_intake",
+        "native_scf_executed"
+      ],
+      "elapsed_seconds": 355.871,
+      "receipt": {
+        "bytes": 37247,
+        "sha256": "b0737ce9e86c69278ed80f19ab3261ef714d8e88bb17d8887c561e3cc14c05b6"
+      }
+    },
+    {
+      "id": "construction-rounding",
+      "label": "72 点完整算符构造与舍入接收",
+      "state": "UNRESOLVED",
+      "reason": "The scientific receiver did not accept this stage"
+    },
+    {
+      "id": "finite-scf",
+      "label": "72 点汇总、完整逆矩阵与有限自洽根",
+      "state": "NOT_RUN"
+    },
+    {
+      "id": "frozen-spectrum",
+      "label": "同势无限冻结谱（接收 925 域证明）",
+      "state": "NOT_RUN"
+    },
+    {
+      "id": "nonlinear-scf",
+      "label": "无限轨道非线性自洽根",
+      "state": "NOT_RUN"
+    }
+  ],
+  "scope": "A fresh numerical SCF calculation from atomic initialization fed fresh Gamma and complete72 NSCF exports. The complete SCF/source/save files and actual operator factors were received. All72 source comparisons differ from the preserved reference, so its construction, finite SCF and frozen-spectrum proofs are not inherited. The infinite-orbital nonlinear SCF target remains unresolved.",
+  "public_summary_only": true,
+  "original_run_metadata": {
+    "bytes": 9008,
+    "sha256": "db3ec0835b0763d073700e9c296cdc5f2b41cfa52f4b0db91e5b3162c1666021"
+  },
+  "private_server_configuration_included": false
+}
