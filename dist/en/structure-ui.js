@@ -5,7 +5,7 @@ import {createStructureDiffractionHandoff} from './structure-diffraction-handoff
 import {siFoldingSourceWave} from './si-folding-route.js?v=20261120-si-fold-handoff1';
 import {cifSettingCases,cifSettingPracticeEnabled,cifSettingPracticeHTML,cifInputSettingHTML,cifExplicitHallCheckHTML} from './cif-setting-practice.js?v=20261120-cif-explicit-hall1';
 import {cifOrbitCases,cifOrbitPracticeEnabled,cifOrbitPracticeHTML} from './cif-orbit-practice.js?v=20261120-cif-orbit1';
-import {quartzStructureCases,quartzStructurePracticeEnabled,quartzStructurePracticeHTML} from './quartz-structure-practice.js?v=20261120-quartz-hand1';
+import {quartzStructureCases,quartzStructurePracticeEnabled,quartzStructurePracticeHTML} from './quartz-structure-practice.js?v=20261122-nextpaths1';
 // Structure files are read locally; the Python worker performs all conversion.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;

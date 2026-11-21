@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {quartzStructureCases} from './quartz-structure-practice.js?v=20261120-quartz-hand1';
+import {quartzStructureCases} from './quartz-structure-practice.js?v=20261122-nextpaths1';
 
 const source = quartzStructureCases.find(example => example.id === 'original');
 const candidates = [

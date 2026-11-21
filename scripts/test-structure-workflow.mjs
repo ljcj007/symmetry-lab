@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {Element,Container,flush} from './test-material-research-ui.mjs';
-import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-route.js';
+import {buildWorkbenchRoute,parseWorkbenchSelection,parseWorkbenchCoordinate as parseNumber} from '../dist/workbench-route.js';
 import {createProjectNavigator} from '../dist/project-navigation.js';
 import {validateStructureHandoff,createStructureHandoff,structureHandoffForCalculation} from '../dist/structure-provenance.js';
 import * as sourceView from '../dist/structure-handoff.js';
@@ -33,7 +33,7 @@ const calls=[],downloads=[],historyWrites=[],loaded=[],notices=[];const location
 let held,hold=false;
 const moduleMap=new Map([['structureHandoff',sourceView]]);
 const context={phonopyScatteringVisit,state,renderTicket:0,dictionaryController:null,document,URLSearchParams,structuredClone,console,Promise,Math,Object,
- validateStructureHandoff,structureHandoffForCalculation,buildWorkbenchRoute,parseWorkbenchSelection,projectNavigation:createProjectNavigator(),
+ validateStructureHandoff,structureHandoffForCalculation,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber,projectNavigation:createProjectNavigator(),
  optionalViews:{get:async key=>{loaded.push(key);return moduleMap.get(key);},peek:key=>moduleMap.get(key)},
  ensureGroups:async()=>({groups}),groupLoader:{peek:()=>({groups})},databases:{sg:{groups}},list:()=>groups,
  $:s=>document.querySelector(s),$$:s=>document.querySelectorAll(s),
@@ -52,7 +52,7 @@ const context={phonopyScatteringVisit,state,renderTicket:0,dictionaryController:
 };
 const functions=[
  section('function runPythonTask(','\nconst optionalViews='),section('async function openWorkbench(','\nconst $='),
- section('function parseNumber(','\nfunction toast('),section('function setView(','\nfunction updateBreadcrumb('),
+ section('function setView(','\nfunction updateBreadcrumb('),
  section('function workbenchSource(){','\nlet dictionaryController='),section('function clearRenderedView(){','async function render(){'),section('async function render(){','\nfunction renderWorkbench(){'),
  section('function renderWorkbench(){','\nfunction showSearch('),section('function readCoords(){','\nfunction matrixHTML('),
  section('function exportJSON(){','\nfunction exportCSV(')

@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-quartzclass1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-nextpaths1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -49,5 +49,13 @@ export const learningActivities = [
     keywords: "quartz COD 9005017 site stabilizer conjugacy silicon oxygen CIF character",
     kind: "Lesson",
     activityAliases: activityAliases.quartzStabilizers
+  },
+  {
+    route: 'classroom/structure-dynamics?tab=learn&lesson=screw-glide',
+    title: "Screw extinctions and chirality in α-quartz",
+    summary: "Calculate axial reflections and a Friedel pair from the original CIF. Compare complex amplitudes and intensities before and after inversion.",
+    keywords: "quartz screw extinction Friedel pair chirality diffraction COD 9005017",
+    kind: "Lesson",
+    activityAliases: activityAliases.quartzExtinction
   }
 ];

@@ -519,3 +519,12 @@ establish that all existing scientific and teaching content has been audited.
 ## Read a conjugacy class from an authentic crystal structure
 
 - In the [site symmetry lesson](dist/index.html#classroom/crystal?track=space&lesson=space-04), learners predict which CIF operation fixes the second Si site modulo translations. The 298 K α-quartz exercise shows how conjugation carries the first site's stabilizer to the second and why the listed operation needs a positive translation by one cell along c to fix that point in real space. Counting the fixed sites in each class recovers the Si permutation character (3, 1, 0). The six O sites provide a contrast with a trivial stabilizer in the translation quotient. [COD 9005017](https://qiserver.ugr.es/cod/9005017.html)
+
+## Use a wrong prediction to choose the next step
+
+- The four quizzes on little groups, double screws, antiunitary multiplication and magnetic antitranslation now pair each wrong choice with a worked correction and a separate transfer question. Learners can compare the spin rotation sign with the translation phase and check whether an antiunitary operation returns to the same wavevector.
+- The default quick finder opens exact group entries by number or symbol. Scientific file queries such as `band.yaml neutron scattering` and `mesh.yaml heat capacity` resolve to workflows whose declared inputs and purpose match. Recent workbench links show the group, wavevector and spin convention so users can tell separate runs apart.
+
+## Compare quartz diffraction before and after inversion
+
+- The space-group and [structure-dynamics lesson](dist/index.html#classroom/structure-dynamics?tab=learn&lesson=screw-glide) reuse the 298 K CIF to compute axial and off-axis reflections. With real scattering weights, both hands have the same axial extinction and intensities. Learners compare the complex off-axis amplitude and relabel its index under a passive change of basis. The lesson also links to the resonant experiment that measured chirality. [COD 9005017](https://qiserver.ugr.es/cod/9005017.html) · [Friedel’s law](https://dictionary.iucr.org/Friedel%27s_law) · [Resonant experiment](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.100.145502)

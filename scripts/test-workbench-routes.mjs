@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {buildWorkbenchRoute,parseWorkbenchSelection} from '../dist/workbench-route.js';
+import {buildWorkbenchRoute,parseWorkbenchSelection,parseWorkbenchCoordinate as parseCoordinate} from '../dist/workbench-route.js';
 import {languageURL} from '../dist/language-switch.js';
 import {createProjectNavigator} from '../dist/project-navigation.js';
 
@@ -10,9 +10,7 @@ const openSource=appSource.slice(appSource.indexOf('async function openWorkbench
 const renderSource=appSource.slice(appSource.indexOf('async function render(){'),appSource.indexOf('\nfunction renderWorkbench(){'));
 const lifecycleSource=appSource.slice(appSource.indexOf('function clearRenderedView(){'),appSource.indexOf('async function render(){'));
 const workbenchSource=appSource.slice(appSource.indexOf('function renderWorkbench(){'),appSource.indexOf('\nfunction bindWorkbench(){'));
-const coordinateSource=appSource.slice(appSource.indexOf('function parseNumber('),appSource.indexOf('\nfunction toast('));
 const plain=value=>JSON.parse(JSON.stringify(value));
-const parseCoordinate=vm.runInNewContext('('+coordinateSource+')');
 assert.equal(parseWorkbenchSelection('other=1'),null);
 assert.deepEqual(parseWorkbenchSelection('sg=099&kx=1%2F2&ky=-1%2F4&kz=0&double=true&bz=BCT2&label=X',parseCoordinate),{mode:'sg',id:'99',k:[.5,-.25,0],doubleValued:true,bzType:'BCT2',labelK:'X'});
 for(const query of ['sg=0','sg=231','sg=1.5','sg=abc','sg=99&sg=225','sg=99&msg=1.2','msg=wrong','mpg=1','sg=99&kx=Infinity','sg=99&kx=1%2F0','sg=99&kx=101'])assert.throws(()=>parseWorkbenchSelection(query,parseCoordinate),undefined,query);
@@ -34,7 +32,7 @@ for(const input of [
 const catalogs={sg:JSON.parse(fs.readFileSync(new URL('../dist/data/space-groups.json',import.meta.url))).groups,
  msg:JSON.parse(fs.readFileSync(new URL('../dist/data/magnetic-groups.json',import.meta.url))).groups,
  mpg:JSON.parse(fs.readFileSync(new URL('../dist/data/points.json',import.meta.url))).points};
-const host={dataset:{},innerHTML:''},retry={},loads=[],notices=[],replaced=[];
+const host={dataset:{},innerHTML:''},retry={},loads=[],notices=[],replaced=[],remembered=[];
 const state={view:'workbench',route:'workbench',mode:'sg',group:catalogs.sg[224],k:[0,0,0],doubleValued:false,bzType:'',labelK:null,result:null,tab:'characters',returnCourse:'classroom/foundations?lesson=from-point-to-space'};
 let draws=0,calculations=0;
 const context={state,renderTicket:0,dictionaryController:null,URLSearchParams,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber:parseCoordinate,
@@ -44,7 +42,7 @@ const context={state,renderTicket:0,dictionaryController:null,URLSearchParams,bu
  gid:(group=state.group,mode=state.mode)=>mode==='sg'?String(group.number):group.id,
  esc:String,isClassroomView:()=>false,renderWorkbench:()=>{draws++;},
  toast:message=>notices.push(message),calculate:async()=>{calculations++;},
- history:{replaceState:(_state,_title,url)=>replaced.push(url),pushState:()=>assert.fail('Parameter synchronization must not add browser history')},
+ history:{replaceState:(_state,_title,url)=>replaced.push(url),pushState:()=>assert.fail('Parameter synchronization must not add browser history')},rememberRoute:route=>remembered.push(route),
  gtitle:(group=state.group)=>group.bcSymbol||group.symbol,lattices:{},modeButtons:()=>'',crystalSpan:String,
  resultMatches:()=>false,fraction:String,bindWorkbench:()=>{},renderResults:()=>{},renderViz:()=>{}
 };
@@ -87,6 +85,8 @@ context.ensureGroups=()=>new Promise(resolve=>{release=resolve;});const stale=op
 const renderWorkbench=vm.runInContext('('+workbenchSource+')',context);
 state.mode='sg';state.group=catalogs.sg[98];state.k=[.125,.25,0];state.doubleValued=true;state.bzType='TetrPrim';state.labelK='X';state.route='workbench?sg=99';
 renderWorkbench();assert.equal(replaced.length,1);assert.equal(replaced[0],'#'+state.route);assert.equal(parseWorkbenchSelection(state.route.split('?')[1]).bzType,'TetrPrim');assert.deepEqual(parseWorkbenchSelection(state.route.split('?')[1]).k,[.125,.25,0]);
+assert.deepEqual(remembered,[state.route],'The resolved canonical state is also available from the home page');
+assert.ok(remembered[0].includes('double=true'),'History distinguishes the selected spin convention');
 renderWorkbench();assert.equal(replaced.length,1,'Rendering an unchanged selection does not rewrite history');
 assert.equal(state.returnCourse,'classroom/foundations?lesson=from-point-to-space');assert.equal(calculations,3);
 assert.ok(draws>=6);

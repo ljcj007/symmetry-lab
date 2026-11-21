@@ -1,6 +1,6 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-quartzclass1';
-import {normalizeSearchText,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-activity1';
-import {learningActivities} from './learning-activity-search.js?v=20261122-quartzclass1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-nextpaths1';
+import {normalizeSearchText,inputFormatSummary,searchCatalogEntries,matchNamedActivities,canMatchExactGroup,matchExactGroups} from './tool-search.js?v=20261122-nextpaths1';
+import {learningActivities} from './learning-activity-search.js?v=20261122-nextpaths1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -8,16 +8,16 @@ export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:'计算',courses:'课程',groups:'群目录',materials:'材料'};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
-const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-quartzclass1');
-export function finderResults(entries,query,{scope='tools',limit=16}={}){
+const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-nextpaths1');
+export function finderResults(entries,query,{scope='tools',limit=16,exactGroupFallback=false}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const related=scope==='tools'?new Set(matchNamedActivities(unique,query)):null;
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]||related?.has(x));
  const normalized=normalizeFinderText(query);
  if(!normalized)return scope==='tools'?selected.slice(0,limit):[];
- return scope==='groups'||scope==='all'
-  ?searchCatalogEntries(selected,query,limit)
-  :searchEntries(selected,query,limit);
+ if(scope==='groups'||scope==='all')return searchCatalogEntries(selected,query,limit);
+ const groups=scope==='tools'&&exactGroupFallback&&canMatchExactGroup(query)?matchExactGroups(unique,query):[];
+ return [...groups,...searchEntries(selected,query,limit)].slice(0,limit);
 }
 
 export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModule}){
@@ -35,7 +35,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  const courseButton=scopeButtons.find(control=>control.dataset.finderScope==='courses');
  const ordinaryCourseLabel=courseButton.textContent;
  const ordinaryLabel=queryLabel.textContent,ordinaryPlaceholder=input.getAttribute('placeholder');
- let opened=false,previousFocus=null,scope='tools',selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
+ let opened=false,previousFocus=null,scope='tools',exactGroupFallback=false,selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
  let topic=null,topicModuleRequest=null;
  const preferred=()=>{const routes=[...favoriteRoutes(),'workbench','structure','products','compute/phonons','compute/tensors','magnetictb','compute/lie/su3_cg','compute/advanced/carat_integral'];return [...routes.map(route=>toolsIndex.find(x=>x.route===route)).filter(Boolean),...toolsIndex];};
  function highlight(){
@@ -47,7 +47,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  }
  function render(){
   if(!opened||destroyed)return;
-  const needsMagneticCatalog=!extra&&scope==='all'&&isFullMagneticGroupQuery(input.value);
+  const exactToolsGroup=scope==='tools'&&exactGroupFallback&&canMatchExactGroup(input.value);
+  const waitingForGroup=!extra&&(exactToolsGroup||scope==='all'&&isFullMagneticGroupQuery(input.value));
   for(const button of scopeButtons)button.hidden=Boolean(topic)&&button.dataset.finderScope!=='courses';
   courseButton.textContent=topic?'本主题课程':ordinaryCourseLabel;
   courseButton.setAttribute('aria-pressed',String(topic?topic.range==='topic':scope==='courses'));
@@ -61,9 +62,9 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   if(topic){
    const pool=topic.data?.[topic.range]||[];
    results=normalizeFinderText(input.value)?searchEntries(pool,input.value,16):pool.slice(0,16);
-  }else results=needsMagneticCatalog?[]:finderResults([...preferred(),...learningActivities,...(extra||[])],input.value,{scope});
+  }else results=waitingForGroup?[]:finderResults([...preferred(),...learningActivities,...(extra||[])],input.value,{scope,exactGroupFallback});
   selected=Math.min(selected,Math.max(0,results.length-1));
-  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?'当前课':item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>文件用途：</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):needsMagneticCatalog?'':topic?(topic.data?'<p class="tool-finder-empty">在当前范围内没有匹配课程。</p>':''):`<p class="tool-finder-empty">${input.value.trim()?'没有匹配结果。试试工具缩写、材料名称或完整群编号。':'输入关键词后查找此类内容。'}</p>`;
+  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?'当前课':item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>文件用途：</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):waitingForGroup?'':topic?(topic.data?'<p class="tool-finder-empty">在当前范围内没有匹配课程。</p>':''):`<p class="tool-finder-empty">${input.value.trim()?'没有匹配结果。试试工具缩写、材料名称或完整群编号。':'输入关键词后查找此类内容。'}</p>`;
   if(topic){
    if(topic.loading)status.textContent='正在读取课堂主题目录…';
    else if(topic.failed)status.innerHTML='课堂主题目录暂未载入。 <button type="button" data-finder-topic-retry>重试课程目录</button>';
@@ -71,9 +72,9 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
    else if(topic.range==='all')status.textContent=`在全部 ${topic.data.all.length} 课中查找，显示 ${results.length} 项（最多 16 项）。`;
    else if(topic.range==='catalog')status.textContent=`${topic.data.catalogTitle} · 本目录共 ${topic.data.catalog.length} 课，显示 ${results.length} 项（最多 16 项）。`;
    else status.textContent=`当前课 · ${topic.data.title} · 本主题共 ${topic.data.topic.length} 课。当前显示 ${results.length}`;
-  }else if(scope==='tools')status.textContent=input.value.trim()?`找到 ${results.length} 项结果（最多显示 16 项）`:'常用工具与收藏；直接选择即可打开。';
-  else if(loading)status.textContent='正在读取精简目录；不会启动计算。';
-  else if(failed)status.innerHTML='目录暂不可用。工具仍可在“工具”范围查找。 <button type="button" data-finder-retry>重试目录</button>';
+  }else if((scope!=='tools'||exactToolsGroup)&&loading)status.textContent='正在读取精简目录；不会启动计算。';
+  else if((scope!=='tools'||exactToolsGroup)&&failed)status.innerHTML='目录暂不可用。工具仍可在“工具”范围查找。 <button type="button" data-finder-retry>重试目录</button>';
+  else if(scope==='tools')status.textContent=input.value.trim()?`找到 ${results.length} 项结果（最多显示 16 项）`:'常用工具与收藏；直接选择即可打开。';
   else if(!extra)status.textContent='输入关键词后按需读取课程、群与材料目录。';
   else status.textContent=`找到 ${results.length} 项（最多显示 16 项）`;
   status.querySelector('[data-finder-retry]')?.addEventListener('click',()=>{failed=false;load();});
@@ -84,7 +85,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   highlight();
  }
  async function load(){
-  if(topic||loading||extra||failed||destroyed||scope==='tools'||!input.value.trim())return;
+  if(topic||loading||extra||failed||destroyed||!input.value.trim())return;
+  if(scope==='tools'&&(!exactGroupFallback||!canMatchExactGroup(input.value)))return;
   loading=true;failed=false;render();
   try{extra=await loadNavigationSearch();}
   catch{failed=true;}
@@ -99,10 +101,10 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  function updateScopeButtons(){
   scopeButtons.forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.finderScope===scope)));
  }
- function openAt(nextScope,trigger){
+ function openAt(nextScope,trigger,includeExactGroups=false){
   if(!opened)previousFocus=trigger||document.activeElement;
   else if(trigger)previousFocus=trigger;
-  scope=nextScope;input.value='';selected=0;input.setAttribute('aria-expanded','true');
+  scope=nextScope;exactGroupFallback=includeExactGroups;input.value='';selected=0;input.setAttribute('aria-expanded','true');
   updateScopeButtons();
   if(!opened){
    opened=true;dialog.hidden=false;
@@ -114,7 +116,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   if(destroyed)return;
   if(opened){input.focus();return;}
   topic=null;
-  openAt('tools');
+  openAt('tools',null,true);
  }
  async function loadTopic(request){
   if(!opened||destroyed||topic!==request||request.loading)return false;
@@ -163,6 +165,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  input.addEventListener('input',()=>{selected=0;render();load();});
  scopeButtons.forEach(x=>x.addEventListener('click',()=>{
   scope=x.dataset.finderScope;
+  exactGroupFallback=false;
   if(scope!=='courses')topic=null;
   else if(topic)topic.range='topic';
   selected=0;updateScopeButtons();render();load();input.focus();

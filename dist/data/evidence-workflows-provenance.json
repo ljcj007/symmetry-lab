@@ -34,13 +34,13 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 88409,
-      "sha256": "4de623389dbe0c8cdec0e52cd8b1f4368f3ad76616ae16f79d39ff35fcaa1678"
+      "bytes": 89869,
+      "sha256": "0f6ae7d111fa8aff75e2b087e7fb282f193c2fcf188507c25dd8183b3f290187"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 106627,
-      "sha256": "6a4cca814e6ae24a5f928bbf3be37ba108992fe9ba9db81c23c8cce982fb085d"
+      "bytes": 106522,
+      "sha256": "9e36fa7c119e2ae95809366644144e63d5b55fa41335c6e68d17a38d61e85ec3"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -74,8 +74,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8428,
-      "sha256": "e841a0ed040d2c4824299e0a3bb0c87bda3882a0574b175f4394022a57f4c1bd"
+      "bytes": 8426,
+      "sha256": "e81802370eb6381e3e55e021d12f0da20d0188ec11e1bb3be7d4e9aa05b80b83"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -124,8 +124,8 @@
     },
     "dist/structure-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31074,
-      "sha256": "29ba07d465db6253d7e810c9650e5c3d38d28a5d0763998d9176867f7d35dd9a"
+      "bytes": 31072,
+      "sha256": "42e64cb11ca9b92d74443b084d519c139742ea372ad272292c0a1c5734c2fc36"
     },
     "locales/en-cu-thermal-example.json": {
       "normalization": "utf8-lf-v1",
@@ -144,8 +144,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 29386,
-      "sha256": "23c541341c0f93c34438b969f26a1d607ccafcb21829bb45779f32ed7185864b"
+      "bytes": 29539,
+      "sha256": "8e0fabff3549b3b3ad788cd35f61720588b6971f8e87a4721a2ce35d90d0e333"
     },
     "scripts/build-evidence-workflows-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -154,8 +154,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7321,
-      "sha256": "84c967a93b322660933c65a4c3d21b4d0e8f4a7a44bcb3909bf0c2b24155cce5"
+      "bytes": 7448,
+      "sha256": "e82c748fbbbf322a8f2c8521ce5fbab975ff768b54f5a03823f170148d23a65d"
     },
     "scripts/fixtures/structure-handoff.json": {
       "normalization": "utf8-lf-v1",
@@ -209,8 +209,8 @@
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11102,
-      "sha256": "c5ff9c3dc80d82195df39973b5b54335cbcf9a9d2042e4fa947b55d1648aee49"
+      "bytes": 11101,
+      "sha256": "6705e1460e51d0690f0cafd2a9da26e01e24ed322a6e887adf82657e096ca110"
     }
   }
 }

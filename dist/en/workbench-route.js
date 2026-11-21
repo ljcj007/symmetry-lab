@@ -2,6 +2,15 @@ const modes=['sg','msg','mpg'];
 const invalidGroup=()=>new Error("The group was not found.");
 const coordinates=['kx','ky','kz'];
 
+export function parseWorkbenchCoordinate(value){
+ const text=String(value);
+ if(!/^\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?(?:\s*\/\s*[+-]?(?:\d+\.?\d*|\.\d+))?\s*$/.test(text))throw new Error("coordinates only support numbers, decimals, or fractions, such as 1/2.");
+ const [numerator,denominator=1]=text.split('/').map(Number);
+ const coordinate=numerator/denominator;
+ if(!Number.isFinite(coordinate)||Math.abs(coordinate)>100)throw new Error("coordinates must be finite values ​​between −100 and 100.");
+ return coordinate;
+}
+
 // Keep the established sg= links while using the same explicit key for each catalogue.
 export function parseWorkbenchSelection(query,parseCoordinate=Number){
  const params=query instanceof URLSearchParams?query:new URLSearchParams(String(query||'').replace(/^\?/,''));

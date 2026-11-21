@@ -118,6 +118,33 @@ for(const prefix of sourceOnly?['']:['','en/']){
   assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' unsupported file '+query);
   assert.deepEqual(filterToolDirectory(toolsIndex,{query}),[],prefix+' unsupported file in directory '+query);
  }
+ const qualifiedFiles=[
+  ['compute/phonopy-scattering',['band.yaml neutron scattering','band.yaml 中子散射','mesh.yaml 非弹性散射']],
+  ['compute/phonon-thermo',['mesh.yaml thermodynamics','mesh.yaml 热容','./mesh.yaml heat capacity','./mesh.yaml "heat capacity"',
+   '/tmp/phonon results/mesh.yaml heat capacity','C:\\My Results\\mesh.yaml heat capacity','"C:\\My Results\\mesh.yaml" heat capacity','data/mesh.yaml heat capacity']],
+  ['bands',['trace.txt irrep','trace.txt DFT bands','trace.txt 不可约表示']],
+  ['magnetictb',['wannier90_hr.dat band structure','/tmp/Graphene Trial/wannier90_hr.dat 能带结构']],
+  ['structure',['POSCAR space group','./quartz-sample.cif space group','./quartz-sample.cif 空间群']]
+ ];
+ for(const [route,queries] of qualifiedFiles){
+  const item=toolsIndex.find(entry=>entry.route===route);
+  for(const query of queries){
+   assert.equal(finderResults(toolsIndex,query)[0]?.route,route,prefix+' qualified file '+query);
+   assert.equal(filterToolDirectory(toolsIndex,{query})[0]?.route,route,prefix+' directory qualified file '+query);
+   assert.equal(matchingInputFormats(item,query).length,1,prefix+' keep declared file purpose '+query);
+  }
+ }
+ for(const query of ['band.yaml heat capacity','trace.txt Wannier','trace.txt irrep unsupportedword','/tmp/xxx.xyz heat capacity']){
+  assert.deepEqual(finderResults(toolsIndex,query),[],prefix+' keep file and purpose constraints '+query);
+  assert.deepEqual(filterToolDirectory(toolsIndex,{query}),[],prefix+' directory keeps constraints '+query);
+ }
+ for(const query of ['irrep product','direct product irreps','"tensor product of irreps"','不可约表示 直积']){
+  assert.equal(finderResults(toolsIndex,query)[0]?.route,'products',prefix+' irrep product '+query);
+  assert.equal(filterToolDirectory(toolsIndex,{category:'coupling',query})[0]?.route,'products',prefix+' directory irrep product '+query);
+  assert.deepEqual(filterToolDirectory(toolsIndex,{category:'structure',query}),[],prefix+' product keeps category filter '+query);
+ }
+ assert.deepEqual(finderResults(toolsIndex,'irrep product unsupportedword'),[],prefix+' product phrase keeps extra constraints');
+ assert.equal(finderResults(toolsIndex,'SU ( 3 ) 27')[0]?.route,'compute/lie/su3_ninej',prefix+' preserve spaced group notation');
  assert.equal(finderResults(toolsIndex,'Clebsch-Gordan')[0].route,'compute/lie/su3_cg');
  assert.equal(finderResults(toolsIndex,'POSCAR')[0].route,'structure');
  assert.equal(finderResults(toolsIndex,'CIF Hall')[0]?.route,'structure');
@@ -169,6 +196,9 @@ for(const prefix of sourceOnly?['']:['','en/']){
  input.value='band.yaml';input.oninput();
  assert.equal(container.querySelectorAll('.nav-file-purpose').length,3);
  assert.doesNotMatch(container.querySelector('#tools-filtered').innerHTML,/data-route="compute\/phonon-thermo"/);
+ input.value='band.yaml 中子散射';input.oninput();
+ assert.equal(container.querySelectorAll('.nav-file-purpose').length,1);
+ assert.equal(container.querySelector('[data-favorite]').dataset.favorite,'compute/phonopy-scattering');
  input.value='/tmp/project/wannier90_hr.dat';input.oninput();
  assert.equal(container.querySelectorAll('.nav-file-purpose').length,1);
  assert.match(container.querySelector('.nav-file-purpose').textContent,/wannier90_hr\.dat/);
@@ -213,6 +243,13 @@ for(const prefix of sourceOnly?['']:['','en/']){
  assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands'],'Typing the filename only shows the route');
  for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
  assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands','structure']);
+ assert.equal(dialog.hidden,true);
+ button.fire('click');
+ query.value='C:\\My Results\\mesh.yaml heat capacity';query.fire('input');
+ assert.equal(list.querySelectorAll('.tool-finder-file-purpose').length,1);
+ assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands','structure'],'Typing the qualified path only presents the tool');
+ for(const fn of documentEvents.keydown||[])fn({key:'Enter',preventDefault(){}});
+ assert.deepEqual(opened,['compute/phonon-thermo','magnetictb','bands','structure','compute/phonon-thermo']);
  assert.equal(dialog.hidden,true);
  assert.equal(network,0,'Tools-only filename filtering does not fetch catalogs or read files');
  controller.destroy();assert.equal(body.querySelector('dialog'),null);

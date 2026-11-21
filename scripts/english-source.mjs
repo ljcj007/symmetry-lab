@@ -6,6 +6,7 @@ export const ROOT=fileURLToPath(new URL('../',import.meta.url));
 export const HAN=/[\u3400-\u9fff]/u;
 export const sharedCode=new Set(['math-notation.js','math-svg.js','crystal-notation.js','crystal-symbol-data.js','language-switch.js','english-results.js','scattering-replay-reference.js']);
 sharedCode.add('learning-activity-aliases.js');
+sharedCode.add('tool-search-terms.js');
 export const opaqueKeys=new Set(['id','module','action','model','route','url','path','filename','file','sha256','sourceHashes','catalogSHA256','input','inputs','parameters','defaults','default','value','schema','schemaVersion','release','version','format','code','poscar','cif','trace','rotations','operations','generators','matrix','matrices','arithmetic','sourceId','sourceIds','references','exerciseIds','materialIds','lesson','lessonId','exercise','preset','presetId','tool','function','api','implementation','symbols','formulaAliases','aliases','contexts']);
 opaqueKeys.add('activityAliases');
 export function walkAST(node,fn){if(!node||typeof node!=='object')return;if(node.type)fn(node);for(const [key,value]of Object.entries(node)){if(['start','end','loc'].includes(key))continue;if(Array.isArray(value))value.forEach(x=>walkAST(x,fn));else if(value&&typeof value==='object')walkAST(value,fn);}}

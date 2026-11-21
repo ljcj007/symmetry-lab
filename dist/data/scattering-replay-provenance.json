@@ -49,18 +49,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 88409,
-      "sha256": "4de623389dbe0c8cdec0e52cd8b1f4368f3ad76616ae16f79d39ff35fcaa1678"
+      "bytes": 89869,
+      "sha256": "0f6ae7d111fa8aff75e2b087e7fb282f193c2fcf188507c25dd8183b3f290187"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 106627,
-      "sha256": "6a4cca814e6ae24a5f928bbf3be37ba108992fe9ba9db81c23c8cce982fb085d"
+      "bytes": 106522,
+      "sha256": "9e36fa7c119e2ae95809366644144e63d5b55fa41335c6e68d17a38d61e85ec3"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32804,
-      "sha256": "ab23a1176dc272fca9c106d43e9b1f12011c8d498c85088410413c00e28f107d"
+      "bytes": 32802,
+      "sha256": "88da3a591b0cc0625f5e68c91c760010bfb962f91e8d88794773c86c7bc9a1ae"
     },
     "dist/course-flow.js": {
       "normalization": "utf8-lf-v1",
@@ -74,8 +74,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 404935,
-      "sha256": "e7b0f080e235de98dba1d159befeadac3349e0d08ec81db0bb8acf805dc8bd20"
+      "bytes": 405478,
+      "sha256": "c3bf4de012735a4924bc56eab541ce734f4d3b41c6b6c8a623c62a270e626d61"
     },
     "dist/docs/dynamic-scattering.md": {
       "normalization": "utf8-lf-v1",
@@ -94,8 +94,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8428,
-      "sha256": "e841a0ed040d2c4824299e0a3bb0c87bda3882a0574b175f4394022a57f4c1bd"
+      "bytes": 8426,
+      "sha256": "e81802370eb6381e3e55e021d12f0da20d0188ec11e1bb3be7d4e9aa05b80b83"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -144,13 +144,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3143,
-      "sha256": "10031e3fab8a66f31c4b237157a1559950798ac51828831546653e337148e5da"
+      "bytes": 3141,
+      "sha256": "2959c4cf068aec7b647bc7a23b50758fc2a0231aee3a4db2d40b56b5e669fb77"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12271,
-      "sha256": "6ed28509c0741e5cb5b76ed20c7f361928b82cae327b01afd4ff776872d177dd"
+      "bytes": 12475,
+      "sha256": "e4ea60278dac3511fca88b54ace196515084df6bbdc904deb52fa373ccb0a8cb"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -557,6 +557,11 @@
       "bytes": 122,
       "sha256": "50ca5650a04ed45bad209abaecce0a6150fac6f54caa27a381d906832db45a07"
     },
+    "locales/en-next-paths.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 778,
+      "sha256": "2e1aaaf966f8e849190385ea5d0c12b101e6985d8619b1f4760cd0a87f0744d1"
+    },
     "locales/en-ninej-search.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 108,
@@ -731,6 +736,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 4699,
       "sha256": "b6fa412630723044d76c29b630667969e579f495bd0ef9a71f2c77f1cd0e369e"
+    },
+    "locales/en-quartz-extinction-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 5621,
+      "sha256": "1fbd7a0124ecb70b477209330ae848cd3465d58464912ded31632bb6269cd6e3"
     },
     "locales/en-quartz-lesson.json": {
       "normalization": "utf8-lf-v1",
@@ -942,6 +952,11 @@
       "bytes": 3040,
       "sha256": "b1143d0449ad784ac5b8eaf21b047802182a851a0727dce371fcce3aa1e1f4c3"
     },
+    "locales/en-symmetry-course-feedback.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 12943,
+      "sha256": "bc8f58efe3462b63bf7ee6769a64f43704a28dcf0328d699124e3c3ea9322b59"
+    },
     "locales/en-symmetry-operator-bridge.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 15967,
@@ -1104,8 +1119,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 29386,
-      "sha256": "23c541341c0f93c34438b969f26a1d607ccafcb21829bb45779f32ed7185864b"
+      "bytes": 29539,
+      "sha256": "8e0fabff3549b3b3ad788cd35f61720588b6971f8e87a4721a2ce35d90d0e333"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -1154,13 +1169,13 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7321,
-      "sha256": "84c967a93b322660933c65a4c3d21b4d0e8f4a7a44bcb3909bf0c2b24155cce5"
+      "bytes": 7448,
+      "sha256": "e82c748fbbbf322a8f2c8521ce5fbab975ff768b54f5a03823f170148d23a65d"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5568,
-      "sha256": "0e29536a102cd19be3af87084dfff06d79492abb07fc755b0a59a68a8881c17d"
+      "bytes": 5608,
+      "sha256": "c4416c984a7b5e105282890d806b2f8ee3e39de7bf67c12a8e2e4da92f6f1ed0"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",

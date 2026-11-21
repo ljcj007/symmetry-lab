@@ -2,14 +2,14 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261120-lesson-nav1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-quartzclass1';
-import {startToolFinder} from './tool-finder.js?v=20261122-quartzclass1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-nextpaths1';
+import {startToolFinder} from './tool-finder.js?v=20261122-nextpaths1';
 import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
-import {spaceGroupNumberForQuery,spaceGroupSymbolKey} from './tool-search.js?v=20261122-activity1';
+import {spaceGroupNumberForQuery,spaceGroupSymbolKey} from './tool-search.js?v=20261122-nextpaths1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
-import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
-import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261122-quartzclass1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-quartzclass1';
+import {buildWorkbenchRoute,parseWorkbenchSelection,parseWorkbenchCoordinate as parseNumber} from './workbench-route.js?v=20261122-nextpaths1';
+import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261122-nextpaths1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-nextpaths1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -25,7 +25,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-quartz-hand1'),structure:()=>import('./structure-ui.js?v=20261120-cif-explicit-hall1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-quartz-hand1'),structure:()=>import('./structure-ui.js?v=20261122-nextpaths1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -83,7 +83,6 @@ function formatComplex(input,digits=5){const z=complex(input),tol=.5*10**-digits
 const cf=x=>{try{return formatComplex(complex(x),4)}catch{return JSON.stringify(x)}};
 const norm=x=>Math.abs(x)<1e-8?0:Number(x.toFixed(6));
 function fraction(n){if(!Number.isFinite(n))return '?';for(let d=1;d<=24;d++)if(Math.abs(n*d-Math.round(n*d))<1e-7)return d===1?String(Math.round(n)):Math.round(n*d)+'/'+d;return String(norm(n));}
-function parseNumber(s){if(!/^\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?(?:\s*\/\s*[+-]?(?:\d+\.?\d*|\.\d+))?\s*$/.test(s))throw new Error('坐标仅支持数字、小数或分数，例如 1/2。');const a=s.split('/').map(Number);const n=a.length===2?a[0]/a[1]:a[0];if(!Number.isFinite(n)||Math.abs(n)>100)throw new Error('坐标必须为 −100 到 100 之间的有限数值。');return n;}
 function toast(text){const t=$('#toast');t.textContent=text;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3200);}
 function download(content,name,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 function showError(message){const dest=$('#calculation-error');if(dest)dest.innerHTML=`<div class="notice error" role="alert">${esc(message)}</div>`;else toast(message);}
@@ -191,7 +190,7 @@ function setView(request,options={}){
  if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects','qe-si'].includes(view))context.innerHTML+='<div class="mr-notebook-link"><a href="#atlas/notebook">记录最近计算 / 打开材料项目 →</a><a href="#compute/symmetry-audit">三层对称性诊断 →</a><a href="#atlas/compare">参数对照与预测 →</a></div>';
  if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  context.innerHTML+=projectNavigation.html();projectNavigation.bind(context,route=>setView(route));
- if(view!=='advanced')rememberRoute(route);
+ if(view!=='advanced'&&view!=='workbench')rememberRoute(route);
  if(options.render===false)return;
  const page=render();
  if(options.focusTitle&&route!==previousRoute){
@@ -353,7 +352,7 @@ async function render(){
  }catch(error){if(current()){$('#app').innerHTML='<div class="notice error" role="alert">此页面暂未载入：'+esc(error.message)+' <button id="resource-retry" class="secondary">重试此页面</button> <a href="#home">返回首页</a></div>';$('#resource-retry').onclick=()=>render();}}
 }
 
-function renderWorkbench(){const route=buildWorkbenchRoute({...state,id:gid()});if(state.route!==route){state.route=route;history.replaceState(null,'','#'+route);}const g=state.group;const current=resultMatches();const r=current?state.result:null;$('#app').innerHTML=`<div id="workbench-structure-source"></div><div class="workspace-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 定义对称性</div><span class="subtle">PARAMETERS</span></div><div class="panel-body">${modeButtons(state.mode)}
+function renderWorkbench(){const route=buildWorkbenchRoute({...state,id:gid()});if(state.route!==route){state.route=route;history.replaceState(null,'','#'+route);}rememberRoute(route);const g=state.group;const current=resultMatches();const r=current?state.result:null;$('#app').innerHTML=`<div id="workbench-structure-source"></div><div class="workspace-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> 定义对称性</div><span class="subtle">PARAMETERS</span></div><div class="panel-body">${modeButtons(state.mode)}
  <label class="field-label" for="group-search">${state.mode==='sg'?'空间群编号或符号':state.mode==='msg'?'磁空间群 · BNS / OG 编号':'磁点群编号或符号'}<span>${state.mode==='sg'?'1 — 230':state.mode==='msg'?'1,651 MAGNETIC GROUPS':'122 MAGNETIC POINT GROUPS'}</span></label>
  <div class="search-wrap"><div class="group-input"><input id="group-search" autocomplete="off" aria-label="搜索并选择群" value="${esc(gid(g))}   ${esc(gtitle(g))}"><span>⌕</span></div><div id="group-options" class="search-list hidden"></div></div>
  <div class="group-info"><strong>${crystalSpan(gtitle(g),'hm')}</strong><span class="tag">${esc(lattices[g.lattice]||g.lattice)}</span><span class="tag">${state.mode==='sg'?crystalSpan(g.pointGroup,'schoenflies'):'Type '+['','I','II','III','IV'][g.type]}</span>${g.ogId?`<span class="tag">OG ${g.ogId}</span>`:''}</div>
@@ -500,6 +499,8 @@ function renderDatabase(){const groups=list(state.dbMode);
   comparisonLink='<p><a href="#classroom/crystal?track=space&amp;lesson=space-04">用 α 石英 CIF 核对位点稳定子的共轭 →</a></p>';
  else if(state.dbMode==='msg'&&singleMatch?.id==='4.8')
   comparisonLink='<p><a href="#classroom/spin?track=magnetic&amp;lesson=magnetic-04">检验 BNS 4.8 的反幺正螺旋与区边界简并 →</a></p>';
+ if(state.dbMode==='sg'&&[152,154].includes(singleMatch?.number))
+  comparisonLink+='<p><a href="#classroom/structure-dynamics?tab=learn&amp;lesson=screw-glide">比较 α 石英镜像结构的衍射消光 →</a></p>';
  const pageSize=25;state.dbPage=Math.min(state.dbPage,Math.max(0,Math.ceil(filtered.length/pageSize)-1));const selected=filtered.slice(state.dbPage*pageSize,(state.dbPage+1)*pageSize);$('#app').innerHTML=`<section class="panel"><div class="panel-body">${modeButtons(state.dbMode,'db-mode')}<div class="controls-row" style="margin-top:20px"><input id="db-search" placeholder="搜索编号、国际符号、OG 编号或晶格…" aria-label="搜索数据库" value="${esc(state.dbQuery)}">${state.dbMode==='sg'?'':`<select id="db-type" aria-label="磁群类型"><option value="all">全部类型</option>${[1,2,3,4].map(t=>`<option value="${t}" ${String(t)===state.dbType?'selected':''}>Type ${['','I','II','III','IV'][t]}</option>`).join('')}</select>`}<span class="subtle">${filtered.length} 个匹配结果</span></div>${comparisonLink}${tableHTML([state.dbMode==='sg'?'No.':state.dbMode==='msg'?'BNS':'MPG','国际符号 / BC','晶格',state.dbMode==='msg'?'OG 编号':'点群 / 类型','操作数',''],selected.map(g=>[esc(gid(g,state.dbMode)),`<span class="db-symbol">${crystalSpan(gtitle(g),'hm')}</span>`,esc(lattices[g.lattice]||g.lattice),state.dbMode==='msg'?esc(g.ogId):g.pointGroup?crystalSpan(g.pointGroup,'schoenflies'):esc(['','I','II','III','IV'][g.type]),g.operations.length,`<button class="text-button" data-open-group="${esc(gid(g,state.dbMode))}">打开工作台 ↗</button>`]))}<div class="pagination"><span>第 ${state.dbPage+1} / ${Math.max(1,Math.ceil(filtered.length/pageSize))} 页 · 数据来自上游完整表</span><div><button class="secondary small" id="prev-page" ${state.dbPage===0?'disabled':''}>← 上一页</button><button class="secondary small" id="next-page" ${(state.dbPage+1)*pageSize>=filtered.length?'disabled':''}>下一页 →</button></div></div></div></section>`;$$('[data-db-mode]').forEach(b=>b.onclick=()=>{setView('atlas/'+b.dataset.dbMode);});$('#db-search').oninput=e=>{const pos=e.target.selectionStart;state.dbQuery=e.target.value;state.dbPage=0;const route='atlas/'+state.dbMode+'?q='+encodeURIComponent(state.dbQuery);state.route=route;history.replaceState(null,'','#'+route);renderDatabase();$('#db-search').focus();$('#db-search').setSelectionRange(pos,pos);};if($('#db-type'))$('#db-type').onchange=e=>{state.dbType=e.target.value;state.dbPage=0;renderDatabase();};$('#prev-page').onclick=()=>{state.dbPage--;renderDatabase();};$('#next-page').onclick=()=>{state.dbPage++;renderDatabase();};
  $$('[data-open-group]').forEach(button=>button.onclick=()=>{
   const mode=state.dbMode,id=button.dataset.openGroup;

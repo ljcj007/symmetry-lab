@@ -22,6 +22,7 @@ export function quartzStructurePracticeHTML(open){
     <p id="structure-quartz-status" class="form-note" role="status" tabindex="-1" hidden></p>
     <details class="structure-details"><summary>Check the three structure results</summary><p>The original structure has space group 154. Active inversion with the lattice fixed gives space group 152. A passive change of the coordinates and lattice basis keeps space group 154. All three structures have three Si sites and six O sites.</p></details>
     <p class="form-note">The two POSCAR files are teaching geometries derived from the original CIF. Anisotropic displacement data remain in the complete source file.</p>
+    <p><a href="#classroom/structure-dynamics?tab=learn&amp;lesson=screw-glide">Check diffraction extinctions after inversion using the same CIF →</a></p>
     <p class="controls-row"><a href="data/examples/quartz-298k/9005017.cif" download="9005017.cif">Download the byte-preserved CIF ↓</a><a href="docs/quartz-handedness.md">See the structure source and basis conventions ↗</a><a href="#crystkit?preset=quartz-handedness">Check the space-group operations in CrystKit →</a></p>
   </details>`;
 }

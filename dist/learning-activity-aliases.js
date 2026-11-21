@@ -28,4 +28,8 @@ export const activityAliases = {
     'quartz site stabilizer', 'quartz stabilizers', 'quartz conjugacy', 'quartz silicon orbit',
     '石英 位点稳定子', '石英位点稳定子', '石英 共轭', '石英 Si 位点'
   ],
+  quartzExtinction: [
+    'quartz extinction', 'quartz Friedel pair', 'alpha quartz screw extinctions',
+    '石英 消光', '石英消光', '石英 手性衍射', '石英 弗里德尔对'
+  ],
 };

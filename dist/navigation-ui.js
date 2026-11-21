@@ -1,9 +1,10 @@
-import {homeHTML} from './entry-home.js?v=20261112-paths1';
+import {homeHTML} from './entry-home.js?v=20261122-nextpaths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-quartzclass1';
-import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-activity1';
-import {learningActivities} from './learning-activity-search.js?v=20261122-quartzclass1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-activity1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-nextpaths1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-nextpaths1';
+import {learningActivities} from './learning-activity-search.js?v=20261122-nextpaths1';
+import {buildWorkbenchRoute,parseWorkbenchCoordinate,parseWorkbenchSelection} from './workbench-route.js?v=20261122-nextpaths1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-nextpaths1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
 export {searchEntries};
@@ -156,7 +157,13 @@ const sessionSaved=new Map(),storageFallback=new Set();
 const readSaved=key=>{try{const x=storageFallback.has(key)?sessionSaved.get(key):JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(x)?x.filter(v=>typeof v==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(v)).slice(0,20):[];}catch{return sessionSaved.get(key)||[];}};
 const save=(key,value)=>{sessionSaved.set(key,[...value]);try{localStorage.setItem(key,JSON.stringify(value));storageFallback.delete(key);}catch{storageFallback.add(key);}};
 export const favoriteRoutes=()=>readSaved('symmetry-lab.favorites.v1').filter(knownTool);
-export function rememberRoute(route){if(['home','compute','atlas','classroom','docs'].includes(route))return;save('symmetry-lab.recent.v1',[route,...readSaved('symmetry-lab.recent.v1').filter(x=>x!==route)].slice(0,6));}
+export function rememberRoute(route){
+ if(['home','compute','atlas','classroom','docs'].includes(route))return;
+ const key='symmetry-lab.recent.v1',previous=readSaved(key);
+ const otherRoutes=route.startsWith('workbench?')?previous.filter(item=>item!=='workbench'):previous;
+ const next=distinctRecentRoutes([route,...otherRoutes]);
+ if(next.length!==previous.length||next.some((item,index)=>item!==previous[index]))save(key,next);
+}
 export function toggleFavorite(route){if(!knownTool(route))return favoriteRoutes();const old=favoriteRoutes();const next=old.includes(route)?old.filter(x=>x!==route):[...old,route];save('symmetry-lab.favorites.v1',next);return next;}
 const link=(route,label,cls='')=>`<a class="${cls}" href="#${esc(route)}" data-route="${esc(route)}">${label}</a>`;
 const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,query);return text?`<${tag} class="nav-file-purpose"><strong>文件用途：</strong> ${esc(text)}</${tag}>`:'';};
@@ -181,13 +188,29 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-quartzclass1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-nextpaths1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 
 function orderedQuery(query){
  const params=new URLSearchParams(query);
  params.sort();
  return params.toString();
+}
+
+function workbenchSelection(query){
+ try{return parseWorkbenchSelection(query,parseWorkbenchCoordinate);}
+ catch{return null;}
+}
+
+function distinctRecentRoutes(routes){
+ const distinct=new Map();
+ for(const route of routes){
+  const [path,query='']=route.split('?');
+  const selection=path==='workbench'?workbenchSelection(query):null;
+  const key=selection?buildWorkbenchRoute(selection):path+'?'+orderedQuery(query);
+  if(!distinct.has(key))distinct.set(key,route);
+ }
+ return [...distinct.values()].slice(0,6);
 }
 
 function recentPage(route){
@@ -197,6 +220,14 @@ function recentPage(route){
   return targetPath===path&&orderedQuery(targetQuery)===orderedQuery(query);
  });
  if(activity)return {route,title:activity.title};
+ const selectionForWorkbench=path==='workbench'?workbenchSelection(query):null;
+ if(selectionForWorkbench){
+  const {id,mode,k,doubleValued}=selectionForWorkbench;
+  const group={sg:'SG',msg:'BNS',mpg:'MPG'}[mode];
+  const momentum=mode==='mpg'?'':k.every(value=>value===0)?' · Γ':` · k = (${k.join(', ')})`;
+  const spin=doubleValued?'双值表示':'单值表示';
+  return {route,title:`${group} ${id}${momentum} · ${spin}`,plainTitle:true};
+ }
  const tool=knownTool(path);
  if(tool)return {route,title:tool.title};
  if(path==='docs/dictionary')return {route,title:'公式与符号词典'};
@@ -268,7 +299,7 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   ['classroom/spin','双群、色群与自旋群专题','按点群与三维空间群学习；明确教学实例的适用范围。']
  ].map(([r,t,s])=>`<article>${link(r,`<h2>${t}</h2><p>${s}</p><span class="nav-card-go">浏览 →</span>`,'nav-atlas-card')}</article>`).join('')}</div>`;
  else {
-  const recent=readSaved('symmetry-lab.recent.v1').map(recentPage);
+  const recent=distinctRecentRoutes(readSaved('symmetry-lab.recent.v1')).map(recentPage);
   body.innerHTML=homeHTML({link,toolCard,knownTool,favorites,recent,pathways:classroomPathways,esc});
   void fillRecentLessonNames(root,current,recent,loadRecentProgression);
  }

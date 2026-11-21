@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {parseWorkbenchSelection} from '../dist/workbench-route.js';
+import {parseClassroomRoute} from '../dist/classroom-ui.js';
 
 // Run the production module against an inert DOM. This isolates loader races and
 // stored-progress validation without adding a browser or a test dependency.
@@ -42,6 +43,9 @@ class Element {
   }
   querySelectorAll(selector){return this.children.flatMap(child=>[...(child.matches(selector)?[child]:[]),...child.querySelectorAll(selector)]);}
   querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
+  getAttribute(name){return this.attributes[name]??null;}
+  setAttribute(name,value){this.attributes[name]=String(value);}
+  removeAttribute(name){delete this.attributes[name];}
   focus(){}
   scrollIntoView(){}
   checkValidity(){return true;}
@@ -378,3 +382,102 @@ await settle();
 assert.equal(siPage.firstElementChild.querySelector('[data-si-structure-practice]'),null,'The silicon file applies to its own material case');
 assert.equal(siPage.firstElementChild.querySelector('a[href="#atlas/qe-si"]'),null,'The fixed silicon proof is not linked as a GaAs case');
 console.log('Silicon structure practice appears once in the standard-cell lesson and the silicon material case.');
+
+const english=process.argv.includes('--english');
+const feedbackEdition=new URL(english?'../dist/en/':'../dist/',import.meta.url);
+const feedbackCatalogs=Object.fromEntries(['symmetry-course-lessons','symmetry-course-atlas'].map(name=>[name,JSON.parse(fs.readFileSync(new URL(`data/${name}.json`,feedbackEdition),'utf8'))]));
+const feedbackUI=await import(new URL('symmetry-course-ui.js?targeted-feedback',feedbackEdition));
+const mainWrites=[],feedbackRoutes=[];
+globalThis.fetch=async url=>{
+  const name=Object.keys(feedbackCatalogs).find(key=>url.includes(key+'.json'));
+  assert.ok(name,'Quiz and transfer practice only load the ordinary course catalogs');
+  return {ok:true,json:async()=>feedbackCatalogs[name]};
+};
+globalThis.localStorage={getItem:()=>null,setItem:(key,value)=>{mainWrites.push([key,JSON.parse(value)]);}};
+const feedbackLessons=feedbackCatalogs['symmetry-course-lessons'].lessons;
+const noQuizRun=()=>assert.fail('Answer checking must stay independent of Python');
+const feedbackPage=new Container();
+const quizPlans=[
+  ['crystal','space','space-05',[
+    ['sc-bloch-quarter',null,'sc-bloch-reverse'],
+    ['sc-screw-quarter-roots','sc-screw-unitary-pairing',null]]],
+  ['spin','double','double-06',[
+    ['sc-double-screw-zone-face',null,'sc-double-screw-two-branches'],
+    [null,'sc-mirror-spin-sector','sc-glide-translation']]],
+  ['spin','magnetic','magnetic-04',[
+    ['sc-antiunitary-diagonal-product',null,'sc-antiunitary-left-coefficient'],
+    ['sc-antiunitary-scalar-phase','sc-antiunitary-two-applications',null]]],
+  ['spin','magnetic','magnetic-05',[
+    ['sc-antitranslation-zone-center',null,'sc-antitranslation-full-period'],
+    ['sc-antitranslation-transverse-boundary',null,'sc-antitranslation-separate-tests']]]
+];
+const variantIds=new Set();
+const quizMarkupText=text=>text.replace(/[&<>"']/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+for(const [pathway,track,id,expected] of quizPlans){
+  const lessonIndex=feedbackLessons.findIndex(lesson=>lesson.id===id);
+  assert.notEqual(lessonIndex,-1);
+  const lesson=feedbackLessons[lessonIndex];
+  const dispose=await feedbackUI.renderSymmetryCourseView({container:feedbackPage,run:noQuizRun,
+    selection:parseClassroomRoute(`#classroom/${pathway}?track=${track}&lesson=${id}&tab=quiz`),
+    onNavigate:route=>feedbackRoutes.push(route)});
+  const feedbackRoot=feedbackPage.firstElementChild;
+  assert.equal(feedbackRoot.querySelectorAll('.sc-question').length,expected.length,'The native deep link opens exactly this lesson’s questions');
+  assert.equal(feedbackRoot.querySelector('[data-feedback-check]'),null,'The transfer question stays hidden until a main answer is checked');
+  for(const [questionIndex,ids] of expected.entries()){
+    const quiz=lesson.quiz[questionIndex],question=()=>feedbackRoot.querySelector(`#sc-q-${lessonIndex}-${questionIndex}`);
+    assert.deepEqual(quiz.feedback.map(choice=>choice.remediation?.id||null),ids);
+    assert.equal(new Set(quiz.feedback.map(choice=>choice.message)).size,quiz.choices.length);
+    for(const [selected,entry] of quiz.feedback.entries()){
+      const choice=question().querySelectorAll(`input[name="sc-answer-${lessonIndex}-${questionIndex}"]`)[selected];
+      choice.onchange();
+      assert.equal(question().querySelector('[data-feedback-check]'),null,'Changing the main choice hides the previous transfer');
+      question().querySelector('.sc-check-answer').onclick();
+      const article=question();
+      const panel=article.querySelector('[data-learning-feedback]');
+      const pageMarkup=feedbackRoot.querySelector('#sc-content').innerHTML;
+      assert.ok(panel&&pageMarkup.includes(quizMarkupText(entry.message)),'The submitted option contributes its feedback');
+      for(const alternative of quiz.feedback.filter(item=>item!==entry)){
+        assert.ok(!pageMarkup.includes(quizMarkupText(alternative.message)),'Unsubmitted feedback stays hidden');
+      }
+      assert.deepEqual(mainWrites.at(-1)[1][`${id}:${questionIndex}`],{selected,checked:true});
+      assert.equal(article.querySelectorAll('[data-feedback-check]').length,selected===quiz.answer?0:1);
+      if(!entry.remediation)continue;
+      const variant=entry.remediation,check=article.querySelector('[data-feedback-check]');
+      const reset=article.querySelector('[data-feedback-reset]'),result=article.querySelector('[data-feedback-result]');
+      const transferChoices=article.querySelectorAll('[data-feedback-choice]');
+      const writeCount=mainWrites.length;
+      variantIds.add(variant.id);
+      assert.ok(panel.querySelector('fieldset'));
+      assert.equal(Object.hasOwn(check.attributes,'disabled'),true);
+      transferChoices[(variant.answer+1)%variant.choices.length].onchange();
+      check.onclick();
+      assert.equal(result.getAttribute('data-correct'),'false');
+      transferChoices[variant.answer].onchange();
+      check.onclick();
+      assert.equal(result.getAttribute('data-correct'),'true');
+      assert.ok(result.textContent.endsWith(variant.explanation));
+      reset.onclick();
+      assert.equal(result.getAttribute('data-correct'),null);
+      assert.equal(mainWrites.length,writeCount,'Transfer attempts and reset never write course progress');
+      const detachedCheck=check.onclick;
+      const detachedChoice=transferChoices[variant.answer].onchange;
+      const newSelection=(selected+1)%quiz.choices.length;
+      article.querySelectorAll(`input[name="sc-answer-${lessonIndex}-${questionIndex}"]`)[newSelection].onchange();
+      assert.equal(mainWrites.length,writeCount+1,'Only the change to the main answer writes course progress');
+      detachedChoice();
+      detachedCheck();
+      assert.equal(result.getAttribute('data-correct'),null,'Retired remediation handlers cannot update a hidden panel');
+      assert.deepEqual(mainWrites.at(-1)[1][`${id}:${questionIndex}`],{selected:newSelection,checked:false});
+    }
+  }
+  if(id==='space-05'){
+    const routeFilter=feedbackRoot.querySelector('#sc-quiz-track');
+    routeFilter.value='magnetic';
+    routeFilter.onchange({target:routeFilter});
+  }
+  dispose();
+}
+assert.equal(variantIds.size,16);
+assert.equal(feedbackRoutes.length,0,'Native quiz deep links and practice do not push history');
+assert.ok(mainWrites.every(([key])=>key==='symmetry-lab.academy.progress.v1'),'Transfer practice does not create a storage channel');
+console.log(`Targeted symmetry course feedback (${english?'EN':'ZH'}): eight mapped questions, all sixteen transfers, history, independent progress, and detached panels.`);

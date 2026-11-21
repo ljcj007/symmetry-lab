@@ -558,7 +558,40 @@
             "i"
           ],
           "answer": 1,
-          "explanation": "exp(−2πi×1/2)=−1。这里沿 c 的整格平移仍作用为非平凡相位。"
+          "explanation": "exp(−2πi×1/2)=−1。这里沿 c 的整格平移仍作用为非平凡相位。",
+          "feedback": [
+            {
+              "message": "一个原胞的平移保持周期结构，但 Bloch 态可以取得一个相位。这里需代入倒格子分数 1/2。",
+              "remediation": {
+                "id": "sc-bloch-quarter",
+                "prompt": "把轴向倒格子分数改为 1/4。沿 +c 平移的相位是多少？",
+                "choices": [
+                  "1",
+                  "−i",
+                  "+i"
+                ],
+                "answer": 1,
+                "explanation": "沿 +c 平移的相位为 exp(−2πi×1/4)=−i。"
+              }
+            },
+            {
+              "message": "沿 +c 平移时，1/2 给出角度 −π，相位为 −1。"
+            },
+            {
+              "message": "先确认题中给出的是整格平移 +c。相位角为 −π，所以没有虚部。",
+              "remediation": {
+                "id": "sc-bloch-reverse",
+                "prompt": "在轴向倒格子分数 1/4 处，把平移方向换成 −c。相位是多少？",
+                "choices": [
+                  "−i",
+                  "+i",
+                  "−1"
+                ],
+                "answer": 1,
+                "explanation": "平移反向使指数变成 +2πi×1/4，所以相位为 +i。"
+              }
+            }
+          ]
         },
         {
           "question": "自旋忽略的 2₁ 螺旋满足 λ²=−1 时，其可能本征值是？",
@@ -568,7 +601,40 @@
             "±i"
           ],
           "answer": 2,
-          "explanation": "i 和 −i 的平方都为 −1。是否把这两种本征值的态配成同能量，还要检查额外对称。"
+          "explanation": "i 和 −i 的平方都为 −1。是否把这两种本征值的态配成同能量，还要检查额外对称。",
+          "feedback": [
+            {
+              "message": "±1 的平方是 +1。要找到螺旋本征值，先求出平方的相位，再取满足条件的根。",
+              "remediation": {
+                "id": "sc-screw-quarter-roots",
+                "prompt": "若自旋忽略的螺旋轴上，整格平移的相位为 −i，哪组根满足 λ²=−i？",
+                "choices": [
+                  "±exp(−iπ/4)",
+                  "±exp(+iπ/4)",
+                  "±i"
+                ],
+                "answer": 0,
+                "explanation": "把根的相角乘以二。±exp(−iπ/4) 都平方成 exp(−iπ/2)=−i。"
+              }
+            },
+            {
+              "message": "−1 是平方相位。把它直接作为本征值会给出错误的平方 +1。",
+              "remediation": {
+                "id": "sc-screw-unitary-pairing",
+                "prompt": "同一波矢上有两个不同的螺旋本征值 i 和 −i。仅凭该幺正螺旋就能断定两态等能吗？",
+                "choices": [
+                  "一定等能",
+                  "不一定，可以有不同能量",
+                  "两种根只能出现一种"
+                ],
+                "answer": 1,
+                "explanation": "两个一维表示各自允许一个能量。同能量配对需要把两个态联系起来的额外条件。"
+              }
+            },
+            {
+              "message": "i 和 −i 都满足平方为 −1。它们能标记不同螺旋表示，能量是否相等还取决于其他对称条件。"
+            }
+          ]
         }
       ],
       "references": [
@@ -1402,7 +1468,40 @@
             "U*V"
           ],
           "answer": 1,
-          "explanation": "UKVK=UV*K²=UV*，左侧的 K 对右侧 V 做复共轭。"
+          "explanation": "UKVK=UV*K²=UV*，左侧的 K 对右侧 V 做复共轭。",
+          "feedback": [
+            {
+              "message": "相乘时要把左边的共轭算符移过右侧矩阵。此时右侧矩阵 V 变为 V*。",
+              "remediation": {
+                "id": "sc-antiunitary-diagonal-product",
+                "prompt": "若 U=diag(1,i)，V=diag(i,1)，两个反幺正操作相乘得到哪个矩阵？",
+                "choices": [
+                  "diag(i,i)",
+                  "diag(−i,i)",
+                  "diag(−i,−i)"
+                ],
+                "answer": 1,
+                "explanation": "先对 V 取复共轭得到 diag(−i,1)，再左乘 U。"
+              }
+            },
+            {
+              "message": "左侧的 K 先对 V 取复共轭。两个 K 结合为恒等，所以 AB 是线性的 UV*。"
+            },
+            {
+              "message": "共轭作用于 K 右边的 V，U 始终在最左侧。",
+              "remediation": {
+                "id": "sc-antiunitary-left-coefficient",
+                "prompt": "在一维复数空间中，先施加 B=K，再施加 A=iK。合成操作对振幅乘以什么？",
+                "choices": [
+                  "+i",
+                  "−i",
+                  "−1"
+                ],
+                "answer": 0,
+                "explanation": "两次共轭相消，最左侧的 i 保留下来。"
+              }
+            }
+          ]
         },
         {
           "question": "对一维 A=iK，A² 等于什么？",
@@ -1412,7 +1511,40 @@
             "1"
           ],
           "answer": 2,
-          "explanation": "iK iK=i(−i)K²=1。漏掉共轭才会得到错误的 −1。"
+          "explanation": "iK iK=i(−i)K²=1。漏掉共轭才会得到错误的 −1。",
+          "feedback": [
+            {
+              "message": "计算两次 iK 时，第二个 i 要经过第一个 K，因此会变成 −i。",
+              "remediation": {
+                "id": "sc-antiunitary-scalar-phase",
+                "prompt": "把 i 换成单位复相位 exp(iπ/4)。这个反幺正算符做两次，得到什么？",
+                "choices": [
+                  "1",
+                  "i",
+                  "−1"
+                ],
+                "answer": 0,
+                "explanation": "两次操作的复相位互为共轭。乘积是 exp(iπ/4)exp(−iπ/4)=1。"
+              }
+            },
+            {
+              "message": "一次作用含有 i 和共轭。求平方需要再做同样的操作，包含对振幅的第二次共轭。",
+              "remediation": {
+                "id": "sc-antiunitary-two-applications",
+                "prompt": "以振幅 i 开始，先做一次 iK，再做一次。两步之后的振幅依次是什么？",
+                "choices": [
+                  "−1, −i",
+                  "1, i",
+                  "i, −1"
+                ],
+                "answer": 1,
+                "explanation": "第一次把 i 共轭为 −i，再乘 i 得到 1。第二次把 1 共轭后再乘 i，得到 i。"
+              }
+            },
+            {
+              "message": "两次操作包含两个相消的复相位，i(−i)=1，所以 A² 是恒等。"
+            }
+          ]
         }
       ],
       "references": [
@@ -1535,7 +1667,40 @@
             "iI"
           ],
           "answer": 1,
-          "explanation": "−exp(−2πi×1/2)=−(−1)=+1。A 保持该边界动量，但仅凭它不能强制 Kramers 型配对。"
+          "explanation": "−exp(−2πi×1/2)=−(−1)=+1。A 保持该边界动量，但仅凭它不能强制 Kramers 型配对。",
+          "feedback": [
+            {
+              "message": "时间反演平方贡献 −I。组合操作平方还包含两个半格平移合成的一个整格平移。",
+              "remediation": {
+                "id": "sc-antitranslation-zone-center",
+                "prompt": "把波矢移到 Γ，整格平移相位变为 +1。这时 A² 是多少？",
+                "choices": [
+                  "−I",
+                  "+I",
+                  "iI"
+                ],
+                "answer": 0,
+                "explanation": "Γ 点的平移因子为 +1，自旋 1/2 的时间反演平方仍贡献 −I。"
+              }
+            },
+            {
+              "message": "平移一个完整原胞贡献 −1，时间反演平方也贡献 −1，两者合成 +I。这里的 A 不强制 Kramers 型配对。"
+            },
+            {
+              "message": "计算平方时要用两次半平移合成的 2τ。布里渊区边界的这个整格平移因子是 −1。",
+              "remediation": {
+                "id": "sc-antitranslation-full-period",
+                "prompt": "若轴向倒格子分数改为 1/4，两个同向半格平移合成后的 Bloch 相位是多少？",
+                "choices": [
+                  "−i",
+                  "+i",
+                  "−1"
+                ],
+                "answer": 0,
+                "explanation": "两次半格平移合成一次整格平移，其相位是 exp(−2πi×1/4)=−i。"
+              }
+            }
+          ]
         },
         {
           "question": "同一 τ 下，k=(0.2,0,0) 处 A²=−I，为何仍不能单凭 A 断言该 k 两重简并？",
@@ -1545,7 +1710,40 @@
             "因为反铁磁体从来没有简并"
           ],
           "answer": 1,
-          "explanation": "Kramers 型同一 k 配对要求反幺正操作保持该动量子空间；这里的伙伴处于不同的 −k。"
+          "explanation": "Kramers 型同一 k 配对要求反幺正操作保持该动量子空间；这里的伙伴处于不同的 −k。",
+          "feedback": [
+            {
+              "message": "−I 可以是合法的反幺正平方。为了判定同一波矢上的配对，还要检查 −k 是否与 k 相差一个倒格矢。",
+              "remediation": {
+                "id": "sc-antitranslation-transverse-boundary",
+                "prompt": "改取 k=(1/2,0,0)，τ 仍为 (0,0,1/2)。A 保持哈密顿量时，是否强制这个 k 的 Kramers 配对？",
+                "choices": [
+                  "是，动量等价而且平方为 −I",
+                  "否，−k 与 k 不等价",
+                  "否，平方为 +I"
+                ],
+                "answer": 0,
+                "explanation": "−k 与 k 相差整数倒格坐标 (−1,0,0)。轴向分量为零，所以 A²=−I，两个条件都满足。"
+              }
+            },
+            {
+              "message": "这里 A²=−I，但 A 把态送到另一个不等价的波矢。要得到同一波矢的配对，需要先检查动量等价。"
+            },
+            {
+              "message": "反铁磁里也可能有受对称性保护的简并。对这个组合操作，应分别检查动量等价与平方的符号。",
+              "remediation": {
+                "id": "sc-antitranslation-separate-tests",
+                "prompt": "对于同一个 τ，Γ 与 k=(0,0,1/2) 都由 A 保持。仅由 A 强制的 Kramers 配对在哪处成立？",
+                "choices": [
+                  "两处都成立",
+                  "只在 Γ 成立",
+                  "只在 k=(0,0,1/2) 成立"
+                ],
+                "answer": 1,
+                "explanation": "Γ 的平方为 −I；另一个动量的整格平移相位为 −1，平方变成 +I。只有 Γ 的两个条件同时满足。"
+              }
+            }
+          ]
         }
       ],
       "references": [
@@ -1706,7 +1904,40 @@
             "只有 +1"
           ],
           "answer": 1,
-          "explanation": "Γ 的整胞平移相位为 1，但 2π 旋量回转仍给出 −1。"
+          "explanation": "Γ 的整胞平移相位为 1，但 2π 旋量回转仍给出 −1。",
+          "feedback": [
+            {
+              "message": "在 Γ 点，整格平移相位确实为 +1。自旋 1/2 的 2π 回转仍提供一个 −1。",
+              "remediation": {
+                "id": "sc-double-screw-zone-face",
+                "prompt": "把轴向倒格子分数移到 1/2。自旋回转给出 −1，平移也给出 −1。本征值可以是什么？",
+                "choices": [
+                  "±i",
+                  "±1",
+                  "−1/2"
+                ],
+                "answer": 1,
+                "explanation": "两个负号相乘得到 +1，所以 λ²=+1，允许的两种根是 ±1。"
+              }
+            },
+            {
+              "message": "Γ 点的自旋回转因子是 −1，平移因子是 +1。因此 λ²=−1，两种根为 ±i。"
+            },
+            {
+              "message": "平方关系限制了允许的根，不能据此挑一个根。Γ 点的平方为 −1，因此 +1 也不符合。",
+              "remediation": {
+                "id": "sc-double-screw-two-branches",
+                "prompt": "在某个波矢处已知双值螺旋满足 λ²=+i。这个关系允许哪些根？",
+                "choices": [
+                  "±exp(+iπ/4)",
+                  "±exp(−iπ/4)",
+                  "+i（唯一）"
+                ],
+                "answer": 0,
+                "explanation": "两个相反的根都平方成 +i。具体能带属于哪一根还需要看态的对称性。"
+              }
+            }
+          ]
         },
         {
           "question": "在 P²=E 且 P 与旋转提升交换的约定下，镜面提升的平方是？",
@@ -1716,7 +1947,40 @@
             "任意平移"
           ],
           "answer": 0,
-          "explanation": "M̃=P C̃₂n，因此 M̃²=P² C̃₂n²=Ē。"
+          "explanation": "M̃=P C̃₂n，因此 M̃²=P² C̃₂n²=Ē。",
+          "feedback": [
+            {
+              "message": "反演平方为恒等。两次镜面提升留下的是法向二重转动的旋量 2π 因子，也就是双群中心元。"
+            },
+            {
+              "message": "反演是一次镜面提升的一个因子。做两次后，两个反演在给定约定下相消。",
+              "remediation": {
+                "id": "sc-mirror-spin-sector",
+                "prompt": "同一纯镜面分别作用于普通极矢量和自旋 1/2。做两次后，两者的因子各是多少？",
+                "choices": [
+                  "+1 和 −1",
+                  "都为 −1",
+                  "都为 +1"
+                ],
+                "answer": 0,
+                "explanation": "空间镜面平方为恒等，普通矢量得到 +1。自旋 1/2 的镜面提升平方是 2π 回转，因子为 −1。"
+              }
+            },
+            {
+              "message": "本题是纯镜面，操作定义里没有分数平移。滑移面需要另外计入平移。",
+              "remediation": {
+                "id": "sc-glide-translation",
+                "prompt": "若改用沿镜面方向平移半个原胞的滑移操作，做两次后积累的空间平移是多少？",
+                "choices": [
+                  "零",
+                  "半个原胞",
+                  "沿同方向平移一个原胞"
+                ],
+                "answer": 2,
+                "explanation": "镜面作用保持面内平移方向。两个同向的半格平移合成一个整格平移。"
+              }
+            }
+          ]
         }
       ],
       "references": [

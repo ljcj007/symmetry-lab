@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-quartzclass1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-nextpaths1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -49,5 +49,13 @@ export const learningActivities = [
     keywords: 'quartz COD 9005017 site stabilizer conjugacy silicon oxygen CIF 石英 位点 稳定子 共轭 特征标',
     kind: '课程',
     activityAliases: activityAliases.quartzStabilizers
+  },
+  {
+    route: 'classroom/structure-dynamics?tab=learn&lesson=screw-glide',
+    title: 'α 石英的螺旋消光与手性',
+    summary: '从原始 CIF 计算轴向反射及弗里德尔对，比较镜像前后的复振幅与强度。',
+    keywords: 'quartz screw extinction Friedel pair chirality diffraction COD 9005017 石英 螺旋 消光 弗里德尔 手性 衍射',
+    kind: '课程',
+    activityAliases: activityAliases.quartzExtinction
   }
 ];

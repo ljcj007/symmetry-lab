@@ -2,6 +2,15 @@ const modes=['sg','msg','mpg'];
 const invalidGroup=()=>new Error('未找到该群。');
 const coordinates=['kx','ky','kz'];
 
+export function parseWorkbenchCoordinate(value){
+ const text=String(value);
+ if(!/^\s*[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?(?:\s*\/\s*[+-]?(?:\d+\.?\d*|\.\d+))?\s*$/.test(text))throw new Error('坐标仅支持数字、小数或分数，例如 1/2。');
+ const [numerator,denominator=1]=text.split('/').map(Number);
+ const coordinate=numerator/denominator;
+ if(!Number.isFinite(coordinate)||Math.abs(coordinate)>100)throw new Error('坐标必须为 −100 到 100 之间的有限数值。');
+ return coordinate;
+}
+
 // Keep the established sg= links while using the same explicit key for each catalogue.
 export function parseWorkbenchSelection(query,parseCoordinate=Number){
  const params=query instanceof URLSearchParams?query:new URLSearchParams(String(query||'').replace(/^\?/,''));

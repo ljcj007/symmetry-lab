@@ -1,8 +1,10 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
 import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-antisc1';
+import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';
 import {quartzConjugacyHTML,bindQuartzConjugacy} from './quartz-conjugacy-ui.js?v=20261122-quartzclass1';
+import {quartzExtinctionHTML,bindQuartzExtinction} from './quartz-extinction-ui.js?v=20261122-nextpaths1';
 import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
@@ -174,7 +176,7 @@ export function relatedSymmetryExercises(lesson,exercises=[]){
 const selectedGroup=()=>{if(!loaded)return null;const list=state.mode==='sg'?loaded.atlas.spaceGroups:state.mode==='msg'?loaded.atlas.magneticGroups:loaded.atlas.magneticPointGroups;return list.find(g=>String(g.number??g.id)===String(state.selection[state.mode]))||list[0];};
 
 async function load(){
-  const files=[['symmetry-course-lessons.json','20261121-seitz-handoff1'],['symmetry-course-atlas.json','20261115-precision1']];
+  const files=[['symmetry-course-lessons.json','20261122-course-feedback1'],['symmetry-course-atlas.json','20261115-precision1']];
   if(!dataPromise)dataPromise=Promise.all(files.map(async ([file,version])=>{const response=await fetch('./data/'+file+'?v='+version);if(!response.ok)throw Error(`Teaching data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([lessons,atlas])=>{
     if(!Array.isArray(lessons.lessons)||!lessons.lessons.length||!Array.isArray(atlas.spaceGroups)||atlas.spaceGroups.length!==230||!Array.isArray(atlas.magneticGroups)||!Array.isArray(atlas.magneticPointGroups))throw Error("The teaching data format is incomplete, please refresh and try again.");
     const validAnswers={};
@@ -201,8 +203,10 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
   disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML="<div class=\"sc-page\"><div class=\"sc-loading\" role=\"status\"><span class=\"spinner\"></span>is loading space group , double group , magnetic group, color group and spin group courses...</div></div>";
   let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{},disposeLessonComparison=()=>{};
+  const quizFeedback=new Map();
   const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
-  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeLessonComparison();disposeLessonComparison=()=>{};};
+  const clearQuizFeedback=()=>{quizFeedback.forEach(dispose=>dispose());quizFeedback.clear();};
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeLessonComparison();disposeLessonComparison=()=>{};clearQuizFeedback();};
   disposePreviousSeitzWorkshop=clearSeitzWorkshop;
   function disposeView(){
     if(disposed)return;
@@ -253,7 +257,10 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     }
     if(selection.material)chooseMaterial(selection.material);
     if(state.tab==='derive')extensionState.exercise=selection.exercise||null;
-    if(state.tab==='quiz'&&selection.lesson)state.quizLesson=selection.lesson;
+    if(state.tab==='quiz'&&selection.lesson){
+      state.quizTrack='all';
+      state.quizLesson=lessons.lessons[chosen]?.id||'all';
+    }
   }
   const sync=()=>{
     const preset=(isGroupLab(state.lab)||state.tab==='lab'&&state.lab==='seitz')?state.inputs[state.lab].preset:undefined;
@@ -293,6 +300,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?"<p><a id=\"sc-rashba-trim-link\" href=\"#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check\">Compare spectra and time reversal at these three wavevectors →</a></p>":''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
+      ${lesson.id==='space-03'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzExtinctionHTML():''}
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzConjugacyHTML():''}
       ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
       ${lesson.id==='magnetic-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?antiunitaryScrewHTML():''}
@@ -324,6 +332,10 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     const quartz=$('[data-quartz-conjugacy]');
     if(quartz)disposeLessonComparison=bindQuartzConjugacy(quartz,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('[data-quartz-conjugacy]')===quartz
+    });
+    const extinction=$('[data-quartz-extinction]');
+    if(extinction)disposeLessonComparison=bindQuartzExtinction(extinction,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('[data-quartz-extinction]')===extinction
     });
   }
   function bindSeitzQuotientHost(){
@@ -599,13 +611,49 @@ m′ = εₜ det(R) Rm</pre><p class="sc-small">εₜ = −1 means it comes with
     $('#sc-export-lab').onclick=()=>{download(JSON.stringify({input:state.labPayload,result:state.labResult,...(groupViewer?{camera:groupViewer.getView()}:{} )},null,2),`teaching-lab-${state.lab}.json`);toast("has exported experimental input and Python calculation results");};
   }
   function drawQuiz(){
+    clearQuizFeedback();
     const filtered=allQuestions.filter(({lesson})=>(state.quizTrack==='all'||lesson.track===state.quizTrack)&&(state.quizLesson==='all'||lesson.id===state.quizLesson));
     const progress=correctCount(allQuestions);
     $('#sc-content').innerHTML=`<div class="sc-quiz-heading"><div><h2>Make judgment first, then see why</h2><p>exercises cover concepts, simple derivation and common misunderstandings. An explanation will be displayed after the answer is submitted; the progress will only be saved in this browser.</p></div><div class="sc-progress"><strong>${progress}<small> / ${allQuestions.length}</small></strong><span>has mastered the question</span><progress value="${progress}" max="${allQuestions.length}" aria-label="self-test mastery progress"></progress></div></div><div class="sc-quiz-filter"><label>Learning path<select id="sc-quiz-track">${options([['all',"All learning paths"],...tracks.map(t=>[t.id,t.title])],state.quizTrack)}</select></label><label>Learning Unit<select id="sc-quiz-lesson">${options([['all',"All units"],...lessons.lessons.filter(l=>state.quizTrack==='all'||l.track===state.quizTrack).map(l=>[l.id,shortLessonTitle(l)])],state.quizLesson)}</select></label><button type="button" class="sc-text-button" id="sc-clear-progress">Clear the answer records of this course</button></div><div class="sc-quizzes">${filtered.map(entry=>questionHTML(entry)).join('')}</div>`;
     $('#sc-quiz-track').onchange=e=>{state.quizTrack=e.target.value;state.quizLesson='all';drawQuiz();};$('#sc-quiz-lesson').onchange=e=>{state.quizLesson=e.target.value;drawQuiz();};$('#sc-clear-progress').onclick=()=>{state.answers={};persist();drawQuiz();toast("The answer record for this course has been cleared");};
-    for(const entry of filtered){const {lesson,li,quiz,qi,key}=entry;root.querySelectorAll(`input[name="sc-answer-${li}-${qi}"]`).forEach(input=>input.onchange=()=>{state.answers[key]={selected:Number(input.value),checked:false};persist();const article=$(`#sc-q-${li}-${qi}`);article?.classList.remove('is-correct','is-incorrect');article?.querySelectorAll('.correct-choice').forEach(el=>el.classList.remove('correct-choice'));const feedback=article?.querySelector('.sc-answer-feedback');if(feedback)feedback.innerHTML='';const button=article?.querySelector('.sc-check-answer');if(button)button.textContent="Check answers";});const button=$(`#sc-check-${li}-${qi}`);if(button)button.onclick=()=>{const answer=state.answers[key];if(!answer||!Number.isInteger(answer.selected)){toast("Please choose an answer first");return;}answer.checked=true;persist();drawQuiz();$(`#sc-q-${li}-${qi} .sc-answer-feedback`)?.focus({preventScroll:true});};}
+    for(const {li,quiz,qi,key} of filtered){
+      const articleSelector=`#sc-q-${li}-${qi}`,article=$(articleSelector);
+      const active=()=>current()&&state.tab==='quiz'&&$(articleSelector)===article;
+      const button=article.querySelector('.sc-check-answer');
+      const feedback=article.querySelector('.sc-answer-feedback');
+      const clearFeedback=()=>{quizFeedback.get(key)?.();quizFeedback.delete(key);};
+      for(const input of article.querySelectorAll(`input[name="sc-answer-${li}-${qi}"]`)){
+        input.onchange=()=>{
+          if(!active())return;
+          state.answers[key]={selected:Number(input.value),checked:false};
+          persist();
+          clearFeedback();
+          article.classList.remove('is-correct','is-incorrect');
+          article.querySelectorAll('.correct-choice').forEach(el=>el.classList.remove('correct-choice'));
+          feedback.innerHTML='';
+          button.textContent="Check answers";
+        };
+      }
+      button.onclick=()=>{
+        if(!active())return;
+        const answer=state.answers[key];
+        if(!answer||!Number.isInteger(answer.selected)){toast("Please choose an answer first");return;}
+        answer.checked=true;
+        persist();
+        drawQuiz();
+        $(articleSelector)?.querySelector('.sc-answer-feedback')?.focus({preventScroll:true});
+      };
+      const answer=state.answers[key];
+      if(answer?.checked&&quiz.feedback){
+        quizFeedback.set(key,bindChoiceFeedback(article,quiz,answer.selected,{prefix:`sc-${li}-${qi}`,isCurrent:active}));
+      }
+    }
   }
-  function questionHTML({lesson,li,quiz,qi,key}){const answer=state.answers[key],checked=answer?.checked===true,correct=checked&&answer.selected===quiz.answer;return `<article class="sc-question ${checked?(correct?'is-correct':'is-incorrect'):''}" id="sc-q-${li}-${qi}"><span class="sc-kicker">${esc(trackTitle(lesson.track))} · ${esc(lesson.title)}</span><fieldset><legend>${qi+1}. ${esc(quiz.question)}</legend>${quiz.choices.map((choice,i)=>`<label class="sc-answer ${checked&&i===quiz.answer?'correct-choice':''}"><input type="radio" name="sc-answer-${li}-${qi}" value="${i}" ${answer?.selected===i?'checked':''}><span class="sc-choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary sc-check-answer" id="sc-check-${li}-${qi}">${checked?"Check again":"Check answers"}</button><div class="sc-answer-feedback" tabindex="-1" aria-live="polite">${checked?`<strong>${correct?"answered correctly":"Think again"} · Answer ${String.fromCharCode(65+quiz.answer)}</strong><p>${esc(quiz.explanation)}</p>`:''}</div></article>`;}
+  function questionHTML({lesson,li,quiz,qi,key}){
+    const answer=state.answers[key],checked=answer?.checked===true,correct=checked&&answer.selected===quiz.answer;
+    const feedback=checked?(renderChoiceFeedback(quiz,answer.selected,{prefix:`sc-${li}-${qi}`})||`<p>${esc(quiz.explanation)}</p>`):'';
+    return `<article class="sc-question ${checked?(correct?'is-correct':'is-incorrect'):''}" id="sc-q-${li}-${qi}"><span class="sc-kicker">${esc(trackTitle(lesson.track))} · ${esc(lesson.title)}</span><fieldset><legend>${qi+1}. ${esc(quiz.question)}</legend>${quiz.choices.map((choice,i)=>`<label class="sc-answer ${checked&&i===quiz.answer?'correct-choice':''}"><input type="radio" name="sc-answer-${li}-${qi}" value="${i}" ${answer?.selected===i?'checked':''}><span class="sc-choice-letter">${String.fromCharCode(65+i)}</span><span>${esc(choice)}</span></label>`).join('')}</fieldset><button type="button" class="secondary sc-check-answer" id="sc-check-${li}-${qi}">${checked?"Check again":"Check answers"}</button><div class="sc-answer-feedback" tabindex="-1" aria-live="polite">${checked?`<strong>${correct?"answered correctly":"Think again"} · Answer ${String.fromCharCode(65+quiz.answer)}</strong>${feedback}`:''}</div></article>`;
+  }
   draw();
   return disposeView;
 }

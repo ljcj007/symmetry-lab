@@ -1,6 +1,6 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-quartzclass1';
-import {normalizeSearchText,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-activity1';
-import {learningActivities} from './learning-activity-search.js?v=20261122-quartzclass1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-nextpaths1';
+import {normalizeSearchText,inputFormatSummary,searchCatalogEntries,matchNamedActivities,canMatchExactGroup,matchExactGroups} from './tool-search.js?v=20261122-nextpaths1';
+import {learningActivities} from './learning-activity-search.js?v=20261122-nextpaths1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -8,16 +8,16 @@ export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:"Calculate",courses:"Lesson",groups:"Group directory",materials:"Material"};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
-const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-quartzclass1');
-export function finderResults(entries,query,{scope='tools',limit=16}={}){
+const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-nextpaths1');
+export function finderResults(entries,query,{scope='tools',limit=16,exactGroupFallback=false}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const related=scope==='tools'?new Set(matchNamedActivities(unique,query)):null;
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]||related?.has(x));
  const normalized=normalizeFinderText(query);
  if(!normalized)return scope==='tools'?selected.slice(0,limit):[];
- return scope==='groups'||scope==='all'
-  ?searchCatalogEntries(selected,query,limit)
-  :searchEntries(selected,query,limit);
+ if(scope==='groups'||scope==='all')return searchCatalogEntries(selected,query,limit);
+ const groups=scope==='tools'&&exactGroupFallback&&canMatchExactGroup(query)?matchExactGroups(unique,query):[];
+ return [...groups,...searchEntries(selected,query,limit)].slice(0,limit);
 }
 
 export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModule}){
@@ -35,7 +35,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  const courseButton=scopeButtons.find(control=>control.dataset.finderScope==='courses');
  const ordinaryCourseLabel=courseButton.textContent;
  const ordinaryLabel=queryLabel.textContent,ordinaryPlaceholder=input.getAttribute('placeholder');
- let opened=false,previousFocus=null,scope='tools',selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
+ let opened=false,previousFocus=null,scope='tools',exactGroupFallback=false,selected=0,results=[],extra=null,loading=false,failed=false,destroyed=false;
  let topic=null,topicModuleRequest=null;
  const preferred=()=>{const routes=[...favoriteRoutes(),'workbench','structure','products','compute/phonons','compute/tensors','magnetictb','compute/lie/su3_cg','compute/advanced/carat_integral'];return [...routes.map(route=>toolsIndex.find(x=>x.route===route)).filter(Boolean),...toolsIndex];};
  function highlight(){
@@ -47,7 +47,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  }
  function render(){
   if(!opened||destroyed)return;
-  const needsMagneticCatalog=!extra&&scope==='all'&&isFullMagneticGroupQuery(input.value);
+  const exactToolsGroup=scope==='tools'&&exactGroupFallback&&canMatchExactGroup(input.value);
+  const waitingForGroup=!extra&&(exactToolsGroup||scope==='all'&&isFullMagneticGroupQuery(input.value));
   for(const button of scopeButtons)button.hidden=Boolean(topic)&&button.dataset.finderScope!=='courses';
   courseButton.textContent=topic?"This topic":ordinaryCourseLabel;
   courseButton.setAttribute('aria-pressed',String(topic?topic.range==='topic':scope==='courses'));
@@ -61,9 +62,9 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   if(topic){
    const pool=topic.data?.[topic.range]||[];
    results=normalizeFinderText(input.value)?searchEntries(pool,input.value,16):pool.slice(0,16);
-  }else results=needsMagneticCatalog?[]:finderResults([...preferred(),...learningActivities,...(extra||[])],input.value,{scope});
+  }else results=waitingForGroup?[]:finderResults([...preferred(),...learningActivities,...(extra||[])],input.value,{scope,exactGroupFallback});
   selected=Math.min(selected,Math.max(0,results.length-1));
-  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?"Current lesson":item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>File use:</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):needsMagneticCatalog?'':topic?(topic.data?"<p class=\"tool-finder-empty\">No lessons match in this scope.</p>":''):`<p class="tool-finder-empty">${input.value.trim()?"No matches. Try a tool abbreviation, material name, or complete group number.":"Enter keywords to search this category."}</p>`;
+  list.innerHTML=results.length?results.map((item,index)=>{const purpose=inputFormatSummary(item,input.value);return `<button type="button" class="tool-finder-result" role="option" id="tool-finder-result-${index}" data-finder-result="${index}" tabindex="-1" aria-selected="${selected===index}"><span>${escapeHTML(item.current?"Current lesson":item.kind)}</span><strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.topicLabel||item.summary)}</small>${purpose?`<small class="tool-finder-file-purpose"><strong>File use:</strong> ${escapeHTML(purpose)}</small>`:''}</button>`;}).join(''):waitingForGroup?'':topic?(topic.data?"<p class=\"tool-finder-empty\">No lessons match in this scope.</p>":''):`<p class="tool-finder-empty">${input.value.trim()?"No matches. Try a tool abbreviation, material name, or complete group number.":"Enter keywords to search this category."}</p>`;
   if(topic){
    if(topic.loading)status.textContent="Loading the lesson topic index…";
    else if(topic.failed)status.innerHTML="The lesson topic index could not be loaded. <button type=\"button\" data-finder-topic-retry>Retry the lesson index</button>";
@@ -71,9 +72,9 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
    else if(topic.range==='all')status.textContent=`Searching all ${topic.data.all.length} lessons. Showing ${results.length} results (up to 16).`;
    else if(topic.range==='catalog')status.textContent=`${topic.data.catalogTitle} · Lessons in this catalog: ${topic.data.catalog.length} total. Showing ${results.length} results (up to 16).`;
    else status.textContent=`Current lesson · ${topic.data.title} · Lessons in this topic: ${topic.data.topic.length} total. Showing ${results.length}`;
-  }else if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} results (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
-  else if(loading)status.textContent="Loading the compact catalogue; no calculation is started.";
-  else if(failed)status.innerHTML="The catalogue is temporarily unavailable. Tools remain searchable in the Tools scope. <button type=\"button\" data-finder-retry>Retry catalogue</button>";
+  }else if((scope!=='tools'||exactToolsGroup)&&loading)status.textContent="Loading the compact catalogue; no calculation is started.";
+  else if((scope!=='tools'||exactToolsGroup)&&failed)status.innerHTML="The catalogue is temporarily unavailable. Tools remain searchable in the Tools scope. <button type=\"button\" data-finder-retry>Retry catalogue</button>";
+  else if(scope==='tools')status.textContent=input.value.trim()?`found ${results.length} results (up to 16 shown)`:"Frequently used tools and favorites; select one to open it.";
   else if(!extra)status.textContent="Enter keywords to load the lesson, group, and material catalogue on demand.";
   else status.textContent=`found ${results.length} total (up to 16 shown)`;
   status.querySelector('[data-finder-retry]')?.addEventListener('click',()=>{failed=false;load();});
@@ -84,7 +85,8 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   highlight();
  }
  async function load(){
-  if(topic||loading||extra||failed||destroyed||scope==='tools'||!input.value.trim())return;
+  if(topic||loading||extra||failed||destroyed||!input.value.trim())return;
+  if(scope==='tools'&&(!exactGroupFallback||!canMatchExactGroup(input.value)))return;
   loading=true;failed=false;render();
   try{extra=await loadNavigationSearch();}
   catch{failed=true;}
@@ -99,10 +101,10 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  function updateScopeButtons(){
   scopeButtons.forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.finderScope===scope)));
  }
- function openAt(nextScope,trigger){
+ function openAt(nextScope,trigger,includeExactGroups=false){
   if(!opened)previousFocus=trigger||document.activeElement;
   else if(trigger)previousFocus=trigger;
-  scope=nextScope;input.value='';selected=0;input.setAttribute('aria-expanded','true');
+  scope=nextScope;exactGroupFallback=includeExactGroups;input.value='';selected=0;input.setAttribute('aria-expanded','true');
   updateScopeButtons();
   if(!opened){
    opened=true;dialog.hidden=false;
@@ -114,7 +116,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
   if(destroyed)return;
   if(opened){input.focus();return;}
   topic=null;
-  openAt('tools');
+  openAt('tools',null,true);
  }
  async function loadTopic(request){
   if(!opened||destroyed||topic!==request||request.loading)return false;
@@ -163,6 +165,7 @@ export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModu
  input.addEventListener('input',()=>{selected=0;render();load();});
  scopeButtons.forEach(x=>x.addEventListener('click',()=>{
   scope=x.dataset.finderScope;
+  exactGroupFallback=false;
   if(scope!=='courses')topic=null;
   else if(topic)topic.range='topic';
   selected=0;updateScopeButtons();render();load();input.focus();

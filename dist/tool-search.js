@@ -1,4 +1,6 @@
-import {matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {hmAliases} from './crystal-symbol-data.js?v=20261110-en1';
+import {filePurposeTerms,productSearchAliases} from './tool-search-terms.js?v=20261122-expertfiles1';
 
 // One query convention for the directory, home search and global finder.
 export function normalizeSearchText(value){
@@ -13,21 +15,27 @@ export function normalizeSearchText(value){
 // it never reads a file or chooses a conversion/compute mode.
 const filenameSuffix=/\.[a-z0-9]+$/iu;
 const rootedPath=/^(?:[a-z]:[\\/]|[\\/]|\.{1,2}[\\/])/iu;
+const namedFile=/^(?:poscar(?:[-‐‑‒–—−]?0)?|contcar|wt\.in[-‐‑‒–—−]bands)$/iu;
+const rootedFilePrefix=/^(?:[a-z]:[\\/]|[\\/]|\.{1,2}[\\/])(?:.*[\\/])?([^\\/]+?\.[a-z0-9]+|poscar(?:[-‐‑‒–—−]?0)?|contcar|wt\.in[-‐‑‒–—−]bands)(?=\s|$)/iu;
+const fileNameSyntax=name=>filenameSuffix.test(name)||namedFile.test(name);
 function fileBasename(term){
  const base=term.split(/[\\/]/).at(-1);
- const looksLikeFile=rootedPath.test(term)||term.includes('\\')||filenameSuffix.test(base)||/^(?:poscar(?:[-‐‑‒–—−]?0)?|contcar|wt\.in[-‐‑‒–—−]bands)$/iu.test(base);
+ const looksLikeFile=rootedPath.test(term)||term.includes('\\')||fileNameSyntax(base);
  return /[\\/]/.test(term)&&looksLikeFile&&base?base:term;
+}
+function searchWords(raw){
+ const protectedFiles=raw.replace(/"[^"]+"|'[^']+'|\S+/g,part=>
+  /^["']/u.test(part)||!fileNameSyntax(fileBasename(part))?part:`"${part}"`);
+ return (normalizeSearchText(protectedFiles).match(/"[^"]+"|'[^']+'|\S+/g)||[])
+  .map(term=>fileBasename(term.replace(/^["']|["']$/g,'')))
+  .filter(term=>term&&term!=='/');
 }
 function queryTerms(query){
  const raw=String(query??'').normalize('NFKC').trim();
- const quoted=/^(?:"[^"]+"|'[^']+')$/.test(raw);
- const complete=quoted?raw.slice(1,-1):raw;
- const single=quoted||!(/\s/.test(raw))||rootedPath.test(complete);
- const basename=single?fileBasename(complete):complete;
- if(basename!==complete||(single&&filenameSuffix.test(basename)))return [normalizeSearchText(basename)];
- return (normalizeSearchText(raw).match(/"[^"]+"|'[^']+'|\S+/g)||[])
-  .map(term=>fileBasename(term.replace(/^["']|["']$/g,'')))
-  .filter(term=>term&&term!=='/');
+ const leadingFile=raw.match(rootedFilePrefix);
+ if(!leadingFile)return searchWords(raw);
+ // Keep spaces in the pasted path and interpret words after its file as qualifiers.
+ return [normalizeSearchText(leadingFile[1]),...searchWords(raw.slice(leadingFile[0].length))];
 }
 function matchesInputFormat(row,term){
  return row.files.some(file=>{
@@ -46,8 +54,11 @@ export function matchingInputFormats(item,query){
 export function inputFormatSummary(item,query){
  return matchingInputFormats(item,query).map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions).join(' ');
 }
+const normalizedFilePurposes=new Map(Object.entries(filePurposeTerms).map(([route,text])=>[route,normalizeSearchText(text)]));
+const productQueries=new Set(productSearchAliases.map(normalizeSearchText));
+const unquoteQuery=query=>normalizeSearchText(query).replace(/^["“‘']+|["”’']+$/g,'').trim();
 export function matchNamedActivities(entries,query){
- const text=normalizeSearchText(query).replace(/^["“‘']+|["”’']+$/g,'').trim();
+ const text=unquoteQuery(query);
  return text?entries.filter(item=>item.activityAliases?.some(alias=>normalizeSearchText(alias)===text)):[];
 }
 function resultRouteKey(route){
@@ -74,11 +85,13 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  });
  const score=row=>row.formats.reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
  const intents=prepared.filter(row=>row.intent&&!matchingExamples.includes(row.item)).map(({item,intent})=>({...item,summary:intent.summary}));
+ const productIntent=productQueries.has(unquoteQuery(query))?entries.filter(item=>item.route==='products'):[];
  const tools=prepared.filter(row=>!row.intent&&!matchingExamples.includes(row.item)&&terms.every(term=>
-  (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))))
+  (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))||
+  (row.formats.length>0&&normalizedFilePurposes.get(row.item.route)?.includes(term))))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
  const seen=new Set();
- return [...activities,...examples,...intents,...tools].filter(item=>{
+ return [...activities,...examples,...intents,...productIntent,...tools].filter(item=>{
   const key=resultRouteKey(item.route);
   if(seen.has(key))return false;
   seen.add(key);
@@ -101,13 +114,33 @@ export function spaceGroupSymbolKey(symbol){
   .replace(/(\d)[\u0304\u0305]/gu,'-$1').replace(/[‐‑‒–—−]/gu,'-')
   .replace(/(\d)_(?=\d)/gu,'$1').replace(/\s/gu,'');
 }
+const knownSpaceGroupSymbols=new Set(Object.keys(hmAliases).map(spaceGroupSymbolKey));
+
+export function canMatchExactGroup(query){
+ const number=spaceGroupNumberForQuery(query);
+ return number?Number(number)<=230:
+  isFullMagneticGroupQuery(query)||knownSpaceGroupSymbols.has(spaceGroupSymbolKey(query));
+}
+
+function exactSpaceGroups(entries,number,symbol){
+ if(number)return entries.filter(item=>item.route===`atlas/sg?q=${number}`);
+ return symbol?entries.filter(item=>item.route?.startsWith('atlas/sg?q=')&&
+  item.symbols?.some(alias=>spaceGroupSymbolKey(alias)===symbol)):[];
+}
+
+export function matchExactGroups(entries,query){
+ if(isFullMagneticGroupQuery(query)){
+  return matchMagneticGroupQuery(entries.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds)??[];
+ }
+ const number=spaceGroupNumberForQuery(query);
+ return number&&Number(number)>230?[]:exactSpaceGroups(entries,number,spaceGroupSymbolKey(query));
+}
 
 export function searchCatalogEntries(entries,query,limit=30){
  const magnetic=matchMagneticGroupQuery(entries.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds);
  const spaceNumber=spaceGroupNumberForQuery(query);
  const symbol=magnetic===null&&!spaceNumber?spaceGroupSymbolKey(query):'';
- const space=spaceNumber?entries.filter(item=>item.route===`atlas/sg?q=${spaceNumber}`)
-  :symbol?entries.filter(item=>item.route.startsWith('atlas/sg?q=')&&item.symbols?.some(alias=>spaceGroupSymbolKey(alias)===symbol)):[];
+ const space=exactSpaceGroups(entries,spaceNumber,symbol);
  const others=entries.filter(item=>!space.includes(item)&&(magnetic===null||!magneticRoute.test(item.route)));
  return [...(magnetic??[]),...space,...searchEntries(others,query,limit)].slice(0,limit);
 }

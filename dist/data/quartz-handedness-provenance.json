@@ -26,13 +26,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 106627,
-      "sha256": "6a4cca814e6ae24a5f928bbf3be37ba108992fe9ba9db81c23c8cce982fb085d"
+      "bytes": 106522,
+      "sha256": "9e36fa7c119e2ae95809366644144e63d5b55fa41335c6e68d17a38d61e85ec3"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32804,
-      "sha256": "ab23a1176dc272fca9c106d43e9b1f12011c8d498c85088410413c00e28f107d"
+      "bytes": 32802,
+      "sha256": "88da3a591b0cc0625f5e68c91c760010bfb962f91e8d88794773c86c7bc9a1ae"
     },
     "dist/crystkit-handedness-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -71,8 +71,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 36935,
-      "sha256": "94081a4e5c91367e08bc845cf58e64508953acd3472cf06fa8a838e79e6a2d04"
+      "bytes": 38267,
+      "sha256": "4be62fc86ee6ce38227460dcc92fdd7f6b80a02bf1c19d239d191a5fc34a9497"
     },
     "dist/python/structure_bc.py": {
       "normalization": "utf8-lf-v1",
@@ -81,8 +81,8 @@
     },
     "dist/quartz-structure-practice.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2357,
-      "sha256": "b44774cdf9d67bcbb660e68a3eebecd9fdd99a0f31a26777b956a5b66e011cd5"
+      "bytes": 2494,
+      "sha256": "833323bfa3e72e96b000853f546179a1e445cb315f0e8264e0c58386c782e1de"
     },
     "dist/research-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -91,13 +91,13 @@
     },
     "dist/structure-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31074,
-      "sha256": "29ba07d465db6253d7e810c9650e5c3d38d28a5d0763998d9176867f7d35dd9a"
+      "bytes": 31072,
+      "sha256": "42e64cb11ca9b92d74443b084d519c139742ea372ad272292c0a1c5734c2fc36"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13416,
-      "sha256": "81828ed06deb09045bc9c2b21f58bbc79a309e1cc417e9107e6a9a67b97ed8ce"
+      "bytes": 14004,
+      "sha256": "c0e95f96784c149ab616a46053a94360cf2a3f2b1359839da4e76d59a8cdac2a"
     },
     "locales/en-crystkit-handedness.json": {
       "normalization": "utf8-lf-v1",
@@ -116,8 +116,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 29386,
-      "sha256": "23c541341c0f93c34438b969f26a1d607ccafcb21829bb45779f32ed7185864b"
+      "bytes": 29539,
+      "sha256": "8e0fabff3549b3b3ad788cd35f61720588b6971f8e87a4721a2ce35d90d0e333"
     },
     "scripts/build-quartz-handedness-provenance.mjs": {
       "normalization": "utf8-lf-v1",

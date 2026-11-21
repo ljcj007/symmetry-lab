@@ -76,6 +76,8 @@ catalogFiles.push('en-zno-raman-bridge.json','en-rashba-trim-bridge.json','en-re
 catalogFiles.push('en-learning-activity-search.json','en-seitz-little-group.json');
 catalogFiles.push('en-antiunitary-screw.json');
 catalogFiles.push('en-quartz-conjugacy-ui.json');
+catalogFiles.push('en-symmetry-course-feedback.json','en-quartz-extinction-ui.json');
+catalogFiles.push('en-next-paths.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

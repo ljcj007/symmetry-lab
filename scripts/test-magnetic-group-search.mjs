@@ -19,12 +19,12 @@ Element.prototype.fire=function(name){for(const handler of this.events?.[name]??
 Element.prototype.focus=function(){document.activeElement=this;};
 Element.prototype.remove=function(){this.parentNode.children=this.parentNode.children.filter(child=>child!==this);};
 
-for(const edition of ['../dist/','../dist/en/']){
+for(const edition of process.argv.includes('--source-only')?['../dist/']:['../dist/','../dist/en/']){
  const address=file=>new URL(edition+file,import.meta.url);
  const {toolsIndex,renderNavigationHub}=await import(address('navigation-ui.js'));
  const {finderResults,startToolFinder}=await import(address('tool-finder.js'));
  const {isFullMagneticGroupQuery,matchMagneticGroupQuery}=await import(address('magnetic-group-query.js'));
- const {spaceGroupNumberForQuery,spaceGroupSymbolKey}=await import(address('tool-search.js'));
+ const {spaceGroupNumberForQuery,spaceGroupSymbolKey,canMatchExactGroup,matchExactGroups}=await import(address('tool-search.js'));
  const index=JSON.parse(readFileSync(address('data/search-index.json')));
  const indexedGroups=index.entries.filter(item=>item.route.startsWith('atlas/msg?q='));
  assert.equal(indexedGroups.length,expectedOg.size);
@@ -54,6 +54,24 @@ for(const edition of ['../dist/','../dist/en/']){
  const symbolQueries=[['C222','21'],['P 4','75'],['P4_1','76'],['P 4₃','78'],['P2_1/c','14'],['Fm3̅m','225']];
  for(const [query,id]of symbolQueries){
   for(const scope of ['groups','all'])assert.equal(finderResults(entries,query,{scope})[0]?.route,'atlas/sg?q='+id,query);
+  assert.ok(canMatchExactGroup(query),query);
+  assert.deepEqual(matchExactGroups(entries,query).map(item=>item.route),['atlas/sg?q='+id],query);
+ }
+ for(const group of index.entries.filter(item=>item.route.startsWith('atlas/sg?q='))){
+  for(const query of group.symbols){
+   assert.ok(canMatchExactGroup(query),edition+' matches every indexed HM alias before load: '+query);
+   assert.ok(matchExactGroups(entries,query).some(item=>item.route===group.route),edition+' exact HM: '+query);
+  }
+ }
+ for(const [query,route]of [['SG 225','atlas/sg?q=225'],['230','atlas/sg?q=230'],['BNS 62.448',routeFor('62.448')],['OG 62.8.509',routeFor('62.448')]]){
+  assert.ok(canMatchExactGroup(query),query);
+  assert.deepEqual(matchExactGroups(entries,query).map(item=>item.route),[route],query);
+ }
+ assert.ok(canMatchExactGroup('BNS 999.999'),'A complete magnetic identifier still needs an index lookup');
+ assert.deepEqual(matchExactGroups(entries,'BNS 999.999'),[],'Unknown identifier never falls back to tool keywords');
+ for(const query of ['SG 231','BNS 62.','OG 62.8.','band','band.yaml','CIF','P4 P41 P43',"P4_1'"]){
+  assert.equal(canMatchExactGroup(query),false,query);
+  assert.deepEqual(matchExactGroups(entries,query),[],query);
  }
  assert.ok(finderResults(entries,'P4',{scope:'groups'}).some(item=>item.route==='atlas/sg?q=76'),'Exact symbols retain related partial results');
  assert.ok(finderResults(entries,"P4_1'",{scope:'groups'}).every(item=>item.route!=='atlas/sg?q=76'),'A prime must not disappear from the symbol');

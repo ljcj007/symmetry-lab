@@ -5,6 +5,7 @@ import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlow
 import {setMaterialResearchInput} from './material-research-ui.js?v=20261122-phenomena1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261120-lesson-topic1';
+import {quartzExtinctionHTML,bindQuartzExtinction} from './quartz-extinction-ui.js?v=20261122-nextpaths1';
 import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -91,7 +92,7 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  const importedDiffraction=selection.calculationOnly&&tool==='diffraction'?validateStructureDiffractionHandoff(selection.diffractionHandoff):null;
  let sourceGeometry=importedDiffraction?diffractionGeometry(importedDiffraction.custom):null;
  let diffractionSource=importedDiffraction?.source||null,hasMaterialBackground=!importedDiffraction,satelliteEvidence=null;
- const satelliteState={};let stopSatellite=()=>{},satelliteOpen=selection.preset==='zno-satellite';
+ const satelliteState={};let stopSatellite=()=>{},stopQuartz=()=>{},satelliteOpen=selection.preset==='zno-satellite';
  try{const p=JSON.parse(localStorage.getItem('symmetry-lab.structure-dynamics.progress.v1')||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))progress=p;}catch{}
  const sync=()=>onNavigate({tab,lesson:lesson.id,experiment:tool,material:hasMaterialBackground?material.id:undefined,exercise:exercise.id});
  function applyMaterial(){if(['silicon','gaas','nacl'].includes(material.id)){forms.diffraction.preset=material.id;forms.diffraction.latticeConstant={silicon:5.43,gaas:5.65,nacl:5.64}[material.id];}forms.diffraction.scatteringFactors=structuredClone(material.expected?.scatteringFactors||{});forms.diffraction.hkl=({silicon:[2,2,0],nacl:[1,1,1],gaas:[2,0,0]})[material.id]||[2,2,0];}
@@ -151,7 +152,7 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  function links(c){
   const classroomRoute=c.routes?.classroom??`#classroom/structure-dynamics?material=${encodeURIComponent(c.id)}&lesson=${encodeURIComponent(c.lessonIds[0])}`;
   return `<div class="obs-links"><a href="${esc(classroomRoute)}">Browse the materials learning pathways →</a><a href="#compute/${c.id==='batio3'?'phase':'diffraction'}?material=${esc(c.id)}">${c.id==='batio3'?"Phase transitions and domains":"Diffraction and extinction"} →</a><a href="#compute/phonopy?material=${esc(c.id)}">Import your own Phonopy data →</a>${c.id==='batio3'?"<a href=\"#compute/tensors?preset=tetragonal_4mm\">polarity Phase tensor constraints →</a>":`<a href="#atlas/materials?material=${esc(c.id)}">Structure and Symmetry Operation →</a><a href="#classroom/observables?material=${esc(c.id)}">phonon and physical properties class →</a>`}</div>`;}
- function draw(){if(!current())return;const previous=$('[data-dyn-zno-satellite]');if(previous)satelliteOpen=previous.open;stopSatellite();stopSatellite=()=>{};stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
+ function draw(){if(!current())return;const previous=$('[data-dyn-zno-satellite]');if(previous)satelliteOpen=previous.open;stopSatellite();stopSatellite=()=>{};stopQuartz();stopQuartz=()=>{};stop();if(tab==='lab'&&tool==='phase')material=data.cases.find(c=>c.id==='batio3');if(tab==='lab'&&tool==='diffraction'&&material.id==='batio3')material=data.cases.find(c=>c.id==='silicon');onLocation((selection.calculationOnly?"Computing Center / ":selection.atlasOnly?"material map / ":"Learning center / ")+(selection.calculationOnly?names[tool]:"Structures, phase transitions and experiments"));
  const backgrounds=data.cases.filter(c=>tab!=='lab'||(tool==='phase'?c.id==='batio3':tool==='diffraction'?c.id!=='batio3':true)).map(c=>[c.id,c.formula+' · '+c.name]);
  if(!hasMaterialBackground)backgrounds.unshift(['',"Custom input"]);
  root.innerHTML=`<header class="obs-header"><span class="obs-eyebrow">STRUCTURE → DISTORTION → OBSERVATION</span><h2>${selection.calculationOnly?names[tool]:selection.atlasOnly?"Connecting structure, dynamics and experiments from one material":"How do structures change, and how do experiments detect it?"}</h2><p>from order parameter and domains, to diffraction cancellation, and then check the dynamics with your own phonon data.</p></header>${selection.calculationOnly||selection.atlasOnly?'':`<nav class="obs-tabs" aria-label="Structural Dynamics Course">${[['learn',"course explanation"],['lab',"Interactive experiments"],['derive',"Guided exercises"],['cases',"Material study paths"]].map(([id,title])=>`<button type="button" data-dyn-tab="${id}" class="${tab===id?'active':''}" aria-pressed="${tab===id}">${title}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>material learning route (background)<select id="dyn-material">${opts(backgrounds,hasMaterialBackground?material.id:'')}</select></label>${hasMaterialBackground?`<p>${esc(material.summary)}${tool==='phonopy'&&tab==='lab'?" The imported file determines the structure; this case name does not specify it.":''}</p>`:''}</div>
@@ -168,7 +169,9 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  }
  function learn(){$('#dyn-content').innerHTML=`<label class="obs-chapter">Select theme<select id="dyn-lesson">${opts(data.lessons.map(l=>[l.id,l.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(x=>`<aside class="obs-example"><h3>${esc(x.title)}</h3><ol>${x.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><strong>${esc(x.result)}</strong></aside>`).join('')}<div class="obs-links"><button class="primary" id="dyn-to-lab">Open ${names[lesson.tool]} →</button><button class="secondary" id="dyn-to-exercise">step-by-step derivation →</button></div>
  ${lesson.id==='structure-factor'?"<aside class=\"obs-model-note\" id=\"dyn-structure-practice\"><p>You can also open a POSCAR or CIF and test your own reflection indices in the reciprocal basis of the input cell.</p><a href=\"#structure\">Read a structure and prepare diffraction input →</a></aside>":''}
- ${lesson.id==='phonopy-files'?phonopyAlGammaEntry:''}${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${lesson.tool==='diffraction'?znoSatelliteLesson:''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+ ${lesson.id==='screw-glide'?quartzExtinctionHTML():''}${lesson.id==='phonopy-files'?phonopyAlGammaEntry:''}${lesson.tool==='phonopy'?phonopyZnOEntryHTML():''}${lesson.tool==='diffraction'?znoSatelliteLesson:''}${links(material)}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
+ const quartz=$('[data-quartz-extinction]');
+ if(quartz)stopQuartz=bindQuartzExtinction(quartz,{run,isCurrent:()=>current()&&tab==='learn'&&$('[data-quartz-extinction]')===quartz});
  $('#dyn-lesson').onchange=e=>{invalidate();lesson=data.lessons.find(l=>l.id===e.target.value);exercise=data.exercises.find(x=>x.lesson===lesson.id);tool=lesson.tool;draw();sync();};$('#dyn-to-exercise').onclick=()=>{invalidate();exercise=data.exercises.find(e=>e.lesson===lesson.id);tab='derive';draw();sync();};}
  function applyLessonPreset(){
   if(tool==='phase'){Object.assign(forms.phase,structuredClone(defaults.phase));material=data.cases.find(c=>c.id==='batio3');}
@@ -308,5 +311,5 @@ export async function renderStructureDynamicsView({container,selection={},run,ca
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)applyLessonPreset();
  draw();
  if(selection.preset==='phonopy-zno'&&tool==='phonopy'&&tab==='lab')await loadPhonopyExample('zno');
- return ()=>{stopSatellite();stop();};
+ return ()=>{stopSatellite();stopQuartz();stop();};
 }

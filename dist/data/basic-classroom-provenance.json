@@ -37,24 +37,24 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 106627,
-      "sha256": "6a4cca814e6ae24a5f928bbf3be37ba108992fe9ba9db81c23c8cce982fb085d"
+      "bytes": 106522,
+      "sha256": "9e36fa7c119e2ae95809366644144e63d5b55fa41335c6e68d17a38d61e85ec3"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32804,
-      "sha256": "ab23a1176dc272fca9c106d43e9b1f12011c8d498c85088410413c00e28f107d"
+      "bytes": 32802,
+      "sha256": "88da3a591b0cc0625f5e68c91c760010bfb962f91e8d88794773c86c7bc9a1ae"
     },
     "dist/navigation-ui.js": {
-      "bytes": 36935,
-      "sha256": "94081a4e5c91367e08bc845cf58e64508953acd3472cf06fa8a838e79e6a2d04"
+      "bytes": 38267,
+      "sha256": "4be62fc86ee6ce38227460dcc92fdd7f6b80a02bf1c19d239d191a5fc34a9497"
     },
     "dist/tool-directory.js": {
-      "bytes": 3084,
-      "sha256": "0e9801b79d8de3291d63cf768c8b60bd120eb072498634a9f8fba9cdef628cdd"
+      "bytes": 3085,
+      "sha256": "1f542ba52223d112945e7f856d4f7746732474bc0684a2cf8a9adc80dbbcb623"
     },
     "dist/tool-finder.js": {
-      "bytes": 13416,
-      "sha256": "81828ed06deb09045bc9c2b21f58bbc79a309e1cc417e9107e6a9a67b97ed8ce"
+      "bytes": 14004,
+      "sha256": "c0e95f96784c149ab616a46053a94360cf2a3f2b1359839da4e76d59a8cdac2a"
     },
     "dist/lie-foundations-ui.js": {
       "bytes": 9320,
@@ -65,16 +65,16 @@
       "sha256": "bc1dfda79d04be8411745d42bb9b8ac9cdbcd8c05b739786413218d392550cae"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 109681,
-      "sha256": "4f96549babdc62e477a4013eeff6d9a1aaa490008b7a5c3f509f82ffc57a9c7e"
+      "bytes": 111232,
+      "sha256": "cc8d78001964d1fe0adfd8cdff3337cc5c1d2b4a6d8618626774e96038b9a803"
     },
     "dist/python-client.js": {
-      "bytes": 3143,
-      "sha256": "10031e3fab8a66f31c4b237157a1559950798ac51828831546653e337148e5da"
+      "bytes": 3141,
+      "sha256": "2959c4cf068aec7b647bc7a23b50758fc2a0231aee3a4db2d40b56b5e669fb77"
     },
     "dist/python-worker.js": {
-      "bytes": 12271,
-      "sha256": "6ed28509c0741e5cb5b76ed20c7f361928b82cae327b01afd4ff776872d177dd"
+      "bytes": 12475,
+      "sha256": "e4ea60278dac3511fca88b54ace196515084df6bbdc904deb52fa373ccb0a8cb"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 163590,
@@ -85,8 +85,8 @@
       "sha256": "cbe1e998e105e9ad53b10fb97afe46639b99b18cd3431447621714d089e16a70"
     },
     "dist/data/symmetry-course-lessons.json": {
-      "bytes": 108677,
-      "sha256": "2eadcba2a153dd24cf7fc832f6923c899b7c84639b0b46d3138c4cae86005930"
+      "bytes": 121030,
+      "sha256": "88b7094f002fc80bde2be66d77cf11de0705df56c27f3d350308e94bda29a6cd"
     },
     "dist/data/symmetry-derivations.json": {
       "bytes": 60362,

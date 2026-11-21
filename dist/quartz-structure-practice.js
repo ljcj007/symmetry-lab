@@ -22,6 +22,7 @@ export function quartzStructurePracticeHTML(open){
     <p id="structure-quartz-status" class="form-note" role="status" tabindex="-1" hidden></p>
     <details class="structure-details"><summary>核对三个结构结果</summary><p>原始结构识别为空间群 154。固定晶格的主动镜像变为空间群 152，同时改变坐标和晶格基矢的被动换基仍是空间群 154。三个结构都含 3 个 Si 位点和 6 个 O 位点。</p></details>
     <p class="form-note">两份 POSCAR 是从原始 CIF 派生的教学几何。各向异性热位移保留在完整原文件中。</p>
+    <p><a href="#classroom/structure-dynamics?tab=learn&amp;lesson=screw-glide">用同一 CIF 核对镜像后的衍射消光 →</a></p>
     <p class="controls-row"><a href="data/examples/quartz-298k/9005017.cif" download="9005017.cif">下载保留原字节的 CIF ↓</a><a href="docs/quartz-handedness.md">查看结构来源与换基说明 ↗</a><a href="#crystkit?preset=quartz-handedness">在 CrystKit 核对空间群操作 →</a></p>
   </details>`;
 }
