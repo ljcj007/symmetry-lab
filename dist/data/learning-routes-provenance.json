@@ -43,7 +43,8 @@
     "Named spectra, time reversal, triangle projection and double-screw activities open their exact routes from the quick finder, home search and calculator directory. Activity aliases preserve strict group and material scopes, and opening an activity waits for user input before running a calculation.",
     "The space-group 4 single-valued comparison checks screw little-group membership modulo reciprocal translations before comparing the square phase. The proposed momenta hand off to the workbench with explicit settings and manual calculation.",
     "The entrance and first lesson use the same square rotation and mirror sequence before making the transition to matrix representations. The first lesson keeps its optional operation exercise lazy.",
-    "The BNS 4.8 comparison derives the spinful antiunitary square at three cuts and hands off to explicit common-basis workbench inputs. Reference calculations verify a one-dimensional a-type corepresentation at the center and a two-dimensional b-type corepresentation at the boundary. Matching atlas entries link to the relevant ordinary and magnetic lessons."
+    "The BNS 4.8 comparison derives the spinful antiunitary square at three cuts and hands off to explicit common-basis workbench inputs. Reference calculations verify a one-dimensional a-type corepresentation at the center and a two-dimensional b-type corepresentation at the boundary. Matching atlas entries link to the relevant ordinary and magnetic lessons.",
+    "The authentic 298 K quartz case derives every site orbit from the six operation rows in the pinned CIF. Independent checks recover the three Si site stabilizers, the six O sites, the positive unit-cell correction at the second Si site and the Si permutation character (3, 1, 0). The finder, space-group record and S3 conjugacy experiment link into the same exercise."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -62,8 +63,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 87720,
-      "sha256": "ae0cbfb4a85733fe0a8620be9bc6f43d45366f99c097bb2f06a3022849ffece0"
+      "bytes": 88409,
+      "sha256": "4de623389dbe0c8cdec0e52cd8b1f4368f3ad76616ae16f79d39ff35fcaa1678"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -78,8 +79,8 @@
       "sha256": "3d234314e6134f24d538324936ad55c068e5c6184f70ad1d35531f2db8f8a79c"
     },
     "dist/app.js": {
-      "bytes": 106407,
-      "sha256": "aeb6111535b363e4ca7d4b483a89d09c3a6e84cf581291828ea2219c77c13c93"
+      "bytes": 106627,
+      "sha256": "6a4cca814e6ae24a5f928bbf3be37ba108992fe9ba9db81c23c8cce982fb085d"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -98,8 +99,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32801,
-      "sha256": "e09bf17dc876eaf1ab943035c2acb2aacfc8aec96ef1b8d7dc02564322661366"
+      "bytes": 32804,
+      "sha256": "ab23a1176dc272fca9c106d43e9b1f12011c8d498c85088410413c00e28f107d"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -310,20 +311,20 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/group-theorems.js": {
-      "bytes": 29045,
-      "sha256": "c1d71a4d23bace51cde11bd42b6e1a0c9814539f5b598e93b9aea5eb6b6f7741"
+      "bytes": 29180,
+      "sha256": "0a0a1635a0bae8b7395985cc7f4235b282fb712e5c05d8820f7551e80575c131"
     },
     "dist/index.html": {
-      "bytes": 8423,
-      "sha256": "387fd023a691130d507c528f3e476b2f44f71d51dabb55f3721053b9f57bcc62"
+      "bytes": 8428,
+      "sha256": "e841a0ed040d2c4824299e0a3bb0c87bda3882a0574b175f4394022a57f4c1bd"
     },
     "dist/learning-activity-aliases.js": {
-      "bytes": 1490,
-      "sha256": "b05f509eb4a78564ff688f741feee443b4cb8b38d5589ce2f7f924b1113a0c43"
+      "bytes": 1705,
+      "sha256": "131af33a62ab253747ec5186d12ce403a6699f930b15d6151e2aafbdbe904dec"
     },
     "dist/learning-activity-search.js": {
-      "bytes": 2460,
-      "sha256": "c51320a06dd74ca9094388ccd662c374018be24756ad9dae8b9494cf92d1688a"
+      "bytes": 2875,
+      "sha256": "496cb83841e02c52c9573749dabdbe821eb2661ce5ec733555fa2954d63e5c49"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -334,8 +335,8 @@
       "sha256": "dae690760467b7bcadadcfd21e0dc29a6d93d1893d630ec1b57ab8ca95b13060"
     },
     "dist/lesson-topic-finder.js": {
-      "bytes": 1711,
-      "sha256": "3bc8c565d3f66e66944ce76716db762969ddecf04820ba473875df45f54959c4"
+      "bytes": 1716,
+      "sha256": "d2a29acdc2152c1dfa27bc9d5fdb9cc5480175979dfd79f91f2c60426056bce6"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,
@@ -354,8 +355,8 @@
       "sha256": "4ee478e59cc7c02605f8fc0f76f752d9741944a97ec38164bef4fd1b0d6444cd"
     },
     "dist/navigation-ui.js": {
-      "bytes": 36920,
-      "sha256": "fffa92dc7f566a254addb9996ce99c53f4baceaffc047a04ae465e2d04359797"
+      "bytes": 36935,
+      "sha256": "94081a4e5c91367e08bc845cf58e64508953acd3472cf06fa8a838e79e6a2d04"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -378,12 +379,12 @@
       "sha256": "a60959782e6495305c3418c78e0de9c63c66dae31a74b900faf2d5d9ef4df389"
     },
     "dist/python-client.js": {
-      "bytes": 3140,
-      "sha256": "72ebc4f9a2e826cd452aef54762b12b76a0e72ff9b37cb035767188c3acc6650"
+      "bytes": 3143,
+      "sha256": "10031e3fab8a66f31c4b237157a1559950798ac51828831546653e337148e5da"
     },
     "dist/python-worker.js": {
-      "bytes": 12061,
-      "sha256": "4f562d8b8b10258f996f77b02e98ea4d95ceabfe43cf7ff2de0d1b6df944ceab"
+      "bytes": 12271,
+      "sha256": "6ed28509c0741e5cb5b76ed20c7f361928b82cae327b01afd4ff776872d177dd"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -477,6 +478,10 @@
       "bytes": 23271,
       "sha256": "4505784a1b62e5f4442b3995407f449575bd39f8d497b0baf947ef202232d44f"
     },
+    "dist/python/quartz_conjugacy.py": {
+      "bytes": 6942,
+      "sha256": "f7255da7d0631b2dd64207a08dc086385d09bfc614a74b62f5cfa7801db0dad0"
+    },
     "dist/python/salc_lab.py": {
       "bytes": 19473,
       "sha256": "ab58759178e9da1798ac8399976e39c533d4e67b83ec298e839a7af33da9f7f0"
@@ -545,6 +550,14 @@
       "bytes": 37652,
       "sha256": "71a252847707d528b88dd03ba0ebddae2cc4838bf9602fc3f77cb53f8d2e9861"
     },
+    "dist/quartz-conjugacy-ui.js": {
+      "bytes": 9963,
+      "sha256": "368fcc02d091183449bd3f6593be392c76d9e6fde209b8ae2e0c685be4f04258"
+    },
+    "dist/quartz-structure-practice.js": {
+      "bytes": 2357,
+      "sha256": "b44774cdf9d67bcbb660e68a3eebecd9fdd99a0f31a26777b956a5b66e011cd5"
+    },
     "dist/research-ui.js": {
       "bytes": 26507,
       "sha256": "3d25c8a313d92f20ca989b0d896795e992304899a45b1522ab1ee625e4d8ec1e"
@@ -590,8 +603,8 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 109227,
-      "sha256": "421086095af9aff176467ff71b9550794ef2df8836f3705d1ddef516d5de7bf4"
+      "bytes": 109681,
+      "sha256": "4f96549babdc62e477a4013eeff6d9a1aaa490008b7a5c3f509f82ffc57a9c7e"
     },
     "dist/symmetry-mini-demos.js": {
       "bytes": 33021,
@@ -602,8 +615,8 @@
       "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
     },
     "dist/tool-finder.js": {
-      "bytes": 13401,
-      "sha256": "f313f0e05da2d3cf081362c18b7eaa8c4a907a45b1ce156c5e55ad66769b1efa"
+      "bytes": 13416,
+      "sha256": "81828ed06deb09045bc9c2b21f58bbc79a309e1cc417e9107e6a9a67b97ed8ce"
     },
     "dist/tool-search.js": {
       "bytes": 6264,
@@ -737,6 +750,10 @@
       "bytes": 983,
       "sha256": "a98b79907f6a791fd52fb69da15835e26fab83ca69c0b58f91672cb4388990b6"
     },
+    "locales/en-quartz-conjugacy-ui.json": {
+      "bytes": 4699,
+      "sha256": "b6fa412630723044d76c29b630667969e579f495bd0ef9a71f2c77f1cd0e369e"
+    },
     "locales/en-rashba-trim-bridge.json": {
       "bytes": 3974,
       "sha256": "76e9278ccd5c9ae237c3c7cfd7ca7a6259803c0833d529e6ce15f28f99798585"
@@ -782,12 +799,12 @@
       "sha256": "c7bacf2ba45e316bbeab9c1fba662157cba11b37a57286edb6ed3cd4d3fb4988"
     },
     "package.json": {
-      "bytes": 29236,
-      "sha256": "2b65de299f4a87afeab9e604840fc232880d905bd2f73bde5f0c94a533591f13"
+      "bytes": 29386,
+      "sha256": "23c541341c0f93c34438b969f26a1d607ccafcb21829bb45779f32ed7185864b"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 23191,
-      "sha256": "d0c6981678784ccb5101f63d0fef238ccdc863e0d20dfa898d0b1966e9522920"
+      "bytes": 23946,
+      "sha256": "f2495a99b52a9a2c4c35b613614cbb48c34ca1c47b6fffb7deb4f220ce1f41a7"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -798,12 +815,16 @@
       "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 7271,
-      "sha256": "6e16c7f77b1d80d5327da89a755749daafb041f80cff909e76f7873719d78fc2"
+      "bytes": 7321,
+      "sha256": "84c967a93b322660933c65a4c3d21b4d0e8f4a7a44bcb3909bf0c2b24155cce5"
     },
     "scripts/english-source.mjs": {
       "bytes": 5568,
       "sha256": "0e29536a102cd19be3af87084dfff06d79492abb07fc755b0a59a68a8881c17d"
+    },
+    "scripts/fixtures/quartz-conjugacy.json": {
+      "bytes": 2872,
+      "sha256": "e91a167bd8a6041bb4c84fbdf76b6e8534a68dcc9361fa98cae11bec08f4fdb4"
     },
     "scripts/search-catalog-source.mjs": {
       "bytes": 9498,
@@ -1001,6 +1022,10 @@
       "bytes": 27627,
       "sha256": "1868e22d96dbf8334b77321542759ed6cb2d1c11f01c76c679523c140de311f1"
     },
+    "scripts/test-python-quartz-conjugacy.py": {
+      "bytes": 5765,
+      "sha256": "4b73194dfa64577b64d7be6fac552e6d23f89e29618ff12611a5cb0e32f2260b"
+    },
     "scripts/test-python-structure-bc.py": {
       "bytes": 34413,
       "sha256": "3608b33fb3f642529528d3eebc39b42fbe868e93386e35c9149223c6276361d4"
@@ -1016,6 +1041,10 @@
     "scripts/test-qe-si-navigation.mjs": {
       "bytes": 4997,
       "sha256": "89ffc8396d7aa460deae582bd2c9f98843b6ef256074ed23592e5e75bf773899"
+    },
+    "scripts/test-quartz-conjugacy-ui.mjs": {
+      "bytes": 4250,
+      "sha256": "7a19d0df9a7aafee6d87ec6358371920bfc1d12b0cbb3ca784b5b236809bbefa"
     },
     "scripts/test-recent-lesson-names.mjs": {
       "bytes": 3084,
@@ -1042,8 +1071,8 @@
       "sha256": "3613a9c63ec99364af26b7ce1dc1df3b6fd6553013f8ab57898885ac87620789"
     },
     "scripts/test-tool-finder.mjs": {
-      "bytes": 12658,
-      "sha256": "bed32c01d5a9a8404b27787f36868696e218e6b8c81bcea3ab4554a03bd2a119"
+      "bytes": 12760,
+      "sha256": "11a3d41e1842819616be38a8395e982da1f353f5c4ddd3ea209b4c391ceaadf6"
     },
     "scripts/test-workbench-group-numbers.mjs": {
       "bytes": 8050,

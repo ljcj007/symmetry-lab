@@ -24,4 +24,8 @@ export const activityAliases = {
     'antiunitary screw', 'antiunitary screw nodal plane', 'screw time reversal', 'screw nodal plane',
     '反幺正螺旋', '反幺正螺旋 区边界', '螺旋 时间反演', '螺旋 节面简并'
   ],
+  quartzStabilizers: [
+    'quartz site stabilizer', 'quartz stabilizers', 'quartz conjugacy', 'quartz silicon orbit',
+    '石英 位点稳定子', '石英位点稳定子', '石英 共轭', '石英 Si 位点'
+  ],
 };

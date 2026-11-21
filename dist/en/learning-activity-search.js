@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-antisc1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-quartzclass1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -41,5 +41,13 @@ export const learningActivities = [
     keywords: "antiunitary screw nodal plane zone boundary time reversal BNS 4.8 magnetic little group degeneracy",
     kind: "Lesson",
     activityAliases: activityAliases.antiunitaryScrew
+  },
+  {
+    route: 'classroom/crystal?track=space&lesson=space-04',
+    title: "Conjugate site stabilizers in quartz",
+    summary: "Use the original 298 K α-quartz CIF to check the lattice correction and the Si permutation character.",
+    keywords: "quartz COD 9005017 site stabilizer conjugacy silicon oxygen CIF character",
+    kind: "Lesson",
+    activityAliases: activityAliases.quartzStabilizers
   }
 ];

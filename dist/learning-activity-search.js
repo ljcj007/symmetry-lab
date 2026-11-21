@@ -1,4 +1,4 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-antisc1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-quartzclass1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
@@ -41,5 +41,13 @@ export const learningActivities = [
     keywords: 'antiunitary screw nodal plane zone boundary time reversal BNS 4.8 反幺正 螺旋 磁群 区边界 简并 小群',
     kind: '课程',
     activityAliases: activityAliases.antiunitaryScrew
+  },
+  {
+    route: 'classroom/crystal?track=space&lesson=space-04',
+    title: '石英位点稳定子的共轭',
+    summary: '用 298 K α 石英原始 CIF 核对 Si 位点的整格修正与置换特征标。',
+    keywords: 'quartz COD 9005017 site stabilizer conjugacy silicon oxygen CIF 石英 位点 稳定子 共轭 特征标',
+    kind: '课程',
+    activityAliases: activityAliases.quartzStabilizers
   }
 ];

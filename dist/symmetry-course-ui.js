@@ -2,6 +2,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
 import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-antisc1';
 import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';
+import {quartzConjugacyHTML,bindQuartzConjugacy} from './quartz-conjugacy-ui.js?v=20261122-quartzclass1';
 import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
@@ -292,6 +293,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?'<p><a id="sc-rashba-trim-link" href="#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check">用这三个波矢比较能谱与时间反演 →</a></p>':''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
+      ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzConjugacyHTML():''}
       ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
       ${lesson.id==='magnetic-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?antiunitaryScrewHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
@@ -319,6 +321,10 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     });
     const antiunitaryScrew=$('#sc-antiunitary-screw');
     if(antiunitaryScrew)disposeLessonComparison=bindAntiunitaryScrew(antiunitaryScrew);
+    const quartz=$('[data-quartz-conjugacy]');
+    if(quartz)disposeLessonComparison=bindQuartzConjugacy(quartz,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('[data-quartz-conjugacy]')===quartz
+    });
   }
   function bindSeitzQuotientHost(){
     const detail=$('[data-seitz-quotient-entry]');

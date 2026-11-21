@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29165,
-  "translatedUnits": 29165,
+  "sourceUnits": 29201,
+  "translatedUnits": 29201,
   "missing": [],
-  "files": 533,
+  "files": 534,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -192,6 +192,7 @@
     "en-response-bridges-docs.json",
     "en-learning-activity-search.json",
     "en-seitz-little-group.json",
-    "en-antiunitary-screw.json"
+    "en-antiunitary-screw.json",
+    "en-quartz-conjugacy-ui.json"
   ]
 }

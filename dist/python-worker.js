@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261122-fourfold1';
+const BUILD = '20261122-quartzclass1';
 const DATA_BUILD = '20261117-derive1';
 const plans = {
   group_theorems: ['group_theorems'],
@@ -37,6 +37,7 @@ const plans = {
   symbolic_spacegroups: ['magnetictb_browser', 'symbolic_core', 'symbolic_interfaces', 'symbolic_spacegroups'],
   standard_labels: ['magnetictb_browser', 'symbolic_core', 'standard_labels'],
   teaching_labs: ['crystal_labs', 'group_extensions', 'lie_applications', 'lie_labs', 'teaching_labs'],
+  quartz_conjugacy: ['spglib_runtime', 'structure_bc', 'crystkit_browser', 'quartz_conjugacy'],
   structure_bc: ['spglib_runtime', 'structure_bc']
 };
 let runtime;
@@ -139,6 +140,8 @@ try:
         _result = foundations_demos.run(_request['payload'])
     elif _request['action'] == 'symmetry_mini_demos':
         _result = symmetry_mini_demos.run(_request['payload'])
+    elif _request['action'] == 'quartz_conjugacy':
+        _result = quartz_conjugacy.run(_request['payload'])
     else:
         _result = browser_api.run(_request['action'], _request['payload'], _sg_database, _carat_catalogs.get(_request['payload'].get('dimension', 3)), _magnetic_database, _label_database)
     _output = json.dumps({'result': _result}, ensure_ascii=False, allow_nan=False)

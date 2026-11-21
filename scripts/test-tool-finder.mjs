@@ -32,7 +32,8 @@ const activities=[
  ['Rashba 时间反演','Rashba time reversal','classroom/foundations?module=mini&experiment=bands&preset=rashba-trim-check'],
  ['三顶点 投影矩阵秩','triangle projector rank','classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation'],
  ['双值螺旋 工作台','double screw eigenvalue','classroom/crystal?track=double&lesson=double-06'],
- ['反幺正螺旋','antiunitary screw','classroom/spin?track=magnetic&lesson=magnetic-04']
+ ['反幺正螺旋','antiunitary screw','classroom/spin?track=magnetic&lesson=magnetic-04'],
+ ['石英 位点稳定子','quartz site stabilizer','classroom/crystal?track=space&lesson=space-04']
 ];
 const localEntries=[...toolsIndex,...learningActivities];
 assert.deepEqual(englishActivities.map(item=>item.activityAliases),learningActivities.map(item=>item.activityAliases));

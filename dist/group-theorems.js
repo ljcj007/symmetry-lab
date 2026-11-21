@@ -89,6 +89,7 @@ function scene(t,p){
   classes.forEach((members,j)=>{const x=20+j*215;body+=`<rect x="${x}" y="60" width="200" height="225" rx="12" fill="#f2f7fa" stroke="#a2b8c5"/>`+text(x+100,90,['恒等类','对换类','三循环类'][j]);members.forEach((g,i)=>{body+=text(x+100,135+i*52,names[g],g===r.conjugate?'#ad6130':g===p.g?'#237a9c':'#35556a',20);});});
   html=`<h3>${math(String.raw`hgh^{-1}`)}=${esc(names[r.conjugate])}，仍在同一共轭类</h3><p>当前 g=${esc(names[p.g])}，h=${esc(names[p.h])}。共轭相当于用群内变换重新标记描述；共轭操作的表示矩阵相似，因而迹相同。</p><p>本页所有实验使用元素次序 e、三个对换、两个三循环；共轭类大小为 1、3、2。它与前面 D₃ 课堂按 E、2C₃、3C₂ 的列序不同。</p>`;
   task=exercise('是否每两个同阶元素都一定共轭？本页能支持多大的结论？',['共轭保持元素阶，因为(hgh⁻¹)ⁿ=hgⁿh⁻¹。','在S₃中，三个对换确实构成一个共轭类，两个三循环构成另一类。','阶相同是一般群中共轭的必要条件，并非充分条件；不能把这个小模型的分类直接推广到所有群。']);
+  html+='<p><a href="#classroom/crystal?track=space&amp;lesson=space-04">在 α 石英中核对三个 Si 位点的共轭 →</a></p>';
  }
  if(t==='normal'){
   r.leftCosets.forEach((c,i)=>{const x=30+i*210;body+=`<rect x="${x}" y="75" width="190" height="110" rx="12" fill="#eef5f8" stroke="#8babbc"/>`+text(x+95,108,`左陪集 ${i+1}`)+text(x+95,148,setLabel(c),undefined,13);});body+=text(330,239,'h H h⁻¹ = '+setLabel(r.conjugated),undefined,18)+text(330,285,r.normal?'对全体 h 都等于 H：正规':'存在 h 使共轭集合改变：非正规',r.normal?'#26786d':'#a85e34');

@@ -21,7 +21,7 @@ export function seitzLittleGroupHTML() {
     <form id="sc-seitz-little-group-form">
       <label for="sc-seitz-little-group-prediction">At which wavevectors do you predict that the screw belongs to the little group?</label>
       <select id="sc-seitz-little-group-prediction" required>
-        <option value="">Choose a prediction</option>
+        <option value="">Make a prediction</option>
         <option value="all">A, B and C</option>
         <option value="axis-only">A only</option>
         <option value="axis-boundary">A and C</option>
@@ -98,7 +98,7 @@ export function bindSeitzLittleGroup(host, {run, isCurrent, formatNumber, format
       <p><a href="#classroom/spin?tab=learn&amp;lesson=magnetic-04&amp;track=magnetic">Continue with B and test pairing under the antiunitary screw →</a></p>`;
   }
 
-  prediction.onchange = () => reset("Prediction changed. You can check it again.");
+  prediction.onchange = () => reset("Prediction changed. Run the check again.");
   cancel.onclick = () => {
     reset("Check canceled.");
     submit.focus();

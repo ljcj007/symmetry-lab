@@ -2,7 +2,7 @@ import {createResourceLoader} from './resource-loader.js?v=20261110-en1';
 import {studyMapHTML} from './learning-map.js?v=20261112-paths1';
 const courseDefinitions={
 'zero-start':{load:()=>import('./zero-start.js?v=20261122-antisc1'),render:'renderZeroStart',result:'getZeroStartResult'},
-'group-theorems':{load:()=>import('./group-theorems.js?v=20261122-class-bridges1'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
+'group-theorems':{load:()=>import('./group-theorems.js?v=20261122-quartzclass1'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261122-phenomena1'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261122-class-bridges1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
 'frontiers':{load:()=>import('./frontiers-ui.js?v=20261120-quartz-hand1'),render:'renderFrontiersView',result:'getFrontiersResult'}
@@ -14,7 +14,7 @@ const courseDefinitions={
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261117-derive1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261117-derive1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261122-antisc1'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-antisc1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-quartzclass1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261121-course-entry1'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261121-spectral1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261122-phenomena1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}

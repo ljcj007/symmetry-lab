@@ -515,3 +515,7 @@ establish that all existing scientific and teaching content has been audited.
 
 - The [magnetic symmetry lesson](dist/index.html#classroom/spin?track=magnetic&lesson=magnetic-04) holds the transverse coordinate fixed in gray group BNS 4.8. Learners predict where the composition returns a state to the same wavevector, then separately check where its square enforces equal-energy pairing. The linked workbench compares the one-dimensional, intermediate, and two-dimensional cases using the published magnetic operations. [Physical Review B](https://doi.org/10.1103/2f4l-tz7p)
 - The atlas records for ordinary space group 4 and BNS 4.8 link to their corresponding exercises. The exact bilingual name of the antiunitary screw activity also opens the magnetic lesson from the three search surfaces.
+
+## Read a conjugacy class from an authentic crystal structure
+
+- In the [site symmetry lesson](dist/index.html#classroom/crystal?track=space&lesson=space-04), learners predict which CIF operation fixes the second Si site modulo translations. The 298 K α-quartz exercise shows how conjugation carries the first site's stabilizer to the second and why the listed operation needs a positive translation by one cell along c to fix that point in real space. Counting the fixed sites in each class recovers the Si permutation character (3, 1, 0). The six O sites provide a contrast with a trivial stabilizer in the translation quotient. [COD 9005017](https://qiserver.ugr.es/cod/9005017.html)

@@ -128,7 +128,7 @@ function grapheneActivityHTML(){
    <label><input type="radio" name="mr-graphene-ideal" value="split"><span>Equal hopping amplitudes split the two energies</span></label>
    <label><input type="radio" name="mr-graphene-ideal" value="unknown"><span>The hopping value is needed to decide</span></label>
    <button id="mr-graphene-check-ideal" type="button" class="secondary">Check the prediction</button>
-   <p id="mr-graphene-ideal-status" class="learning-feedback" role="status">${ideal?"Correct prediction.":''}</p>
+   <p id="mr-graphene-ideal-status" class="learning-feedback" role="status">${ideal?"Your prediction was correct.":''}</p>
   </fieldset>
   <div id="mr-graphene-compare" ${ideal?'':'hidden'}>
    <p>The three phases add to  ${formula('1+\\omega+\\omega^2=0')}, so the off-diagonal hopping vanishes at K. The sublattices have equal on-site energies, which gives two equal eigenvalues at K.</p>
@@ -173,7 +173,7 @@ function bindGrapheneActivity(root,isCurrent){
  }
  bindAnswer('ideal','equal',{
   hint:"Put the three equal-length phase vectors tip to tail and examine their sum.",
-  success:"Correct prediction.",reveal:'compare',focus:'import-heading'
+  success:"Your prediction was correct.",reveal:'compare',focus:'import-heading'
  });
  bindAnswer('interpretation','point',{
   hint:"Check the difference of the two energies and its units. The Hermiticity check establishes that both energies are real.",
