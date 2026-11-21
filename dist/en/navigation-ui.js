@@ -1,12 +1,13 @@
 import {homeHTML} from './entry-home.js?v=20261122-nextpaths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-friedel1';
-import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-nextpaths1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-start-crystal1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-start-crystal1';
 import {learningActivities} from './learning-activity-search.js?v=20261122-friedel1';
 import {buildWorkbenchRoute,parseWorkbenchCoordinate,parseWorkbenchSelection} from './workbench-route.js?v=20261122-nextpaths1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-nextpaths1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-start-crystal1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
+import {ninejRoute,ninejDefaultExample,ninejBasisExamples,matchNinejExamples} from './su3-ninej-presets.js?v=20261122-start-crystal1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -64,7 +65,7 @@ export const toolGroups=[
   ['compute/lie/su3_tensor',"SU(3) · Representations and tensor products","Dynkin labels, representation dimensions, weights and tensor-product decomposition.","SU3 means"],
   ['compute/lie/su3_cg',"SU(3) · CG coefficients and basis transformations","Numerical and exact radical coefficients, complex amplitudes and basis transformations in both directions.",'Clebsch Gordan'],
   ['compute/lie/su3_racah','SU(3) · Racah / 6j',"Recoupling matrices and outer multiplicities for triple tensor products.","Racah Triple 6j"],
-  ['compute/lie/su3_ninej',"SU(3) · 9j coefficients and four-body recoupling","Higher-dimensional inputs, exact coefficients, channel probabilities and inverse basis transformations.","Quadruple 8 10 15 27"],
+  [ninejRoute,"SU(3) · 9j coefficients and four-body recoupling","Higher-dimensional inputs, exact coefficients, channel probabilities and inverse basis transformations.","Quadruple 8 10 15 27"],
  ]},
  {id:'models',title:"Hamiltonians and bands",summary:"Build models and apply symmetry to band analysis.",tools:[
   ['compute/lie/rabi',"Two-level Rabi oscillations in SU(2)","Compare two-level evolution, transition probabilities, and resonance conditions as the drive and detuning change.","SU2 Rabi two-level drive detuning resonance dynamics"],
@@ -146,11 +147,21 @@ const representationSearchIntents={
   }
  ]
 };
+function ninejSearchExample(query){
+ const match=matchNinejExamples(query);
+ if(!match?.cases.length)return null;
+ // A factor-only match identifies the calculator. Only an explicit target selects a preset.
+ if(match.target===undefined)return {params:''};
+ if(match.cases.length!==1)return null;
+ const [example]=match.cases;
+ return {params:`preset=${example.id}`,title:`SU(3) · 9j · ${example.expression}`,summary:"Prefill the calculator with the four input representations and the final representation."};
+}
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?" file import "+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
  return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability,
-  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
+  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined,
+  matchSearchExample:route===ninejRoute?ninejSearchExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
@@ -170,12 +181,20 @@ const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,qu
 const namedExamples={
  'crystkit':['preset=quartz-handedness',"Open the α-quartz catalogue handedness comparison →"],
  'compute/band-representation-lab':['module=bandrep&preset=perovskite-sites',"Open the SG 221 3c site example"],
- 'compute/lie/su3_ninej':['preset=su3-ninej-four-octets-singlet',"Open the 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 singlet example"],
  'compute/advanced/carat_integral':['preset=noncyclic-affine',"Z and affine classes of a six-dimensional noncyclic group →"],
  'compute/advanced/integral_normalizer':['preset=glued6',"Normalizer of a glued six-dimensional integral lattice →"],
  'compute/advanced/arithmetic_centralizer':['preset=a5',"Arithmetic centralizer for six-dimensional A₅ →"],
  'compute/advanced/symbolic_spacegroups':['preset=magnetic',"Antiferromagnetic half-translation corepresentations in BNS 1.3 →"]
 };
+const defaultNinejCase=ninejBasisExamples.filter(example=>example.id===ninejDefaultExample);
+function toolExamples(item,query){
+ if(item.route===ninejRoute){
+  const cases=matchNinejExamples(query)?.cases??defaultNinejCase;
+  return cases.map(example=>[`preset=${example.id}`,"Open example"+' '+example.expression+' →']);
+ }
+ const example=item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route];
+ return example?[example]:[];
+}
 function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
  const rows=capability?[
@@ -184,9 +203,8 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ["Existing files and their uses",capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc("Inputs and supported scope")}">Inputs and supported scope</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- const example=showScope&&(item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route]);
- const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
- return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+ const exampleLinks=showScope?toolExamples(item,query).map(([params,label])=>link(`${item.route}?${params}`,esc(label),'nav-tool-example')).join(''):'';
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${exampleLinks}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-friedel1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}

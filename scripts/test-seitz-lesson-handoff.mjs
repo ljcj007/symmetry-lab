@@ -49,7 +49,7 @@ const preset=container=>container.querySelector('#sc-preset');
 const click=(container,id)=>container.querySelector('#'+id).onclick();
 const guide=new Container();
 await renderZeroStart({container:guide,selection:parseClassroomRoute('#classroom/start?lesson=next')});
-const crystal=guide.querySelectorAll('a').find(link=>link.getAttribute('href')==='#classroom/crystal?track=space');
+const crystal=guide.querySelectorAll('a').find(link=>link.getAttribute('href')==='#classroom/crystal?tab=learn&lesson=space-01&track=space');
 assert.ok(crystal);
 
 const {container:intro,dispose:closeIntro}=await openCourse(crystal.getAttribute('href'),'intro');
@@ -120,6 +120,25 @@ const compareOutput=$('#sc-seitz-comparison-result');
 const kField=$('#sc-seitz-comparison-k');
 const submit=()=>compareForm.onsubmit({preventDefault(){}});
 const rowCells=(host,id)=>host.querySelector(`[data-seitz-row="${id}"]`).querySelectorAll('td').map(cell=>cell.textContent);
+function checkComparisonLinks(models, kz) {
+  for (const [index, number] of [75, 76, 78].entries()) {
+    $(`[data-seitz-detail="${models[index]}"]`).onclick();
+    const trace=$('#sc-seitz-comparison-trace');
+    assert.equal(trace.querySelector('[data-seitz-atlas]').getAttribute('href'),`#atlas/sg?q=${number}`);
+    const workbench=trace.querySelector('[data-seitz-workbench]');
+    if (Math.abs(kz)<=100) {
+      const href=workbench.getAttribute('href').replaceAll('&amp;','&');
+      assert.deepEqual(parseWorkbenchSelection(href.split('?')[1]),{
+        mode:'sg',id:String(number),k:[0,0,kz],doubleValued:false,bzType:'',labelK:kz===0?'Γ':null
+      });
+      assert.match(trace.textContent,english?/fourth power/:/取四次方/);
+    } else {
+      assert.equal(workbench,null);
+      assert.match(trace.textContent,/−100/);
+    }
+    if(english) assert.doesNotMatch(trace.innerHTML,/\p{Script=Han}/u);
+  }
+}
 assert.equal(kField.value,'0.25');
 assert.equal(compareOutput.innerHTML,'');
 await submit();
@@ -140,6 +159,7 @@ const traceButton=$('[data-seitz-detail="screw43"]');
 traceButton.onclick();
 assert.equal(traceButton.getAttribute('aria-pressed'),'true');
 assert.deepEqual(rowCells($('#sc-seitz-comparison-trace'),'4'),['3.1','0.1']);
+checkComparisonLinks(models,.25);
 assert.equal(calls.length,4,'Browsing the computed steps does not run Python');
 kField.value='0';
 compareForm.oninput();
@@ -147,6 +167,14 @@ assert.equal(compareOutput.innerHTML,'','Editing the input clears results for th
 assert.equal(calls.length,4,'Editing the wavevector waits for submit');
 await submit();
 assert.deepEqual(models.map(id=>rowCells(compareOutput,id)),[['0','0','1'],['1/4','1','1'],['3/4','3','1']]);
+checkComparisonLinks(models,0);
+for (const kz of [.5,.125,100.125]) {
+  kField.value=String(kz);
+  compareForm.oninput();
+  await submit();
+  checkComparisonLinks(models,kz);
+  if (kz===.5) assert.deepEqual(models.map(id=>rowCells(compareOutput,id).at(-1)),['1','-1','-1']);
+}
 comparison.dispose();
 
 for (const [id, translation] of [['rotation4',0],['screw43',3]]) {

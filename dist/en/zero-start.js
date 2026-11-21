@@ -20,6 +20,7 @@ const plain=value=>value&&typeof value==='object'&&!Array.isArray(value);
 const exactKeys=(value,keys)=>plain(value)&&Object.keys(value).length===keys.length&&keys.every(key=>own(value,key));
 const integer=(value,low,high)=>Number.isInteger(value)&&value>=low&&value<=high;
 const clean=value=>Object.is(value,-0)?0:value;
+const goalExits={geometry:'foundations',spectra:'water',crystal:'crystal',tools:'compute'};
 
 export function rotateQuarter(point,turns=1){
  if(!Array.isArray(point)||![2,3].includes(point.length)||!point.every(Number.isFinite)||!Number.isInteger(turns))throw Error('A rotation needs a finite 2D or 3D point and an integer number of quarter turns.');
@@ -39,7 +40,7 @@ export function zeroStartExpectedAnswer(step,context){
  if(step==='coordinates'&&exactKeys(context,['x','y','applied'])&&integer(context.x,-2,2)&&integer(context.y,-2,2)&&context.applied===true)return 'ccw';
  if(step==='matrix'&&exactKeys(context,['shown'])&&context.shown==='both')return 'correct';
  if(step==='trace'&&exactKeys(context,['space','applied'])&&['xy','xyz'].includes(context.space)&&context.applied===true)return String(matrixTrace(cartesianQuarterMatrix(context.space)));
- if(step==='next'&&exactKeys(context,['goal'])&&['geometry','spectra','tools'].includes(context.goal))return {geometry:'foundations',spectra:'water',tools:'compute'}[context.goal];
+ if(step==='next'&&exactKeys(context,['goal'])&&typeof context.goal==='string'&&own(goalExits,context.goal))return goalExits[context.goal];
  return null;
 }
 export function normalizeZeroStartProgress(raw){
@@ -112,7 +113,7 @@ const continuations={
  foundations:['#classroom/foundations?lesson=group-basics',"Point groups and representations · Continue with the first lesson","Use the square from the introductory guide to combine a 90° turn and a reflection. In “From geometric symmetry to matrices,” add the diagonal entries of the matrix to find its character."],
  water:['#classroom/foundations?module=demos&experiment=water',"Water, infrared, and Raman","With matrices and characters in place, connect displacements to spectroscopic channels."],
  theorems:['#classroom/foundations?module=theorems&experiment=rearrangement',"Theorem proofs and applications","With a foundation in representations, use S₃ to examine rearrangement, Schur's lemma, and orthogonality."],
- crystal:['#classroom/crystal?track=space',"Crystals and space groups","Extend point groups with periodic translations, screw axes, and glide planes."],
+ crystal:['#classroom/crystal?tab=learn&lesson=space-01&track=space',"Crystals and space groups","See how a one-cell shift lines up a repeating pattern. Then compare a turn on its own with a turn that also shifts the pattern."],
  compute:['#compute',"Calculation center","For a specific task, find the tool and enter its parameters directly."]
 };
 
@@ -136,16 +137,19 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   <div class="zs-controls">${select('zs-space',[['xy',"Planar arrows only (x,y)"],['xyz',"Three-dimensional arrows (x,y,z)"]],c.space,"Choose the action space")}
   <button type="button" id="zs-action" class="primary">Show the 90° operation in this space</button></div>
   ${c.applied?traceObservation(c.space):"<p class=\"zs-empty\">Choose a space, then display the matrix.</p>"}`;
-  return `<p>Six short checks connect geometry, coordinates, matrices, and characters. Continue according to your question; every path opens directly, without a progress lock.</p><div class="zs-controls">${select('zs-goal',[['',"Choose your goal first"],['geometry',"I want a systematic course on point groups and representations"],['spectra',"I want to understand water vibrations and spectroscopy"],['tools',"I have specific inputs and need a calculation tool"]],c.goal,"What would you like to do next?")}</div><div class="zs-next-grid">${Object.values(continuations).map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>If matrices still feel unfamiliar, revisit steps 3–5 before the first foundations lesson. The spectroscopy demonstration uses displacement representations; the theorem and space-group paths gradually introduce further prerequisites.</p>`;
+  return `<p>Six short checks connect geometry, coordinates, matrices, and characters. Continue according to your question; every path opens directly, without a progress lock.</p><div class="zs-controls">${select('zs-goal',[['',"Choose your goal first"],['geometry',"I want a systematic course on point groups and representations"],['spectra',"I want to understand water vibrations and spectroscopy"],['crystal',"I want to understand symmetry in repeating crystal patterns"],['tools',"I have specific inputs and need a calculation tool"]],c.goal,"What would you like to do next?")}</div><div class="zs-next-grid">${Object.values(continuations).map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>If matrices still feel unfamiliar, revisit steps 3–5 before the first foundations lesson. The spectroscopy demonstration uses displacement representations; the theorem and space-group paths gradually introduce further prerequisites.</p>`;
  }
  function assessment(){const c=drafts[step],question={objects:"After the current operation, does the whole object coincide with its original state?",repeat:"What are the operation's order and the selected point's shortest return period?",coordinates:"Which coordinate rule describes a 90° counterclockwise rotation of any planar arrow?",matrix:"Which matrix has columns that correctly record the two unit arrows' new coordinates?",trace:"What is the character of this 90° operation in the selected action space?",next:"Which entry best matches the goal you selected?"}[step];
-  const choices={objects:[['same',"All sites coincide with sites of the same type"],['changed',"At least one type or position does not match"]],repeat:[['4,4',"Operation order 4; point period 4"],['4,1',"Operation order 4; point period 1"],['1,1',"Operation order 1; point period 1"]],coordinates:[['ccw','(x,y) → (−y,x)'],['cw','(x,y) → (y,−x)'],['half','(x,y) → (−x,−y)']],matrix:[['correct',"First row 0, −1; second row 1, 0"],['reverse',"First row 0, 1; second row −1, 0"],['identity',"First row 1, 0; second row 0, 1"]],trace:[['0','0'],['1','1'],['2','2'],['3','3']],next:[['foundations',"Point groups and representations · First foundations lesson"],['water',"Water, infrared, and Raman"],['compute',"Calculation center"]]}[step];
+  const choices={objects:[['same',"All sites coincide with sites of the same type"],['changed',"At least one type or position does not match"]],repeat:[['4,4',"Operation order 4; point period 4"],['4,1',"Operation order 4; point period 1"],['1,1',"Operation order 1; point period 1"]],coordinates:[['ccw','(x,y) → (−y,x)'],['cw','(x,y) → (y,−x)'],['half','(x,y) → (−x,−y)']],matrix:[['correct',"First row 0, −1; second row 1, 0"],['reverse',"First row 0, 1; second row −1, 0"],['identity',"First row 1, 0; second row 0, 1"]],trace:[['0','0'],['1','1'],['2','2'],['3','3']],next:[['foundations',"Point groups and representations · First foundations lesson"],['water',"Water, infrared, and Raman"],['crystal',"Crystals and space groups · First lesson"],['compute',"Calculation center"]]}[step];
   return `<section class="zs-check" aria-labelledby="zs-check-heading"><h3 id="zs-check-heading">Pause and check your explanation</h3>
   ${select('zs-answer',[['',"Choose an answer"],...choices],answers[step]||'',question,step==='trace'?'zs-feedback':'')}
   <button type="button" id="zs-check" class="primary">Check this step</button><p id="zs-feedback" role="status" aria-live="polite" class="${progress.answers[step]?'zs-success':''}">${esc(feedback[step]||(progress.answers[step]?"This step's answer has been checked and saved on this device.":''))}</p>
   ${step==='trace'&&progress.answers.trace?traceWorkedAnswer(c.space):''}</section>`;
  }
  function explanation(correct){const c=drafts[step];if(zeroStartExpectedAnswer(step,c)===null)return {objects:"Rotate the object first, then judge using its current colors and positions.",repeat:"Apply a rotation first, then compare the off-axis and on-axis points.",coordinates:"Display the rotated arrow first.",matrix:"Select Show both unit arrows first, then check the columns one at a time.",trace:"Display the operation matrix in the selected space first.",next:"Choose your current goal first."}[step];
+  if(step==='next'&&c.goal==='crystal'){
+   return (correct?"Your answer matches.":"Try again.")+"Start with the first lesson on crystals and space groups. Find the one-cell shift that makes the repeating pattern coincide.";
+  }
   if(step==='trace'){
    if(correct)return "The character is correct for the selected space.";
    if(!answers.trace)return "Choose the character you calculated.";

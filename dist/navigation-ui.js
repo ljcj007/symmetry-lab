@@ -1,12 +1,13 @@
 import {homeHTML} from './entry-home.js?v=20261122-nextpaths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-friedel1';
-import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-nextpaths1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-start-crystal1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-start-crystal1';
 import {learningActivities} from './learning-activity-search.js?v=20261122-friedel1';
 import {buildWorkbenchRoute,parseWorkbenchCoordinate,parseWorkbenchSelection} from './workbench-route.js?v=20261122-nextpaths1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-nextpaths1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-start-crystal1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
+import {ninejRoute,ninejDefaultExample,ninejBasisExamples,matchNinejExamples} from './su3-ninej-presets.js?v=20261122-start-crystal1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -64,7 +65,7 @@ export const toolGroups=[
   ['compute/lie/su3_tensor','SU(3) · 表示与直积','Dynkin 标签、表示维数、权和直积分解。','SU3 表示'],
   ['compute/lie/su3_cg','SU(3) · CG 系数与换基','数值与精确根式系数、复振幅和双向基底变换。','Clebsch Gordan'],
   ['compute/lie/su3_racah','SU(3) · Racah / 6j','三重张量积的重耦合矩阵与外重数。','Racah 三重 6j'],
-  ['compute/lie/su3_ninej','SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
+  [ninejRoute,'SU(3) · 9j 与四重重耦合','高维输入、精确系数、通道概率与逆向换基。','四重 8 10 15 27'],
  ]},
  {id:'models',title:'Hamiltonian 与能带',summary:'构造模型并将对称性用于能带分析。',tools:[
   ['compute/lie/rabi','SU(2) · 两能级 Rabi 振荡','用驱动与失谐比较两能级演化、跃迁概率和共振条件。','SU2 Rabi 两能级 驱动 失谐 共振 动力学'],
@@ -146,11 +147,21 @@ const representationSearchIntents={
   }
  ]
 };
+function ninejSearchExample(query){
+ const match=matchNinejExamples(query);
+ if(!match?.cases.length)return null;
+ // A factor-only match identifies the calculator. Only an explicit target selects a preset.
+ if(match.target===undefined)return {params:''};
+ if(match.cases.length!==1)return null;
+ const [example]=match.cases;
+ return {params:`preset=${example.id}`,title:`SU(3) · 9j · ${example.expression}`,summary:'在计算器中预填四个输入表示和最终表示。'};
+}
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?' file import 文件 导入 '+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
  return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:'计算',category:group.id,capability,
-  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
+  searchIntents:representationSearchIntents[route],searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined,
+  matchSearchExample:route===ninejRoute?ninejSearchExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
@@ -170,12 +181,20 @@ const formatPurpose=(item,query,tag='p')=>{const text=inputFormatSummary(item,qu
 const namedExamples={
  'crystkit':['preset=quartz-handedness','打开 α-石英手性目录比较 →'],
  'compute/band-representation-lab':['module=bandrep&preset=perovskite-sites','打开 SG 221 的 3c 位点算例'],
- 'compute/lie/su3_ninej':['preset=su3-ninej-four-octets-singlet','打开 8 ⊗ 8 ⊗ 8 ⊗ 8 → 1 单态算例'],
  'compute/advanced/carat_integral':['preset=noncyclic-affine','六维非循环群的 Z 类与仿射类 →'],
  'compute/advanced/integral_normalizer':['preset=glued6','六维非直和整数格的正规化子 →'],
  'compute/advanced/arithmetic_centralizer':['preset=a5','六维 A₅ 的算术中心化子 →'],
  'compute/advanced/symbolic_spacegroups':['preset=magnetic','BNS 1.3 的反铁磁半平移共表示 →']
 };
+const defaultNinejCase=ninejBasisExamples.filter(example=>example.id===ninejDefaultExample);
+function toolExamples(item,query){
+ if(item.route===ninejRoute){
+  const cases=matchNinejExamples(query)?.cases??defaultNinejCase;
+  return cases.map(example=>[`preset=${example.id}`,'打开算例'+' '+example.expression+' →']);
+ }
+ const example=item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route];
+ return example?[example]:[];
+}
 function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const capability=getToolCapability(item.route),badge=showScope&&capability?`<span class="nav-arithmetic-badge">${esc(arithmeticLabels[capability.arithmetic])}</span>`:'';
  const rows=capability?[
@@ -184,9 +203,8 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ['已有文件与用途',capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc('输入与适用范围')}">输入与适用范围</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- const example=showScope&&(item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route]);
- const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
- return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
+ const exampleLinks=showScope?toolExamples(item,query).map(([params,label])=>link(`${item.route}?${params}`,esc(label),'nav-tool-example')).join(''):'';
+ return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLinks}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-friedel1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}

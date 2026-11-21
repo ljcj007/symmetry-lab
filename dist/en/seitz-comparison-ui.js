@@ -1,10 +1,11 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
+import {buildWorkbenchRoute} from './workbench-route.js?v=20261122-nextpaths1';
 
 const models = [
-  {id: 'rotation4', symbol: 'P 4'},
-  {id: 'screw41', symbol: 'P 4₁'},
-  {id: 'screw43', symbol: 'P 4₃'}
+  {id: 'rotation4', number: 75, symbol: 'P 4'},
+  {id: 'screw41', number: 76, symbol: 'P 4₁'},
+  {id: 'screw43', number: 78, symbol: 'P 4₃'}
 ];
 const point = [0.2, 0.3, 0.1];
 const symbol = model => crystalSpan(model.symbol, 'hm');
@@ -62,7 +63,8 @@ export function bindSeitzComparison(host, {run, isCurrent, formatNumber, formatC
     status.textContent = message;
   }
 
-  function showResults(results) {
+  function showResults(results, kz) {
+    const canOpenWorkbench = Math.abs(kz) <= 100;
     output.innerHTML = resultTable("Comparison after four applications",
       ["space group", "Axial shift per step", "Total axial shift", "Bloch phase after four applications"],
       results.map(({model, result}) => ({id: model.id, heading: symbol(model), values: [
@@ -70,6 +72,7 @@ export function bindSeitzComparison(host, {run, isCurrent, formatNumber, formatC
         formatComplex(result.frames[4].blochPhase)
       ]}))) + `<p>All three rotations return to the identity after four applications. Their wrapped endpoints coincide with the starting point. Translation by whole cells still determines the phase.</p>
       <p>The total axial translation ${math('L_z')} gives the phase ${math('e^{-2\\pi i k_z L_z}')}. Try a wavevector of 0 and see how the translations and phases change.</p>
+      <p>Make one more prediction. At an axial wavevector of ${math('1/2')}, do the two screws have the same phase?</p>
       <p>Select a model to compare unwrapped and wrapped coordinates at each step.</p>
       <div class="sc-actions" role="group" aria-label="Select a step-by-step trajectory">${models.map(model =>
         `<button type="button" class="secondary" aria-pressed="false" aria-controls="sc-seitz-comparison-trace"
@@ -84,11 +87,19 @@ export function bindSeitzComparison(host, {run, isCurrent, formatNumber, formatC
         button.setAttribute('aria-pressed', pressed);
         button.setAttribute('class', pressed ? 'primary' : 'secondary');
       }
+      let handoff;
+      if (canOpenWorkbench) {
+        const route = buildWorkbenchRoute({mode: 'sg', id: selected.model.number, k: [0, 0, kz], doubleValued: false});
+        handoff = `<p><a href="#${escape(route)}" data-seitz-workbench>Open the workbench with this wavevector →</a></p>
+          <p>Run the single-valued calculation and find ${crystalSpan('C4z+', 'operation')} in the character table. The single-valued little-group representations at an axial wavevector are all one-dimensional. Raise any character in that column to the fourth power and compare it with the Bloch phase for the same space group in the table above.</p>`;
+      } else {
+        handoff = "<p>Choose a wavevector between −100 and 100 to carry it into the workbench.</p>";
+      }
       trace.innerHTML = `<p>${symbol(selected.model)}</p>` + resultTable("Axial position at each step",
         ["Applications", "Unwrapped axial coordinate", "Wrapped axial coordinate"],
         selected.result.frames.map(frame => ({id: frame.step, heading: frame.step, values: [
           formatNumber(frame.unwrapped[2]), formatNumber(frame.wrapped[2])
-        ]})));
+        ]}))) + `<p><a href="#atlas/sg?q=${selected.model.number}" data-seitz-atlas>View this space group in the atlas →</a></p>` + handoff;
     }
 
     for (const [index, button] of buttons.entries()) button.onclick = () => selectModel(results[index]);
@@ -112,12 +123,14 @@ export function bindSeitzComparison(host, {run, isCurrent, formatNumber, formatC
         active = run('teaching_labs', {lab: 'seitz', preset: model.id, point: [...point], k: [0, 0, kz], steps: 4});
         const result = await active;
         if (!current(ticket)) return;
-        if (result?.preset !== model.id || result.closure?.rotationOrder !== 4 || result.frames?.[4]?.step !== 4) {
+        if (result?.lab !== 'seitz' || result.preset !== model.id || result.closure?.rotationOrder !== 4 ||
+            result.frames?.[4]?.step !== 4 || !Array.isArray(result.k) || result.k.length !== 3 ||
+            result.k[0] !== 0 || result.k[1] !== 0 || result.k[2] !== kz) {
           throw new Error('Invalid Seitz comparison result');
         }
         results.push({model, result});
       }
-      showResults(results);
+      showResults(results, kz);
       status.textContent = "Comparison complete.";
     } catch {
       if (current(ticket)) clearCalculation("The comparison did not finish. Run it again to retry.");

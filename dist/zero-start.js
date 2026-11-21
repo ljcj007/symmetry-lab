@@ -20,6 +20,7 @@ const plain=value=>value&&typeof value==='object'&&!Array.isArray(value);
 const exactKeys=(value,keys)=>plain(value)&&Object.keys(value).length===keys.length&&keys.every(key=>own(value,key));
 const integer=(value,low,high)=>Number.isInteger(value)&&value>=low&&value<=high;
 const clean=value=>Object.is(value,-0)?0:value;
+const goalExits={geometry:'foundations',spectra:'water',crystal:'crystal',tools:'compute'};
 
 export function rotateQuarter(point,turns=1){
  if(!Array.isArray(point)||![2,3].includes(point.length)||!point.every(Number.isFinite)||!Number.isInteger(turns))throw Error('A rotation needs a finite 2D or 3D point and an integer number of quarter turns.');
@@ -39,7 +40,7 @@ export function zeroStartExpectedAnswer(step,context){
  if(step==='coordinates'&&exactKeys(context,['x','y','applied'])&&integer(context.x,-2,2)&&integer(context.y,-2,2)&&context.applied===true)return 'ccw';
  if(step==='matrix'&&exactKeys(context,['shown'])&&context.shown==='both')return 'correct';
  if(step==='trace'&&exactKeys(context,['space','applied'])&&['xy','xyz'].includes(context.space)&&context.applied===true)return String(matrixTrace(cartesianQuarterMatrix(context.space)));
- if(step==='next'&&exactKeys(context,['goal'])&&['geometry','spectra','tools'].includes(context.goal))return {geometry:'foundations',spectra:'water',tools:'compute'}[context.goal];
+ if(step==='next'&&exactKeys(context,['goal'])&&typeof context.goal==='string'&&own(goalExits,context.goal))return goalExits[context.goal];
  return null;
 }
 export function normalizeZeroStartProgress(raw){
@@ -112,7 +113,7 @@ const continuations={
  foundations:['#classroom/foundations?lesson=group-basics','点群与表示 · 从第一课继续','用导学里的正方形组合 90° 旋转和镜面反射。随后在「把几何对称变成矩阵」一课把矩阵的对角元相加，求出特征标。'],
  water:['#classroom/foundations?module=demos&experiment=water','水分子、红外与拉曼','已有矩阵和特征标概念后，连接位移与光谱通道。'],
  theorems:['#classroom/foundations?module=theorems&experiment=rearrangement','定理证明与应用','有表示基础后，沿 S₃ 检查重排、Schur 与正交关系。'],
- crystal:['#classroom/crystal?track=space','晶体与空间群','在点群基础上加入周期平移、螺旋轴和滑移面。'],
+ crystal:['#classroom/crystal?tab=learn&lesson=space-01&track=space','晶体与空间群','先看重复图案平移一格怎样重合，再比较只转动和边转边移动。'],
  compute:['#compute','计算中心','已有具体任务时，直接检索工具与输入参数。']
 };
 
@@ -136,16 +137,19 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   <div class="zs-controls">${select('zs-space',[['xy','只看平面箭头 (x,y)'],['xyz','看三维箭头 (x,y,z)']],c.space,'选择作用空间')}
   <button type="button" id="zs-action" class="primary">显示这个空间中的 90° 操作</button></div>
   ${c.applied?traceObservation(c.space):'<p class="zs-empty">选择一个空间，再显示矩阵。</p>'}`;
-  return `<p>六个小检查把几何、坐标、矩阵和特征标连在一起。接下来可以按问题继续；任何路线都可直接打开，不需要等待进度解锁。</p><div class="zs-controls">${select('zs-goal',[['','先选择你的目标'],['geometry','我想系统学习点群与表示'],['spectra','我想看懂水分子的振动和光谱'],['tools','我已有具体输入，要找计算工具']],c.goal,'现在最想做什么？')}</div><div class="zs-next-grid">${Object.values(continuations).map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>如果矩阵还不熟，先回看第 3–5 步，再进入基础第一课。光谱演示需要位移表示；定理工坊和空间群路线还会逐步引入新的前置概念。</p>`;
+  return `<p>六个小检查把几何、坐标、矩阵和特征标连在一起。接下来可以按问题继续；任何路线都可直接打开，不需要等待进度解锁。</p><div class="zs-controls">${select('zs-goal',[['','先选择你的目标'],['geometry','我想系统学习点群与表示'],['spectra','我想看懂水分子的振动和光谱'],['crystal','我想了解晶体的重复图案怎样体现对称性'],['tools','我已有具体输入，要找计算工具']],c.goal,'现在最想做什么？')}</div><div class="zs-next-grid">${Object.values(continuations).map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>如果矩阵还不熟，先回看第 3–5 步，再进入基础第一课。光谱演示需要位移表示；定理工坊和空间群路线还会逐步引入新的前置概念。</p>`;
  }
  function assessment(){const c=drafts[step],question={objects:'当前这次操作后，整个对象与原来是否重合？',repeat:'操作的阶、所选点的最短返回周期分别是多少？',coordinates:'对任意平面箭头，逆时针 90° 的坐标规则是哪一条？',matrix:'哪一个矩阵的两列正确记录了两个单位箭头的新坐标？',trace:'当前所选作用空间中，这个 90° 操作的特征标是多少？',next:'哪一个入口最符合你刚才选的目标？'}[step];
-  const choices={objects:[['same','同类位置全部重合'],['changed','至少一个类型或位置不重合']],repeat:[['4,4','操作阶 4；点周期 4'],['4,1','操作阶 4；点周期 1'],['1,1','操作阶 1；点周期 1']],coordinates:[['ccw','(x,y) → (−y,x)'],['cw','(x,y) → (y,−x)'],['half','(x,y) → (−x,−y)']],matrix:[['correct','第一行 0, −1；第二行 1, 0'],['reverse','第一行 0, 1；第二行 −1, 0'],['identity','第一行 1, 0；第二行 0, 1']],trace:[['0','0'],['1','1'],['2','2'],['3','3']],next:[['foundations','点群与表示 · 基础第一课'],['water','水分子、红外与拉曼'],['compute','计算中心']]}[step];
+  const choices={objects:[['same','同类位置全部重合'],['changed','至少一个类型或位置不重合']],repeat:[['4,4','操作阶 4；点周期 4'],['4,1','操作阶 4；点周期 1'],['1,1','操作阶 1；点周期 1']],coordinates:[['ccw','(x,y) → (−y,x)'],['cw','(x,y) → (y,−x)'],['half','(x,y) → (−x,−y)']],matrix:[['correct','第一行 0, −1；第二行 1, 0'],['reverse','第一行 0, 1；第二行 −1, 0'],['identity','第一行 1, 0；第二行 0, 1']],trace:[['0','0'],['1','1'],['2','2'],['3','3']],next:[['foundations','点群与表示 · 基础第一课'],['water','水分子、红外与拉曼'],['crystal','晶体与空间群 · 第一课'],['compute','计算中心']]}[step];
   return `<section class="zs-check" aria-labelledby="zs-check-heading"><h3 id="zs-check-heading">停一下，核对你的解释</h3>
   ${select('zs-answer',[['','请选择'],...choices],answers[step]||'',question,step==='trace'?'zs-feedback':'')}
   <button type="button" id="zs-check" class="primary">核对这一步</button><p id="zs-feedback" role="status" aria-live="polite" class="${progress.answers[step]?'zs-success':''}">${esc(feedback[step]||(progress.answers[step]?'这一步的答案已核对并保存在本机。':''))}</p>
   ${step==='trace'&&progress.answers.trace?traceWorkedAnswer(c.space):''}</section>`;
  }
  function explanation(correct){const c=drafts[step];if(zeroStartExpectedAnswer(step,c)===null)return {objects:'请先转动一次对象，再根据当前颜色和位置判断。',repeat:'请先作用一次旋转，再比较一般点与轴上的点。',coordinates:'请先显示箭头旋转后的结果。',matrix:'请先选择“同时查看两个单位箭头”，再逐列核对。',trace:'请先显示所选空间中的操作矩阵。',next:'请先选择你现在的目标。'}[step];
+  if(step==='next'&&c.goal==='crystal'){
+   return (correct?'核对一致。':'再试一次。')+'从「晶体与空间群」第一课开始，先找出让重复图案重合的一格平移。';
+  }
   if(step==='trace'){
    if(correct)return '当前作用空间的特征标计算正确。';
    if(!answers.trace)return '请先选择你算出的特征标。';

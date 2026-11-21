@@ -125,6 +125,8 @@ assert.equal(routes.at(-1),'compute/phonon-modes?preset=zno-ir','Typing leaves t
 key('Enter');assert.equal(routes.at(-1),'workbench');assert.equal(requests,0);
 button.fire('click');type('精确磁共表示');assert.match(list.innerHTML,/仿射参数线/);
 key('Enter');assert.equal(routes.at(-1),'compute/advanced/symbolic_spacegroups');assert.equal(requests,0);
+button.fire('click');type('SU(3) 9j 27 ⊗ 3 ⊗ 3̄ ⊗ 3 → 42');assert.match(list.innerHTML,/27 ⊗ 3 ⊗ 3̄ ⊗ 3 → 42/);
+key('Enter');assert.equal(routes.at(-1),'compute/lie/su3_ninej?preset=su3-ninej-27-four');assert.equal(requests,0);
 assert.equal(key('k',{metaKey:true}),true);assert.equal(dialog.hidden,false);
 type('225');await flush();assert.equal(requests,1,'The initial scope lazily reads the catalogue for an exact group');assert.ok(status.querySelector('[data-finder-retry]'));assert.match(status.innerHTML,/工具/);
 type('225.1');await flush();assert.equal(requests,1,'Failed requests wait for explicit retry');

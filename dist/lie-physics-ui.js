@@ -1,4 +1,4 @@
-import {ninejName,ninejDefault,ninejPresets,ninejInputIds,ninejControls,readNineJPayload,bindNineJControls,ninejOutput,bindNineJOutput} from './su3-ninej-ui.js?v=20261110-en1';
+import {ninejName,ninejDefault,ninejPresets,ninejInputIds,ninejControls,readNineJPayload,bindNineJControls,ninejOutput,bindNineJOutput} from './su3-ninej-ui.js?v=20261122-start-crystal1';
 import {cgName,cgDefault,cgPresets,cgInputIds,cgControls,readCGPayload,bindCGControls,cgOutput,bindCGOutput} from './su3-cg-ui.js?v=20261110-en1';
 import {racahName,racahDefault,racahPresets,racahInputIds,racahControls,readRacahPayload,bindRacahControls,racahOutput,bindRacahOutput} from './su3-racah-ui.js?v=20261110-en1';
 // Display-only helpers. Python supplies dynamics, CG coefficients, dimensions,

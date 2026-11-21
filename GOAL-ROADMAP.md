@@ -530,3 +530,21 @@ establish that all existing scientific and teaching content has been audited.
 - The space-group and [structure-dynamics lesson](dist/index.html#classroom/structure-dynamics?tab=learn&lesson=screw-glide) reuse the 298 K CIF to compute axial and off-axis reflections. With real scattering weights, both hands have the same axial extinction and intensities. Learners compare the complex off-axis amplitude and relabel its index under a passive change of basis. The lesson also links to the resonant experiment that measured chirality. [COD 9005017](https://qiserver.ugr.es/cod/9005017.html) · [Friedel’s law](https://dictionary.iucr.org/Friedel%27s_law) · [Resonant experiment](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.100.145502)
 
 - The [advanced comparison](dist/index.html#classroom/structure-dynamics?tab=learn&lesson=screw-glide&preset=quartz-friedel) uses illustrative complex scalar weights on the same measured geometry. The 110 pair has a normalized intensity difference of about 8.10%, the 101 pair retains equal intensities, and inversion reverses the signed 110 difference. The general diffraction calculator accepts the same input form and adds the two intensities at their common powder angle. Real number inputs retain their established calculation and export behavior.
+
+## Continue into crystals and find a four-factor calculation
+
+- The last introductory check now offers a crystal goal and points to
+  [the first space-group lesson](dist/index.html#classroom/crystal?tab=learn&lesson=space-01&track=space).
+  A wrong choice prompts learners to find a one-cell shift in a repeating
+  pattern. The verified goal is restored on reload. The lesson remains available
+  directly from the introductory cards.
+- In that lesson, choosing the P 4, P 4₁ or P 4₃ trajectory shows the group's
+  atlas entry and opens the representation workbench at the calculated axial
+  wavevector. The four one-dimensional representations each reproduce the
+  four-step translation phase from the fourth power of the character of the
+  positive quarter-turn operation. The comparison covers five wavevectors in
+  all three space groups.
+- The quick finder and calculation center match complete SU(3) 9j example
+  expressions against the existing input and output representations. For example,
+  `SU(3) 9j 27 ⊗ 3 ⊗ 3̄ ⊗ 3 → 42` opens the calculator with all four
+  factors and the target prefilled. Calculation starts when the user runs it.

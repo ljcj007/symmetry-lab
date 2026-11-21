@@ -1,9 +1,10 @@
 // Display and input validation only. Python supplies all exact recoupling data.
+import {repSize} from './su3-ninej-presets.js?v=20261122-start-crystal1';
+export {ninejDefault,ninejPresets} from './su3-ninej-presets.js?v=20261122-start-crystal1';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=value=>{const n=Number(value);return !Number.isFinite(n)?'—':n===0?'0':Math.abs(n)<1e-5?n.toExponential(4):Number(n.toFixed(6)).toString();};
 const options=(items,value)=>items.map(([id,label])=>`<option value="${esc(id)}" ${String(id)===String(value)?'selected':''}>${esc(label)}</option>`).join('');
 const reps=[['0,0','1 · (0, 0)'],['1,0','3 · (1, 0)'],['0,1','3̄ · (0, 1)'],['2,0','6 · (2, 0)'],['0,2','6̄ · (0, 2)'],['1,1','8 · (1, 1)'],['3,0','10 · (3, 0)'],['0,3','10̄ · (0, 3)'],['2,1','15 · (2, 1)'],['1,2','15̄ · (1, 2)'],['4,0','15′ · (4, 0)'],['0,4','15̄′ · (0, 4)'],['3,1','24 · (3, 1)'],['1,3','24̄ · (1, 3)'],['2,2','27 · (2, 2)']];
-const repSize=([p,q])=>(p+1)*(q+1)*(p+q+2)/2;
 const repLabel=item=>item?.label||`(${item?.p??0}, ${item?.q??0})`;
 const allTargets=Array.from({length:17},(_,sum)=>Array.from({length:sum+1},(_,q)=>{const p=sum-q;return [`${p},${q}`,`${repSize([p,q])} dimension · (${p}, ${q})`];})).flat();
 // This generic weight bound only limits the menu. Python supplies actual tensor
@@ -18,24 +19,6 @@ const targetItems=targets=>targets.map(item=>[`${item.p},${item.q}`,`${repLabel(
 const selectedMultiplicity=$=>$('#lg-ninej-target')?._ninejTargets?.find(item=>`${item.p},${item.q}`===$('#lg-ninej-target').value)?.multiplicity;
 const vectorHint=m=>`Fill in${m?` ${m} Term`:"The multiplicity item selected for the final representation (calculated first in single path state, multiplicity can be read)"}. Each item is a real number, a radical string, or {"re":"sqrt(2)/2","im":"1/3"}. The overall norm remains unchanged; Python checks expression and vector dimensions.`;
 export const ninejName="SU(3) · 9j coefficient and quadruple recoupling";
-export const ninejDefault={factors:[[1,0],[1,0],[1,0],[1,0]],target:[2,1],direction:'left_to_right',state:{index:0}};
-const octetInput=target=>({factors:[[1,1],[1,1],[1,1],[1,1]],target,direction:'left_to_right',state:{index:0}});
-const highInput=(factors,target)=>({factors,target,direction:'left_to_right',state:{index:0}});
-export const ninejPresets={
-  'su3-ninej-four-fundamentals':{experiment:'su3_ninej',input:structuredClone(ninejDefault)},
-  'su3-ninej-color-octet':{experiment:'su3_ninej',input:{factors:[[1,0],[0,1],[1,0],[0,1]],target:[1,1],direction:'left_to_right',state:{index:0}}},
-  'su3-ninej-mixed':{experiment:'su3_ninej',input:{factors:[[2,0],[1,0],[0,1],[0,0]],target:[2,0],direction:'left_to_right',state:{index:0}}},
-  'su3-ninej-complex':{experiment:'su3_ninej',input:{...structuredClone(ninejDefault),state:{amplitudes:[{re:'sqrt(2)/2',im:'0'},{re:'0',im:'sqrt(2)/2'},{re:'0',im:'0'}]}}},
-  'su3-ninej-four-octets-singlet':{experiment:'su3_ninej',input:{...octetInput([0,0]),state:{index:7}}},
-  'su3-ninej-four-octets-adjoint':{experiment:'su3_ninej',input:octetInput([1,1])},
-  'su3-ninej-four-octets-27':{experiment:'su3_ninej',input:octetInput([2,2])},
-  'su3-ninej-four-octets-complex':{experiment:'su3_ninej',input:{...octetInput([0,0]),state:{amplitudes:Array.from({length:8},(_,i)=>({re:i===0?'sqrt(2)/2':'0',im:i===1?'sqrt(2)/2':'0'}))}}},
-  'su3-ninej-decuplet-four':{experiment:'su3_ninej',input:highInput([[3,0],[1,0],[1,0],[0,1]],[2,1])},
-  'su3-ninej-decuplet-standard':{experiment:'su3_ninej',input:highInput([[3,0],[1,0],[1,0],[1,0]],[1,1])},
-  'su3-ninej-fifteen-four':{experiment:'su3_ninej',input:highInput([[2,1],[1,0],[0,1],[1,0]],[3,1])},
-  'su3-ninej-27-four':{experiment:'su3_ninej',input:highInput([[2,2],[1,0],[0,1],[1,0]],[3,2])},
-  'su3-ninej-high-complex':{experiment:'su3_ninej',input:{...highInput([[2,2],[1,0],[0,1],[1,0]],[3,2]),state:{amplitudes:Array.from({length:5},(_,i)=>({re:i===0?'sqrt(2)/2':'0',im:i===1?'sqrt(2)/2':'0'}))}}},
-};
 export const ninejInputIds=['#lg-ninej-factor1','#lg-ninej-factor2','#lg-ninej-factor3','#lg-ninej-factor4','#lg-ninej-target','#lg-ninej-direction','#lg-ninej-mode','#lg-ninej-index','#lg-ninej-vector'];
 export function ninejControls(input){
   const custom=Array.isArray(input.state?.amplitudes),dimension=input.factors.map(repSize).reduce((a,b)=>a*b,1);

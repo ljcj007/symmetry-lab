@@ -1,5 +1,5 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
-import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
+import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-start-crystal1';
 import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-antisc1';
 import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';

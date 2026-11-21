@@ -54,13 +54,13 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 90423,
-      "sha256": "dd6f29029c529a32a21b6ea2d922723fdf3165b84b3a44e9adcc6a83d97c889a"
+      "bytes": 91582,
+      "sha256": "f7fa1dd03cb8ffd491fba49016aa041fb65b8032a25c11cb1b0851455a47de0a"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 106514,
-      "sha256": "5b4ad9945f05e9c0db2ce24f6120a483e5072d4256da0de09e93a5d86b275450"
+      "bytes": 106536,
+      "sha256": "01aff6ab36434a9687c7cc25197708b0933f9fc1c6798f376d604c413cdfb5db"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -139,8 +139,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8424,
-      "sha256": "87ecc19cb5bb15df87471929558c82a9d55e27e15f9acd0d67ed1506894de8f1"
+      "bytes": 8430,
+      "sha256": "d816ddcd5d67bccdce46ca386ec0cd040cc727656fcaa8d3199bae079f190182"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -169,8 +169,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 38261,
-      "sha256": "b72fdf610448256fdccd81dfee31e390f14dfe1cbce87116de37fd91592d6e63"
+      "bytes": 39232,
+      "sha256": "6e3a790e1a2bea86570175a3ac5c99fdc2d449d715a756bf59ef86d36e334ee2"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -239,8 +239,8 @@
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3085,
-      "sha256": "1f542ba52223d112945e7f856d4f7746732474bc0684a2cf8a9adc80dbbcb623"
+      "bytes": 3089,
+      "sha256": "d134f35a79c9300fcc21463c890b7add42d8df33c522d50d6dc0c9c7fc422645"
     },
     "locales/en-advanced-shared-presets-directory.json": {
       "normalization": "utf8-lf-v1",
@@ -564,8 +564,8 @@
     },
     "locales/en-learning-entry.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23537,
-      "sha256": "ee5afd370432f7260b7895b6d5d84a029b1c09423a6c2ce288d785da7315c232"
+      "bytes": 24040,
+      "sha256": "7e0e7888abb072be8c21f94b7f012ad9b82cb971376eaca2648ab973575da113"
     },
     "locales/en-lesson-progression.json": {
       "normalization": "utf8-lf-v1",
@@ -629,8 +629,8 @@
     },
     "locales/en-ninej-search.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 108,
-      "sha256": "8e16797200feea8b5a4f511db063947619bd5aaa55c1c605bc0abbc0463e69a3"
+      "bytes": 192,
+      "sha256": "2aa30315871b870b26c9d02fc8ad9cc4127c657e5c902dbeff0caf3943e720bc"
     },
     "locales/en-onsager-learning-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -874,8 +874,8 @@
     },
     "locales/en-seitz-comparison.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2402,
-      "sha256": "bbdf0d55e40804d21be510c15221ee811054147c3fa0fcbeedd2c3c27f13012e"
+      "bytes": 3491,
+      "sha256": "11e96d9a997ecfa14fa66882a4fe63093819b8872ab4dd845884315d8824a2f0"
     },
     "locales/en-seitz-little-group.json": {
       "normalization": "utf8-lf-v1",
@@ -1319,8 +1319,8 @@
     },
     "scripts/test-tool-finder.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13386,
-      "sha256": "5e01de60ca524f6158046c616c792ff320d9185378d048f0110334641eaae915"
+      "bytes": 13632,
+      "sha256": "5ed9c8b0aad998ba81f8cf4dffc6090471145e6c21b097d73a074ee4d4122373"
     }
   }
 }

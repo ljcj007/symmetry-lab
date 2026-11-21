@@ -131,18 +131,27 @@ const assertExit=(route,label)=>{
  assert.equal(exitLink().textContent,label);
 };
 const foundationsExitLabel=local('继续基础第一课 →','Continue with the first foundations lesson →');
+const crystalRoute='#classroom/crystal?tab=learn&lesson=space-01&track=space';
 assertExit(foundationsExit,foundationsExitLabel);
 for(const [goal,choice,route,label] of [
  ['geometry','foundations',foundationsExit,foundationsExitLabel],
  ['spectra','water','#classroom/foundations?module=demos&experiment=water',local('水分子、红外与拉曼 →','Water, infrared, and Raman →')],
+ ['crystal','crystal',crystalRoute,local('晶体与空间群 →','Crystals and space groups →')],
  ['tools','compute','#compute',local('计算中心 →','Calculation center →')]
 ]){
  choose(view,'zs-goal',goal);
  assertExit(foundationsExit,foundationsExitLabel);
+ if(goal==='crystal'){
+  check(view,'compute');
+  assertExit(foundationsExit,foundationsExitLabel);
+  assert.ok(!getZeroStartResult().checkedSteps.includes('next'));
+  assert.match(view.$('#zs-feedback').textContent,local(/一格平移/,/one-cell shift/));
+ }
  check(view,choice);
  assertExit(route,label);
  view=mount({lesson:'next'});
  assertExit(route,label);
+ assert.deepEqual(getZeroStartResult().answers.next,{choice,context:{goal}});
 }
 choose(view,'zs-answer','water');
 assertExit(foundationsExit,foundationsExitLabel);

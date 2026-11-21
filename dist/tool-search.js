@@ -77,16 +77,17 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  const intentQuery=normalizeSearchText(query);
  const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords),formats:inputFormatsForTerms(item,terms),
   intent:item.searchIntents?.find(({aliases})=>aliases.some(alias=>alias.test(intentQuery)))}));
- const matchingExamples=entries.filter(({searchExample:example})=>example?.matches(exampleQuery,exampleTerms));
- const examples=matchingExamples.map(item=>{
-  if(!includeExampleRoutes)return item;
-  const {params,title,summary}=item.searchExample;
-  return {...item,route:`${item.route}?${params}`,title,summary};
- });
+ const matchingExamples=new Map();
+ for(const item of entries){
+  const example=item.matchSearchExample?.(query)??(item.searchExample?.matches(exampleQuery,exampleTerms)?item.searchExample:null);
+  if(example)matchingExamples.set(item,example);
+ }
+ const examples=[...matchingExamples].map(([item,{params,title,summary}])=>includeExampleRoutes&&params?
+  {...item,route:`${item.route}?${params}`,title,summary}:item);
  const score=row=>row.formats.reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
- const intents=prepared.filter(row=>row.intent&&!matchingExamples.includes(row.item)).map(({item,intent})=>({...item,summary:intent.summary}));
+ const intents=prepared.filter(row=>row.intent&&!matchingExamples.has(row.item)).map(({item,intent})=>({...item,summary:intent.summary}));
  const productIntent=productQueries.has(unquoteQuery(query))?entries.filter(item=>item.route==='products'):[];
- const tools=prepared.filter(row=>!row.intent&&!matchingExamples.includes(row.item)&&terms.every(term=>
+ const tools=prepared.filter(row=>!row.intent&&!matchingExamples.has(row.item)&&terms.every(term=>
   (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))||
   (row.formats.length>0&&normalizedFilePurposes.get(row.item.route)?.includes(term))))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
