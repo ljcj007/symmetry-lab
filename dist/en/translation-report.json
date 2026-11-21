@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29075,
-  "translatedUnits": 29075,
+  "sourceUnits": 29139,
+  "translatedUnits": 29139,
   "missing": [],
-  "files": 529,
+  "files": 531,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -189,6 +189,8 @@
     "en-classroom-lab-bridges-docs.json",
     "en-zno-raman-bridge.json",
     "en-rashba-trim-bridge.json",
-    "en-response-bridges-docs.json"
+    "en-response-bridges-docs.json",
+    "en-learning-activity-search.json",
+    "en-seitz-little-group.json"
   ]
 }

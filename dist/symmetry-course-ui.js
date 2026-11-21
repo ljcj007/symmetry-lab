@@ -1,5 +1,6 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
+import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-littlegroup1';
 import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
@@ -290,6 +291,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?'<p><a id="sc-rashba-trim-link" href="#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check">用这三个波矢比较能谱与时间反演 →</a></p>':''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
+      ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="sc-references"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>{const source=(lessons.sources||[]).find(s=>s.id===ref.sourceId),url=safeURL(ref.url)||safeURL(source?.url);return `<span>${esc(source?.title||ref.sourceId||'')} · ${esc(ref.chapter||'')}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}${url?` <a href="${esc(url)}" target="_blank" rel="noreferrer">来源 ↗</a>`:''}</span>`;}).join('')}</div>
       <div class="sc-actions"><button class="secondary" type="button" id="sc-lesson-quiz">本节自测 →</button>${lesson.lab&&labNames[lesson.lab]?`<button class="secondary" type="button" id="sc-lesson-lab">${lesson.labInputs?'打开本课实验（重置为示例参数）':'打开对应实验'}</button>`:''}${lesson.workbench?'<button class="secondary" type="button" id="sc-lesson-workbench">在工作台验证</button>':''}${next?'<button class="primary" type="button" id="sc-next-lesson">下一单元 →</button>':''}</div></article></div>`;
@@ -306,6 +308,11 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     const comparison=$('#sc-seitz-comparison');
     if(comparison)disposeSeitzComparison=bindSeitzComparison(comparison,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-comparison')===comparison,
+      formatNumber:fmt,formatComplex:complex
+    });
+    const littleGroupComparison=$('#sc-seitz-little-group');
+    if(littleGroupComparison)disposeSeitzComparison=bindSeitzLittleGroup(littleGroupComparison,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-little-group')===littleGroupComparison,
       formatNumber:fmt,formatComplex:complex
     });
   }

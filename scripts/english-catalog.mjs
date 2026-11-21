@@ -73,6 +73,7 @@ catalogFiles.push('en-character-comparison.json','en-character-discovery.json','
 catalogFiles.push('en-workbench-intent-search.json');
 catalogFiles.push('en-triangle-reduction-bridge.json','en-double-screw-workbench.json','en-classroom-lab-bridges-docs.json');
 catalogFiles.push('en-zno-raman-bridge.json','en-rashba-trim-bridge.json','en-response-bridges-docs.json');
+catalogFiles.push('en-learning-activity-search.json','en-seitz-little-group.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

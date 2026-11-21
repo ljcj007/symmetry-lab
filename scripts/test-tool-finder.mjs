@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import {Element,flush} from './test-material-research-ui.mjs';
 import {finderResults,normalizeFinderText,startToolFinder} from '../dist/tool-finder.js';
 import {toolsIndex} from '../dist/navigation-ui.js';
+import {learningActivities} from '../dist/learning-activity-search.js';
 
 const catalog=JSON.parse(fs.readFileSync(new URL('../dist/data/search-index.json',import.meta.url),'utf8')).entries;
 assert.equal(normalizeFinderText(' C₄v / Clebsch–Gordan '),'c4v / clebsch gordan');
@@ -22,6 +23,24 @@ assert.equal(finderResults(toolsIndex,'interferometer')[0].route,'compute/lie/in
 assert.equal(finderResults(toolsIndex,'Rabi')[0].route,'compute/lie/rabi');
 assert.equal(finderResults([{route:'javascript:alert(1)',title:'bad',kind:'计算'}],'bad').length,0);
 assert.ok(finderResults([...toolsIndex,...catalog],'Young',{scope:'courses'}).every(x=>x.kind==='课程'));
+
+const activities=[
+ ['氧化锌 拉曼','ZnO Raman','compute/phonon-modes?preset=zno-ir'],
+ ['Rashba 时间反演','Rashba time reversal','classroom/foundations?module=mini&experiment=bands&preset=rashba-trim-check'],
+ ['三顶点 投影矩阵秩','triangle projector rank','classroom/foundations?module=demos&experiment=projection&preset=triangle-permutation'],
+ ['双值螺旋 工作台','double screw eigenvalue','classroom/crystal?track=double&lesson=double-06']
+];
+const localEntries=[...toolsIndex,...learningActivities];
+for(const [chinese,english,route] of activities){
+ for(const query of [chinese,english,`“${english}”`]){
+  const results=finderResults(localEntries,query);
+  assert.equal(results[0]?.route,route,query+' works before the catalog loads');
+  assert.equal(results.filter(item=>item.route===route).length,1);
+  assert.deepEqual(finderResults(localEntries,query,{scope:'groups'}),[]);
+  assert.deepEqual(finderResults(localEntries,query,{scope:'materials'}),[]);
+ }
+ assert.equal(finderResults([...localEntries,...catalog],english,{scope:'courses'})[0]?.route,route);
+}
 
 for(const edition of process.argv.includes('--source-only')?['']:['','en/']){
  const address=file=>new URL('../dist/'+edition+file,import.meta.url);

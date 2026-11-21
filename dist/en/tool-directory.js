@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261122-expert-intents1';
+import {searchEntries} from './tool-search.js?v=20261122-activity1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={

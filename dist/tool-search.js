@@ -46,9 +46,21 @@ export function matchingInputFormats(item,query){
 export function inputFormatSummary(item,query){
  return matchingInputFormats(item,query).map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions).join(' ');
 }
+export function matchNamedActivities(entries,query){
+ const text=normalizeSearchText(query).replace(/^["“‘']+|["”’']+$/g,'').trim();
+ return text?entries.filter(item=>item.activityAliases?.some(alias=>normalizeSearchText(alias)===text)):[];
+}
+function resultRouteKey(route){
+ const [path,query]=route.split('?');
+ if(!query)return path;
+ const parameters=new URLSearchParams(query);
+ parameters.sort();
+ return path+'?'+parameters;
+}
 export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}={}){
  const terms=queryTerms(query);
  if(!terms.length)return [];
+ const activities=matchNamedActivities(entries,query);
  const exampleTerms=terms.join(' ').replace(/[“”‘’]/gu,'').split(' ').filter(Boolean);
  const exampleQuery=exampleTerms.join(' ');
  const intentQuery=normalizeSearchText(query);
@@ -65,7 +77,13 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  const tools=prepared.filter(row=>!row.intent&&!matchingExamples.includes(row.item)&&terms.every(term=>
   (row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)||row.formats.some(format=>matchesInputFormat(format,term))))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
- return [...examples,...intents,...tools].slice(0,limit);
+ const seen=new Set();
+ return [...activities,...examples,...intents,...tools].filter(item=>{
+  const key=resultRouteKey(item.route);
+  if(seen.has(key))return false;
+  seen.add(key);
+  return true;
+ }).slice(0,limit);
 }
 
 const magneticRoute=/^atlas\/msg\?q=(\d+\.\d+)$/u;

@@ -1,8 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-phenomena1';
-import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-expert-intents1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-activity1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-activity1';
+import {learningActivities} from './learning-activity-search.js?v=20261122-activity1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-activity1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
 export {searchEntries};
@@ -180,7 +181,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-foundations-char2');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-activity1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 
 function orderedQuery(query){
@@ -191,6 +192,11 @@ function orderedQuery(query){
 
 function recentPage(route){
  const [path,query='']=route.split('?');
+ const activity=learningActivities.find(item=>{
+  const [targetPath,targetQuery='']=item.route.split('?');
+  return targetPath===path&&orderedQuery(targetQuery)===orderedQuery(query);
+ });
+ if(activity)return {route,title:activity.title};
  const tool=knownTool(path);
  if(tool)return {route,title:tool.title};
  if(path==='docs/dictionary')return {route,title:'公式与符号词典'};
@@ -229,7 +235,7 @@ async function fillRecentLessonNames(root,current,recent,load){
 
 export async function renderNavigationHub({container,view='home',databases,loadRecentProgression=loadClassroomProgression}){
  const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
- const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?'查找计算工具':view==='atlas'?'搜索群、材料与课程':'已经有一个问题？'}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?'试试：POSCAR、Clebsch-Gordan、Raman、DMI':'试试：镜面对称、声子、GaAs、225'}" autocomplete="off"><span id="site-search-status">${view==='compute'?'仅筛选计算工具；查找课程与群可用顶部快捷查找。':'输入关键词后检索课程、工具与群目录'}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
+ const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?'查找计算工具与练习':view==='atlas'?'搜索群、材料与课程':'已经有一个问题？'}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?'试试：POSCAR、Clebsch-Gordan、ZnO Raman':'试试：镜面对称、声子、GaAs、225'}" autocomplete="off"><span id="site-search-status">${view==='compute'?'筛选计算工具，或按名称打开相关练习。':'输入关键词后检索课程、工具与群目录'}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
 
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
@@ -271,13 +277,17 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   if(view==='compute'){renderCompute();const replacement=[...root.querySelectorAll('[data-favorite]')].find(b=>b.dataset.favorite===route);(replacement||root.querySelector('#tools-only-favorites'))?.focus?.({preventScroll:true});}
   else{button.setAttribute('aria-pressed',String(selected));button.setAttribute('aria-label',(selected?'取消收藏':'收藏')+knownTool(route).title);button.textContent=selected?'★':'☆';}
  });}
- let entries=[...toolsIndex];
+ let entries=[...toolsIndex,...learningActivities];
  const input=root.querySelector('#site-search'),results=root.querySelector('#site-search-results'),status=root.querySelector('#site-search-status');
  function renderCompute(){
   if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,arithmetic:computeArithmetic,query:input.value,favorites:onlyFavorites?saved:null});
+  const activities=computeCategory==='all'&&computeArithmetic==='all'&&!onlyFavorites?matchNamedActivities(learningActivities,input.value):[];
+  results.innerHTML=activities.length?`<section id="tools-related-activities" aria-labelledby="tools-related-activities-title">
+   <h2 id="tools-related-activities-title">相关练习</h2><ul class="nav-search-list">${activities.map(item=>`<li><a href="#${esc(item.route)}" data-route="${esc(item.route)}" data-activity-link><span>${esc(item.kind)}</span><strong>${esc(item.title)}</strong><small>${esc(item.summary)}</small></a></li>`).join('')}</ul>
+  </section>`:'';
   root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
    const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route),query:input.value})).join('')}</div></section>`:'';
-  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?'还没有收藏工具。关闭“只看收藏”，点击工具卡片上的星号即可收藏。':'当前条件没有匹配工具。可以更换分类或计算类型、缩短关键词，或清空筛选。'}</p>`;
+  }).join(''):activities.length?'':`<p class="nav-empty">${onlyFavorites&&!saved.length?'还没有收藏工具。关闭“只看收藏”，点击工具卡片上的星号即可收藏。':'当前条件没有匹配工具。可以更换分类或计算类型、缩短关键词，或清空筛选。'}</p>`;
   root.querySelector('#tools-filter-status').textContent=`当前显示 ${found.length} / ${toolsIndex.length} 项工具`;
   root.querySelector('#tools-arithmetic-help').textContent=arithmeticDescriptions[computeArithmetic]||'计算类型按当前入口的计算方式归类，具体输入和条件见各工具。';
   root.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===computeCategory)));
@@ -304,7 +314,7 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>${formatPurpose(t,query,'small')}`)}</li>`).join('')}</ul>`:'<p class="nav-empty">没有找到匹配内容，请尝试群编号、材料名称或计算名称。</p>';
  };
  const loadSearch=async()=>{if(loading||ready||!current())return;loading=true;status.textContent='正在读取搜索目录；可先查找工具…';
-  try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...extra];ready=true;status.textContent='工具 · 课程 · 群目录 · 材料';update();}
+  try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...learningActivities,...extra];ready=true;status.textContent='工具 · 课程 · 群目录 · 材料';update();}
   catch{if(current()){status.innerHTML='课程与群目录暂不可用，工具仍可搜索。 <button type="button" id="search-retry">重试搜索目录</button>';root.querySelector('#search-retry').onclick=loadSearch;}}
   finally{loading=false;}
  };

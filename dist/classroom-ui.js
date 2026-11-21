@@ -14,7 +14,7 @@ const courseDefinitions={
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261117-derive1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261117-derive1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261119-si1'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-phenomena1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-activity1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261121-course-entry1'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261121-spectral1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261122-phenomena1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}

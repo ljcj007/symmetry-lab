@@ -4,6 +4,7 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {Container,Element} from './test-material-research-ui.mjs';
 import {createResultLocalizer} from '../dist/english-results.js';
+import {parseWorkbenchSelection} from '../dist/workbench-route.js';
 
 const english=process.argv.includes('--english');
 const edition=new URL(english?'../dist/en/':'../dist/',import.meta.url);
@@ -25,7 +26,7 @@ const routes=[],calls=[];
 async function run(tool,input){
   assert.equal(tool,'teaching_labs');
   const python=process.env.SYMMETRY_LAB_PYTHON||'python';
-  const result=spawnSync(python,['-c',
+  const result=spawnSync(python,['-B','-c',
     'import json, sys; sys.path.insert(0,"dist/python"); from teaching_labs import run; print(json.dumps(run(json.load(sys.stdin))))'
   ],{cwd:fileURLToPath(new URL('../',import.meta.url)),encoding:'utf8',input:JSON.stringify(input)});
   assert.equal(result.status,0,result.error?.message||result.stderr);
@@ -174,4 +175,99 @@ for (const interrupt of ['edit','cancel','leave']) {
   assert.equal(output.innerHTML,'','An interrupted comparison must not render a late result');
   view.dispose();
 }
-console.log(`Seitz lesson handoff (${english?'English':'Chinese'}): shared models, live drafts, fourfold comparison, and interrupted calculations passed.`);
+
+const littleGroupRoute='#classroom/crystal?track=space&lesson=space-05';
+const littleGroupCases=[
+  {id:'axis',k:[0,0,.5],transformed:'(0, 0, 0.5)',difference:'(0, 0, 0)',member:true},
+  {id:'off-axis',k:[.25,0,.5],transformed:'(-0.25, 0, 0.5)',difference:'(-0.5, 0, 0)',member:false},
+  {id:'boundary',k:[.5,0,.5],transformed:'(-0.5, 0, 0.5)',difference:'(-1, 0, 0)',member:true}
+];
+const littleGroupStart=calls.length;
+const littleGroup=await openCourse(littleGroupRoute,'little-group');
+const littleGroupHost=littleGroup.container.querySelector('#sc-seitz-little-group');
+const littleGroupForm=littleGroupHost.querySelector('form');
+const prediction=littleGroupHost.querySelector('#sc-seitz-little-group-prediction');
+const littleGroupOutput=littleGroupHost.querySelector('#sc-seitz-little-group-result');
+assert.equal(littleGroupHost.querySelector('#sc-seitz-little-group-status').getAttribute('role'),'status');
+assert.equal(calls.length,littleGroupStart,'Loading the lesson must not calculate');
+await littleGroupForm.onsubmit({preventDefault(){}});
+assert.equal(calls.length,littleGroupStart,'A prediction is required before the explicit calculation');
+assert.equal(littleGroupOutput.innerHTML,'');
+prediction.value='axis-boundary';
+await littleGroupForm.onsubmit({preventDefault(){}});
+const littleGroupCalls=calls.slice(littleGroupStart);
+assert.deepEqual(littleGroupCalls.map(call=>call.input),littleGroupCases.map(({k})=>({lab:'seitz',preset:'screw21',point:[.2,.3,.1],k,steps:2})));
+assert.match(littleGroupOutput.textContent,english?/Correct\./:/预测正确/);
+const workbenchSelections=littleGroupCases.map(({id,k,transformed,difference,member})=>{
+  const row=littleGroupOutput.querySelector(`[data-seitz-little-group-case="${id}"]`);
+  const verdict=english?(member?'In little group':'Outside little group'):(member?'在小群内':'在小群外');
+  assert.deepEqual(row.querySelectorAll('td').slice(0,4).map(cell=>cell.textContent),[transformed,difference,verdict,'-1']);
+  const href=row.querySelector('a').getAttribute('href').replaceAll('&amp;','&');
+  assert.match(href,/^#workbench\?/);
+  const selection=parseWorkbenchSelection(href.split('?')[1]);
+  assert.deepEqual(selection,{mode:'sg',id:'4',k,doubleValued:false,bzType:'',labelK:null});
+  return selection;
+});
+assert.equal(calls.length,littleGroupStart+3,'Results contain manual workbench links with no extra calculation');
+if(english) assert.doesNotMatch(littleGroupHost.innerHTML+littleGroupOutput.innerHTML,/\p{Script=Han}/u);
+prediction.value='all';
+prediction.onchange();
+assert.equal(littleGroupOutput.innerHTML,'','Editing the prediction clears the previous result');
+littleGroup.dispose();
+
+const separateCore=spawnSync(process.env.SYMMETRY_LAB_PYTHON||'python',['-B','-c',`
+import json, sys
+from pathlib import Path
+sys.path.insert(0, 'dist/python')
+from symmetry_core import analyze_group
+payload = json.load(sys.stdin)
+groups = json.loads(Path('dist/data/space-groups.json').read_text(encoding='utf8'))['groups']
+sg4 = next(group for group in groups if group['number'] == 4)
+checks = []
+for request in payload:
+    result = analyze_group({**request, 'operations': sg4['operations'], 'basis': sg4['basis']})
+    little = result['littleGroup']
+    screw_index = next((i for i, op in enumerate(little['unitaryOperations']) if op['name'] == 'C2z'), None)
+    characters = [] if screw_index is None else [rep['characters'][screw_index] for rep in result['irreps']]
+    checks.append({'order': little['order'], 'starSize': len(result['star']), 'screwCharacters': sorted([round(z['re']), round(z['im'])] for z in characters)})
+print(json.dumps(checks))
+`],{cwd:fileURLToPath(new URL('../',import.meta.url)),encoding:'utf8',input:JSON.stringify(workbenchSelections)});
+assert.equal(separateCore.status,0,separateCore.error?.message||separateCore.stderr);
+assert.deepEqual(JSON.parse(separateCore.stdout),[
+  {order:2,starSize:1,screwCharacters:[[0,-1],[0,1]]},
+  {order:1,starSize:2,screwCharacters:[]},
+  {order:2,starSize:1,screwCharacters:[[0,-1],[0,1]]}
+]);
+
+for (const [guess,expected] of [['all',english?/half a reciprocal lattice vector/:/半个倒格矢/],['axis-only',english?/one reciprocal lattice vector/:/一个完整的倒格矢/]]) {
+  let requests=0;
+  const view=await openCourse(littleGroupRoute,'little-group-'+guess,()=>Promise.resolve(littleGroupCalls[requests++].result));
+  view.container.querySelector('#sc-seitz-little-group-prediction').value=guess;
+  await view.container.querySelector('#sc-seitz-little-group-form').onsubmit({preventDefault(){}});
+  assert.equal(requests,3);
+  assert.match(view.container.querySelector('#sc-seitz-little-group-result').querySelector('p').textContent,expected);
+  view.dispose();
+}
+
+for (const interrupt of ['edit','cancel','leave']) {
+  let resolve,cancelled=0,requests=0;
+  const pending=new Promise(finish=>{resolve=finish;});
+  pending.cancel=()=>{cancelled++;};
+  const view=await openCourse(littleGroupRoute,'little-group-'+interrupt,()=>{requests++;return pending;});
+  const prediction=view.container.querySelector('#sc-seitz-little-group-prediction');
+  const form=view.container.querySelector('#sc-seitz-little-group-form');
+  const output=view.container.querySelector('#sc-seitz-little-group-result');
+  prediction.value='axis-boundary';
+  const running=form.onsubmit({preventDefault(){}});
+  if(interrupt==='edit')prediction.onchange();
+  if(interrupt==='cancel')click(view.container,'sc-seitz-little-group-cancel');
+  if(interrupt==='leave')click(view.container,'sc-tab-lab');
+  resolve(littleGroupCalls[0].result);
+  await running;
+  assert.equal(cancelled,1,interrupt);
+  assert.equal(requests,1,'An interrupted little-group check must not start the next model');
+  assert.equal(output.innerHTML,'','An interrupted little-group check must not render a late result');
+  view.dispose();
+}
+
+console.log(`Seitz lesson handoff (${english?'English':'Chinese'}): shared models, live drafts, fourfold comparison, SG 4 little-group checks against the workbench core, and interrupted calculations passed.`);

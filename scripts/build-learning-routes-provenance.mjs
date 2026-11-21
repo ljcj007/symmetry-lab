@@ -70,6 +70,8 @@ files.push('dist/zno-ir-polarization-ui.js','dist/symmetry-mini-demos.js','dist/
  'dist/data/examples/zno-ir-polarization.json','dist/data/pointgroup-atlas.json','scripts/test-zno-ir-polarization-ui.mjs',
  'scripts/test-symmetry-mini-demos.mjs','locales/en-zno-raman-bridge.json','locales/en-rashba-trim-bridge.json',
  'locales/en-response-bridges-docs.json');
+files.push('dist/learning-activity-search.js','dist/seitz-little-group-ui.js','scripts/search-catalog-source.mjs',
+ 'scripts/test-seitz-lesson-handoff.mjs','locales/en-learning-activity-search.json','locales/en-seitz-little-group.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -117,6 +119,8 @@ data.verification.push('The three-vertex character reduction opens the correspon
 data.verification.push('The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request.');
 data.verification.push('The derived ZnO Gamma example links both E₂ clusters with zero Born projection to the C₆ᵥ vector and quadratic channels. An independently normalized two-tensor model checks parallel and crossed polarization weights.');
 data.verification.push('A Rashba example compares the Hamiltonian time-reversal condition and the equality of positive and negative momentum spectra at the same three momenta as the Kramers lesson. The student can check both Zeeman choices against the same momentum.');
+data.verification.push('Named spectra, time reversal, triangle projection and double-screw activities open their exact routes from the quick finder, home search and calculator directory. Activity aliases preserve strict group and material scopes, and opening an activity waits for user input before running a calculation.');
+data.verification.push('The space-group 4 single-valued comparison checks screw little-group membership modulo reciprocal translations before comparing the square phase. The proposed momenta hand off to the workbench with explicit settings and manual calculation.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

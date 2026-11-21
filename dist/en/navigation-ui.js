@@ -1,8 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-phenomena1';
-import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-expert-intents1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-activity1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-activity1';
+import {learningActivities} from './learning-activity-search.js?v=20261122-activity1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-activity1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
 export {searchEntries};
@@ -180,7 +181,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-foundations-char2');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-activity1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 
 function orderedQuery(query){
@@ -191,6 +192,11 @@ function orderedQuery(query){
 
 function recentPage(route){
  const [path,query='']=route.split('?');
+ const activity=learningActivities.find(item=>{
+  const [targetPath,targetQuery='']=item.route.split('?');
+  return targetPath===path&&orderedQuery(targetQuery)===orderedQuery(query);
+ });
+ if(activity)return {route,title:activity.title};
  const tool=knownTool(path);
  if(tool)return {route,title:tool.title};
  if(path==='docs/dictionary')return {route,title:"Dictionary of Formulas and Symbols"};
@@ -229,7 +235,7 @@ async function fillRecentLessonNames(root,current,recent,load){
 
 export async function renderNavigationHub({container,view='home',databases,loadRecentProgression=loadClassroomProgression}){
  const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
- const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find a calculation tool":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?"Try: POSCAR, Clebsch-Gordan, Raman, DMI":"Try: mirror symmetry, phonons, GaAs, 225"}" autocomplete="off"><span id="site-search-status">${view==='compute'?"Filter calculation tools here; use the quick finder above for lessons and groups.":"Enter keywords to search lessons, tools and group catalogs."}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
+ const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find tools and activities":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?"Try POSCAR, Clebsch–Gordan, or ZnO Raman":"Try: mirror symmetry, phonons, GaAs, 225"}" autocomplete="off"><span id="site-search-status">${view==='compute'?"Filter the tools or enter the name of an activity to open it.":"Enter keywords to search lessons, tools and group catalogs."}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
 
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
@@ -271,13 +277,17 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   if(view==='compute'){renderCompute();const replacement=[...root.querySelectorAll('[data-favorite]')].find(b=>b.dataset.favorite===route);(replacement||root.querySelector('#tools-only-favorites'))?.focus?.({preventScroll:true});}
   else{button.setAttribute('aria-pressed',String(selected));button.setAttribute('aria-label',(selected?"Remove from favorites":"Add to favorites")+knownTool(route).title);button.textContent=selected?'★':'☆';}
  });}
- let entries=[...toolsIndex];
+ let entries=[...toolsIndex,...learningActivities];
  const input=root.querySelector('#site-search'),results=root.querySelector('#site-search-results'),status=root.querySelector('#site-search-status');
  function renderCompute(){
   if(!current())return;const saved=favoriteRoutes(),found=filterToolDirectory(toolsIndex,{category:computeCategory,arithmetic:computeArithmetic,query:input.value,favorites:onlyFavorites?saved:null});
+  const activities=computeCategory==='all'&&computeArithmetic==='all'&&!onlyFavorites?matchNamedActivities(learningActivities,input.value):[];
+  results.innerHTML=activities.length?`<section id="tools-related-activities" aria-labelledby="tools-related-activities-title">
+   <h2 id="tools-related-activities-title">Related activities</h2><ul class="nav-search-list">${activities.map(item=>`<li><a href="#${esc(item.route)}" data-route="${esc(item.route)}" data-activity-link><span>${esc(item.kind)}</span><strong>${esc(item.title)}</strong><small>${esc(item.summary)}</small></a></li>`).join('')}</ul>
+  </section>`:'';
   root.querySelector('#tools-filtered').innerHTML=found.length?toolGroups.map(group=>{
    const items=found.filter(item=>item.category===group.id);return items.length?`<section class="nav-tool-section" id="tools-${group.id}"><header><h2>${esc(group.title)}</h2><p>${esc(group.summary)}</p></header><div class="nav-card-grid">${items.map(item=>toolCard(item,saved,{showScope:true,scopeOpen:expandedScopes.has(item.route),query:input.value})).join('')}</div></section>`:'';
-  }).join(''):`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match the current conditions. Change the category or calculation type, shorten the keywords, or clear the filters."}</p>`;
+  }).join(''):activities.length?'':`<p class="nav-empty">${onlyFavorites&&!saved.length?"No tools are saved as favorites yet. Turn off Favorites only, then select the star on a tool card to save it.":"No tools match the current conditions. Change the category or calculation type, shorten the keywords, or clear the filters."}</p>`;
   root.querySelector('#tools-filter-status').textContent=`Showing ${found.length} / ${toolsIndex.length} tools`;
   root.querySelector('#tools-arithmetic-help').textContent=arithmeticDescriptions[computeArithmetic]||"Calculation types describe the methods available at each entry. See each tool for its inputs and conditions.";
   root.querySelectorAll('[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===computeCategory)));
@@ -304,7 +314,7 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>${formatPurpose(t,query,'small')}`)}</li>`).join('')}</ul>`:"<p class=\"nav-empty\">No matches found. Try a group number, material name or calculation name.</p>";
  };
  const loadSearch=async()=>{if(loading||ready||!current())return;loading=true;status.textContent="Loading the search index; you can search tools now…";
-  try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...extra];ready=true;status.textContent="Tools · Lessons · Group catalogs · Materials";update();}
+  try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...learningActivities,...extra];ready=true;status.textContent="Tools · Lessons · Group catalogs · Materials";update();}
   catch{if(current()){status.innerHTML="Lessons and group catalogs are temporarily unavailable. Tool search still works. <button type=\"button\" id=\"search-retry\">Retry the search index</button>";root.querySelector('#search-retry').onclick=loadSearch;}}
   finally{loading=false;}
  };
