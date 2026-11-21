@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-lesson-topic1';
-import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261120-structure-diffraction1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261121-spectral1';
+import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261121-spectral1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-si-fold1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
@@ -97,10 +97,19 @@ export const toolGroups=[
  ]}
 ];
 toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
+const znoInfraredExample={
+ params:'preset=zno-ir',
+ title:"Infrared polarization of Γ-point ZnO modes",
+ summary:"Use Born effective charges to compare the infrared response along the c axis and in the basal plane.",
+ label:"Open the Γ-point ZnO infrared polarization example →",
+ matches:(query,terms)=>/(?:\bzno\b|\bzinc oxide\b|氧化锌|zno红外)/u.test(query)
+  &&/(?:\binfrared\b|\bir\b|\bborn\b|红外|有效电荷)/u.test(query)
+  &&terms.every(term=>/^(?:(?:zno|氧化锌)(?:红外(?:偏振)?)?|zinc|oxide|infrared|ir|红外(?:偏振)?|polari[sz]ation|偏振|born|effective|charges?|有效电荷|γ|gamma|点|c|axis|c轴|基面|basal|plane|modes?|光学声子)$/u.test(term))
+};
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?" file import "+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
- return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability};
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:"Calculate",category:group.id,capability,searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
@@ -128,13 +137,58 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ["Existing files and their uses",capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc("Inputs and supported scope")}">Inputs and supported scope</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- const example=showScope&&namedExamples[item.route];
+ const example=showScope&&(item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route]);
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">Open tool →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?"Remove from favorites":"Add to favorites"}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261120-wannier1');if(!Array.isArray(data.entries))throw Error("The search index has an invalid format.");return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
-export async function renderNavigationHub({container,view='home',databases}){
+
+function orderedQuery(query){
+ const params=new URLSearchParams(query);
+ params.sort();
+ return params.toString();
+}
+
+function recentPage(route){
+ const [path,query='']=route.split('?');
+ const tool=knownTool(path);
+ if(tool)return {route,title:tool.title};
+ if(path==='docs/dictionary')return {route,title:"Dictionary of Formulas and Symbols"};
+ if(!path.startsWith('classroom/'))return {route,title:path.startsWith('atlas')?"Continue exploring the atlas":"Resume the last calculation"};
+ const selection=parseClassroomRoute(route);
+ if(selection?.section==='zero-start')return {route,title:"Start from Zero"};
+ const pathway=classroomPathways.find(item=>item.id===selection?.pathway);
+ const normalized=orderedQuery(query);
+ const named=pathway?.links.find(([,target])=>orderedQuery(target)===normalized);
+ const lesson=selection?.lesson&&(!selection.tab||selection.tab==='learn')?selection:null;
+ return {route,title:named?.[0]||pathway?.title||"Resume the last lesson",lesson};
+}
+
+async function fillRecentLessonNames(root,current,recent,load){
+ const lessons=recent.filter(item=>item.lesson);
+ if(!lessons.length)return;
+ try{
+  const {progressionForSelection}=await load();
+  if(!current())return;
+  const names=new Map();
+  for(const item of lessons){
+   const resolved=progressionForSelection(item.lesson);
+   if(resolved.current?.lessonId===item.lesson.lesson&&resolved.current.title){
+    names.set(item.route,resolved.current.title);
+   }
+  }
+  const recentLinks=root.querySelector('.nav-recent')?.querySelectorAll('a')||[];
+  for(const anchor of recentLinks){
+   const name=names.get(anchor.dataset.route);
+   if(name)anchor.textContent=name;
+  }
+ }catch{
+  // The initial native links still work if the optional lesson index fails.
+ }
+}
+
+export async function renderNavigationHub({container,view='home',databases,loadRecentProgression=loadClassroomProgression}){
  const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
  const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?"Find a calculation tool":view==='atlas'?"Search groups, materials and lessons":"Have a question in mind?"}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?"Try: POSCAR, Clebsch-Gordan, Raman, DMI":"Try: mirror symmetry, phonons, GaAs, 225"}" autocomplete="off"><span id="site-search-status">${view==='compute'?"Filter calculation tools here; use the quick finder above for lessons and groups.":"Enter keywords to search lessons, tools and group catalogs."}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
@@ -169,8 +223,9 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['classroom/spin',"Double groups, color groups and spin groups","Study point groups and three-dimensional space groups, with explicit limits for each teaching example."]
  ].map(([r,t,s])=>`<article>${link(r,`<h2>${t}</h2><p>${s}</p><span class="nav-card-go">Explore →</span>`,'nav-atlas-card')}</article>`).join('')}</div>`;
  else {
-  const recent=readSaved('symmetry-lab.recent.v1').map(route=>{const tool=knownTool(route.split('?')[0]);return tool?{...tool,route}:{route,title:route.startsWith('classroom')?"Resume the last lesson":route.startsWith('atlas')?"Continue exploring the atlas":"Resume the last calculation",summary:"Return to where you left off",kind:"Recent"};});
+  const recent=readSaved('symmetry-lab.recent.v1').map(recentPage);
   body.innerHTML=homeHTML({link,toolCard,knownTool,favorites,recent,pathways:classroomPathways,esc});
+  void fillRecentLessonNames(root,current,recent,loadRecentProgression);
  }
  function bindFavorites(){root.querySelectorAll('[data-favorite]').forEach(button=>button.onclick=()=>{
   if(!current())return;const route=button.dataset.favorite,selected=toggleFavorite(route).includes(route);

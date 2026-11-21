@@ -39,6 +39,9 @@ files.push('dist/symmetry-course-ui.js','dist/structure-ui.js','dist/cif-setting
  'dist/cif-orbit-practice.js','locales/en-cif-orbit-practice.json','locales/en-cif-reciprocal-lesson.json','scripts/test-python-cif-reciprocal-replay.py',
  'dist/formula-dictionary.js','scripts/test-formula-dictionary.mjs','scripts/test-entry-paths.mjs','scripts/test-beginner-links.mjs','locales/en-beginner-links.json');
 
+files.push('scripts/test-recent-lesson-names.mjs','scripts/test-observables-ui.mjs','scripts/test-python-phonon-spectra.py',
+ 'dist/python/phonon_spectra.py','locales/en-si-response-comparison.json');
+
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
  'dist/python/structure_bc.py','dist/python/standard_labels.py','dist/python/phase_domains.py',

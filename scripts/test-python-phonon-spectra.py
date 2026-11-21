@@ -1,4 +1,5 @@
 """Independent Gamma-mode, representation, and optical selection checks."""
+from bisect import bisect_right
 import json
 import math
 from pathlib import Path
@@ -132,6 +133,40 @@ class PhononSpectraTests(unittest.TestCase):
         self.assertAlmostEqual(lookup[415], 0.5)
         forbidden = run_phonons({'preset': 'nacl', 'channel': 'raman', 'angle': 45})
         self.assertTrue(all(point['intensity'] == 0 for point in forbidden['spectrum']['points']))
+
+    def test_spectrum_sampling_resolves_extreme_linewidths(self):
+        for center, width in ((4000, 0.1), (10, 500), (250, 500), (10, 0.1), (4000, 500)):
+            with self.subTest(center=center, fwhm=width):
+                result = run_phonons({'preset': 'silicon', 'angle': 22.5,
+                                      'frequency_cm1': center, 'width_cm1': width})
+                spectrum = result['spectrum']
+                self.assertEqual(spectrum['assumedFrequencyCm1'], center)
+                self.assertEqual(spectrum['fwhmCm1'], width)
+                peak = result['polarization']['intensity']
+                self.assertAlmostEqual(peak, 0.5)
+                xs = [point['wavenumber'] for point in spectrum['points']]
+                ys = [point['intensity'] for point in spectrum['points']]
+                self.assertEqual(xs, sorted(set(xs)))
+                self.assertLessEqual(len(xs), 513)
+                self.assertAlmostEqual(xs[0], max(0, center - 8 * width))
+                self.assertAlmostEqual(xs[-1], center + 8 * width)
+                self.assertAlmostEqual(ys[-1] / peak, 1 / 257)
+                samples = dict(zip(xs, ys))
+                self.assertAlmostEqual(samples[center] / peak, 1)
+                self.assertAlmostEqual(samples[center + width / 2] / peak, 0.5)
+                if center >= width / 2:
+                    self.assertAlmostEqual(samples[center - width / 2] / peak, 0.5)
+
+                # Bound the error of the polyline rendered by the browser.
+                for offset in [1, *(i / 113 for i in range(-904, 904))]:
+                    x = center + offset * width
+                    if not xs[0] <= x < xs[-1]:
+                        continue
+                    j = bisect_right(xs, x)
+                    t = (x - xs[j - 1]) / (xs[j] - xs[j - 1])
+                    interpolated = ((1 - t) * ys[j - 1] + t * ys[j]) / peak
+                    expected = 1 / (1 + 4 * offset ** 2)
+                    self.assertLessEqual(abs(interpolated - expected), 0.001)
 
     def test_animation_periodicity_and_relative_coordinate_basis(self):
         for preset in ('silicon', 'gaas', 'nacl'):

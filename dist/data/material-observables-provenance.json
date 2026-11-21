@@ -67,16 +67,16 @@
       "sha256": "2a9342d5551803e28e85c365368068133e8a881114db04e7227a966381993e00"
     },
     "dist/observables-ui.js": {
-      "bytes": 32300,
-      "sha256": "377119ad1c44384540d41cecbeaa52c3c0cf16340cf07b84bbd3da2bf7dc03e3"
+      "bytes": 34420,
+      "sha256": "3c27565bc3d4bd0815b1418980f3a140eb9a6b86c6e784712edd4e9674e55cae"
     },
     "dist/observables.css": {
       "bytes": 5270,
       "sha256": "7e0f89c4f480c7393b8034957de1241db8ee9b6eeb34a7edc74d5a5d1d3cbe8b"
     },
     "dist/python/phonon_spectra.py": {
-      "bytes": 18790,
-      "sha256": "65f943ce20ad9683527324a417a5dd803fe32821373a059cf9d3522d9806469c"
+      "bytes": 18918,
+      "sha256": "2c77600ebbeef378c2f251d07e50f726e20aa928a703688a4c360a060ab210e1"
     },
     "dist/python/property_tensors.py": {
       "bytes": 28969,
@@ -87,36 +87,36 @@
       "sha256": "9aded557a32e85c3160edfca36b687b319983cafa98e2a224134848dbbe8f1b6"
     },
     "dist/python-worker.js": {
-      "bytes": 12070,
-      "sha256": "a5194009ae03adb4ba40160232996177e270a707bf855566b0b239d9a3b53be6"
+      "bytes": 12061,
+      "sha256": "1ede7a2528357148be1170136dfa6303471d3704b2271ec3183d4fd06ba53212"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32735,
-      "sha256": "8be27d23821ba1ad4d26494fc5618bab2bec2215a32ccd3397d4f67dd1ddfe2d"
+      "bytes": 32788,
+      "sha256": "1970c611d4b56b2b4e6689b3c02eb5b2d8970561d3d98e54ccb77ff9e1183587"
     },
     "dist/navigation-ui.js": {
-      "bytes": 31463,
-      "sha256": "e91a124387c69759ba6d7d4adb59b3e44ccd6dc3d4a4f59c0573a448544cf169"
+      "bytes": 33840,
+      "sha256": "88ff82daf8774dbba934cfb021d6a4fdeef1a0b225137d665871741cc757d49d"
     },
     "dist/symmetry-course-ui.js": {
       "bytes": 104282,
       "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
     },
     "dist/app.js": {
-      "bytes": 102659,
-      "sha256": "9a37ca0d95825a0892d3004e3e23ee6f964ad7297a88c6627e2543927589d06c"
+      "bytes": 102635,
+      "sha256": "bc64f015fe45294102b8a93717d9bd1eac101e91fcb7bde9a0d6f1434da86b28"
     },
     "dist/index.html": {
-      "bytes": 8223,
-      "sha256": "6533f4f4f327405a944d239542094ab6d2411fa69e24bb120a8bfbc0cc2f7ee7"
+      "bytes": 8214,
+      "sha256": "8cb2e5deb6073e9bb66534476677d3ab21fcc76eece6636faa1ee24e22a0bba3"
     },
     "dist/docs/material-observables.md": {
       "bytes": 6678,
       "sha256": "e2aa1b2f2fad3a45038a1afe9bfbbab34588cbcb4cf3efb1195f7cc03ade0659"
     },
     "scripts/test-python-phonon-spectra.py": {
-      "bytes": 9434,
-      "sha256": "70ab8591fee54c366b6f245a5cb96a05f872ae6c6eda4dec2b922ea319501ea8"
+      "bytes": 11497,
+      "sha256": "a6b669da8d223a97b8378dbd2c5747a2931f7975cc0f4407899e2d4f1c38210c"
     },
     "scripts/test-python-property-tensors.py": {
       "bytes": 9819,
@@ -127,8 +127,8 @@
       "sha256": "aa619a2d8d9d5ed7c3bbe4bdd08e52146965fa5878a3d55f6dd9faf00234d3f4"
     },
     "scripts/test-observables-ui.mjs": {
-      "bytes": 14302,
-      "sha256": "f757bbe595f9cb68c75e3244619613707fb989aa7661a4e5e25ff57e1740d22f"
+      "bytes": 17459,
+      "sha256": "0f3fb3dc8b98eb841a5d57c58fe7c7eb1bad83647fbc33b958a8f57e59aebc70"
     },
     "scripts/test-python-api.py": {
       "bytes": 33245,
@@ -143,8 +143,8 @@
       "sha256": "93f85ce3236adca6245b08f4482d8f4a85857ae627c7b20c4f0c7a6493b00587"
     },
     "package.json": {
-      "bytes": 28374,
-      "sha256": "f16f8ea00c22374676f57951ccead7511a881f2af22ec77689e7c40946a1f720"
+      "bytes": 28620,
+      "sha256": "77ac852b85a875ff79b89e76356f65b91b85343331798f0e3d41aca281da49c5"
     }
   }
 }

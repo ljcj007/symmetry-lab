@@ -259,9 +259,12 @@ def run_phonons(payload):
         _, _, rr, ii = _intensities(degrees, polarization, selected, modes)
         pattern.append({'angle': degrees, 'raman': rr, 'ir': ii,
                         'intensity': rr if channel == 'raman' else ii})
-    peak_points = sorted(set([2 * frequency * i / 200 for i in range(201)] + [frequency - width / 2, frequency + width / 2]))
+    # Resolve both half-maximum crossings with 32 intervals per FWHM. At
+    # eight FWHM from the peak, the untruncated tail is 1/257 of the maximum.
+    spacing = width / 32
+    peak_points = sorted({max(0.0, frequency + i * spacing) for i in range(-256, 257)})
     spectrum = [{'wavenumber': x, 'intensity': intensity / (1 + 4 * ((x - frequency) / width) ** 2)}
-                for x in peak_points if x >= 0]
+                for x in peak_points]
     vertex_codes = list(product((0, 1), repeat=3))
     vertices = [_mv(_CELL, code) for code in vertex_codes]
     edges = [[i, j] for i, a in enumerate(vertex_codes) for j, b in enumerate(vertex_codes)

@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261120-structure-diffraction1';
+import {searchEntries} from './tool-search.js?v=20261121-spectral1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={
@@ -24,5 +24,5 @@ export function orderToolGroups(groups){
 }
 export function filterToolDirectory(entries,{category='all',arithmetic='all',query='',favorites=null}={}){
  const selected=entries.filter(item=>(category==='all'||item.category===category)&&(arithmetic==='all'||item.capability?.arithmetic===arithmetic)&&(!favorites||favorites.includes(item.route)));
- return String(query).trim()?searchEntries(selected,query,selected.length):selected;
+ return String(query).trim()?searchEntries(selected,query,selected.length,{includeExampleRoutes:false}):selected;
 }

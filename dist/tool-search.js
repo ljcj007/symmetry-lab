@@ -31,11 +31,20 @@ export function matchingInputFormats(item,query){
 export function inputFormatSummary(item,query){
  return matchingInputFormats(item,query).map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions).join(' ');
 }
-export function searchEntries(entries,query,limit=30){
+export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}={}){
  const terms=queryTerms(query);
  if(!terms.length)return [];
+ const exampleTerms=terms.join(' ').replace(/[“”‘’]/gu,'').split(' ').filter(Boolean);
+ const exampleQuery=exampleTerms.join(' ');
  const prepared=entries.map(item=>({item,title:normalizeSearchText(item.title),summary:normalizeSearchText(item.summary),keywords:normalizeSearchText(item.keywords),extra:normalizeSearchText(item.capabilityKeywords)}));
+ const matchingExamples=entries.filter(({searchExample:example})=>example?.matches(exampleQuery,exampleTerms));
+ const examples=matchingExamples.map(item=>{
+  if(!includeExampleRoutes)return item;
+  const {params,title,summary}=item.searchExample;
+  return {...item,route:`${item.route}?${params}`,title,summary};
+ });
  const score=row=>matchingInputFormats(row.item,query).reduce((sum,format)=>sum+20*format.priority,0)+terms.reduce((sum,term)=>sum+(row.title.includes(term)?4:0)+(row.keywords.includes(term)?2:0)+(row.extra.includes(term)?1:0),0);
- return prepared.filter(row=>terms.every(term=>(row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)))
-  .sort((a,b)=>score(b)-score(a)).slice(0,limit).map(row=>row.item);
+ const tools=prepared.filter(row=>!matchingExamples.includes(row.item)&&terms.every(term=>(row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)))
+  .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
+ return [...examples,...tools].slice(0,limit);
 }

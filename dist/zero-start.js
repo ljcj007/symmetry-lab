@@ -108,13 +108,13 @@ function traceWorkedAnswer(space){
  <p><a href="#classroom/foundations?module=demos&amp;experiment=characters">继续练习同一操作在不同表示中的特征标 →</a></p>
  </section>`;
 }
-const continuations=[
- ['#classroom/foundations?lesson=group-basics','点群与表示 · 从第一课继续','用群的规则整理刚才的动作，再学习表示与约化。'],
- ['#classroom/foundations?module=demos&experiment=water','水分子、红外与拉曼','已有矩阵和特征标概念后，连接位移与光谱通道。'],
- ['#classroom/foundations?module=theorems&experiment=rearrangement','定理证明与应用','有表示基础后，沿 S₃ 检查重排、Schur 与正交关系。'],
- ['#classroom/crystal?track=space','晶体与空间群','在点群基础上加入周期平移、螺旋轴和滑移面。'],
- ['#compute','计算中心','已有具体任务时，直接检索工具与输入参数。']
-];
+const continuations={
+ foundations:['#classroom/foundations?lesson=group-basics','点群与表示 · 从第一课继续','用群的规则整理刚才的动作，再学习表示与约化。'],
+ water:['#classroom/foundations?module=demos&experiment=water','水分子、红外与拉曼','已有矩阵和特征标概念后，连接位移与光谱通道。'],
+ theorems:['#classroom/foundations?module=theorems&experiment=rearrangement','定理证明与应用','有表示基础后，沿 S₃ 检查重排、Schur 与正交关系。'],
+ crystal:['#classroom/crystal?track=space','晶体与空间群','在点群基础上加入周期平移、螺旋轴和滑移面。'],
+ compute:['#compute','计算中心','已有具体任务时，直接检索工具与输入参数。']
+};
 
 export function renderZeroStart({container,selection={},onNavigate=()=>{},download,toast=()=>{},loadPlacementModule=loadDefaultPlacement}){
  let progress=load(),step=ids.includes(selection.lesson)?selection.lesson:ids[0],drafts=copy(defaults),answers={},feedback={};
@@ -136,7 +136,7 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   <div class="zs-controls">${select('zs-space',[['xy','只看平面箭头 (x,y)'],['xyz','看三维箭头 (x,y,z)']],c.space,'选择作用空间')}
   <button type="button" id="zs-action" class="primary">显示这个空间中的 90° 操作</button></div>
   ${c.applied?traceObservation(c.space):'<p class="zs-empty">选择一个空间，再显示矩阵。</p>'}`;
-  return `<p>六个小检查把几何、坐标、矩阵和特征标连在一起。接下来可以按问题继续；任何路线都可直接打开，不需要等待进度解锁。</p><div class="zs-controls">${select('zs-goal',[['','先选择你的目标'],['geometry','我想系统学习点群与表示'],['spectra','我想看懂水分子的振动和光谱'],['tools','我已有具体输入，要找计算工具']],c.goal,'现在最想做什么？')}</div><div class="zs-next-grid">${continuations.map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>如果矩阵还不熟，先回看第 3–5 步，再进入基础第一课。光谱演示需要位移表示；定理工坊和空间群路线还会逐步引入新的前置概念。</p>`;
+  return `<p>六个小检查把几何、坐标、矩阵和特征标连在一起。接下来可以按问题继续；任何路线都可直接打开，不需要等待进度解锁。</p><div class="zs-controls">${select('zs-goal',[['','先选择你的目标'],['geometry','我想系统学习点群与表示'],['spectra','我想看懂水分子的振动和光谱'],['tools','我已有具体输入，要找计算工具']],c.goal,'现在最想做什么？')}</div><div class="zs-next-grid">${Object.values(continuations).map(([route,title,summary])=>`<a href="${route}"><strong>${title}</strong><span>${summary}</span></a>`).join('')}</div><p>如果矩阵还不熟，先回看第 3–5 步，再进入基础第一课。光谱演示需要位移表示；定理工坊和空间群路线还会逐步引入新的前置概念。</p>`;
  }
  function assessment(){const c=drafts[step],question={objects:'当前这次操作后，整个对象与原来是否重合？',repeat:'操作的阶、所选点的最短返回周期分别是多少？',coordinates:'对任意平面箭头，逆时针 90° 的坐标规则是哪一条？',matrix:'哪一个矩阵的两列正确记录了两个单位箭头的新坐标？',trace:'当前所选作用空间中，这个 90° 操作的特征标是多少？',next:'哪一个入口最符合你刚才选的目标？'}[step];
   const choices={objects:[['same','同类位置全部重合'],['changed','至少一个类型或位置不重合']],repeat:[['4,4','操作阶 4；点周期 4'],['4,1','操作阶 4；点周期 1'],['1,1','操作阶 1；点周期 1']],coordinates:[['ccw','(x,y) → (−y,x)'],['cw','(x,y) → (y,−x)'],['half','(x,y) → (−x,−y)']],matrix:[['correct','第一行 0, −1；第二行 1, 0'],['reverse','第一行 0, 1；第二行 −1, 0'],['identity','第一行 1, 0；第二行 0, 1']],trace:[['0','0'],['1','1'],['2','2'],['3','3']],next:[['foundations','点群与表示 · 基础第一课'],['water','水分子、红外与拉曼'],['compute','计算中心']]}[step];
@@ -154,9 +154,12 @@ export function renderZeroStart({container,selection={},onNavigate=()=>{},downlo
   const reason={objects:!c.marked?'四个同类位置经过 90° 的整数倍旋转可以一一重合。':c.turns===4?'四次 90° 回到原位，B 类位置也回到原处。':'外轮廓重合，但 B 类位置移动到了另一个角，所以不是这个带类型对象的对称。',repeat:c.point==='axis'?'整个操作的阶仍是 4；轴上的这个点每次都不动，点周期是 1。':'一般点做四次才返回；这个旋转操作的阶也是 4。',coordinates:'向右的 (1,0) 应转到向上的 (0,1)，所以一般规则是 (−y,x)。',matrix:'第一列记录 (1,0) 的像 (0,1)，第二列记录 (0,1) 的像 (−1,0)；不要把列和行对调。',next:'系统学习从基础第一课开始；光谱问题进入水分子演示；已有明确输入时进入计算中心。'}[step];return (correct?'核对一致。':'再试一次。')+reason;
  }
  function draw(activeId=globalThis.document?.activeElement?.id){if(!current())return;remember();const index=ids.indexOf(step),completed=ids.filter(id=>progress.answers[id]).length;
+  const checkedChoice=progress.answers.next?.choice;
+  const [nextRoute,nextTitle]=continuations[checkedChoice]||continuations.foundations;
+  const nextLabel=checkedChoice&&checkedChoice!=='foundations'?nextTitle+' →':'继续基础第一课 →';
   const placementOpen=$('#zs-placement')?.open;
   disposePlacement();
-  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">零基础起步 · 无需先学矩阵</span><h2 id="zs-heading" tabindex="-1">先动手，再读懂对称性的语言。</h2><p>从一个正方形和一支箭头出发，用六个短步骤接上现有群论课堂。可以自由跳转；进度只记录已核对的答案，不代表课程成绩。</p><p class="zs-progress" role="status">已核对 ${completed} / 6 步 · 当前 ${index+1} / 6</p></header><details id="zs-placement" class="zs-panel" ${placementOpen?'open':''}><summary>找适合自己的起点（四题，可跳过）</summary><div id="zs-placement-body"></div></details><nav class="zs-step-nav" aria-label="零基础起步步骤">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?'✓ 已核对':'可直接进入'}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">这一小步：${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?'<button type="button" id="zs-previous" class="secondary">← 上一步</button>':''}${index<5?'<button type="button" id="zs-next" class="primary">下一步 →</button>':'<a class="primary" href="#classroom/foundations?lesson=group-basics">继续基础第一课 →</a>'}</div></article><footer class="zs-footer"><p>学习记录只保存在当前浏览器；存储不可用时仍可操作本页。你可以导出记录自行保留。</p><button type="button" id="zs-export" class="secondary">导出这条路线的核对记录</button><button type="button" id="zs-clear" class="secondary">清空这条路线的记录</button><a href="#classroom">查看全部课程</a></footer>`;
+  host.innerHTML=`<header class="zs-intro"><span class="zs-kicker">零基础起步 · 无需先学矩阵</span><h2 id="zs-heading" tabindex="-1">先动手，再读懂对称性的语言。</h2><p>从一个正方形和一支箭头出发，用六个短步骤接上现有群论课堂。可以自由跳转；进度只记录已核对的答案，不代表课程成绩。</p><p class="zs-progress" role="status">已核对 ${completed} / 6 步 · 当前 ${index+1} / 6</p></header><details id="zs-placement" class="zs-panel" ${placementOpen?'open':''}><summary>找适合自己的起点（四题，可跳过）</summary><div id="zs-placement-body"></div></details><nav class="zs-step-nav" aria-label="零基础起步步骤">${ZERO_START_STEPS.map((item,i)=>`<button type="button" data-zs-step="${item.id}" ${item.id===step?'aria-current="step"':''}><span>${String(i+1).padStart(2,'0')}</span><strong>${item.title}</strong><small>${progress.answers[item.id]?'✓ 已核对':'可直接进入'}</small></button>`).join('')}</nav><article class="zs-panel"><h3>${index+1} · ${ZERO_START_STEPS[index].title}</h3><p class="zs-goal">这一小步：${ZERO_START_STEPS[index].goal}</p>${body()}${assessment()}<div class="zs-step-actions">${index?'<button type="button" id="zs-previous" class="secondary">← 上一步</button>':''}${index<5?'<button type="button" id="zs-next" class="primary">下一步 →</button>':`<a id="zs-continue" class="primary" href="${esc(nextRoute)}">${esc(nextLabel)}</a>`}</div></article><footer class="zs-footer"><p>学习记录只保存在当前浏览器；存储不可用时仍可操作本页。你可以导出记录自行保留。</p><button type="button" id="zs-export" class="secondary">导出这条路线的核对记录</button><button type="button" id="zs-clear" class="secondary">清空这条路线的记录</button><a href="#classroom">查看全部课程</a></footer>`;
   const placement=$('#zs-placement');
   disposePlacement=bindOptionalPanel({detail:placement,body:$('#zs-placement-body'),load:loadPlacementModule,
    isCurrent:()=>current()&&$('#zs-placement')===placement,

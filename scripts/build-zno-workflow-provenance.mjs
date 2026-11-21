@@ -51,6 +51,7 @@ const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.
  'locales/en-zno-mode-quadrature-ui.json','locales/en-zno-mode-quadrature-docs.json',
  'dist/data/examples/'+polarizationFile,'dist/zno-ir-polarization-ui.js','dist/optional-panel.js','dist/observables-ui.js',
  'scripts/build-zno-ir-polarization.py','scripts/test-zno-ir-polarization-ui.mjs',
+ 'dist/navigation-ui.js','dist/tool-search.js','dist/tool-directory.js','dist/tool-finder.js','scripts/test-zno-ir-search.mjs','scripts/test-tool-finder.mjs','locales/en-zno-ir-search.json',
  'locales/en-zno-ir-polarization-ui.json','locales/en-zno-ir-polarization-docs.json','locales/en-zno-ir-polarization-host.json',
  'dist/zno-satellite-ui.js','dist/structure-diffraction-handoff.js','dist/python/diffraction.py','dist/docs/structure-dynamics.md',
  'scripts/test-zno-satellite-ui.mjs','scripts/test-zno-satellite-host.mjs','scripts/test-python-zno-satellite.py',

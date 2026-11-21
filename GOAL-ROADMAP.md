@@ -446,3 +446,11 @@ establish that all existing scientific and teaching content has been audited.
 
 - The trace results render the positive representation multiplicities from the Python decomposition and display the verified dimension or supplied degeneracy in each row. Ordinary results use their available label mappings, and magnetic results keep their local corepresentation identifiers. The JSON export retains the original decomposition object and its reconstruction checks.
 - The phonon results render each representation label separately, so the complete `2g` of `T2g` appears as the subscript while any multiplicity stays on the baseline. The formatter preserves the original representation strings in exported data.
+
+## Resume a named lesson and compare optical measurements
+
+- After the sixth introductory check, the main link follows the verified learning goal into the first foundations lesson, the water vibration and spectra demonstration, or the calculation center. Revisiting the check restores the verified destination.
+- Home resolves recent classroom links against the same lesson index used by the classroom. The point-group and Lie-group representations lessons display their own titles and keep their original URLs. Tool-only history needs no classroom index.
+- Chinese and English searches for ZnO infrared polarization or Born effective charge link to the ZnO Γ-point exercise. The calculation directory also offers the exact preset while retaining its general phonon calculation entry.
+- The Si polarization lesson compares the cubic equilibrium dielectric tensor with the derivative that drives first-order Raman scattering. It links to both calculations, with a prediction and a folded derivation for the parallel and crossed geometries at 0° and 45°.
+- The model Lorentzian spectrum samples across the specified linewidth, including the center and visible half-maximum points. The wavenumber axis preserves narrow peak intervals.

@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261120-quartz-hand1';
-import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-spectral1';
+import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];

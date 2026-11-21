@@ -115,18 +115,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 77543,
-      "sha256": "45b78db49f90b76ffc72c5a002451027386d16ce67fbb98bafb994e9f82a051f"
+      "bytes": 78779,
+      "sha256": "e9c1a06da67f5876dcf63ede476137051f4e9d71f4285081b888240f2efbaa48"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 102659,
-      "sha256": "9a37ca0d95825a0892d3004e3e23ee6f964ad7297a88c6627e2543927589d06c"
+      "bytes": 102635,
+      "sha256": "bc64f015fe45294102b8a93717d9bd1eac101e91fcb7bde9a0d6f1434da86b28"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32735,
-      "sha256": "8be27d23821ba1ad4d26494fc5618bab2bec2215a32ccd3397d4f67dd1ddfe2d"
+      "bytes": 32788,
+      "sha256": "1970c611d4b56b2b4e6689b3c02eb5b2d8970561d3d98e54ccb77ff9e1183587"
     },
     "dist/data/examples/phonopy-si-structure/LICENSE.txt": {
       "normalization": "binary",
@@ -155,18 +155,18 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8223,
-      "sha256": "6533f4f4f327405a944d239542094ab6d2411fa69e24bb120a8bfbc0cc2f7ee7"
+      "bytes": 8214,
+      "sha256": "8cb2e5deb6073e9bb66534476677d3ab21fcc76eece6636faa1ee24e22a0bba3"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31463,
-      "sha256": "e91a124387c69759ba6d7d4adb59b3e44ccd6dc3d4a4f59c0573a448544cf169"
+      "bytes": 33840,
+      "sha256": "88ff82daf8774dbba934cfb021d6a4fdeef1a0b225137d665871741cc757d49d"
     },
     "dist/observables-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32300,
-      "sha256": "377119ad1c44384540d41cecbeaa52c3c0cf16340cf07b84bbd3da2bf7dc03e3"
+      "bytes": 34420,
+      "sha256": "3c27565bc3d4bd0815b1418980f3a140eb9a6b86c6e784712edd4e9674e55cae"
     },
     "dist/optional-panel.js": {
       "normalization": "utf8-lf-v1",
@@ -235,18 +235,18 @@
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3068,
-      "sha256": "5fd71493b287a2972e1ed3f9d1d566c0b48293e3c4b4f26d4512140caa6b80eb"
+      "bytes": 3084,
+      "sha256": "20c577874272bb2eb30ef3bc5478e114962e7debc830b6f44c7b7b0094c5d67e"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13089,
-      "sha256": "6a8da705ef3cc1cb024418947d72ab19f4771a329dbd6c704336f93be9f6dd91"
+      "bytes": 13073,
+      "sha256": "bee9e7e3fc196a5b3d81dac550fbdb835113b000cbfd5226ea0d3cc4686d5862"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2619,
-      "sha256": "db4808d3b1db14e8520fe3c5c30eb104abfc7d36ac2e36818f6240ee13669224"
+      "bytes": 3183,
+      "sha256": "1363a93cf84ee575604f10b3d5b18f7698f5b1cf06f877ac8ead9d8aecb05e79"
     },
     "locales/en-si-conventional-folding-host.json": {
       "normalization": "utf8-lf-v1",
@@ -290,8 +290,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28374,
-      "sha256": "f16f8ea00c22374676f57951ccead7511a881f2af22ec77689e7c40946a1f720"
+      "bytes": 28620,
+      "sha256": "77ac852b85a875ff79b89e76356f65b91b85343331798f0e3d41aca281da49c5"
     },
     "scripts/build-si-structure-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -300,8 +300,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6419,
-      "sha256": "4f2c0a4fe6bebfefaeb7a284cc82d80491ef4275a0708be791f587371562e4c2"
+      "bytes": 6496,
+      "sha256": "614552c70d6d3625fb6285f89d379615fe501d76edf1650934efebd7320b1f6a"
     },
     "scripts/test-file-search.mjs": {
       "normalization": "utf8-lf-v1",

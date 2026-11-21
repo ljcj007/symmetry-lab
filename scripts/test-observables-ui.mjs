@@ -26,7 +26,7 @@ class Container{constructor(){this.isConnected=true;}set innerHTML(value){if(thi
 const answer={material:{name:'Si · 金刚石结构'},decomposition:{mechanical:[{irrep:'T1u',multiplicity:1},{irrep:'T2g',multiplicity:1}],acoustic:[{irrep:'T1u',multiplicity:1}],optical:[{irrep:'T2g',multiplicity:1,dimension:3,ir:false,raman:true}]},classes:[{label:'E',size:1,mechanical:6,acoustic:3,optical:3}],polarization:{intensity:1,channel:'raman',pattern:[{angle:0,intensity:0},{angle:45,intensity:1},{angle:90,intensity:0}]},spectrum:{assumedFrequencyCm1:300,fwhmCm1:20,points:[{wavenumber:0,intensity:0},{wavenumber:300,intensity:1},{wavenumber:600,intensity:0}]},derivation:[{title:'真实位点置换',formula:'chi=Nfixed trR',explanation:'在原胞中计算。'}],scope:['不计算 Born 电荷或 LO-TO 分裂。'],selectedMode:'sum',animatedMode:'z',sources:[],sites:[{id:'0',species:'Si',cartesian:[0,0,0]},{id:'1',species:'Si',cartesian:[.25,.25,.25]}],frames:[{sites:[{id:'0',species:'Si',cartesian:[0,0,0]},{id:'1',species:'Si',cartesian:[.25,.25,.25]}]},{sites:[{id:'0',species:'Si',cartesian:[0,0,.1]},{id:'1',species:'Si',cartesian:[.25,.25,.15]}]}],cellVertices:[[0,0,0],[.5,.5,0],[.5,0,.5],[0,.5,.5],[1,.5,.5],[.5,1,.5],[.5,.5,1],[1,1,1]],cellEdges:[[0,1],[0,2],[0,3],[1,4],[1,5],[2,4],[2,6],[3,5],[3,6],[4,7],[5,7],[6,7]]};
 const clone=()=>structuredClone(answer);
 const submit=container=>container.querySelector('#obs-form').onsubmit({preventDefault(){}});
-const mount=async(selection={},run=async()=>clone())=>{const container=new Container(),downloads=[],navigations=[];await renderObservablesView({container,selection,run,download:(body,name)=>downloads.push({body,name}),onNavigate:route=>navigations.push(route)});return {container,downloads,navigations};};
+const mount=async(selection={},run=async()=>clone(),render=renderObservablesView)=>{const container=new Container(),downloads=[],navigations=[];await render({container,selection,run,download:(body,name)=>downloads.push({body,name}),onNavigate:route=>navigations.push(route)});return {container,downloads,navigations};};
 
 assert.equal(formatDecomposition([{irrep:'T2',multiplicity:2}]),'2 T2');
 assert.equal(curveSVG([],'angle','intensity'),'');
@@ -35,7 +35,14 @@ const curve=curveSVG([[0,0],[90,1],[180,0],[null,1]],'<angle>','a & b');
 assert.match(curve,/&lt;angle&gt;/);assert.match(curve,/a &amp; b/);assert.doesNotMatch(curve,/(?:NaN|Infinity)/);
 assert.match(curveSVG([[0,0],[360,0]],'angle','zero'),/max 0</,'Forbidden responses must be labeled max 0, not a plotting-axis epsilon');
 
-const calls=[],lab=await mount({calculationOnly:true,experiment:'phonons',material:'silicon'},async(action,input)=>{calls.push({action,input});return clone();});
+const calls=[],lab=await mount({calculationOnly:true,experiment:'phonons',material:'silicon'},async(action,input)=>{
+ calls.push({action,input});
+ const result=clone();
+ if(input.frequency_cm1===4000){
+  result.spectrum={assumedFrequencyCm1:4000,fwhmCm1:.1,points:[{wavenumber:3999.2,intensity:1/257},{wavenumber:4000,intensity:1},{wavenumber:4000.8,intensity:1/257}]};
+ }
+ return result;
+});
 assert.equal(lab.container.querySelector('[data-obs-tab]'),null,'Calculator mode does not create nested course tabs');
 assert.match(lab.container.querySelector('#obs-content').innerHTML,/Si · 金刚石 · m3̄m/,'Native selects use a real overbar instead of an arithmetic minus');
 assert.match(lab.container.querySelector('#obs-content').innerHTML,/GaAs · 闪锌矿 · 4̄3m/);
@@ -52,6 +59,10 @@ lab.container.querySelector('#obs-download').onclick();
 assert.equal(JSON.parse(lab.downloads[0].body).input.frequency_cm1,400);
 assert.equal(JSON.parse(lab.downloads[0].body).result.decomposition.optical[0].irrep,'T2g');
 assert.match(lab.downloads[0].name,/phonons-silicon\.json$/);
+lab.container.querySelector('#obs-frequency').value='4000';
+lab.container.querySelector('#obs-width').value='0.1';
+await submit(lab.container);
+assert.match(lab.container.querySelector('#obs-output').innerHTML,/>3999\.2<\/text>[\s\S]*>4000\.8<\/text>/,'The narrow spectrum shows its actual bounds');
 lab.container.querySelector('#obs-frame').oninput({target:{value:'1'}});
 assert.match(lab.container.querySelector('#obs-motion-svg').innerHTML,/marker-end/);
 for(const yaw of [-180,-90,0,90,180]){lab.container.querySelector('#obs-yaw').oninput({target:{value:String(yaw)}});for(const line of lab.container.querySelector('#obs-motion-svg').querySelectorAll('line'))for(const coord of ['x1','x2','y1','y2']){const n=Number(line.attributes[coord]);assert.ok(Number.isFinite(n)&&n>=0&&n<=(coord.startsWith('x')?640:360),'3D projection remains inside the canvas');}}
@@ -100,6 +111,30 @@ assert.equal(JSON.parse(storage.get('symmetry-lab.observables.progress.v1'))[exe
 assert.match(practice.container.querySelector('#obs-progress').textContent,/全部步骤完成/);
 const restored=await mount({tab:'derive',exercise:exercise.id});
 assert.match(restored.container.querySelector('#obs-content').innerHTML,/✓ /,'Exercise completion survives remounting');
+const siliconLesson=await mount({lesson:'polarization',material:'silicon'});
+const siliconContent=siliconLesson.container.querySelector('#obs-content');
+const prediction=siliconContent.querySelector('[data-obs-si-responses]');
+assert.ok(prediction);
+assert.equal(Object.hasOwn(prediction.attributes,'open'),false,'Prediction is folded by default');
+assert.equal(Object.hasOwn(prediction.querySelector('[data-obs-si-answer]').attributes,'open'),false,'Solution remains folded when viewing the prediction');
+const [dielectricRoute,ramanRoute]=prediction.querySelectorAll('a').map(link=>link.attributes.href);
+assert.equal(dielectricRoute,'#classroom/observables?lesson=neumann&material=silicon');
+assert.equal(ramanRoute,'#compute/phonons?material=silicon');
+assert.match(siliconContent.innerHTML,/P<sub>y<\/sub> = 0/);
+assert.match(siliconContent.innerHTML,/C<sub>4z<\/sub>.*Q<sub>z<\/sub>/);
+const nonSilicon=await mount({lesson:'polarization',material:'gaas'});
+assert.equal(nonSilicon.container.querySelector('[data-obs-si-responses]'),null);
+const routeSelection=hash=>Object.fromEntries(new URLSearchParams(hash.split('?')[1]));
+const neumann=await mount(routeSelection(dielectricRoute));
+assert.ok(neumann.container.querySelector('a[href="#classroom/observables?lesson=polarization&material=silicon"]'));
+neumann.container.querySelector('#obs-learn-lab').onclick();
+assert.equal(neumann.container.querySelector('#obs-preset').value,'cubic_m3m');
+assert.equal(neumann.container.querySelector('#obs-tensor').value,'dielectric');
+assert.deepEqual(JSON.parse(neumann.container.querySelector('#obs-field').value),[1,0,0]);
+const siliconRaman=await mount({...routeSelection(ramanRoute),calculationOnly:true,experiment:'phonons'});
+assert.equal(siliconRaman.container.querySelector('#obs-preset').value,'silicon');
+assert.equal(siliconRaman.container.querySelector('#obs-channel').value,'raman');
+assert.ok(siliconRaman.container.querySelector('option[value="z"]'));
 const precisionCalls=[],precision=await mount({calculationOnly:true,experiment:'phonons',material:'silicon'},async(action,input)=>{precisionCalls.push({action,input});return clone();});
 const range=precision.container.querySelector('#obs-angle'),numeric=precision.container.querySelector('#obs-angle-number'),checkAngle=precision.container.querySelector('#obs-angle-exact');
 assert.equal(range.attributes.step,'any');assert.equal(numeric.attributes.step,'any');assert.equal(numeric.attributes.min,'0');assert.equal(numeric.attributes.max,'360');assert.ok(Object.hasOwn(numeric.attributes,'required'));
@@ -112,4 +147,13 @@ numeric.value='';precision.container.querySelector('#obs-form').oninput({target:
 numeric.value='361';precision.container.querySelector('#obs-form').oninput({target:numeric});await submit(precision.container);assert.equal(precisionCalls.length,2,'An out-of-range number cannot silently use the old slider value');
 checkAngle.onclick();await submit(precision.container);assert.equal(precisionCalls[2].input.angle,22.5,'Explicit check angle repairs the invalid draft without quantizing it');
 const retired=checkAngle.onclick;precision.container.innerHTML='<p>Retired</p>';retired();assert.equal(precisionCalls.length,3);
+if(process.argv.includes('--english')){
+ const english=await import('../dist/en/observables-ui.js');
+ const edition=await mount({lesson:'polarization',material:'silicon'},undefined,english.renderObservablesView);
+ const panel=edition.container.querySelector('[data-obs-si-responses]');
+ const content=edition.container.querySelector('#obs-content').innerHTML;
+ assert.deepEqual(panel.querySelectorAll('a').map(link=>link.attributes.href),[dielectricRoute,ramanRoute]);
+ assert.match(content,/Why do dielectric and Raman experiments give different responses/);
+ assert.match(content,/the parallel intensity is 0 and the crossed intensity is 1/);
+}
 console.log('Observables UI: exact result schema, curves and viewport, stale responses, persisted exercises, bidirectional continuous Raman angle, exact 22.5-degree manual runs, invalid drafts and retired check buttons passed.');

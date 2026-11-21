@@ -113,12 +113,42 @@ check(view,'0');
 choose(view,'zs-answer','1');
 assert.equal(view.$('#zs-trace-worked'),null,'Changing the answer hides the previously worked result');
 check(view,'0');
-view=mount({lesson:'next'});choose(view,'zs-goal','tools');check(view,'compute');assert.equal(getZeroStartResult().checkedSteps.length,6);
+view=mount({lesson:'next'});
+const foundationsExit='#classroom/foundations?lesson=group-basics';
+const exitLink=()=>view.$('#zs-continue');
+const assertExit=(route,label)=>{
+ assert.equal(exitLink().tag,'a');
+ // The test DOM preserves HTML entities in attributes.
+ assert.equal(exitLink().getAttribute('href'),route.replaceAll('&','&amp;'));
+ assert.equal(exitLink().textContent,label);
+};
+const foundationsExitLabel=local('继续基础第一课 →','Continue with the first foundations lesson →');
+assertExit(foundationsExit,foundationsExitLabel);
+for(const [goal,choice,route,label] of [
+ ['geometry','foundations',foundationsExit,foundationsExitLabel],
+ ['spectra','water','#classroom/foundations?module=demos&experiment=water',local('水分子、红外与拉曼 →','Water, infrared, and Raman →')],
+ ['tools','compute','#compute',local('计算中心 →','Calculation center →')]
+]){
+ choose(view,'zs-goal',goal);
+ assertExit(foundationsExit,foundationsExitLabel);
+ check(view,choice);
+ assertExit(route,label);
+ view=mount({lesson:'next'});
+ assertExit(route,label);
+}
+choose(view,'zs-answer','water');
+assertExit(foundationsExit,foundationsExitLabel);
+view.$('#zs-check').onclick();
+assertExit(foundationsExit,foundationsExitLabel);
+assert.ok(!getZeroStartResult().checkedSteps.includes('next'));
+check(view,'compute');
+assertExit('#compute',local('计算中心 →','Calculation center →'));
+assert.equal(getZeroStartResult().checkedSteps.length,6);
 assert.match(view.container.firstElementChild.innerHTML,/#classroom\/foundations\?module=theorems/);
 view.$('#zs-export').onclick();const exported=JSON.parse(view.downloads[0].body);assert.equal(exported.schemaVersion,1);assert.equal(exported.checkedSteps.length,6);assert.deepEqual(exported.answers,getZeroStartResult().answers);assert.match(exported.note,/not a grade/);
 assert.equal(view.downloads[0].type,'application/json');
 // Unvalidated writes and unrelated course progress must not be inherited or erased.
-storage.set('symmetry-lab.pointgroups.progress.v1','retained');view.$('#zs-clear').onclick();assert.equal(getZeroStartResult().checkedSteps.length,0);assert.equal(storage.get('symmetry-lab.pointgroups.progress.v1'),'retained');
+storage.set('symmetry-lab.pointgroups.progress.v1','retained');view.$('#zs-clear').onclick();assert.equal(getZeroStartResult().checkedSteps.length,0);assert.equal(storage.get('symmetry-lab.pointgroups.progress.v1'),'retained');assertExit(foundationsExit,foundationsExitLabel);
 storage.set(ZERO_START_KEY,JSON.stringify({version:1,answers:{trace:{choice:'0',context:{space:'xyz',applied:true}},next:{choice:'<script>',context:{goal:'tools'}}}}));
 view=mount({lesson:'<script>'});assert.equal(getZeroStartResult().checkedSteps.length,0);assert.match(view.$('#zs-heading').textContent,local(/先动手/,/Explore first/));assert.ok(!view.container.firstElementChild.innerHTML.includes('href="<script>'));
 // Blocked browser storage retains this session's work without breaking the UI.
@@ -126,4 +156,4 @@ globalThis.localStorage={getItem(){throw Error('blocked');},setItem(){throw Erro
 view=mount();view.$('#zs-action').onclick();check(view,'same');assert.deepEqual(getZeroStartResult().checkedSteps,['objects']);
 view=mount();assert.deepEqual(getZeroStartResult().checkedSteps,['objects']);
 const stale=view.$('#zs-action');view.container.innerHTML='<p>Another page</p>';stale.onclick();assert.equal(view.container.innerHTML,'<p>Another page</p>');
-console.log(`Zero-start (${english?'English':'Chinese'}): exact actions, trace prediction and accessible feedback, six-step validation, persistence, export, and stale-view safety passed.`);
+console.log(`Zero-start (${english?'English':'Chinese'}): exact actions, trace prediction and accessible feedback, six-step validation and goal-based exit, persistence, export, and stale-view safety passed.`);

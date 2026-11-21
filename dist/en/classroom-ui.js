@@ -1,7 +1,7 @@
 import {createResourceLoader} from './resource-loader.js?v=20261110-en1';
 import {studyMapHTML} from './learning-map.js?v=20261112-paths1';
 const courseDefinitions={
-'zero-start':{load:()=>import('./zero-start.js?v=20261120-start-placement1'),render:'renderZeroStart',result:'getZeroStartResult'},
+'zero-start':{load:()=>import('./zero-start.js?v=20261121-spectral1'),render:'renderZeroStart',result:'getZeroStartResult'},
 'group-theorems':{load:()=>import('./group-theorems.js?v=20261113-prose2'),render:'renderGroupTheoremsView',result:'getGroupTheoremsResult'},
 'symmetry-mini-demos':{load:()=>import('./symmetry-mini-demos.js?v=20261113-prose2'),render:'renderSymmetryMiniDemosView',result:'getSymmetryMiniDemosResult'},
 'foundations-demos':{load:()=>import('./foundations-demos.js?v=20261120-gamma-trace1'),render:'renderFoundationsDemosView',result:'getFoundationsDemosResult'},
@@ -16,7 +16,7 @@ const courseDefinitions={
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261119-si1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261120-cif-explicit-hall1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261117-derive1'),render:'renderLieGroupView',result:'getLieGroupResult'}
-,'observables':{load:()=>import('./observables-ui.js?v=20261120-lesson-topic1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261121-spectral1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261120-al-gamma1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261120-al-gamma1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
 ,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261120-zno-satellite1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
@@ -26,6 +26,7 @@ const courseDefinitions={
 };
 const courseModules=createResourceLoader(key=>courseDefinitions[key].load());
 const progressionModules=createResourceLoader(()=>import('./lesson-progression.js?v=20261120-lesson-topic1'));
+export const loadClassroomProgression=()=>progressionModules.get('lessons');
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // Physical course modules retain their IDs, URLs and independent progress keys.
@@ -170,7 +171,7 @@ const renderers=Object.fromEntries(Object.keys(courseDefinitions).map(section=>[
 }]));
 export function getClassroomResult(section){const course=courseModules.peek(section)?.[courseDefinitions[section]?.result]?.();return course?{kind:'group-theory-classroom',section,course}:null;}
 
-export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,onOpenLessonTopic,courseRenderers=renderers,loadProgression=()=>progressionModules.get('lessons')}){
+export function renderClassroomView({container,section='pointgroups',route,onSection=()=>{},onNavigate,onLocation=()=>{},run,cancelRun,toast,download,openGroup,onOpenProjectLab,canOpenProjectInput,onOpenLessonTopic,courseRenderers=renderers,loadProgression=loadClassroomProgression}){
   let selection=typeof route==='string'?parseClassroomRoute(route):route;
   selection=selection||parseClassroomRoute(classroomHash(section));
   section=selection.section;

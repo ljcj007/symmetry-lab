@@ -54,6 +54,8 @@ assert.ok(list.querySelectorAll('[data-finder-result]').length);assert.equal(inp
 assert.equal(key('ArrowDown'),true);assert.equal(input.getAttribute('aria-activedescendant'),'tool-finder-result-1');
 type('Clebsch-Gordan');assert.match(list.innerHTML,/CG/);assert.equal(requests,0,'Tool-only search uses the local tool catalog');
 key('Enter');assert.equal(routes[0],'compute/lie/su3_cg');assert.equal(dialog.hidden,true);assert.equal(document.activeElement,button);
+button.fire('click');type('ZnO Born effective charge');assert.match(list.innerHTML,/ZnO Γ 点模式的红外偏振/);
+key('Enter');assert.equal(routes.at(-1),'compute/phonon-modes?preset=zno-ir');assert.equal(requests,0);
 assert.equal(key('k',{metaKey:true}),true);assert.equal(dialog.hidden,false);
 type('225');scope('groups');await flush();assert.equal(requests,1);assert.ok(status.querySelector('[data-finder-retry]'));assert.match(status.innerHTML,/工具/);
 type('225.1');await flush();assert.equal(requests,1,'Failed requests wait for explicit retry');

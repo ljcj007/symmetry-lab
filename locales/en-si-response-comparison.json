@@ -1,0 +1,16 @@
+{
+  "同一块硅晶体，为什么介电响应与拉曼信号不同？": "Why do dielectric and Raman experiments give different responses for the same silicon crystal?",
+  "先预测：沿 x 轴施加电场时，晶体会产生 y 方向的线性极化吗？若改做 z 位移光学模的拉曼实验，入射光沿 x 偏振时，哪个检偏方向有信号？": "Make a prediction. An electric field points along x. Does the crystal develop a linear polarization along y? In a Raman experiment on the z-displacement optical mode with x-polarized incident light, which analyzer direction gives a signal?",
+  "检验介电响应：打开诺伊曼原理课堂，再打开交互实验 →": "Check the dielectric response. Open the Neumann’s principle lesson and launch its experiment →",
+  "检验拉曼选择定则：打开硅的声子与光谱计算 →": "Check the Raman selection rule in the silicon phonon and spectra calculator →",
+  "在介电实验中使用立方点群预设和电场 (1, 0, 0)。在光谱计算中选择拉曼通道与单个 z 模式，分别用平行和交叉检偏计算 0° 与 45°。": "In the dielectric experiment, use the cubic point-group preset and the electric field (1, 0, 0). In the spectra calculator, select the Raman channel and the single z mode. Calculate the intensities for parallel and crossed analyzers at both 0° and 45°.",
+  "查看答案与推导": "Show the answer and derivation",
+  "平衡晶体的线性介电响应张量只有一个独立参数：χ = a": "The linear dielectric response tensor of the equilibrium crystal has one independent parameter, χ = a",
+  "I。沿 x 施加电场时，极化与电场平行。": "I. An electric field along x gives polarization parallel to the field.",
+  "一阶拉曼张量描述光学极化率随振动坐标的变化。对 z 位移光学模，两套硅子晶格沿 z 作反相运动。金刚石空间群中旋转部分为 C": "The first-order Raman tensor describes how optical polarizability changes with a vibrational coordinate. In the z-displacement optical mode, the two silicon sublattices move in opposite directions along z. A diamond space-group operation with rotation part C",
+  "的操作带有分数平移并交换两套子晶格，故 Q": "also has a fractional translation that exchanges the two sublattices, so Q",
+  "变号。xy 张量基分量在同一旋转下也变号，因此允许有与 Q": "changes sign. The xy tensor basis component also changes sign under this rotation, so an xy component of the optical polarizability proportional to Q",
+  "成正比的光学极化率 xy 分量。": "is symmetry-allowed.",
+  "在计算器的归一化模型中，0° 时平行强度为 0、交叉为 1；45° 时两者互换。这两个结果分别检验平衡介电张量与光学极化率对振动坐标的导数。": "In the calculator’s normalized model, at 0° the parallel intensity is 0 and the crossed intensity is 1. At 45° the intensities switch. The two experiments probe the equilibrium dielectric tensor and the derivative of optical polarizability with respect to a vibrational coordinate, respectively.",
+  "对照硅的平衡介电响应与拉曼选择定则 →": "Compare silicon’s equilibrium dielectric response with its Raman selection rule →"
+}

@@ -1,8 +1,8 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways} from './classroom-ui.js?v=20261120-lesson-topic1';
-import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261120-structure-diffraction1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261120-structure-diffraction1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261121-spectral1';
+import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261121-spectral1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-si-fold1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
@@ -97,10 +97,19 @@ export const toolGroups=[
  ]}
 ];
 toolGroups.splice(0,toolGroups.length,...orderToolGroups(toolGroups));
+const znoInfraredExample={
+ params:'preset=zno-ir',
+ title:'ZnO Γ 点模式的红外偏振',
+ summary:'用 Born 有效电荷比较沿 c 轴与基面内的红外响应。',
+ label:'打开 ZnO Γ 点红外偏振算例 →',
+ matches:(query,terms)=>/(?:\bzno\b|\bzinc oxide\b|氧化锌|zno红外)/u.test(query)
+  &&/(?:\binfrared\b|\bir\b|\bborn\b|红外|有效电荷)/u.test(query)
+  &&terms.every(term=>/^(?:(?:zno|氧化锌)(?:红外(?:偏振)?)?|zinc|oxide|infrared|ir|红外(?:偏振)?|polari[sz]ation|偏振|born|effective|charges?|有效电荷|γ|gamma|点|c|axis|c轴|基面|basal|plane|modes?|光学声子)$/u.test(term))
+};
 export const toolsIndex=toolGroups.flatMap(group=>group.tools.map(([route,title,summary,keywords])=>{
  const capability=getToolCapability(route);
  const formatKeywords=capability?.inputFormats.length?' file import 文件 导入 '+capability.inputFormats.map(row=>row.files.join(' ')+' '+row.purpose).join(' '):'';
- return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:'计算',category:group.id,capability};
+ return {route,title,summary,keywords,capabilityKeywords:capability?capability.searchTerms+' '+arithmeticLabels[capability.arithmetic]+formatKeywords:'',kind:'计算',category:group.id,capability,searchExample:route==='compute/phonon-modes'?znoInfraredExample:undefined};
 }));
 export const knownTool=route=>toolsIndex.find(t=>t.route===String(route||'').replace(/^#/,''));
 const sessionSaved=new Map(),storageFallback=new Set();
@@ -128,13 +137,58 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
   ['已有文件与用途',capability.inputFormats.map(row=>row.files.join(' / ')+' — '+row.purpose+' '+row.conditions)]
  ].filter(([,value])=>value.length):[];
  const scope=showScope&&capability?`<details class="nav-tool-scope" data-tool-scope="${esc(item.route)}" ${scopeOpen?'open':''}><summary aria-label="${esc(item.title)} · ${esc('输入与适用范围')}">输入与适用范围</summary><dl>${rows.map(([label,value])=>`<dt>${label}</dt><dd>${value.length===1?esc(value[0]):`<ul>${value.map(text=>`<li>${esc(text)}</li>`).join('')}</ul>`}</dd>`).join('')}</dl></details>`:'';
- const example=showScope&&namedExamples[item.route];
+ const example=showScope&&(item.searchExample?[item.searchExample.params,item.searchExample.label]:namedExamples[item.route]);
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
 const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261120-wannier1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
-export async function renderNavigationHub({container,view='home',databases}){
+
+function orderedQuery(query){
+ const params=new URLSearchParams(query);
+ params.sort();
+ return params.toString();
+}
+
+function recentPage(route){
+ const [path,query='']=route.split('?');
+ const tool=knownTool(path);
+ if(tool)return {route,title:tool.title};
+ if(path==='docs/dictionary')return {route,title:'公式与符号词典'};
+ if(!path.startsWith('classroom/'))return {route,title:path.startsWith('atlas')?'继续浏览图谱':'继续上次计算'};
+ const selection=parseClassroomRoute(route);
+ if(selection?.section==='zero-start')return {route,title:'零基础导学'};
+ const pathway=classroomPathways.find(item=>item.id===selection?.pathway);
+ const normalized=orderedQuery(query);
+ const named=pathway?.links.find(([,target])=>orderedQuery(target)===normalized);
+ const lesson=selection?.lesson&&(!selection.tab||selection.tab==='learn')?selection:null;
+ return {route,title:named?.[0]||pathway?.title||'继续上次课程',lesson};
+}
+
+async function fillRecentLessonNames(root,current,recent,load){
+ const lessons=recent.filter(item=>item.lesson);
+ if(!lessons.length)return;
+ try{
+  const {progressionForSelection}=await load();
+  if(!current())return;
+  const names=new Map();
+  for(const item of lessons){
+   const resolved=progressionForSelection(item.lesson);
+   if(resolved.current?.lessonId===item.lesson.lesson&&resolved.current.title){
+    names.set(item.route,resolved.current.title);
+   }
+  }
+  const recentLinks=root.querySelector('.nav-recent')?.querySelectorAll('a')||[];
+  for(const anchor of recentLinks){
+   const name=names.get(anchor.dataset.route);
+   if(name)anchor.textContent=name;
+  }
+ }catch{
+  // The initial native links still work if the optional lesson index fails.
+ }
+}
+
+export async function renderNavigationHub({container,view='home',databases,loadRecentProgression=loadClassroomProgression}){
  const favorites=favoriteRoutes(),expandedScopes=new Set();let computeCategory='all',computeArithmetic='all',onlyFavorites=false;
  const search=`<section class="nav-search-panel"><label for="site-search">${view==='compute'?'查找计算工具':view==='atlas'?'搜索群、材料与课程':'已经有一个问题？'}</label><div class="nav-search-row"><input id="site-search" type="search" placeholder="${view==='compute'?'试试：POSCAR、Clebsch-Gordan、Raman、DMI':'试试：镜面对称、声子、GaAs、225'}" autocomplete="off"><span id="site-search-status">${view==='compute'?'仅筛选计算工具；查找课程与群可用顶部快捷查找。':'输入关键词后检索课程、工具与群目录'}</span></div><div id="site-search-results" aria-live="polite"></div></section>`;
  container.innerHTML='<div class="nav-hub">'+(view==='home'?'<div id="hub-body"></div>'+search:search+'<div id="hub-body"></div>')+'</div>';
@@ -169,8 +223,9 @@ export async function renderNavigationHub({container,view='home',databases}){
   ['classroom/spin','双群、色群与自旋群专题','按点群与三维空间群学习；明确教学实例的适用范围。']
  ].map(([r,t,s])=>`<article>${link(r,`<h2>${t}</h2><p>${s}</p><span class="nav-card-go">浏览 →</span>`,'nav-atlas-card')}</article>`).join('')}</div>`;
  else {
-  const recent=readSaved('symmetry-lab.recent.v1').map(route=>{const tool=knownTool(route.split('?')[0]);return tool?{...tool,route}:{route,title:route.startsWith('classroom')?'继续上次课程':route.startsWith('atlas')?'继续浏览图谱':'继续上次计算',summary:'恢复上次访问的位置',kind:'最近'};});
+  const recent=readSaved('symmetry-lab.recent.v1').map(recentPage);
   body.innerHTML=homeHTML({link,toolCard,knownTool,favorites,recent,pathways:classroomPathways,esc});
+  void fillRecentLessonNames(root,current,recent,loadRecentProgression);
  }
  function bindFavorites(){root.querySelectorAll('[data-favorite]').forEach(button=>button.onclick=()=>{
   if(!current())return;const route=button.dataset.favorite,selected=toggleFavorite(route).includes(route);
