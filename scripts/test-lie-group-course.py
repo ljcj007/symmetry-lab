@@ -61,6 +61,8 @@ class LieCourse(unittest.TestCase):
         for source in sources.values():
             self.assertTrue(source['title'])
             self.assertTrue(source['url'].startswith('https://'))
+        lab_names={'u1','representations','interferometer','su2','su3','commutator',
+                   'rabi','su2_coupling','su3_tensor','su3_cg','su3_racah','su3_ninej'}
         labs=set()
         for lesson in lessons:
             with self.subTest(lesson=lesson['id']):
@@ -79,9 +81,9 @@ class LieCourse(unittest.TestCase):
                 for reference in lesson['references']:
                     self.assertIn(reference['sourceId'],sources)
                 if lesson.get('lab'):
-                    self.assertIn(lesson['lab'],('su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg','su3_racah','su3_ninej'))
+                    self.assertIn(lesson['lab'],lab_names)
                     labs.add(lesson['lab'])
-        self.assertEqual(labs,{'su2','su3','commutator','rabi','su2_coupling','su3_tensor','su3_cg','su3_racah','su3_ninej'})
+        self.assertEqual(labs,lab_names)
 
     def test_guided_derivations(self):
         course=json.loads((ROOT/'dist/data/lie-group-lessons.json').read_text(encoding='utf8'))

@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
-import {Element,flush} from './test-material-research-ui.mjs';
+import {Container,Element,flush} from './test-material-research-ui.mjs';
 
 const groups=JSON.parse(readFileSync(new URL('../dist/data/magnetic-groups.json',import.meta.url))).groups;
+const spaceGroups=JSON.parse(readFileSync(new URL('../dist/data/space-groups.json',import.meta.url))).groups;
 const routeFor=id=>'atlas/msg?q='+id;
 const expectedOg=new Map(groups.map(group=>[routeFor(group.id),group.ogId]));
 assert.equal(expectedOg.size,1651);
@@ -20,9 +21,10 @@ Element.prototype.remove=function(){this.parentNode.children=this.parentNode.chi
 
 for(const edition of ['../dist/','../dist/en/']){
  const address=file=>new URL(edition+file,import.meta.url);
- const {toolsIndex}=await import(address('navigation-ui.js'));
+ const {toolsIndex,renderNavigationHub}=await import(address('navigation-ui.js'));
  const {finderResults,startToolFinder}=await import(address('tool-finder.js'));
  const {isFullMagneticGroupQuery,matchMagneticGroupQuery}=await import(address('magnetic-group-query.js'));
+ const {spaceGroupNumberForQuery}=await import(address('tool-search.js'));
  const index=JSON.parse(readFileSync(address('data/search-index.json')));
  const indexedGroups=index.entries.filter(item=>item.route.startsWith('atlas/msg?q='));
  assert.equal(indexedGroups.length,expectedOg.size);
@@ -46,6 +48,9 @@ for(const edition of ['../dist/','../dist/en/']){
  assert.ok(msgRoutes('P_s1').includes('atlas/msg?q=1.3'));
  assert.equal(finderResults(entries,'BNS 1.3')[0]?.route,'compute/advanced/symbolic_spacegroups');
  assert.equal(finderResults(entries,'225',{scope:'groups'})[0]?.route,'atlas/sg?q=225');
+ for(const query of ['SG 225','Space group No. 225','空间群编号 225']){
+  assert.equal(finderResults(entries,query,{scope:'groups'})[0]?.route,'atlas/sg?q=225',query);
+ }
 
  for(const query of ['BNS 62.448','62.448','OG 62.8.509','62.8.509','ＢＮＳ：６２．４４８'])assert.equal(isFullMagneticGroupQuery(query),true,query);
  for(const query of ['BNS 62.','OG 62.8.','225','BNS 1.3.3','CG 1.3'])assert.equal(isFullMagneticGroupQuery(query),false,query);
@@ -112,6 +117,50 @@ for(const edition of ['../dist/','../dist/en/']){
  assert.deepEqual(launches,['atlas/msg?q=1.3','atlas/msg?q=1.3']);
  finder.destroy();
 
+ const mountSearch=async view=>{
+  const container=new Container();
+  await renderNavigationHub({container,view});
+  const field=container.querySelector('#site-search');
+  return {
+   container,
+   search(value){field.value=value;field.oninput();},
+   routes(){return container.querySelector('#site-search-results').querySelectorAll('a').map(a=>a.dataset.route);}
+  };
+ };
+ const home=await mountSearch('home');
+ assert.equal(fetches,2,'The in-page catalog waits for interaction');
+ home.search('BNS 1.3');
+ await flush();
+ assert.equal(fetches,3);
+ assert.deepEqual(home.routes(),[],'The homepage does not offer substitute tools for a complete group number while loading');
+ home.search('DMI');
+ assert.ok(home.routes().includes('compute/exchange-symmetry-lab'),'Ordinary tool search is available during loading');
+ home.search('BNS 62.448');
+ rejectCatalog(Error('Catalog unavailable'));
+ await flush();
+ assert.deepEqual(home.routes(),[]);
+ const retry=home.container.querySelector('#search-retry').onclick();
+ await flush();
+ assert.equal(fetches,4);
+ resolveCatalog({ok:true,json:async()=>index});
+ await retry;
+ const atlas=await mountSearch('atlas');
+ for(const page of [home,atlas]){
+  for(const [query,expected]of [['BNS 62.448','62.448'],['OG 1.3.3','1.3'],['BNS 编号 62.448','62.448']]){
+   page.search(query);
+   await flush();
+   assert.deepEqual(page.routes().filter(route=>route.startsWith('atlas/msg?q=')),[routeFor(expected)],query);
+   assert.equal(page.routes()[0],routeFor(expected),query);
+  }
+  for(const query of ['225','SG 225','Space group No. 225','空间群编号 225']){
+   page.search(query);
+   assert.equal(page.routes()[0],'atlas/sg?q=225',query);
+  }
+  page.search('BNS 62.');
+  assert.ok(page.routes().filter(route=>route.startsWith('atlas/msg?q=62.')).length>1);
+ }
+ assert.equal(fetches,4,'Homepage and atlas share the warmed catalog');
+
  const source=readFileSync(address('app.js'),'utf8');
  const renderSource=source.slice(source.indexOf('function renderDatabase('),source.indexOf('\nfunction activeContext('));
  const atlasBranch=source.match(/else if\(\/\^atlas.*?state\.dbType='all';\}/u)?.[0];
@@ -119,7 +168,8 @@ for(const edition of ['../dist/','../dist/en/']){
  const state={};
  let rows,calculations=0;
  const host={};
- const render=vm.runInNewContext('('+renderSource.trim()+')',{state,matchMagneticGroupQuery,list:()=>groups,gid:g=>g.id,esc:String,modeButtons:()=>'',
+ const render=vm.runInNewContext('('+renderSource.trim()+')',{state,matchMagneticGroupQuery,spaceGroupNumberForQuery,
+  list:()=>state.dbMode==='sg'?spaceGroups:groups,gid:g=>state.dbMode==='sg'?String(g.number):g.id,esc:String,modeButtons:()=>'',
   tableHTML(_,values){rows=values;return '';},crystalSpan:String,gtitle:g=>g.bcSymbol||g.symbol,lattices:{},$:()=>host,$$:()=>[],
   calculate(){calculations++;},history:{replaceState(){}}});
  const open=vm.runInNewContext(`route=>{let view,primary;const [path,query]=route.split('?');const params=new URLSearchParams(query);if(false){}${atlasBranch}return [view,primary];}`,{state,URLSearchParams});
@@ -139,6 +189,14 @@ for(const edition of ['../dist/','../dist/en/']){
  render();
  assert.ok(rows.length>1);
  assert.ok(rows.every(row=>row[0].startsWith('62.')));
+ for(const [query,id]of [['4','4'],['SG 22','22'],['Space group No. 225','225'],['空间群编号 225','225']]){
+  open('atlas/sg?q='+encodeURIComponent(query));
+  render();
+  assert.deepEqual(Array.from(rows,row=>row[0]),[id],query);
+ }
+ open('atlas/sg?q='+encodeURIComponent('Pnma'));
+ render();
+ assert.ok(Array.from(rows,row=>row[0]).includes('62'),'Symbol text still searches the ordinary catalog');
  assert.equal(calculations,0,'Search and atlas navigation alone never calculate');
- console.log(`Magnetic group search (${edition.includes('/en/')?'English':'Chinese'}): exact catalog IDs, partial searches, canonical navigation and no calculation passed.`);
+ console.log(`Group search (${edition.includes('/en/')?'English':'Chinese'}): exact catalog IDs, partial searches, home and atlas searches, canonical navigation and no calculation passed.`);
 }

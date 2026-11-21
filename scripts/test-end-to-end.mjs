@@ -59,3 +59,4 @@ try {
 } finally { await rm(temp,{recursive:true,force:true}); }
 assert.doesNotMatch(JSON.stringify(r),/C:\\\\Users|10\.20\.160\.50|ljcj007|password|token/i,'Public projection excludes local account/path/secrets');
 console.log(JSON.stringify({status:'PASS',exactJSAndPythonParity:true,negativeCases:negativeCases.length,archiveExtractedAndExecuted:true,outputOverwriteRejected:true,projectionSha256:PINNED_PROJECTION_SHA256}));
+await import('./test-qe-si-navigation.mjs');

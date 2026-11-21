@@ -61,7 +61,7 @@ const persistDerivations=()=>{try{localStorage.setItem(derivationStorageKey,JSON
 const mastered=questions=>questions.filter(({quiz,key})=>state.answers[key]?.checked===true&&state.answers[key]?.selected===quiz.answer).length;
 async function load(){
   if(!promise)promise=(async()=>{
-    const response=await fetch('./data/lie-group-lessons.json?v=20261113-depth1');
+    const response=await fetch('./data/lie-group-lessons.json?v=20261121-lesson-lab1');
     if(!response.ok)throw Error(`李群课程未能载入（HTTP ${response.status}）。`);
     const data=await response.json();
     if(!Array.isArray(data.lessons)||!data.lessons.length||data.lessons.some(lesson=>!lesson.id||!Array.isArray(lesson.quiz)||lesson.quiz.some(q=>!Array.isArray(q.choices)||!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.choices.length)))throw Error('李群课程数据不完整，请重新载入。');
@@ -96,19 +96,73 @@ export async function renderLieGroupView({container,run,cancelRun,toast=()=>{},d
   let data;try{data=await load();}catch(error){if(current()){root.innerHTML=`<p class="notice error" role="alert">${esc(error.message)}</p><button type="button" class="secondary" id="lg-retry">重新载入</button>`;$('#lg-retry').onclick=async()=>{if(!current())return;const child=await renderLieGroupView({container,run,cancelRun,toast,download,selection,onNavigate,onLocation,loadSu3Basis,loadSu3Copy});if(typeof child!=='function')return;if(disposed)child();else{if(typeof retryCleanup==='function')retryCleanup();retryCleanup=child;}};}return disposeView;}
   if(!current())return disposeView;
   let pendingExercise=selection.exercise||null,derivationBankReason='',stageReturn=null;
-  if(selection.pathway||selection.tab||selection.calculationOnly){state.tab=selection.calculationOnly?'lab':tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.track=lieTracks.some(([id])=>id===selection.track)?selection.track:'all';const chosen=data.lessons.findIndex(l=>l.id===selection.lesson);state.lesson=chosen>=0?chosen:Math.max(0,data.lessons.findIndex(l=>inLieTrack(l,state.track)));if(chosen>=0&&!inLieTrack(data.lessons[chosen],state.track))state.track=lessonTrack(data.lessons[chosen]);if(selection.experiment&&Object.hasOwn(experimentNames,selection.experiment)){if(state.experiment!==selection.experiment){state.result=null;state.payload=null;state.preset=null;}state.experiment=selection.experiment;}if(selection.preset&&labPresets[selection.preset]?.experiment===state.experiment){state.preset=selection.preset;state.inputs[state.experiment]=structuredClone(labPresets[selection.preset].input);state.result=null;state.payload=null;}if(state.tab==='quiz'&&selection.lesson)state.quizLesson=selection.lesson;}
+  if(selection.pathway||selection.tab||selection.calculationOnly){
+    state.tab=selection.calculationOnly?'lab':tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';
+    state.track=lieTracks.some(([id])=>id===selection.track)?selection.track:'all';
+    const chosen=data.lessons.findIndex(l=>l.id===selection.lesson);
+    state.lesson=chosen>=0?chosen:Math.max(0,data.lessons.findIndex(l=>inLieTrack(l,state.track)));
+    if(chosen>=0&&!inLieTrack(data.lessons[chosen],state.track))state.track=lessonTrack(data.lessons[chosen]);
+    const experiment=Object.hasOwn(experimentNames,selection.experiment)?selection.experiment:null;
+    const preset=Object.hasOwn(labPresets,selection.preset)?labPresets[selection.preset]:null;
+    if(experiment){
+      if(experiment!==state.experiment||preset?.experiment===experiment)applyLabSelection(experiment,selection.preset);
+    }else if(preset){
+      applyLabSelection(preset.experiment,selection.preset);
+    }else if(state.tab==='lab'&&!selection.calculationOnly){
+      applyLessonLab();
+    }
+    if(state.tab==='quiz'&&selection.lesson)state.quizLesson=selection.lesson;
+  }
   const projectLoad=projectInputFor(selection,'teaching_labs',state.inputs[selection.projectInput?.input?.experiment]||{});
   if(projectLoad.status==='loaded'){
     const {lab,experiment,...input}=projectLoad.input;
     state.experiment=experiment;state.inputs[experiment]=input;state.preset=null;state.tab='lab';state.result=null;state.payload=null;state.error='';
   }
+  // Tab navigation within the same lesson retains the current experiment and inputs.
+  let labLesson=state.tab==='lab'?state.lesson:null;
   const origin=selection.lieStageReturn;
   if(!selection.calculationOnly&&origin&&lieTracks.some(([id])=>id===origin.track)&&origin.track!==state.track&&Number.isInteger(origin.lesson)&&origin.lesson>=0&&origin.lesson<data.lessons.length&&inLieTrack(data.lessons[origin.lesson],origin.track))stageReturn={track:origin.track,lesson:origin.lesson};
   const sync=()=>{onNavigate({tab:state.tab,lesson:data.lessons[state.lesson]?.id,track:state.track,experiment:state.experiment,preset:state.preset,exercise:state.tab==='derive'?derivations?.exercises[state.derivation]?.id:undefined},{lieStageReturn:stageReturn?{...stageReturn}:null});onLocation(selection.calculationOnly?'计算中心 / '+(groupLieExperiments(experimentNames,state.experiment).find(group=>group.open)?.title||'连续群基础')+' / '+experimentNames[state.experiment]:'学习中心 / '+(selection.pathway==='coupling'?'张量积与重耦合':'连续群与物理')+' / '+String(data.lessons[state.lesson]?.title||'').replace(/^\d+\s*[·.、]\s*/,''));};
   const questions=entries(data.lessons);
   const invalidate=()=>{state.job++;state.derivationLoad++;state.busy=false;state.error='';};
-  function navigate(tab){if(!current())return;invalidate();state.tab=selection.calculationOnly?'lab':tab;if(tab==='quiz')state.quizLesson=data.lessons[state.lesson]?.id||'all';const rendered=draw();$('#lg-content')?.focus({preventScroll:true});if(rendered?.then)return rendered.then(()=>{if(current()&&state.tab===tab)sync();});sync();return rendered;}
-  function changeExperiment(experiment,presetId){if(!current()||!Object.hasOwn(experimentNames,experiment))return;invalidate();state.experiment=experiment;state.preset=presetId||null;if(typeof presetId==='string'&&Object.hasOwn(labPresets,presetId)&&labPresets[presetId].experiment===experiment)state.inputs[experiment]=structuredClone(labPresets[presetId].input);state.result=null;state.payload=null;}
+  function applyLabSelection(experiment,presetId){
+    if(!Object.hasOwn(experimentNames,experiment))return;
+    const preset=labPresets[presetId];
+    state.experiment=experiment;
+    state.preset=preset?.experiment===experiment?presetId:null;
+    if(state.preset)state.inputs[experiment]=structuredClone(preset.input);
+    state.result=null;
+    state.payload=null;
+  }
+  function applyLessonLab(){
+    const lesson=data.lessons[state.lesson];
+    applyLabSelection(lesson.lab,lesson.labPreset);
+  }
+  function navigate(tab){
+    if(!current())return;
+    invalidate();
+    state.tab=selection.calculationOnly?'lab':tab;
+    if(state.tab==='lab'){
+      if(!selection.calculationOnly&&labLesson!==state.lesson)applyLessonLab();
+      labLesson=state.lesson;
+    }
+    if(tab==='quiz')state.quizLesson=data.lessons[state.lesson]?.id||'all';
+    const rendered=draw();
+    $('#lg-content')?.focus({preventScroll:true});
+    if(rendered?.then)return rendered.then(()=>{if(current()&&state.tab===tab)sync();});
+    sync();
+    return rendered;
+  }
+  function changeExperiment(experiment,presetId){
+    if(!current()||!Object.hasOwn(experimentNames,experiment))return;
+    invalidate();
+    applyLabSelection(experiment,presetId);
+  }
+  function openLab(experiment,presetId){
+    applyLabSelection(experiment,presetId);
+    labLesson=state.lesson;
+    return navigate('lab');
+  }
   function sourceList(){return `<details class="lg-sources"><summary>参考来源与计算约定</summary><p>课程采用原创中文说明。离散晶体群与连续李群在这里通过生成元、表示和自旋联系起来；U(1) 圆采用 z(φ)=exp(+iφ)，逆时针为正；SU(2)、SU(3) 采用 U(θ)=exp(−iθT)，分别取 T=σ/2 与 λ/2。φ 与 θ 是不同参数约定；双路径实验在路径⊗自旋空间合束。</p>${(data.sources||[]).map(source=>`<p>${safeURL(source.url)?`<a href="${esc(source.url)}" target="_blank" rel="noreferrer">${esc(source.title)} ↗</a>`:esc(source.title)}${source.note?' · '+esc(source.note):''}</p>`).join('')}</details>`;}
   const quantumBridgeStates=new Map();
   function draw(){
@@ -173,7 +227,7 @@ export async function renderLieGroupView({container,run,cancelRun,toast=()=>{},d
     root.querySelectorAll('[data-lg-other-lesson]').forEach(button=>button.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-lg-other-lesson]')].includes(button))return;const index=Number(button.dataset.lgOtherLesson);if(!Number.isInteger(index)||index<0||index>=data.lessons.length||inLieTrack(data.lessons[index],state.track))return;switchStage(lessonTrack(data.lessons[index]),index);});
     const returnStage=$('#lg-return-stage');if(returnStage)returnStage.onclick=()=>{if(!current()||$('#lg-return-stage')!==returnStage||!stageReturn)return;const previous=stageReturn;stageReturn=null;invalidate();state.track=previous.track;state.lesson=previous.lesson;drawLearn();sync();$('#lg-track-select')?.focus?.({preventScroll:true});};
     const quizButton=$('#lg-lesson-quiz');quizButton.onclick=()=>{if(!current()||$('#lg-lesson-quiz')!==quizButton)return;state.quizLesson=lesson.id;navigate('quiz');};
-    const labButton=$('#lg-lesson-lab');if(labButton)labButton.onclick=()=>{if(!current()||$('#lg-lesson-lab')!==labButton)return;changeExperiment(lesson.lab,lesson.labPreset);navigate('lab');};
+    const labButton=$('#lg-lesson-lab');if(labButton)labButton.onclick=()=>{if(!current()||$('#lg-lesson-lab')!==labButton)return;return openLab(lesson.lab,lesson.labPreset);};
     const nextButton=$('#lg-next-lesson');if(nextButton)nextButton.onclick=()=>{if(current()&&$('#lg-next-lesson')===nextButton)chooseLesson(next.index);};
   }
   function drawLab(){
@@ -249,7 +303,7 @@ export async function renderLieGroupView({container,run,cancelRun,toast=()=>{},d
     if($('#lg-show-hint'))$('#lg-show-hint').onclick=()=>update({hint:true});
     if($('#lg-next-derivation-step'))$('#lg-next-derivation-step').onclick=()=>update({revealed:progress.revealed+1});
     if($('#lg-show-derivation-answer'))$('#lg-show-derivation-answer').onclick=()=>update({answer:true});
-    if($('#lg-derivation-lab'))$('#lg-derivation-lab').onclick=()=>{if(!active())return;changeExperiment(exercise.lab,exercise.labPreset);navigate('lab');};
+    if($('#lg-derivation-lab'))$('#lg-derivation-lab').onclick=()=>{if(!active())return;return openLab(exercise.lab,exercise.labPreset);};
     root.querySelectorAll('[data-lg-derivation-answer]').forEach(input=>input.onchange=()=>update({selected:Number(input.value),checked:false}));
     $('#lg-check-derivation').onclick=()=>{if(progress.selected!==undefined)return update({checked:true});};
     $('#lg-reset-derivation').onclick=()=>{if(!active())return;delete state.derivationProgress[exercise.id];persistDerivations();return drawDerivations();};

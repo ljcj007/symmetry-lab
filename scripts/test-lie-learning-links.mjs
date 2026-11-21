@@ -55,7 +55,9 @@ const presetInputs=[
  ['su3-weight-phase','su3',{generator:3,degrees:90,state:'plus12'}]
 ];
 for(const [index,[preset,lab,input]] of presetInputs.entries()){
+ const lesson=lessons.find(item=>item.id===introductoryBindings[index][0]);
  const exercise=exercises.find(item=>item.id===introductoryBindings[index][1]);
+ assert.equal(lesson.lab,lab);assert.equal(lesson.labPreset,preset);
  assert.equal(exercise.lab,lab);assert.equal(exercise.labPreset,preset);
  assert.deepEqual(foundationPresets[preset],{experiment:lab,input},'Linked experiment must start with the actual problem values');
 }

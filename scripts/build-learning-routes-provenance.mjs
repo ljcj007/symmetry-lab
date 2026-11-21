@@ -45,6 +45,9 @@ files.push('dist/magnetic-group-query.js','dist/tool-finder.js','scripts/test-ma
  'dist/material-research-ui.js','scripts/test-python-phonon-modes.py','scripts/test-gamma-translations-ui.mjs','locales/en-gamma-translations.json');
 files.push('scripts/test-atlas-workbench-routes.mjs','scripts/test-gaas-mixed-exercise-ui.mjs',
  'locales/en-gaas-mixed-exercise.json');
+files.push('scripts/test-seitz-lesson-handoff.mjs','scripts/test-lie-foundations-ui.mjs','scripts/test-lie-group-course.py',
+ 'dist/data/symmetry-course-lessons.json','dist/data/lie-group-lessons.json','scripts/search-catalog-source.mjs',
+ 'scripts/test-qe-si-navigation.mjs','locales/en-qe-si-navigation.json','dist/end-to-end/index.html','dist/end-to-end/app.js');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -82,6 +85,7 @@ data.verification.push('Every indexed lesson opens contextual course search from
 data.verification.push('Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing.');
 data.verification.push('Atlas material cards open their declared lessons and preserve material-specific lab inputs. Atlas workbench links record the selected group and valid reciprocal-space conventions when the browser history entry is created.');
 data.verification.push('The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units.');
+data.verification.push('The homepage, atlas and finder share exact group-number lookup. The introductory screw-axis and Lie lessons open the cases used in their worked examples. The silicon atlas and bilingual catalog reach the local QE–Si evidence page through a standard link.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

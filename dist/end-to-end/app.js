@@ -29,6 +29,7 @@ if(en){
  document.querySelector('.lead').textContent='Connect source identity, operator construction, rounding, basis truncation and self-consistency error to one mathematical statement about the complete spectrum.';
  document.querySelector('.hero-actions .primary').textContent='Run the scalar verification';
  document.querySelector('#language').textContent='中文';document.querySelector('#language').href='./';document.querySelector('#language').lang='zh-CN';
+ document.querySelector('footer .brand').href='../en/';
  document.querySelector('#spectrum-title').textContent='Schematic common Fermi window';document.querySelector('#spectrum-desc').textContent='A common energy interval separates four occupied spatial bands from the upper spectrum over the entire Brillouin zone. This is not actual Si dispersion data.';
  document.querySelector('#stage-tabs').setAttribute('aria-label','Evidence stages');
 }

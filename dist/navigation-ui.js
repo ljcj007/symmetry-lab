@@ -1,8 +1,9 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261121-atlas-workbench1';
-import {searchEntries,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
-import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261121-spectral1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261121-course-entry1';
+import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261121-course-entry1';
+import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261121-course-entry1';
+import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261120-si-fold1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
@@ -141,7 +142,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const exampleLink=example?link(`${item.route}?${example[0]}`,esc(example[1]),'nav-tool-example'):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLink}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261120-wannier1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261121-course-entry1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 
 function orderedQuery(query){
@@ -256,8 +257,14 @@ export async function renderNavigationHub({container,view='home',databases,loadR
   input.oninput=renderCompute;renderCompute();return;
  }
  bindFavorites();
- const update=()=>{if(!current())return;const query=input.value.trim();if(!query){results.innerHTML='';return;}const found=searchEntries(entries,query);results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>${formatPurpose(t,query,'small')}`)}</li>`).join('')}</ul>`:'<p class="nav-empty">没有找到匹配内容，请尝试群编号、材料名称或计算名称。</p>';};
  let loading=false,ready=false;
+ const update=()=>{
+  if(!current())return;
+  const query=input.value.trim();
+  if(!query||(!ready&&isFullMagneticGroupQuery(query))){results.innerHTML='';return;}
+  const found=searchCatalogEntries(entries,query);
+  results.innerHTML=found.length?`<ul class="nav-search-list">${found.map(t=>`<li>${link(t.route,`<span>${esc(t.kind)}</span><strong>${esc(t.title)}</strong><small>${esc(t.summary)}</small>${formatPurpose(t,query,'small')}`)}</li>`).join('')}</ul>`:'<p class="nav-empty">没有找到匹配内容，请尝试群编号、材料名称或计算名称。</p>';
+ };
  const loadSearch=async()=>{if(loading||ready||!current())return;loading=true;status.textContent='正在读取搜索目录；可先查找工具…';
   try{const extra=await searchCatalog.get('all');if(!current())return;entries=[...toolsIndex,...extra];ready=true;status.textContent='工具 · 课程 · 群目录 · 材料';update();}
   catch{if(current()){status.innerHTML='课程与群目录暂不可用，工具仍可搜索。 <button type="button" id="search-retry">重试搜索目录</button>';root.querySelector('#search-retry').onclick=loadSearch;}}

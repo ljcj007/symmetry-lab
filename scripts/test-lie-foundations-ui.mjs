@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {Element,Container} from './test-material-research-ui.mjs';
 import {foundationPresets,lieGroupLabel} from '../dist/lie-foundations-ui.js';
+import {parseClassroomRoute} from '../dist/classroom-ui.js';
 
 Element.prototype.focus=function(){};Element.prototype.scrollIntoView=function(){};
 const course=JSON.parse(fs.readFileSync(new URL('../dist/data/lie-group-lessons.json',import.meta.url),'utf8'));
@@ -64,3 +65,88 @@ const race$=selector=>racePage.querySelector(selector);const pending=race$('#lg-
 racePage.querySelectorAll('[data-lg-experiment]').find(button=>button.dataset.lgExperiment==='su3').onclick();finish(fixtures.interferometer.result);await pending;
 assert.ok(race$('#lg-generator'));assert.equal(race.getLieGroupResult().experiment,null);
 console.log('Lie foundations UI: first-eight sequence, U1 label/positive phase, lazy exact-preset handoff, lesson return, input invalidation, original JSON exports, spinor/vector, double-path ports, SU3 coherences and stale-job isolation passed.');
+
+// The lesson route, tab and worked-example button must agree about the real input.
+const exact42=JSON.parse(fs.readFileSync(new URL('./fixtures/su3-ninej-ui.json',import.meta.url),'utf8')).twentySeven;
+const exact42Input={lab:'lie',experiment:'su3_ninej',factors:[[2,2],[1,0],[0,1],[1,0]],target:[3,2],
+ direction:'left_to_right',state:{index:0}};
+const doubleCover='#classroom/continuous?track=continuous&lesson=su2-double-cover';
+const highDegree='#classroom/coupling?track=ninej&lesson=su3-ninej-27-input-exact';
+for(const edition of process.argv.includes('--english')?['','en/']:['']){
+ const location=new URL('../dist/'+edition,import.meta.url);
+ globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(new URL(String(url),location),'utf8'))});
+ const lessonsView=await import(new URL('lie-group-ui.js?lesson-input-test',location));
+ const page=new Container(),submitted=[],navigation=[];
+ const node=selector=>page.querySelector(selector);
+ let result;
+ const visit=hash=>lessonsView.renderLieGroupView({
+  container:page,selection:parseClassroomRoute(hash),onNavigate:patch=>navigation.push(patch),
+  run:async(action,input)=>{submitted.push({action,input});return structuredClone(result);}
+ });
+ const submitLab=()=>node('#lg-lab-form').onsubmit({preventDefault(){}});
+ const expectLab=(experiment,preset)=>assert.deepEqual(
+  [navigation.at(-1).experiment,navigation.at(-1).preset],[experiment,preset]
+ );
+
+ for(const button of ['#lg-tab-lab','#lg-lesson-lab']){
+  const count=submitted.length;
+  await visit(doubleCover);
+  await node(button).onclick();
+  expectLab('interferometer','su2-phase-single');
+  assert.equal(node('#lg-angle').value,'360');
+  assert.equal(node('#lg-branches').value,'single');
+  assert.equal(submitted.length,count);
+  result=fixtures.interferometer.result;
+  await submitLab();
+  assert.deepEqual(submitted.at(-1),{action:'teaching_labs',input:fixtures.interferometer.input});
+  assert.deepEqual(lessonsView.getLieGroupResult().experiment.result.portProbabilities,[0,1]);
+ }
+
+ // A different lesson gets its own preset. A return to the same lesson retains
+ // the selected experiment and its valid submitted input.
+  result=undefined;
+ node('#lg-branches').value='both';
+ await submitLab();
+ const edited=submitted.at(-1).input;
+ assert.equal(edited.branches,'both');
+ await node('#lg-tab-learn').onclick();
+ await node('#lg-tab-lab').onclick();
+ assert.equal(node('#lg-branches').value,'both');
+ await submitLab();
+ assert.deepEqual(submitted.at(-1).input,edited);
+
+ await node('#lg-tab-learn').onclick();
+ const picker=node('#lg-chapter-select');
+ picker.value='5';picker.onchange({target:picker});
+ await node('#lg-tab-learn').onkeydown({key:'ArrowRight',preventDefault(){}});
+ expectLab('representations','su2-center-actions');
+ assert.equal(node('#lg-angle').value,'360');
+ assert.equal(node('#lg-branches'),null);
+
+ result=exact42;
+ for(const handoff of ['tab','button','direct']){
+  const count=submitted.length;
+  await visit(highDegree+(handoff==='direct'?'&tab=lab':''));
+  if(handoff==='tab')await node('#lg-tab-lab').onclick();
+  if(handoff==='button')await node('#lg-lesson-lab').onclick();
+  assert.equal(submitted.length,count);
+  assert.equal(node('#lg-ninej-factor1').value,'2,2');
+  assert.equal(node('#lg-ninej-target').value,'3,2');
+  await submitLab();
+  assert.deepEqual(submitted.at(-1),{action:'teaching_labs',input:exact42Input});
+  const solved=lessonsView.getLieGroupResult().experiment.result;
+  assert.equal(solved.dimension,729);
+  assert.equal(solved.multiplicity,5);
+  assert.equal(solved.exactChecks.roundtrip,'0');
+ }
+
+ const count=submitted.length;
+ await visit(highDegree+'&tab=lab&experiment=interferometer&preset=su2-phase-single');
+ assert.equal(node('#lg-angle').value,'360');
+ assert.equal(node('#lg-ninej-target'),null);
+ await visit('#compute/lie/su3_ninej?preset=su3-ninej-color-octet');
+ assert.equal(node('#lg-ninej-factor1').value,'1,0');
+ assert.equal(node('#lg-ninej-target').value,'1,1');
+ assert.equal(submitted.length,count,'An explicit calculator or lab link keeps its chosen preset and waits for a manual run');
+ console.log(`Lesson-linked Lie labs (${edition?'English':'Chinese'}): manual interferometer and exact 42 inputs, keyboard handoff, lesson defaults and explicit overrides passed.`);
+}

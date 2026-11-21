@@ -466,3 +466,10 @@ establish that all existing scientific and teaching content has been audited.
 - The NaCl and GaAs classroom links open their declared diffraction lessons. The experiment starts with the corresponding crystal and teaching scattering weights, and the material cards retain the full lesson list.
 - Opening a workbench from an ordinary, magnetic space-group or magnetic point-group row writes a complete route. Reload and language switch recover the group, momentum and spin convention. The new origin example resets the momentum label to Γ and carries over a Brillouin-zone choice only when supported by the selected group.
 - The phonon mode exercise provides both GaAs models on the same experimental settings. Learners predict, run each model, and compare the T₂ labels, translation weights and Ga/As displacements. Switching back to uploaded data restores the previous source and frequency-unit selection.
+
+## Match course experiments and group numbers across entry points
+
+- The homepage, atlas search and quick finder use the same lookup for BNS, OG and ordinary space-group numbers. Opening a numbered space-group record in the atlas filters the table to the requested group.
+- The first space-group lesson opens its 4₁ screw example. The Seitz lab preserves supported model names in shared links and keeps an edited draft when students revisit tabs within the same lesson.
+- Lie lessons open the experiment used in their example, whether the learner chooses the lab tab or the link at the end of the lesson. This includes the SU(2) double-cover interferometer and the exact SU(3) four-factor exercise with a 27-dimensional input.
+- The Si material card and quick finder reach the QE–Si evidence chain. Each edition opens the workshop on its current host and in its selected interface language.

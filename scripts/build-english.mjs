@@ -69,6 +69,7 @@ for(const name of fs.readdirSync(dist).filter(x=>x.endsWith('.js')&&!['language-
 let index=replaceUnits(fs.readFileSync(path.join(dist,'index.html'),'utf8'),t).replace('lang="zh-CN"','lang="en"');
 index=index.replace(/(href|src)="((?:[^"/]+\.css|icon\.svg|language-switch\.js)(?:\?[^" ]*)?)"/g,'$1="../$2"');
 index=index.replace('href="vendor/katex/katex.min.css"','href="../vendor/katex/katex.min.css"');
+index=index.replace('href="end-to-end/"','href="../end-to-end/?lang=en"');
 index=index.replace(/(data-view="compute"[\s\S]*?<span class="nav-mobile-label"[^>]*>)[^<]*(<\/span>)/,'$1Tools$2');
 write('index.html',index);
 const bigGroups=new Set(['space-groups.json','magnetic-groups.json','points.json']);

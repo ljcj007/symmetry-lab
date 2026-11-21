@@ -102,16 +102,16 @@
   ],
   "files": {
     "dist/classroom-ui.js": {
-      "bytes": 32802,
-      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
+      "bytes": 32804,
+      "sha256": "b77b8d2240c9afa0712a98fa1c35710204f36f7eafcf9747441af9338bf5684a"
     },
     "dist/classroom.css": {
       "bytes": 8608,
       "sha256": "7130de46e1fe607f421aaf2cf2570ec6da379638df57a58dca2851dd90be5ae2"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 59790,
-      "sha256": "09ee1b2cb9755b2d7c3ffb42c0a8365cdf3613c4a743a6cc8915f17948ad0a5e"
+      "bytes": 60611,
+      "sha256": "bc1dfda79d04be8411745d42bb9b8ac9cdbcd8c05b739786413218d392550cae"
     },
     "dist/lie-group.css": {
       "bytes": 27977,
@@ -122,8 +122,8 @@
       "sha256": "c0df476c63d78d660a0037ae9a825ad240bd6e917b8377cd1d96b1963665c9a0"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 163220,
-      "sha256": "fb44bf2c1a8e643f8a8dbc8ce2af89ba5add1b3ab317a53e747fb99fab21edd2"
+      "bytes": 163590,
+      "sha256": "7313d317c968ecfb9d9d2d8a85523e6231f06c8b5797608f349867d5bdf82057"
     },
     "dist/docs/lie-groups.md": {
       "bytes": 45925,
@@ -134,16 +134,16 @@
       "sha256": "e1c9206aa6a0fe017bd54b9820875081cf074d442c829514ef04d3a9dcb0de6d"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 81283,
-      "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
+      "bytes": 81288,
+      "sha256": "79fc9f0a826cf96fa816c330936e9cbbd8b524d70d808b9fa72be872f57b6ff7"
     },
     "scripts/test-python-lie-labs.py": {
       "bytes": 11173,
       "sha256": "5b1f4c387edc5c471d9638132954aab15017232204bf269fb9e2eb66ccd96a45"
     },
     "scripts/test-lie-group-course.py": {
-      "bytes": 14616,
-      "sha256": "f80bedd15aaa5ec994ee2381c6c8f78f61dfb0117c9e0a0f77515e2ebb7e7b41"
+      "bytes": 14619,
+      "sha256": "e3d9b41e62d894f0991aed851721c948e0f6015444540a1df52570bfdff9f3fd"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,

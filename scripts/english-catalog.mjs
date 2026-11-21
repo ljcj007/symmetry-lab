@@ -66,6 +66,7 @@ catalogFiles.push('en-beginner-links.json');
 catalogFiles.push('en-si-response-comparison.json','en-zno-ir-search.json');
 catalogFiles.push('en-gamma-translations.json');
 catalogFiles.push('en-gaas-mixed-exercise.json');
+catalogFiles.push('en-qe-si-navigation.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

@@ -2,6 +2,7 @@
 export const catalogs=['pointgroup-lessons','symmetry-course-lessons','lie-group-lessons','symmetry-materials','material-observables','structure-dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy-materials','pathways-materials','bridges-materials','principles-materials','construction-materials','connections-materials','frontiers-materials'];
 export const learningEntries=([pg,sg,lie,materials,observables,dynamics,research,coupled,electronic,quantum,response,spectroscopy,pathways,bridges,principles,construction,connections,frontiers])=>[
   {route:'docs/dictionary',title:'公式与符号词典',summary:'按主题解释变量、单位、坐标约定与公式适用条件。',keywords:'公式 符号 单位 dictionary',kind:'词典'},
+  {route:'atlas/qe-si',title:'硅带隙 · QE–Si 证据链',summary:'从 Quantum ESPRESSO 原始数据到共同带隙的证明案例。',keywords:'QE-Si Quantum ESPRESSO DFT SCF 硅 带隙复核 端到端',kind:'材料'},
   ...frontiers.lessons.map(l=>({route:'classroom/'+frontiers.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 层群 手性 SPT 伪对称 射影',kind:'课程'})),
   ...frontiers.cases.map(c=>({route:'atlas/frontiers?material='+encodeURIComponent(c.id)+'&module='+c.module,title:c.title,summary:c.summary,keywords:c.id+' 表面 极性 多体',kind:'材料'})),
   ...connections.lessons.map(l=>({route:'classroom/'+connections.modules.find(m=>m.id===l.module).pathway+'?module='+l.module+'&lesson='+encodeURIComponent(l.id),title:l.title,summary:l.summary,keywords:l.module+' 置换 拓扑缺陷 互易 Pauli Onsager',kind:'课程'})),

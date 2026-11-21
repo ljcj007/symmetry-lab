@@ -1,4 +1,4 @@
-import {searchEntries} from './tool-search.js?v=20261121-spectral1';
+import {searchEntries} from './tool-search.js?v=20261121-course-entry1';
 
 const categoryOrder=['structure','representation','coupling','observables','models','algebra'];
 const reassigned={

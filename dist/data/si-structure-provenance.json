@@ -115,18 +115,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 80530,
-      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
+      "bytes": 81426,
+      "sha256": "f6742a2dc28a61495a82b4cef715906083f1d3e75b3c861425368fec10b9d80b"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 103040,
-      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
+      "bytes": 103960,
+      "sha256": "8df22981794a64c21902bd7ee454378f0474cb0623454328cacc5ed4a88023bd"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32802,
-      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
+      "bytes": 32804,
+      "sha256": "b77b8d2240c9afa0712a98fa1c35710204f36f7eafcf9747441af9338bf5684a"
     },
     "dist/data/examples/phonopy-si-structure/LICENSE.txt": {
       "normalization": "binary",
@@ -145,8 +145,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 396309,
-      "sha256": "f8e25eb79ff948643c41b8969a2209540264a2bc10704a388939b84bf3ff8fbf"
+      "bytes": 396540,
+      "sha256": "f72ebbaf97c82d494f71e3d86586a0aa8f6cd97f66e05ca90fb9e024af65634a"
     },
     "dist/docs/si-structure-example.md": {
       "normalization": "utf8-lf-v1",
@@ -155,13 +155,13 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8473,
-      "sha256": "f61cadf9b5eb91a0e5d7028f2bb8b374c02fd60e7658ff06403c11f996277cf4"
+      "bytes": 8429,
+      "sha256": "5dff7a3edcfa826451e3dfc4547733f453cc2b7ab0879b890228d5205861881f"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33847,
-      "sha256": "823dde3ba52e1168c9c58d24a45884171e1e86ba50c26164671371d75fa61da7"
+      "bytes": 34035,
+      "sha256": "062eee7e1ba9ddca726d9f14ab98c435a60a79a3ab330cb4cf2e1d64a3236743"
     },
     "dist/observables-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -225,8 +225,8 @@
     },
     "dist/symmetry-course-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 104282,
-      "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
+      "bytes": 105493,
+      "sha256": "489a5aa1bce5c83c41785aabf047aebf5c1ec0bc1a3a386d241a7d015027185e"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -235,18 +235,18 @@
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3084,
-      "sha256": "20c577874272bb2eb30ef3bc5478e114962e7debc830b6f44c7b7b0094c5d67e"
+      "bytes": 3088,
+      "sha256": "01615326ac866e67400e966b7a6e0e87303a76ede0b3113f4d4d3218fe59c93b"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13825,
-      "sha256": "9dcee4792ce9c15aed66918ef5d0683fc28d5dfaf47b49542199081fc60ecbfd"
+      "bytes": 13191,
+      "sha256": "9c89492eb94db190d68eb8a9913f8cc2d232e08aab98ff8b2e7c0a2be612ea87"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3183,
-      "sha256": "1363a93cf84ee575604f10b3d5b18f7698f5b1cf06f877ac8ead9d8aecb05e79"
+      "bytes": 4245,
+      "sha256": "75a3a14fb48edd55c9d2868d809212a5a8f436144827445fc7e76a3bfbd42dfd"
     },
     "locales/en-si-conventional-folding-host.json": {
       "normalization": "utf8-lf-v1",
@@ -290,8 +290,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28916,
-      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
+      "bytes": 29018,
+      "sha256": "7f8ab950464fe8b4659f9abfeea685df659909e90499ceed1f7ee949f926141f"
     },
     "scripts/build-si-structure-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -300,8 +300,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6595,
-      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
+      "bytes": 6642,
+      "sha256": "5b4cb5f6869deb57a34a652911994c0c1e21ad24dcddc810235ff99ddaa52561"
     },
     "scripts/test-file-search.mjs": {
       "normalization": "utf8-lf-v1",
@@ -365,8 +365,8 @@
     },
     "scripts/test-symmetry-course-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 26087,
-      "sha256": "37b6d0ac0f3ff70edd0e0390d63f28d553195cde645f84fb6dacfc1ec354473a"
+      "bytes": 26413,
+      "sha256": "3bb88f006fc5f16e15278fb2266fc42290e4f47573b617031e181e81b952fd24"
     }
   }
 }

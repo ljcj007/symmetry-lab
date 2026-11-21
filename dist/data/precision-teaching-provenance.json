@@ -40,13 +40,13 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 80530,
-      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
+      "bytes": 81426,
+      "sha256": "f6742a2dc28a61495a82b4cef715906083f1d3e75b3c861425368fec10b9d80b"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 103040,
-      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
+      "bytes": 103960,
+      "sha256": "8df22981794a64c21902bd7ee454378f0474cb0623454328cacc5ed4a88023bd"
     },
     "dist/connections-views.js": {
       "normalization": "utf8-lf-v1",
@@ -70,8 +70,8 @@
     },
     "dist/data/symmetry-course-lessons.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 108619,
-      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
+      "bytes": 108677,
+      "sha256": "2eadcba2a153dd24cf7fc832f6923c899b7c84639b0b46d3138c4cae86005930"
     },
     "dist/electronic-materials-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -80,13 +80,13 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8473,
-      "sha256": "f61cadf9b5eb91a0e5d7028f2bb8b374c02fd60e7658ff06403c11f996277cf4"
+      "bytes": 8429,
+      "sha256": "5dff7a3edcfa826451e3dfc4547733f453cc2b7ab0879b890228d5205861881f"
     },
     "dist/lie-group-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 59790,
-      "sha256": "09ee1b2cb9755b2d7c3ffb42c0a8365cdf3613c4a743a6cc8915f17948ad0a5e"
+      "bytes": 60611,
+      "sha256": "bc1dfda79d04be8411745d42bb9b8ac9cdbcd8c05b739786413218d392550cae"
     },
     "dist/lie-physics-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -150,8 +150,8 @@
     },
     "dist/symmetry-course-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 104282,
-      "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
+      "bytes": 105493,
+      "sha256": "489a5aa1bce5c83c41785aabf047aebf5c1ec0bc1a3a386d241a7d015027185e"
     },
     "locales/en-geometry-diagnostic-display.json": {
       "normalization": "utf8-lf-v1",
@@ -175,8 +175,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28916,
-      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
+      "bytes": 29018,
+      "sha256": "7f8ab950464fe8b4659f9abfeea685df659909e90499ceed1f7ee949f926141f"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -195,8 +195,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6595,
-      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
+      "bytes": 6642,
+      "sha256": "5b4cb5f6869deb57a34a652911994c0c1e21ad24dcddc810235ff99ddaa52561"
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
@@ -235,8 +235,8 @@
     },
     "scripts/test-lie-group-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 81283,
-      "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
+      "bytes": 81288,
+      "sha256": "79fc9f0a826cf96fa816c330936e9cbbd8b524d70d808b9fa72be872f57b6ff7"
     },
     "scripts/test-magnetic-setting-derivation.py": {
       "normalization": "utf8-lf-v1",

@@ -29,7 +29,8 @@
     "Every indexed lesson opens contextual course search from its current learning panel. All 197 canonical lesson identities resolve into 51 topics. Same-name lessons stay distinct. Users can browse their topic or retain the query when broadening to the course catalog or the whole lesson inventory.",
     "Both search indexes retain all 1651 BNS and OG pairs. Full numbered lookups select the matching magnetic group, including through a delayed or retried catalog. Gamma mode diagnostics recover all rigid-translation weight from the original GaAs acoustic triplet and split it equally between two unchanged T2 labels after a controlled mixing.",
     "Atlas material cards open their declared lessons and preserve material-specific lab inputs. Atlas workbench links record the selected group and valid reciprocal-space conventions when the browser history entry is created.",
-    "The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units."
+    "The GaAs exercise compares the same Gamma calculation for two synthetic presets, with explicit manual runs. Switching back restores the earlier official phonon inputs and their confirmed units.",
+    "The homepage, atlas and finder share exact group-number lookup. The introductory screw-axis and Lie lessons open the cases used in their worked examples. The silicon atlas and bilingual catalog reach the local QE–Si evidence page through a standard link."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -48,8 +49,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 80530,
-      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
+      "bytes": 81426,
+      "sha256": "f6742a2dc28a61495a82b4cef715906083f1d3e75b3c861425368fec10b9d80b"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -60,8 +61,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 103040,
-      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
+      "bytes": 103960,
+      "sha256": "8df22981794a64c21902bd7ee454378f0474cb0623454328cacc5ed4a88023bd"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -80,8 +81,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32802,
-      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
+      "bytes": 32804,
+      "sha256": "b77b8d2240c9afa0712a98fa1c35710204f36f7eafcf9747441af9338bf5684a"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -148,8 +149,8 @@
       "sha256": "465dba4269a9337c054763dbd0c3dfe37c4a647ddc7f0d3a42b41417a5596a1c"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 163220,
-      "sha256": "fb44bf2c1a8e643f8a8dbc8ce2af89ba5add1b3ab317a53e747fb99fab21edd2"
+      "bytes": 163590,
+      "sha256": "7313d317c968ecfb9d9d2d8a85523e6231f06c8b5797608f349867d5bdf82057"
     },
     "dist/data/material-observables.json": {
       "bytes": 42170,
@@ -188,8 +189,8 @@
       "sha256": "a89290455b4a116ff0d1b3759574f045d1bccb945e155a2240040c0c0443a1d6"
     },
     "dist/data/symmetry-course-lessons.json": {
-      "bytes": 108619,
-      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
+      "bytes": 108677,
+      "sha256": "2eadcba2a153dd24cf7fc832f6923c899b7c84639b0b46d3138c4cae86005930"
     },
     "dist/docs/cif-setting-practice.md": {
       "bytes": 7266,
@@ -215,6 +216,14 @@
       "bytes": 32616,
       "sha256": "b78b94571c5e8c8ed4c6c4e803296dd437dfc3972b3aefdfeffec155ba8d5da2"
     },
+    "dist/end-to-end/app.js": {
+      "bytes": 14088,
+      "sha256": "d53cc084de659a5a0a375881802031d0d57d77cd0b8e6a956842bdc6d155f610"
+    },
+    "dist/end-to-end/index.html": {
+      "bytes": 10174,
+      "sha256": "57abc91054ad234af98026f61801e325609ea813acbf5dbb92347d7726637f84"
+    },
     "dist/formula-dictionary.js": {
       "bytes": 19672,
       "sha256": "691ac26f95becef59c35f187b4fb10a5f4a3eb37a804d24228cd7fe5ebe2fa91"
@@ -236,8 +245,8 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/index.html": {
-      "bytes": 8473,
-      "sha256": "f61cadf9b5eb91a0e5d7028f2bb8b374c02fd60e7658ff06403c11f996277cf4"
+      "bytes": 8429,
+      "sha256": "5dff7a3edcfa826451e3dfc4547733f453cc2b7ab0879b890228d5205861881f"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -249,7 +258,7 @@
     },
     "dist/lesson-topic-finder.js": {
       "bytes": 1717,
-      "sha256": "bab47e6580c1f64492952fc3d90aa9d066af25138126a2e46e29b3dab4211aed"
+      "sha256": "397b45d128a9de7c61eaa9342ddde0dd10a8d1321dcdbe34e72e7f38fd776d07"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,
@@ -268,8 +277,8 @@
       "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
     },
     "dist/navigation-ui.js": {
-      "bytes": 33847,
-      "sha256": "823dde3ba52e1168c9c58d24a45884171e1e86ba50c26164671371d75fa61da7"
+      "bytes": 34035,
+      "sha256": "062eee7e1ba9ddca726d9f14ab98c435a60a79a3ab330cb4cf2e1d64a3236743"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -484,20 +493,20 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 104282,
-      "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
+      "bytes": 105493,
+      "sha256": "489a5aa1bce5c83c41785aabf047aebf5c1ec0bc1a3a386d241a7d015027185e"
     },
     "dist/tool-capabilities.js": {
       "bytes": 44716,
       "sha256": "55213a8e421e185ca7242f7964dd0c246f5956c18c64702b045525f20def2677"
     },
     "dist/tool-finder.js": {
-      "bytes": 13825,
-      "sha256": "9dcee4792ce9c15aed66918ef5d0683fc28d5dfaf47b49542199081fc60ecbfd"
+      "bytes": 13191,
+      "sha256": "9c89492eb94db190d68eb8a9913f8cc2d232e08aab98ff8b2e7c0a2be612ea87"
     },
     "dist/tool-search.js": {
-      "bytes": 3183,
-      "sha256": "1363a93cf84ee575604f10b3d5b18f7698f5b1cf06f877ac8ead9d8aecb05e79"
+      "bytes": 4245,
+      "sha256": "75a3a14fb48edd55c9d2868d809212a5a8f436144827445fc7e76a3bfbd42dfd"
     },
     "dist/zero-start-placement.js": {
       "bytes": 5147,
@@ -591,6 +600,10 @@
       "bytes": 18040,
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
     },
+    "locales/en-qe-si-navigation.json": {
+      "bytes": 983,
+      "sha256": "a98b79907f6a791fd52fb69da15835e26fab83ca69c0b58f91672cb4388990b6"
+    },
     "locales/en-si-response-comparison.json": {
       "bytes": 3295,
       "sha256": "d36cd6ac0b330bc21110e2c98ea1d2824cb5651ea5f40d11b15b3b8579fcddf3"
@@ -604,20 +617,24 @@
       "sha256": "cc7602d29ceadfe79ac1c247387b29bac85dd421393c5f084d3d30e25b9ae36a"
     },
     "package.json": {
-      "bytes": 28916,
-      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
+      "bytes": 29018,
+      "sha256": "7f8ab950464fe8b4659f9abfeea685df659909e90499ceed1f7ee949f926141f"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 16411,
-      "sha256": "511a0b861eedd866e53173cf0863a224636179863673fd9b43a5599af414845c"
+      "bytes": 17062,
+      "sha256": "9b4639af3b3500f3f0442e757a20815bacafbd77b3f4ba09ee2980dda07c1dc7"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
       "sha256": "ccb326271e1ec5c5e4ccd8b90fce0ccdd532e8ff54466d9a49e6ada81f001f5c"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 6595,
-      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
+      "bytes": 6642,
+      "sha256": "5b4cb5f6869deb57a34a652911994c0c1e21ad24dcddc810235ff99ddaa52561"
+    },
+    "scripts/search-catalog-source.mjs": {
+      "bytes": 9371,
+      "sha256": "cde8839166ce4245e208f4e8037c2b5e7eac8b14660ac2a8baf78de5f29afa39"
     },
     "scripts/test-al-gamma-discovery.mjs": {
       "bytes": 4267,
@@ -628,8 +645,8 @@
       "sha256": "8c20f4446b0a78a5fcb99539cf8ffd41da9b035a79b7a594a52e45ffc7e23280"
     },
     "scripts/test-atlas-workbench-routes.mjs": {
-      "bytes": 5066,
-      "sha256": "e0b73910eb236aca3a899ebceb201fcbe2aabb143465e46eeb6b6fd10406f64d"
+      "bytes": 5166,
+      "sha256": "be92109380e4c0ce76b1951c4a9426edc1a70950651ce7b5d1a85b4cfbd43de5"
     },
     "scripts/test-band-match-results.mjs": {
       "bytes": 1406,
@@ -699,13 +716,21 @@
       "bytes": 3664,
       "sha256": "8b8f570a9d10b66e8152b718fa9a40f3bf6d13dea460e10b0845030e6f2e849a"
     },
+    "scripts/test-lie-foundations-ui.mjs": {
+      "bytes": 11689,
+      "sha256": "7e409fb18a6dd2e0ea63facd42a7bd061fb1557ff966cde5cb29f234d5be42da"
+    },
+    "scripts/test-lie-group-course.py": {
+      "bytes": 14619,
+      "sha256": "e3d9b41e62d894f0991aed851721c948e0f6015444540a1df52570bfdff9f3fd"
+    },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 81283,
-      "sha256": "e1f73d322022f5304c10de1faedcbc7d588203770171e19cbff031298791534e"
+      "bytes": 81288,
+      "sha256": "79fc9f0a826cf96fa816c330936e9cbbd8b524d70d808b9fa72be872f57b6ff7"
     },
     "scripts/test-magnetic-group-search.mjs": {
-      "bytes": 7942,
-      "sha256": "7bd109153ac69d080c0cc5e15bf5816766f39a032fa631ec33104292eaaa679f"
+      "bytes": 10727,
+      "sha256": "1acb56fdc17e8d9a177ecf121f4dda988e5f61b3a27f93a7387d1ed1c08d3f58"
     },
     "scripts/test-material-notebook.mjs": {
       "bytes": 15291,
@@ -779,6 +804,10 @@
       "bytes": 34413,
       "sha256": "3608b33fb3f642529528d3eebc39b42fbe868e93386e35c9149223c6276361d4"
     },
+    "scripts/test-qe-si-navigation.mjs": {
+      "bytes": 4997,
+      "sha256": "89ffc8396d7aa460deae582bd2c9f98843b6ef256074ed23592e5e75bf773899"
+    },
     "scripts/test-recent-lesson-names.mjs": {
       "bytes": 3084,
       "sha256": "41983452ea8f3e75f8dc020093ead5f0c136c450249eaf12b008ab567d4cf0d0"
@@ -786,6 +815,10 @@
     "scripts/test-route-focus.mjs": {
       "bytes": 7243,
       "sha256": "f084df17a7c47118b355770b38395454ef7b2760da08b3dd35fbed3ee6835829"
+    },
+    "scripts/test-seitz-lesson-handoff.mjs": {
+      "bytes": 5334,
+      "sha256": "4f0c05d01463ef7b62e01c358b3cfbed1545d78fffb74597ec206b910c135034"
     },
     "scripts/test-structure-dynamics-ui.mjs": {
       "bytes": 40406,

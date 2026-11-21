@@ -165,7 +165,9 @@
           "answer": 1,
           "explanation": "维数描述群本身的局部参数数目，与群的元素数、具体表示的向量空间维数不同。"
         }
-      ]
+      ],
+      "lab": "u1",
+      "labPreset": "u1-circle-quarter"
     },
     {
       "id": "unitary-matrices",
@@ -235,7 +237,8 @@
           "explanation": "酉性保证范数和内积，但可以在基态间重新分配概率。"
         }
       ],
-      "lab": "su2"
+      "lab": "su2",
+      "labPreset": "unitary-z-quarter"
     },
     {
       "id": "generators-commutators",
@@ -305,7 +308,8 @@
           "explanation": "(−iT)†=iT=−(−iT)。对于 su(n)，还要求 Tr T=0。"
         }
       ],
-      "lab": "commutator"
+      "lab": "commutator",
+      "labPreset": "generators-xy"
     },
     {
       "id": "su2-spinor",
@@ -375,7 +379,8 @@
           "explanation": "三个独立实生成元对应群维数 3；基本表示作用在二分量复向量上，维数为 2。"
         }
       ],
-      "lab": "su2"
+      "lab": "su2",
+      "labPreset": "spinor-y-quarter"
     },
     {
       "id": "su2-double-cover",
@@ -455,7 +460,8 @@
           "explanation": "共轭作用 U(r·σ)U† 对整体负号不敏感，且核正是 {I,−I}；两者的李代数都为三维。"
         }
       ],
-      "lab": "su2"
+      "lab": "interferometer",
+      "labPreset": "su2-phase-single"
     },
     {
       "id": "representations",
@@ -535,7 +541,9 @@
           "answer": 0,
           "explanation": "三分量复态对应基本表示；八个独立生成元对应群的实维数。SO(3) 则是三维正交实旋转群，实维数 3。"
         }
-      ]
+      ],
+      "lab": "representations",
+      "labPreset": "su2-center-actions"
     },
     {
       "id": "su3-generators",
@@ -611,7 +619,8 @@
           "explanation": "末态为 −i|2⟩。相位 −i 不改变该基态的测量概率，因此概率为 1。"
         }
       ],
-      "lab": "su3"
+      "lab": "su3",
+      "labPreset": "su3-t1-half"
     },
     {
       "id": "su3-weights",
@@ -689,7 +698,8 @@
           "explanation": "基本表示中的三个权两两相减得到六个非零根；伴随表示另有两个零权的 Cartan 方向，共八维。"
         }
       ],
-      "lab": "su3"
+      "lab": "su3",
+      "labPreset": "su3-weight-phase"
     },
     {
       "id": "rabi-qubit-control",

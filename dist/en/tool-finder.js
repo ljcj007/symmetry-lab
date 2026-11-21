@@ -1,27 +1,21 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-atlas-workbench1';
-import {normalizeSearchText,inputFormatSummary} from './tool-search.js?v=20261121-spectral1';
-import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-course-entry1';
+import {normalizeSearchText,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261121-course-entry1';
+import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:"Calculate",courses:"Lesson",groups:"Group directory",materials:"Material"};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
-const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261120-lesson-topic1');
-const magneticRoute=/^atlas\/msg\?q=(\d+\.\d+)$/u;
-function catalogMagneticIds(item){
- return {bns:item.route.match(magneticRoute)?.[1],og:item.summary?.match(/^OG (\d+\.\d+\.\d+)$/u)?.[1]};
-}
+const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261121-course-entry1');
 export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);
  const normalized=normalizeFinderText(query);
  if(!normalized)return scope==='tools'?selected.slice(0,limit):[];
- const magneticMatches=scope==='groups'||scope==='all'?matchMagneticGroupQuery(selected.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds):null;
- const ordinary=magneticMatches===null?selected:selected.filter(item=>!magneticRoute.test(item.route));
- const found=searchEntries(ordinary,query,ordinary.length);
- const numeric=/^\d+$/.test(normalized),exactGroup=x=>numeric&&x.route==='atlas/sg?q='+encodeURIComponent(normalized);
- return [...(magneticMatches??[]),...found.sort((a,b)=>Number(exactGroup(b))-Number(exactGroup(a)))].slice(0,limit);
+ return scope==='groups'||scope==='all'
+  ?searchCatalogEntries(selected,query,limit)
+  :searchEntries(selected,query,limit);
 }
 
 export function startToolFinder({button,onNavigate,loadLessonTopic=loadTopicModule}){

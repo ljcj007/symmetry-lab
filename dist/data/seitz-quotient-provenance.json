@@ -36,18 +36,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 80530,
-      "sha256": "2b39498a7b5f60fdd7024fdc6ca435f70ccc144deba235459c9cd2f04365b959"
+      "bytes": 81426,
+      "sha256": "f6742a2dc28a61495a82b4cef715906083f1d3e75b3c861425368fec10b9d80b"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 103040,
-      "sha256": "adc6f9cc02df1370e476aae1e18eba96a9356f40a1fa53447f54025e5e58347b"
+      "bytes": 103960,
+      "sha256": "8df22981794a64c21902bd7ee454378f0474cb0623454328cacc5ed4a88023bd"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32802,
-      "sha256": "3e8bdbb1b4087f2b4c1ed791285cb839a5d47dc14f3225c75331970c528318ba"
+      "bytes": 32804,
+      "sha256": "b77b8d2240c9afa0712a98fa1c35710204f36f7eafcf9747441af9338bf5684a"
     },
     "dist/crystal-notation.js": {
       "normalization": "utf8-lf-v1",
@@ -61,8 +61,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 396309,
-      "sha256": "f8e25eb79ff948643c41b8969a2209540264a2bc10704a388939b84bf3ff8fbf"
+      "bytes": 396540,
+      "sha256": "f72ebbaf97c82d494f71e3d86586a0aa8f6cd97f66e05ca90fb9e024af65634a"
     },
     "dist/data/space-groups.json": {
       "normalization": "utf8-lf-v1",
@@ -71,8 +71,8 @@
     },
     "dist/data/symmetry-course-lessons.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 108619,
-      "sha256": "20c253ca1f390ad292121b38b3d3f24819e759f01b7dd68de89282451af9ca65"
+      "bytes": 108677,
+      "sha256": "2eadcba2a153dd24cf7fc832f6923c899b7c84639b0b46d3138c4cae86005930"
     },
     "dist/docs/seitz-quotient.md": {
       "normalization": "utf8-lf-v1",
@@ -81,8 +81,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8473,
-      "sha256": "f61cadf9b5eb91a0e5d7028f2bb8b374c02fd60e7658ff06403c11f996277cf4"
+      "bytes": 8429,
+      "sha256": "5dff7a3edcfa826451e3dfc4547733f453cc2b7ab0879b890228d5205861881f"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -96,8 +96,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33847,
-      "sha256": "823dde3ba52e1168c9c58d24a45884171e1e86ba50c26164671371d75fa61da7"
+      "bytes": 34035,
+      "sha256": "062eee7e1ba9ddca726d9f14ab98c435a60a79a3ab330cb4cf2e1d64a3236743"
     },
     "dist/pointgroup-identify-core.js": {
       "normalization": "utf8-lf-v1",
@@ -126,13 +126,13 @@
     },
     "dist/symmetry-course-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 104282,
-      "sha256": "9de6463f8a0edb57162f76a4e2d508d1ae782781f46c3ee3b72f4fac377f67fd"
+      "bytes": 105493,
+      "sha256": "489a5aa1bce5c83c41785aabf047aebf5c1ec0bc1a3a386d241a7d015027185e"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 13825,
-      "sha256": "9dcee4792ce9c15aed66918ef5d0683fc28d5dfaf47b49542199081fc60ecbfd"
+      "bytes": 13191,
+      "sha256": "9c89492eb94db190d68eb8a9913f8cc2d232e08aab98ff8b2e7c0a2be612ea87"
     },
     "dist/workbench-route.js": {
       "normalization": "utf8-lf-v1",
@@ -156,13 +156,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28916,
-      "sha256": "44d431e3457be7c306a0b1c60befec1c58a6836c0b015a3fbf15a6c537d497fd"
+      "bytes": 29018,
+      "sha256": "7f8ab950464fe8b4659f9abfeea685df659909e90499ceed1f7ee949f926141f"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10403,
-      "sha256": "7a258aea10e706c2ff4b2fafb117e538297410ee60caab5e9ebd72930646d497"
+      "bytes": 10478,
+      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
     },
     "scripts/build-search-index.mjs": {
       "normalization": "utf8-lf-v1",
@@ -176,8 +176,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6595,
-      "sha256": "2d946bf8d7f3f10dee1de4fa06e5dfb96464e8d2c2b0647638e8c295f7af5ced"
+      "bytes": 6642,
+      "sha256": "5b4cb5f6869deb57a34a652911994c0c1e21ad24dcddc810235ff99ddaa52561"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",
@@ -191,8 +191,8 @@
     },
     "scripts/search-catalog-source.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 9147,
-      "sha256": "0ea5018f84c280b63400aa9ddf4d69f15483bfae5d4e96c0eb9f9d36de0c196d"
+      "bytes": 9371,
+      "sha256": "cde8839166ce4245e208f4e8037c2b5e7eac8b14660ac2a8baf78de5f29afa39"
     },
     "scripts/test-seitz-quotient-core.mjs": {
       "normalization": "utf8-lf-v1",

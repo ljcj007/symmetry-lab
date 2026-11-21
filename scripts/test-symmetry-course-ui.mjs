@@ -322,8 +322,10 @@ for(const selection of [
   assert.equal(entries.length,1,'Both the fixed lesson and silicon case have one structure entry');
   assert.equal(entries[0].querySelectorAll('a[href="#structure"]').length,1);
   assert.ok(entries[0].querySelector('a[href="docs/si-structure-example.md"]'));
+  assert.equal(siPage.firstElementChild.querySelectorAll('a[href="#atlas/qe-si"]').length,selection.material==='silicon'?1:0,'The QE–Si evidence is linked from the silicon material');
 }
 await siRoutes.renderSymmetryCourseView({container:siPage,selection:{pathway:'crystal',tab:'materials',material:'gaas'},run:noRun});
 await settle();
 assert.equal(siPage.firstElementChild.querySelector('[data-si-structure-practice]'),null,'The silicon file applies to its own material case');
+assert.equal(siPage.firstElementChild.querySelector('a[href="#atlas/qe-si"]'),null,'The fixed silicon proof is not linked as a GaAs case');
 console.log('Silicon structure practice appears once in the standard-cell lesson and the silicon material case.');

@@ -1,3 +1,5 @@
+import {matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+
 // One query convention for the directory, home search and global finder.
 export function normalizeSearchText(value){
  return String(value??'').normalize('NFKC').toLocaleLowerCase()
@@ -47,4 +49,22 @@ export function searchEntries(entries,query,limit=30,{includeExampleRoutes=true}
  const tools=prepared.filter(row=>!matchingExamples.includes(row.item)&&terms.every(term=>(row.title+' '+row.summary+' '+row.keywords+' '+row.extra).includes(term)))
   .sort((a,b)=>score(b)-score(a)).map(row=>row.item);
  return [...examples,...tools].slice(0,limit);
+}
+
+const magneticRoute=/^atlas\/msg\?q=(\d+\.\d+)$/u;
+const spaceGroupQuery=/^(?:(?:sg|space\s+group|空间群)\s*(?:no\.?\s*|编号\s*)?:?\s*)?([1-9]\d{0,2})$/iu;
+function catalogMagneticIds(item){
+ return {bns:item.route.match(magneticRoute)?.[1],og:item.summary?.match(/^OG (\d+\.\d+\.\d+)$/u)?.[1]};
+}
+
+export function spaceGroupNumberForQuery(query){
+ return String(query??'').normalize('NFKC').trim().match(spaceGroupQuery)?.[1]??null;
+}
+
+export function searchCatalogEntries(entries,query,limit=30){
+ const magnetic=matchMagneticGroupQuery(entries.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds);
+ const spaceNumber=spaceGroupNumberForQuery(query);
+ const space=spaceNumber&&entries.find(item=>item.route===`atlas/sg?q=${spaceNumber}`);
+ const others=entries.filter(item=>item!==space&&(magnetic===null||!magneticRoute.test(item.route)));
+ return [...(magnetic??[]),...(space?[space]:[]),...searchEntries(others,query,limit)].slice(0,limit);
 }

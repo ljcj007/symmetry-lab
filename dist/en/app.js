@@ -2,13 +2,14 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261120-lesson-nav1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261121-atlas-workbench1';
-import {startToolFinder} from './tool-finder.js?v=20261121-atlas-workbench1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261121-course-entry1';
+import {startToolFinder} from './tool-finder.js?v=20261121-course-entry1';
 import {matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {spaceGroupNumberForQuery} from './tool-search.js?v=20261121-course-entry1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection} from './workbench-route.js?v=20261112-flow2';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261121-atlas-workbench1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261121-atlas-workbench1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261121-course-entry1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -64,6 +65,7 @@ for(const view of ['group-theorems','symmetry-mini-demos','foundations-demos','p
 labels.home=["Overview","Explore symmetries from lessons, computational tasks, or crystal materials."];
 labels.compute=["Calculation center","Find tools by task and reuse calculators and precise algorithms from the classroom."];
 labels.atlas=["Groups and materials atlas","Unified access to group catalogues, crystal structures and examples of magnetic materials."];
+labels['qe-si']=["Silicon band gap · QE–Si evidence","A worked proof from native Quantum ESPRESSO data to a common band gap."];
 labels.classroom=["Symmetry classroom","From fundamental concepts to crystals, spin, continuous symmetry and representation coupling."];
 labels['zero-start']=["Start from Zero","Begin with a rotation, then explore coordinates, matrices, and characters. No prior group theory is required."];
 labels.projects=["Cross-module projects","Connect research questions, computational evidence, numerical checks, and derivation notes into one reproducible report."];
@@ -128,6 +130,7 @@ function setView(request,options={}){
  }
  else if(path==='atlas/projects'){view='projects';primary='atlas';}
  else if(path==='atlas/notebook'){view='notebook';primary='atlas';}
+ else if(path==='atlas/qe-si'){view='qe-si';primary='atlas';}
  else if(path==='atlas/mechanisms'){
    const module=['distortion','magnons','qha'].includes(params.get('module'))?params.get('module'):'distortion',query=new URLSearchParams({module,tab:'cases',material:params.get('material')||'batio3'});
    if(params.has('preset'))query.set('preset',params.get('preset'));
@@ -179,10 +182,10 @@ function setView(request,options={}){
  const heading=$('#page-title');heading.textContent=title;$('#page-subtitle').textContent=knownTool(path)?.summary||labels[view][1];
  updateBreadcrumb(title);
  $$('.nav-item').forEach(n=>{const selected=n.dataset.view===primary;n.classList.toggle('active',selected);if(selected)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});
- $('#export-top').classList.toggle('hidden',['home','compute','atlas','classroom','docs','dictionary','notebook','compare','projects'].includes(view));
+ $('#export-top').classList.toggle('hidden',['home','compute','atlas','classroom','docs','dictionary','notebook','compare','projects','qe-si'].includes(view));
  const context=$('#view-context');
  context.innerHTML=primary==='compute'&&view!=='compute'?`<div class="nav-tool-context"><a href="#compute" data-route="compute">← All calculation tools</a>${state.returnCourse?`<a href="#${esc(state.returnCourse)}" data-route="${esc(state.returnCourse)}">Return to the previous course →</a>`:view==='phonopy-scattering'?"<a href=\"#classroom/observables?module=scattering&lesson=scattering-chain\">Learn coherent one-phonon scattering →</a><a href=\"#compute/phonopy\">Inspect the original Phonopy files first →</a>":course?.calculationOnly?(['group-theorems','symmetry-mini-demos','foundations-demos','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy','flagship','frontiers','connections','construction','principles','bridges','pathways'].includes(course.section)?`<a href="#classroom/${course.pathway}?module=${course.module}${course.material?'&amp;material='+encodeURIComponent(course.material):''}${course.preset?'&amp;preset='+encodeURIComponent(course.preset):''}">Learn this topic →</a>`:course.section==='dynamics'?"<a href=\"#classroom/structure-dynamics\" data-route=\"classroom/structure-dynamics\">Learning phase changes and experiments →</a>":course.section==='observables'?"<a href=\"#classroom/observables\" data-route=\"classroom/observables\">Learn material properties →</a>":course.section==='lie'&&course.pathway==='continuous'?"<a href=\"#classroom/continuous\" data-route=\"classroom/continuous\">Learn continuous group fundamentals →</a>": "<a href=\"#classroom/coupling\" data-route=\"classroom/coupling\">Learning to represent coupling →</a>"):''}</div>`:primary==='atlas'&&view!=='atlas'?"<div class=\"nav-tool-context\"><a href=\"#atlas\" data-route=\"atlas\">← Group and Material Map</a></div>":'';
- if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects'].includes(view))context.innerHTML+="<div class=\"mr-notebook-link\"><a href=\"#atlas/notebook\">Record recent calculations / Open material project →</a><a href=\"#compute/symmetry-audit\">Three-layer symmetry diagnosis →</a><a href=\"#atlas/compare\">parameter comparison and prediction →</a></div>";
+ if(!['home','classroom','compute','atlas','docs','dictionary','notebook','compare','projects','qe-si'].includes(view))context.innerHTML+="<div class=\"mr-notebook-link\"><a href=\"#atlas/notebook\">Record recent calculations / Open material project →</a><a href=\"#compute/symmetry-audit\">Three-layer symmetry diagnosis →</a><a href=\"#atlas/compare\">parameter comparison and prediction →</a></div>";
  if(view==='zero-start'){context.innerHTML='';$('#export-top').classList.add('hidden');}
  context.innerHTML+=projectNavigation.html();projectNavigation.bind(context,route=>setView(route));
  if(view!=='advanced')rememberRoute(route);
@@ -302,6 +305,10 @@ async function render(){
   else if(view==='projects')await page.renderResponseProjects({container:$('#app'),selection:Object.fromEntries(new URLSearchParams(state.route.split('?')[1]||'')),download,onOpenLab:openProjectLab,canOpenCurrent:canOpenProjectInput});
   else if(view==='compare')await page.renderComparisonLab({container:$('#app'),download});
   else if(view==='notebook')await renderMaterialNotebook({container:$('#app'),run:runPythonTask,cancelRun:cancelPython,toast,download});
+  else if(view==='qe-si'){
+   const href=document.documentElement.lang==='en'?'../end-to-end/?lang=en':'end-to-end/';
+   $('#app').innerHTML=`<section class="panel"><div class="panel-body"><p>Follow the operator error, self-consistency condition and spectral interval through the evidence chain. Run the scalar verification of the published certificate on the case page.</p><div class="obs-links"><a href="${href}">Open the QE–Si evidence chain →</a><a href="#atlas/materials?material=silicon">Back to silicon in the materials atlas →</a></div></div></section>`;
+  }
   else if(view==='classroom'||isClassroomView(view)){const cleanup=await renderClassroomView({container:$('#app'),section:view,route:state.courseRoute,onNavigate:syncCourseRoute,onLocation:updateBreadcrumb,onSection:setView,run:runPythonTask,cancelRun:cancelPython,toast,download,openGroup:openWorkbench,onOpenProjectLab:openProjectLab,canOpenProjectInput,onOpenLessonTopic:(context,trigger)=>toolFinder.openLessonTopic(context,trigger)});retainRenderedViewCleanup(cleanup,ticket);}
   else if(view==='products')renderProducts();
   else if(view==='bands')renderBands();
@@ -430,8 +437,10 @@ function renderViz(){const svg=$('#reciprocal-viz');if(!svg)return;const cross=(
 
 function renderDatabase(){const groups=list(state.dbMode);
  const q=state.dbQuery.trim().toLowerCase();
- const magneticMatches=state.dbMode==='msg'?matchMagneticGroupQuery(groups,state.dbQuery,g=>({bns:g.id,og:g.ogId})):null;
- const filtered=(magneticMatches??groups).filter(g=>(state.dbType==='all'||String(g.type)===state.dbType)&&(magneticMatches!==null||[gid(g,state.dbMode),g.symbol,g.bcSymbol,g.ogId,g.lattice,g.pointGroup].some(v=>String(v||'').toLowerCase().includes(q))));
+ const spaceNumber=state.dbMode==='sg'?spaceGroupNumberForQuery(state.dbQuery):null;
+ const numberedMatches=spaceNumber?groups.filter(g=>gid(g,state.dbMode)===spaceNumber)
+  :state.dbMode==='msg'?matchMagneticGroupQuery(groups,state.dbQuery,g=>({bns:g.id,og:g.ogId})):null;
+ const filtered=(numberedMatches??groups).filter(g=>(state.dbType==='all'||String(g.type)===state.dbType)&&(numberedMatches!==null||[gid(g,state.dbMode),g.symbol,g.bcSymbol,g.ogId,g.lattice,g.pointGroup].some(v=>String(v||'').toLowerCase().includes(q))));
  const pageSize=25;state.dbPage=Math.min(state.dbPage,Math.max(0,Math.ceil(filtered.length/pageSize)-1));const selected=filtered.slice(state.dbPage*pageSize,(state.dbPage+1)*pageSize);$('#app').innerHTML=`<section class="panel"><div class="panel-body">${modeButtons(state.dbMode,'db-mode')}<div class="controls-row" style="margin-top:20px"><input id="db-search" placeholder="Search number, international symbol, OG number or lattice..." aria-label="Search database" value="${esc(state.dbQuery)}">${state.dbMode==='sg'?'':`<select id="db-type" aria-label="magnetic group type"><option value="all">All types</option>${[1,2,3,4].map(t=>`<option value="${t}" ${String(t)===state.dbType?'selected':''}>Type ${['','I','II','III','IV'][t]}</option>`).join('')}</select>`}<span class="subtle">${filtered.length} matching results</span></div>${tableHTML([state.dbMode==='sg'?'No.':state.dbMode==='msg'?'BNS':'MPG',"International Symbol / BC","lattice",state.dbMode==='msg'?"OG No.":"point group / Type","Operation count",''],selected.map(g=>[esc(gid(g,state.dbMode)),`<span class="db-symbol">${crystalSpan(gtitle(g),'hm')}</span>`,esc(lattices[g.lattice]||g.lattice),state.dbMode==='msg'?esc(g.ogId):g.pointGroup?crystalSpan(g.pointGroup,'schoenflies'):esc(['','I','II','III','IV'][g.type]),g.operations.length,`<button class="text-button" data-open-group="${esc(gid(g,state.dbMode))}">Open workbench ↗</button>`]))}<div class="pagination"><span>No. ${state.dbPage+1} / ${Math.max(1,Math.ceil(filtered.length/pageSize))} page · Data comes from the upstream complete table</span><div><button class="secondary small" id="prev-page" ${state.dbPage===0?'disabled':''}>← Previous page</button><button class="secondary small" id="next-page" ${(state.dbPage+1)*pageSize>=filtered.length?'disabled':''}>Next page →</button></div></div></div></section>`;$$('[data-db-mode]').forEach(b=>b.onclick=()=>{setView('atlas/'+b.dataset.dbMode);});$('#db-search').oninput=e=>{const pos=e.target.selectionStart;state.dbQuery=e.target.value;state.dbPage=0;const route='atlas/'+state.dbMode+'?q='+encodeURIComponent(state.dbQuery);state.route=route;history.replaceState(null,'','#'+route);renderDatabase();$('#db-search').focus();$('#db-search').setSelectionRange(pos,pos);};if($('#db-type'))$('#db-type').onchange=e=>{state.dbType=e.target.value;state.dbPage=0;renderDatabase();};$('#prev-page').onclick=()=>{state.dbPage--;renderDatabase();};$('#next-page').onclick=()=>{state.dbPage++;renderDatabase();};
  $$('[data-open-group]').forEach(button=>button.onclick=()=>{
   const mode=state.dbMode,id=button.dataset.openGroup;
