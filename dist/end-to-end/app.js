@@ -18,16 +18,79 @@ adapter:'The native-data chain currently supports this QE–Si case. VASP input 
 replayTitle:'What is actually recomputed in each mode?',replayMode:'Mode',replayWork:'Recomputed',replayNeeds:'Received prerequisites',
 browserMode:'This page / downloadable Python package',browserWork:'Receipt identity, exact scalar contraction condition, potential-error budget and spectral composition',browserNeeds:'Matrix-proof results in the published projection; source hashes identify records but do not replay their proofs',
 localMode:'Research-workspace one-click entry',localWork:'72-point aggregation, full inverse verification, finite SCF acceptance and same-potential spectral composition',localNeeds:'Original workspace, fixed runtime, point-response and domain proof packets',
-fullMode:'Full scientific replay',fullWork:'Native QE, response matrices and all closed-domain matrix calculations',fullNeeds:'Complete scientific inputs, environment and computation resources; this website offers no remote execution service',
+fullMode:'Full scientific replay',fullWork:'From-scratch SCF, native export, response and closed-domain matrices (target workflow)',fullNeeds:'Complete scientific inputs, environment and resources; the current public runner does not yet implement this full workflow',
 historyTitle:'How was the last domain included?',history:'One subblock was unresolved at the original upper cut; that record is preserved. A new receiver narrowed the upper cut for the same operator and remainder budget, strictly accepted the remaining subblock, and intersected the intervals across all 925 domains. The final result uses this new composition.',
 footer:'An identified source. Errors carried through. A checkable conclusion.'
 };
+Object.assign(messages,{
+  "navNative": "Actual DFT jobs",
+  "navVerify": "Receipt review",
+  "heroAction": "Get the native-run companion",
+  "caseLabel": "Fresh SCF to native source connected · Infinite-orbital SCF proof in progress",
+  "chainIntro": "These five stages concern the fixed existing reference source. The fresh-SCF run and its source/proof status are shown separately below.",
+  "adapter": "Complete native-source support currently targets this QE–Si case. VASP XML/OUTCAR metadata can be imported; full PAW-operator verification and arbitrary-material certification remain open. The finite affine workbench remains available.",
+  "nativeTitle": "Start from native output. Continue with one click.",
+  "nativeOverall": "Infinite-orbital SCF: in progress · UNRESOLVED",
+  "nativeLead": "The new companion solves a fresh numerical SCF problem, runs Gamma and complete 72-point native exports, downloads raw sources and compares operator identities. Matching identities can continue through the reference proofs; changed sources do not inherit them. Infinite-orbital nonlinear SCF validation remains in progress.",
+  "launchTitle": "Install the local run companion",
+  "launchIntro": "Download the launcher, fresh-SCF and native-export drivers, and job portal. After local setup, one click continues the available calculations and receivers. Numerical convergence and strict root certification are recorded separately.",
+  "downloadCompanion": "Download the local companion",
+  "packageScope": "Code and license only, about 74 KB. Scientific inputs, the fixed environment and matrix-proof packets come from the complete research workspace.",
+  "setupTitle": "Setup and launch",
+  "setupWorkspace": "Place the archive’s web and native directories under paper/work/a-new-run-directory/ in the complete project. Preserve the scientific sources and fixed runtime.",
+  "setupConfig": "Download the example, fill in verified server information, the SCF input, and SCF/export executable paths, then save it locally as server_profile.json. Enter the password at launch.",
+  "downloadConfig": "Download server configuration example",
+  "downloadInputList": "Download explicit input-list example",
+  "setupRegister": "Register the local source directory and reference-model chain. Registration pins the inputs and receivers. Missing scientific sources or receivers leave the result unresolved.",
+  "setupStart": "Open web/start_server.cmd, enter the server password, then select the registered QE–Si reference model in the local portal and run it.",
+  "setupRequirements": "Requires Python, Paramiko, the workspace numerical environment, a working SCF executable and the complete NC source exporter. Ordinary stdout/XML does not contain the complete operator.",
+  "downloadGuide": "Download installation and registration instructions",
+  "localBoundary": "The local launcher connects to your server. This public page provides the entry and records. Passwords stay in the local launch process; server configuration is not published.",
+  "actualTitle": "An actual run from fresh SCF",
+  "actualDate": "22 Nov 2026 · China Standard Time",
+  "actualIntro": "One click completed fresh numerical SCF, Gamma and 72-point native export, and complete source reception. The new source differs from the reference, so old proof inheritance stopped.",
+  "actualNative": "Fresh numerical SCF and complete source",
+  "actualNativeDetail": "Converged from atomic initialization; input, UPFs, logs and the complete new save checked before and after",
+  "actualRounding": "Gamma and 72-point NC native export",
+  "actualRoundingDetail": "Uses this run’s new SCF parent; complete operator sources downloaded and structurally received",
+  "actualFinite": "Connect the new source to reference proofs",
+  "actualFiniteDetail": "All 72 points contain changed operator fields. Exact identity failed; a new-source proof bridge is pending",
+  "actualSpectrum": "Strict root and spectrum for this source",
+  "actualSpectrumDetail": "Finite SCF, basis-tail and global-spectrum proofs were not inherited; new-source validation is pending",
+  "actualInfinite": "Infinite-orbital nonlinear SCF root",
+  "actualInfiniteDetail": "The strict receiver is still under study. A complete end-to-end certificate has not been obtained.",
+  "freshMode": "Fresh compute",
+  "receivedMode": "Proof composition",
+  "actualScope": "This run received fresh numerical SCF and complete native sources. The existing reference-source gap above 0.081 eV is retained separately and is not a gap certificate for this new source.",
+  "downloadActual": "Download the public fresh-SCF run summary",
+  "localMode": "Local companion after setup",
+  "localWork": "Fresh numerical SCF, native export and source comparison; construction/rounding and reference SCF/frozen-spectrum proof composition continue only after exact operator identity",
+  "localNeeds": "Original workspace, fixed runtime, point-response and 925-domain proof packets; infinite-orbital nonlinear SCF remains unresolved",
+  "gapLabel": "Accepted gap of the existing reference source",
+  "gapScope": "Infinite frozen spectrum at the existing finite-reference SCF potential. A new calculation needs its own source bridge.",
+  "downloadReferenceRun": "View the earlier reference-source run summary",
+  "awaitingSource": "New source pending",
+  "navInfinite": "Infinite SCF progress",
+  "infiniteTitle": "The infinite spectrum is enclosed. Nonlinear SCF is next.",
+  "infiniteIntro": "A separate 256 Ry, 72-point reference-equation study has strict infinite frozen-spectrum bounds at a new candidate potential and throughout its complete potential ball. It is received separately from the fresh QE-source task below, with the declared 48³ charge grid and 12³ quadrature.",
+  "proposalTag": "Numerical proposal · not a certificate",
+  "proposalTitle": "6 Anderson iterations",
+  "proposalText": "Numerical self-consistency residual of the candidate potential. It locates a validation center; it is not a rigorous root enclosure.",
+  "frozenTag": "Strictly received · infinite frozen spectrum",
+  "centerTitle": "Exact symmetric center",
+  "centerText": "After exact symmetry projection and gauge fixing, the complete infinite-plane-wave operator retains a common gap over the entire Brillouin zone.",
+  "ballTitle": "Uniform throughout the potential ball",
+  "ballText": "All 2,618 invariant mean-zero potential directions. Normalized grid L² radius: 4.000 × 10⁻⁶ Ry.",
+  "infiniteRemainingTitle": "The remaining link",
+  "infiniteRemaining": "The whole-ball nonlinear self-consistency inclusion condition is not closed. Rigorous control of the density and potential returned by every candidate is needed to connect the frozen-spectrum bounds to an infinite-orbital SCF root. Infinite SCF remains UNRESOLVED.",
+  "downloadInfiniteProgress": "Download progress summary and original-receipt SHA-256 hashes"
+});
 if(en){
  document.documentElement.lang='en';document.title='QE–Si · End-to-end evidence | Symmetry Lab';
  for(const node of document.querySelectorAll('[data-i18n]')){const value=messages[node.dataset.i18n];if(value!==undefined){if(node.dataset.i18n==='verifyTitle')node.innerHTML=value;else node.textContent=value;}}
- document.querySelector('h1').innerHTML='From native DFT data<br>to a verified global gap.';
+ document.querySelector('h1').innerHTML='Connect native DFT sources<br>to a verified global gap.';
  document.querySelector('.lead').textContent='Connect source identity, operator construction, rounding, basis truncation and self-consistency error to one mathematical statement about the complete spectrum.';
- document.querySelector('.hero-actions .primary').textContent='Run the scalar verification';
+ document.querySelector('.hero-actions .primary').textContent=messages.heroAction;
  document.querySelector('#language').textContent='中文';document.querySelector('#language').href='./';document.querySelector('#language').lang='zh-CN';
  document.querySelector('footer .brand').href='../en/';
  document.querySelector('#spectrum-title').textContent='Schematic common Fermi window';document.querySelector('#spectrum-desc').textContent='A common energy interval separates four occupied spatial bands from the upper spectrum over the entire Brillouin zone. This is not actual Si dispersion data.';
