@@ -474,3 +474,8 @@ establish that all existing scientific and teaching content has been audited.
 - The first space-group lesson opens its 4₁ screw example. The Seitz lab preserves supported model names in shared links and keeps an edited draft when students revisit tabs within the same lesson.
 - Lie lessons open the experiment used in their example, whether the learner chooses the lab tab or the link at the end of the lesson. This includes the SU(2) double-cover interferometer and the exact SU(3) four-factor exercise with a 27-dimensional input.
 - The Si material card and quick finder reach the QE–Si evidence chain. Each edition opens the workshop on its current host and in its selected interface language.
+
+## Compare a fourfold rotation and two screw axes
+
+- In [the first space-group lesson](dist/index.html#classroom/crystal?track=space&lesson=space-01), learners use the same starting point and axial wavevector for representative operations from P 4, P 4₁ and P 4₃. After four steps, the traces coincide in the wrapped cell and retain 0, 1 and 3 cells of axial translation. At axial fractional wavevector 1/4, the associated Bloch phases are 1, −i and +i.
+- The finder, the ordinary space-group atlas and the representation workbench resolve these symbols with or without spaces, Unicode subscripts or numerical underscores. Each of the three exact atlas records links back to the lesson.

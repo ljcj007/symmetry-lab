@@ -1,4 +1,5 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
+import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
@@ -9,7 +10,7 @@ const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'
 const complex = value => {if(typeof value==='number')return fmt(value);if(!value||typeof value!=='object')return String(value??'—');const a=Number(value.re||0),b=Number(value.im||0);if(Math.abs(b)<1e-9)return fmt(a);const i=(Math.abs(Math.abs(b)-1)<1e-9?'':fmt(Math.abs(b)))+'i';return Math.abs(a)<1e-9?(b<0?'−':'')+i:fmt(a)+(b<0?' − ':' + ')+i;};
 const tabs=[['learn',"explanation"],['lab',"interactive demonstration"],['derive',"Step-by-step derivation"],['quiz',"Exercises and self-checks"],['materials',"Material Example · 3D"],['atlas',"group map"]];
 const labNames={seitz:"screw axis , glide plane and Bloch phases",spinor:"720° rotation of spindle",magnetic:"magnetic moment and antiunitary operation",antiferro:"antiferromagnetic chain with Kramers condition",double_group:"double point group and double space group",color_group:"color point group and color space group",spin_group:"spin point group and spin space group"};
-const seitzPresets=[['screw21',"2₁ screw axis · around z"],['screw41',"4₁ screw axis · around z"],['glide',"glide plane"],['translation',"pure translation"]];
+const seitzPresets=[['screw21',"2₁ screw axis · around z"],['rotation4',"Fourfold rotation about z"],['screw41',"4₁ screw axis · around z"],['screw43',"4₃ screw axis along z"],['glide',"glide plane"],['translation',"pure translation"]];
 const isSeitzPreset=value=>seitzPresets.some(([id])=>id===value);
 const groupPresets={double_group:[['c2_point',"point group C₂: Double coverage with double rotation"],['d2_point',"point group D₂: Q₈ with non-commutative spinors"],['screw21_space',"Three-dimensional space group : Dual coverage of 2₁ screw axis"]],color_group:[['c3_point',"point group C₃: three-color triangle pattern"],['translation3_space',"3D space group : Three-color layered periodic model"]],spin_group:[['c2_point',"point group C₂: independent space and spin rotation"],['triangular_point',"point group C₃: Triangular 120° spin configuration"],['af_space',"three-dimensional space group : collinear antiferromagnetic periodic model"],['helix3_space',"three-dimensional space group : three-layer 120° spiral spin"]]};
 const isGroupLab=lab=>Object.hasOwn(groupPresets,lab);
@@ -180,9 +181,9 @@ export function getSymmetryCourseResult(){
 export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions,loadSeitzQuotientModule=loadSeitzQuotient}){
   disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML="<div class=\"sc-page\"><div class=\"sc-loading\" role=\"status\"><span class=\"spinner\"></span>is loading space group , double group , magnetic group, color group and spin group courses...</div></div>";
-  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{};
+  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{},disposeSeitzComparison=()=>{};
   const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
-  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};};
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeSeitzComparison();disposeSeitzComparison=()=>{};};
   disposePreviousSeitzWorkshop=clearSeitzWorkshop;
   function disposeView(){
     if(disposed)return;
@@ -271,6 +272,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?`<aside class="sc-callout" data-cif-orbit-lesson><strong>Check CIF site multiplicity with α-quartz</strong><p>Under the same space-group operations, will using 0.6667 or 2/3 change the orbit of Si1? Predict the result and compare with the declared multiplicity.</p><a href="#structure?cif-orbit=practice">Open the quartz site-multiplicity exercise →</a></aside>`:''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
+      ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="sc-references"><strong>References</strong>${(lesson.references||[]).map(ref=>{const source=(lessons.sources||[]).find(s=>s.id===ref.sourceId),url=safeURL(ref.url)||safeURL(source?.url);return `<span>${esc(source?.title||ref.sourceId||'')} · ${esc(ref.chapter||'')}${ref.printedPages?" · Book page "+esc(ref.printedPages):''}${ref.pdfPages?" · PDF page "+esc(ref.pdfPages):''}${url?` <a href="${esc(url)}" target="_blank" rel="noreferrer">Source ↗</a>`:''}</span>`;}).join('')}</div>
       <div class="sc-actions"><button class="secondary" type="button" id="sc-lesson-quiz">Self-test in this section →</button>${lesson.lab&&labNames[lesson.lab]?`<button class="secondary" type="button" id="sc-lesson-lab">${lesson.labInputs?"Open this lesson's experiment (reset to example parameters)":"Open the related experiment"}</button>`:''}${lesson.workbench?"<button class=\"secondary\" type=\"button\" id=\"sc-lesson-workbench\">Verified on the workbench</button>":''}${next?"<button class=\"primary\" type=\"button\" id=\"sc-next-lesson\">Next unit →</button>":''}</div></article></div>`;
@@ -284,6 +286,11 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if($('#sc-next-lesson'))$('#sc-next-lesson').onclick=()=>{state.lesson=next.index;drawLearn();sync();$('.sc-lesson h2')?.scrollIntoView({block:'nearest'});};
     bindSpinActionsHost(lesson);
     disposeSeitzWorkshop=bindSeitzQuotientHost();
+    const comparison=$('#sc-seitz-comparison');
+    if(comparison)disposeSeitzComparison=bindSeitzComparison(comparison,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-comparison')===comparison,
+      formatNumber:fmt,formatComplex:complex
+    });
   }
   function bindSeitzQuotientHost(){
     const detail=$('[data-seitz-quotient-entry]');

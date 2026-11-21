@@ -15,7 +15,12 @@ for(const [experiment,title,keywords] of [
 for(const [experiment,title] of [['polyhedra','正多面体点群'],['vibrations','简并振动与示意谱'],['bands','布里渊区与能带简并'],['manybody','置换与两自旋多体态'],['time-reversal','时间反演与自旋'],['double-soc','双群与自旋–轨道耦合']])entries.push({route:'classroom/foundations?module=mini&experiment='+experiment,title,summary:'几何、简并与自旋的交互微实验',keywords:title,kind:'课程'});
 for(const [experiment,title] of [['rearrangement','重排定理'],['conjugacy','共轭与类'],['normal','正规子群'],['irreducible','可约与不可约表示'],['schur','舒尔引理'],['unitarity','表示的幺正性'],['orthogonality','矩阵元与特征标正交定理'],['reduction','可约表示的约化'],['degeneracy','表示维数与能级简并度']])entries.push({route:'classroom/foundations?module=theorems&experiment='+experiment,title,summary:'有限群定理的交互证明与应用',keywords:title,kind:'课程'});
 entries.push({route:'classroom/observables?module=shg-story',title:'Si、GaAs 与 BaTiO₃ · SHG 旗舰实验',summary:'预测 → 计算 → 解释 → 反例验证',keywords:'反演 二次谐波 倍频 SHG',kind:'课程'});
-for(const [mode,name,field]of [['sg','space-groups','groups'],['msg','magnetic-groups','groups'],['mpg','points','points']])for(const g of read(name)[field])entries.push({route:'atlas/'+mode+'?q='+encodeURIComponent(String(mode==='sg'?g.number:g.id)),title:(mode==='sg'?'空间群 ':mode==='msg'?'磁空间群 ':'磁点群 ')+(mode==='sg'?g.number:g.id)+' · '+(g.bcSymbol||g.symbol),summary:g.ogId?'OG '+g.ogId:g.pointGroup||g.lattice||'',keywords:[g.symbol,g.bcSymbol,g.ogId].filter(Boolean).join(' '),kind:'群目录'});
+for(const [mode,name,field]of [['sg','space-groups','groups'],['msg','magnetic-groups','groups'],['mpg','points','points']])for(const g of read(name)[field]){
+ const symbols=[...new Set([g.symbol,g.bcSymbol].filter(Boolean))];
+ const entry={route:'atlas/'+mode+'?q='+encodeURIComponent(String(mode==='sg'?g.number:g.id)),title:(mode==='sg'?'空间群 ':mode==='msg'?'磁空间群 ':'磁点群 ')+(mode==='sg'?g.number:g.id)+' · '+(g.bcSymbol||g.symbol),summary:g.ogId?'OG '+g.ogId:g.pointGroup||g.lattice||'',keywords:[g.symbol,g.bcSymbol,g.ogId].filter(Boolean).join(' '),kind:'群目录'};
+ if(mode==='sg')entry.symbols=symbols;
+ entries.push(entry);
+}
 const output=JSON.stringify({schema:1,entries})+'\n',target=new URL('search-index.json',root);
 if(process.argv.includes('--check')){if(fs.readFileSync(target,'utf8')!==output)throw Error('Search index is stale');}
 else fs.writeFileSync(target,output);

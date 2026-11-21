@@ -9,7 +9,7 @@ const app=readFileSync(url('app.js'),'utf8');
 const read=(file,field)=>JSON.parse(readFileSync(new URL('../dist/data/'+file+'.json',import.meta.url),'utf8'))[field];
 const groups={sg:read('space-groups','groups'),msg:read('magnetic-groups','groups'),mpg:read('points','points')};
 const {matchMagneticGroupQuery,isFullMagneticGroupQuery}=await import(url('magnetic-group-query.js'));
-const {spaceGroupNumberForQuery}=await import(url('tool-search.js'));
+const {spaceGroupNumberForQuery,spaceGroupSymbolKey}=await import(url('tool-search.js'));
 const id=(group,mode)=>mode==='sg'?String(group.number):group.id;
 const title=group=>group.bcSymbol||group.symbol;
 const chosenK=[.125,-.25,.375];
@@ -43,7 +43,7 @@ function workbench(mode,initialId=id(groups[mode][0],mode)){
  const other={onclick:null};
  const context={
   state,gid,gtitle,list:m=>groups[m],esc:String,crystalSpan:String,lattices:{},parseNumber:Number,
-  matchMagneticGroupQuery,isFullMagneticGroupQuery,spaceGroupNumberForQuery,
+  matchMagneticGroupQuery,isFullMagneticGroupQuery,spaceGroupNumberForQuery,spaceGroupSymbolKey,
   $:selector=>selector==='#group-search'?input:selector==='#group-options'?popup:
    selector==='#group-options button'?buttons[0]:selector.startsWith('#k-')?coordinates[Number(selector.at(-1))]:other,
   $$:selector=>selector==='button'?buttons:[],
@@ -135,6 +135,12 @@ directSymbol.type('C222');
 assert.equal(await directSymbol.calculate(),true);
 assert.equal(directSymbol.requests[0].id,'21','Exact symbols resolve identically for Enter and Calculate');
 assert.ok(workbench('sg').type('C22').includes('20'),'Partial symbols remain browseable');
+for(const [symbol,group] of [['P4_1','76'],['P 4₃','78'],['Fm3̅m','225'],['P 2_1/c','14']]){
+ const typed=workbench('sg');
+ assert.equal(typed.type(symbol)[0],group,symbol);
+ assert.equal(await typed.calculate(),true,symbol);
+ assert.equal(typed.requests[0].id,group,symbol);
+}
 
 const stale=workbench('msg');
 stale.type('1.3');

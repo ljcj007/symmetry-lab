@@ -15,10 +15,12 @@ _C4Z = [[0, -1, 0], [1, 0, 0], [0, 0, 1]]
 _MZ = [[1, 0, 0], [0, 1, 0], [0, 0, -1]]
 _INVERSION = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
 _SEITZ = {
-    'translation': (_I3, [0, 0, 1], 1, '纯平移'),
-    'screw21': (_C2Z, [0, 0, Fraction(1, 2)], 2, '二重螺旋 2₁'),
-    'screw41': (_C4Z, [0, 0, Fraction(1, 4)], 4, '四重螺旋 4₁'),
-    'glide': (_MZ, [Fraction(1, 2), 0, 0], 2, '沿 x 的滑移镜面'),
+    'translation': (_I3, [0, 0, 1], 1, '纯平移：追踪 Seitz 操作'),
+    'screw21': (_C2Z, [0, 0, Fraction(1, 2)], 2, '二重螺旋 2₁：追踪 Seitz 操作'),
+    'screw41': (_C4Z, [0, 0, Fraction(1, 4)], 4, '四重螺旋 4₁：追踪 Seitz 操作'),
+    'glide': (_MZ, [Fraction(1, 2), 0, 0], 2, '沿 x 的滑移镜面：追踪 Seitz 操作'),
+    'rotation4': (_C4Z, [0, 0, 0], 4, '四重旋转 4：追踪 Seitz 操作'),
+    'screw43': (_C4Z, [0, 0, Fraction(3, 4)], 4, '四重螺旋 4₃：追踪 Seitz 操作'),
 }
 _SEITZ_SOURCE = {'title': 'Bilbao Crystallographic Server: Seitz notation',
                  'url': 'https://www.cryst.ehu.es/cryst/seitz_help.html'}
@@ -93,7 +95,7 @@ def _seitz(payload):
     steps = payload.get('steps', 4)
     if isinstance(steps, bool) or not isinstance(steps, int) or not 1 <= steps <= 12:
         raise ValueError('steps 必须为 1 到 12 的整数')
-    rotation, translation, rotation_order, label = _SEITZ[preset]
+    rotation, translation, rotation_order, title = _SEITZ[preset]
     # Decimal input is interpreted exactly as written, not via binary floats.
     point_q = [Fraction(str(x)) for x in point]
     k_q = [Fraction(str(x)) for x in k]
@@ -121,7 +123,7 @@ def _seitz(payload):
     for _ in range(rotation_order):
         closure_r, closure_t = _compose((rotation, translation), (closure_r, closure_t))
     return {
-        'lab': 'seitz', 'title': label + '：追踪 Seitz 操作', 'preset': preset,
+        'lab': 'seitz', 'title': title, 'preset': preset,
         'point': point, 'k': k, 'steps': steps,
         'rotation': [row[:] for row in rotation], 'translation': list(map(float, translation)),
         'frames': frames,
@@ -134,7 +136,9 @@ def _seitz(payload):
             'Seitz 乘法为 {R|t}{S|u}={RS|Ru+t}；右边的操作先作用。',
             '平面波 exp(2πik·r) 被送到 Rk，并获得 exp(−2πi(Rk)·t) 相位。一般 k 处该相位不是小群表示的本征值。',
             'wrapped 只表示折回 [0,1) 晶胞。旋转部分回到恒等时，非零整格平移仍然存在；完整空间群是无限群。',
-            '四种预设用于比较平移、螺旋和滑移，不代表任意真实晶胞的完整空间群。',
+            ('比较两个四重螺旋和纯四重旋转时，旋转部分相同，轴向平移不同。单个操作不代表实际晶胞的完整空间群。'
+             if preset in ('rotation4', 'screw43')
+             else '四种预设用于比较平移、螺旋和滑移，不代表任意真实晶胞的完整空间群。'),
         ], 'sources': [_SEITZ_SOURCE],
     }
 

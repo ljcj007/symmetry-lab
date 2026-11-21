@@ -61,10 +61,18 @@ export function spaceGroupNumberForQuery(query){
  return String(query??'').normalize('NFKC').trim().match(spaceGroupQuery)?.[1]??null;
 }
 
+export function spaceGroupSymbolKey(symbol){
+ return String(symbol??'').normalize('NFKC').toLowerCase()
+  .replace(/(\d)[\u0304\u0305]/gu,'-$1').replace(/[‐‑‒–—−]/gu,'-')
+  .replace(/(\d)_(?=\d)/gu,'$1').replace(/\s/gu,'');
+}
+
 export function searchCatalogEntries(entries,query,limit=30){
  const magnetic=matchMagneticGroupQuery(entries.filter(item=>magneticRoute.test(item.route)),query,catalogMagneticIds);
  const spaceNumber=spaceGroupNumberForQuery(query);
- const space=spaceNumber&&entries.find(item=>item.route===`atlas/sg?q=${spaceNumber}`);
- const others=entries.filter(item=>item!==space&&(magnetic===null||!magneticRoute.test(item.route)));
- return [...(magnetic??[]),...(space?[space]:[]),...searchEntries(others,query,limit)].slice(0,limit);
+ const symbol=magnetic===null&&!spaceNumber?spaceGroupSymbolKey(query):'';
+ const space=spaceNumber?entries.filter(item=>item.route===`atlas/sg?q=${spaceNumber}`)
+  :symbol?entries.filter(item=>item.route.startsWith('atlas/sg?q=')&&item.symbols?.some(alias=>spaceGroupSymbolKey(alias)===symbol)):[];
+ const others=entries.filter(item=>!space.includes(item)&&(magnetic===null||!magneticRoute.test(item.route)));
+ return [...(magnetic??[]),...space,...searchEntries(others,query,limit)].slice(0,limit);
 }

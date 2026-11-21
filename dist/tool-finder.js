@@ -1,5 +1,5 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261121-course-entry1';
-import {normalizeSearchText,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261121-course-entry1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-fourfold1';
+import {normalizeSearchText,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-fourfold1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
 
 const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -7,7 +7,7 @@ export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:'计算',courses:'课程',groups:'群目录',materials:'材料'};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
-const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261121-course-entry1');
+const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-fourfold1');
 export function finderResults(entries,query,{scope='tools',limit=16}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const selected=scope==='all'?unique:unique.filter(x=>x.kind===kindFor[scope]);

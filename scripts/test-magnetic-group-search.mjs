@@ -24,7 +24,7 @@ for(const edition of ['../dist/','../dist/en/']){
  const {toolsIndex,renderNavigationHub}=await import(address('navigation-ui.js'));
  const {finderResults,startToolFinder}=await import(address('tool-finder.js'));
  const {isFullMagneticGroupQuery,matchMagneticGroupQuery}=await import(address('magnetic-group-query.js'));
- const {spaceGroupNumberForQuery}=await import(address('tool-search.js'));
+ const {spaceGroupNumberForQuery,spaceGroupSymbolKey}=await import(address('tool-search.js'));
  const index=JSON.parse(readFileSync(address('data/search-index.json')));
  const indexedGroups=index.entries.filter(item=>item.route.startsWith('atlas/msg?q='));
  assert.equal(indexedGroups.length,expectedOg.size);
@@ -50,6 +50,15 @@ for(const edition of ['../dist/','../dist/en/']){
  assert.equal(finderResults(entries,'225',{scope:'groups'})[0]?.route,'atlas/sg?q=225');
  for(const query of ['SG 225','Space group No. 225','空间群编号 225']){
   assert.equal(finderResults(entries,query,{scope:'groups'})[0]?.route,'atlas/sg?q=225',query);
+ }
+ const symbolQueries=[['C222','21'],['P 4','75'],['P4_1','76'],['P 4₃','78'],['P2_1/c','14'],['Fm3̅m','225']];
+ for(const [query,id]of symbolQueries){
+  for(const scope of ['groups','all'])assert.equal(finderResults(entries,query,{scope})[0]?.route,'atlas/sg?q='+id,query);
+ }
+ assert.ok(finderResults(entries,'P4',{scope:'groups'}).some(item=>item.route==='atlas/sg?q=76'),'Exact symbols retain related partial results');
+ assert.ok(finderResults(entries,"P4_1'",{scope:'groups'}).every(item=>item.route!=='atlas/sg?q=76'),'A prime must not disappear from the symbol');
+ for(const query of ['P4 P41 P43','P4 P4_1 P4_3','P4 P4₁ P4₃']){
+  assert.equal(finderResults(entries,query,{scope:'courses'})[0]?.route,'classroom/crystal?lesson=space-01&track=space',query);
  }
 
  for(const query of ['BNS 62.448','62.448','OG 62.8.509','62.8.509','ＢＮＳ：６２．４４８'])assert.equal(isFullMagneticGroupQuery(query),true,query);
@@ -156,6 +165,10 @@ for(const edition of ['../dist/','../dist/en/']){
    page.search(query);
    assert.equal(page.routes()[0],'atlas/sg?q=225',query);
   }
+  for(const [query,id]of symbolQueries){
+   page.search(query);
+   assert.equal(page.routes()[0],'atlas/sg?q='+id,query);
+  }
   page.search('BNS 62.');
   assert.ok(page.routes().filter(route=>route.startsWith('atlas/msg?q=62.')).length>1);
  }
@@ -168,7 +181,7 @@ for(const edition of ['../dist/','../dist/en/']){
  const state={};
  let rows,calculations=0;
  const host={};
- const render=vm.runInNewContext('('+renderSource.trim()+')',{state,matchMagneticGroupQuery,spaceGroupNumberForQuery,
+ const render=vm.runInNewContext('('+renderSource.trim()+')',{state,matchMagneticGroupQuery,spaceGroupNumberForQuery,spaceGroupSymbolKey,
   list:()=>state.dbMode==='sg'?spaceGroups:groups,gid:g=>state.dbMode==='sg'?String(g.number):g.id,esc:String,modeButtons:()=>'',
   tableHTML(_,values){rows=values;return '';},crystalSpan:String,gtitle:g=>g.bcSymbol||g.symbol,lattices:{},$:()=>host,$$:()=>[],
   calculate(){calculations++;},history:{replaceState(){}}});
@@ -193,6 +206,12 @@ for(const edition of ['../dist/','../dist/en/']){
   open('atlas/sg?q='+encodeURIComponent(query));
   render();
   assert.deepEqual(Array.from(rows,row=>row[0]),[id],query);
+ }
+ for(const [query,id]of symbolQueries){
+  open('atlas/sg?q='+encodeURIComponent(query));
+  render();
+  assert.deepEqual(Array.from(rows,row=>row[0]),[id],query);
+  assert.equal(host.innerHTML.includes('href="#classroom/crystal?track=space&amp;lesson=space-01"'),['75','76','78'].includes(id),query);
  }
  open('atlas/sg?q='+encodeURIComponent('Pnma'));
  render();

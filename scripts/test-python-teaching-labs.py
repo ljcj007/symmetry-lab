@@ -71,6 +71,38 @@ class TeachingLabsTests(unittest.TestCase):
                 self.assertFalse(closure['isIdentity'])
                 self.assertEqual(closure['translation'], [1.0, 0.0, 0.0] if preset == 'glide' else [0.0, 0.0, 1.0])
 
+    def test_fourfold_models_separate_rotation_translation_and_axial_phase(self):
+        point = [0.125, 0.25, 0.75]
+        k = [0, 0, 0.25]
+        quarter_turn = [[0, -1, 0], [1, 0, 0], [0, 0, 1]]
+        identity = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        models = (
+            ('rotation4', '0', 0, 0.75, 1),
+            ('screw41', '1/4', 1, 0.0, -1j),
+            ('screw43', '3/4', 3, 0.5, 1j),
+        )
+        for preset, exact_first_shift, final_shift, first_wrapped_z, final_phase in models:
+            with self.subTest(preset=preset):
+                result = labs.run({'lab': 'seitz', 'preset': preset, 'point': point, 'k': k, 'steps': 4})
+                first, fourth = result['frames'][1], result['frames'][4]
+                self.assertEqual(first['rotation'], quarter_turn)
+                self.assertEqual(first['translationExact'], ['0', '0', exact_first_shift])
+                self.assertEqual(first['wrapped'], [0.75, 0.125, first_wrapped_z])
+                self.assertEqual(fourth['rotation'], identity)
+                self.assertEqual(fourth['translationExact'], ['0', '0', str(final_shift)])
+                self.assertEqual(fourth['unwrapped'], [point[0], point[1], point[2] + final_shift])
+                self.assertEqual(fourth['wrapped'], point)
+                closure = result['closure']
+                self.assertEqual(closure['rotationOrder'], 4)
+                self.assertEqual(closure['translation'], [0, 0, final_shift])
+                self.assertTrue(closure['isPureTranslation'])
+                self.assertEqual(closure['isIdentity'], final_shift == 0)
+                for step, frame in enumerate(result['frames']):
+                    self.assertEqual(frame['transformedK'], k)
+                    self.assertTrue(frame['isLittleGroup'])
+                    self.assertAlmostEqual(z(frame['blochPhase']), cmath.exp(-1j * math.pi * final_shift * step / 8), places=11)
+                self.assertAlmostEqual(z(fourth['blochPhase']), final_phase, places=11)
+
     def test_seitz_phase_uses_rotated_k_not_an_arbitrary_eigenvalue(self):
         coordinate = [0.17, -0.43, 0.29]
         k = [0.2, 0.1, 0.35]

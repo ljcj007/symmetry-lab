@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 28928,
-  "translatedUnits": 28928,
+  "sourceUnits": 28956,
+  "translatedUnits": 28956,
   "missing": [],
-  "files": 528,
+  "files": 529,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -177,6 +177,8 @@
     "en-zno-ir-search.json",
     "en-gamma-translations.json",
     "en-gaas-mixed-exercise.json",
-    "en-qe-si-navigation.json"
+    "en-qe-si-navigation.json",
+    "en-fourfold-search.json",
+    "en-seitz-comparison.json"
   ]
 }

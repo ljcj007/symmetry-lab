@@ -11795,7 +11795,7 @@
     "origins": [
       "python/phonon_modes.py",
       "python-fixture/material-research.json/results/modes/warnings/4",
-      "python-fixture/material-research.json/results/modesAcoustic/warnings/5",
+      "python-fixture/material-research.json/results/modesAcoustic/warnings/4",
       "python-fixture/material-research.json/results/modesGaAs/warnings/4",
       "python-fixture/material-research.json/results/modesPhase/warnings/4"
     ]
@@ -11805,7 +11805,7 @@
     "origins": [
       "python/phonon_modes.py",
       "python-fixture/material-research.json/results/modes/warnings/5",
-      "python-fixture/material-research.json/results/modesAcoustic/warnings/6",
+      "python-fixture/material-research.json/results/modesAcoustic/warnings/5",
       "python-fixture/material-research.json/results/modesGaAs/warnings/5",
       "python-fixture/material-research.json/results/modesPhase/warnings/5"
     ]
@@ -11815,7 +11815,7 @@
     "origins": [
       "python/phonon_modes.py",
       "python-fixture/material-research.json/results/modes/warnings/6",
-      "python-fixture/material-research.json/results/modesAcoustic/warnings/7",
+      "python-fixture/material-research.json/results/modesAcoustic/warnings/6",
       "python-fixture/material-research.json/results/modesGaAs/warnings/6",
       "python-fixture/material-research.json/results/modesPhase/warnings/6"
     ]
@@ -13560,7 +13560,6 @@
     "source": "所选 q 与展示超胞不相容：动画展示无限 Bloch 模的有限窗口，不施加周期边界。",
     "origins": [
       "python/phonopy_import.py",
-      "python-fixture/material-research.json/results/modesFiniteQ/warnings/4",
       "python-fixture/structure-dynamics.json/phonopyQ1/warnings/2"
     ]
   },
@@ -13751,8 +13750,6 @@
     "source": "所选模式接近零频；动画相位由滑块驱动，不能据此推断真实振动周期。",
     "origins": [
       "python/phonopy_import.py",
-      "python-fixture/material-research.json/results/modesAcoustic/warnings/4",
-      "python-fixture/material-research.json/results/modesCharacters/warnings/3",
       "python-fixture/structure-dynamics.json/phonopy/warnings/2"
     ]
   },
@@ -23506,33 +23503,39 @@
     ]
   },
   {
-    "source": "纯平移",
+    "source": "纯平移：追踪 Seitz 操作",
     "origins": [
       "python/teaching_labs.py"
     ]
   },
   {
-    "source": "二重螺旋 2₁",
+    "source": "二重螺旋 2₁：追踪 Seitz 操作",
     "origins": [
       "python/teaching_labs.py"
     ]
   },
   {
-    "source": "四重螺旋 4₁",
+    "source": "四重螺旋 4₁：追踪 Seitz 操作",
     "origins": [
       "python/teaching_labs.py"
     ]
   },
   {
-    "source": "沿 x 的滑移镜面",
+    "source": "沿 x 的滑移镜面：追踪 Seitz 操作",
     "origins": [
       "python/teaching_labs.py"
     ]
   },
   {
-    "source": "ZXQD0DQXZ：追踪 Seitz 操作",
+    "source": "四重旋转 4：追踪 Seitz 操作",
     "origins": [
-      "python-template/teaching_labs.py"
+      "python/teaching_labs.py"
+    ]
+  },
+  {
+    "source": "四重螺旋 4₃：追踪 Seitz 操作",
+    "origins": [
+      "python/teaching_labs.py"
     ]
   },
   {
@@ -23590,12 +23593,6 @@
     ]
   },
   {
-    "source": "：追踪 Seitz 操作",
-    "origins": [
-      "python/teaching_labs.py"
-    ]
-  },
-  {
     "source": "Seitz 乘法为 {R|t}{S|u}={RS|Ru+t}；右边的操作先作用。",
     "origins": [
       "python/teaching_labs.py"
@@ -23609,12 +23606,6 @@
   },
   {
     "source": "wrapped 只表示折回 [0,1) 晶胞。旋转部分回到恒等时，非零整格平移仍然存在；完整空间群是无限群。",
-    "origins": [
-      "python/teaching_labs.py"
-    ]
-  },
-  {
-    "source": "四种预设用于比较平移、螺旋和滑移，不代表任意真实晶胞的完整空间群。",
     "origins": [
       "python/teaching_labs.py"
     ]
@@ -23723,6 +23714,18 @@
   },
   {
     "source": " 必须为 true 或 false",
+    "origins": [
+      "python/teaching_labs.py"
+    ]
+  },
+  {
+    "source": "比较两个四重螺旋和纯四重旋转时，旋转部分相同，轴向平移不同。单个操作不代表实际晶胞的完整空间群。",
+    "origins": [
+      "python/teaching_labs.py"
+    ]
+  },
+  {
+    "source": "四种预设用于比较平移、螺旋和滑移，不代表任意真实晶胞的完整空间群。",
     "origins": [
       "python/teaching_labs.py"
     ]

@@ -1,4 +1,5 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
+import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-seitz-comparison1';
 // Scientific lab results come from Python. The finite iK replay below stores
 // exact worked examples, independently checked against semilinear algebra.
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
@@ -9,7 +10,7 @@ const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'
 const complex = value => {if(typeof value==='number')return fmt(value);if(!value||typeof value!=='object')return String(value??'—');const a=Number(value.re||0),b=Number(value.im||0);if(Math.abs(b)<1e-9)return fmt(a);const i=(Math.abs(Math.abs(b)-1)<1e-9?'':fmt(Math.abs(b)))+'i';return Math.abs(a)<1e-9?(b<0?'−':'')+i:fmt(a)+(b<0?' − ':' + ')+i;};
 const tabs=[['learn','讲解'],['lab','交互演示'],['derive','分步推导'],['quiz','练习与自测'],['materials','材料实例 · 3D'],['atlas','群图谱']];
 const labNames={seitz:'螺旋轴、滑移面与 Bloch 相位',spinor:'旋量的 720° 回转',magnetic:'磁矩与反幺正操作',antiferro:'反铁磁链与 Kramers 条件',double_group:'双点群与双空间群',color_group:'色点群与色空间群',spin_group:'自旋点群与自旋空间群'};
-const seitzPresets=[['screw21','2₁ 螺旋轴 · 绕 z'],['screw41','4₁ 螺旋轴 · 绕 z'],['glide','滑移面'],['translation','纯平移']];
+const seitzPresets=[['screw21','2₁ 螺旋轴 · 绕 z'],['rotation4','四重旋转 · 绕 z'],['screw41','4₁ 螺旋轴 · 绕 z'],['screw43','4₃ 螺旋轴 · 绕 z'],['glide','滑移面'],['translation','纯平移']];
 const isSeitzPreset=value=>seitzPresets.some(([id])=>id===value);
 const groupPresets={double_group:[['c2_point','点群 C₂：二重旋转的双覆盖'],['d2_point','点群 D₂：Q₈ 与非交换旋量'],['screw21_space','三维空间群：2₁ 螺旋轴的双覆盖']],color_group:[['c3_point','点群 C₃：三色三角图案'],['translation3_space','三维空间群：三色层状周期模型']],spin_group:[['c2_point','点群 C₂：独立空间与自旋旋转'],['triangular_point','点群 C₃：三角形 120° 自旋构型'],['af_space','三维空间群：共线反铁磁周期模型'],['helix3_space','三维空间群：三层 120° 螺旋自旋']]};
 const isGroupLab=lab=>Object.hasOwn(groupPresets,lab);
@@ -180,9 +181,9 @@ export function getSymmetryCourseResult(){
 export async function renderSymmetryCourseView({container,run,cancelRun,toast=()=>{},download=()=>{},openGroup=()=>{},selection={},onNavigate=()=>{},onLocation=()=>{},loadSpinActionsModule=loadSpinActions,loadSeitzQuotientModule=loadSeitzQuotient}){
   disposePreviousSeitzWorkshop();disposeSpinActions();disposeSpinActions=()=>{};stop();stopViewer();extensionState.job++;extensionState.viewRevision++;extensionState.busy=false;state.busy=false;state.labJob++;const revision=++state.revision;
   container.innerHTML='<div class="sc-page"><div class="sc-loading" role="status"><span class="spinner"></span>正在载入空间群、双群、磁群、色群与自旋群课程…</div></div>';
-  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{};
+  let disposed=false,disposeRetry=null,disposeSeitzWorkshop=()=>{},disposeSeitzComparison=()=>{};
   const root=container.firstElementChild,current=()=>!disposed&&state.revision===revision&&root.parentNode===container&&container.isConnected!==false,$=selector=>root.querySelector(selector);
-  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};};
+  const clearSeitzWorkshop=()=>{disposeSeitzWorkshop();disposeSeitzWorkshop=()=>{};disposeSeitzComparison();disposeSeitzComparison=()=>{};};
   disposePreviousSeitzWorkshop=clearSeitzWorkshop;
   function disposeView(){
     if(disposed)return;
@@ -271,6 +272,7 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?`<aside class="sc-callout" data-cif-orbit-lesson><strong>用 α 石英核对 CIF 位点重数</strong><p>同一组空间群操作下，写成 0.6667 或 2/3 会改变 Si1 的轨道吗？先预测，再用文件中的重数核对。</p><a href="#structure?cif-orbit=practice">打开石英位点重数练习 →</a></aside>`:''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
+      ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="sc-references"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>{const source=(lessons.sources||[]).find(s=>s.id===ref.sourceId),url=safeURL(ref.url)||safeURL(source?.url);return `<span>${esc(source?.title||ref.sourceId||'')} · ${esc(ref.chapter||'')}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}${url?` <a href="${esc(url)}" target="_blank" rel="noreferrer">来源 ↗</a>`:''}</span>`;}).join('')}</div>
       <div class="sc-actions"><button class="secondary" type="button" id="sc-lesson-quiz">本节自测 →</button>${lesson.lab&&labNames[lesson.lab]?`<button class="secondary" type="button" id="sc-lesson-lab">${lesson.labInputs?'打开本课实验（重置为示例参数）':'打开对应实验'}</button>`:''}${lesson.workbench?'<button class="secondary" type="button" id="sc-lesson-workbench">在工作台验证</button>':''}${next?'<button class="primary" type="button" id="sc-next-lesson">下一单元 →</button>':''}</div></article></div>`;
@@ -284,6 +286,11 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if($('#sc-next-lesson'))$('#sc-next-lesson').onclick=()=>{state.lesson=next.index;drawLearn();sync();$('.sc-lesson h2')?.scrollIntoView({block:'nearest'});};
     bindSpinActionsHost(lesson);
     disposeSeitzWorkshop=bindSeitzQuotientHost();
+    const comparison=$('#sc-seitz-comparison');
+    if(comparison)disposeSeitzComparison=bindSeitzComparison(comparison,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-comparison')===comparison,
+      formatNumber:fmt,formatComplex:complex
+    });
   }
   function bindSeitzQuotientHost(){
     const detail=$('[data-seitz-quotient-entry]');

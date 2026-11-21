@@ -12,7 +12,7 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
  const app=readFileSync(address('app.js'),'utf8');
  const {buildWorkbenchRoute,parseWorkbenchSelection}=await import(address('workbench-route.js'));
  const {matchMagneticGroupQuery}=await import(address('magnetic-group-query.js'));
- const {spaceGroupNumberForQuery}=await import(address('tool-search.js'));
+ const {spaceGroupNumberForQuery,spaceGroupSymbolKey}=await import(address('tool-search.js'));
  const section=(start,end)=>{
   const from=app.indexOf(start),to=app.indexOf(end,from+start.length);
   assert.ok(from>=0&&to>from,start);
@@ -23,7 +23,7 @@ async function appInstance(edition,{hash,selectedId='',priorSelection=false}){
  const gid=(group=state.group,mode=state.mode)=>mode==='sg'?String(group.number):group.id;
  const button={dataset:{openGroup:selectedId}},host={innerHTML:'',dataset:{},classList:{toggle:noop,add:noop}},location={hash};
  const calculations=[],historyWrites=[];
- const context={state,location,URLSearchParams,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber:Number,matchMagneticGroupQuery,spaceGroupNumberForQuery,
+ const context={state,location,URLSearchParams,buildWorkbenchRoute,parseWorkbenchSelection,parseNumber:Number,matchMagneticGroupQuery,spaceGroupNumberForQuery,spaceGroupSymbolKey,
   labels:{home:['home',''],database:['database',''],workbench:['workbench','']},knownTool:noop,parseClassroomRoute:noop,withClassroomNavigationContext:noop,
   projectNavigation:{enter:noop,selection:noop,html:()=>'',bind:noop,consumeInput:noop},phonopyScatteringVisit:noop,
   history:{
