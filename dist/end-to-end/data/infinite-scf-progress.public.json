@@ -1,60 +1,113 @@
 {
-  "schema": "infinite-orbital-SCF-research-progress.public.v1",
-  "overall_status": "UNRESOLVED",
-  "infinite_orbital_nonlinear_SCF_certified": false,
-  "scope": "Separate 256Ry/72-point reference-map study. These records do not certify the fresh QE source of the one-click v5 run. Frozen spectral statements do not establish a nonlinear SCF root.",
-  "reference_model": {
-    "orbital_cutoff_Ry": 256,
-    "native_reduced_k_points": 72,
-    "charge_grid": [
-      48,
-      48,
-      48
-    ],
-    "k_quadrature": [
-      12,
-      12,
-      12
-    ],
-    "complete_invariant_mean_zero_potential_directions": 2618
-  },
-  "numerical_proposal": {
-    "status": "NUMERICAL_PROPOSAL_NOT_CERTIFICATE",
-    "anderson_iterations": 6,
-    "potential_residual_sup_Ry_display": "1.933e-09",
-    "interval_root_certified": false,
-    "receipt": {
-      "bytes": 75279,
-      "sha256": "696ba37b918e3214a2257519674335cff95d2ef679ab8da090c140d6000b9427"
+  "schema": "public-infinite-SCF-progress.v1",
+  "status": "INFINITE_NONLINEAR_SCF_UNRESOLVED",
+  "orbital_cutoff_Ry": 1024,
+  "irreducible_k_points": 72,
+  "charge_grid": [
+    48,
+    48,
+    48
+  ],
+  "k_grid": [
+    12,
+    12,
+    12
+  ],
+  "complete_potential_dimension": 2618,
+  "reference_model": "Variational restricted L=S E P and L*=P E* S; fixed source C1 UPF-node model and analytic reference PBE",
+  "numerical_iterations": 5,
+  "numerical_final_iteration": 4,
+  "numerical_target_met": true,
+  "finite_nonlinear_SCF_certified": false,
+  "infinite_nonlinear_SCF_certified": false,
+  "true_infinite_occupied_density_received_all72": false,
+  "source_all72_carriers_received": true,
+  "source_all72_C1_and_kinetic_factors_received": true,
+  "final_center_frozen_infinite_gap_received": true,
+  "complete_ball_frozen_infinite_gap_received": true,
+  "display": {
+    "numerical_residual_sup": {
+      "value": "1.047",
+      "unit": "nRy",
+      "direction": "upper",
+      "scope": "outward display of a numerical binary64 diagnostic; not a rigorous SCF residual"
     },
-    "display_rounding": "upward_to_three_decimal_mantissa"
-  },
-  "exact_center_frozen_spectrum": {
-    "status": "CERTIFIED_EXACT_INVARIANT_GAUGE_CENTER_WITH_INFINITE_FROZEN_GAP",
-    "exact_center_sha256": "f3851e9719690fb43e6817bd8bed976c5496a4f56588a6d2ad25b1f6506db122",
-    "all_BZ_infinite_frozen_gap_received": true,
-    "conservative_gap_lower_meV": "45.737",
-    "SCF_certified": false,
-    "receipt": {
-      "bytes": 17783,
-      "sha256": "93ac308ecaa058d387e055967d8b581951fe1084a35a4873355fc9fd1521d56b"
+    "numerical_residual_grid_L2": {
+      "value": "0.092",
+      "unit": "nRy",
+      "direction": "upper",
+      "scope": "outward display of a numerical binary64 diagnostic; not a rigorous SCF residual"
+    },
+    "maximum_numerical_orbital_residual": {
+      "value": "0.253",
+      "unit": "nRy",
+      "direction": "upper",
+      "scope": "outward display of a numerical binary64 diagnostic; not a rigorous SCF residual"
+    },
+    "actual_F1024_at_old_256_center_sup": {
+      "value": "0.395",
+      "unit": "mRy",
+      "direction": "upper",
+      "scope": "outward display of a numerical binary64 diagnostic; not a rigorous SCF residual"
+    },
+    "final_center_frozen_gap": {
+      "value": "41.782",
+      "unit": "meV",
+      "direction": "lower",
+      "scope": "rigorous all-BZ infinite frozen rank4 gap at the new exact invariant fixed-gauge center"
+    },
+    "complete_ball_frozen_gap": {
+      "value": "5.585",
+      "unit": "meV",
+      "direction": "lower",
+      "scope": "rigorous all-BZ infinite frozen rank4 gap uniform on the complete2618-dimensional ball"
+    },
+    "ball_grid_L2_radius": {
+      "value": "4.000",
+      "unit": "microRy",
+      "direction": "lower",
+      "scope": "exact normalized48-grid L2 potential radius"
     }
   },
-  "complete_potential_ball_frozen_spectrum": {
-    "status": "CERTIFIED_INFINITE_RANK4_GAP_UNIFORM_ON_COMPLETE_POTENTIAL_L2_BALL",
-    "exact_center_sha256": "f3851e9719690fb43e6817bd8bed976c5496a4f56588a6d2ad25b1f6506db122",
-    "normalized_grid_L2_radius_Ry": "4.000e-6",
-    "potential_directions": 2618,
-    "all_BZ_infinite_frozen_gap_uniform_on_ball_received": true,
-    "conservative_gap_lower_meV": "9.540",
-    "SCF_certified": false,
-    "receipt": {
-      "bytes": 18398,
-      "sha256": "03ac4214e0e812a532531ecc7ff15fc473fbb0e1c10624f3499897d072893f6d"
+  "receipts": {
+    "numerical_run": {
+      "sha256": "c2b10393accbbaa3ee93270c5c1df283e2e59360863a90fa113834e193c93c2d",
+      "status": "NUMERICAL_RESIDUAL_TARGET_MET"
+    },
+    "final_iteration": {
+      "sha256": "478d28f6f584457782575c9ddb98f6940c2e915a727a2c169b83aa64c4d3139d",
+      "status": "NUMERICAL_PROPOSAL_NOT_CERTIFICATE"
+    },
+    "potential_C0_bridge": {
+      "sha256": "cc6f54e4cb42d15cf89fb683da82c1b6011ee827094eb4a681cf19fb5bea7291",
+      "status": "CERTIFIED_NEW_CENTER_INFINITE_FROZEN_RANK4_GAP"
+    },
+    "exact_center": {
+      "sha256": "5fcf735b2f83c8fa588d0ecf1f7717042ed81b5a13511fcad92d2d3de39f9466",
+      "status": "CERTIFIED_EXACT_INVARIANT_GAUGE_CENTER_WITH_INFINITE_FROZEN_GAP"
+    },
+    "uniform_ball_gap": {
+      "sha256": "a027ebd9d931071543b69d34d70aaef90eaa47afe395121caf97dbf4fc0a9313",
+      "status": "CERTIFIED_INFINITE_RANK4_GAP_UNIFORM_ON_COMPLETE_POTENTIAL_L2_BALL"
+    },
+    "complete_carriers": {
+      "sha256": "09b4aea7e7c5dfb75b97d652a92e58d3f7891815d96adb263034c97b9408cb64",
+      "status": "CERTIFIED_ALL72_COMPLETE_CANONICAL1024_CARRIERS_AND_KINETIC_DISKS"
+    },
+    "all72_C1_factors": {
+      "sha256": "20c01eac00a9c155c7b4c93377370442f54d1a5420ba96f7fa0745ec3c64f72f",
+      "status": "CERTIFIED_ALL72_COMPLETE_CANONICAL1024_C1_FACTOR_AND_KINETIC_ENCLOSURES"
+    },
+    "cutoff_feedback": {
+      "sha256": "6c331cf16b4c742a4195864fec9b5cb7fef7c46e4af5b9d7c851d8525958ee5f",
+      "status": "NUMERICAL_RESIDUAL_TARGET_UNRESOLVED"
     }
   },
-  "source_identity_rechecked_files": 325,
-  "remaining_condition": "The whole-ball nonlinear self-consistency inclusion condition is not closed. Infinite-orbital nonlinear SCF remains UNRESOLVED.",
-  "private_source_paths_included": false,
-  "public_summary_only": true
+  "retained_schema_note": "The preserved numerical receipt schema name contains PBE256 from an earlier producer. Its explicit orbital_cutoff_Ry, final iteration, exact complete carrier receipts and source-bound factors all identify the actual1024Ry run. No preserved receipt bytes were changed.",
+  "remaining_obligations": [
+    "Receive all72 true infinite occupied projectors/density at this new center and uniformly on a nonlinear neighborhood.",
+    "Receive the full2618-direction finite/infinite response or a complete rigorously reduced energy/block estimate.",
+    "Receive an actual Brouwer/self-mapping or contraction inequality, including numerical rounding, source-to-exact-center transport, true orbital tails and PBE neighborhood inclusion."
+  ],
+  "scope_note": "Numerical convergence and a frozen infinite band gap are distinct results. Neither establishes existence or uniqueness of an infinite-orbital self-consistent solution."
 }

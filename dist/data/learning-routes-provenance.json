@@ -246,12 +246,40 @@
       "sha256": "b78b94571c5e8c8ed4c6c4e803296dd437dfc3972b3aefdfeffec155ba8d5da2"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 21045,
-      "sha256": "a67eee540c2413c3605fe69a87b1570d2677d737c8442f1cd880bd38e02e31d5"
+      "bytes": 21599,
+      "sha256": "ad2b4422b7cb121816f8fbd873752469c89785bc6fa9d289b47b4b545e2b5761"
+    },
+    "dist/end-to-end/data/infinite-scf-progress-256-history.public.json": {
+      "bytes": 2330,
+      "sha256": "4e90cef287a2a2a7ed1ff6debab550be4107a721e24606965d10c70645dbefa4"
+    },
+    "dist/end-to-end/data/infinite-scf-progress.public.json": {
+      "bytes": 4817,
+      "sha256": "d6b667ba5864349bd95af18c6660bf18e2a93324b0bae5f4fb0ce7d870474c13"
+    },
+    "dist/end-to-end/data/local-companion-release.json": {
+      "bytes": 247,
+      "sha256": "e819c5361ec3c0f02f967267fef79b4756b4c6d9947ef16ab385329af58111e0"
+    },
+    "dist/end-to-end/data/one-click-fresh-scf-run-v5.public.json": {
+      "bytes": 3249,
+      "sha256": "6c3cc3df1bd81e9ba48700ce856fce183a6c207579398aee5912a1227c46112d"
+    },
+    "dist/end-to-end/data/one-click-reference-run-v3.public.json": {
+      "bytes": 4056,
+      "sha256": "66ca08c6cd1f52f2e94761bf8565814c4e80c248a460e699ecd0f12acf5b58ae"
+    },
+    "dist/end-to-end/downloads/local-run-guide.md": {
+      "bytes": 6291,
+      "sha256": "9ebf028dbb55ad61d95889320413c32e68973feb04f77e908a069403583f6965"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 18617,
-      "sha256": "1f86280ba4df3659597e6b1d583a10f6fa8858cdd543509ae262609b1d6666ad"
+      "bytes": 19263,
+      "sha256": "15b382071af7e34b860278d42176a0067ed1c33e1525af850d47d5772ac9058c"
+    },
+    "dist/end-to-end/style.css": {
+      "bytes": 12895,
+      "sha256": "8be1dac6d6504acbd211fb6ef13129eca772bc05071027e7c3aba12a4f1ae655"
     },
     "dist/formula-dictionary.js": {
       "bytes": 19672,
@@ -726,8 +754,8 @@
       "sha256": "c6fca2255513e9e0fb8e2e6931021714a79175caa7c080d19aaa3abfa6099dea"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 21058,
-      "sha256": "7e039fbf21dbaf44fd715b252cf2aae719ba0a7d1810824219db3e1c9dd692bc"
+      "bytes": 21494,
+      "sha256": "a8e8cd77ba6f6efb321e092264b74bb765d22d91e87c3f34557f342c2948a21f"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -872,6 +900,10 @@
     "scripts/test-native-navigation.mjs": {
       "bytes": 3918,
       "sha256": "d1735addfe75bf5e979d53730995cd0137ec82644e454bd56cc3814014d40c82"
+    },
+    "scripts/test-native-run-entry.mjs": {
+      "bytes": 11640,
+      "sha256": "8c53b25c642ea32aa617519847c8c62d77b0c959bac5a64eb2cd65d2fcb65363"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2890,

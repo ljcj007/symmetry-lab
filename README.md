@@ -1,6 +1,6 @@
 # Symmetry Lab · 晶体对称性浏览器工作台
 
-**QE–Si 端到端研究入口：** [中文入口](https://ljcj007.github.io/symmetry-lab/end-to-end/) · [English](https://ljcj007.github.io/symmetry-lab/end-to-end/?lang=en)。本机作业入口已实际从原子初猜执行新 SCF、Γ 点与全部 72 点原生导出，下载并核对完整源和执行记录；新旧算符身份不同，流程在证明衔接处返回 UNRESOLVED，不继承旧证书。另一次既有父源作业已重新计算构造与舍入，并接续有限参考根及同势无限冻结谱组合，参考势共同带隙严格大于 **0.081 eV**。新一轮无限轨道研究已获得收敛的 256 Ry 数值候选、该新中心及完整势球的严格无限冻结谱隙；**无限轨道非线性自洽根仍为 UNRESOLVED，完整目标尚未完成**。网页保留精确标量复核、独立研究进展和代码下载；公开包排除实际服务器配置、凭据和科学数据。旧入口继续保留。
+**QE–Si 端到端研究入口：** [中文入口](https://ljcj007.github.io/symmetry-lab/end-to-end/) · [English](https://ljcj007.github.io/symmetry-lab/end-to-end/?lang=en)。本机作业入口已实际从原子初猜执行新 SCF、Γ 点与全部 72 点原生导出，下载并核对完整源和执行记录；新旧算符身份不同，流程在证明衔接处返回 UNRESOLVED，不继承旧证书。另一次既有父源作业已重新计算构造与舍入，并接续有限参考根及同势无限冻结谱组合，参考势共同带隙严格大于 **0.081 eV**。最新 1024 Ry、72 点变分参考方程经五轮迭代得到数值残差 **1.047 nRy**（向上显示、非根证书）；精确中心及完整 2618 方向、半径 4.000 µRy 势球的严格无限冻结谱隙分别至少为 **41.782 meV** 和 **5.585 meV**。256 Ry 候选在 1024 Ry 映射下的数值反馈残差约 0.395 mRy，旧 256 Ry 研究摘要单独保留；**无限轨道非线性自洽根仍为 UNRESOLVED，完整目标尚未完成**。网页保留精确标量复核、独立研究进展和代码下载；公开包排除实际服务器配置、凭据和科学数据。旧入口继续保留。
 
 **源绑定电子结构认证：** [一键工作台](https://ljcj007.github.io/symmetry-lab/source-bound/) · [共享接口与代码](source-bound-workbench/README.md) · [方法与文献对照](source-bound-workbench/docs/PRIOR_ART_COMPARISON.md)。原中英文网站入口继续保留。
 

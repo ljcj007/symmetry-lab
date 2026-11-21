@@ -72,18 +72,21 @@ Object.assign(messages,{
   "awaitingSource": "New source pending",
   "navInfinite": "Infinite SCF progress",
   "infiniteTitle": "The infinite spectrum is enclosed. Nonlinear SCF is next.",
-  "infiniteIntro": "A separate 256 Ry, 72-point reference-equation study has strict infinite frozen-spectrum bounds at a new candidate potential and throughout its complete potential ball. It is received separately from the fresh QE-source task below, with the declared 48³ charge grid and 12³ quadrature.",
+  "infiniteIntro": "A separate variational 1024 Ry, 72-point reference-equation study produced a new candidate in five numerical iterations. Strict infinite frozen-spectrum bounds are received at its exact center and throughout the complete potential ball. This study remains separate from the fresh QE-source task below, with the declared 48³ charge grid and 12³ quadrature.",
   "proposalTag": "Numerical proposal · not a certificate",
-  "proposalTitle": "6 Anderson iterations",
-  "proposalText": "Numerical self-consistency residual of the candidate potential. It locates a validation center; it is not a rigorous root enclosure.",
+  "proposalTitle": "5 numerical iterations at 1024 Ry",
+  "proposalText": "Numerical self-consistency residual of the candidate potential, displayed upward. Meeting the numerical target does not enclose a rigorous finite or infinite SCF root.",
   "frozenTag": "Strictly received · infinite frozen spectrum",
   "centerTitle": "Exact symmetric center",
   "centerText": "After exact symmetry projection and gauge fixing, the complete infinite-plane-wave operator retains a common gap over the entire Brillouin zone.",
   "ballTitle": "Uniform throughout the potential ball",
-  "ballText": "All 2,618 invariant mean-zero potential directions. Normalized grid L² radius: 4.000 × 10⁻⁶ Ry.",
+  "ballText": "All 2,618 invariant mean-zero potential directions. Normalized grid L² radius: 4.000 µRy.",
   "infiniteRemainingTitle": "The remaining link",
-  "infiniteRemaining": "The whole-ball nonlinear self-consistency inclusion condition is not closed. Rigorous control of the density and potential returned by every candidate is needed to connect the frozen-spectrum bounds to an infinite-orbital SCF root. Infinite SCF remains UNRESOLVED.",
-  "downloadInfiniteProgress": "Download progress summary and original-receipt SHA-256 hashes"
+  "infiniteRemaining": "True infinite occupied charge at all 72 points, full response or a rigorous reduction, and the whole-ball nonlinear inclusion condition remain to be received. Neither a frozen gap nor numerical convergence supplies this link. Infinite SCF remains UNRESOLVED.",
+  "downloadInfiniteProgress": "Download latest 1024 Ry summary and original-receipt SHA-256 hashes",
+  "cutoffTitle": "Why test the orbital cutoff further?",
+  "cutoffText": "Putting the 256 Ry numerical candidate into the 1024 Ry reference map gives a feedback residual of about 0.395 mRy. A small finite-cutoff residual still needs true infinite-orbital error control before an infinite-SCF conclusion. The earlier 256 Ry study is retained as a separate historical source.",
+  "download256History": "Download historical 256 Ry research summary"
 });
 if(en){
  document.documentElement.lang='en';document.title='QE–Si · End-to-end evidence | Symmetry Lab';

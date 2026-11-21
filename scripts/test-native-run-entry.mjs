@@ -43,25 +43,53 @@ for(const key of ['finite_reference_symmetric_scf_root_received','all_BZ_infinit
 assert.deepEqual(fresh.stages.map(s=>s.state),['SUCCEEDED','UNRESOLVED','NOT_RUN','NOT_RUN','NOT_RUN']);
 assert.ok(fresh.accepted_claims.includes('native_scf_executed'));
 assert.ok(!fresh.accepted_claims.includes('operator_identity_bridge'));
-const progress=JSON.parse(readFileSync(new URL('data/infinite-scf-progress.public.json',page),'utf8'));
-assert.equal(progress.overall_status,'UNRESOLVED');
-assert.equal(progress.infinite_orbital_nonlinear_SCF_certified,false);
-assert.equal(progress.numerical_proposal.status,'NUMERICAL_PROPOSAL_NOT_CERTIFICATE');
-assert.equal(progress.numerical_proposal.anderson_iterations,6);
-assert.equal(progress.numerical_proposal.potential_residual_sup_Ry_display,'1.933e-09');
-assert.equal(progress.numerical_proposal.display_rounding,'upward_to_three_decimal_mantissa');
-assert.equal(progress.numerical_proposal.interval_root_certified,false);
-assert.equal(progress.exact_center_frozen_spectrum.conservative_gap_lower_meV,'45.737');
-assert.equal(progress.complete_potential_ball_frozen_spectrum.conservative_gap_lower_meV,'9.540');
-assert.equal(progress.complete_potential_ball_frozen_spectrum.potential_directions,2618);
-assert.equal(progress.complete_potential_ball_frozen_spectrum.normalized_grid_L2_radius_Ry,'4.000e-6');
-assert.equal(progress.complete_potential_ball_frozen_spectrum.SCF_certified,false);
-assert.equal(progress.exact_center_frozen_spectrum.SCF_certified,false);
-assert.equal(progress.complete_potential_ball_frozen_spectrum.exact_center_sha256,progress.exact_center_frozen_spectrum.exact_center_sha256);
-for(const row of [progress.numerical_proposal,progress.exact_center_frozen_spectrum,progress.complete_potential_ball_frozen_spectrum])assert.match(row.receipt.sha256,/^[a-f0-9]{64}$/);
-assert.match(progress.scope,/Separate 256Ry/);
-assert.match(progress.remaining_condition,/whole-ball nonlinear/);
-const publicRecords=[JSON.stringify(progress),JSON.stringify(fresh),JSON.stringify(run),JSON.stringify(release),readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'),readFileSync(new URL('downloads/local-run-guide.md',page),'utf8')].join('\n');
+const progressBytes=readFileSync(new URL('data/infinite-scf-progress.public.json',page));
+assert.equal(createHash('sha256').update(progressBytes).digest('hex'),'d6b667ba5864349bd95af18c6660bf18e2a93324b0bae5f4fb0ce7d870474c13');
+const progress=JSON.parse(progressBytes);
+assert.equal(progress.schema,'public-infinite-SCF-progress.v1');
+assert.equal(progress.status,'INFINITE_NONLINEAR_SCF_UNRESOLVED');
+assert.equal(progress.orbital_cutoff_Ry,1024);
+assert.equal(progress.irreducible_k_points,72);
+assert.equal(progress.complete_potential_dimension,2618);
+assert.equal(progress.numerical_iterations,5);
+assert.equal(progress.numerical_final_iteration,4);
+assert.equal(progress.numerical_target_met,true);
+for(const key of ['finite_nonlinear_SCF_certified','infinite_nonlinear_SCF_certified','true_infinite_occupied_density_received_all72'])assert.equal(progress[key],false,key);
+for(const key of ['source_all72_carriers_received','source_all72_C1_and_kinetic_factors_received','final_center_frozen_infinite_gap_received','complete_ball_frozen_infinite_gap_received'])assert.equal(progress[key],true,key);
+assert.match(progress.reference_model,/Variational restricted L=S E P/);
+for(const [name,value,unit,direction] of [
+ ['numerical_residual_sup','1.047','nRy','upper'],
+ ['actual_F1024_at_old_256_center_sup','0.395','mRy','upper'],
+ ['final_center_frozen_gap','41.782','meV','lower'],
+ ['complete_ball_frozen_gap','5.585','meV','lower'],
+ ['ball_grid_L2_radius','4.000','microRy','lower']
+]){
+ assert.equal(progress.display[name].value,value,name);
+ assert.equal(progress.display[name].unit,unit,name);
+ assert.equal(progress.display[name].direction,direction,name);
+ assert.match(value,/^\d+\.\d{3}$/);
+}
+assert.match(progress.display.numerical_residual_sup.scope,/not a rigorous SCF residual/);
+for(const row of Object.values(progress.receipts))assert.match(row.sha256,/^[a-f0-9]{64}$/);
+assert.equal(Object.keys(progress.receipts).length,8);
+assert.equal(progress.receipts.numerical_run.status,'NUMERICAL_RESIDUAL_TARGET_MET');
+assert.equal(progress.receipts.final_iteration.status,'NUMERICAL_PROPOSAL_NOT_CERTIFICATE');
+assert.equal(progress.receipts.exact_center.status,'CERTIFIED_EXACT_INVARIANT_GAUGE_CENTER_WITH_INFINITE_FROZEN_GAP');
+assert.equal(progress.receipts.uniform_ball_gap.status,'CERTIFIED_INFINITE_RANK4_GAP_UNIFORM_ON_COMPLETE_POTENTIAL_L2_BALL');
+assert.ok(progress.remaining_obligations.some(s=>/all72 true infinite occupied/.test(s)));
+assert.ok(progress.remaining_obligations.some(s=>/full2618-direction/.test(s)));
+assert.ok(progress.remaining_obligations.some(s=>/self-mapping or contraction/.test(s)));
+assert.match(progress.scope_note,/Neither establishes existence or uniqueness/);
+const history256=JSON.parse(readFileSync(new URL('data/infinite-scf-progress-256-history.public.json',page),'utf8'));
+assert.equal(history256.overall_status,'UNRESOLVED');
+assert.equal(history256.infinite_orbital_nonlinear_SCF_certified,false);
+assert.equal(history256.reference_model.orbital_cutoff_Ry,256);
+assert.equal(history256.numerical_proposal.anderson_iterations,6);
+assert.equal(history256.numerical_proposal.potential_residual_sup_Ry_display,'1.933e-09');
+assert.equal(history256.exact_center_frozen_spectrum.conservative_gap_lower_meV,'45.737');
+assert.equal(history256.complete_potential_ball_frozen_spectrum.conservative_gap_lower_meV,'9.540');
+assert.match(history256.scope,/Separate 256Ry/);
+const publicRecords=[JSON.stringify(history256),JSON.stringify(progress),JSON.stringify(fresh),JSON.stringify(run),JSON.stringify(release),readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'),readFileSync(new URL('downloads/local-run-guide.md',page),'utf8')].join('\n');
 assert.doesNotMatch(publicRecords,/(?:10\.(?:\d{1,3}\.){2}\d{1,3}|192\.168\.\d{1,3}\.\d{1,3})|C:\\\\Users|\/home\//);
 assert.doesNotMatch(JSON.stringify(run),/capability|command|python_executable|source_root|server_profile/);
 const config=JSON.parse(readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'));
@@ -74,7 +102,7 @@ for(const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)){
  const url=new URL(ref,page);url.search='';url.hash='';
  assert.ok(existsSync(url),ref);
 }
-for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','setupStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','proposalText','centerText','ballText','infiniteRemaining']){
+for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','setupStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','proposalText','centerText','ballText','infiniteRemaining','cutoffTitle','cutoffText','download256History']){
  assert.ok(html.includes('data-i18n="'+key+'"'),key+' Chinese');
  const translations=JSON.parse(app.match(/Object.assign\(messages,(\{[\s\S]+?\})\);/)[1]);
  assert.ok(translations[key]&&!/[\u4e00-\u9fff]/.test(translations[key]),key+' English');
@@ -85,6 +113,12 @@ assert.match(html,/id="run"/);
 assert.match(html,/实际求解全新数值 SCF/);
 assert.match(html,/新源与旧参考源不同/);
 assert.match(html,/无限轨道自洽：进行中 · UNRESOLVED/);
+assert.match(html,/5 轮 1024 Ry/);
+assert.match(html,/1\.047 <small>nRy<\/small>/);
+assert.match(html,/≥ 41\.782 <small>meV<\/small>/);
+assert.match(html,/≥ 5\.585 <small>meV<\/small>/);
+assert.match(html,/256 Ry 数值候选放入 1024 Ry 参考映射/);
+assert.match(html,/0\.395 mRy/);
 const scan=spawnSync('python',['-B','-c',
  "import sys,zipfile,re;z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;names=z.namelist();assert len(names)==20;assert all('/jobs/' not in n and '/profiles/' not in n and '/qa/' not in n and not n.endswith('server_profile.json') for n in names);text='\\n'.join(z.read(n).decode('utf8') for n in names);assert re.search(r'\\b10\\.(?:[0-9]{1,3}\\.){2}[0-9]{1,3}\\b',text) is None and '/home/' not in text and 'C:\\\\Users' not in text;print('public code archive checked')",
  fileURLToPath(archive)],{encoding:'utf8'});
@@ -110,4 +144,4 @@ try{
  await rm(extracted,{recursive:true,force:true});
 }
 function requireSeparator(){return process.platform==='win32'?'\\':'/';}
-console.log(JSON.stringify({status:'PASS',nativeRunSummaryScope:true,NSCFParentBoundary:true,freshSCFChangedSourceStopsReuse:true,localizedUnresolvedReason:true,separateInfiniteSCFResearchScope:true,fullInfiniteSCFStillUnresolved:true,companionBytesAndSha256:true,publicCodeOnly:true,bilingualEntryAndDownloads:true,extractedCompanionProtocolExecuted:true}));
+console.log(JSON.stringify({status:'PASS',nativeRunSummaryScope:true,NSCFParentBoundary:true,freshSCFChangedSourceStopsReuse:true,localizedUnresolvedReason:true,separateInfiniteSCFResearchScope:true,latest1024ProgressAnd256History:true,finiteCutoffFeedbackIsNotInfiniteSCF:true,fullInfiniteSCFStillUnresolved:true,companionBytesAndSha256:true,publicCodeOnly:true,bilingualEntryAndDownloads:true,extractedCompanionProtocolExecuted:true}));

@@ -49,6 +49,12 @@ files.push('scripts/test-seitz-lesson-handoff.mjs','scripts/test-lie-foundations
  'scripts/test-magnetic-setting-derivation.py',
  'dist/data/symmetry-course-lessons.json','dist/data/lie-group-lessons.json','scripts/search-catalog-source.mjs',
  'scripts/test-qe-si-navigation.mjs','locales/en-qe-si-navigation.json','dist/end-to-end/index.html','dist/end-to-end/app.js');
+files.push('scripts/test-native-run-entry.mjs','dist/end-to-end/style.css',
+ 'dist/end-to-end/data/infinite-scf-progress.public.json',
+ 'dist/end-to-end/data/infinite-scf-progress-256-history.public.json',
+ 'dist/end-to-end/data/one-click-fresh-scf-run-v5.public.json',
+ 'dist/end-to-end/data/one-click-reference-run-v3.public.json',
+ 'dist/end-to-end/data/local-companion-release.json','dist/end-to-end/downloads/local-run-guide.md');
 files.push('scripts/test-workbench-group-numbers.mjs');
 files.push('dist/seitz-comparison-ui.js','locales/en-seitz-comparison.json','locales/en-fourfold-search.json',
  'scripts/build-search-index.mjs','scripts/test-python-teaching-labs.py');
