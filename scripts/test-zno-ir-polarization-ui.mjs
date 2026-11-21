@@ -6,7 +6,8 @@ import {Container,Element} from './test-material-research-ui.mjs';
 const english=process.argv.includes('--english');
 const prefix=english?'../dist/en/':'../dist/';
 const fixtureURL=new URL(prefix+'data/examples/zno-ir-polarization.json',import.meta.url);
-const {bindZnOIRPolarization,projectZnOIRPolarization}=await import(prefix+'zno-ir-polarization-ui.js');
+const {bindZnOIRPolarization,projectZnOIRPolarization,projectZnOE2Raman}=await import(prefix+'zno-ir-polarization-ui.js');
+const {parseClassroomRoute}=await import(prefix+'classroom-ui.js');
 const bytes=readFileSync(fixtureURL),data=JSON.parse(bytes);
 assert.equal(bytes.byteLength,6283);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),'7faf5a93b7590f44d81e6fd7acd9ff4e7fe4f6e7a65d1e04e8177bf52a49666b');
@@ -30,6 +31,28 @@ for(const theta of [0,20,45,70,90])for(const phi of [0,36,90,180]){
 }
 assert.throws(()=>projectZnOIRPolarization(data,-1,0),RangeError);
 assert.throws(()=>projectZnOIRPolarization(data,45,181),RangeError);
+assert.deepEqual(data.groups.slice(2).map(group=>group.frequency),[2.718847621,12.0685925431]);
+assert.deepEqual(projectZnOE2Raman(0),{
+ parallel:[1,0],crossed:[0,1],total:{parallel:1,crossed:1}
+});
+assert.deepEqual(projectZnOE2Raman(45),{
+ parallel:[0,1],crossed:[1,0],total:{parallel:1,crossed:1}
+});
+for(const theta of [10,22.5,37,69,90]){
+ const {parallel,crossed,total}=projectZnOE2Raman(theta);
+ const phase=theta*Math.PI/90;
+ near(parallel[0],Math.cos(phase)**2);
+ near(parallel[1],Math.sin(phase)**2);
+ near(crossed[0],parallel[1]);
+ near(crossed[1],parallel[0]);
+ near(total.parallel,1);
+ near(total.crossed,1);
+}
+for(const theta of [-1,91,NaN])assert.throws(()=>projectZnOE2Raman(theta),RangeError);
+const atlas=JSON.parse(readFileSync(new URL('../dist/data/pointgroup-atlas.json',import.meta.url)));
+const e2=atlas.groups.find(group=>group.id===25&&group.hm==='6mm').irreps.find(irrep=>irrep.mulliken==='E2');
+assert.deepEqual([e2.vectorMultiplicity,e2.quadraticMultiplicity],[0,1]);
+assert.deepEqual(e2.basis.quadratic,['x^2 - y^2','x*y']);
 
 const requests=[],host=new Container(),state={};
 let active=true,responseMode='tamper';
@@ -58,6 +81,7 @@ const control=(id,v)=>{
 let cleanup=mount();
 assert.match(host.innerHTML,english?/Predict first/:/先预测/);
 assert.equal($('polarization'),null);
+assert.equal($('raman-predict'),null,'The Raman contrast waits for the authenticated IR rows');
 assert.equal(requests.length,0);
 control('predict-a1','z');control('predict-e1','x');
 assert.equal(requests.length,0);
@@ -104,6 +128,35 @@ assert.equal(value('a1'),0);
 assert.equal(value('e2-low'),0);
 assert.equal(value('e2-high'),0);
 assert.equal($('polarization').getAttribute('aria-valuetext'),'90°');
+assert.match($('lab').innerHTML,/2\.71885/);
+assert.match($('lab').innerHTML,/12\.0686/);
+assert.equal($('raman-result').hidden,true);
+$('raman-check').onclick();
+assert.equal($('raman-result').hidden,true,'The rationale waits for a choice');
+control('raman-predict','neither');
+$('raman-check').onclick();
+assert.equal($('raman-result').hidden,false);
+assert.match($('raman-status').textContent,english?/character table/:/特征标表/);
+control('raman-predict','raman');
+assert.equal($('raman-result').hidden,true,'An edit clears the previous judgment');
+$('raman-check').onclick();
+assert.match($('raman-status').textContent,english?/Correct prediction/:/预测正确/);
+assert.match($('raman-result').innerHTML,english?/polarizability derivatives/:/极化率导数/);
+assert.equal($('raman-check').getAttribute('aria-expanded'),'true');
+const resultLinks=[...$('raman-result').querySelectorAll('a')];
+assert.ok(resultLinks.some(link=>link.getAttribute('href')?.endsWith('10.1103/PhysRevB.85.165208')));
+const characterLink=resultLinks.find(link=>link.getAttribute('href')?.includes('group=25'));
+const characterRoute=parseClassroomRoute(characterLink.getAttribute('href').replaceAll('&amp;','&'));
+assert.deepEqual([characterRoute.section,characterRoute.tab,characterRoute.group],['pointgroups','atlas','25']);
+const ramanValues=()=>['parallel-diagonal','parallel-offdiagonal','crossed-diagonal','crossed-offdiagonal','parallel-total','crossed-total']
+ .map(id=>Number($('raman-'+id).textContent));
+assert.deepEqual(ramanValues(),[1,0,0,1,1,1]);
+host.querySelector('[data-zir-raman-angle="45"]').onclick();
+assert.deepEqual(ramanValues(),[0,1,1,0,1,1]);
+assert.equal($('raman-angle').getAttribute('aria-valuetext'),'45°');
+assert.equal($('polarization').value,'90','The geometry uses its own angle');
+assert.equal(value('e2-low'),0);
+assert.equal(value('e2-high'),0);
 if(english){
  assert.doesNotMatch(host.innerHTML,/[\u3400-\u9fff]/u);
  assert.doesNotMatch($('lab').innerHTML,/[\u3400-\u9fff]/u);
@@ -115,6 +168,10 @@ assert.equal(requests.length,alreadyRead);
 assert.equal($('polarization').value,'90');
 assert.equal($('basis').value,'36');
 assert.equal($('predict-a1').value,'z');
+assert.equal($('raman-predict').value,'raman');
+assert.equal($('raman-result').hidden,false);
+assert.equal($('raman-angle').value,'45');
+assert.deepEqual(ramanValues(),[0,1,1,0,1,1]);
 cleanup();
 
 cleanup=mount({});
@@ -133,7 +190,6 @@ const fetchFixture=globalThis.fetch;
 globalThis.fetch=(url,options)=>String(url).startsWith('data/material-research.json?')
  ?Promise.resolve({ok:true,json:async()=>JSON.parse(readFileSync(new URL(prefix+'data/material-research.json',import.meta.url)))})
  :fetchFixture(url,options);
-const {parseClassroomRoute}=await import(prefix+'classroom-ui.js');
 const {renderMaterialResearchView}=await import(prefix+'material-research-ui.js');
 const view=new Container(),calls=requests.length;
 const stop=await renderMaterialResearchView({container:view,
@@ -141,7 +197,7 @@ const stop=await renderMaterialResearchView({container:view,
  run:()=>assert.fail('The optional ZnO URL may not run main tool Python')});
 const disclosure=view.querySelector('[data-mr-zno-ir-entry]');
 assert.equal(disclosure.open,true);
-await import(prefix+'zno-ir-polarization-ui.js?v=20261120-zno-ir1');
+await import(prefix+'zno-ir-polarization-ui.js?v=20261122-phenomena1');
 await new Promise(setImmediate);
 assert.ok(disclosure.querySelector('#zir-load'));
 assert.equal(requests.length,calls,'The open deep link may not read the data before manual verification');
@@ -153,4 +209,4 @@ assert.ok(hostRequest.signal.aborted);
 hostRequest.finish();await inHost;
 assert.equal(disclosure.querySelector('#zir-load'),null);
 
-console.log(`ZnO Γ polarization (${english?'English':'Chinese'}): pinned data, accessible predictions, independent sliders, E₁ basis invariance, E₂ zero projections and classroom ownership passed.`);
+console.log(`ZnO Γ polarization (${english?'English':'Chinese'}): pinned data, independent angles, E₁ basis invariance, E₂ activity prediction and Raman geometry, and classroom ownership passed.`);

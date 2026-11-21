@@ -37,7 +37,9 @@
     "The shared finder and calculation directory match declared CIF and POSCAR filename patterns and the CONTCAR alias. Choosing the structure tool leaves the file selection and conversion to the user.",
     "The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request.",
     "The three-vertex character reduction opens the corresponding D₃ projection experiment with the reordered classes. The rank exercise checks the images of all three basis vectors and a symmetric vector with zero E projection.",
-    "The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request."
+    "The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request.",
+    "The derived ZnO Gamma example links both E₂ clusters with zero Born projection to the C₆ᵥ vector and quadratic channels. An independently normalized two-tensor model checks parallel and crossed polarization weights.",
+    "A Rashba example compares the Hamiltonian time-reversal condition and the equality of positive and negative momentum spectra at the same three momenta as the Kramers lesson. The student can check both Zeeman choices against the same momentum."
   ],
   "limitations": [
     "All 197 indexed lessons have at least one reviewed optional connection in the 259-edge graph. This coverage records concrete conceptual transfers; it does not establish complete operational teaching depth, targeted diagnosis or an authentic scientific workflow in every lesson.",
@@ -56,8 +58,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 84720,
-      "sha256": "ac2689b999923c0aa25d2cf576d299b92a268f95aeb21d1f440425d28df29c84"
+      "bytes": 85608,
+      "sha256": "bef59d95fbbe04dd9e09ef3714e089cd11cb20a5f7ddcea93f0a7895e1ab135c"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -68,8 +70,8 @@
       "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
     },
     "dist/app.js": {
-      "bytes": 105966,
-      "sha256": "2d1a2406afa3e961df56481bb9f908ddd91f9522acca850adc494125a0cee85e"
+      "bytes": 105954,
+      "sha256": "035ddfeb06a0087b3af085d6ff198fa4f247d9f8f94742dc61267505bc483a9f"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -88,8 +90,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32822,
-      "sha256": "38beee59e6202dc40d5b9c6740268001df3f1b9c1734eb31fc6ee7560ecb9d16"
+      "bytes": 32810,
+      "sha256": "6ad6e2ecbdcc3d78009d12eed829933023a57b510596a08c759fb7ab9347f7fa"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -147,6 +149,10 @@
       "bytes": 8206,
       "sha256": "a5d34dc7f9ddf73066e07a9b64a53e7d9b89735d9af353de0af1a21a5512b87f"
     },
+    "dist/data/examples/zno-ir-polarization.json": {
+      "bytes": 6283,
+      "sha256": "7faf5a93b7590f44d81e6fd7acd9ff4e7fe4f6e7a65d1e04e8177bf52a49666b"
+    },
     "dist/data/formula-dictionary.json": {
       "bytes": 164356,
       "sha256": "c9f3c8b1f949a168aed60d188cd51adca3a8b6c5f2ef1316afbc715c9d0fb35e"
@@ -170,6 +176,10 @@
     "dist/data/pathways-materials.json": {
       "bytes": 92984,
       "sha256": "b23069ac2cfdd6e432481ccd4e6bade08d89e8adfcca059c040a42c0711abdca"
+    },
+    "dist/data/pointgroup-atlas.json": {
+      "bytes": 222680,
+      "sha256": "2b3e0d61ce141465facb2da580c5a7c3b29efbba8b4664dd4cf1ba4feca85f58"
     },
     "dist/data/pointgroup-lessons.json": {
       "bytes": 35682,
@@ -220,16 +230,16 @@
       "sha256": "ed1c0f799951f76a401917ebfd3773340d880d4ddba5cd0cb2ac948d7eba560c"
     },
     "dist/docs/phonopy-import.md": {
-      "bytes": 19648,
-      "sha256": "8109ca7f597d3923943264d457b4903ec640948cfe6b28ccdb64e244a39fb6c3"
+      "bytes": 20236,
+      "sha256": "216ab6597f3b62afdb26795790e7cfa6cea590396342c39ef973dc375ec51db5"
     },
     "dist/docs/structure-bc.md": {
       "bytes": 8595,
       "sha256": "c5b43703da95c40b08d6ff3b586e59806c52180b0bddf2e015e65fb12679aa8b"
     },
     "dist/docs/symmetry-course.md": {
-      "bytes": 15832,
-      "sha256": "66ce6da753be1ccb2b24996f96384f0d19054164ff5c938def684438d3470cc3"
+      "bytes": 16424,
+      "sha256": "10f2a09ede729e81d10e21ef7d721a5ff4e9fae41befe9162ebb77ea9f5accc2"
     },
     "dist/electronic-materials-ui.js": {
       "bytes": 32616,
@@ -268,8 +278,8 @@
       "sha256": "c1d71a4d23bace51cde11bd42b6e1a0c9814539f5b598e93b9aea5eb6b6f7741"
     },
     "dist/index.html": {
-      "bytes": 8430,
-      "sha256": "16f5cb8416ac331c42a8565baa47f2055793ec133a85bc38aac81d9da59e710d"
+      "bytes": 8426,
+      "sha256": "4beda60ca92f77bc17d5c1bd487e50436cfbf749f405fd79d1a3bce4cc3498b1"
     },
     "dist/lesson-progression-index.js": {
       "bytes": 76197,
@@ -280,8 +290,8 @@
       "sha256": "dae690760467b7bcadadcfd21e0dc29a6d93d1893d630ec1b57ab8ca95b13060"
     },
     "dist/lesson-topic-finder.js": {
-      "bytes": 1718,
-      "sha256": "99184c636301249bee6e0793e9b6303bc5ab75fc95ce79adb20570004b729616"
+      "bytes": 1714,
+      "sha256": "6e9442fe5bbd1e507e30603d1e4d440a9b854f23ed4a6efdaa1305850bba3f33"
     },
     "dist/lie-physics-ui.js": {
       "bytes": 20543,
@@ -296,12 +306,12 @@
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 67091,
-      "sha256": "fef7b636046f8cc3b93aa1195fdd5ff860dc212c0beb91e413228a8747be5a7d"
+      "bytes": 67094,
+      "sha256": "4ee478e59cc7c02605f8fc0f76f752d9741944a97ec38164bef4fd1b0d6444cd"
     },
     "dist/navigation-ui.js": {
-      "bytes": 35934,
-      "sha256": "5ee7e2848c263beca16c833b1fa5af64700b1d237249ed7b25bcca33067db852"
+      "bytes": 35930,
+      "sha256": "82b839bca155430293e91c006f87d3fe0c90fcc6381e52a8d6f8c982a6e7fd23"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -471,6 +481,10 @@
       "bytes": 25552,
       "sha256": "c12fd845f510e177e6ea326e14d2f8e860aad6af16c259dc8b764dae4f84478a"
     },
+    "dist/python/symmetry_mini_demos.py": {
+      "bytes": 11279,
+      "sha256": "f0b58aee1a06ed59e112ec2fcb3bc406b24191c1fa79e15dd5e7babe79c9b0cd"
+    },
     "dist/python/symmetry_workshop.py": {
       "bytes": 7090,
       "sha256": "fc7d504badd66f54bcf8d784b4153b5d9459441467cfea357bd2921357137d19"
@@ -504,8 +518,8 @@
       "sha256": "4a21d69b2fadbdf16eedf4f091a7d09dc9739374448f3954a38a1009bf29cd8c"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 60079,
-      "sha256": "ee5570bf4f1d1d5cbbf77eb4e25e3a8ba75967afc06c8513d922e0eaf7471c77"
+      "bytes": 60073,
+      "sha256": "0ed1413f7d6a94cd05fc551f68b9c55f442af9b70921fb54ad5a23532b6a8a2d"
     },
     "dist/structure-ui.js": {
       "bytes": 31074,
@@ -528,16 +542,20 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 107987,
-      "sha256": "0417d177d3f24782fcf32f16b15279501904b9ee9d54aaaaa93907c1458c3f9e"
+      "bytes": 108281,
+      "sha256": "71af3576ec4157b53f2c9e052124fbb5431ec24a3a99a742a2ba48c4836205bd"
+    },
+    "dist/symmetry-mini-demos.js": {
+      "bytes": 33021,
+      "sha256": "aa8d89fac088f4d3ef7bc339df7519f1f3b304f7e60e4284818595c0540bba30"
     },
     "dist/tool-capabilities.js": {
       "bytes": 45026,
       "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
     },
     "dist/tool-finder.js": {
-      "bytes": 13195,
-      "sha256": "aeed8372cab7a273e9ae1e51ac3982d225775de470cec52d57ed241e7f65f68d"
+      "bytes": 13187,
+      "sha256": "ea3c292e40923b0d546da69e672a78648b847440d9741c931375ad9874865ad5"
     },
     "dist/tool-search.js": {
       "bytes": 5606,
@@ -550,6 +568,10 @@
     "dist/zero-start.js": {
       "bytes": 26205,
       "sha256": "a115f25f73c0185163d7cd7cb0014c46ae74cc16ddec000e48a64b135284199e"
+    },
+    "dist/zno-ir-polarization-ui.js": {
+      "bytes": 18692,
+      "sha256": "66fd40fd3eb399e79309c02767d19b5d69d609b83e3fbed38450aabf723ead0f"
     },
     "locales/en-al-gamma-discovery.json": {
       "bytes": 6295,
@@ -659,6 +681,14 @@
       "bytes": 983,
       "sha256": "a98b79907f6a791fd52fb69da15835e26fab83ca69c0b58f91672cb4388990b6"
     },
+    "locales/en-rashba-trim-bridge.json": {
+      "bytes": 3974,
+      "sha256": "76e9278ccd5c9ae237c3c7cfd7ca7a6259803c0833d529e6ce15f28f99798585"
+    },
+    "locales/en-response-bridges-docs.json": {
+      "bytes": 2529,
+      "sha256": "78adf0bfb99e40fc127597633996310c684b6266ba5f3e62646bf46807736cfb"
+    },
     "locales/en-seitz-comparison.json": {
       "bytes": 2402,
       "sha256": "bbdf0d55e40804d21be510c15221ee811054147c3fa0fcbeedd2c3c27f13012e"
@@ -687,13 +717,17 @@
       "bytes": 4575,
       "sha256": "cc7602d29ceadfe79ac1c247387b29bac85dd421393c5f084d3d30e25b9ae36a"
     },
+    "locales/en-zno-raman-bridge.json": {
+      "bytes": 3533,
+      "sha256": "c7bacf2ba45e316bbeab9c1fba662157cba11b37a57286edb6ed3cd4d3fb4988"
+    },
     "package.json": {
       "bytes": 29126,
       "sha256": "c6fca2255513e9e0fb8e2e6931021714a79175caa7c080d19aaa3abfa6099dea"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 20147,
-      "sha256": "fecf93237139e63a5b665350de0a004b56647a59742ea9f340b47b96cc4c05aa"
+      "bytes": 21058,
+      "sha256": "7e039fbf21dbaf44fd715b252cf2aae719ba0a7d1810824219db3e1c9dd692bc"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -704,8 +738,8 @@
       "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 7031,
-      "sha256": "1fec10d322967b2d8108c12cdaaa175f5e27b2f569e47e14e2ac711c518ffa9b"
+      "bytes": 7139,
+      "sha256": "a30b2cef0b5e58e2adaa35418a8ea4953196a6d3b343b99719613f1cd6f9378d"
     },
     "scripts/search-catalog-source.mjs": {
       "bytes": 9400,
@@ -927,6 +961,10 @@
       "bytes": 29604,
       "sha256": "24ef02be2c3ef774729bfc3ca13fe26d555791d718ec533567abec484e551ddd"
     },
+    "scripts/test-symmetry-mini-demos.mjs": {
+      "bytes": 9777,
+      "sha256": "3613a9c63ec99364af26b7ce1dc1df3b6fd6553013f8ab57898885ac87620789"
+    },
     "scripts/test-tool-finder.mjs": {
       "bytes": 10521,
       "sha256": "57817a190d0ae6684c6831333bc61e7beb2b26a2e48e43a92ddb61041ff54ef4"
@@ -938,6 +976,10 @@
     "scripts/test-zero-start-placement.mjs": {
       "bytes": 6089,
       "sha256": "b2e7e4f3afcb96d31837e9b4799f30e4109843a53aa21ba1d79943b343951582"
+    },
+    "scripts/test-zno-ir-polarization-ui.mjs": {
+      "bytes": 10760,
+      "sha256": "70d1a7f9803ad2e825596f56dcb258e7cc39b4c483280c67596c49547fc932e8"
     }
   },
   "reviewHistory": [

@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261112-paths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-class-bridges1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-phenomena1';
 import {searchEntries,inputFormatSummary,searchCatalogEntries} from './tool-search.js?v=20261122-expert-intents1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-expert-intents1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';

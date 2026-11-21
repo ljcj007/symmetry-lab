@@ -90,6 +90,8 @@ The distributed derivative has 55277 bytes and preserves 983 CRLF sequences from
 
 The primitive cell has two Zn and two O atoms with masses 65.38 and 15.9994 AMU, in structure P6₃mc (186). The frequency file supplies only four discrete q points, `(0,0,0)`, `(1/4,0,0)`, `(1/4,0,1/4)` and `(1/2,0,0)`, each with 12 branches. It declares no path segments, so the display uses scatter points rather than an assumed dispersion path. The file has no frequency-unit field. The example entry explicitly confirms THz from the original VASP units and the generator conversion factor 15.633302300230191. The companion file declares length in angstrom. Confirming the unit changes no frequency values.
 
+In the [ZnO Γ polarization exercise](../index.html#compute/phonon-modes?preset=zno-ir), apply the published Born effective charges to the Γ-point eigenvectors. Both E₂ optical doublets have zero Born projection. The 6mm table places E₂ in the quadratic channel (x²−y², xy), so normalized teaching tensors can compare parallel and crossed polarizations. Rotating by 45° interchanges the two tensor-channel weights. The input files give frequencies and displacement eigenvectors. For Raman tensors and intensities measured in ZnO, see the original experiment. [ZnO Raman tensor measurements](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.85.165208)
+
 Use the following teaching steps and independent checks:
 
 1. **Predict the dimension.** Derive `3N=12` from the four primitive-cell atoms before reading the data. These four q points are four input entries, not a complete Brillouin-zone mesh from which to integrate DOS, heat capacity or scattering intensity.

@@ -60,6 +60,10 @@ files.push('dist/group-theorems.js','dist/python/group_theorems.py','dist/python
  'dist/docs/group-theorems.md','dist/docs/symmetry-course.md','scripts/test-group-theorems.mjs',
  'scripts/test-symmetry-course-ui.mjs','locales/en-triangle-reduction-bridge.json',
  'locales/en-double-screw-workbench.json','locales/en-classroom-lab-bridges-docs.json');
+files.push('dist/zno-ir-polarization-ui.js','dist/symmetry-mini-demos.js','dist/python/symmetry_mini_demos.py',
+ 'dist/data/examples/zno-ir-polarization.json','dist/data/pointgroup-atlas.json','scripts/test-zno-ir-polarization-ui.mjs',
+ 'scripts/test-symmetry-mini-demos.mjs','locales/en-zno-raman-bridge.json','locales/en-rashba-trim-bridge.json',
+ 'locales/en-response-bridges-docs.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
@@ -105,6 +109,8 @@ data.verification.push('The shared finder and calculation directory match declar
 data.verification.push('The finder and calculation directory resolve explicit bilingual little-group, double-valued and antiunitary search terms. Explicit symbolic terms lead to the exact solver. The numerical workbench preserves its current group, momentum and spin setting and waits for a calculation request.');
 data.verification.push('The three-vertex character reduction opens the corresponding D₃ projection experiment with the reordered classes. The rank exercise checks the images of all three basis vectors and a symmetric vector with zero E projection.');
 data.verification.push('The double-screw experiment opens the space-group 4 BC workbench with its computed axial wavevector and double-valued mode. Reopening a loading workbench from the generic finder preserves an explicit workbench route and shares its catalog request.');
+data.verification.push('The derived ZnO Gamma example links both E₂ clusters with zero Born projection to the C₆ᵥ vector and quadratic channels. An independently normalized two-tensor model checks parallel and crossed polarization weights.');
+data.verification.push('A Rashba example compares the Hamiltonian time-reversal condition and the equality of positive and negative momentum spectra at the same three momenta as the Kramers lesson. The student can check both Zeeman choices against the same momentum.');
 assert.deepEqual(Object.values(data.counts),[17,197,197,259,84,3]);
 const target=new URL('dist/data/learning-routes-provenance.json',root),body=JSON.stringify(data,null,2)+'\n';
 if(process.argv.includes('--check'))assert.equal(fs.readFileSync(target,'utf8').replace(/\r\n?/g,'\n'),body,'Learning routes provenance is stale');else fs.writeFileSync(target,body);

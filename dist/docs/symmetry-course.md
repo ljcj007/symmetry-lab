@@ -63,6 +63,8 @@
 
 在[双空间群螺旋课](../index.html#classroom/crystal?track=double&lesson=double-06)运行二重螺旋演示，再把当前轴向波矢带到第 4 号空间群的双值工作台。对照工作台中绕 z 轴、平移分量为 (0, 0, ½) 的操作。手动计算其两个一维小表示，核对该列的一对特征标。在 Γ 点应为 ±i，在 k_z=½ 处应为 ±1。[IUCr 对螺旋操作的定义](https://www.iucr.org/who-we-are/commissions/commission-on-crystallographic-nomenclature/published-reports/symsym)
 
+[Rashba 时间反演练习](../index.html#classroom/foundations?module=mini&experiment=bands&preset=rashba-trim-check)沿用 Kramers 课的倒格分数 κ。波矢以晶格常数为单位，因此模型输入 k/π=2κ。在无 Zeeman 项时，κ=0 和 ½ 的同点间隙均为零，κ=0.2 处仍可出现分裂。加上 B=0.30 后，模型的正负 k 能谱仍分别相同，直接核对 ΘH(k)Θ⁻¹ 与 H(−k) 的矩阵则会得到残差 0.60，两处时间反演不变点也都出现 0.60 的间隙。[Rashba 自旋轨道项与 Zeeman 项](https://topocondmat.org/w2-majorana/nanowire)
+
 磁群分类采用 I=230、II=230、III=674、IV=517，总数 1651；磁点群另有 32+32+58=122 类型。BNS 与 OG 标记按各自晶胞设定理解，编号不是小数。IV 类磁群的反平移在忽略平移后成为纯时间反演，这解释了有序反铁磁结构为什么可以具有灰磁点群。
 
 反铁磁实验中的“无此配对保护”仅指选定反幺正操作不能给出该项 Kramers 型结论，不等于所有简并都消失。课程不由净磁矩、磁群类型或半平移对称直接判定材料的实际磁序、能带分裂大小或拓扑相。

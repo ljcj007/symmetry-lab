@@ -15,6 +15,9 @@ const range=(id,label,v,min,max,step)=>`<label><span>${label} <output data-outpu
 const select=(id,label,v,choices)=>`<label><span>${label}</span><select aria-label="${esc(label)}" data-param="${id}">${choices.map(([x,t])=>`<option value="${x}" ${String(x)===String(v)?'selected':''}>${t}</option>`).join('')}</select></label>`;
 export const miniDemoThemes=[{id:'polyhedra',title:"Five Platonic solids and point groups"},{id:'vibrations',title:"Molecular vibrations and degeneracy"},{id:'bands',title:"Bands and Kramers degeneracy"},{id:'manybody',title:"Two spins and exchange symmetry"},{id:'time-reversal',title:"Time reversal: antiunitary action"},{id:'double-soc',title:"Double groups, spin rotations, and SOC"}];
 const defaults={polyhedra:{polyhedron:'tetra',order:3,fraction:1},vibrations:{k0:1,k:.5,delta:0,mix:0,phase:45,mode:'E'},bands:{t:1,alpha:.4,B:0,kpi:.35},manybody:{J:1,state:'singlet'},'time-reversal':{theta:65,phi:35,B:0,operation:'T'},'double-soc':{angle:360,coupling:.6}};
+const rashbaTrimPreset='rashba-trim-check';
+const lessonFractions=[0,.2,.5];
+const rashbaFields=[0,.3];
 let latest=null;
 export const getSymmetryMiniDemosResult=()=>latest;
 
@@ -41,7 +44,14 @@ export function miniDemoPreview(experiment,params={}){
   return {stiffness,basis:{A1:a,u,v},modeVector,displacement:modeVector.map(x=>x*Math.sin(s.phase*Math.PI/180)),eigenvalues,frequencies:eigenvalues.map(x=>x>=0?Math.sqrt(x):null),eigenResidual,isEigenvector:eigenResidual<1e-9,degenerateE:Math.abs(s.delta)<1e-12,stable:Math.min(...eigenvalues)>0};
  }
  if(experiment==='bands'){
-  const k=s.kpi*Math.PI,val=q=>{const e=-2*s.t*Math.cos(q),r=Math.hypot(2*s.alpha*Math.sin(q),s.B);return [e-r,e+r];};return {k,energies:val(k),curves:Array.from({length:129},(_,i)=>{const k=-Math.PI+2*Math.PI*i/128;return {k,energies:val(k)};}),trimGaps:{0:2*Math.abs(s.B),pi:2*Math.abs(s.B)},trResidual:2*Math.abs(s.B),sameKDegenerate:Math.abs(val(k)[1]-val(k)[0])<1e-9};
+  const k=s.kpi*Math.PI;
+  const val=q=>{const e=-2*s.t*Math.cos(q),r=Math.hypot(2*s.alpha*Math.sin(q),s.B);return [e-r,e+r];};
+  const e=-2*s.t*Math.cos(k),spinY=2*s.alpha*Math.sin(k),radius=Math.hypot(spinY,s.B),energies=val(k);
+  return {k,energies,hamiltonian:{real:[[e+s.B,0],[0,e-s.B]],imag:[[0,-spinY],[spinY,0]]},
+   spinUpper:radius>1e-12?[0,spinY/radius,s.B/radius]:null,
+   curves:Array.from({length:129},(_,i)=>{const k=-Math.PI+2*Math.PI*i/128;return {k,energies:val(k)};}),
+   trimGaps:{0:2*Math.abs(s.B),pi:2*Math.abs(s.B)},trResidual:2*Math.abs(s.B),
+   sameKDegenerate:Math.abs(energies[1]-energies[0])<1e-9};
  }
  if(experiment==='manybody'){
   const states={singlet:[0,1/Math.sqrt(2),-1/Math.sqrt(2),0],triplet0:[0,1/Math.sqrt(2),1/Math.sqrt(2),0],'triplet+':[1,0,0,0],'triplet-':[0,0,0,1]},wavefunction=states[s.state],swapped=[wavefunction[0],wavefunction[2],wavefunction[1],wavefunction[3]],exchangeEigenvalue=dot(wavefunction,swapped);return {wavefunction,swapped,exchangeEigenvalue,energy:s.state==='singlet'?-.75*s.J:.25*s.J,levels:[{label:'S=0 singlet',energy:-.75*s.J,degeneracy:1},{label:'S=1 triplet',energy:.25*s.J,degeneracy:3}]};
@@ -100,13 +110,187 @@ function scene(t,s){
 
 export function miniDemoScene(experiment,params={}){return scene(experiment,{...defaults[experiment],...params});}
 
+function rashbaLessonInput(fraction,B,direction=1){
+ return {experiment:'bands',t:defaults.bands.t,alpha:defaults.bands.alpha,B,kpi:direction*2*fraction};
+}
+
+function rashbaPairEvidence(positive,negative){
+ // iσ_y H* (iσ_y)† exchanges the diagonal entries and negates
+ // the exchanged off-diagonal entries after complex conjugation.
+ const {real,imag}=positive.hamiltonian;
+ const target=negative.hamiltonian;
+ const residual=Math.max(...real.flatMap((row,i)=>row.map((_,j)=>{
+  const sign=i===j?1:-1;
+  const re=sign*real[1-i][1-j]-target.real[i][j];
+  const im=-sign*imag[1-i][1-j]-target.imag[i][j];
+  return Math.hypot(re,im);
+ })));
+ const spectrum=Math.max(...positive.energies.map((energy,i)=>Math.abs(energy-negative.energies[i])));
+ return {spectrum,gap:positive.energies[1]-positive.energies[0],residual,
+  spin:[positive.spinUpper?.[2]??null,negative.spinUpper?.[2]??null]};
+}
+
+function rashbaLessonRows(fraction){
+ return rashbaFields.map(B=>{
+  const positive=miniDemoPreview('bands',rashbaLessonInput(fraction,B));
+  const negative=miniDemoPreview('bands',rashbaLessonInput(fraction,B,-1));
+  return {B,...rashbaPairEvidence(positive,negative)};
+ });
+}
+
+function rashbaTrimHTML(){
+ const {t,alpha}=defaults.bands;
+ return `<section id="smd-rashba-trim" class="smd-exercise" aria-labelledby="smd-rashba-title">
+  <h3 id="smd-rashba-title">When the dispersion is even, how can we test time reversal?</h3>
+  <p>Keep the three reciprocal fractional coordinates from the Kramers lesson. In this one-dimensional Rashba model, set ${math(String.raw`a=1,\ t=${t},\ \alpha=${alpha}`)}, so ${math('k/\\pi=2\\kappa')}. Compare zero and finite fields at the same values of the other model parameters.</p>
+  <div class="controls-row">
+   <label for="smd-rashba-k">Reciprocal fractional coordinate κ</label>
+   <select class="form-select" id="smd-rashba-k">${lessonFractions.map(k=>`<option value="${k}">${k}</option>`).join('')}</select>
+   <label for="smd-rashba-guess">How can you tell whether the model has time-reversal symmetry?</label>
+   <select class="form-select" id="smd-rashba-guess" aria-describedby="smd-rashba-feedback">
+    <option value="">Choose an answer</option>
+    <option value="even-proves">Matching energies at opposite wavevectors establish time-reversal symmetry</option>
+    <option value="split-breaks">Different energies at the same wavevector establish broken time reversal</option>
+    <option value="matrix-test">Compare the time-reversed matrix with the matrix at the opposite wavevector</option>
+   </select>
+   <button id="smd-rashba-check" type="button" class="secondary" aria-controls="smd-rashba-result">Check the matrices and energies</button>
+  </div>
+  <p id="smd-rashba-feedback" role="status"></p>
+  <div id="smd-rashba-result" hidden>
+   <div id="smd-rashba-evidence"></div>
+   <button id="smd-rashba-python" type="button" class="secondary">Verify this comparison with Python</button>
+   <p id="smd-rashba-python-status" role="status"></p>
+  </div>
+  <a href="#classroom/spin?tab=learn&amp;lesson=double-04&amp;track=double">Review the three conditions for Kramers pairing →</a>
+ </section>`;
+}
+
+function rashbaEvidenceHTML(fraction,rows){
+ const trim=fraction===0||fraction===.5;
+ const heads=["Field B","Energy difference at opposite wavevectors","Gap at the same wavevector","Largest matrix entry residual","Upper branch spin z at opposite wavevectors"];
+ return `<p>${math('k/\\pi='+2*fraction)}。${trim?"The two wavevectors differ by a reciprocal-lattice vector and share a momentum subspace.":"The opposite wavevectors belong to distinct momentum subspaces. At zero field they are paired with each other."}</p>
+  <div class="smd-scroll" tabindex="0" role="region" aria-label="Time-reversal comparison results"><table><thead><tr>${heads.map(head=>`<th scope="col">${head}</th>`).join('')}</tr></thead>
+   <tbody>${rows.map(row=>`<tr data-rashba-field="${row.B}"><th scope="row">${row.B.toFixed(2)}</th>
+    <td data-rashba-spectrum>${fmt(row.spectrum)}</td><td data-rashba-gap>${fmt(row.gap)}</td>
+    <td data-rashba-residual>${fmt(row.residual)}</td>
+    <td>${row.spin.some(x=>x===null)?'—':row.spin.map(fmt).join(', ')}</td></tr>`).join('')}</tbody>
+  </table></div>
+  <p>At both fields, the two sorted energies agree at opposite wavevectors. Comparing matrix entries gives ${math('\\Theta H(k)\\Theta^{-1}-H(-k)=-2B\\sigma_z')}。</p>
+  <p>At a degeneracy, the choice of eigenvectors is arbitrary within the degenerate space, so the table omits the upper branch spin component.</p>`;
+}
+
+function bindRashbaTrim(root,state,{run,isCurrent}){
+ const k=root.querySelector('#smd-rashba-k'),guess=root.querySelector('#smd-rashba-guess');
+ const check=root.querySelector('#smd-rashba-check'),feedback=root.querySelector('#smd-rashba-feedback');
+ const result=root.querySelector('#smd-rashba-result'),evidence=root.querySelector('#smd-rashba-evidence');
+ const python=root.querySelector('#smd-rashba-python'),status=root.querySelector('#smd-rashba-python-status');
+ let retired=false,revision=0,request=null;
+ const here=()=>!retired&&isCurrent()&&root.querySelector('#smd-rashba-k')===k;
+ function clearRequest(){
+  revision++;request?.cancel?.();request=null;
+  if(state.verification==='running')state.verification='';
+ }
+ function showPython(){
+  python.hidden=!run;
+  python.disabled=state.verification==='running';
+  status.textContent=({
+   running:"Checking both wavevector signs and both fields…",
+   passed:"Python agrees. The spectrum remains even at both fields, and the time-reversal matrix condition holds at zero field only.",
+   mismatch:"The Python calculation differs from the preview. Check the comparison again.",
+   failed:"The Python check did not finish. You can try again."
+  })[state.verification]||'';
+ }
+ function show(){
+  result.hidden=state.checked!=='matrix-test';
+  feedback.textContent=({
+   'matrix-test':"Correct. Matching energies establish a relation between spectra. To test time reversal, compare how the Hamiltonian transforms.",
+   'even-proves':"Matching energies compare only the eigenvalues. Compare the two matrices entry by entry.",
+   'split-breaks':"Check whether the opposite wavevectors share a momentum subspace before interpreting the gap at a single wavevector.",
+   empty:"Choose a test first."
+  })[state.checked]||'';
+  if(!result.hidden)evidence.innerHTML=rashbaEvidenceHTML(state.fraction,rashbaLessonRows(state.fraction));
+  showPython();
+ }
+ k.value=String(state.fraction);guess.value=state.guess;
+ function change(){
+  if(!here())return;
+  clearRequest();
+  state.fraction=Number(k.value);state.guess=guess.value;state.checked='';state.verification='';
+  show();
+ }
+ k.onchange=guess.onchange=change;
+ check.onclick=()=>{if(here()){state.checked=guess.value||'empty';show();}};
+ python.onclick=async()=>{
+  if(!here()||!run||result.hidden||state.verification==='running')return;
+  const stamp=++revision,fraction=state.fraction;
+  const expected=rashbaLessonRows(fraction);
+  state.verification='running';showPython();
+  try{
+   const reports=[];
+   for(const B of rashbaFields){
+    const pair=[];
+    for(const direction of [1,-1]){
+     const input=rashbaLessonInput(fraction,B,direction);
+     request=run('symmetry_mini_demos',input);
+     const data=await request;
+     if(!here()||stamp!==revision)return;
+     request=null;
+     if(data?.experiment!=='bands'||data.B!==B||!Number.isFinite(data.kpi)||
+      Math.abs(data.kpi-input.kpi)>1e-12||data.checks?.passed!==true)throw new Error('Unexpected Rashba result');
+     pair.push(data);
+    }
+    reports.push(rashbaPairEvidence(pair[0],pair[1]));
+   }
+   const close=(a,b)=>a===null||b===null?a===b:Math.abs(a-b)<1e-9;
+   const matches=reports.every((row,i)=>['spectrum','gap','residual'].every(key=>close(row[key],expected[i][key]))&&
+    row.spin.every((component,j)=>close(component,expected[i].spin[j])));
+   state.verification=matches?'passed':'mismatch';
+  }catch{
+   if(!here()||stamp!==revision)return;
+   request=null;state.verification='failed';
+  }
+  showPython();
+ };
+ show();
+ return ()=>{retired=true;clearRequest();};
+}
+
 export async function renderSymmetryMiniDemosView({container,selection={},run,onNavigate=()=>{}}){
  let theme=miniDemoThemes.some(x=>x.id===selection.experiment)?selection.experiment:'polyhedra',state={...defaults[theme]},pythonResult=null,status='',busy=false,timer=null,revision=0;
- container.innerHTML='<article class="smd-course"></article>';const root=container.firstElementChild,current=()=>container.isConnected!==false&&container.firstElementChild===root,payload=()=>({experiment:theme,...state});
+ let routePreset=selection.preset,disposed=false,disposeRashba=()=>{};
+ const rashbaState={fraction:.2,guess:'',checked:'',verification:''};
+ const rashbaOpen=()=>theme==='bands'&&routePreset===rashbaTrimPreset;
+ container.innerHTML='<article class="smd-course"></article>';const root=container.firstElementChild,current=()=>!disposed&&container.isConnected!==false&&container.firstElementChild===root,payload=()=>({experiment:theme,...state});
  function update(){const out=scene(theme,state);root.querySelector('.smd-preview').innerHTML=out.plot+out.html;root.querySelector('.smd-questions').innerHTML=out.exercise;root.querySelectorAll('[data-output]').forEach(el=>el.textContent=state[el.dataset.output]);latest={tool:'symmetry_mini_demos_preview',input:payload(),result:{...out.data,computation:'deterministic JavaScript teaching preview'}};}
- function draw(){root.innerHTML=`<header class="smd-hero"><span>Advanced concept mini-experiments</span><h2>From Platonic solids to spin and bands</h2><p>Vary parameters, check the symmetry operation, then use a counterexample to test the conditions of a conclusion.</p></header><nav class="smd-tabs" aria-label="Advanced concept topics">${miniDemoThemes.map(x=>`<button type="button" data-theme="${x.id}" aria-pressed="${theme===x.id}">${x.title}</button>`).join('')}</nav><div class="smd-workspace"><aside class="smd-controls"><h3>Parameters and predictions</h3>${controls(theme,state)}<button type="button" class="primary" data-action="python" ${busy||!run?'disabled':''}>${busy?"Checking with Python…":"Check with browser Python"}</button><p class="smd-status" role="status">${esc(status||"SVG figures and values update immediately as parameters change.")}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><details class="smd-python"><summary>Python check data</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):"Results appear after you click the check button."}</pre></details><footer><a href="#classroom/foundations?module=demos">Water, characters, and projection demonstrations</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching conventions and sources</a></footer>`;update();}
- function changed(e){const id=e.target.dataset.param;if(!id)return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status="Parameters changed. Check again using the current input.";update();root.querySelector('.smd-status').textContent=status;}
+ function draw(){
+  disposeRashba();disposeRashba=()=>{};
+  root.innerHTML=`<header class="smd-hero"><span>Advanced concept mini-experiments</span><h2>From Platonic solids to spin and bands</h2><p>Vary parameters, check the symmetry operation, then use a counterexample to test the conditions of a conclusion.</p></header><nav class="smd-tabs" aria-label="Advanced concept topics">${miniDemoThemes.map(x=>`<button type="button" data-theme="${x.id}" aria-pressed="${theme===x.id}">${x.title}</button>`).join('')}</nav>
+  ${rashbaOpen()?rashbaTrimHTML():''}
+  <div class="smd-workspace"><aside class="smd-controls"><h3>Parameters and predictions</h3>${controls(theme,state)}<button type="button" class="primary" data-action="python" ${busy||!run?'disabled':''}>${busy?"Checking with Python…":"Check with browser Python"}</button><p class="smd-status" role="status">${esc(status||"SVG figures and values update immediately as parameters change.")}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><details class="smd-python"><summary>Python check data</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):"Results appear after you click the check button."}</pre></details><footer><a href="#classroom/foundations?module=demos">Water, characters, and projection demonstrations</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching conventions and sources</a></footer>`;
+  update();
+  if(rashbaOpen())disposeRashba=bindRashbaTrim(root,rashbaState,{run,isCurrent:current});
+ }
+ function changed(e){const id=e.target.dataset.param;if(!id||!current())return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status="Parameters changed. Check again using the current input.";update();root.querySelector('.smd-status').textContent=status;}
  root.addEventListener('input',e=>{if(e.target.tagName!=='SELECT')changed(e);});root.addEventListener('change',changed);
- root.addEventListener('click',async e=>{const tab=e.target.closest('[data-theme]');if(tab){if(timer){clearInterval(timer);timer=null;}revision++;theme=tab.dataset.theme;state={...defaults[theme]};status='';pythonResult=null;onNavigate({experiment:theme});draw();return;}const action=e.target.closest('[data-action]')?.dataset.action;if(action==='animate'){if(timer){clearInterval(timer);timer=null;}else timer=setInterval(()=>{if(!current()){clearInterval(timer);return;}revision++;state.phase=(state.phase+6)%360;const el=root.querySelector('[data-param="phase"]');if(el)el.value=state.phase;update();},70);}if(action==='python'&&run&&!busy){if(timer){clearInterval(timer);timer=null;}const requestedRevision=revision;busy=true;status="Checking the current finite model…";draw();try{const input=payload(),result=await run('symmetry_mini_demos',input);if(!current()||requestedRevision!==revision)return;pythonResult=result;status=result?.checks?.passed===false?"Model checks failed. Inspect the input and returned data.":"Python check complete.";draw();latest={tool:'symmetry_mini_demos',input,result};}catch(error){if(current()&&requestedRevision===revision){status="Python check did not complete:"+error.message;draw();}}finally{busy=false;if(current()){const b=root.querySelector('[data-action="python"]');b.disabled=false;b.textContent="Check with browser Python";}}}});
+ root.addEventListener('click',async e=>{
+  if(!current())return;
+  const tab=e.target.closest('[data-theme]');
+  if(tab){
+   if(timer){clearInterval(timer);timer=null;}
+   revision++;theme=tab.dataset.theme;state={...defaults[theme]};status='';pythonResult=null;
+   const patch=routePreset===undefined?{experiment:theme}:{experiment:theme,preset:undefined};
+   routePreset=undefined;onNavigate(patch);draw();return;
+  }
+  const action=e.target.closest('[data-action]')?.dataset.action;
+  if(action==='animate'){if(timer){clearInterval(timer);timer=null;}else timer=setInterval(()=>{if(!current()){clearInterval(timer);timer=null;return;}revision++;state.phase=(state.phase+6)%360;const el=root.querySelector('[data-param="phase"]');if(el)el.value=state.phase;update();},70);}
+  if(action==='python'&&run&&!busy){
+   if(timer){clearInterval(timer);timer=null;}
+   const requestedRevision=revision;busy=true;status="Checking the current finite model…";draw();
+   try{const input=payload(),result=await run('symmetry_mini_demos',input);if(!current()||requestedRevision!==revision)return;pythonResult=result;status=result?.checks?.passed===false?"Model checks failed. Inspect the input and returned data.":"Python check complete.";draw();latest={tool:'symmetry_mini_demos',input,result};}
+   catch(error){if(current()&&requestedRevision===revision){status="Python check did not complete:"+error.message;draw();}}
+   finally{busy=false;if(current()){const b=root.querySelector('[data-action="python"]');b.disabled=false;b.textContent="Check with browser Python";}}
+  }
+ });
  draw();
+ return ()=>{disposed=true;if(timer)clearInterval(timer);disposeRashba();};
 }

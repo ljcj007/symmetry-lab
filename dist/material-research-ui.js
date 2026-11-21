@@ -330,7 +330,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
   if(module.id==='modes'&&forms.modes.preset==='custom'){for(const[id,key]of [['mr-file-text','content'],['mr-structure-text','structure_content']])if($('#'+id))$('#'+id).value=forms.modes[key]??'';}const form=$('#mr-form');form.onsubmit=e=>{e.preventDefault();if(current()&&$('#mr-form')===form)return calculate();};
   const irEntry=$('[data-mr-zno-ir-entry]'),irBody=irEntry?.querySelector('[data-mr-zno-ir-body]');
   disposeIR=bindOptionalPanel({detail:irEntry,body:irBody,isCurrent:()=>current()&&$('[data-mr-zno-ir-entry]')===irEntry,
-   load:()=>import('./zno-ir-polarization-ui.js?v=20261120-zno-ir1'),
+   load:()=>import('./zno-ir-polarization-ui.js?v=20261122-phenomena1'),
    mount:(component,isCurrent)=>component.bindZnOIRPolarization({root:irBody,isCurrent,state:irState})});
   const alEntry=$('#mr-al-gamma');
   if(alEntry){

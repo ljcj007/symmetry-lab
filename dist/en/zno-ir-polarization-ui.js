@@ -8,11 +8,16 @@ const fixture = Object.freeze({
 const sourceCommit = '0937453a793eb504f674b7d4fd98421d508008e6';
 const bornSource = 'https://github.com/phonopy/phonopy/blob/'+sourceCommit+'/example/ZnO/BORN';
 const clusterIds = ['a1', 'e1', 'e2-low', 'e2-high'];
+const e2InPlaneTensors = [
+  [[1, 0], [0, -1]],
+  [[0, 1], [1, 0]]
+];
 const verifiedByState = new WeakMap();
 const radians = value => value * Math.PI / 180;
 const shown = value => Number(value.toPrecision(6));
 const degreesIn = (value, maximum) => Number.isFinite(value) && value >= 0 && value <= maximum;
 const predictions = ['z', 'x', 'equal'];
+const ramanPredictions = ['ir', 'raman', 'both', 'neither'];
 
 function validateData(data) {
   const settings = data?.settings;
@@ -70,6 +75,118 @@ export function projectZnOIRPolarization(data, thetaDegrees, phiDegrees) {
     clusters[id] = {components,total:components.reduce((sum, value) => sum + value, 0)};
   }
   return {polarization,clusters};
+}
+
+/** Normalized equal-coefficient E2 basis in the basal plane. */
+export function projectZnOE2Raman(thetaDegrees) {
+  if (!degreesIn(thetaDegrees, 90)) {
+    throw new RangeError("Use a Raman polarization angle between 0° and 90°.");
+  }
+  const theta = radians(thetaDegrees);
+  const input = [Math.cos(theta), Math.sin(theta)];
+  const crossedAnalyzer = [-input[1], input[0]];
+  const weights = analyzer => e2InPlaneTensors.map(tensor => {
+    const amplitude = tensor.reduce((sum, row, axis) => sum + analyzer[axis] *
+      row.reduce((projection, value, direction) => projection + value * input[direction], 0), 0);
+    const intensity = amplitude ** 2;
+    return intensity < 1e-14 ? 0 : intensity;
+  });
+  const parallel = weights(input), crossed = weights(crossedAnalyzer);
+  const sum = values => values.reduce((total,value) => total + value, 0);
+  return {parallel,crossed,total:{parallel:sum(parallel),crossed:sum(crossed)}};
+}
+
+function ramanExerciseHTML(state) {
+  const selected = ramanPredictions.includes(state.ramanPrediction) ? state.ramanPrediction : '';
+  const angle = degreesIn(state.ramanAngle, 90) ? state.ramanAngle : 0;
+  const choices = [['',"Choose an answer"],['ir',"IR only"],['raman',"Ordinary first-order Raman only"],
+    ['both',"Both are allowed"],['neither',"Neither is allowed"]];
+  const row = (id, label) => `<tr><th scope="row">${label}</th>
+    <td><output id="zir-raman-parallel-${id}"></output></td>
+    <td><output id="zir-raman-crossed-${id}"></output></td></tr>`;
+  return `<section class="mr-scope" aria-labelledby="zir-raman-heading">
+    <h4 id="zir-raman-heading">From zero E₂ infrared projection to Raman selection rules</h4>
+    <p>Both the low- and high-frequency E₂ clusters in the table have zero mode-dipole projection in the pinned ZnO data.</p>
+    <label for="zir-raman-predict">Which optical couplings do the 6mm selection rules allow for these two E₂ clusters at Γ?</label>
+    <select id="zir-raman-predict">${choices.map(([value,label])=>`<option value="${value}" ${selected===value?'selected':''}>${label}</option>`).join('')}</select>
+    <button type="button" id="zir-raman-check" class="secondary" aria-controls="zir-raman-result" aria-expanded="false">Check the E₂ prediction</button>
+    <p id="zir-raman-status" role="status"></p>
+    <div id="zir-raman-result" hidden>
+      <p>The E₂ row of C₆ᵥ has polar-vector multiplicity 0 and symmetric second-rank tensor multiplicity 1. The x²−y² and xy basis functions allow ordinary first-order Raman scattering.</p>
+      <p><a href="#classroom/foundations?tab=atlas&amp;group=25">Check the E₂ columns in the 6mm character table →</a></p>
+      <h5>Normalized Raman geometry</h5>
+      <p>For backscattering along z, the incident polarization and analyzer both lie in the xy plane. The two in-plane E₂ tensors in this symmetry-adapted basis are diag(1, −1) and [[0, 1], [1, 0]], with their common coefficient set to 1.</p>
+      <p>For each frequency cluster, calculate the two partner weights and sum them incoherently. The numerical eigenvectors can be rotated within a degenerate subspace. The Born projections above use the phonon data. The Raman weights here use the normalized model. The response data in the source are limited to Born effective charges. Obtain polarizability derivatives and measured Raman intensities separately.</p>
+      <label for="zir-raman-angle"><span>Incident polarization angle from x</span>
+        <input id="zir-raman-angle" type="range" min="0" max="90" step="1" value="${angle}">
+        <output id="zir-raman-angle-value" for="zir-raman-angle"></output>
+      </label>
+      <div class="obs-links">
+        <button type="button" class="secondary" data-zir-raman-angle="0">0°</button>
+        <button type="button" class="secondary" data-zir-raman-angle="45">45°</button>
+      </div>
+      <p>Compare 0° with 45°. Which partner becomes bright with the parallel analyzer? Then check the sum over the cluster.</p>
+      <div class="table-wrap" tabindex="0" aria-label="Normalized Raman polarization weights">
+        <table><thead><tr><th scope="col">E₂ symmetry-adapted basis</th><th scope="col">Parallel analyzer</th><th scope="col">Crossed analyzer</th></tr></thead>
+        <tbody>${row('diagonal','x²−y²')}${row('offdiagonal','xy')}${row('total',"Sum over both partners")}</tbody></table>
+      </div>
+      <p><a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.85.165208" target="_blank" rel="noreferrer">Experimental reading · Polarized Raman backscattering in ZnO ↗</a></p>
+    </div>
+  </section>`;
+}
+
+function bindRamanExercise(root, state, isCurrent) {
+  const get = id => root.querySelector('#zir-raman-'+id);
+  const prediction = get('predict'), check = get('check'), result = get('result'), status = get('status'), angle = get('angle');
+  const active = () => isCurrent() && get('predict') === prediction;
+  const selected = () => ramanPredictions.includes(state.ramanPrediction);
+  const update = () => {
+    if (!active()) return;
+    const value = Number(angle.value);
+    if (!degreesIn(value, 90)) return;
+    state.ramanAngle = value;
+    const {parallel,crossed,total} = projectZnOE2Raman(value);
+    get('angle-value').textContent = value+'°';
+    angle.setAttribute('aria-valuetext',value+'°');
+    for (const [channel,weights] of Object.entries({parallel,crossed})) {
+      get(channel+'-diagonal').textContent = String(shown(weights[0]));
+      get(channel+'-offdiagonal').textContent = String(shown(weights[1]));
+      get(channel+'-total').textContent = String(shown(total[channel]));
+    }
+  };
+  const reveal = () => {
+    result.hidden = false;
+    check.setAttribute('aria-expanded','true');
+    status.textContent = state.ramanPrediction === 'raman' ?
+      "Correct prediction. Use the polarization geometry below to check the two partners." : "Use the polar-vector and quadratic-function columns in the character table to revise your prediction.";
+    update();
+  };
+  prediction.onchange = () => {
+    if (!active()) return;
+    state.ramanPrediction = ramanPredictions.includes(prediction.value) ? prediction.value : '';
+    state.ramanChecked = false;
+    result.hidden = true;
+    check.setAttribute('aria-expanded','false');
+    status.textContent = '';
+  };
+  check.onclick = () => {
+    if (!active()) return;
+    if (!selected()) {
+      status.textContent = "Choose an answer first.";
+      return;
+    }
+    state.ramanChecked = true;
+    reveal();
+  };
+  angle.oninput = update;
+  for (const button of root.querySelectorAll('[data-zir-raman-angle]')){
+    button.onclick = () => {
+      if (!active()) return;
+      angle.value = button.dataset.zirRamanAngle;
+      update();
+    };
+  }
+  if (state.ramanChecked && selected()) reveal();
 }
 
 function predictionMenu(id, label, selected) {
@@ -168,7 +285,7 @@ export function bindZnOIRPolarization({root,isCurrent=()=>true,state={}}){
     const theta = degreesIn(state.theta,90) ? state.theta : 45;
     const phi = degreesIn(state.phi,180) ? state.phi : 0;
     status.textContent = "The ZnO data package matches the pinned SHA-256.";
-    lab.innerHTML = labHtml(data,theta,phi);
+    lab.innerHTML = labHtml(data,theta,phi)+ramanExerciseHTML(state);
     load.hidden = true;
     const angle = get('#zir-polarization'), basis = get('#zir-basis');
     const rows = [...lab.querySelectorAll('[data-zir-value]')].map(output => ({
@@ -195,6 +312,7 @@ export function bindZnOIRPolarization({root,isCurrent=()=>true,state={}}){
     angle.oninput = basis.oninput = update;
     update();
     updatePrediction();
+    bindRamanExercise(lab,state,current);
     if (focus) angle.focus?.();
   }
 
