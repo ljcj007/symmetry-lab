@@ -98,7 +98,13 @@ def run():
     data=json.loads((ROOT/'dist/data/nonsymmorphic-content.json').read_text(encoding='utf-8'))
     assert len(data['lessons'])==3 and len(data['exercises'])==3 and len(data['cases'])==3
     assert all(len(x['steps'])==4 for x in data['exercises'])
-    assert len(data['module']['presets'])==8 and len(data['module']['predictions'])==2
+    assert len(data['module']['presets'])==9
+    assert {p['id'] for p in data['module']['presets']}=={
+        'nonsymmorphic-hourglass', 'nonsymmorphic-screw', 'nonsymmorphic-mass',
+        'nonsymmorphic-spinless', 'nonsymmorphic-offline', 'nonsymmorphic-break-time',
+        'nonsymmorphic-screw-single', 'nonsymmorphic-screw-double', 'nonsymmorphic-glide-quarter',
+    }
+    assert len(data['module']['predictions'])==2
     for preset in data['module']['presets']:
         result=lab.calculate(preset['input'])
         assert result['checks']['passed'],preset['id']
@@ -107,7 +113,7 @@ def run():
         try:lab.calculate(bad)
         except (ValueError,TypeError):pass
         else:raise AssertionError('invalid input accepted: '+str(bad))
-    print('nonsymmorphic: PASS (24 independent k/representation cases, endpoint pairings, periodic sewing, full-line gap bounds, momentum diagnostics, eight presets)')
+    print('nonsymmorphic: PASS (24 independent k/representation cases, endpoint pairings, periodic sewing, full-line gap bounds, momentum diagnostics, nine presets)')
 
 
 if __name__=='__main__':

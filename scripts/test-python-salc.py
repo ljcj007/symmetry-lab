@@ -214,7 +214,11 @@ class SalcTests(unittest.TestCase):
         self.assertEqual(len(c["lessons"]), 3)
         self.assertEqual(len(c["exercises"]), 3)
         self.assertEqual(len(c["cases"]), 3)
-        self.assertEqual(len(c["module"]["presets"]), 6)
+        self.assertEqual(len(c["module"]["presets"]), 7)
+        self.assertEqual({p["id"] for p in c["module"]["presets"]}, {
+            "salc-four-sites", "salc-polarization", "salc-repeated", "salc-breaking",
+            "salc-axial", "salc-allowed-zero", "salc-polarization-x",
+        })
         self.assertEqual(len(c["module"]["predictions"]), 2)
         sources = {s["id"] for s in c["sources"]}
         presets = {s["id"] for s in c["module"]["presets"]}

@@ -37,9 +37,10 @@ def canonical_hash(value):
                                      separators=(',', ':')).encode('utf-8')).hexdigest()
 
 
-verify('exactly one new task follows the unchanged original 22',
-       len(items) == 23 and items[-1]['id'] == ID and
-       canonical_hash(items[:-1]) == 'eb2bc33fe15258e9833931eb4f27d874e785d29337de281ebb379439aa87ab83')
+verify('the unchanged original 22 still precede the magnetic-setting task',
+       len(items) == 24 and items[22]['id'] == ID and
+       items[23]['id'] == 'space-seitz-pair-folding' and
+       canonical_hash(items[:22]) == 'eb2bc33fe15258e9833931eb4f27d874e785d29337de281ebb379439aa87ab83')
 spin_connection_ids = {'double-01', 'double-02', 'double-03', 'double-04',
                        'magnetic-04', 'magnetic-05'}
 verify('the first space-group lesson opens its 4₁ screw model',

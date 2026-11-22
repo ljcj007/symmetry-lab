@@ -163,7 +163,12 @@ class WavevectorTests(unittest.TestCase):
 
     def test_presets_content_and_json(self):
         content = json.loads((ROOT/'dist/data/wavevector-content.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(content['module']['presets']), 7)
+        self.assertEqual(len(content['module']['presets']), 8)
+        self.assertEqual({p['id'] for p in content['module']['presets']}, {
+            'wavevector-stripe', 'wavevector-double', 'wavevector-checker', 'wavevector-phase',
+            'wavevector-unequal', 'wavevector-diagonal', 'wavevector-period-two',
+            'wavevector-checker-phase90',
+        })
         self.assertEqual(len(content['module']['predictions']), 2)
         self.assertEqual(len(content['lessons']), 3)
         self.assertEqual(len(content['cases']), 3)

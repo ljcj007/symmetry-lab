@@ -170,7 +170,10 @@ class QuantumGeometryTests(unittest.TestCase):
         module = catalog["modules"][0]
         self.assertEqual(module["id"], "geometry")
         presets = {p["id"]: p for p in module["presets"]}
-        self.assertEqual(len(presets), 5)
+        self.assertEqual(set(presets), {
+            "geometry-qwz-chern", "geometry-qwz-trivial", "geometry-qwz-closing",
+            "geometry-ssh-topological", "geometry-ssh-trivial", "geometry-ssh-metric-limit",
+        })
         for preset in presets.values():
             json.dumps(run(preset["input"]), allow_nan=False)
         sources = {x["id"] for x in catalog["sources"]}

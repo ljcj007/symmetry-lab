@@ -482,7 +482,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "ae34c6d9487a4f6294ca42ea8a3ba687b8532e6cd1f8dffea7f4294fc1a4dd6c",
+      "sha256": "5255087efbd2d03ce49bb1d35c70c83209c1b96ef784e216f738050027349120",
       "bytes": 56448
     },
     {
@@ -492,8 +492,8 @@
     },
     {
       "path": "dist/data/connections-provenance.json",
-      "sha256": "85bfe09d29aa87fab06dc56c14d7862e366d8d48eea8be12920cfa4eca3046e9",
-      "bytes": 110305
+      "sha256": "60bbfdb325c5009a405bd807c5d551a7626daf29aa59e42960c7297110aa5e52",
+      "bytes": 110306
     },
     {
       "path": "dist/data/conservation-content.json",
@@ -507,8 +507,8 @@
     },
     {
       "path": "dist/data/construction-provenance.json",
-      "sha256": "729c5d6a8c26ba8eb617033cc03fc47361a627b2340f06c9f1fe0fe1dd05473c",
-      "bytes": 64069
+      "sha256": "fb3d579939083c9837a316c25b3bfa677419930a2cd1633e79216ec028760b03",
+      "bytes": 64070
     },
     {
       "path": "dist/data/coupled-materials-provenance.json",
@@ -587,8 +587,8 @@
     },
     {
       "path": "dist/data/frontiers-provenance.json",
-      "sha256": "2cb8ad7355f2116b5d0a888b31aec175764bf3f9839a6928ae00f824b845c0a1",
-      "bytes": 113045
+      "sha256": "8ff89f22be4828ee55fe6f2fb4fa7fe8a639c8cc0fef3a9f716d3737ab6071d5",
+      "bytes": 113046
     },
     {
       "path": "dist/data/hall-response-content.json",
@@ -707,7 +707,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "c2bb37e545c0c7391bd60ba150d406d38aee652c06089116f439e62e8ef1aab2",
+      "sha256": "da9edc2050b2a15576533cef3209caef8faecdf82e84c95c5bc099ea3c57a568",
       "bytes": 58573
     },
     {
@@ -2982,8 +2982,8 @@
     },
     {
       "path": "scripts/test-python-nonsymmorphic.py",
-      "sha256": "a44d8b1d598375d7dcc3e9627ea26f869ecb7b710604ff4ee21d4fba42b3e71a",
-      "bytes": 6530
+      "sha256": "7aec7e344d591be593c0ce0bd5c14ebb22a4c18ae0e3ff3a34803710b41210a6",
+      "bytes": 6867
     },
     {
       "path": "scripts/test-python-order-parameter.py",
@@ -3047,8 +3047,8 @@
     },
     {
       "path": "scripts/test-python-quantum-geometry-lab.py",
-      "sha256": "0c22bf7c822049d22ef05f6f143fa041ee10e3c25ddb4ed0278a411f073a1dec",
-      "bytes": 10789
+      "sha256": "2337c17e2f9aa8255448cb5023f7bd6d72dba27d2cea2cd4525a5c069e5d3755",
+      "bytes": 10974
     },
     {
       "path": "scripts/test-python-response-content.py",
@@ -3057,8 +3057,8 @@
     },
     {
       "path": "scripts/test-python-salc.py",
-      "sha256": "ec58024c8996443ffcdf17c28614fb5ab26477cfa852e9e7d5855742aba4ae7f",
-      "bytes": 13472
+      "sha256": "fd951727fbdfeb0498fde93a75cf0be4a76279fada90f9de500ae4e4fe2ebe57",
+      "bytes": 13709
     },
     {
       "path": "scripts/test-python-shg-lab.py",
@@ -3147,8 +3147,8 @@
     },
     {
       "path": "scripts/test-python-wavevector.py",
-      "sha256": "5041aa0340ca9a167d57480372063091a63f99a841d7a9a58f99ce0ee6404630",
-      "bytes": 9811
+      "sha256": "ead919b4565ea5bf2806f0169167b0b2606e9c1ed1bfee5f3ce8f1c7f2bb57a7",
+      "bytes": 10118
     },
     {
       "path": "scripts/test-quantum-materials-ui.mjs",
