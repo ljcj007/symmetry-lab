@@ -27,12 +27,12 @@
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 107193,
-      "sha256": "76e72878a7caa7f4a9d23a95e324353cbd1b49c18013649cc58793468996d5a7"
+      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32836,
-      "sha256": "6fcf6fb691dca52858cf92ba82918c42ff02445861bde3a31731ee6eca322ce0"
+      "bytes": 32846,
+      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755"
     },
     "dist/crystkit-handedness-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -72,7 +72,7 @@
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 39246,
-      "sha256": "56b0b47e6b08aa5a32d65e673c0fceff2c026eb4bec98a05752bc7ec8074ee87"
+      "sha256": "be33d5c6a7bc1517b64180c97929c87292189de584fe5a0ef9a7d3f3001e7eb8"
     },
     "dist/python/structure_bc.py": {
       "normalization": "utf8-lf-v1",
@@ -97,7 +97,7 @@
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 14024,
-      "sha256": "06071f3e19a8d669a7042af8727f1ef7999912844808066609f7cb26fe9984a6"
+      "sha256": "07d4a4cbce1c2b77e691f0be05e42aa31d9346c7f64b68bd1212fa164488539e"
     },
     "locales/en-crystkit-handedness.json": {
       "normalization": "utf8-lf-v1",
@@ -116,8 +116,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30282,
-      "sha256": "a51a36cb9fbdf9cd99f636b4eb0e155b7b19d8ae1b2977272a227396c3bd5a08"
+      "bytes": 30740,
+      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
     },
     "scripts/build-quartz-handedness-provenance.mjs": {
       "normalization": "utf8-lf-v1",

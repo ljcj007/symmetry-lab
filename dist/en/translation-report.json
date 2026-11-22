@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29489,
-  "translatedUnits": 29489,
+  "sourceUnits": 29529,
+  "translatedUnits": 29529,
   "missing": [],
-  "files": 542,
+  "files": 543,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -202,6 +202,8 @@
     "en-zno-gamma-nac-routes.json",
     "en-zno-gamma-nac-ui.json",
     "en-complex-character-checkpoint.json",
-    "en-magnetictb-presets.json"
+    "en-magnetictb-presets.json",
+    "en-pointgroup-lesson-handoff.json",
+    "en-material-lesson-handoffs.json"
   ]
 }

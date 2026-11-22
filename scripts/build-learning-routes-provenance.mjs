@@ -88,6 +88,11 @@ files.push('dist/complex-character-checkpoint.js','scripts/test-complex-characte
  'locales/en-complex-character-checkpoint.json','dist/magnetictb-presets.js','dist/research-ui.js',
  'scripts/test-magnetictb-preset-routes.mjs','scripts/test-python-magnetictb.py','locales/en-magnetictb-presets.json');
 
+files.push('dist/c4v-character-crosswalk.js','locales/en-pointgroup-lesson-handoff.json',
+ 'locales/en-material-lesson-handoffs.json','scripts/test-pointgroup-lesson-handoff.mjs',
+ 'scripts/test-lie-lesson-handoffs.mjs','scripts/test-python-lie-lesson-handoffs.py',
+ 'scripts/test-material-lesson-handoffs.mjs','scripts/test-python-material-lesson-handoffs.py');
+
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',
  'dist/python/structure_bc.py','dist/python/standard_labels.py','dist/python/phase_domains.py',

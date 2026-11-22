@@ -39,7 +39,23 @@ export function readPhysicsPayload(experiment,$,read){
   }
   return input;
 }
-export const physicsPresets={...cgPresets,...racahPresets,...ninejPresets,pi:{experiment:'rabi',input:{omega:1,delta:0,time:Math.PI}},'2pi':{experiment:'rabi',input:{omega:1,delta:0,time:2*Math.PI}},detuned:{experiment:'rabi',input:{omega:1,delta:2,time:Math.PI}},'half-pair':{experiment:'su2_coupling',input:{twoJ1:1,twoJ2:1,twoM1:1,twoM2:-1,coupling:1}},'half-one':{experiment:'su2_coupling',input:{twoJ1:1,twoJ2:2,twoM1:1,twoM2:0,coupling:1}},'three-three':{experiment:'su3_tensor',input:{p1:1,q1:0,p2:1,q2:0}},'three-bar':{experiment:'su3_tensor',input:{p1:1,q1:0,p2:0,q2:1}},'eight-eight':{experiment:'su3_tensor',input:{p1:1,q1:1,p2:1,q2:1}}};
+export const physicsPresets={
+  ...cgPresets,...racahPresets,...ninejPresets,
+  pi:{experiment:'rabi',input:{omega:1,delta:0,time:Math.PI}},
+  '2pi':{experiment:'rabi',input:{omega:1,delta:0,time:2*Math.PI}},
+  detuned:{experiment:'rabi',input:{omega:1,delta:2,time:Math.PI}},
+  'rabi-detuned-first-peak':{experiment:'rabi',input:{omega:2,delta:2,time:Math.PI/(2*Math.SQRT2)}},
+  'half-pair':{experiment:'su2_coupling',input:{twoJ1:1,twoJ2:1,twoM1:1,twoM2:-1,coupling:1}},
+  'exchange-half-pair-kappa-two':{experiment:'su2_coupling',input:{...physicsDefaults.su2_coupling,coupling:2}},
+  'half-one':{experiment:'su2_coupling',input:{twoJ1:1,twoJ2:2,twoM1:1,twoM2:0,coupling:1}},
+  'spin-one-by-half':{experiment:'su2_coupling',input:{twoJ1:2,twoJ2:1,twoM1:2,twoM2:-1,coupling:1}},
+  'three-three':{experiment:'su3_tensor',input:{p1:1,q1:0,p2:1,q2:0}},
+  'three-bar':{experiment:'su3_tensor',input:{p1:1,q1:0,p2:0,q2:1}},
+  'eight-eight':{experiment:'su3_tensor',input:{p1:1,q1:1,p2:1,q2:1}},
+  'dynkin-fifteen-by-singlet':{experiment:'su3_tensor',input:{p1:2,q1:1,p2:0,q2:0}},
+  'dynkin-twentyseven-by-singlet':{experiment:'su3_tensor',input:{p1:2,q1:2,p2:0,q2:0}},
+  'octet-by-singlet':{experiment:'su3_tensor',input:{p1:1,q1:1,p2:0,q2:0}}
+};
 export const physicsInputIds=[...cgInputIds,...racahInputIds,...ninejInputIds,'#lg-omega','#lg-delta','#lg-time','#lg-two-m1','#lg-two-m2','#lg-coupling','#lg-p1','#lg-q1','#lg-p2','#lg-q2'];
 
 function trajectorySVG(trajectory,index){

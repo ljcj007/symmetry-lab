@@ -71,11 +71,44 @@ newWorker.onmessage({data:{id:newWorker.message.id,result:clone(refs.cases[0].re
 const lessons=json('../dist/data/pointgroup-lessons.json'),atlas=json('../dist/data/pointgroup-atlas.json');
 globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('lessons')?lessons:atlas});
 const pg=await import('../dist/pointgroup-ui.js?composition-host'),page=new Container();let loads=0,runs=0;
-const options={container:page,selection:{tab:'learn',lesson:'group-basics'},loadComposition:async()=>{loads++;return{bindCompositionLesson:bind};},run:(action,input)=>{runs++;assert.equal(action,'teaching_labs');return Promise.resolve(clone(replies.get(JSON.stringify(input))));},cancelRun:()=>{}};
+const lessonExports=[];
+const options={container:page,selection:{tab:'learn',lesson:'group-basics'},loadComposition:async()=>{loads++;return{bindCompositionLesson:bind};},run:(action,input)=>{runs++;assert.equal(action,'teaching_labs');return Promise.resolve(clone(replies.get(JSON.stringify(input))));},cancelRun:()=>{},download:(body,name,type)=>lessonExports.push({body:JSON.parse(body),name,type})};
 await pg.renderPointgroupView(options);assert.equal(loads,0,'Closed first-lesson entry does not import the optional interface');assert.equal(runs,0);assert.ok(page.querySelector('[data-composition-entry]'));
+const hostControl=id=>page.querySelector('#'+id);
+hostControl('pg-tab-lab').onclick();
+const labGroup=hostControl('pg-lab-group');labGroup.value='5';labGroup.onchange({target:labGroup});
+const labOperation=hostControl('pg-lab-operation');labOperation.value='2';labOperation.onchange({target:labOperation});
+const labPoint=hostControl('pg-point-0');labPoint.value='.42';labPoint.oninput({target:labPoint});
+hostControl('pg-apply').onclick();
+const manualPreview=pg.getPointgroupResult();
+assert.equal(manualPreview.pointGroup.id,5);assert.equal(manualPreview.experiment.operation.label,'I');
+assert.equal(manualPreview.experiment.applications,1);
+assert.deepEqual(manualPreview.experiment.initialPoint,[.42,.37,.81]);
+assert.deepEqual(manualPreview.experiment.result,[-.42,-.37,-.81]);
+hostControl('pg-return-lesson').onclick();
 let entry=page.querySelector('[data-composition-entry]');entry.open=true;await entry.ontoggle();assert.equal(loads,1);assert.equal(runs,0,'Opening the interface does not load Python or calculate');
 page.querySelector('#cpx-note').value='Retain on ordinary tab and lesson returns.';page.querySelector('#cpx-note').oninput();await page.querySelector('#cpx-form').onsubmit({preventDefault(){}});assert.equal(runs,1);
-const before=pg.getPointgroupResult();page.querySelector('#pg-lesson-lab').onclick();assert.equal(page.querySelector('[data-composition-body]'),null);page.querySelector('#pg-return-lesson').onclick();await flush();assert.equal(runs,1);assert.equal(page.querySelector('#cpx-note').value,'Retain on ordinary tab and lesson returns.');assert.ok(page.querySelector('#cpx-export'));assert.deepEqual(pg.getPointgroupResult().experiment,before.experiment,'The optional panel preserves the old pointgroup experiment');
+hostControl('cpx-export').onclick();
+assert.deepEqual(pg.getPointgroupResult(),manualPreview,'The composition workshop keeps the manually chosen geometry and preview step.');
+hostControl('pg-tab-lab').onclick();assert.equal(page.querySelector('[data-composition-body]'),null);
+assert.deepEqual(pg.getPointgroupResult(),manualPreview,'The ordinary Lab tab keeps the chosen group, operation, point, and rendered step.');
+hostControl('pg-return-lesson').onclick();await flush();assert.equal(runs,1);
+assert.equal(hostControl('cpx-note').value,'Retain on ordinary tab and lesson returns.');
+hostControl('cpx-export').onclick();assert.deepEqual(lessonExports[1],lessonExports[0]);
+
+assert.match(hostControl('pg-lesson-lab').textContent,/重放例题的四重旋转/);
+hostControl('pg-lesson-lab').onclick();assert.equal(page.querySelector('[data-composition-body]'),null);
+const replay=pg.getPointgroupResult();
+assert.equal(replay.pointGroup.id,9);assert.equal(replay.experiment.operation.label,'C4z+');
+assert.deepEqual(replay.experiment.operation.matrix,[[0,-1,0],[1,0,0],[0,0,1]]);
+assert.equal(replay.experiment.applications,0);
+assert.deepEqual(replay.experiment.initialPoint,[1,0,0]);assert.deepEqual(replay.experiment.result,[1,0,0]);
+for(const p of [[0,1,0],[-1,0,0],[0,-1,0],[1,0,0]]){
+ hostControl('pg-apply').onclick();assert.deepEqual(pg.getPointgroupResult().experiment.result,p);
+}
+hostControl('pg-return-lesson').onclick();await flush();assert.equal(runs,1);
+assert.equal(hostControl('cpx-note').value,'Retain on ordinary tab and lesson returns.');
+hostControl('cpx-export').onclick();assert.deepEqual(lessonExports[2],lessonExports[0]);
 const oldFrame=page.querySelector('#cpx-next').onclick;page.querySelector('#pg-chapter-select').value='1';page.querySelector('#pg-chapter-select').onchange({target:page.querySelector('#pg-chapter-select')});assert.equal(page.querySelector('[data-composition-entry]'),null);oldFrame();assert.equal(runs,1);page.querySelector('#pg-chapter-select').value='0';page.querySelector('#pg-chapter-select').onchange({target:page.querySelector('#pg-chapter-select')});await flush();assert.ok(page.querySelector('#cpx-export'));assert.equal(runs,1);
 entry=page.querySelector('[data-composition-entry]');entry.open=false;entry.ontoggle();assert.equal(page.querySelector('#cpx-form'),null);entry.open=true;await entry.ontoggle();assert.ok(page.querySelector('#cpx-export'));assert.equal(runs,1);
 await pg.renderPointgroupView({...options,selection:{tab:'learn',lesson:'operations-notation'}});assert.equal(page.querySelector('[data-composition-entry]'),null);assert.equal(runs,1);

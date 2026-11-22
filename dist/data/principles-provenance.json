@@ -369,7 +369,7 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "76e72878a7caa7f4a9d23a95e324353cbd1b49c18013649cc58793468996d5a7",
+      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a",
       "bytes": 107193
     },
     {
@@ -394,8 +394,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "6fcf6fb691dca52858cf92ba82918c42ff02445861bde3a31731ee6eca322ce0",
-      "bytes": 32836
+      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755",
+      "bytes": 32846
     },
     {
       "path": "dist/classroom.css",
@@ -414,8 +414,8 @@
     },
     {
       "path": "dist/coupled-materials-ui.js",
-      "sha256": "a6154be2eca77c89b3f83dbd29ac3aedd58f74584aad55814b0a3b95cf66d06a",
-      "bytes": 49140
+      "sha256": "d66f9c49d7562b36a5edee7fedda8e71894b555fccb85951957f9a04d91e4e0c",
+      "bytes": 50504
     },
     {
       "path": "dist/coupled-materials.css",
@@ -444,7 +444,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "45d78553c26c34fe9ff99e9535b771cc80e9b51581ffeffe2fd9c567ea9dd793",
+      "sha256": "130991072be65f2f15bb7ceaded58b7b0b10ab1e319a67e2ed1c591194407c83",
       "bytes": 56448
     },
     {
@@ -454,7 +454,7 @@
     },
     {
       "path": "dist/data/coupled-materials-provenance.json",
-      "sha256": "e6f57271e962ae718fdd5a9bc0f20340f5e0fdb960944117a28694c6b6b1ade2",
+      "sha256": "b9db624163aa8a193e3ba64c0165b923782e06688598bcffbe0c71d1ed41b05c",
       "bytes": 2964
     },
     {
@@ -474,17 +474,17 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "e4159fa5e4bd75dc5a4cafd338353733144bc0c2c0a938a5017414b7d08a67a3",
+      "sha256": "80542348e8f8a07e5d488f497131416b72c16b2f30f3d4c68a0484b04586c1ab",
       "bytes": 16857
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "b8568275c26f90c36f08b6c752e8667960f082771e5abe13d16ef247b387898c",
+      "sha256": "f5d12d9e776fce755bebc402c484a5eb2dd4e8037341a2d55714a5df3365f1db",
       "bytes": 16897
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "7b04813a85423748fb7dbb3f32fc89d3c82450c3743f9677bba62072e1ef6742",
+      "sha256": "bf3b8538ac579306b75cbcd05a54b37ea0af6542fab68d8ba7804293c49715ba",
       "bytes": 5973
     },
     {
@@ -499,12 +499,12 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "83691ec401925114239917f745dcbc12f6dd4bd8bd2d5d62b410a419d237291f",
+      "sha256": "d667ef8f9b11112322bcad57ccab7bd6c1c82a8729f024f5139271de4274e1cf",
       "bytes": 27432
     },
     {
       "path": "dist/data/pointgroup-provenance.json",
-      "sha256": "aeaa6a0c32bad2a50ab1a78e214f38d3bf8c3b0eac139b393c201f2d8ada6fcc",
+      "sha256": "7b9161577fcefd629ee39dc9074d336cbce4ac1ee3722dcf64fdc189e581d822",
       "bytes": 3457
     },
     {
@@ -529,12 +529,12 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "ae889d5fb57d6afe386e87eedcb8f75a7a5cfb432f8840696917244a4ee6fb7f",
+      "sha256": "451a97e7f2ae6f168c2cfacb5b00196c553ee1038e529bdce47ef3332accf283",
       "bytes": 10435
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "7376b1c2c6477d10a8f5f7229e3d69cf26ecbbb659f895a8545cb514264f05d0",
+      "sha256": "c5e5d3ced59bd39dc08f10e9c6a1ddc36384b721e2e057ba7de6aea85e24cb88",
       "bytes": 13329
     },
     {
@@ -544,7 +544,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "f524472af1e041e7c992e80611b7f3d764a023ce1ddf491213d7653d1e0bf72a",
+      "sha256": "8d780598deaec88bcda850f703673804d6c5eaaa700895a836a1dd9deadfd4fc",
       "bytes": 15860
     },
     {
@@ -599,7 +599,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "ca1b5cb751cef84d7c735fc90a2bebaaa17193bbe8b32792b14949ce116b3b82",
+      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9",
       "bytes": 8432
     },
     {
@@ -609,8 +609,8 @@
     },
     {
       "path": "dist/lie-group-ui.js",
-      "sha256": "8542e86ce3f69d4a0e3c6491f352fe6e88a7ef8d31e6458883468d48cd93394c",
-      "bytes": 60615
+      "sha256": "26da76eb9da5f29323dcf6d1211041265c57e0c81752d4e717783f1bedd41ebf",
+      "bytes": 60632
     },
     {
       "path": "dist/lie-group.css",
@@ -619,8 +619,8 @@
     },
     {
       "path": "dist/lie-physics-ui.js",
-      "sha256": "f01c478f3fffca76c99b3039e75cdc483f411f9ee5bef144fb400d9a3bb53733",
-      "bytes": 20554
+      "sha256": "704d689eb3e6191cc99cef1adee7197dcbcaf6a7c220d17c1e1f1ab92af72250",
+      "bytes": 21148
     },
     {
       "path": "dist/material-notebook.js",
@@ -629,8 +629,8 @@
     },
     {
       "path": "dist/material-research-ui.js",
-      "sha256": "b869005b0945d95bc471acf9b191cb07fd6682627860e1cd64e8bce33c1f1b24",
-      "bytes": 68097
+      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab",
+      "bytes": 70987
     },
     {
       "path": "dist/material-research.css",
@@ -659,7 +659,7 @@
     },
     {
       "path": "dist/navigation-ui.js",
-      "sha256": "56b0b47e6b08aa5a32d65e673c0fceff2c026eb4bec98a05752bc7ec8074ee87",
+      "sha256": "be33d5c6a7bc1517b64180c97929c87292189de584fe5a0ef9a7d3f3001e7eb8",
       "bytes": 39246
     },
     {
@@ -669,8 +669,8 @@
     },
     {
       "path": "dist/observables-ui.js",
-      "sha256": "e34252a133c7cfd86580eaabe9125356c6b26de0767fcbef65fad195612a759f",
-      "bytes": 34556
+      "sha256": "80772e5e1d2ccd084ad52c2e23b138351c877be62c415217369302bfbe3fbb33",
+      "bytes": 34763
     },
     {
       "path": "dist/observables.css",
@@ -699,8 +699,8 @@
     },
     {
       "path": "dist/pointgroup-ui.js",
-      "sha256": "0b8570fbf74de5406c6a8c1ceebe49730ea78b5a54b6f02262a6e642f476da1f",
-      "bytes": 47941
+      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83",
+      "bytes": 50428
     },
     {
       "path": "dist/pointgroup.css",
@@ -829,8 +829,8 @@
     },
     {
       "path": "dist/structure-dynamics-ui.js",
-      "sha256": "f0f970b32e76944835d0487f62ee1356c7bbc1f0c266c6d81cb4dd134a6090e5",
-      "bytes": 61217
+      "sha256": "bbc89eb752ae96bfd286a0c2b4e9fd4457b46111b84eb97ed7a8bce65c3568ac",
+      "bytes": 61222
     },
     {
       "path": "dist/structure-dynamics.css",
@@ -879,8 +879,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "a51a36cb9fbdf9cd99f636b4eb0e155b7b19d8ae1b2977272a227396c3bd5a08",
-      "bytes": 30282
+      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525",
+      "bytes": 30740
     },
     {
       "path": "scripts/build-bilbao-labels.py",
@@ -1164,8 +1164,8 @@
     },
     {
       "path": "scripts/test-lie-group-ui.mjs",
-      "sha256": "79fc9f0a826cf96fa816c330936e9cbbd8b524d70d808b9fa72be872f57b6ff7",
-      "bytes": 81288
+      "sha256": "5fdd17e3fcb53d6b0d0da582df1d80d2840e938e50aacf86a936280f2f65766c",
+      "bytes": 81299
     },
     {
       "path": "scripts/test-magnetic-induction.mjs",

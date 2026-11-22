@@ -1,5 +1,5 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261120-zno-ir1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261122-lesson-handoffs1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -68,6 +68,12 @@ const defaults={
  magnons:{model:'fm',exchange:1,spin:1,anisotropy:1.15,field:0,samples:161,q:.25,branch:0,amplitude:.12,sites:16,frames:48},
  qha:{source:'preset',preset:'einstein-volume',pressure:0,fit_degree:3,fit_window:5,gamma:1.5,theta:400,bulk_modulus:100,v0:40,natom:2,t_min:0,t_max:1000,t_step:25,content:''}
 };
+const qhaAuditPressures={interior:0,boundary:-100};
+const qhaAuditControls=()=>`<aside class="mr-scope" data-cm-qha-audit>
+ <h3>比较内点极小值与体积上边界</h3>
+ <p>两组都用合成 Einstein 教学模型。压力以 GPa 表示，每个输入胞的体积用 Å³ 表示。−100 GPa 是用于触及体积上边界的拉伸条件。选择条件后手动运行，核对是否报告平衡体积、热膨胀和定压热容。</p>
+ <div class="obs-links"><button type="button" class="secondary" data-cm-qha-audit-case="interior">载入内点对照（0 GPa）</button><button type="button" class="secondary" data-cm-qha-audit-case="boundary">载入体积上边界（−100 GPa）</button></div>
+</aside>`;
 export async function renderCoupledMaterialsView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{},loadCuQhaSourceModule=loadCuQhaSource}){
  let disposed=false;
  container.innerHTML='<div class="obs-page mr-page cm-page"><p role="status">正在准备畸变与激发课程…</p></div>';const root=container.firstElementChild,$=s=>root.querySelector(s),current=()=>!disposed&&root.parentNode===container&&container.isConnected!==false;lastResult=null;
@@ -121,7 +127,18 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#cm-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);const calculationRoute='#compute/'+m.route+(c.id==='cu-qha'?'':'?material='+encodeURIComponent(c.id));return `<a href="${coupledCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · 学习 →</a><a href="${esc(calculationRoute)}">对应计算 →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">保存材料研究记录 →</a></div></article>`).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{read();}catch(error){draftError=error?.message||'请检查当前输入';}flowDrafts.remember($('#cm-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error('本课实验参数暂不可用，请返回课程目录检查。');flowDrafts.discard(module.id);clearCuProof();clearZnOProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
+ function applyQhaAuditCase(kind){
+  if(!current()||module.id!=='qha'||lesson.id!=='qha-audit'||!Object.hasOwn(qhaAuditPressures,kind))return;
+  flowDrafts.discard(module.id);clearCuProof();
+  forms.qha={...structuredClone(defaults.qha),...structuredClone(lesson.lab),pressure:qhaAuditPressures[kind]};
+  tab='lab';invalidate();draw();sync();
+ }
+ function openLessonLab(){
+  if(!current())return;
+  if(!lesson.lab||typeof lesson.lab!=='object')throw Error('本课实验参数暂不可用，请返回课程目录检查。');
+  if(lesson.id==='qha-audit')return applyQhaAuditCase('boundary');
+  flowDrafts.discard(module.id);clearCuProof();clearZnOProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();
+ }
  function derive(){const exercises=data.exercises.filter(e=>data.lessons.some(l=>l.id===e.lesson&&l.module===module.id));$('#cm-content').innerHTML=`<label class="obs-chapter">选择练习<select id="cm-exercise">${options(exercises.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}</select></label><article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="cm-steps"></div><p id="cm-progress" role="status"></p>${courseFlowActions('cm')}${navlinks()}</article>`;const exerciseSelect=$('#cm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#cm-exercise')!==exerciseSelect)return;exercise=data.exercises.find(x=>x.id===e.target.value);lesson=data.lessons.find(x=>x.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#cm-steps'),exerciseId=exercise.id;
@@ -172,9 +189,12 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   const znoEntry=module.id==='distortion'?znoQuadratureHTML(znoOpen):'';
   const znoEvidence=currentZnOEvidence();
   const znoStatus=module.id==='distortion'?`<p id="cm-zno-source-status" class="mr-scope" role="status" tabindex="-1"${znoEvidence?'':' hidden'}>${znoEvidence?(znoEvidence.directionCount===1?'已核对 ZnO 数据并载入相位 0 的方向。请手动运行。':'已核对 ZnO 数据并载入相位 0 和 π/2 的方向。请手动运行。'):''}</p>`:'';
-  $('#cm-content').innerHTML=`${cuEntry}${znoEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>实验参数</legend>${cuStatus}${znoStatus}${controls()}<button type="submit" class="primary">运行 Python 并更新演示 →</button><button id="cm-cancel" type="button" class="secondary" hidden>取消计算</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>输入 → 计算 → 核对 → 保存</h3><p>计算在浏览器内完成。先运行一个教学预设，再改变参数观察结构、激发或热力学响应。</p></section></div>${navlinks()}`;
+  $('#cm-content').innerHTML=`${lesson.id==='qha-audit'?qhaAuditControls():''}${cuEntry}${znoEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>实验参数</legend>${cuStatus}${znoStatus}${controls()}<button type="submit" class="primary">运行 Python 并更新演示 →</button><button id="cm-cancel" type="button" class="secondary" hidden>取消计算</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>输入 → 计算 → 核对 → 保存</h3><p>计算在浏览器内完成。先运行一个教学预设，再改变参数观察结构、激发或热力学响应。</p></section></div>${navlinks()}`;
   const form=$('#cm-form');
   const formCurrent=()=>current()&&activeForm()===form;
+  for(const button of root.querySelectorAll('[data-cm-qha-audit-case]')){
+   button.onclick=()=>{if(formCurrent())applyQhaAuditCase(button.dataset.cmQhaAuditCase);};
+  }
   form.onsubmit=e=>{e.preventDefault();if(formCurrent())return calculate();};
   $('#cm-cancel').onclick=()=>{if(!formCurrent())return;cancelOwnJob(true);invalidate();$('#cm-result').innerHTML='<p role="status">已取消计算。重新运行后生成新的结果。</p>';};
   form.oninput=e=>{

@@ -777,7 +777,9 @@
           "explanation": "Ω_{eff}=√(Ω²+Δ²) 增大，而 Ω²/(Ω²+Δ²) 减小。振荡速度与完全翻转能力是不同量。"
         }
       ],
-      "lab": "rabi"
+      "lab": "rabi",
+      "labPreset": "rabi-detuned-first-peak",
+      "derivationId": "rabi-pi-pulse"
     },
     {
       "id": "su2-coupling-representations",
@@ -856,7 +858,8 @@
           "explanation": "总 z 分量固定 M=m₁+m₂=0，因此 M=1 的系数为零；J=0 和 J=1 的 M=0 分量都可出现。"
         }
       ],
-      "lab": "su2_coupling"
+      "lab": "su2_coupling",
+      "labPreset": "spin-one-by-half"
     },
     {
       "id": "singlet-triplet-exchange",
@@ -934,7 +937,8 @@
           "explanation": "J=0 是一维平凡表示。单独旋转一个自旋一般会改变态；共同旋转才对应这里的对称性。"
         }
       ],
-      "lab": "su2_coupling"
+      "lab": "su2_coupling",
+      "labPreset": "half-pair"
     },
     {
       "id": "su3-dynkin-representations",
@@ -1013,7 +1017,8 @@
           "explanation": "Cartan 本征值可以简并。伴随表示的两个 Cartan 方向均为零权，但 8 仍是不可约表示。"
         }
       ],
-      "lab": "su3_tensor"
+      "lab": "su3_tensor",
+      "labPreset": "dynkin-fifteen-by-singlet"
     },
     {
       "id": "su3-flavor-color",
@@ -1092,7 +1097,8 @@
           "explanation": "3⊗3̄=8⊕1；而 3⊗3=6⊕3̄，6⊗3=10⊕8。可否形成单态是分解结果，不能只看维数大小。"
         }
       ],
-      "lab": "su3_tensor"
+      "lab": "su3_tensor",
+      "labPreset": "three-bar"
     },
     {
       "id": "su3-octet-selection",
@@ -1170,7 +1176,8 @@
           "explanation": "包含关系是必要条件。动力学、其他对称性或具体矩阵元仍可令振幅为零。"
         }
       ],
-      "lab": "su3_tensor"
+      "lab": "su3_tensor",
+      "labPreset": "octet-by-singlet"
     },
     {
       "id": "su3-cg-change-basis",

@@ -35,20 +35,20 @@
   ],
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 93861,
-      "sha256": "69ccec17f052ecf7dfcd116a78928306193799c795cc89e64f919f4c04b4b67f"
+      "bytes": 94968,
+      "sha256": "75c93d2c3a9666b4d2b119748a9dc59f4b7ff36efa9a99e95fd67ca11a034dc1"
     },
     "dist/app.js": {
       "bytes": 107193,
-      "sha256": "76e72878a7caa7f4a9d23a95e324353cbd1b49c18013649cc58793468996d5a7"
+      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
     },
     "dist/bridges-ui.js": {
       "bytes": 17152,
       "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32836,
-      "sha256": "6fcf6fb691dca52858cf92ba82918c42ff02445861bde3a31731ee6eca322ce0"
+      "bytes": 32846,
+      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -67,8 +67,8 @@
       "sha256": "43465408609d4a089014f8eb46493eddee0383905ba53182088793b57026179f"
     },
     "dist/coupled-materials-ui.js": {
-      "bytes": 49140,
-      "sha256": "a6154be2eca77c89b3f83dbd29ac3aedd58f74584aad55814b0a3b95cf66d06a"
+      "bytes": 50504,
+      "sha256": "d66f9c49d7562b36a5edee7fedda8e71894b555fccb85951957f9a04d91e4e0c"
     },
     "dist/docs/hall-response-lab.md": {
       "bytes": 4794,
@@ -92,19 +92,19 @@
     },
     "dist/index.html": {
       "bytes": 8432,
-      "sha256": "ca1b5cb751cef84d7c735fc90a2bebaaa17193bbe8b32792b14949ce116b3b82"
+      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9"
     },
     "dist/lie-group-ui.js": {
-      "bytes": 60615,
-      "sha256": "8542e86ce3f69d4a0e3c6491f352fe6e88a7ef8d31e6458883468d48cd93394c"
+      "bytes": 60632,
+      "sha256": "26da76eb9da5f29323dcf6d1211041265c57e0c81752d4e717783f1bedd41ebf"
     },
     "dist/material-notebook.js": {
       "bytes": 24916,
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 68097,
-      "sha256": "b869005b0945d95bc471acf9b191cb07fd6682627860e1cd64e8bce33c1f1b24"
+      "bytes": 70987,
+      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab"
     },
     "dist/pathways-ui.js": {
       "bytes": 18106,
@@ -187,16 +187,16 @@
       "sha256": "b1143d0449ad784ac5b8eaf21b047802182a851a0727dce371fcce3aa1e1f4c3"
     },
     "package.json": {
-      "bytes": 30282,
-      "sha256": "a51a36cb9fbdf9cd99f636b4eb0e155b7b19d8ae1b2977272a227396c3bd5a08"
+      "bytes": 30740,
+      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
     },
     "scripts/build-learning-support-provenance.mjs": {
       "bytes": 5915,
       "sha256": "bca3c6c72d0d2c1c56e4249ec79c0417ddf8079ed8694cee0c51e13f3c3c02b2"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 7688,
-      "sha256": "c8fcd14d7c30ff232bb77f9e72dd5e955383693edaf9087e9ef9fbcffac5ca96"
+      "bytes": 7779,
+      "sha256": "6fffe75adfc7473c04db7856e6043510bc16e98bc4e6347ff48962f6fa33f0e1"
     },
     "scripts/test-hall-bridges.mjs": {
       "bytes": 14598,

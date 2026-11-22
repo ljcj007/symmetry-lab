@@ -1,5 +1,5 @@
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261120-zno-ir1';
+import {multiCurveSVG,frozenStructureSVG} from './material-research-ui.js?v=20261122-lesson-handoffs1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(x)?Number(x.toPrecision(6)):'—';
@@ -68,6 +68,12 @@ const defaults={
  magnons:{model:'fm',exchange:1,spin:1,anisotropy:1.15,field:0,samples:161,q:.25,branch:0,amplitude:.12,sites:16,frames:48},
  qha:{source:'preset',preset:'einstein-volume',pressure:0,fit_degree:3,fit_window:5,gamma:1.5,theta:400,bulk_modulus:100,v0:40,natom:2,t_min:0,t_max:1000,t_step:25,content:''}
 };
+const qhaAuditPressures={interior:0,boundary:-100};
+const qhaAuditControls=()=>`<aside class="mr-scope" data-cm-qha-audit>
+ <h3>Compare an interior minimum with the upper volume boundary</h3>
+ <p>Both cases use a synthetic Einstein teaching model. Pressure is in GPa, and volume is in Å³ per input cell. The tensile condition of −100 GPa moves the sampled minimum to the upper volume edge. Choose a condition, run manually, and check whether the output reports equilibrium volume, thermal expansion and constant-pressure heat capacity.</p>
+ <div class="obs-links"><button type="button" class="secondary" data-cm-qha-audit-case="interior">Load the interior control (0 GPa)</button><button type="button" class="secondary" data-cm-qha-audit-case="boundary">Load the upper volume boundary (−100 GPa)</button></div>
+</aside>`;
 export async function renderCoupledMaterialsView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{},loadCuQhaSourceModule=loadCuQhaSource}){
  let disposed=false;
  container.innerHTML="<div class=\"obs-page mr-page cm-page\"><p role=\"status\">is preparing the distortion and excitation course...</p></div>";const root=container.firstElementChild,$=s=>root.querySelector(s),current=()=>!disposed&&root.parentNode===container&&container.isConnected!==false;lastResult=null;
@@ -121,7 +127,18 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
  function cases(){const all=[...data.cases].sort((a,b)=>(b.id===selection.material)-(a.id===selection.material));$('#cm-content').innerHTML=`<div class="obs-case-grid">${all.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p><p class="mr-scope">${esc(c.assumption)}</p><div class="obs-links">${c.modules.map(id=>{const m=data.modules.find(m=>m.id===id);const calculationRoute='#compute/'+m.route+(c.id==='cu-qha'?'':'?material='+encodeURIComponent(c.id));return `<a href="${coupledCourseRoute(id,'material='+encodeURIComponent(c.id))}">${esc(m.title)} · Learn →</a><a href="${esc(calculationRoute)}">corresponding calculation →</a>`;}).join('')}${c.links.map(([t,url])=>`<a href="${esc(url)}">${esc(t)} →</a>`).join('')}<a href="#atlas/notebook">Save material research records →</a></div></article>`).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{read();}catch(error){draftError=error?.message||"Check the current input";}flowDrafts.remember($('#cm-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);clearCuProof();clearZnOProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();}
+ function applyQhaAuditCase(kind){
+  if(!current()||module.id!=='qha'||lesson.id!=='qha-audit'||!Object.hasOwn(qhaAuditPressures,kind))return;
+  flowDrafts.discard(module.id);clearCuProof();
+  forms.qha={...structuredClone(defaults.qha),...structuredClone(lesson.lab),pressure:qhaAuditPressures[kind]};
+  tab='lab';invalidate();draw();sync();
+ }
+ function openLessonLab(){
+  if(!current())return;
+  if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");
+  if(lesson.id==='qha-audit')return applyQhaAuditCase('boundary');
+  flowDrafts.discard(module.id);clearCuProof();clearZnOProof();mergeLabInput(lesson.lab);tab='lab';invalidate();draw();sync();
+ }
  function derive(){const exercises=data.exercises.filter(e=>data.lessons.some(l=>l.id===e.lesson&&l.module===module.id));$('#cm-content').innerHTML=`<label class="obs-chapter">Select exercise<select id="cm-exercise">${options(exercises.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}</select></label><article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="cm-steps"></div><p id="cm-progress" role="status"></p>${courseFlowActions('cm')}${navlinks()}</article>`;const exerciseSelect=$('#cm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#cm-exercise')!==exerciseSelect)return;exercise=data.exercises.find(x=>x.id===e.target.value);lesson=data.lessons.find(x=>x.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#cm-steps'),exerciseId=exercise.id;
@@ -172,9 +189,12 @@ export async function renderCoupledMaterialsView({container,selection={},run,can
   const znoEntry=module.id==='distortion'?znoQuadratureHTML(znoOpen):'';
   const znoEvidence=currentZnOEvidence();
   const znoStatus=module.id==='distortion'?`<p id="cm-zno-source-status" class="mr-scope" role="status" tabindex="-1"${znoEvidence?'':' hidden'}>${znoEvidence?(znoEvidence.directionCount===1?"The verified ZnO input now contains the phase 0 direction. Run the calculation when ready.":"The verified ZnO input now contains the phase 0 and π/2 directions. Run the calculation when ready."):''}</p>`:'';
-  $('#cm-content').innerHTML=`${cuEntry}${znoEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${cuStatus}${znoStatus}${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
+  $('#cm-content').innerHTML=`${lesson.id==='qha-audit'?qhaAuditControls():''}${cuEntry}${znoEntry}<div class="obs-lab-layout"><form class="obs-controls" id="cm-form"><fieldset><legend>experimental parameters</legend>${cuStatus}${znoStatus}${controls()}<button type="submit" class="primary">runs Python and updates the demo →</button><button id="cm-cancel" type="button" class="secondary" hidden>Cancel calculation</button></fieldset></form><section id="cm-result" class="mr-result cm-result"><h3>Input → Calculate → Check → Save</h3><p>calculations are done within the browser. Run a tutorial preset first, then change parameters to observe structure, excitation, or thermodynamic response.</p></section></div>${navlinks()}`;
   const form=$('#cm-form');
   const formCurrent=()=>current()&&activeForm()===form;
+  for(const button of root.querySelectorAll('[data-cm-qha-audit-case]')){
+   button.onclick=()=>{if(formCurrent())applyQhaAuditCase(button.dataset.cmQhaAuditCase);};
+  }
   form.onsubmit=e=>{e.preventDefault();if(formCurrent())return calculate();};
   $('#cm-cancel').onclick=()=>{if(!formCurrent())return;cancelOwnJob(true);invalidate();$('#cm-result').innerHTML="<p role=\"status\">Calculation canceled. New results are generated after re-running.</p>";};
   form.oninput=e=>{

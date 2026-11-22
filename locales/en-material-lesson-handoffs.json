@@ -1,0 +1,16 @@
+{
+  "用同一支 ZnO 模式比较偶数与奇数超胞": "Compare even and odd supercells for the same ZnO mode",
+  "固定原胞倒易波矢 q=(1/2,0,0)，以及从 0 开始的 q 点索引 3、模式索引 10。选择一个超胞后手动运行，再比较周期性和结构导出。": "Keep the primitive reciprocal wavevector q=(1/2,0,0), q-point index 3 and mode index 10. The indices start at zero. Choose a supercell, run the calculation manually, and compare periodicity and structure export.",
+  "载入偶数超胞 [2,1,1]": "Load the even supercell [2,1,1]",
+  "载入奇数超胞 [3,1,1]": "Load the odd supercell [3,1,1]",
+  "查看 ZnO 计算来源 →": "See the ZnO calculation sources →",
+  "核验并载入 ZnO 有限波矢 →": "Verify and load the finite-q ZnO mode →",
+  "ZnO 配对文件暂时无法读取。": "The paired ZnO files could not be read.",
+  "ZnO 配对文件的 SHA-256 不匹配，请核对来源后重试。": "The paired ZnO files do not match their SHA-256 records. Check the source and try again.",
+  "ZnO 本征矢与原胞文件已核对。请手动运行，再比较另一个超胞。": "The ZnO eigenvector and primitive-cell files were verified. Run manually and then compare the other supercell.",
+  "载入 Si 的拉曼对照 →": "Load the Si Raman comparison →",
+  "比较内点极小值与体积上边界": "Compare an interior minimum with the upper volume boundary",
+  "两组都用合成 Einstein 教学模型。压力以 GPa 表示，每个输入胞的体积用 Å³ 表示。−100 GPa 是用于触及体积上边界的拉伸条件。选择条件后手动运行，核对是否报告平衡体积、热膨胀和定压热容。": "Both cases use a synthetic Einstein teaching model. Pressure is in GPa, and volume is in Å³ per input cell. The tensile condition of −100 GPa moves the sampled minimum to the upper volume edge. Choose a condition, run manually, and check whether the output reports equilibrium volume, thermal expansion and constant-pressure heat capacity.",
+  "载入内点对照（0 GPa）": "Load the interior control (0 GPa)",
+  "载入体积上边界（−100 GPa）": "Load the upper volume boundary (−100 GPa)"
+}

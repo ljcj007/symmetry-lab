@@ -45,18 +45,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 93861,
-      "sha256": "69ccec17f052ecf7dfcd116a78928306193799c795cc89e64f919f4c04b4b67f"
+      "bytes": 94968,
+      "sha256": "75c93d2c3a9666b4d2b119748a9dc59f4b7ff36efa9a99e95fd67ca11a034dc1"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 107193,
-      "sha256": "76e72878a7caa7f4a9d23a95e324353cbd1b49c18013649cc58793468996d5a7"
+      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32836,
-      "sha256": "6fcf6fb691dca52858cf92ba82918c42ff02445861bde3a31731ee6eca322ce0"
+      "bytes": 32846,
+      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755"
     },
     "dist/data/material-research.json": {
       "normalization": "utf8-lf-v1",
@@ -81,17 +81,17 @@
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
       "bytes": 8432,
-      "sha256": "ca1b5cb751cef84d7c735fc90a2bebaaa17193bbe8b32792b14949ce116b3b82"
+      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 68097,
-      "sha256": "b869005b0945d95bc471acf9b191cb07fd6682627860e1cd64e8bce33c1f1b24"
+      "bytes": 70987,
+      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 39246,
-      "sha256": "56b0b47e6b08aa5a32d65e673c0fceff2c026eb4bec98a05752bc7ec8074ee87"
+      "sha256": "be33d5c6a7bc1517b64180c97929c87292189de584fe5a0ef9a7d3f3001e7eb8"
     },
     "dist/python/magnetictb_browser.py": {
       "normalization": "utf8-lf-v1",
@@ -111,7 +111,7 @@
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 14024,
-      "sha256": "06071f3e19a8d669a7042af8727f1ef7999912844808066609f7cb26fe9984a6"
+      "sha256": "07d4a4cbce1c2b77e691f0be05e42aa31d9346c7f64b68bd1212fa164488539e"
     },
     "dist/tool-search.js": {
       "normalization": "utf8-lf-v1",
@@ -155,8 +155,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30282,
-      "sha256": "a51a36cb9fbdf9cd99f636b4eb0e155b7b19d8ae1b2977272a227396c3bd5a08"
+      "bytes": 30740,
+      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
     },
     "scripts/build-wannier-graphene-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -165,8 +165,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7688,
-      "sha256": "c8fcd14d7c30ff232bb77f9e72dd5e955383693edaf9087e9ef9fbcffac5ca96"
+      "bytes": 7779,
+      "sha256": "6fffe75adfc7473c04db7856e6043510bc16e98bc4e6347ff48962f6fa33f0e1"
     },
     "scripts/test-material-research-content.py": {
       "normalization": "utf8-lf-v1",

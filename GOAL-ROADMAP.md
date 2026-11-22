@@ -583,3 +583,20 @@ establish that all existing scientific and teaching content has been audited.
   built-in example updates its address. Editing the input, importing a model
   or preparing a follow-up calculation returns the address to the general
   tool route. All computations remain explicit actions.
+
+## Open the worked example from its own lesson
+
+- The first point-group lesson opens the positive quarter-turn of point group 4
+  on the displayed starting point. The four-step coordinate ledger uses the
+  actual operation matrix. The representation and character-reduction lessons
+  align their worked 4mm class order with the atlas order and check the
+  quadratic basis function against the actual character row.
+- Lie lessons 9–14 and their six derivations select their own explicit inputs.
+  The detuned Rabi example and resonant π-pulse exercise keep distinct settings.
+  The exchange, Dynkin-label and octet examples likewise retain the values used
+  in each calculation. Twelve captured requests are checked against Python.
+- The finite-wavevector freezing lesson loads the verified ZnO file pair and
+  compares even and odd repetitions at q = (1/2, 0, 0). The Raman polarization
+  lesson opens the Si Rz example at 22.5°. The quasiharmonic audit offers the
+  synthetic 0 GPa interior minimum and −100 GPa upper-boundary control, with
+  the sampled cell-volume range and pressure units shown.

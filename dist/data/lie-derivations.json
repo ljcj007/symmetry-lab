@@ -523,6 +523,7 @@
         "explanation": "直接代入 tπ=π/Ω；时间单位为所用角频率单位的倒数。"
       },
       "lab": "rabi",
+      "labPreset": "pi",
       "references": [
         {
           "sourceId": "wmi-rabi",
@@ -579,6 +580,7 @@
         "explanation": "对应振幅为 √(1/3)，其绝对值平方为 1/3。"
       },
       "lab": "su2_coupling",
+      "labPreset": "spin-one-by-half",
       "references": [
         {
           "sourceId": "mit-angular-addition"
@@ -686,6 +688,7 @@
         "explanation": "此时 E_{triplet}=−0.5、E_{singlet}=1.5，三重态较低。"
       },
       "lab": "su2_coupling",
+      "labPreset": "exchange-half-pair-kappa-two",
       "references": [
         {
           "sourceId": "mit-angular-addition"
@@ -742,6 +745,7 @@
         "explanation": "标签 (1,0) 与 (0,1) 不同；二次 Casimir 在 p、q 交换下不变。"
       },
       "lab": "su3_tensor",
+      "labPreset": "dynkin-twentyseven-by-singlet",
       "references": [
         {
           "sourceId": "osborn-groups",
@@ -795,6 +799,7 @@
         "explanation": "两个基本指标的张量分为对称与反对称部分，结果为 6⊕3̄，没有单态。"
       },
       "lab": "su3_tensor",
+      "labPreset": "three-bar",
       "references": [
         {
           "sourceId": "osborn-groups",
@@ -909,6 +914,7 @@
         "explanation": "表示包含关系只是可能非零的必要条件；动力学可以令允许通道的矩阵元恰好为零。"
       },
       "lab": "su3_tensor",
+      "labPreset": "eight-eight",
       "references": [
         {
           "sourceId": "osborn-groups",

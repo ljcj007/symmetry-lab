@@ -99,6 +99,12 @@ const alGammaPanelHTML=open=>`<details class="mr-scope" id="mr-al-gamma" ${open?
  <div class="obs-links"><a href="docs/phonopy-import.md#official-al-gamma">Original Al files and step-by-step checks →</a><a href="#atlas/research?material=al-phonopy-gamma">Al phonon material case →</a></div>
  </details>`;
 const alGammaLessonHTML=()=>`<aside class="mr-scope"><h3>Check equivalent Γ points with official Al data</h3><p>Use the same Phonopy calculation to compare two ways of writing Γ, then test whether a boundary wavevector can be frozen in one primitive cell.</p><p><a href="#compute/phonon-modes?preset=al-gamma">Open the Al phonon-mode exercise →</a></p></aside>`;
+const znoFreezingControls=()=>`<aside class="mr-scope" data-mr-zno-freezing>
+ <h3>Compare even and odd supercells for the same ZnO mode</h3>
+ <p>Keep the primitive reciprocal wavevector q=(1/2,0,0), q-point index 3 and mode index 10. The indices start at zero. Choose a supercell, run the calculation manually, and compare periodicity and structure export.</p>
+ <div class="obs-links"><button type="button" class="secondary" data-mr-zno-cells="2">Load the even supercell [2,1,1]</button><button type="button" class="secondary" data-mr-zno-cells="3">Load the odd supercell [3,1,1]</button></div>
+ <p><a href="data/examples/phonopy-zno-source.json">See the ZnO calculation sources →</a></p>
+</aside>`;
 function alGammaSourceHTML(identity){
  const {band,companion}=identity;
  return `<aside class="mr-scope"><h3>Official Al file pair verified</h3><p>Both files match the SHA-256 digests of the pinned release. The exercise explicitly uses THz for frequencies. The original length unit is au.</p><ul>${[band,companion].map(file=>`<li><a href="${esc(file.url)}" target="_blank" rel="noreferrer" data-math-ignore>${esc(file.filename)} ↗</a></li>`).join('')}</ul><p><a href="data/examples/phonopy-al-abacus-source.json" target="_blank">Pinned version, units and license ↗</a></p></aside>`;
@@ -211,7 +217,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
  const flowSteps=new Map(),flowDrafts=createCourseFlowDrafts();
  const thermalBridgeStates=new Map();let disposeThermalBridge=()=>{};
  const irState={};let disposeIR=()=>{},irOpen=selection.preset==='zno-ir';
- let alOpen=selection.preset==='al-gamma',verifiedAl=null;
+ let alOpen=selection.preset==='al-gamma',verifiedAl=null,verifiedZnOFreezing=null;
  let nacOpen=selection.preset==='zno-gamma-nac',disposeNAC=()=>{};
  let module=data.modules.find(m=>m.id===selection.module)||data.modules[0],lesson=data.lessons.find(l=>l.id===selection.lesson&&l.module===module.id)||data.lessons.find(l=>l.module===module.id),exercise=data.exercises.find(e=>e.id===selection.exercise&&data.lessons.some(l=>l.id===e.lesson&&l.module===module.id))||data.exercises.find(e=>e.lesson===lesson.id),tab=selection.calculationOnly?'lab':selection.atlasOnly?'cases':['learn','lab','derive','cases'].includes(selection.tab)?selection.tab:'learn';
  if(selection.exercise)lesson=data.lessons.find(l=>l.id===exercise.lesson)||lesson;
@@ -267,6 +273,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
   for(const [id,sample] of [['mr-demo','synthetic'],['mr-cu-example','cu']]){const button=$('#'+id);if(button)button.disabled=busy||(loading&&pendingRead.kind==='sample'&&pendingRead.sample===sample);}
   for(const button of root.querySelectorAll('[data-mr-gaas-case]'))button.disabled=busy||loading;
   for(const button of root.querySelectorAll('[data-mr-al-scene]'))button.disabled=busy||(loading&&pendingRead.sample==='al'&&pendingRead.scene===button.dataset.mrAlScene);
+  for(const button of root.querySelectorAll('[data-mr-zno-cells]'))button.disabled=busy||loading;
   const cancel=$('#mr-cancel');if(cancel){cancel.hidden=!(busy||loading);cancel.textContent=loading?"Cancel file loading":"Cancel calculation";}
   const status=$('#mr-input-status');if(status){status.hidden=!(loading||inputNotice);status.textContent=loading?"Loading the file. Run the calculation manually after loading finishes.":inputNotice;}
   const provenance=$('#mr-input-provenance');if(module.id==='modes'&&provenance){const identity=alSourceFor(forms.modes);provenance.innerHTML=identity?alGammaSourceHTML(identity):'';}
@@ -296,7 +303,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
   ${learningBridgeHTML('thermal',lesson.id)}
   ${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}
   ${lesson.id==='band-crossing'?grapheneActivityHTML():''}
-  <div class="obs-links"><button id="mr-to-lab" class="primary">Open the corresponding experiment →</button><button id="mr-to-derive" class="secondary">step-by-step derivation →</button></div>
+  <div class="obs-links"><button id="mr-to-lab" class="primary">${lesson.id==='mode-freezing'?"Verify and load the finite-q ZnO mode →":"Open the corresponding experiment →"}</button><button id="mr-to-derive" class="secondary">step-by-step derivation →</button></div>
   ${navlinks()}${sources(data.sources.filter(s=>lesson.references.includes(s.id)))}</article>`;
   disposeThermalBridge=bindLearningBridge({root,family:'thermal',lessonId:lesson.id,isCurrent:current,stateStore:thermalBridgeStates,onOpenLab:openThermalBridgeLab});
   bindGrapheneActivity(root,current);
@@ -314,7 +321,15 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{read();}catch(error){draftError=error?.message||"Check the current input";}flowDrafts.remember($('#mr-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
  function openThermalBridgeLab(request){if(!current()||module.id!=='thermo'||request?.module!=='thermo'||request?.action!=='phonon_thermo')return false;flowDrafts.discard(module.id);forms.thermo={...structuredClone(defaults.thermo),...structuredClone(request.input)};invalidate();tab='lab';draw();sync();return true;}
- function openLessonLab(){if(!current())return;if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");flowDrafts.discard(module.id);Object.assign(forms[module.id],structuredClone(lesson.lab||{}));tab='lab';invalidate();draw();sync();}
+ function openLessonLab(){
+  if(!current())return;
+  if(!lesson.lab||typeof lesson.lab!=='object')throw Error("This lesson's experiment parameters are temporarily unavailable. Return to the course directory to check them.");
+  flowDrafts.discard(module.id);
+  const freezing=lesson.id==='mode-freezing';
+  if(!freezing)Object.assign(forms[module.id],structuredClone(lesson.lab));
+  tab='lab';invalidate();draw();sync();
+  if(freezing)return loadZnOFreezing(2);
+ }
  function derive(){const exercises=data.exercises.filter(e=>data.lessons.some(l=>l.id===e.lesson&&l.module===module.id));$('#mr-content').innerHTML=`<label class="obs-chapter">Select exercise<select id="mr-exercise">${options(exercises.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}</select></label><article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="mr-steps"></div><p id="mr-progress" role="status"></p>${courseFlowActions('mr')}${navlinks()}</article>`;const exerciseSelect=$('#mr-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#mr-exercise')!==exerciseSelect)return;exercise=data.exercises.find(x=>x.id===e.target.value);lesson=data.lessons.find(x=>x.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#mr-steps'),exerciseId=exercise.id;
@@ -333,6 +348,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
    const otherPanels=alGammaPanelHTML(alOpen)+znoIRPanelHTML(irOpen);
    const nacPanel=znoNACPanelHTML(nacOpen);
    optionalPanels=selection.preset==='zno-gamma-nac'?nacPanel+otherPanels:otherPanels+nacPanel;
+   if(lesson.id==='mode-freezing')optionalPanels=znoFreezingControls()+optionalPanels;
   }
   $('#mr-content').innerHTML=`${optionalPanels}<div class="obs-lab-layout"><form class="obs-controls" id="mr-form"><fieldset><legend>experimental parameters</legend>${controls()}<button id="mr-run" type="submit" class="primary">runs Python and updates the demo →</button><button id="mr-cancel" type="button" class="secondary" hidden>Cancel calculation</button><p id="mr-input-status" role="status" hidden></p></fieldset><div id="mr-input-provenance">${isCuInput()?cuThermalSourceHTML():''}</div></form><section id="mr-result" class="mr-result"><h3>Input → Calculate → Check → Save</h3><p>Runs Python within the browser and saves the assumptions along with the original input in the materials study record.</p></section></div>${navlinks()}`;
   if(module.id==='modes'&&forms.modes.preset==='custom'){for(const[id,key]of [['mr-file-text','content'],['mr-structure-text','structure_content']])if($('#'+id))$('#'+id).value=forms.modes[key]??'';}const form=$('#mr-form');form.onsubmit=e=>{e.preventDefault();if(current()&&$('#mr-form')===form)return calculate();};
@@ -368,6 +384,9 @@ export async function renderMaterialResearchView({container,selection={},run,can
     invalidate();draw();sync();
    };
   }
+  for(const button of root.querySelectorAll('[data-mr-zno-cells]')){
+   button.onclick=()=>{if(current()&&$('#mr-form')===form&&!button.disabled)return loadZnOFreezing(Number(button.dataset.mrZnoCells));};
+  }
   for(const id of ['mr-preset','mr-model','mr-source'])if($('#'+id)){const control=$('#'+id);control.onchange=()=>{if(!current()||$('#'+id)!==control)return;try{read();if(id==='mr-preset'&&forms.modes.preset==='custom')forms.modes.length_unit='auto';invalidate();draw();sync();}catch(e){$('#mr-result').textContent=e.message;}};}
   for(const [id,kind]of [['mr-file','content'],['mr-structure-file','structure_content']])if($('#'+id)){const control=$('#'+id);control.onchange=e=>{if(current()&&$('#'+id)===control)return loadLocalFile(e.target.files?.[0],kind);};}
   for(const [id,sample]of [['mr-demo','synthetic'],['mr-cu-example','cu']])if($('#'+id)){const button=$('#'+id);button.onclick=()=>{if(current()&&$('#'+id)===button)return loadExample(sample);};}
@@ -388,6 +407,33 @@ export async function renderMaterialResearchView({container,selection={},run,can
    inputNotice="Both original Al files have been verified and loaded. Check the wavevector index, supercell and units, then run the calculation.";
    draw();sync();$('#mr-run')?.focus?.();
   }catch(error){inputReadFailed(request,error,()=>loadAlGammaScene(scene));}
+ }
+ async function loadZnOFreezing(repetitions){
+  if(module.id!=='modes'||lesson.id!=='mode-freezing'||busy||readIsCurrent()||![2,3].includes(repetitions))return;
+  const request=beginInputRead('sample',{sample:'zno-freezing'});
+  if(!request)return;
+  try{
+   if(!verifiedZnOFreezing){
+    const {ZNO_PHONOPY_EXAMPLE:source,verifyZnOPhonopyExample}=await import('./structure-dynamics-ui.js?v=20261122-lesson-handoffs1');
+    if(!readIsCurrent(request))return;
+    const decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
+    const readSource=async file=>{
+     const response=await fetch('data/examples/'+file,{signal:request.controller?.signal});
+     if(!response.ok)throw Error("The paired ZnO files could not be read.");
+     return decoder.decode(await response.arrayBuffer());
+    };
+    const [content,companion]=await Promise.all([readSource(source.file),readSource(source.companionFile)]);
+    if(!readIsCurrent(request))return;
+    const identity=await verifyZnOPhonopyExample(content,companion);
+    if(!readIsCurrent(request))return;
+    if(!identity)throw Error("The paired ZnO files do not match their SHA-256 records. Check the source and try again.");
+    verifiedZnOFreezing={content,filename:source.file,structure_content:companion};
+   }
+   forms.modes={...structuredClone(defaults.modes),...verifiedZnOFreezing,preset:'custom',frequency_unit:'THz',
+    selected_q:3,selected_band:10,amplitude:.12,supercell:[repetitions,1,1]};
+   invalidate();inputNotice="The ZnO eigenvector and primitive-cell files were verified. Run manually and then compare the other supercell.";
+   draw();sync();$('#mr-run')?.focus?.();
+  }catch(error){inputReadFailed(request,error,()=>loadZnOFreezing(repetitions));}
  }
  async function loadLocalFile(file,kind){
   if(!file)return;const request=beginInputRead('file',{filename:file.name});if(!request)return;
@@ -427,5 +473,5 @@ export async function renderMaterialResearchView({container,selection={},run,can
  function bindThermo(){const paint=()=>{const r=result,b=thermalBasis(r),energy=['freeEnergy','internalEnergy'].includes(quantity),label={heatCapacity:'Cv',entropy:'S',freeEnergy:'F',internalEnergy:'U'}[quantity],temp=r.series[0]?.rows[cursor]?.temperature;$('#mr-thermal-plot').innerHTML=multiCurveSVG(r.series.map(s=>({label:s.label,points:s.rows.map(row=>[row.temperature,row[quantity]])})),{xLabel:"Temperature T / K",yLabel:label+' / '+(energy?b.energy:b.entropy),cursor:temp});$('#mr-temperature-values').innerHTML=`<h3>T = ${num(temp)} K · ${esc(b.label)}</h3>`+table(["model/data",'F / '+b.energy,'U / '+b.energy,'S / '+b.entropy,'Cv / '+b.entropy],r.series.map(s=>{const row=s.rows.find(x=>x.temperature===temp)||{};return [s.label,num(row.freeEnergy),num(row.internalEnergy),num(row.entropy),num(row.heatCapacity)];}));};$('#mr-quantity').onchange=e=>{quantity=e.target.value;paint();};$('#mr-temperature').oninput=e=>{cursor=+e.target.value;paint();};paint();}
 
  if(selection.lesson&&tab==='lab'&&!selection.calculationOnly)Object.assign(forms[module.id],structuredClone(lesson.lab||{}));draw();
- return ()=>{disposeIR();disposeNAC();disposeThermalBridge();if(pendingRead?.sample==='al'){const request=pendingRead;pendingRead=null;request.controller?.abort();}};
+ return ()=>{disposeIR();disposeNAC();disposeThermalBridge();const request=pendingRead;pendingRead=null;request?.controller?.abort();};
 }

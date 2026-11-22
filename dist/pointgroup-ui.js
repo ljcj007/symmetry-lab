@@ -3,13 +3,15 @@ import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {matrixBridgeHTML,bindMatrixBridge} from './matrix-bridges.js?v=20261113-flow1';
 import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 import {complexCharacterCheckpointHTML,bindComplexCharacterCheckpoint} from './complex-character-checkpoint.js?v=20261122-complexchar1';
+import {c4vCrosswalkEntryHTML,bindC4vCrosswalk} from './c4v-character-crosswalk.js?v=20261122-lessonhandoff1';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inlineMath=(tex,source=tex)=>`<span class="sl-math" data-math-source="${esc(source)}">${mathHTML(tex)}</span>`;
 const storageKey = 'symmetry-lab.pointgroups.progress.v1';
 const tabs = [['learn','学习路线'],['atlas','32 点群图谱'],['lab','对称操作实验'],['quiz','练习与自测']];
-const state = {tab:'learn',lesson:0,group:null,search:'',system:'',operation:0,point:[.63,.37,.81],step:0,showOrbit:false,answers:{},quizLesson:'all',revision:0,timer:null};
+const squareStarterPreset = 'square-quarter-turn';
+const state = {tab:'learn',lesson:0,group:null,search:'',system:'',operation:0,point:[.63,.37,.81],step:0,squareStarter:false,showOrbit:false,answers:{},quizLesson:'all',revision:0,timer:null};
 let dataPromise, loaded;
 const compositionState=new Map();
 const representationActionsState=new Map();
@@ -117,16 +119,26 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     return disposeView;
   }
   if(!current())return disposeView;
-  if(selection.pathway||selection.tab){state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.lesson=Math.max(0,lessons.lessons.findIndex(item=>item.id===selection.lesson));if(selection.group)changeGroup(selection.group);if(state.tab==='quiz'&&selection.lesson)state.quizLesson=String(state.lesson);}
-  const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,group:String(state.group)});onLocation('学习中心 / 基础与表示 / '+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
+  if(selection.pathway||selection.tab){state.squareStarter=false;state.tab=tabs.some(([id])=>id===selection.tab)?selection.tab:'learn';state.lesson=Math.max(0,lessons.lessons.findIndex(item=>item.id===selection.lesson));if(selection.group)changeGroup(selection.group);if(state.tab==='quiz'&&selection.lesson)state.quizLesson=String(state.lesson);}
+  if(state.tab==='lab'&&selection.lesson==='group-basics'&&selection.preset===squareStarterPreset&&(!selection.group||String(selection.group)==='9'))setSquareStarter();
+  const sync=()=>{onNavigate({tab:state.tab,lesson:lessons.lessons[state.lesson]?.id,group:String(state.group),preset:state.squareStarter&&state.tab==='lab'?squareStarterPreset:undefined});onLocation('学习中心 / 基础与表示 / '+shortLessonTitle(lessons.lessons[state.lesson]||{}));};
   const allQuestions=quizEntries(lessons.lessons);
   const source=lessons.source||{};
   const sourceText=[Array.isArray(source.authors)?source.authors.join('、'):source.authors,source.title,source.edition,source.publisher,source.year].filter(Boolean).join(' · ');
   const sourceDOI=String(source.doi||'').replace(/^https?:\/\/doi\.org\//,'');
   const sourceLink=/^10\.\d{4,9}\/[\w./();:+-]+$/i.test(sourceDOI)?` <a href="https://doi.org/${esc(sourceDOI)}" target="_blank" rel="noreferrer">出版信息 ↗</a>`:'';
   const sourceHTML=()=>`<details class="pg-source"><summary>参考书与使用约定</summary><p>${esc(sourceText)}${sourceLink}</p><p>${esc(source.referenceNote||'教学内容以自己的语言组织，章节页码用于定位参考书；图谱和交互实验由本项目生成。')}</p><p>图谱讲解三维晶体的 32 个普通点群与单值表示，不含磁点群和自旋双群。点群操作没有平移部分；进入工作台时使用代表空间群的 Γ 点。</p></details>`;
-  function navigate(tab) { if(!current())return;stop();state.tab=tab;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
-  function changeGroup(id) { const g=atlas.groups.find(g=>String(g.id)===String(id))||atlas.groups[0];state.group=g.id;state.operation=g.generators?.[0]??0;state.step=0;stop(); }
+  function navigate(tab) { if(!current())return;stop();state.tab=tab;if(tab!=='lab')state.squareStarter=false;if(tab==='quiz')state.quizLesson=String(state.lesson);draw();sync();$('.pg-content')?.focus({preventScroll:true}); }
+  function changeGroup(id) { const g=atlas.groups.find(g=>String(g.id)===String(id))||atlas.groups[0];state.group=g.id;state.operation=g.generators?.[0]??0;state.step=0;state.squareStarter=false;stop(); }
+  function setSquareStarter(){
+    const group=atlas.groups.find(item=>item.id===9&&item.hm==='4');
+    const operation=group?.operations?.findIndex(item=>item.label==='C4z+'&&item.order===4)??-1;
+    if(operation<0)return;
+    changeGroup(group.id);
+    state.operation=operation;
+    state.point=[1,0,0];
+    state.squareStarter=true;
+  }
   function draw() {
     if(!current())return;
     clearLearningSupport();
@@ -157,7 +169,8 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     clearLearningSupport();
     state.lesson=safeIndex(state.lesson,lessons.lessons.length);
     const lesson=lessons.lessons[state.lesson];
-    $('.pg-content').innerHTML=`<div class="classroom-chapter-picker"><label>基础与表示 · 选择单元<select id="pg-chapter-select">${lessons.lessons.map((item,i)=>`<option value="${i}" ${state.lesson===i?'selected':''}>${esc(item.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="pg-chapter-lab">进入演示 →</button></div><div class="pg-learn-layout"><aside class="pg-lesson-nav" aria-label="课程目录"><p class="pg-label">循序渐进 · 学习路线</p>${lessons.lessons.map((item,i)=>{
+    const starter=lesson.id==='group-basics';
+    $('.pg-content').innerHTML=`<div class="classroom-chapter-picker"><label>基础与表示 · 选择单元<select id="pg-chapter-select">${lessons.lessons.map((item,i)=>`<option value="${i}" ${state.lesson===i?'selected':''}>${esc(item.title)}</option>`).join('')}</select></label><button type="button" class="secondary" id="pg-chapter-lab">${starter?'重放例题的四重旋转 →':'进入演示 →'}</button></div><div class="pg-learn-layout"><aside class="pg-lesson-nav" aria-label="课程目录"><p class="pg-label">循序渐进 · 学习路线</p>${lessons.lessons.map((item,i)=>{
       const entries=quizEntries([item]),complete=entries.length>0&&correctCount(entries)===entries.length;
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
@@ -169,6 +182,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>配套交互教学演示</strong><p>把这节课的符号、矩阵与物理图像放在一起操作。</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">打开本节交互演示 →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
+      ${c4vCrosswalkEntryHTML(lesson.id)}
       ${complexCharacterCheckpointHTML(lesson.id)}
       ${lesson.pitfall?`<aside class="pg-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       ${lesson.id==='from-point-to-space'?`<section class="pg-worked" aria-label="从点群到晶体计算" data-si-structure-practice>
@@ -177,17 +191,24 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
         <div class="pg-lesson-actions"><a class="secondary" href="#structure">在结构工作台载入 Phonopy 硅算例 →</a><button class="secondary" type="button" id="pg-open-sg99">SG 99 · Γ 单值表示工作台 →</button><a class="primary" href="#classroom/crystal?track=space&amp;lesson=space-01">继续空间群第一课 →</a></div>
       </section>`:''}
       <div class="pg-reference"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}</span>`).join('')}</div>
-      <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">动手操作对称变换</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
+      <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">${starter?'重放例题的四重旋转 →':'动手操作对称变换'}</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
     const characterCheckpoint=$('[data-complex-character-body]');
     if(characterCheckpoint)bindComplexCharacterCheckpoint({root:characterCheckpoint,atlas,isCurrent:()=>current()&&$('[data-complex-character-body]')===characterCheckpoint});
+    const crosswalk=$('[data-c4v-crosswalk-body]');
+    if(crosswalk)bindC4vCrosswalk({root:crosswalk,atlas,isCurrent:()=>current()&&$('[data-c4v-crosswalk-body]')===crosswalk});
     mountComposition(lesson.id);
     mountRepresentation(lesson.id);
     disposeIdentify=mountPointgroupIdentify();
-    $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=()=>navigate('lab');
+    const lessonLab=()=>{
+      if(!current()||state.tab!=='learn'||lessons.lessons[state.lesson]!==lesson)return;
+      if(starter)setSquareStarter();
+      navigate('lab');
+    };
+    $('#pg-chapter-select').onchange=e=>{state.lesson=Number(e.target.value);drawLearn();sync();};$('#pg-chapter-lab').onclick=lessonLab;
     root.querySelectorAll('[data-lesson]').forEach(button=>button.onclick=()=>{state.lesson=Number(button.dataset.lesson);drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});});
     $('#pg-lesson-quiz').onclick=()=>{state.quizLesson=String(state.lesson);navigate('quiz');};
-    $('#pg-lesson-lab').onclick=()=>navigate('lab');
+    $('#pg-lesson-lab').onclick=lessonLab;
     if($('#pg-open-sg99')){const handoff=$('#pg-open-sg99');handoff.onclick=()=>{if(current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id==='from-point-to-space'&&$('#pg-open-sg99')===handoff)openGroup({mode:'sg',id:99,k:[0,0,0],doubleValued:false});};}
     if($('#pg-next-lesson'))$('#pg-next-lesson').onclick=()=>{state.lesson++;drawLearn();sync();$('.pg-lesson h2')?.scrollIntoView({block:'nearest'});};
   }
@@ -348,12 +369,26 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
     const g=selected();
     state.operation=safeIndex(state.operation,g.operations.length);
     const op=g.operations[state.operation];
-    $('.pg-content').innerHTML=`<div class="pg-lab-heading"><div><h2>一个操作，连续做几次？</h2><p>选择操作，观察 r → Rr → R²r。点会回到原处，但点的周期未必等于操作的阶。</p></div><button type="button" class="secondary" id="pg-lab-atlas">查看 ${crystalSpan(g.hm,'hm')} 的特征标表 →</button></div><div class="pg-lab-layout"><section class="pg-lab-controls"><label>点群（国际符号）<select id="pg-lab-group">${atlas.groups.map(item=>`<option value="${item.id}" ${item.id===g.id?'selected':''}>${esc(nativeHm(item.hm))} · ${esc(item.system)}</option>`).join('')}</select></label><label>对称操作<select id="pg-lab-operation">${g.operations.map((item,i)=>`<option value="${i}" ${i===state.operation?'selected':''}>${esc(item.label)} · 阶 ${item.order}${Number(item.det)<0?' · 反向':''}</option>`).join('')}</select></label><div class="pg-operation-info"><span>当前操作 <b>${crystalSpan(op.label,'operation')}</b></span><span>det R = <b>${esc(fmt(op.det))}</b></span><span>操作阶 <b>${op.order}</b></span><span>${Number(op.det)>0?'保持取向':'改变取向'}</span></div><div class="pg-equation"><span>r′ =</span>${matrixHTML(op.matrix)}<span>r</span></div><p class="pg-small">每一列是相应单位基向量变换后的坐标。det R = −1 可以对应镜面、反演或旋转反演。</p><fieldset class="pg-point-inputs"><legend>初始点 p₀</legend>${state.point.map((value,i)=>`<label><span>${'xyz'[i]} = <output id="pg-point-value-${i}">${fmt(value)}</output></span><input id="pg-point-${i}" type="range" min="-1" max="1" step="0.01" value="${value}" aria-label="初始点 ${'xyz'[i]} 坐标"></label>`).join('')}</fieldset><div class="pg-point-presets"><button type="button" data-point="generic">一般位置</button><button type="button" data-point="axis">x 轴上</button><button type="button" data-point="plane">xy 平面内</button></div><label class="pg-check"><input type="checkbox" id="pg-full-orbit" ${state.showOrbit?'checked':''}> 同时显示整个点群生成的点轨道</label></section><section class="pg-lab-visual"><div class="pg-svg-wrap" id="pg-lab-svg">${labSVG(g,op)}</div><div class="pg-svg-legend"><span><i class="initial"></i>初始点</span><span><i class="current"></i>当前点</span><span><i class="cycle"></i>此操作生成的点</span>${state.showOrbit?'<span><i class="orbit"></i>整个点群的点轨道</span>':''}</div><div class="pg-lab-actions"><button type="button" class="primary" id="pg-apply">施加一次 R →</button><button type="button" class="secondary" id="pg-play">演示完整一周</button><button type="button" class="secondary" id="pg-reset">重置</button></div><div id="pg-lab-status" class="pg-lab-status" aria-live="polite"></div></section></div><aside class="pg-callout"><strong>操作、子群和点轨道是三个概念。</strong> 反复施加一个操作 R 得到循环子群 ⟨R⟩；施加点群的所有操作得到点的完整轨道。落在对称轴或镜面上的特殊点可能被多个操作保持不动，因此轨道中的点数可以小于群阶。</aside>`;
+    const sequenceCaption='四次旋转的坐标记录';
+    const sequence=state.squareStarter?`<section class="pg-worked" id="pg-square-sequence">
+      <h3>逐步回到起点</h3><p>从 x 轴上的点出发。每次转 90°，按下「施加一次」逐项核对。</p>
+      <div class="pg-table-wrap" role="region" tabindex="0" aria-label="${esc(sequenceCaption)}"><table class="pg-character-table">
+        <caption>${esc(sequenceCaption)}</caption><thead><tr><th scope="col">四分之一转次数</th><th scope="col">笛卡尔坐标</th></tr></thead>
+        <tbody>${Array.from({length:op.order+1},(_,i)=>`<tr data-pg-square-step="${i}"><th scope="row">${i}</th><td>${esc(vector(transformed(op,state.point,i)))}</td></tr>`).join('')}</tbody>
+      </table></div></section>`:'';
+    $('.pg-content').innerHTML=`<div class="pg-lab-heading"><div><h2>一个操作，连续做几次？</h2><p>选择操作，观察 r → Rr → R²r。点会回到原处，但点的周期未必等于操作的阶。</p></div><button type="button" class="secondary" id="pg-lab-atlas">查看 ${crystalSpan(g.hm,'hm')} 的特征标表 →</button></div><div class="pg-lab-layout"><section class="pg-lab-controls"><label>点群（国际符号）<select id="pg-lab-group">${atlas.groups.map(item=>`<option value="${item.id}" ${item.id===g.id?'selected':''}>${esc(nativeHm(item.hm))} · ${esc(item.system)}</option>`).join('')}</select></label><label>对称操作<select id="pg-lab-operation">${g.operations.map((item,i)=>`<option value="${i}" ${i===state.operation?'selected':''}>${esc(item.label)} · 阶 ${item.order}${Number(item.det)<0?' · 反向':''}</option>`).join('')}</select></label><div class="pg-operation-info"><span>当前操作 <b>${crystalSpan(op.label,'operation')}</b></span><span>det R = <b>${esc(fmt(op.det))}</b></span><span>操作阶 <b>${op.order}</b></span><span>${Number(op.det)>0?'保持取向':'改变取向'}</span></div><div class="pg-equation"><span>r′ =</span>${matrixHTML(op.matrix)}<span>r</span></div><p class="pg-small">每一列是相应单位基向量变换后的坐标。det R = −1 可以对应镜面、反演或旋转反演。</p><fieldset class="pg-point-inputs"><legend>初始点 p₀</legend>${state.point.map((value,i)=>`<label><span>${'xyz'[i]} = <output id="pg-point-value-${i}">${fmt(value)}</output></span><input id="pg-point-${i}" type="range" min="-1" max="1" step="0.01" value="${value}" aria-label="初始点 ${'xyz'[i]} 坐标"></label>`).join('')}</fieldset><div class="pg-point-presets"><button type="button" data-point="generic">一般位置</button><button type="button" data-point="axis">x 轴上</button><button type="button" data-point="plane">xy 平面内</button></div><label class="pg-check"><input type="checkbox" id="pg-full-orbit" ${state.showOrbit?'checked':''}> 同时显示整个点群生成的点轨道</label></section><section class="pg-lab-visual"><div class="pg-svg-wrap" id="pg-lab-svg">${labSVG(g,op)}</div><div class="pg-svg-legend"><span><i class="initial"></i>初始点</span><span><i class="current"></i>当前点</span><span><i class="cycle"></i>此操作生成的点</span>${state.showOrbit?'<span><i class="orbit"></i>整个点群的点轨道</span>':''}</div><div class="pg-lab-actions"><button type="button" class="primary" id="pg-apply">施加一次 R →</button><button type="button" class="secondary" id="pg-play">演示完整一周</button><button type="button" class="secondary" id="pg-reset">重置</button></div><div id="pg-lab-status" class="pg-lab-status" aria-live="polite"></div></section></div><aside class="pg-callout"><strong>操作、子群和点轨道是三个概念。</strong> 反复施加一个操作 R 得到循环子群 ⟨R⟩；施加点群的所有操作得到点的完整轨道。落在对称轴或镜面上的特殊点可能被多个操作保持不动，因此轨道中的点数可以小于群阶。</aside>`+sequence;
+    const clearSequence=()=>{
+      if(!state.squareStarter)return;
+      state.squareStarter=false;
+      const table=$('#pg-square-sequence');
+      if(table)table.hidden=true;
+      sync();
+    };
     $('#pg-lab-atlas').onclick=()=>navigate('atlas');
-    $('#pg-lab-group').onchange=e=>{changeGroup(e.target.value);drawLab();};
-    $('#pg-lab-operation').onchange=e=>{stop();state.operation=Number(e.target.value);state.step=0;drawLab();};
-    state.point.forEach((_,i)=>{$('#pg-point-'+i).oninput=e=>{stop();state.point[i]=Number(e.target.value);state.step=0;$('#pg-point-value-'+i).textContent=fmt(state.point[i]);refreshLab();};});
-    root.querySelectorAll('[data-point]').forEach(button=>button.onclick=()=>{stop();state.point=button.dataset.point==='axis'?[1,0,0]:button.dataset.point==='plane'?[.63,.37,0]:[.63,.37,.81];state.step=0;drawLab();});
+    $('#pg-lab-group').onchange=e=>{const hadSequence=state.squareStarter;changeGroup(e.target.value);drawLab();if(hadSequence)sync();};
+    $('#pg-lab-operation').onchange=e=>{stop();state.operation=Number(e.target.value);state.step=0;clearSequence();drawLab();};
+    state.point.forEach((_,i)=>{$('#pg-point-'+i).oninput=e=>{stop();state.point[i]=Number(e.target.value);state.step=0;clearSequence();$('#pg-point-value-'+i).textContent=fmt(state.point[i]);refreshLab();};});
+    root.querySelectorAll('[data-point]').forEach(button=>button.onclick=()=>{stop();state.point=button.dataset.point==='axis'?[1,0,0]:button.dataset.point==='plane'?[.63,.37,0]:[.63,.37,.81];state.step=0;clearSequence();drawLab();});
     $('#pg-full-orbit').onchange=e=>{state.showOrbit=e.target.checked;drawLab();};
     $('#pg-apply').onclick=()=>{stop();state.step=(state.step%op.order)+1;refreshLab();};
     $('#pg-reset').onclick=()=>{stop();state.step=0;refreshLab();};
