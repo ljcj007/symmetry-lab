@@ -2,14 +2,15 @@ import {createResourceLoader,createGroupLoader} from './resource-loader.js?v=202
 import {startFormulaDictionary,renderFormulaDictionary} from './formula-dictionary.js?v=20261120-lesson-nav1';
 import {crystalSpan} from './crystal-notation.js?v=20261111-demos1';
 import {startMathDisplay,mathSourceText} from './math-display.js?v=20261113-prose2';
-import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-zno-gamma-nac1';
-import {startToolFinder} from './tool-finder.js?v=20261122-zno-gamma-nac1';
+import {renderNavigationHub,knownTool,rememberRoute} from './navigation-ui.js?v=20261122-character-model1';
+import {startToolFinder} from './tool-finder.js?v=20261122-character-model1';
 import {isFullMagneticGroupQuery,matchMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
+import {readMagneticTBPreset,magneticTBPresetRoute} from './magnetictb-presets.js?v=20261122-character-model1';
 import {spaceGroupNumberForQuery,spaceGroupSymbolKey} from './tool-search.js?v=20261122-start-crystal1';
 import {bandMatchRows} from './band-match-results.js?v=20261120-band-match-display1';
 import {buildWorkbenchRoute,parseWorkbenchSelection,parseWorkbenchCoordinate as parseNumber} from './workbench-route.js?v=20261122-nextpaths1';
 import {runPythonTask as executePythonTask,onPythonStatus,cancelPython} from './python-client.js?v=20261122-zno-nac1';
-import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-zno-gamma-nac1';
+import {renderClassroomView,getClassroomResult,isClassroomView,resolveClassroomRoute,classroomHash,parseClassroomRoute,withClassroomNavigationContext} from './classroom-ui.js?v=20261122-character-model1';
 import {projectInputFor} from './project-input.js?v=20261117-phonopy1';
 import {phonopyScatteringVisit} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
@@ -25,7 +26,7 @@ function runPythonTask(action,input,recordContext={}){
  return pending;
 }
 
-const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261120-quartz-hand1'),structure:()=>import('./structure-ui.js?v=20261122-nextpaths1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
+const optionalViews=createResourceLoader(key=>({phonopyScattering:()=>import('./phonopy-scattering-ui.js?v=20261117-derive1'),compare:()=>import('./comparison-lab.js?v=20261117-derive1'),projects:()=>import('./response-projects.js?v=20261117-derive1'),advanced:()=>import('./advanced-ui.js?v=20261120-advanced1'),research:()=>import('./research-ui.js?v=20261122-character-model1'),structure:()=>import('./structure-ui.js?v=20261122-nextpaths1'),structureHandoff:()=>import('./structure-handoff.js?v=20261114-evidence2')})[key]());
 const getStructureResult=()=>optionalViews.peek('structure')?.getStructureResult();
 const getAdvancedResult=()=>optionalViews.peek('advanced')?.getAdvancedResult();
 const getResearchResult=view=>optionalViews.peek('research')?.getResearchResult(view);
@@ -95,6 +96,7 @@ function setView(request,options={}){
  const pending=state.pendingGroup;
  if(route==='workbench'&&options.history!==false&&state.view==='workbench'&&pending&&!groupLoader.peek(pending.mode))route=previousRoute;
  const path=route.split('?')[0],params=new URLSearchParams(route.split('?')[1]||'');
+ if(path==='magnetictb'&&route!==path)route=magneticTBPresetRoute(readMagneticTBPreset(new URLSearchParams(route.slice(path.length+1))));
  let course=parseClassroomRoute(route),primary;
  if(course){view=course.section==='overview'?'classroom':course.section;primary=course.calculationOnly?'compute':'classroom';}
  else if(path==='compute/phonopy-scattering'){view='phonopy-scattering';primary='compute';course={...Object.fromEntries(params),section:'phonopy-scattering',pathway:'observables',calculationOnly:true};}
@@ -342,9 +344,16 @@ async function render(){
    });
    retainRenderedViewCleanup(cleanup,ticket);
   }else if(['magnetictb','crystkit'].includes(view)){
+   const query=state.route.split('?')[1];
+   const preset=view==='magnetictb'&&query?readMagneticTBPreset(new URLSearchParams(query)):null;
    const cleanup=await page.renderResearchView(view,{
     container:$('#app'),isCurrent:current,run:runPythonTask,toast,download,
-    context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued,handednessExercise:state.route==='crystkit?preset=handedness',quartzHandednessExercise:state.route==='crystkit?preset=quartz-handedness'}
+    onPresetChange:(nextPreset,keepHistory)=>{
+     if(!current()||view!=='magnetictb')return;
+     const route=magneticTBPresetRoute(nextPreset);
+     if(state.route!==route)setView(route,{render:false,history:keepHistory});
+    },
+    context:{group:state.group,mode:state.mode,k:state.k,doubleValued:state.doubleValued,magneticTBPreset:preset,handednessExercise:state.route==='crystkit?preset=handedness',quartzHandednessExercise:state.route==='crystkit?preset=quartz-handedness'}
    });
    retainRenderedViewCleanup(cleanup,ticket);
   }

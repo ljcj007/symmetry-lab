@@ -2,6 +2,7 @@ import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {mathHTML} from './math-display.js?v=20261113-prose2';
 import {matrixBridgeHTML,bindMatrixBridge} from './matrix-bridges.js?v=20261113-flow1';
 import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
+import {complexCharacterCheckpointHTML,bindComplexCharacterCheckpoint} from './complex-character-checkpoint.js?v=20261122-complexchar1';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -168,6 +169,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>Related Interactive Demo</strong><p>Explore this lesson's symbols, matrices, and physical pictures together.</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">Open This Lesson's Demo →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
+      ${complexCharacterCheckpointHTML(lesson.id)}
       ${lesson.pitfall?`<aside class="pg-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       ${lesson.id==='from-point-to-space'?`<section class="pg-worked" aria-label="From point groups to crystal calculations" data-si-structure-practice>
         <h3>Continue this lesson with the tools</h3><p>Use a consistent cell and wavevector convention before comparing representations. For SG 99 at Γ, the wavevector is k=(0,0,0) in fractional coordinates of the BC primitive reciprocal basis. Start here with single-valued representations.</p>
@@ -177,6 +179,8 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       <div class="pg-reference"><strong>References</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?" · Book page "+esc(ref.printedPages):''}${ref.pdfPages?" · PDF page "+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">Self-test in this section →</button><button type="button" class="secondary" id="pg-lesson-lab">Hands-on Symmetry Transformation</button>${state.lesson+1<lessons.lessons.length?"<button type=\"button\" class=\"primary\" id=\"pg-next-lesson\">Next unit →</button>":''}</div></article></div>`;
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
+    const characterCheckpoint=$('[data-complex-character-body]');
+    if(characterCheckpoint)bindComplexCharacterCheckpoint({root:characterCheckpoint,atlas,isCurrent:()=>current()&&$('[data-complex-character-body]')===characterCheckpoint});
     mountComposition(lesson.id);
     mountRepresentation(lesson.id);
     disposeIdentify=mountPointgroupIdentify();

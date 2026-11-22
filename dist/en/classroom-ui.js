@@ -13,7 +13,7 @@ const courseDefinitions={
 ,'pathways':{load:()=>import('./pathways-ui.js?v=20261117-derive1'),render:'renderPathwaysView',result:'getPathwaysResult'}
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261117-derive1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261117-derive1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
-,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261122-antisc1'),render:'renderPointgroupView',result:'getPointgroupResult'}
+,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261122-character-model1'),render:'renderPointgroupView',result:'getPointgroupResult'}
 ,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-start-crystal1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
 ,'lie':{load:()=>import('./lie-group-ui.js?v=20261122-start-crystal1'),render:'renderLieGroupView',result:'getLieGroupResult'}
 ,'observables':{load:()=>import('./observables-ui.js?v=20261122-zno-gamma-nac1'),render:'renderObservablesView',result:'getObservablesResult'}

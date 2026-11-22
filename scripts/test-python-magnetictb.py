@@ -143,6 +143,19 @@ class TightBindingTests(unittest.TestCase):
         self.assertAlmostEqual(b["chern"],1,places=10)
         self.assertAlmostEqual(tb.chern_number(h,1,15,axes=[1,0])["chern"],-1,places=10)
 
+    def test_chern_preset_and_topology_dispatcher(self):
+        chern=tb.run(load("chern"))
+        graphene=tb.run(load("graphene"))
+        np.testing.assert_allclose(chern["bands"]["energies"][0],[-1,1],atol=1e-12)
+        np.testing.assert_allclose(graphene["bands"]["energies"][0],[-3,3],atol=1e-12)
+        gap=lambda result:min(upper-lower for lower,upper in result["bands"]["energies"])
+        self.assertAlmostEqual(gap(chern),2,places=10)
+        self.assertLess(gap(graphene),1e-10)
+        topology=tb.run({"action":"topology","method":"chern","model":chern["model"],
+                         "axes":[0,1],"occupied":1,"mesh":15})
+        self.assertEqual(topology["nearest_integer"],1)
+        self.assertAlmostEqual(topology["chern"],1,places=10)
+
     def test_kubo_curvature_integrates_to_chern(self):
         h=tb._input_hoppings(load("chern"));mesh=29
         integral=sum(tb.berry_curvature(h,[(i+.5)/mesh,(j+.5)/mesh,0],1)["curvature"]

@@ -84,6 +84,9 @@ files.push('dist/friedel-pair-ui.js','dist/quartz-friedel-ui.js','dist/python/qu
  'scripts/test-quartz-friedel-ui.mjs','scripts/test-python-friedel-pair.py','scripts/fixtures/quartz-friedel.json',
  'locales/en-friedel-pair-ui.json','locales/en-quartz-friedel-ui.json');
 files.push('dist/su3-ninej-presets.js','scripts/test-ninej-search.mjs','locales/en-ninej-search.json');
+files.push('dist/complex-character-checkpoint.js','scripts/test-complex-character-checkpoint.mjs',
+ 'locales/en-complex-character-checkpoint.json','dist/magnetictb-presets.js','dist/research-ui.js',
+ 'scripts/test-magnetictb-preset-routes.mjs','scripts/test-python-magnetictb.py','locales/en-magnetictb-presets.json');
 
 files.push('dist/symmetry-course-ui.js','dist/pointgroup-ui.js','dist/coupled-materials-ui.js',
  'dist/python/teaching_labs.py','dist/python/group_extensions.py','dist/python/symmetry_core.py',

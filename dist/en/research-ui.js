@@ -1,5 +1,6 @@
 // Presentation only. All model, group and topology calculations run in Python.
 import {GRAPHENE_REFERENCE, fetchGrapheneSources, verifyGrapheneSources} from './wannier-graphene-source.js?v=20261120-wannier1';
+import {magneticTBExamples,isMagneticTBPreset} from './magnetictb-presets.js?v=20261122-tb-presets1';
 
 import {affineComparisonHTML,handednessExample,handednessExerciseHTML,quartzHandednessExample,quartzHandednessHTML} from './crystkit-handedness-ui.js?v=20261120-quartz-hand1';
 
@@ -7,11 +8,16 @@ const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const pretty=value=>JSON.stringify(value,null,2);
 const states={magnetictb:{text:'',result:null,model:null,busy:false,revision:0},crystkit:{text:pretty({action:'analyze',group_number:19,point:['1/7','2/7','3/7']}),result:null,busy:false,revision:0}};
 const researchRenderers=new WeakMap();
-const examples={magnetictb:[['graphene',"Graphene · Symmetry Modeling"],['spinful-chain',"spin chain · time reversal"],['ssh',"SSH chain · transition model"],['chern',"Chern Insulator · 2D model"]],crystkit:[['space-group',"space group 19 · Precise operation"],['finite-orders',"GL(n,ℤ) · Finite order"],['simplify',"Rational number base·Translational lattice simplification"],['conjugacy',"matrix group conjugate"],['normalizer-orbit',"gives the translation system orbit of normalizer"]]};
+const examples={magnetictb:magneticTBExamples,crystkit:[['space-group',"space group 19 · Precise operation"],['finite-orders',"GL(n,ℤ) · Finite order"],['simplify',"Rational number base·Translational lattice simplification"],['conjugacy',"matrix group conjugate"],['normalizer-orbit',"gives the translation system orbit of normalizer"]]};
 const number=value=>typeof value==='number'?Number(value.toPrecision(7)).toString():String(value??'—');
 const table=(heads,rows)=>`<div class="table-wrap"><table><thead><tr>${heads.map(v=>`<th>${esc(v)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${row.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const cards=items=>`<div class="stats">${items.map(([label,value])=>`<div class="stat"><div class="stat-label">${esc(label)}</div><strong>${esc(number(value))}</strong></div>`).join('')}</div>`;
-export function setResearchInput(view,payload){const s=states[view];if(!s)throw new Error("Unknown research tool");s.revision++;s.text=pretty(payload);s.result=null;s.model=null;s.error=null;s.graphene=null;}
+function writeResearchInput(state,payload,{preserveModel=false,graphene=null,preset=null}={}){
+ state.revision++;
+ Object.assign(state,{text:payload===undefined?'':pretty(payload),result:null,error:null,graphene,preset});
+ if(!preserveModel)state.model=null;
+}
+export function setResearchInput(view,payload){const state=states[view];if(!state)throw new Error("Unknown research tool");writeResearchInput(state,payload);}
 export function getResearchResult(view){return states[view]?.result;}
 
 function grapheneStatus(evidence){
@@ -159,12 +165,17 @@ function results(view,s){
 }
 
 export function renderResearchView(view,options){
- const {container,run,toast,download,context,isCurrent=()=>true}=options,s=states[view],tb=view==='magnetictb';
+ const {container,run,toast,download,context,isCurrent=()=>true,onPresetChange=()=>{}}=options,s=states[view],tb=view==='magnetictb';
+ const requestedPreset=tb&&isMagneticTBPreset(context.magneticTBPreset)?context.magneticTBPreset:null;
  let grapheneWidget,startedDefault=false,handednessOpen=context.handednessExercise||s.handednessOpen;
  let quartzHandednessOpen=context.quartzHandednessExercise||s.quartzHandednessOpen;
  const owner={view,draw,dispose};
  researchRenderers.get(container)?.dispose();
  researchRenderers.set(container,owner);
+ if(tb&&requestedPreset!==s.preset&&(requestedPreset||s.preset)){
+  writeResearchInput(s,undefined);
+ }
+ if(requestedPreset)s.example=requestedPreset;
  const current=()=>researchRenderers.get(container)===owner&&isCurrent();
  function dispose(){
   grapheneWidget?.dispose();
@@ -174,25 +185,40 @@ export function renderResearchView(view,options){
  if(!current())return;
  grapheneWidget?.dispose();
  container.dataset.researchView=view;
- container.innerHTML=`<div class="notice research-intro">${tb?"generates tight-binding model from atomic positions, orbitals, and symmetry operations; Wannier90 hr files can also be imported. After selecting the example and running it, all numerical calculations are done by Python in the browser.":"Perform exact rational number operations on crystal groups. You can directly use the 230 space group on this site, or enter a custom generator ; space group recognition only reports verified matches."}</div>${tb?'':handednessExerciseHTML(handednessOpen)+quartzHandednessHTML(quartzHandednessOpen)}<div class="research-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> ${tb?"model and calculation input":"crystal group and calculation input"}</div><span class="badge">Python</span></div><div class="panel-body"><label class="field-label" for="research-example">Quick Example</label><div class="controls-row"><select id="research-example" aria-label="Select calculation example">${examples[view].map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${label}</option>`).join('')}</select><button id="load-research-example" class="secondary small">loading example</button></div>${!tb?`<div class="controls-row"><label for="cryst-number">space group No.</label><input id="cryst-number" type="number" min="1" max="230" value="${context.mode==='sg'?context.group.number:19}"><button class="secondary small" id="cryst-use-number">use this group</button></div>`:`<div class="controls-row"><button class="secondary small" id="tb-use-operations">Use workbench group operation</button><label class="secondary small file-label">Import hr file<input type="file" id="tb-hr-file" accept=".dat,.txt" hidden></label></div>${grapheneSourcePanel(s)}`}<label class="field-label" for="research-json">${tb?"Lattice, orbitals, symmetries, and k-paths":"Operations, coordinate changes and analysis"}<span>editable JSON</span></label><textarea class="band-input research-input" id="research-json" spellcheck="false" aria-label="Python Calculation input JSON">${esc(s.text)}</textarea><details class="input-help"><summary>Input conventions and available calculations</summary><p>${tb?"lattice is a real-space lattice vector; position, translation and k are all fractional coordinates . Orbitals are available in s, px/py/pz or full real d basis. The operations must form a complete finite group, and the rotation acts on the fractional coordinates column vector.":"operations or generators use rotation and translation; fractions are written as strings, such as \"1/2\". basis and origin satisfy x_input = basis × x_BC + origin. Without transformation only matches within the current BC setting."}</p><p>${tb?"action optional model, bands, slab, finite, surface, topology. The parameter units are specified by you, and the energy plot uses the same units. The Fourier phase convention for a non-zero transition is exp(+2πi k·R).":"action optional analyze, finite_orders, conjugacy, blocks, simplify, normalizer_orbit or compare. Finite-order algorithms distinguish between the first occurrence of a dimension and all allowed orders of that dimension."}</p><a href="../python/${tb?'magnetictb_browser':'crystkit_browser'}.py" download>Download the tool Python source code ↓</a></details><button id="run-research" class="primary" ${s.busy?'disabled':''}>${s.busy?"<i class=\"spinner\"></i>Python Calculating…":"Run Python calculation →"}</button><div id="research-error" role="alert">${s.error?`<p class="notice error">${esc(s.error)}</p>`:''}</div></div></section><section class="panel"><div class="result-header"><div class="result-heading">${tb?"model and energy band":"precise group analysis"}<small>calculation results</small></div><div class="result-tools"><button id="research-export" class="text-button">↓ JSON</button>${tb?'<button id="tb-csv" class="text-button">↓ CSV</button><button id="tb-hr" class="text-button">↓ hr</button>':''}</div></div><div class="result-content">${results(view,s)}</div></section></div>${tb?`<section class="panel research-followup"><div class="panel-top"><div class="panel-title"><span class="step">02</span> Continue calculation with current model</div></div><div class="panel-body"><div class="controls-row"><label>occupied band number <input id="tb-occupied" type="number" min="1" value="1"></label><label>grid <input id="tb-mesh" type="number" min="5" max="101" value="21"></label><label>layer number <input id="tb-layers" type="number" min="1" max="80" value="12"></label><label>Open direction <select id="tb-axis"><option value="0">a₁</option><option value="1">a₂</option><option value="2">a₃</option></select></label></div><div class="controls-row"><button data-post="slab" class="secondary small">thin film energy band</button><button data-post="chern" class="secondary small">Chern number · k₁k₂ surface</button><button data-post="wilson" class="secondary small">Wilson Ring · k₁</button><button data-post="surface" class="secondary small">surface spectrum · k = 0</button></div><p class="form-note">These buttons write the current model and parameters into the left input box; they can be run after adjustment. The Chern number requires a direct band gap in the occupied subspace and convergence should be checked using a denser mesh. Surface spectrum uses specified open direction with η = 0.02.</p></div></section>`:''}<p class="notice research-scope">${tb?"covers: symmetry constrained modeling, s/p/d and spin-orbitals, energy bands, hr, membranes, finite systems, surface Green functions, Berry/Wilson and Chern numbers. Exact symbolic Hamiltonians, cyclotomic field , and polynomial orbitals can be computed in \"Exact Algebra and High-Dimensional Groups\". The complete spin space group catalog, DFT fitting and the Z₂ algorithm are still not covered.":"covers: exact affine closure and coordinate transformations, finite quotient group generator , point orbit , matrix conjugate and three-dimensional reference database matching. CARAT 1–6 dimensional Q-type catalog, group expansion, specific complete normalizer and infinite group generation certificates have been accessed in \"Exact Algebra and High-Dimensional Groups\". General Z classifications still have scope restrictions."}<a href="#" data-view="advanced"> Open exact algebra and high-dimensional groups →</a></p>`;
+ container.innerHTML=`<div class="notice research-intro">${tb?"Build a tight-binding model from atomic positions, orbitals, and symmetry operations, or import a Wannier90 hr file. Choose an example and run it in your browser using Python. After loading a built-in example, copy the address to reopen the same inputs.":"Perform exact rational number operations on crystal groups. You can directly use the 230 space group on this site, or enter a custom generator ; space group recognition only reports verified matches."}</div>${tb?'':handednessExerciseHTML(handednessOpen)+quartzHandednessHTML(quartzHandednessOpen)}<div class="research-grid"><section class="panel"><div class="panel-top"><div class="panel-title"><span class="step">01</span> ${tb?"model and calculation input":"crystal group and calculation input"}</div><span class="badge">Python</span></div><div class="panel-body"><label class="field-label" for="research-example">Quick Example</label><div class="controls-row"><select id="research-example" aria-label="Select calculation example">${examples[view].map(([key,label])=>`<option value="${key}" ${s.example===key?'selected':''}>${label}</option>`).join('')}</select><button id="load-research-example" class="secondary small">loading example</button></div>${!tb?`<div class="controls-row"><label for="cryst-number">space group No.</label><input id="cryst-number" type="number" min="1" max="230" value="${context.mode==='sg'?context.group.number:19}"><button class="secondary small" id="cryst-use-number">use this group</button></div>`:`<div class="controls-row"><button class="secondary small" id="tb-use-operations">Use workbench group operation</button><label class="secondary small file-label">Import hr file<input type="file" id="tb-hr-file" accept=".dat,.txt" hidden></label></div>${grapheneSourcePanel(s)}`}<label class="field-label" for="research-json">${tb?"Lattice, orbitals, symmetries, and k-paths":"Operations, coordinate changes and analysis"}<span>editable JSON</span></label><textarea class="band-input research-input" id="research-json" spellcheck="false" aria-label="Python Calculation input JSON">${esc(s.text)}</textarea><details class="input-help"><summary>Input conventions and available calculations</summary><p>${tb?"lattice is a real-space lattice vector; position, translation and k are all fractional coordinates . Orbitals are available in s, px/py/pz or full real d basis. The operations must form a complete finite group, and the rotation acts on the fractional coordinates column vector.":"operations or generators use rotation and translation; fractions are written as strings, such as \"1/2\". basis and origin satisfy x_input = basis × x_BC + origin. Without transformation only matches within the current BC setting."}</p><p>${tb?"action optional model, bands, slab, finite, surface, topology. The parameter units are specified by you, and the energy plot uses the same units. The Fourier phase convention for a non-zero transition is exp(+2πi k·R).":"action optional analyze, finite_orders, conjugacy, blocks, simplify, normalizer_orbit or compare. Finite-order algorithms distinguish between the first occurrence of a dimension and all allowed orders of that dimension."}</p><a href="../python/${tb?'magnetictb_browser':'crystkit_browser'}.py" download>Download the tool Python source code ↓</a></details><button id="run-research" class="primary" ${s.busy?'disabled':''}>${s.busy?"<i class=\"spinner\"></i>Python Calculating…":"Run Python calculation →"}</button><div id="research-error" role="alert">${s.error?`<p class="notice error">${esc(s.error)}</p>`:''}</div></div></section><section class="panel"><div class="result-header"><div class="result-heading">${tb?"model and energy band":"precise group analysis"}<small>calculation results</small></div><div class="result-tools"><button id="research-export" class="text-button">↓ JSON</button>${tb?'<button id="tb-csv" class="text-button">↓ CSV</button><button id="tb-hr" class="text-button">↓ hr</button>':''}</div></div><div class="result-content">${results(view,s)}</div></section></div>${tb?`<section class="panel research-followup"><div class="panel-top"><div class="panel-title"><span class="step">02</span> Continue calculation with current model</div></div><div class="panel-body"><div class="controls-row"><label>occupied band number <input id="tb-occupied" type="number" min="1" value="1"></label><label>grid <input id="tb-mesh" type="number" min="5" max="101" value="21"></label><label>layer number <input id="tb-layers" type="number" min="1" max="80" value="12"></label><label>Open direction <select id="tb-axis"><option value="0">a₁</option><option value="1">a₂</option><option value="2">a₃</option></select></label></div><div class="controls-row"><button data-post="slab" class="secondary small">thin film energy band</button><button data-post="chern" class="secondary small">Chern number · k₁k₂ surface</button><button data-post="wilson" class="secondary small">Wilson Ring · k₁</button><button data-post="surface" class="secondary small">surface spectrum · k = 0</button></div><p class="form-note">These buttons write the current model and parameters into the left input box; they can be run after adjustment. The Chern number requires a direct band gap in the occupied subspace and convergence should be checked using a denser mesh. Surface spectrum uses specified open direction with η = 0.02.</p></div></section>`:''}<p class="notice research-scope">${tb?"covers: symmetry constrained modeling, s/p/d and spin-orbitals, energy bands, hr, membranes, finite systems, surface Green functions, Berry/Wilson and Chern numbers. Exact symbolic Hamiltonians, cyclotomic field , and polynomial orbitals can be computed in \"Exact Algebra and High-Dimensional Groups\". The complete spin space group catalog, DFT fitting and the Z₂ algorithm are still not covered.":"covers: exact affine closure and coordinate transformations, finite quotient group generator , point orbit , matrix conjugate and three-dimensional reference database matching. CARAT 1–6 dimensional Q-type catalog, group expansion, specific complete normalizer and infinite group generation certificates have been accessed in \"Exact Algebra and High-Dimensional Groups\". General Z classifications still have scope restrictions."}<a href="#" data-view="advanced"> Open exact algebra and high-dimensional groups →</a></p>`;
  const $=q=>container.querySelector(q);
- const setInput=(value,{preserveModel=false,graphene=null}={})=>{
-  s.revision++;s.text=pretty(value);s.result=null;s.error=null;s.graphene=graphene;
-  if(!preserveModel)s.model=null;
+ const setInput=(value,{preserveModel,graphene,preset=null,reportPreset=true}={})=>{
+  writeResearchInput(s,value,{preserveModel,graphene,preset});
+  if(tb&&reportPreset)onPresetChange(preset,Boolean(preset));
   draw();
  };
  $('#research-json').oninput=e=>{
-  s.revision++;s.text=e.target.value;s.model=null;s.result=null;s.error=null;s.graphene=null;
+  if(!current())return;
+  s.revision++;s.text=e.target.value;s.model=null;s.result=null;s.error=null;s.graphene=null;s.preset=null;
+  if(tb)onPresetChange(null,false);
   grapheneWidget?.cancel();
+  $('#run-research').disabled=!s.text.trim();
   container.querySelector('.result-content').innerHTML="<div class=\"empty-state\">The input has been modified, please rerun the calculation.</div>";
  };
- $('#research-example').onchange=e=>{s.example=e.target.value;s.revision++;grapheneWidget?.cancel();};
- async function loadExample(){
+ $('#research-example').onchange=e=>{s.example=e.target.value;if(!tb)s.revision++;grapheneWidget?.cancel();};
+ async function loadExample(key,{preset=null,reportPreset=false}={}){
+  if(!current()||!examples[view].some(([id])=>id===key))return;
   grapheneWidget?.cancel();
-  const key=$('#research-example').value;s.example=key;const revision=++s.revision;
-  try{const response=await fetch(`examples/${view}-${key}.json`);if(!response.ok)throw new Error("sample reading failed");const payload=await response.json();if(current()&&s.revision===revision)setInput(payload);}catch(e){if(current()&&s.revision===revision)toast(e.message);}
+  s.example=key;
+  const revision=++s.revision;
+  try{
+   const response=await fetch(`examples/${view}-${key}.json`);
+   if(!response.ok)throw new Error("sample reading failed");
+   const payload=await response.json();
+   if(!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error("sample reading failed");
+   if(current()&&s.revision===revision){s.example=key;setInput(payload,{preset,reportPreset});}
+  }catch(e){if(current()&&s.revision===revision)toast(e.message);}
  }
- $('#load-research-example').onclick=loadExample;
+ $('#load-research-example').onclick=()=>{
+  if(s.busy)return;
+  const key=$('#research-example').value;
+  return loadExample(key,{preset:tb?key:null,reportPreset:tb});
+ };
  async function calculate(){
   if(!current()||s.busy)return;
   grapheneWidget?.cancel();
@@ -218,7 +244,7 @@ export function renderResearchView(view,options){
   $('#tb-hr-file').onchange=async e=>{const file=e.target.files[0];if(!file)return;grapheneWidget.cancel();const revision=++s.revision;if(file.size>10*1024*1024){toast("hr files cannot exceed 10 MiB.");return;}const hrText=await file.text();if(s.revision!==revision||!current())return;setInput({action:'hr_import',hr_text:hrText,path:[{label:'Γ',k:[0,0,0]},{label:'X',k:[.5,0,0]}],points_per_segment:60});};
   $('#tb-hr').onclick=()=>s.result?.hr_text?download(s.result.hr_text,'symmetry-lab_hr.dat','text/plain'):toast("Please generate or import the model first.");
   $('#tb-csv').onclick=()=>{const b=s.result?.bands;if(!b){toast("currently has no data to carry.");return;}download(['kx,ky,kz,distance,'+b.energies[0].map((_,i)=>`band_${i+1}`).join(','),...b.energies.map((e,i)=>[...(b.kpoints[i]),b.distance[i],...e].join(','))].join('\n'),'tight-binding-bands.csv','text/csv');};
-  $('[data-apply-parameters]')?.addEventListener('click',()=>{const inputs=[...container.querySelectorAll('[data-parameter]')];if(inputs.some(i=>!i.value.trim()||!i.validity.valid||!Number.isFinite(Number(i.value)))){toast("Each transition parameter must fill in a finite value.");return;}const payload=structuredClone(s.lastPayload);payload.parameters=Object.fromEntries(inputs.map(i=>[i.dataset.parameter,Number(i.value)]));s.revision++;s.model=null;s.graphene=null;s.text=pretty(payload);calculate();});
+  $('[data-apply-parameters]')?.addEventListener('click',()=>{const inputs=[...container.querySelectorAll('[data-parameter]')];if(inputs.some(i=>!i.value.trim()||!i.validity.valid||!Number.isFinite(Number(i.value)))){toast("Each transition parameter must fill in a finite value.");return;}const payload=structuredClone(s.lastPayload);payload.parameters=Object.fromEntries(inputs.map(i=>[i.dataset.parameter,Number(i.value)]));writeResearchInput(s,payload);onPresetChange(null,false);calculate();});
   container.querySelectorAll('[data-post]').forEach(button=>button.onclick=()=>{
    if(!s.model){toast("Please generate or import a model first.");return;}
    const action=button.dataset.post,axis=Number($('#tb-axis').value),occupied=Number($('#tb-occupied').value);
@@ -251,7 +277,12 @@ export function renderResearchView(view,options){
   $('#cryst-use-number').onclick=()=>setInput({action:'analyze',group_number:Number($('#cryst-number').value),point:['1/7','2/7','3/7']});
  }
  if(s.busy)container.querySelectorAll('textarea,select,input,#load-research-example,#cryst-use-number,#tb-use-operations,[data-post]').forEach(el=>el.disabled=true);
- if(!s.text&&!startedDefault&&!context.quartzHandednessExercise){startedDefault=true;loadExample();}
+ if(!s.text)$('#run-research').disabled=true;
+ if(!s.text&&!startedDefault&&!context.quartzHandednessExercise){
+  startedDefault=true;
+  const key=tb?(requestedPreset||magneticTBExamples[0][0]):$('#research-example').value;
+  loadExample(key,{preset:requestedPreset});
+ }
  }
  draw();
  return dispose;

@@ -1,4 +1,4 @@
-import {parseClassroomRoute} from './classroom-ui.js?v=20261122-zno-gamma-nac1';
+import {parseClassroomRoute} from './classroom-ui.js?v=20261122-character-model1';
 import {progressionForSelection} from './lesson-progression.js?v=20261120-lesson-topic1';
 import {progressionCatalogs,progressionLessons} from './lesson-progression-index.js?v=20261113-route1';
 

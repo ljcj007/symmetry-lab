@@ -567,3 +567,19 @@ establish that all existing scientific and teaching content has been audited.
   FORCE_SETS and reproduces ten raw and charge-neutralized cases.
   [Phonopy formulation](https://phonopy.github.io/phonopy/formulation.html#non-analytical-term-correction)
   · [Comparison report](scripts/fixtures/zno-gamma-nac-official.json)
+
+## Use complex characters and restore a named model
+
+- The [character reduction lesson](dist/index.html#classroom/foundations?tab=learn&lesson=character-reduction)
+  follows its real-character example with the complex one-dimensional
+  representations of point group 4. Learners compare the four products in
+  the character inner product and repeat the calculation on the conjugate
+  complex line. Both formulas give integer multiplicities and preserve the
+  dimension in this example. Omitting conjugation assigns the line to the
+  conjugate representation.
+- The four packaged MagneticTB models have shareable preset routes. For example,
+  [the Chern model](dist/index.html#magnetictb?preset=chern) restores the same
+  input after reload, history navigation or a language change. Loading a
+  built-in example updates its address. Editing the input, importing a model
+  or preparing a follow-up calculation returns the address to the general
+  tool route. All computations remain explicit actions.

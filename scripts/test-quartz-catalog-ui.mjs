@@ -34,6 +34,7 @@ const marker=app.indexOf('handednessExercise:state.route');
 const first=app.lastIndexOf('context:{',marker),last=app.indexOf('}',marker);
 assert.ok(first>=0&&last>first);
 const routeContext=route=>vm.runInNewContext('('+app.slice(first+'context:'.length,last+1)+')',{
+ preset:null, // The shared research renderer binds a MagneticTB preset only for that view.
  state:{route,group:{number:19},mode:'sg',k:[0,0,0],doubleValued:false}
 });
 const container=new Container();container.dataset={};

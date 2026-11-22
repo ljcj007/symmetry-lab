@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29466,
-  "translatedUnits": 29466,
+  "sourceUnits": 29489,
+  "translatedUnits": 29489,
   "missing": [],
-  "files": 540,
+  "files": 542,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -200,6 +200,8 @@
     "en-friedel-pair-ui.json",
     "en-quartz-friedel-ui.json",
     "en-zno-gamma-nac-routes.json",
-    "en-zno-gamma-nac-ui.json"
+    "en-zno-gamma-nac-ui.json",
+    "en-complex-character-checkpoint.json",
+    "en-magnetictb-presets.json"
   ]
 }
