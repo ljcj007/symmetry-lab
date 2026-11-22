@@ -1,4 +1,4 @@
-import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
+import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261122-neumann-return1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
 import {tensorReplayLessonHTML,bindTensorReplayLesson,tensorReplayResultHTML,bindTensorReplayResult} from './tensor-replay-ui.js?v=20261115-tensor1';
 import {bindOptionalPanel} from './optional-panel.js?v=20261120-gamma-trace1';
@@ -43,6 +43,11 @@ export function curveSVG(points,xLabel,yLabel,{xPrecision=4}={}){
  return `<svg class="obs-curve" viewBox="0 0 720 305" role="img" aria-label="${esc(xLabel+'与'+yLabel+'曲线')}"><title>${svgMathText(yLabel)}</title><path d="M60 25V250H680" fill="none" stroke="#9daea8"/><polyline points="${line}" fill="none" stroke="#287c66" stroke-width="3"/><text x="60" y="276">${esc(Number(xmin.toPrecision(xPrecision)))}</text><text x="680" y="276" text-anchor="end">${esc(Number(xmax.toPrecision(xPrecision)))}</text><text x="310" y="298">${svgMathText(xLabel)}</text><text x="65" y="20">${svgMathText(yLabel)} · max ${esc(Number(ymax.toPrecision(4)))}</text></svg>`;
 }
 const sourcesHTML=(items=[])=>`<div class="obs-sources">${items.map(s=>{const url=typeof s==='string'?s:s.url;return /^https:\/\//.test(url||'')?`<a href="${esc(url)}" target="_blank" rel="noreferrer">${esc(s.title||url)} ↗</a>`:'';}).join('')}</div>`;
+const tensors=['dielectric','elasticity','piezoelectric','magnetoelectric'];
+const tensorContextKey=({lesson,exercise,material,preset,tensor})=>JSON.stringify([lesson,exercise,material,preset,tensor]);
+// One exact handoff keeps one editable draft per view. Shared links carry only
+// the named choices. Each side has one owner, even across repeated navigation.
+let neumannHandoff=null;
 export async function renderObservablesView({container,selection={},run,cancelRun,download,onNavigate=()=>{},onLocation=()=>{}}){
  container.innerHTML='<div class="obs-page"><p role="status">正在准备材料物性课堂…</p></div>';
  const root=container.firstElementChild,current=()=>root.parentNode===container&&container.isConnected!==false;
@@ -60,15 +65,50 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  let completed={};if(!selection.calculationOnly){try{completed=JSON.parse(localStorage.getItem('symmetry-lab.observables.progress.v1')||'{}');if(!completed||typeof completed!=='object'||Array.isArray(completed))completed={};}catch{}}
  const forms={phonons:{...params.phonons},tensors:{...params.tensors}};
  function applyCase(){forms.phonons.preset=material.phononPreset;forms.phonons.channel=material.id==='nacl'?'ir':'raman';forms.tensors.parameters=material.id==='gaas'?{a1:1}:{};forms.tensors.strain=[0,0,0,.02,0,0];forms.tensors.preset=material.tensorPreset;forms.tensors.tensor=material.tensorProperty;}
- applyCase();if(selection.preset&&selection.calculationOnly)forms[tool].preset=selection.preset;
+ applyCase();
+ if(selection.preset&&(selection.calculationOnly||tab==='lab'&&tool==='tensors'))forms[tool].preset=selection.preset;
+ if(tab==='lab'&&tool==='tensors'){
+  if(tensors.includes(selection.tensor))forms.tensors.tensor=selection.tensor;
+  else if(!selection.calculationOnly&&lesson.id==='neumann')forms.tensors.tensor='dielectric';
+ }
  const $=s=>root.querySelector(s);
- function sync(){onNavigate({tab,lesson:lesson.id,material:material.id,experiment:tool,exercise:exercise.id});}
+ const neumannLab=()=>tab==='lab'&&tool==='tensors'&&lesson.id==='neumann';
+ const neumannContext=()=>({lesson:lesson.id,exercise:exercise.id,material:material.id,preset:forms.tensors.preset,
+  tensor:neumannLab()?forms.tensors.tensor:'dielectric'});
+ const neumannToolHref=()=> '#compute/tensors?'+new URLSearchParams(neumannContext()).toString();
+ const side=selection.calculationOnly?'tool':'course',owner={};
+ let visit=null;
+ const ownsVisit=()=>Boolean(visit&&visit===neumannHandoff&&visit.owners[side]===owner);
+ function rememberHandoff(){
+  if(ownsVisit()&&neumannLab()&&visit.key===tensorContextKey(neumannContext()))rememberLabDraft(visit.drafts,[side]);
+ }
+ function sync(){
+  const patch={tab,lesson:lesson.id,material:material.id,experiment:tool,exercise:exercise.id};
+  if(neumannLab())Object.assign(patch,{preset:forms.tensors.preset,tensor:forms.tensors.tensor});
+  else if(!selection.calculationOnly||tool==='tensors')Object.assign(patch,{preset:selection.calculationOnly?forms.tensors.preset:undefined,tensor:undefined});
+  onNavigate(patch);
+ }
  function invalidate(){disposeTensorResult();disposeTensorResult=()=>{};tensorResultStates.clear();tensorResultSerial++;result=null;payload=null;lastResult=null;ticket++;stopAnimation();if(busy){cancelRun?.();busy=false;}}
- function caseLinks(c){return `<div class="obs-links"><a href="#classroom/observables?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">浏览材料学习路线 →</a><a href="#compute/phonons?material=${esc(c.id)}">声子与光谱 →</a><a href="#compute/tensors?material=${esc(c.id)}">物性张量 →</a><a href="#classroom/structure-dynamics?material=${esc(c.id)}">相变、衍射与数据导入 →</a><a href="#atlas/materials?material=${esc(c.id)}">晶体结构与操作 →</a></div>`;}
+ function caseLinks(c){
+  const related=!selection.calculationOnly&&c===material&&lesson.id==='neumann'&&
+   (tab==='learn'||tab==='derive'||neumannLab());
+  const href=related?neumannToolHref():'#compute/tensors?material='+encodeURIComponent(c.id);
+  return `<div class="obs-links"><a href="#classroom/observables?material=${esc(c.id)}&lesson=${esc(c.lessonIds[0])}">浏览材料学习路线 →</a><a href="#compute/phonons?material=${esc(c.id)}">声子与光谱 →</a><a data-obs-tensor-context="${related?'neumann':''}" href="${esc(href)}">物性张量 →</a><a href="#classroom/structure-dynamics?material=${esc(c.id)}">相变、衍射与数据导入 →</a><a href="#atlas/materials?material=${esc(c.id)}">晶体结构与操作 →</a></div>`;
+ }
  function draw(){if(!current())return;disposeDisplacementDemo();disposeDisplacementDemo=()=>{};disposeTensorLesson();disposeTensorLesson=()=>{};disposeTensorResult();disposeTensorResult=()=>{};stopAnimation();onLocation((selection.calculationOnly?'计算中心':'学习中心 / 材料物性')+' / '+(selection.calculationOnly?(tool==='phonons'?'声子与光谱':'物性张量'):lesson.title));
  root.innerHTML=`<div class="obs-header"><span class="obs-eyebrow">SYMMETRY → OBSERVABLES</span><h2>${selection.calculationOnly?(tool==='phonons'?'从位移表示到光谱选择定则':'从对称操作到允许的物性张量'):'让群论走进可观测的材料性质'}</h2><p>以 Si、GaAs、NaCl 为线索，连接结构、表示、响应与实验几何。</p></div>${selection.calculationOnly?'':`<nav class="obs-tabs" aria-label="材料物性课程内容">${[['learn','课程讲解'],['lab','交互实验'],['derive','分步练习'],['cases','材料案例']].map(([id,t])=>`<button type="button" data-obs-tab="${id}" aria-pressed="${tab===id}" class="${tab===id?'active':''}">${t}</button>`).join('')}</nav>`}<div class="obs-case-bar"><label>案例导航（计算模型可另选）<select id="obs-material">${options(data.cases.map(c=>[c.id,c.formula+' · '+c.name]),material.id)}</select></label><p>${esc(material.summary)}</p></div><div id="obs-content"></div>`;
  root.querySelectorAll('[data-obs-tab]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-obs-tab]')].includes(b))return;rememberLabDraft();if(busy)invalidate();tab=b.dataset.obsTab;draw();sync();});
- $('#obs-material').onchange=e=>{material=data.cases.find(x=>x.id===e.target.value);flowDrafts.discard('phonons');flowDrafts.discard('tensors');invalidate();applyCase();draw();sync();};
+ const materialSelect=$('#obs-material');
+ materialSelect.onchange=e=>{
+  if(!current()||$('#obs-material')!==materialSelect)return;
+  material=data.cases.find(x=>x.id===e.target.value);
+  if(ownsVisit()){
+   if(selection.calculationOnly){visit.drafts.discard('tool');visit.toolReset=true;}
+   else neumannHandoff=null;
+  }
+  visit=null;
+  flowDrafts.discard('phonons');flowDrafts.discard('tensors');invalidate();applyCase();draw();sync();
+ };
  if(tab==='learn')drawLearn();else if(tab==='derive')drawExercise();else if(tab==='cases')drawCases();else {drawLab();flowDrafts.restore($('#obs-form'),tool);}bindCourseFlowActions({root,prefix:'obs',isCurrent:current,onLearn:openLessonLearn,onLab:openLessonLab,labButtonId:'obs-learn-lab'});
  }
  function drawLearn(){const relevant=data.exercises.filter(e=>e.lesson===lesson.id);$('#obs-content').innerHTML=`<label class="obs-chapter">选择主题<select id="obs-lesson">${options(data.lessons.map(x=>[x.id,x.title]),lesson.id)}</select></label><article class="obs-lesson"><h2>${esc(lesson.title)}</h2><p class="obs-lead">${esc(lesson.summary)}</p>${tensorReplayLessonHTML(lesson.id)}${lesson.id==='acoustic-optical'?gammaPeriodicityHTML:''}${lesson.id==='mechanical-modes'?siFoldingHTML:''}${lesson.id==='ir-raman'?znoIRCourseLink:''}${lesson.id==='polarization'&&material.id==='silicon'?siResponsesHTML:''}${lesson.id==='neumann'&&material.id==='silicon'?siResponsesBackLink:''}${lesson.sections.map(s=>`<section><h3>${esc(s.title)}</h3><p>${phononProse(s.text)}</p>${s.formula?`<div class="obs-formula">${esc(s.formula)}</div>`:''}</section>`).join('')}${(lesson.examples||[]).map(e=>`<aside class="obs-example"><h3>${esc(e.title)}</h3><ol>${e.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p><strong>${esc(e.result)}</strong></p></aside>`).join('')}<div class="obs-links"><button id="obs-learn-lab" class="primary">${lesson.id==='polarization'?'载入 Si 的拉曼对照 →':'打开交互实验 →'}</button>${relevant.length?'<button id="obs-learn-exercise" class="secondary">分步推导练习 →</button>':''}</div>${caseLinks(material)}${sourcesHTML(data.sources.filter(s=>(lesson.references||[]).includes(s.id)))}</article>`;
@@ -87,14 +127,23 @@ export async function renderObservablesView({container,selection={},run,cancelRu
   }
  }
  function drawCases(){$('#obs-content').innerHTML=`<div class="obs-case-grid">${data.cases.map(c=>`<article><span class="obs-eyebrow">${esc(c.formula)}</span><h2>${esc(c.name)}</h2><p>${esc(c.phase)}</p><h3>${esc(c.question)}</h3><p>${esc(c.answer)}</p>${caseLinks(c)}<p><a href="#classroom/observables?lesson=neumann&amp;material=${esc(c.id)}">比较张量约束方法（教学对照，非材料常数） →</a></p><details><summary>模型范围与来源</summary><ul>${c.limitations.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>${sourcesHTML(data.sources.filter(s=>c.references.includes(s.id)))}</details></article>`).join('')}</div>`;}
- function rememberLabDraft(){if(tab==='lab'){let draftError='';try{readForm();}catch(error){draftError=error?.message||'请检查当前输入';}flowDrafts.remember($('#obs-form'),tool,draftError);}}
+ function rememberLabDraft(drafts=flowDrafts,keys=[tool]){
+  if(tab!=='lab')return;
+  let draftError='';
+  try{readForm();}catch(error){draftError=error?.message||'请检查当前输入';}
+  for(const key of keys)drafts.remember($('#obs-form'),key,draftError);
+ }
  function openLessonLearn(){if(!current())return;rememberLabDraft();if(busy)invalidate();tab='learn';draw();sync();}
  function openLessonLab(){
   if(!current())return;
+  if(lesson.id==='neumann'){
+   const lessonKey=tensorContextKey({...neumannContext(),preset:material.tensorPreset,tensor:'dielectric'});
+   if(ownsVisit()||neumannHandoff?.key===lessonKey){neumannHandoff=null;visit=null;}
+  }
   tool=['neumann','piezoelectricity','magnetoelectricity'].includes(lesson.id)?'tensors':'phonons';
   flowDrafts.discard(tool);tab='lab';
   if(lesson.id==='polarization')forms.phonons={...params.phonons,...ramanLessonControls};
-  if(lesson.id==='neumann')forms.tensors.tensor='dielectric';
+ if(lesson.id==='neumann')Object.assign(forms.tensors,{tensor:'dielectric',preset:material.tensorPreset});
   if(lesson.id==='piezoelectricity')forms.tensors.tensor='piezoelectric';
   if(lesson.id==='magnetoelectricity'){
    forms.tensors.preset='custom';forms.tensors.tensor='magnetoelectric';
@@ -113,8 +162,32 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  function drawLab(){const f=forms[tool];$('#obs-content').innerHTML=`${selection.calculationOnly?'':`<div class="obs-tabs"><button data-tool="phonons" class="${tool==='phonons'?'active':''}">声子与光谱</button><button data-tool="tensors" class="${tool==='tensors'?'active':''}">物性张量</button></div>`}<div class="obs-lab-layout"><form id="obs-form" class="obs-controls"><fieldset id="obs-fields" ${busy?'disabled':''}><legend>实验参数</legend>${tool==='phonons'?phononControls(f):tensorControls(f)}<button class="primary" type="submit">${busy?'Python 计算中…':'计算并更新演示 →'}</button></fieldset><button type="button" class="secondary" id="obs-cancel" ${busy?'':'hidden'}>取消当前计算</button><p class="obs-small">计算在浏览器内的 Python 中完成。修改参数后重新计算，结果与导出会一同更新。</p></form><section id="obs-output" aria-live="polite" aria-busy="${busy}"></section></div>${caseLinks(material)}`;
  root.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{if(!current()||![...root.querySelectorAll('[data-tool]')].includes(b))return;if(b.dataset.tool!==tool){rememberLabDraft();tool=b.dataset.tool;invalidate();draw();sync();}});
  const form=$('#obs-form'),mountedTool=tool,labCurrent=()=>current()&&tab==='lab'&&tool===mountedTool&&$('#obs-form')===form;
+ const companion=$('[data-obs-tensor-context="neumann"]');
+ if(companion)companion.onclick=event=>{
+  if(!labCurrent()||$('[data-obs-tensor-context="neumann"]')!==companion||
+   event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  const key=tensorContextKey(neumannContext());
+  if(!ownsVisit()||visit.key!==key)visit=neumannHandoff={key,drafts:createCourseFlowDrafts(),owners:{course:owner},toolReset:true};
+  rememberLabDraft(visit.drafts,visit.toolReset?['course','tool']:['course']);
+  visit.toolReset=false;
+ };
  const cancel=$('#obs-cancel');cancel.onclick=()=>{if(!labCurrent()||!busy)return;invalidate();draw();$('#obs-output').innerHTML='<p role="status">计算已取消，请检查输入后手动重试。</p>';};
- $('#obs-form').oninput=e=>{if(!labCurrent()||busy)return;if(tool==='tensors'&&['obs-preset','obs-tensor'].includes(e.target?.id)){forms.tensors.parameters={};$('#obs-parameters').value='{}';}if(['obs-angle','obs-angle-number'].includes(e.target?.id)){const range=$('#obs-angle'),number=$('#obs-angle-number'),raw=e.target.value,n=Number(raw);if(e.target.id==='obs-angle'&&number)number.value=raw;if(e.target.id==='obs-angle-number'&&String(raw).trim()&&Number.isFinite(n)&&n>=0&&n<=360)range.value=raw;if(range?.nextElementSibling)range.nextElementSibling.textContent=String(raw).trim()?raw+'°':'—';}if(!busy){invalidate();$('#obs-output').innerHTML='<p class="obs-placeholder">参数已改变，请重新计算。</p>';}};
+ form.oninput=e=>{
+  if(!labCurrent()||busy)return;
+  if(tool==='tensors'&&['obs-preset','obs-tensor'].includes(e.target?.id)){
+   Object.assign(forms.tensors,{preset:$('#obs-preset').value,tensor:$('#obs-tensor').value,parameters:{}});
+   $('#obs-parameters').value='{}';
+   if(neumannLab()){if(companion)companion.href=neumannToolHref();sync();}
+  }
+  if(['obs-angle','obs-angle-number'].includes(e.target?.id)){
+   const range=$('#obs-angle'),number=$('#obs-angle-number'),raw=e.target.value,n=Number(raw);
+   if(e.target.id==='obs-angle'&&number)number.value=raw;
+   if(e.target.id==='obs-angle-number'&&String(raw).trim()&&Number.isFinite(n)&&n>=0&&n<=360)range.value=raw;
+   if(range?.nextElementSibling)range.nextElementSibling.textContent=String(raw).trim()?raw+'°':'—';
+  }
+  rememberHandoff();
+  invalidate();$('#obs-output').innerHTML='<p class="obs-placeholder">参数已改变，请重新计算。</p>';
+ };
  const exactAngle=$('#obs-angle-exact');if(exactAngle)exactAngle.onclick=()=>{if(!current()||$('#obs-angle-exact')!==exactAngle||busy)return;$('#obs-angle').value='22.5';$('#obs-angle-number').value='22.5';$('#obs-form').oninput({target:$('#obs-angle-number')});};
  $('#obs-form').onsubmit=async e=>{e.preventDefault();if(!labCurrent()||busy)return;try{readForm();}catch(error){$('#obs-output').innerHTML=`<p role="alert">${esc(error.message)}</p>`;return;}invalidate();busy=true;const job=ticket,input=JSON.parse(JSON.stringify(forms[tool])),action=tool;$('#obs-fields').disabled=true;cancel.hidden=false;$('#obs-output').innerHTML='<p role="status"><span class="spinner"></span> Python 正在求解；首次运行需要下载计算环境…</p>';$('#obs-output').setAttribute('aria-busy','true');try{const answer=await run(action,input);if(!labCurrent()||job!==ticket)return;result=answer;payload=input;lastResult={kind:'material-observables',tool:action,material:material.id,input:payload,result};drawOutput();}catch(error){if(labCurrent()&&job===ticket)$('#obs-output').innerHTML=`<p role="alert" class="notice error">${esc(error.message)}</p>`;}finally{if(current()&&job===ticket){busy=false;cancel.hidden=true;if($('#obs-fields'))$('#obs-fields').disabled=false;if($('#obs-output'))$('#obs-output').setAttribute('aria-busy','false');}}};
  if(result)drawOutput();else $('#obs-output').innerHTML='<div class="obs-placeholder"><span>01 → 02 → 03</span><h3>选择模型，计算约束，检验物理结论。</h3><p>声子工具覆盖三种二原子 fcc 原胞模型的 Γ 点；张量工具支持预设点群与自定义笛卡尔生成元。</p></div>';
@@ -135,5 +208,12 @@ export async function renderObservablesView({container,selection={},run,cancelRu
  stopAnimation=()=>{playing=false;clearTimeout(handle);};const tick=()=>{if(!playing||!current()||!$('#obs-play')){stopAnimation();return;}frame=(frame+1)%frames.length;paint();handle=setTimeout(tick,65);};$('#obs-play').onclick=()=>{playing=!playing;$('#obs-play').textContent=playing?'暂停位移':'播放位移';if(playing)tick();else clearTimeout(handle);};$('#obs-frame').oninput=e=>{stopAnimation();$('#obs-play').textContent='播放位移';frame=+e.target.value;paint();};$('#obs-yaw').oninput=e=>{yaw=+e.target.value;paint();};paint();
  }
  draw();
- return ()=>{disposeDisplacementDemo();disposeTensorLesson();disposeTensorResult();stopAnimation();};
+ if(neumannLab()&&tensors.includes(selection.tensor)&&neumannHandoff?.key===tensorContextKey(selection)){
+  visit=neumannHandoff;visit.owners[side]=owner;
+  visit.drafts.restore($('#obs-form'),side,{keep:true});
+ }
+ return ()=>{
+  if(ownsVisit())delete visit.owners[side];
+  disposeDisplacementDemo();disposeTensorLesson();disposeTensorResult();stopAnimation();
+ };
 }

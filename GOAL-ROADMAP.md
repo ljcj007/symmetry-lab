@@ -620,3 +620,24 @@ establish that all existing scientific and teaching content has been audited.
 - Existing generic presets keep their original inputs. New regressions capture
   the requests emitted by both language editions and replay them through the
   same Python entry point used by the browser.
+
+## Carry a worked example through its actual tool and return
+
+- Space-group lessons 4 and 6 open bounded P−1 examples in the existing CrystKit
+  calculator. General points and inversion centers distinguish orbit size from
+  stabilizer order. Moving the origin shows the unfolded −1/2 translation and
+  its folded +1/2 representative with the coordinate convention stated.
+- SU(3) lessons 26 and 29 offer the four-fundamental and four-octet singlet
+  examples without replacing their original main experiments or derivations.
+  Exact matrix entries and path probabilities support the stated hand
+  calculations of Casimir means and variances. The ends of the CG and Racah
+  stages continue into the next stage through their first appropriate lesson.
+- Neumann's classroom and tensor tool share named context in their addresses
+  while retaining independent editable drafts within the page session. Invalid
+  or incomplete named addresses cannot consume another draft. Repeated history
+  navigation restores the proper side; explicitly loading the same lesson
+  defaults clears its own older draft. Raw custom JSON stays out of addresses.
+- Qualified space-group material context survives tab changes. Independent
+  unqualified visits do not acquire a material from an earlier renderer.
+  English result labels distinguish stabilizer, element, finite-quotient and
+  derived-series orders from course levels.

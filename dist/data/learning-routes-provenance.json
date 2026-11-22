@@ -67,8 +67,8 @@
   },
   "files": {
     "GOAL-ROADMAP.md": {
-      "bytes": 96284,
-      "sha256": "740172fb86d553ba49b8f101de7333c5b3891650737fc1f2b06cb17cf351f2bc"
+      "bytes": 97695,
+      "sha256": "fd682cefc64a9c4e1ddb892182869918e31bf266d492ef79a4b5f617b397b46c"
     },
     "NOTICE.txt": {
       "bytes": 15904,
@@ -83,8 +83,8 @@
       "sha256": "3d234314e6134f24d538324936ad55c068e5c6184f70ad1d35531f2db8f8a79c"
     },
     "dist/app.js": {
-      "bytes": 107194,
-      "sha256": "5c59b62c2e6ef991a91a1e24b12fe2bd92df35d2939a82ebb46264f4f9af2b36"
+      "bytes": 107209,
+      "sha256": "ba6e8e090be576b30ede7255e8bf30cff85476719ccbe9cadc6a677bcebdeebd"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -107,8 +107,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 32921,
-      "sha256": "f0a05575e5ee80787cfef675752c3a29a621a20cbbc957d6d2758f5a77644a88"
+      "bytes": 33711,
+      "sha256": "085748d77a1222035b6dda2db1fa193e59b5f8f0e424dd690d0764c5715b750e"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -129,6 +129,10 @@
     "dist/coupled-materials-ui.js": {
       "bytes": 50504,
       "sha256": "d66f9c49d7562b36a5edee7fedda8e71894b555fccb85951957f9a04d91e4e0c"
+    },
+    "dist/course-flow.js": {
+      "bytes": 6524,
+      "sha256": "d73c3cfcdce646e587f1052f7a0a7f5bee646d7466003c9266d85aabe7079094"
     },
     "dist/crystkit-handedness-ui.js": {
       "bytes": 4331,
@@ -183,8 +187,8 @@
       "sha256": "465dba4269a9337c054763dbd0c3dfe37c4a647ddc7f0d3a42b41417a5596a1c"
     },
     "dist/data/lie-group-lessons.json": {
-      "bytes": 163865,
-      "sha256": "08780e0f3cf7a9d9e0e2734474dced4ff1bd4eaaf51892386424d2694aa3d92f"
+      "bytes": 165574,
+      "sha256": "54d4fad706f8054c2301e8b7b8cc0490d1e6d721241e6adb32dd3905abb30c2b"
     },
     "dist/data/material-observables.json": {
       "bytes": 42170,
@@ -331,8 +335,8 @@
       "sha256": "0a0a1635a0bae8b7395985cc7f4235b282fb712e5c05d8820f7551e80575c131"
     },
     "dist/index.html": {
-      "bytes": 8433,
-      "sha256": "4d9ba4fc52150f87d222857db6b4dbc17ffc3f38be6bd2f645b621723a6fbac7"
+      "bytes": 8427,
+      "sha256": "8eea886c38b4b1686a2eb2c234a3c30ce571ae7b5e1ec29e64c9ddfa9ef1fa7d"
     },
     "dist/learning-activity-aliases.js": {
       "bytes": 2439,
@@ -383,8 +387,8 @@
       "sha256": "d950f43e5d93f15d5de365d1b0a0bb96de8dc1934d852ae3fbf5983c003bc8f3"
     },
     "dist/observables-ui.js": {
-      "bytes": 34763,
-      "sha256": "80772e5e1d2ccd084ad52c2e23b138351c877be62c415217369302bfbe3fbb33"
+      "bytes": 38246,
+      "sha256": "5e6589ffd68e23d490972a01efa5e725d45c79b88ea307d05b7aec52c070e198"
     },
     "dist/optional-panel.js": {
       "bytes": 1198,
@@ -393,6 +397,10 @@
     "dist/pathways-ui.js": {
       "bytes": 18131,
       "sha256": "a4832c14846c3edd0d206353935c58b5339d4eda2758bf2b55fc20e45eca995a"
+    },
+    "dist/pminus1-practice.js": {
+      "bytes": 4206,
+      "sha256": "d20dc75ae31659709937eeaa1bc5edebc894b377e9dff4c8823fb4ed1e07cb9f"
     },
     "dist/pointgroup-ui.js": {
       "bytes": 50428,
@@ -599,8 +607,8 @@
       "sha256": "833323bfa3e72e96b000853f546179a1e445cb315f0e8264e0c58386c782e1de"
     },
     "dist/research-ui.js": {
-      "bytes": 27682,
-      "sha256": "3e2ffa35838119126e4c4e5272cdb4d8cda57d2fb0e8cb6838256a0d7310c3be"
+      "bytes": 28525,
+      "sha256": "9bb9a11ab39aaf00ba3c47ba62bb303aa016392c4e6c885948d7c2262042d12b"
     },
     "dist/response-materials-ui.js": {
       "bytes": 13828,
@@ -647,8 +655,8 @@
       "sha256": "f8522184f11ef95f99ad5f5a70de880c14e1edb72d614789738d0e1369477215"
     },
     "dist/symmetry-course-ui.js": {
-      "bytes": 111730,
-      "sha256": "dd622cafe063b3d54488d0a11a3a53eb822f49cd81e2e6ae3c4e8ea0abcf4845"
+      "bytes": 112086,
+      "sha256": "32d1b6daf16b042db1f85ddbcf488260001cb03f024f363562f7e89d3f02b44b"
     },
     "dist/symmetry-mini-demos.js": {
       "bytes": 33021,
@@ -754,6 +762,10 @@
       "bytes": 6600,
       "sha256": "a0565d2897a5ff11000ddbe9f0c575084ec1f49e2d7162e56fe67b5212237bf1"
     },
+    "locales/en-crystkit-result-terms.json": {
+      "bytes": 371,
+      "sha256": "b013a6a3113e3fc3c6f892ba6c15ff2a6a79de26a898f773b565c43b9cfe98a7"
+    },
     "locales/en-double-screw-workbench.json": {
       "bytes": 1049,
       "sha256": "9db309fe6bc67a133b2385b2a9dfcc4e95cd65abe05708c84add9aa8cd0e1c3d"
@@ -806,6 +818,10 @@
       "bytes": 57,
       "sha256": "5ddedb01875cc490e04321e0c457743f36c8a68e68640fc211a915ba1e34cb52"
     },
+    "locales/en-lie-ninej-worked.json": {
+      "bytes": 2602,
+      "sha256": "f200b46eb0f847b8435e5fd7017bb1ffef1b3a8d5ece40a9c033ac76d344b068"
+    },
     "locales/en-magnetictb-presets.json": {
       "bytes": 513,
       "sha256": "cff0cdc8553f0bb35c468a062a92bf4d24756a8e63f0c14a4b3687e4d58ee4a7"
@@ -829,6 +845,10 @@
     "locales/en-phonopy-units.json": {
       "bytes": 18040,
       "sha256": "89cc554a438f6671d8e9b1ef3efa77458bf5354485256add4d9b44ea0637b002"
+    },
+    "locales/en-pminus1-practice.json": {
+      "bytes": 3330,
+      "sha256": "43b0729f73540246cb30d7e009a040eba8b4cbe093e5641f29586416f5927e21"
     },
     "locales/en-pointgroup-lesson-handoff.json": {
       "bytes": 2699,
@@ -903,12 +923,12 @@
       "sha256": "c7bacf2ba45e316bbeab9c1fba662157cba11b37a57286edb6ed3cd4d3fb4988"
     },
     "package.json": {
-      "bytes": 31170,
-      "sha256": "f6dbde19203b707163c5c791630bd9562bdf67dbc58a03cdc5844fe91ef00fdc"
+      "bytes": 31716,
+      "sha256": "f0a6d335e99b0067765c16112fc54ffe97b8c3895b67b4e3c8163a2401c2969b"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 27040,
-      "sha256": "6fa2e42911b23e007718f88b71b4be492be4b36fbe5a98bf21c253ef46b2d962"
+      "bytes": 27591,
+      "sha256": "14b755de4900968df92a6ff5deabf565538e460046d637f224b451479d18ebc7"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -919,12 +939,16 @@
       "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 7873,
-      "sha256": "776f3ec71b70e357e894753d55c26be09a721a11e6d3eae1432862f63650c987"
+      "bytes": 7999,
+      "sha256": "07fe9a8bb6ae1d835ba659c19638d227a48537fbc8759513b2ed6d18eecd892a"
     },
     "scripts/english-source.mjs": {
       "bytes": 5608,
       "sha256": "c4416c984a7b5e105282890d806b2f8ee3e39de7bf67c12a8e2e4da92f6f1ed0"
+    },
+    "scripts/fixtures/crystkit-sg2-orbit-terms.json": {
+      "bytes": 2396,
+      "sha256": "08fa2f817a4ae5da3f9f8bb9346deef55b9222c6e04be8960162c1c5dcd87929"
     },
     "scripts/fixtures/quartz-conjugacy.json": {
       "bytes": 2872,
@@ -941,6 +965,10 @@
     "scripts/search-catalog-source.mjs": {
       "bytes": 9510,
       "sha256": "d1aff6bfd0ff11c9a5dbfd9a3ad1c1f1fdc08318ffaaecb7ac579e4d76c6dc03"
+    },
+    "scripts/test-academy-material-context.mjs": {
+      "bytes": 3654,
+      "sha256": "48b666e194dabfd057844008212ed4e790544a3ed9050e590d183fe74de3c439"
     },
     "scripts/test-advanced-field-drafts.mjs": {
       "bytes": 5169,
@@ -993,6 +1021,10 @@
     "scripts/test-course-return.mjs": {
       "bytes": 6602,
       "sha256": "0244a80c7d73c1b1a4a7f021d2e1c1e066e32301a5ea40265e4f2ef945a3161e"
+    },
+    "scripts/test-crystkit-english-terms.mjs": {
+      "bytes": 2249,
+      "sha256": "5e51f3242a6fe11a1c9c6c8b808b07da337d9f2dbe08053e5c2cc77c7c5512fc"
     },
     "scripts/test-crystkit-handedness-ui.mjs": {
       "bytes": 3324,
@@ -1047,8 +1079,8 @@
       "sha256": "4493f463a9a235cd22d275a725bdba055da4d1e31b0c6ebeb210a88828eeedd4"
     },
     "scripts/test-lesson-progression.mjs": {
-      "bytes": 52336,
-      "sha256": "cf2e96196ae3cb2ac21acc704dcd5e39bb0a57630530bd4640fdb62681f87b06"
+      "bytes": 52478,
+      "sha256": "13eebf85fe4f1eec02015cf3129445de146d413219170db6371c581428f7769e"
     },
     "scripts/test-lesson-topic-finder.mjs": {
       "bytes": 9846,
@@ -1067,12 +1099,16 @@
       "sha256": "e3d9b41e62d894f0991aed851721c948e0f6015444540a1df52570bfdff9f3fd"
     },
     "scripts/test-lie-group-ui.mjs": {
-      "bytes": 81299,
-      "sha256": "5fdd17e3fcb53d6b0d0da582df1d80d2840e938e50aacf86a936280f2f65766c"
+      "bytes": 81294,
+      "sha256": "963ebb8d4e69713ff4ff89439429f57f417ba89f7343161c751b6128f1db0fbf"
     },
     "scripts/test-lie-lesson-handoffs.mjs": {
       "bytes": 6919,
       "sha256": "014dd2145b15123166bd1e128c176578ff8709ec99a9f811398c59f0055b24b5"
+    },
+    "scripts/test-lie-ninej-worked.mjs": {
+      "bytes": 7003,
+      "sha256": "38fb7e1752a1c289716ed602f4b752fe6d5bcc4a2b58d14d3399e9ec0b5b1c61"
     },
     "scripts/test-magnetic-group-search.mjs": {
       "bytes": 13307,
@@ -1118,6 +1154,10 @@
       "bytes": 2890,
       "sha256": "93f85ce3236adca6245b08f4482d8f4a85857ae627c7b20c4f0c7a6493b00587"
     },
+    "scripts/test-neumann-tensor-return.mjs": {
+      "bytes": 9173,
+      "sha256": "88ad5b6013b351b0d642d25b33d577cb0407022c50f01b217f1843b92a6c78db"
+    },
     "scripts/test-ninej-search.mjs": {
       "bytes": 5952,
       "sha256": "2b988ee2f79d2d387e0af0cb9f7e56620434ef79fd4a809d82dbba696002e86b"
@@ -1129,6 +1169,10 @@
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,
       "sha256": "715f2384b3f493f030027208d7e26f7d3843a5b6d63425a64b1b42e19cf8a95f"
+    },
+    "scripts/test-pminus1-practice.mjs": {
+      "bytes": 9396,
+      "sha256": "1ce0362a5ed57871dce149148663b527c44728356d8eed439d3ff62a1bee2d1d"
     },
     "scripts/test-pointgroup-lesson-handoff.mjs": {
       "bytes": 7124,
@@ -1174,6 +1218,10 @@
       "bytes": 3259,
       "sha256": "602d0202fa088de891ec765b55f1ad0454e4f869ec8e6c7d2fe66879365f301d"
     },
+    "scripts/test-python-lie-ninej-worked.py": {
+      "bytes": 3016,
+      "sha256": "648e4789ac82fa4279cc35219886782b4adb46ee534d04aa5c602724f799b0c0"
+    },
     "scripts/test-python-magnetictb.py": {
       "bytes": 11053,
       "sha256": "f3f2c3c94d5a85c93ba24787697c0e3fef337bf9a0148aea1a7416a5d6fcba91"
@@ -1197,6 +1245,10 @@
     "scripts/test-python-phonopy-import.py": {
       "bytes": 27627,
       "sha256": "1868e22d96dbf8334b77321542759ed6cb2d1c11f01c76c679523c140de311f1"
+    },
+    "scripts/test-python-pminus1-practice.py": {
+      "bytes": 2210,
+      "sha256": "2e22fd57c70261b31593fa2e86c77200fea3cc0e7c863c7fa5959edf32c85c50"
     },
     "scripts/test-python-quartz-conjugacy.py": {
       "bytes": 5765,

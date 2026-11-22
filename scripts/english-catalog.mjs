@@ -83,6 +83,8 @@ catalogFiles.push('en-zno-gamma-nac-routes.json','en-zno-gamma-nac-ui.json');
 catalogFiles.push('en-complex-character-checkpoint.json','en-magnetictb-presets.json');
 catalogFiles.push('en-pointgroup-lesson-handoff.json','en-material-lesson-handoffs.json');
 catalogFiles.push('en-electronic-response-handoffs.json','en-manybody-lesson-handoffs.json');
+catalogFiles.push('en-pminus1-practice.json','en-lie-ninej-worked.json');
+catalogFiles.push('en-crystkit-result-terms.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

@@ -1,0 +1,10 @@
+{
+  "下一阶段 · 三重张量积与 Racah 重耦合 →": "Next stage · triple tensor products and Racah recoupling →",
+  "下一阶段 · 四重张量积与 9j 重耦合 →": "Next stage · fourfold tensor products and 9j recoupling →",
+  "在 9j 计算器打开本例 · 四个基本表示": "Open this 9j example · four fundamental representations",
+  "保留四个 3、目标 Dynkin 标签 (2,1)、左到右和输入路径 0，点击计算。按右树路径索引记下精确概率；非零通道表略去的路径概率为 0。": "Keep all four inputs at 3, the target Dynkin label (2,1), left-to-right recoupling, and input path 0. Run the calculation and record the exact probabilities by right-tree path index. Any path missing from the nonzero-channel table has probability 0.",
+  "按右树第一中间表示 G 合并概率。把 G=6 和 G=3̄ 的概率各乘本例给出的 O/κ 本征值，求和得平均值；换成本征值平方再求和，减去平均值的平方，得到方差除以 κ²。": "Group the probabilities by the first right-tree intermediate irrep G. Weight the O/κ eigenvalues given in the example by the probabilities of G=6 and G=3̄, then sum to obtain the scaled mean. Repeat with the squared eigenvalues and subtract the square of the scaled mean to obtain the variance divided by κ².",
+  "在 9j 计算器打开本例 · 四个八重态的双单态": "Open this 9j example · double singlet from four octets",
+  "保留四个 8、目标 (0,0)、左到右和输入路径 7，点击计算。展开全部耦合路径，按右树第一中间表示 G 汇总精确概率；把 G=8 的不同路径概率相加。用 R 矩阵核对第 7 条左路径与第 7 条右路径的重叠为 1/8，索引从 0 开始。": "Keep all four inputs at 8, the target (0,0), left-to-right recoupling, and input path 7. Run the calculation and expand the full list of coupling paths. Group the exact probabilities by the first right-tree intermediate irrep G, summing over all paths with G=8. In the R matrix, check the overlap between left path 7 and right path 7. With zero-based indexing it is 1/8.",
+  "用汇总后的概率和本例的 Casimir 本征值手算平均值与方差。先用本征值做加权和，再用本征值平方做加权和，两者用来核对例题中的平均与涨落。": "Use the grouped probabilities and the Casimir eigenvalues given in the example to calculate the mean and variance by hand. Use the eigenvalues for the first weighted sum and their squares for the second. These sums give the mean and fluctuation in the worked example."
+}

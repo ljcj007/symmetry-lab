@@ -999,10 +999,11 @@ for(const [catalog,lessonId,context='']of[
  const labContext=parseClassroomRoute(shellMoves.at(-1).hash);
  assert.equal(labContext.tab,'lab');assert.deepEqual(shellMoves.at(-1).options,{render:false});
  for(const key of ['section','pathway','module','lesson','track','material','preset','exercise','group','level','experiment']){
-  // An exercise selects a derive view; academy material selects its materials
-  // view. Leaving those tabs intentionally removes their scoped URL selectors,
-  // while the existing renderer and its input state remain mounted.
-  const scopedSelector=key==='exercise'||key==='material'&&['academy','pointgroups','lie'].includes(initialContext.section);
+  // A qualified academy material remains the case context outside Materials.
+  // Neumann's tensor lab also retains its exercise context. Fresh unqualified
+  // academy visits are independently checked against leaked renderer state.
+  const neumannLab=initialContext.section==='observables'&&initialContext.lesson==='neumann'&&initialContext.experiment==='tensors';
+  const scopedSelector=key==='exercise'&&!neumannLab||key==='material'&&['pointgroups','lie'].includes(initialContext.section);
   assert.equal(labContext[key],scopedSelector?undefined:initialContext[key],entry.key+' preserves the tab-appropriate local '+key);
  }
 

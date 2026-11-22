@@ -1,5 +1,5 @@
 import {createResultLocalizer} from '../english-results.js?v=sha256-642040f6de5426902a38';
-const englishMessages=fetch(new URL('./data/python-messages.json?v=sha256-126d094374f0fdacb3d4',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
+const englishMessages=fetch(new URL('./data/python-messages.json?v=sha256-df8e37dc70f79fc99cd4',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
 const BUILD = '20261122-zno-nac1';

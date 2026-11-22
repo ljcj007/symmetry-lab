@@ -57,8 +57,9 @@ export function createCourseFlowDrafts(){
    const fields=['input','select','textarea'].flatMap(tag=>[...form.querySelectorAll(tag)]).filter(el=>el.id&&el.type!=='file').map(el=>({id:el.id,value:el.value,checked:el.checked}));
    drafts.set(key,{fields,outputs:[...form.querySelectorAll('output')].map(el=>el.textContent),error});
   },
-  restore(form,key){
-   const draft=drafts.get(key);if(!form||!draft)return;drafts.delete(key);
+  restore(form,key,{keep=false}={}){
+   const draft=drafts.get(key);if(!form||!draft)return;
+   if(!keep)drafts.delete(key);
    for(const field of draft.fields){const el=form.querySelector('#'+field.id);if(el){el.value=field.value;if(typeof field.checked==='boolean')el.checked=field.checked;}}
    [...form.querySelectorAll('output')].forEach((el,i)=>{if(draft.outputs[i]!==undefined)el.textContent=draft.outputs[i];});
    if(draft.error){const status=document.createElement('p');status.setAttribute('role','alert');status.textContent=draft.error+' 原输入已保留，请修改后重新检查。';form.appendChild(status);}

@@ -1,0 +1,22 @@
+{
+  "核对一般点和反演中心的轨道 ·": "Check the orbits of a general point and an inversion center ·",
+  "分别取 (1/5, 3/10, 2/5) 和 (0, 0, 0)。先预测轨道有几个点、哪些操作保持该点，再比较相同的原胞平移取模下的两个结果。": "Use (1/5, 3/10, 2/5) and (0, 0, 0). Predict the orbit size and which operations fix the point. Compare both results modulo translations of the same primitive cell.",
+  "在晶体群工具中比较两个点 →": "Compare the two points in Crystal Group Tools →",
+  "把同一个反演中心写在两个原点设定中": "Describe the same inversion center from two origins",
+  "保持基底不变。新原点的旧坐标是 (1/4, 0, 0)，旧反演中心的新坐标是 (−1/4, 0, 0)。先算反演的未折回平移，再核对计算输出的折回结果。": "Keep the basis fixed. The new origin has old coordinates (1/4, 0, 0). The original inversion center has new coordinates (−1/4, 0, 0). Predict the inversion translation before reduction, then check the reduced result in the tool.",
+  "在晶体群工具中比较原点移动前后 →": "Compare the original and shifted origins in Crystal Group Tools →",
+  "一般点与反演中心": "General point and inversion center",
+  "分别载入并运行两个输入。在点轨道表中核对一般点有两个等价点、稳定子阶为 1，反演中心有一个等价点、稳定子阶为 2。": "Load and run each input. In the orbit table, check that the general point has two equivalent points and stabilizer order 1, while the inversion center has one equivalent point and stabilizer order 2.",
+  "载入一般点": "Load the general point",
+  "载入反演中心": "Load the inversion center",
+  "载入会替换当前输入。点击运行后再比较结果。": "Loading an example replaces the current input. Run each case to compare results.",
+  "移动坐标原点": "Shift the coordinate origin",
+  "比较同一个物理反演中心的两组坐标。移动后，用 origin = (1/4, 0, 0)，并在新坐标中取 point = (−1/4, 0, 0)。": "Compare two coordinate descriptions of the same physical inversion center. After shifting, set origin = (1/4, 0, 0) and use point = (−1/4, 0, 0) in the new coordinates.",
+  "载入原来的原点设定": "Load the original setting",
+  "载入移动后的原点设定": "Load the shifted setting",
+  "按坐标式计算，未折回平移为": "The coordinate transformation gives the translation before reduction as",
+  "原点设在反演中心时，未折回平移为": "With the origin at the inversion center, the translation before reduction is",
+  "读出反演的平移分量": "Read the inversion translation",
+  "Python 返回的原胞折回结果为": "Python returns this translation reduced modulo the primitive cell:",
+  "operations 或 generators 使用 rotation 和 translation；分数写为字符串，例如 \"1/2\"。basis 与 origin 满足 x_old = basis × x_new + origin，point 使用新坐标。给定群编号时，旧坐标使用 BC 设置。": "Use rotation and translation in operations or generators. Write fractions as strings such as \"1/2\". The coordinate convention is x_old = basis × x_new + origin. Enter point in the new coordinates. For a group number, the old coordinates use the BC setting."
+}

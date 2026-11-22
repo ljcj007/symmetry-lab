@@ -14,9 +14,9 @@ const courseDefinitions={
 ,'spectroscopy':{load:()=>import('./spectroscopy-ui.js?v=20261117-derive1'),render:'renderSpectroscopyView',result:'getSpectroscopyResult'}
 ,'response-materials':{load:()=>import('./response-materials-ui.js?v=20261122-classroom-drafts1'),render:'renderResponseMaterialsView',result:'getResponseMaterialsResult'}
 ,'pointgroups':{load:()=>import('./pointgroup-ui.js?v=20261122-lesson-handoffs1'),render:'renderPointgroupView',result:'getPointgroupResult'}
-,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-start-crystal1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
-,'lie':{load:()=>import('./lie-group-ui.js?v=20261122-lesson-handoffs1'),render:'renderLieGroupView',result:'getLieGroupResult'}
-,'observables':{load:()=>import('./observables-ui.js?v=20261122-lesson-handoffs1'),render:'renderObservablesView',result:'getObservablesResult'}
+,'academy':{load:()=>import('./symmetry-course-ui.js?v=20261122-core-links1'),render:'renderSymmetryCourseView',result:'getSymmetryCourseResult'}
+,'lie':{load:()=>import('./lie-group-ui.js?v=20261122-core-links1'),render:'renderLieGroupView',result:'getLieGroupResult'}
+,'observables':{load:()=>import('./observables-ui.js?v=20261122-core-links1'),render:'renderObservablesView',result:'getObservablesResult'}
 ,'dynamics':{load:()=>import('./structure-dynamics-ui.js?v=20261122-lesson-handoffs1'),render:'renderStructureDynamicsView',result:'getStructureDynamicsResult'}
 ,'material-research':{load:()=>import('./material-research-ui.js?v=20261122-lesson-handoffs1'),render:'renderMaterialResearchView',result:'getMaterialResearchResult'}
 ,'coupled-materials':{load:()=>import('./coupled-materials-ui.js?v=20261122-lesson-handoffs1'),render:'renderCoupledMaterialsView',result:'getCoupledMaterialsResult'}
@@ -51,7 +51,7 @@ const introductoryLinks={
  continuous:[["Generators and physical applications",'track=continuous'],["Discrete and continuous: from C₄ to U(1)",'tab=lab&experiment=u1'],["SU(2) and the Bloch sphere",'tab=lab&experiment=su2'],["Different representations of the same group",'tab=lab&experiment=representations'],["Two-path interference and relative phase",'tab=lab&experiment=interferometer'],["SU(3) and weight diagrams",'tab=lab&experiment=su3']]
 };
 for(const pathway of classroomPathways){const first=introductoryLinks[pathway.id]||[],queries=new Set(first.map(([,query])=>query));pathway.links=[...first,...pathway.links.filter(([,query])=>!queries.has(query))];}
-const queryFields=['module','tab','lesson','experiment','preset','track','material','exercise','group','level','project','projectInstance','projectStep'];
+const queryFields=['module','tab','lesson','experiment','preset','track','material','exercise','group','level','project','projectInstance','projectStep','tensor'];
 const specialistModules={
  theorems:{section:'group-theorems',pathway:'foundations',route:'group-theorems'},
  mini:{section:'symmetry-mini-demos',pathway:'foundations',route:'symmetry-mini-demos'},
@@ -148,6 +148,8 @@ export function parseClassroomRoute(route){
   if(result.calculationOnly)result.tab='lab';
   if(tool)result={...result,section:tool.section,module:tool.module,pathway:tool.pathway,tab:'lab',calculationOnly:true};
   else if(['compute/phase','compute/diffraction','compute/phonopy','compute/phonons','compute/tensors'].includes(path))result.experiment=path.slice(8);
+  if(result.section!=='observables'||result.experiment!=='tensors'||result.tab!=='lab'||
+   ['lesson','exercise','material','preset','tensor'].some(field=>params.getAll(field).length>1))delete result.tensor;
   return result;
 }
 export function buildClassroomHash(selection={}){
@@ -222,11 +224,20 @@ export function renderClassroomView({container,section='pointgroups',route,onSec
   onLocation(overview?"Learning center":selection.calculationOnly?"Calculation center / Tensor products and recoupling":"Learning center / "+(pathway?.title||"Lesson"));
   if(overview)return;
   const update=(patch,context)=>{
-    if(!current())return;const previousPathway=selection.pathway;selection={...selection,...patch};
+    if(!current())return;
+    const previousPathway=selection.pathway;
+    // The academy can still display the last material while an independent
+    // lesson URL has no material context. Carry only the current route's choice
+    // or a material selected in the Materials view.
+    const academyMaterial=section==='academy'?(selection.tab==='materials'?patch.material??selection.material:selection.material):undefined;
+    selection={...selection,...patch};
     if(specialist(patch.module)){selection.section=specialist(patch.module).section;selection.pathway=specialist(patch.module).pathway;}
     if(selection.section==='lie'&&!selection.calculationOnly)selection.pathway=liePathway(selection.track,selection.pathway);
-    if(patch.tab&&patch.tab!=='derive')delete selection.exercise;
-    if(patch.tab&&patch.tab!=='materials'&&!['frontiers','connections','construction','principles','bridges','pathways','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(section))delete selection.material;
+    const neumannLab=selection.section==='observables'&&selection.lesson==='neumann'&&selection.experiment==='tensors'&&patch.tab==='lab';
+    if(patch.tab&&patch.tab!=='derive'&&!neumannLab)delete selection.exercise;
+    if(patch.tab&&patch.tab!=='materials'&&!['frontiers','connections','construction','principles','bridges','pathways','observables','dynamics','material-research','coupled-materials','electronic-materials','quantum-materials','response-materials','spectroscopy'].includes(section)){
+      if(academyMaterial)selection.material=academyMaterial;else delete selection.material;
+    }
     // A new learning pathway needs a new sidebar; local tabs keep their state.
     const hash=buildClassroomHash(selection),options={render:selection.pathway!==previousPathway};
     if(selection.section==='lie'&&context&&Object.hasOwn(context,'lieStageReturn')){

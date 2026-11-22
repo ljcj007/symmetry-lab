@@ -44,8 +44,8 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "5c59b62c2e6ef991a91a1e24b12fe2bd92df35d2939a82ebb46264f4f9af2b36",
-      "bytes": 107194
+      "sha256": "ba6e8e090be576b30ede7255e8bf30cff85476719ccbe9cadc6a677bcebdeebd",
+      "bytes": 107209
     },
     {
       "path": "dist/bridges-projects.js",
@@ -69,8 +69,8 @@
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "f0a05575e5ee80787cfef675752c3a29a621a20cbbc957d6d2758f5a77644a88",
-      "bytes": 32921
+      "sha256": "085748d77a1222035b6dda2db1fa193e59b5f8f0e424dd690d0764c5715b750e",
+      "bytes": 33711
     },
     {
       "path": "dist/classroom.css",
@@ -189,8 +189,8 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "4d9ba4fc52150f87d222857db6b4dbc17ffc3f38be6bd2f645b621723a6fbac7",
-      "bytes": 8433
+      "sha256": "8eea886c38b4b1686a2eb2c234a3c30ce571ae7b5e1ec29e64c9ddfa9ef1fa7d",
+      "bytes": 8427
     },
     {
       "path": "dist/induction.js",
@@ -199,8 +199,8 @@
     },
     {
       "path": "dist/lie-group-ui.js",
-      "sha256": "26da76eb9da5f29323dcf6d1211041265c57e0c81752d4e717783f1bedd41ebf",
-      "bytes": 60632
+      "sha256": "a904b9aca841a4cec6458eb74db0d727954978c9bfc97457558b8ddc3bb9b8a3",
+      "bytes": 61347
     },
     {
       "path": "dist/lie-group.css",
@@ -259,8 +259,8 @@
     },
     {
       "path": "dist/observables-ui.js",
-      "sha256": "80772e5e1d2ccd084ad52c2e23b138351c877be62c415217369302bfbe3fbb33",
-      "bytes": 34763
+      "sha256": "5e6589ffd68e23d490972a01efa5e725d45c79b88ea307d05b7aec52c070e198",
+      "bytes": 38246
     },
     {
       "path": "dist/observables.css",
@@ -344,8 +344,8 @@
     },
     {
       "path": "dist/research-ui.js",
-      "sha256": "3e2ffa35838119126e4c4e5272cdb4d8cda57d2fb0e8cb6838256a0d7310c3be",
-      "bytes": 27682
+      "sha256": "9bb9a11ab39aaf00ba3c47ba62bb303aa016392c4e6c885948d7c2262042d12b",
+      "bytes": 28525
     },
     {
       "path": "dist/response-materials-ui.js",
@@ -434,8 +434,8 @@
     },
     {
       "path": "dist/symmetry-course-ui.js",
-      "sha256": "dd622cafe063b3d54488d0a11a3a53eb822f49cd81e2e6ae3c4e8ea0abcf4845",
-      "bytes": 111730
+      "sha256": "32d1b6daf16b042db1f85ddbcf488260001cb03f024f363562f7e89d3f02b44b",
+      "bytes": 112086
     },
     {
       "path": "dist/symmetry-course.css",
@@ -469,7 +469,7 @@
     },
     {
       "path": "dist/data/bridges-provenance.json",
-      "sha256": "5a8209ccebf9983d68bb2fbcba38808f7fa0a7904ca35203db93d0dfc2d5bcf3",
+      "sha256": "fd23c3d3bd96e3c5d1ecfc591513ee5546849d6e7abde8debbcc92a55135d18a",
       "bytes": 56448
     },
     {
@@ -489,7 +489,7 @@
     },
     {
       "path": "dist/data/construction-provenance.json",
-      "sha256": "27600725be5648ab09814346cf9985e495854489a6ce37ff53482b3090cb284f",
+      "sha256": "8f1ace2ab50557f372c9c1ac143be5b91420e1f7b9957c5e933792ef9a575fcf",
       "bytes": 64069
     },
     {
@@ -559,7 +559,7 @@
     },
     {
       "path": "dist/data/formula-display-provenance.json",
-      "sha256": "40c471a6ab83d469146104c5fc81da7e502c5fa5c0eb95501a0988e5e383bbbf",
+      "sha256": "d687c4d0f7b16f1562cc86f6d7e5a12b8a8a558c3ff09240e3262ace258fd8ee",
       "bytes": 16857
     },
     {
@@ -584,12 +584,12 @@
     },
     {
       "path": "dist/data/lie-group-lessons.json",
-      "sha256": "08780e0f3cf7a9d9e0e2734474dced4ff1bd4eaaf51892386424d2694aa3d92f",
-      "bytes": 163865
+      "sha256": "54d4fad706f8054c2301e8b7b8cc0490d1e6d721241e6adb32dd3905abb30c2b",
+      "bytes": 165574
     },
     {
       "path": "dist/data/lie-group-provenance.json",
-      "sha256": "9611ce6fccbedb33841bd3b48be4f1e98f5fc485811abdcafcd3f5545d6cd279",
+      "sha256": "1c5ffdb432de67b41bc664c2cba6979b2d7788d4b4732a55293fb5636a09e3bb",
       "bytes": 16897
     },
     {
@@ -609,7 +609,7 @@
     },
     {
       "path": "dist/data/material-observables-provenance.json",
-      "sha256": "9c6d0df410192e6972fae48d9c081aae28a041c5b5f5b4171e3de216cf693359",
+      "sha256": "440edfde2c7282a8e172f13b1aef4a5693c7665570f6c68ce47c7cfdc4fe4c35",
       "bytes": 5973
     },
     {
@@ -644,7 +644,7 @@
     },
     {
       "path": "dist/data/pathways-provenance.json",
-      "sha256": "24bb140027bb0f897e2737b8422ee16663683c805af8b4efa47903c95e96ed17",
+      "sha256": "46c6f7a3ea95063482593235fc14bd6543fadb54622c658e1ca3bcc0db1a3df1",
       "bytes": 27432
     },
     {
@@ -679,7 +679,7 @@
     },
     {
       "path": "dist/data/principles-provenance.json",
-      "sha256": "1f6ab3af5bb6b999dd32efb4b76fed36a183c5efed432f54bfd310b6a1f7385b",
+      "sha256": "b1bffc81af35e26319687b10ff35168e281041a28c5e5e28e3ebd239aa846914",
       "bytes": 58573
     },
     {
@@ -714,7 +714,7 @@
     },
     {
       "path": "dist/data/response-materials-provenance.json",
-      "sha256": "4c52f0ba4e20d2a1195f68cf86830d80975210c45133f895c0a7dd4192ff3337",
+      "sha256": "97eed98e708514201602edf49289c17c14f244564828374a75136816aa7b8553",
       "bytes": 10435
     },
     {
@@ -744,7 +744,7 @@
     },
     {
       "path": "dist/data/spectroscopy-provenance.json",
-      "sha256": "4562cee2957bc085a097f3bff1f9fe5e1b1adcb0ae6dc7d20a43599e17b892c2",
+      "sha256": "b9e782010c4b43037ce827688ae0e31c17e84964434eddef61b0ef769cfe263b",
       "bytes": 13329
     },
     {
@@ -779,7 +779,7 @@
     },
     {
       "path": "dist/data/symmetry-course-provenance.json",
-      "sha256": "8d780598deaec88bcda850f703673804d6c5eaaa700895a836a1dd9deadfd4fc",
+      "sha256": "a3c00773d585bc88d34b4487651e6dca8fe14ae489086fae30ec034138a33acd",
       "bytes": 15860
     },
     {
@@ -2589,8 +2589,8 @@
     },
     {
       "path": "scripts/test-lie-group-ui.mjs",
-      "sha256": "5fdd17e3fcb53d6b0d0da582df1d80d2840e938e50aacf86a936280f2f65766c",
-      "bytes": 81299
+      "sha256": "963ebb8d4e69713ff4ff89439429f57f417ba89f7343161c751b6128f1db0fbf",
+      "bytes": 81294
     },
     {
       "path": "scripts/test-magnetic-induction.mjs",
@@ -3274,8 +3274,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "f6dbde19203b707163c5c791630bd9562bdf67dbc58a03cdc5844fe91ef00fdc",
-      "bytes": 31170
+      "sha256": "f0a6d335e99b0067765c16112fc54ffe97b8c3895b67b4e3c8163a2401c2969b",
+      "bytes": 31716
     }
   ]
 }

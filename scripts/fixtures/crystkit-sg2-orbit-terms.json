@@ -1,0 +1,101 @@
+{
+  "source": "SG 2 requests captured in edge-pminus1-combined.log; replayed by the production CrystKit Python API and matched against the exported browser orbit. Only displayed result fields retained.",
+  "cases": {
+    "general": {
+      "input": {
+        "action": "analyze",
+        "group_number": 2,
+        "point": [
+          "1/5",
+          "3/10",
+          "2/5"
+        ]
+      },
+      "result": {
+        "action": "analyze",
+        "quotient": {
+          "order": 2,
+          "abelian": true,
+          "solvable": true,
+          "derivedSeriesOrders": [
+            2,
+            1
+          ],
+          "minimumGeneratorIndices": [
+            1
+          ],
+          "minimumGeneratorCount": 1,
+          "generatorMeaning": "Exact minimum for the finite quotient modulo lattice translations; not the infinite space group"
+        },
+        "pointGroupOrder": 2,
+        "gramInvariantVerified": true,
+        "orbit": {
+          "points": [
+            [
+              "1/5",
+              "3/10",
+              "2/5"
+            ],
+            [
+              "4/5",
+              "7/10",
+              "3/5"
+            ]
+          ],
+          "multiplicity": 2,
+          "stabilizerIndices": [
+            0
+          ],
+          "stabilizerOrder": 1,
+          "orbitStabilizerVerified": true
+        }
+      }
+    },
+    "center": {
+      "input": {
+        "action": "analyze",
+        "group_number": 2,
+        "point": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "action": "analyze",
+        "quotient": {
+          "order": 2,
+          "abelian": true,
+          "solvable": true,
+          "derivedSeriesOrders": [
+            2,
+            1
+          ],
+          "minimumGeneratorIndices": [
+            1
+          ],
+          "minimumGeneratorCount": 1,
+          "generatorMeaning": "Exact minimum for the finite quotient modulo lattice translations; not the infinite space group"
+        },
+        "pointGroupOrder": 2,
+        "gramInvariantVerified": true,
+        "orbit": {
+          "points": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "multiplicity": 1,
+          "stabilizerIndices": [
+            0,
+            1
+          ],
+          "stabilizerOrder": 2,
+          "orbitStabilizerVerified": true
+        }
+      }
+    }
+  }
+}
