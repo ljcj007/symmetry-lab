@@ -56,18 +56,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 91582,
-      "sha256": "f7fa1dd03cb8ffd491fba49016aa041fb65b8032a25c11cb1b0851455a47de0a"
+      "bytes": 92861,
+      "sha256": "86c44b644c41af9999bd84962aeb81d3ea8ee3a41d5ff8a5d2e230e09175eef2"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 106536,
-      "sha256": "01aff6ab36434a9687c7cc25197708b0933f9fc1c6798f376d604c413cdfb5db"
+      "sha256": "a7bc07c9d7650e9b9921b35bbe34e7bf80b1b39446b73293baf3cbfb4326886f"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32812,
-      "sha256": "5b98362187f665e4d3672b43eccc342c19c75ec5b4314fe12c12c549fcd70381"
+      "bytes": 32827,
+      "sha256": "08b4bf582d1dce100d3af0baf2fe1b766f65fa6ce7e88f62c0726d487aa1ff3b"
     },
     "dist/data/lie-group-lessons.json": {
       "normalization": "utf8-lf-v1",
@@ -87,7 +87,7 @@
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
       "bytes": 8430,
-      "sha256": "d816ddcd5d67bccdce46ca386ec0cd040cc727656fcaa8d3199bae079f190182"
+      "sha256": "6c149d8f3118de8554493d8803a3c383096a736b393b3cabca2da7d3a27e0c48"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -117,12 +117,12 @@
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
       "bytes": 3139,
-      "sha256": "bef6f4cffb10f45d5ad2ce3aec9e76943740eae9ee6465df19605346c15522ea"
+      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12667,
-      "sha256": "c6c43794db0969e34e35b0c813699576954dabb58f934a670e8647d06b3fb23e"
+      "bytes": 12824,
+      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -1049,6 +1049,16 @@
       "bytes": 148,
       "sha256": "a58f97d000b6656f5c564b0bd16ff8f960e3a4fbc50a0f60c7fd2d2bbdb40767"
     },
+    "locales/en-zno-gamma-nac-routes.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 2180,
+      "sha256": "925e7bc2de15cfcbbf962fbbdc7414d2ab09add2b4e1195e299002720937eef8"
+    },
+    "locales/en-zno-gamma-nac-ui.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6713,
+      "sha256": "2d3154f1487309f68a0cf59e972f6dc81c35a3bf8b07e1196bd408b44ba0cd50"
+    },
     "locales/en-zno-ir-polarization-docs.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 3986,
@@ -1116,8 +1126,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 29681,
-      "sha256": "e5eed73144f620c97b9c16597213181f9f048ec6c6b0e647c4999aab5c8c1e76"
+      "bytes": 29924,
+      "sha256": "34982b079d13379624868b93ae3dbbc8be432851e05dfe2a0a2a7be2a38f688a"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1146,8 +1156,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7522,
-      "sha256": "3e837b6fc515aa38f61928c0ea99b8caa73ca7cc7c4b59961e767dc649ef84bb"
+      "bytes": 7600,
+      "sha256": "28e8e367e3201792c12de1dc59518c589ee713797562cb45d5e7b2a9564f30cd"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

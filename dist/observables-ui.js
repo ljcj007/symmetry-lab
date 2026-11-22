@@ -12,7 +12,7 @@ const phononProse=value=>esc(value).replace(/(?<![A-Za-z_])(?:T1u|T2g|F2g|T2|A1g
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const gammaPeriodicityHTML='<details class="mr-scope" data-obs-gamma-entry><summary>为什么晶体 Γ 点不扣整体转动？</summary><div data-obs-gamma-body></div></details>';
 const siFoldingHTML='<details class="mr-scope" data-obs-si-folding><summary>八原子常规胞的 Γ 模式都属于原胞 Γ 吗？</summary><div data-obs-si-folding-body></div></details>';
-const znoIRCourseLink='<p class="mr-scope"><a href="#compute/phonon-modes?preset=zno-ir">用 ZnO 的 Born 有效电荷检验红外偏振 →</a></p>';
+const znoIRCourseLink=`<div class="mr-scope"><p><a href="#compute/phonon-modes?preset=zno-ir">用 ZnO 的 Born 有效电荷检验红外偏振 →</a></p><p><a href="#compute/phonon-modes?preset=zno-gamma-nac">比较趋近 Γ 的方向怎样改变 ZnO 光学模频率 →</a></p></div>`;
 const siResponsesHTML=`<details class="mr-scope" data-obs-si-responses>
  <summary>同一块硅晶体，为什么介电响应与拉曼信号不同？</summary>
  <p>先预测：沿 x 轴施加电场时，晶体会产生 y 方向的线性极化吗？若改做 z 位移光学模的拉曼实验，入射光沿 x 偏振时，哪个检偏方向有信号？</p>

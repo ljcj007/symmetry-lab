@@ -1,0 +1,95 @@
+{
+  "officialMethod": "Phonopy DynamicalMatrixWang, exact \u0393 directional limit",
+  "inputRevision": "0937453a793eb504f674b7d4fd98421d508008e6",
+  "forceSetsSHA256": "403e821f0017ca396874edcdb7da58366c6dce3cbe1f8ca03cd1346f1bd02dc5",
+  "versions": {
+    "phonopy": "4.10.0",
+    "numpy": "2.5.4",
+    "spglib": "2.8.0",
+    "symfc": "1.8.0",
+    "phonors": "0.8.0"
+  },
+  "archivedBaselineMatrixError": 4.716416146521851e-11,
+  "cases": [
+    {
+      "direction": "c-axis",
+      "correction": "raw",
+      "matrixError": 5.551115123125783e-17,
+      "maxEigenvalueError": 9.772715969802448e-11,
+      "maxOpticalErrorTHz": 1.7116250639048758e-09,
+      "thirdAcousticFrequencyTHz": 0.034937394867767604
+    },
+    {
+      "direction": "c-axis",
+      "correction": "neutralized",
+      "matrixError": 1.1102230246251565e-16,
+      "maxEigenvalueError": 9.77270209201464e-11,
+      "maxOpticalErrorTHz": 1.7116041917120128e-09,
+      "thirdAcousticFrequencyTHz": 1.2495582186798366e-07
+    },
+    {
+      "direction": "basal-axis",
+      "correction": "raw",
+      "matrixError": 2.220446049250313e-16,
+      "maxEigenvalueError": 9.772693765341955e-11,
+      "maxOpticalErrorTHz": 1.711615293942259e-09,
+      "thirdAcousticFrequencyTHz": 0.04238097203908958
+    },
+    {
+      "direction": "basal-axis",
+      "correction": "neutralized",
+      "matrixError": 1.1102230246251565e-16,
+      "maxEigenvalueError": 9.772685438669271e-11,
+      "maxOpticalErrorTHz": 1.7116228434588265e-09,
+      "thirdAcousticFrequencyTHz": 1.8065116683906267e-07
+    },
+    {
+      "direction": "oblique-cartesian",
+      "correction": "raw",
+      "matrixError": 1.1102230246251565e-16,
+      "maxEigenvalueError": 9.772682663111709e-11,
+      "maxOpticalErrorTHz": 1.7116135175854197e-09,
+      "thirdAcousticFrequencyTHz": 0.03899257498512391
+    },
+    {
+      "direction": "oblique-cartesian",
+      "correction": "neutralized",
+      "matrixError": 8.326672684688674e-17,
+      "maxEigenvalueError": 9.772660458651217e-11,
+      "maxOpticalErrorTHz": 1.7116090766933212e-09,
+      "thirdAcousticFrequencyTHz": 1.8554571738150186e-07
+    },
+    {
+      "direction": "oblique-reciprocal",
+      "correction": "raw",
+      "matrixError": 2.220446049250313e-16,
+      "maxEigenvalueError": 9.772688214226832e-11,
+      "maxOpticalErrorTHz": 1.7116166262098886e-09,
+      "thirdAcousticFrequencyTHz": 0.04093439933433756
+    },
+    {
+      "direction": "oblique-reciprocal",
+      "correction": "neutralized",
+      "matrixError": 2.220446049250313e-16,
+      "maxEigenvalueError": 9.772693765341955e-11,
+      "maxOpticalErrorTHz": 1.7116148498530492e-09,
+      "thirdAcousticFrequencyTHz": 2.4457989723295437e-07
+    },
+    {
+      "direction": "reversed-oblique-reciprocal",
+      "correction": "raw",
+      "matrixError": 2.220446049250313e-16,
+      "maxEigenvalueError": 9.772688214226832e-11,
+      "maxOpticalErrorTHz": 1.7116166262098886e-09,
+      "thirdAcousticFrequencyTHz": 0.04093439933433756
+    },
+    {
+      "direction": "reversed-oblique-reciprocal",
+      "correction": "neutralized",
+      "matrixError": 2.220446049250313e-16,
+      "maxEigenvalueError": 9.772693765341955e-11,
+      "maxOpticalErrorTHz": 1.7116148498530492e-09,
+      "thirdAcousticFrequencyTHz": 2.4457989723295437e-07
+    }
+  ]
+}

@@ -1,7 +1,15 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-friedel1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-zno-gamma-nac1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
+  {
+    route: 'compute/phonon-modes?preset=zno-gamma-nac',
+    title: 'ZnO 的 Γ 点方向与 LO–TO 劈裂',
+    summary: '比较沿 c 轴、基面和斜向的 Γ 极限，再用电荷中性检验声学平移。',
+    keywords: 'ZnO wurtzite zinc oxide phonon gamma LO TO NAC Born charge 氧化锌 Γ 点 非解析修正 纵横光学模 声子',
+    kind: '课程',
+    activityAliases: activityAliases.znoGammaNac
+  },
   {
     route: 'compute/phonon-modes?preset=zno-ir',
     title: 'ZnO Γ 点红外与拉曼选择定则',

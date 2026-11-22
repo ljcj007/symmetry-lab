@@ -1,5 +1,11 @@
 // Search aliases are matched verbatim in both language editions.
 export const activityAliases = {
+  znoGammaNac: [
+    'ZnO LO TO', 'ZnO LO-TO', 'ZnO LO–TO', 'ZnO LO-TO splitting', 'ZnO NAC',
+    'ZnO non-analytic correction', 'ZnO Gamma longitudinal optical splitting',
+    'zinc oxide LO-TO splitting', 'ZnO LO–TO 劈裂', '氧化锌 LO–TO 劈裂',
+    'ZnO 非解析修正', '氧化锌 非解析修正', 'ZnO 纵横光学模劈裂'
+  ],
   znoRaman: [
     'ZnO Raman', 'zinc oxide Raman', 'ZnO E2 Raman', 'ZnO Raman polarization',
     'ZnO Raman selection rules', 'ZnO 拉曼', 'ZnO 拉曼偏振', 'ZnO E₂ 拉曼',

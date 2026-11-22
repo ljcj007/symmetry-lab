@@ -1,6 +1,6 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
 const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
-const BUILD = '20261122-friedel1';
+const BUILD = '20261122-zno-nac1';
 const DATA_BUILD = '20261117-derive1';
 const plans = {
   group_theorems: ['group_theorems'],
@@ -10,6 +10,7 @@ const plans = {
   representation_actions: ['representation_actions'],
   phonopy_scattering: ['phonopy_import', 'phonopy_scattering'],
   phonopy_derivation: ['phonopy_import', 'phonopy_scattering', 'symmetry_grading', 'phonopy_derivation'],
+  zno_gamma_nac: ['zno_gamma_nac'],
   layer_symmetry_lab:['symmetry_frontiers'],chirality_polarity_lab:['symmetry_frontiers'],manybody_spt_lab:['symmetry_frontiers'],symmetry_linked:['symmetry_frontiers'],frontier_inverse:['symmetry_frontiers'],
   statistics_lab:['symmetry_connections'],defects_lab:['symmetry_connections'],reciprocity_lab:['symmetry_connections'],symmetry_audit:['symmetry_connections'],symbolic_step_grade:['symmetry_connections'],
   salc_lab:['salc_lab'],wavevector_lab:['wavevector_lab'],nonsymmorphic_lab:['nonsymmorphic_lab'],symmetry_grading:['symmetry_grading'],
@@ -76,7 +77,7 @@ async function prepare(id, action, payload) {
   const su3Basis = action === 'teaching_labs' && payload.lab === 'su3_basis';
   const su3Copy = action === 'teaching_labs' && payload.lab === 'su3_copy';
   const teachingPackages = spinActions || antitranslation ? ['sympy'] : su3Copy || su3Basis || su3NineJ || su3Racah || exactCG ? ['numpy', 'sympy'] : su3CG ? ['numpy'] : [];
-  for (const name of ['group_theorems','foundations_demos','symmetry_mini_demos','water_actions','representation_actions'].includes(action) ? [] : ['phonopy','phonopy_scattering','phonopy_derivation','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
+  for (const name of ['group_theorems','foundations_demos','symmetry_mini_demos','water_actions','representation_actions'].includes(action) ? [] : ['phonopy','phonopy_scattering','phonopy_derivation','zno_gamma_nac','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
     await runtime.loadPackage(name); packages.add(name);
@@ -148,6 +149,8 @@ try:
         _result = quartz_extinction.run(_request['payload'])
     elif _request['action'] == 'quartz_friedel':
         _result = quartz_friedel.run(_request['payload'])
+    elif _request['action'] == 'zno_gamma_nac':
+        _result = zno_gamma_nac.run(_request['payload'])
     else:
         _result = browser_api.run(_request['action'], _request['payload'], _sg_database, _carat_catalogs.get(_request['payload'].get('dimension', 3)), _magnetic_database, _label_database)
     _output = json.dumps({'result': _result}, ensure_ascii=False, allow_nan=False)

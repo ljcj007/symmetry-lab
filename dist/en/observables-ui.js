@@ -12,7 +12,7 @@ const phononProse=value=>esc(value).replace(/(?<![A-Za-z_])(?:T1u|T2g|F2g|T2|A1g
 const pretty=x=>typeof x==='string'?x:JSON.stringify(x,null,2);
 const gammaPeriodicityHTML="<details class=\"mr-scope\" data-obs-gamma-entry><summary>Why is rigid rotation excluded from crystal vibrations at Γ?</summary><div data-obs-gamma-body></div></details>";
 const siFoldingHTML="<details class=\"mr-scope\" data-obs-si-folding><summary>Do all eight-atom conventional-cell Γ modes belong to primitive-cell Γ?</summary><div data-obs-si-folding-body></div></details>";
-const znoIRCourseLink="<p class=\"mr-scope\"><a href=\"#compute/phonon-modes?preset=zno-ir\">Check infrared polarization with ZnO Born effective charges →</a></p>";
+const znoIRCourseLink=`<div class="mr-scope"><p><a href="#compute/phonon-modes?preset=zno-ir">Check infrared polarization with ZnO Born effective charges →</a></p><p><a href="#compute/phonon-modes?preset=zno-gamma-nac">Explore how the direction of approach to Γ changes the optical frequencies of ZnO →</a></p></div>`;
 const siResponsesHTML=`<details class="mr-scope" data-obs-si-responses>
  <summary>Why do dielectric and Raman experiments give different responses for the same silicon crystal?</summary>
  <p>Make a prediction. An electric field points along x. Does the crystal develop a linear polarization along y? In a Raman experiment on the z-displacement optical mode with x-polarized incident light, which analyzer direction gives a signal?</p>

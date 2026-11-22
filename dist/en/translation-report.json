@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29398,
-  "translatedUnits": 29398,
+  "sourceUnits": 29466,
+  "translatedUnits": 29466,
   "missing": [],
-  "files": 539,
+  "files": 540,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -198,6 +198,8 @@
     "en-quartz-extinction-ui.json",
     "en-next-paths.json",
     "en-friedel-pair-ui.json",
-    "en-quartz-friedel-ui.json"
+    "en-quartz-friedel-ui.json",
+    "en-zno-gamma-nac-routes.json",
+    "en-zno-gamma-nac-ui.json"
   ]
 }

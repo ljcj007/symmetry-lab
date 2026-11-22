@@ -57,6 +57,11 @@ const files=['.gitattributes','.github/workflows/pages.yml','README.md','NOTICE.
  'dist/zno-satellite-ui.js','dist/structure-diffraction-handoff.js','dist/python/diffraction.py','dist/docs/structure-dynamics.md',
  'scripts/test-zno-satellite-ui.mjs','scripts/test-zno-satellite-host.mjs','scripts/test-python-zno-satellite.py',
  'locales/en-zno-satellite-ui.json','locales/en-zno-satellite-host.json','locales/en-zno-satellite-docs.json',
+ 'dist/zno-gamma-nac-ui.js','dist/python/zno_gamma_nac.py','dist/learning-activity-search.js','dist/learning-activity-aliases.js',
+ 'scripts/test-zno-gamma-nac-ui.mjs','scripts/test-zno-gamma-nac-routes.mjs',
+ 'scripts/test-python-zno-gamma-nac.py','scripts/check-zno-gamma-nac-official.py',
+ 'scripts/fixtures/zno-gamma-nac-official.json',
+ 'locales/en-zno-gamma-nac-routes.json','locales/en-zno-gamma-nac-ui.json',
  ...fs.readdirSync(examples).filter(name=>name.startsWith('phonopy-zno-')).map(name=>'dist/data/examples/'+name)];
 const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf8-lf-v1 for registered text dependencies; original-byte dataset identities are recorded separately',
  scope:'Reviewed cross-course links and one authentic unequal-mass phonon input-to-frozen-export workflow. Browser calculations read supplied eigenvectors; Phonopy force-data postprocessing is reproducible offline.',
@@ -67,6 +72,14 @@ const data={schemaVersion:1,release:'20261115-zno1',sourceHashNormalization:'utf
  generation:{classification:example.classification,commit:example.commit,generator:example.generator},
  phaseBasisExample:{file:quadratureFile,settings:quadrature.settings,checks:quadrature.checks},
  opticalPolarizationExample:{file:polarizationFile,settings:polarization.settings,checks:polarization.checks},
+ directionalGammaExample:{
+  action:'zno_gamma_nac',route:'compute/phonon-modes?preset=zno-gamma-nac',
+  provenance:'Pinned qpoints dynamical matrix, companion primitive cell and original BORN. The independent Phonopy 4.10.0 Wang-method comparison starts from FORCE_SETS.',
+  officialComparison:'scripts/fixtures/zno-gamma-nac-official.json',
+  directions:['Cartesian','primitive reciprocal fractional'],corrections:['neutralized','raw','off'],
+  quantities:['frequency in THz','parent-subspace norm','longitudinal mode dipole','rigid-translation residual'],
+  boundary:'Long-range term in the directional Gamma limit. The imported-phonon workflow above still uses the supplied NAC-off eigenpairs.'
+ },
  satelliteComparison:{file:quadratureFile,basis:'same 64-site supercell for all three inputs',hkl:[1,0,1],scatteringFactors:{Zn:1,O:1}},
  verification:['All 48 supplied modes have independently checked orthogonality, Hermitian dynamical matrices and eigenpair/frequency residuals. The selected nondegenerate complex mode has independently checked mass unweighting, spatial phases and all exported 64-atom coordinates.',
   'The exact distributed primary and companion text identities are checked separately. Browser textarea newline normalization preserves an unedited raw input; an explicit text edit or independent source replacement retires the old match and unit confirmation.',

@@ -2,6 +2,8 @@
   "version": 1,
   "title": "从模式、能带到热力学的材料分析",
   "sources": [
+    {"id":"phonopy-nac","title":"Phonopy：非解析项的 Γ 极限公式","url":"https://phonopy.github.io/phonopy/formulation.html#non-analytical-term-correction"},
+    {"id":"zno-phonopy-born","title":"Phonopy ZnO 原始 BORN 文件","url":"https://github.com/phonopy/phonopy/blob/0937453a793eb504f674b7d4fd98421d508008e6/example/ZnO/BORN"},
     {"id":"phonopy","title":"Phonopy：动力学矩阵、本征矢与热力学公式","url":"https://phonopy.github.io/phonopy/formulation.html"},
     {"id":"files","title":"Phonopy：输出文件与单位","url":"https://phonopy.github.io/phonopy/output-files.html"},
     {"id":"isodistort","title":"ISODISTORT：畸变模与母相—子相关系","url":"https://iso.byu.edu/isodistorthelp.php"},
@@ -120,6 +122,17 @@
       {"prompt":"两个模型的高温平台由什么决定？","choices":["总模式数 3n","θE 与 θD 的比值","零点能大小"],"answer":0,"hint":"每模式高温贡献 kB。","explanation":"同一 n 下均趋于 3nR，尽管低温行为不同。"}]}
   ],
   "cases": [
+    {
+      "id":"zno",
+      "formula":"ZnO",
+      "title":"氧化锌的 Γ 点方向与 LO–TO 劈裂",
+      "keywords":"ZnO wurtzite zinc oxide phonon gamma LO TO NAC Born charge 氧化锌 Γ 点 非解析修正 纵横光学模 声子",
+      "summary":"用同一晶胞和本征模比较 c 轴、基面与斜向的极限。根据母相子空间权重追踪 A1 和 E1，再检验电荷中性与声学平移。",
+      "assumption":"动力学矩阵基于固定版本 Phonopy 计算示例。加入的是 Γ 点的长程静电修正，方向用直角坐标或原胞倒易分数坐标表示。",
+      "modules":[],
+      "links":[["到课堂比较红外和拉曼选择定则","#classroom/observables?tab=learn&lesson=ir-raman"],["打开 ZnO 的 LO–TO 劈裂实验","#compute/phonon-modes?preset=zno-gamma-nac"]],
+      "sources":["phonopy-nac","zno-phonopy-born"]
+    },
     {"id":"silicon","formula":"Si","title":"从 Γ 模式到冻结结构与热容","summary":"识别 Oh 的声学 T1u 与光学 T2g，检查位移后导出结构；再用自己的网格数据研究热力学。","assumption":"内置频率和模式是可核验的教学构造；θE/θD 为用户参数，不是 Si 的拟合参数。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=silicon"],["衍射消光","#compute/diffraction?material=silicon"],["Phonopy 导入","#compute/phonopy?material=silicon"]]},
     {"id":"gaas","formula":"GaAs","title":"不同原子质量与 Td 振动表示","summary":"比较质量加权本征矢与实际位移，理解声学和光学 T2 子空间，并构造冻结模。","assumption":"演示不由模式标签推算 Raman 强度或真实软模频率。","modules":["modes","thermo"],"links":[["原有材料结构","#atlas/materials?material=gaas"],["红外与 Raman 选择定则","#compute/phonons?preset=gaas"],["Phonopy 导入","#compute/phonopy?material=gaas"]]},
     {"id":"square-model","formula":"C4v 模型","title":"方格晶格上的轨道、镜面与交叉","summary":"用 p_x/p_y 两轨道的周期模型，计算 E→A′+A″ 和镜面破缺开隙；再切换到自旋 Rashba 模型。","assumption":"这是二维模型，不指代某一真实材料，也不是所有空间群的能带连接目录。","modules":["bands"],"links":[["点群与表示","#classroom/foundations"],["双群与自旋","#classroom/spin"],["紧束缚与拓扑计算","#magnetictb"]]},

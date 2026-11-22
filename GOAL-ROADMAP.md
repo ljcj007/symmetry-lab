@@ -548,3 +548,22 @@ establish that all existing scientific and teaching content has been audited.
   expressions against the existing input and output representations. For example,
   `SU(3) 9j 27 ⊗ 3 ⊗ 3̄ ⊗ 3 → 42` opens the calculator with all four
   factors and the target prefilled. Calculation starts when the user runs it.
+
+## Follow the ZnO optical modes as the approach to Γ changes
+
+- The infrared and Raman lesson, [ZnO material case](dist/index.html#atlas/research?material=zno)
+  and calculation finder open the same [directional LO–TO lab](dist/index.html#compute/phonon-modes?preset=zno-gamma-nac).
+  Predictions can be tested along the c axis, in the basal plane or in an
+  oblique direction. The result places the uncorrected and corrected frequencies
+  side by side and uses parent-mode projections to track branches through a
+  change in frequency ordering.
+- The lab checks the original BORN file, companion primitive cell and the
+  archived dynamical matrix before calculating. A raw-charge control shows
+  the artificial frequency of about 0.03494 THz in an acoustic mode along
+  the c axis. Applying charge neutrality preserves the rigid-translation
+  subspace to the stated numerical tolerance.
+- The calculation takes the direct directional limit at Γ. An independent
+  Phonopy 4.10.0 calculation rebuilds the reference from the pinned
+  FORCE_SETS and reproduces ten raw and charge-neutralized cases.
+  [Phonopy formulation](https://phonopy.github.io/phonopy/formulation.html#non-analytical-term-correction)
+  · [Comparison report](scripts/fixtures/zno-gamma-nac-official.json)

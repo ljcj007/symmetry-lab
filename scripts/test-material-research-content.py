@@ -52,7 +52,7 @@ class MaterialResearchContentTests(unittest.TestCase):
                                   'bands': ('band_connectivity', 'band-connectivity'),
                                   'thermo': ('phonon_thermo', 'phonon-thermo')})
         cases = {c['id']: c for c in DATA['cases']}
-        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model', 'graphene-wannier', 'al-phonopy-gamma'})
+        self.assertEqual(set(cases), {'silicon', 'gaas', 'square-model', 'graphene-wannier', 'al-phonopy-gamma', 'zno'})
         self.assertEqual(cases['square-model']['modules'], ['bands'])
         self.assertIn('二维模型', cases['square-model']['assumption'])
         self.assertIn('教学', cases['silicon']['assumption'])
@@ -69,6 +69,14 @@ class MaterialResearchContentTests(unittest.TestCase):
             '#classroom/structure-dynamics?tab=learn&lesson=phonopy-files',
             '#compute/phonon-modes?preset=al-gamma',
         })
+        zno = cases['zno']
+        self.assertEqual(zno['modules'], [])
+        self.assertEqual(set(zno['sources']), {'phonopy-nac', 'zno-phonopy-born'})
+        self.assertEqual({path for _, path in zno['links']}, {
+            '#classroom/observables?tab=learn&lesson=ir-raman',
+            '#compute/phonon-modes?preset=zno-gamma-nac',
+        })
+        self.assertIn('Γ 点', zno['assumption'])
         for case in cases.values():
             self.assertTrue(set(case['modules']) <= set(mapping))
             self.assertTrue(all(link[1].startswith('#') for link in case['links']))

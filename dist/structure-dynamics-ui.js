@@ -2,7 +2,7 @@ import {phonopyDerivationLearningLinkHTML} from './phonopy-derivation-host.js?v=
 import {setPhonopyScatteringInput} from './phonopy-scattering-handoff.js?v=20261117-derive1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 // Course and calculators share the same Python interfaces; uploaded data stay local.
-import {setMaterialResearchInput} from './material-research-ui.js?v=20261122-phenomena1';
+import {setMaterialResearchInput} from './material-research-ui.js?v=20261122-zno-gamma-nac1';
 import {validateStructureDiffractionHandoff} from './structure-diffraction-handoff.js?v=20261120-structure-diffraction1';
 import {curveSVG} from './observables-ui.js?v=20261120-lesson-topic1';
 import {quartzExtinctionHTML,bindQuartzExtinction} from './quartz-extinction-ui.js?v=20261122-nextpaths1';

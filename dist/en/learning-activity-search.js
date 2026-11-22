@@ -1,7 +1,15 @@
-import {activityAliases} from './learning-activity-aliases.js?v=20261122-friedel1';
+import {activityAliases} from './learning-activity-aliases.js?v=20261122-zno-gamma-nac1';
 
 // Each activity has one destination for both the runtime finder and the generated catalog.
 export const learningActivities = [
+  {
+    route: 'compute/phonon-modes?preset=zno-gamma-nac',
+    title: "ZnO approach directions at Γ and LO–TO splitting",
+    summary: "Compare the Γ limits along the c axis, in the basal plane and at an oblique angle. Then test charge neutrality using acoustic translations.",
+    keywords: "ZnO wurtzite zinc oxide phonon gamma LO TO NAC Born charge longitudinal transverse optical modes",
+    kind: "Lesson",
+    activityAliases: activityAliases.znoGammaNac
+  },
   {
     route: 'compute/phonon-modes?preset=zno-ir',
     title: "ZnO Γ-point infrared and Raman selection rules",
