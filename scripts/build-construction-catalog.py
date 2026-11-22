@@ -9,5 +9,5 @@ for module,pathway in {'salc':'foundations','wavevector':'structure-dynamics','n
  for source in data['sources']:source['id']=module+'-'+source['id']
  for lesson in data['lessons']:lesson['references']=[module+'-'+s for s in lesson['references']]
  for key in ['lessons','exercises','cases','sources']:result[key].extend(data[key])
-(ROOT/'dist/data/construction-materials.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+(ROOT/'dist/data/construction-materials.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n')
 print({k:len(result[k]) for k in ['modules','lessons','exercises','cases','sources']})

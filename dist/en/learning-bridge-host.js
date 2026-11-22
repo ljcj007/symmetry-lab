@@ -23,7 +23,7 @@ const definitions={
  orderActions:{load:()=>import('./order-actions-bridge.js?v=20261115-actions1'),html:'orderActionsBridgeHTML',bind:'bindOrderActionsBridge'},
  layerActions:{load:()=>import('./layer-actions-bridge.js?v=20261117-derive1'),html:'layerActionsBridgeHTML',bind:'bindLayerActionsBridge'},
  fhs:{load:()=>import('./fhs-plaquette-bridge.js?v=20261117-derive1'),html:'fhsPlaquetteBridgeHTML',bind:'bindFhsPlaquetteBridge'},
- symmetryOperators:{load:()=>import('./symmetry-operator-bridge.js?v=20261115-derivations1'),html:'symmetryOperatorBridgeHTML',bind:'bindSymmetryOperatorBridge'},
+ symmetryOperators:{load:()=>import('./symmetry-operator-bridge.js?v=20261122-operator-reference1'),html:'symmetryOperatorBridgeHTML',bind:'bindSymmetryOperatorBridge'},
  chiralityActions:{load:()=>import('./chirality-actions-bridge.js?v=20261117-derive1'),html:'chiralityActionsBridgeHTML',bind:'bindChiralityActionsBridge'}
 };
 const modules=createResourceLoader(family=>definitions[family].load());

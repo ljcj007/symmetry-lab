@@ -99,8 +99,10 @@ for(const scenario of cases){
  topics.onchange({target:topics});
  await click('#pw-to-derive');
  await click('#pw-flow-lab');
- const second=fixture.requests[lessons[1].preset];
- assert.equal($('#pw-preset').value,lessons[1].preset);
+ const nextExercise=data.exercises.find(exercise=>exercise.lesson===next);
+ const nextPreset=nextExercise.labStages?.[0]?.preset||lessons[1].preset;
+ const second=fixture.requests[nextPreset];
+ assert.equal($('#pw-preset').value,nextPreset);
  assert.equal(input().value,String(second.input[key]));
  assert.equal(warning()?.textContent??'', '',`${section}: explicitly loading the new preset clears the old draft warning`);
  assert.equal(calls.length,1,`${section}: loading the next lesson preset still waits for Run`);

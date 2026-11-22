@@ -1,0 +1,8 @@
+{
+  "I 型 · 普通型": "Type I · ordinary",
+  "II 型 · 灰型": "Type II · grey",
+  "III 型 · 黑白型": "Type III · black-and-white",
+  "用实际操作表比较磁点群": "Compare magnetic point groups using their operation tables",
+  "三个入口都预设 Γ 点和单值表示。进入工作台后，手动计算不可约表示，再打开「对称操作」。记录操作总数和类型为反幺正的行数，检查哪些群含单独的时间反演 Θ。": "All three links select Γ and single-valued representations. In the Workbench, run the representation calculation, then open the Symmetry Operations tab. Count all rows and the antiunitary rows, and identify which group contains time reversal Θ by itself.",
+  "IV 型是磁空间群的类型。取磁点群时，ΘT(τ) 的平移部分被舍去。要核对半平移和随波矢变化的相位，需要查看磁空间群的操作表。": "Type IV classifies magnetic space groups. Forming a magnetic point group drops the translation part of ΘT(τ). Use the magnetic space-group operation table to check the half translation and the wavevector-dependent phase."
+}

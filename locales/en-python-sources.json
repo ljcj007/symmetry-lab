@@ -26887,5 +26887,17 @@
     "origins": [
       "python-fixture/phonopy-derivation-messages.json/requestErrors/1/message"
     ]
+  },
+  {
+    "source": "G：声明的有限超胞母群 = H：当前图案稳定子",
+    "origins": [
+      "python-fixture/construction.json.gz/results/wavevector-checker-phase90/subgroupGraph/nodes/0/label"
+    ]
+  },
+  {
+    "source": "T：超胞内平移 = H∩T：保留平移",
+    "origins": [
+      "python-fixture/construction.json.gz/results/wavevector-checker-phase90/subgroupGraph/nodes/1/label"
+    ]
   }
 ]

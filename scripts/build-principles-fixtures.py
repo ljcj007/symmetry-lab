@@ -3,6 +3,7 @@
 UTF-8/LF source hashes make semantic source changes stale without treating a
 Windows CRLF checkout as a different algorithm. Gzip timestamps are fixed.
 """
+import argparse
 import gzip
 import hashlib
 import json
@@ -20,7 +21,19 @@ def normalized_hash(path):
     return hashlib.sha256(path.read_text(encoding='utf-8').encode('utf-8')).hexdigest()
 
 
-def main():
+def retained_results(path, requests, source_hashes, release):
+    """Retain verified fixture rows when only the preset catalogue has grown."""
+    prior = json.loads(gzip.decompress(path.read_bytes()))
+    if (prior['format'] != 'real-python-principles-fixtures'
+            or prior['release'] != release
+            or prior['sourceHashes'] != source_hashes
+            or any(requests.get(key) != payload for key, payload in prior['requests'].items())
+            or set(prior['results']) != set(prior['requests'])):
+        raise ValueError('Existing results do not match the current cores and retained requests')
+    return prior['results']
+
+
+def main(retain_existing=False):
     catalog_path = ROOT/'dist/data/principles-materials.json'
     data = json.loads(catalog_path.read_text(encoding='utf-8'))
     requests = {}
@@ -30,16 +43,21 @@ def main():
             if preset['id'] in requests:
                 raise ValueError('Duplicate fixture ID: '+preset['id'])
             requests[preset['id']] = {'action': module['action'], 'input': {**defaults, **preset['input']}}
-    results = {key: run(request['action'], request['input']) for key, request in requests.items()}
+    target = ROOT/'scripts/fixtures/principles.json.gz'
+    hashes = {name: normalized_hash(ROOT/'dist/python'/name) for name in CORE_FILES}
+    prior = retained_results(target, requests, hashes, data['release']) if retain_existing else {}
+    results = {
+        key: prior[key] if key in prior else run(request['action'], request['input'])
+        for key, request in requests.items()
+    }
     fixture = {
         'format': 'real-python-principles-fixtures', 'release': data['release'],
         'sourceHashNormalization': 'utf8-lf-v1',
-        'sourceHashes': {name: normalized_hash(ROOT/'dist/python'/name) for name in CORE_FILES},
+        'sourceHashes': hashes,
         'catalogSHA256': normalized_hash(catalog_path),
         'requests': requests, 'results': results,
     }
     raw = json.dumps(fixture, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')
-    target = ROOT/'scripts/fixtures/principles.json.gz'
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(gzip.compress(raw, mtime=0))
     print('Principles fixtures:', len(results), 'real results;', len(raw), 'raw bytes;',
@@ -47,4 +65,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--retain-existing', action='store_true')
+    main(retain_existing=parser.parse_args().retain_existing)

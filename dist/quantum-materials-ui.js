@@ -12,7 +12,7 @@ const sources=rows=>`<div class="obs-sources">${(rows||[]).filter(s=>/^https:\/\
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 export function parseQuantumData(text){if(typeof text!=='string'||new TextEncoder().encode(text).length>4_000_000)throw Error('预处理 JSON 最大为 4 MB');const d=JSON.parse(text);if(!object(d))throw Error('JSON 须为对象');return d;}
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=fetch('data/quantum-materials.json?v='+RELEASE).then(r=>{if(!r.ok)throw Error('轨道、几何与输运课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/quantum-materials.json?v=20261122-exercise-cases1').then(r=>{if(!r.ok)throw Error('轨道、几何与输运课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getQuantumMaterialsResult=()=>lastResult;
 export const quantumCourseRoute=(id,query='')=>'#classroom/'+({orbitals:'spin',geometry:'crystal',transport:'observables'}[id]||'spin')+'?module='+id+(query?'&'+query:'');
 const numeric=(label,key,value,extra='')=>`<label>${esc(label)}<input id="qm-${key}" type="number" ${/\bstep\s*=/.test(extra)?'':'step="any"'} value="${esc(value)}" ${extra}></label>`;
@@ -74,8 +74,13 @@ export async function renderQuantumMaterialsView({container,selection={},run,can
   flowDrafts.discard('geometry');forms.geometry=input;preset='';invalidate();tab='lab';draw();sync();return true;
  }
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!module.presets.some(p=>p.id===lesson.preset))throw Error('本课预设暂不可用，请返回课程目录检查。');flowDrafts.discard(module.id);applyPreset(lesson.preset);invalidate();tab='lab';draw();sync();}
- function derive(){const list=data.exercises.filter(e=>e.module===module.id);$('#qm-content').innerHTML=`${select('选择分步练习','exercise',list.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}<article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="qm-steps"></div><p id="qm-progress" role="status"></p>${courseFlowActions('qm')}${links()}</article>`;const exerciseSelect=$('#qm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#qm-exercise')!==exerciseSelect)return;exercise=list.find(x=>x.id===e.target.value);lesson=data.lessons.find(l=>l.id===exercise.lesson);draw();sync();};
+ function openLessonLab(){
+  if(!current())return;
+  const target=tab==='derive'?(exercise.labPreset||lesson.preset):lesson.preset;
+  if(!module.presets.some(p=>p.id===target))throw Error('本课预设暂不可用，请返回课程目录检查。');
+  flowDrafts.discard(module.id);applyPreset(target);invalidate();tab='lab';draw();sync();
+ }
+ function derive(){const list=data.exercises.filter(e=>e.module===module.id);$('#qm-content').innerHTML=`${select('选择分步练习','exercise',list.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}<article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="qm-steps"></div><p id="qm-progress" role="status"></p>${courseFlowActions('qm')}${links()}</article>`;if(exercise.labPreset)$('#qm-flow-lab').textContent='用本题条件检验';const exerciseSelect=$('#qm-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#qm-exercise')!==exerciseSelect)return;exercise=list.find(x=>x.id===e.target.value);lesson=data.lessons.find(l=>l.id===exercise.lesson);draw();sync();};
 
  const stepRoot=$('#qm-steps'),exerciseId=exercise.id;
  renderCourseFlowSteps({container:stepRoot,exercise,prefix:'qm',answerAttribute:'data-qm-answer',choicesClass:'mr-choices',completedSteps:flowSteps.get(exerciseId)||0,isCurrent:()=>current()&&$('#qm-steps')===stepRoot&&exercise.id===exerciseId,onStep:count=>flowSteps.set(exerciseId,count),onComplete:()=>{progress[exerciseId]=true;try{localStorage.setItem('symmetry-lab.quantum-materials.progress.v1',JSON.stringify(progress));}catch{}$('#qm-progress').textContent='✓ 推导完成。请到实验中改变参数，检验这个结论。';}});

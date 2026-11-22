@@ -66,7 +66,7 @@ CORE={
     ]
   }
 }
-EXPECTED_COUNTS={'modules':3,'lessons':9,'exercises':9,'exerciseSteps':36,'cases':9,'presets':21,'predictions':6,
+EXPECTED_COUNTS={'modules':3,'lessons':9,'exercises':9,'exerciseSteps':36,'cases':9,'presets':24,'predictions':6,
                  'projects':3,'projectStages':9,'retainedProjects':17,'projectCenterTotal':20,'dictionaryEntries':106,'dictionarySources':39}
 
 

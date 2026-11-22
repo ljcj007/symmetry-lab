@@ -49,6 +49,6 @@ for(const family of families){
   }
  }
 }
-assert.equal(contexts,159);assert.equal(controls,1890);assert.ok(ranges>0);
+assert.equal(contexts,165);assert.equal(controls,1980);assert.equal(ranges,211);
 assert.deepEqual(Object.keys(expectedPreserved).sort(),['exchange','exchange-dephasing']);
 console.log(`Precision controls: ${contexts} default/preset contexts, ${controls} actual controls, ${ranges} synchronized ranges; exact 2π, native-step arithmetic, select membership and retained discrete counts passed.`);

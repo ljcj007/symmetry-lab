@@ -651,6 +651,16 @@
           "answer": 0,
           "explanation": "两者是不同模型的态；有限量子二聚体的基态关联不等于经典局域箭头。"
         }
+      ],
+      "labStages": [
+        {
+          "preset": "exchange-heisenberg",
+          "label": "载入 J=1、D=0 的交换基准"
+        },
+        {
+          "preset": "exchange-plane",
+          "label": "比较仅打开 D_z=0.6 的情况"
+        }
       ]
     },
     {

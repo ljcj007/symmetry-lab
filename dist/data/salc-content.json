@@ -28,7 +28,8 @@
       {"id":"salc-repeated","title":"八维表示：副本混合与伙伴简并","input":{"copies":2,"targetIrrep":"E","seedSite":0,"operatorType":"scalar","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.6,"copyOffset":0.8,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
       {"id":"salc-breaking","title":"移除四重约束：A₁—B₁混合","input":{"copies":1,"targetIrrep":"B1","seedSite":0,"operatorType":"quadrupole","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.6,"retainC4":0,"retainMirror":1}},
       {"id":"salc-axial","title":"A₂环流算符：E内部的复矩阵元","input":{"copies":1,"targetIrrep":"E","seedSite":0,"operatorType":"axial","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
-      {"id":"salc-allowed-zero","title":"允许却为零：关闭算符幅值","input":{"copies":1,"targetIrrep":"A1","seedSite":0,"operatorType":"dipole","polarizationAngle":0,"operatorScale":0,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}}
+      {"id":"salc-allowed-zero","title":"允许却为零：关闭算符幅值","input":{"copies":1,"targetIrrep":"A1","seedSite":0,"operatorType":"dipole","polarizationAngle":0,"operatorScale":0,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}},
+      {"id":"salc-polarization-x","title":"四站点：沿 x 的单位偶极输入","input":{"copies":1,"targetIrrep":"E","seedSite":1,"operatorType":"dipole","polarizationAngle":0,"operatorScale":1,"hop":-1,"crossHop":0.3,"copyOffset":0.5,"anisotropy":0.4,"retainC4":1,"retainMirror":1}}
     ],
     "predictions": [
       {"id":"salc-predict-polarization","preset":"salc-polarization","question":"从x偏振转到45度偏振时，副本1中A₁到E_x、E_y的强度怎样变化？","choices":["两个伙伴各为1/4，总强度仍为1/2","两个伙伴各为1/2，总强度加倍","E_y始终禁戒"],"answer":0,"explanation":"本模型X与Y分别连接到E_x与E_y；强度为cos²θ/2和sin²θ/2。单个伙伴强度随偏振变，总和不变。"},
@@ -81,7 +82,11 @@
         {"prompt":"A₁→E的偶极通道是否被群论禁止？","hint":"E⊗A₁=E。","choices":["没有被禁止","一定被禁止","只有B₁算符才允许"],"answer":0,"explanation":"末态E在张量积中出现一次，但是否非零仍需算矩阵元。"},
         {"prompt":"x偏振时两个E伙伴的强度分别是多少？","hint":"X只在±x站点非零，E_y只在±y站点非零。","choices":["1/2和0","1/2和1/2","0和0"],"answer":0,"explanation":"〈E_x|X|A₁〉=1/√2，而〈E_y|X|A₁〉=0。"},
         {"prompt":"把偏振转到45度后，两个强度之和是多少？","hint":"使用cos²θ+sin²θ=1。","choices":["1","1/2","0"],"answer":1,"explanation":"两个伙伴各为1/4，总强度保持1/2。这个结论针对完整E伙伴空间和当前模型归一化。"}
-      ]
+      ],
+        "labStages": [
+          {"preset":"salc-polarization-x","label":"载入 x 偏振的四站点模型"},
+          {"preset":"salc-polarization","label":"比较 45° 偏振的两个伙伴"}
+        ]
     },
     {
       "id":"salc-multiplicity-exercise","module":"salc","lesson":"salc-multiplicity","title":"副本混合后还保护什么？","prompt":"使用八维预设，比较副本耦合、伙伴简并和子群约束。",

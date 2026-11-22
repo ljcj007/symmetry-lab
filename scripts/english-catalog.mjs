@@ -85,6 +85,7 @@ catalogFiles.push('en-pointgroup-lesson-handoff.json','en-material-lesson-handof
 catalogFiles.push('en-electronic-response-handoffs.json','en-manybody-lesson-handoffs.json');
 catalogFiles.push('en-pminus1-practice.json','en-lie-ninej-worked.json');
 catalogFiles.push('en-crystkit-result-terms.json');
+catalogFiles.push('en-seitz-pair-practice.json','en-magnetic-point-types.json','en-spectroscopy-worked-handoffs.json','en-quantum-lesson-handoffs.json','en-principles-construction-exercise-stages.json');
 export function loadEnglishCatalog(){
  return Object.assign({},...catalogFiles.filter(name=>fs.existsSync(path.join(localeRoot,name))).map(name=>JSON.parse(fs.readFileSync(path.join(localeRoot,name),'utf8'))));
 }

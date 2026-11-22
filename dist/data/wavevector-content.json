@@ -198,6 +198,20 @@
           "relativePhaseDegrees": 0,
           "pattern": "single"
         }
+      },
+      {
+        "id": "wavevector-checker-phase90",
+        "title": "棋盘格自共轭臂：相位 90°",
+        "input": {
+          "period": 2,
+          "qx": 1,
+          "qy": 1,
+          "amplitude": 1,
+          "transverseRatio": 1,
+          "phaseDegrees": 90,
+          "relativePhaseDegrees": 0,
+          "pattern": "single"
+        }
       }
     ],
     "predictions": [
@@ -485,6 +499,24 @@
           ],
           "answer": 2,
           "explanation": "此处是模式 Fourier 权重；真实原子散射、偏振与几何因子未包含。"
+        }
+      ],
+      "labStages": [
+        {
+          "preset": "wavevector-stripe",
+          "label": "载入 N=4 单 q 条纹"
+        },
+        {
+          "preset": "wavevector-double",
+          "label": "比较 N=4 双 q 的卫星权重"
+        },
+        {
+          "preset": "wavevector-checker",
+          "label": "载入 N=2 棋盘格，相位 0°"
+        },
+        {
+          "preset": "wavevector-checker-phase90",
+          "label": "比较 N=2 棋盘格，相位 90°"
         }
       ]
     }

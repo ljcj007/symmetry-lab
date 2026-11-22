@@ -57,5 +57,5 @@ for(const[name,render,prefix]of renderers)for(const module of catalogs[name].mod
  }
 }
 for(const key of Object.keys(expectedSteps))assert.ok(seen.has(key),'Expected discrete/continuous control was inspected: '+key);
-assert.ok(hallExact);assert.equal(contexts,101);assert.equal(runs,0);assert.equal(writes,0);
+assert.ok(hallExact);assert.equal(contexts,104);assert.equal(runs,0);assert.equal(writes,0);
 console.log('Hardcoded input contracts: '+contexts+' actual renderer contexts, '+inputs+' number/range inputs, unique step attributes, exact Hall mass, discrete/half-integer controls and continuous chemical potential passed; no automatic calculation or mastery writes. Native-browser validity is checked separately.');

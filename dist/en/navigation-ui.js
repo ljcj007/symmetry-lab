@@ -1,6 +1,6 @@
 import {homeHTML} from './entry-home.js?v=20261122-nextpaths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-lesson-handoffs1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-exercise-cases1';
 import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-start-crystal1';
 import {learningActivities} from './learning-activity-search.js?v=20261122-zno-gamma-nac1';
 import {buildWorkbenchRoute,parseWorkbenchCoordinate,parseWorkbenchSelection} from './workbench-route.js?v=20261122-nextpaths1';

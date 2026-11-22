@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LESSON_DERIVATIONS = {
     'space-01': ['space-nacl-count'],
-    'space-02': ['space-si-compose'],
+    'space-02': ['space-seitz-pair-folding', 'space-si-compose'],
     'space-03': ['space-si-compose'],
     'space-04': ['space-pminus1-orbit-stabilizer'],
     'space-05': ['space-si-compose'],  # Its final step derives the Bloch phase.

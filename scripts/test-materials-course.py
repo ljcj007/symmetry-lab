@@ -53,16 +53,16 @@ class MaterialsCourseTests(unittest.TestCase):
     def test_guided_derivations_are_complete_and_have_unambiguous_checks(self):
         exercises = self.derivations['exercises']
         materials = {m['id'] for m in self.materials['materials']}
-        self.assertEqual(len(exercises), 23)
+        self.assertEqual(len(exercises), 24)
         self.assertEqual(len({e['id'] for e in exercises}), len(exercises))
         self.assertEqual({e['track'] for e in exercises}, {'space', 'double', 'magnetic', 'color', 'spin'})
         sources={s['id'] for s in self.materials['sources']}|{s['id'] for s in self.course['sources']}
         lab_presets={'double_group':{'c2_point','d2_point','screw21_space'},
                      'color_group':{'c3_point','translation3_space'},
                      'spin_group':{'c2_point','af_space','triangular_point','helix3_space'}}
-        # These conceptual examples intentionally have no corresponding lab.
+        # These worked examples do not use the general lab preset selector.
         # Keep the original exercises' strict material/preset checks intact.
-        conceptual={'space-pminus1-orbit-stabilizer','color-swap-antilinear-time-reversal','magnetic-settings-macroscopic-constraints'}
+        conceptual={'space-pminus1-orbit-stabilizer','space-seitz-pair-folding','color-swap-antilinear-time-reversal','magnetic-settings-macroscopic-constraints'}
         for e in exercises:
             with self.subTest(exercise=e['id']):
                 if 'materialId' in e:
@@ -101,6 +101,7 @@ class MaterialsCourseTests(unittest.TestCase):
         self.assertEqual(mapping['magnetic-05'], ['magnetic-nio-square'])
         self.assertEqual(mapping['spin-04'], ['spin-soc-lock'])
         self.assertEqual(mapping['space-04'], ['space-pminus1-orbit-stabilizer'])
+        self.assertEqual(mapping['space-02'], ['space-seitz-pair-folding', 'space-si-compose'])
         self.assertEqual(mapping['color-03'], ['color-swap-antilinear-time-reversal'])
         self.assertEqual(mapping['magnetic-03'], ['magnetic-settings-macroscopic-constraints'])
         self.assertEqual(sum(bool(ids) for ids in mapping.values()), 24)

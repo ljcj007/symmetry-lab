@@ -55,13 +55,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107209,
-      "sha256": "ba6e8e090be576b30ede7255e8bf30cff85476719ccbe9cadc6a677bcebdeebd"
+      "bytes": 107211,
+      "sha256": "ab29a51f2b2c67f35fcf6271ed40a6dc6f547446de624d94635b33c7a2cc2607"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33711,
-      "sha256": "085748d77a1222035b6dda2db1fa193e59b5f8f0e424dd690d0764c5715b750e"
+      "bytes": 33727,
+      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
     },
     "dist/data/pointgroup-lessons.json": {
       "normalization": "utf8-lf-v1",
@@ -95,8 +95,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8427,
-      "sha256": "8eea886c38b4b1686a2eb2c234a3c30ce571ae7b5e1ec29e64c9ddfa9ef1fa7d"
+      "bytes": 8431,
+      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -523,6 +523,11 @@
       "bytes": 2602,
       "sha256": "f200b46eb0f847b8435e5fd7017bb1ffef1b3a8d5ece40a9c033ac76d344b068"
     },
+    "locales/en-magnetic-point-types.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1142,
+      "sha256": "86c6aebc2f5ab48837170d151ea7540c09e991d0fc3dfc9f516b0095a93c125f"
+    },
     "locales/en-magnetictb-presets.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 513,
@@ -683,6 +688,11 @@
       "bytes": 1030,
       "sha256": "beb6cc67fd47118c8d900e772929b3580394bd85cada6b5cd0101ae4bbc0339a"
     },
+    "locales/en-principles-construction-exercise-stages.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1992,
+      "sha256": "c6b008804d37e88556147b28b00b94696f1ed39f14c24fd13496a8950d534d5c"
+    },
     "locales/en-project-conditions.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 9938,
@@ -757,6 +767,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 131287,
       "sha256": "c48e982b19525a29896bd5d1fa157d50b599cf1ee4cb8ca1c28f61594bbb2580"
+    },
+    "locales/en-quantum-lesson-handoffs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 80,
+      "sha256": "52d328e5111feef308feabc802245f11159327df4ef344cc0126e7a82a75540f"
     },
     "locales/en-quantum-state-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -848,6 +863,11 @@
       "bytes": 3895,
       "sha256": "932cd56b734b0dc5b069953c1c203f92866630f0a663a8ce25ef3ced928e0ee1"
     },
+    "locales/en-seitz-pair-practice.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 6608,
+      "sha256": "fbcbba152a3acfb936edacc52f110a0609b88f06f86fb1583a03a693d701946f"
+    },
     "locales/en-seitz-quotient-docs.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 7219,
@@ -897,6 +917,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 579,
       "sha256": "0bb7ec4a094fde55daaa9c34b8e81df17ce5296a8a87b33e4b652ec82a64d677"
+    },
+    "locales/en-spectroscopy-worked-handoffs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 147,
+      "sha256": "1737a49230ee4eddc8f930208f1307e6b12733505e74529458366b9feb48f929"
     },
     "locales/en-spin-actions-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -1165,8 +1190,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31716,
-      "sha256": "f0a6d335e99b0067765c16112fc54ffe97b8c3895b67b4e3c8163a2401c2969b"
+      "bytes": 32492,
+      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1195,8 +1220,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7999,
-      "sha256": "07fe9a8bb6ae1d835ba659c19638d227a48537fbc8759513b2ed6d18eecd892a"
+      "bytes": 8203,
+      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

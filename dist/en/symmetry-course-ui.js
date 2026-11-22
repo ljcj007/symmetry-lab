@@ -1,5 +1,6 @@
 import {crystalSpan} from './crystal-notation.js?v=20261110-en1';
 import {seitzComparisonHTML,bindSeitzComparison} from './seitz-comparison-ui.js?v=20261122-start-crystal1';
+import {seitzPairExercise,seitzPairPracticeHTML,bindSeitzPairPractice} from './seitz-pair-practice.js?v=20261122-exercise-cases1';
 import {seitzLittleGroupHTML,bindSeitzLittleGroup} from './seitz-little-group-ui.js?v=20261122-antisc1';
 import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 import {antiunitaryScrewHTML,bindAntiunitaryScrew} from './antiunitary-screw-ui.js?v=20261122-antisc1';
@@ -13,6 +14,18 @@ import {buildWorkbenchRoute} from './workbench-route.js?v=20261112-flow2';
 import {createCrystalViewer} from './crystal-viewer.js?v=20261110-en1';
 import {createSpinColorViewer} from './spincolor-viewer.js?v=20261115-momentum1';
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function magneticPointTypesEntryHTML(){
+ const groups=[
+  ['3.1','2',"Type I · ordinary"],
+  ['3.2',"21'","Type II · grey"],
+  ['3.3',"2'","Type III · black-and-white"]
+ ];
+ const links=groups.map(([id,symbol,label])=>{
+  const route=buildWorkbenchRoute({mode:'mpg',id,k:[0,0,0],doubleValued:false,labelK:'Γ'});
+  return `<li><a data-sc-magnetic-point-type="${id}" href="#${esc(route)}">${esc(label)} · ${crystalSpan(symbol,'hm')} · ${id}</a></li>`;
+ }).join('');
+ return `<aside class="sc-callout" id="sc-magnetic-point-types"><h3>Compare magnetic point groups using their operation tables</h3><p>All three links select Γ and single-valued representations. In the Workbench, run the representation calculation, then open the Symmetry Operations tab. Count all rows and the antiunitary rows, and identify which group contains time reversal Θ by itself.</p><ul>${links}</ul><p>Type IV classifies magnetic space groups. Forming a magnetic point group drops the translation part of ΘT(τ). Use the magnetic space-group operation table to check the half translation and the wavevector-dependent phase.</p></aside>`;
+}
 const fmt = value => { const n=Number(value);return Number.isFinite(n)?(Math.abs(n)<1e-9?'0':Number(n.toFixed(5)).toString()):String(value??'—'); };
 const vector = value => Array.isArray(value)?'('+value.map(fmt).join(', ')+')':'—';
 const complex = value => {if(typeof value==='number')return fmt(value);if(!value||typeof value!=='object')return String(value??'—');const a=Number(value.re||0),b=Number(value.im||0);if(Math.abs(b)<1e-9)return fmt(a);const i=(Math.abs(Math.abs(b)-1)<1e-9?'':fmt(Math.abs(b)))+'i';return Math.abs(a)<1e-9?(b<0?'−':'')+i:fmt(a)+(b<0?' − ':' + ')+i;};
@@ -178,7 +191,7 @@ export function relatedSymmetryExercises(lesson,exercises=[]){
 const selectedGroup=()=>{if(!loaded)return null;const list=state.mode==='sg'?loaded.atlas.spaceGroups:state.mode==='msg'?loaded.atlas.magneticGroups:loaded.atlas.magneticPointGroups;return list.find(g=>String(g.number??g.id)===String(state.selection[state.mode]))||list[0];};
 
 async function load(){
-  const files=[['symmetry-course-lessons.json','20261122-course-feedback1'],['symmetry-course-atlas.json','20261115-precision1']];
+  const files=[['symmetry-course-lessons.json','20261122-exercise-cases1'],['symmetry-course-atlas.json','20261115-precision1']];
   if(!dataPromise)dataPromise=Promise.all(files.map(async ([file,version])=>{const response=await fetch('./data/'+file+'?v='+version);if(!response.ok)throw Error(`Teaching data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([lessons,atlas])=>{
     if(!Array.isArray(lessons.lessons)||!lessons.lessons.length||!Array.isArray(atlas.spaceGroups)||atlas.spaceGroups.length!==230||!Array.isArray(atlas.magneticGroups)||!Array.isArray(atlas.magneticPointGroups))throw Error("The teaching data format is incomplete, please refresh and try again.");
     const validAnswers={};
@@ -189,7 +202,8 @@ async function load(){
 }
 
 async function loadExtensions(){
-  if(!extensionPromise)extensionPromise=Promise.all(['symmetry-materials.json','symmetry-derivations.json'].map(async file=>{const response=await fetch('./data/'+file+'?v=20261115-precision1');if(!response.ok)throw Error(`Materials and derivation data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
+  const files=[['symmetry-materials.json','20261115-precision1'],['symmetry-derivations.json','20261122-exercise-cases1']];
+  if(!extensionPromise)extensionPromise=Promise.all(files.map(async ([file,version])=>{const response=await fetch('./data/'+file+'?v='+version);if(!response.ok)throw Error(`Materials and derivation data failed to load (HTTP ${response.status}）。`);return response.json();})).then(([materials,derivations])=>{
     if(!Array.isArray(materials.materials)||!materials.materials.length||!Array.isArray(derivations.exercises)||!derivations.exercises.length)throw Error("The material and derivation data format is incomplete, please reload.");
     const valid={};for(const exercise of derivations.exercises){const saved=extensionState.progress[exercise.id];if(!saved||typeof saved!=='object'||Array.isArray(saved))continue;const entry={revealed:Number.isInteger(saved.revealed)&&saved.revealed>=0&&saved.revealed<=exercise.steps.length?saved.revealed:0,hint:saved.hint===true,showAnswer:saved.showAnswer===true&&saved.revealed===exercise.steps.length};if(Number.isInteger(saved.selected)&&saved.selected>=0&&saved.selected<exercise.check.choices.length){entry.selected=saved.selected;entry.checked=saved.checked===true;}valid[exercise.id]=entry;}
     extensionState.progress=valid;extensions={materials,derivations};return extensions;
@@ -301,11 +315,13 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?spinActionsEntryHTML(lesson.id):''}${(lesson.sections||[]).map((section,i)=>`<section class="sc-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="sc-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
       ${lesson.example?`<section class="sc-worked"><span class="sc-kicker">step by step deduction</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(text=>`<li>${esc(text)}</li>`).join('')}</ol><p class="sc-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?pMinusOneLessonHTML(lesson.id):''}
+      ${lesson.id==='space-02'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzPairPracticeHTML():''}
       ${lesson.id==='double-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?"<p><a id=\"sc-rashba-trim-link\" href=\"#classroom/foundations?module=mini&amp;experiment=bands&amp;preset=rashba-trim-check\">Compare spectra and time reversal at these three wavevectors →</a></p>":''}
       ${lesson.id==='space-01'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzComparisonHTML():''}
       ${lesson.id==='space-03'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzExtinctionHTML()+quartzFriedelHTML({open:selection.preset==='quartz-friedel'}):''}
       ${lesson.id==='space-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?quartzConjugacyHTML():''}
       ${lesson.id==='space-05'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?seitzLittleGroupHTML():''}
+      ${lesson.id==='magnetic-03'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?magneticPointTypesEntryHTML():''}
       ${lesson.id==='magnetic-04'&&!selection.calculationOnly&&!selection.embeddedOnly&&!selection.atlasOnly?antiunitaryScrewHTML():''}
       ${lesson.pitfall?`<aside class="sc-pitfall"><strong>Easy to confuse</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       <div class="sc-references"><strong>References</strong>${(lesson.references||[]).map(ref=>{const source=(lessons.sources||[]).find(s=>s.id===ref.sourceId),url=safeURL(ref.url)||safeURL(source?.url);return `<span>${esc(source?.title||ref.sourceId||'')} · ${esc(ref.chapter||'')}${ref.printedPages?" · Book page "+esc(ref.printedPages):''}${ref.pdfPages?" · PDF page "+esc(ref.pdfPages):''}${url?` <a href="${esc(url)}" target="_blank" rel="noreferrer">Source ↗</a>`:''}</span>`;}).join('')}</div>
@@ -320,6 +336,11 @@ export async function renderSymmetryCourseView({container,run,cancelRun,toast=()
     if($('#sc-next-lesson'))$('#sc-next-lesson').onclick=()=>{state.lesson=next.index;drawLearn();sync();$('.sc-lesson h2')?.scrollIntoView({block:'nearest'});};
     bindSpinActionsHost(lesson);
     disposeSeitzWorkshop=bindSeitzQuotientHost();
+    const seitzPair=$('#sc-seitz-pair');
+    if(seitzPair)disposeLessonComparison=bindSeitzPairPractice(seitzPair,{
+      run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-pair')===seitzPair,
+      onDerive:()=>{extensionState.exercise=seitzPairExercise;return navigate('derive');}
+    });
     const comparison=$('#sc-seitz-comparison');
     if(comparison)disposeLessonComparison=bindSeitzComparison(comparison,{
       run,isCurrent:()=>current()&&state.tab==='learn'&&$('#sc-seitz-comparison')===comparison,

@@ -15,15 +15,21 @@ export function courseFlowRoute(base,context={}){
  return path+'?'+params.toString();
 }
 
-export function courseFlowActions(prefix){
+export function courseFlowActions(prefix,stages=[]){
  safePrefix(prefix);
- return `<div class="obs-links"><button type="button" class="secondary" id="${prefix}-flow-learn">回到本课讲解</button><button type="button" class="primary" id="${prefix}-flow-lab">用本课预设检验</button></div><p id="${prefix}-flow-status" role="alert"></p>`;
+ const primary=stages[0]?.label||'用本课预设检验';
+ const comparisons=stages.slice(1).map((stage,index)=>`<button type="button" class="secondary" id="${prefix}-flow-stage-${index+1}" data-course-flow-stage="${index+1}">${esc(stage.label)}</button>`).join('');
+ return `<div class="obs-links"><button type="button" class="secondary" id="${prefix}-flow-learn">回到本课讲解</button><button type="button" class="primary" id="${prefix}-flow-lab">${esc(primary)}</button>${comparisons}</div><p id="${prefix}-flow-status" role="alert"></p>`;
 }
 
-export function bindCourseFlowActions({root,prefix,isCurrent,onLearn,onLab,labButtonId}){
+export function bindCourseFlowActions({root,prefix,isCurrent,onLearn,onLab,onStage,labButtonId}){
  safePrefix(prefix);
  const actions=[['#'+prefix+'-flow-learn',onLearn],['#'+prefix+'-flow-lab',onLab]];
  if(labButtonId)actions.push(['#'+safePrefix(labButtonId),onLab]);
+ if(onStage)for(const button of root.querySelectorAll('[data-course-flow-stage]')){
+  const index=Number(button.dataset.courseFlowStage);
+  actions.push(['#'+safePrefix(button.id),()=>onStage(index)]);
+ }
  for(const [id,action]of actions){
   const button=root.querySelector(id);if(!button)continue;
   const active=()=>isCurrent()&&root.querySelector(id)===button;

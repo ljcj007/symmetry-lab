@@ -289,6 +289,24 @@
             "retainC4": 1,
             "retainMirror": 1
           }
+        },
+        {
+          "id": "salc-polarization-x",
+          "title": "四站点：沿 x 的单位偶极输入",
+          "input": {
+            "copies": 1,
+            "targetIrrep": "E",
+            "seedSite": 1,
+            "operatorType": "dipole",
+            "polarizationAngle": 0,
+            "operatorScale": 1,
+            "hop": -1,
+            "crossHop": 0.3,
+            "copyOffset": 0.5,
+            "anisotropy": 0.4,
+            "retainC4": 1,
+            "retainMirror": 1
+          }
         }
       ],
       "predictions": [
@@ -512,6 +530,20 @@
             "amplitude": 1,
             "transverseRatio": 1,
             "phaseDegrees": 0,
+            "relativePhaseDegrees": 0,
+            "pattern": "single"
+          }
+        },
+        {
+          "id": "wavevector-checker-phase90",
+          "title": "棋盘格自共轭臂：相位 90°",
+          "input": {
+            "period": 2,
+            "qx": 1,
+            "qy": 1,
+            "amplitude": 1,
+            "transverseRatio": 1,
+            "phaseDegrees": 90,
             "relativePhaseDegrees": 0,
             "pattern": "single"
           }
@@ -798,6 +830,23 @@
             "zeeman": 0,
             "shift": 0,
             "kFraction": 0.5,
+            "transverseY": 0,
+            "transverseZ": 0,
+            "points": 121
+          }
+        },
+        {
+          "id": "nonsymmorphic-glide-quarter",
+          "title": "双值滑移内部交叉：t=λ=1，f_x=1/4",
+          "input": {
+            "operation": "glide",
+            "spinful": "true",
+            "hopping": 1,
+            "spinOrbit": 1,
+            "mass": 0,
+            "zeeman": 0,
+            "shift": 0,
+            "kFraction": 0.25,
             "transverseY": 0,
             "transverseZ": 0,
             "points": 121
@@ -1234,6 +1283,16 @@
           "answer": 1,
           "explanation": "两个伙伴各为1/4，总强度保持1/2。这个结论针对完整E伙伴空间和当前模型归一化。"
         }
+      ],
+      "labStages": [
+        {
+          "preset": "salc-polarization-x",
+          "label": "载入 x 偏振的四站点模型"
+        },
+        {
+          "preset": "salc-polarization",
+          "label": "比较 45° 偏振的两个伙伴"
+        }
       ]
     },
     {
@@ -1446,6 +1505,24 @@
           "answer": 2,
           "explanation": "此处是模式 Fourier 权重；真实原子散射、偏振与几何因子未包含。"
         }
+      ],
+      "labStages": [
+        {
+          "preset": "wavevector-stripe",
+          "label": "载入 N=4 单 q 条纹"
+        },
+        {
+          "preset": "wavevector-double",
+          "label": "比较 N=4 双 q 的卫星权重"
+        },
+        {
+          "preset": "wavevector-checker",
+          "label": "载入 N=2 棋盘格，相位 0°"
+        },
+        {
+          "preset": "wavevector-checker-phase90",
+          "label": "比较 N=2 棋盘格，相位 90°"
+        }
       ]
     },
     {
@@ -1551,6 +1628,20 @@
           ],
           "answer": 1,
           "explanation": "单值 T²=+I 不独自强制配对；在 X 它交换互为共轭的不同 G 扇区。"
+        }
+      ],
+      "labStages": [
+        {
+          "preset": "nonsymmorphic-hourglass",
+          "label": "载入双值滑移的端点配对"
+        },
+        {
+          "preset": "nonsymmorphic-glide-quarter",
+          "label": "比较 t=λ=1 时 f_x=1/4 的交叉"
+        },
+        {
+          "preset": "nonsymmorphic-spinless",
+          "label": "比较单值滑移在 X 点的配对"
         }
       ]
     },

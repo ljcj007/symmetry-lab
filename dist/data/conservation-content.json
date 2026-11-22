@@ -349,6 +349,66 @@
           "points": 161,
           "basisAngle": 45
         }
+      },
+      {
+        "id": "conservation-mixed-xyz",
+        "title": "闭系统 XYZ：最大混合态与总 S_z",
+        "input": {
+          "experiment": "pair",
+          "initialState": "mixed",
+          "observable": "sz",
+          "jx": 1,
+          "jy": 0.4,
+          "jz": 1.7,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-bath-sz",
+        "title": "局域纯退相干：检查总 S_z",
+        "input": {
+          "experiment": "pair",
+          "initialState": "plus_x",
+          "observable": "sz",
+          "jx": 1,
+          "jy": 1,
+          "jz": 1,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0,
+          "gammaPhi": 0.2,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
+      },
+      {
+        "id": "conservation-bath-relaxation",
+        "title": "同一模型加入弛豫：检查总 S_z",
+        "input": {
+          "experiment": "pair",
+          "initialState": "plus_x",
+          "observable": "sz",
+          "jx": 1,
+          "jy": 1,
+          "jz": 1,
+          "fieldX": 0,
+          "fieldZ": 0,
+          "gradientZ": 0,
+          "gamma1": 0.1,
+          "gammaPhi": 0.2,
+          "duration": 8,
+          "points": 161,
+          "basisAngle": 45
+        }
       }
     ],
     "predictions": [
@@ -581,6 +641,20 @@
           ],
           "answer": 1,
           "explanation": "弛豫通常改变Sz，不可仅靠旧Hamiltonian对称性推断。"
+        }
+      ],
+      "labStages": [
+        {
+          "preset": "conservation-mixed-xyz",
+          "label": "载入闭系统 XYZ 的最大混合初态"
+        },
+        {
+          "preset": "conservation-bath-sz",
+          "label": "比较纯退相干下的总 S_z"
+        },
+        {
+          "preset": "conservation-bath-relaxation",
+          "label": "比较加入弛豫后的总 S_z"
         }
       ]
     },

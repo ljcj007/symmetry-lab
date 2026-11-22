@@ -293,13 +293,17 @@ python dist/python/cli.py teaching_labs dist/examples/spin-group-space.json
 
 Windows 可以直接双击 `start.cmd` 启动；关闭弹出的命令行窗口即可停止静态文件服务器。
 
-需要支持 ES Modules 的现代浏览器。开发服务器和测试使用 Node.js 22 或更新版本，无需安装 npm 依赖。在项目根目录执行：
+Windows 解压源码包时，建议选择较短的目录，例如 `C:\SymmetryLab`，并保留包内的相对目录结构。完整来源中有较长的上游文件路径，解压到多层嵌套目录可能超过系统的默认路径长度。
+
+需要支持 ES Modules 的现代浏览器。静态文件服务器使用 Node.js 22 或更新版本，启动网站无需安装 npm 依赖。在项目根目录执行：
 
 ```sh
 npm start
 ```
 
 打开 `http://127.0.0.1:4318`。服务器只监听本机。可通过 `PORT` 环境变量更改端口。
+
+运行开发测试前，先用 `npm ci --ignore-scripts` 安装包内声明的测试依赖。Python 核验另需 `dist/python/requirements.txt` 中的数值库；版本和检查顺序见 `.github/workflows/pages.yml`。这些开发依赖不影响上述静态网站启动。
 
 将 `dist/` 的完整内容部署到任意支持 JavaScript 模块和 Web Worker 的 HTTP/HTTPS 静态服务器即可。请保留 `data/`、`examples/`、许可证和相对目录结构。不要通过 `file://` 直接打开 HTML；浏览器通常会阻止模块、Worker 或数据文件加载。
 

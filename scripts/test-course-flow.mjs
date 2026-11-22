@@ -69,7 +69,7 @@ for(const [catalog,ui,prefix,basePath,deriveId,labId]of families){
    await view.$('#'+prefix+'-flow-lab').onclick();
    assert.equal(view.routes.at(-1).lesson,lesson.id);assert.equal(view.routes.at(-1).exercise,exercise.id);
    assert.equal(view.routes.at(-1).tab,'lab');
-   const exercisePreset=exercise.labPreset||(catalog==='bridges-materials'?exercise.preset:null);
+   const exercisePreset=exercise.labStages?.[0]?.preset||exercise.labPreset||(catalog==='bridges-materials'?exercise.preset:null);
    const reference=await mount(exercisePreset?{...selection,tab:'lab',preset:exercisePreset}:selection);
    if(!exercisePreset)await reference.$('#'+labId).onclick();
    assert.deepEqual(controls(view.page),controls(reference.page),lesson.id+' initializes the registered exercise conditions or its existing lesson experiment');

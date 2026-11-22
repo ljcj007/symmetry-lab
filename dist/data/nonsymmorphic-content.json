@@ -259,6 +259,23 @@
           "transverseZ": 0,
           "points": 121
         }
+      },
+      {
+        "id": "nonsymmorphic-glide-quarter",
+        "title": "双值滑移内部交叉：t=λ=1，f_x=1/4",
+        "input": {
+          "operation": "glide",
+          "spinful": "true",
+          "hopping": 1,
+          "spinOrbit": 1,
+          "mass": 0,
+          "zeeman": 0,
+          "shift": 0,
+          "kFraction": 0.25,
+          "transverseY": 0,
+          "transverseZ": 0,
+          "points": 121
+        }
       }
     ],
     "predictions": [
@@ -492,6 +509,20 @@
           ],
           "answer": 1,
           "explanation": "单值 T²=+I 不独自强制配对；在 X 它交换互为共轭的不同 G 扇区。"
+        }
+      ],
+      "labStages": [
+        {
+          "preset": "nonsymmorphic-hourglass",
+          "label": "载入双值滑移的端点配对"
+        },
+        {
+          "preset": "nonsymmorphic-glide-quarter",
+          "label": "比较 t=λ=1 时 f_x=1/4 的交叉"
+        },
+        {
+          "preset": "nonsymmorphic-spinless",
+          "label": "比较单值滑移在 X 点的配对"
         }
       ]
     },

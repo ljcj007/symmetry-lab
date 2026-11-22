@@ -23,7 +23,7 @@ const requests={};
 for(const m of data.modules)for(const p of m.presets)requests[p.id]={action:m.action,input:{...Object.fromEntries(m.fields.map(f=>[f.key,f.default])),...p.input}};
 assert.deepEqual(fixture.requests,requests);
 assert.deepEqual(Object.keys(fixture.results).sort(),Object.keys(requests).sort());
-assert.equal(data.modules.length,3);assert.equal(Object.keys(requests).length,21);
+assert.equal(data.modules.length,3);assert.equal(Object.keys(requests).length,24);
 assert.equal(data.lessons.length,9);assert.equal(data.exercises.reduce((n,e)=>n+e.steps.length,0),36);
 assert.equal(data.modules.reduce((n,m)=>n+m.predictions.length,0),6);
 assert.equal(data.cases.length,9);

@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29566,
-  "translatedUnits": 29566,
+  "sourceUnits": 29645,
+  "translatedUnits": 29645,
   "missing": [],
-  "files": 544,
+  "files": 546,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -209,6 +209,11 @@
     "en-manybody-lesson-handoffs.json",
     "en-pminus1-practice.json",
     "en-lie-ninej-worked.json",
-    "en-crystkit-result-terms.json"
+    "en-crystkit-result-terms.json",
+    "en-seitz-pair-practice.json",
+    "en-magnetic-point-types.json",
+    "en-spectroscopy-worked-handoffs.json",
+    "en-quantum-lesson-handoffs.json",
+    "en-principles-construction-exercise-stages.json"
   ]
 }

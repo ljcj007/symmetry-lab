@@ -1,5 +1,5 @@
 import {mathHTML} from './math-display.js?v=20261113-prose2';
-import {SYMMETRY_OPERATOR_REFERENCE} from './symmetry-operator-reference.js?v=20261115-derivations1';
+import {SYMMETRY_OPERATOR_REFERENCE} from './symmetry-operator-reference.js?v=20261122-operator-reference1';
 
 export const SYMMETRY_OPERATOR_BRIDGE_HOOKS=Object.freeze({
  'exchange-bond-constraints':Object.freeze(['bond-operation']),

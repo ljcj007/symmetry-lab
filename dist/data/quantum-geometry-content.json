@@ -80,6 +80,20 @@
             "kx": 0.6,
             "ky": 0
           }
+        },
+        {
+          "id": "geometry-ssh-metric-limit",
+          "title": "SSH 极限：常数度规 g = 1/4",
+          "input": {
+            "model": "ssh",
+            "t1": 0,
+            "t2": 1,
+            "mesh": 31,
+            "pathSamples": 121,
+            "gaugeStrength": 1,
+            "kx": 0.6,
+            "ky": 0
+          }
         }
       ]
     }
@@ -90,7 +104,7 @@
       "module": "geometry",
       "title": "同一量子态的相位与态之间的距离",
       "summary": "从投影算符理解量子度规，先区分波函数相位、轨道基底和真正的态变化。",
-      "preset": "geometry-ssh-topological",
+      "preset": "geometry-ssh-metric-limit",
       "references": [
         "geometry-metric",
         "geometry-ssh"
@@ -223,7 +237,8 @@
           "answer": 0,
           "explanation": "量子几何来自投影而非能量尺度；不可据此把任意能量放大当作态变化。"
         }
-      ]
+      ],
+      "labPreset": "geometry-ssh-metric-limit"
     },
     {
       "id": "geometry-chern-steps",
@@ -422,4 +437,3 @@
     }
   ]
 }
-

@@ -40,7 +40,7 @@ CORE={
               'Finite-system spin rotations, antiunitary covariance, Kramers square diagnostics, global-SU2 checks and invariant expectations under passive basis changes'],
   'limitations':['Finite Hilbert spaces with H/hbar in rad/ns and rates in inverse ns; no thermodynamic spontaneous-symmetry-breaking or Goldstone proof',
                  'Commutation with the Hamiltonian alone does not imply open-system conservation; a level coincidence or commuting observable alone does not prove robust degeneracy protection']}}
-EXPECTED_COUNTS={'modules':3,'lessons':9,'exercises':9,'exerciseSteps':36,'cases':9,'presets':24,'predictions':6,
+EXPECTED_COUNTS={'modules':3,'lessons':9,'exercises':9,'exerciseSteps':36,'cases':9,'presets':27,'predictions':6,
                  'projects':3,'projectStages':9,'retainedProjects':14,'projectCenterTotal':17,'dictionaryEntries':94,'dictionarySources':34}
 
 

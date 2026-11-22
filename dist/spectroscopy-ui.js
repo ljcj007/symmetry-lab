@@ -1,12 +1,12 @@
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
-import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
+import {captureCalculation} from './material-notebook.js?v=20261117-derive1';
 import {esc,num,table,notes,sources,defaultInputs,controlsHTML,readControls,resultHTML,bindResult} from './spectroscopy-views.js?v=20261115-precision1';
 import {renderResponseProjects} from './response-projects.js?v=20261117-derive1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=fetch('data/spectroscopy-materials.json?v='+RELEASE+'-20261113-flow1').then(r=>{if(!r.ok)throw Error('磁共振、超导结与多重态光谱课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/spectroscopy-materials.json?v=20261122-exercise-cases1').then(r=>{if(!r.ok)throw Error('磁共振、超导结与多重态光谱课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getSpectroscopyResult=()=>lastResult;
 export const spectroscopyCourseRoute=(id,query='')=>'#classroom/'+({resonance:'spin',andreev:'spin',spectra:'observables'}[id]||'spin')+'?module='+id+(query?'&'+query:'');
 const select=(label,key,rows,value)=>`<label>${esc(label)}<select id="spx-${key}">${options(rows,value)}</select></label>`;
@@ -31,10 +31,26 @@ export async function renderSpectroscopyView({container,selection={},run,cancelR
  function cases(){$('#spx-content').innerHTML=`<div class="obs-case-grid">${data.cases.filter(c=>selection.atlasOnly||c.module===module.id).sort((a,b)=>(b.id===selection.material)-(a.id===selection.material)).map(c=>{const m=data.modules.find(m=>m.id===c.module),q=new URLSearchParams({material:c.id,preset:c.preset}).toString();return `<article><span class="obs-eyebrow">${esc(c.kind)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p>${notes([c.assumption])}<div class="obs-links"><a href="${spectroscopyCourseRoute(c.module,q)}">学习与推导 →</a><a href="#compute/${m.route}?${q}">打开对应计算 →</a>${c.links.filter(([,url])=>url!=='#atlas/notebook').map(([title,url])=>`<a href="${esc(url)}">${esc(title)} →</a>`).join('')}<a href="#atlas/notebook">研究记录 →</a></div></article>`;}).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{forms[module.id]=readControls(module.id,root,forms[module.id]);}catch(error){draftError=error?.message||'请检查当前输入';}flowDrafts.remember($('#spx-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;const targetPreset=tab==='derive'&&exercise.labPreset?exercise.labPreset:lesson.preset;if(!module.presets.some(p=>p.id===targetPreset))throw Error('本课预设暂不可用，请返回课程目录检查。');flowDrafts.discard(module.id);applyPreset(targetPreset);invalidate();tab='lab';draw();sync();}
- function derive(){const list=data.exercises.filter(e=>e.module===module.id);$('#spx-content').innerHTML=`${select('选择分步练习','exercise',list.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}<article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="spx-steps"></div><p id="spx-progress" role="status"></p>${courseFlowActions('spx')}${links()}</article>`;const exerciseSelect=$('#spx-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#spx-exercise')!==exerciseSelect)return;exercise=list.find(x=>x.id===e.target.value);lesson=data.lessons.find(l=>l.id===exercise.lesson);draw();sync();};
+ function openLabPreset(targetPreset){
+  if(!current())return;
+  if(!module.presets.some(p=>p.id===targetPreset))throw Error('本课预设暂不可用，请返回课程目录检查。');
+  flowDrafts.discard(module.id);applyPreset(targetPreset);invalidate();tab='lab';draw();sync();
+ }
+ function openLessonLab(){openLabPreset(tab==='derive'&&exercise.labPreset?exercise.labPreset:lesson.preset);}
+ function derive(){
+ const list=data.exercises.filter(e=>e.module===module.id);
+ const comparison=module.presets.find(p=>p.id===exercise.comparisonLabPreset);
+ const comparisonAction=comparison?`<div class="obs-links"><button type="button" class="secondary" id="spx-flow-comparison">${esc(comparison.title)} →</button></div>`:'';
+ $('#spx-content').innerHTML=`${select('选择分步练习','exercise',list.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}<article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="spx-steps"></div><p id="spx-progress" role="status"></p>${courseFlowActions('spx')}${comparisonAction}${links()}</article>`;
+ const exerciseSelect=$('#spx-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#spx-exercise')!==exerciseSelect)return;exercise=list.find(x=>x.id===e.target.value);lesson=data.lessons.find(l=>l.id===exercise.lesson);draw();sync();};
 
  if(exercise.labPreset)$('#spx-flow-lab').textContent='用本题条件检验';
+ if(comparison){
+  const primary=module.presets.find(p=>p.id===exercise.labPreset);
+  if(primary)$('#spx-flow-lab').textContent=primary.title+' →';
+  const button=$('#spx-flow-comparison');
+  button.onclick=()=>{if(current()&&tab==='derive'&&$('#spx-flow-comparison')===button)openLabPreset(comparison.id);};
+ }
  const stepRoot=$('#spx-steps'),exerciseId=exercise.id;
  renderCourseFlowSteps({container:stepRoot,exercise,prefix:'spx',answerAttribute:'data-spx-answer',choicesClass:'mr-choices',completedSteps:flowSteps.get(exerciseId)||0,isCurrent:()=>current()&&$('#spx-steps')===stepRoot&&exercise.id===exerciseId,onStep:count=>flowSteps.set(exerciseId,count),onComplete:()=>{progress[exerciseId]=true;try{localStorage.setItem('symmetry-lab.spectroscopy.progress.v1',JSON.stringify(progress));}catch{}$('#spx-progress').textContent='✓ 推导完成。请到实验中改变参数，检验这个结论。';}});
  }

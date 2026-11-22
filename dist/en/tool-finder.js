@@ -1,4 +1,4 @@
-import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-lesson-handoffs1';
+import {toolsIndex,searchEntries,favoriteRoutes,loadNavigationSearch} from './navigation-ui.js?v=20261122-exercise-cases1';
 import {normalizeSearchText,inputFormatSummary,searchCatalogEntries,matchNamedActivities,canMatchExactGroup,matchExactGroups} from './tool-search.js?v=20261122-start-crystal1';
 import {learningActivities} from './learning-activity-search.js?v=20261122-zno-gamma-nac1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
@@ -8,7 +8,7 @@ export const finderScopes=['tools','all','courses','groups','materials'];
 const kindFor={tools:"Calculate",courses:"Lesson",groups:"Group directory",materials:"Material"};
 const safeRoute=route=>typeof route==='string'&&/^[a-z0-9_/?=&.%+-]+$/i.test(route);
 export const normalizeFinderText=normalizeSearchText;
-const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-lesson-handoffs1');
+const loadTopicModule=()=>import('./lesson-topic-finder.js?v=20261122-exercise-cases1');
 export function finderResults(entries,query,{scope='tools',limit=16,exactGroupFallback=false}={}){
  const unique=[...new Map(entries.filter(x=>x&&safeRoute(x.route)&&typeof x.title==='string').map(x=>[x.route,x])).values()];
  const related=scope==='tools'?new Set(matchNamedActivities(unique,query)):null;
