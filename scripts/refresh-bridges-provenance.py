@@ -54,7 +54,7 @@ CORE = {
                        'Projection uses the displayed coefficient Euclidean metric; no material fit, generic new k.p solver, full-Brillouin-zone spectrum or topological invariant']},
 }
 EXPECTED_COUNTS = {'modules':4,'lessons':13,'exercises':13,'exerciseSteps':52,
-                   'cases':11,'presets':25,'predictions':8,'projects':4,
+                   'cases':11,'presets':29,'predictions':8,'projects':4,
                    'projectStages':12,'retainedProjects':10,'projectCenterTotal':14,
                    'dictionaryEntries':82,'dictionarySources':30}
 

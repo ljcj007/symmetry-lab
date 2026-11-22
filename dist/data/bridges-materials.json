@@ -466,6 +466,19 @@
           }
         },
         {
+          "id": "conditional-cloud-atomic",
+          "title": "条件振动云：固定电子所在站点",
+          "input": {
+            "hopping": 0,
+            "phononEnergy": 1,
+            "coupling": 0.5,
+            "siteBias": 0.8,
+            "cutoff": 8,
+            "scanMaxCoupling": 1.4,
+            "scanPoints": 7
+          }
+        },
+        {
           "id": "biased-cloud",
           "title": "不等价位点：电荷与振动云偏移",
           "input": {
@@ -709,6 +722,57 @@
             "thermalScale": 1,
             "duration": 20,
             "points": 201
+          }
+        },
+        {
+          "id": "free-damping-check",
+          "title": "无驱动单自旋：比较纵向和横向衰减",
+          "input": {
+            "experiment": "single",
+            "initialState": "plus_x",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 0,
+            "gradient": 0,
+            "gamma1": 0.4,
+            "gammaPhi": 0.1,
+            "thermalScale": 1,
+            "duration": 20,
+            "points": 201
+          }
+        },
+        {
+          "id": "thermal-exchange-sparse",
+          "title": "热初态双自旋：局域耗散与 41 点取样",
+          "input": {
+            "experiment": "pair",
+            "initialState": "thermal",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0.4,
+            "gammaPhi": 0.1,
+            "thermalScale": 0.8,
+            "duration": 4,
+            "points": 41
+          }
+        },
+        {
+          "id": "thermal-exchange-dense",
+          "title": "热初态双自旋：同一演化的 161 点取样",
+          "input": {
+            "experiment": "pair",
+            "initialState": "thermal",
+            "drive": 0,
+            "detuning": 0,
+            "exchange": 1,
+            "gradient": 0,
+            "gamma1": 0.4,
+            "gammaPhi": 0.1,
+            "thermalScale": 0.8,
+            "duration": 4,
+            "points": 161
           }
         },
         {
@@ -1227,7 +1291,7 @@
       "module": "polaron",
       "title": "均匀电子密度里也可以藏着振动云",
       "summary": "从原子极限的位移振子，走向对称基态中的电子—声子关联。",
-      "preset": "symmetric-cloud",
+      "preset": "conditional-cloud-atomic",
       "sections": [
         {
           "title": "原子极限可以直接配方",
@@ -1391,7 +1455,7 @@
       "module": "density",
       "title": "从模型约定到可信的演化结果",
       "summary": "区分初态温度、现象学环境和数值采样，检查结果的物理性。",
-      "preset": "dephasing-plusx",
+      "preset": "thermal-exchange-sparse",
       "sections": [
         {
           "title": "初始热态和环境温度不同",
@@ -1733,7 +1797,7 @@
       "module": "polaron",
       "lesson": "polaron-conditional-cloud",
       "title": "完成平方，再辨认条件振动云",
-      "prompt": "先考虑t=0、ℏω=1、g=0.5 eV，电子已知位于一个站点。",
+      "prompt": "先固定电子所在站点，取 t=0、ℏω=1 eV、g=0.5 eV。比较能量时扣除该站点的电子位能，再切换到对称振动云预设。",
       "steps": [
         {
           "prompt": "被占据振子带来的基态能降低是多少？",
@@ -1891,6 +1955,7 @@
       "id": "density-lindblad-exercise",
       "module": "density",
       "lesson": "density-lindblad",
+      "preset": "free-damping-check",
       "title": "分清 T₁、T₂ 与纯退相干",
       "prompt": "取无驱动单自旋 γ₁=0.4、γ_φ=0.1 ns⁻¹。",
       "steps": [
@@ -1998,7 +2063,7 @@
       "module": "density",
       "lesson": "density-assumptions",
       "title": "检查热初态、耗散与数值结论",
-      "prompt": "在热初态实验中打开局域耗散，再比较稀密时间采样。",
+      "prompt": "先载入含局域耗散的热初态双自旋，手动运行 41 点取样。再切换到同一演化的 161 点取样，比较共同时间点的密度矩阵。",
       "steps": [
         {
           "prompt": "thermalScale 决定什么？",

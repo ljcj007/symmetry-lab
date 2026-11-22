@@ -60,6 +60,30 @@
           }
         },
         {
+          "id": "device-barrier-half-transmission",
+          "title": "单点势垒手算 · E=0，V=2 eV",
+          "input": {
+            "model": "uniform",
+            "sites": 12,
+            "hopping": 1,
+            "dimerRatio": 0.6,
+            "gate": 0,
+            "barrier": 2,
+            "barrierStart": 6,
+            "barrierWidth": 1,
+            "leadHopping": 1,
+            "leadOnsite": 0,
+            "contactLeft": 1,
+            "contactRight": 1,
+            "energy": 0,
+            "energyMin": -2.5,
+            "energyMax": 2.5,
+            "samples": 161,
+            "eta": 1e-7,
+            "spinDegeneracy": 2
+          }
+        },
+        {
           "id": "device-ssh-weak",
           "title": "SSH 端态 · 弱接触",
           "input": {
@@ -317,6 +341,7 @@
       "id": "device-barrier-steps",
       "module": "device",
       "lesson": "device-scattering",
+      "labPreset": "device-barrier-half-transmission",
       "title": "手算单点势垒与断开电极",
       "prompt": "取t=1 eV、所选E=0，在匹配量子线中加入一个V=2 eV的在位势。",
       "steps": [

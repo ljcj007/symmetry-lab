@@ -34,18 +34,18 @@
   "files": {
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 94968,
-      "sha256": "75c93d2c3a9666b4d2b119748a9dc59f4b7ff36efa9a99e95fd67ca11a034dc1"
+      "bytes": 96284,
+      "sha256": "740172fb86d553ba49b8f101de7333c5b3891650737fc1f2b06cb17cf351f2bc"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107193,
-      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
+      "bytes": 107194,
+      "sha256": "5c59b62c2e6ef991a91a1e24b12fe2bd92df35d2939a82ebb46264f4f9af2b36"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 17152,
-      "sha256": "ac740622662cff01d51b7b4d3fb610e7f4bfa60dc5d8ddb88f88c4b5bc9e7594"
+      "bytes": 17294,
+      "sha256": "a1d3a4c386f2886808f5c119121103683dc05a67d07da127db509af63d9274a6"
     },
     "dist/data/examples/phonopy-cu-LICENSE.txt": {
       "normalization": "utf8-lf-v1",
@@ -74,8 +74,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8432,
-      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9"
+      "bytes": 8433,
+      "sha256": "4d9ba4fc52150f87d222857db6b4dbc17ffc3f38be6bd2f645b621723a6fbac7"
     },
     "dist/learning-bridge-host.js": {
       "normalization": "utf8-lf-v1",
@@ -104,8 +104,8 @@
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18106,
-      "sha256": "b8526ffad354a38b38a116c138157e1fe439aa9921749f50b63c832f304503cf"
+      "bytes": 18131,
+      "sha256": "a4832c14846c3edd0d206353935c58b5339d4eda2758bf2b55fc20e45eca995a"
     },
     "dist/structure-handoff.css": {
       "normalization": "utf8-lf-v1",
@@ -144,8 +144,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30740,
-      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
+      "bytes": 31170,
+      "sha256": "f6dbde19203b707163c5c791630bd9562bdf67dbc58a03cdc5844fe91ef00fdc"
     },
     "scripts/build-evidence-workflows-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -154,8 +154,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7779,
-      "sha256": "6fffe75adfc7473c04db7856e6043510bc16e98bc4e6347ff48962f6fa33f0e1"
+      "bytes": 7873,
+      "sha256": "776f3ec71b70e357e894753d55c26be09a721a11e6d3eae1432862f63650c987"
     },
     "scripts/fixtures/structure-handoff.json": {
       "normalization": "utf8-lf-v1",

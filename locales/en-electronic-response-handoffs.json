@@ -1,0 +1,6 @@
+{
+  "GaAs (001) 手算 · PP，θ=φ=45°": "GaAs (001) worked example · PP, θ=φ=45°",
+  "N=2 完美链 · Γ 点投影": "N=2 perfect chain · Γ-point projection",
+  "单点势垒手算 · E=0，V=2 eV": "Single-site barrier worked example · E=0, V=2 eV",
+  "在 N=2、K=0 时，c=(1,1)/√2 对 k=0 相长，对 k=π 相消，所以 W(0)=1、W(π)=0。把态换为 (1,−1)/√2，权重交换；两者的实空间概率完全相同。在实验中保持 N=2、k/π=0，将能带 n 从 0 改为 1 后重新计算，在通道权重表中比较 k/π=0 和 −1；第一布里渊区中 −π 与 π 等价。": "For N=2 and K=0, the components of c=(1,1)/√2 interfere constructively at k=0 and destructively at k=π, so W(0)=1 and W(π)=0. Changing the state to (1,−1)/√2 interchanges the weights while leaving the real-space probabilities unchanged. In the lab, keep N=2 and k/π=0, change the band index n from 0 to 1, and run again. Compare k/π=0 and −1 in the channel weights table. The first Brillouin zone lists −π, which is equivalent to π."
+}

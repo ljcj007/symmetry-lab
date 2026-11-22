@@ -23,7 +23,7 @@ const requests={};
 for(const m of data.modules)for(const p of m.presets)requests[p.id]={action:m.action,input:{...Object.fromEntries(m.fields.map(f=>[f.key,f.default])),...p.input}};
 assert.deepEqual(fixture.requests,requests);
 assert.deepEqual(Object.keys(fixture.results).sort(),Object.keys(requests).sort());
-assert.equal(data.modules.length,4);assert.equal(Object.keys(requests).length,25);
+assert.equal(data.modules.length,4);assert.equal(Object.keys(requests).length,29);
 assert.equal(data.lessons.length,13);assert.equal(data.exercises.reduce((n,e)=>n+e.steps.length,0),52);
 assert.equal(data.modules.reduce((n,m)=>n+(m.predictions||[]).length,0),8);
 
@@ -180,4 +180,4 @@ for(const mode of ['cancel','change','disconnect']){
  finish(structuredClone(fixture.results[question.preset]));await flush();assert.equal(ui.getBridgesResult(),null);assert.equal(storage.get(predictionKey),saved,'No verdict for '+mode+' result');
 }
 
-console.log('Bridges UI: 25 real SHA-checked presets, four route families, peak/state/cloud/constraint interactions, formula focus, 52 gated steps, eight predictions, exports and stale/cancellation guards passed.');
+console.log('Bridges UI: 29 real SHA-checked presets, four route families, peak/state/cloud/constraint interactions, formula focus, 52 gated steps, eight predictions, exports and stale/cancellation guards passed.');

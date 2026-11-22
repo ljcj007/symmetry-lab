@@ -49,18 +49,18 @@
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 94968,
-      "sha256": "75c93d2c3a9666b4d2b119748a9dc59f4b7ff36efa9a99e95fd67ca11a034dc1"
+      "bytes": 96284,
+      "sha256": "740172fb86d553ba49b8f101de7333c5b3891650737fc1f2b06cb17cf351f2bc"
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107193,
-      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
+      "bytes": 107194,
+      "sha256": "5c59b62c2e6ef991a91a1e24b12fe2bd92df35d2939a82ebb46264f4f9af2b36"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32846,
-      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755"
+      "bytes": 32921,
+      "sha256": "f0a05575e5ee80787cfef675752c3a29a621a20cbbc957d6d2758f5a77644a88"
     },
     "dist/course-flow.js": {
       "normalization": "utf8-lf-v1",
@@ -69,8 +69,8 @@
     },
     "dist/data/pathways-materials.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 92984,
-      "sha256": "b23069ac2cfdd6e432481ccd4e6bade08d89e8adfcca059c040a42c0711abdca"
+      "bytes": 93825,
+      "sha256": "4d7ba324a32661898628ddcea1c1750cbf026ffbf56ff8c30389f7fd8b73f9ce"
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
@@ -94,8 +94,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8432,
-      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9"
+      "bytes": 8433,
+      "sha256": "4d9ba4fc52150f87d222857db6b4dbc17ffc3f38be6bd2f645b621723a6fbac7"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -119,8 +119,8 @@
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18106,
-      "sha256": "b8526ffad354a38b38a116c138157e1fe439aa9921749f50b63c832f304503cf"
+      "bytes": 18131,
+      "sha256": "a4832c14846c3edd0d206353935c58b5339d4eda2758bf2b55fc20e45eca995a"
     },
     "dist/pathways-views.js": {
       "normalization": "utf8-lf-v1",
@@ -397,6 +397,11 @@
       "bytes": 40946,
       "sha256": "dca21feca79d0e501f88c3ac2432f8d1534702b4d226437bdf2d1de916b4ca2c"
     },
+    "locales/en-electronic-response-handoffs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1068,
+      "sha256": "53c4f6c44492e424a5b027cc900e554aa8222c21bacef959138efeb554a0796e"
+    },
     "locales/en-entropy-conventions.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 10355,
@@ -551,6 +556,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 49612,
       "sha256": "81ed729ce0c22d4ade7792c0c28ea06bed3e9d8c222e388c8e07ad5c176d56e6"
+    },
+    "locales/en-manybody-lesson-handoffs.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 1360,
+      "sha256": "55f379af5030cea067b1281cfd8017ba873d405f96823eb43b6861447c21c0a4"
     },
     "locales/en-material-lesson-handoffs.json": {
       "normalization": "utf8-lf-v1",
@@ -749,8 +759,8 @@
     },
     "locales/en-quality.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 131243,
-      "sha256": "146ef1ec019a53057f32dfe254a4ec16bab795246694e1636d796326c4c023aa"
+      "bytes": 131287,
+      "sha256": "c48e982b19525a29896bd5d1fa157d50b599cf1ee4cb8ca1c28f61594bbb2580"
     },
     "locales/en-quantum-state-bridge.json": {
       "normalization": "utf8-lf-v1",
@@ -1159,8 +1169,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 30740,
-      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
+      "bytes": 31170,
+      "sha256": "f6dbde19203b707163c5c791630bd9562bdf67dbc58a03cdc5844fe91ef00fdc"
     },
     "scripts/build-bridges-project-fixtures.py": {
       "normalization": "utf8-lf-v1",
@@ -1209,8 +1219,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7779,
-      "sha256": "6fffe75adfc7473c04db7856e6043510bc16e98bc4e6347ff48962f6fa33f0e1"
+      "bytes": 7873,
+      "sha256": "776f3ec71b70e357e894753d55c26be09a721a11e6d3eae1432862f63650c987"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1234,8 +1244,8 @@
     },
     "scripts/fixtures/pathways.json.gz": {
       "normalization": "binary",
-      "bytes": 2187123,
-      "sha256": "e5aed0bc97ab255ed3ceafa568f3ba23fd922aeddd3cb301be938f3463f48d28"
+      "bytes": 2188787,
+      "sha256": "67c0638b45be0f68a8e32a0131b10b6f8a02e016a0e7ff938e961ffb2c2dc617"
     },
     "scripts/fixtures/scattering-replay.json": {
       "normalization": "utf8-lf-v1",

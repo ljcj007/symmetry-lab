@@ -132,7 +132,7 @@
         "default": 12,
         "min": 0,
         "max": 50,
-        "step": 0.5
+        "step": "any"
       },
       {
         "key": "points",
@@ -177,6 +177,57 @@
           "thermalScale": 1,
           "duration": 20,
           "points": 201
+        }
+      },
+      {
+        "id": "free-damping-check",
+        "title": "无驱动单自旋：比较纵向和横向衰减",
+        "input": {
+          "experiment": "single",
+          "initialState": "plus_x",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 0,
+          "gradient": 0,
+          "gamma1": 0.4,
+          "gammaPhi": 0.1,
+          "thermalScale": 1,
+          "duration": 20,
+          "points": 201
+        }
+      },
+      {
+        "id": "thermal-exchange-sparse",
+        "title": "热初态双自旋：局域耗散与 41 点取样",
+        "input": {
+          "experiment": "pair",
+          "initialState": "thermal",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 1,
+          "gradient": 0,
+          "gamma1": 0.4,
+          "gammaPhi": 0.1,
+          "thermalScale": 0.8,
+          "duration": 4,
+          "points": 41
+        }
+      },
+      {
+        "id": "thermal-exchange-dense",
+        "title": "热初态双自旋：同一演化的 161 点取样",
+        "input": {
+          "experiment": "pair",
+          "initialState": "thermal",
+          "drive": 0,
+          "detuning": 0,
+          "exchange": 1,
+          "gradient": 0,
+          "gamma1": 0.4,
+          "gammaPhi": 0.1,
+          "thermalScale": 0.8,
+          "duration": 4,
+          "points": 161
         }
       },
       {
@@ -353,7 +404,7 @@
       "module": "density",
       "title": "从模型约定到可信的演化结果",
       "summary": "区分初态温度、现象学环境和数值采样，检查结果的物理性。",
-      "preset": "dephasing-plusx",
+      "preset": "thermal-exchange-sparse",
       "sections": [
         {
           "title": "初始热态和环境温度不同",
@@ -439,6 +490,7 @@
       "id": "density-lindblad-exercise",
       "module": "density",
       "lesson": "density-lindblad",
+      "preset": "free-damping-check",
       "title": "分清 T₁、T₂ 与纯退相干",
       "prompt": "取无驱动单自旋 γ₁=0.4、γ_φ=0.1 ns⁻¹。",
       "steps": [
@@ -546,7 +598,7 @@
       "module": "density",
       "lesson": "density-assumptions",
       "title": "检查热初态、耗散与数值结论",
-      "prompt": "在热初态实验中打开局域耗散，再比较稀密时间采样。",
+      "prompt": "先载入含局域耗散的热初态双自旋，手动运行 41 点取样。再切换到同一演化的 161 点取样，比较共同时间点的密度矩阵。",
       "steps": [
         {
           "prompt": "thermalScale 决定什么？",

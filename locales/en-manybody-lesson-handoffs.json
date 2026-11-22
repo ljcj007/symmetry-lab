@@ -1,0 +1,10 @@
+{
+  "无相互作用二聚体：有限尺寸能隙": "Noninteracting dimer · finite-size gap",
+  "不等价二聚体的原子极限：t=0，Δ=6 eV": "Ionic dimer in the atomic limit · t=0, Δ=6 eV",
+  "条件振动云：固定电子所在站点": "Conditional phonon cloud · electron localized on one site",
+  "无驱动单自旋：比较纵向和横向衰减": "Undriven single spin · longitudinal and transverse decay",
+  "热初态双自旋：局域耗散与 41 点取样": "Thermal spin pair · local dissipation with 41 samples",
+  "热初态双自旋：同一演化的 161 点取样": "Thermal spin pair · the same evolution with 161 samples",
+  "先固定电子所在站点，取 t=0、ℏω=1 eV、g=0.5 eV。比较能量时扣除该站点的电子位能，再切换到对称振动云预设。": "First fix the electron on one site with t=0, ℏω=1 eV and g=0.5 eV. Subtract that site's electronic energy when comparing energies, then switch to the symmetric phonon-cloud preset.",
+  "先载入含局域耗散的热初态双自旋，手动运行 41 点取样。再切换到同一演化的 161 点取样，比较共同时间点的密度矩阵。": "Load the thermal spin pair with local dissipation and run the 41-sample preset manually. Switch to the 161-sample preset for the same evolution and compare density matrices at the shared times."
+}

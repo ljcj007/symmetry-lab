@@ -4,12 +4,12 @@ import {scatteringReplayLessonHTML,scatteringReplayResultHTML,bindScatteringRepl
 import {projectInputFor,projectInputStatusHTML} from './project-input.js?v=20261117-phonopy1';
 import {courseFlowRoute,courseFlowActions,bindCourseFlowActions,renderCourseFlowSteps,createCourseFlowDrafts} from './course-flow.js?v=20261113-flow1';
 import {captureCalculation,RELEASE} from './material-notebook.js?v=20261117-derive1';
-import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './pathways-views.js?v=20261115-precision1';
+import {esc,num,table,notes,sources,controlsHTML,readControls,resultHTML,bindResult} from './pathways-views.js?v=20261122-classroom-drafts1';
 import {renderResponseProjects} from './response-projects.js?v=20261117-derive1';
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=fetch('data/pathways-materials.json?v='+RELEASE).then(r=>{if(!r.ok)throw Error('位点、散射、畴壁与关联电子课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/pathways-materials.json?v=20261122-classroom-drafts1').then(r=>{if(!r.ok)throw Error('位点、散射、畴壁与关联电子课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getPathwaysResult=()=>lastResult;
 export const pathwaysCourseRoute=(id,query='')=>'#classroom/'+({bandrep:'crystal',scattering:'observables',domainwall:'structure-dynamics',hubbard:'spin'}[id]||'crystal')+'?module='+id+(query?'&'+query:'');
 const select=(label,key,rows,value)=>`<label>${esc(label)}<select id="pw-${key}">${options(rows,value)}</select></label>`;

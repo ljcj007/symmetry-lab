@@ -92,15 +92,15 @@
     },
     {
       "path": "dist/app.js",
-      "sha256": "97792b34b47c320e22f35369129f3896301931daa6c50ba4c29fdb57b0df103a"
+      "sha256": "5c59b62c2e6ef991a91a1e24b12fe2bd92df35d2939a82ebb46264f4f9af2b36"
     },
     {
       "path": "dist/classroom-ui.js",
-      "sha256": "a17a3785e681013a5be16b7f46b8227276788beebb649302dd90913e1defe755"
+      "sha256": "f0a05575e5ee80787cfef675752c3a29a621a20cbbc957d6d2758f5a77644a88"
     },
     {
       "path": "dist/data/device-transport-content.json",
-      "sha256": "dffbc694960337ed4e55140a034fa355f33ea4207a5733d138304b5f28b08745"
+      "sha256": "7a0f3cf92629707146f818a147824b6d8271b4cf66ddd4fd57beb0812ef23bd4"
     },
     {
       "path": "dist/data/hall-response-content.json",
@@ -112,7 +112,7 @@
     },
     {
       "path": "dist/data/response-materials.json",
-      "sha256": "2b04cfb09219c8a5824a4248405d9d69e9f2749585b385e0b5ed5ddc5273d421"
+      "sha256": "90446f15e847f994b4db94e301574abb0d0985818a0b7413d28a69cd98a1192e"
     },
     {
       "path": "dist/docs/device-transport-lab.md",
@@ -196,7 +196,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "3c08bf0d0712c3eb31152045f900fd502463ab243f2b4104eb5bf0b1dc6119b9"
+      "sha256": "4d9ba4fc52150f87d222857db6b4dbc17ffc3f38be6bd2f645b621723a6fbac7"
     },
     {
       "path": "dist/material-notebook.js",
@@ -232,7 +232,7 @@
     },
     {
       "path": "dist/response-materials-ui.js",
-      "sha256": "bd7e9d6741044064bfd2e7c0b391bdb84b5e7a76a73ff3c94374bffc23147f27"
+      "sha256": "53e50f6c1b7001142562093b900bbf69ab6686195adf44f64c0763826984a54e"
     },
     {
       "path": "dist/response-materials.css",
@@ -248,7 +248,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "d0e4ea11cf398c7537ed26ef920a9f21076e4812aab7ebd72ebc58fd54403525"
+      "sha256": "f6dbde19203b707163c5c791630bd9562bdf67dbc58a03cdc5844fe91ef00fdc"
     },
     {
       "path": "scripts/build-response-catalog.py",
@@ -260,7 +260,7 @@
     },
     {
       "path": "scripts/fixtures/response-materials.json",
-      "sha256": "a0898d5e1c4b99dfe5f7025c19d3d2677b62f3d324b34d148783b7205c144ef0"
+      "sha256": "dd7acc6febb62b3d4dbcb99fb6ad388d587c661b73f0272bf1509ac9d8e7b365"
     },
     {
       "path": "scripts/test-python-device-transport.py",

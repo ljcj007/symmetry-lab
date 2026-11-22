@@ -18,7 +18,7 @@
       {"key":"alternatingPotential","label":"交错位能 Δ（eV；0号站点为+Δ/2）","type":"number","default":0,"min":-10,"max":10,"step":0.5},
       {"key":"probe","label":"探针的空间形状","type":"select","default":"local","options":[["local","选定局域站点"],["momentum","归一化有限链傅里叶探针"]]},
       {"key":"site","label":"局域探针站点（从0开始；不超过L−1）","type":"number","default":0,"min":0,"max":3,"step":1},
-      {"key":"q","label":"傅里叶探针 q a/π（局域探针时忽略）","type":"number","default":1,"min":-2,"max":2,"step":0.1},
+      {"key":"q","label":"傅里叶探针 q a/π（局域探针时忽略）","type":"number","default":1,"min":-2,"max":2,"step":"any"},
       {"key":"spin","label":"单粒子探针的自旋","type":"select","default":"up","experiment":"single_particle","options":[["up","上自旋"],["down","下自旋"]]},
       {"key":"chemicalPotential","label":"谱能量零点 μ（eV；不改变粒子数）","type":"number","default":2,"min":-20,"max":40,"step":0.1,"experiment":"single_particle"},
       {"key":"responseKind","label":"连通响应算符","type":"select","default":"spin","experiment":"response","options":[["spin","纵向自旋（z 分量）"],["charge","电荷密度 n"]]},

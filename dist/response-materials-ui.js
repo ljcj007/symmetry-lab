@@ -7,7 +7,7 @@ import {renderResponseProjects} from './response-projects.js?v=20261117-derive1'
 const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const options=(rows,v)=>rows.map(([id,title])=>`<option value="${esc(id)}" ${String(id)===String(v)?'selected':''}>${esc(title)}</option>`).join('');
 let catalogPromise,lastResult=null;
-const catalog=()=>catalogPromise??=fetch('data/response-materials.json?v='+RELEASE+'-20261113-flow1').then(r=>{if(!r.ok)throw Error('横向响应、器件与多电子课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
+const catalog=()=>catalogPromise??=fetch('data/response-materials.json?v=20261122-classroom-drafts1').then(r=>{if(!r.ok)throw Error('横向响应、器件与多电子课程暂未载入');return r.json();}).catch(e=>{catalogPromise=null;throw e;});
 export const getResponseMaterialsResult=()=>lastResult;
 export const responseCourseRoute=(id,query='')=>'#classroom/'+({multiplet:'spin',device:'crystal',hall:'observables'}[id]||'spin')+'?module='+id+(query?'&'+query:'');
 const select=(label,key,rows,value)=>`<label>${esc(label)}<select id="rp-${key}">${options(rows,value)}</select></label>`;
@@ -32,9 +32,15 @@ export async function renderResponseMaterialsView({container,selection={},run,ca
  function cases(){$('#rp-content').innerHTML=`<div class="obs-case-grid">${data.cases.filter(c=>selection.atlasOnly||c.module===module.id).sort((a,b)=>(b.id===selection.material)-(a.id===selection.material)).map(c=>{const m=data.modules.find(m=>m.id===c.module),q=new URLSearchParams({material:c.id,preset:c.preset}).toString();return `<article><span class="obs-eyebrow">${esc(c.kind)}</span><h2>${esc(c.title)}</h2><p>${esc(c.summary)}</p>${notes([c.assumption])}<div class="obs-links"><a href="${responseCourseRoute(c.module,q)}">学习与推导 →</a><a href="#compute/${m.route}?${q}">打开对应计算 →</a>${c.links.filter(([,url])=>url!=='#atlas/notebook').map(([title,url])=>`<a href="${esc(url)}">${esc(title)} →</a>`).join('')}<a href="#atlas/notebook">研究记录 →</a></div></article>`;}).join('')}</div>`;}
  function rememberLabDraft(){if(tab==='lab'){let draftError='';try{forms[module.id]=readControls(module.id,root,forms[module.id]);}catch(error){draftError=error?.message||'请检查当前输入';}flowDrafts.remember($('#rp-form'),module.id,draftError);}}
  function openLessonLearn(){if(!current())return;rememberLabDraft();invalidate();tab='learn';draw();sync();}
- function openLessonLab(){if(!current())return;if(!module.presets.some(p=>p.id===lesson.preset))throw Error('本课预设暂不可用，请返回课程目录检查。');flowDrafts.discard(module.id);applyPreset(lesson.preset);invalidate();tab='lab';draw();sync();}
+ function openLessonLab(){
+  if(!current())return;
+  const targetPreset=tab==='derive'&&exercise.labPreset?exercise.labPreset:lesson.preset;
+  if(!module.presets.some(p=>p.id===targetPreset))throw Error('本课预设暂不可用，请返回课程目录检查。');
+  flowDrafts.discard(module.id);applyPreset(targetPreset);invalidate();tab='lab';draw();sync();
+ }
  function derive(){const list=data.exercises.filter(e=>e.module===module.id);$('#rp-content').innerHTML=`${select('选择分步练习','exercise',list.map(e=>[e.id,(progress[e.id]?'✓ ':'')+e.title]),exercise.id)}<article class="obs-lesson"><h2>${esc(exercise.title)}</h2><p>${esc(exercise.prompt)}</p><div id="rp-steps"></div><p id="rp-progress" role="status"></p>${courseFlowActions('rp')}${links()}</article>`;const exerciseSelect=$('#rp-exercise');exerciseSelect.onchange=e=>{if(!current()||$('#rp-exercise')!==exerciseSelect)return;exercise=list.find(x=>x.id===e.target.value);lesson=data.lessons.find(l=>l.id===exercise.lesson);draw();sync();};
 
+ if(exercise.labPreset)$('#rp-flow-lab').textContent='用本题条件检验';
  const stepRoot=$('#rp-steps'),exerciseId=exercise.id;
  renderCourseFlowSteps({container:stepRoot,exercise,prefix:'rp',answerAttribute:'data-rp-answer',choicesClass:'mr-choices',completedSteps:flowSteps.get(exerciseId)||0,isCurrent:()=>current()&&$('#rp-steps')===stepRoot&&exercise.id===exerciseId,onStep:count=>flowSteps.set(exerciseId,count),onComplete:()=>{progress[exerciseId]=true;try{localStorage.setItem('symmetry-lab.response-materials.progress.v1',JSON.stringify(progress));}catch{}$('#rp-progress').textContent='✓ 推导完成。请到实验中改变参数，检验这个结论。';}});
  }

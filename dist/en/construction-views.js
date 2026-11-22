@@ -1,4 +1,4 @@
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261115-precision1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261122-classroom-drafts1';
 import {heatmapSVG} from './quantum-plots.js?v=20261110-en1';
 export {esc,num,table,notes,sources,readControls};
 const ints=new Set(['copies','seedSite','period','qx','qy','points']);

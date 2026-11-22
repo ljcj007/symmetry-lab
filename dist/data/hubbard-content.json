@@ -157,6 +157,36 @@
           "scanMaxU": 12,
           "scanPoints": 25
         }
+      },
+      {
+        "id": "dimer-free-gap",
+        "title": "无相互作用二聚体：有限尺寸能隙",
+        "input": {
+          "sites": 2,
+          "nUp": 1,
+          "nDown": 1,
+          "boundary": "open",
+          "hopping": 1,
+          "interactionU": 0,
+          "alternatingPotential": 0,
+          "scanMaxU": 12,
+          "scanPoints": 25
+        }
+      },
+      {
+        "id": "ionic-atomic-dimer",
+        "title": "不等价二聚体的原子极限：t=0，Δ=6 eV",
+        "input": {
+          "sites": 2,
+          "nUp": 1,
+          "nDown": 1,
+          "boundary": "open",
+          "hopping": 0,
+          "interactionU": 4,
+          "alternatingPotential": 6,
+          "scanMaxU": 12,
+          "scanPoints": 25
+        }
       }
     ]
   },
@@ -166,7 +196,7 @@
       "module": "hubbard",
       "title": "先选粒子数扇区，再建立多体基底",
       "summary": "把一个单粒子轨道的两种自旋扩展为占据数基底，并辨认费米符号和边界。",
-      "preset": "dimer-half",
+      "preset": "chain-four",
       "sections": [
         {
           "title": "每站点一个轨道，四种占据",
@@ -232,7 +262,7 @@
       "module": "hubbard",
       "title": "谱中的间隔究竟是哪一种隙",
       "summary": "区分固定 S^z 扇区激发、二聚体 S/T 分裂与改变电子数的电荷增减能。",
-      "preset": "chain-four",
+      "preset": "dimer-free-gap",
       "sections": [
         {
           "title": "固定扇区谱只回答指定空间内的问题",
@@ -263,7 +293,7 @@
       "module": "hubbard",
       "title": "位能差、排斥与简并平均",
       "summary": "通过不等价二聚体观察电荷偏移，再用原子极限检查基态平均的含义。",
-      "preset": "ionic-dimer",
+      "preset": "ionic-atomic-dimer",
       "sections": [
         {
           "title": "正 Δ 把哪个站点抬高",

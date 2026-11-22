@@ -91,8 +91,8 @@ class ElectronicContentTests(unittest.TestCase):
             else:
                 self.assertIn(phrase, text)
 
-    def test_all_sixteen_presets_run_and_return_finite_json(self):
-        self.assertEqual(len(self.results), 16)
+    def test_all_eighteen_presets_run_and_return_finite_json(self):
+        self.assertEqual(len(self.results), 18)
         for name, result in self.results.items():
             with self.subTest(name=name):
                 json.dumps(result, allow_nan=False)
@@ -123,8 +123,9 @@ class ElectronicContentTests(unittest.TestCase):
 
     def test_shg_lesson_analytic_number_and_inversion_counterexample(self):
         from shg_lab import run
-        r = run({**self.presets["shg"]["gaas-001"]["input"], "azimuth": 45})
+        r = self.results["gaas-001-pp-worked"]
         self.assertAlmostEqual(r["selection"]["intensity"], 1/8)
+        self.assertAlmostEqual(self.results["gaas-001"]["selection"]["intensity"], 3/32)
         normal = run({"model": "gaas", "incidence": 0})
         self.assertEqual(normal["scan"]["maxIntensity"], 0)
         self.assertFalse(normal["symmetry"]["inversionPresent"])

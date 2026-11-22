@@ -600,3 +600,23 @@ establish that all existing scientific and teaching content has been audited.
   lesson opens the Si Rz example at 22.5°. The quasiharmonic audit offers the
   synthetic 0 GPa interior minimum and −100 GPa upper-boundary control, with
   the sampled cell-volume range and pressure units shown.
+
+## Keep edited classroom inputs and replay exact limits
+
+- The principles, construction, connections and many-body classrooms retain
+  edited fields when learners switch between the explanation and experiment.
+  Incomplete fields remain visible with field-specific validation messages.
+  An explicit worked-example action still loads its own named preset.
+- The GaAs SHG geometry lesson opens its 45 degree PP example with normalized
+  intensity 1/8. The band-unfolding lesson uses two sites at Gamma to exchange
+  the lower and upper branch weights. The device derivation opens the single
+  barrier with E = 0 and V = 2 in the displayed model units, where transmission
+  and reflection approach 1/2 as the artificial broadening tends to zero.
+- Hubbard exercises separately open a four-site 36-dimensional sector, the
+  noninteracting dimer gap and the strict atomic limit. Density-matrix
+  derivations separate free damping from driven evolution and compare two
+  sampling grids for the exchange pair. The conditional polaron cloud starts
+  from a biased atomic limit and keeps the symmetric teaching control.
+- Existing generic presets keep their original inputs. New regressions capture
+  the requests emitted by both language editions and replay them through the
+  same Python entry point used by the browser.

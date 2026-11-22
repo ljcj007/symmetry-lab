@@ -112,6 +112,22 @@
           }
         },
         {
+          "id": "gaas-001-pp-worked",
+          "title": "GaAs (001) 手算 · PP，θ=φ=45°",
+          "input": {
+            "model": "gaas",
+            "cut": "001",
+            "incidence": 45,
+            "azimuth": 45,
+            "samples": 361,
+            "channel": "PP",
+            "cOverA": 1,
+            "coefficients": {
+              "xyz": 1
+            }
+          }
+        },
+        {
           "id": "gaas-111",
           "title": "GaAs (111) · 改变切面",
           "input": {
@@ -223,6 +239,20 @@
             "onsite": 0,
             "samples": 81,
             "q": 0.25,
+            "band": 0
+          }
+        },
+        {
+          "id": "chain-two-site-gamma",
+          "title": "N=2 完美链 · Γ 点投影",
+          "input": {
+            "mode": "model",
+            "model": "perfect",
+            "size": 2,
+            "hopping": 1,
+            "onsite": 0,
+            "samples": 81,
+            "q": 0,
             "band": 0
           }
         },
@@ -391,7 +421,7 @@
       "module": "shg",
       "title": "从晶体切面到四通道角度谱",
       "summary": "明确样品旋转、偏振字母和共同强度标尺，手算一个可直接核对的 GaAs 图样。",
-      "preset": "gaas-001",
+      "preset": "gaas-001-pp-worked",
       "references": [
         "shgpy"
       ],
@@ -474,7 +504,7 @@
       "module": "unfold",
       "title": "谱权重从哪里来：相位、投影与求和规则",
       "summary": "从 N=2 的手算出发，理解为什么本征值不能替代波函数。",
-      "preset": "chain-perfect",
+      "preset": "chain-two-site-gamma",
       "references": [
         "easyunfold-theory"
       ],
@@ -486,7 +516,7 @@
         },
         {
           "title": "用两站点均匀态手算",
-          "text": "在 N=2、K=0 时，c=(1,1)/√2 对 k=0 相长，对 k=π 相消，所以 W(0)=1、W(π)=0。把态换为 (1,−1)/√2，权重交换；两者的实空间概率完全相同。这个反例直接说明仅有逐站点概率也不足以展开。",
+          "text": "在 N=2、K=0 时，c=(1,1)/√2 对 k=0 相长，对 k=π 相消，所以 W(0)=1、W(π)=0。把态换为 (1,−1)/√2，权重交换；两者的实空间概率完全相同。在实验中保持 N=2、k/π=0，将能带 n 从 0 改为 1 后重新计算，在通道权重表中比较 k/π=0 和 −1；第一布里渊区中 −π 与 π 等价。",
           "formula": "c±=(1,±1)/√2 ⇒ [W(0),W(π)]=[1,0] 或 [0,1]"
         },
         {
@@ -742,6 +772,7 @@
       "id": "shg-geometry-exercise",
       "module": "shg",
       "lesson": "shg-geometry",
+      "labPreset": "gaas-001-pp-worked",
       "title": "手算 GaAs (001) 的相对强度",
       "prompt": "沿本站约定取 a=χ_xyz=1，θ=45°、φ=45°，使用共同强度单位。",
       "steps": [
@@ -901,6 +932,7 @@
       "id": "unfold-projection-exercise",
       "module": "unfold",
       "lesson": "unfold-projection",
+      "labPreset": "chain-two-site-gamma",
       "title": "两站点投影与权重守恒",
       "prompt": "取 N=2、K=0，归一化态 c=(1,1)/√2，投影因子为 exp(−ikj)/√N。",
       "steps": [

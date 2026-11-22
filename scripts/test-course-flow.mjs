@@ -69,12 +69,15 @@ for(const [catalog,ui,prefix,basePath,deriveId,labId]of families){
    await view.$('#'+prefix+'-flow-lab').onclick();
    assert.equal(view.routes.at(-1).lesson,lesson.id);assert.equal(view.routes.at(-1).exercise,exercise.id);
    assert.equal(view.routes.at(-1).tab,'lab');
-   const reference=await mount(exercise.labPreset?{...selection,tab:'lab',preset:exercise.labPreset}:selection);
-   if(!exercise.labPreset)await reference.$('#'+labId).onclick();
+   const exercisePreset=exercise.labPreset||(catalog==='bridges-materials'?exercise.preset:null);
+   const reference=await mount(exercisePreset?{...selection,tab:'lab',preset:exercisePreset}:selection);
+   if(!exercisePreset)await reference.$('#'+labId).onclick();
    assert.deepEqual(controls(view.page),controls(reference.page),lesson.id+' initializes the registered exercise conditions or its existing lesson experiment');
-   const targetPreset=exercise.labPreset||lesson.preset;
+   const targetPreset=exercisePreset||lesson.preset;
    if(targetPreset)assert.equal(view.$('#'+prefix+'-preset').value,targetPreset,'The registered exercise/lesson preset is selected, not the first preset');
-   if(exercise.labPreset){assert.equal(exercise.id,'resonance-intensity-steps');assert.equal(Number(view.$('#spx-spin').value),.5);assert.equal(Number(view.$('#spx-zeroFieldD').value),0);assert.equal(Number(view.$('#spx-zeroFieldE').value),0);}
+   if(exercise.id==='resonance-intensity-steps'){assert.equal(exercise.labPreset,'resonance-isotropic');assert.equal(Number(view.$('#spx-spin').value),.5);assert.equal(Number(view.$('#spx-zeroFieldD').value),0);assert.equal(Number(view.$('#spx-zeroFieldE').value),0);}
+   if(exercise.id==='device-barrier-steps'){assert.equal(exercise.labPreset,'device-barrier-half-transmission');assert.equal(Number(view.$('#rp-energy').value),0);assert.equal(Number(view.$('#rp-barrier').value),2);}
+   if(exercise.id==='density-lindblad-exercise'){assert.equal(exercise.preset,'free-damping-check');assert.equal(lesson.preset,'rabi-damped');assert.equal(Number(view.$('#pw-drive').value),0);assert.equal(Number(view.$('#pw-gamma1').value),.4);}
    const form=view.$('#'+prefix+'-form'),field=form.querySelectorAll('input').find(input=>['number','range'].includes(input.type)&&input.value!==''&&Number.isFinite(Number(input.value)))||form.querySelector('textarea')||form.querySelectorAll('select').find(select=>select.id!==prefix+'-preset'&&select.querySelectorAll('option').length>1);
    assert.ok(field,lesson.id+' has an editable parameter or JSON input');
    if(['number','range'].includes(field.type)){

@@ -20,6 +20,7 @@
       {"id":"uncoupled","title":"无耦合基准：电子与振子可分离","input":{"hopping":1,"phononEnergy":1,"coupling":0,"siteBias":0,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
       {"id":"symmetric-cloud","title":"对称振动云：密度均匀仍有关联","input":{"hopping":1,"phononEnergy":1,"coupling":0.8,"siteBias":0,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
       {"id":"atomic-shift","title":"原子极限：位移振子的解析检验","input":{"hopping":0,"phononEnergy":1,"coupling":0.7,"siteBias":0.8,"cutoff":8,"scanMaxCoupling":1.4,"scanPoints":7}},
+      {"id":"conditional-cloud-atomic","title":"条件振动云：固定电子所在站点","input":{"hopping":0,"phononEnergy":1,"coupling":0.5,"siteBias":0.8,"cutoff":8,"scanMaxCoupling":1.4,"scanPoints":7}},
       {"id":"biased-cloud","title":"不等价位点：电荷与振动云偏移","input":{"hopping":1,"phononEnergy":1,"coupling":0.8,"siteBias":1.2,"cutoff":6,"scanMaxCoupling":1.6,"scanPoints":7}},
       {"id":"strong-cloud","title":"较强耦合：先检查声子基底","input":{"hopping":1,"phononEnergy":1,"coupling":1.6,"siteBias":0,"cutoff":8,"scanMaxCoupling":2,"scanPoints":7}},
       {"id":"truncation-warning","title":"故意不足的截断：数值残差不等于收敛","input":{"hopping":1,"phononEnergy":0.5,"coupling":1.6,"siteBias":0,"cutoff":2,"scanMaxCoupling":1.6,"scanPoints":5}}
@@ -38,7 +39,7 @@
     },
     {
       "id":"polaron-conditional-cloud","module":"polaron","title":"均匀电子密度里也可以藏着振动云",
-      "summary":"从原子极限的位移振子，走向对称基态中的电子—声子关联。","preset":"symmetric-cloud",
+      "summary":"从原子极限的位移振子，走向对称基态中的电子—声子关联。","preset":"conditional-cloud-atomic",
       "sections":[
         {"title":"原子极限可以直接配方","text":"t=0时先固定电子所在站点。被占据振子的势能面发生位移，单振子基态能降低g²/(ℏω)，声子平均数为[g/(ℏω)]²。正g给出负X位移；能量已省略两个振子的总零点能ℏω。","formula":"ℏω b†b+g(b+b†)=ℏω(b†+g/ℏω)(b+g/ℏω)−g²/ℏω"},
         {"title":"平均分布不能替代关联","text":"当Δ=0且基态不简并时，站点交换对称要求两个电子占据都为1/2。电子与伴随的振动云可以共同离域，所以均匀密度并不排除电子—声子关联。二站点结果不能据此声称无限晶体发生自俘获相变。","formula":"⟨n_0⟩=⟨n_1⟩=1/2；⟨n_i X_j⟩一般不等于⟨n_i⟩⟨X_j⟩"},
@@ -70,7 +71,7 @@
     },
     {
       "id":"polaron-cloud-exercise","module":"polaron","lesson":"polaron-conditional-cloud","title":"完成平方，再辨认条件振动云",
-      "prompt":"先考虑t=0、ℏω=1、g=0.5 eV，电子已知位于一个站点。",
+      "prompt":"先固定电子所在站点，取 t=0、ℏω=1 eV、g=0.5 eV。比较能量时扣除该站点的电子位能，再切换到对称振动云预设。",
       "steps":[
         {"prompt":"被占据振子带来的基态能降低是多少？","hint":"配方后的常数项是−g²/(ℏω)。","choices":["−0.25 eV","−0.5 eV","+0.25 eV"],"answer":0,"explanation":"−0.5²/1=−0.25 eV，未包括电子站点位能。"},
         {"prompt":"被占据振子的⟨X⟩是多少？","hint":"位移后的湮灭算符是真空算符，⟨b⟩=−g/(ℏω)。","choices":["−0.5","−1","+1"],"answer":1,"explanation":"X=b+b†，故⟨X⟩=−2g/(ℏω)=−1，无量纲。"},

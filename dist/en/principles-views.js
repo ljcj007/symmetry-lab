@@ -1,5 +1,5 @@
 const englishRadialLabels={"径向极大":"Radial maximum","径向极小":"Radial minimum"};
-import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261115-precision1';
+import {esc,num,table,notes,sources,controlsHTML as baseControls,readControls,resultHTML as baseResult,bindResult as bindBase} from './bridges-views.js?v=20261122-classroom-drafts1';
 export {esc,num,table,notes,sources,readControls};
 export function controlsHTML(module,values){const keys=module.id==='order'?['etaX','etaY','etaZ','basisAngle']:module.id==='exchange'?['dz','conventionAngle']:['fieldZ','gammaPhi','basisAngle'];return baseControls({...module,fields:module.fields.map(f=>f.type==='number'&&f.key!=='points'?{...f,step:'any'}:f)},values)+`<details class="pr-sliders"><summary>Drag parameters to compare</summary><p>Drag to synchronize the input above; click Calculate to update the result.</p>${module.fields.filter(f=>keys.includes(f.key)).map(f=>`<label>${esc(f.label)}<input type="range" data-pr-control="${esc(f.key)}" min="${f.min??-5}" max="${f.max??5}" step="any" value="${esc(values[f.key])}"></label>`).join('')}</details>`;}
 const value=x=>typeof x==='number'?num(x):x===null||x===undefined?'—':typeof x==='object'?JSON.stringify(x):(englishRadialLabels[x]||String(x));

@@ -140,6 +140,7 @@ for(const [combined,sources]of [
  ['quantum-materials.json',['crystal-field-content.json','quantum-geometry-content.json','electron-transport-content.json']],
  ['spectroscopy-materials.json',['spin-resonance-content.json','andreev-content.json','atomic-spectra-content.json']],
  ['pathways-materials.json',['bandrep-content.json','scattering-content.json','domainwall-content.json','hubbard-content.json']],
+ ['bridges-materials.json',['manybody-content.json','polaron-content.json','density-content.json','workshop-content.json']],
 ]){
  const target=read(combined);
  const displayOnly=value=>Array.isArray(value)?value.map(displayOnly):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([key])=>!['references','sources'].includes(key)).map(([key,item])=>[key,displayOnly(item)])):value;

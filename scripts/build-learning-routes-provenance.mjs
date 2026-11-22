@@ -106,6 +106,11 @@ files.push('dist/lie-physics-ui.js','dist/su3-cg-ui.js','dist/su3-racah-ui.js','
  'dist/python/crystal_field_lab.py','dist/python/local_multiplet_lab.py','dist/python/spin_resonance_lab.py',
  'dist/python/atomic_spectra_lab.py','dist/python/hubbard_lab.py','dist/python/manybody_spectra_lab.py',
  'dist/python/polaron_lab.py','dist/python/salc_lab.py','dist/python/symmetry_workshop.py','dist/python/symmetry_connections.py');
+files.push('dist/principles-ui.js','locales/en-quality.json',
+ 'locales/en-electronic-response-handoffs.json','locales/en-manybody-lesson-handoffs.json',
+ 'scripts/test-advanced-field-drafts.mjs','scripts/test-electronic-response-handoffs.mjs',
+ 'scripts/test-python-electronic-response-handoffs.py','scripts/test-manybody-lesson-handoffs.mjs',
+ 'scripts/test-python-manybody-lesson-handoffs.py','scripts/test-course-flow.mjs');
 const data={schemaVersion:1,release:'20261115-momentum1',sourceHashNormalization:'utf8-lf-v1',
  scope:'Optional reviewed cross-lesson routes through representations, order parameters, exchange, conservation, layers, chirality, quantum geometry, phonon import and thermodynamics, equilibrium tensors, bulk and device transport, pairing and NS scattering, band representations, finite-wavevector ordering, SU(3) recoupling, spinor double covers, magnetic and color operations, spin-group locking, structural distortions, diffraction, domains and walls, magnons and quasiharmonic response, all indexed SU(3) lesson connections, nonlinear optics, band unfolding, orbital and many-electron spectra, SALCs, fermion statistics and order-parameter defects; schema-valid classroom drafts, explicit conventions, and the retained pinned official Phonopy example.',
  counts:{catalogues:lessonProgressionCatalogs.length,indexedLessons:lessonProgressionInventory.length,reviewedLessons:reviewed.size,optionalEdges:lessonProgressionEdges.length,officialExampleQOccurrences:example.counts.qpointOccurrences,officialExampleBands:example.counts.bandsPerQ},

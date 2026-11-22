@@ -1,4 +1,4 @@
-import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261115-precision1';
+import {esc,num,table,notes,sources,controlsHTML,readControls} from './pathways-views.js?v=20261122-classroom-drafts1';
 import {quantumCurveSVG,heatmapSVG} from './quantum-plots.js?v=20261110-en1';
 import {svgMathText} from './math-svg.js?v=20261110-en1';
 export {esc,num,table,notes,sources,controlsHTML,readControls};
