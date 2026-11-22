@@ -1,0 +1,23 @@
+// Check the actually published projection against its actual run and UI pin.
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {verifyInfiniteReceipt} from '../dist/end-to-end/verify-infinite.js';
+const base=new URL('../dist/end-to-end/',import.meta.url);
+const load=async path=>JSON.parse(await readFile(new URL(path,base),'utf8'));
+const scalar=await load('data/complete-infinite-scf-receipt-r72p.json');
+const actual=await load('data/one-click-complete-infinite-r72p.public.json');
+const ui=await readFile(new URL('infinite-replay.js',base),'utf8');
+const pin=JSON.parse(ui.match(/^const pinned=(\{[^\n]+\});$/m)?.[1]??'null');
+const result=await verifyInfiniteReceipt(scalar,pin);
+assert.equal(scalar.actual_job_id,actual.job_id);
+assert.equal(scalar.target_identity_sha256,actual.target_identity_sha256);
+assert.equal(actual.status,'COMPLETED');
+assert.equal(actual.full_chain_certified,true);
+assert.equal(actual.complete_infinite_response_received,true);
+assert.deepEqual(actual.stages.map(s=>s.id),['native-dft','ionic-input','infinite-scf']);
+assert.ok(actual.stages.every(s=>s.state==='SUCCEEDED'));
+assert.deepEqual(scalar.accepted_stage_receipt_sha256,actual.accepted_stage_receipt_sha256);
+for(const[a,b]of [['actual_run','run'],['actual_native_identity','native_mathematical_identity'],['energy_composition','energy_existence_composition'],['complete_response','complete_response_composition']])assert.deepEqual(scalar.proof_pins[a],actual.receipt_pins[b]);
+assert.equal(result.status,'VERIFIED_PUBLISHED_INFINITE_SCF_SCALAR_COMPOSITION');
+assert.equal(actual.full_chain_recomputed,false,'The public run receives large proofs, rather than recomputing every matrix');
+console.log(JSON.stringify({status:'PASS_ACTUAL_PUBLISHED_INFINITE_SCF_COMPOSITION',job:actual.job_id,canonicalPoints:72,completeNativeMathematicalInputs:79,allStagesSucceeded:true,exactFreshBoundaryMarginPositive:true,largeProofsReceived:true}));

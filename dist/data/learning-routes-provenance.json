@@ -271,8 +271,12 @@
       "sha256": "308675a94ec7a41d8a7ec8ab23bdbc9becba1662b841f0600908e9d437bc703d"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 21599,
-      "sha256": "ad2b4422b7cb121816f8fbd873752469c89785bc6fa9d289b47b4b545e2b5761"
+      "bytes": 28272,
+      "sha256": "cf34647b191ba3611d505dd5f9304737d03fea053a44e44c322373c2e9582cbf"
+    },
+    "dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json": {
+      "bytes": 3554,
+      "sha256": "1e365830d9e1858aac58bdc8e1e7d32756bd0c8fe335427734354c49dd96b280"
     },
     "dist/end-to-end/data/infinite-scf-progress-256-history.public.json": {
       "bytes": 2330,
@@ -283,8 +287,12 @@
       "sha256": "d6b667ba5864349bd95af18c6660bf18e2a93324b0bae5f4fb0ce7d870474c13"
     },
     "dist/end-to-end/data/local-companion-release.json": {
-      "bytes": 247,
-      "sha256": "e819c5361ec3c0f02f967267fef79b4756b4c6d9947ef16ab385329af58111e0"
+      "bytes": 253,
+      "sha256": "2b60d046d7ef0c9ae8df99ed6f797eed7e82ecb8c2d7aeca4a58489dee2653cb"
+    },
+    "dist/end-to-end/data/one-click-complete-infinite-r72p.public.json": {
+      "bytes": 3463,
+      "sha256": "88ab25340a88e01ffa2beec4bdac322ec190f2b0f838733af4ab9f5de27fbcc9"
     },
     "dist/end-to-end/data/one-click-fresh-scf-run-v5.public.json": {
       "bytes": 3249,
@@ -295,16 +303,28 @@
       "sha256": "66ca08c6cd1f52f2e94761bf8565814c4e80c248a460e699ecd0f12acf5b58ae"
     },
     "dist/end-to-end/downloads/local-run-guide.md": {
-      "bytes": 6291,
-      "sha256": "9ebf028dbb55ad61d95889320413c32e68973feb04f77e908a069403583f6965"
+      "bytes": 3792,
+      "sha256": "599cdc9abab0183c61d23e24080ec6e6138b4201bb87c693e447cf7fc2afa22e"
+    },
+    "dist/end-to-end/downloads/server-profile-infinite-inputs.example.json": {
+      "bytes": 54,
+      "sha256": "8fe1890ad11e2be4768c08b02834b390c02933ad1d79630a8e45e1b34fd72dfd"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 19263,
-      "sha256": "15b382071af7e34b860278d42176a0067ed1c33e1525af850d47d5772ac9058c"
+      "bytes": 21023,
+      "sha256": "5b6eb905b06fb1bead13796233bc507c47618e19ec8a2fefd39aa7eb39c8ba1c"
+    },
+    "dist/end-to-end/infinite-replay.js": {
+      "bytes": 1920,
+      "sha256": "3a257276228a1db3e2d1eb090f33c6227cada0804090e51e25adf5b1058588ff"
     },
     "dist/end-to-end/style.css": {
-      "bytes": 12895,
-      "sha256": "8be1dac6d6504acbd211fb6ef13129eca772bc05071027e7c3aba12a4f1ae655"
+      "bytes": 14747,
+      "sha256": "5b775cf34bf71651e27a504c8882ea52dd54940e3dd802fc4e274040d668332f"
+    },
+    "dist/end-to-end/verify-infinite.js": {
+      "bytes": 4578,
+      "sha256": "a953c764417f7a3b7510ff7006a63d016eb15dd98234b2688d6d02b3541cd302"
     },
     "dist/formula-dictionary.js": {
       "bytes": 19672,
@@ -927,8 +947,8 @@
       "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 27591,
-      "sha256": "14b755de4900968df92a6ff5deabf565538e460046d637f224b451479d18ebc7"
+      "bytes": 27971,
+      "sha256": "0169aa1407f0fd2439dc414cb2eb8ad1c254f563b85a14806d82ee6e0c28e33c"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -1078,6 +1098,10 @@
       "bytes": 5896,
       "sha256": "4493f463a9a235cd22d275a725bdba055da4d1e31b0c6ebeb210a88828eeedd4"
     },
+    "scripts/test-infinite-scalar-controls.mjs": {
+      "bytes": 4043,
+      "sha256": "83b90646ae8b369d70e38493a6848718116fcd75fa5062d498059925554a3f4f"
+    },
     "scripts/test-lesson-progression.mjs": {
       "bytes": 52478,
       "sha256": "13eebf85fe4f1eec02015cf3129445de146d413219170db6371c581428f7769e"
@@ -1147,8 +1171,8 @@
       "sha256": "d1735addfe75bf5e979d53730995cd0137ec82644e454bd56cc3814014d40c82"
     },
     "scripts/test-native-run-entry.mjs": {
-      "bytes": 11640,
-      "sha256": "8c53b25c642ea32aa617519847c8c62d77b0c959bac5a64eb2cd65d2fcb65363"
+      "bytes": 12895,
+      "sha256": "d43841962b1ba625ea45424327a2cef05cccdeb9e84e7798e7ceedead6fae372"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2890,
@@ -1177,6 +1201,10 @@
     "scripts/test-pointgroup-lesson-handoff.mjs": {
       "bytes": 7124,
       "sha256": "5e017a0e55a3aadec301302fb69420fa0bc856c38bac74b9334200097b69c64e"
+    },
+    "scripts/test-published-infinite.mjs": {
+      "bytes": 1971,
+      "sha256": "73674be13c35d6cc38964bbe8a1d9395840891b1a6c8f9b41d436c6ca1faabe4"
     },
     "scripts/test-python-al-gamma-source.py": {
       "bytes": 9968,

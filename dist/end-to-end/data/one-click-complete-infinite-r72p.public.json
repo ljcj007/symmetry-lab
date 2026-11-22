@@ -1,0 +1,96 @@
+{
+  "schema": "public-actual-QE-to-infinite-energy-and-response.v1",
+  "job_id": "20261122t145340-1461ed6f95",
+  "status": "COMPLETED",
+  "started_at": "2026-11-22T14:53:40.363796+00:00",
+  "finished_at": "2026-11-22T15:01:48.281087+00:00",
+  "elapsed_seconds": 487.917,
+  "native_scf_executed": true,
+  "complete72_native_exports_received": true,
+  "unmixed_input_ionic_bridge_received": true,
+  "native_mathematical_files": 79,
+  "final_energy_receiver_actually_executed": true,
+  "final_complete_response_receiver_actually_executed": true,
+  "infinite_nonlinear_SCF_certified": true,
+  "complete_infinite_response_received": true,
+  "full_chain_certified": true,
+  "full_chain_recomputed": false,
+  "target_identity_sha256": "a23b0647fc4aa2e7919ffb5d9f0d2d5faf0d887845f7afc7263bc6e45766932f",
+  "display_bounds": {
+    "orbital_H1_radius": "2.950E-9",
+    "chart_Hessian_lower": "1.200E-2",
+    "true_gradient_dual_upper": "2.855E-11",
+    "fresh_boundary_margin_lower": "3.571E-12"
+  },
+  "accepted_stage_receipt_sha256": {
+    "field": "ae92831fe87719b227dbc409dbc94f78e0dfe4b74cbddeefb322f24bb5f58450",
+    "hessian": "de5b583b4f023b71a9f747c06c892630de81ab4c755ab6ec82eaae5df51b9e77",
+    "force": "5f1176a3b16e0281b4ab5aec89536159818bce1bdcb756fad2e3a2cf37630e25",
+    "source": "83f6902f8494f4fed0488663b2a1aba5acae1027615d93773fe252bd0d0f751a",
+    "occupation": "b66642bf0ec9dba9b8be1fc3fa09cd1ac3f3c5f91bbfd4f7c7af7d64248db4ff"
+  },
+  "remaining_obligations": [],
+  "stages": [
+    {
+      "id": "native-dft",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 449.689,
+      "receipt_pin": {
+        "bytes": 38634,
+        "sha256": "21f917701a89d9bdab1849fa1db3ff8e698d1544f18fb0726d7d5e11fd120299"
+      },
+      "claims": [
+        "native_dft_executed",
+        "raw_source_intake",
+        "native_scf_executed"
+      ]
+    },
+    {
+      "id": "ionic-input",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 4.519,
+      "receipt_pin": {
+        "bytes": 10543,
+        "sha256": "fc490c7ffe8ffcf27842be1e277f20cb4db9bdb8e4b88cf8e57f65d1a11ef4e7"
+      },
+      "claims": [
+        "ionic_input_source_bridge_enclosed"
+      ]
+    },
+    {
+      "id": "infinite-scf",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 33.135,
+      "receipt_pin": {
+        "bytes": 1677,
+        "sha256": "257670d5488aec20117d10384fce5e3741a45d77f409e338c2fa8ed3d9a8c1ba"
+      },
+      "claims": [
+        "infinite_orbital_nonlinear_scf_root_enclosed",
+        "complete_infinite_scf_response_invertibility_enclosed"
+      ]
+    }
+  ],
+  "receipt_pins": {
+    "run": {
+      "bytes": 12035,
+      "sha256": "e0a4559498daf4570f2f36420e5b47eaa5ca8ab4d8fadcd2bc5c212946cf7737"
+    },
+    "native_mathematical_identity": {
+      "bytes": 12718,
+      "sha256": "99b9cbad1251f387010d7af3c36f50773647ab6fa6f2fbe5a4490f662fa0ab97"
+    },
+    "energy_existence_composition": {
+      "bytes": 1841455,
+      "sha256": "5a6e51c797d39845b926858c019479e592184d7afd16bc2d5a9465a3e28bfbb0"
+    },
+    "complete_response_composition": {
+      "bytes": 2101498,
+      "sha256": "b12cd9a4a8d738b844bfc484c0bd184e0c96df1e6245e4c659cb1133fffa2687"
+    }
+  },
+  "scope": "Source-bound UPF-node C1 extension, analytic reference PBE, fixed48^3 charge observations, canonical72 k quadrature, infinite orbital space.",
+  "uniqueness_claimed": false,
+  "literal_unexported_QE_infinite_generator_certified": false,
+  "public_projection_is_not_an_independent_proof": true
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "public-actual-QE-to-infinite-proof-gate.v1",
+  "job_id": "20261122t043042-6469cedd8e",
+  "status": "UNRESOLVED",
+  "started_at": "2026-11-22T04:30:42.505534+00:00",
+  "finished_at": "2026-11-22T04:37:54.605897+00:00",
+  "elapsed_seconds": 432.1,
+  "native_scf_executed": true,
+  "complete72_native_exports_received": true,
+  "unmixed_input_ionic_bridge_received": true,
+  "complete_native_mathematical_identity_received": true,
+  "native_mathematical_files": 79,
+  "final_nonlinear_receiver_actually_executed": true,
+  "infinite_nonlinear_SCF_certified": false,
+  "full_chain_certified": false,
+  "literal_unexported_QE_infinite_generator_certified": false,
+  "scope": "Source-bound UPF-node C1 extension, analytic reference PBE, fixed48^3 charge grid and canonical72 k quadrature.",
+  "stages": [
+    {
+      "id": "native-dft",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 424.932,
+      "receipt_pin": {
+        "bytes": 38634,
+        "sha256": "6b519fd005076817ab8223f09eba6ce23d14cbc79eabd22f0e7c0234f6976df0"
+      },
+      "claims": [
+        "native_dft_executed",
+        "raw_source_intake",
+        "native_scf_executed"
+      ]
+    },
+    {
+      "id": "ionic-input",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 5.032,
+      "receipt_pin": {
+        "bytes": 10543,
+        "sha256": "3496c8cbebac77735221f6af831c922df026173f2591df6d9f086a86f6bf83ba"
+      },
+      "claims": [
+        "ionic_input_source_bridge_enclosed"
+      ]
+    },
+    {
+      "id": "infinite-scf",
+      "state": "UNRESOLVED",
+      "elapsed_seconds": 1.506,
+      "receipt_pin": {
+        "bytes": 1310,
+        "sha256": "390c42e6beec3829d86658e44f101a031bf7f8ead8e49aa2a3cfd2ba6ebcc7cb"
+      },
+      "claims": []
+    }
+  ],
+  "remaining_obligations": [
+    "FULL2618_PRECONDITIONER_SOURCE_NOT_RECEIVED",
+    "all72_map_receipt: MISSING_ACTUAL_RECEIPT",
+    "full_response_receipt: MISSING_ACTUAL_RECEIPT",
+    "whole_ball_receipt: MISSING_ACTUAL_RECEIPT",
+    "fresh_source_bridge_receipt: MISSING_ACTUAL_RECEIPT"
+  ],
+  "receipt_pins": {
+    "run": {
+      "bytes": 9773,
+      "sha256": "82b0d6d2604e222bbc765632c27bedac9f3ca0c4e8e12e1723470b502811c874"
+    },
+    "complete_native_identity": {
+      "bytes": 12718,
+      "sha256": "5b5c93f22af364ee6beadbf8880d430bd42d995a6d5300873a18b3b5549a16f5"
+    },
+    "nonlinear_composition": {
+      "bytes": 4498,
+      "sha256": "183657e7eebbc4da6763c079618af32ca59d09193d2de74b56717d974993976d"
+    }
+  },
+  "public_projection_is_not_an_independent_proof": true
+}

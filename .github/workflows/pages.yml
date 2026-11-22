@@ -42,6 +42,10 @@ jobs:
         run: npm test
       - name: Verify QE-Si scalar receipt and independent replay
         run: node scripts/test-end-to-end.mjs
+      - name: Verify infinite-SCF exact controls and actual one-click certificate
+        run: |
+          node scripts/test-infinite-scalar-controls.mjs
+          node scripts/test-published-infinite.mjs
       - name: Verify native-run scope and extracted companion
         run: node scripts/test-native-run-entry.mjs
       - name: Verify source provenance

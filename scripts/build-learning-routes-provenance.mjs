@@ -55,6 +55,11 @@ files.push('scripts/test-native-run-entry.mjs','dist/end-to-end/style.css',
  'dist/end-to-end/data/one-click-fresh-scf-run-v5.public.json',
  'dist/end-to-end/data/one-click-reference-run-v3.public.json',
  'dist/end-to-end/data/local-companion-release.json','dist/end-to-end/downloads/local-run-guide.md');
+files.push('dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json',
+ 'dist/end-to-end/data/one-click-complete-infinite-r72p.public.json',
+ 'dist/end-to-end/infinite-replay.js','dist/end-to-end/verify-infinite.js',
+ 'dist/end-to-end/downloads/server-profile-infinite-inputs.example.json',
+ 'scripts/test-infinite-scalar-controls.mjs','scripts/test-published-infinite.mjs');
 files.push('scripts/test-workbench-group-numbers.mjs');
 files.push('dist/seitz-comparison-ui.js','locales/en-seitz-comparison.json','locales/en-fourfold-search.json',
  'scripts/build-search-index.mjs','scripts/test-python-teaching-labs.py');

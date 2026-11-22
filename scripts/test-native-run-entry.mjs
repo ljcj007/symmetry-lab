@@ -28,7 +28,16 @@ assert.equal(release.full_scientific_inputs_included,false);
 const archive=new URL('downloads/'+release.filename,page),bytes=readFileSync(archive);
 assert.equal(bytes.length,release.bytes);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),release.sha256);
-assert.equal(release.filename,'dft-local-companion-v6.zip');
+assert.equal(release.filename,'dft-local-companion-v12-r72t.zip');
+const actual=JSON.parse(readFileSync(new URL('data/one-click-complete-infinite-r72p.public.json',page),'utf8'));
+assert.equal(actual.full_chain_certified,true);
+assert.equal(actual.full_chain_recomputed,false);
+assert.equal(actual.native_mathematical_files,79);
+assert.equal(actual.native_scf_executed,true);
+assert.equal(actual.infinite_nonlinear_SCF_certified,true);
+assert.equal(actual.complete_infinite_response_received,true);
+assert.deepEqual(actual.stages.map(s=>s.state),['SUCCEEDED','SUCCEEDED','SUCCEEDED']);
+assert.deepEqual(actual.remaining_obligations,[]);
 const fresh=JSON.parse(readFileSync(new URL('data/one-click-fresh-scf-run-v5.public.json',page),'utf8'));
 assert.equal(fresh.overall_status,'UNRESOLVED');
 assert.equal(fresh.full_chain_certified,false);
@@ -89,7 +98,7 @@ assert.equal(history256.numerical_proposal.potential_residual_sup_Ry_display,'1.
 assert.equal(history256.exact_center_frozen_spectrum.conservative_gap_lower_meV,'45.737');
 assert.equal(history256.complete_potential_ball_frozen_spectrum.conservative_gap_lower_meV,'9.540');
 assert.match(history256.scope,/Separate 256Ry/);
-const publicRecords=[JSON.stringify(history256),JSON.stringify(progress),JSON.stringify(fresh),JSON.stringify(run),JSON.stringify(release),readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'),readFileSync(new URL('downloads/local-run-guide.md',page),'utf8')].join('\n');
+const publicRecords=[JSON.stringify(actual),JSON.stringify(history256),JSON.stringify(progress),JSON.stringify(fresh),JSON.stringify(run),JSON.stringify(release),readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'),readFileSync(new URL('downloads/local-run-guide.md',page),'utf8')].join('\n');
 assert.doesNotMatch(publicRecords,/(?:10\.(?:\d{1,3}\.){2}\d{1,3}|192\.168\.\d{1,3}\.\d{1,3})|C:\\\\Users|\/home\//);
 assert.doesNotMatch(JSON.stringify(run),/capability|command|python_executable|source_root|server_profile/);
 const config=JSON.parse(readFileSync(new URL('downloads/server-profile.example.json',page),'utf8'));
@@ -97,30 +106,29 @@ assert.equal(config.host,'<your-server>');
 assert.ok(!('password' in config));
 assert.equal(config.schema,'native-QE-SSH-profile.v1');
 assert.deepEqual(JSON.parse(readFileSync(new URL('downloads/server-profile-inputs.example.json',page),'utf8')),['server_profile.json']);
+assert.deepEqual(JSON.parse(readFileSync(new URL('downloads/server-profile-infinite-inputs.example.json',page),'utf8')),['server_profile.json','infinite_recipe.json']);
 for(const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)){
  const ref=match[1];if(/^[a-z]+:|^\?/.test(ref))continue;
  const url=new URL(ref,page);url.search='';url.hash='';
  assert.ok(existsSync(url),ref);
 }
-for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','setupStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','proposalText','centerText','ballText','infiniteRemaining','cutoffTitle','cutoffText','download256History']){
+const translations=Object.assign({},...Array.from(app.matchAll(/Object.assign\(messages,(\{[\s\S]+?\})\);/g),m=>JSON.parse(m[1])));
+for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','setupStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','completeMapTitle','completeResponseTitle','completeBallTitle','modelScope','infiniteReplayScope']){
  assert.ok(html.includes('data-i18n="'+key+'"'),key+' Chinese');
- const translations=JSON.parse(app.match(/Object.assign\(messages,(\{[\s\S]+?\})\);/)[1]);
  assert.ok(translations[key]&&!/[\u4e00-\u9fff]/.test(translations[key]),key+' English');
 }
 assert.match(html,/href="#native-run"/);
 assert.match(html,/id="verify"/);
 assert.match(html,/id="run"/);
-assert.match(html,/实际求解全新数值 SCF/);
-assert.match(html,/新源与旧参考源不同/);
-assert.match(html,/无限轨道自洽：进行中 · UNRESOLVED/);
-assert.match(html,/5 轮 1024 Ry/);
-assert.match(html,/1\.047 <small>nRy<\/small>/);
-assert.match(html,/≥ 41\.782 <small>meV<\/small>/);
-assert.match(html,/≥ 5\.585 <small>meV<\/small>/);
-assert.match(html,/256 Ry 数值候选放入 1024 Ry 参考映射/);
-assert.match(html,/0\.395 mRy/);
+assert.match(html,/id="reference-history"/);
+assert.match(html,/id="infinite-verify"/);
+assert.match(html,/id="run-infinite"/);
+assert.match(html,/72 \/ 72 个求积点/);
+assert.match(html,/2618 <small/);
+assert.match(html,/整球存在性与完整响应接收器，全部通过/);
+assert.match(html,/大型证明按同源身份接收/);
 const scan=spawnSync('python',['-B','-c',
- "import sys,zipfile,re;z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;names=z.namelist();assert len(names)==20;assert all('/jobs/' not in n and '/profiles/' not in n and '/qa/' not in n and not n.endswith('server_profile.json') for n in names);text='\\n'.join(z.read(n).decode('utf8') for n in names);assert re.search(r'\\b10\\.(?:[0-9]{1,3}\\.){2}[0-9]{1,3}\\b',text) is None and '/home/' not in text and 'C:\\\\Users' not in text;print('public code archive checked')",
+ "import sys,zipfile,re,json,hashlib;z=zipfile.ZipFile(sys.argv[1]);assert z.testzip() is None;names=z.namelist();assert len(names)==len(set(names))==26;assert all('/jobs/' not in n and '/profiles/' not in n and '/qa/' not in n and not n.endswith('server_profile.json') for n in names);m=json.loads(z.read('dft-local-companion/MANIFEST.json'));assert len(m['files'])==25;assert all(len(z.read('dft-local-companion/'+r['path']))==r['bytes'] and hashlib.sha256(z.read('dft-local-companion/'+r['path'])).hexdigest()==r['sha256'] for r in m['files']);text='\\n'.join(z.read(n).decode('utf8') for n in names);assert re.search(r'\\b10\\.(?:[0-9]{1,3}\\.){2}[0-9]{1,3}\\b',text) is None and '/home/' not in text and 'C:\\\\Users' not in text;print('public code archive checked')",
  fileURLToPath(archive)],{encoding:'utf8'});
 assert.equal(scan.status,0,scan.stderr);
 const extracted=await mkdtemp(join(tmpdir(),'dft-companion-'));
@@ -129,6 +137,8 @@ try{
  assert.equal(unpack.status,0,unpack.stderr);
  const control=spawnSync('python',['-B',join(extracted,'dft-local-companion/web/tests/test_portal.py')],{encoding:'utf8',timeout:60000,maxBuffer:2*1024*1024,env:{...process.env,PYTHONUTF8:'1',PYTHONDONTWRITEBYTECODE:'1'}});
  assert.equal(control.status,0,control.stdout+'\n'+control.stderr);
+ const gates=spawnSync('python',['-B',join(extracted,'dft-local-companion/web/tests/test_energy_response_gate.py')],{encoding:'utf8',timeout:60000,maxBuffer:2*1024*1024,env:{...process.env,PYTHONUTF8:'1',PYTHONDONTWRITEBYTECODE:'1'}});
+ assert.equal(gates.status,0,gates.stdout+'\n'+gates.stderr);
  const companionJS=readFileSync(join(extracted,'dft-local-companion/web/site/app.js'),'utf8');
  const stageFunction=companionJS.slice(companionJS.indexOf('function renderStages('),companionJS.indexOf('function renderJob('));
  const node=()=>({children:[],textContent:'',append(...x){this.children.push(...x);},replaceChildren(...x){this.children=x;},setAttribute(){}});
@@ -144,4 +154,4 @@ try{
  await rm(extracted,{recursive:true,force:true});
 }
 function requireSeparator(){return process.platform==='win32'?'\\':'/';}
-console.log(JSON.stringify({status:'PASS',nativeRunSummaryScope:true,NSCFParentBoundary:true,freshSCFChangedSourceStopsReuse:true,localizedUnresolvedReason:true,separateInfiniteSCFResearchScope:true,latest1024ProgressAnd256History:true,finiteCutoffFeedbackIsNotInfiniteSCF:true,fullInfiniteSCFStillUnresolved:true,companionBytesAndSha256:true,publicCodeOnly:true,bilingualEntryAndDownloads:true,extractedCompanionProtocolExecuted:true}));
+console.log(JSON.stringify({status:'PASS',nativeRunSummaryScope:true,NSCFParentBoundary:true,freshSCFChangedSourceStopsReuse:true,localizedUnresolvedReason:true,historical1024And256RecordsPreserved:true,actualInfiniteSCFAndCompleteResponseAccepted:true,largeProofsReceived:true,companionBytesAndSha256:true,publicCodeOnly:true,bilingualEntryAndDownloads:true,extractedCompanionProtocolAndEnergyResponseControlsExecuted:true}));
