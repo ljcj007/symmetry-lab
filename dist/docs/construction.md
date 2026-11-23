@@ -65,6 +65,6 @@ python scripts/refresh-construction-provenance.py
 python scripts/refresh-construction-provenance.py --check
 ```
 
-刷新脚本验证目录计数、题目引用、词典前缀哈希、真实计算夹具及缓存版本，再按依赖顺序更新来源文件哈希。历史 release、date、counts、coverage 和来源声明保持；Python 登记新增三个物理核心与 `symmetry_grading`。遇到清单依赖环会失败并给出路径。`--check` 不写文件。
+刷新脚本验证目录计数、题目引用、词典前缀记录、真实计算夹具及缓存版本，再按依赖顺序更新来源文件记录。历史 release、date、counts、coverage 和来源声明保持；Python 登记新增三个物理核心与 `symmetry_grading`。遇到清单依赖环会失败并给出路径。`--check` 不写文件。
 
 [本版来源及文件清单](../data/construction-provenance.json) 汇总原始论文、作者讲义与官方文档。数值预设是明确标记的教学模型；真实材料名称提供机制背景，不表示已拟合材料参数。

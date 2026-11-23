@@ -56,7 +56,7 @@ for(const scene of expected){
 }
 assert.equal(ready.createInput('incorrect-case'),null);
 
-const pinError=english?/pinned byte count or SHA-256/:/字节数或 SHA-256 不匹配/;
+const pinError=english?/could not be read/:/暂时无法读取/;
 for(const ref of [AL_GAMMA_SOURCE.band,AL_GAMMA_SOURCE.companion]){
  const corrupt=async url=>{
   const name=basename(url),bytes=load(name);

@@ -50,7 +50,7 @@ async function fetchData(signal) {
   const digest = new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes));
   signal.throwIfAborted();
   const hex = Array.from(digest, value => value.toString(16).padStart(2, '0')).join('');
-  if (hex !== fixture.sha256) throw new Error('ZnO 数据的 SHA-256 与固定版本不一致。');
+  if (hex !== fixture.sha256) throw new Error('ZnO 示例数据暂时无法读取，请重新载入。');
   return validateData(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(bytes)));
 }
 
@@ -284,7 +284,7 @@ export function bindZnOIRPolarization({root,isCurrent=()=>true,state={}}){
   function showLab(focus=false) {
     const theta = degreesIn(state.theta,90) ? state.theta : 45;
     const phi = degreesIn(state.phi,180) ? state.phi : 0;
-    status.textContent = '固定版本的 ZnO 数据包已通过 SHA-256 核验。';
+    status.textContent = 'ZnO 示例数据已载入。';
     lab.innerHTML = labHtml(data,theta,phi)+ramanExerciseHTML(state);
     load.hidden = true;
     const angle = get('#zir-polarization'), basis = get('#zir-basis');

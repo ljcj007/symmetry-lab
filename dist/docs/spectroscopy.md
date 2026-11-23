@@ -70,6 +70,6 @@ python scripts/refresh-spectroscopy-provenance.py
 python scripts/refresh-spectroscopy-provenance.py --check
 ```
 
-命令只更新旧清单的文件哈希、Python模块哈希及本次来源清单，不重建课程、不改历史版本和计数、不打包或提交。发布文件与引用见 [spectroscopy-provenance.json](../data/spectroscopy-provenance.json)；它不包含本机 `.openai` 辅助文件。
+命令只更新旧清单的文件记录、Python模块记录及本次来源清单，不重建课程、不改历史版本和计数、不打包或提交。发布文件与引用见 [spectroscopy-provenance.json](../data/spectroscopy-provenance.json)；它不包含本机 `.openai` 辅助文件。
 
 方法来源包括[EasySpin有效自旋约定](https://www.easyspin.org/documentation/hamiltonian.html)、[Kwant NS教程](https://kwant-project.org/doc/1/tutorial/superconductors)、[BTK原始论文](https://doi.org/10.1103/PhysRevB.25.4515)及[Quanty XAS教程](https://www.quanty.org/documentation/tutorials/nio_crystal_field/xas_l23)。这些资料用于核对模型和方法；本次代码、练习、参数与图形独立实现，不宣称移植了完整EasySpin、Kwant或Quanty软件。

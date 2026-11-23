@@ -23,7 +23,7 @@ export function getResearchResult(view){return states[view]?.result;}
 
 function grapheneStatus(evidence){
  return evidence
-  ?'两份原始文件的 SHA-256 已核验。已填入原始晶格和能带路径，请手动运行 Python 计算。'
+  ?'已载入原始晶格和能带路径，请运行 Python 计算。'
   :'载入会替换当前 JSON。请先保存需要保留的草稿。';
 }
 

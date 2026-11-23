@@ -13,7 +13,7 @@
 - [完整 BSD 三条款许可](../data/examples/phonopy-cu-LICENSE.txt)
 - [Phonopy 官方输出文件说明](https://phonopy.github.io/phonopy/output-files.html#thermal-properties-yaml)
 
-固定提交为 18cad919af8fe8aad349e04f101887fa19b051a0。YAML 为 41975 字节，SHA-256 为 1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1；XZ 为 4900 字节，SHA-256 为 36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f。计算记录中的 verificationBasis=parsed-utf8-content 表示核对的是实际交给计算器的 UTF-8 文本，不是任意本地文件的原始字节或文件名。
+固定提交为 18cad919af8fe8aad349e04f101887fa19b051a0。YAML 原文与原始 XZ 压缩文件均随示例保留。计算记录中的 verificationBasis=parsed-utf8-content 表示核对的是实际交给计算器的 UTF-8 文本，不是任意本地文件的原始字节或文件名。
 
 ## 先预测，再检查计量基准
 

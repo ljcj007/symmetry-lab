@@ -38,7 +38,7 @@ async function sha256(bytes) {
 
 async function checkBytes(bytes, expected) {
   if (bytes.byteLength !== expected.bytes || await sha256(bytes) !== expected.sha256) {
-    throw new SourceError('文件大小或 SHA-256 与固定版本不同。请重新读取。');
+    throw new SourceError('Cu 示例数据暂时无法读取，请重新载入。');
   }
 }
 
@@ -124,7 +124,7 @@ function sourceRows(manifest) {
 function preview(manifest) {
   const docs = new URL('./docs/cu-qha-example.md', import.meta.url).href;
   return '<div class="cq-verified" id="cq-preview" tabindex="-1">' +
-    '<p class="cq-status" role="status">已核对来源清单、配对输入和 11 段原始 YAML 文本的 SHA-256。</p>' +
+    '<p class="cq-status" role="status">已载入 11 组配对的 Cu 静态能量与热性质数据。</p>' +
     '<p>每行的静态能量和声子热性质都对应同一个四原子输入胞。体积用 Å³，静态能量用 eV/输入胞，温度用 K。</p>' +
     '<p>' + '已提供的温度采样' + ' · ' + esc(manifest.temperatureMinK) + '–' +
     esc(manifest.temperatureMaxK) + ' K · ' + '步长' + ' ' + esc(manifest.temperatureStepK) +
@@ -136,7 +136,7 @@ function preview(manifest) {
     sourceRows(manifest) + '</tbody></table></div>' +
     '<ul class="cq-links"><li>' + link(manifest.upstreamUrl, 'Phonopy 原始数据') + '</li><li>' +
     link(path(manifest.eVFile.path), '静态能量原表 e-v.dat') + '</li><li>' +
-    link(path(checks.manifest.name), '来源清单与校验和') + '</li><li>' +
+    link(path(checks.manifest.name), '数据来源') + '</li><li>' +
     link(path(checks.payload.name), '配对输入 JSON') + '</li><li>' +
     link(path(manifest.licenseFile.path), '数据许可证') + '</li><li>' + link(docs, '算例说明与复现') + '</li></ul>' +
     '<p>填入并计算后，在 300 K 查看自由能极小值两侧各有哪些体积采样。在 2500 K 查看平衡体积的状态及可用的温度导数。</p></div>';
@@ -160,7 +160,7 @@ export function bindCuQhaSource({root, isCurrent = () => true, onApply}) {
         '读取并核对 Cu 数据' + '</button>' : preview(bundle.manifest) +
         '<button type="button" class="secondary" id="cq-apply"' + (applying ? ' disabled' : '') + '>' +
         '将核对过的 Cu 输入填入表单' + '</button>') +
-      (controller ? '<p role="status">正在读取文件并核对校验和…</p>' : '') +
+      (controller ? '<p role="status">正在载入 Cu 示例数据…</p>' : '') +
       (failure ? '<p class="cq-error" role="alert">' + esc(failure) + '</p>' : '') +
       (applied ? '<p class="cq-status" id="cq-applied" tabindex="-1" role="status">已填入。请使用计算按钮查看拟合结果。</p>' : '') +
       '</section>';

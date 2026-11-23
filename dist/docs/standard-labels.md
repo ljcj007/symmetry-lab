@@ -6,7 +6,7 @@
 
 - **BC：230 个普通空间群，单值与双值，6,928 张有名 k 点／k 线表。** 从 SpaceGroupIrep 的 `LittleGroupIrepData.wl`、`AbstractGroupData.wl` 以及 `LGIrepLabel` / `DLGIrepLabel` 提取，包含扩展 Mulliken 标签、BC Γ 型标签、抽象群表示编号、维数、reality 指标及精确特征标。
 - **Bilbao：230 个普通空间群，460 个单值／双值原始文件，共 2,700 张最大 k 点表。** 来源是 IrRep 保存的 Bilbao 表，冻结于提交 `4f43f138d30ef37a499a297ac9b1ec8ef14717cc`。原始十进制振幅和相位有舍入误差，因此其匹配是有容差的数值匹配。
-- 非对称型原胞、原点选择、旋转命名和自旋上下分量顺序已经转换到网站的 BC 约定。源文件、许可证、文件 SHA-256 和检验记录随网站提供。
+- 非对称型原胞、原点选择、旋转命名和自旋上下分量顺序已经转换到网站的 BC 约定。源文件、许可证和检验记录随网站提供。
 
 BC 和 Bilbao 的编号不必相同。例如空间群 4 的 Z 点，BC `Z1` 对应 Bilbao `Z2`，BC `Z2` 对应 Bilbao `Z1`。程序通过特征标得到这项对应。
 

@@ -18,7 +18,6 @@
 - [spglib 官方源码](https://github.com/spglib/spglib)及 [2.8.0 PyPI 发布](https://pypi.org/project/spglib/2.8.0/)。
 - [官方 C API](https://spglib.readthedocs.io/en/stable/api.html)及[标准化约定](https://spglib.readthedocs.io/en/stable/definition.html)。
 - 编译器：官方 Emscripten **5.0.3**，SDK 发布提交 `065bfade0ee2c02138b83cb10049d8be95e146b6`。
-- 源码 SHA-256：`12a224434b5659793353937625fd7eb91c00c8952c18ca729a7a8117b1e29e8f`。
 - [完整资产校验值](../vendor/spglib/provenance.json)，[BSD-3-Clause 许可](../vendor/spglib/LICENSE.spglib)。
 
 在已配置官方 Emscripten 5.0.3 的环境运行：

@@ -30,6 +30,6 @@ A/B 对照需主动固定 A，再用修改后的参数计算 B，点击保存比
 
 ## 验证
 
-`npm run test:connections` 运行独立数学和界面测试。Python 检验交换算符、Young 幂等、完整分解、绕数与无效环路、互易 / 空间协变 / 非负耗散、反幺正变换及符号输入安全。UI 使用真实 Python 预设结果，保留源码及课程哈希，检验全部预设、课程、公式、判分、记录和路由。`python scripts/refresh-connections-provenance.py --check` 检验按依赖顺序更新的来源清单。
+`npm run test:connections` 运行独立数学和界面测试。Python 检验交换算符、Young 幂等、完整分解、绕数与无效环路、互易 / 空间协变 / 非负耗散、反幺正变换及符号输入安全。UI 使用真实 Python 预设结果，保留源码及课程版本记录，检验全部预设、课程、公式、判分、记录和路由。`python scripts/refresh-connections-provenance.py --check` 检验按依赖顺序更新的来源清单。
 
 教学文本为独立撰写，参考与延伸阅读列于课程和词典。计算是明确有限模型；未宣称任意同伦群求解、任意 S_n Young 表、真实材料拟合或任意符号证明自动判分。

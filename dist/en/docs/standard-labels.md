@@ -6,7 +6,7 @@ The site can query BC standard character tables and map locally calculated D1/D2
 
 - **BC:230 ordinary  space group , single/double-valued,6928 named-k-point/line tables.** Extract SpaceGroupIrep `LittleGroupIrepData.wl`, `AbstractGroupData.wl`, `LGIrepLabel`/`DLGIrepLabel`, including extended Mulliken, BC Γ labels, abstract representation IDs, dimensions, reality, and exact  character .
 - **Bilbao: 230 ordinary space groups, 460 single-/double-valued source files and 2,700 maximal-k tables.** Sources are Bilbao tables retained by IrRep, frozen at commit `4f43f138d30ef37a499a297ac9b1ec8ef14717cc`. Decimal amplitudes and phases have rounding error, so matching is numerical with tolerance.
-- Nonsymmorphic primitive cells, origin choices, rotation names, and spin-component order have been converted to site BC conventions. Source files, licenses, SHA-256 hashes, and checks accompany the site.
+- Nonsymmorphic primitive cells, origin choices, rotation names and spin-component order have been converted to the site’s BC conventions. Source files, licenses and check records accompany the site.
 
 BC/Bilbao numbering can differ. Group  space group 4 at Z: BC `Z1` maps Bilbao `Z2`; BC `Z2` maps `Z1`. Compute mapping via  character .
 

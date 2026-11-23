@@ -143,12 +143,12 @@ export function bindZnOGammaNAC({root,run,isCurrent=()=>true}) {
       <select id="zgn-prediction" required>
         <option value="">请选择预测</option><option value="a1">仅 A₁</option><option value="e1">仅 E₁</option><option value="both">A₁ 和 E₁ 都耦合</option>
       </select>
-      <div class="pd-actions"><button id="zgn-run" class="primary" type="submit">核验原文件并计算</button>
+      <div class="pd-actions"><button id="zgn-run" class="primary" type="submit">运行计算</button>
         <button id="zgn-cancel" class="secondary" type="button" hidden>取消本次请求</button></div>
       <p id="zgn-status" role="status"></p><p id="zgn-error" role="alert" hidden></p>
     </form>
     <div id="zgn-result"></div>
-    <p>频率来自固定的 Phonopy 算例。点击计算后，页面核对三份文件的 SHA-256，并用 Python 对同一 Γ 点矩阵做频率对照。</p>
+    <p>频率来自固定的 Phonopy 算例。点击计算后，用 Python 对同一 Γ 点矩阵做频率对照。</p>
     <p><a href="data/examples/phonopy-zno-source.json">查看来源、生成设置与许可 →</a></p>
   </section>`;
   const form = get('form'), coordinates = get('coordinates'), prediction = get('prediction');

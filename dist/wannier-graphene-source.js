@@ -114,7 +114,7 @@ async function verifyText(value, file, crypto, signal) {
   const digest = await crypto.subtle.digest('SHA-256', bytes);
   assertActive(signal);
   const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  if (hex !== file.sha256) throw sourceError('石墨烯原文件的 SHA-256 与固定版本不符。', file);
+  if (hex !== file.sha256) throw sourceError('石墨烯示例暂时无法读取，请重新载入。', file);
   try {
     return new TextDecoder('utf-8', {fatal: true}).decode(bytes);
   } catch {
@@ -123,7 +123,7 @@ async function verifyText(value, file, crypto, signal) {
 }
 
 function checkDigestAvailable(crypto) {
-  if (typeof crypto?.subtle?.digest !== 'function') throw new Error('当前浏览器无法核验原文件的 SHA-256。');
+  if (typeof crypto?.subtle?.digest !== 'function') throw new Error('请通过 HTTPS 或本机地址载入石墨烯示例。');
 }
 
 /** Verify both exact file bodies before extracting the existing HR input. */

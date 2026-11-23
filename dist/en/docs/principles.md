@@ -44,13 +44,13 @@ Adds  order parameter ,  stabilizer subgroup , group averages, coordinate change
 
 `npm run test:principles` validates models, constraints, interfaces, projects, and dictionary. `npm test` and `npm run test:python` retain old regressions. New cores run entirely in existing browser Python with NumPy. Conservation reuses the density-matrix module's matrix exponential and Liouvillian; no computation server is needed.
 
-Build catalogs with `python scripts/build-principles-catalog.py`; `python scripts/build-principles-fixtures.py`/project scripts generate real Python fixtures. Core/catalog edits require rebuilding fixtures, not hash replacement alone. Once files stabilize, run:
+Catalogues are built with `python scripts/build-principles-catalog.py`; calculation and project fixtures are generated from actual Python outputs by `python scripts/build-principles-fixtures.py` and the project-fixture script. Updating a core or catalogue requires rebuilding the relevant fixtures, rather than only replacing version records. Once files are stable, run:
 
 ```text
 python scripts/refresh-principles-provenance.py
 python scripts/refresh-principles-provenance.py --check
 ```
 
-Refresh scripts preserve historical release versions, dates, counts and coverage statements, updating existing hashes and registering three new Python cores only. Historical-manifest dependencies are recursively computed using final in-memory bytes; cycles raise errors before repeated rewrites create permanent mismatches. `--check` is strictly read-only, and repeated refreshes should produce no changes. Provenance is at `dist/data/principles-provenance.json`, independent of temporary `.openai` files; it does not package, commit or publish.
+The refresh script preserves the versions, dates, counts and coverage declarations of historical releases, updates existing file records and registers three new Python cores. Dependencies between historical manifests are resolved recursively from final in-memory bytes; a cycle is reported before repeated rewrites can create permanent mismatches. `--check` is strictly read-only, and a repeated refresh should make no changes. Source manifests are at `dist/data/principles-provenance.json`; they require no temporary `.openai` files and do not package, commit or publish.
 
 Physics/convention sources include [ISODISTORT](https://iso.byu.edu/isodistorthelp.php), [ISOTROPY](https://iso.byu.edu/isotropy_doc.php), [Moriya's original paper](https://doi.org/10.1103/PhysRev.120.91), [Tong's Noether course](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html), [Lindblad's original paper](https://doi.org/10.1007/BF01608499), and [MIT antiunitary notes](https://web.mit.edu/8.861/www/lect_notes/Lecture15-1.pdf). Case parameters are declared teaching models, not fitted data for these materials.

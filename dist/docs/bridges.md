@@ -82,7 +82,7 @@ A、B必须来自同一计算工具。自动曲线叠加还要求相同版本，
 
 ## 构建、验证与来源
 
-`scripts/build-bridges-catalog.py` 合并四个原创内容文件，保持原目录不变。`scripts/build-bridges-fixtures.py` 与 `scripts/build-bridges-project-fixtures.py` 通过公共浏览器API生成真实结果夹具；源文件哈希采用UTF-8/LF，二进制gzip保持原字节，兼容Windows与CI检出。
+`scripts/build-bridges-catalog.py` 合并四个原创内容文件，保持原目录不变。`scripts/build-bridges-fixtures.py` 与 `scripts/build-bridges-project-fixtures.py` 通过公共浏览器API生成真实结果夹具；源文件采用UTF-8/LF，二进制gzip保持原字节，兼容Windows与CI检出。
 
 `npm run test:bridges` 检查新核心、预设、路由、练习、项目、对照和词典。完整旧功能回归继续使用 `npm test` 与 `npm run test:python`。公式目录回归保留原始文本并验证统一数学渲染。
 
@@ -93,6 +93,6 @@ python scripts/refresh-bridges-provenance.py
 python scripts/refresh-bridges-provenance.py --check
 ```
 
-该脚本保留旧来源清单的版本、日期、数量、来源和范围说明，只刷新既有文件/模块哈希并登记四个新核心，再生成[本次来源清单](../data/bridges-provenance.json)。`--check`只读，不重建目录、打包、提交或发布；新清单同时覆盖共享界面、测试、夹具和刷新后的历史清单。
+该脚本保留旧来源清单的版本、日期、数量、来源和范围说明，只刷新既有文件/模块记录并登记四个新核心，再生成[本次来源清单](../data/bridges-provenance.json)。`--check`只读，不重建目录、打包、提交或发布；新清单同时覆盖共享界面、测试、夹具和刷新后的历史清单。
 
 方法参照本课程各条目所列的一手论文与官方文档，包括Hubbard/二聚体研究、TRIQS/Quanty、Holstein、EPW、QuTiP、Vidal–Werner和Qsymm。它们用于核对方法和背景；本站课程、合成预设、浏览器计算和练习为独立教学实现，不宣称完整移植参考软件或给出材料拟合。

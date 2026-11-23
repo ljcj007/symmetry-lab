@@ -1,0 +1,39 @@
+{
+  "job_id": "20261122t145340-1461ed6f95",
+  "status": "COMPLETED",
+  "started_at": "2026-11-22T14:53:40.363796+00:00",
+  "finished_at": "2026-11-22T15:01:48.281087+00:00",
+  "elapsed_seconds": 487.917,
+  "native_scf_executed": true,
+  "full_chain_certified": true,
+  "full_chain_recomputed": false,
+  "display_bounds": {
+    "orbital_H1_radius": "2.950E-9",
+    "chart_Hessian_lower": "1.200E-2",
+    "true_gradient_dual_upper": "2.855E-11",
+    "fresh_boundary_margin_lower": "3.571E-12"
+  },
+  "scope": "Source-bound UPF-node C1 extension, analytic reference PBE, fixed48^3 charge observations, canonical72 k quadrature, infinite orbital space.",
+  "checks": {
+    "all72_infinite_orbitals": true,
+    "complete2618_response": true,
+    "whole_ball_occupied_SCF_exists": true
+  },
+  "stages": [
+    {
+      "id": "native-dft",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 449.689
+    },
+    {
+      "id": "ionic-input",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 4.519
+    },
+    {
+      "id": "infinite-scf",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 33.135
+    }
+  ]
+}

@@ -38,7 +38,7 @@ async function sha256(bytes) {
 
 async function checkBytes(bytes, expected) {
   if (bytes.byteLength !== expected.bytes || await sha256(bytes) !== expected.sha256) {
-    throw new SourceError("The file size or SHA-256 differs from the pinned version. Please reload it.");
+    throw new SourceError("The Cu example data could not be read. Load them again.");
   }
 }
 
@@ -124,7 +124,7 @@ function sourceRows(manifest) {
 function preview(manifest) {
   const docs = new URL('./docs/cu-qha-example.md', import.meta.url).href;
   return '<div class="cq-verified" id="cq-preview" tabindex="-1">' +
-    "<p class=\"cq-status\" role=\"status\">SHA-256 verified for the source manifest, the paired input and all 11 raw YAML texts.</p>" +
+    "<p class=\"cq-status\" role=\"status\">Loaded 11 paired sets of Cu static energies and thermal properties.</p>" +
     "<p>Each row pairs static energy and phonon thermal properties for the same four-atom input cell. Volume is in Å³, static energy in eV per input cell, and temperature in K.</p>" +
     '<p>' + "Input temperature range" + ' · ' + esc(manifest.temperatureMinK) + '–' +
     esc(manifest.temperatureMaxK) + ' K · ' + "Step" + ' ' + esc(manifest.temperatureStepK) +
@@ -136,7 +136,7 @@ function preview(manifest) {
     sourceRows(manifest) + '</tbody></table></div>' +
     '<ul class="cq-links"><li>' + link(manifest.upstreamUrl, "Original Phonopy data") + '</li><li>' +
     link(path(manifest.eVFile.path), "Original e-v.dat table") + '</li><li>' +
-    link(path(checks.manifest.name), "Source manifest and checksums") + '</li><li>' +
+    link(path(checks.manifest.name), "data source") + '</li><li>' +
     link(path(checks.payload.name), "Paired input JSON") + '</li><li>' +
     link(path(manifest.licenseFile.path), "Data license") + '</li><li>' + link(docs, "Example notes and reproduction") + '</li></ul>' +
     "<p>After loading and running the calculation, inspect the sampled volumes on either side of the free-energy minimum at 300 K. At 2500 K, check the status of the equilibrium volume and which temperature derivatives are available.</p></div>";
@@ -160,7 +160,7 @@ export function bindCuQhaSource({root, isCurrent = () => true, onApply}) {
         "Load and verify the Cu data" + '</button>' : preview(bundle.manifest) +
         '<button type="button" class="secondary" id="cq-apply"' + (applying ? ' disabled' : '') + '>' +
         "Fill the form with the verified Cu input" + '</button>') +
-      (controller ? "<p role=\"status\">Reading files and checking hashes…</p>" : '') +
+      (controller ? "<p role=\"status\">Loading the Cu example data…</p>" : '') +
       (failure ? '<p class="cq-error" role="alert">' + esc(failure) + '</p>' : '') +
       (applied ? "<p class=\"cq-status\" id=\"cq-applied\" tabindex=\"-1\" role=\"status\">Input filled. Use the calculation button to inspect the fits.</p>" : '') +
       '</section>';

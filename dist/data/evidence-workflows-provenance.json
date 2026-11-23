@@ -39,8 +39,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107211,
-      "sha256": "ab29a51f2b2c67f35fcf6271ed40a6dc6f547446de624d94635b33c7a2cc2607"
+      "bytes": 107205,
+      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
     },
     "dist/bridges-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -69,8 +69,8 @@
     },
     "dist/docs/cu-thermal-example.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4277,
-      "sha256": "f195ffd3bfc1d829e9108aa930220bd851518ce81d9a34adc47e7ee048efedda"
+      "bytes": 4131,
+      "sha256": "09c64fb653afb85b8f283ac4afc8d0e9878372e0d818a7d9bb15d2cc0107afc9"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
@@ -89,8 +89,8 @@
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 70987,
-      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab"
+      "bytes": 70234,
+      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
     },
     "dist/oscillator-spectra-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -114,18 +114,18 @@
     },
     "dist/structure-handoff.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7913,
-      "sha256": "caf8040d79af465be1f6e7fc29d40612beb48e2683609ff070c7abc097f9df34"
+      "bytes": 7513,
+      "sha256": "ddab355a1fb26a7dd4f71652fdb5e0b3f0c4db63d959ef506368f073ae0b21be"
     },
     "dist/structure-provenance.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11625,
-      "sha256": "5b9c161acce033b558a900a1e39878bcf29453ea334611756eefcd29fb6553b1"
+      "bytes": 11613,
+      "sha256": "fe44f65a7c5a12fd8f5b3fb07fec81849b7858236289c4f9652fd39defb15303"
     },
     "dist/structure-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31072,
-      "sha256": "42e64cb11ca9b92d74443b084d519c139742ea372ad272292c0a1c5734c2fc36"
+      "bytes": 31066,
+      "sha256": "6bede3d34c13b5caf464fe673fae6fd8e28fd229f320de6f8d241f2d65e6043d"
     },
     "locales/en-cu-thermal-example.json": {
       "normalization": "utf8-lf-v1",
@@ -179,8 +179,8 @@
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28728,
-      "sha256": "5d298e79ada34b1cae1334700cec74fdda2bfaf1b5977c297db5867274ab51c2"
+      "bytes": 28816,
+      "sha256": "4ed2bc60b221c944518850c4fb2267229e990a7dcddf958f5f776eb40d848d91"
     },
     "scripts/test-oscillator-bridge-integration.mjs": {
       "normalization": "utf8-lf-v1",
@@ -199,8 +199,8 @@
     },
     "scripts/test-structure-handoff.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5290,
-      "sha256": "11700dc054f7d653bde9fd5cf734a39966a76abbef9ed6074eb7edcd57370bcd"
+      "bytes": 5381,
+      "sha256": "d4525fe55d6a6f591020ab37664bc6ff1886f1bba06328afe510c8d0b5cebb78"
     },
     "scripts/test-structure-ui.mjs": {
       "normalization": "utf8-lf-v1",

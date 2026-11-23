@@ -48,6 +48,8 @@ jobs:
           node scripts/test-published-infinite.mjs
       - name: Verify native-run scope and extracted companion
         run: node scripts/test-native-run-entry.mjs
+      - name: Verify one-click desktop download
+        run: python scripts/test-oneclick-release.py
       - name: Verify source provenance
         run: python scripts/refresh-english-provenance.py --check
       - name: Test Python computation cores

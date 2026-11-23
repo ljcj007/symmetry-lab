@@ -113,7 +113,7 @@ for(const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)){
  assert.ok(existsSync(url),ref);
 }
 const translations=Object.assign({},...Array.from(app.matchAll(/Object.assign\(messages,(\{[\s\S]+?\})\);/g),m=>JSON.parse(m[1])));
-for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','setupStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','completeMapTitle','completeResponseTitle','completeBallTitle','modelScope','infiniteReplayScope']){
+for(const key of ['nativeTitle','nativeOverall','nativeLead','launchIntro','oneclickDownload','oneclickOpen','oneclickStart','actualIntro','actualNativeDetail','actualInfiniteDetail','actualScope','infiniteIntro','completeMapTitle','completeResponseTitle','completeBallTitle','modelScope','infiniteReplayScope']){
  assert.ok(html.includes('data-i18n="'+key+'"'),key+' Chinese');
  assert.ok(translations[key]&&!/[\u4e00-\u9fff]/.test(translations[key]),key+' English');
 }

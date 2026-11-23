@@ -44,13 +44,13 @@ Hamiltonian系数为rad/ns，耗散率为ns⁻¹。时间反演诊断显式计�
 
 `npm run test:principles`验证数值模型、约束、界面、项目和词典。`npm test`与`npm run test:python`保留原有模块回归。新核心完全在现有浏览器Python环境中运行，使用NumPy；守恒模块复用原密度矩阵模块的矩阵指数与Liouvillian实现，没有服务器计算依赖。
 
-目录由`python scripts/build-principles-catalog.py`构建；计算夹具由`python scripts/build-principles-fixtures.py`和项目夹具脚本生成实际Python输出。更新核心或目录后必须重建相关夹具，不能只替换哈希。最终文件稳定后执行：
+目录由`python scripts/build-principles-catalog.py`构建；计算夹具由`python scripts/build-principles-fixtures.py`和项目夹具脚本生成实际Python输出。更新核心或目录后必须重建相关夹具，不能只替换版本记录。最终文件稳定后执行：
 
 ```text
 python scripts/refresh-principles-provenance.py
 python scripts/refresh-principles-provenance.py --check
 ```
 
-刷新脚本保留所有历史发布的版本、日期、数量和覆盖声明，仅更新已有文件哈希并登记三个新Python核心。历史清单之间的依赖按最终内存字节递归计算；发现循环先报错，不反复重写造成永久失配。`--check`严格只读，重复刷新应产生零变化。来源清单位于`dist/data/principles-provenance.json`，不依赖临时`.openai`文件，也不执行打包、Git提交或发布。
+刷新脚本保留所有历史发布的版本、日期、数量和覆盖声明，仅更新已有文件记录并登记三个新Python核心。历史清单之间的依赖按最终内存字节递归计算；发现循环先报错，不反复重写造成永久失配。`--check`严格只读，重复刷新应产生零变化。来源清单位于`dist/data/principles-provenance.json`，不依赖临时`.openai`文件，也不执行打包、Git提交或发布。
 
 物理与约定来源包括[ISODISTORT官方说明](https://iso.byu.edu/isodistorthelp.php)、[ISOTROPY官方文档](https://iso.byu.edu/isotropy_doc.php)、[Moriya原始论文](https://doi.org/10.1103/PhysRev.120.91)、[Tong的Noether课程](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S1.html)、[Lindblad原始论文](https://doi.org/10.1007/BF01608499)及[MIT反幺正讲义](https://web.mit.edu/8.861/www/lect_notes/Lecture15-1.pdf)。案例参数是明确声明的教学模型，不是这些材料的拟合数据。

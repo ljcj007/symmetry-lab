@@ -75,16 +75,16 @@
       "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
     },
     "dist/al-gamma-source.js": {
-      "bytes": 3070,
-      "sha256": "c5dc0bfc343f90b8f99adb0f8ed23de68b18bcda0d8659ebe13ff30652801340"
+      "bytes": 3064,
+      "sha256": "a9fa2056234f5005678a0420f3a5830b086a5a04890fa694e29ccf06c143a5eb"
     },
     "dist/antiunitary-screw-ui.js": {
       "bytes": 8329,
       "sha256": "3d234314e6134f24d538324936ad55c068e5c6184f70ad1d35531f2db8f8a79c"
     },
     "dist/app.js": {
-      "bytes": 107211,
-      "sha256": "ab29a51f2b2c67f35fcf6271ed40a6dc6f547446de624d94635b33c7a2cc2607"
+      "bytes": 107205,
+      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -235,8 +235,8 @@
       "sha256": "a2d89027d5d7d3931bb8428eb96bd19ca4a3da89ba552dd854b15ebb59975e31"
     },
     "dist/docs/cif-setting-practice.md": {
-      "bytes": 7266,
-      "sha256": "1333dbc730ba66dc6f591d336c84abcb50c5a1ce0ccc81782967ffada1762d4d"
+      "bytes": 7248,
+      "sha256": "830e2a4ce2fca5693679a0ee4a94ccc3009ab058d1671b5194abbea9e1ef8fb3"
     },
     "dist/docs/density-matrix.md": {
       "bytes": 4897,
@@ -255,8 +255,8 @@
       "sha256": "ed1c0f799951f76a401917ebfd3773340d880d4ddba5cd0cb2ac948d7eba560c"
     },
     "dist/docs/phonopy-import.md": {
-      "bytes": 20236,
-      "sha256": "216ab6597f3b62afdb26795790e7cfa6cea590396342c39ef973dc375ec51db5"
+      "bytes": 19700,
+      "sha256": "723d060cc09e74de49c13735761613ecd25f9664f4e96e7fc016d913028ce2c1"
     },
     "dist/docs/structure-bc.md": {
       "bytes": 8595,
@@ -271,8 +271,8 @@
       "sha256": "308675a94ec7a41d8a7ec8ab23bdbc9becba1662b841f0600908e9d437bc703d"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 28272,
-      "sha256": "cf34647b191ba3611d505dd5f9304737d03fea053a44e44c322373c2e9582cbf"
+      "bytes": 29807,
+      "sha256": "2546bb8f8aa7b65928108f1c6188a8bed29e89d2674797c24bf0020f84592c74"
     },
     "dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json": {
       "bytes": 3554,
@@ -285,6 +285,10 @@
     "dist/end-to-end/data/infinite-scf-progress.public.json": {
       "bytes": 4817,
       "sha256": "d6b667ba5864349bd95af18c6660bf18e2a93324b0bae5f4fb0ce7d870474c13"
+    },
+    "dist/end-to-end/data/infinite-scf-result.json": {
+      "bytes": 1104,
+      "sha256": "b5044ca458570063c6bc7755e2b3a043cd2cecb66f8bdf4e4cc739651b0c7f23"
     },
     "dist/end-to-end/data/local-companion-release.json": {
       "bytes": 253,
@@ -302,21 +306,29 @@
       "bytes": 4056,
       "sha256": "66ca08c6cd1f52f2e94761bf8565814c4e80c248a460e699ecd0f12acf5b58ae"
     },
+    "dist/end-to-end/data/one-click-run-result.json": {
+      "bytes": 783,
+      "sha256": "ef91f0b3892373032c7015260d62dc1ffb4ca842031ae8b9e3a5b49769a449d7"
+    },
+    "dist/end-to-end/data/oneclick-release.json": {
+      "bytes": 466,
+      "sha256": "cf517da19af1f436e4e9df7ff709744709c04fe823ff3c7307e18b2a0e813829"
+    },
     "dist/end-to-end/downloads/local-run-guide.md": {
-      "bytes": 3792,
-      "sha256": "599cdc9abab0183c61d23e24080ec6e6138b4201bb87c693e447cf7fc2afa22e"
+      "bytes": 1060,
+      "sha256": "80f10cf5092e9711f1631d565748dc62b6fd4369ce9e203b5f9018af594c92c4"
     },
     "dist/end-to-end/downloads/server-profile-infinite-inputs.example.json": {
       "bytes": 54,
       "sha256": "8fe1890ad11e2be4768c08b02834b390c02933ad1d79630a8e45e1b34fd72dfd"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 21023,
-      "sha256": "5b6eb905b06fb1bead13796233bc507c47618e19ec8a2fefd39aa7eb39c8ba1c"
+      "bytes": 19609,
+      "sha256": "69b7de435391d1e8a436eec00b280d4194a60d579134b80b3dbec0d3ce89114f"
     },
     "dist/end-to-end/infinite-replay.js": {
-      "bytes": 1920,
-      "sha256": "3a257276228a1db3e2d1eb090f33c6227cada0804090e51e25adf5b1058588ff"
+      "bytes": 1967,
+      "sha256": "62e87f8405198108444a3750efe6964c1e271945a77541b1b0e7794d411e20f9"
     },
     "dist/end-to-end/style.css": {
       "bytes": 14747,
@@ -395,8 +407,8 @@
       "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
     },
     "dist/material-research-ui.js": {
-      "bytes": 70987,
-      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab"
+      "bytes": 70234,
+      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
     },
     "dist/navigation-ui.js": {
       "bytes": 39245,
@@ -627,8 +639,8 @@
       "sha256": "833323bfa3e72e96b000853f546179a1e445cb315f0e8264e0c58386c782e1de"
     },
     "dist/research-ui.js": {
-      "bytes": 28525,
-      "sha256": "9bb9a11ab39aaf00ba3c47ba62bb303aa016392c4e6c885948d7c2262042d12b"
+      "bytes": 28477,
+      "sha256": "b47164f03a475bd4ab20fd67422d87f17e2596c1e4ff8d92ad881f16660e6d8f"
     },
     "dist/response-materials-ui.js": {
       "bytes": 13828,
@@ -647,12 +659,12 @@
       "sha256": "7bfa2a4c2d17072712df61f9881846d5abb2562a57f0012091e2b121322e5d7d"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 61222,
-      "sha256": "bbc89eb752ae96bfd286a0c2b4e9fd4457b46111b84eb97ed7a8bce65c3568ac"
+      "bytes": 60094,
+      "sha256": "979edb213bb899155191ba23646e59c6383beb3dfa2219bd09d6b58f15baf041"
     },
     "dist/structure-ui.js": {
-      "bytes": 31072,
-      "sha256": "42e64cb11ca9b92d74443b084d519c139742ea372ad272292c0a1c5734c2fc36"
+      "bytes": 31066,
+      "sha256": "6bede3d34c13b5caf464fe673fae6fd8e28fd229f320de6f8d241f2d65e6043d"
     },
     "dist/style.css": {
       "bytes": 24172,
@@ -711,8 +723,8 @@
       "sha256": "c12067c1c00f32ea9937284546525af6c34df506c5cbceb53f1ef41bcf9e7f83"
     },
     "dist/zno-ir-polarization-ui.js": {
-      "bytes": 18692,
-      "sha256": "66fd40fd3eb399e79309c02767d19b5d69d609b83e3fbed38450aabf723ead0f"
+      "bytes": 18670,
+      "sha256": "7d012923dc162fe2098e8a00636f67d738f54896bb11bd4021c863411622a7c5"
     },
     "locales/en-al-gamma-discovery.json": {
       "bytes": 6295,
@@ -879,8 +891,8 @@
       "sha256": "a98b79907f6a791fd52fb69da15835e26fab83ca69c0b58f91672cb4388990b6"
     },
     "locales/en-quality.json": {
-      "bytes": 131287,
-      "sha256": "c48e982b19525a29896bd5d1fa157d50b599cf1ee4cb8ca1c28f61594bbb2580"
+      "bytes": 151230,
+      "sha256": "b2d5a92d6c64f8a181941c8b4d0eb4f10e3ab8853572bc573581e2ac5a990eb0"
     },
     "locales/en-quartz-conjugacy-ui.json": {
       "bytes": 4699,
@@ -947,8 +959,8 @@
       "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
     },
     "scripts/build-learning-routes-provenance.mjs": {
-      "bytes": 27971,
-      "sha256": "0169aa1407f0fd2439dc414cb2eb8ad1c254f563b85a14806d82ee6e0c28e33c"
+      "bytes": 28165,
+      "sha256": "926735cd4eeff66c9e0bebb7fe61e7a44ce81b54e3510fe302d0ea1dd5c68c5b"
     },
     "scripts/build-lesson-progression-index.mjs": {
       "bytes": 4784,
@@ -999,8 +1011,8 @@
       "sha256": "91223890466091750b6f646c614f868fa692fe287aa775ea2cd93a4a78f956d7"
     },
     "scripts/test-al-gamma-source.mjs": {
-      "bytes": 4372,
-      "sha256": "8c20f4446b0a78a5fcb99539cf8ffd41da9b035a79b7a594a52e45ffc7e23280"
+      "bytes": 4349,
+      "sha256": "2db9a3cbc7bd1ee089a986419eb0a414ea5cb129853a3f230db40b761f5c1e7c"
     },
     "scripts/test-antiunitary-screw-lesson.mjs": {
       "bytes": 8274,
@@ -1163,16 +1175,16 @@
       "sha256": "ba36fc44468492237d5497b5e8237ee9070b25b37750a3ad33fafb858423b7dd"
     },
     "scripts/test-material-research-ui.mjs": {
-      "bytes": 28728,
-      "sha256": "5d298e79ada34b1cae1334700cec74fdda2bfaf1b5977c297db5867274ab51c2"
+      "bytes": 28816,
+      "sha256": "4ed2bc60b221c944518850c4fb2267229e990a7dcddf958f5f776eb40d848d91"
     },
     "scripts/test-native-navigation.mjs": {
       "bytes": 3918,
       "sha256": "d1735addfe75bf5e979d53730995cd0137ec82644e454bd56cc3814014d40c82"
     },
     "scripts/test-native-run-entry.mjs": {
-      "bytes": 12895,
-      "sha256": "d43841962b1ba625ea45424327a2cef05cccdeb9e84e7798e7ceedead6fae372"
+      "bytes": 12932,
+      "sha256": "4364cf583b41f32b7a6244f05f8409a2bfb29f0d03946b3463a9353178fa5831"
     },
     "scripts/test-navigation-ui.mjs": {
       "bytes": 2890,
@@ -1189,6 +1201,10 @@
     "scripts/test-observables-ui.mjs": {
       "bytes": 17459,
       "sha256": "0f3fb3dc8b98eb841a5d57c58fe7c7eb1bad83647fbc33b958a8f57e59aebc70"
+    },
+    "scripts/test-oneclick-release.py": {
+      "bytes": 2581,
+      "sha256": "14be3c492e6b00ab2466a7829f4c3f3dcbd2737310854b76888a30a01e9baae7"
     },
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,
@@ -1327,8 +1343,8 @@
       "sha256": "9c21371f832716390ab83a09c9ada25d335d4366458a33f7d12f08fa823d3cdc"
     },
     "scripts/test-structure-dynamics-ui.mjs": {
-      "bytes": 40406,
-      "sha256": "0a956e66f0068796b57250b68cc97fda5b78881e9141e4f296e5682737a86209"
+      "bytes": 40404,
+      "sha256": "ddf77b42738c0ac793c05180fdcd7522fc6ae65f26dde9460e26edc5bd63b883"
     },
     "scripts/test-symmetry-course-ui.mjs": {
       "bytes": 36421,
@@ -1351,8 +1367,8 @@
       "sha256": "b2e7e4f3afcb96d31837e9b4799f30e4109843a53aa21ba1d79943b343951582"
     },
     "scripts/test-zno-ir-polarization-ui.mjs": {
-      "bytes": 10760,
-      "sha256": "70d1a7f9803ad2e825596f56dcb258e7cc39b4c483280c67596c49547fc932e8"
+      "bytes": 10849,
+      "sha256": "cf7aa43aae7193146afb2552b248e03bd51d981af6e183c16081d089c29bd852"
     }
   },
   "reviewHistory": [

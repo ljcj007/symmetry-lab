@@ -18,7 +18,7 @@ G(V,T;p) = E_static(V) + F_vib(V,T) + pV
 
 静态能量来自 `e-v.dat`。从 `thermal_properties.yaml-00.xz` 到 `thermal_properties.yaml-10.xz` 的 11 个压缩文件依次携带各体积的热性质。每个文件的体积和原子数必须与对应行一致。各文件含 0 至 2500 K 的同一温度网格，每隔 10 K 一点。
 
-[本地来源清单](../data/examples/phonopy-cu-qha/source.json)列出每个原文件的字节、哈希、体积和来源路径。也可下载[静态能量原表](../data/examples/phonopy-cu-qha/e-v.dat)、[计算器可读的完整输入](../data/examples/phonopy-cu-qha/payload.json)和[原许可证](../data/examples/phonopy-cu-qha/LICENSE.txt)。
+[本地来源清单](../data/examples/phonopy-cu-qha/source.json)列出每个原文件的体积和来源路径。也可下载[静态能量原表](../data/examples/phonopy-cu-qha/e-v.dat)、[计算器可读的完整输入](../data/examples/phonopy-cu-qha/payload.json)和[原许可证](../data/examples/phonopy-cu-qha/LICENSE.txt)。
 
 站内方法在采样最低点附近拟合低阶多项式，并检查局部曲率与采样区间。Phonopy 的标准命令还提供不同的状态方程拟合。比较两种方法时，先对照同一体积和温度的原始自由能，再解释拟合结果的差别。
 

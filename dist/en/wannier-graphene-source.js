@@ -114,7 +114,7 @@ async function verifyText(value, file, crypto, signal) {
   const digest = await crypto.subtle.digest('SHA-256', bytes);
   assertActive(signal);
   const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  if (hex !== file.sha256) throw sourceError("The graphene file's SHA-256 differs from the pinned revision.", file);
+  if (hex !== file.sha256) throw sourceError("The graphene example could not be read. Load it again.", file);
   try {
     return new TextDecoder('utf-8', {fatal: true}).decode(bytes);
   } catch {
@@ -123,7 +123,7 @@ async function verifyText(value, file, crypto, signal) {
 }
 
 function checkDigestAvailable(crypto) {
-  if (typeof crypto?.subtle?.digest !== 'function') throw new Error("This browser cannot verify the original files' SHA-256 digests.");
+  if (typeof crypto?.subtle?.digest !== 'function') throw new Error("Use HTTPS or a local address to load the graphene example.");
 }
 
 /** Verify both exact file bodies before extracting the existing HR input. */

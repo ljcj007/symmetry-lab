@@ -82,7 +82,7 @@ Each project stage checks required parameters and includes actual calculations. 
 
 ## Build, validation, and sources
 
-`scripts/build-bridges-catalog.py` merges four original content files, preserving the directory. `scripts/build-bridges-fixtures.py` and `scripts/build-bridges-project-fixtures.py` generate real fixtures through the public browser API. Hashes use UTF-8/LF for source and original bytes for binary gzip, supporting Windows and CI.
+`scripts/build-bridges-catalog.py` merges four original content files while preserving the existing catalogues. `scripts/build-bridges-fixtures.py` and `scripts/build-bridges-project-fixtures.py` generate actual result fixtures through the public browser API. Sources use UTF-8/LF; binary gzip files retain their original bytes for Windows and CI checkouts.
 
 `npm run test:bridges` checks new cores, presets, routes, exercises, projects, comparisons and dictionary entries. Existing full regressions continue with `npm test` and `npm run test:python`. Formula-directory regressions preserve original text and verify unified mathematical rendering.
 
@@ -93,6 +93,6 @@ python scripts/refresh-bridges-provenance.py
 python scripts/refresh-bridges-provenance.py --check
 ```
 
-The script preserves old-manifest version, date, counts, sources, scope, refreshing existing hashes and registering four new cores before generating [this manifest](../data/bridges-provenance.json). `--check` is read-only, without catalog rebuild, packaging, commit, or publication. The new manifest covers shared UI, tests, fixtures, and refreshed historical manifests too.
+The script preserves the version, date, counts, sources and scope of the historical manifests. It refreshes existing file/module records, registers four new cores and generates the [current source manifest](../data/bridges-provenance.json). `--check` is read-only: it does not rebuild catalogues, package, commit or publish. The new manifest covers the shared interface, tests, fixtures and refreshed historical manifests.
 
 Methods follow the primary papers and official documentation listed in each lesson, including Hubbard/dimer studies, TRIQS/Quanty, Holstein, EPW, QuTiP, Vidal–Werner and Qsymm. These establish methods and background; the courses, synthetic presets, browser calculations and exercises are independent teaching implementations, not complete ports of the reference software or material fits.

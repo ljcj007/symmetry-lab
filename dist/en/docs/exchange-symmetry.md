@@ -53,7 +53,7 @@ Only an abstract bond is calculated; ligand paths are not automatically found fr
 
 `scripts/test-python-exchange-symmetry.py` checks closure for all 48 generator-toggle combinations and independent invariance of classical energies, D direction under endpoint exchange, matrix decomposition, the global classical lower bound, analytical Heisenberg/DMI quantum spectra, averaging over degenerate ground states and complete Hamiltonians after explicit quantum rotation/exchange unitaries.
 
-`python scripts/build-principles-project-fixtures.py` reruns nine Python stages from actual presets. `node scripts/test-principles-projects.mjs` checks source hashes, preset matching, ℏ conversion, complete density-matrix trajectories, actual project-interface collection, explanation restoration, export, independent-copy import, and retention of the previous 14 projects.
+`python scripts/build-principles-project-fixtures.py` reruns nine Python stages from the actual presets. `node scripts/test-principles-projects.mjs` checks source records, preset matching, ℏ conversions, complete density-matrix trajectories, project registration, interpretation restoration, export, independent-copy import and retention of the existing 14 projects through the actual project interface.
 
 ## Sources
 

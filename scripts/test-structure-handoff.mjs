@@ -32,13 +32,14 @@ const invalid=mutate=>{const value=copy(first);mutate(value);assert.throws(()=>v
 for(const mutate of [v=>v.raw='file text',v=>v.source.text='file text',v=>v.association.tool='analyze',v=>v.source.sha256='xx',v=>v.source.filename='../secret',v=>v.version=2,v=>v.settings.symprec=0,v=>v.coordinates.bcK[0]+=1,v=>v.coordinates.M[0][0]=Infinity,v=>v.verification.converted=false,v=>v.doubleValued='false',v=>v.source.byteCount=0,v=>v.settings.angleTolerance=90,v=>v.structure.groupNumber=231,v=>v.association.q[0]+=1])invalid(mutate);
 const pending=structureHandoffStatus(first);assert.equal(pending.numerical,'pending');
 const sample=fixtures.cases['silicon-shipped'];
-await assert.rejects(()=>createStructureHandoff({result:sample.conversion,input:sample.request,crypto:{}}),/SHA-256/);
+await assert.rejects(()=>createStructureHandoff({result:sample.conversion,input:sample.request,crypto:{}}),/无法读取完整结构记录/);
 await assert.rejects(()=>createStructureHandoff({result:sample.conversion,input:{...sample.request,k:[0,0,0]}}),/不一致/);
 let finish;const delayed={subtle:{digest:()=>new Promise(resolve=>{finish=resolve;})}};let alive=true;
 const hashing=createStructureHandoff({result:sample.conversion,input:sample.request,crypto:delayed,isCurrent:()=>alive});alive=false;finish(new Uint8Array(32).buffer);await assert.rejects(()=>hashing,/已改变/);
 const badBytes=new TextEncoder().encode('a different input');await assert.rejects(()=>createStructureHandoff({result:sample.conversion,input:sample.request,source:{kind:'user-file',filename:'x.POSCAR',bytes:badBytes}}),/不一致/);
 const root=new Container(),downloads=[];root.innerHTML=structureHandoffHTML(first);const cleanup=bindStructureHandoff({root,value:first,download:(...args)=>downloads.push(args)});const button=root.querySelector('[data-structure-handoff-download]');button.onclick();assert.equal(downloads.length,1);assert.deepEqual(JSON.parse(downloads[0][0]).structureHandoff,first);cleanup();assert.equal(button.onclick,null);
-assert.match(root.innerHTML,/没有标准名字并不使/);assert.match(root.innerHTML,/原文件字节|解析文本 UTF-8/);
+assert.match(root.innerHTML,/没有标准名字并不使/);assert.match(root.innerHTML,/查看结构与表示结果/);
+assert.doesNotMatch(root.innerHTML,/SHA-?256|sourceSHA256|[0-9a-f]{64}/i);
 console.log('Structure source: 7 captured production conversions × 2 spin choices; exact hashes/M/q/unfolded k, request/result association, label scope, strict mutation rejection and stale digest/download guards passed.');
 
 const literal=copy(first);literal.source.filename='NaCl_example.POSCAR';const literalRoot=new Container();literalRoot.innerHTML=structureHandoffHTML(literal);assert.notEqual(literalRoot.querySelector('.sth-state').getAttribute('data-math-ignore'),null);assert.ok(literalRoot.querySelector('.sth-state').textContent.includes('NaCl_example.POSCAR'));assert.ok(literalRoot.querySelectorAll('td').every(cell=>cell.getAttribute('data-math-ignore')!==null),'Source fields are literal metadata, not mathematical expressions');

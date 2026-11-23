@@ -30,7 +30,7 @@ Typesetting does not execute expressions or change Python/JavaScript calculation
 
 ## Local resources and licenses
 
-The site hosts **KaTeX 0.19.1** ESM, CSS and 20 WOFF2 fonts locally, without a third-party CDN. Upstream uses the MIT license, preserved at [`vendor/katex/LICENSE`](../../vendor/katex/LICENSE); version, download sources and asset hashes appear in [`vendor/katex/provenance.json`](../../vendor/katex/provenance.json). Original site code remains under the repository’s GPL-3.0-only license.
+The site hosts **KaTeX 0.19.1** ESM, CSS and 20 WOFF2 font files. Formula rendering does not depend on a third-party CDN. KaTeX uses the MIT license; its complete text is retained at [`vendor/katex/LICENSE`](../../vendor/katex/LICENSE), with versions and download sources at [`vendor/katex/provenance.json`](../../vendor/katex/provenance.json). Original site code remains under GPL-3.0-only.
 
 Official KaTeX sources: [repository](https://github.com/KaTeX/KaTeX), [supported functions and notation](https://katex.org/docs/supported), [options](https://katex.org/docs/options). Trusted HTML commands are disabled; user-provided content is still handled as text.
 
@@ -40,7 +40,7 @@ The static audit traversed all lesson JSON and frontend display entry points, fi
 
 Checks cover mixed Unicode/ASCII scripts, parenthesized negative exponents, scripts on the same base, daggers, matrices, fractions, Chinese annotations, multiline expressions, safe escaping, dynamic updates, and preservation of SVG source labels. All 527 formula samples, asynchronous insertions, matrices, font loading, results, exercises, and chart labels were browser-checked without parsing errors or horizontal overflow. Full-catalogue regression additionally verifies 1283 prose entries and 3709 mathematical fragments, with lossless reconstruction of original text.
 
-Manifests record UTF-8/LF text hashes and unconverted binary hashes. Historical versions, counts, and sources remain; only file/Python-module hashes refresh. After all source changes, run:
+Site-wide source manifests retain their versions, counts, sources and file records. After all source edits, run:
 
 ```sh
 python scripts/refresh-formula-provenance.py

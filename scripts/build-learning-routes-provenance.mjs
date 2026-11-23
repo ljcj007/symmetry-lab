@@ -60,6 +60,9 @@ files.push('dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json',
  'dist/end-to-end/infinite-replay.js','dist/end-to-end/verify-infinite.js',
  'dist/end-to-end/downloads/server-profile-infinite-inputs.example.json',
  'scripts/test-infinite-scalar-controls.mjs','scripts/test-published-infinite.mjs');
+files.push('dist/end-to-end/data/oneclick-release.json',
+ 'dist/end-to-end/data/infinite-scf-result.json','dist/end-to-end/data/one-click-run-result.json',
+ 'scripts/test-oneclick-release.py');
 files.push('scripts/test-workbench-group-numbers.mjs');
 files.push('dist/seitz-comparison-ui.js','locales/en-seitz-comparison.json','locales/en-fourfold-search.json',
  'scripts/build-search-index.mjs','scripts/test-python-teaching-labs.py');

@@ -53,7 +53,7 @@
 
 `scripts/test-python-exchange-symmetry.py` 检查全部48组生成元开关的闭包及独立经典能量不变性、端点交换的 D 方向、矩阵分解、经典全局下界、Heisenberg 与 DMI 解析量子能谱、简并基态平均，以及显式量子旋转/交换幺正变换后的完整 Hamiltonian。
 
-`python scripts/build-principles-project-fixtures.py` 从实际预设重新运行九个 Python 阶段。`node scripts/test-principles-projects.mjs` 核验来源哈希、预设匹配、ℏ换算、完整密度矩阵轨迹，以及实际项目界面的收录、解释恢复、导出、独立副本导入和旧14个项目的保留。
+`python scripts/build-principles-project-fixtures.py` 从实际预设重新运行九个 Python 阶段。`node scripts/test-principles-projects.mjs` 核验来源记录、预设匹配、ℏ换算、完整密度矩阵轨迹，以及实际项目界面的收录、解释恢复、导出、独立副本导入和旧14个项目的保留。
 
 ## 来源
 

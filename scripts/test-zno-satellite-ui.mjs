@@ -135,7 +135,8 @@ for(const key of ['parent','full','half']){
 }
 assert.equal(requests.length,fetches,'All choices share the same verified bytes in this view');
 assert.equal(presets.length,3);
-assert.match($('status').textContent,/SHA-256/);
+assert.match($('status').textContent,/ZnO 示例数据已载入|ZnO example data are loaded/);
+assert.doesNotMatch($('status').textContent,/SHA-?256|[0-9a-f]{64}/i);
 cleanup();
 cleanup=mount();
 assert.equal(requests.length,fetches);

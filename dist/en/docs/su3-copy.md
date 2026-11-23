@@ -56,7 +56,7 @@ Transform the target generators consistently to $D_a'=Q^\dagger D_aQ$ and all ei
 
 Results retain the canonical `canonical.request`, complete `canonical.reply` and digest separately from derived teaching matrices, metadata pairings and checks. Export both layers. The new copy basis must neither overwrite canonical CG coefficients nor impersonate the original $8_s/8_a$ exchange-eigenstate convention. Exact expressions, LaTeX and numerical previews come from one SymPy object; numbers serve display and plotting only.
 
-For source-digest verification, exports also retain `canonical.serialization` (`python-json-utf8-sorted-v1`) and the complete original JSON text in `canonical.serialized`. The `canonical.sha256` digest uses the UTF-8 bytes of that exact text. Verify the retained text directly rather than substituting browser-reformatted JSON. Writing `0.0` as `0` or reordering keys changes the text without changing the scientific numerical values; parsed content and original text bytes can be checked separately.
+Exports retain the original CG response, complete request and exact basis-change result for further independent calculation or research records.
 
 The workshop fixes $8\otimes8$ and reuses the existing exact CG core. It adds no general SU(N) solver and infers no spectrum, decay rate or transition intensity from CG coefficients. The factors are labeled; physical identical-particle statistics additionally require all spin, spatial and other degrees of freedom. Here $I$ and GT weights are representation labels first.
 

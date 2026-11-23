@@ -47,7 +47,7 @@ for (const name of ['source.json', 'payload.json']) {
   corrupt = name;
   await click(root, 'cq-load');
   assert.match(root.querySelector('[role="alert"]').textContent,
-    english ? /differs from the pinned version/ : /与固定版本不同/);
+    english ? /could not be read/ : /暂时无法读取/);
   assert.equal(at(root, 'cq-preview'), null);
   assert.equal(at(root, 'cq-apply'), null);
 }
@@ -58,7 +58,8 @@ assert.equal(submitted.length, 0, 'Preview does not apply or calculate');
 assert.ok(at(root, 'cq-apply'));
 assert.ok(at(root, 'cq-preview'));
 assert.match(root.querySelector('[role="status"]').textContent,
-  english ? /all 11 raw YAML texts/ : /11 段原始 YAML 文本/);
+  english ? /11 paired sets/ : /11 组配对/);
+assert.doesNotMatch(root.querySelector('[role="status"]').textContent,/SHA-?256|[0-9a-f]{64}/i);
 assert.equal(root.querySelector('tbody').querySelectorAll('tr').length, 11);
 assert.match(root.innerHTML, /2500 K/);
 assert.match(root.innerHTML, /300 K/);

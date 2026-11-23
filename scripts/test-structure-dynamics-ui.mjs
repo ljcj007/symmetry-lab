@@ -148,7 +148,7 @@ assert.match(units,/用户明确确认/);assert.match(units,/文件长度字段/
 const referenceHTML=phonopySourceHTML({sourceIdentity:{sha256:officialSource.sha256,byteCount:officialSource.byteCount,reference:{commit:officialSource.commit,path:officialSource.path,url:officialSource.url}}});
 assert.match(referenceHTML,/不是实验数据/);assert.match(referenceHTML,/未声明频率单位/);
 assert.match(referenceHTML,/相对复相位/);assert.doesNotMatch(referenceHTML,/虚部均为零/);
-assert.match(referenceHTML,new RegExp(officialSource.sha256));assert.match(referenceHTML,/BSD 三条款/);
+assert.doesNotMatch(referenceHTML,/SHA-?256|[0-9a-f]{64}/i);assert.match(referenceHTML,/BSD 三条款/);
 assert.equal(phonopySourceHTML({sourceIdentity:{sha256:'a different input'}}),'');
 globalThis.fetch=async()=>({ok:true,text:()=>new Promise(resolve=>resolveDemo=resolve)});
 const slowOfficial=await mount({calculationOnly:true,experiment:'phonopy'});

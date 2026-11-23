@@ -60,7 +60,7 @@ async function fetchData(signal) {
   const digest = new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes));
   signal.throwIfAborted();
   const hex = Array.from(digest, value => value.toString(16).padStart(2, '0')).join('');
-  if (hex !== dataset.sha256) throw new Error("The ZnO data SHA-256 differs from the pinned version.");
+  if (hex !== dataset.sha256) throw new Error("The ZnO example data could not be read. Load them again.");
   return validateData(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(bytes)));
 }
 
@@ -120,7 +120,7 @@ export function bindZnOSatellite({root,isCurrent=()=>true,state={},onLoad}) {
     cancel.hidden = !pending;
   }
   function loadedMessage() {
-    return verifiedByState.has(state) ? "The ZnO data package matches its pinned SHA-256." : '';
+    return verifiedByState.has(state) ? "The ZnO example data are loaded." : '';
   }
   async function load(key) {
     if (!current() || pending || typeof onLoad !== 'function') return;

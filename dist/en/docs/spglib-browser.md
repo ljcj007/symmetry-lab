@@ -18,7 +18,6 @@ Lattices use Python API **row vectors** for input/output; C API columns are conv
 - [Official spglib source](https://github.com/spglib/spglib) and [2.8.0 PyPI release](https://pypi.org/project/spglib/2.8.0/).
 - [Official C API](https://spglib.readthedocs.io/en/stable/api.html) and [standardization conventions](https://spglib.readthedocs.io/en/stable/definition.html).
 - Compiler: official Emscripten **5.0.3**, SDK release commit `065bfade0ee2c02138b83cb10049d8be95e146b6`.
-- Source SHA-256: `12a224434b5659793353937625fd7eb91c00c8952c18ca729a7a8117b1e29e8f`.
 - [Complete asset checksums](../../vendor/spglib/provenance.json), [BSD-3-Clause license](../../vendor/spglib/LICENSE.spglib).
 
 Run with official Emscripten5.0.3 configured:

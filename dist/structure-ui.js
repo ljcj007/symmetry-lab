@@ -72,8 +72,8 @@ const siExample=Object.freeze({
 });
 
 const sourceMessages=Object.freeze({
-  si:{insecure:'需要 HTTPS 或本机地址核对 Si 示例的文件指纹。',unavailable:'官方 Si 示例暂未载入，请重试。',mismatch:'官方 Si 示例的字节数或 SHA-256 不匹配。',encoding:'官方 Si 示例无法按原样保留为 UTF-8 文本。',timeout:'官方 Si 示例读取超时，请重试。'},
-  quartz:{insecure:'需要 HTTPS 或本机地址核对石英练习文件的指纹。',unavailable:'石英练习文件暂未载入，请重试。',mismatch:'石英练习文件的字节数或 SHA-256 不匹配。',encoding:'石英练习文件无法按原样保留为 UTF-8 文本。',timeout:'石英练习文件读取超时，请重试。'}
+  si:{insecure:'请通过 HTTPS 或本机地址载入 Si 示例。',unavailable:'官方 Si 示例暂未载入，请重试。',mismatch:'官方 Si 示例暂时无法读取，请重新载入。',encoding:'官方 Si 示例无法按原样保留为 UTF-8 文本。',timeout:'官方 Si 示例读取超时，请重试。'},
+  quartz:{insecure:'需要 HTTPS 或本机地址核对石英练习文件的指纹。',unavailable:'石英练习文件暂未载入，请重试。',mismatch:'石英练习文件暂时无法读取，请重新载入。',encoding:'石英练习文件无法按原样保留为 UTF-8 文本。',timeout:'石英练习文件读取超时，请重试。'}
 });
 
 async function readStructureExample(example,signal,messages){

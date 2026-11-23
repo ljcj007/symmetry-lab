@@ -32,10 +32,10 @@ async function readVerifiedFile(file,fetcher,signal,crypto){
  if(!response.ok)throw Error("The official Al input could not be loaded. Try again.");
  const bytes=await response.arrayBuffer();
  signal?.throwIfAborted();
- if(bytes.byteLength!==file.byteCount)throw Error("The official Al input does not match its pinned byte count or SHA-256 digest.");
+ if(bytes.byteLength!==file.byteCount)throw Error("The official Al example could not be read. Load it again.");
  const hash=asHex(await crypto.digest('SHA-256',bytes));
  signal?.throwIfAborted();
- if(hash!==file.sha256)throw Error("The official Al input does not match its pinned byte count or SHA-256 digest.");
+ if(hash!==file.sha256)throw Error("The official Al example could not be read. Load it again.");
  return new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes);
 }
 

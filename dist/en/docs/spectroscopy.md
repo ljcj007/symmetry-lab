@@ -70,6 +70,6 @@ python scripts/refresh-spectroscopy-provenance.py
 python scripts/refresh-spectroscopy-provenance.py --check
 ```
 
-The command updates only old-manifest file/module hashes and this release's provenance list. It neither rebuilds lessons, changes historical versions/counts, packages, nor commits. Release files/references are in [spectroscopy-provenance.json](../data/spectroscopy-provenance.json), excluding local `.openai` helpers.
+The command updates file records, Python-module records and the current source manifest without rebuilding lessons, changing historical versions or counts, packaging or committing. Release files and references appear in [spectroscopy-provenance.json](../data/spectroscopy-provenance.json); local `.openai` helper files are excluded.
 
 Sources:[EasySpin conventions](https://www.easyspin.org/documentation/hamiltonian.html),[Kwant NS](https://kwant-project.org/doc/1/tutorial/superconductors),[BTK paper](https://doi.org/10.1103/PhysRevB.25.4515),[Quanty XAS](https://www.quanty.org/documentation/tutorials/nio_crystal_field/xas_l23), for methods/models. Code, exercises, parameters, plots are independent, not complete EasySpin/Kwant/Quanty ports.

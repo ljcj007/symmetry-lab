@@ -18,7 +18,7 @@ Now select 2500 K. The lowest sampled point is at the edge of the volume range, 
 
 The static energies come from `e-v.dat`. The eleven compressed files from `thermal_properties.yaml-00.xz` to `thermal_properties.yaml-10.xz` contain the thermal properties in volume order. The volume and atom count of each file must agree with the corresponding row. All files use the same temperature grid from 0 to 2500 K in steps of 10 K.
 
-The [local source manifest](../data/examples/phonopy-cu-qha/source.json) lists the bytes, hash, volume, and upstream path of each original file. Download the [original static-energy table](../data/examples/phonopy-cu-qha/e-v.dat), the [complete calculator input](../data/examples/phonopy-cu-qha/payload.json), and the [upstream license](../data/examples/phonopy-cu-qha/LICENSE.txt).
+The [local source manifest](../data/examples/phonopy-cu-qha/source.json) lists the volume and upstream path for each original file. You can also download the [original static-energy table](../data/examples/phonopy-cu-qha/e-v.dat), the [complete calculator input](../data/examples/phonopy-cu-qha/payload.json) and the [original license](../data/examples/phonopy-cu-qha/LICENSE.txt).
 
 The site fits a low-order polynomial around the lowest sampled point and checks local curvature and the sampled interval. The standard Phonopy command also offers alternative equations of state. When comparing the results, first check the raw free energy at the same volume and temperature, then explain differences between the fits.
 

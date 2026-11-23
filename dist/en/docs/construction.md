@@ -65,6 +65,6 @@ python scripts/refresh-construction-provenance.py
 python scripts/refresh-construction-provenance.py --check
 ```
 
-The refresh script verifies directory counts, question references, dictionary-prefix hashes, real calculation fixtures and cache versions, then updates source-file hashes in dependency order. Historical release, date, counts, coverage and provenance statements are retained; the Python registry adds three physics cores and `symmetry_grading`. Manifest dependency cycles fail with a reported path. `--check` does not write files.
+The refresh script checks catalogue counts, exercise references, dictionary-prefix records, actual calculation fixtures and cache versions, then updates source-file records in dependency order. Historical release, date, counts, coverage and source declarations remain unchanged. Python registers three new physics cores and `symmetry_grading`. A manifest dependency cycle fails with its path. `--check` writes no files.
 
 [Sources and file list for this version](../data/construction-provenance.json) collect original papers, author notes, and official documentation. Numerical presets are labeled teaching models; real-material names provide mechanism context, not fitted parameters.

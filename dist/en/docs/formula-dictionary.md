@@ -6,7 +6,7 @@ This release appends 12 entries and 5 sources after the previous 94 entries and 
 
 Adds character-isotypic and partner matrix-element projections,  selection rule  containment  multiplicity , Schur structure of repeated  complex representation , q stars/conjugate pairs, translation  stabilizer /indices, mode Fourier weights, Parseval, nonsymmorphic squares, momentum eigenvalues, endpoint Kramers pairing, and mass-term direct gaps in declared models. Entries specify variables, units, bases, scope, and experiment links.
 
-Entries in this version require the matching lesson/computation context, avoiding forced interpretations of P, F(q), T² or m from other modules. `node scripts/test-construction-dictionary.mjs` checks the complete hashes of the previous 94 entries and 34 sources, and context matching/typesetting of 12 new definitions. Earlier historical notes and general interfaces follow below.
+Entries in this edition require a matching classroom or calculation context, so that P, F(q), T² or m from other modules are not assigned this model’s meaning. `node scripts/test-construction-dictionary.mjs` checks the complete records of the existing 94 entries and 34 sources, plus context matching and layout for 12 new explanations. Historical notes and general interfaces remain below.
 
 ## Symmetry-principles extension (20261030-symmetry1)
 
@@ -14,7 +14,7 @@ Adds 12 entries/4 sources after 82/30, for 94/34; old content is unchanged. `rel
 
 Adds order parameter η, stabilizer Hη, Reynolds group averaging, passive coordinate changes, single-bond exchange J, DMI vector D, symmetric traceless exchange Γ, axial-spin transformations, conserved quantity Q, commutators, the Lindblad adjoint generator and Kramers conditions. Each entry includes variables, units, conventions, scope, sources and calculation links. Distinguish η from numerical linewidth in many-body spectra, Γ from the Brillouin-zone center, and J from total angular momentum or Hund coupling. Context-free Q, D and similar symbols are not forcibly assigned to these models.
 
-`node scripts/test-principles-dictionary.mjs` verifies full hashes of the original 82 entries/30 sources, contextual disambiguation, safe links, and KaTeX rendering of new formulas. Historical extension notes remain below.
+`node scripts/test-principles-dictionary.mjs` checks complete records for the existing 82 entries and 30 sources, contextual disambiguation, link safety and KaTeX rendering of new formulas. Historical extension notes remain below.
 
 
 Version `20261029-pathways1`. The 66-entry dictionary covers representations,  space group / double group /magnetic groups, SU(2)/SU(3),  phonon , thermodynamics, tensors, transitions, topology,  transport ,  crystal field , spectroscopy, and site induction, dynamic scattering,  domain wall , Hubbard clusters.

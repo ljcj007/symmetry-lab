@@ -143,12 +143,12 @@ export function bindZnOGammaNAC({root,run,isCurrent=()=>true}) {
       <select id="zgn-prediction" required>
         <option value="">Choose a prediction</option><option value="a1">A₁ only</option><option value="e1">E₁ only</option><option value="both">Both A₁ and E₁</option>
       </select>
-      <div class="pd-actions"><button id="zgn-run" class="primary" type="submit">Verify the source files and calculate</button>
+      <div class="pd-actions"><button id="zgn-run" class="primary" type="submit">Run calculation</button>
         <button id="zgn-cancel" class="secondary" type="button" hidden>Cancel this request</button></div>
       <p id="zgn-status" role="status"></p><p id="zgn-error" role="alert" hidden></p>
     </form>
     <div id="zgn-result"></div>
-    <p>The frequencies come from a pinned Phonopy example. When you run the calculation, the page verifies the SHA-256 of three files and uses Python to compare frequencies from the same Γ-point matrix.</p>
+    <p>The frequencies come from a pinned Phonopy example. Running the calculation uses Python to compare frequencies from the same Γ-point matrix.</p>
     <p><a href="data/examples/phonopy-zno-source.json">View sources, generation settings and license →</a></p>
   </section>`;
   const form = get('form'), coordinates = get('coordinates'), prediction = get('prediction');

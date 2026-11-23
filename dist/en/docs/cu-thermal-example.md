@@ -13,7 +13,7 @@ The data are existing fixed-volume calculation output from volume index 05 of th
 - [Full BSD 3-Clause license](../data/examples/phonopy-cu-LICENSE.txt)
 - [Official Phonopy output-file documentation](https://phonopy.github.io/phonopy/output-files.html#thermal-properties-yaml)
 
-The pinned commit is 18cad919af8fe8aad349e04f101887fa19b051a0. The YAML has 41975 bytes and SHA-256 1c9e6edeeded194fc7eebe9c4f4bd6e88728b48ea4f530a033240f8394267bf1; the XZ has 4900 bytes and SHA-256 36c87fc5560cc7815cd9d97105830c00cffa4a3a2fb486235d7976bc493ebb1f. In calculation records, verificationBasis=parsed-utf8-content identifies the actual UTF-8 text passed to the calculator, rather than an arbitrary local file's raw bytes or name.
+The pinned commit is 18cad919af8fe8aad349e04f101887fa19b051a0. Both the YAML text and original XZ archive accompany the example. In calculation records, verificationBasis=parsed-utf8-content refers to the UTF-8 text actually passed to the calculator, rather than arbitrary local file bytes or filenames.
 
 ## Predict, then check the normalization basis
 

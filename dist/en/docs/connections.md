@@ -30,6 +30,6 @@ The three projects connect Pauli statistics to Hubbard physics, XY textures to s
 
 ## Validation
 
-`npm run test:connections` runs independent mathematical and interface tests. Python checks exchange operators, Young idempotents, complete decompositions, winding numbers and invalid loops, reciprocity/spatial covariance/nonnegative dissipation, antiunitary transformations and symbolic-input safety. UI tests use actual Python preset results, retain source and lesson hashes, and check every preset, lesson, formula, grade, record and route. `python scripts/refresh-connections-provenance.py --check` verifies the source manifest updated in dependency order.
+`npm run test:connections` runs independent mathematical and interface tests. Python checks exchange operators, Young idempotents, complete decompositions, winding and invalid loops, reciprocity, spatial covariance, nonnegative dissipation, antiunitary transformations and symbolic-input safety. The UI uses actual Python preset results and retains source and course-version records to check all presets, lessons, formulas, grading, records and routes. `python scripts/refresh-connections-provenance.py --check` checks the source manifests in dependency order.
 
 Teaching text is independently written, with references and further reading in lessons and the dictionary. Calculations use explicitly finite models; they do not claim arbitrary homotopy-group solving, arbitrary S_n Young tableaux, real-material fitting, or automatic grading of arbitrary symbolic proofs.

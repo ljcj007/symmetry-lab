@@ -266,8 +266,8 @@
     },
     ".github/workflows/pages.yml": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2312,
-      "sha256": "72d47039100b8ab8e15a84af92959338d1c0df9212700d0fc3fad32c3444f460"
+      "bytes": 2413,
+      "sha256": "0e9a48a90f94f6e7cf2d0b9923ada28873639e15e8c2bdbc984232f01f3d1655"
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
@@ -286,8 +286,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107211,
-      "sha256": "ab29a51f2b2c67f35fcf6271ed40a6dc6f547446de624d94635b33c7a2cc2607"
+      "bytes": 107205,
+      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -366,8 +366,8 @@
     },
     "dist/docs/phonopy-import.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20236,
-      "sha256": "216ab6597f3b62afdb26795790e7cfa6cea590396342c39ef973dc375ec51db5"
+      "bytes": 19700,
+      "sha256": "723d060cc09e74de49c13735761613ecd25f9664f4e96e7fc016d913028ce2c1"
     },
     "dist/docs/structure-dynamics.md": {
       "normalization": "utf8-lf-v1",
@@ -401,8 +401,8 @@
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 70987,
-      "sha256": "530a779b86864bb40f1fb3b1020ec3f8af4cf8edc348ec540bf76a1dd10e2aab"
+      "bytes": 70234,
+      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -461,8 +461,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 61222,
-      "sha256": "bbc89eb752ae96bfd286a0c2b4e9fd4457b46111b84eb97ed7a8bce65c3568ac"
+      "bytes": 60094,
+      "sha256": "979edb213bb899155191ba23646e59c6383beb3dfa2219bd09d6b58f15baf041"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -486,18 +486,18 @@
     },
     "dist/zno-gamma-nac-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14739,
-      "sha256": "7612ac56cae9f2573e0af154f3d7e01da4e30639150d5b53887304c84b17c1d8"
+      "bytes": 14686,
+      "sha256": "d760b543672301a2ecf8cf17b1866d1627f0e6bd5d5ad2d8fa76bc3c692f4001"
     },
     "dist/zno-ir-polarization-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18692,
-      "sha256": "66fd40fd3eb399e79309c02767d19b5d69d609b83e3fbed38450aabf723ead0f"
+      "bytes": 18670,
+      "sha256": "7d012923dc162fe2098e8a00636f67d738f54896bb11bd4021c863411622a7c5"
     },
     "dist/zno-satellite-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 7971,
-      "sha256": "e111c83b8e5db8eb594a6af2df6aafbbdd9491ac547497c67ea80d3a0b1334cc"
+      "bytes": 7965,
+      "sha256": "e9d25e57fc3a0310154537e6d2f995c4f396b237c5aa88d77d01c407d1a37d48"
     },
     "locales/en-gamma-translations.json": {
       "normalization": "utf8-lf-v1",
@@ -586,8 +586,8 @@
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 27971,
-      "sha256": "0169aa1407f0fd2439dc414cb2eb8ad1c254f563b85a14806d82ee6e0c28e33c"
+      "bytes": 28165,
+      "sha256": "926735cd4eeff66c9e0bebb7fe61e7a44ce81b54e3510fe302d0ea1dd5c68c5b"
     },
     "scripts/build-zno-ir-polarization.py": {
       "normalization": "utf8-lf-v1",
@@ -696,8 +696,8 @@
     },
     "scripts/test-zno-ir-polarization-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10760,
-      "sha256": "70d1a7f9803ad2e825596f56dcb258e7cc39b4c483280c67596c49547fc932e8"
+      "bytes": 10849,
+      "sha256": "cf7aa43aae7193146afb2552b248e03bd51d981af6e183c16081d089c29bd852"
     },
     "scripts/test-zno-ir-search.mjs": {
       "normalization": "utf8-lf-v1",
@@ -721,8 +721,8 @@
     },
     "scripts/test-zno-satellite-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 6847,
-      "sha256": "beb9bfe7ca206ab41a533533fac27f8feb001b915eeee65ca947ddaf5df356f6"
+      "bytes": 6964,
+      "sha256": "3a846b2594610a5cbe934a67a7ebb0fae047d0b53f6e415c5ee16190e0805a34"
     }
   }
 }

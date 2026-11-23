@@ -108,7 +108,8 @@ assert.equal($('load').disabled,false);
 
 responseMode='verified';
 await $('load').onclick();
-assert.match($('status').textContent,/SHA-256/);
+assert.match($('status').textContent,/ZnO 示例数据已载入/);
+assert.doesNotMatch($('status').textContent,/SHA-?256|[0-9a-f]{64}/i);
 assert.equal($('load').hidden,true);
 assert.equal(document.activeElement,$('polarization'));
 assert.equal($('polarization').getAttribute('aria-describedby'),'zir-polarization-help');

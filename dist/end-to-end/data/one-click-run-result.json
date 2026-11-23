@@ -1,0 +1,28 @@
+{
+  "id": "20261123t024338-faf6a9c9a0",
+  "status": "COMPLETED",
+  "started_at": "2026-11-23T02:43:38.719936+00:00",
+  "finished_at": "2026-11-23T02:52:34.169725+00:00",
+  "elapsed_seconds": 535.449,
+  "full_chain_certified": true,
+  "full_chain_recomputed": false,
+  "stages": [
+    {
+      "id": "native-dft",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 483.949
+    },
+    {
+      "id": "ionic-input",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 6.537
+    },
+    {
+      "id": "infinite-scf",
+      "state": "SUCCEEDED",
+      "elapsed_seconds": 44.215
+    }
+  ],
+  "entry": "Downloaded one-click desktop launcher",
+  "scope": "Source-bound C1/PBE reference equation; fixed48^3 charge observations, canonical72-point quadrature and complete infinite orbitals."
+}

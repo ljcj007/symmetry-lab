@@ -72,8 +72,8 @@ const siExample=Object.freeze({
 });
 
 const sourceMessages=Object.freeze({
-  si:{insecure:"Open the site over HTTPS or at a local address to verify the Si example's file hash.",unavailable:"The official Si example could not load. Please try again.",mismatch:"The official Si example's byte count or SHA-256 does not match.",encoding:"The official Si example could not be preserved byte for byte as UTF-8 text.",timeout:"The official Si example took too long to load. Please try again."},
-  quartz:{insecure:"Use HTTPS or a local address to verify the quartz exercise files.",unavailable:"The quartz exercise file could not be loaded. Try again.",mismatch:"The byte count or SHA-256 of the quartz exercise file does not match.",encoding:"The quartz exercise file could not be preserved as UTF-8 text.",timeout:"Reading the quartz exercise file timed out. Try again."}
+  si:{insecure:"Use HTTPS or a local address to load the Si example.",unavailable:"The official Si example could not load. Please try again.",mismatch:"The official Si example could not be read. Load it again.",encoding:"The official Si example could not be preserved byte for byte as UTF-8 text.",timeout:"The official Si example took too long to load. Please try again."},
+  quartz:{insecure:"Use HTTPS or a local address to verify the quartz exercise files.",unavailable:"The quartz exercise file could not be loaded. Try again.",mismatch:"The quartz exercise file could not be read. Load it again.",encoding:"The quartz exercise file could not be preserved as UTF-8 text.",timeout:"Reading the quartz exercise file timed out. Try again."}
 });
 
 async function readStructureExample(example,signal,messages){

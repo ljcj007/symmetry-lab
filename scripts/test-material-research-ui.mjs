@@ -208,7 +208,8 @@ async function runUITests(){
  corruptAlFile=null;
  assert.equal(al.$('#mr-structure-text').value,'edited companion','A failed verification leaves the editable draft intact');
  assert.equal(al.$('#mr-qi').value,'83');
- assert.match(al.$('#mr-result').innerHTML,/SHA-256/);
+ assert.match(al.$('#mr-result').innerHTML,/暂时无法读取/);
+ assert.doesNotMatch(al.$('#mr-result').innerHTML,/SHA-?256|[0-9a-f]{64}/i);
  await al.$('#mr-retry-input').onclick();
  assert.equal(al.$('#mr-qi').value,'62','The manual retry restores the selected case');
 

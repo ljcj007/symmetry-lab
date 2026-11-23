@@ -32,10 +32,10 @@ async function readVerifiedFile(file,fetcher,signal,crypto){
  if(!response.ok)throw Error('官方 Al 输入文件暂未载入，请重试。');
  const bytes=await response.arrayBuffer();
  signal?.throwIfAborted();
- if(bytes.byteLength!==file.byteCount)throw Error('官方 Al 输入文件的字节数或 SHA-256 不匹配。');
+ if(bytes.byteLength!==file.byteCount)throw Error('官方 Al 示例暂时无法读取，请重新载入。');
  const hash=asHex(await crypto.digest('SHA-256',bytes));
  signal?.throwIfAborted();
- if(hash!==file.sha256)throw Error('官方 Al 输入文件的字节数或 SHA-256 不匹配。');
+ if(hash!==file.sha256)throw Error('官方 Al 示例暂时无法读取，请重新载入。');
  return new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes);
 }
 

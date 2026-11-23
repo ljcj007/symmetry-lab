@@ -11,7 +11,7 @@ const str=(x,max=240)=>{if(typeof x!=='string'||x.length>max||/[\u0000-\u001f\u0
 const vec=x=>{if(!Array.isArray(x)||x.length!==3)error('结构来源摘要的坐标必须有三个分量。');return x.map(v=>finite(v,-1e9,1e9));};
 const mat=x=>{if(!Array.isArray(x)||x.length!==3)error('结构来源摘要的变换矩阵必须为三乘三。');return x.map(vec);};
 const determinant=m=>m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1])-m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0])+m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
-const checksum=x=>{if(typeof x!=='string'||!/^[0-9a-f]{64}$/.test(x))error('结构来源摘要缺少有效的 SHA-256。');return x;};
+const checksum=x=>{if(typeof x!=='string'||!/^[0-9a-f]{64}$/.test(x))error('结构来源记录不完整，请重新载入结构。');return x;};
 const bool=x=>{if(typeof x!=='boolean')error('结构来源摘要的状态必须是明确的布尔值。');return x;};
 const associationOf=v=>({tool:'structure_bc',sourceSHA256:v.source.sha256,groupNumber:v.structure.groupNumber,hallNumber:v.structure.hallNumber,symprec:v.settings.symprec,angleTolerance:v.settings.angleTolerance,inputK:[...v.coordinates.inputK],bcK:[...v.coordinates.bcK],M:v.coordinates.M.map(row=>[...row]),q:[...v.coordinates.q]});
 
@@ -23,7 +23,7 @@ export function validateStructureHandoff(value){
  keys(value.source,['kind','filename','format','sha256','byteCount','hashBasis','textSHA256','textByteCount']);
  const source={kind:str(value.source.kind,40),filename:str(value.source.filename),format:str(value.source.format,12),sha256:checksum(value.source.sha256),byteCount:integer(value.source.byteCount,1,16_000_000),hashBasis:str(value.source.hashBasis,20),textSHA256:checksum(value.source.textSHA256),textByteCount:integer(value.source.textByteCount,1,16_000_000)};
  if(!['teaching-example','user-file','user-text'].includes(source.kind)||!['poscar','cif','cell'].includes(source.format)||/[\\/]/.test(source.filename)||!['file-bytes','utf8-text'].includes(source.hashBasis))error('结构来源类型、文件名或格式不受支持。');
- if(source.hashBasis==='file-bytes'&&source.kind!=='user-file'||source.hashBasis==='utf8-text'&&(source.sha256!==source.textSHA256||source.byteCount!==source.textByteCount))error('结构摘要的文件或文本指纹约定不一致。');
+ if(source.hashBasis==='file-bytes'&&source.kind!=='user-file'||source.hashBasis==='utf8-text'&&(source.sha256!==source.textSHA256||source.byteCount!==source.textByteCount))error('结构记录与原始输入不一致，请重新载入结构。');
  keys(value.settings,['symprec','angleTolerance']);
  const settings={symprec:finite(value.settings.symprec,1e-10,1),angleTolerance:finite(value.settings.angleTolerance,-1,90)};
  if(settings.angleTolerance!==-1&&!(settings.angleTolerance>0&&settings.angleTolerance<90))error('角度容差应为 -1 或介于 0 与 90 度之间。');
@@ -51,7 +51,7 @@ export function validateStructureHandoff(value){
 export async function createStructureHandoff({result,input,source={kind:'user-text',filename:''},doubleValued=false,crypto=globalThis.crypto,isCurrent=()=>true}={}){
  if(!obj(input)||typeof input.text!=='string'||!input.text.length||input.text.length>4_000_000)error('需要非空的原始结构文本，才能建立可核对的文件来源。');
  if(!obj(result)||result.tool!=='structure_bc'||result.verified!==true||result.complete!==true)error('结构转换尚未通过完整检查，不能建立已验证的来源交接。');
- if(!crypto?.subtle||typeof crypto.subtle.digest!=='function'||typeof TextEncoder!=='function')error('当前浏览环境无法计算 SHA-256；可保留几何导出，来源交接需在支持安全摘要的环境中重试。');
+ if(!crypto?.subtle||typeof crypto.subtle.digest!=='function'||typeof TextEncoder!=='function')error('当前浏览环境无法读取完整结构记录，请通过 HTTPS 或本机地址重试。');
  if(!isCurrent())error('结构来源已改变，本次摘要不再使用。');
  const text=input.text,inputK=vec(input.k),textBytes=new TextEncoder().encode(text);let bytes=textBytes,hashBasis='utf8-text';
  if(source.bytes!==undefined&&source.bytes!==null){

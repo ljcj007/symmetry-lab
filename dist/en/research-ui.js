@@ -23,7 +23,7 @@ export function getResearchResult(view){return states[view]?.result;}
 
 function grapheneStatus(evidence){
  return evidence
-  ?"Both originals match their pinned SHA-256 hashes. The original lattice and band path are loaded. Run the Python calculation when ready."
+  ?"Loaded the original lattice and band path. Run the Python calculation."
   :"Loading replaces the current JSON. Save a copy of your draft if you need it.";
 }
 

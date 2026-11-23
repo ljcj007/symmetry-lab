@@ -30,7 +30,7 @@
 
 ## 本地资源与许可证
 
-网站托管 **KaTeX 0.19.1** 的 ESM、CSS 和 20 个 WOFF2 字体文件。公式渲染不依赖第三方 CDN。上游采用 MIT 许可证，许可原文随站点保存于 [`vendor/katex/LICENSE`](../vendor/katex/LICENSE)，版本、下载来源与资源哈希见 [`vendor/katex/provenance.json`](../vendor/katex/provenance.json)。网站原创代码仍按仓库 GPL-3.0-only 许可证提供。
+网站托管 **KaTeX 0.19.1** 的 ESM、CSS 和 20 个 WOFF2 字体文件。公式渲染不依赖第三方 CDN。上游采用 MIT 许可证，许可原文随站点保存于 [`vendor/katex/LICENSE`](../vendor/katex/LICENSE)，版本与下载来源见 [`vendor/katex/provenance.json`](../vendor/katex/provenance.json)。网站原创代码仍按仓库 GPL-3.0-only 许可证提供。
 
 KaTeX 官方来源：[项目仓库](https://github.com/KaTeX/KaTeX)、[支持的函数与记号](https://katex.org/docs/supported)、[配置选项](https://katex.org/docs/options)。渲染器不启用受信任 HTML 命令；展示用户提供内容时仍按文本处理。
 
@@ -40,7 +40,7 @@ KaTeX 官方来源：[项目仓库](https://github.com/KaTeX/KaTeX)、[支持的
 
 检查覆盖 Unicode 与 ASCII 上下标混排、括号负指数、同基底上下标、dagger、矩阵、分式、中文注释、多行表达式、安全转义、动态更新及 SVG 原始标签保留。已在浏览器检查全部527个公式样本、异步插入、矩阵、字体加载、结果显示、练习内容及图表标签；页面无公式解析错误和横向溢出。全目录回归另外验证1283条正文、3709个数学片段，原始文本可无损重组。
 
-全站来源清单以 UTF-8/LF 文本哈希和未转换的二进制哈希记录；历史清单保留各自版本、计数和来源，仅更新文件与 Python 模块哈希。全部源码修改完成后运行：
+全站来源清单保留各自版本、计数、来源及文件记录。全部源码修改完成后运行：
 
 ```sh
 python scripts/refresh-formula-provenance.py

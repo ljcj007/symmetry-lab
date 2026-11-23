@@ -11,7 +11,7 @@ const str=(x,max=240)=>{if(typeof x!=='string'||x.length>max||/[\u0000-\u001f\u0
 const vec=x=>{if(!Array.isArray(x)||x.length!==3)error("Each coordinate in the structure-source summary must have three components.");return x.map(v=>finite(v,-1e9,1e9));};
 const mat=x=>{if(!Array.isArray(x)||x.length!==3)error("The transformation matrix in the structure-source summary must be 3 by 3.");return x.map(vec);};
 const determinant=m=>m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1])-m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0])+m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
-const checksum=x=>{if(typeof x!=='string'||!/^[0-9a-f]{64}$/.test(x))error("The structure-source summary does not contain a valid SHA-256 digest.");return x;};
+const checksum=x=>{if(typeof x!=='string'||!/^[0-9a-f]{64}$/.test(x))error("The structure-source record is incomplete. Load the structure again.");return x;};
 const bool=x=>{if(typeof x!=='boolean')error("Each status in the structure-source summary must be an explicit Boolean value.");return x;};
 const associationOf=v=>({tool:'structure_bc',sourceSHA256:v.source.sha256,groupNumber:v.structure.groupNumber,hallNumber:v.structure.hallNumber,symprec:v.settings.symprec,angleTolerance:v.settings.angleTolerance,inputK:[...v.coordinates.inputK],bcK:[...v.coordinates.bcK],M:v.coordinates.M.map(row=>[...row]),q:[...v.coordinates.q]});
 
@@ -23,7 +23,7 @@ export function validateStructureHandoff(value){
  keys(value.source,['kind','filename','format','sha256','byteCount','hashBasis','textSHA256','textByteCount']);
  const source={kind:str(value.source.kind,40),filename:str(value.source.filename),format:str(value.source.format,12),sha256:checksum(value.source.sha256),byteCount:integer(value.source.byteCount,1,16_000_000),hashBasis:str(value.source.hashBasis,20),textSHA256:checksum(value.source.textSHA256),textByteCount:integer(value.source.textByteCount,1,16_000_000)};
  if(!['teaching-example','user-file','user-text'].includes(source.kind)||!['poscar','cif','cell'].includes(source.format)||/[\\/]/.test(source.filename)||!['file-bytes','utf8-text'].includes(source.hashBasis))error("The structure-source type, file name, or format is not supported.");
- if(source.hashBasis==='file-bytes'&&source.kind!=='user-file'||source.hashBasis==='utf8-text'&&(source.sha256!==source.textSHA256||source.byteCount!==source.textByteCount))error("The file and text fingerprint conventions in the structure summary are inconsistent.");
+ if(source.hashBasis==='file-bytes'&&source.kind!=='user-file'||source.hashBasis==='utf8-text'&&(source.sha256!==source.textSHA256||source.byteCount!==source.textByteCount))error("The structure record does not match the original input. Load the structure again.");
  keys(value.settings,['symprec','angleTolerance']);
  const settings={symprec:finite(value.settings.symprec,1e-10,1),angleTolerance:finite(value.settings.angleTolerance,-1,90)};
  if(settings.angleTolerance!==-1&&!(settings.angleTolerance>0&&settings.angleTolerance<90))error("The angle tolerance must be -1 or strictly between 0 and 90 degrees.");
@@ -51,7 +51,7 @@ export function validateStructureHandoff(value){
 export async function createStructureHandoff({result,input,source={kind:'user-text',filename:''},doubleValued=false,crypto=globalThis.crypto,isCurrent=()=>true}={}){
  if(!obj(input)||typeof input.text!=='string'||!input.text.length||input.text.length>4_000_000)error("Nonempty original structure text is required to establish a traceable source.");
  if(!obj(result)||result.tool!=='structure_bc'||result.verified!==true||result.complete!==true)error("The structure conversion has not passed all checks, so a verified source handoff cannot be established.");
- if(!crypto?.subtle||typeof crypto.subtle.digest!=='function'||typeof TextEncoder!=='function')error("This browser environment cannot compute SHA-256. Geometry exports remain available; retry the source handoff in an environment that supports secure digests.");
+ if(!crypto?.subtle||typeof crypto.subtle.digest!=='function'||typeof TextEncoder!=='function')error("This browser could not read the complete structure record. Retry over HTTPS or at a local address.");
  if(!isCurrent())error("The structure source has changed; this summary is no longer used.");
  const text=input.text,inputK=vec(input.k),textBytes=new TextEncoder().encode(text);let bytes=textBytes,hashBasis='utf8-text';
  if(source.bytes!==undefined&&source.bytes!==null){

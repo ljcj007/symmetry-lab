@@ -107,7 +107,7 @@ const znoFreezingControls=()=>`<aside class="mr-scope" data-mr-zno-freezing>
 </aside>`;
 function alGammaSourceHTML(identity){
  const {band,companion}=identity;
- return `<aside class="mr-scope"><h3>官方 Al 配套文件已核对</h3><p>两份文件均匹配固定版本的 SHA-256。THz 是此算例明确采用的频率单位，原文件中的长度单位为 au。</p><ul>${[band,companion].map(file=>`<li><a href="${esc(file.url)}" target="_blank" rel="noreferrer" data-math-ignore>${esc(file.filename)} ↗</a></li>`).join('')}</ul><p><a href="data/examples/phonopy-al-abacus-source.json" target="_blank">固定版本、单位与许可证 ↗</a></p></aside>`;
+ return `<aside class="mr-scope"><h3>官方 Al 配套文件已核对</h3><p>示例使用配套的原始结构与声子数据。THz 是此算例明确采用的频率单位，原文件中的长度单位为 au。</p><ul>${[band,companion].map(file=>`<li><a href="${esc(file.url)}" target="_blank" rel="noreferrer" data-math-ignore>${esc(file.filename)} ↗</a></li>`).join('')}</ul><p><a href="data/examples/phonopy-al-abacus-source.json" target="_blank">固定版本、单位与许可证 ↗</a></p></aside>`;
 }
 export async function verifyCuThermalExample(content){
  if(typeof content!=='string')return null;const bytes=new TextEncoder().encode(content);
@@ -115,12 +115,12 @@ export async function verifyCuThermalExample(content){
  const digest=await globalThis.crypto.subtle.digest('SHA-256',bytes),hash=Array.from(new Uint8Array(digest),value=>value.toString(16).padStart(2,'0')).join('');
  return hash===CU_THERMAL_EXAMPLE.sha256?{...CU_THERMAL_EXAMPLE,verificationBasis:'parsed-utf8-content'}:null;
 }
-function cuThermalSourceHTML(){return `<aside class="mr-scope"><h3>官方 Cu 热性质计算示例</h3><p>这是 Phonopy 官方 Cu-QHA 测试中的固定体积计算输出，未在本站重算，也不是实验数据。原文件含 4 个原子的输入计算胞和 251 个温度点（0–2500 K）；不能把其摩尔量当作一摩尔原子或一原子原胞。</p><p>F、U 的单位为 kJ/mol 输入计算胞，S、Cv 为 J/(mol 输入计算胞 K)。本站按 U=F+TS/1000 求内能；与原文件 energy 列的差不超过 1.68×10⁻⁷ kJ/mol，来自原文有限小数位。原始列完整保留在下载文件中。</p><p>单份热性质曲线不提供本征矢、不同质量原子的相对运动或静态 E(V)，不能单独得到完整 QHA、热膨胀、Cp 或热导率，也不证明网格收敛。</p><div class="obs-links"><a href="${CU_THERMAL_EXAMPLE.url}" target="_blank" rel="noreferrer">固定版本原压缩文件 ↗</a><a href="data/examples/phonopy-cu-thermal-index05.yaml" download>↓ 原文逐字节解压 YAML</a><a href="data/examples/phonopy-cu-thermal-index05.yaml.xz" download>↓ 原始 XZ 归档</a><a href="data/examples/phonopy-cu-LICENSE.txt" target="_blank">完整 BSD 三条款许可 ↗</a><a href="docs/cu-thermal-example.md" target="_blank">来源、单位与分步核对 ↗</a></div><details><summary>Cu 文件身份与计量基准</summary><p>${esc(CU_THERMAL_EXAMPLE.commit)} · ${esc(CU_THERMAL_EXAMPLE.path)}</p><pre>SHA-256: ${CU_THERMAL_EXAMPLE.sha256}\nUTF-8 bytes: ${CU_THERMAL_EXAMPLE.byteCount}\nXZ SHA-256: ${CU_THERMAL_EXAMPLE.archiveSha256}</pre><a href="data/examples/phonopy-cu-thermal-source.json" target="_blank">完整来源记录 ↗</a></details></aside>`;}
+function cuThermalSourceHTML(){return `<aside class="mr-scope"><h3>官方 Cu 热性质计算示例</h3><p>这是 Phonopy 官方 Cu-QHA 测试中的固定体积计算输出，未在本站重算，也不是实验数据。原文件含 4 个原子的输入计算胞和 251 个温度点（0–2500 K）；不能把其摩尔量当作一摩尔原子或一原子原胞。</p><p>F、U 的单位为 kJ/mol 输入计算胞，S、Cv 为 J/(mol 输入计算胞 K)。本站按 U=F+TS/1000 求内能；与原文件 energy 列的差不超过 1.68×10⁻⁷ kJ/mol，来自原文有限小数位。原始列完整保留在下载文件中。</p><p>单份热性质曲线不提供本征矢、不同质量原子的相对运动或静态 E(V)，不能单独得到完整 QHA、热膨胀、Cp 或热导率，也不证明网格收敛。</p><div class="obs-links"><a href="${CU_THERMAL_EXAMPLE.url}" target="_blank" rel="noreferrer">固定版本原压缩文件 ↗</a><a href="data/examples/phonopy-cu-thermal-index05.yaml" download>↓ 原文逐字节解压 YAML</a><a href="data/examples/phonopy-cu-thermal-index05.yaml.xz" download>↓ 原始 XZ 归档</a><a href="data/examples/phonopy-cu-LICENSE.txt" target="_blank">完整 BSD 三条款许可 ↗</a><a href="docs/cu-thermal-example.md" target="_blank">来源、单位与分步核对 ↗</a></div></aside>`;}
 const modeCharacterRows=classification=>(classification.characters?.length?classification.characters.map((c,i)=>[c.class||c.operation||i+1,c.size??1,num(c.real),num(c.imag)]):(classification.operationCharacters||[]).map((c,i)=>['操作 '+(i+1),1,num(Array.isArray(c)?c[0]:c.re??c.real),num(Array.isArray(c)?c[1]:c.im??c.imag)]));
 function modeSourceIdentityHTML(identity){
  const reference=identity?.reference;if(reference?.id!=='phonopy-zno-derived-qpoints')return '';
  const companion=reference.companion||{};
- return `<aside class="mr-scope"><h3>ZnO 派生计算来源</h3><p>本征矢由 Phonopy 对官方 ZnO 力数据离线后处理生成，本例关闭 NAC；它不是原仓库已有的 qpoints 输出，也不是本站新执行的第一性原理计算。</p><p>${companion.matchesPinnedSource?'伴随原胞与固定版本原文逐字节一致。':'伴随原胞未与固定原文逐字节匹配；请核对所用原胞、原子顺序和质量。'}</p><details><summary>主文件与伴随原胞的身份</summary><pre data-math-ignore>${esc('qpoints SHA-256: '+identity.sha256+'\nqpoints UTF-8 bytes: '+identity.byteCount+'\ncompanion SHA-256: '+(companion.actualSha256||'—')+'\nexpected companion SHA-256: '+(companion.expectedSha256||'—')+'\nPhonopy: '+(reference.generator?.phonopy||'—'))}</pre></details><div class="obs-links"><a href="data/examples/phonopy-zno-source.json" target="_blank">ZnO 输入与生成记录 ↗</a><a href="docs/phonopy-import.md#zno-derived-example" target="_blank">ZnO 数据与练习 ↗</a>${companion.matchesPinnedSource?'<a href="#compute/phonon-modes?preset=zno-ir">比较 ZnO Γ 点的红外偏振 →</a><a href="#compute/distortion-modes">继续：ZnO 固定声子支的正交相位对照 →</a>':''}</div></aside>`;
+ return `<aside class="mr-scope"><h3>ZnO 派生计算来源</h3><p>本征矢由 Phonopy 对官方 ZnO 力数据离线后处理生成，本例关闭 NAC；它不是原仓库已有的 qpoints 输出，也不是本站新执行的第一性原理计算。</p><p>${companion.matchesPinnedSource?'伴随原胞与固定版本原文逐字节一致。':'伴随原胞未与固定原文逐字节匹配；请核对所用原胞、原子顺序和质量。'}</p><div class="obs-links"><a href="data/examples/phonopy-zno-source.json" target="_blank">ZnO 输入与生成记录 ↗</a><a href="docs/phonopy-import.md#zno-derived-example" target="_blank">ZnO 数据与练习 ↗</a>${companion.matchesPinnedSource?'<a href="#compute/phonon-modes?preset=zno-ir">比较 ZnO Γ 点的红外偏振 →</a><a href="#compute/distortion-modes">继续：ZnO 固定声子支的正交相位对照 →</a>':''}</div></aside>`;
 }
 const grapheneProgress={ideal:false,interpretation:false};
 const formula=tex=>`<span class="sl-math">${mathHTML(tex)}</span>`;
@@ -426,7 +426,7 @@ export async function renderMaterialResearchView({container,selection={},run,can
     if(!readIsCurrent(request))return;
     const identity=await verifyZnOPhonopyExample(content,companion);
     if(!readIsCurrent(request))return;
-    if(!identity)throw Error('ZnO 配对文件的 SHA-256 不匹配，请核对来源后重试。');
+    if(!identity)throw Error('ZnO 配对数据暂时无法读取，请重新载入。');
     verifiedZnOFreezing={content,filename:source.file,structure_content:companion};
    }
    forms.modes={...structuredClone(defaults.modes),...verifiedZnOFreezing,preset:'custom',frequency_unit:'THz',

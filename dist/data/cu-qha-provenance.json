@@ -19,8 +19,8 @@
   "files": {
     ".github/workflows/pages.yml": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2312,
-      "sha256": "72d47039100b8ab8e15a84af92959338d1c0df9212700d0fc3fad32c3444f460"
+      "bytes": 2413,
+      "sha256": "0e9a48a90f94f6e7cf2d0b9923ada28873639e15e8c2bdbc984232f01f3d1655"
     },
     "GOAL-ROADMAP.md": {
       "normalization": "utf8-lf-v1",
@@ -29,8 +29,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107211,
-      "sha256": "ab29a51f2b2c67f35fcf6271ed40a6dc6f547446de624d94635b33c7a2cc2607"
+      "bytes": 107205,
+      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -49,8 +49,8 @@
     },
     "dist/cu-qha-source-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10014,
-      "sha256": "1b198c70febe81bb5dd78893e95e37ac0819d089a9293c6c3c712d5f92face5c"
+      "bytes": 9966,
+      "sha256": "281e4f627af6c9d9cecfa0dfe7a36b866e578a331f0e1776dd80e01fd367b57a"
     },
     "dist/cu-qha-source.css": {
       "normalization": "utf8-lf-v1",
@@ -159,13 +159,13 @@
     },
     "dist/docs/cu-qha-example.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 2694,
-      "sha256": "7d8fa9ccec24293c7bcd4e6e01834b26a1f5f15ad33897120d80db1ac9bcf89c"
+      "bytes": 2676,
+      "sha256": "956b8cb50dc093f43870ebbd0d0a8abc52affbab45423b643a8ddfc3a44adc5e"
     },
     "dist/docs/cu-thermal-example.md": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4277,
-      "sha256": "f195ffd3bfc1d829e9108aa930220bd851518ce81d9a34adc47e7ee048efedda"
+      "bytes": 4131,
+      "sha256": "09c64fb653afb85b8f283ac4afc8d0e9878372e0d818a7d9bb15d2cc0107afc9"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
@@ -254,8 +254,8 @@
     },
     "scripts/test-cu-qha-source-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 5289,
-      "sha256": "6dc799ab8ac3dcf7a012c7e610ed7f10239731ce2f4197416a0ef81f2233f9b9"
+      "bytes": 5350,
+      "sha256": "f861a66e8239610d30373be48c9ab0f8ec3ea6709a89c554d72121a29852d3d2"
     },
     "scripts/test-python-coupled-content.py": {
       "normalization": "utf8-lf-v1",
