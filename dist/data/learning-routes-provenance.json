@@ -271,8 +271,8 @@
       "sha256": "308675a94ec7a41d8a7ec8ab23bdbc9becba1662b841f0600908e9d437bc703d"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 29807,
-      "sha256": "2546bb8f8aa7b65928108f1c6188a8bed29e89d2674797c24bf0020f84592c74"
+      "bytes": 31143,
+      "sha256": "327ef29d15ef65bb134e3287fe49b62b036dd977ae6033998754246fb4c20a95"
     },
     "dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json": {
       "bytes": 3554,
@@ -307,24 +307,24 @@
       "sha256": "66ca08c6cd1f52f2e94761bf8565814c4e80c248a460e699ecd0f12acf5b58ae"
     },
     "dist/end-to-end/data/one-click-run-result.json": {
-      "bytes": 783,
-      "sha256": "ef91f0b3892373032c7015260d62dc1ffb4ca842031ae8b9e3a5b49769a449d7"
+      "bytes": 1032,
+      "sha256": "05d76faa1d22b746fe379f9c841dc078ee0e65f980c72d275dda6d9aba9ee623"
     },
     "dist/end-to-end/data/oneclick-release.json": {
-      "bytes": 466,
-      "sha256": "cf517da19af1f436e4e9df7ff709744709c04fe823ff3c7307e18b2a0e813829"
+      "bytes": 933,
+      "sha256": "b2da15762309d4db44bd2267a8e3033a2072bd9491e1669ec88dadd91955b9a3"
     },
     "dist/end-to-end/downloads/local-run-guide.md": {
-      "bytes": 1060,
-      "sha256": "80f10cf5092e9711f1631d565748dc62b6fd4369ce9e203b5f9018af594c92c4"
+      "bytes": 1951,
+      "sha256": "dadafc60f890ee3f3678044e9ce6282f3b1709b5230f6223f6150f289bae355c"
     },
     "dist/end-to-end/downloads/server-profile-infinite-inputs.example.json": {
       "bytes": 54,
       "sha256": "8fe1890ad11e2be4768c08b02834b390c02933ad1d79630a8e45e1b34fd72dfd"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 19609,
-      "sha256": "69b7de435391d1e8a436eec00b280d4194a60d579134b80b3dbec0d3ce89114f"
+      "bytes": 20551,
+      "sha256": "c7ee8ba6d8c903a7d1ffc499538a5a199df861341ae7698d2ed189b516cf9f0d"
     },
     "dist/end-to-end/infinite-replay.js": {
       "bytes": 1967,
@@ -1203,8 +1203,8 @@
       "sha256": "0f3fb3dc8b98eb841a5d57c58fe7c7eb1bad83647fbc33b958a8f57e59aebc70"
     },
     "scripts/test-oneclick-release.py": {
-      "bytes": 2581,
-      "sha256": "14be3c492e6b00ab2466a7829f4c3f3dcbd2737310854b76888a30a01e9baae7"
+      "bytes": 8679,
+      "sha256": "cd4a8af54e73a6b27f678d8fe406621ab879cbf69c59e5c41f2f2301d7462ebe"
     },
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,

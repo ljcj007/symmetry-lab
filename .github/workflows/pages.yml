@@ -49,7 +49,9 @@ jobs:
       - name: Verify native-run scope and extracted companion
         run: node scripts/test-native-run-entry.mjs
       - name: Verify one-click desktop download
-        run: python scripts/test-oneclick-release.py
+        run: |
+          python scripts/test-oneclick-release.py
+          node scripts/test-actual-run-view.mjs
       - name: Verify source provenance
         run: python scripts/refresh-english-provenance.py --check
       - name: Test Python computation cores
