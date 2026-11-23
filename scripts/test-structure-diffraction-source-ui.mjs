@@ -54,7 +54,8 @@ Object.defineProperty(globalThis,'crypto',{configurable:true,value:{subtle:{asyn
 }}}});
 const activeRun=$('structure-run').onclick();
 await flush();
-assert.match($('structure-handoff-card').textContent,english?/fingerprint/i:/指纹/);
+assert.match($('structure-handoff-card').textContent,english?/Preparing the structure record/i:/整理结构记录/);
+assert.doesNotMatch($('structure-handoff-card').textContent,/sha[-_]?256|fingerprint|指纹/i);
 const beforeHash=diffractionButton();
 assert.ok(beforeHash);
 assert.equal(beforeHash.disabled,false);

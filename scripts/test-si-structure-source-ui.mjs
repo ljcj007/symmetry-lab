@@ -5,7 +5,7 @@ import {validateStructureHandoff,structureHandoffForCalculation} from '../dist/s
 
 const english=process.argv.includes('--english');
 const {renderStructureView,getStructureResult}=await import(english?'../dist/en/structure-ui.js':'../dist/structure-ui.js');
-const mismatch=english?/byte count or SHA-256 does not match/:/字节数或 SHA-256 不匹配/;
+const mismatch=english?/could not be read/:/暂时无法读取/;
 const verified=english?/original official Si file is verified/:/已核对官方 Si 原文件/;
 const predict=english?/Make a prediction/:/先预测/;
 const compare=english?/Compare the star-arm counts/:/比较两次计算的星臂数/;

@@ -85,22 +85,22 @@ assert.deepEqual(result.payload, {action: 'hr_import', hr_text: 'a'.repeat(hr.by
 assert.deepEqual(await verifyGrapheneSources({hrBytes: bufferOf(hrBytes), settingsBytes: bufferOf(settingsBytes),
   crypto: fixtureDigest}), result, 'Local ArrayBuffer inputs use exactly the same source verification');
 
-await assert.rejects(verifyGrapheneSources({...inputs, crypto: webcrypto}), /暂时无法读取/);
+await assert.rejects(verifyGrapheneSources({...inputs, crypto: webcrypto}), /暂时无法读取|could not be read/);
 await assert.rejects(verifyGrapheneSources({...inputs, hrBytes: settingsBytes, crypto: fixtureDigest}),
   error => error.sourceFile === hr.fileName);
 await assert.rejects(verifyGrapheneSources({hrBytes, crypto: fixtureDigest}), error => error.sourceFile === settings.fileName);
 const modifiedHR = hrBytes.slice();
 modifiedHR[0] = 99;
 await assert.rejects(verifyGrapheneSources({...inputs, hrBytes: modifiedHR, crypto: fixtureDigest}),
-  error => error.sourceFile === hr.fileName && /暂时无法读取/.test(error.message));
+  error => error.sourceFile === hr.fileName && /暂时无法读取|could not be read/.test(error.message));
 const modifiedConfig = settingsBytes.slice();
 modifiedConfig[modifiedConfig.length - 1] = 46;
 await assert.rejects(verifyGrapheneSources({...inputs, settingsBytes: modifiedConfig, crypto: fixtureDigest}),
-  error => error.sourceFile === settings.fileName && /暂时无法读取/.test(error.message));
+  error => error.sourceFile === settings.fileName && /暂时无法读取|could not be read/.test(error.message));
 const crlf = encoder.encode(new TextDecoder().decode(settingsBytes).replaceAll('\n', '\r\n'));
 await assert.rejects(verifyGrapheneSources({...inputs, settingsBytes: crlf, crypto: fixtureDigest}),
   error => error.sourceFile === settings.fileName && !/SHA-256/.test(error.message));
-await assert.rejects(verifyGrapheneSources({...inputs, crypto: {}}), /HTTPS 或本机地址/);
+await assert.rejects(verifyGrapheneSources({...inputs, crypto: {}}), /HTTPS 或本机地址|HTTPS or a local address/);
 
 const pendingHR = hrBytes.slice();
 let continueDigest;

@@ -21,7 +21,12 @@ class Container {
 }
 const container = new Container();
 const calls = [];
-renderAdvancedView({container,run:async(tool,payload)=>{calls.push({tool,payload});return tool==='carat_integral'?{z_complete:false,z_class_count:null,z_classes:[{index:1,generators:[[[1,0],[0,-1]]],certificate:'exact'}]}:{expression:'2'};},toast:()=>{},download:()=>{}});
+const downloads=[];
+renderAdvancedView({container,run:async(tool,payload)=>{
+ calls.push({tool,payload});
+ const result=tool==='carat_integral'?{z_complete:false,z_class_count:null,z_classes:[{index:1,generators:[[[1,0],[0,-1]]],certificate:'exact'}]}:{expression:'2'};
+ return {...result,sourceIdentity:{sha256:'b'.repeat(64),hashBasis:'file-bytes'},hasHessian:true,fingerprint:[1,0,1]};
+},toast:()=>{},download:(...args)=>downloads.push(args)});
 container.tabs.find(b=>b.dataset.exactTool==='symbolic').onclick();
 container.querySelector('#exact-example').onchange({target:{value:'chain'}});
 let resolveFetch;
@@ -39,6 +44,12 @@ try {
   await container.querySelector('#exact-run').onclick();
   assert.deepEqual(calls,[{tool:'symbolic',payload:{action:'algebra',expression:'1+1'}}]);
   assert.match(container.html,/符号结果/);
+  assert.doesNotMatch(container.html,/sha[-_]?256|[0-9a-f]{64}/i);
+  assert.match(container.html,/hasHessian/);
+  assert.match(container.html,/fingerprint/);
+  container.querySelector('#exact-json').click();
+  assert.equal(JSON.parse(downloads.at(-1)[0]).sourceIdentity.sha256,'b'.repeat(64));
+  assert.deepEqual(JSON.parse(downloads.at(-1)[0]).fingerprint,[1,0,1]);
 
   const failed = container.querySelector('#exact-load').onclick();
   resolveFetch({ok:false});

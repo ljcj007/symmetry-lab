@@ -80,6 +80,9 @@ function mount(view='magnetictb'){
    runs.push({tool,input});
    if(input.path?.length!==4)return {manualInput:true};
    const result=settledBands(input);
+   result.sourceIdentity={sha256:hr.sha256,hashBasis:'file-bytes'};
+   result.hasHessian=true;
+   result.fingerprint=[1,0,1];
    if(wrongK)result.bands.kpoints[1]=[.5,.5,0];
    return result;
   }
@@ -176,7 +179,8 @@ assert.equal(verified.hr_text,new TextDecoder().decode(hrBytes));
 assert.equal(verified.points_per_segment,101);
 assert.deepEqual(verified.path.map(point=>point.label),['M','K','Γ','M']);
 assert.deepEqual(verified.path[1].k,live?[.33333333,.33333333,0]:[.3,.2,0]);
-assert.match($('graphene-source-status').textContent,english?/Both originals match their pinned SHA-256 hashes/:/SHA-256 已核验/);
+assert.match($('graphene-source-status').textContent,english?/Loaded the original lattice and band path/:/已载入原始晶格和能带路径/);
+assert.doesNotMatch($('graphene-source-status').textContent,/SHA-?256|[0-9a-f]{64}/i);
 assert.equal($('graphene-k-diagnostic'),null);
 
 await $('run-research').onclick();
@@ -187,6 +191,10 @@ assert.match(container.querySelector('.band-chart').textContent,english?/Energy 
 assert.equal($('graphene-k-diagnostic').querySelectorAll('sub').length,4);
 assert.match($('graphene-k-diagnostic').querySelector('a').getAttribute('href'),/#classroom\/crystal\?module=bands/);
 assert.equal(getResearchResult('magnetictb').model.orbital_count,2);
+assert.doesNotMatch(container.querySelector('.json-output').innerHTML,/sha[-_]?256|[0-9a-f]{64}/i);
+assert.match(container.querySelector('.json-output').innerHTML,/hasHessian/);
+assert.match(container.querySelector('.json-output').innerHTML,/fingerprint/);
+assert.equal(getResearchResult('magnetictb').sourceIdentity.sha256,hr.sha256);
 assert.equal(container.querySelector('svg').tag,'svg');
 if(english)assert.doesNotMatch(container.innerHTML,/[\u3400-\u9fff]/u);
 

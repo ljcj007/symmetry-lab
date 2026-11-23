@@ -33,7 +33,13 @@ assert.equal(await ui.verifyZnOPhonopyExample(text,companion+' '),null);
 assert.equal(await ui.verifyZnOPhonopyExample(text.replace(/\r\n/g,'\n'),companion),null);
 assert.equal(await ui.verifyZnOPhonopyExample(undefined,companion),null);
 const calls=[];
-const calculate=async(action,input)=>{calls.push({action,input:structuredClone(input)});return structuredClone(fixture.result);};
+const calculate=async(action,input)=>{
+ calls.push({action,input:structuredClone(input)});
+ const response=structuredClone(fixture.result);
+ // A presentation-only regression probe: "hasHessian" is scientific data, not a hash key.
+ response.presentationProbe={hasHessian:true,numericValue:1.23456789,fingerprint:[1,0,1]};
+ return response;
+};
 const mount=async(selection={},run=calculate)=>{
  const container=new Container(),downloads=[],routes=[],cancellations=[];
  await ui.renderStructureDynamicsView({container,selection:{calculationOnly:true,experiment:'phonopy',...selection},run,
@@ -68,12 +74,16 @@ assert.equal(calls.at(-1).input.phase,0);
 assert.deepEqual(calls.at(-1).input.supercell,[4,1,4]);
 assert.match(view.$('#dyn-output').innerHTML,/Phonopy 衍生计算/);
 assert.match(view.$('#dyn-output').innerHTML,/明确关闭 NAC/);
-assert.match(view.$('#dyn-output').innerHTML,new RegExp(source.companion.sha256));
+assert.doesNotMatch(view.$('#dyn-output').innerHTML,/SHA-?256|[0-9a-f]{64}/i);
+assert.match(view.$('#dyn-output').innerHTML,/hasHessian/);
+assert.match(view.$('#dyn-output').innerHTML,/1\.23456789/);
+assert.match(view.$('#dyn-output').innerHTML,/fingerprint/);
 assert.match(view.$('#dyn-output').innerHTML,/逐字节匹配/);
 assert.equal(view.$('#dyn-freeze').attributes.href,'#compute/phonon-modes?material=zno');
 view.$('#dyn-download').onclick();const exported=JSON.parse(view.downloads.at(-1).body);
 assert.equal(exported.input.content,text);assert.equal(exported.input.structure_content,companion);
 assert.equal(exported.result.sourceIdentity.reference.companion.actualSha256,source.companion.sha256);
+assert.deepEqual(exported.result.presentationProbe,{hasHessian:true,numericValue:1.23456789,fingerprint:[1,0,1]});
 assert.equal(exported.result.sourceIdentity.reference.generator.isNAC,false);
 assert.equal(view.$('#dyn-motion').querySelectorAll('circle').length,128);
 view.$('#dyn-frame').oninput({target:{value:'4'}});assert.doesNotMatch(view.$('#dyn-motion').innerHTML,/NaN|Infinity/);
@@ -199,8 +209,9 @@ assert.equal(ui.getStructureDynamicsResult(),null);jobs[1].resolve(fixture.resul
 assert.equal(raced.$('#dyn-run').disabled,false);assert.equal(raced.cancellations.length,1);
 
 const sourceHTML=ui.phonopySourceHTML(fixture.result);
-assert.match(sourceHTML,/不是仓库原有的 qpoints 输出/);assert.match(sourceHTML,new RegExp(source.sha256));
-assert.match(sourceHTML,/原始力数据 SHA-256/);
+assert.match(sourceHTML,/不是仓库原有的 qpoints 输出/);
+assert.doesNotMatch(sourceHTML,/SHA-?256|[0-9a-f]{64}/i);
+assert.match(sourceHTML,/phonopy-zno-LICENSE/);
 const unmatched=structuredClone(fixture.result);unmatched.sourceIdentity.reference.companion.matchesPinnedSource=false;
 assert.match(ui.phonopySourceHTML(unmatched),/仅凭 qpoints 摘要不能认证原子顺序/);
 globalThis.fetch=normalFetch;

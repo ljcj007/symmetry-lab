@@ -403,12 +403,12 @@
       "sha256": "b1661a72ffce02602b7ce7982c4d4d8fd5338fe516e30848795cc7cad0f7d52b"
     },
     "dist/material-notebook.js": {
-      "bytes": 24916,
-      "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
+      "bytes": 25323,
+      "sha256": "1f9fc4b41d5c20255f47f08447b1e02501c64a022772fcc843764520475d34a3"
     },
     "dist/material-research-ui.js": {
-      "bytes": 70234,
-      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
+      "bytes": 70695,
+      "sha256": "dd95544be307bd1b593f1b7a9ef13343704578a291fcfafb60640f52f6cc6cf0"
     },
     "dist/navigation-ui.js": {
       "bytes": 39245,
@@ -639,8 +639,8 @@
       "sha256": "833323bfa3e72e96b000853f546179a1e445cb315f0e8264e0c58386c782e1de"
     },
     "dist/research-ui.js": {
-      "bytes": 28477,
-      "sha256": "b47164f03a475bd4ab20fd67422d87f17e2596c1e4ff8d92ad881f16660e6d8f"
+      "bytes": 28964,
+      "sha256": "544dc29a940743083450fb3aa2a3a509dbf64eadd52654d252f24f8b8b211e41"
     },
     "dist/response-materials-ui.js": {
       "bytes": 13828,
@@ -659,12 +659,12 @@
       "sha256": "7bfa2a4c2d17072712df61f9881846d5abb2562a57f0012091e2b121322e5d7d"
     },
     "dist/structure-dynamics-ui.js": {
-      "bytes": 60094,
-      "sha256": "979edb213bb899155191ba23646e59c6383beb3dfa2219bd09d6b58f15baf041"
+      "bytes": 60564,
+      "sha256": "aca7827e15e226d0d67a12e2975a3f2c95cfc25f09ba7d8da0c966a727f43e0b"
     },
     "dist/structure-ui.js": {
-      "bytes": 31066,
-      "sha256": "6bede3d34c13b5caf464fe673fae6fd8e28fd229f320de6f8d241f2d65e6043d"
+      "bytes": 31054,
+      "sha256": "638879ab1d42bd4db1effa9f5254f2a7ad57e0341752dfd24e30d77ae890021a"
     },
     "dist/style.css": {
       "bytes": 24172,
@@ -891,8 +891,8 @@
       "sha256": "a98b79907f6a791fd52fb69da15835e26fab83ca69c0b58f91672cb4388990b6"
     },
     "locales/en-quality.json": {
-      "bytes": 151230,
-      "sha256": "b2d5a92d6c64f8a181941c8b4d0eb4f10e3ab8853572bc573581e2ac5a990eb0"
+      "bytes": 151885,
+      "sha256": "19236cd30102919e3a584c9bf4e594081974efbf2be9172948586461e37f24ad"
     },
     "locales/en-quartz-conjugacy-ui.json": {
       "bytes": 4699,
@@ -1031,12 +1031,12 @@
       "sha256": "faaf05603b6426b6ab3aa5edb5c0e42919c24917c4c2ffe01c824ab1dedce5b4"
     },
     "scripts/test-cif-setting-lesson.mjs": {
-      "bytes": 9817,
-      "sha256": "e9a32786fda4ab806eda06c18bf55136b5be08012e1c2bf8a8b55ce386efd913"
+      "bytes": 9839,
+      "sha256": "fb62d901addb6a47d46cbbf1f6d18e5477dbf123ffab7a387516205122bf5d31"
     },
     "scripts/test-cif-setting-practice.mjs": {
-      "bytes": 19596,
-      "sha256": "3fa83908c66b0cb34d4f706c20b04d960424f1ae8c22c77a4b5b774262f25863"
+      "bytes": 19724,
+      "sha256": "9a8c94b8d8e8f24f71ddca582212216d88c236187a9c788441b9c5b1a97b921c"
     },
     "scripts/test-classroom-ui.mjs": {
       "bytes": 12443,
@@ -1167,16 +1167,16 @@
       "sha256": "a868c139bc1484782ee45b4bd9b40d59505e6d874dab6e97f9766dcb694c1934"
     },
     "scripts/test-material-notebook.mjs": {
-      "bytes": 15291,
-      "sha256": "f523224519fd2cbf5cbee3a4a6a030cacdd991efdbc394a3e919d0f7aa0dfbab"
+      "bytes": 15513,
+      "sha256": "8359934bcf6888cd4fee09286ce9b48c1dade1f07d3efb773741aa0b95524811"
     },
     "scripts/test-material-research-content.py": {
       "bytes": 14129,
       "sha256": "ba36fc44468492237d5497b5e8237ee9070b25b37750a3ad33fafb858423b7dd"
     },
     "scripts/test-material-research-ui.mjs": {
-      "bytes": 28816,
-      "sha256": "4ed2bc60b221c944518850c4fb2267229e990a7dcddf958f5f776eb40d848d91"
+      "bytes": 28896,
+      "sha256": "98904febbc35abbcb1cb6e06f6e6f19d3bd1589d46b5800d8c06ce48221b8b9d"
     },
     "scripts/test-native-navigation.mjs": {
       "bytes": 3918,
@@ -1367,8 +1367,8 @@
       "sha256": "b2e7e4f3afcb96d31837e9b4799f30e4109843a53aa21ba1d79943b343951582"
     },
     "scripts/test-zno-ir-polarization-ui.mjs": {
-      "bytes": 10849,
-      "sha256": "cf7aa43aae7193146afb2552b248e03bd51d981af6e183c16081d089c29bd852"
+      "bytes": 10877,
+      "sha256": "449b9c607cb22da0ce88d072073bd495f8f58f4c14687608525f6ba9b33f730e"
     }
   },
   "reviewHistory": [

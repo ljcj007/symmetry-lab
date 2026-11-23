@@ -1,6 +1,8 @@
 // Presentation only: all classification and algebra are computed by Python.
 import {mountCoverage} from './coverage-ui.js?v=20261110-en1';
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Read-only preview formatting; inputs, scientific records and exports retain all original fields.
+const displayResultJSON=value=>JSON.stringify(value,(key,item)=>/sha[-_]?256|digest|hashBasis|(?:^|_)(?:fileHash|sourceHash|hash)(?:$|_)|^(?:fileHashes|sourceHashes|sourceHashAlgorithm|sourceHashNormalization|hashAlgorithm|hashNormalization|checksum)$/i.test(key)||(/fingerprint/i.test(key)&&typeof item==='string'&&/^[a-f0-9]{64}$/i.test(item))?undefined:item,2);
 const pretty = x => JSON.stringify(x, null, 2);
 const specs = {
  carat: {name:"CARAT rational classes", intro:"Browse all 8,329 rational classes in dimensions 1–6, with exact representative matrices, class counts, and classification evidence. Q classes, Z classes, and affine classes correspond to different equivalence relations.",
@@ -98,7 +100,7 @@ function resultView(tool,s){
  if(r.representatives)out+=`<details><summary>Extension representatives ·  ${r.representatives.length} items</summary>${table(["serial number","Cohomology coordinates","Generator translations"],r.representatives.map(e=>[e.index,e.coordinates,e.generatorTranslations]))}</details>`;
  if(r.orbits)out+=`<h3>Affine classes and chirality</h3>${table(["Representative","Extension index","Enantiomorphic pairing"],r.orbits.map(e=>[e.representative,e.extensionIndices,e.enantiomorphicPair?"yes":"no"]))}`;
  if(r.diagnostics)out+=`<details><summary>Exact-verification details</summary>${table(["Exact verification","Result"],Object.entries(r.diagnostics).map(([k,v])=>[k,v]))}</details>`;
- out+=`<details class="exact-full"><summary>Complete results, exact matrices, and certificates</summary><pre class="json-output">${esc(pretty(r))}</pre></details>`;
+ out+=`<details class="exact-full"><summary>Complete results, exact matrices, and certificates</summary><pre class="json-output">${esc(displayResultJSON(r))}</pre></details>`;
  return out;
 }
 

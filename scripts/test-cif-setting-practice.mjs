@@ -304,7 +304,8 @@ assert.equal($('#structure-text').value,cifOrbitCases[1].text);
 assert.deepEqual(fetchedQuartz,[],'Opening the activity neither replaces a draft nor fetches');
 const beforeQuartzRun=calls.length;
 await $('#structure-quartz-original').onclick();
-assert.match($('#structure-quartz-status').textContent,/SHA-256/);
+assert.match($('#structure-quartz-status').textContent,english?/could not be read/:/暂时无法读取/);
+assert.doesNotMatch($('#structure-quartz-status').textContent,/SHA-?256|[0-9a-f]{64}/i);
 assert.equal($('#structure-text').value,cifOrbitCases[1].text);
 tamperQuartz=false;
 for(const entry of quartzStructureCases){

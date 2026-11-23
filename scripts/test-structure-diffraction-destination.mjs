@@ -46,7 +46,7 @@ try{
  assert.match(panel().innerHTML,local(/倒易基矢/,/reciprocal basis/));
  assert.match(panel().innerHTML,local(/占位率均为 1/,/occupancies are both 1/));
  assert.match(panel().innerHTML,/POSCAR-0/);
- assert.match(panel().innerHTML,new RegExp(sha256));
+ assert.doesNotMatch(panel().innerHTML,/SHA-?256|[0-9a-f]{64}/i);
  assert.equal(panel().querySelector('a').getAttribute('href'),'#structure');
  assert.equal(calls.length,0);
  assert.equal(getStructureDynamicsResult(),null);

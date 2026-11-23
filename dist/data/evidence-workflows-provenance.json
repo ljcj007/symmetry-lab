@@ -84,13 +84,13 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24916,
-      "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
+      "bytes": 25323,
+      "sha256": "1f9fc4b41d5c20255f47f08447b1e02501c64a022772fcc843764520475d34a3"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 70234,
-      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
+      "bytes": 70695,
+      "sha256": "dd95544be307bd1b593f1b7a9ef13343704578a291fcfafb60640f52f6cc6cf0"
     },
     "dist/oscillator-spectra-bridge.css": {
       "normalization": "utf8-lf-v1",
@@ -124,8 +124,8 @@
     },
     "dist/structure-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 31066,
-      "sha256": "6bede3d34c13b5caf464fe673fae6fd8e28fd229f320de6f8d241f2d65e6043d"
+      "bytes": 31054,
+      "sha256": "638879ab1d42bd4db1effa9f5254f2a7ad57e0341752dfd24e30d77ae890021a"
     },
     "locales/en-cu-thermal-example.json": {
       "normalization": "utf8-lf-v1",
@@ -174,13 +174,13 @@
     },
     "scripts/test-material-notebook.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 15291,
-      "sha256": "f523224519fd2cbf5cbee3a4a6a030cacdd991efdbc394a3e919d0f7aa0dfbab"
+      "bytes": 15513,
+      "sha256": "8359934bcf6888cd4fee09286ce9b48c1dade1f07d3efb773741aa0b95524811"
     },
     "scripts/test-material-research-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 28816,
-      "sha256": "4ed2bc60b221c944518850c4fb2267229e990a7dcddf958f5f776eb40d848d91"
+      "bytes": 28896,
+      "sha256": "98904febbc35abbcb1cb6e06f6e6f19d3bd1589d46b5800d8c06ce48221b8b9d"
     },
     "scripts/test-oscillator-bridge-integration.mjs": {
       "normalization": "utf8-lf-v1",
@@ -209,8 +209,8 @@
     },
     "scripts/test-structure-workflow.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 11101,
-      "sha256": "6705e1460e51d0690f0cafd2a9da26e01e24ed322a6e887adf82657e096ca110"
+      "bytes": 11349,
+      "sha256": "5cf756109866a6d35c6db8c595dab2e73e3a74410d46395d284bb24aa8f187a2"
     }
   }
 }

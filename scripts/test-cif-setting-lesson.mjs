@@ -136,7 +136,7 @@ assert.match(replay,/_cell_length_a/);
 assert.match(replay,/_cell\.length_a/);
 assert.match(replay,/github\.com\/COMCIFS\/cif_core\/blob\/v3\.3\.0\/cif_core\.dic/);
 assert.match(replay,/source_site_rows/);
-assert.match(replay,/SHA-256/);
+assert.doesNotMatch(replay,/SHA-?256|[0-9a-f]{64}/i);
 const reciprocal=doc.split('<a id="cif-reciprocal-replay"></a>')[1];
 assert.ok(reciprocal);
 assert.match(reciprocal,/\]\(\.\.\/#structure\?cif-setting=practice\)/);

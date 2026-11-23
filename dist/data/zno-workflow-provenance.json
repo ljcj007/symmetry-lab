@@ -396,13 +396,13 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24916,
-      "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
+      "bytes": 25323,
+      "sha256": "1f9fc4b41d5c20255f47f08447b1e02501c64a022772fcc843764520475d34a3"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 70234,
-      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
+      "bytes": 70695,
+      "sha256": "dd95544be307bd1b593f1b7a9ef13343704578a291fcfafb60640f52f6cc6cf0"
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -461,8 +461,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 60094,
-      "sha256": "979edb213bb899155191ba23646e59c6383beb3dfa2219bd09d6b58f15baf041"
+      "bytes": 60564,
+      "sha256": "aca7827e15e226d0d67a12e2975a3f2c95cfc25f09ba7d8da0c966a727f43e0b"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -646,8 +646,8 @@
     },
     "scripts/test-material-notebook.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 15291,
-      "sha256": "f523224519fd2cbf5cbee3a4a6a030cacdd991efdbc394a3e919d0f7aa0dfbab"
+      "bytes": 15513,
+      "sha256": "8359934bcf6888cd4fee09286ce9b48c1dade1f07d3efb773741aa0b95524811"
     },
     "scripts/test-mode-frequency-confirmation.mjs": {
       "normalization": "utf8-lf-v1",
@@ -696,8 +696,8 @@
     },
     "scripts/test-zno-ir-polarization-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10849,
-      "sha256": "cf7aa43aae7193146afb2552b248e03bd51d981af6e183c16081d089c29bd852"
+      "bytes": 10877,
+      "sha256": "449b9c607cb22da0ce88d072073bd495f8f58f4c14687608525f6ba9b33f730e"
     },
     "scripts/test-zno-ir-search.mjs": {
       "normalization": "utf8-lf-v1",
@@ -711,8 +711,8 @@
     },
     "scripts/test-zno-phonopy-example.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 16330,
-      "sha256": "697217f7a310523ad397902507db7baea570a8442556efa5c2ca4d9bc76d4f4d"
+      "bytes": 16839,
+      "sha256": "217af94a5e0698af3dbc38e2abe125d1d7ef48a359d5bc70fc3df43fc126ada6"
     },
     "scripts/test-zno-satellite-host.mjs": {
       "normalization": "utf8-lf-v1",

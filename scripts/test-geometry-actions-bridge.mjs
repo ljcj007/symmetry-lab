@@ -6,6 +6,7 @@ import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {Container,Element} from './test-material-research-ui.mjs';
 import {HAN,jsStrings,textUnits,replaceUnits} from './english-source.mjs';
+import {loadEnglishCatalog} from './english-catalog.mjs';
 import {GEOMETRY_ACTIONS_REFERENCE as saved} from '../dist/geometry-actions-reference.js';
 import {GEOMETRY_ACTIONS_BRIDGE_HOOKS,geometryActionsReference,geometryActionsLabRequest,geometryActionsBridgeHTML,bindGeometryActionsBridge} from '../dist/geometry-actions-bridge.js';
 
@@ -87,7 +88,7 @@ let live=true;const dated=mount({isCurrent:()=>live});live=false;dated.$('step')
 assert.equal(mount().$('copy'),null);
 const unsupported=bindGeometryActionsBridge({lessonId:'unknown'});assert.deepEqual(unsupported.snapshot(),{});unsupported();
 
-const source=fs.readFileSync(new URL('../dist/geometry-actions-bridge.js',import.meta.url),'utf8'),locale=JSON.parse(fs.readFileSync(new URL('../locales/en-geometry-actions-bridge.json',import.meta.url),'utf8'));
+const source=fs.readFileSync(new URL('../dist/geometry-actions-bridge.js',import.meta.url),'utf8'),locale=loadEnglishCatalog();
 const units=[...new Set(jsStrings(source).flatMap(x=>textUnits(x.value)))];
 for(const unit of units){assert.ok(locale[unit],`Missing English unit: ${unit}`);assert.ok(!HAN.test(locale[unit]));}
 for(const part of jsStrings(source)){const translated=replaceUnits(part.value,text=>locale[text]??text);assert.ok(!HAN.test(translated),`Untranslated text: ${translated}`);}

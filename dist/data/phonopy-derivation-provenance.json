@@ -174,13 +174,13 @@
     },
     "dist/material-notebook.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 24916,
-      "sha256": "671792259e3a639cadcfc3729f736c6e1060aa39e6c97dfd553bc32e6dbff9ba"
+      "bytes": 25323,
+      "sha256": "1f9fc4b41d5c20255f47f08447b1e02501c64a022772fcc843764520475d34a3"
     },
     "dist/material-research-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 70234,
-      "sha256": "452a6b914931630639c9fbaad00b86a4229a0784637758f3506af3f75b264b1a"
+      "bytes": 70695,
+      "sha256": "dd95544be307bd1b593f1b7a9ef13343704578a291fcfafb60640f52f6cc6cf0"
     },
     "dist/math-display.js": {
       "normalization": "utf8-lf-v1",
@@ -214,8 +214,8 @@
     },
     "dist/phonopy-derivation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 36795,
-      "sha256": "44118c2e3f1ad1ef5d89fd9df561b89f167cb8afe3d83c16568db4db2229c2e6"
+      "bytes": 37167,
+      "sha256": "04b0b7e103e8f93bec926f27d8eb12254f0a5ac823b593bdee4647d40c40a998"
     },
     "dist/phonopy-derivation.css": {
       "normalization": "utf8-lf-v1",
@@ -229,8 +229,8 @@
     },
     "dist/phonopy-scattering-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 40280,
-      "sha256": "aa6e2ff16546a6b3505f329c04ec0fae3f500a7d4e5ae1c9a410df0e1b480688"
+      "bytes": 40714,
+      "sha256": "2eae71f6eddfd5c41eb7108be5fdc1c8fee3391604db57340da01076a14232c4"
     },
     "dist/phonopy-scattering.css": {
       "normalization": "utf8-lf-v1",
@@ -284,8 +284,8 @@
     },
     "dist/structure-dynamics-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 60094,
-      "sha256": "979edb213bb899155191ba23646e59c6383beb3dfa2219bd09d6b58f15baf041"
+      "bytes": 60564,
+      "sha256": "aca7827e15e226d0d67a12e2975a3f2c95cfc25f09ba7d8da0c966a727f43e0b"
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
@@ -784,8 +784,8 @@
     },
     "locales/en-phonopy-scattering-ui.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 25314,
-      "sha256": "886f82c9451aaf0b1d57591abd877aae8ea6eb58129f87b0de16899ac46eb6ac"
+      "bytes": 25139,
+      "sha256": "c467297ca382dc993e92cd29d25796079b507d5f434b02119c4812bb23a49d16"
     },
     "locales/en-phonopy-units.json": {
       "normalization": "utf8-lf-v1",
@@ -899,8 +899,8 @@
     },
     "locales/en-quality.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 151230,
-      "sha256": "b2d5a92d6c64f8a181941c8b4d0eb4f10e3ab8853572bc573581e2ac5a990eb0"
+      "bytes": 151885,
+      "sha256": "19236cd30102919e3a584c9bf4e594081974efbf2be9172948586461e37f24ad"
     },
     "locales/en-quantum-lesson-handoffs.json": {
       "normalization": "utf8-lf-v1",
@@ -1424,8 +1424,8 @@
     },
     "scripts/test-phonopy-derivation-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 18128,
-      "sha256": "be03a8a0dac7fc01a3e60fcb7750c0213c470e4f5a6d08fee9bf9e4515062ee2"
+      "bytes": 18419,
+      "sha256": "fafcb3cb2acb99401cd36cea071a217c2b7822d321666921ce1219d8e78aeb56"
     },
     "scripts/test-phonopy-derivation-worker.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1439,8 +1439,8 @@
     },
     "scripts/test-phonopy-scattering-ui.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14286,
-      "sha256": "a0d57231d89ab63eb7734e602ce565203030b8ee6c5f06ceee0884f0c56f8c14"
+      "bytes": 14361,
+      "sha256": "a8193bc7a46fb58eaeab5fd138592661dc938b247bba4201349b8a17ca5f6445"
     },
     "scripts/test-phonopy-scattering-worker.mjs": {
       "normalization": "utf8-lf-v1",

@@ -1,6 +1,8 @@
 // Presentation only: all classification and algebra are computed by Python.
 import {mountCoverage} from './coverage-ui.js?v=20261110-en1';
 const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Read-only preview formatting; inputs, scientific records and exports retain all original fields.
+const displayResultJSON=value=>JSON.stringify(value,(key,item)=>/sha[-_]?256|digest|hashBasis|(?:^|_)(?:fileHash|sourceHash|hash)(?:$|_)|^(?:fileHashes|sourceHashes|sourceHashAlgorithm|sourceHashNormalization|hashAlgorithm|hashNormalization|checksum)$/i.test(key)||(/fingerprint/i.test(key)&&typeof item==='string'&&/^[a-f0-9]{64}$/i.test(item))?undefined:item,2);
 const pretty = x => JSON.stringify(x, null, 2);
 const specs = {
  carat: {name:'CARAT 有理类', intro:'检索 1–6 维全部 8,329 个有理类，查看精确矩阵代表、类数与分类证据。Q 类、Z 类和仿射类分别对应不同的等价关系。',
@@ -98,7 +100,7 @@ function resultView(tool,s){
  if(r.representatives)out+=`<details><summary>扩张代表 · ${r.representatives.length} 个</summary>${table(['序号','上同调坐标','生成元平移'],r.representatives.map(e=>[e.index,e.coordinates,e.generatorTranslations]))}</details>`;
  if(r.orbits)out+=`<h3>仿射类与手性</h3>${table(['代表','扩张索引','对映体配对'],r.orbits.map(e=>[e.representative,e.extensionIndices,e.enantiomorphicPair?'是':'否']))}`;
  if(r.diagnostics)out+=`<details><summary>精确验证明细</summary>${table(['精确验证','结果'],Object.entries(r.diagnostics).map(([k,v])=>[k,v]))}</details>`;
- out+=`<details class="exact-full"><summary>完整结果、精确矩阵与证书</summary><pre class="json-output">${esc(pretty(r))}</pre></details>`;
+ out+=`<details class="exact-full"><summary>完整结果、精确矩阵与证书</summary><pre class="json-output">${esc(displayResultJSON(r))}</pre></details>`;
  return out;
 }
 

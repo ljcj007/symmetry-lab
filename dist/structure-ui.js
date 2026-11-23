@@ -73,7 +73,7 @@ const siExample=Object.freeze({
 
 const sourceMessages=Object.freeze({
   si:{insecure:'请通过 HTTPS 或本机地址载入 Si 示例。',unavailable:'官方 Si 示例暂未载入，请重试。',mismatch:'官方 Si 示例暂时无法读取，请重新载入。',encoding:'官方 Si 示例无法按原样保留为 UTF-8 文本。',timeout:'官方 Si 示例读取超时，请重试。'},
-  quartz:{insecure:'需要 HTTPS 或本机地址核对石英练习文件的指纹。',unavailable:'石英练习文件暂未载入，请重试。',mismatch:'石英练习文件暂时无法读取，请重新载入。',encoding:'石英练习文件无法按原样保留为 UTF-8 文本。',timeout:'石英练习文件读取超时，请重试。'}
+  quartz:{insecure:'请通过 HTTPS 或本机地址载入石英练习。',unavailable:'石英练习文件暂未载入，请重试。',mismatch:'石英练习文件暂时无法读取，请重新载入。',encoding:'石英练习文件无法按原样保留为 UTF-8 文本。',timeout:'石英练习文件读取超时，请重试。'}
 });
 
 async function readStructureExample(example,signal,messages){
@@ -155,7 +155,7 @@ export function renderStructureView(options) {
       ${state.format==='cif'?cifInputSettingHTML(r.input_metadata?.cif_symmetry_setting)+cifExplicitHallCheckHTML(r.input_metadata?.cif_explicit_hall_check,hallCheckOpen):''}
       <label class="sth-spin" for="structure-spin">${esc('交接到工作台的表示类型')}<select id="structure-spin"><option value="false" ${!state.doubleValued?'selected':''}>${esc('单值表示（默认）')}</option><option value="true" ${state.doubleValued?'selected':''}>${esc('双值表示（半整数自旋）')}</option></select></label><p class="form-note">${esc('这是明确的表示类型选择；结构文件本身不能决定 SOC 强弱或磁序。打开工作台后先核对来源和选择，再手动计算。')}</p>
       <div class="controls-row"><button class="primary small" id="structure-open-group" ${!state.handoff||state.handoffPending?'disabled':''}>${esc('携带来源打开表示工作台 →')}</button><button class="text-button" id="structure-json">↓ 完整 JSON</button></div>
-      <div id="structure-handoff-card">${state.handoff?structureHandoffHTML(state.handoff):`<p class="sth-state ${state.handoffError?'sth-error':''}" role="status">${esc(state.handoffError||(state.handoffPending?'正在计算来源指纹；几何导出可继续使用。':'来源摘要尚未就绪；可先保留几何导出。'))}</p>`}</div>
+      <div id="structure-handoff-card">${state.handoff?structureHandoffHTML(state.handoff):`<p class="sth-state ${state.handoffError?'sth-error':''}" role="status">${esc(state.handoffError||(state.handoffPending?'正在整理结构记录；几何导出可继续使用。':'来源摘要尚未就绪；可先保留几何导出。'))}</p>`}</div>
       <div class="structure-downloads"><button class="secondary small" id="structure-poscar">↓ BC POSCAR</button><button class="secondary small" id="structure-cif">↓ BC CIF</button></div>
       ${canOpenDiffraction?`<div class="structure-details">
         <button class="secondary" type="button" id="structure-open-diffraction" aria-describedby="structure-diffraction-scope" ${diffraction?'':'disabled'}>${esc('用输入晶胞计算衍射 →')}</button>

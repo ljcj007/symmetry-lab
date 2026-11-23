@@ -194,6 +194,7 @@ async function runUITests(){
  assert.equal(alInput.structure_filename,alManifest.companion.localFile);
  assert.equal(Object.hasOwn(alInput,'length_unit'),false);
  assert.equal(ui.getMaterialResearchResult().result.inputSourceIdentity.companion.sha256,alManifest.companion.sha256);
+ assert.doesNotMatch(al.$('#mr-result').innerHTML,/sha[-_]?256|[0-9a-f]{64}/i);
  assert.equal(ui.getMaterialResearchResult().material,'al-phonopy-gamma');
  al.$('#mr-download').onclick();
  assert.equal(JSON.parse(al.downloads.at(-1).body).result.inputSourceIdentity.band.sha256,alManifest.sha256);

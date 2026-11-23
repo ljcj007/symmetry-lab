@@ -147,6 +147,8 @@ await saveProject(sourceProject);
 const changedSource=clone(zno.modes);delete changedSource.sourceIdentity.reference;changedSource.sourceIdentity.sha256='0'.repeat(64);
 const sourceUI=await mount(notebook,async(_action,input)=>input.preset==='gaas'?clone(fixtures.results.modesGaAs):changedSource);
 if(sourceUI.$('#nb-project').value!==sourceProject.id){sourceUI.$('#nb-project').value=sourceProject.id;await sourceUI.$('#nb-project').onchange({target:sourceUI.$('#nb-project')});}
+assert.doesNotMatch(sourceUI.container.innerHTML,/sha[-_]?256|[0-9a-f]{64}/i);
+assert.equal((await listProjects()).find(p=>p.id===sourceProject.id).records[0].result.sourceIdentity.sha256,zno.modes.sourceIdentity.sha256);
 sourceUI.$('#nb-rerun-input').value=JSON.stringify({preset:'custom',content:'different input'});
 await sourceUI.$('#nb-rerun').onclick();
 const rerunSource=(await listProjects()).find(p=>p.id===sourceProject.id);

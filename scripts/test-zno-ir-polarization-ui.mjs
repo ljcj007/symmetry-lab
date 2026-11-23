@@ -108,7 +108,7 @@ assert.equal($('load').disabled,false);
 
 responseMode='verified';
 await $('load').onclick();
-assert.match($('status').textContent,/ZnO 示例数据已载入/);
+assert.match($('status').textContent,/ZnO 示例数据已载入|ZnO example data are loaded/);
 assert.doesNotMatch($('status').textContent,/SHA-?256|[0-9a-f]{64}/i);
 assert.equal($('load').hidden,true);
 assert.equal(document.activeElement,$('polarization'));
