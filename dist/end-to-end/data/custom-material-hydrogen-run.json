@@ -1,0 +1,32 @@
+{
+  "id": "20261123t062910-edbf30f0c7bf",
+  "material_name": "H2 molecular cell",
+  "status": "COMPLETED",
+  "started_at": "2026-11-23T06:29:23.529864+00:00",
+  "elapsed_seconds": 39.159,
+  "calculation_completed": true,
+  "numerical_scf_completed": true,
+  "native_operator_received": true,
+  "finite_point_spectrum_certified": true,
+  "finite_kpoint_common_gap_certified": true,
+  "infinite_scf_certified": false,
+  "full_chain_certified": false,
+  "full_chain_recomputed": false,
+  "finite_proof_recomputed": true,
+  "verification_level": "finite-point-spectrum",
+  "points_requested": 1,
+  "points_certified": 1,
+  "plane_wave_dimensions": [
+    2109,
+    2109
+  ],
+  "schema": "custom-qe-public-result.v1",
+  "client_elapsed_seconds": 43.469,
+  "spectral_index": 1,
+  "nonlocal_channels": [
+    0
+  ],
+  "common_gap_lower_eV": 6.142,
+  "gap_eV_is_approximate": true,
+  "scope": "Exact dyadic finite plane-wave sources at the recorded k points; new QE and new Arb proofs. Infinite-basis, continuous-k and nonlinear SCF proofs are separate."
+}

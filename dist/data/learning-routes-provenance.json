@@ -271,8 +271,8 @@
       "sha256": "308675a94ec7a41d8a7ec8ab23bdbc9becba1662b841f0600908e9d437bc703d"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 31143,
-      "sha256": "327ef29d15ef65bb134e3287fe49b62b036dd977ae6033998754246fb4c20a95"
+      "bytes": 36014,
+      "sha256": "1da3765459afeaa79e50f83c811e100b18a395b2065b9624ff6f0f9e2480f890"
     },
     "dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json": {
       "bytes": 3554,
@@ -307,32 +307,32 @@
       "sha256": "66ca08c6cd1f52f2e94761bf8565814c4e80c248a460e699ecd0f12acf5b58ae"
     },
     "dist/end-to-end/data/one-click-run-result.json": {
-      "bytes": 1032,
-      "sha256": "05d76faa1d22b746fe379f9c841dc078ee0e65f980c72d275dda6d9aba9ee623"
+      "bytes": 990,
+      "sha256": "a635018db682659505c491f9619906ce9c38bc2a53d3002c9b23e21676323824"
     },
     "dist/end-to-end/data/oneclick-release.json": {
-      "bytes": 933,
-      "sha256": "b2da15762309d4db44bd2267a8e3033a2072bd9491e1669ec88dadd91955b9a3"
+      "bytes": 1260,
+      "sha256": "bd0731ec4b7a693d4ee3639a05499d153bd0649f61b4e091bc566e27f10f27a7"
     },
     "dist/end-to-end/downloads/local-run-guide.md": {
-      "bytes": 1951,
-      "sha256": "dadafc60f890ee3f3678044e9ce6282f3b1709b5230f6223f6150f289bae355c"
+      "bytes": 2833,
+      "sha256": "b8cbfecd4cfd02a7ea01cbe7bec66f0bf5529c971b88d909acb819a60ce541c4"
     },
     "dist/end-to-end/downloads/server-profile-infinite-inputs.example.json": {
       "bytes": 54,
       "sha256": "8fe1890ad11e2be4768c08b02834b390c02933ad1d79630a8e45e1b34fd72dfd"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 20551,
-      "sha256": "c7ee8ba6d8c903a7d1ffc499538a5a199df861341ae7698d2ed189b516cf9f0d"
+      "bytes": 25200,
+      "sha256": "74a3cad8d326ae9d6d08b50dfb5e0b890f44785e406f53c6c203ca837e5c7770"
     },
     "dist/end-to-end/infinite-replay.js": {
       "bytes": 1967,
       "sha256": "62e87f8405198108444a3750efe6964c1e271945a77541b1b0e7794d411e20f9"
     },
     "dist/end-to-end/style.css": {
-      "bytes": 14747,
-      "sha256": "5b775cf34bf71651e27a504c8882ea52dd54940e3dd802fc4e274040d668332f"
+      "bytes": 15497,
+      "sha256": "97c4393616fb036fdeca4a1844c0e8b81bd48745c060ff23697b69d50632fe5c"
     },
     "dist/end-to-end/verify-infinite.js": {
       "bytes": 4578,
@@ -1203,8 +1203,8 @@
       "sha256": "0f3fb3dc8b98eb841a5d57c58fe7c7eb1bad83647fbc33b958a8f57e59aebc70"
     },
     "scripts/test-oneclick-release.py": {
-      "bytes": 8679,
-      "sha256": "cd4a8af54e73a6b27f678d8fe406621ab879cbf69c59e5c41f2f2301d7462ebe"
+      "bytes": 12073,
+      "sha256": "9dde8add5b2aeaade58cac1f991d1aff703c1d07794c6f5124ee167243e3359d"
     },
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,

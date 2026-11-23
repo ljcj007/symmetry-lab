@@ -1,0 +1,32 @@
+{
+  "id": "20261123t062753-1709ec3059e2",
+  "material_name": "Diamond C",
+  "status": "COMPLETED",
+  "started_at": "2026-11-23T06:28:06.803733+00:00",
+  "elapsed_seconds": 45.302,
+  "calculation_completed": true,
+  "numerical_scf_completed": true,
+  "native_operator_received": true,
+  "finite_point_spectrum_certified": true,
+  "finite_kpoint_common_gap_certified": true,
+  "infinite_scf_certified": false,
+  "full_chain_certified": false,
+  "full_chain_recomputed": false,
+  "finite_proof_recomputed": true,
+  "verification_level": "finite-point-spectrum",
+  "points_requested": 8,
+  "points_certified": 8,
+  "plane_wave_dimensions": [
+    902,
+    941
+  ],
+  "schema": "custom-qe-public-result.v1",
+  "client_elapsed_seconds": 49.662,
+  "spectral_index": 4,
+  "nonlocal_channels": [
+    8
+  ],
+  "common_gap_lower_eV": 2.662,
+  "gap_eV_is_approximate": true,
+  "scope": "Exact dyadic finite plane-wave sources at the recorded k points; new QE and new Arb proofs. Infinite-basis, continuous-k and nonlinear SCF proofs are separate."
+}

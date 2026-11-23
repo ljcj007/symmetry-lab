@@ -41,10 +41,12 @@ def verify_bundle(path,release=None):
                 assert len(files)==release['files']
                 assert expanded==release['expanded_bytes']
             b=json.loads(z.read(base+'BUNDLE.json'))
-            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='15'
+            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='16'
             assert b['platform']=='windows-x86_64'
             assert b['requires_local_paper'] is False and b['requires_installed_python'] is False
             assert b['scientific_execution']=='remote-source-bound-service'
+            assert set(b['supported_modes'])>={'si-reference','custom-qe'}
+            assert b['custom_input_import'] is True
             assert b['entry']=='一键运行.exe' and b['english_entry']=='Run.exe'
             if release is not None:assert release['entry']==base+b['entry']
             exe=z.read(base+'Run.exe');assert exe==z.read(base+b['entry']);pe(exe,'Run.exe')
@@ -58,8 +60,10 @@ def verify_bundle(path,release=None):
                 'runtime/Lib/site-packages/paramiko/__init__.py','runtime/Lib/site-packages/cryptography/__init__.py',
                 'runtime/Lib/site-packages/bcrypt/__init__.py','runtime/Lib/site-packages/nacl/__init__.py',
                 'runtime/LICENSE_PYTHON.txt','LICENSE','THIRD_PARTY_SOURCES.txt','build-sources/conda-recipes.zip',
-                'app/main.py','app/remote_service.py','app/launcher.c','app/build_app.py','app/test_client.py','app/portable_controls.py')
+                'app/main.py','app/remote_service.py','app/launcher.c','app/build_app.py','app/test_client.py','app/portable_controls.py',
+                'app/material_gui.py','app/input_import.py','app/qe_input.py','app/test_import.py')
             assert all(base+n in names for n in required)
+            assert not any(n.lower().endswith('.upf')for n in names),'Pseudopotentials need their own redistribution authorization.'
             assert z.read(base+'runtime/python313._pth').decode('ascii').splitlines()==['Lib','DLLs','Lib/site-packages','../app']
             assert base+'runtime/Lib/site-packages/sitecustomize.py'not in names
             for dep in b['dependencies']:
@@ -72,7 +76,7 @@ def verify_bundle(path,release=None):
             with zipfile.ZipFile(io.BytesIO(z.read(base+'build-sources/conda-recipes.zip')))as recipes:
                 assert recipes.testzip()is None;safe_members(recipes)
                 assert any(n.endswith('meta.yaml')for n in recipes.namelist())
-            text='\n'.join(z.read(base+n).decode('utf-8-sig')for n in ('app/main.py','app/remote_service.py','README.txt','BUNDLE.json'))
+            text='\n'.join(z.read(base+n).decode('utf-8-sig')for n in ('app/main.py','app/remote_service.py','app/material_gui.py','app/input_import.py','README.txt','BUNDLE.json'))
             assert not re.search(r'\b10\.(?:\d{1,3}\.){2}\d{1,3}\b|\b192\.168\.\d{1,3}\.\d{1,3}\b|C:[/\\]Users[/\\]|ljcj007|/home/ljcj',text)
             assert not re.search(r'discover_workspace|find_workspace|select_workspace|register_native|oneclick_launcher_20261123',text)
             z.extractall(folder)
@@ -80,12 +84,15 @@ def verify_bundle(path,release=None):
         # -I excludes external site packages and script paths. Add only the
         # extracted client source for these dependency-free protocol controls.
         code='import runpy,sys;p=sys.argv[2];sys.path.insert(0,sys.argv[1]);sys.argv=[p];runpy.run_path(p,run_name="__main__")'
-        result=subprocess.run([sys.executable,'-I','-B','-c',code,str(shipped/'app'),str(shipped/'app/test_client.py')],
-            cwd=folder,capture_output=True,text=True,encoding='utf8',timeout=90,
-            env=dict(os.environ,PYTHONUTF8='1',PYTHONDONTWRITEBYTECODE='1'))
-        assert result.returncode==0,result.stdout+'\n'+result.stderr
-        ran=re.search(r'Ran (\d+) tests',result.stdout+result.stderr);assert ran and int(ran[1])>=7
-    return dict(archive_members=len(files),expanded_bytes=expanded,extracted_protocol_controls=int(ran[1]),
+        controls={}
+        for name,minimum in [('test_client.py',10),('test_import.py',6)]:
+            result=subprocess.run([sys.executable,'-I','-B','-c',code,str(shipped/'app'),str(shipped/'app'/name)],
+                cwd=folder,capture_output=True,text=True,encoding='utf8',timeout=90,
+                env=dict(os.environ,PYTHONUTF8='1',PYTHONDONTWRITEBYTECODE='1'))
+            assert result.returncode==0,result.stdout+'\n'+result.stderr
+            ran=re.search(r'Ran (\d+) tests',result.stdout+result.stderr);assert ran and int(ran[1])>=minimum
+            controls[name]=int(ran[1])
+    return dict(archive_members=len(files),expanded_bytes=expanded,extracted_protocol_controls=controls['test_client.py'],extracted_import_controls=controls['test_import.py'],
         bundled_interpreter_x64=True,native_executable_aliases_equal=True,licenses_and_sources_included=True)
 
 
@@ -95,12 +102,14 @@ def main():
     args=ap.parse_args();release=json.loads((PAGE/'data/oneclick-release.json').read_text(encoding='utf8'))
     archive=args.archive or PAGE/'downloads'/release['filename']
     if not args.bundle_only:
-        assert release['status']=='ready' and release['version']==15
+        assert release['status']=='ready' and release['version']==16
         assert archive.stat().st_size==release['bytes']
         for key in ('existing_complete_research_workspace_required','python_installation_required','manual_registration_required',
                     'manual_configuration_required','password_saved','full_chain_recomputed'):assert release[key] is False,key
-        for key in ('runtime_included','server_research_service_required','server_research_service_tested','full_chain_certified'):assert release[key] is True,key
-        assert release['actually_tested_run']
+        for key in ('runtime_included','server_research_service_required','server_research_service_tested','builtin_si_full_chain_certified','custom_input_import','custom_finite_point_spectrum_tested'):assert release[key] is True,key
+        assert release['custom_infinite_scf_certified']is False
+        assert set(release['supported_modes'])>={'si-reference','custom-qe'}
+        assert release['actually_tested_custom_run']
         html=(PAGE/'index.html').read_text(encoding='utf8')
         card=html[html.index('<article class="native-launch">'):html.index('<article class="actual-run"')]
         assert release['filename']in card and '一键运行.exe'in card
@@ -111,7 +120,34 @@ def main():
             assert not re.search(r'sha.?256|digest|fingerprint|[0-9a-f]{64}',text,re.I)
             assert json.loads(text)['full_chain_certified'] is True
         assert 'example-certificate.html'in html and 'data-i18n="resumeTip"'in html
-        assert 'qe-certificate-server-source-v15.zip'in html
+        assert 'qe-certificate-server-source-v16.zip'in html
+        assert 'qe-certificate-standalone-v15.zip'in html
+        assert 'id="custom-materials"'in html and 'data-custom="levels"'in html
+        assert 'example-carbon-scf.in'in html and 'example-custom-material-certificate.html'in html
+        assert 'example-hydrogen-scf.in'in html and 'example-hydrogen-certificate.html'in html
+        assert 'data-i18n="customCompareScope"'in html
+        custom_text=(PAGE/'data/custom-material-run.json').read_text(encoding='utf8')
+        assert not re.search(r'sha.?256|digest|fingerprint|[0-9a-f]{64}|/home/|C:[/\\]Users',custom_text,re.I)
+        custom=json.loads(custom_text)
+        assert custom['schema']=='custom-qe-public-result.v1' and custom['status']=='COMPLETED'
+        assert custom['id']==release['actually_tested_custom_run']
+        for key in ('calculation_completed','numerical_scf_completed','native_operator_received','finite_point_spectrum_certified','finite_proof_recomputed'):assert custom[key] is True,key
+        assert custom['infinite_scf_certified']is False and custom['full_chain_certified']is False
+        assert 0<custom['points_certified']<=custom['points_requested']
+        hydrogen_text=(PAGE/'data/custom-material-hydrogen-run.json').read_text(encoding='utf8')
+        assert not re.search(r'sha.?256|digest|fingerprint|[0-9a-f]{64}|/home/|C:[/\\]Users',hydrogen_text,re.I)
+        hydrogen=json.loads(hydrogen_text)
+        assert hydrogen['schema']=='custom-qe-public-result.v1'and hydrogen['status']=='COMPLETED'
+        assert hydrogen['id']!=custom['id']and hydrogen['points_certified']==hydrogen['points_requested']==1
+        for key in ('calculation_completed','numerical_scf_completed','native_operator_received','finite_point_spectrum_certified','finite_proof_recomputed'):assert hydrogen[key]is True,key
+        assert hydrogen['infinite_scf_certified']is False and hydrogen['full_chain_certified']is False
+        assert custom['points_certified']==custom['points_requested']==8
+        assert custom['plane_wave_dimensions']==[902,941]and hydrogen['plane_wave_dimensions']==[2109,2109]
+        input_h=(PAGE/'downloads/example-hydrogen-scf.in').read_text(encoding='utf8')
+        assert 'H.pz-vbc.UPF'in input_h and 'K_POINTS gamma'in input_h
+        assert not re.search(r'/home/|C:[/\\]Users|10\.20\.',input_h)
+        custom_view=subprocess.run(['node',str(ROOT/'scripts/test-custom-material-view.mjs')],cwd=ROOT,capture_output=True,text=True,encoding='utf8',timeout=30)
+        assert custom_view.returncode==0,custom_view.stdout+'\n'+custom_view.stderr
         view=subprocess.run(['node',str(ROOT/'scripts/test-actual-run-view.mjs')],cwd=ROOT,
             capture_output=True,text=True,encoding='utf8',timeout=30)
         assert view.returncode==0,view.stdout+'\n'+view.stderr

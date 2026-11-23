@@ -1,0 +1,20 @@
+&CONTROL
+ calculation='scf', prefix='hydrogen', outdir='./out', pseudo_dir='./pseudo',
+/
+&SYSTEM
+ ibrav=0, nat=2, ntyp=1, ecutwfc=40, ecutrho=160, nbnd=5,
+ occupations='fixed',
+/
+&ELECTRONS
+ conv_thr=1d-10, mixing_beta=0.3, electron_maxstep=100,
+/
+ATOMIC_SPECIES
+H 1.008 H.pz-vbc.UPF
+CELL_PARAMETERS bohr
+8 0 0
+0 8 0
+0 0 8
+ATOMIC_POSITIONS bohr
+H 3.3 4 4
+H 4.7 4 4
+K_POINTS gamma

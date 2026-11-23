@@ -1,32 +1,32 @@
 {
-  "id": "20261123t044416-a616ecda92",
+  "id": "20261123t060452-5baefc5c85",
   "status": "COMPLETED",
-  "started_at": "2026-11-23T04:44:16.722714+00:00",
-  "finished_at": "2026-11-23T04:54:53.882656+00:00",
-  "elapsed_seconds": 637.022,
+  "started_at": "2026-11-23T06:04:52.133234+00:00",
+  "finished_at": "2026-11-23T06:15:28.546991+00:00",
+  "elapsed_seconds": 636.312,
   "full_chain_certified": true,
   "full_chain_recomputed": false,
   "stages": [
     {
       "id": "native-dft",
       "state": "SUCCEEDED",
-      "elapsed_seconds": 487.622
+      "elapsed_seconds": 484.377
     },
     {
       "id": "ionic-input",
       "state": "SUCCEEDED",
-      "elapsed_seconds": 10.042
+      "elapsed_seconds": 10.04
     },
     {
       "id": "infinite-scf",
       "state": "SUCCEEDED",
-      "elapsed_seconds": 137.736
+      "elapsed_seconds": 140.231
     }
   ],
-  "entry": "Standalone Windows executable with bundled runtime and remote complete scientific service",
+  "entry": "Standalone v16 fixed-Si compatibility regression",
   "scope": "Source-bound C1/PBE reference equation; fixed48^3 charge observations, canonical72-point quadrature and complete infinite orbitals.",
   "client_request_id": "20261123t044402-a7bcd5cfea53",
-  "client_elapsed_seconds": 660.572,
+  "client_elapsed_seconds": 660.224,
   "independent_client": true,
   "installed_python_required": false,
   "local_project_required": false
