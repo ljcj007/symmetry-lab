@@ -41,12 +41,14 @@ def verify_bundle(path,release=None):
                 assert len(files)==release['files']
                 assert expanded==release['expanded_bytes']
             b=json.loads(z.read(base+'BUNDLE.json'))
-            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='16'
+            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='17'
             assert b['platform']=='windows-x86_64'
             assert b['requires_local_paper'] is False and b['requires_installed_python'] is False
             assert b['scientific_execution']=='remote-source-bound-service'
             assert set(b['supported_modes'])>={'si-reference','custom-qe'}
             assert b['custom_input_import'] is True
+            assert b['upf_binding_confirmation'] is True and b['upf_nested_folder_search'] is True
+            assert b['terminal_stage_status'] is True
             assert b['entry']=='一键运行.exe' and b['english_entry']=='Run.exe'
             if release is not None:assert release['entry']==base+b['entry']
             exe=z.read(base+'Run.exe');assert exe==z.read(base+b['entry']);pe(exe,'Run.exe')
@@ -61,7 +63,7 @@ def verify_bundle(path,release=None):
                 'runtime/Lib/site-packages/bcrypt/__init__.py','runtime/Lib/site-packages/nacl/__init__.py',
                 'runtime/LICENSE_PYTHON.txt','LICENSE','THIRD_PARTY_SOURCES.txt','build-sources/conda-recipes.zip',
                 'app/main.py','app/remote_service.py','app/launcher.c','app/build_app.py','app/test_client.py','app/portable_controls.py',
-                'app/material_gui.py','app/input_import.py','app/qe_input.py','app/test_import.py')
+                'app/material_gui.py','app/input_import.py','app/qe_input.py','app/test_import.py','app/test_gui_import.py')
             assert all(base+n in names for n in required)
             assert not any(n.lower().endswith('.upf')for n in names),'Pseudopotentials need their own redistribution authorization.'
             assert z.read(base+'runtime/python313._pth').decode('ascii').splitlines()==['Lib','DLLs','Lib/site-packages','../app']
@@ -85,7 +87,7 @@ def verify_bundle(path,release=None):
         # extracted client source for these dependency-free protocol controls.
         code='import runpy,sys;p=sys.argv[2];sys.path.insert(0,sys.argv[1]);sys.argv=[p];runpy.run_path(p,run_name="__main__")'
         controls={}
-        for name,minimum in [('test_client.py',10),('test_import.py',6)]:
+        for name,minimum in [('test_client.py',10),('test_import.py',12)]:
             result=subprocess.run([sys.executable,'-I','-B','-c',code,str(shipped/'app'),str(shipped/'app'/name)],
                 cwd=folder,capture_output=True,text=True,encoding='utf8',timeout=90,
                 env=dict(os.environ,PYTHONUTF8='1',PYTHONDONTWRITEBYTECODE='1'))
@@ -102,7 +104,7 @@ def main():
     args=ap.parse_args();release=json.loads((PAGE/'data/oneclick-release.json').read_text(encoding='utf8'))
     archive=args.archive or PAGE/'downloads'/release['filename']
     if not args.bundle_only:
-        assert release['status']=='ready' and release['version']==16
+        assert release['status']=='ready' and release['version']==17
         assert archive.stat().st_size==release['bytes']
         for key in ('existing_complete_research_workspace_required','python_installation_required','manual_registration_required',
                     'manual_configuration_required','password_saved','full_chain_recomputed'):assert release[key] is False,key
@@ -110,6 +112,8 @@ def main():
         assert release['custom_infinite_scf_certified']is False
         assert set(release['supported_modes'])>={'si-reference','custom-qe'}
         assert release['actually_tested_custom_run']
+        assert release['terminal_stage_status'] and release['remaining_obligations_visible']
+        assert release['paw_completed_task_resume_tested'] and release['preserves_existing_PAW_model']
         html=(PAGE/'index.html').read_text(encoding='utf8')
         card=html[html.index('<article class="native-launch">'):html.index('<article class="actual-run"')]
         assert release['filename']in card and '一键运行.exe'in card
@@ -122,6 +126,11 @@ def main():
         assert 'example-certificate.html'in html and 'data-i18n="resumeTip"'in html
         assert 'qe-certificate-server-source-v16.zip'in html
         assert 'qe-certificate-standalone-v15.zip'in html
+        assert 'qe-certificate-standalone-v16.zip'in html
+        assert 'data-i18n="upfMatchTip"'in html and 'PBEsol'in html
+        guide=(PAGE/'downloads/local-run-guide.md').read_text(encoding='utf8')
+        assert '输入要求 → 所选文件'in guide and 'input_dft'in guide and 'PBEsol'in guide
+        assert 'PAW/USPP'in guide and 'NC 证书不适用'in guide and '不表示任务仍在等待'in guide
         assert 'id="custom-materials"'in html and 'data-custom="levels"'in html
         assert 'example-carbon-scf.in'in html and 'example-custom-material-certificate.html'in html
         assert 'example-hydrogen-scf.in'in html and 'example-hydrogen-certificate.html'in html
@@ -130,7 +139,8 @@ def main():
         assert not re.search(r'sha.?256|digest|fingerprint|[0-9a-f]{64}|/home/|C:[/\\]Users',custom_text,re.I)
         custom=json.loads(custom_text)
         assert custom['schema']=='custom-qe-public-result.v1' and custom['status']=='COMPLETED'
-        assert custom['id']==release['actually_tested_custom_run']
+        assert custom['id']==release['published_custom_run']
+        assert release['published_example_client_version']==16
         for key in ('calculation_completed','numerical_scf_completed','native_operator_received','finite_point_spectrum_certified','finite_proof_recomputed'):assert custom[key] is True,key
         assert custom['infinite_scf_certified']is False and custom['full_chain_certified']is False
         assert 0<custom['points_certified']<=custom['points_requested']
