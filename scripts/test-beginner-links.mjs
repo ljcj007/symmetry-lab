@@ -15,7 +15,14 @@ globalThis.fetch=async url=>{
 globalThis.document={compatMode:'CSS1Compat',createElement:tag=>new Element(tag),activeElement:null};
 globalThis.localStorage={getItem:()=>null,setItem(){}};
 Object.defineProperty(Element.prototype,'firstElementChild',{configurable:true,get(){return this.children[0]??null;}});
-Element.prototype.insertAdjacentHTML=function(where,html){this.innerHTML=where==='afterbegin'?html+this.innerHTML:this.innerHTML+html;};
+Element.prototype.insertAdjacentHTML=function(where,html){
+ if(where==='afterend'){
+  const fragment=new Element();fragment.innerHTML=html;
+  const parent=this.parentNode;assert.ok(parent);
+  for(const child of fragment.children)child.parentNode=parent;
+  parent.children.splice(parent.children.indexOf(this)+1,0,...fragment.children);
+ }else this.innerHTML=where==='afterbegin'?html+this.innerHTML:this.innerHTML+html;
+};
 Element.prototype.focus=function(){document.activeElement=this;};
 Element.prototype.scrollIntoView=function(){};
 
@@ -57,7 +64,7 @@ pgTitle(basics,'group-basics');
 const composition=basics.querySelector('[data-composition-entry]');
 assert.equal(composition?.querySelector('summary')?.textContent,english?"Turn a square 90° and then reflect it. What changes if you swap the order?":"把正方形转 90° 再照镜子，交换顺序会怎样？");
 assert.equal(composition.open,false,'The optional square experiment stays collapsed on arrival');
-const sidebar=basics.querySelector('.classroom-topics');
+const sidebar=basics.querySelector('.classroom-topic-links');
 label(sidebar,pgAtlasRoute,english?'Look up the 32 point groups and character tables':'查 32 个点群与特征标表');
 assert.ok(link(sidebar,identifyRoute));
 const atlas=await mount(pgAtlasRoute);
@@ -70,7 +77,7 @@ assert.ok(identification.querySelector('[data-pointgroup-identify-entry]'));
 
 const space=await mount(spaceRoute);
 sgTitle(space,'space-01');
-const crystalSidebar=space.querySelector('.classroom-topics');
+const crystalSidebar=space.querySelector('.classroom-topic-links');
 label(crystalSidebar,spaceRoute,english?'First space-group lesson · From lattices to 230 space-group types':'空间群第一课 · 从晶格到 230 个空间群');
 label(crystalSidebar,blochRoute,english?'Little groups of k and Bloch phases':'k 小群与 Bloch 相位');
 assert.ok(link(crystalSidebar,'#classroom/crystal?tab=lab&experiment=seitz'));

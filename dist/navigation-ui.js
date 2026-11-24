@@ -1,12 +1,12 @@
 import {homeHTML} from './entry-home.js?v=20261122-nextpaths1';
 import {createResourceLoader,fetchJSON} from './resource-loader.js?v=20261110-en1';
-import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261122-exercise-cases1';
+import {classroomPathways,parseClassroomRoute,loadClassroomProgression} from './classroom-ui.js?v=20261124-teaching1';
 import {searchEntries,inputFormatSummary,searchCatalogEntries,matchNamedActivities} from './tool-search.js?v=20261122-start-crystal1';
 import {learningActivities} from './learning-activity-search.js?v=20261122-zno-gamma-nac1';
 import {buildWorkbenchRoute,parseWorkbenchCoordinate,parseWorkbenchSelection} from './workbench-route.js?v=20261122-nextpaths1';
 import {orderToolGroups,filterToolDirectory} from './tool-directory.js?v=20261122-start-crystal1';
 import {isFullMagneticGroupQuery} from './magnetic-group-query.js?v=20261121-msg-gamma1';
-import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261122-foundations-char2';
+import {getToolCapability,arithmeticLabels,arithmeticDescriptions} from './tool-capabilities.js?v=20261124-teaching1';
 import {ninejRoute,ninejDefaultExample,ninejBasisExamples,matchNinejExamples} from './su3-ninej-presets.js?v=20261122-start-crystal1';
 export {searchEntries};
 // Shared entry points. A tool keeps one implementation even when a lesson links to it.
@@ -206,7 +206,7 @@ function toolCard(item,favorites,{showScope=false,scopeOpen=false,query=''}={}){
  const exampleLinks=showScope?toolExamples(item,query).map(([params,label])=>link(`${item.route}?${params}`,esc(label),'nav-tool-example')).join(''):'';
  return `<article class="nav-tool-card">${link(item.route,`<span class="nav-card-kicker">${item.kind}</span>${badge}<h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p>${formatPurpose(item,query)}<span class="nav-card-go">打开工具 →</span>`)}${exampleLinks}${scope}<button type="button" class="nav-favorite" data-favorite="${esc(item.route)}" aria-pressed="${favorites.includes(item.route)}" aria-label="${favorites.includes(item.route)?'取消收藏':'收藏'}${esc(item.title)}">${favorites.includes(item.route)?'★':'☆'}</button></article>`;
 }
-const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261122-zno-gamma-nac1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
+const searchCatalog=createResourceLoader(async()=>{const data=await fetchJSON('data/search-index.json?v=20261124-teaching1');if(!Array.isArray(data.entries))throw Error('搜索目录格式不正确');return data.entries;});
 export function loadNavigationSearch(){return searchCatalog.get('all');}
 
 function orderedQuery(query){

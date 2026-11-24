@@ -71,8 +71,8 @@
       "sha256": "fd682cefc64a9c4e1ddb892182869918e31bf266d492ef79a4b5f617b397b46c"
     },
     "NOTICE.txt": {
-      "bytes": 15904,
-      "sha256": "57ff03245d66c8849550b534d24298a5a27ee00c9f04bd0b1b2fb3b3e0b06f91"
+      "bytes": 16319,
+      "sha256": "5dc7ceff1e01b3e26d1c07482951fc46195dc5b6fa2f5117cdc19b8b0c97e38b"
     },
     "dist/al-gamma-source.js": {
       "bytes": 3064,
@@ -83,8 +83,8 @@
       "sha256": "3d234314e6134f24d538324936ad55c068e5c6184f70ad1d35531f2db8f8a79c"
     },
     "dist/app.js": {
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/band-match-results.js": {
       "bytes": 1046,
@@ -107,8 +107,8 @@
       "sha256": "8afed2748460e6952886864a3266a39ae0602e7ffc1d8a580f6310b1e2aa2cb2"
     },
     "dist/classroom-ui.js": {
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -207,8 +207,8 @@
       "sha256": "2b3e0d61ce141465facb2da580c5a7c3b29efbba8b4664dd4cf1ba4feca85f58"
     },
     "dist/data/pointgroup-lessons.json": {
-      "bytes": 35682,
-      "sha256": "9ce858936683b5b9f2f77a4767eb9dd4998fa7d56d339be3dbc98ba80c5fdc11"
+      "bytes": 44659,
+      "sha256": "f0696139578c36cc5f0b35be880f026d99f2b55498811f2270a1359295eb3290"
     },
     "dist/data/principles-materials.json": {
       "bytes": 72367,
@@ -243,16 +243,16 @@
       "sha256": "91fed972192ad9b242990bfcf3c2cfd3b1e9f48512d5d095deed9436e0c3fc67"
     },
     "dist/docs/foundations-demos.md": {
-      "bytes": 16061,
-      "sha256": "5c8e96dc38fba3831d70dedac5f5d5a401d3c6f17eb20a45ac63aeb592aa0f9f"
+      "bytes": 16278,
+      "sha256": "d6bdce295862bf63ca8c61a696a2eb09bff01695c3a0708e4382b382dc51742d"
     },
     "dist/docs/frontiers.md": {
       "bytes": 5021,
       "sha256": "7c86eb35213e05805b111f71aaa33ffd266c58eb32a8d063ed699fd40c36d898"
     },
     "dist/docs/group-theorems.md": {
-      "bytes": 7752,
-      "sha256": "ed1c0f799951f76a401917ebfd3773340d880d4ddba5cd0cb2ac948d7eba560c"
+      "bytes": 8155,
+      "sha256": "ad59ce5afad64470f283332e3131a741ea213302a1fb4b86d24300d00dc8d5b7"
     },
     "dist/docs/phonopy-import.md": {
       "bytes": 19700,
@@ -343,8 +343,8 @@
       "sha256": "691ac26f95becef59c35f187b4fb10a5f4a3eb37a804d24228cd7fe5ebe2fa91"
     },
     "dist/foundations-demos.js": {
-      "bytes": 42468,
-      "sha256": "d293671599bfd5bd370a494b2703d0c5f8fc3f1ba94623b74410582d947899ad"
+      "bytes": 59215,
+      "sha256": "214c0e9f07812f40e0c04337d72c27843b6a15af33dedb97867e5e68a0c005bf"
     },
     "dist/friedel-pair-ui.js": {
       "bytes": 3036,
@@ -363,12 +363,12 @@
       "sha256": "2ba9205a8f4739e0fba2ab96bca4eee5208d1394a234b301be51ff048c70685a"
     },
     "dist/group-theorems.js": {
-      "bytes": 29180,
-      "sha256": "0a0a1635a0bae8b7395985cc7f4235b282fb712e5c05d8820f7551e80575c131"
+      "bytes": 28259,
+      "sha256": "92fb0cad8923b3474b826bbe67ca984cfb3f34bf953f3a3aab5294cc0b49ca80"
     },
     "dist/index.html": {
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/learning-activity-aliases.js": {
       "bytes": 2439,
@@ -387,12 +387,12 @@
       "sha256": "dae690760467b7bcadadcfd21e0dc29a6d93d1893d630ec1b57ab8ca95b13060"
     },
     "dist/lesson-topic-finder.js": {
-      "bytes": 1719,
-      "sha256": "23bc95d432d1614933be3c9f4afdc0d8d5549fb72b2e4f0aca8b2596ba6846f0"
+      "bytes": 1713,
+      "sha256": "2d7dedbb9554b3bfc6d6a367830ad0320b4576ce3fadd7e39abacc2189fc877e"
     },
     "dist/lie-physics-ui.js": {
-      "bytes": 21148,
-      "sha256": "704d689eb3e6191cc99cef1adee7197dcbcaf6a7c220d17c1e1f1ab92af72250"
+      "bytes": 21149,
+      "sha256": "38752e476d090bf20576bb81bb3bd7419e86cf690d2f0ae51034c62055a88ff4"
     },
     "dist/magnetic-group-query.js": {
       "bytes": 1319,
@@ -411,8 +411,8 @@
       "sha256": "dd95544be307bd1b593f1b7a9ef13343704578a291fcfafb60640f52f6cc6cf0"
     },
     "dist/navigation-ui.js": {
-      "bytes": 39245,
-      "sha256": "e1bdccf319ce118315550fd58e20c57844f93ed2315d36057565ef6d61a035dc"
+      "bytes": 39226,
+      "sha256": "5f6e77e24c3cc37fd98ff7cd17002cb820eec8a241c599990a541e38937f4443"
     },
     "dist/navigation.css": {
       "bytes": 8478,
@@ -435,20 +435,20 @@
       "sha256": "d20dc75ae31659709937eeaa1bc5edebc894b377e9dff4c8823fb4ed1e07cb9f"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 50428,
-      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83"
+      "bytes": 50714,
+      "sha256": "1427a63edb25254af40df38b5781bc3a8daf6c04fa9d292b8d82957f1ff8598a"
     },
     "dist/principles-ui.js": {
       "bytes": 20022,
       "sha256": "73eabdceb6b7e29572bcb604c4c520474f9d424c1598fd26668cf412b48c520c"
     },
     "dist/python-client.js": {
-      "bytes": 3139,
-      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
+      "bytes": 3140,
+      "sha256": "4bfa0ad97949fb369a24018e8df61c980ea3a31aecea1014a308146ada045105"
     },
     "dist/python-worker.js": {
-      "bytes": 12824,
-      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
+      "bytes": 13304,
+      "sha256": "af1047ca452a2770242f5a45242a9d4088a7a12fab96e63d559467a1ea20c65d"
     },
     "dist/python/atomic_spectra_lab.py": {
       "bytes": 19187,
@@ -483,8 +483,8 @@
       "sha256": "a8655606e6567c6e5de4b6e9f5c9c204cb945a726c891c15d17ae0dab8fdd3cf"
     },
     "dist/python/foundations_demos.py": {
-      "bytes": 19199,
-      "sha256": "2cb7cfd4f88c3e8e94eabc7d277876ef28cd2718e9f956f17b953aa79e2aefb1"
+      "bytes": 20103,
+      "sha256": "5182b29528b981c6e58ff20ff8215e9be36f5641515c2c8cde38a8c9e3588454"
     },
     "dist/python/group_extensions.py": {
       "bytes": 24875,
@@ -603,8 +603,8 @@
       "sha256": "c12fd845f510e177e6ea326e14d2f8e860aad6af16c259dc8b764dae4f84478a"
     },
     "dist/python/symmetry_mini_demos.py": {
-      "bytes": 11279,
-      "sha256": "f0b58aee1a06ed59e112ec2fcb3bc406b24191c1fa79e15dd5e7babe79c9b0cd"
+      "bytes": 12543,
+      "sha256": "2585f14983d453e86e4017fc238600c02fadbcf8e62b4856d5e6bb2c06dd9606"
     },
     "dist/python/symmetry_workshop.py": {
       "bytes": 7090,
@@ -671,16 +671,16 @@
       "sha256": "22538272ea95383bed78b2266c5984a50cb9706032bbb8ab2119c960cd845bbf"
     },
     "dist/su3-cg-ui.js": {
-      "bytes": 22382,
-      "sha256": "56ab642ec1bcee8cfa47f332252eaefbdb1928227c1da1c34adb1475a53cbfe9"
+      "bytes": 22411,
+      "sha256": "d1dc999ab7e9f2ddf28aacc703a6088563e1e5840dbabdbfbecab5d9879a8188"
     },
     "dist/su3-ninej-presets.js": {
       "bytes": 3126,
       "sha256": "7ea2ca9dee0b24139b0182d8ae53c885f71d64f9c489ebfd2f09184ae9c96fa4"
     },
     "dist/su3-ninej-ui.js": {
-      "bytes": 28454,
-      "sha256": "fd9545aa6ebaffa3388d453b042d5a24a4a339e3d44db1168cc09209834001d6"
+      "bytes": 28471,
+      "sha256": "66069a40a3342691aa72d6b16775aec595af2eb0ed1999e4857981b98a0d47ff"
     },
     "dist/su3-racah-ui.js": {
       "bytes": 21923,
@@ -691,12 +691,12 @@
       "sha256": "8dc6e18a1aff74111955ae63334122de159f7340eba5f322937a9554cd733d43"
     },
     "dist/symmetry-mini-demos.js": {
-      "bytes": 33021,
-      "sha256": "aa8d89fac088f4d3ef7bc339df7519f1f3b304f7e60e4284818595c0540bba30"
+      "bytes": 33094,
+      "sha256": "2f2f08c4e1559e4d051fa572007c99dc59281abe4bd81b8f01e009a7a1373aac"
     },
     "dist/tool-capabilities.js": {
-      "bytes": 45026,
-      "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
+      "bytes": 45036,
+      "sha256": "723ed622dcc9071aac0c7c6adfc7001c947bddc40f818dd39ade972e1d8827d3"
     },
     "dist/tool-finder.js": {
       "bytes": 14022,
@@ -955,8 +955,8 @@
       "sha256": "c7bacf2ba45e316bbeab9c1fba662157cba11b37a57286edb6ed3cd4d3fb4988"
     },
     "package.json": {
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-learning-routes-provenance.mjs": {
       "bytes": 28165,
@@ -971,8 +971,8 @@
       "sha256": "e312af4e3954a83b248ac1eaa220b80eb1d22b9993d88c9cbed7e7ff91f3321a"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/english-source.mjs": {
       "bytes": 5608,
@@ -1027,8 +1027,8 @@
       "sha256": "36a7e29fb0542aecbff920aade9e0ab9da9b048b40fc9b7d704e8713051997fa"
     },
     "scripts/test-beginner-links.mjs": {
-      "bytes": 5952,
-      "sha256": "faaf05603b6426b6ab3aa5edb5c0e42919c24917c4c2ffe01c824ab1dedce5b4"
+      "bytes": 6248,
+      "sha256": "204e398633a3e26a28c35f95d4bb10a57d7c903427518513b56f976011184dc1"
     },
     "scripts/test-cif-setting-lesson.mjs": {
       "bytes": 9839,
@@ -1083,8 +1083,8 @@
       "sha256": "56e0fb7862cdea5bc4d63a6061d4f17d643099496be99c1723a73fbb18ed2679"
     },
     "scripts/test-foundations-demos.mjs": {
-      "bytes": 14691,
-      "sha256": "fcb2d1e0806f7405059a90a9b4d6d464e6daf771b24dce240f020808034fe3be"
+      "bytes": 14484,
+      "sha256": "9cf3c4dfa766fa8d78a0f867a8f271300ff441c65b602d1b64dabe6a913e6a59"
     },
     "scripts/test-foundations-routing.mjs": {
       "bytes": 2492,
@@ -1107,8 +1107,8 @@
       "sha256": "926c3eacc5773b78c3c78786d812cd6e8202678f2f85811d47b0ef6127dda283"
     },
     "scripts/test-group-theorems.mjs": {
-      "bytes": 5896,
-      "sha256": "4493f463a9a235cd22d275a725bdba055da4d1e31b0c6ebeb210a88828eeedd4"
+      "bytes": 5719,
+      "sha256": "28cfbac7dcdf28b785a3d77300c47ba23901f4b7b7ea7cd629d1d91246dd520b"
     },
     "scripts/test-infinite-scalar-controls.mjs": {
       "bytes": 4043,
@@ -1351,8 +1351,8 @@
       "sha256": "e8bd32cb15d4aa7d3e5052fe08472d568d4e23d18f3f705820ec2261152278b6"
     },
     "scripts/test-symmetry-mini-demos.mjs": {
-      "bytes": 9777,
-      "sha256": "3613a9c63ec99364af26b7ce1dc1df3b6fd6553013f8ab57898885ac87620789"
+      "bytes": 7080,
+      "sha256": "66f1fc211e621127a8fbc112fb89dbed12035e48239d8bc94a8aa68d40a2b6f4"
     },
     "scripts/test-tool-finder.mjs": {
       "bytes": 13632,

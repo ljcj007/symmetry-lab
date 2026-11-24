@@ -52,12 +52,15 @@ function fixture(){
  const root={listeners:{},nodes:new Map(),_html:'',set innerHTML(v){this._html=v;this.nodes=new Map();},get innerHTML(){return this._html;},addEventListener(t,f){this.listeners[t]=f;},querySelector(s){if(!this.nodes.has(s))this.nodes.set(s,{innerHTML:'',textContent:'',disabled:false});return this.nodes.get(s);},querySelectorAll(){return [];}};
  return {root,container:{isConnected:true,firstElementChild:root,set innerHTML(v){this.firstElementChild=root;}}};
 }
-let resolveRun;const f=fixture();await renderGroupTheoremsView({container:f.container,selection:{experiment:'degeneracy'},run:()=>new Promise(resolve=>{resolveRun=resolve;})});
-const action=()=>({target:{closest:s=>s==='[data-action]'?{dataset:{action:'python'}}:null}});
-const pending=f.root.listeners.click(action());f.root.listeners.input({target:{tagName:'INPUT',dataset:{param:'epsilon'},value:'.2'}});resolveRun({checks:{passed:true},stale:true});await pending;
-assert.equal(getGroupTheoremsResult().input.epsilon,.2);assert.equal(getGroupTheoremsResult().tool,'group_theorems_preview');
-const pendingTab=f.root.listeners.click(action());await f.root.listeners.click({target:{closest:s=>s==='[data-theme]'?{dataset:{theme:'normal'}}:null}});resolveRun({checks:{passed:true},stale:true});await pendingTab;
-assert.equal(getGroupTheoremsResult().input.experiment,'normal');assert.equal(getGroupTheoremsResult().tool,'group_theorems_preview');
+let runtimeCalls=0;const f=fixture();await renderGroupTheoremsView({container:f.container,selection:{experiment:'degeneracy'},run:()=>{runtimeCalls++;throw Error('The basic theorem experiment must not load Python.');}});
+assert.doesNotMatch(f.root.innerHTML,/data-action="python"|gt-python/);
+assert.match(f.root.innerHTML,/逐步证明/);
+f.root.listeners.input({target:{tagName:'INPUT',dataset:{param:'epsilon'},value:'.2'}});
+assert.equal(getGroupTheoremsResult().input.epsilon,.2);
+assert.equal(getGroupTheoremsResult().result.protectedE,false);
+f.root.listeners.click({target:{closest:s=>s==='[data-theme]'?{dataset:{theme:'normal'}}:null}});
+assert.equal(getGroupTheoremsResult().input.experiment,'normal');
+assert.equal(runtimeCalls,0);
 assert.match(f.root.innerHTML,/<select data-param="subgroup" aria-label="待检查子群"/);
 assert.match(f.root.innerHTML,/docs\/group-theorems\.md/);
-console.log(`Nine group theorem demonstrations: ${cases.length} JavaScript/Python comparisons, SVG/TeX and stale-result isolation passed.`);
+console.log(`Nine group theorem demonstrations: ${cases.length} JavaScript/Python comparisons, SVG/TeX, full proofs and runtime-free classroom interaction passed.`);

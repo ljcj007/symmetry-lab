@@ -121,6 +121,16 @@ def water_demo(params=None):
         patterns[key] = u
         residuals[key] = {"translation": max(abs(sum(m*v[j] for m, v in zip(mass, u))) for j in range(3)),
                           "rotation": abs(sum(m*(r[2]*v[0]-r[0]*v[2]) for m, r, v in zip(mass, centered, u)))}
+    # Two copies of A1 need not be orthogonal merely because each has no rigid
+    # motion. Choose a mass-orthogonal internal basis; a force field can still
+    # mix these two copies when it selects the physical normal modes.
+    def mass_inner(left,right):
+        return sum(m*sum(x*y for x,y in zip(u,v)) for m,u,v in zip(mass,left,right))
+    coefficient=mass_inner(patterns["bend"],patterns["symmetric"])/mass_inner(patterns["symmetric"],patterns["symmetric"])
+    bend=[[x-coefficient*y for x,y in zip(u,v)] for u,v in zip(patterns["bend"],patterns["symmetric"])]
+    bend_scale=max(math.sqrt(sum(x*x for x in row)) for row in bend)
+    patterns["bend"]=[[x/bend_scale for x in row] for row in bend]
+    mass_normalized={key:[[x/math.sqrt(mass_inner(pattern,pattern)) for x in row] for row in pattern] for key,pattern in patterns.items()}
     scale = amplitude*math.sin(math.radians(phase))
     positions = [[r[j]+scale*u[j] for j in range(3)] for r, u in zip(sites, patterns[mode])]
     fixed, vector = [3, 1, 3, 1], [3, -1, 1, 1]
@@ -138,9 +148,9 @@ def water_demo(params=None):
                 "characters": {"fixed": fixed, "vector": vector, "displacement": displacement, "translation": trans, "rotation": rot, "vibration": vib},
                 "decomposition": {"displacement": _reduce(displacement, [1]*4, C2V_ROWS), "translation": _reduce(trans, [1]*4, C2V_ROWS), "rotation": _reduce(rot, [1]*4, C2V_ROWS), "vibration": decomp},
                 "atoms": [{"element": "O", "mass": 16.}, {"element": "H", "mass": 1.}, {"element": "H", "mass": 1.}],
-                "equilibrium": sites, "positions": positions, "displacements": patterns[mode], "patterns": patterns,
+                "equilibrium": sites, "positions": positions, "displacements": patterns[mode], "patterns": patterns,"massNormalizedPatterns":mass_normalized,
                 "modes": mode_rows, "mode": mode, "selection": next(row for row in mode_rows if row["id"] == mode),
-                "modelNote": "Schematic symmetry-adapted motions, with rigid translation and rotation removed; no force constants, frequencies or absolute intensities are computed. A1 motions can mix in true normal modes.",
+                "modelNote": "Mass-orthogonal schematic symmetry-adapted motions, with rigid translation and rotation removed; no force constants, frequencies or absolute intensities are computed. A1 motions can mix in true normal modes.",
                 "checks": {"passed": decomp == {"A1": 2, "A2": 0, "B1": 1, "B2": 0} and all(max(v.values()) < 1e-10 for v in residuals.values()), "rigidResiduals": residuals, "vibrationalDimensions": sum(decomp.values())}})
     return out
 

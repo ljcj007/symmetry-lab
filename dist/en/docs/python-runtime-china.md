@@ -1,0 +1,21 @@
+# Python runtime hosted with this site
+
+The interpreter, standard library, NumPy, SymPy, mpmath and PyYAML are included with the website under `vendor/pyodide/314.0.7/`. Both language editions share this runtime. The first calculation downloads resources from the current website; it makes no requests to jsDelivr. Pyodide 314.0.7, CPython 3.14.2 and the `pyemscripten_2026_0` ABI remain pinned to keep the interpreter and wheels compatible.
+
+`python-runtime.mjs` explicitly sets same-origin `indexURL`, `packageBaseUrl` and `stdLibURL` values and supplies a lock file containing only the four included packages. Package paths must be local filenames, and dependencies must belong to this allowlist. The complete upstream lock is preserved as `upstream-lock.json`. Pyodide package integrity checks remain enabled. Missing packages produce an error without falling back to an overseas source. Interpreter loading has a 120-second limit. Failed or timed-out attempts are cleared so the next calculation can retry. Worker requests run sequentially.
+
+An actual GET check on 24 November 2026 confirmed that the [pyodide 314.0.7 npm package](https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz) provided by China's [npmmirror service](https://npmmirror.com/) returned HTTP 200, redirected to its `cdn.npmmirror.com/packages/` path and allowed cross-origin reads from this website's Origin. Its integrity matched the pinned npm SHA-512, and the four core files matched the preserved cache byte for byte. The plausible `npmmirror.com/mirrors/pyodide/v314.0.7/full/pyodide.mjs` path returned 404; simply replacing the CDN domain would fail. The npm package contains only the core files, so the scientific package wheels must also be included.
+
+The three cached wheels matched the SHA-256 values in the original upstream lock. The missing PyYAML 6.0.3 wheel was downloaded from the pinned upstream URL, which returned HTTP 200 with CORS `*`; its SHA-256 also matched the original lock. These are build-time acquisition sources. Student calculations fetch everything from this website. See [runtime-manifest.json](../../vendor/pyodide/314.0.7/runtime-manifest.json) for individual sources, sizes, hashes and HTTP records, and [NOTICE.txt](../../vendor/pyodide/314.0.7/NOTICE.txt) for copyright notices and source links. The runtime resources and extracted licenses total approximately 21.37 MB in uncompressed static files, using decimal units; other website assets are excluded.
+
+Offline verification and maintenance commands:
+
+```powershell
+python scripts/vendor-python-runtime.py --check
+node scripts/test-python-runtime.mjs
+node scripts/test-python-runtime-browser.mjs "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+```
+
+The first command verifies every saved resource without changing files or using the network. The browser test uses a fresh hidden Chromium/Edge profile with third-party networking blocked. It calculates double-well stationary points, solves a NumPy phonon eigenproblem and imports Phonopy data through PyYAML. It also injects interpreter import and wheel download failures to verify that the same Worker can retry. To acquire the pinned resources again, run `python scripts/vendor-python-runtime.py --cache <existing pinned cache directory>`; omit the cache argument to download the wheels from their fixed upstream URLs. The script verifies the pinned tarball, lock and wheel hashes without upgrading versions.
+
+This change removes the first-load dependency on third-party runtime domains. Visitors must still be able to reach the website's own domain. This work did not test representative mainland China ISP networks, deploy the site or establish that the existing GitHub Pages domain is reliably reachable throughout mainland China. The same static website can be hosted on a university server or another server reachable from mainland China without rewriting resource paths. Preserve the directory structure and serve `.mjs` files with a JavaScript MIME type and `.wasm` files as `application/wasm`. Official deployment and configuration references: [pinned JavaScript API](https://pyodide.org/en/314.0.7/usage/api/js-api.html) and [Pyodide deployment guide](https://pyodide.org/en/stable/usage/downloading-and-deploying.html).

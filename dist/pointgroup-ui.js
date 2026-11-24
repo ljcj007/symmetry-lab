@@ -4,6 +4,7 @@ import {matrixBridgeHTML,bindMatrixBridge} from './matrix-bridges.js?v=20261113-
 import {renderChoiceFeedback,bindChoiceFeedback} from './learning-feedback.js?v=20261113-flow1';
 import {complexCharacterCheckpointHTML,bindComplexCharacterCheckpoint} from './complex-character-checkpoint.js?v=20261122-complexchar1';
 import {c4vCrosswalkEntryHTML,bindC4vCrosswalk} from './c4v-character-crosswalk.js?v=20261122-lessonhandoff1';
+import {pointgroupLessonInteractionHTML,bindPointgroupLessonInteraction} from './pointgroup-lessons-interactive.js?v=20261124-teaching1';
 // A local, self-contained teaching surface. Calculations below are Cartesian
 // matrix operations on the verified atlas, not a second crystallographic engine.
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -16,11 +17,12 @@ let dataPromise, loaded;
 const compositionState=new Map();
 const representationActionsState=new Map();
 const pointgroupIdentifyState=new Map();
+const lessonInteractionState=new Map();
 let pointgroupIdentifyOpen=false;
 let compositionModulePromise,previousCompositionCleanup=()=>{};
 const defaultCompositionLoader=()=>compositionModulePromise||(compositionModulePromise=import('./composition-ui.js?v=20261116-composition1').catch(error=>{compositionModulePromise=null;throw error;}));
 const defaultRepresentationActionsLoader=()=>import('./representation-actions-ui.js?v=20261117-rep1');
-const defaultPointgroupIdentifyLoader=()=>import('./pointgroup-identify-ui.js?v=20261119-pointgroups1');
+const defaultPointgroupIdentifyLoader=()=>import('./pointgroup-identify-ui.js?v=20261124-teaching1');
 export function compositionEntryHTML(lessonId,opened=false){
   return lessonId==='group-basics'?`<details class="cpx-entry" data-composition-entry${opened?' open':''}><summary>把正方形转 90° 再照镜子，交换顺序会怎样？</summary><p>用导学里的正方形比较两个顺序怎样移动同一个点。再用结果理解矩阵乘法、封闭性和逆操作。</p><div data-composition-body></div></details>`:'';
 }
@@ -28,7 +30,7 @@ export function representationActionsEntryHTML(lessonId,opened=false){
   return ['representations','character-reduction'].includes(lessonId)?`<details class="rpa-entry" data-representation-actions-entry${opened?' open':''}><summary>这些矩阵真的构成表示吗？</summary><p>先跟踪基矢，再检验全部操作的乘法；比较统一换基与只改一项矩阵，解释为什么相同特征标还不够。</p><div data-representation-actions-body></div></details>`:'';
 }
 export function pointgroupIdentifyEntryHTML(lessonId,opened=false){
-  return lessonId==='thirty-two'?`<details class="pg-identify-entry" data-pointgroup-identify-entry${opened?' open':''}><summary>从操作证据识别晶体点群</summary><p>观察旋转、镜面和反演，判断现有证据能否确定一个点群，再到图谱核对。</p><div data-pointgroup-identify-body></div></details>`:'';
+  return lessonId==='thirty-two'?`<details class="pg-identify-entry" data-pointgroup-identify-entry${opened?' open':''}><summary>进阶：把判据用于全部 32 个点群</summary><p>先完成本页的有提示对照，再逐项读取操作证据；证据不全时应保留多个候选，到图谱核对完整操作。</p><div data-pointgroup-identify-body></div></details>`:'';
 }
 try { const saved=JSON.parse(localStorage.getItem(storageKey)||'{}'); if(saved&&typeof saved==='object'&&!Array.isArray(saved))state.answers=saved; } catch { /* Private browsing can disable storage. */ }
 const persist = () => { try { localStorage.setItem(storageKey,JSON.stringify(state.answers)); } catch { /* Progress remains in memory. */ } };
@@ -63,7 +65,7 @@ const correctCount = entries => entries.filter(({quiz,key})=>state.answers[key]?
 
 async function load() {
   if(!dataPromise)dataPromise=Promise.all(['pointgroup-lessons.json','pointgroup-atlas.json'].map(async file=>{
-    const response=await fetch('./data/'+file+'?v=20261113-flow1');
+    const response=await fetch('./data/'+file+'?v=20261124-teaching1');
     if(!response.ok)throw Error('教学数据未能载入（HTTP '+response.status+'）。');
     return response.json();
   })).then(([lessons,atlas])=>{
@@ -89,7 +91,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const root=container.firstElementChild;
   let disposed=false,retryCleanup=null;
   const current=()=>!disposed&&revision===state.revision&&root.parentNode===container&&container.isConnected!==false;
-  let disposeBridges=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,disposeRepresentation=()=>{},representationTicket=0,representationDetail=null,representationLesson=null,representationOpening=null,representationBound=false,detachObserver;
+  let disposeBridges=()=>{},disposeLessonInteraction=()=>{},disposeFeedback=[],disposeComposition=()=>{},compositionTicket=0,disposeRepresentation=()=>{},representationTicket=0,representationDetail=null,representationLesson=null,representationOpening=null,representationBound=false,detachObserver;
   let disposeIdentify=()=>{};
   const clearIdentify=()=>{disposeIdentify();disposeIdentify=()=>{};};
   const clearComposition=()=>{compositionTicket++;disposeComposition();disposeComposition=()=>{};};
@@ -100,7 +102,7 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
   const cleanupCompositionView=()=>{clearComposition();clearRepresentation();clearIdentify();detachObserver?.disconnect();};
   previousCompositionCleanup=cleanupCompositionView;
   if(typeof MutationObserver==='function'){detachObserver=new MutationObserver(()=>{if(!current())cleanupCompositionView();});detachObserver.observe(container.ownerDocument?.documentElement||container,{childList:true,subtree:true});}
-  const clearLearningSupport=()=>{clearComposition();clearRepresentation();clearIdentify();disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
+  const clearLearningSupport=()=>{clearComposition();clearRepresentation();clearIdentify();disposeLessonInteraction();disposeLessonInteraction=()=>{};disposeBridges();disposeBridges=()=>{};for(const dispose of disposeFeedback)dispose();disposeFeedback=[];};
   function disposeView(){
     if(disposed)return;disposed=true;
     const child=retryCleanup;retryCleanup=null;if(typeof child==='function')child();
@@ -175,15 +177,17 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       return `<button type="button" class="${i===state.lesson?'active':''}" data-lesson="${i}" ${i===state.lesson?'aria-current="step"':''}><span class="pg-lesson-number">${String(i+1).padStart(2,'0')}</span><span>${esc(shortLessonTitle(item))}<small>${complete?'✓ 自测已掌握':esc(item.summary||'')}</small></span></button>`;
     }).join('')}</aside><article class="pg-lesson"><div class="pg-lesson-heading"><span class="pg-kicker">单元 ${String(state.lesson+1).padStart(2,'0')} / ${lessons.lessons.length}</span><h2>${esc(lesson.title)}</h2><p>${esc(lesson.summary||'')}</p></div>
       ${(lesson.objectives||[]).length?`<div class="pg-objectives"><h3>学完这一节，你能</h3><ul>${lesson.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${pointgroupLessonInteractionHTML(lesson.id)}
       ${pointgroupIdentifyEntryHTML(lesson.id,pointgroupIdentifyOpen)}
-      ${representationActionsEntryHTML(lesson.id,representationActionsState.get('host:'+lesson.id)?.open===true)}
-      ${matrixBridgeHTML(lesson.id)}
-      ${compositionEntryHTML(lesson.id,compositionState.get('host:group-basics')?.open===true)}
       ${(lesson.sections||[]).map((section,i)=>`<section class="pg-lesson-section"><h3><span>${String(i+1).padStart(2,'0')}</span>${esc(section.title)}</h3>${(section.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${section.formula?`<pre class="pg-formula">${esc(section.formula)}</pre>`:''}</section>`).join('')}
-      ${["representations","character-reduction","projection","selection-rules","thirty-two"].includes(lesson.id)?`<aside class="notice"><strong>配套交互教学演示</strong><p>把这节课的符号、矩阵与物理图像放在一起操作。</p><a href="#classroom/foundations?module=demos&experiment=${({representations:"characters","character-reduction":"characters",projection:"projection","selection-rules":"water","thirty-two":"macro"})[lesson.id]}">打开本节交互演示 →</a></aside>`:""}
       ${lesson.example?`<section class="pg-worked"><span class="pg-kicker">一步一步推演</span><h3>${esc(lesson.example.title)}</h3><ol>${(lesson.example.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="pg-example-result">${esc(lesson.example.result)}</p></section>`:''}
       ${c4vCrosswalkEntryHTML(lesson.id)}
       ${complexCharacterCheckpointHTML(lesson.id)}
+      <div class="pgl-further">
+      ${representationActionsEntryHTML(lesson.id,representationActionsState.get('host:'+lesson.id)?.open===true)}
+      ${matrixBridgeHTML(lesson.id)}
+      ${compositionEntryHTML(lesson.id,compositionState.get('host:group-basics')?.open===true)}
+      </div>
       ${lesson.pitfall?`<aside class="pg-pitfall"><strong>容易混淆的地方</strong><p>${esc(lesson.pitfall)}</p></aside>`:''}
       ${lesson.id==='from-point-to-space'?`<section class="pg-worked" aria-label="从点群到晶体计算" data-si-structure-practice>
         <h3>把这一课接到实际工具</h3><p>先统一晶胞和波矢坐标，再比较表示。SG 99 的 Γ 点使用 BC 原胞倒易分数坐标 k=(0,0,0)，这里先打开单值表示。</p>
@@ -192,6 +196,8 @@ export async function renderPointgroupView({container,toast=()=>{},download=()=>
       </section>`:''}
       <div class="pg-reference"><strong>参考阅读</strong>${(lesson.references||[]).map(ref=>`<span>${esc(ref.chapter)}${ref.printedPages?' · 书页 '+esc(ref.printedPages):''}${ref.pdfPages?' · PDF 页 '+esc(ref.pdfPages):''}</span>`).join('')}</div>
       <div class="pg-lesson-actions"><button type="button" class="secondary" id="pg-lesson-quiz">本节自测 →</button><button type="button" class="secondary" id="pg-lesson-lab">${starter?'重放例题的四重旋转 →':'动手操作对称变换'}</button>${state.lesson+1<lessons.lessons.length?'<button type="button" class="primary" id="pg-next-lesson">下一单元 →</button>':''}</div></article></div>`;
+    const interactionRoot=$('[data-pointgroup-lesson-interaction]');
+    if(interactionRoot)disposeLessonInteraction=bindPointgroupLessonInteraction({root:interactionRoot,lessonId:lesson.id,stateStore:lessonInteractionState,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id&&$('[data-pointgroup-lesson-interaction]')===interactionRoot});
     disposeBridges=bindMatrixBridge({root:$('.pg-content'),lessonId:lesson.id,isCurrent:()=>current()&&state.tab==='learn'&&lessons.lessons[state.lesson]?.id===lesson.id});
     const characterCheckpoint=$('[data-complex-character-body]');
     if(characterCheckpoint)bindComplexCharacterCheckpoint({root:characterCheckpoint,atlas,isCurrent:()=>current()&&$('[data-complex-character-body]')===characterCheckpoint});

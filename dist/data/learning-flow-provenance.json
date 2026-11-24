@@ -33,16 +33,16 @@
       "sha256": "fd682cefc64a9c4e1ddb892182869918e31bf266d492ef79a4b5f617b397b46c"
     },
     "dist/app.js": {
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/bridges-ui.js": {
       "bytes": 17294,
       "sha256": "a1d3a4c386f2886808f5c119121103683dc05a67d07da127db509af63d9274a6"
     },
     "dist/classroom-ui.js": {
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/classroom.css": {
       "bytes": 8608,
@@ -73,8 +73,8 @@
       "sha256": "2a9342d5551803e28e85c365368068133e8a881114db04e7227a966381993e00"
     },
     "dist/data/pointgroup-lessons.json": {
-      "bytes": 35682,
-      "sha256": "9ce858936683b5b9f2f77a4767eb9dd4998fa7d56d339be3dbc98ba80c5fdc11"
+      "bytes": 44659,
+      "sha256": "f0696139578c36cc5f0b35be880f026d99f2b55498811f2270a1359295eb3290"
     },
     "dist/data/response-materials.json": {
       "bytes": 59295,
@@ -97,8 +97,8 @@
       "sha256": "117c77b7273b5a9f1d1256c391692eede6205976f090f450ac1a7bd86339a2bf"
     },
     "dist/index.html": {
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/learning-feedback.js": {
       "bytes": 4472,
@@ -137,8 +137,8 @@
       "sha256": "a4832c14846c3edd0d206353935c58b5339d4eda2758bf2b55fc20e45eca995a"
     },
     "dist/pointgroup-ui.js": {
-      "bytes": 50428,
-      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83"
+      "bytes": 50714,
+      "sha256": "1427a63edb25254af40df38b5781bc3a8daf6c04fa9d292b8d82957f1ff8598a"
     },
     "dist/principles-ui.js": {
       "bytes": 20022,
@@ -173,16 +173,16 @@
       "sha256": "614cca565ad1ce9a78026b3207505384d77777bce38d31530148ab3fc4e6aaff"
     },
     "package.json": {
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-learning-flow-provenance.mjs": {
       "bytes": 5216,
       "sha256": "20d87a77010fd2966af24b2e871828b6fdd5e1b297a02a1afc3ba556c5a0d4cc"
     },
     "scripts/english-catalog.mjs": {
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/test-course-flow.mjs": {
       "bytes": 18069,

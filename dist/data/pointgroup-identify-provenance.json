@@ -40,13 +40,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/crystal-notation.js": {
       "normalization": "utf8-lf-v1",
@@ -65,13 +65,13 @@
     },
     "dist/data/pointgroup-lessons.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 35682,
-      "sha256": "9ce858936683b5b9f2f77a4767eb9dd4998fa7d56d339be3dbc98ba80c5fdc11"
+      "bytes": 44659,
+      "sha256": "f0696139578c36cc5f0b35be880f026d99f2b55498811f2270a1359295eb3290"
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 407105,
-      "sha256": "6a3dd8e965758f87bb5c89a33bfde1de847fde1040646922835331dab8864fd1"
+      "bytes": 407206,
+      "sha256": "f48cd70b7703f62a528b78f3f2a3f837971ac41ed053111a0700e41ecd7a4187"
     },
     "dist/data/space-groups.json": {
       "normalization": "utf8-lf-v1",
@@ -85,8 +85,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -100,8 +100,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 39245,
-      "sha256": "e1bdccf319ce118315550fd58e20c57844f93ed2315d36057565ef6d61a035dc"
+      "bytes": 39226,
+      "sha256": "5f6e77e24c3cc37fd98ff7cd17002cb820eec8a241c599990a541e38937f4443"
     },
     "dist/pointgroup-identify-core.js": {
       "normalization": "utf8-lf-v1",
@@ -110,8 +110,8 @@
     },
     "dist/pointgroup-identify-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 21440,
-      "sha256": "9dd0cf45a68aa9ebf720db0e51a3682e9abd48d8ccdbb7126fa3c9c09298ddf6"
+      "bytes": 21894,
+      "sha256": "36f8edfdf2816b0c9ac191ff83f38946f8faab0962bb9b50210de05d61c74343"
     },
     "dist/pointgroup-identify.css": {
       "normalization": "utf8-lf-v1",
@@ -120,13 +120,13 @@
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50428,
-      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83"
+      "bytes": 50714,
+      "sha256": "1427a63edb25254af40df38b5781bc3a8daf6c04fa9d292b8d82957f1ff8598a"
     },
     "dist/pointgroup.css": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19724,
-      "sha256": "dc68dc811c86a8291de8b98a195053ca21e21659a2a6326e384a8d7a7ad4065f"
+      "bytes": 24684,
+      "sha256": "04124e3564febf0e4be6a400a7c0f21b231398b529ecf20161316e6cbe118ae1"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
@@ -155,13 +155,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10478,
-      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
+      "bytes": 10554,
+      "sha256": "b71a1aeeba0debc1d444e5035900a630606ef51f649981a967b5636a34bf9fea"
     },
     "scripts/build-pointgroup-course.py": {
       "normalization": "utf8-lf-v1",
@@ -185,8 +185,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/package-source.py": {
       "normalization": "utf8-lf-v1",
@@ -215,8 +215,8 @@
     },
     "scripts/test-pointgroup-identify-host.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10442,
-      "sha256": "739742611916dd3f35b17fde94288cbdc15df9dea39d9463ab4a15fc9f6498df"
+      "bytes": 10723,
+      "sha256": "ebacdddd646df78867c307e5ffc7bfe491ee4a6a63823d02a213988f64b406de"
     },
     "scripts/test-pointgroup-identify-ui.mjs": {
       "normalization": "utf8-lf-v1",

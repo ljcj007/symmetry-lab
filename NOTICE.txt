@@ -252,3 +252,6 @@ file was not used. Original pedagogical activities, independent eigenpair
 and displacement checks, and a reproducible offline script accompany the
 data. They do not establish convergence of the original force calculation,
 phonon intensities, a relaxed distortion or a general C6v label classifier.
+
+Self-hosted browser Python runtime (2026-11-24)
+Pyodide 314.0.7 / CPython 3.14.2 and four unchanged scientific wheels are included under dist/vendor/pyodide/314.0.7/. Their upstream licenses, corresponding source links, exact versions, retrieval sources and checksums are provided in that directory, especially NOTICE.txt and runtime-manifest.json. No third-party CDN request is required for these runtime assets.

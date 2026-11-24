@@ -1,0 +1,71 @@
+{
+  "info": {
+    "abi_version": "2026_0",
+    "arch": "wasm32",
+    "platform": "emscripten_5_0_3",
+    "python": "3.14.2"
+  },
+  "packages": {
+    "numpy": {
+      "depends": [],
+      "file_name": "numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "imports": [
+        "numpy"
+      ],
+      "install_dir": "site",
+      "name": "numpy",
+      "package_type": "package",
+      "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+      "tool": {},
+      "unvendored_tests": false,
+      "version": "2.4.6"
+    },
+    "sympy": {
+      "depends": [
+        "mpmath"
+      ],
+      "file_name": "sympy-1.14.0-py3-none-any.whl",
+      "imports": [
+        "isympy",
+        "sympy"
+      ],
+      "install_dir": "site",
+      "name": "sympy",
+      "package_type": "package",
+      "sha256": "61ea8bb98049ba1c702ba3ad2607acb7ab94b9af0b6f97498741f50d3249f428",
+      "tool": {},
+      "unvendored_tests": true,
+      "version": "1.14.0"
+    },
+    "mpmath": {
+      "depends": [],
+      "file_name": "mpmath-1.4.1-py3-none-any.whl",
+      "imports": [
+        "mpmath"
+      ],
+      "install_dir": "site",
+      "name": "mpmath",
+      "package_type": "package",
+      "sha256": "e5ebd537e74b9066341a5152e83b63ff2fc37a6388fa7351e766b6e4640f7eee",
+      "tool": {},
+      "unvendored_tests": true,
+      "version": "1.4.1"
+    },
+    "pyyaml": {
+      "depends": [],
+      "file_name": "pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "imports": [
+        "_yaml",
+        "yaml"
+      ],
+      "install_dir": "site",
+      "name": "pyyaml",
+      "package_type": "package",
+      "sha256": "a05d2a48c13ed72a8c60c73b30b753a25c3a591bb66c15428b7e95e69a9e806f",
+      "tool": {},
+      "unvendored_tests": false,
+      "version": "6.0.3"
+    }
+  },
+  "tool": {}
+}

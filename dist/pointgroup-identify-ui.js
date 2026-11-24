@@ -29,9 +29,9 @@ const vectorText = vector => '(' + vector.map(countText).join(', ') + ')';
 const pad = n => String(n).padStart(2, '0');
 
 const modes = [
-  {id: 'starter', text: '入门题', symbols: ['m', '2', '2/m', 'mm2', '222', '-1']},
-  {id: 'compare', text: '易混点群对照', symbols: ['4mm', '-42m', '6', '-6', '432', '-43m', '222', 'mm2']},
-  {id: 'all', text: '全部 32 个点群'}
+  {id: 'starter', text: '基本操作与二重轴：6 个案例', symbols: ['m', '2', '2/m', 'mm2', '222', '-1']},
+  {id: 'compare', text: '旋转与反常操作对照：8 个案例', symbols: ['4mm', '-42m', '6', '-6', '432', '-43m', '222', 'mm2']},
+  {id: 'all', text: '进阶：完整 32 类'}
 ];
 const axes = ['x', 'y', 'z'];
 const labels = {
@@ -283,13 +283,14 @@ export function bindPointgroupIdentify({root, atlas, openGroup, stateStore, isCu
     const answerOptions = groupOptions(catalog.groups, atlasGroups, draft.answer);
 
     root.innerHTML = '<div class="pgi-workshop"><div class="pgi-section"><div class="pgi-controls">' +
-      '<label for="pgi-mode">题组<select id="pgi-mode">' +
+      '<h4>用操作证据逐步缩小候选</h4><p>先按矩阵跟踪一根基向量，再辨认旋转、镜面或反演。操作未列完时，只能排除与已见证据冲突的群；完整清单才能用“某类操作不存在”排除候选。初步判断可以留空。</p>' +
+      '<label for="pgi-mode">练习范围<select id="pgi-mode">' +
       modes.map(entry => selectOption(entry.id, entry.text, mode.id)).join('') + '</select></label>' +
-      '<label for="pgi-case">未知点群<select id="pgi-case">' +
-      exercises.map(entry => selectOption(entry.id, '练习 ' + pad(catalog.exercises.indexOf(entry) + 1), exercise.id)).join('') +
+      '<label for="pgi-case">操作证据案例<select id="pgi-case">' +
+      exercises.map(entry => selectOption(entry.id, '案例 ' + pad(catalog.exercises.indexOf(entry) + 1) + ' · 先观察，再命名', exercise.id)).join('') +
       '</select></label></div>' +
-      '<label for="pgi-predict">先猜一个点群<select id="pgi-predict">' + options + '</select></label>' +
-      '<p>先留下猜测，再用矩阵和操作计数核对。每题从同一个点群中展示不同数量的操作。</p></div>' +
+      '<label for="pgi-predict">初步判断（可跳过）<select id="pgi-predict">' + options + '</select></label>' +
+      '<p>解题顺序：先找正旋转的阶数，再找镜面的方向和反演，最后检查完整计数。可以随时展开候选列表，把名称与操作证据对应起来。</p></div>' +
       inspectHTML(operations, geometry, before, after, operation, draft) +
       evidenceHTML(evidence, operations, groupOrder, groups, draft) +
       reviewHTML(groups, target, evidence, groupOrder, answerOptions, draft) + '</div>';

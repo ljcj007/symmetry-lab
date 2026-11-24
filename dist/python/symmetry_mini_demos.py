@@ -94,8 +94,28 @@ def vibrations(p):
     residual=_norm([x-rayleigh*y for x,y in zip(_mv(stiffness,mode_vector),mode_vector)])
     eigenvalues=[k0,k0+3*k+delta,k0+3*k]
     frequencies=[math.sqrt(x) if x>=0 else None for x in eigenvalues]
+    coefficients=[1.,0.,0.] if mode=="A1" else [0.,math.cos(angle),math.sin(angle)]
+    basis=[a,u,v]
+    # A broken E pair has two distinct normal frequencies. A common sine is
+    # not a solution of q'' + Kq = 0 for an arbitrary mixed direction.
+    displacement=[sum(coefficients[j]*basis[j][i]*math.sin(frequencies[j]*phase)
+                      for j in range(3) if frequencies[j] is not None) for i in range(3)]
+    detector_name=p.get("detector","local")
+    if detector_name not in ("common","contrast","local"):
+        raise ValueError("detector must be common, contrast, or local")
+    detector={"common":a,"contrast":u,"local":[0.,1.,0.]}[detector_name]
+    intensities=[_dot(detector,b)**2 for b in basis]
+    spectrum=[]
+    for index,frequency in enumerate(frequencies):
+        if frequency is None:continue
+        prior=next((peak for peak in spectrum if abs(peak["frequency"]-frequency)<1e-9),None)
+        if prior is not None:
+            prior["intensity"]+=intensities[index]
+            prior["modes"].append(["A1","u","v"][index])
+        else:spectrum.append({"frequency":frequency,"intensity":intensities[index],"modes":[["A1","u","v"][index]]})
     return _result("vibrations",k0=k0,k=k,delta=delta,mode=mode,mix=math.degrees(angle),phase=math.degrees(phase),
-                   stiffness=stiffness,basis={"A1":a,"u":u,"v":v},modeVector=mode_vector,displacement=[math.sin(phase)*x for x in mode_vector],
+                   stiffness=stiffness,basis={"A1":a,"u":u,"v":v},modeVector=mode_vector,displacement=displacement,
+                   time=phase,coefficients=coefficients,detector=detector,intensities=intensities,spectrum=spectrum,
                    eigenvalues=eigenvalues,frequencies=frequencies,rayleigh=rayleigh,eigenResidual=residual,isEigenvector=residual<1e-9,
                    degenerateE=abs(delta)<1e-12,stable=min(eigenvalues)>0,
                    modelNote="Three equal-mass scalar oscillators on the complete three-site ring. Frequencies use unit mass. This is not a general molecular spectrum solver; a negative eigenvalue means an unstable harmonic direction.",

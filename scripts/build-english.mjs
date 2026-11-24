@@ -56,6 +56,7 @@ function js(source,name){
   result=result.replace(':String(x);',':(englishRadialLabels[x]||String(x));');
  }
  if(name==='python-worker.js'){
+  result=result.replaceAll('./python-runtime.mjs','../python-runtime.mjs');
   result=result.replace('new URL(path, import.meta.url)',"new URL(path, new URL('../', import.meta.url))");
   result=`import {createResultLocalizer} from '../english-results.js?v=${resultLocalizerVersion}';\nconst englishMessages=fetch(new URL('./data/python-messages.json?v=${messageVersion}',import.meta.url)).then(r=>{if(!r.ok)throw Error('English message catalog could not be loaded');return r.json();}).then(data=>createResultLocalizer({...data,nativeAnnotations:true}));\n`+result;
   const original='self.postMessage({id, status: \'done\', ...JSON.parse(output)});';

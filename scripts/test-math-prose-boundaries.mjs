@@ -267,9 +267,9 @@ const cases=[
    "sum"
   ],
   "math": [
-   "χ"
+   "Δ=10Dq"
   ],
-  "unitContains": "χ = sum of matrix diagonal entries"
+  "unitContains": "The weighted energy sum is"
  },
  {
   "id": "arithmetic-sum-function",

@@ -10,7 +10,7 @@ const repSize=(p,q)=>(p+1)*(q+1)*(p+q+2)/2;
 const size=input=>repSize(input.p1,input.q1)*repSize(input.p2,input.q2);
 const limit=arithmetic=>arithmetic==='exact'?81:256;
 const sizeHint=(dimension,arithmetic)=>`本次空间 ${dimension} 维；${arithmetic==='exact'?'精确模式上限 81 维':'数值模式上限 256 维'}。${dimension>limit(arithmetic)?'请减小表示或切换模式后计算。':'计算后可按完整标签选择基底态。'}`;
-const vectorHint=(dimension,arithmetic)=>`选择自定义向量时填写 ${dimension} 项；每项为实数或 {"re":实部,"im":虚部}。${arithmetic==='exact'?'实部、虚部也可填写安全表达式字符串，如 "sqrt(2)/2"、"1/3"；i 使用 im 分量。Python 核对表达式及范数。':'保留输入的范数，范数平方范围 10⁻²⁴ 到 10¹²；测量概率按范数平方归一化。'}`;
+const vectorHint=(dimension,arithmetic)=>`选择自定义向量时填写 ${dimension} 项；每项为实数或 {"re":实部,"im":虚部}。${arithmetic==='exact'?'实部、虚部也可填写安全表达式字符串，如 "sqrt(2)/2"、"1/3"；i 使用 im 分量。表达式按精确代数求值，并计算态矢量的范数。':'保留输入的范数，范数平方范围 10⁻²⁴ 到 10¹²；测量概率按范数平方归一化。'}`;
 const exactParts=value=>typeof value==='object'&&value!==null?{re:String(value.re??'0'),im:String(value.im??'0')}:{re:String(value??'0'),im:'0'};
 const exactComplex=value=>{const {re,im}=exactParts(value);return im==='0'?re:re==='0'?`(${im})i`:`${re} + (${im})i`;};
 export const cgName='SU(3) · CG 系数与换基';

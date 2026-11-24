@@ -1,0 +1,320 @@
+{
+  "schema": "symmetry-lab-self-hosted-python-runtime-1",
+  "checkedUTC": "2026-11-24",
+  "pyodide": "314.0.7",
+  "python": "3.14.2",
+  "abi": {
+    "abi_version": "2026_0",
+    "arch": "wasm32",
+    "platform": "emscripten_5_0_3",
+    "python": "3.14.2"
+  },
+  "npmTarballIntegrity": "sha512-0YvXxEhfEdpLfb/XkM2BFAeMROq0iMUX2bzzH9pOttyMcWkwq+HbE5uyuGD82LN7y2q+SNvi/6V5JEsOlD2R1A==",
+  "upstreamLockSha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+  "runtimePolicy": "All browser runtime and package requests use the website origin; no CDN fallback.",
+  "files": [
+    {
+      "path": "upstream-lock.json",
+      "bytes": 119077,
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/pyodide-lock.json"
+    },
+    {
+      "path": "pyodide.mjs",
+      "bytes": 17931,
+      "sha256": "6f1d60f7bf529beb300f0f47983c921d3982363640ba20af0e38efdddbc66109",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/pyodide.mjs",
+      "preservedCacheMatched": true
+    },
+    {
+      "path": "pyodide.asm.mjs",
+      "bytes": 1250344,
+      "sha256": "f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/pyodide.asm.mjs",
+      "preservedCacheMatched": true
+    },
+    {
+      "path": "pyodide.asm.wasm",
+      "bytes": 9598218,
+      "sha256": "cc36e3cab04fdfc9a63ff13eb52eae2b911bf46c025cc7b281f394bd3de1d5e6",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/pyodide.asm.wasm",
+      "preservedCacheMatched": true
+    },
+    {
+      "path": "python_stdlib.zip",
+      "bytes": 2545637,
+      "sha256": "fa1957e5777068fc4f7437f96d860ae2fbe9c19732ba06c84e004ec16dd7dd7a",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/python_stdlib.zip",
+      "preservedCacheMatched": true
+    },
+    {
+      "path": "upstream-package.json",
+      "bytes": 2999,
+      "sha256": "40ca48e43ce4ddc68412d5b7a7ca9e2477cd4f0e672277ae468ac2245717079b",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "member": "package/package.json"
+    },
+    {
+      "path": "pyodide-lock.json",
+      "bytes": 1813,
+      "sha256": "80f8cbbd6fc189adb48cb36e7ba02bed63fb313c3ce06a9120713e7e74213bd3",
+      "source": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "modification": "Package allowlist only; the four upstream entries, hashes and ABI info are unchanged."
+    },
+    {
+      "path": "numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "bytes": 2960568,
+      "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "acquisition": "preserved fixed cache",
+      "package": "numpy",
+      "version": "2.4.6",
+      "upstreamLockHashMatched": true
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/LICENSE.txt",
+      "bytes": 1543,
+      "sha256": "1be1df33863f97a7bc1c4d67980bd6c69c9a6fef0a5ee76e6ad6cb91e56e8491",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/LICENSE.txt"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "bytes": 1018,
+      "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "bytes": 690,
+      "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+      "bytes": 20785,
+      "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/src/highway/LICENSE"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "bytes": 1414,
+      "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "bytes": 1514,
+      "sha256": "211e7d737d6179a08f791ebb0a99897ce7cd2457410c542876d125576edfe910",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+      "bytes": 1543,
+      "sha256": "c17011467b4fe6e20fbfbeda4df09e58c2bca5480a063e55735a4000a379aad9",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "bytes": 1498,
+      "sha256": "a85ca13fdf90160b64a0698215868c13b74d835ad0a4e2ba44713b8c5058a056",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "bytes": 2266,
+      "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/ma/LICENSE",
+      "bytes": 1593,
+      "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/ma/LICENSE"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/LICENSE.md",
+      "bytes": 3511,
+      "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+      "bytes": 2745,
+      "sha256": "469778be8f33d54e1bcaab28c281cc472916d2d273f835e55bc487d30503face",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/distributions/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "bytes": 2926,
+      "sha256": "0e111337b25494a773106695f0e799f642b8567aaacca4f116a74a8177179156",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "bytes": 1154,
+      "sha256": "e7d4f4fb20358f314210a892ae17351e04993813646f697ec387385ca2a36918",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+      "bytes": 1509,
+      "sha256": "6f5828a57223d4cc7f8ea505a2623e7b978b242752c1515e355f46ba2cec1800",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/philox/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "bytes": 1226,
+      "sha256": "9d4098846018319cd68e228ee6220361787f73bccbf00237a85e4fc9621b998f",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md"
+    },
+    {
+      "path": "licenses/numpy-2.4.6.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "bytes": 332,
+      "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "numpy-2.4.6.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md"
+    },
+    {
+      "path": "sympy-1.14.0-py3-none-any.whl",
+      "bytes": 4185567,
+      "sha256": "61ea8bb98049ba1c702ba3ad2607acb7ab94b9af0b6f97498741f50d3249f428",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/sympy-1.14.0-py3-none-any.whl",
+      "acquisition": "preserved fixed cache",
+      "package": "sympy",
+      "version": "1.14.0",
+      "upstreamLockHashMatched": true
+    },
+    {
+      "path": "licenses/sympy-1.14.0.dist-info/licenses/AUTHORS",
+      "bytes": 55779,
+      "sha256": "82b1038521b0696c63c90b31ed4a0a2c9c4c16871c648b157b07ca44b6f18f8d",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/sympy-1.14.0-py3-none-any.whl",
+      "member": "sympy-1.14.0.dist-info/licenses/AUTHORS"
+    },
+    {
+      "path": "licenses/sympy-1.14.0.dist-info/licenses/LICENSE",
+      "bytes": 7885,
+      "sha256": "07a5e9819f727b4986ad2829c7a29a6320d42575f720eb24d71b7fef573a0286",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/sympy-1.14.0-py3-none-any.whl",
+      "member": "sympy-1.14.0.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "mpmath-1.4.1-py3-none-any.whl",
+      "bytes": 430985,
+      "sha256": "e5ebd537e74b9066341a5152e83b63ff2fc37a6388fa7351e766b6e4640f7eee",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/mpmath-1.4.1-py3-none-any.whl",
+      "acquisition": "preserved fixed cache",
+      "package": "mpmath",
+      "version": "1.4.1",
+      "upstreamLockHashMatched": true
+    },
+    {
+      "path": "licenses/mpmath-1.4.1.dist-info/licenses/LICENSE",
+      "bytes": 1537,
+      "sha256": "01cb9dc26c9afd5804c2ebf72f9ef03b5fd48972875ed59a483a45f441971f1e",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/mpmath-1.4.1-py3-none-any.whl",
+      "member": "mpmath-1.4.1.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "bytes": 112901,
+      "sha256": "a05d2a48c13ed72a8c60c73b30b753a25c3a591bb66c15428b7e95e69a9e806f",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "acquisition": "HTTP GET",
+      "package": "pyyaml",
+      "version": "6.0.3",
+      "upstreamLockHashMatched": true
+    },
+    {
+      "path": "licenses/pyyaml-6.0.3.dist-info/licenses/LICENSE",
+      "bytes": 1101,
+      "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
+      "source": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "member": "pyyaml-6.0.3.dist-info/licenses/LICENSE"
+    },
+    {
+      "path": "LICENSE-PYODIDE.txt",
+      "bytes": 16725,
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "source": "https://raw.githubusercontent.com/pyodide/pyodide/314.0.7/LICENSE"
+    },
+    {
+      "path": "LICENSE-CPYTHON.txt",
+      "bytes": 13804,
+      "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+      "source": "https://raw.githubusercontent.com/python/cpython/v3.14.2/LICENSE"
+    },
+    {
+      "path": "NOTICE.txt",
+      "bytes": 1301,
+      "sha256": "b9c5817f82a42684ad953ad46b599fd76a38dcd957ea39dcb8e11890e46fbe48",
+      "source": "Symmetry Lab packaging notice in scripts/vendor-python-runtime.py"
+    }
+  ],
+  "httpVerification": [
+    {
+      "url": "https://registry.npmmirror.com/pyodide/-/pyodide-314.0.7.tgz",
+      "finalUrl": "https://cdn.npmmirror.com/packages/pyodide/314.0.7/pyodide-314.0.7.tgz",
+      "status": 200,
+      "bytes": 6488647,
+      "cors": "https://ljcj007.github.io",
+      "contentType": "application/octet-stream",
+      "sha256": "66b7949e5a0cba2250b586d7e368bf12fb482800748d182c4618254b685ffaa0"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "finalUrl": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyyaml-6.0.3-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "status": 200,
+      "bytes": 112901,
+      "cors": "*",
+      "contentType": "application/wasm",
+      "sha256": "a05d2a48c13ed72a8c60c73b30b753a25c3a591bb66c15428b7e95e69a9e806f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pyodide/pyodide/314.0.7/LICENSE",
+      "finalUrl": "https://raw.githubusercontent.com/pyodide/pyodide/314.0.7/LICENSE",
+      "status": 200,
+      "bytes": 16725,
+      "cors": "*",
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.2/LICENSE",
+      "finalUrl": "https://raw.githubusercontent.com/python/cpython/v3.14.2/LICENSE",
+      "status": 200,
+      "bytes": 13804,
+      "cors": "*",
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+    },
+    {
+      "url": "https://npmmirror.com/mirrors/pyodide/v314.0.7/full/pyodide.mjs",
+      "finalUrl": "https://cdn.npmmirror.com/binaries/pyodide/v314.0.7/full/pyodide.mjs",
+      "status": 404,
+      "cors": "https://ljcj007.github.io"
+    }
+  ],
+  "limits": "HTTP checks ran on the current network, not on representative mainland China ISPs. Same-origin hosting removes third-party runtime dependencies; website-origin reachability remains required."
+}

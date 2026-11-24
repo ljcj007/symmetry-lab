@@ -7,3 +7,4 @@
   .fd-workspace{grid-template-columns:minmax(0,1fr)}
   .fd-controls{position:static}
 }
+.fd-step{padding:1.15rem 0;border-top:1px solid #d7e2e9}.fd-step h4{display:flex;align-items:center;gap:.65rem;margin:.15rem 0 .8rem;font-size:1.15rem;color:#184d66}.fd-step h4>span{display:inline-grid;place-items:center;min-width:1.8rem;height:1.8rem;border-radius:50%;background:#e4f0f5;color:#175e7b;font-size:.95rem}.fd-step p{max-width:90ch;margin:.7rem 0}.fd-result{background:#eaf4f7;border-left:4px solid #237b93;padding:.8rem 1rem;border-radius:4px;font-size:1.08em}.fd-basis{padding:.7rem;background:#f4f8fb;line-height:2}.fd-preview .fd-matrix{max-width:100%;font-size:1rem}.fd-preview .fd-scroll .fd-matrix{width:max-content}.fd-course .fd-preview{overflow:hidden}.fd-step .fd-matrix-pair>div{min-width:0}.fd-course{max-width:1450px}.fd-preview>svg{max-height:480px}.fd-step .sl-math{white-space:normal}.fd-tabs button{flex:0 1 auto}

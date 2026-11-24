@@ -68,13 +68,13 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/composition-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -93,8 +93,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/lesson-progression.js": {
       "normalization": "utf8-lf-v1",
@@ -103,23 +103,23 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 39245,
-      "sha256": "e1bdccf319ce118315550fd58e20c57844f93ed2315d36057565ef6d61a035dc"
+      "bytes": 39226,
+      "sha256": "5f6e77e24c3cc37fd98ff7cd17002cb820eec8a241c599990a541e38937f4443"
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50428,
-      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83"
+      "bytes": 50714,
+      "sha256": "1427a63edb25254af40df38b5781bc3a8daf6c04fa9d292b8d82957f1ff8598a"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3139,
-      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
+      "bytes": 3140,
+      "sha256": "4bfa0ad97949fb369a24018e8df61c980ea3a31aecea1014a308146ada045105"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12824,
-      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
+      "bytes": 13304,
+      "sha256": "af1047ca452a2770242f5a45242a9d4088a7a12fab96e63d559467a1ea20c65d"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -138,8 +138,8 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 45026,
-      "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
+      "bytes": 45036,
+      "sha256": "723ed622dcc9071aac0c7c6adfc7001c947bddc40f818dd39ade972e1d8827d3"
     },
     "dist/tool-finder.js": {
       "normalization": "utf8-lf-v1",
@@ -183,8 +183,8 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/audit-english-results.mjs": {
       "normalization": "utf8-lf-v1",
@@ -203,8 +203,8 @@
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10478,
-      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
+      "bytes": 10554,
+      "sha256": "b71a1aeeba0debc1d444e5035900a630606ef51f649981a967b5636a34bf9fea"
     },
     "scripts/collect-fixture-messages.mjs": {
       "normalization": "utf8-lf-v1",
@@ -213,8 +213,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/extract-python-messages.py": {
       "normalization": "utf8-lf-v1",
@@ -228,8 +228,8 @@
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 870219,
-      "sha256": "23e44718bb5acbccfe65b60a168b388bd55fe03d224431d079c3011df650fc6d"
+      "bytes": 870305,
+      "sha256": "38a437515635ed3ebc16f96053542c31e72cc5b91254249797191e51a3e0e0d3"
     },
     "scripts/fixtures/composition.json": {
       "normalization": "utf8-lf-v1",
@@ -238,8 +238,8 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1737275,
-      "sha256": "e4021419b18d5784ff867c723d5ce069e4d7a00e8c050f77a056a7dc88e4f1c0"
+      "bytes": 1737361,
+      "sha256": "5894b2cebb47d2fda4db0d1d2e932c8ecb9f6fdd08c39a85e5babdab317a3255"
     },
     "scripts/fixtures/spin-actions.json": {
       "normalization": "utf8-lf-v1",

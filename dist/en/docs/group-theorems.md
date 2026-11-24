@@ -63,3 +63,7 @@ If a quantum Hamiltonian preserves the chosen finite group, Schur's lemma makes 
 ## Order of checks
 
 Fix the group and representation space, then specify matrices, bases, and inner products. Check multiplication before characters, orthogonality, decomposition, and energy levels. The finite demonstrations replay key substitutions or invariant-subspace arguments; they do not replace the general proofs.
+
+## Complete proofs and further reading
+
+Each classroom topic now states its assumptions, develops five or six proof steps, and connects them to a matrix experiment and counterexample. The argument proceeds through rearrangement, invariant inner products, Schur's lemma, matrix-element orthogonality and character reduction. The energy-level topic distinguishes irreducible dimension, repeated copies and accidental degeneracy. Further reading: [Etingof et al., MIT, Introduction to Representation Theory, §§4.5–4.7](https://math.mit.edu/~etingof/reprbook.pdf).

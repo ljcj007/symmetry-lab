@@ -40,7 +40,10 @@ assert.deepEqual(r.counterexample.oxygenDiagonal,[-1,-1,1]);
 assert.equal(r.selectionChannels.length,4);
 assert.ok(r.selectionChannels.every(c=>c.modeRows.length===3));
 assert.equal(r.checks.length,33);assert.ok(r.checks.every(c=>c.passed===true&&c.residual===0));
-assert.equal(sha(bytes('dist/python/foundations_demos.py')),'2cb7cfd4f88c3e8e94eabc7d277876ef28cd2718e9f956f17b953aa79e2aefb1');
+// The 2026-11-24 classroom revision makes its two A1 trial motions
+// mass-orthogonal. The independent water_actions ledger and its 36 columns
+// remain bit-for-bit unchanged (build-water-actions-reference.py --check).
+assert.equal(sha(bytes('dist/python/foundations_demos.py')),'5182b29528b981c6e58ff20ff8215e9be36f5641515c2c8cde38a8c9e3588454');
 assert.equal(lessonProgressionInventory.length,197);assert.equal(lessonProgressionEdges.length,259);
 const locales=['en-water-actions-ui.json','en-water-actions-host.json','en-water-actions-docs.json'];
 const previous=Object.assign({},...catalogFiles.filter(n=>!locales.includes(n)).map(n=>JSON.parse(bytes('locales/'+n))));

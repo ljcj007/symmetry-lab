@@ -1,10 +1,10 @@
 {
   "release": "20261110-en1",
   "language": "en",
-  "sourceUnits": 29618,
-  "translatedUnits": 29618,
+  "sourceUnits": 30214,
+  "translatedUnits": 30214,
   "missing": [],
-  "files": 546,
+  "files": 551,
   "shared": {
     "python": "../python/",
     "vendor": "../vendor/",
@@ -214,6 +214,12 @@
     "en-magnetic-point-types.json",
     "en-spectroscopy-worked-handoffs.json",
     "en-quantum-lesson-handoffs.json",
-    "en-principles-construction-exercise-stages.json"
+    "en-principles-construction-exercise-stages.json",
+    "en-theorem-redesign-20261124.json",
+    "en-navigation-redesign-20261124.json",
+    "en-pointgroup-redesign-20261124.json",
+    "en-foundations-redesign-20261124.json",
+    "en-foundations-redesign-tail-20261124.json",
+    "en-runtime-teaching-20261124.json"
   ]
 }

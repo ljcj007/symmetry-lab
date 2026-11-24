@@ -4,7 +4,7 @@ export const PHONOPY_DERIVATION_LESSON='scattering-phase';
 export const PHONOPY_DERIVATION_ROUTE='#classroom/observables?module=scattering&lesson=scattering-phase';
 const lessonMemory=new Map();
 let modulePromise=null;
-const loadUI=()=>modulePromise??=import('./phonopy-derivation-ui.js?v=20261117-derive1').catch(error=>{modulePromise=null;throw error;});
+const loadUI=()=>modulePromise??=import('./phonopy-derivation-ui.js?v=20261124-teaching1').catch(error=>{modulePromise=null;throw error;});
 const clone=value=>structuredClone(value);
 const readOpen=node=>typeof node?.open==='boolean'?node.open:node?.getAttribute?.('open')!==null;
 const navigate=route=>{if(globalThis.location)globalThis.location.hash=route;};

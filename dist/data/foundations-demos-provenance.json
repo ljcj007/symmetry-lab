@@ -10,28 +10,28 @@
   "files": [
     {
       "path": "dist/foundations-demos.js",
-      "sha256": "d293671599bfd5bd370a494b2703d0c5f8fc3f1ba94623b74410582d947899ad",
-      "bytes": 42468
+      "sha256": "214c0e9f07812f40e0c04337d72c27843b6a15af33dedb97867e5e68a0c005bf",
+      "bytes": 59215
     },
     {
       "path": "dist/foundations-demos.css",
-      "sha256": "0deeffd30036aacf903e188de5a2361dd259db0d0cf9c3b1400cfdbe850a5056",
-      "bytes": 4314
+      "sha256": "dd73b455f972d6e90e277793b1bebf668cad5c8383933029fe6b6462fb1b0c6e",
+      "bytes": 5160
     },
     {
       "path": "dist/symmetry-mini-demos.js",
-      "sha256": "aa8d89fac088f4d3ef7bc339df7519f1f3b304f7e60e4284818595c0540bba30",
-      "bytes": 33021
+      "sha256": "2f2f08c4e1559e4d051fa572007c99dc59281abe4bd81b8f01e009a7a1373aac",
+      "bytes": 33094
     },
     {
       "path": "dist/symmetry-mini-demos.css",
-      "sha256": "3aaff8e2e1de50cf88ad20c2b0dad13b2b2ae5e67433b10c6aac5b4502b25cfa",
-      "bytes": 3493
+      "sha256": "cef432403478f045cd4205ddf3d56f818c0dedc78eaa5a4192cf7542bc6ab2b5",
+      "bytes": 3900
     },
     {
       "path": "dist/group-theorems.js",
-      "sha256": "0a0a1635a0bae8b7395985cc7f4235b282fb712e5c05d8820f7551e80575c131",
-      "bytes": 29180
+      "sha256": "92fb0cad8923b3474b826bbe67ca984cfb3f34bf953f3a3aab5294cc0b49ca80",
+      "bytes": 28259
     },
     {
       "path": "dist/group-theorems.css",
@@ -40,13 +40,13 @@
     },
     {
       "path": "dist/python/foundations_demos.py",
-      "sha256": "2cb7cfd4f88c3e8e94eabc7d277876ef28cd2718e9f956f17b953aa79e2aefb1",
-      "bytes": 19199
+      "sha256": "5182b29528b981c6e58ff20ff8215e9be36f5641515c2c8cde38a8c9e3588454",
+      "bytes": 20103
     },
     {
       "path": "dist/python/symmetry_mini_demos.py",
-      "sha256": "f0b58aee1a06ed59e112ec2fcb3bc406b24191c1fa79e15dd5e7babe79c9b0cd",
-      "bytes": 11279
+      "sha256": "2585f14983d453e86e4017fc238600c02fadbcf8e62b4856d5e6bb2c06dd9606",
+      "bytes": 12543
     },
     {
       "path": "dist/python/group_theorems.py",
@@ -55,28 +55,28 @@
     },
     {
       "path": "dist/docs/foundations-demos.md",
-      "sha256": "5c8e96dc38fba3831d70dedac5f5d5a401d3c6f17eb20a45ac63aeb592aa0f9f",
-      "bytes": 16061
+      "sha256": "d6bdce295862bf63ca8c61a696a2eb09bff01695c3a0708e4382b382dc51742d",
+      "bytes": 16278
     },
     {
       "path": "dist/docs/group-theorems.md",
-      "sha256": "ed1c0f799951f76a401917ebfd3773340d880d4ddba5cd0cb2ac948d7eba560c",
-      "bytes": 7752
+      "sha256": "ad59ce5afad64470f283332e3131a741ea213302a1fb4b86d24300d00dc8d5b7",
+      "bytes": 8155
     },
     {
       "path": "scripts/test-foundations-demos.mjs",
-      "sha256": "fcb2d1e0806f7405059a90a9b4d6d464e6daf771b24dce240f020808034fe3be",
-      "bytes": 14691
+      "sha256": "9cf3c4dfa766fa8d78a0f867a8f271300ff441c65b602d1b64dabe6a913e6a59",
+      "bytes": 14484
     },
     {
       "path": "scripts/test-symmetry-mini-demos.mjs",
-      "sha256": "3613a9c63ec99364af26b7ce1dc1df3b6fd6553013f8ab57898885ac87620789",
-      "bytes": 9777
+      "sha256": "66f1fc211e621127a8fbc112fb89dbed12035e48239d8bc94a8aa68d40a2b6f4",
+      "bytes": 7080
     },
     {
       "path": "scripts/test-group-theorems.mjs",
-      "sha256": "4493f463a9a235cd22d275a725bdba055da4d1e31b0c6ebeb210a88828eeedd4",
-      "bytes": 5896
+      "sha256": "28cfbac7dcdf28b785a3d77300c47ba23901f4b7b7ea7cd629d1d91246dd520b",
+      "bytes": 5719
     },
     {
       "path": "scripts/test-foundations-routing.mjs",

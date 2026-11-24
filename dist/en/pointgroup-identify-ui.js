@@ -29,9 +29,9 @@ const vectorText = vector => '(' + vector.map(countText).join(', ') + ')';
 const pad = n => String(n).padStart(2, '0');
 
 const modes = [
-  {id: 'starter', text: "Starter exercises", symbols: ['m', '2', '2/m', 'mm2', '222', '-1']},
-  {id: 'compare', text: "Compare similar groups", symbols: ['4mm', '-42m', '6', '-6', '432', '-43m', '222', 'mm2']},
-  {id: 'all', text: "All 32 point groups"}
+  {id: 'starter', text: "Basic operations and twofold axes: 6 cases", symbols: ['m', '2', '2/m', 'mm2', '222', '-1']},
+  {id: 'compare', text: "Proper and improper operations compared: 8 cases", symbols: ['4mm', '-42m', '6', '-6', '432', '-43m', '222', 'mm2']},
+  {id: 'all', text: "Advanced: all 32 types"}
 ];
 const axes = ['x', 'y', 'z'];
 const labels = {
@@ -283,13 +283,14 @@ export function bindPointgroupIdentify({root, atlas, openGroup, stateStore, isCu
     const answerOptions = groupOptions(catalog.groups, atlasGroups, draft.answer);
 
     root.innerHTML = '<div class="pgi-workshop"><div class="pgi-section"><div class="pgi-controls">' +
-      "<label for=\"pgi-mode\">Exercise set<select id=\"pgi-mode\">" +
+      "<h4>Narrow down candidates using operation evidence</h4><p>First track a basis vector with the matrix, then identify a rotation, mirror or inversion. Before the operation list is complete, rule out only groups that conflict with observed evidence. An absent operation category rules out a group only with a complete list. The initial answer may be left blank.</p>" +
+      "<label for=\"pgi-mode\">practice range<select id=\"pgi-mode\">" +
       modes.map(entry => selectOption(entry.id, entry.text, mode.id)).join('') + '</select></label>' +
-      "<label for=\"pgi-case\">Mystery group<select id=\"pgi-case\">" +
-      exercises.map(entry => selectOption(entry.id, "Exercise " + pad(catalog.exercises.indexOf(entry) + 1), exercise.id)).join('') +
+      "<label for=\"pgi-case\">Operation-evidence case<select id=\"pgi-case\">" +
+      exercises.map(entry => selectOption(entry.id, "Case " + pad(catalog.exercises.indexOf(entry) + 1) + "  · observe first, then name", exercise.id)).join('') +
       '</select></label></div>' +
-      "<label for=\"pgi-predict\">Make an initial guess<select id=\"pgi-predict\">" + options + '</select></label>' +
-      "<p>Record a guess, then test it against the matrices and operation counts. Each exercise reveals operations from a single point group.</p></div>" +
+      "<label for=\"pgi-predict\">Initial answer (optional)<select id=\"pgi-predict\">" + options + '</select></label>' +
+      "<p>Work in order: proper rotation order, mirror directions and inversion, then complete counts. Open the candidate list whenever helpful and connect each name to its operation evidence.</p></div>" +
       inspectHTML(operations, geometry, before, after, operation, draft) +
       evidenceHTML(evidence, operations, groupOrder, groups, draft) +
       reviewHTML(groups, target, evidence, groupOrder, answerOptions, draft) + '</div>';

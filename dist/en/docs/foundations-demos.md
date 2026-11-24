@@ -1,5 +1,7 @@
 # Seeing symmetry: foundational teaching demonstrations
 
+2026-11-24 model and teaching corrections: [audit, source basis, model boundaries, and validation](foundations-audit-20261124.md). The live demonstrations now compute locally and show the derivations directly.
+
 This topic connects spatial operations, basis functions, representation matrices, characters, and physical consequences in a practical learning sequence. The graphics clarify transformations and degeneracies, with values from explicitly defined teaching models. Molecular animations do not replace quantum-chemical normal-mode calculations, and the crystal-field levels are not fitted parameters for a particular material.
 
 ## Where was the water example?
@@ -97,7 +99,7 @@ The regular tetrahedron has proper rotation group T (order 12) and full point gr
 
 Take equal-mass scalar coordinates q₁, q₂, q₃ at triangle vertices, with equal pair coupling κ and equal pinning p. The potential is V = p∑qᵢ²/2 + κ∑i<j(qᵢ−qⱼ)²/2, with mass m>0. The stiffness matrix is pI+κL(K₃); the A₁ squared frequency is p/m and the two-dimensional E squared frequency is (p+3κ)/m. This is explicitly a three-scalar-oscillator model, not the full nine-dimensional displacement calculation of a three-atom molecule.
 
-**Try and check:** With equivalent couplings, changing the linear combination within E preserves the frequency. Change one bond and recheck commutation with the symmetry matrices and splitting of E. At p=0, uniform displacement is a zero-frequency mode. The model uses the same A₁ and E bases as the triangle projection example; it does not replace water force-constant or spectrum calculations.
+**Try and check:** With equivalent couplings, changing the linear combination within E does not change its frequency. Add the δuuᵀ perturbation, then check commutation with the symmetry matrices and the splitting of E. At p=0, the uniform displacement is a zero-frequency mode. This model uses the same A₁,E basis as the triangle projector to explain degeneracy; it does not replace force-constant or spectroscopic calculations for water.
 
 ### Same-k degeneracy versus pairing of k and −k in the Brillouin zone
 

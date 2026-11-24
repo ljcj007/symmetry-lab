@@ -14,7 +14,7 @@ const exercise=(q,steps)=>`<section class="smd-exercise"><h3>Prediction and step
 const range=(id,label,v,min,max,step)=>`<label><span>${label} <output data-output="${id}">${v}</output></span><input type="range" aria-label="${esc(label)}" data-param="${id}" value="${v}" min="${min}" max="${max}" step="${step}"></label>`;
 const select=(id,label,v,choices)=>`<label><span>${label}</span><select aria-label="${esc(label)}" data-param="${id}">${choices.map(([x,t])=>`<option value="${x}" ${String(x)===String(v)?'selected':''}>${t}</option>`).join('')}</select></label>`;
 export const miniDemoThemes=[{id:'polyhedra',title:"Five Platonic solids and point groups"},{id:'vibrations',title:"Molecular vibrations and degeneracy"},{id:'bands',title:"Bands and Kramers degeneracy"},{id:'manybody',title:"Two spins and exchange symmetry"},{id:'time-reversal',title:"Time reversal: antiunitary action"},{id:'double-soc',title:"Double groups, spin rotations, and SOC"}];
-const defaults={polyhedra:{polyhedron:'tetra',order:3,fraction:1},vibrations:{k0:1,k:.5,delta:0,mix:0,phase:45,mode:'E'},bands:{t:1,alpha:.4,B:0,kpi:.35},manybody:{J:1,state:'singlet'},'time-reversal':{theta:65,phi:35,B:0,operation:'T'},'double-soc':{angle:360,coupling:.6}};
+const defaults={polyhedra:{polyhedron:'tetra',order:3,fraction:1},vibrations:{k0:1,k:.5,delta:0,mix:0,phase:45,mode:'E',detector:'local'},bands:{t:1,alpha:.4,B:0,kpi:.35},manybody:{J:1,state:'singlet'},'time-reversal':{theta:65,phi:35,B:0,operation:'T'},'double-soc':{angle:360,coupling:.6}};
 const rashbaTrimPreset='rashba-trim-check';
 const lessonFractions=[0,.2,.5];
 const rashbaFields=[0,.3];
@@ -41,7 +41,9 @@ export function miniDemoPreview(experiment,params={}){
  if(experiment==='polyhedra')return geometry(s);
  if(experiment==='vibrations'){
   const a=[1,1,1].map(x=>x/Math.sqrt(3)),u=[2,-1,-1].map(x=>x/Math.sqrt(6)),v=[0,1,-1].map(x=>x/Math.sqrt(2)),angle=s.mix*Math.PI/180,modeVector=s.mode==='A1'?a:u.map((x,i)=>Math.cos(angle)*x+Math.sin(angle)*v[i]),stiffness=u.map((x,i)=>u.map((y,j)=>s.k0*(i===j?1:0)+s.k*(i===j?2:-1)+s.delta*x*y)),rayleigh=dot(modeVector,mv(stiffness,modeVector)),eigenResidual=norm(mv(stiffness,modeVector).map((x,i)=>x-rayleigh*modeVector[i])),eigenvalues=[s.k0,s.k0+3*s.k+s.delta,s.k0+3*s.k];
-  return {stiffness,basis:{A1:a,u,v},modeVector,displacement:modeVector.map(x=>x*Math.sin(s.phase*Math.PI/180)),eigenvalues,frequencies:eigenvalues.map(x=>x>=0?Math.sqrt(x):null),eigenResidual,isEigenvector:eigenResidual<1e-9,degenerateE:Math.abs(s.delta)<1e-12,stable:Math.min(...eigenvalues)>0};
+  const frequencies=eigenvalues.map(x=>x>=0?Math.sqrt(x):null),time=s.phase*Math.PI/180,coefficients=s.mode==='A1'?[1,0,0]:[0,Math.cos(angle),Math.sin(angle)],basis=[a,u,v],displacement=a.map((_,i)=>basis.reduce((sum,b,j)=>sum+(frequencies[j]===null?0:coefficients[j]*b[i]*Math.sin(frequencies[j]*time)),0)),detector=({common:a,contrast:u,local:[0,1,0]})[s.detector]||[0,1,0],intensities=basis.map(b=>dot(detector,b)**2),spectrum=[];
+  frequencies.forEach((frequency,i)=>{if(frequency===null)return;const prior=spectrum.find(p=>Math.abs(p.frequency-frequency)<1e-9);if(prior){prior.intensity+=intensities[i];prior.modes.push(['A1','u','v'][i]);}else spectrum.push({frequency,intensity:intensities[i],modes:[['A1','u','v'][i]]});});
+  return {stiffness,basis:{A1:a,u,v},modeVector,displacement,eigenvalues,frequencies,eigenResidual,isEigenvector:eigenResidual<1e-9,degenerateE:Math.abs(s.delta)<1e-12,stable:Math.min(...eigenvalues)>0,time,coefficients,detector,intensities,spectrum};
  }
  if(experiment==='bands'){
   const k=s.kpi*Math.PI;
@@ -65,7 +67,7 @@ export function miniDemoPreview(experiment,params={}){
 
 function controls(t,s){
  if(t==='polyhedra')return select('polyhedron',"Ideal regular polyhedron",s.polyhedron,[['tetra',"Tetrahedron · T / T_d"],['cube',"Hexahedron (cube) · O / O_h"],['octa',"Octahedron · O / O_h"],['dodeca',"Dodecahedron · I / I_h"],['icosa',"Icosahedron · I / I_h"]])+select('order',"Test a rotation about the declared axis",s.order,[[2,"C₂ · x axis"],[3,"C₃ · (1,1,1) axis"],[4,"C₄ · z axis"],[5,"C₅ · (0,1,φ) axis"]])+range('fraction',"Fraction of the rotation completed",s.fraction,0,1,.01);
- if(t==='vibrations')return range('k0',"Common restoring stiffness k₀",s.k0,.2,3,.05)+range('k',"Equivalent coupling around the ring, k",s.k,0,1,.025)+range('delta',"Symmetry breaking δ",s.delta,-1,1,.025)+select('mode',"Mode space to display",s.mode,[['A1',"A₁ in-phase coordinate"],['E',"Combination within the E space"]])+range('mix',"E-partner mixing angle (°)",s.mix,0,360,1)+range('phase',"Schematic vibration phase (°)",s.phase,0,360,1)+"<button type=\"button\" data-action=\"animate\">Play / pause the mode</button>";
+ if(t==='vibrations')return range('k0',"Common restoring stiffness k₀",s.k0,.2,3,.05)+range('k',"Equivalent coupling around the ring, k",s.k,0,1,.025)+range('delta',"Symmetry breaking δ",s.delta,-1,1,.025)+select('mode',"Initial mode combination",s.mode,[['A1',"A₁ in-phase coordinate"],['E',"Combination within the E space"]])+range('mix',"E-partner mixing angle (°)",s.mix,0,360,1)+range('phase',"Model time × 180/π",s.phase,0,360,1)+select('detector',"Linear detection channel d·q",s.detector,[['local',"Local channel: q₂"],['common',"In-phase channel: (q₁+q₂+q₃)/√3"],['contrast',"Contrast channel: (2q₁−q₂−q₃)/√6"]])+"<button type=\"button\" data-action=\"animate\">Play / pause motion</button>";
  if(t==='bands')return range('t',"Hopping t",s.t,0,2,.05)+range('alpha',"Rashba coupling α",s.alpha,0,1,.025)+range('B',"Zeeman parameter B",s.B,-1,1,.025)+range('kpi',"Current wave vector k / π",s.kpi,-1,1,.01);
  if(t==='manybody')return range('J',"Exchange parameter J",s.J,-2,2,.05)+select('state',"Two-spin state",s.state,[['singlet',"Singlet (↑↓−↓↑)/√2"],['triplet0',"Triplet m=0"],['triplet+',"Triplet ↑↑"],['triplet-',"Triplet ↓↓"]]);
  if(t==='time-reversal')return range('theta',"Bloch polar angle θ (°)",s.theta,0,180,1)+range('phi',"Relative phase φ (°)",s.phi,0,360,1)+select('operation',"Action to compare",s.operation,[['T','T = iσᵧK'],['T2','T²'],['K',"K (complex conjugation)"],['K2','K²']])+range('B',"External-field parameter B",s.B,-1,1,.05);
@@ -84,10 +86,18 @@ function scene(t,s){
   return {plot:svg("Coincidence check for rotated vertex sets of Platonic solids",body),html:`<h3>Proper rotation group ${groupMath(r.properGroup)}（${r.properOrder} operations); full point group ${groupMath(r.fullGroup)}（${r.fullOrder} operations)</h3><p>${r.vertices.length} vertices and ${r.edges.length} edges. The largest current vertex-set mismatch is ${fmt(r.maxMismatch)}; the rotation axis is (${r.axis.map(fmt).join(', ')})。</p><p>${r.crystallographic?"The point group of this polyhedron is an ordinary crystallographic point-group type.":`${groupMath('I')} / ${groupMath('Ih')} Contains fivefold axes and describes these solids or corresponding molecules; it is not an ordinary crystallographic point group of a three-dimensional periodic lattice.`}</p><p>Set the completed fraction to 1 to test the selected Cₙ operation. The dodecahedron and icosahedron are dual and have the same rotation group; the full point group additionally includes improper operations such as inversion or reflections.</p>`,exercise:exercise("Does the same fivefold axis also leave the cube's vertex set invariant? How do symmetry of shape and crystallographic allowance differ?",["Choose C₅ for the icosahedron, set the rotation fraction to 1, and check the set of 12 vertices.","Switch to the cube. The same operation no longer leaves the vertex set invariant; the cube has C₄ and C₃ axes.","Three-dimensional periodic lattices permit rotation orders 1,2,3,4,6. Regular polyhedra and nonperiodic molecules are not restricted to that catalogue."]),data:r};
  }
  if(t==='vibrations'){
-  const base=[[160,230],[320,90],[480,230]];let body=line(...base[0],...base[1])+line(...base[1],...base[2])+line(...base[2],...base[0]);
-  base.forEach(([x,y],i)=>{body+=`<circle cx="${x}" cy="${y}" r="18" fill="#e5eef4" stroke="#557488"/>`+line(x,y,x,y-70*r.displacement[i],'#247da0',5)+text(x,y+46,`q${i+1}: ${fmt(r.displacement[i])}`,undefined,15);});
-  const f=r.frequencies.map(x=>x===null?"Imaginary frequency (unstable)":fmt(x));body+=text(320,30,r.degenerateE?"E doublet: mixing does not change the eigenfrequency":"δ selects a direction and splits the E partners");
-  return {plot:svg("Symmetry-adapted modes of three equivalent scalar oscillators",body),html:`<h3>Use the same E subspace to distinguish a basis change from actual symmetry breaking</h3><p>${math(String.raw`K=k_0I+kL_{K_3}+\delta uu^T`)}; for unit masses, ${math(String.raw`\omega_{A_1}^2=k_0`)}，${math(String.raw`\omega_u^2=k_0+3k+\delta`)}，${math(String.raw`\omega_v^2=k_0+3k`)}。</p>${table(["Mode",'A₁','u ∈ E','v ∈ E'],[["Frequency",...f]])}<p>The eigenvalue-equation residual for the current combination is ${fmt(r.eigenResidual)}：${r.isEigenvector?"It is a single-frequency normal coordinate.":"For δ≠0, this arbitrary mixture is not one normal mode; resolve it into two partners with different frequencies."}</p><p>Amplitude bars denote scalar coordinates without specifying displacement directions in a real molecule. This three-node spring model illustrates degeneracy; it does not solve arbitrary molecular spectra.</p>`,exercise:exercise("Why does changing the mixing angle at δ=0 not lift the degeneracy?",["u and v have the same eigenvalue k₀+3k. Any orthogonal mixture is still an eigenvector with that eigenvalue.","With δ≠0, the squared frequencies of u and v become k₀+3k+δ and k₀+3k. This is an actual splitting in the model.","A negative squared frequency means the harmonic reference structure is unstable. Taking its square root does not give a stable vibrational frequency."]),data:r};
+  const base=[[70,200],[160,100],[250,200]],basis=[r.basis.A1,r.basis.u,r.basis.v],labels=['A₁','u','v'];let body=text(160,28,"Three equivalent scalar coordinates",undefined,16);
+  body+=line(...base[0],...base[1])+line(...base[1],...base[2])+line(...base[2],...base[0]);
+  base.forEach(([x,y],i)=>{body+=`<circle cx="${x}" cy="${y}" r="16" fill="#e5eef4" stroke="#557488"/>`+line(x,y,x,y-55*r.displacement[i],'#247da0',4)+text(x,y+42,`q${i+1}=${fmt(r.displacement[i])}`,undefined,13);});
+  const maxFrequency=Math.max(1,...r.frequencies.filter(x=>x!==null))+.3,X=f=>360+220*f/maxFrequency;
+  body+=text(470,28,"Ideal stick spectrum for the linear detector",undefined,16)+line(350,267,602,267,'#738c9d')+text(490,315,"ω / √(stiffness unit / mass unit)",undefined,12)+text(365,293,'0',undefined,13);
+  r.spectrum.forEach((p,i)=>{const x=X(p.frequency),h=150*p.intensity;body+=line(x,267,x,267-h,['#357d9a','#b76e39','#75559a'][i%3],5)+text(x,250-h,fmt(p.intensity),undefined,13)+text(x,287,fmt(p.frequency),undefined,12);});
+  body+=text(160,315,`t=${fmt(r.time)}; blue segments in the left panel show scalar coordinates only`,undefined,12);
+  const f=r.frequencies.map(x=>x===null?"ω²<0: harmonic instability":fmt(x)),matrix=r.stiffness.map(row=>row.map(fmt).join('  ')).join('\n');
+  return {plot:svg("Actual time evolution of three scalar oscillators and a schematic direction-dependent detection spectrum",body),html:`<h3>Find orthogonal eigenmodes, then distinguish basis changes, splitting and spectral intensity</h3>
+  <section class="smd-step"><h4>1 · Define the model and its three eigenvectors</h4><p>Each of the three nodes has one equal-mass <strong>scalar</strong>  qᵢ. The vertical lines show coordinate values, not displacement directions in a real molecule. The model mass is m=1, and ${math(String.raw`K=k_0I+kL_{K_3}+\delta uu^T`)}, where L has diagonal entries 2 and off-diagonal entries −1.</p><pre class="smd-matrix" aria-label="Stiffness matrix">${matrix}</pre>${table(["Basis vector","Three components",'ω²','ω'],basis.map((b,i)=>[labels[i],b.map(fmt).join(', '),fmt(r.eigenvalues[i]),f[i]]))}<p>a=(1,1,1)/√3, u=(2,−1,−1)/√6 and v=(0,1,−1)/√2 are unit vectors with pairwise zero inner products. Direct multiplication by K gives Ka=k₀a, Ku=(k₀+3k+δ)u and Kv=(k₀+3k)v.</p></section>
+  <section class="smd-step"><h4>2 · Change the basis within a degeneracy; use two frequencies after splitting</h4><p>At δ=0, u and v have the same frequency, and any  ${math(String.raw`w=\cos\beta\,u+\sin\beta\,v`)}  remains a normal mode. Its orthogonal partner is −sinβ u+cosβ v. Changing β only selects another direction within the same E plane; it does not lift the degeneracy.</p><p>At δ≠0, u and v have different eigenfrequencies.${r.isEigenvector?"The current choice is a single-frequency normal coordinate.":"The current mixture is not a single-frequency normal mode. Its components evolve separately at ωu and ωv, so the direction of motion changes with time."} ${!r.stable?"At least one direction has ω²≤0: the reference structure is not a stable harmonic minimum. Sinusoidal animation is paused along directions with negative squared frequency, and these directions are not shown as real-frequency spectral peaks.":''}</p><p>${math(String.raw`q(t)=c_a a\sin(\omega_a t)+c_u u\sin(\omega_u t)+c_v v\sin(\omega_v t)`)}. The current (ca,cu,cv)=(${r.coefficients.map(fmt).join(', ')} ). The time slider changes the motion; the mixing angle changes the prepared mode combination.</p></section>
+  <section class="smd-step"><h4>3 · Detection direction can change peak intensities while frequencies stay fixed</h4><p>Assume an external linear observable S=d·q with a normalized detection vector d=(${r.detector.map(fmt).join(', ')}). The ideal mode weight is  ${math(String.raw`I_j=|d^T e_j|^2`)}; this is an explicitly defined schematic coupling. The vector d is not presented as an actual dipole-moment or polarizability derivative.</p>${table(["Mode",'A₁','u','v'],[["Channel weight",...r.intensities.map(fmt)]])}<p>Peaks at the same frequency are merged and their weights added. Thus, at δ=0, changing the orthonormal basis of E does not change the total weight at that frequency. The local q₂ channel detects both E partners, while the in-phase channel couples only to A₁. Changing the detection channel leaves K and the frequencies unchanged.</p><p>The stick spectrum assumes the same independent preparation of each mode and neglects linewidth, temperature and damping. Actual material IR / Raman intensities also require dipole-moment / polarizability derivatives. This page invents no frequencies or units for a real material.</p></section>`,exercise:exercise("At δ=0 and a mixing angle of 45°, why is there still only one E frequency in the spectrum? How should the animation change when δ changes?",["Degeneracy means that u and v have equal squared frequencies, so any orthogonal mixture remains single-frequency.","At δ≠0, u and v have different frequencies. A general mixture must evolve at both frequencies separately; imposing one common sinusoidal phase on both is incorrect.","The local q₂ channel can detect two separate E peaks. In the in-phase channel both have zero weight, but the modes still exist."]),data:r};
  }
  if(t==='bands'){
   const es=r.curves.flatMap(x=>x.energies),lo=Math.min(...es)-.2,hi=Math.max(...es)+.2,X=k=>70+(k+Math.PI)/(2*Math.PI)*500,Y=e=>285-(e-lo)/(hi-lo)*230;let body=line(70,285,590,285)+line(70,285,70,45);
@@ -158,8 +168,6 @@ function rashbaTrimHTML(){
   <p id="smd-rashba-feedback" role="status"></p>
   <div id="smd-rashba-result" hidden>
    <div id="smd-rashba-evidence"></div>
-   <button id="smd-rashba-python" type="button" class="secondary">Verify this comparison with Python</button>
-   <p id="smd-rashba-python-status" role="status"></p>
   </div>
   <a href="#classroom/spin?tab=learn&amp;lesson=double-04&amp;track=double">Review the three conditions for Kramers pairing →</a>
  </section>`;
@@ -179,80 +187,15 @@ function rashbaEvidenceHTML(fraction,rows){
   <p>At a degeneracy, the choice of eigenvectors is arbitrary within the degenerate space, so the table omits the upper branch spin component.</p>`;
 }
 
-function bindRashbaTrim(root,state,{run,isCurrent}){
- const k=root.querySelector('#smd-rashba-k'),guess=root.querySelector('#smd-rashba-guess');
- const check=root.querySelector('#smd-rashba-check'),feedback=root.querySelector('#smd-rashba-feedback');
- const result=root.querySelector('#smd-rashba-result'),evidence=root.querySelector('#smd-rashba-evidence');
- const python=root.querySelector('#smd-rashba-python'),status=root.querySelector('#smd-rashba-python-status');
- let retired=false,revision=0,request=null;
+function bindRashbaTrim(root,state,{isCurrent}){
+ const k=root.querySelector('#smd-rashba-k'),guess=root.querySelector('#smd-rashba-guess'),feedback=root.querySelector('#smd-rashba-feedback'),result=root.querySelector('#smd-rashba-result'),evidence=root.querySelector('#smd-rashba-evidence');
+ let retired=false;
  const here=()=>!retired&&isCurrent()&&root.querySelector('#smd-rashba-k')===k;
- function clearRequest(){
-  revision++;request?.cancel?.();request=null;
-  if(state.verification==='running')state.verification='';
- }
- function showPython(){
-  python.hidden=!run;
-  python.disabled=state.verification==='running';
-  status.textContent=({
-   running:"Checking both wavevector signs and both fields…",
-   passed:"Python agrees. The spectrum remains even at both fields, and the time-reversal matrix condition holds at zero field only.",
-   mismatch:"The Python calculation differs from the preview. Check the comparison again.",
-   failed:"The Python check did not finish. You can try again."
-  })[state.verification]||'';
- }
- function show(){
-  result.hidden=state.checked!=='matrix-test';
-  feedback.textContent=({
-   'matrix-test':"Correct. Matching energies establish a relation between spectra. To test time reversal, compare how the Hamiltonian transforms.",
-   'even-proves':"Matching energies compare only the eigenvalues. Compare the two matrices entry by entry.",
-   'split-breaks':"Check whether the opposite wavevectors share a momentum subspace before interpreting the gap at a single wavevector.",
-   empty:"Choose a test first."
-  })[state.checked]||'';
-  if(!result.hidden)evidence.innerHTML=rashbaEvidenceHTML(state.fraction,rashbaLessonRows(state.fraction));
-  showPython();
- }
+ function show(){result.hidden=state.checked!=='matrix-test';feedback.textContent=({'matrix-test':"Correct. Matching energies establish a relation between spectra. To test time reversal, compare how the Hamiltonian transforms.",'even-proves':"Matching energies compare only the eigenvalues. Compare the two matrices entry by entry.",'split-breaks':"Check whether the opposite wavevectors share a momentum subspace before interpreting the gap at a single wavevector.",empty:"Choose a test first."})[state.checked]||'';if(!result.hidden)evidence.innerHTML=rashbaEvidenceHTML(state.fraction,rashbaLessonRows(state.fraction));}
  k.value=String(state.fraction);guess.value=state.guess;
- function change(){
-  if(!here())return;
-  clearRequest();
-  state.fraction=Number(k.value);state.guess=guess.value;state.checked='';state.verification='';
-  show();
- }
- k.onchange=guess.onchange=change;
- check.onclick=()=>{if(here()){state.checked=guess.value||'empty';show();}};
- python.onclick=async()=>{
-  if(!here()||!run||result.hidden||state.verification==='running')return;
-  const stamp=++revision,fraction=state.fraction;
-  const expected=rashbaLessonRows(fraction);
-  state.verification='running';showPython();
-  try{
-   const reports=[];
-   for(const B of rashbaFields){
-    const pair=[];
-    for(const direction of [1,-1]){
-     const input=rashbaLessonInput(fraction,B,direction);
-     request=run('symmetry_mini_demos',input);
-     const data=await request;
-     if(!here()||stamp!==revision)return;
-     request=null;
-     if(data?.experiment!=='bands'||data.B!==B||!Number.isFinite(data.kpi)||
-      Math.abs(data.kpi-input.kpi)>1e-12||data.checks?.passed!==true)throw new Error('Unexpected Rashba result');
-     pair.push(data);
-    }
-    reports.push(rashbaPairEvidence(pair[0],pair[1]));
-   }
-   const close=(a,b)=>a===null||b===null?a===b:Math.abs(a-b)<1e-9;
-   const matches=reports.every((row,i)=>['spectrum','gap','residual'].every(key=>close(row[key],expected[i][key]))&&
-    row.spin.every((component,j)=>close(component,expected[i].spin[j])));
-   state.verification=matches?'passed':'mismatch';
-  }catch{
-   if(!here()||stamp!==revision)return;
-   request=null;state.verification='failed';
-  }
-  showPython();
- };
- show();
- return ()=>{retired=true;clearRequest();};
+ k.onchange=guess.onchange=()=>{if(here()){state.fraction=Number(k.value);state.guess=guess.value;state.checked='';show();}};
+ root.querySelector('#smd-rashba-check').onclick=()=>{if(here()){state.checked=guess.value||'empty';show();}};
+ show();return ()=>{retired=true;};
 }
 
 export async function renderSymmetryMiniDemosView({container,selection={},run,onNavigate=()=>{}}){
@@ -266,11 +209,11 @@ export async function renderSymmetryMiniDemosView({container,selection={},run,on
   disposeRashba();disposeRashba=()=>{};
   root.innerHTML=`<header class="smd-hero"><span>Advanced concept mini-experiments</span><h2>From Platonic solids to spin and bands</h2><p>Vary parameters, check the symmetry operation, then use a counterexample to test the conditions of a conclusion.</p></header><nav class="smd-tabs" aria-label="Advanced concept topics">${miniDemoThemes.map(x=>`<button type="button" data-theme="${x.id}" aria-pressed="${theme===x.id}">${x.title}</button>`).join('')}</nav>
   ${rashbaOpen()?rashbaTrimHTML():''}
-  <div class="smd-workspace"><aside class="smd-controls"><h3>Parameters and predictions</h3>${controls(theme,state)}<button type="button" class="primary" data-action="python" ${busy||!run?'disabled':''}>${busy?"Checking with Python…":"Check with browser Python"}</button><p class="smd-status" role="status">${esc(status||"SVG figures and values update immediately as parameters change.")}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><details class="smd-python"><summary>Python check data</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):"Results appear after you click the check button."}</pre></details><footer><a href="#classroom/foundations?module=demos">Water, characters, and projection demonstrations</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching conventions and sources</a></footer>`;
+  <div class="smd-workspace"><aside class="smd-controls"><h3>Parameters and predictions</h3>${controls(theme,state)}<p class="smd-status" role="status">${esc(status||"SVG figures and values update immediately as parameters change.")}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><footer><a href="#classroom/foundations?module=demos">Water, characters, and projection demonstrations</a> · <a href="#classroom/spin?module=orbitals">Crystal fields and orbitals</a> · <a href="docs/foundations-demos.md">Teaching conventions and sources</a></footer>`;
   update();
   if(rashbaOpen())disposeRashba=bindRashbaTrim(root,rashbaState,{run,isCurrent:current});
  }
- function changed(e){const id=e.target.dataset.param;if(!id||!current())return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status="Parameters changed. Check again using the current input.";update();root.querySelector('.smd-status').textContent=status;}
+ function changed(e){const id=e.target.dataset.param;if(!id||!current())return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status="Parameters changed; the plot and derivation have updated together.";update();root.querySelector('.smd-status').textContent=status;}
  root.addEventListener('input',e=>{if(e.target.tagName!=='SELECT')changed(e);});root.addEventListener('change',changed);
  root.addEventListener('click',async e=>{
   if(!current())return;
@@ -283,13 +226,6 @@ export async function renderSymmetryMiniDemosView({container,selection={},run,on
   }
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='animate'){if(timer){clearInterval(timer);timer=null;}else timer=setInterval(()=>{if(!current()){clearInterval(timer);timer=null;return;}revision++;state.phase=(state.phase+6)%360;const el=root.querySelector('[data-param="phase"]');if(el)el.value=state.phase;update();},70);}
-  if(action==='python'&&run&&!busy){
-   if(timer){clearInterval(timer);timer=null;}
-   const requestedRevision=revision;busy=true;status="Checking the current finite model…";draw();
-   try{const input=payload(),result=await run('symmetry_mini_demos',input);if(!current()||requestedRevision!==revision)return;pythonResult=result;status=result?.checks?.passed===false?"Model checks failed. Inspect the input and returned data.":"Python check complete.";draw();latest={tool:'symmetry_mini_demos',input,result};}
-   catch(error){if(current()&&requestedRevision===revision){status="Python check did not complete:"+error.message;draw();}}
-   finally{busy=false;if(current()){const b=root.querySelector('[data-action="python"]');b.disabled=false;b.textContent="Check with browser Python";}}
-  }
  });
  draw();
  return ()=>{disposed=true;if(timer)clearInterval(timer);disposeRashba();};

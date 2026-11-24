@@ -14,7 +14,7 @@ const exercise=(q,steps)=>`<section class="smd-exercise"><h3>预测与分步推�
 const range=(id,label,v,min,max,step)=>`<label><span>${label} <output data-output="${id}">${v}</output></span><input type="range" aria-label="${esc(label)}" data-param="${id}" value="${v}" min="${min}" max="${max}" step="${step}"></label>`;
 const select=(id,label,v,choices)=>`<label><span>${label}</span><select aria-label="${esc(label)}" data-param="${id}">${choices.map(([x,t])=>`<option value="${x}" ${String(x)===String(v)?'selected':''}>${t}</option>`).join('')}</select></label>`;
 export const miniDemoThemes=[{id:'polyhedra',title:'五种正多面体与点群'},{id:'vibrations',title:'分子振动与简并'},{id:'bands',title:'能带与 Kramers 简并'},{id:'manybody',title:'两自旋与交换对称性'},{id:'time-reversal',title:'时间反演：反幺正作用'},{id:'double-soc',title:'双群、自旋旋转与 SOC'}];
-const defaults={polyhedra:{polyhedron:'tetra',order:3,fraction:1},vibrations:{k0:1,k:.5,delta:0,mix:0,phase:45,mode:'E'},bands:{t:1,alpha:.4,B:0,kpi:.35},manybody:{J:1,state:'singlet'},'time-reversal':{theta:65,phi:35,B:0,operation:'T'},'double-soc':{angle:360,coupling:.6}};
+const defaults={polyhedra:{polyhedron:'tetra',order:3,fraction:1},vibrations:{k0:1,k:.5,delta:0,mix:0,phase:45,mode:'E',detector:'local'},bands:{t:1,alpha:.4,B:0,kpi:.35},manybody:{J:1,state:'singlet'},'time-reversal':{theta:65,phi:35,B:0,operation:'T'},'double-soc':{angle:360,coupling:.6}};
 const rashbaTrimPreset='rashba-trim-check';
 const lessonFractions=[0,.2,.5];
 const rashbaFields=[0,.3];
@@ -41,7 +41,9 @@ export function miniDemoPreview(experiment,params={}){
  if(experiment==='polyhedra')return geometry(s);
  if(experiment==='vibrations'){
   const a=[1,1,1].map(x=>x/Math.sqrt(3)),u=[2,-1,-1].map(x=>x/Math.sqrt(6)),v=[0,1,-1].map(x=>x/Math.sqrt(2)),angle=s.mix*Math.PI/180,modeVector=s.mode==='A1'?a:u.map((x,i)=>Math.cos(angle)*x+Math.sin(angle)*v[i]),stiffness=u.map((x,i)=>u.map((y,j)=>s.k0*(i===j?1:0)+s.k*(i===j?2:-1)+s.delta*x*y)),rayleigh=dot(modeVector,mv(stiffness,modeVector)),eigenResidual=norm(mv(stiffness,modeVector).map((x,i)=>x-rayleigh*modeVector[i])),eigenvalues=[s.k0,s.k0+3*s.k+s.delta,s.k0+3*s.k];
-  return {stiffness,basis:{A1:a,u,v},modeVector,displacement:modeVector.map(x=>x*Math.sin(s.phase*Math.PI/180)),eigenvalues,frequencies:eigenvalues.map(x=>x>=0?Math.sqrt(x):null),eigenResidual,isEigenvector:eigenResidual<1e-9,degenerateE:Math.abs(s.delta)<1e-12,stable:Math.min(...eigenvalues)>0};
+  const frequencies=eigenvalues.map(x=>x>=0?Math.sqrt(x):null),time=s.phase*Math.PI/180,coefficients=s.mode==='A1'?[1,0,0]:[0,Math.cos(angle),Math.sin(angle)],basis=[a,u,v],displacement=a.map((_,i)=>basis.reduce((sum,b,j)=>sum+(frequencies[j]===null?0:coefficients[j]*b[i]*Math.sin(frequencies[j]*time)),0)),detector=({common:a,contrast:u,local:[0,1,0]})[s.detector]||[0,1,0],intensities=basis.map(b=>dot(detector,b)**2),spectrum=[];
+  frequencies.forEach((frequency,i)=>{if(frequency===null)return;const prior=spectrum.find(p=>Math.abs(p.frequency-frequency)<1e-9);if(prior){prior.intensity+=intensities[i];prior.modes.push(['A1','u','v'][i]);}else spectrum.push({frequency,intensity:intensities[i],modes:[['A1','u','v'][i]]});});
+  return {stiffness,basis:{A1:a,u,v},modeVector,displacement,eigenvalues,frequencies,eigenResidual,isEigenvector:eigenResidual<1e-9,degenerateE:Math.abs(s.delta)<1e-12,stable:Math.min(...eigenvalues)>0,time,coefficients,detector,intensities,spectrum};
  }
  if(experiment==='bands'){
   const k=s.kpi*Math.PI;
@@ -65,7 +67,7 @@ export function miniDemoPreview(experiment,params={}){
 
 function controls(t,s){
  if(t==='polyhedra')return select('polyhedron','理想正多面体',s.polyhedron,[['tetra','正四面体 · T / T_d'],['cube','正六面体（立方体）· O / O_h'],['octa','正八面体 · O / O_h'],['dodeca','正十二面体 · I / I_h'],['icosa','正二十面体 · I / I_h']])+select('order','绕已声明的轴尝试旋转',s.order,[[2,'C₂ · x 轴'],[3,'C₃ · (1,1,1) 轴'],[4,'C₄ · z 轴'],[5,'C₅ · (0,1,φ) 轴']])+range('fraction','旋转完成比例',s.fraction,0,1,.01);
- if(t==='vibrations')return range('k0','共同回复刚度 k₀',s.k0,.2,3,.05)+range('k','环上等价耦合 k',s.k,0,1,.025)+range('delta','对称破缺 δ',s.delta,-1,1,.025)+select('mode','展示的模式空间',s.mode,[['A1','A₁ 同相坐标'],['E','E 空间内的组合']])+range('mix','E 搭档混合角（°）',s.mix,0,360,1)+range('phase','示意振动相位（°）',s.phase,0,360,1)+'<button type="button" data-action="animate">播放 / 暂停模式</button>';
+ if(t==='vibrations')return range('k0','共同回复刚度 k₀',s.k0,.2,3,.05)+range('k','环上等价耦合 k',s.k,0,1,.025)+range('delta','对称破缺 δ',s.delta,-1,1,.025)+select('mode','初始模态组合',s.mode,[['A1','A₁ 同相坐标'],['E','E 空间内的组合']])+range('mix','E 搭档混合角（°）',s.mix,0,360,1)+range('phase','模型时间 × 180/π',s.phase,0,360,1)+select('detector','线性探测通道 d·q',s.detector,[['local','局域通道：q₂'],['common','同相通道：(q₁+q₂+q₃)/√3'],['contrast','对比通道：(2q₁−q₂−q₃)/√6']])+'<button type="button" data-action="animate">播放 / 暂停运动</button>';
  if(t==='bands')return range('t','跃迁 t',s.t,0,2,.05)+range('alpha','Rashba 耦合 α',s.alpha,0,1,.025)+range('B','Zeeman 参数 B',s.B,-1,1,.025)+range('kpi','当前波矢 k / π',s.kpi,-1,1,.01);
  if(t==='manybody')return range('J','交换参数 J',s.J,-2,2,.05)+select('state','两自旋态',s.state,[['singlet','单态 (↑↓−↓↑)/√2'],['triplet0','三重态 m=0'],['triplet+','三重态 ↑↑'],['triplet-','三重态 ↓↓']]);
  if(t==='time-reversal')return range('theta','Bloch 极角 θ（°）',s.theta,0,180,1)+range('phi','相对相位 φ（°）',s.phi,0,360,1)+select('operation','比较作用',s.operation,[['T','T = iσᵧK'],['T2','T²'],['K','K（复共轭）'],['K2','K²']])+range('B','外磁场参数 B',s.B,-1,1,.05);
@@ -84,10 +86,18 @@ function scene(t,s){
   return {plot:svg('正多面体顶点集合的旋转重合检查',body),html:`<h3>纯旋转群 ${groupMath(r.properGroup)}（${r.properOrder} 阶）；完整点群 ${groupMath(r.fullGroup)}（${r.fullOrder} 阶）</h3><p>${r.vertices.length} 个顶点、${r.edges.length} 条边。当前顶点集合最大失配为 ${fmt(r.maxMismatch)}；旋转轴为 (${r.axis.map(fmt).join(', ')})。</p><p>${r.crystallographic?'当前多面体的点群属于普通晶体学点群类型。':`${groupMath('I')} / ${groupMath('Ih')} 含五重轴，可描述正多面体或相应分子；不能作为三维周期晶格的普通晶体学点群。`}</p><p>把完成比例调到 1 才是在检查所选 Cₙ 操作。正十二面体与正二十面体互为对偶，拥有相同旋转群；完整点群还包含反演或镜面等不正操作。</p>`,exercise:exercise('同一条五重轴是否也让立方体顶点重合？怎样区分“形状很对称”和“晶体学允许”？',['先在正二十面体上选择 C₅，并将旋转比例设为1，核对12个顶点集合。','切换到立方体，同一操作不再使顶点集合重合；立方体具有 C₄ 和 C₃ 轴。','三维周期晶格的旋转阶数限制为1、2、3、4、6；正多面体或非周期分子的点群不受同一目录限制。']),data:r};
  }
  if(t==='vibrations'){
-  const base=[[160,230],[320,90],[480,230]];let body=line(...base[0],...base[1])+line(...base[1],...base[2])+line(...base[2],...base[0]);
-  base.forEach(([x,y],i)=>{body+=`<circle cx="${x}" cy="${y}" r="18" fill="#e5eef4" stroke="#557488"/>`+line(x,y,x,y-70*r.displacement[i],'#247da0',5)+text(x,y+46,`q${i+1}: ${fmt(r.displacement[i])}`,undefined,15);});
-  const f=r.frequencies.map(x=>x===null?'虚频（不稳定）':fmt(x));body+=text(320,30,r.degenerateE?'E 双简并：混合角不改变本征频率':'δ 选定方向并劈裂 E 搭档');
-  return {plot:svg('三个等价标量振子的对称适应模式',body),html:`<h3>用同一个 E 子空间区分换基与真实破缺</h3><p>${math(String.raw`K=k_0I+kL_{K_3}+\delta uu^T`)}，单位质量下 ${math(String.raw`\omega_{A_1}^2=k_0`)}，${math(String.raw`\omega_u^2=k_0+3k+\delta`)}，${math(String.raw`\omega_v^2=k_0+3k`)}。</p>${table(['模式','A₁','u ∈ E','v ∈ E'],[['频率',...f]])}<p>当前组合的本征方程残差为 ${fmt(r.eigenResidual)}：${r.isEigenvector?'它是一个单频正常坐标。':'δ≠0 时该任意混合不是单一正常模，应分解为不同频率的两个搭档。'}</p><p>图中振幅条表示标量坐标，不指定真实分子的位移方向。该三节点弹簧模型用于讲解简并，不是任意分子的光谱求解器。</p>`,exercise:exercise('δ=0 时改变混合角，为何不能称为简并被解除？',['u 与 v 都有相同的本征值 k₀+3k，其任意正交混合仍是该本征值的本征向量。','令 δ≠0 后，u 与 v 的平方频率分别改变为 k₀+3k+δ 与 k₀+3k；这才是模型中的真实劈裂。','若某个平方频率降到负值，谐性参考结构失稳；不能把负数直接开方当成稳定振动频率。']),data:r};
+  const base=[[70,200],[160,100],[250,200]],basis=[r.basis.A1,r.basis.u,r.basis.v],labels=['A₁','u','v'];let body=text(160,28,'三个等价的标量坐标',undefined,16);
+  body+=line(...base[0],...base[1])+line(...base[1],...base[2])+line(...base[2],...base[0]);
+  base.forEach(([x,y],i)=>{body+=`<circle cx="${x}" cy="${y}" r="16" fill="#e5eef4" stroke="#557488"/>`+line(x,y,x,y-55*r.displacement[i],'#247da0',4)+text(x,y+42,`q${i+1}=${fmt(r.displacement[i])}`,undefined,13);});
+  const maxFrequency=Math.max(1,...r.frequencies.filter(x=>x!==null))+.3,X=f=>360+220*f/maxFrequency;
+  body+=text(470,28,'线性探测器的理想棒状谱',undefined,16)+line(350,267,602,267,'#738c9d')+text(490,315,'ω / √(刚度单位 / 质量单位)',undefined,12)+text(365,293,'0',undefined,13);
+  r.spectrum.forEach((p,i)=>{const x=X(p.frequency),h=150*p.intensity;body+=line(x,267,x,267-h,['#357d9a','#b76e39','#75559a'][i%3],5)+text(x,250-h,fmt(p.intensity),undefined,13)+text(x,287,fmt(p.frequency),undefined,12);});
+  body+=text(160,315,`t=${fmt(r.time)}；左图蓝线只表示标量坐标`,undefined,12);
+  const f=r.frequencies.map(x=>x===null?'ω²<0：谐性失稳':fmt(x)),matrix=r.stiffness.map(row=>row.map(fmt).join('  ')).join('\n');
+  return {plot:svg('三标量振子真实时间演化与方向相关的示意探测谱',body),html:`<h3>先求正交本征模，再区分换基、劈裂与谱强度</h3>
+  <section class="smd-step"><h4>1 · 明确模型与三个本征向量</h4><p>三个节点各有一个等质量<strong>标量</strong> qᵢ；图中竖线是坐标数值，不是真实分子的空间位移方向。模型质量 m=1，${math(String.raw`K=k_0I+kL_{K_3}+\delta uu^T`)}，L 的对角为2、非对角为−1。</p><pre class="smd-matrix" aria-label="刚度矩阵">${matrix}</pre>${table(['基向量','三个分量','ω²','ω'],basis.map((b,i)=>[labels[i],b.map(fmt).join(', '),fmt(r.eigenvalues[i]),f[i]]))}<p>a=(1,1,1)/√3，u=(2,−1,−1)/√6，v=(0,1,−1)/√2；三者长度为1，内积两两为0。直接乘 K，可得 Ka=k₀a、Ku=(k₀+3k+δ)u、Kv=(k₀+3k)v。</p></section>
+  <section class="smd-step"><h4>2 · 简并时换基，破缺时两个频率</h4><p>δ=0 时 u、v 同频，任意 ${math(String.raw`w=\cos\beta\,u+\sin\beta\,v`)} 仍是正常模。与之正交的搭档为 −sinβ u+cosβ v。改变 β 只在同一个 E 平面内换方向，没有解除简并。</p><p>δ≠0 时 u 和 v 具有不同本征频率。${r.isEigenvector?'当前选取是一个单频正常坐标。':'当前混合不是单频正常模。图已分别按 ωu 与 ωv 演化，运动方向会随时间改变。'} ${!r.stable?'至少一个方向的 ω²≤0：参考结构不是稳定谐性极小值；负平方频率的方向暂停正弦动画，也不画成实频谱峰。':''}</p><p>${math(String.raw`q(t)=c_a a\sin(\omega_a t)+c_u u\sin(\omega_u t)+c_v v\sin(\omega_v t)`)}。当前 (ca,cu,cv)=(${r.coefficients.map(fmt).join(', ')} )。时间滑块改变运动；混合角改变准备的模态组合。</p></section>
+  <section class="smd-step"><h4>3 · 同一组频率，探测方向可以改变峰强度</h4><p>假设外部线性探测量为 S=d·q，归一化探测向量 d=(${r.detector.map(fmt).join(', ')})。理想模式权重 ${math(String.raw`I_j=|d^T e_j|^2`)}；这是定义明确的示意耦合，不将 d 冒充真实电偶极导数或极化率导数。</p>${table(['模式','A₁','u','v'],[['通道权重',...r.intensities.map(fmt)]])}<p>同频峰合并显示，总权重相加；因此δ=0时更换 E 的正交基不会改变该频率处的总权重。局域 q₂ 通道能同时看到两个 E 搭档；同相通道只耦合 A₁。改变探测通道不会改变 K 或频率。</p><p>棒状谱假设各模受到相同的独立准备并忽略线宽、温度、阻尼。实际材料的 IR / Raman 强度还需偶极矩 / 极化率导数；本页没有虚构任何真实材料的频率或单位。</p></section>`,exercise:exercise('δ=0、混合角45°时，为什么谱中仍只有一条E频率？改δ后动画该怎样改变？',['简并意味着u和v的平方频率相同，任意正交混合仍然单频。','δ≠0使u、v频率不同，任意混合须分别按两个频率演化，不能给两者强加一个共同正弦相位。','在局域q₂通道可观察两条分开的E峰；换成同相探测通道，两者权重都为0，但它们仍然存在。']),data:r};
  }
  if(t==='bands'){
   const es=r.curves.flatMap(x=>x.energies),lo=Math.min(...es)-.2,hi=Math.max(...es)+.2,X=k=>70+(k+Math.PI)/(2*Math.PI)*500,Y=e=>285-(e-lo)/(hi-lo)*230;let body=line(70,285,590,285)+line(70,285,70,45);
@@ -158,8 +168,6 @@ function rashbaTrimHTML(){
   <p id="smd-rashba-feedback" role="status"></p>
   <div id="smd-rashba-result" hidden>
    <div id="smd-rashba-evidence"></div>
-   <button id="smd-rashba-python" type="button" class="secondary">用 Python 核对这组比较</button>
-   <p id="smd-rashba-python-status" role="status"></p>
   </div>
   <a href="#classroom/spin?tab=learn&amp;lesson=double-04&amp;track=double">回看 Kramers 配对的三个条件 →</a>
  </section>`;
@@ -179,80 +187,15 @@ function rashbaEvidenceHTML(fraction,rows){
   <p>能级简并时，表中省略上支的自旋分量，因为简并空间内可选择不同的本征基。</p>`;
 }
 
-function bindRashbaTrim(root,state,{run,isCurrent}){
- const k=root.querySelector('#smd-rashba-k'),guess=root.querySelector('#smd-rashba-guess');
- const check=root.querySelector('#smd-rashba-check'),feedback=root.querySelector('#smd-rashba-feedback');
- const result=root.querySelector('#smd-rashba-result'),evidence=root.querySelector('#smd-rashba-evidence');
- const python=root.querySelector('#smd-rashba-python'),status=root.querySelector('#smd-rashba-python-status');
- let retired=false,revision=0,request=null;
+function bindRashbaTrim(root,state,{isCurrent}){
+ const k=root.querySelector('#smd-rashba-k'),guess=root.querySelector('#smd-rashba-guess'),feedback=root.querySelector('#smd-rashba-feedback'),result=root.querySelector('#smd-rashba-result'),evidence=root.querySelector('#smd-rashba-evidence');
+ let retired=false;
  const here=()=>!retired&&isCurrent()&&root.querySelector('#smd-rashba-k')===k;
- function clearRequest(){
-  revision++;request?.cancel?.();request=null;
-  if(state.verification==='running')state.verification='';
- }
- function showPython(){
-  python.hidden=!run;
-  python.disabled=state.verification==='running';
-  status.textContent=({
-   running:'正在核对正负波矢和两个外场…',
-   passed:'Python 核对一致。两种外场的能谱仍为偶对称，其中只有零场通过时间反演矩阵检验。',
-   mismatch:'Python 结果与预览有差异，请重新核对。',
-   failed:'Python 核对未完成，可以重试。'
-  })[state.verification]||'';
- }
- function show(){
-  result.hidden=state.checked!=='matrix-test';
-  feedback.textContent=({
-   'matrix-test':'正确。能量相同是能谱的关系，时间反演还需要检验 Hamiltonian 的变换。',
-   'even-proves':'能量相同只比较了本征值。还可以逐项比较两个矩阵。',
-   'split-breaks':'先检查正负波矢是否回到同一个动量子空间，再判断同一波矢的能级间隔。',
-   empty:'请先选择判断方法。'
-  })[state.checked]||'';
-  if(!result.hidden)evidence.innerHTML=rashbaEvidenceHTML(state.fraction,rashbaLessonRows(state.fraction));
-  showPython();
- }
+ function show(){result.hidden=state.checked!=='matrix-test';feedback.textContent=({'matrix-test':'正确。能量相同是能谱的关系，时间反演还需要检验 Hamiltonian 的变换。','even-proves':'能量相同只比较了本征值。还可以逐项比较两个矩阵。','split-breaks':'先检查正负波矢是否回到同一个动量子空间，再判断同一波矢的能级间隔。',empty:'请先选择判断方法。'})[state.checked]||'';if(!result.hidden)evidence.innerHTML=rashbaEvidenceHTML(state.fraction,rashbaLessonRows(state.fraction));}
  k.value=String(state.fraction);guess.value=state.guess;
- function change(){
-  if(!here())return;
-  clearRequest();
-  state.fraction=Number(k.value);state.guess=guess.value;state.checked='';state.verification='';
-  show();
- }
- k.onchange=guess.onchange=change;
- check.onclick=()=>{if(here()){state.checked=guess.value||'empty';show();}};
- python.onclick=async()=>{
-  if(!here()||!run||result.hidden||state.verification==='running')return;
-  const stamp=++revision,fraction=state.fraction;
-  const expected=rashbaLessonRows(fraction);
-  state.verification='running';showPython();
-  try{
-   const reports=[];
-   for(const B of rashbaFields){
-    const pair=[];
-    for(const direction of [1,-1]){
-     const input=rashbaLessonInput(fraction,B,direction);
-     request=run('symmetry_mini_demos',input);
-     const data=await request;
-     if(!here()||stamp!==revision)return;
-     request=null;
-     if(data?.experiment!=='bands'||data.B!==B||!Number.isFinite(data.kpi)||
-      Math.abs(data.kpi-input.kpi)>1e-12||data.checks?.passed!==true)throw new Error('Unexpected Rashba result');
-     pair.push(data);
-    }
-    reports.push(rashbaPairEvidence(pair[0],pair[1]));
-   }
-   const close=(a,b)=>a===null||b===null?a===b:Math.abs(a-b)<1e-9;
-   const matches=reports.every((row,i)=>['spectrum','gap','residual'].every(key=>close(row[key],expected[i][key]))&&
-    row.spin.every((component,j)=>close(component,expected[i].spin[j])));
-   state.verification=matches?'passed':'mismatch';
-  }catch{
-   if(!here()||stamp!==revision)return;
-   request=null;state.verification='failed';
-  }
-  showPython();
- };
- show();
- return ()=>{retired=true;clearRequest();};
+ k.onchange=guess.onchange=()=>{if(here()){state.fraction=Number(k.value);state.guess=guess.value;state.checked='';show();}};
+ root.querySelector('#smd-rashba-check').onclick=()=>{if(here()){state.checked=guess.value||'empty';show();}};
+ show();return ()=>{retired=true;};
 }
 
 export async function renderSymmetryMiniDemosView({container,selection={},run,onNavigate=()=>{}}){
@@ -266,11 +209,11 @@ export async function renderSymmetryMiniDemosView({container,selection={},run,on
   disposeRashba();disposeRashba=()=>{};
   root.innerHTML=`<header class="smd-hero"><span>进阶概念微实验</span><h2>从正多面体到自旋与能带</h2><p>改变参数、核对对称操作，再用一个反例检查结论的条件。</p></header><nav class="smd-tabs" aria-label="进阶概念主题">${miniDemoThemes.map(x=>`<button type="button" data-theme="${x.id}" aria-pressed="${theme===x.id}">${x.title}</button>`).join('')}</nav>
   ${rashbaOpen()?rashbaTrimHTML():''}
-  <div class="smd-workspace"><aside class="smd-controls"><h3>参数与判断</h3>${controls(theme,state)}<button type="button" class="primary" data-action="python" ${busy||!run?'disabled':''}>${busy?'正在用 Python 核对…':'用浏览器内 Python 核对'}</button><p class="smd-status" role="status">${esc(status||'SVG 图和数值随参数即时更新。')}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><details class="smd-python"><summary>Python 核对数据</summary><pre>${pythonResult?esc(JSON.stringify(pythonResult,null,2)):'点击核对按钮后显示结果。'}</pre></details><footer><a href="#classroom/foundations?module=demos">水分子、特征标与投影演示</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学约定与来源</a></footer>`;
+  <div class="smd-workspace"><aside class="smd-controls"><h3>参数与判断</h3>${controls(theme,state)}<p class="smd-status" role="status">${esc(status||'SVG 图和数值随参数即时更新。')}</p></aside><section class="smd-preview" aria-live="polite"></section></div><div class="smd-questions"></div><footer><a href="#classroom/foundations?module=demos">水分子、特征标与投影演示</a> · <a href="#classroom/spin?module=orbitals">晶场与轨道专题</a> · <a href="docs/foundations-demos.md">教学约定与来源</a></footer>`;
   update();
   if(rashbaOpen())disposeRashba=bindRashbaTrim(root,rashbaState,{run,isCurrent:current});
  }
- function changed(e){const id=e.target.dataset.param;if(!id||!current())return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status='参数已改变，可用当前输入重新核对。';update();root.querySelector('.smd-status').textContent=status;}
+ function changed(e){const id=e.target.dataset.param;if(!id||!current())return;revision++;state[id]=Number.isFinite(Number(e.target.value))?Number(e.target.value):e.target.value;pythonResult=null;status='参数已改变，图与推导已同步更新。';update();root.querySelector('.smd-status').textContent=status;}
  root.addEventListener('input',e=>{if(e.target.tagName!=='SELECT')changed(e);});root.addEventListener('change',changed);
  root.addEventListener('click',async e=>{
   if(!current())return;
@@ -283,13 +226,6 @@ export async function renderSymmetryMiniDemosView({container,selection={},run,on
   }
   const action=e.target.closest('[data-action]')?.dataset.action;
   if(action==='animate'){if(timer){clearInterval(timer);timer=null;}else timer=setInterval(()=>{if(!current()){clearInterval(timer);timer=null;return;}revision++;state.phase=(state.phase+6)%360;const el=root.querySelector('[data-param="phase"]');if(el)el.value=state.phase;update();},70);}
-  if(action==='python'&&run&&!busy){
-   if(timer){clearInterval(timer);timer=null;}
-   const requestedRevision=revision;busy=true;status='正在核对当前有限模型…';draw();
-   try{const input=payload(),result=await run('symmetry_mini_demos',input);if(!current()||requestedRevision!==revision)return;pythonResult=result;status=result?.checks?.passed===false?'模型检查未通过，请检查输入和返回数据。':'Python 核对完成。';draw();latest={tool:'symmetry_mini_demos',input,result};}
-   catch(error){if(current()&&requestedRevision===revision){status='Python 核对未完成：'+error.message;draw();}}
-   finally{busy=false;if(current()){const b=root.querySelector('[data-action="python"]');b.disabled=false;b.textContent='用浏览器内 Python 核对';}}
-  }
  });
  draw();
  return ()=>{disposed=true;if(timer)clearInterval(timer);disposeRashba();};

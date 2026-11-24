@@ -59,8 +59,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/data/examples/phonopy-zno-BORN": {
       "normalization": "binary",
@@ -109,8 +109,8 @@
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 407105,
-      "sha256": "6a3dd8e965758f87bb5c89a33bfde1de847fde1040646922835331dab8864fd1"
+      "bytes": 407206,
+      "sha256": "f48cd70b7703f62a528b78f3f2a3f837971ac41ed053111a0700e41ecd7a4187"
     },
     "dist/docs/dynamic-scattering.md": {
       "normalization": "utf8-lf-v1",
@@ -139,8 +139,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -169,8 +169,8 @@
     },
     "dist/navigation-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 39245,
-      "sha256": "e1bdccf319ce118315550fd58e20c57844f93ed2315d36057565ef6d61a035dc"
+      "bytes": 39226,
+      "sha256": "5f6e77e24c3cc37fd98ff7cd17002cb820eec8a241c599990a541e38937f4443"
     },
     "dist/pathways-ui.js": {
       "normalization": "utf8-lf-v1",
@@ -204,13 +204,13 @@
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3139,
-      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
+      "bytes": 3140,
+      "sha256": "4bfa0ad97949fb369a24018e8df61c980ea3a31aecea1014a308146ada045105"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12824,
-      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
+      "bytes": 13304,
+      "sha256": "af1047ca452a2770242f5a45242a9d4088a7a12fab96e63d559467a1ea20c65d"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -234,8 +234,8 @@
     },
     "dist/tool-capabilities.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 45026,
-      "sha256": "0c04710bc5bdd0b46bd4a57c3d232ddd6c957b34ae13c096cdb18c4a173a68d3"
+      "bytes": 45036,
+      "sha256": "723ed622dcc9071aac0c7c6adfc7001c947bddc40f818dd39ade972e1d8827d3"
     },
     "dist/tool-directory.js": {
       "normalization": "utf8-lf-v1",
@@ -512,6 +512,16 @@
       "bytes": 6999,
       "sha256": "1e94751dfeb815f6646ea320bd97796fb7fcb6baa43649b60cfa680901f42182"
     },
+    "locales/en-foundations-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 25277,
+      "sha256": "fc2e291b94f6454eed8b6b43b67e5ac480137a578b35d791d67c089f605b2c58"
+    },
+    "locales/en-foundations-redesign-tail-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 18171,
+      "sha256": "95bd56170023c84876db8765fd8196bd0c55406f7d518a2c1e602345b886228e"
+    },
     "locales/en-fourfold-search.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1513,
@@ -662,6 +672,11 @@
       "bytes": 122,
       "sha256": "50ca5650a04ed45bad209abaecce0a6150fac6f54caa27a381d906832db45a07"
     },
+    "locales/en-navigation-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4924,
+      "sha256": "20167feaa7b2b8fefac755327c661aa1c20d9ecb8cdb08077f034c779ef12bab"
+    },
     "locales/en-next-paths.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 778,
@@ -709,8 +724,8 @@
     },
     "locales/en-phonopy-derivation-ui.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20339,
-      "sha256": "99a9674b142869763150062ae900eb6fa56e36ea3f6dae1ca81167d9235ea572"
+      "bytes": 20327,
+      "sha256": "2d1b844578055cd91fe5607f6a32eac2e94b026e011a98d9f9f71334ac2d3d6a"
     },
     "locales/en-phonopy-scattering-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -761,6 +776,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 2699,
       "sha256": "fde751c77e76afe05da9cd741f54b396a81c1ad82849ab79783aa56bb7229933"
+    },
+    "locales/en-pointgroup-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 45069,
+      "sha256": "7a615331e588876e5b203ea4bda1e2817c52f26f3404a7336173fa00cef3a1b0"
     },
     "locales/en-precision-controls.json": {
       "normalization": "utf8-lf-v1",
@@ -911,6 +931,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 2529,
       "sha256": "78adf0bfb99e40fc127597633996310c684b6266ba5f3e62646bf46807736cfb"
+    },
+    "locales/en-runtime-teaching-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7909,
+      "sha256": "539f27b72f81385473a84a102c3e5efcf1648a065683c4d5df20ae9cead988af"
     },
     "locales/en-scattering-replay-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -1117,6 +1142,11 @@
       "bytes": 15191,
       "sha256": "e1ee72b8e432307d406540641066e67166e49e303583ad66a34304bb893c02a9"
     },
+    "locales/en-theorem-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 37546,
+      "sha256": "889edab8c20cc8b382fbcab53fd169e73776a9e42daf0d3e1846c4eeeda1ab67"
+    },
     "locales/en-thermal-learning-bridge.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 14273,
@@ -1269,13 +1299,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10478,
-      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
+      "bytes": 10554,
+      "sha256": "b71a1aeeba0debc1d444e5035900a630606ef51f649981a967b5636a34bf9fea"
     },
     "scripts/build-phonopy-scattering-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1299,8 +1329,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",

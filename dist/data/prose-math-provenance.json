@@ -30,8 +30,8 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/crystal-notation.js": {
       "normalization": "utf8-lf-v1",
@@ -60,8 +60,8 @@
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/math-display.css": {
       "normalization": "utf8-lf-v1",
@@ -95,13 +95,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10478,
-      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
+      "bytes": 10554,
+      "sha256": "b71a1aeeba0debc1d444e5035900a630606ef51f649981a967b5636a34bf9fea"
     },
     "scripts/build-prose-math-provenance.mjs": {
       "normalization": "utf8-lf-v1",
@@ -110,8 +110,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -155,8 +155,8 @@
     },
     "scripts/test-math-prose-boundaries.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12392,
-      "sha256": "6551684de9ddbe620b6c9cda261335fd6495771037a88dd5f429ceea2412e83a"
+      "bytes": 12388,
+      "sha256": "665bec68d471e490719cfb20a1326ebad57b2a2e9e019e9fea75bfeac926b122"
     },
     "scripts/test-math-prose-dom.mjs": {
       "normalization": "utf8-lf-v1",

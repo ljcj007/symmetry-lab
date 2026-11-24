@@ -46,7 +46,6 @@
   "已使用提示或参考": "Hint or reference accessed",
   "尚未使用提示或参考": "No hint or reference accessed yet",
   "当前任务不提供定量判分。排除模式或超出判分器支持范围的分量不会生成通过；完整原因保留在原始参考导出中。": "This task is unavailable for numerical checking. Excluded modes or components beyond the grader range cannot receive a pass; the complete reason is retained in the raw reference export.",
-  "把当前测点的已填数值送到 Python 核对": "Send the entered numerical answers to Python for checking",
   "核对以原文件的明确复相位约定进行逐分量比较，不用强度相同代替复振幅正确。未填任务仍显示为未作答。": "Checking compares each component in the source file's explicit complex-phase convention. Equal strength does not establish a correct complex amplitude. Empty tasks remain missing.",
   "请补全同一题的全部分量，并只填有限数值；其他题的草稿不会丢失。": "Complete every component of a task using finite numbers only. Drafts for the other tasks are retained.",
   "本次定量反馈": "Numerical feedback for this submission",
@@ -139,5 +138,6 @@
   "只凭 T = 100 K 和四个 q 点，能得到材料的 Debye–Waller 因子吗？": "Can T = 100 K and four q points alone determine the material's Debye–Waller factor?",
   "不能，需实际热位移数据或完整积分。": "No; actual thermal-displacement data or a complete integration is needed.",
   "能，温度决定全部位移。": "Yes; temperature determines all displacements.",
-  "本练习明确省略 Debye–Waller；这是一项模型近似，不由温度或稀疏 q 点自动证明。": "This exercise explicitly omits Debye–Waller. It is a model approximation, not a consequence of temperature or sparse q points."
+  "本练习明确省略 Debye–Waller；这是一项模型近似，不由温度或稀疏 q 点自动证明。": "This exercise explicitly omits Debye–Waller. It is a model approximation, not a consequence of temperature or sparse q points.",
+  "提交当前测点的振幅与相位答案": "Submit the amplitude and phase answers for this point"
 }

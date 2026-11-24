@@ -55,23 +55,23 @@
     },
     "dist/app.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/classroom-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/data/pointgroup-lessons.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 35682,
-      "sha256": "9ce858936683b5b9f2f77a4767eb9dd4998fa7d56d339be3dbc98ba80c5fdc11"
+      "bytes": 44659,
+      "sha256": "f0696139578c36cc5f0b35be880f026d99f2b55498811f2270a1359295eb3290"
     },
     "dist/data/search-index.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 407105,
-      "sha256": "6a3dd8e965758f87bb5c89a33bfde1de847fde1040646922835331dab8864fd1"
+      "bytes": 407206,
+      "sha256": "f48cd70b7703f62a528b78f3f2a3f837971ac41ed053111a0700e41ecd7a4187"
     },
     "dist/docs/water-actions.md": {
       "normalization": "utf8-lf-v1",
@@ -85,18 +85,18 @@
     },
     "dist/foundations-demos.css": {
       "normalization": "utf8-lf-v1",
-      "bytes": 4314,
-      "sha256": "0deeffd30036aacf903e188de5a2361dd259db0d0cf9c3b1400cfdbe850a5056"
+      "bytes": 5160,
+      "sha256": "dd73b455f972d6e90e277793b1bebf668cad5c8383933029fe6b6462fb1b0c6e"
     },
     "dist/foundations-demos.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 42468,
-      "sha256": "d293671599bfd5bd370a494b2703d0c5f8fc3f1ba94623b74410582d947899ad"
+      "bytes": 59215,
+      "sha256": "214c0e9f07812f40e0c04337d72c27843b6a15af33dedb97867e5e68a0c005bf"
     },
     "dist/index.html": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8431,
-      "sha256": "8455ec17927e7c09e49b3181d6136795a927ffe6f5eb07a46936149e0c3a83e3"
+      "bytes": 8367,
+      "sha256": "2334d2491a59163aaf29214d7c85cf099ffe5e8783acbc658ceaf7404684b195"
     },
     "dist/lesson-progression-index.js": {
       "normalization": "utf8-lf-v1",
@@ -120,18 +120,18 @@
     },
     "dist/pointgroup-ui.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 50428,
-      "sha256": "f44fe84e10792c5b0c428cac309eb03f197110c774667dd89d57cef214a83a83"
+      "bytes": 50714,
+      "sha256": "1427a63edb25254af40df38b5781bc3a8daf6c04fa9d292b8d82957f1ff8598a"
     },
     "dist/python-client.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 3139,
-      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
+      "bytes": 3140,
+      "sha256": "4bfa0ad97949fb369a24018e8df61c980ea3a31aecea1014a308146ada045105"
     },
     "dist/python-worker.js": {
       "normalization": "utf8-lf-v1",
-      "bytes": 12824,
-      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
+      "bytes": 13304,
+      "sha256": "af1047ca452a2770242f5a45242a9d4088a7a12fab96e63d559467a1ea20c65d"
     },
     "dist/python/browser_api.py": {
       "normalization": "utf8-lf-v1",
@@ -140,8 +140,8 @@
     },
     "dist/python/foundations_demos.py": {
       "normalization": "utf8-lf-v1",
-      "bytes": 19199,
-      "sha256": "2cb7cfd4f88c3e8e94eabc7d277876ef28cd2718e9f956f17b953aa79e2aefb1"
+      "bytes": 20103,
+      "sha256": "5182b29528b981c6e58ff20ff8215e9be36f5641515c2c8cde38a8c9e3588454"
     },
     "dist/python/water_actions.py": {
       "normalization": "utf8-lf-v1",
@@ -433,6 +433,16 @@
       "bytes": 6999,
       "sha256": "1e94751dfeb815f6646ea320bd97796fb7fcb6baa43649b60cfa680901f42182"
     },
+    "locales/en-foundations-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 25277,
+      "sha256": "fc2e291b94f6454eed8b6b43b67e5ac480137a578b35d791d67c089f605b2c58"
+    },
+    "locales/en-foundations-redesign-tail-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 18171,
+      "sha256": "95bd56170023c84876db8765fd8196bd0c55406f7d518a2c1e602345b886228e"
+    },
     "locales/en-fourfold-search.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 1513,
@@ -583,6 +593,11 @@
       "bytes": 122,
       "sha256": "50ca5650a04ed45bad209abaecce0a6150fac6f54caa27a381d906832db45a07"
     },
+    "locales/en-navigation-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 4924,
+      "sha256": "20167feaa7b2b8fefac755327c661aa1c20d9ecb8cdb08077f034c779ef12bab"
+    },
     "locales/en-next-paths.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 778,
@@ -630,8 +645,8 @@
     },
     "locales/en-phonopy-derivation-ui.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 20339,
-      "sha256": "99a9674b142869763150062ae900eb6fa56e36ea3f6dae1ca81167d9235ea572"
+      "bytes": 20327,
+      "sha256": "2d1b844578055cd91fe5607f6a32eac2e94b026e011a98d9f9f71334ac2d3d6a"
     },
     "locales/en-phonopy-scattering-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -682,6 +697,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 2699,
       "sha256": "fde751c77e76afe05da9cd741f54b396a81c1ad82849ab79783aa56bb7229933"
+    },
+    "locales/en-pointgroup-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 45069,
+      "sha256": "7a615331e588876e5b203ea4bda1e2817c52f26f3404a7336173fa00cef3a1b0"
     },
     "locales/en-precision-controls.json": {
       "normalization": "utf8-lf-v1",
@@ -832,6 +852,11 @@
       "normalization": "utf8-lf-v1",
       "bytes": 2529,
       "sha256": "78adf0bfb99e40fc127597633996310c684b6266ba5f3e62646bf46807736cfb"
+    },
+    "locales/en-runtime-teaching-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 7909,
+      "sha256": "539f27b72f81385473a84a102c3e5efcf1648a065683c4d5df20ae9cead988af"
     },
     "locales/en-scattering-replay-docs.json": {
       "normalization": "utf8-lf-v1",
@@ -1038,6 +1063,11 @@
       "bytes": 15191,
       "sha256": "e1ee72b8e432307d406540641066e67166e49e303583ad66a34304bb893c02a9"
     },
+    "locales/en-theorem-redesign-20261124.json": {
+      "normalization": "utf8-lf-v1",
+      "bytes": 37546,
+      "sha256": "889edab8c20cc8b382fbcab53fd169e73776a9e42daf0d3e1846c4eeeda1ab67"
+    },
     "locales/en-thermal-learning-bridge.json": {
       "normalization": "utf8-lf-v1",
       "bytes": 14273,
@@ -1190,13 +1220,13 @@
     },
     "package.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 32492,
-      "sha256": "7f6d8187ea6cbb7c8f63c32844acc617ace60ecd4826e37eb09b87300899dda6"
+      "bytes": 32845,
+      "sha256": "66dda56c25e0ccf7253a5e6b67ac9459f9000f063593e86937bfac7e988ca77b"
     },
     "scripts/build-english.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 10478,
-      "sha256": "515a5e99dea3a8e453f21c068d165c395f89d280d0e0138c0daf5c5cc83e4fd3"
+      "bytes": 10554,
+      "sha256": "b71a1aeeba0debc1d444e5035900a630606ef51f649981a967b5636a34bf9fea"
     },
     "scripts/build-search-index.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1205,8 +1235,8 @@
     },
     "scripts/build-water-actions-provenance.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8696,
-      "sha256": "d4897ac86867f4163224ea9fa8532b80ae031c34bb9deb5059153d3763e9b50c"
+      "bytes": 8916,
+      "sha256": "eb2f8e54b14ff7af37adb01504befa044b12ccc9ed1f488eb21aea359913ff56"
     },
     "scripts/build-water-actions-reference.py": {
       "normalization": "utf8-lf-v1",
@@ -1220,8 +1250,8 @@
     },
     "scripts/english-catalog.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 8203,
-      "sha256": "64928397c8b19b53ca79b99b120ea4a87f8e2384954f8d27cb32652db4e0cdf2"
+      "bytes": 8458,
+      "sha256": "c6e732917709fe74f4f3b20511d7823c4b4ccf09a6d592776ead19b8f1fef2eb"
     },
     "scripts/english-source.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1240,8 +1270,8 @@
     },
     "scripts/fixtures/bridges-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 870219,
-      "sha256": "23e44718bb5acbccfe65b60a168b388bd55fe03d224431d079c3011df650fc6d"
+      "bytes": 870305,
+      "sha256": "38a437515635ed3ebc16f96053542c31e72cc5b91254249797191e51a3e0e0d3"
     },
     "scripts/fixtures/composition.json": {
       "normalization": "utf8-lf-v1",
@@ -1250,8 +1280,8 @@
     },
     "scripts/fixtures/pathways-projects.json": {
       "normalization": "utf8-lf-v1",
-      "bytes": 1737275,
-      "sha256": "e4021419b18d5784ff867c723d5ce069e4d7a00e8c050f77a056a7dc88e4f1c0"
+      "bytes": 1737361,
+      "sha256": "5894b2cebb47d2fda4db0d1d2e932c8ecb9f6fdd08c39a85e5babdab317a3255"
     },
     "scripts/fixtures/spin-actions.json": {
       "normalization": "utf8-lf-v1",
@@ -1295,8 +1325,8 @@
     },
     "scripts/test-foundations-demos.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 14691,
-      "sha256": "fcb2d1e0806f7405059a90a9b4d6d464e6daf771b24dce240f020808034fe3be"
+      "bytes": 14484,
+      "sha256": "9cf3c4dfa766fa8d78a0f867a8f271300ff441c65b602d1b64dabe6a913e6a59"
     },
     "scripts/test-foundations-routing.mjs": {
       "normalization": "utf8-lf-v1",
@@ -1330,8 +1360,8 @@
     },
     "scripts/test-water-actions-host.mjs": {
       "normalization": "utf8-lf-v1",
-      "bytes": 23242,
-      "sha256": "e618afe0109878db22d38a876ce45009c10f782ed67cbe6c385806851cb61bc6"
+      "bytes": 23119,
+      "sha256": "b93148c1019870d6b7236ab5c0b960a035a2c26dcc5392186458fbb3f24c3d65"
     },
     "scripts/test-water-actions-ui.mjs": {
       "normalization": "utf8-lf-v1",

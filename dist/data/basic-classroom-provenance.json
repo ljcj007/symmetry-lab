@@ -37,16 +37,16 @@
   ],
   "files": {
     "dist/app.js": {
-      "bytes": 107205,
-      "sha256": "a3dff8fe4ab0b327c9324daa7b26f8503d7a4253f9d6216c92d14ee16072e39d"
+      "bytes": 107223,
+      "sha256": "b197e35bfd96bc2f84dead7646570d1bda21891ffb05484b79d357fa14ca6bce"
     },
     "dist/classroom-ui.js": {
-      "bytes": 33727,
-      "sha256": "fe5dc1c6bc37c80913d10d8edf3251eb81272a60e66d217ba8812c057b030ad8"
+      "bytes": 34319,
+      "sha256": "d1316dd3009367910184177db0f9274b054c0a47885bcaec21731515e33827e8"
     },
     "dist/navigation-ui.js": {
-      "bytes": 39245,
-      "sha256": "e1bdccf319ce118315550fd58e20c57844f93ed2315d36057565ef6d61a035dc"
+      "bytes": 39226,
+      "sha256": "5f6e77e24c3cc37fd98ff7cd17002cb820eec8a241c599990a541e38937f4443"
     },
     "dist/tool-directory.js": {
       "bytes": 3089,
@@ -69,12 +69,12 @@
       "sha256": "8dc6e18a1aff74111955ae63334122de159f7340eba5f322937a9554cd733d43"
     },
     "dist/python-client.js": {
-      "bytes": 3139,
-      "sha256": "8997ce04654fecdd0a9e96573b3349e70addb2210818fc708f6df1212686161e"
+      "bytes": 3140,
+      "sha256": "4bfa0ad97949fb369a24018e8df61c980ea3a31aecea1014a308146ada045105"
     },
     "dist/python-worker.js": {
-      "bytes": 12824,
-      "sha256": "1324690ad4bac73c8f6555232de191cb67b5739f4ec3e12137e60162e6eed65f"
+      "bytes": 13304,
+      "sha256": "af1047ca452a2770242f5a45242a9d4088a7a12fab96e63d559467a1ea20c65d"
     },
     "dist/data/lie-group-lessons.json": {
       "bytes": 165574,
@@ -149,20 +149,20 @@
       "sha256": "a2f2bf8e77b530d6f602bbae9e9ff9f990fdbadc9d8ba872157039a79d003117"
     },
     "scripts/fixtures/pathways-projects.json": {
-      "bytes": 1737275,
-      "sha256": "e4021419b18d5784ff867c723d5ce069e4d7a00e8c050f77a056a7dc88e4f1c0"
+      "bytes": 1737361,
+      "sha256": "5894b2cebb47d2fda4db0d1d2e932c8ecb9f6fdd08c39a85e5babdab317a3255"
     },
     "scripts/fixtures/bridges-projects.json": {
-      "bytes": 870219,
-      "sha256": "23e44718bb5acbccfe65b60a168b388bd55fe03d224431d079c3011df650fc6d"
+      "bytes": 870305,
+      "sha256": "38a437515635ed3ebc16f96053542c31e72cc5b91254249797191e51a3e0e0d3"
     },
     "dist/foundations-demos.css": {
-      "bytes": 4314,
-      "sha256": "0deeffd30036aacf903e188de5a2361dd259db0d0cf9c3b1400cfdbe850a5056"
+      "bytes": 5160,
+      "sha256": "dd73b455f972d6e90e277793b1bebf668cad5c8383933029fe6b6462fb1b0c6e"
     },
     "dist/symmetry-mini-demos.css": {
-      "bytes": 3493,
-      "sha256": "3aaff8e2e1de50cf88ad20c2b0dad13b2b2ae5e67433b10c6aac5b4502b25cfa"
+      "bytes": 3900,
+      "sha256": "cef432403478f045cd4205ddf3d56f818c0dedc78eaa5a4192cf7542bc6ab2b5"
     },
     "dist/group-theorems.css": {
       "bytes": 3561,

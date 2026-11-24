@@ -69,8 +69,10 @@ function workshop(bindings){
     loadProgression:async()=>({progressionForSelection:()=>({current:null})}),
     run:()=>assert.fail('Opening or identifying a group must not run the shared calculator'),
     courseRenderers:{pointgroups:options=>host.renderPointgroupView({...options,loadPointgroupIdentify:async()=>{imports++;return workshop(bindings);}})}});
-  const sidebar=page.querySelector('.classroom-topics');
-  assert.ok(sidebar.querySelectorAll('a').some(link=>link.getAttribute('href')?.replaceAll('&amp;','&')===lessonRoute));
+  const foundationNav=page.querySelector('.foundation-roadmap');
+  assert.equal(foundationNav.querySelectorAll('a').length,5,'Five coherent units replace the duplicated topic sidebar');
+  assert.equal(page.querySelector('.classroom-topics'),null);
+  assert.ok(foundationNav.querySelectorAll('a').some(link=>link.getAttribute('href')?.replaceAll('&amp;','&')==='#classroom/foundations?tab=learn&lesson=group-basics'),'Point-group sequence remains reachable');
   assert.ok(entry(page));
   assert.equal(entry(page).open,false);
   const lecture=page.querySelector('.pg-lesson').innerHTML;

@@ -1,5 +1,4 @@
 // Versions match the downloadable CPython modules. Inputs stay in this Worker.
-const INDEX_URL = 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/';
 const BUILD = '20261122-zno-nac1';
 const DATA_BUILD = '20261117-derive1';
 const plans = {
@@ -60,10 +59,11 @@ async function prepare(id, action, payload) {
   if (['carat', 'carat_integral'].includes(action) && (!Number.isInteger(dimension) || dimension < 1 || dimension > 6)) throw new Error('CARAT 维数须为 1–6 的整数');
   const progress = message => self.postMessage({id, status: 'loading', message});
   if (!runtime) {
-    progress('首次运行：下载 Python 解释器…');
-    const {loadPyodide} = await import(INDEX_URL + 'pyodide.mjs');
-    runtime = await loadPyodide({indexURL: INDEX_URL});
-    runtime.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_magnetic_database = None\n_label_database = None\n_carat_catalogs = {}');
+    progress('首次运行：从本站加载 Python 解释器…');
+    const {getPythonRuntime} = await import('./python-runtime.mjs?v=20261124-teaching1');
+    const initialized = await getPythonRuntime();
+    initialized.runPython('import json, sys, gzip\nsys.path.insert(0, "/home/pyodide")\n_sg_database = None\n_magnetic_database = None\n_label_database = None\n_carat_catalogs = {}');
+    runtime = initialized;
   }
   const needsLabels = action === 'standard_labels' || (action === 'analyze' && payload.group_number !== undefined);
   const exact = needsLabels || ['statistics_lab', 'defects_lab', 'reciprocity_lab', 'symmetry_audit', 'symbolic_step_grade', 'phase', 'tensors', 'crystkit', 'symbolic', 'carat', 'crystkit_ext', 'carat_integral', 'integral_normalizer', 'symbolic_interfaces', 'arithmetic_centralizer', 'symbolic_spacegroups'].includes(action);
@@ -80,7 +80,12 @@ async function prepare(id, action, payload) {
   for (const name of ['group_theorems','foundations_demos','symmetry_mini_demos','water_actions','representation_actions'].includes(action) ? [] : ['phonopy','phonopy_scattering','phonopy_derivation','zno_gamma_nac','phonon_modes','phonon_thermo','qha_lab'].includes(action) ? ['numpy', 'pyyaml'] : action === 'teaching_labs' ? teachingPackages : exact ? ['numpy', 'sympy'] : ['numpy']) {
     if (packages.has(name)) continue;
     progress(`正在加载 Python 计算库 ${name}…`);
-    await runtime.loadPackage(name); packages.add(name);
+    await runtime.loadPackage(name);
+    // Upstream may report failed downloads through its error callback rather than throw.
+    if (runtime.loadedPackages && !Object.hasOwn(runtime.loadedPackages, name)) {
+      throw new Error(`本站 Python 计算库 ${name} 未能加载，请再次点击计算。`);
+    }
+    packages.add(name);
   }
   if (['structure_bc','phonon_modes'].includes(action) && !spglibLoaded) {
     progress('正在加载本地晶体对称性引擎 spglib…');
@@ -129,7 +134,7 @@ async function prepare(id, action, payload) {
     runtime.FS.unlink('/home/pyodide/catalog.json.gz'); catalogs.add(dimension);
   }
 }
-self.onmessage = async ({data: {id, action, payload}}) => {
+async function runRequest({id, action, payload}) {
   try {
     await prepare(id, action, payload);
     self.postMessage({id, status: 'running', message: 'Python 正在本地计算…'});
@@ -163,4 +168,9 @@ _output
   } catch (error) {
     self.postMessage({id, status: 'error', error: 'Python 环境或计算失败：' + (error.message || String(error))});
   }
+}
+// Avoid overlapping initialization and Python globals when two controls submit together.
+let requestQueue = Promise.resolve();
+self.onmessage = ({data}) => {
+  requestQueue = requestQueue.then(() => runRequest(data));
 };
