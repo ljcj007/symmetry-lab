@@ -1,11 +1,11 @@
 {
   "schema": "qe-certificate-desktop-release.v2",
   "status": "ready",
-  "version": 17,
-  "filename": "qe-certificate-standalone-v17.zip",
-  "bytes": 17686639,
-  "files": 1991,
-  "expanded_bytes": 50710308,
+  "version": 18,
+  "filename": "qe-certificate-standalone-v18.zip",
+  "bytes": 17753247,
+  "files": 1997,
+  "expanded_bytes": 50915338,
   "entry": "QE-Certificate/一键运行.exe",
   "english_entry": "QE-Certificate/Run.exe",
   "platform": "windows-x86_64",
@@ -40,5 +40,14 @@
   "terminal_stage_status": true,
   "remaining_obligations_visible": true,
   "paw_completed_task_resume_tested": true,
-  "preserves_existing_PAW_model": true
+  "preserves_existing_PAW_model": true,
+  "offline_band_visualization": true,
+  "historical_result_visualization": true,
+  "included_Si_example": true,
+  "visualization_replays_math": false,
+  "visualization_supports_spin": false,
+  "visualization_default_example": "Si",
+  "visualization_example_points": 72,
+  "visualization_example_bands": 12,
+  "scientific_workflow_changed": false
 }

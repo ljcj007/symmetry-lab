@@ -52,6 +52,8 @@ jobs:
         run: |
           python scripts/test-oneclick-release.py
           node scripts/test-actual-run-view.mjs
+          node scripts/test-band-viewer.mjs
+          python scripts/test-band-visualization.py
       - name: Verify source provenance
         run: python scripts/refresh-english-provenance.py --check
       - name: Test Python computation cores

@@ -271,8 +271,8 @@
       "sha256": "308675a94ec7a41d8a7ec8ab23bdbc9becba1662b841f0600908e9d437bc703d"
     },
     "dist/end-to-end/app.js": {
-      "bytes": 36340,
-      "sha256": "62f90d0c535c307a0827af5af46f28a5d5a5c2bd486841572f00ff9c0f533193"
+      "bytes": 36580,
+      "sha256": "43ea951318eb1e63d19f9a8fa55fb35dd0898a2de34ebf6337b08e8367955c61"
     },
     "dist/end-to-end/data/complete-infinite-scf-receipt-r72p.json": {
       "bytes": 3554,
@@ -311,20 +311,20 @@
       "sha256": "a635018db682659505c491f9619906ce9c38bc2a53d3002c9b23e21676323824"
     },
     "dist/end-to-end/data/oneclick-release.json": {
-      "bytes": 1577,
-      "sha256": "bac51525568d4270013906a05548ed7fd7ac601425af003d2afc493d33c40486"
+      "bytes": 1924,
+      "sha256": "7b1ba46d2b418780135118fc1bb94996d18ef315874cb1fbbc2b4c8e6cfa006d"
     },
     "dist/end-to-end/downloads/local-run-guide.md": {
-      "bytes": 3647,
-      "sha256": "5cdf60bdefc7e33857e622f0d6b4a064c0d6a315461d5fc5d9945b05999fc279"
+      "bytes": 4683,
+      "sha256": "63a45c9c4442c532a0f37b552387c67975aba7feff6d0ff3ff59c9aa3e5b2b04"
     },
     "dist/end-to-end/downloads/server-profile-infinite-inputs.example.json": {
       "bytes": 54,
       "sha256": "8fe1890ad11e2be4768c08b02834b390c02933ad1d79630a8e45e1b34fd72dfd"
     },
     "dist/end-to-end/index.html": {
-      "bytes": 25568,
-      "sha256": "c5ca584081bad1554b88eb115db2ed5b2d5b96e81aca22b4e9d94a66efb4943b"
+      "bytes": 25717,
+      "sha256": "b415cfc2b4560ced4284a9ef4b98c913ff0477ad910536292318c80c3e2a5b24"
     },
     "dist/end-to-end/infinite-replay.js": {
       "bytes": 1967,
@@ -1203,8 +1203,8 @@
       "sha256": "0f3fb3dc8b98eb841a5d57c58fe7c7eb1bad83647fbc33b958a8f57e59aebc70"
     },
     "scripts/test-oneclick-release.py": {
-      "bytes": 12919,
-      "sha256": "f19fe43a9b73bdb464265ca9202ae20ca8d42673738d3cd9f9a545477762a6e8"
+      "bytes": 13329,
+      "sha256": "5cc5a18a3f28aa963276349534fbaff1af1f5373d29297a0329ef70db70cb39e"
     },
     "scripts/test-pathways-ui.mjs": {
       "bytes": 6474,

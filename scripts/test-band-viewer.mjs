@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+const code=await fs.readFile(new URL('../dist/end-to-end/bands/viewer.js',import.meta.url),'utf8');
+const viewer=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+const fixture={schema:'qe-band-visualization.v1',id:'C',label:'Carbon',energy_reference_eV:1.5,energy_reference_kind:'highest-occupied',spectral_index:2,points:[
+ {index:1,k_fractional:[0,0,0],energies_eV:[-5,0,4,8],occupations:[1,1,0,0],certificate:{status:'certified',lower_cut_eV:1,upper_cut_eV:3,rank:2,dimension:900,negative_count_at_lower_cut:2,positive_count_at_upper_cut:898}},
+ {index:2,k_fractional:[.25,.5,.5],energies_eV:[-4,.2,5,9],occupations:[1,1,0,0],certificate:{status:'certified',lower_cut_eV:1,upper_cut_eV:3,rank:2,dimension:941}}
+ ],common_certificate:{lower_cut_eV:1,upper_cut_eV:3,gap_lower_eV:2},scope:{finite_point_spectrum_certified:true,infinite_scf_certified:false},verification:{calculation_completed:true,native_operator_received:true}};
+let controls=0;
+function control(fn){fn();controls++;}
+control(()=>{const d=viewer.normalizeDataset(fixture),f=viewer.proofFacts(d);assert.equal(f.certified,2);assert.equal(f.total,2);assert.equal(f.common.gap_lower_eV,2);assert.equal(f.individuallyCertified,false);assert.equal(f.continuousCertified,false);});
+control(()=>{const d=viewer.normalizeDataset(fixture);assert.deepEqual(viewer.sliceValues(d),[0,.5]);assert.equal(viewer.filterPoints(d,'0.5').length,1);assert.equal(viewer.filterPoints(d,'all').length,2);assert.equal(viewer.filterPoints(d,'0.2').length,0);});
+control(()=>{const d=viewer.normalizeDataset(fixture);assert.deepEqual(viewer.selectedBandIndices(d,'all'),[0,1,2,3]);assert.deepEqual(viewer.selectedBandIndices(d,'frontier'),[1,2]);assert.deepEqual(viewer.selectedBandIndices(d,'3'),[3]);assert.deepEqual(viewer.selectedBandIndices(d,'garbage'),[]);});
+control(()=>{const d=viewer.normalizeDataset(fixture);const csv=viewer.asCsv(d,{band:'frontier',relative:true,slice:'all'});assert.equal(csv.trim().split('\r\n').length,5);assert.ok(csv.includes('"-1.5"'));assert.ok(csv.includes('"-0.5","1.5","2","false","false"'));assert.ok(csv.includes('"highest-occupied"'));});
+control(()=>{assert.equal(viewer.numericGap(fixture.points[0],2),4);assert.equal(viewer.numericGap(fixture.points[0],4),null);assert.equal(viewer.numericGap(fixture.points[0],null),null);});
+control(()=>{const d=structuredClone(fixture);d.points[1].certificate={status:'not_applicable'};const f=viewer.proofFacts(viewer.normalizeDataset(d));assert.equal(f.certified,1);assert.equal(f.common,null);});
+control(()=>{const d=structuredClone(fixture);d.points[0].certificate={status:'certified',lower_cut_eV:3,upper_cut_eV:1,rank:2};const p=viewer.normalizeDataset(d).points[0];assert.equal(p.certificate.status,'unresolved');});
+control(()=>{const d=structuredClone(fixture);d.points[0].certificate.positive_count_at_upper_cut=899;assert.equal(viewer.normalizeDataset(d).points[0].certificate.status,'unresolved');});
+control(()=>{const d=structuredClone(fixture);d.common_certificate.lower_cut_eV=.9;assert.equal(viewer.proofFacts(viewer.normalizeDataset(d)).common,null);});
+control(()=>{const d=structuredClone(fixture);d.scope.finite_point_spectrum_certified=false;const f=viewer.proofFacts(viewer.normalizeDataset(d));assert.equal(f.collectionCertified,false);assert.equal(f.common,null);});
+control(()=>{const d=structuredClone(fixture);d.points.forEach(p=>p.certificate={status:'not_applicable'});d.scope.infinite_scf_certified=true;const f=viewer.proofFacts(viewer.normalizeDataset(d));assert.equal(f.infinite,true);assert.equal(f.certified,0);assert.equal(f.common,null);});
+control(()=>{const d=structuredClone(fixture);d.points[0].energies_eV=[NaN];assert.throws(()=>viewer.normalizeDataset(d),/energies/);});
+control(()=>{const svg=viewer.drawingToSvg([{kind:'text',x:10,y:20,text:'<script>not active</script>',color:'#123'}],300,200,'Safe & clear');assert.ok(svg.includes('&lt;script&gt;'));assert.ok(!svg.includes('<script>'));assert.ok(svg.includes('Safe &amp; clear'));});
+control(()=>{assert.ok(viewer.energyReferenceLabel(fixture,true,'en').includes('highest occupied'));assert.ok(!viewer.energyReferenceLabel(fixture,true,'en').includes('E_F'));assert.equal(viewer.energyReferenceLabel({...fixture,energy_reference_kind:'fermi'},true,'en'),'E − E_F / eV');assert.ok(viewer.energyReferenceLabel(fixture,false,'en').includes('Original'));});
+control(()=>{const d=viewer.normalizeDataset({...fixture,points:[fixture.points[0]]});assert.equal(viewer.filterPoints(d).length,1);assert.equal(viewer.proofFacts(d).continuousCertified,false);});
+control(()=>{const d=viewer.normalizeDataset({...fixture,scope:{infinite_scf_certified:true},model_certificate:{status:'received',root_exists:true,closure:{force_to_boundary_ratio:.8990427440039928},complete_response_received:true,response_directions:2618}});const b=viewer.modelBudgetFacts(d);assert.equal(b.responseDirections,2618);assert.ok(Math.abs(b.remainingPercent-10.095725599600724)<1e-10);assert.equal(viewer.modelBudgetFacts({...d,scope:{infinite_scf_certified:false}}),null);assert.equal(viewer.modelBudgetFacts({...d,model_certificate:{...d.model_certificate,closure:{force_to_boundary_ratio:1.01}}}),null);});
+console.log(JSON.stringify({status:'PASS_BAND_VIEWER_DATA_AND_SCOPE_CONTROLS',controls,perBandCertificatesInvented:false,continuousSurfacesInvented:false,referenceKindsDistinguished:true}));

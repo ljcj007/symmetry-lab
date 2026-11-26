@@ -41,7 +41,7 @@ def verify_bundle(path,release=None):
                 assert len(files)==release['files']
                 assert expanded==release['expanded_bytes']
             b=json.loads(z.read(base+'BUNDLE.json'))
-            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='17'
+            assert b['schema']=='qe-certificate-client-bundle.v1' and str(b['version'])=='18'
             assert b['platform']=='windows-x86_64'
             assert b['requires_local_paper'] is False and b['requires_installed_python'] is False
             assert b['scientific_execution']=='remote-source-bound-service'
@@ -49,6 +49,8 @@ def verify_bundle(path,release=None):
             assert b['custom_input_import'] is True
             assert b['upf_binding_confirmation'] is True and b['upf_nested_folder_search'] is True
             assert b['terminal_stage_status'] is True
+            assert b['offline_band_visualization'] and b['historical_result_visualization']
+            assert b['visualization_replays_math'] is False
             assert b['entry']=='一键运行.exe' and b['english_entry']=='Run.exe'
             if release is not None:assert release['entry']==base+b['entry']
             exe=z.read(base+'Run.exe');assert exe==z.read(base+b['entry']);pe(exe,'Run.exe')
@@ -63,7 +65,8 @@ def verify_bundle(path,release=None):
                 'runtime/Lib/site-packages/bcrypt/__init__.py','runtime/Lib/site-packages/nacl/__init__.py',
                 'runtime/LICENSE_PYTHON.txt','LICENSE','THIRD_PARTY_SOURCES.txt','build-sources/conda-recipes.zip',
                 'app/main.py','app/remote_service.py','app/launcher.c','app/build_app.py','app/test_client.py','app/portable_controls.py',
-                'app/material_gui.py','app/input_import.py','app/qe_input.py','app/test_import.py','app/test_gui_import.py')
+                'app/material_gui.py','app/input_import.py','app/qe_input.py','app/test_import.py','app/test_gui_import.py',
+                'app/demo/Si能带示例.html','app/band_report.py','app/test_band_report.py','app/viewer/viewer.js','app/viewer/style.css','app/viewer/template.html')
             assert all(base+n in names for n in required)
             assert not any(n.lower().endswith('.upf')for n in names),'Pseudopotentials need their own redistribution authorization.'
             assert z.read(base+'runtime/python313._pth').decode('ascii').splitlines()==['Lib','DLLs','Lib/site-packages','../app']
@@ -87,14 +90,14 @@ def verify_bundle(path,release=None):
         # extracted client source for these dependency-free protocol controls.
         code='import runpy,sys;p=sys.argv[2];sys.path.insert(0,sys.argv[1]);sys.argv=[p];runpy.run_path(p,run_name="__main__")'
         controls={}
-        for name,minimum in [('test_client.py',10),('test_import.py',12)]:
+        for name,minimum in [('test_client.py',10),('test_import.py',12),('test_band_report.py',12)]:
             result=subprocess.run([sys.executable,'-I','-B','-c',code,str(shipped/'app'),str(shipped/'app'/name)],
                 cwd=folder,capture_output=True,text=True,encoding='utf8',timeout=90,
                 env=dict(os.environ,PYTHONUTF8='1',PYTHONDONTWRITEBYTECODE='1'))
             assert result.returncode==0,result.stdout+'\n'+result.stderr
             ran=re.search(r'Ran (\d+) tests',result.stdout+result.stderr);assert ran and int(ran[1])>=minimum
             controls[name]=int(ran[1])
-    return dict(archive_members=len(files),expanded_bytes=expanded,extracted_protocol_controls=controls['test_client.py'],extracted_import_controls=controls['test_import.py'],
+    return dict(archive_members=len(files),expanded_bytes=expanded,extracted_protocol_controls=controls['test_client.py'],extracted_import_controls=controls['test_import.py'],extracted_band_report_controls=controls['test_band_report.py'],
         bundled_interpreter_x64=True,native_executable_aliases_equal=True,licenses_and_sources_included=True)
 
 
@@ -104,7 +107,7 @@ def main():
     args=ap.parse_args();release=json.loads((PAGE/'data/oneclick-release.json').read_text(encoding='utf8'))
     archive=args.archive or PAGE/'downloads'/release['filename']
     if not args.bundle_only:
-        assert release['status']=='ready' and release['version']==17
+        assert release['status']=='ready' and release['version']==18
         assert archive.stat().st_size==release['bytes']
         for key in ('existing_complete_research_workspace_required','python_installation_required','manual_registration_required',
                     'manual_configuration_required','password_saved','full_chain_recomputed'):assert release[key] is False,key

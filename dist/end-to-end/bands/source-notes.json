@@ -1,0 +1,57 @@
+{
+  "status": "PASS_WHITELISTED_PUBLIC_DATASETS",
+  "datasets": 3,
+  "user_PAW_included": false,
+  "source_parser_sha256": "f1f14cf359540a25415e183d79414609c3237da1dd25e00b0d14bb4ac9d750ef",
+  "data_sha256": "5e280c82103f53449045f22220faa3e3cfbefc1393cd601e480a4fed04312c65",
+  "notes": [
+    {
+      "id": "si-reference-72pt",
+      "run_id": "20261123t060452-5baefc5c85",
+      "points": 72,
+      "stored_bands": 12,
+      "reference_kind": "highest-occupied",
+      "sampled_numerical_index_interval_eV": 0.5272234868232308,
+      "strict_common_window_eV": null,
+      "complete_operator_dimensions": [],
+      "finite_point_spectrum_certified": false,
+      "separate_infinite_SCF_receipt": true
+    },
+    {
+      "id": "carbon-8pt",
+      "run_id": "20261123t062753-1709ec3059e2",
+      "points": 8,
+      "stored_bands": 12,
+      "reference_kind": "highest-occupied",
+      "sampled_numerical_index_interval_eV": 4.437414333571125,
+      "strict_common_window_eV": 2.6624486001426746,
+      "complete_operator_dimensions": [
+        902,
+        912,
+        919,
+        920,
+        923,
+        932,
+        934,
+        941
+      ],
+      "finite_point_spectrum_certified": true,
+      "separate_infinite_SCF_receipt": false
+    },
+    {
+      "id": "hydrogen-gamma",
+      "run_id": "20261123t062910-edbf30f0c7bf",
+      "points": 1,
+      "stored_bands": 5,
+      "reference_kind": "highest-occupied",
+      "sampled_numerical_index_interval_eV": 10.23595634285172,
+      "strict_common_window_eV": 6.141573805711033,
+      "complete_operator_dimensions": [
+        2109
+      ],
+      "finite_point_spectrum_certified": true,
+      "separate_infinite_SCF_receipt": false
+    }
+  ],
+  "scope": "Numerical stored bands and independently source-matched existing receipt displays; no solver or proof replay."
+}
